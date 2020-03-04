@@ -1,0 +1,232 @@
+button{
+    background: none;
+    border: none
+}
+.notification-image{
+  margin-left: 24px;
+  margin-top: 20px;
+}
+.img-responsive{
+    height: 157px;
+    width: 100%;
+
+}
+.menubar-options{
+  height: 107px;
+  width: 25%;
+  margin-top: 9px;
+ 
+  display: inline-flex;
+  margin-left: 564px;
+}
+.option-buttons{
+  height: 104px;
+  width: 33.3%;
+}
+.options{
+    height: 101px;
+}
+.servicenow-heading{
+    width: 100%;
+    height: 40px;
+    border: 2px solid #c9e5e57d;
+    background-color: #c9e5e57d;
+    display: inline-flex
+}
+.glyphicon{
+    font-size: 20px;
+    
+}
+p{
+  margin-left: 71px;
+  color: black;
+  font-size: large;
+}
+.container{
+  float: left;
+  width: 100%; 
+}
+input {
+line-height: normal;
+height: 24px;
+background-color: #c9e5e57d;
+color: black;
+margin-left: 50%;
+
+margin-top: 6px;
+border-top: 0;
+border-left: 0;
+border-bottom: 1px solid #847d7d8f;
+}
+.searchfile{
+margin-top: 8px;
+font-size: medium;
+color: #847d7d8f;
+}
+.analyse{
+margin-left: 32px;
+border-radius: 25px;
+background: blue;
+width: 194px;
+height: 32px;
+color: white;
+}
+.dataflow{
+  border: 1px solid white;
+  height: 488px;
+  margin-top: 20px;
+  padding: 0;
+}
+.fileupload{
+  border: 1px solid white;
+  height: 488px;
+  margin-top: 20px;
+  padding: 0;
+  
+}
+.dataflow-title{
+  border: 1px solid #c9e5e57d ;
+  height: 30px;
+  background-color: #c9e5e57d;
+
+}
+.fileupload-title{
+  border: 1px solid #c9e5e57d;
+  height: 30px;
+  background-color: #c9e5e57d;
+
+}
+.title-margin{
+  margin-left: 15px;
+  color: black;
+  font-size: large;
+}
+label{
+  margin-top: 12px;
+  font-size: large;
+}
+.data{
+  border: 1px solid white;
+  height: 497px;
+  display: flex;
+}
+.data-upload{
+  border: 1px solid #d2c4c4;
+  width: 30%;
+  margin-top: 10%;
+  height: 225px;
+  margin-left: 19%;
+  border-radius: 17px;
+
+}
+.data-preview{
+  border: 1px solid #d2c4c4;
+  width: 30%;
+  margin-top: 10%;
+  height: 225px;
+  margin-left: 4%;
+  border-radius: 17px;
+}
+.data-upload-image{
+  margin-top: 5px;
+  margin-left: 125px;
+}
+.data-preview-image{
+  margin-left: 3px;
+  margin-left: 134px;
+  margin-top: 2px;
+}
+h1 {
+  font-size: 36px;
+  color: #7c7c7c;
+  font-family: none;
+  margin-left: 10%;
+}
+h3{
+  color: #7c7c7c;
+  margin-left: 19%;
+  font-size: 18px;
+}
+#data-preview-label{
+  margin-left: 49px;
+
+}
+#data-preview-seclabel{
+margin-left: 81px;
+}
+#data-preview-select{
+  margin-left: 142px;
+  border-radius: 25px;
+background:#6868dd;
+width: 134px;
+height: 37px;  
+color: white;
+}
+#data-preview-create{
+  margin-left: 156px;
+  border-radius: 25px;
+background:#6868dd;
+width: 134px;
+height: 37px;  
+color: white;
+
+}
+.rpa-logo{
+  height: 44px;
+  margin-left: -8px;
+}
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+  
+  color: white;
+  background-color: 	#6868dd;
+  padding: 8px 20px;
+  border-radius: 25px;
+  
+  margin-left: 126px;
+  width: 134px;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.dropdown-menu>li>a{
+    color: blue
+}
+.open>.dropdown-menu {
+  display: block;
+  margin-left: -98px;
+  border-color: blue
+}
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: -46px;
+  margin-top: 82px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid\9;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+.link-title{
+  font-weight: bold;
+  text-decoration: underline
+}
+.alignment{
+margin-left: -6px;
+}
+.alignment-1{
+  margin-left: -2px;
+
+}

@@ -1,0 +1,10 @@
+.update_info{
+    position: absolute;
+    right: 60px;
+    color: #0062cf;
+}
+#canvas{
+    height: 600px;
+    width: 100%;
+    background-color: #efefef;
+}

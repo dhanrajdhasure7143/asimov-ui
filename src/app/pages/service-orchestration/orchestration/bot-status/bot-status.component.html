@@ -1,0 +1,130 @@
+<div class="row col-md-12">
+
+    <!-- 1 -->
+    <div class="col-md-3" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+      <h5 style="background-color: #f2f9ff;padding: 2%;">Bots</h5>
+      <!-- <p style="background-color: white; ">Some text..</p></div> -->
+      <div style="background-color: white;padding: 0% 10% 3% 10%; ">
+        <div class="bots_status" (click)="new()" style="border: 1px solid #f2f3ff;text-align: center;">
+            <img class="image" src="/assets/images/iconfinder_add_134224.svg">
+            <h3>10</h3>
+            <h6 class="status">New</h6>
+        </div>
+        <div class="bots_status" (click)="active()" style="border: 1px solid #f2f3ff;text-align: center;">
+            <img class="image" src="/assets/images/iconfinder_activity_3324973.svg">
+            <h3>4</h3>
+            <h6 class="status">Active</h6>
+        </div>
+        <div class="bots_status" style="border: 1px solid #f2f3ff;text-align: center;">
+            <img class="image" src="/assets/images/Fill.svg">
+            <h3>0</h3>
+            <h6 class="status">Errors</h6>
+        </div>
+        <div class="bots_status" style="border: 1px solid #f2f3ff;text-align: center;">
+            <img class="image" src="/assets/images/iconfinder_server-web-hosting-storage-data_2205217 (1).svg">
+            <h3>22</h3>
+            <h6 class="status">Running</h6>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="col-md-6" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+      <h5 style="background-color: #f2f9ff;padding: 1%;">Active Bots Details</h5>
+      <table style="background-color: white; " class="table">
+        <thead>
+            <tr>
+    			<th scope="col">Process Name</th>
+			<th scope="col">process Owner</th>
+			<th scope="col">Bot Assaigned</th>
+			<th scope="row">Bot state</th>
+			<th scope="row">Project Strat Time</th>
+			<th scope="row">Project End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of feesDetails.bookingDetails; let i = index">
+                <td scope="col">{{i +1}}</td>
+                <td scope="col">{{data.slot.shiftType}}</td>
+                <td scope="col">{{data.slot.start}}</td>
+                <td>{{data.rent}}</td>
+                <td>{{data.electricCharges}}</td>
+                <td>{{data.administrationCharges}}</td>
+
+            </tr>
+        </tbody>
+    </table>
+     </div>
+    </div>
+    <div class="col-md-3" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+      <h5 style="background-color: #f2f9ff;padding: 2%;">Inbox</h5>
+      <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Messages</th>
+                <th scope="col">Time</th>
+                <th scope="col">Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of indexData.indexDetails; let i = index">
+                <td scope="col">{{data.Messages}}</td>
+                <td scope="col">{{data.Time}}</td>
+                <td scope="col">{{data.Date}}</td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    
+  </div>
+</div>
+<div class="row col-md-12">
+  <div class="col-md-3" style="padding: 10px;">
+    <div style="border: 1px solid #f2f3ff;">
+  <h5 style="background-color: #f2f9ff;padding: 2%;">Process Status</h5>
+  <!-- <p style="background-color: white; ">Some text..</p></div> -->
+  <div style="background-color: white;padding: 0% 10% 3% 10%; ">
+    <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+        <h3 style="color: #61af4e; font-family: fantasy;">22</h3>
+        <h6>Approved</h6>
+    </div>
+    <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+        <h3 style="color: #ed9040; font-family: fantasy;">04</h3>
+        <h6>Pending</h6>
+    </div>
+    <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+        <h3 style="color: #888888; font-family: fantasy;">0</h3>
+        <h6>onHold</h6>
+    </div>
+    <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+        <h3 style="color: #ff5555; font-family: fantasy;">10</h3>
+        <h6>Rejected</h6>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- 2 -->
+<div class="col-md-6" style="padding: 10px;">
+    <div style="border: 1px solid #f2f3ff;">
+  <h5 style="background-color: #f2f9ff;padding: 1%;">Active Bots Performance</h5>
+  <canvas id="myChart" style="height: 280px !important"></canvas>
+ </div>
+</div>
+<div class="col-md-3" style="padding: 10px;">
+    <div style="border: 1px solid #f2f3ff;">
+  <h5 style="background-color: #f2f9ff;padding: 2%;">Bot Usage</h5>
+  <!-- <ngx-gauge [type]="gaugeType" 
+  size=300
+  [value]="gaugeValue" 
+  [label]="gaugeLabel" 
+  [thick]="gaugeThickness" 
+  [append]="gaugeAppendText">
+</ngx-gauge> -->
+</div>
+  </div>
+  </div>

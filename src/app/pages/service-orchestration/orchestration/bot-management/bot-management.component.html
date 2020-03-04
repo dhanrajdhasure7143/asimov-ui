@@ -1,0 +1,59 @@
+<div class="col-md-12">
+    <div class="collection_btn">
+      <button  type="button"
+        class="btn btn_style" aria-hidden="true" placement="bottom">
+        <img class="imageI" src="/assets/images/Page-1.svg">
+      </button>
+      <button  type="button"
+        class="btn btn_style" aria-hidden="true" placement="bottom">
+        <img class="imageI" src="/assets/images/iconfinder_add_134224.svg">
+      </button>
+      <button  type="button"
+      class="btn btn_style" aria-hidden="true" placement="bottom">
+      <img class="imageI" src="/assets/images/iconfinder_check_2561355.svg">
+    </button>
+    <button  type="button"
+    class="btn btn_style" aria-hidden="true" placement="bottom">
+    <img class="imageI" src="/assets/images/iconfinder_ic_event_48px_3669345.svg">
+  </button>
+  <button  type="button"
+  class="btn btn_style" aria-hidden="true" placement="bottom">
+  <img class="imageI" src="/assets/images/iconfinder_icon-play_211876.svg">
+</button>
+<button  type="button"
+class="btn btn_style" aria-hidden="true" placement="bottom">
+<img class="imageI" src="/assets/images/iconfinder_save_2639912.svg">
+</button>
+    </div>
+  </div>
+<table class="table">
+	<thead class="">
+   
+		<tr>
+            <th class="active">
+                <input type="checkbox" class="select-all checkbox" (click)="CheckAllOptions($event)" name="select-all" />
+            </th>
+			<th scope="col">Process Name</th>
+			<th scope="col">process Owner</th>
+			<th scope="col">Bot Assaigned</th>
+			<th scope="row">Bot state</th>
+			<th scope="row">Project Strat Time</th>
+			<th scope="row">Project End Time</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let data of feesDetails.bookingDetails; let i = index">
+            <td class="active">
+                <input type="checkbox" [(ngModel)]="data.cheked" (click)="expression(data)" [value]="data.id">
+            </td>
+			<td scope="col">
+            <a href= "">{{i +1}}</a></td>
+			<td scope="col">{{data.slot.shiftType}}</td>
+			<td scope="col">{{data.slot.start}}</td>
+			<td>{{data.rent}}</td>
+			<td>{{data.electricCharges}}</td>
+			<td>{{data.administrationCharges}}</td>
+		</tr>
+	</tbody>
+</table>
