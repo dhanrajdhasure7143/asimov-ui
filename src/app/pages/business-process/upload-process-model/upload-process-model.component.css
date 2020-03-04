@@ -1,0 +1,57 @@
+.bpmn-editor{
+    height: 450px;
+}
+.generate-button{
+    background-color: blue;
+    border-radius: 12px;
+    color: white;
+    margin-left: 76%;
+    margin-top: 24%;
+    text-align: center;
+    
+}
+
+#canvas{
+  height: 800px;
+  width: 100%;
+  background-color: #efefef;
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.btn {
+   color: #6868dd;
+    padding: 8px 20px;
+    border-color: #6868dd;
+    font-weight: 900;
+    border-radius: 44px;
+    margin-left: 1186px;
+    width: 134px;
+}
+
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.dropdown-menu>li>a{
+  color: blue
+}
+svg:not(:root) {
+  overflow: hidden;
+  margin-left: 127px;
+}
+.upload-btn-wrapper {
+  
+  margin-top: 281px;
+  
+}
+.resize-button{
+  margin-left: 20px;
+}

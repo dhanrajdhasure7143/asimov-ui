@@ -1,0 +1,86 @@
+/* .form{
+  text-align:center;
+  margin-top: 20px;
+
+} */
+.form
+{
+
+    /* width: 360px;
+    height: 400px; */
+    position:absolute;
+    /* top:50%; */
+    left:50%;
+    transform:translate(-33%,108%);
+    /* background-color:white; */
+    border-radius: 10px;
+    /* opacity:0.7; */
+    padding:0px 30px;
+    box-sizing:border-box;
+
+}
+#a input
+{
+
+	outline:none;
+}
+input[type="text"], input[type="password"]
+{
+  width: 138%;
+  border:none;
+  border-bottom: 1px solid gray;
+  text-align:left;
+  padding:1em;
+  /* margin:15px 0px; */
+}
+sup{
+    top:-1.5em
+}
+span.user_name::before{
+    content: "\f007";
+    position: absolute;
+    left:25px;
+    top:110px;
+    font-family: "Font Awesome 5 Pro";
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    font-weight: 500;
+}
+.brand{
+    padding-bottom:10px;
+}
+
+span.password::before{
+    content:"\f13e";
+    position:absolute;
+    left:25px;
+    top:157px;
+    font-family: "Font Awesome 5 Pro";
+    -webkit-font-smoothing:antialiased;
+    display:inline-block;
+    font-style:normal;
+    font-variant: normal;
+    text-rendering: auto;
+    font-weight: 600;
+} 
+h6{
+    color:rgba(11, 108, 236, 0.774);
+    font-weight:700;
+}
+.btn{
+    background-color: #0062cf;
+}
+     .ure{
+         color:#0062cf;
+         margin-left:1em;
+     }
+     hr.new5 {
+        border: 5px solid #0062cf;
+    margin-bottom:0px;
+    /* position: fixed; */
+    
+      }

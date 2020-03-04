@@ -1,0 +1,22 @@
+img.image{
+    position: absolute;
+    left: 26%;
+    width: 40px;
+    padding: 14px 0px 0px 0px;
+}
+.status{
+    color: #0062cf;
+}
+.bots_status:hover {
+    cursor: pointer;
+    background-color: #0062cf;
+}
+.bots_status:hover img{
+    filter: invert(1);
+}
+.bots_status:hover h3 {
+    color: white;
+}
+.bots_status:hover h6 {
+    color: white;
+}

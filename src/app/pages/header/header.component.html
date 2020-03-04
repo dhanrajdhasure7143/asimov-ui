@@ -1,0 +1,46 @@
+<div class="s1">
+  <section class="header">
+    <div class="container-fluid">
+      <nav class="navbar navbar-fixed-top" id="nv1">
+        <div class=" c1">
+          <div class="abrand">
+            <div class="abrand_div">
+            <h3 id="brand">ASIMOV <sup><i class="fa fa-registered" aria-hidden="true"></i></sup></h3>
+            <small id="sm">Process Mining Simplified</small>
+          </div>
+            <ul class="nav navbar-nav  navbar-right ">
+              <li> <div class="breadcrumb">
+                  <div routerLink="/pages/home" (click)="selectedIndex=pages.length"><i class="fa fa-home" aria-hidden="true"></i>Home</div>
+                  <div *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route"><u>{{parent_link.title}}</u></div>
+                  <div *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route"><u>{{child_link.title}}</u></div>
+                </div>
+              </li> 
+              <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i"
+                *ngFor="let each_page of pages;let i=index" [routerLink]="each_page.link"><a >
+                  <img [src]="each_page.img"> 
+                  <label>{{each_page.title}}</label>
+                </a>
+              </li>
+              <li class="icon_middle"><a href="#">
+                  <img src="assets/images/Group 192.svg">
+                </a>
+              </li>
+              <li class="icon_middle"><a href="#">
+                <img src="assets/images/pro1.png">
+                      </a>
+                      <span (click)="myFunction()" class="dropbtn"><i class="fas fa-chevron-down"></i></span>
+                        <div id="myDropdown" class="dropdown-content">
+                         <a href="#home"><i class="far fa-user"></i> My Profile</a>
+                            <a href="#about"><i class="fas fa-cog"></i>Settings</a>
+                            <a href="#contact"><i class="fas fa-sign-out-alt"></i>Signout</a>
+                        </div> 
+                    </li>
+                  </ul>
+            </div>
+          </div>
+        </nav>
+    </div>
+
+
+  </section>
+</div>                       

@@ -1,0 +1,113 @@
+    <div class="container-fluid bps-heading">
+        <div class="bps-heading-image">
+        <img src='..\assets\busineeprocessstudionewicon.svg'>
+        </div>
+        <div class="bps-heading-title">
+        <label>Process Graph</label>
+        </div>
+        
+        </div>
+    
+    
+        <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                            <div class="zoom_bar">
+                                    <p class="zoom_value">{{zoomValue}}%</p>
+                                <div class="zoom_slider custom_zoom_slider"><ng5-slider [(ngModel)]="zoomValue" [options]="zoomOptions" ></ng5-slider></div>
+                                <p class="zoom_label"> ZOOM</p>
+                            </div>
+                            <div class="kpibtn"><button class="kpi_btn"><img src="..\assets\viewKPI.svg" style="height:16px;">View KPI's</button></div>
+                        <div class="time_info">
+                                <label class="labels">Quick Insights</label> 
+                            <div class="quick_box">
+                                <h6 id="box_text">Total Time</h6>
+                                <h5 id="box_text" class="totalinfo">107 Hrs</h5>
+                                <hr>
+                                <h6 id="box_text" >Total Cost</h6>
+                                <h5 id="box_text" class="totalinfo" >$ 4280.00</h5>
+                            </div>
+                            <label class="labels labels1">Ep Gains</label>
+                            <div class="gains_box">
+                                <h5 class="hours">0 Hrs <span class="arrows" style='font-size:22px;color:green;'>&#8595;</span></h5>
+                                <hr>
+                                <h5 class="hours">$ 0.00 <span class="arrows" style='font-size:22px;color:green;'>&#8595;</span></h5>
+                            </div>
+                            <div>
+                            <span class="arrows2" style='font-size:13px;color:green;'>&#8595; </span>
+                            <span class="arrows2" style='font-size:13px;color:red;'>&#8593; </span>
+                            <span class="arrows2" style='font-size:13px;color:gray;'>&#8594; </span>
+                            </div>
+                            <div>
+                                    <span class="arrows1" style='font-size:9.5px; padding: 3px;'>Savings</span>
+                                    <span class="arrows1" style='font-size:8.5px; padding: 3px;'>Elevated</span>
+                                    <span class="arrows1" style='font-size:8.5px; padding: 3px;'>No Change</span>
+                            </div>                            
+                            <div class="buttons">
+                                <button class="glyphicon glyphicon-play play_btn"></button>
+                                <button class="glyphicon glyphicon-download-alt down_btn"></button>
+                                <!-- <button class="play_btn"><img src="..\assets\playPI.svg" style="height:40px;"></button>
+                                <button class="down_btn"><img src="..\assets\downloadPI.svg" style="height:40px;"></button> -->  
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="gauge_box">
+                            <div class="gauge_heading"><p id="details">Details</p></div>
+                            <div class="gauges">
+                                    <h6 class="labels">Pursuit</h6>
+                                <div class="power pursuit_gauge">
+                                    
+                                    <div id="power-gauge" class="left_gauge"> </div>
+                                    <div class="pursuit_slider custom-slider"><ng5-slider [(ngModel)]="value" (click)="onclick()" [options]="options" ></ng5-slider></div>
+                                </div>
+                                
+                                <div class="power track_gauge">
+                                        <h6 class="trackLabel">Track</h6>
+                                    <div id="powerauge" class="right_gauge"> </div>
+                                <div class="track_slider custom-slider"><ng5-slider [(ngModel)]="trackValue" id="test_slid" (userChange)="test2()" [options]="options" ></ng5-slider></div>                        
+                                </div>
+                            </div>
+                                    <div class="gauge_heading2">
+                                    <button class=" test bars_btns">Frequency</button>
+                                    <button class=" test bars_btns">Performance</button>
+                                </div>
+                                <div class="case_frequency"><button class="case_btn"><img src="..\assets\casefrequency.svg" style="height:18px;"> Case Frequency</button></div>
+                                <div class=" bar_chart">
+                                    <div class="test">
+                                        <ngx-charts-bar-horizontal-stacked class="test"
+                                          [view]="view"
+                                          [scheme]="colorScheme"
+                                          [results]="multi"
+                                          [xAxis]="showXAxis"
+                                          [yAxis]="showYAxis"
+                                          [tooltipDisabled]="tooltipDisabled"
+                                          [showXAxisLabel]="showXAxisLabel"
+                                          [showYAxisLabel]="showYAxisLabel"
+                                          [yAxisLabel]="yAxisLabel"
+                                          [trimXAxisTicks]="trimXAxisTicks"
+                                          [trimYAxisTicks]="trimYAxisTicks"
+                                          [maxXAxisTickLength]="maxXAxisTickLength"
+                                          [maxYAxisTickLength]="maxYAxisTickLength"
+                                          [xScaleMax]="xScaleMax"
+                                          [xAxisTicks]="xAxisTicks"
+                                          [xAxis]="xAxis"
+                                          [barPadding]="12">
+                                          <!-- <ng-template #tooltipTemplate let-model="model">
+                                                This is the single point tooltip template
+                            
+                                              </ng-template> -->
+                                      </ngx-charts-bar-horizontal-stacked>
+                                    </div>
+                                    <div><button class="generate_btn">Generate BPMN</button></div>
+                                    </div>
+                                    
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        
+
+
+
