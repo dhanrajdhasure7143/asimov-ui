@@ -4,7 +4,18 @@
     color: #0062cf;
 }
 #canvas{
-    height: 600px;
+    height: 500px;
     width: 100%;
-    background-color: #efefef;
+    background-color: white;
+}
+.btn_row{
+    margin: 10px 80px;
+}
+.upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100px;
 }

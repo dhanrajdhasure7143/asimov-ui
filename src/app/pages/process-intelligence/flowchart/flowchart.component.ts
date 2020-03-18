@@ -1,552 +1,146 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output,EventEmitter, } from '@angular/core';
 import { Options, PointerType} from 'ng5-slider';
+// import * as go from 'gojs';
+import {ZoomSlider} from '../../../zoomSlider';
+import { DataTransferService } from '../../services/data-transfer.service';
 
-import * as d3 from "d3";
-declare var $: any;
 @Component({
   selector: 'app-flowchart',
   templateUrl: './flowchart.component.html',
-  styleUrls: ['./flowchart.component.css']
+  styleUrls: ['./flowchart.component.css'],
 })
 export class FlowchartComponent implements OnInit {
-  gaugemap: any = {};
-  showXAxisLabel;
-  showYAxisLabel;
-  yAxisLabel;
-  xScaleMax;
+  public select_varaint:any=0;
+  public model1 = [
+    {"key":-1, "loc":"455 -150", "category":"Start"},
+    {"key":0,  "loc":"390 -65", "name":"Shopping",  tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:20,clickCount: 0,"selected": "inactive" },
+    {"key":1, "loc":"253 12", "name":"Browse Items",tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:40,clickCount: 0,"selected": "inactive" },
+    {"key":2, "loc":"253 146", "name":"Search Items",tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:80,clickCount: 0,"selected": "inactive" },
+    {"key":3, "loc":"412 112", "name":"View Item",  tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:50,clickCount: 0,"selected": "inactive"},
+    {"key":4, "loc":"561 -17", "name":"View Cart",  tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:10,clickCount: 0,"selected": "inactive"},
+    {"key":5, "loc":"494 171", "name":"Update Cart",tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:5,clickCount: 0,"selected": "inactive"},
+    {"key":6, "loc":"650 66", "name":"Checkout",    tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:80,clickCount: 0,"selected": "inactive"},
+    {"key":-2, "loc":"717 160", "category":"End"}
+    ];
+  public model2 = [
+      { "from": -1, "to": 0,"curviness": 0 },
+      { "from": 0, "to": 1,  "progress": "true", "text": 20 },
+      { "from": 0, "to": 2,  "progress": "true", "text": 40 },
+      { "from": 1, "to": 2,  "progress": "true", "text": 60 },
+      { "from": 2, "to": 3,  "progress": "true", "text": 80 },
+      { "from": 2, "to": 2,  "text": 65, "curviness": 20},
+      { "from": 3, "to": 0,  "text": 10},
+      { "from": 3, "to": 4,  "progress": "true","text": 7 },
+      { "from": 4, "to": 6,  "text": 85, },
+      { "from": 4, "to": 5,  "text": 22, "curviness": 0 },
+      { "from": 6, "to": 5,  "text": 13 },
+      { "from": 6, "to":-2,"curviness": 0},
+    ];
+   
+  public data = ([{ case:69, name:"of Cases", detail:"130 events per case on avarage", hours:72.00,varaintDetails:"5 of 25 Varaint",casesCovred:"80% cases Covered"},
+                      { case:82, name:"of Cases", detail:"160 events per case on avarage", hours:72.00,varaintDetails:"8 of 25 Varaint",casesCovred:"20% cases Covered"},
+                      { case:79, name:"of Cases", detail:"1130 events per case on avarage", hours:12.00,varaintDetails:"89 of 125 Varaint",casesCovred:"23% cases Covered"},
+                      { case:29, name:"of Cases", detail:"123 events per case on avarage", hours:32.00,varaintDetails:"35 of 225 Varaint",casesCovred:"80% cases Covered"},
+                      { case:19, name:"of Cases", detail:"130 events per case on avarage", hours:42.00,varaintDetails:"12 of 25 Varaint",casesCovred:"63% cases Covered"},
+                      { case:99, name:"of Cases", detail:"1389 events per case on avarage", hours:62.00,varaintDetails:"5 of 25 Varaint",casesCovred:"89% cases Covered"},
+                      { case:89, name:"of Cases", detail:"1389 events per case on avarage", hours:82.00,varaintDetails:"21 of 25 Varaint",casesCovred:"82% cases Covered"},
+                      { case:69, name:"of Cases", detail:"138 events per case on avarage", hours:78.00,varaintDetails:"3 of 25 Varaint",casesCovred:"35% cases Covered"},
+                      { case:81, name:"of Cases", detail:"10 events per case on avarage", hours:55.00,varaintDetails:"8 of 25 Varaint",casesCovred:"98% cases Covered"},
+                      { case:25, name:"of Cases", detail:"140 events per case on avarage", hours:64.00,varaintDetails:"8 of 25 Varaint",casesCovred:"12% cases Covered"},
+                      { case:55, name:"of Cases", detail:"90 events per case on avarage", hours:78.00,varaintDetails:"20 of 25 Varaint",casesCovred:"32% cases Covered"},
+                      { case:43, name:"of Cases", detail:"130 events per case on avarage", hours:63.00,varaintDetails:"5 of 25 Varaint",casesCovred:"69% cases Covered"},
+                      { case:12, name:"of Cases", detail:"130 events per case on avarage", hours:89.00,varaintDetails:"5 of 25 Varaint",casesCovred:"78% cases Covered"},
+                      { case:76, name:"of Cases", detail:"130 events per case on avarage", hours:12.00,varaintDetails:"5 of 25 Varaint",casesCovred:"12% cases Covered"},
+                      { case:32, name:"of Cases", detail:"130 events per case on avarage", hours:180.00,varaintDetails:"5 of 25 Varaint",casesCovred:"36% cases Covered"},
+                    ]);
+public inactive_data = [
+                    { case:22, name:"of Cases", detail:"130 events per case on avarage", hours:52.00,varaintDetails:"4 of 25 Varaint",casesCovred:"80% cases Covered"},
+                    { case:69, name:"of Cases", detail:"130 events per case on avarage", hours:32.00,varaintDetails:"3 of 25 Varaint",casesCovred:"80% cases Covered"},
+                    { case:12, name:"of Cases", detail:"130 events per case on avarage", hours:72.00,varaintDetails:"105 of 125 Varaint",casesCovred:"80% cases Covered"},
+                    { case:76, name:"of Cases", detail:"130 events per case on avarage", hours:52.00,varaintDetails:"6 of 25 Varaint",casesCovred:"80% cases Covered"},
+                    { case:25, name:"of Cases", detail:"130 events per case on avarage", hours:32.00,varaintDetails:"6 of 125 Varaint",casesCovred:"80% cases Covered"},
+                    { case:55, name:"of Cases", detail:"130 events per case on avarage", hours:22.00,varaintDetails:"21 of 25 Varaint",casesCovred:"80% cases Covered"},
+                      ];
+public active_data = [
+                    { case:12, name:"of Cases", detail:"130 events per case on avarage", hours:52.00,varaintDetails:"4 of 25 Varaint",casesCovred:"90% cases Covered"},
+                    { case:79, name:"of Cases", detail:"120 events per case on avarage", hours:2.00,varaintDetails:"3 of 25 Varaint",casesCovred:"8% cases Covered"},
+                    { case:62, name:"of Cases", detail:"110 events per case on avarage", hours:92.00,varaintDetails:"23 of 25 Varaint",casesCovred:"60% cases Covered"},
+                      { case:46, name:"of Cases", detail:"30 events per case on avarage", hours:122.00,varaintDetails:"9 of 25 Varaint",casesCovred:"55% cases Covered"},
+                      { case:53, name:"of Cases", detail:"160 events per case on avarage", hours:342.00,varaintDetails:"6 of 25 Varaint",casesCovred:"25% cases Covered"},
+                      { case:50, name:"of Cases", detail:"190 events per case on avarage", hours:98.00,varaintDetails:"6 of 25 Varaint",casesCovred:"63% cases Covered"},
+                      ];
+public reports=[{cases:20,activities:50,roles:1053,resources:25,started:"06/03/2020",ended:"25/03/2020"}];
 
-  multi:any[] = [
-    {
-      "name": "500",
-      "series": [
-        {
-          "name": "success",
-          "value": 23
-        },
-        {
-          "name": "failuer",
-          "value": 9
-        }
-      ]
-    },
-  
-    {
-      "name": "400",
-      "series": [
-        {
-          "name": "success",
-          "value": 3
-        },
-        {
-          "name": "failuer",
-  
-          "value": 52
-        }
-      ]
-    },
-  
-    {
-      "name": "300",
-      "series": [
-        {
-          "name": "success",
-          "value": 19
-        },
-        {
-          "name": "failuer",
-          "value": 8
-        }
-      ]
-    },
-     {
-      "name": "200",
-      "series": [
-        {
-          "name": "success",
-          "value": 22,
-        },
-        {
-          "name": "failuer",
-          "value": 48
-        }
-      ]
-    },
-     {
-      "name": "100",
-      "series": [
-        {
-          "name": "success",
-          "value": 25
-        },
-        {
-          "name": "failuer",
-          "value": 8
-        }
-      ]
-    }
-  ];
 
-  view: any[] = [300, 150];
+  public filterLength:number;
+  public dataValues:any[];
+  public hints:any[];
+  public varaint_data:any[];
+  public rangevalue:any;
 
-  showXAxis: boolean = true;
-  showYAxis: boolean = true;
-  gradient: boolean = false;
-  trimXAxisTicks:boolean=true;
-  trimYAxisTicks:boolean=true;
-  maxXAxisTickLength:number=16;
-  maxYAxisTickLength:number=16;
-  xAxis:boolean=true;
-  // xScaleMax:number=80;
-  // autoScale:boolean=true;
-  tooltipDisabled:boolean=false;
-  xAxisTicks = [
-    10,20,30,40,50,60,70,80
-    ]
-  colorScheme = {
-    domain: ['#5AA454', 'red',]
-  };
-  // public barChartType:any = 'horizontalBar';
-  // public barChartLegend = true;
-
-  // public barChartData:any[] = [
-    // { data: [1, 2, 3], label: 'Approved', stack: 'a' },
-    // { data: [1, 2, 3], label: 'Accepted', stack: 'a' },
-    // { data: [1, 2, 3], label: 'Open', stack: 'a' },
-    // { data: [1, 9, 3], label: 'In Progress', stack: 'a' },
-  // ];
-  // public barChartLabels: string[] = ['P', 'R', 'B'];
   value: number = 20;
   trackValue: number = 60;
   options: Options = {
     floor: 0,
     ceil: 100,
      translate: (value: number): string => `${value}%`,
-    //  step: 50,
-     hideLimitLabels: true,
-    //  hidePointerLabels: true,
-    //  showSelectionBarFromValue: -10
+     hideLimitLabels: false,
+     hidePointerLabels:true,
+     vertical:true,
     }
-
-    zoomValue:number=120;
-    zoomOptions: Options = {
-      floor: 100,
-      ceil: 200,
-       translate: (value: number): string => `${value}%`,
-       hideLimitLabels: true,
-      }
-  
-  constructor() { }
+    fetchData : any = [];
+  constructor(private dt:DataTransferService) { }
 
   ngOnInit() {
-    this.pursuitGauge();
-    this.trackGauge();
-    // this.test()
+    this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
+    this.dt.changeChildModule({"route":"/pages/processIntelligence/flowChart", "title":"Process Graph"});
+    this.hints = [
+      { selector:'#process_graph_list', description:'Select process graphs list', showNext:true },
+      { selector:'#myDiagramDiv', description:'Process Graph', showNext:true },
+      { selector:'#variants', description:'Click to explore variants', showNext:true },
+      { selector:'.down_btn', description:'Click to download process graph', showNext:true },
+      { selector:'.play_btn', description:'Click to play process graph', showNext:true },
+      { selector:'.zoom_label', description:'Zoom selection for process graph', showNext:true },
+      { selector:'#act_slider', description:'Activities slider', showNext:true },
+      { selector:'#path_slider', description:'Paths slider', showNext:true },
+      { selector:'#check_box', description:'Select all variants', showNext:true },
+      { selector:'#variant_drpdwn', description:'Select particular variant', showNext:true },
+      { selector:'.details_box', description:'Case details list', showNext:true  },
+      { selector:'.kpi_btn', description:'Click to view KPI', showNext:true  },
+      { selector:'.generate_btn', description:'Click to generate BPMN' }
+    ];
+    this.dt.changeHints(this.hints);
+    this.varaint_data=this.data;
+    //this.dataValuesFilter();
+
   }
 
-  onclick(){
-    
-  }
- 
-  pursuitGauge() {
-    var self = this;
-   var gauge = function (container, configuration) {
-   
-     var config = {
-       size: 710,
-       size1:300,
-       arcInset: 150,
-       arcWidth: 60,
-       clipWidth: 150,
-       clipHeight: 90,
-       ringInset: 20,
-       ringWidth: 20,
-       labelFont: "Helvetica",
-       labelFontSize: 25,
-
-       pointerWidth: 10,
-       pointerTailLength: 8,
-       pointerHeadLengthPercent: 0.7,
-
-       minValue: 0,
-       translate: (minValue: number): string => `${minValue}%`,
-       maxValue: 100,
-
-
-       minAngle: -90,
-       maxAngle: 90,
-
-       transitionMs: 750,
-
-       majorTicks: 1,
-       labelFormat: d3.format('d'),
-       labelInset:10,
-
-
-       arcColorFn: d3.interpolateHsl(d3.rgb('#e07809'))
-     };
-     var range = undefined;
-     var r = undefined;
-     var pointerHeadLength = undefined;
-     var value = 0;
-
-     var svg = undefined;
-     var arc = undefined;
-     var scale = undefined;
-     var ticks = undefined;
-     var tickData = undefined;
-     var pointer = undefined;
-     var oR = config.size1 - config.arcInset;
-     var iR = config.size1 - oR - config.arcWidth;
-     var donut = d3.pie();
-
-     function deg2rad(deg) {
-       return deg * Math.PI / 180;
-     }
-
-     function configure(configuration) {
-       var prop = undefined;
-       for (prop in configuration) {
-         config[prop] = configuration[prop];
-       }
-
-       range = config.maxAngle - config.minAngle;
-       r = config.size / 2;
-       pointerHeadLength = Math.round(r * config.pointerHeadLengthPercent);
-
-       // a linear scale this.gaugemap maps domain values to a percent from 0..1
-       scale = d3.scaleLinear()
-         .range([0, 1])
-         .domain([config.minValue, config.maxValue]);
-
-       ticks = scale.ticks(config.majorTicks);
-       tickData = d3.range(config.majorTicks).map(function () { return 1 / config.majorTicks; });
-
-       arc = d3.arc()
-         .innerRadius(r - config.ringWidth - config.ringInset)
-         .outerRadius(r - config.ringInset)
-         .startAngle(function (d, i) {
-           var ratio = d * i;
-           return deg2rad(config.minAngle + (ratio * range));
-         })
-         .endAngle(function (d, i) {
-           var ratio = d * (i + 1);
-           return deg2rad(config.minAngle + (ratio * range));
-         });
-     }
-     self.gaugemap.configure = configure;
-
-     function centerTranslation() {
-       return 'translate(' + r + ',' + r + ')';
-     }
-
-     function isRendered() {
-       return (svg !== undefined);
-     }
-     self.gaugemap.isRendered = isRendered;
-
-     function render(newValue) {
-       svg = d3.select(container)
-         .append('svg:svg')
-         .attr('class', 'gauge')
-         .attr('width', config.clipWidth)
-         .attr('height', config.clipHeight);
-
-       var centerTx = centerTranslation();
-
-       var arcs = svg.append('g')
-         .attr('class', 'arc')
-         .attr('transform', centerTx);
-
-       arcs.selectAll('path')
-         .data(tickData)
-         .enter().append('path')
-         .attr('fill', function (d, i) {
-           return config.arcColorFn(d * i);
-         })
-         .attr('d', arc);
-
-          // Display Max value
-         var max = svg.append("text")
-         .attr("transform", "translate(" + (iR + ((oR - iR) / 2)) + ",90)") // Set between inner and outer Radius
-         .attr("text-anchor", "middle")
-         .style("font-size", 13)
-         .text(config.labelFormat(config.maxValue) + "%")
-   
-       // Display Min value
-       var min = svg.append("text")
-         .attr("transform", "translate(" + 30 + ",90)") // Set between inner and outer Radius
-         .attr("text-anchor", "middle")
-         .style("font-size", 13)
-        //  .style("font-family", config.labelFont)
-        .text(config.labelFormat(config.minValue) + "%")
-
-      //  var lg = svg.append('g')
-      //    .attr('class', 'label')
-      //    .attr('transform',centerTx);
-        // lg.selectAll('text')
-        //  .data(ticks)
-        //  .enter().append('text')
-        //  .attr('transform',centerTx)
-        //  .attr('transform', function (d) {
-        //    var ratio = scale(d);
-        //    var angle=360;
-        //    var newAngle = config.minAngle + (ratio * range) ;
-        //    return 'rotate(' + newAngle + ') translate(0' + (config.labelInset - r) + ')'
-           
-        //  })
-        // .text(config.labelFormat)
-
-       var lineData = [[config.pointerWidth / 2, 0],
-       [0, -pointerHeadLength],
-       [-(config.pointerWidth / 2), 0],
-       [0, config.pointerTailLength],
-       [config.pointerWidth / 2, 0]];
-       var pointerLine = d3.line().curve(d3.curveLinear)
-       var pg = svg.append('g').data([lineData])
-         .attr('class', 'pointer')
-         .attr('transform', centerTx);
-
-       pointer = pg.append('path')
-         .attr('d', pointerLine/*function(d) { return pointerLine(d) +'Z';}*/)
-         .attr('transform', 'rotate(' + config.minAngle + ')');
-
-       update(newValue === undefined ? 0 : newValue);
-     }
-     self.gaugemap.render = render;
-     function update(newValue, newConfiguration?) {
-       if (newConfiguration !== undefined) {
-         configure(newConfiguration);
-       }
-       var ratio = scale(newValue);
-       var newAngle = config.minAngle + (ratio * range);
-       pointer.transition()
-         .duration(config.transitionMs)
-         .ease(d3.easeElastic)
-         .attr('transform', 'rotate(' + newAngle + ')');
-     }
-     self.gaugemap.update = update;
-
-     configure(configuration);
-
-     return self.gaugemap;
-   };
-
-   var powerGauge = gauge('#power-gauge', {
-     size: 150,
-     clipWidth: 138,
-     clipHeight: 90,
-     ringWidth: 20,
-     maxValue: 100,
-     translate: (maxValue: number): string => `${maxValue}%`,
-     transitionMs: 4000,
-   });
-   powerGauge.render(this.value);
-
- 
-
-//  var powerGauge = gauge('#powerauge', {
-//   size: 150,
-//   clipWidth: 300,
-//   clipHeight: 300,
-//   ringWidth: 20,
-//   maxValue: 100,
-//   translate: (maxValue: number): string => `${maxValue}%`,
-//   transitionMs: 4000,
-//   arcColorFn: d3.interpolateHsl(d3.rgb('#0ec7c7'))
-// });
-// powerGauge.render(this.trackValue);
-
+  ngAfterContentChecked(){
+    this.rangevalue=ZoomSlider.rangeValue
 }
 
-
- trackGauge() {
-      var self = this;
-    var gauge = function (container, configuration) {
  
-   var config = {
-     size: 710,
-     size1:300,
-     arcInset: 150,
-     arcWidth: 60,
-     clipWidth: 150,
-     clipHeight: 90,
-     ringInset: 20,
-     ringWidth: 20,
-
-     pointerWidth: 10,
-     pointerTailLength: 8,
-     pointerHeadLengthPercent: 0.7,
-
-     minValue: 0,
-     translate: (minValue: number): string => `${minValue}%`,
-     maxValue: 100,
-     minAngle: -90,
-     maxAngle: 90,
-
-     transitionMs: 750,
-
-     majorTicks: 1,
-     labelFormat: d3.format('d'),
-     labelInset: 10,
-
-     arcColorFn: d3.interpolateHsl(d3.rgb('#0ec7c7'))
-   };
-   var range = undefined;
-   var r = undefined;
-   var pointerHeadLength = undefined;
-   var value = 0;
-
-   var svg = undefined;
-   var arc = undefined;
-   var scale = undefined;
-   var ticks = undefined;
-   var tickData = undefined;
-   var pointer = undefined;
-   var oR = config.size1 - config.arcInset;
-   var iR = config.size1 - oR - config.arcWidth;
-   var donut = d3.pie();
-
-   function deg2rad(deg) {
-     return deg * Math.PI / 180;
-   }
-
-   // function newAngle(d) {
-   //   var ratio = scale(d);
-   //   var newAngle = config.minAngle + (ratio * range);
-   //   return newAngle;
-   // }
-
-   function configure(configuration) {
-     var prop = undefined;
-     for (prop in configuration) {
-       config[prop] = configuration[prop];
-     }
-
-     range = config.maxAngle - config.minAngle;
-     r = config.size / 2;
-     pointerHeadLength = Math.round(r * config.pointerHeadLengthPercent);
-
-     // a linear scale this.gaugemap maps domain values to a percent from 0..1
-     scale = d3.scaleLinear()
-       .range([0, 1])
-       .domain([config.minValue, config.maxValue]);
-
-     ticks = scale.ticks(config.majorTicks);
-     tickData = d3.range(config.majorTicks).map(function () { return 1 / config.majorTicks; });
-
-     arc = d3.arc()
-       .innerRadius(r - config.ringWidth - config.ringInset)
-       .outerRadius(r - config.ringInset)
-       .startAngle(function (d, i) {
-         var ratio = d * i;
-         return deg2rad(config.minAngle + (ratio * range));
-       })
-       .endAngle(function (d, i) {
-         var ratio = d * (i + 1);
-         return deg2rad(config.minAngle + (ratio * range));
-       });
-   }
-   self.gaugemap.configure = configure;
-
-   function centerTranslation() {
-     return 'translate(' + r + ',' + r + ')';
-   }
-
-   function isRendered() {
-     return (svg !== undefined);
-   }
-   self.gaugemap.isRendered = isRendered;
-
-   function render(newValue) {
-     svg = d3.select(container)
-       .append('svg:svg')
-       .attr('class', 'gauge')
-       .attr('width', config.clipWidth)
-       .attr('height', config.clipHeight);
-
-     var centerTx = centerTranslation();
-
-     var arcs = svg.append('g')
-       .attr('class', 'arc')
-       .attr('transform', centerTx);
-
-     arcs.selectAll('path')
-       .data(tickData)
-       .enter().append('path')
-       .attr('fill', function (d, i) {
-         return config.arcColorFn(d * i);
-       })
-       .attr('d', arc);
-
-    // Display Max value
-    var max = svg.append("text")
-    .attr("transform", "translate(" + (iR + ((oR - iR) / 2)) + ",90)") // Set between inner and outer Radius
-    .attr("text-anchor", "middle")
-    .style("font-size", 13)
-    .text(config.labelFormat(config.maxValue) +"%")
-
-    // Display Min value
-    var min = svg.append("text")
-    .attr("transform", "translate(" + 30 + ",90)") // Set between inner and outer Radius
-    .attr("text-anchor", "middle")
-    .style("font-size", 13)
-    //  .style("font-family", config.labelFont)
-    .text(config.labelFormat(config.minValue) +"%")
-
-     var lineData = [[config.pointerWidth / 2, 0],
-     [0, -pointerHeadLength],
-     [-(config.pointerWidth / 2), 0],
-     [0, config.pointerTailLength],
-     [config.pointerWidth / 2, 0]];
-     var pointerLine = d3.line().curve(d3.curveLinear)
-     var pg = svg.append('g').data([lineData])
-       .attr('class', 'pointer')
-       .attr('transform', centerTx);
-
-     pointer = pg.append('path')
-       .attr('d', pointerLine/*function(d) { return pointerLine(d) +'Z';}*/)
-       .attr('transform', 'rotate(' + config.minAngle + ')');
-
-     update(newValue === undefined ? 0 : newValue);
-   }
-   self.gaugemap.render = render;
-   function update(newValue, newConfiguration?) {
-     if (newConfiguration !== undefined) {
-       configure(newConfiguration);
-     }
-     var ratio = scale(newValue);
-     var newAngle = config.minAngle + (ratio * range);
-     pointer.transition()
-       .duration(config.transitionMs)
-       .ease(d3.easeElastic)
-       .attr('transform', 'rotate(' + newAngle + ')');
-   }
-   self.gaugemap.update = update;
-
-   configure(configuration);
-
-   return self.gaugemap;
- };
-
- var powerauge = gauge('#powerauge', {
-  size: 150,
-  clipWidth: 150,
-  clipHeight: 90,
-  ringWidth: 20,
-  // maxValue: 100,
-  translate: (maxValue: number): string => `${maxValue}%`,
-  transitionMs: 4000,
-});
-powerauge.render(this.trackValue);
-
-}
-
-test2(){
-  this.trackValue=this.trackValue
-  // this.trackGauge();
+  // dataValuesFilter(){
+  //   this.filterLength=this.model.nodeDataArray.length-2;
+  //   this.dataValues=this.model.nodeDataArray.splice(1,this.filterLength);
+  // }
   
-
+  onchangeVaraint(){
+    
+    if(this.select_varaint == 0){
+      this.varaint_data=this.data;
+    }
+    if(this.select_varaint == 1){
+      this.varaint_data=this.inactive_data;
+    }
+    if(this.select_varaint == 2){
+      this.varaint_data=this.active_data
+    }
 }
 
-
+slideup(){
+  document.getElementById("foot").classList.remove("slide-down");
+  document.getElementById("foot").classList.add("slide-up");
+}
+  
 }

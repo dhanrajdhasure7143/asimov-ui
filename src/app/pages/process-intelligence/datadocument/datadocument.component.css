@@ -1,19 +1,12 @@
-#gpg{
+#generateGraph{
     background-color: #006ed5;
     border-radius: 19px;
-font-size: 12px;
-
+    font-size: 12px;
 }
-#fe{
+#search_process_data{
     border: none;
     border-bottom: 1px solid gray;
 }
 .searchblock{
     float:right;
-}
-#gpgc{
-    width:19%;
-}
-#dd{
-    width:59%;
 }

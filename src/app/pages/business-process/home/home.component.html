@@ -1,24 +1,63 @@
-<div class="container data">
-    <div class='data-upload'>
-        <div class="container data-upload-image">
-            <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-5 offset-1">
+            <div class="box_area">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class='col-md-9 drop_box' id="upload_bpmn">
+                        <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn'" >
+                            <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
+                                <h3>Upload Process Model</h3>
+                                <h5>Drag and drop files here-(.bpmn)</h5>
+                                <button class="btn bpmn-btn">Select</button>
+                            </ngx-dropzone-label>
+                        </ngx-dropzone>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class='col-md-9 drop_box create_box'>
+                        <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
+                        <h3>Define Your Own Process</h3>
+                        <h5>Do process model from Scratch level</h5>
+                        <button class="btn bpmn-btn" id="create_bpmn" routerLink="/pages/businessProcess/createDiagram">Create</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h1>Upload Process Model</h1>
-        <h3>drag and drop files here-(.bpnm)</h3>
-        
-        <!-- <div class="upload-btn-wrapper">. -->
-            <button class="btn">Select</button>
-            <input type="file" />
-            <!-- <input type="file" id="Finput" (change)="uploadBpmn()" value="Select New Diagram" accept=".bpmn"/> -->
-        <!-- </div> -->
-        
-    </div>
-    <div class='data-preview'>
-        <div class="data-preview-image">
-            <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
+        <div class="col-md-7">
+            <div class="row col-md-12">
+              <div class="col-md-3">Process Name</div>
+              <div class="col-md-3">Date Time</div>
+              <div class="col-md-3">Approver</div>
+              <div class="col-md-2">Status</div>
+              <div class="col-md-1">
+                Comment
+              </div>
+            </div>
+            <div class="row col-md-12"  id="bpmn_list">
+              <mat-accordion>
+                <mat-expansion-panel *ngFor="let each_diag of saved_diagrams;let i=index" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
+                  <mat-expansion-panel-header>
+                    <mat-panel-title>
+                      <div class="row col-md-12">
+                        <div class="col-md-3">Get Process name{{each_diag.bpmnProcessName}}</div>
+                        <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+                        <div class="col-md-3">Get the approver name</div>
+                        <div class="col-md-2">{{each_diag.bpmnProcessStatus}}Active</div>
+                        <div class="col-md-1">
+                          <span class="comment">
+                            <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments}}</span>
+                          </span>
+                        </div>
+                      </div>
+                    </mat-panel-title>
+                  </mat-expansion-panel-header>
+                  <div [class]="'diagram_container'+i"></div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
         </div>
-        <h1 id="data-preview-label">Define Your Own Process</h1>
-        <h3 id="data-preview-seclabel">Do process model from Scratch level</h3>
-        <button id="data-preview-create" routerLink="/pages/businessProcess/createDiagram">Create</button>
+        <div class="right"><notifier-container></notifier-container></div>
     </div>
 </div>

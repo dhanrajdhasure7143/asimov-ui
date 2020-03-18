@@ -1,0 +1,111 @@
+
+<div id="foot">
+        <div  class="filter_heading">               
+        <div class="container filter_headinglabels">
+            <div class="row">
+                <div class="col-md-2">
+                    <p>Filter Setting</p>
+                </div>
+                <div class="col-md-8">
+                    <p>Filter Value</p>
+                </div>
+                <div class="col-md-2">
+                    <p >Overal Report</p>
+                    <button type="button" class="close cross_close" aria-label="Close" (click)="slideDown()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <p class="filter_typesOne">Filter By</p>
+                        <div class="form-group">
+                                <select class="form-control filterSelection" name="status">
+                                    <option [value]="0" selected>Activity</option>
+                                    <option [value]="1">Cases</option>
+                                    <option [value]="2">Variants</option>
+                                    <option [value]="2">End Points</option>
+                                </select>
+                            </div>
+                            <div>
+                            <p class="percent_filter">Percentage :</p>
+                            <div class="filter_slider custom_filter_slider"><ng5-slider [(ngModel)]="filterValue" [options]="filterOptions" ></ng5-slider></div>
+                            </div>
+                            <div>
+                                <p class="type_filter">Type :</p>
+                                <div class="radio">
+                                    <input type="radio" name="check" value="selected"> Selected<br>
+                                    <input type="radio" name="check" value="Unselected"> Unselected<br>
+                                </div>
+                            </div>
+                    </div>
+                    
+                    <div class="col-md-8">
+                        <div class="dataType">
+                        <p class="dataType_filter">Data Values :</p>
+                        <p class="searchFilter">
+                            <button class="selectAll" (click)="selectAllDataValue()" [hidden]="isSelect">Select All</button>
+                            <button class="deselectAll" [hidden]="!isSelect" (click)="deselectAllDataValue()">Deselect All</button> 
+                            <button class="search" (click)="searchfilterInput()">Search</button> 
+                        </p>
+                        </div>
+                        <div class="searchInput" *ngIf="isSearch">
+                            <input class="form-control" placeholder="Search Values" type="text" name="search" [(ngModel)]="queryString" autocomplete="off">
+                        </div>
+        
+                        <div class="dataValues">
+                            <div *ngFor = "let data of dataValues| FilterPipe: queryString; let i = index;" >
+                                <p id="data" class="data_values" (click)="SelectData(data, i)" [ngStyle]="{'background-color':data.selected === 'active' ? 'gray' : '#fff' }" >{{data.name}}</p>
+                              </div>
+                        </div>
+                    </div>
+        
+                    <div class="col-md-2">
+                        <div class="reports">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>cases</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].cases}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Activities</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].activities}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Roles</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].roles}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Resources</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].resources}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Started</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].started}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ended</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].ended}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    <button class="apply_button" (click)="applyFilter()">Apply Filter</button>
+        
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        </div>
+

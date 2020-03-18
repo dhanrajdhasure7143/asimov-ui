@@ -3,6 +3,7 @@ import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service
 import { RestApiService } from '../../services/rest-api.service';
 import { Router } from '@angular/router'
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-upload-process-model',
@@ -12,7 +13,7 @@ import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 export class UploadProcessModelComponent implements OnInit,AfterViewInit {
   bpmnModeler: any;
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService,
-    private restApiService: RestApiService){}
+    private restApiService: RestApiService, private dt:DataTransferService){}
   receivedbpmn:any;
   resize:boolean=false;
   uploadedBpmnfile;
@@ -33,6 +34,9 @@ ngAfterViewInit(){
 }
 
 ngOnInit() {
+  this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
+  this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
+
   this.bpmnservice.send.subscribe(x=>{
     this.receivedbpmn=x;
 

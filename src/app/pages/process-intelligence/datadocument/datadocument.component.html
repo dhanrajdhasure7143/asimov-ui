@@ -1,23 +1,35 @@
 <div class="container">
-        <div class="row">
-                <div class="col-sm-4" id="dd">
-               
-                    <h5 style="font-weight:600;color: rgb(90, 88, 88)">     <img src="assets/images/Group 208.svg" style="padding-right: 10px">Data Document</h5>
-                </div>
-                <div class="col-sm-4" id="gpgc">
-                      
-                                <div class="searchblock">
-                                      <input type="text" placeholder="Search" aria-label="Search" id="fe">
-                                      <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
-                                </div>
-                </div>
-                <div class="col-sm-4" id="gpgc">
-            <button class="btn btn-primary" id="gpg"><img src="assets/images/Group 77.svg" style="padding-right: 10px" (click)="generatepg()">Generate Process Graph</button>
-                </div>
-            
+    <div class="row">
+        <div class="col-md-4 col-sm-4" id="title">
+            <h5 style="font-weight:600;color: rgb(90, 88, 88)">     <img src="assets/images/Group 208.svg" style="padding-right: 10px">Data Document</h5>
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <div class="searchblock">
+                <input type="text" placeholder="Search" aria-label="Search" id="search_process_data">
+                <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
             </div>
-            <div class="">
-                    <!-- <app-table></app-table> -->
-            </div>
-            
+        </div>
+        <div class="col-md-4 col-sm-4">
+            <button class="btn btn-primary" id="generateGraph" (click)="generatepg()" [disabled]="isValidPiData">
+                <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
+        </div>
+    </div>
+    <div class="">
+        <table class="table" id="process_data">
+            <thead #header>
+                <tr>
+                    <th *ngFor="let headValue of headerData" (click)= "sort(headValue)">
+                    {{headValue}}
+                    </th>
+                </tr>
+            </thead>
+            <tbody #container>
+                <tr *ngFor="let row of fileData">
+                    <td *ngFor="let val of headerData; let i =index">
+                    {{row[i] || ' '}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

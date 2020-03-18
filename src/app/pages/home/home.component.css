@@ -27,15 +27,11 @@
 .active{
     text-decoration: none;
     background-color: #0062cf;
-    
-  }
-  .active #subheading{
-
-
+}
+.active #subheading{
     color:white;
-   
-  }
-   .active  img{
+}
+.active  img{
     filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
-   }
+}
   
