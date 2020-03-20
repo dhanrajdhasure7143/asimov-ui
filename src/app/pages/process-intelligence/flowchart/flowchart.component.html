@@ -80,7 +80,7 @@
                     <p><span class="case_details">Case Details</span> <span class="case_time">Time Taken</span></p>
                 </div>
                 <div class="details_box">
-                    <div class="show_details" *ngFor="let data of varaint_data">
+                    <div class="show_details" *ngFor="let data of varaint_data;trackBy:loopTrackBy">
                             <span class="dot">{{data.case}}%</span>
                             <p><span class="details_one">{{data.name}}</span> <span class="details_time">{{data.hours}}.00 Hrs</span> <br><span class="details_two">{{data.detail}}</span> </p>
                         <div  class="details_hide"><p><span class="hide_detailsone"> {{data.varaintDetails}}</span> <span class="hide_detailstwo">{{data.casesCovred}}</span></p><hr>
@@ -94,7 +94,7 @@
                     </div>
                 </div>
             <div>
-            <div><button class="generate_btn">Generate BPMN</button>
+            <div><button class="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
             <div class="kpibtn"><button class="kpi_btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button></div>
         </div>
         </div>

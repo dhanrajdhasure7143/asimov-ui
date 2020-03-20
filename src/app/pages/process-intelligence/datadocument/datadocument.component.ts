@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
+import { PiHints } from '../model/process-intelligence-module-hints';
 
 @Component({
   selector: 'app-datadocument',
@@ -10,21 +11,15 @@ import { DataTransferService } from "../../services/data-transfer.service";
 export class DatadocumentComponent implements OnInit {
   fileData:any=[];
   isValidPiData:boolean = false;
-  hints:any[];
   headerData: any = [];
   isDesc: boolean = false;
 
-  constructor(private router:Router, private dt:DataTransferService) { }
+  constructor(private router:Router, private dt:DataTransferService, private hints:PiHints) { }
 
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
     this.dt.changeChildModule({"route":"/pages/processIntelligence/datadocument", "title":"Data Document"});
-    this.hints = [
-      { selector:'#process_data', description:'Uploaded file process data', showNext:true },
-      { selector:'#search_process_data', description:'Search Process Data', showNext:true },
-      { selector:'#generateGraph', description:'Click to generate process graph' }
-    ];
-    this.dt.changeHints(this.hints);
+    this.dt.changeHints(this.hints.dataDocumentHints);
     this.dt.current_piData.subscribe(res => {
       if(res){
         this.fileData = res;
@@ -54,4 +49,9 @@ export class DatadocumentComponent implements OnInit {
       return value;
     });
   }
+
+  loopTrackBy(index, term){
+    return index;
+  }
+
 }

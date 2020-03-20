@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTransferService } from "../services/data-transfer.service";
+import { PagesHints } from '../model/pages.model';
 
 
 
@@ -12,9 +13,8 @@ import { DataTransferService } from "../services/data-transfer.service";
 export class HomeComponent implements OnInit {
   dataArr:any[];
   selectedIndex: number=0;
-  hints:any[] = [];
 
-  constructor(private router: Router, private dt:DataTransferService) { }
+  constructor(private router: Router, private dt:DataTransferService, private hints:PagesHints) { }
 
   ngOnInit() {
     this.dt.changeParentModule(undefined);
@@ -25,16 +25,11 @@ export class HomeComponent implements OnInit {
       {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA Studio", "link":""},
       {"id":"SOBox", "img":"assets/images/Group 216.1.svg", "title":"Service Orchestration", "link":"serviceOrchestration/home"}
     ];
-    this.hints = [
-      { selector:'#PIBox', description:'Process Intelligence box', showNext:true },
-      { selector:'#BPSBox', description:'BPStudio box', showNext:true },
-      { selector:'#RPABox', description:'RPA box', showNext:true },
-      { selector:'#SOBox', description:'SO box', showNext:true },
-      { selector:'#launch_btn', description:'Click to open the module' },
-    ];
-    this.dt.changeHints(this.hints);
+    this.dt.changeHints(this.hints.homeHints);
   }
 
- 
+  loopTrackBy(index, term){
+    return index;
+  }
 
 }

@@ -46,7 +46,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let data of feesDetails.bookingDetails; let i = index">
+            <tr *ngFor="let data of feesDetails.bookingDetails; let i = index;trackBy:loopTrackBy">
                 <td scope="col">{{i +1}}</td>
                 <td scope="col">{{data.slot.shiftType}}</td>
                 <td scope="col">{{data.slot.start}}</td>
@@ -71,7 +71,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let data of indexData.indexDetails; let i = index">
+            <tr *ngFor="let data of indexData.indexDetails; let i = index;trackBy:loopTrackBy">
                 <td scope="col">{{data.Messages}}</td>
                 <td scope="col">{{data.Time}}</td>
                 <td scope="col">{{data.Date}}</td>
@@ -79,7 +79,6 @@
         </tbody>
     </table>
     </div>
-    
   </div>
 </div>
 <div class="row col-md-12">

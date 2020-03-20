@@ -8,7 +8,6 @@ import { Chart } from 'chart.js';
   styleUrls: ['./bot-status.component.css']
 })
 export class BotStatusComponent implements OnInit {
-  constructor() { }
   gaugeType = "full";
   gaugeValue = 28.3;
   gaugeLabel = "Overall Running";
@@ -100,6 +99,7 @@ export class BotStatusComponent implements OnInit {
       }
     ]
   }
+  constructor() { }
   ngOnInit() {
    var getElementById:any = document.getElementById('myChart');
     var ctx = getElementById.getContext("2d");
@@ -311,5 +311,8 @@ active(){
       }
     ]
   }
+}
+loopTrackBy(index, term){
+  return index;
 }
 }

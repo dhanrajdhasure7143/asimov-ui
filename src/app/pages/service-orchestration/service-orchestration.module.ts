@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
+import { SharedModule } from '../../shared/shared.module';
 import { ServiceOrchestrationRoutingModule } from './service-orchestration-routing.module';
 import { ServiceOrchestrationComponent } from './service-orchestration.component';
 import { OrchestrationComponent } from './orchestration/orchestration.component';
@@ -15,8 +16,10 @@ import { BotManagementComponent } from './orchestration/bot-management/bot-manag
     CommonModule,
     FormsModule,
     NgbModule,
-    ServiceOrchestrationRoutingModule
-  ]
+    ServiceOrchestrationRoutingModule,
+    SharedModule
+  ],
+  providers:[]
 })
 export class ServiceOrchestrationModule { 
 }

@@ -4,33 +4,39 @@
       <nav class="navbar navbar-fixed-top" id="nv1">
         <div class=" c1">
           <div class="abrand">
-            <div class="abrand_div">
-              <h3 id="brand">GiB-2.0 <sup><i class="fa fa-registered" aria-hidden="true"></i></sup></h3>
-              <small id="sm">State of Automation</small>
-            </div>
-            <ul class="nav navbar-nav  navbar-right ">
-              <li class="breadcrumb_li"> <div class="breadcrumb">
-                  <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
-                  <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
-                  <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
+            <div class="row">
+              <div class="col-md-3">
+                <div class="abrand_div">
+                  <h3 id="brand">GiB-2.0 <sup><i class="fa fa-registered" aria-hidden="true"></i></sup></h3>
+                  <small id="sm">State of Automation</small>
                 </div>
-              </li> 
-              <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i"
-                *ngFor="let each_page of pages;let i=index" [routerLink]="each_page.link"><a *ngIf="parent_link">
-                  <img [src]="each_page.img"> 
-                  <label>{{each_page.title}}</label>
-                </a>
-              </li>
-              <li class=""> <img src="assets/images/Group 192.svg"> </li>
-              <li class=""> <img src="assets/images/pro1.png"> 
-                <span (click)="myFunction()" class="dropbtn"><i class="fas fa-chevron-down"></i></span>
-                  <div id="myDropdown" class="dropdown-content">
-                    <a href="#home"><i class="far fa-user"></i> My Profile</a>
-                      <a href="#about"><i class="fas fa-cog"></i>Settings</a>
-                      <a href="#contact"><i class="fas fa-sign-out-alt"></i>Signout</a>
-                  </div> 
-              </li>
-            </ul>
+              </div>
+              <div class="col-md-9">
+                <ul class="nav navbar-nav  navbar-right ">
+                  <li class="breadcrumb_li"> <div class="breadcrumb">
+                      <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
+                      <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
+                      <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
+                    </div>
+                  </li> 
+                  <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i"
+                    *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link"><a *ngIf="parent_link">
+                      <img [src]="each_page.img"> 
+                      <label>{{each_page.title}}</label>
+                    </a>
+                  </li>
+                  <li class=""> <img src="assets/images/Group 192.svg"> </li>
+                  <li class=""> <img src="assets/images/pro1.png"> 
+                    <span (click)="myFunction()" class="dropbtn"><i class="fas fa-chevron-down"></i></span>
+                      <div id="myDropdown" class="dropdown-content">
+                        <a href="#home"><i class="far fa-user"></i> My Profile</a>
+                          <a href="#about"><i class="fas fa-cog"></i>Settings</a>
+                          <a href="#contact"><i class="fas fa-sign-out-alt"></i>Signout</a>
+                      </div> 
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </nav>

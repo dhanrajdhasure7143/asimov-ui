@@ -88,4 +88,7 @@ export class BotManagementComponent implements OnInit {
     console.log(data);
     
   }
+  loopTrackBy(index, term){
+    return index;
+  }
 }

@@ -11,11 +11,6 @@
 */
 
 import * as go from 'gojs';
-import { Component, ViewEncapsulation } from '@angular/core';
-
-@Component({
-  selector: 'app-zoomSlider',
-})
 
 export  class ZoomSlider {
   private _diagram: go.Diagram;

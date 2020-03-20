@@ -24,10 +24,11 @@
                         <p class="filter_typesOne">Filter By</p>
                         <div class="form-group">
                                 <select class="form-control filterSelection" name="status">
-                                    <option [value]="0" selected>Activity</option>
+                                    <option [value]="each" *ngFor="let each of chart_filter_options;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{each}}</option>
+                                    <option [value]="0">Activity</option>
                                     <option [value]="1">Cases</option>
                                     <option [value]="2">Variants</option>
-                                    <option [value]="2">End Points</option>
+                                    <option [value]="3">End Points</option>
                                 </select>
                             </div>
                             <div>
@@ -57,7 +58,7 @@
                         </div>
         
                         <div class="dataValues">
-                            <div *ngFor = "let data of dataValues| FilterPipe: queryString; let i = index;" >
+                            <div *ngFor = "let data of dataValues| FilterPipe: queryString; let i = index;trackBy:loopTrackBy" >
                                 <p id="data" class="data_values" (click)="SelectData(data, i)" [ngStyle]="{'background-color':data.selected === 'active' ? 'gray' : '#fff' }" >{{data.name}}</p>
                               </div>
                         </div>

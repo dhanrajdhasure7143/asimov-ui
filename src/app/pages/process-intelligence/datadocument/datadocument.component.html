@@ -18,14 +18,14 @@
         <table class="table" id="process_data">
             <thead #header>
                 <tr>
-                    <th *ngFor="let headValue of headerData" (click)= "sort(headValue)">
+                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" (click)= "sort(headValue)">
                     {{headValue}}
                     </th>
                 </tr>
             </thead>
             <tbody #container>
-                <tr *ngFor="let row of fileData">
-                    <td *ngFor="let val of headerData; let i =index">
+                <tr *ngFor="let row of fileData;trackBy:loopTrackBy">
+                    <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy">
                     {{row[i] || ' '}}
                     </td>
                 </tr>

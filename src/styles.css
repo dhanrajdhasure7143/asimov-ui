@@ -2,6 +2,7 @@
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 @import "enjoyhint/enjoyhint.css";
 @import "~angular-notifier/styles";
+/* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 body, html {
   font-family: 'Roboto';
@@ -11,6 +12,9 @@ body, html {
 }
 .navbar-fixed-top{
   z-index: 1000 !important;
+}
+.input-group-text{
+  color:blue;
 }
 /* Scroll bar styles :: starts */
 ::-webkit-scrollbar {

@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NotifierService } from "angular-notifier";
 import * as XLSX from 'xlsx';
 
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from '../../services/rest-api.service';
+import { GlobalScript } from '../../../shared/global-script';
+import { PiHints } from '../model/process-intelligence-module-hints';
 
 declare var target:any;
 
@@ -15,28 +16,21 @@ declare var target:any;
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit {
-  notifier: NotifierService;
   xlsx_csv_mime:string;
   xes_mime:string;
   db_mime:string;
-  hints:any[];
   data;
 
-  constructor(private router: Router, private dt:DataTransferService, private rest:RestApiService, private notifierService: NotifierService) { }
+  constructor(private router: Router, private dt:DataTransferService, private rest:RestApiService, 
+    private global: GlobalScript, private hints:PiHints) { }
 
   ngOnInit() {
-    this.notifier = this.notifierService;
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
     this.dt.changeChildModule("");
     this.xlsx_csv_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.csv';
     this.xes_mime = '.xes';
     this.db_mime = '.json';
-    this.hints = [
-      { selector:'#upload_xl', description:'Upload Excel or CSV File', showNext:true },
-      { selector:'#upload_xes', description:'Upload XES file', showNext:true },
-      { selector:'#upload_db', description:'Upload JSON file' }
-    ];
-    this.dt.changeHints(this.hints);
+    this.dt.changeHints(this.hints.uploadHints);
   }
 
   getUID(id,name){
@@ -58,10 +52,7 @@ export class UploadComponent implements OnInit {
   //       this.dt.changePiData(file);
   //       this.router.navigate(['/pages/processIntelligence/datadocument']);
   //     }, err => {
-  //       this.notifier.show({
-  //         type: "error",
-  //         message: "Oops! Something went wrong"
-  //       });
+      // this.global.notify("Oops! Something went wrong", "error");
   //   });
   // }
   onSelect(event,upload_id) {
@@ -82,20 +73,13 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  notification(msg, type){
-    this.notifier.show({
-      type: type,
-      message: msg
-    });
-  }
-
   error_display(event){
     let message = "Oops! Something went wrong";
       if(event.rejectedFiles[0].reason == "type")
         message = "Please upload file with proper extension";
       if(event.addedFiles.length > 1)
         message = "Only one file has to be uploaded "
-     this.notification(message,"error");
+        this.global.notify(message, "error");
   }
 
   readExcelFile(evt) {
@@ -126,8 +110,8 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(csvRecordsArray);    
       this.router.navigate(['/pages/processIntelligence/datadocument']);  
     };  
-    reader.onerror = function () {  
-      _self.notification("Oops! Something went wrong", "error");
+    reader.onerror = function () { 
+      _self.global.notify("Oops! Something went wrong", "error"); 
     };
   }
 

@@ -17,32 +17,7 @@ import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service
   styleUrls: ['./processintelligencebpmn.component.css']
 })
 export class ProcessintelligencebpmnComponent implements OnInit {
-  // resizebpmn:boolean=false;
-  // isHidden:boolean=true;
-  // bpmnModeler:any;
-
-  // constructor(private router:Router ) { }
-  
-  // ngOnInit() {
-    
-  // }
- 
-  // resize(){
-  //   this.resizebpmn=!this.resizebpmn
-  //   this.isHidden=!this.isHidden
-  // }
-  navigateCreate(){
-    this.router.navigate(['/bpsflowchart']);
-  }
-  // navigateUpload(){
-  //   this.router.navigate(['oadprocessmodel'])
-
-  // }
-  // @ViewChild('ref', {static:true}) private el: ElementRef;
-  // @Output() private importDone: EventEmitter<any> = new EventEmitter();
-
-  // @Input() private url: string;
-  isHidden:boolean=true;
+   isHidden:boolean=true;
   isHiddenTwo:boolean=true;
   bpmnModeler;
   oldBpmnModeler;
@@ -89,6 +64,11 @@ export class ProcessintelligencebpmnComponent implements OnInit {
       console.log(err);
     }));
   }
+  
+  navigateCreate(){
+    this.router.navigate(['/bpsflowchart']);
+  }
+
   // getBpmnData(){
   //   let bpmnFile = (<HTMLInputElement>document.getElementById("Finput")).files[0];
   //   if(bpmnFile){

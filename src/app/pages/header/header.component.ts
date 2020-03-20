@@ -27,6 +27,10 @@ export class HeaderComponent implements OnInit {
   }
   myFunction() {                    
     document.getElementById("myDropdown").classList.toggle("show");
-  } 
+  }
+
+  loopTrackBy(index, term){
+    return index;
+  }
  
 }

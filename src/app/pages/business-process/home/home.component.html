@@ -1,29 +1,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-5 offset-1">
-            <div class="box_area">
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class='col-md-9 drop_box' id="upload_bpmn">
-                        <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn'" >
-                            <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
-                                <h3>Upload Process Model</h3>
-                                <h5>Drag and drop files here-(.bpmn)</h5>
-                                <button class="btn bpmn-btn">Select</button>
-                            </ngx-dropzone-label>
-                        </ngx-dropzone>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2"></div>
-                    <div class='col-md-9 drop_box create_box'>
-                        <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
-                        <h3>Define Your Own Process</h3>
-                        <h5>Do process model from Scratch level</h5>
-                        <button class="btn bpmn-btn" id="create_bpmn" routerLink="/pages/businessProcess/createDiagram">Create</button>
-                    </div>
-                </div>
-            </div>
+            <app-upload-create-drop-bpmn></app-upload-create-drop-bpmn>
         </div>
         <div class="col-md-7">
             <div class="row col-md-12">
@@ -37,7 +15,7 @@
             </div>
             <div class="row col-md-12"  id="bpmn_list">
               <mat-accordion>
-                <mat-expansion-panel *ngFor="let each_diag of saved_diagrams;let i=index" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
+                <mat-expansion-panel *ngFor="let each_diag of saved_diagrams;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
                   <mat-expansion-panel-header>
                     <mat-panel-title>
                       <div class="row col-md-12">
@@ -58,6 +36,5 @@
               </mat-accordion>
             </div>
         </div>
-        <div class="right"><notifier-container></notifier-container></div>
     </div>
 </div>

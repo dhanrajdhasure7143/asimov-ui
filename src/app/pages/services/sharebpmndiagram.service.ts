@@ -5,11 +5,12 @@ import { BehaviorSubject } from 'rxjs'
   providedIn: 'root'
 })
 export class SharebpmndiagramService {
+  private Bpmndata= new BehaviorSubject(null);
+  send=this.Bpmndata.asObservable();
 
   constructor() { }
-  private Bpmndata= new BehaviorSubject(null)
-  send=this.Bpmndata.asObservable()
+
   uploadBpmn(diagram){
     this.Bpmndata.next(diagram)
-}
+  }
 }

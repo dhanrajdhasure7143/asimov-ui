@@ -1,0 +1,39 @@
+/* home component styles - Starts*/
+.dataCard{
+    border:1px solid rgb(218, 210, 210);
+    padding:19px  2px;
+    text-align:center;
+    cursor: pointer;
+    height: 200px;
+}
+#launch_btn{
+    margin-top: 10em;
+    margin-left:40em;
+    background-color: #0061cf;
+    padding:5px 20px;
+    border-radius: 15px
+}
+.dataCardBox{
+    width:18%;
+}
+.footer{
+    bottom:0px;
+}
+#sbtl{
+    color:#006ed5;
+}
+#subheading{
+    color:#006ed5;
+    padding: 13px 10px 0px 10px;
+}
+.active{
+    text-decoration: none;
+    background-color: #0062cf;
+}
+.active #subheading{
+    color:white;
+}
+.active  img{
+    filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
+}
+/* home component styles - Ends*/

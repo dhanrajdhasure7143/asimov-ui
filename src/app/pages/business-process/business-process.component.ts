@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-bussiness-process',
@@ -12,11 +12,8 @@ import { Component, OnInit } from '@angular/core';
              </div><router-outlet></router-outlet>`,
   styleUrls: ['./business-process.component.css'] 
 })
-export class BusinessProcessComponent implements OnInit {
+export class BusinessProcessComponent {
 
   constructor() { }
-
-  ngOnInit() {
-  }
 
 }

@@ -2,45 +2,42 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { NgxSpinnerService } from "ngx-spinner"; 
 
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
-import { Router } from '@angular/router';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
-import { NotifierService } from 'angular-notifier';
-
-export class BpmnModel{
-    bpmnModelId:number;
-    bpmnModelModifiedBy:string;
-    bpmnModelModifiedTime:Date;
-    bpmnModelTempId:number;
-    bpmnModelTempStatus:string;
-    bpmnModelTempVersion:string;
-    bpmnProcessMeta:string;
-}
+import { BpmnModel } from '../model/bpmn-autosave-model';
+import { GlobalScript } from '../../../shared/global-script';
 @Component({
   selector: 'app-create-bpmn-diagram',
   templateUrl: './create-bpmn-diagram.component.html',
   styleUrls: ['./create-bpmn-diagram.component.css']
 })
 export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
-  notifier: NotifierService;
   bpmnModeler:any;
   oldXml;
   newXml;
   updated_date_time;
   bpmnModel:BpmnModel = new BpmnModel();
   counter:number = 0;
+  private form: FormGroup;
+  alive:boolean = true;
 
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
-    private router:Router, private bpmnservice:SharebpmndiagramService, private notifierService: NotifierService) {}
+    private router:Router, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private formBuilder: FormBuilder) {}
 
   ngOnInit(){
-    this.notifier = this.notifierService;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
     //this.bpmnModel.bpmnModelId = 0;
     this.bpmnModel.bpmnModelModifiedBy = localStorage.getItem("userName");
     this.bpmnModel.bpmnModelTempStatus = "initial";
+    // this.form = this.formBuilder.group({
+    //   // your form configuration
+    // });
+    // this.form.valueChanges.pipe(auditTime(2000)).subscribe(formData =>{});
   }
 
   ngAfterViewInit(){
@@ -121,11 +118,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
         message = "Please upload proper *.bpmn file";
-      this.notifier.show({
-        type: "error",
-        message: message,
-        id: "ae12" 
-      });
+      this.global.notify(message, "error");
     }
   }
 
