@@ -80,7 +80,7 @@
                     <p><span class="case_details">Case Details</span> <span class="case_time">Time Taken</span></p>
                 </div>
                 <div class="details_box">
-                    <div class="show_details" *ngFor="let data of varaint_data;trackBy:loopTrackBy">
+                    <div class="show_details" *ngFor="let data of varaint_data">
                             <span class="dot">{{data.case}}%</span>
                             <p><span class="details_one">{{data.name}}</span> <span class="details_time">{{data.hours}}.00 Hrs</span> <br><span class="details_two">{{data.detail}}</span> </p>
                         <div  class="details_hide"><p><span class="hide_detailsone"> {{data.varaintDetails}}</span> <span class="hide_detailstwo">{{data.casesCovred}}</span></p><hr>
