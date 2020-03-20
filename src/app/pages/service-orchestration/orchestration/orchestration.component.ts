@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-orchestration',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrchestrationComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dt:DataTransferService) { }
 
   ngOnInit() {
+    this.dt.changeParentModule({"route":"/pages/serviceOrchestration/home", "title":"Service Orchestration"});
+    this.dt.changeChildModule(undefined);
   }
 
 }

@@ -1,5 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+
+export interface Notification{
+  id ?:string;
+  type:string;
+  message:string;
+}
 
 @Injectable({
   providedIn: 'root'
@@ -20,27 +26,18 @@ export class DataTransferService {
     this.childModule.next(module);
   }
 
-  private fileData:BehaviorSubject<any> = new BehaviorSubject<any>("");
-  current_file_data = this.fileData.asObservable();
+  private hints:BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  current_hints = this.hints.asObservable();
 
-  changeFileData(data:any){
-    this.fileData.next(data);
+  changeHints(hints:any[]){
+    this.hints.next(hints);
   }
-//Vaidehi:: for reading file contents 
-  // getFileContents(file){
-  //   if (!file) {
-  //     console.error('No file to read.');
-  //     return null;
-  //   }
-  //   const reader = new FileReader();
-  //   reader.onload = e => {
-    // this.changeFileData((e.target as FileReader).result)
-  //     return (e.target as FileReader).result;
-  //   };
-  //   reader.onerror = e => {
-  //     console.error(`FileReader failed on file {{file.name}}.`);
-  //     return null;
-  //   };
-  //   // reader.readAsDataURL(file);
-  // }
+
+  private piData:BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  current_piData = this.piData.asObservable();
+
+  changePiData(piData:any){
+    this.piData.next(piData);
+  }
+
 }

@@ -43,10 +43,10 @@ class="btn btn_style" aria-hidden="true" placement="bottom">
 		</tr>
 	</thead>
 	<tbody>
-		<tr *ngFor="let data of feesDetails.bookingDetails; let i = index">
-            <td class="active">
-                <input type="checkbox" [(ngModel)]="data.cheked" (click)="expression(data)" [value]="data.id">
-            </td>
+		<tr *ngFor="let data of feesDetails.bookingDetails; let i = index;trackBy:loopTrackBy">
+      <td class="active">
+          <input type="checkbox" [(ngModel)]="data.cheked" (click)="expression(data)" [value]="data.id">
+      </td>
 			<td scope="col">
             <a href= "">{{i +1}}</a></td>
 			<td scope="col">{{data.slot.shiftType}}</td>

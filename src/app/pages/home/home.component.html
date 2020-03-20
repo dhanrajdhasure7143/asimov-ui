@@ -1,15 +1,15 @@
 <div class="container">
-<div class="row">
-    <h1>Welcome to Asimov</h1>
-    <h3 id="sbtl">Select below service to launch</h3>
     <div class="row">
-        <div class="col-sm-3 dataCardBox" *ngFor="let eachData of dataArr;let i=index">
-            <div class="dataCard" [ngClass]="selectedIndex == i?'active':''" (click)="selectedIndex = i">
-                <img [src]="eachData.img"/>
-                <h5 id="subheading">{{eachData.title}}</h5>
+        <h1>Welcome to Asimov</h1>
+        <h3 id="sbtl">Select below service to launch</h3>
+        <div class="row">
+            <div class="col-sm-2 dataCardBox" *ngFor="let eachData of dataArr;let i=index;trackBy:loopTrackBy">
+                <div [id]="eachData.id" class="dataCard" [ngClass]="selectedIndex == i?'active':''" (click)="selectedIndex = i">
+                    <img [src]="eachData.img"/>
+                    <h5 id="subheading">{{eachData.title}}</h5>
+                </div>
             </div>
         </div>
+        <button class="btn btn-primary" id="launch_btn" [routerLink]="'/pages/'+dataArr[selectedIndex].link">Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
     </div>
-    <button class="btn btn-primary" id="launch_btn" [routerLink]="'/pages/'+dataArr[selectedIndex].link">Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span></button>
-</div>
 </div>

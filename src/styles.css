@@ -1,37 +1,39 @@
 @import "~bpmn-js/dist/assets/diagram-js.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
+@import "enjoyhint/enjoyhint.css";
+@import "~angular-notifier/styles";
+/* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
-.breadcrumb{
-    background-color: none !important;
+body, html {
+  font-family: 'Roboto';
 }
-
-
-/* width */
+.breadcrumb{
+    background-color: white !important;
+}
+.navbar-fixed-top{
+  z-index: 1000 !important;
+}
+.input-group-text{
+  color:blue;
+}
+/* Scroll bar styles :: starts */
 ::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-    /* overflow: scroll; */
-    /* height: 200px; */
-  }
-  
-  /* Track */
-  ::-webkit-scrollbar-track {
-    /* box-shadow: inset 0 0 5px grey;  */
-    border: 1px solid rgb(241, 238, 238);
-    border-radius: 0px;
-  }
-   
-  /* Handle */
-  ::-webkit-scrollbar-thumb {
-    background: rgb(241, 238, 238); 
-    border-radius: 0px;
-  }
-  
-  /* Handle on hover */
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgb(241, 238, 238); 
-  }
-/* You can add global styles to this file, and also import other style files */
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  border: 1px solid rgb(241, 238, 238);
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(241, 238, 238); 
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(241, 238, 238); 
+}
+/* Scroll bar styles :: ends */
+/* Top Nav :: starts */
 ul.nav.nav-tabs.justify-content-start {
     padding: 0% 10%;
     background: #f2f9ff;
@@ -40,72 +42,74 @@ ul.nav.nav-tabs.justify-content-start {
     padding: 0% 10%;
     min-height: 300px;
 }
-/* .nav-link.active, .nav-pills .show > .nav-link {
-    background-color: #CD853F !important;
-    color: white !important;
-    border-radius: 0;
-    border: 3px solid #CD853F;
-    padding-bottom: 2px;      
-  }
-  .nav-link {
-    margin-bottom: 25px !important;
-    color: #CD853F !important;
-    border: 3px solid #CD853F !important;      
-  }
-  .nav-tabs{
-    border-bottom: 0 !important;
-  } */
-
-
-  .nav-link.active, .nav-pills .show > .nav-link {
-    background-color: transparent !important;
-    color: #052a53 !important;
-    border-radius: 0;
-    border: 3px solid transparent;
-    background-image: url(/assets/images/Group211.svg);
-    background-repeat: no-repeat;
-    padding-left: 50px;
-    background-position: left;
-    background-size: 40px;
-    opacity: 1;
-  }
-  .nav-link {
-    margin-bottom: 25px !important;
-    color: #052a53 !important;
-    border: 3px solid transparent !important; 
-    background-image: url(/assets/images/Group211.svg);
-    background-repeat: no-repeat;
-    padding-left: 50px;
-    background-position: left;
-    background-size: 40px;
-    opacity: 0.5;
-    font-size: x-large;
-  }
-  .nav-tabs .nav-link{
-    border-top-left-radius: 0rem;
-      border-top-right-radius: 0rem;
-  }
-  .nav-tabs .nav-link.active {
-    border: 3px solid transparent !important;
-  }
-  .nav-tabs .nav-item {
-    margin-bottom: -25px;
+.nav-link.active, .nav-pills .show > .nav-link {
+  background-color: transparent !important;
+  color: #052a53 !important;
+  border-radius: 0;
+  border: 3px solid transparent;
+  background-image: url(/assets/images/Group211.svg);
+  background-repeat: no-repeat;
+  padding-left: 50px;
+  background-position: left;
+  background-size: 40px;
+  opacity: 1;
 }
+.nav-link {
+  margin-bottom: 25px !important;
+  color: #052a53 !important;
+  border: 3px solid transparent !important; 
+  background-image: url(/assets/images/Group211.svg);
+  background-repeat: no-repeat;
+  padding-left: 50px;
+  background-position: left;
+  background-size: 40px;
+  opacity: 0.5;
+  font-size: x-large;
+}
+.nav-tabs .nav-link{
+  border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
+}
+.nav-tabs .nav-link.active {
+  border: 3px solid transparent !important;
+}
+.nav-tabs .nav-item {
+  margin-bottom: -25px;
+}
+/* generic styles */
 .right{
   float:right;
 }
+.mat-expansion-panel-content.open{
+  padding: 10px;
+  border: 1px dotted #ccc;
+}
+/* notifications to right */
+notifier-notification{
+  right: 12px;
+  left: calc(100% - 350px) !important;
+}
+/* remove dropzone dotted border */
 ngx-dropzone{
   border: none !important;
 }
-th {
-    color: #464646;
-    font-size: 13px;
-    font-weight: 700;
+.djs-container svg{
+  margin-left: 85px;
+}
+div[class^='diagram_container'] .djs-palette{
+  display: none;
+}
+div[class^='diagram_container'] .djs-container svg{
+  margin-left: 5px;
+}
+.bjs-powered-by{
+  display:none !important;/* Against the license agreement */
 }
 .tabscomp .nav-link{
-    padding-left: 50px !important;
+  padding-left: 50px !important;
 }
-.subtitle{
-  color:#006ed5;
-  margin-top: 40px
+th {
+  color: #464646;
+  font-size: 13px;
+  font-weight: 700;
 }

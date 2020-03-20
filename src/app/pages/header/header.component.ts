@@ -22,11 +22,15 @@ export class HeaderComponent implements OnInit {
       {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
       {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
       {"img":"assets/images/robothand.svg", "title":"RPA  Studio", "link":"/pages/"},
-      {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration"}
+      {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
     ];
   }
   myFunction() {                    
     document.getElementById("myDropdown").classList.toggle("show");
-  } 
+  }
+
+  loopTrackBy(index, term){
+    return index;
+  }
  
 }
