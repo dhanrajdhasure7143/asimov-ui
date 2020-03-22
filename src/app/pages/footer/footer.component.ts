@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataTransferService } from '../services/data-transfer.service';
 
-import 'Kinetic';
+// import 'Kinetic';
 import '../../../enjoyhint/src/jquery.enjoyhint.js';
 
 declare var EnjoyHint: any; 
