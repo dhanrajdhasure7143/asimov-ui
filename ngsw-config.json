@@ -3,27 +3,61 @@
   "index": "/index.html",
   "assetGroups": [
     {
-      "name": "app",
+      "name": "app-shell",
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "resources": {
-        "files": [
-          "/favicon.ico",
-          "/index.html",
-          "/manifest.webmanifest",
-          "/*.css",
-          "/*.js"
-        ]
+          "files": [
+              "/index.html",
+              "/pwa-manifest.json",
+              "/assets/images/favicons/favicon.ico",
+              "/assets/js/*.js",
+              "/*.css",
+              "/*.js",
+              "!/*-es5*.js",
+              "/enjoyhint/**"
+          ],
+          "urls": [ ]
       }
-    }, {
-      "name": "assets",
+  },
+  {
+      "name": "assets-eager",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+          "files": [
+              "/assets/images/**",
+              "/assets/images/BPMS/**",
+              "/assets/images/PI/**",
+              "/assets/images/icons/**",
+              "!/assets/images/favicons/**",
+              "!/**/_unused/**"
+          ]
+      }
+  },
+  {
+      "name": "assets-lazy",
       "installMode": "lazy",
       "updateMode": "prefetch",
       "resources": {
-        "files": [
-          "/assets/**",
-          "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
-        ]
+          "files": [
+              "/assets/images/favicons/**",
+              "/*-es5*.js",
+              "!/**/_unused/**"
+          ]
+      }
+  }],
+  "dataGroups": [
+    {
+      "name": "bpmn-approval",
+      "urls": [
+          "/bpsprocess/submit/bpms/notation/approve"
+      ],
+      "cacheConfig": {
+          "strategy": "freshness",
+          "maxSize": 100,
+          "maxAge": "3d",
+          "timeout": "10s"
       }
     }
   ]

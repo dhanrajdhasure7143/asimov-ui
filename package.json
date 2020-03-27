@@ -42,6 +42,7 @@
     "ng5-slider": "^1.2.4",
     "ngx-dropzone": "^2.2.2",
     "ngx-spinner": "^8.1.0",
+    "ngx-xml2json": "^1.0.2",
     "roboto-fontface": "^0.10.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",

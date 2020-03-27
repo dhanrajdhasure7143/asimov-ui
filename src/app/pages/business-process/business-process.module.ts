@@ -4,6 +4,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NotifierModule } from "angular-notifier";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { SharedModule } from '../../shared/shared.module';
 import { BusinessProcessRoutingModule } from './business-process-routing.module';
@@ -22,7 +23,9 @@ import { BpsHints } from './model/bpmn-module-hints';
     MatExpansionModule,
     NotifierModule,
     BusinessProcessRoutingModule,
-    SharedModule
+    SharedModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [BpsHints]
 })

@@ -1,9 +1,7 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { NgxSpinnerService } from "ngx-spinner"; 
-
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
@@ -22,22 +20,19 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   updated_date_time;
   bpmnModel:BpmnModel = new BpmnModel();
   counter:number = 0;
-  private form: FormGroup;
   alive:boolean = true;
+  last_updated_time = new Date().getTime();
 
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
-    private router:Router, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private formBuilder: FormBuilder) {}
+    private router:Router, private bpmnservice:SharebpmndiagramService, private global:GlobalScript) {}
 
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
-    //this.bpmnModel.bpmnModelId = 0;
-    this.bpmnModel.bpmnModelModifiedBy = localStorage.getItem("userName");
+    this.bpmnModel.id = 0;
+    this.bpmnModel.bpmnModelId = '0';
+    this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
     this.bpmnModel.bpmnModelTempStatus = "initial";
-    // this.form = this.formBuilder.group({
-    //   // your form configuration
-    // });
-    // this.form.valueChanges.pipe(auditTime(2000)).subscribe(formData =>{});
   }
 
   ngAfterViewInit(){
@@ -56,26 +51,27 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
         _self.newXml = res.trim();
       });
     });
-    setInterval(() => {
-      this.autoSaveBpmnDiagram();
-    }, 10*1000); //auto save for every 10 secs
+    let _self = this;
+    this.bpmnModeler.on('element.changed', function(){
+      let now = new Date().getTime();
+      if(now - _self.last_updated_time > 10*1000){
+        _self.autoSaveBpmnDiagram();
+        _self.last_updated_time = now;
+      }
+    })
   }
   
   autoSaveBpmnDiagram(){
-    let _self = this;
-    this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
-      _self.oldXml = _self.newXml;
-      _self.newXml = xml;
-      if(_self.oldXml != _self.newXml){
-        _self.spinner.show();
+    this.spinner.show();
+      let _self = this;
+      this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
         _self.updated_date_time = new Date();
         _self.bpmnModel.bpmnModelModifiedTime = _self.updated_date_time;
         _self.bpmnModel.bpmnModelTempId = _self.counter;
         _self.bpmnModel.bpmnModelTempVersion = '0.0.'+_self.counter;
         _self.bpmnModel.bpmnProcessMeta = btoa(_self.newXml);
-        _self.autoSaveDiagram();  
-      }
-    });
+        _self.autoSaveDiagram();
+      });
   }
 
   autoSaveDiagram(){
