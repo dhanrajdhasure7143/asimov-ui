@@ -26,16 +26,16 @@
           </li>
           <li>
             <h6 class="svg_icons">
-              <svg width="12" height="12">
-                <rect width="12" height="12" style="fill:rgb(84, 168, 236);stroke-width:3" />
+              <svg width="12" height="12" class="svg">
+                <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
               </svg>
 
               Success Mapping</h6>
           </li>
           <li>
             <h6 class="svg_icons">
-              <svg width="12" height="12">
-                <rect width="12" height="12" style="fill:rgb(212, 105, 105);stroke-width:3" />
+              <svg width="12" height="12" class="svg">
+                <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
               </svg>
 
               Error Mapping</h6>
@@ -47,16 +47,15 @@
         <table class="table" id="process_data">
             <thead #header>
                 <tr>
-                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" (click)= "sort(headValue)">
+                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" id="th" (click)= "sort(headValue)">
                     {{headValue}}
                     </th>
                 </tr>
             </thead>
             <tbody #container>
-                <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;">
-                     <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy" (click)="selectedCell(i,$event)" [class.valid]="i == selectedcell"> 
-                      <!-- <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy" (click)="selectedCell(i,$event)" [ngClass]="i==selectedcell ? 'valid' : 'invalid'"> -->
-                      {{row[i] || ' '}}
+                <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" id="table_rows">
+                     <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy" id="td" (click)="selectedCell(i,$event)" [class.valid]="i == selectedcell"> 
+                    {{row[i] || ' '}}
                     </td>
                 </tr>
             </tbody>

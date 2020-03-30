@@ -1,18 +1,18 @@
 /* data document component styles - Starts*/
-table {
+.table {
   border-spacing: 0;
   border-collapse: collapse;
   overflow: hidden;
   z-index: 1;
 }
 
-td, th {
+#td, #th {
   cursor: pointer;
   padding: 10px;
   position: relative;
 }
 
-td:hover::after { 
+#td:hover::after { 
   background-color: #f4f4f4;
   content: '\00a0';  
   height: 10000px;    
@@ -23,20 +23,15 @@ td:hover::after {
   z-index: -1;        
 }
 
-/* .table tr td.active{
-  background-color:rgb(84, 168, 236) !important;
-  cursor: no-drop;
-  pointer-events:none;
-} */
-.table tr td.valid{
+.table #table_rows #td.valid{
   background-color:rgb(84, 168, 236) !important;
   cursor: no-drop;
   pointer-events:none;
 }
-.table tr td.invalid{
+.table #table_rows #td.invalid{
   background-color:#d02525 !important;
-  /* cursor: no-drop;
-  pointer-events:none; */
+  cursor: no-drop;
+  pointer-events:none; 
 }
 
 
@@ -46,13 +41,27 @@ float: left !important;
 .svg_icons{
   font-size:9px;
 }
+/* .svg{
+  width:12;
+  height:12;
+}
+.svg_blue_rec{
+  width:12;
+  height:12;
+  fill:rgb(84, 168, 236);
+  stroke-width:3;
+
+}
+.svg_red_rec{
+  width:12;
+  height:12;
+  fill:rgb(212, 105, 105);
+  stroke-width:3;
+} */
 .sel_row{
 width: 669px;
 
 }
-/* .sel_row li h5{
-    padding: 15px;
-} */
 #generateGraph{
     background-color: #006ed5;
     border-radius: 19px;
