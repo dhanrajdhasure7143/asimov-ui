@@ -14,6 +14,35 @@
                 <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
         </div>
     </div>
+
+
+    <div class="row">
+        <ul class="nav navbar-nav sel_row">
+          <li>
+          <h5 id="scid"><b>Select Column - Step {{step_id}}/6:"{{headerName}}"</b></h5>
+          </li>
+          <li>
+            <h6 id="link">(Click on the {{headerName}} Value Column for Data mapping)</h6>
+          </li>
+          <li>
+            <h6 class="svg_icons">
+              <svg width="12" height="12">
+                <rect width="12" height="12" style="fill:rgb(84, 168, 236);stroke-width:3" />
+              </svg>
+
+              Success Mapping</h6>
+          </li>
+          <li>
+            <h6 class="svg_icons">
+              <svg width="12" height="12">
+                <rect width="12" height="12" style="fill:rgb(212, 105, 105);stroke-width:3" />
+              </svg>
+
+              Error Mapping</h6>
+          </li>
+          <li></li>
+        </ul>
+      </div>
     <div class="">
         <table class="table" id="process_data">
             <thead #header>
@@ -24,9 +53,10 @@
                 </tr>
             </thead>
             <tbody #container>
-                <tr *ngFor="let row of fileData;trackBy:loopTrackBy">
-                    <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy">
-                    {{row[i] || ' '}}
+                <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;">
+                     <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy" (click)="selectedCell(i,$event)" [class.valid]="i == selectedcell"> 
+                      <!-- <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy" (click)="selectedCell(i,$event)" [ngClass]="i==selectedcell ? 'valid' : 'invalid'"> -->
+                      {{row[i] || ' '}}
                     </td>
                 </tr>
             </tbody>
