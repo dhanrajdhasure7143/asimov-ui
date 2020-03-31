@@ -14,18 +14,47 @@
                 <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
         </div>
     </div>
+
+
+    <div class="row">
+        <ul class="nav navbar-nav sel_row">
+          <li>
+          <h5 id="scid"><b>Select Column - Step {{step_id}}/6:"{{headerName}}"</b></h5>
+          </li>
+          <li>
+            <h6 id="link">(Click on the {{headerName}} Value Column for Data mapping)</h6>
+          </li>
+          <li>
+            <h6 class="svg_icons">
+              <svg width="12" height="12" class="svg">
+                <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
+              </svg>
+
+              Success Mapping</h6>
+          </li>
+          <li>
+            <h6 class="svg_icons">
+              <svg width="12" height="12" class="svg">
+                <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
+              </svg>
+
+              Error Mapping</h6>
+          </li>
+          <li></li>
+        </ul>
+      </div>
     <div class="">
         <table class="table" id="process_data">
             <thead #header>
                 <tr>
-                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" (click)= "sort(headValue)">
+                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" id="th" (click)= "sort(headValue)">
                     {{headValue}}
                     </th>
                 </tr>
             </thead>
             <tbody #container>
-                <tr *ngFor="let row of fileData;trackBy:loopTrackBy">
-                    <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy">
+                <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" id="table_rows">
+                     <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy" id="td" (click)="selectedCell(i,$event)" [class.valid]="i == selectedcell"> 
                     {{row[i] || ' '}}
                     </td>
                 </tr>
