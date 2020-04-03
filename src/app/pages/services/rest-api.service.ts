@@ -43,4 +43,7 @@ export class RestApiService {
   getUserBpmnsList(){
     return this.http.get("/bpsprocess/fetchByUser/mounika"); // "target" : "http://10.11.1.236:8080",
   }
+  toolSet(){
+    return this.http.get("/load-toolset");
+  }
 }
