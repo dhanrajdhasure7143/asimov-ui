@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Options, PointerType} from 'ng5-slider';
 
 enum Filter{
-  'Activity' = 0,
-  'Cases' = 1,
-  'Variants' = 2,
-  'End Points' = 3,
+  'Activity',
+  'Cases',
+  'Variants',
+  'End Points',
 }
 @Component({
   selector: 'app-filter',
@@ -18,6 +18,7 @@ export class FilterComponent implements OnInit {
   @Input() public reports;
   @Input() public fetchData;
   chart_filter_options;
+  public chart_filter = Filter;
   queryString;
   filterValue:number=60;
   filterOptions: Options = {
@@ -34,11 +35,7 @@ public isSelect:boolean = false;
   constructor() { }
 
   ngOnInit() {
-    this.chart_filter_options = Object.keys(Filter);
-  }
-
-  searchfilterInput(){
-    this.isSearch= !this.isSearch
+    this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
   }
 
 slideDown(){

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router'
 import { diff } from 'bpmn-js-differ';
 import BpmnModdle from 'bpmn-moddle';
@@ -16,7 +16,7 @@ import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service
   templateUrl: './processintelligencebpmn.component.html',
   styleUrls: ['./processintelligencebpmn.component.css']
 })
-export class ProcessintelligencebpmnComponent implements OnInit {
+export class ProcessintelligencebpmnComponent implements OnInit, OnDestroy {
    isHidden:boolean=true;
   isHiddenTwo:boolean=true;
   bpmnModeler;
@@ -29,6 +29,8 @@ export class ProcessintelligencebpmnComponent implements OnInit {
   receivedbpmn:any;
   hasChanges:boolean = false;
   createDiagram:boolean = false;
+  subscription;
+
   constructor(private router:Router, private rest:RestApiService, private bpmnservice:SharebpmndiagramService) { }
 
   ngAfterViewInit(){
@@ -43,7 +45,7 @@ export class ProcessintelligencebpmnComponent implements OnInit {
   }
   
   ngOnInit() {
-    this.bpmnservice.send.subscribe(x=>{
+    this.subscription = this.bpmnservice.send.subscribe(x=>{
       this.receivedbpmn=x;
       //console.log(this.receivedbpmn[0].name);
   
@@ -212,4 +214,7 @@ export class ProcessintelligencebpmnComponent implements OnInit {
     
   }
 
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 }

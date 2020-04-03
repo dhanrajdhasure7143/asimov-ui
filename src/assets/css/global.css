@@ -99,7 +99,7 @@ footer{
   margin-bottom: 0;
 }
 li.breadcrumb_li{
-width: 35%;
+width: 36%;
 }
 div.breadcrumb {
 font-size: 13px;
@@ -109,22 +109,25 @@ user-select: none;
 cursor: pointer;
 }
 div.breadcrumb span:hover{
-font-weight: bold;
+  font-weight: bold;
 }
 div.breadcrumb span:focus, div.breadcrumb span:active{
-outline: none;
+  outline: none;
 }
 .active{
-text-decoration: none;;
-background-color: #0062cf;
+  text-decoration: none;;
+  background-color: #0062cf;
 }
 .active a{
-text-decoration: none;;
-background-color: #0062cf;
-color:white;
+  text-decoration: none;;
+  background-color: #0062cf;
+  color:white;
+}
+.active a label{
+  color: white;
 }
 .active  a img{
-filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
+  filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
 }
 sup{
 font-size: 38%;

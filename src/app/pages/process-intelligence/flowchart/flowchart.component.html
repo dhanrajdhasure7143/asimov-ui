@@ -29,10 +29,7 @@
             </div>
             <div class="form-group left_dropdwn1">
                     <select class="form-control left_dropdwn" name="status" id="process_graph_list">
-                        <option [value]="0" selected>Sales_work_04-03-2020</option>
-                        <option [value]="1">Sales_work_05-03-2020</option>
-                        <option [value]="2">Sales_work_06-03-2020</option>
-                        <option [value]="2">Sales_work_06-03-2020</option>
+                        <option [value]="each" *ngFor="let each of process_graph_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{process_graph_options[each]}}</option>
                     </select>
                 </div>
                 <div>
@@ -71,9 +68,7 @@
             </div>
                 <div class="form-group select_drpdwnone">
                     <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint()" name="status" id="variant_drpdwn">
-                        <option [value]="0" selected>Most Common Varaint</option>
-                        <option [value]="1">In Active</option>
-                        <option [value]="2">Active</option>
+                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
                     </select>
                 </div>
                 <div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from "@angular/router";
 import { DataTransferService } from '../services/data-transfer.service';
 
@@ -7,17 +7,19 @@ import { DataTransferService } from '../services/data-transfer.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   selectedIndex: number;
   parent_link:any={};
   child_link:any={};
   pages:any[];
+  parent_subscription;
+  child_subscription;
 
   constructor(private router:Router, private dataTransfer:DataTransferService) { }
 
   ngOnInit() {
-    this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
-    this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
+    this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
+    this.child_subscription = this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
     this.pages = [ 
       {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
       {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
@@ -33,4 +35,8 @@ export class HeaderComponent implements OnInit {
     return index;
   }
  
+  ngOnDestroy(){
+    this.parent_subscription.unsubscribe();
+    this.child_subscription.unsubscribe();
+  }
 }

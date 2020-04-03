@@ -4,7 +4,7 @@
  
   "context" : ["**"],
  
-  "target" : "http://10.11.1.236:9191",
+  "target" : "http://localhost:9191",
  
   "secure": false,
  
