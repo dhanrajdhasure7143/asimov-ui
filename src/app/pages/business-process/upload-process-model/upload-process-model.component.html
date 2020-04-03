@@ -6,53 +6,15 @@
         </div>
         <div [ngClass]="!reSize?'col-md-6':'col-md-12'"  class="kpis-and-submit-button-div">
             <button class="view-kpis-button"><img src="..\assets\view.svg">View KPI's</button>
-            <button class="submit-for-approval-button" [hidden]="!reSize">Submit for Approval</button>
+            <button class="submit-for-approval-button" routerLink="/pages/approvalWorkflow/home" [hidden]="!reSize">Submit for Approval</button>
         </div>
     </div>
     <div class="canvas1"  id="canvas1" ></div>
 </div>       
 <div class="options-container col-md-5" [hidden]="!reSize">
-    <!-- <div class="col-md-6 upload-container" [hidden]="hideUploadContainer">
-        <div class="upload-panel">
-            <div class="upload-logo">
-                <img src="..\assets\images\BPMS\upload-process-model-image.svg" class="img-responsive upload-logo-resize"> 
-            </div>
-            <div class="upload-title">
-                <h1 class="upload-title-resize">Upload Process Model</h1>
-            </div>
-            <div class="upload-subtitle">
-                <h3 class="upload-subtitle-resize">Drag & Drop files here - (.bpmn)</h3>
-            </div>
-            
-            <div class="upload-btn-wrapper">.
-                    <button class="upload-btn">Select</button>
-                    <input type="file" id="Finput2" (change)="uploadBpmn()" value="Select New Diagram" accept=".bpmn"/>
-                  </div>
-        </div>
-    </div>
-    <div class="col-md-6 create-container" [hidden]="hideCreateContainer">
-        <div class="create-panel">
-            <div class="create-logo">
-                <img src='..\assets\images\BPMS\create-new-process-model-image.svg' class="img-responsive create-logo-resize">
-            </div>
-            <div class="create-title">
-                <h1 class="create-title-resize">Design Your Own Process</h1>
-            </div>
-            <div class="create-subtitle">
-                <h3 class="create-subtitle-resize">Do Process model from scratch level</h3>
-            </div>
-            <div class="create-button">
-                <button class="create-button-css" (click)="navigateCreate()">Create</button>
-            </div>
-        </div>
-    
-    </div> -->
     <app-upload-create-drop-bpmn></app-upload-create-drop-bpmn>    
     <div class="bpmneditor">
-    <div id="canvas2"  [hidden]="isHiddenDiff" id="canvas2">
-       
+        <div id="canvas2"  [hidden]="isHiddenDiff" id="canvas2">
+        </div>
     </div>
-    </div>
-    
-    
-    </div>
+</div>

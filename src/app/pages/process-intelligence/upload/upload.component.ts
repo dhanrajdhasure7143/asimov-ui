@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
+import { NgxXml2jsonService } from 'ngx-xml2json';
 
 import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from '../../services/rest-api.service';
@@ -22,7 +23,7 @@ export class UploadComponent implements OnInit {
   data;
 
   constructor(private router: Router, private dt:DataTransferService, private rest:RestApiService, 
-    private global: GlobalScript, private hints:PiHints) { }
+    private global: GlobalScript, private hints:PiHints, private ngxXml2jsonService: NgxXml2jsonService) { }
 
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
@@ -45,32 +46,22 @@ export class UploadComponent implements OnInit {
     }
     return id;
   }
-  /* Upload the file from UI to Backend */
-  // uploadFile(body, upload_id, file){
-  //   this.rest.sendUploadedFile(body, upload_id).subscribe(
-  //     res => {
-  //       this.dt.changePiData(file);
-  //       this.router.navigate(['/pages/processIntelligence/datadocument']);
-  //     }, err => {
-      // this.global.notify("Oops! Something went wrong", "error");
-  //   });
-  // }
+ 
   onSelect(event,upload_id) {
-    let file:File = event.addedFiles[0]
-    if(file){
-      upload_id = this.getUID(upload_id, file.name);
-      let body = new FormData();
-      body.append("file", file);
-      if(upload_id == 1){
-        this.readExcelFile(event);
-      }
-      if(upload_id == 2){
-        this.readCSVFile(event);
-      }
-      //this.uploadFile(body, upload_id, file);
-    }else{
+    let file:File = event.addedFiles[0];
+    if(file)
+      this.checkUploadId(event, this.getUID(upload_id, file.name));
+    else
       this.error_display(event);
-    }
+  }
+
+  checkUploadId(event, upload_id){
+    if(upload_id == 1)
+      this.readExcelFile(event);
+    if(upload_id == 2)
+      this.readCSVFile(event);
+    if(upload_id == 3)
+      this.readXESFile(event);
   }
 
   error_display(event){
@@ -115,5 +106,30 @@ export class UploadComponent implements OnInit {
     };
   }
 
+  readXESFile(e): void{
+    let file = e.addedFiles[0];
+    let fileReader: FileReader = new FileReader();
+    var _self =this;
+    fileReader.onload = function(x) {
+      let _xml = `${fileReader.result}`
+      const parser = new DOMParser();
+      const xml = parser.parseFromString(_xml, "text/xml");
+      let _obj = _self.ngxXml2jsonService.xmlToJson(xml);
+      if(!_obj['log'])
+      console.log(_obj['log']);
+      var resultTable = _obj['log']['trace'][0]['event'];
+      let xesData = [];
+      resultTable.forEach(e => {
+        let tmp_arr = [];
+        e.string.forEach(ev => {
+          tmp_arr.push(ev['@attributes']['value']);
+        })
+        xesData.push(tmp_arr);
+      });
+      _self.dt.changePiData(xesData)
+      _self.router.navigateByUrl('/pages/processIntelligence/datadocument');  
+    }
+    fileReader.readAsText(file);
+  }
 
 }

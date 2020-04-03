@@ -14,16 +14,15 @@
               <div class="col-md-9">
                 <ul class="nav navbar-nav  navbar-right ">
                   <li class="breadcrumb_li"> <div class="breadcrumb">
-                      <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
-                      <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
-                      <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
+                      <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
+                      <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
+                      <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
                     </div>
                   </li> 
                   <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i"
-                    *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link"><a *ngIf="parent_link">
-                      <img [src]="each_page.img"> 
-                      <label>{{each_page.title}}</label>
-                    </a>
+                    *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link">
+                    <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img"> 
+                      <label>{{each_page.title}}</label> </a>
                   </li>
                   <li class=""> <img src="assets/images/Group 192.svg"> </li>
                   <li class=""> <img src="assets/images/pro1.png"> 
