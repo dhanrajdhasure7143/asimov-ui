@@ -1,66 +1,53 @@
 <div class="container">
     <div class="row">
-        <form id="dataDocumentForm" #dataDocumentForm="ngForm" (ngSubmit)="generatepg()">
-            <div class="col-md-4 col-sm-4" id="title">
-                <h5 style="font-weight:600;color: rgb(90, 88, 88)">     <img src="assets/images/Group 208.svg" style="padding-right: 10px">Data Document</h5>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <div class="searchblock">
-                    <input type="text" placeholder="Search" aria-label="Search" id="search_process_data">
-                    <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4">
-                <button class="btn btn-primary" id="generateGraph" type="submit" [disabled]="isValidPiData">
-                    <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
-            </div>
-        </form>
-    </div>
-
-
-    <div class="row">
-        <ul class="nav navbar-nav sel_row">
-          <li>
-          <h5 id="scid"><b>Select Column - Step {{step_id}}/6:"{{headerName}}"</b></h5>
-          </li>
-          <li>
-            <h6 id="link">(Click on the {{headerName}} Value Column for Data mapping)</h6>
-          </li>
-          <li>
-            <h6 class="svg_icons">
-              <svg width="12" height="12" class="svg">
-                <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
-              </svg>
-
-              Success Mapping</h6>
-          </li>
-          <li>
-            <h6 class="svg_icons">
-              <svg width="12" height="12" class="svg">
-                <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
-              </svg>
-
-              Error Mapping</h6>
-          </li>
-          <li></li>
-        </ul>
+      <div class="col-md-4 col-sm-4" id="title">
+          <!-- <h5 style="font-weight:600;color: rgb(90, 88, 88)">     <img src="assets/images/Group 208.svg" style="padding-right: 10px">Data Document</h5> -->
+          <button class="btn btn-warning pi_btn" *ngIf="!headerName" (click)="resetColMap()">Reset Mapping</button>
       </div>
+      <div class="col-md-4 col-sm-4">
+          <div class="searchblock">
+              <input type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm" (keyup)="searchTable()">
+              <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-4">
+          <button class="btn btn-primary pi_btn" id="generateGraph" (click)="generatepg()" [disabled]="!isValidPiData">
+              <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
+      </div>
+    </div>
+    <div class="row" *ngIf="headerName" class="columnSelection">
+      <div class="col-md-4"><b>Select Column - Step {{step_id}}/6:"{{headerName}}"</b></div>
+      <div class="col-md-4"><small>(Click on the {{headerName}} Value Column for Data mapping)</small></div>
+      <div class="col-md-2"> <svg width="12" height="12" class="svg">
+          <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
+        </svg> Success Mapping
+      </div>
+      <div class="col-md-2">
+        <svg width="12" height="12" class="svg">
+          <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
+        </svg> Error Mapping
+      </div>
+    </div>
     <div class="">
+      <form id="DataDocTableForm">
         <table class="table" id="process_data">
             <thead #header>
                 <tr>
-                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" id="th" (click)= "sort(headValue)">
+                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader" (click)= "sort(headValue)">
                     {{headValue}}
                     </th>
                 </tr>
             </thead>
             <tbody #container>
-                <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" id="table_rows">
-                     <td *ngFor="let val of headerData; let i =index;trackBy:loopTrackBy" id="td" (click)="selectedCell(i,$event)" [class.valid]="i == selectedcell"> 
-                    {{row[i] || ' '}}
-                    </td>
+                <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" class="tableRow">
+                  <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event)"
+                    [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1" 
+                    [class.invalid]="invalidCells['row'+i] && invalidCells['row'+i].indexOf('cell'+j)>-1"> 
+                    {{row[j] || ' '}} 
+                  </td>
                 </tr>
             </tbody>
         </table>
+      </form>
     </div>
 </div>

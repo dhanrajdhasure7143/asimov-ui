@@ -108,15 +108,14 @@ class="btn btn_style" aria-hidden="true" placement="bottom">
   <div class="col-md-10 main">
     <div class="drag-area" dndDropzone (dndDrop)="onDrop($event)">
       <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{node.name}}"  class="dndDropzone" (contextmenu)="onRightClick(node.name, $event, id)"
+        <div id="{{node.name}}"  class="dndDropzone" (contextmenu)="onRightClick(node.name, $event)"
         [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
           <div class="connector-name">{{node.name}}</div>
           <div>
             <nav *ngIf ="optionsVisible" id="context-menu" class="context-menu contextmenu">
               <div class="context-menu1">
                 <div class="context-menu__item" *ngFor="let menu of stud">
-                  <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu.name)"
-                   data-action="View">{{menu.name}}</a>
+                  <a class="context-menu__link" id="{{menu.name}}" data-action="View">{{menu.name}}</a>
                 </div>
               </div>
             </nav>

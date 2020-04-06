@@ -1,8 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
+
 import { DataTransferService } from "../../services/data-transfer.service";
 import { PiHints } from '../model/process-intelligence-module-hints';
-import { send } from 'q';
+import { GlobalScript } from '../../../shared/global-script';
 
 @Component({
   selector: 'app-datadocument',
@@ -11,22 +13,23 @@ import { send } from 'q';
 })
 export class DatadocumentComponent implements OnInit {
   fileData:any=[];
+  validCells:any=[];
+  invalidCells:any=[];
   isValidPiData:boolean = false;
   headerData: any = [];
-  header_names_array:any=['Case_Id','Start_Timestamp','End_Timestamp','Activity','Resource','Role'];
+  header_names_array:string[]=['Case_Id','Start_Timestamp','End_Timestamp','Activity','Resource','Role'];
   isDesc: boolean = false;
   selectedRow: any;
   case_id:any;
-  step_id:any=1;
-  selectedcell: any;
+  step_id:number;
   headerName: any;
-  table_row:any=[];
-  table_row_values_array:any=[];
-  constructor(private router:Router, private dt:DataTransferService, private hints:PiHints) { }
+  bkp_headerData;
+  searchTerm:string;
+
+  constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript) { }
 
   ngOnInit() {
-    this.headerName =this.header_names_array[0];
-    this.step_id = 1;
+    this.resetColMap();
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
     this.dt.changeChildModule({"route":"/pages/processIntelligence/datadocument", "title":"Data Document"});
     this.dt.changeHints(this.hints.dataDocumentHints);
@@ -34,6 +37,7 @@ export class DatadocumentComponent implements OnInit {
       if(res){
         this.fileData = res;
         this.headerData = res[0];
+        this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
       }
     });
@@ -63,66 +67,76 @@ export class DatadocumentComponent implements OnInit {
   loopTrackBy(index, term){
     return index;
   }
-  selectedCell(index,e){
-  var reg_String = new RegExp(/^[a-zA-Z ]*$/);
-   var  reg_num_Alphanum = new RegExp(/^(?=.*\d)[a-zA-Z0-9]*$/);
-  var date = new Date();
-    if(e.srcElement.classList.contains("valid")){
-      
-      //need to add code if valid class is already applied
-     
-    }
-    else{
+  selectedCell(tr_index, index,e){
+    if(!e.srcElement.classList.contains("valid") && this.headerName){
       let hdr_ar_index = this.header_names_array.indexOf(this.headerName);
-      let  header_array_index= this.header_names_array.indexOf(this.headerName)+1;
+      let reg_expression;
+      let isDateCheck:boolean = false;
+      if(hdr_ar_index == 0)
+        reg_expression = new RegExp(/^[a-z\s0-9]{0,255}$/i); //alphanum check
+      isDateCheck = hdr_ar_index == 1 || hdr_ar_index == 2;
+      if(hdr_ar_index == 3 || hdr_ar_index == 4 || hdr_ar_index == 5 )
+        reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i); //string check
+      let isInvalid:boolean = false;
       for(var x = 0;x < this.fileData.length;x++){
-        this.table_row=this.fileData[x];
-        this.table_row_values_array.push(this.table_row[index]);
-      }
-      
-      for(var i=0;i<this.header_names_array.length;i++){
-        if(i==0){
-          for(var y = 0;y<this.table_row_values_array.length;y++)
-          {
-            
-            if(reg_num_Alphanum.test(this.table_row_values_array[y])){
-              this.selectedcell = index;
-              //for valid column color should be in blue color
-            }
-            else{
-              e.srcElement.classList.add("invalid");
-              //for invalid column color should be in red color
+        if(!this.validCells['row'+x])
+          this.validCells['row'+x]=[];
+        if(!this.invalidCells['row'+x])
+          this.invalidCells['row'+x]=[];
+        let each_cell = this.fileData[x][index];
+        if( ( reg_expression && reg_expression.test(each_cell) ) || isDateCheck ){
+          if(isDateCheck){
+            try{
+              formatDate(each_cell, 'd/M/yyyy HH:mm:ss', 'en-US');
+              this.invalidCells['row'+x].splice(this.invalidCells['row'+x].indexOf('cell'+index), 1);
+              if(this.validCells['row'+x].indexOf('cell'+index) == -1)
+                this.validCells['row'+x].push('cell'+index);
+            }catch(e){
+              isInvalid = true;
+              if(this.invalidCells['row'+x].indexOf('cell'+index) == -1)
+               this.invalidCells['row'+x].push('cell'+index);
+              this.global.notify("Incorrect value for "+this.headerName, "error");
               break;
             }
-
+          }else{
+            this.invalidCells['row'+x].splice(this.invalidCells['row'+x].indexOf('cell'+index), 1);
+            if(this.validCells['row'+x].indexOf('cell'+index) == -1)
+              this.validCells['row'+x].push('cell'+index);
           }
-          break;
-        }
-        else if(i==3||i==4||i==5){
-          for(var y = 0;y<this.table_row_values_array.length;y++)
-          {
-            
-            if(reg_String.test(this.table_row_values_array[y])){
-              this.selectedcell = index;
-              //for valid column color should be in blue color
-            }
-            else{
-              e.srcElement.classList.add("invalid");
-              //for invalid column color should be in red color
-              break;
-            }
-          }
-          break;
-        }
-        else{
-          //need to add code for date validation
+        }else{
+          isInvalid = true;
+          if(this.invalidCells['row'+x].indexOf('cell'+index) == -1)
+            this.invalidCells['row'+x].push('cell'+index);
+          this.global.notify("Incorrect value for "+this.headerName, "error");
           break;
         }
       }
-      this.headerData[index]=this.headerName;
-      this.headerName=this.header_names_array[header_array_index];
-      this.step_id = this.step_id+1;
+      if(!isInvalid){
+        if(this.step_id == this.header_names_array.length){
+          this.isValidPiData = true;
+        }else{
+          this.step_id = this.step_id+1;
+        }
+        this.headerData[index]=this.headerName;
+        this.headerName=this.header_names_array[hdr_ar_index+1];
+      }
     }
-   
+  }
+
+  resetColMap(){
+    this.headerName = this.header_names_array[0];
+    this.step_id = 1;
+    this.validCells = [];
+    this.invalidCells = [];
+    this.isValidPiData = false;
+  }
+
+  searchTable(){
+    let _self = this;
+    this.fileData = this.fileData.filter(each_row => {
+      each_row.forEach(each_cell => {
+        return each_cell.indexOf(_self.searchTerm)>-1;
+      })
+    })
   }
 }

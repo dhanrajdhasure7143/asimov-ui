@@ -227,7 +227,7 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
       y: evt.event.clientY - rect.top
     };
   }
-  onRightClick(n,e,i) {    
+  onRightClick(n,e) {    
     this.stud = [];
     if(e.target.id == "Login Mail"){
       this.optionsVisible = true;
