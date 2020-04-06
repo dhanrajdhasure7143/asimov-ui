@@ -4,7 +4,7 @@
  
   "context" : ["**"],
  
-  "target" : "http://10.11.0.107:4444/rpa-service",
+  "target" : "http://localhost:9191",
  
   "secure": false,
  

@@ -229,3 +229,48 @@ div[class^='diagram_container']{
     font-size: large;
   }
 /* bps component styles - Ends*/
+/* shared bpmn-diagram component styles - Starts*/
+.full_width{
+  width: 100%;
+}
+.approve_bpmn_list_header{
+  width:100%;
+  margin: 10px 20px;
+}
+.viewOnly{
+  height: 300px;
+}
+.viewOnly .djs-palette{
+  display: none;
+}
+.viewOnly .viewport{
+  transform: scale(0.4);
+}
+/* shared bpmn-diagram component styles - Ends*/
+/* bpmn-diagram-list component styles - Starts*/
+.account_pay_details_table tr{
+  border-bottom: 1px solid #ccc;  
+  cursor: pointer;
+}
+.account_pay_details_table tr:hover{
+  color: blue;
+}
+.account_pay_details_table tr, .account_pay_details_table td{
+  padding: 10px 0;
+}
+.account_pay_details_table input{
+  height: 20px;
+}
+.account_pay_details_table button{
+  height: 20px;
+  border-radius: 20px;
+  padding: 3px 10px;
+  font-size: 10px;
+  margin-left: 0;
+  margin-right: 2px;
+}
+.diagramCanvas:hover{
+  background-color: #ccc;
+  cursor: pointer;
+}
+/* bpmn-diagram-list component styles - Ends*/

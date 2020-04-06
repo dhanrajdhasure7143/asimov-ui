@@ -23,34 +23,29 @@
                     <div class="col-md-2">
                         <p class="filter_typesOne">Filter By</p>
                         <div class="form-group">
-                                <select class="form-control filterSelection" name="status">
-                                    <option [value]="each" *ngFor="let each of chart_filter_options;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{each}}</option>
-                                    <option [value]="0">Activity</option>
-                                    <option [value]="1">Cases</option>
-                                    <option [value]="2">Variants</option>
-                                    <option [value]="3">End Points</option>
-                                </select>
+                            <select class="form-control filterSelection" name="status">
+                                <option [value]="each" *ngFor="let each of chart_filter_options;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{chart_filter[each]}}</option>
+                            </select>
+                        </div>
+                        <div>
+                        <p class="percent_filter">Percentage :</p>
+                        <div class="filter_slider custom_filter_slider"><ng5-slider [(ngModel)]="filterValue" [options]="filterOptions" ></ng5-slider></div>
+                        </div>
+                        <div>
+                            <p class="type_filter">Type :</p>
+                            <div class="radio">
+                                <input type="radio" name="check" value="selected"> Selected<br>
+                                <input type="radio" name="check" value="Unselected"> Unselected<br>
                             </div>
-                            <div>
-                            <p class="percent_filter">Percentage :</p>
-                            <div class="filter_slider custom_filter_slider"><ng5-slider [(ngModel)]="filterValue" [options]="filterOptions" ></ng5-slider></div>
-                            </div>
-                            <div>
-                                <p class="type_filter">Type :</p>
-                                <div class="radio">
-                                    <input type="radio" name="check" value="selected"> Selected<br>
-                                    <input type="radio" name="check" value="Unselected"> Unselected<br>
-                                </div>
-                            </div>
+                        </div>
                     </div>
-                    
                     <div class="col-md-8">
                         <div class="dataType">
                         <p class="dataType_filter">Data Values :</p>
                         <p class="searchFilter">
                             <button class="selectAll" (click)="selectAllDataValue()" [hidden]="isSelect">Select All</button>
                             <button class="deselectAll" [hidden]="!isSelect" (click)="deselectAllDataValue()">Deselect All</button> 
-                            <button class="search" (click)="searchfilterInput()">Search</button> 
+                            <button class="search" (click)="this.isSearch= !this.isSearch">Search</button> 
                         </p>
                         </div>
                         <div class="searchInput" *ngIf="isSearch">
