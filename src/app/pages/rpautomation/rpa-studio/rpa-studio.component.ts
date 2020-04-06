@@ -14,7 +14,9 @@ import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuCont
   styleUrls: ['./rpa-studio.component.css']
 })
 export class RpaStudioComponent implements OnInit {
-  @ViewChild(ContextMenuComponent) public basicMenu:ContextMenuComponent
+  public stud:any = [];
+  public emailValue:any = []
+  public optionsVisible : boolean = true;
   result:any = [];
   jsPlumbInstance;
   image: any =  '../../../../assets/images/PNG_Format/network@2x.png';
@@ -44,20 +46,9 @@ export class RpaStudioComponent implements OnInit {
   zoomArr = [0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8];
   indexofArr = 6;
   templateNodes: any = [];
-  // public templateNodes = [
-  //     { 'name': 'John', 'path': this.image },
-  //     { 'name': 'Smith', 'path': this.new },
-  //     { 'name': 'George', 'path': this.image2 },
-  //     { 'name': 'Jennifer', 'path': this.image3 },
-  //     { 'name': 'Laura', 'path': this.image4 },
-  //     { 'name': 'Georgina', 'path': this.image0},
-  //     { 'name': 'Timmy', 'path': this.image6 },
-  //     { 'name': 'Karen', 'path': this.image8 },
-  // ];
   show: number;
   toolSetData: void;
-  // @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
-
+  changePx: { x: number; y: number; };
   constructor(private rest:RestApiService) { 
     this.show = 5;
 
@@ -68,7 +59,6 @@ export class RpaStudioComponent implements OnInit {
       let value:any = [];
       let subValue:any = []
       this.toolSetData;
-      console.log(data);
       let data1:any = [];
       data1 = data
       data1.General.forEach(element => {
@@ -76,42 +66,30 @@ export class RpaStudioComponent implements OnInit {
         subValue.push(el.NLP);
         subValue.push(el.OCR);
         subValue.push(element.Email);
+        this.emailValue.push(element.Email);
         subValue.push(element.Database)
         subValue.push(element["Developer Condition"])
         subValue.push(element["Excel File"])
-        console.log(subValue)
         subValue.forEach(ele => {
           value.push(ele)
-          console.log(value);
-      // Object.keys(ele).forEach(function(key) {
-      //   value.push(Object.keys(ele[key]));
-      //   console.log(value)
     })
     });
   })
   value.forEach(element => {
     element.forEach(ele1 => {
-      console.log(ele1);
     let temp:any = {
       name : ele1.name,
       path : 'data:' + 'image/png' + ';base64,' + ele1.icon
     };
-    // temp = ele1
     this.templateNodes.push(temp)
     })
   })
-  let obj = {
-    "dfv" : this.result
-  }
-  console.log(obj);
-  
   })
 
   var element:any = document.querySelector('.drag-area');
 let value = element.getBoundingClientRect().width / element.offsetWidth;
 
   document.querySelector('.zoomout').addEventListener('click',()=>{
-    console.log('value of index  zoom out is',this.indexofArr)
      if(this.indexofArr >0){
       this.indexofArr -= 1;
         value = this.zoomArr[this.indexofArr];
@@ -120,7 +98,6 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
    })
 
    document.querySelector('.zoomin').addEventListener('click',()=>{
-    console.log('value of index zoomin is',this.indexofArr)
     if(this.indexofArr < this.zoomArr.length-1){
       this.indexofArr += 1;
       value = this.zoomArr[this.indexofArr];
@@ -156,25 +133,21 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
   }
 
   onDrop(event: DndDropEvent) {
+    this.stud = [];
+    this.optionsVisible = true;
     const obs = fromEvent(document.body, '  ').subscribe(e => {
-      // console.log(e);
     });
+    this.changePx = this.getMousePos(event.event.target, event);
 
     var mousePos = this.getMousePos(event.event.target, event);
     const dropCoordinates = {
-      // x: event.event.clientX - 170 < 0 ? event.event.clientX - (event.event.clientX - 170) : event.event.clientX - 170 + 'px',
-      // y: event.event.clientY - 370 < 0 ? event.event.clientY - (event.event.clientY - 370) : event.event.clientY - 370 + 'px'
-
       x: mousePos.x + 'px',
       y: mousePos.y + 'px'
     };
-    console.log(event.data);
     
     const node = event.data;
     const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
     this.nodes.push(nodeWithCoordinates);
-    console.log(this.nodes);
-    console.log(this.jsPlumbInstance);
     
     
 
@@ -210,18 +183,13 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
         width:8, 
         height:8
       }],
-      // paintStyle: { cornerRadius: 5, fill: '#CA2C68' },
       isSource: true,
       connectorStyle: { stroke: '#006ed5',strokeWidth: 2 },
       anchor: 'Right',
       maxConnections: -1,
-      // paintStyle: { stroke: "#fff"},
       cssClass: "path",
       Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
       connectorClass: "path",
-      // connectorOverlays: [
-      //   ["Arrow", { width: 12, length: 12, location: 0.5 }]
-      // ],
       connectorOverlays: [['Arrow', {width: 12, length: 12, location: 1 }]],
 
     };
@@ -233,17 +201,14 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
         width:8, 
         height:8
       }],
-      // paintStyle: { cornerRadius: 5, fill: '#CA2C68' },
       isTarget: true,
       connectorStyle: { stroke: '#006ed5',strokeWidth: 2 },
       anchor: 'Left',
       maxConnections: -1,
-      // paintStyle: { stroke: "#fff"},
       Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
       cssClass: "path",
       connectorClass: "path",
       connectorOverlays: [
-        // ["Arrow", { width: 12, length: 12, location: 0.5 }]
       ]
     };
 
@@ -262,5 +227,30 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
       y: evt.event.clientY - rect.top
     };
   }
-  
-}
+  onRightClick(n,e,i) {    
+    this.stud = [];
+    if(e.target.id == "Login Mail"){
+      this.optionsVisible = true;
+      let value:any = []
+      this.emailValue.forEach(ele => {
+        value.push(ele)
+  })
+  value.forEach(element => {
+    element.forEach(ele1 => {
+    let temp:any = {
+      name : ele1.name,
+      path : 'data:' + 'image/png' + ';base64,' + ele1.icon
+    };
+    this.stud.push(temp)
+    })
+  })
+    }else
+    {
+      this.optionsVisible = false
+      this.stud = [{
+        name : "No Options"
+      }]
+    }
+  }
+} 
+

@@ -95,35 +95,38 @@ class="btn btn_style" aria-hidden="true" placement="bottom">
 
 <div class="col-md-12 row">
 <div class="col-md-2 side-slide">
-<div class="nodes" style=" padding: 10px;" *ngFor="let node of templateNodes | slice:0:show; let i=index">
-<!-- border: 1px solid lightgray; border-radius: 2px; -->
+<div class="nodes" *ngFor="let node of templateNodes | slice:0:show; let i=index">
     <div class="" [dndDraggable]="node">
       <span>
-          <img [src]="node.path" style="width:32px; height:auto"> 
-          <!-- {{node.name}} -->
+          <img [src]="node.path" class="con-img"> 
       </span>
     </div>
   </div>
-  <div style="padding: 0px 0px 0px 20px;" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
+  <div class="slice-icon" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
   </div>
 </div>
-  <div class="col-md-10 main-container">
+  <div class="col-md-10 main">
     <div class="drag-area" dndDropzone (dndDrop)="onDrop($event)">
       <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{node.name}}" class="dndDropzone style='width:100%;'" 
+        <div id="{{node.name}}"  class="dndDropzone" (contextmenu)="onRightClick(node.name, $event, id)"
         [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
-          <!-- <div class="node-delete node-action" style='float: right; '>
-            <i class="fa fa-times"></i>
-          </div> -->
           <div class="connector-name">{{node.name}}</div>
-          <!-- <div class="node-edit node-action" style='float: left; bottom: 0; position: absolute;'>
-            <i class="fa fa-edit"></i>
-          </div> -->
-          <!-- <div *ngIf="enterName"><input type="text" name="name" placeholder="enter a name"/></div> -->
+          <div>
+            <nav *ngIf ="optionsVisible" id="context-menu" class="context-menu contextmenu">
+              <div class="context-menu1">
+                <div class="context-menu__item" *ngFor="let menu of stud">
+                  <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu.name)"
+                   data-action="View">{{menu.name}}</a>
+                </div>
+              </div>
+            </nav>
+          </div>
         </div>
       </ng-container>
     </div>
   </div>
+</div>
+</div>
 
-</div>
-</div>
+
+
