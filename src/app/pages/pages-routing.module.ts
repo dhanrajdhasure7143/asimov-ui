@@ -9,6 +9,7 @@ const routes: Routes = [
     {path:'home', component:HomeComponent}, 
     {path:'businessProcess', loadChildren: './business-process/business-process.module#BusinessProcessModule'},
     {path:'processIntelligence', loadChildren: './process-intelligence/process-intelligence.module#ProcessIntelligenceModule'},
+    {path:'approvalWorkflow', loadChildren: './approval-workflow/approval-workflow.module#ApprovalWorkflowModule'},
     {path:'rpautomation', loadChildren: './rpautomation/rpautomation.module#RpautomationModule'},
     {path:'serviceOrchestration', loadChildren: './service-orchestration/service-orchestration.module#ServiceOrchestrationModule'},
     {path:'**', redirectTo:'/home', pathMatch:"full"}
