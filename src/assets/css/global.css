@@ -2,6 +2,7 @@
 @import "./bps-styles.css";
 @import "./pi-styles.css";
 @import "./shared-styles.css";
+@import "./rpa-styles.css";
 
 /* App Module - login component styles -Starts*/
 .form{
@@ -99,14 +100,14 @@ footer{
   margin-bottom: 0;
 }
 li.breadcrumb_li{
-width: 36%;
+  width: 36%;
 }
 div.breadcrumb {
-font-size: 13px;
+  font-size: 13px;
 }
 div.breadcrumb span{
-user-select: none;
-cursor: pointer;
+  user-select: none;
+  cursor: pointer;
 }
 div.breadcrumb span:hover{
   font-weight: bold;
@@ -130,111 +131,105 @@ div.breadcrumb span:focus, div.breadcrumb span:active{
   filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
 }
 sup{
-font-size: 38%;
-top: -1.5em;
+  font-size: 38%;
+  top: -1.5em;
 }
 .fa-registered{
-font-weight: 400;
+  font-weight: 400;
 }
 .icon_middle {
-float: right;
-width: 122px;
+  float: right;
+  width: 122px;
 }
 .icon_middle label {
-display:block;
-color: #0062cf;
-text-align: center;
+  display:block;
+  color: #0062cf;
+  text-align: center;
 }
 label{
-font-size:11px;
-margin: 0px;
+  font-size:11px;
+  margin: 0px;
 }
 .abrand_div {
-display: inline-block;
+  display: inline-block;
 }
 li a:hover, li a:active{
-background-color: #0061cf !important;
-color:white;
+  background-color: #0061cf !important;
+  color:white;
 }
 li a:hover label, li a:active label{
   color:white;
-  }
+}
 svg:hover {
-fill: white;
+  fill: white;
 }
 .icon_middle a:hover img {
   filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
 }
 :target {
-color: red;
+  color: red;
 }
 .header{
-height: 100%;
+  height: 100%;
 }
 #brand{
-color: #0062cf;
-font-weight:550;
-font-size:50px;
-
+  color: #0062cf;
+  font-weight:550;
+  font-size:50px;
 } 
-
 li{
-color: #0062cf;
-list-style-type: none;
-position: relative;
+  color: #0062cf;
+  list-style-type: none;
+  position: relative;
 }
-
-
 li a {
-display: block;
-color: #0062cf;
-text-align: center;
-padding: 12px;
-text-decoration: none;
-height: 90px;
+  display: block;
+  color: #0062cf;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  height: 90px;
 }
 ul {
-list-style-type: none;
-display: flex;
-align-items: center;
-width: calc(100% - 200px);
-justify-content: flex-end;
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  width: calc(100% - 200px);
+  justify-content: flex-end;
 }
 
 i.fas.fa-chevron-down {
-width: 100%;
-text-align: center;
+  width: 100%;
+  text-align: center;
 }
 
 .dropbtn {
-
-cursor: pointer;
-display: block
+  cursor: pointer;
+  display: block
 }
 
 .dropdown {
-position: relative;
-display: inline-block;
+  position: relative;
+  display: inline-block;
 }
 
 .dropdown-content {
-display: none;
-position: absolute;
-background-color: inherit;
-min-width: 105px;
-overflow: auto;
-z-index: 1;
-border:1px solid #0062cf;
-
-margin-left: -21px;
-margin-right: 0px;
+  display: none;
+  position: absolute;
+  background-color: inherit;
+  min-width: 105px;
+  overflow: auto;
+  z-index: 1;
+  border:1px solid #0062cf;
+  margin-left: -21px;
+  margin-right: 0px;
 }
 
 .dropdown-content a {
-color: #0062cf;
-padding: 12px 8px;
-text-decoration: none;
-display: block;
+  color: #0062cf;
+  padding: 12px 8px;
+  text-decoration: none;
+  display: block;
 }
 
 .dropdown a:hover {background-color: #ddd;}
@@ -247,3 +242,23 @@ padding-right: 5px;
 padding-right: 5px;
 }
 /* header component styles - Ends*/
+/* Module title styles - Starts*/
+.module-heading{
+  background-color: #f8f8f8;
+  padding: 6px;
+  margin-bottom: 20px;
+}
+.module-heading-image{
+  width: 36px;
+  height: 36px;
+  margin-right: 5px;
+}
+.module-heading-title{
+  font-size: 18px;
+}
+/* Module title styles - Ends*/
+/* Common styles - Starts*/
+button:active, button:focus, input:active, input:focus{
+  outline: none !important;
+}
+/* Common styles - Ends*/

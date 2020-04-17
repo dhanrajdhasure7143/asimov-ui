@@ -1,0 +1,131 @@
+<div class="container">
+<div class="col-md-12">
+  <div class="collection_btn">
+    <button  type="button"
+      class="btn btn_style" aria-hidden="true" placement="bottom">
+      <img class="imageI" src="/assets/images/Expanded.svg">
+    </button>
+    <button  type="button"
+      class="btn btn_style" aria-hidden="true" placement="bottom">
+      <img class="imageI" src="/assets/images/Path 509.svg">
+    </button>
+    <button  type="button"
+    class="btn btn_style" aria-hidden="true" placement="bottom">
+    <img class="imageI" src="/assets/images/Path 510.svg">
+  </button>
+  <button  type="button"
+  class="btn btn_style" aria-hidden="true" placement="bottom">
+  <img class="imageI" src="/assets/images/Layer 1.svg">
+</button>
+<button  type="button"
+class="btn btn_style" aria-hidden="true" placement="bottom">
+<img class="imageI" src="/assets/images/iconfinder_icon-play_211876.svg">
+</button>
+<button  type="button"
+class="btn btn_style" aria-hidden="true" placement="bottom">
+<img class="imageI" src="/assets/images/Group 286.svg">
+</button>
+<button  type="button"
+class="btn btn_style" aria-hidden="true" placement="bottom">
+<img class="imageI" src="/assets/images/reload_pp.svg">
+</button>
+  </div>
+</div>
+
+<div class="col-md-12">
+  <div class="robotic-run">
+    <button  type="button"
+      class="btn btn_style1" aria-hidden="true" placement="bottom">
+      <div class="row rob-s">
+      <img class="imageI1" src="/assets/images/iconfinder_icon-play_211876.svg">
+      <p>start</p>
+    </div>
+    </button>
+    <button  type="button"
+      class="btn btn_style1" aria-hidden="true" placement="bottom">
+      <div class="row rob-s">
+      <img class="imageI1" src="/assets/images/Rectangle 111.svg">
+      <p>run</p>
+  </div>
+    </button>
+    <button  type="button"
+    class="btn btn_style1" aria-hidden="true" placement="bottom">
+    <div class="row rob-s">
+    <img class="imageI1" src="/assets/images/settings.svg">
+    <p>settings</p>
+    </div>
+  </button>
+  <button  type="button"
+  class="btn btn_style1" aria-hidden="true" placement="bottom">
+  <div class="row rob-s">
+      <img class="imageI1" src="/assets/images/robot.svg">
+      <p>robot</p>
+  </div>
+</button>
+  </div>
+</div>
+<div class="status">
+  <div class="row" style="text-align: center;">Bots</div>
+  <div class="row rob-status">
+    <h4>23</h4>
+    <p>New</p>
+  </div>
+  <div class="row rob-status">
+    <h4>23</h4>
+    <p>Active</p>
+  </div>
+  <div class="row rob-status">
+    <h4>23</h4>
+    <p>Errors</p>
+  </div>
+  <div class="row rob-status">
+    <h4>23</h4>
+    <p>Running</p>
+  </div>
+</div>
+
+<div class="status-zoom">
+  <div class="row">
+    <button class="btn reset"><i class="fas fa-sync-alt"></i></button></div>
+  <div class="row">
+  <button class="btn zoomin"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+<div class="row">
+  <button class="btn zoomout"><i class="fa fa-minus" aria-hidden="true"></i></button></div>
+</div>
+
+<div class="col-md-12 row">
+<div class="col-md-2 side-slide">
+<div class="nodes" *ngFor="let node of templateNodes | slice:0:show; let i=index">
+    <div class="" [dndDraggable]="node">
+      <span>
+          <img [src]="node.path" class="con-img"> 
+      </span>
+    </div>
+  </div>
+  <div class="slice-icon" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
+  </div>
+</div>
+  <div class="col-md-10 main">
+    <div class="drag-area" dndDropzone (dndDrop)="onDrop($event)">
+      <ng-container *ngFor="let node of nodes; let i = index">
+        <div id="{{node.name}}"  class="dndDropzone" (contextmenu)="onRightClick(node.name, $event)"
+        [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
+          <div class="connector-name">{{node.name}}</div>
+          <div>
+            <nav *ngIf ="optionsVisible" id="context-menu" class="context-menu contextmenu">
+              <div class="context-menu1">
+                <div class="context-menu__item" *ngFor="let menu of stud">
+                  <a class="context-menu__link" id="{{menu.name}}" data-action="View">{{menu.name}}</a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
