@@ -4,15 +4,15 @@
 
 export const environment = {
   production: false,
-  pi_url: 'http://pidev.epsoftinc.in',
-  bps_url: 'http://bpsdev.epsoftinc.in',
-  rpa_url: 'http://rpadev.epsoftinc.in/rpa-service',
+  pi_url: 'http://piqa.epsoftinc.in',
+  bps_url: 'http://bpsqa.epsoftinc.in',
+  rpa_url: 'http://rpaqa.epsoftinc.in/rpa-service',
   loopback_url: 'http://10.11.0.107:3000',
   local_url: 'http:localhost:9191'
 };
 
 /*
- * For easier debugging in development mode, you can import the following file
+ * For easier debugging in qaelopment mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *
  * This import should be commented out in production mode because it will have a negative impact
