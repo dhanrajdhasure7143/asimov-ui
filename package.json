@@ -27,7 +27,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@ng-bootstrap/ng-bootstrap": "^5.2.1",
-    "@swimlane/ngx-charts": "^13.0.2",
+    "@swimlane/ngx-charts": "^12.1.0",
     "angular-notifier": "^6.0.1",
     "bootstrap": "3.4.1",
     "bpmn": "^0.2.2",
