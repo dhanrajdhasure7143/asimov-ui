@@ -1154,6 +1154,14 @@ ul li{
 }
 /*pi bpmn component styles - Ends*/
 /*upload component styles - Starts*/
+.download_link{
+  top:104px;
+  text-align: center;
+  color:#0061cf !important;
+  font-weight: 550;
+  cursor: pointer;
+}
+
 .upload_zone{
     border:1px solid rgb(212, 179, 179);
     padding: 0;

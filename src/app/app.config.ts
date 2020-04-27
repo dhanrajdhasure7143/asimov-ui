@@ -14,7 +14,7 @@ export interface AsimovAppConfig {
 
 export const AppConfig: AsimovAppConfig = {
     processIntelligenceEndPoint: environment.local_url,//pi_url
-    bussinessProcessEndPoint: environment.local_url,//bps_url
+    bussinessProcessEndPoint: 'http://bpsdev.epsoftinc.in/',//bps_url
     rpaEndPoint: environment.rpa_url,
     loopbackHost: environment.loopback_url,
     imagePath: '', 

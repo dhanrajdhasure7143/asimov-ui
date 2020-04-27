@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
-
+import { FormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { ApprovalWorkflowComponent } from './approval-workflow.component';
 import { ApprovalWorkflowRoutingModule } from './approval-workflow-routing.module';
@@ -15,6 +15,7 @@ import { BpmnDiagramListComponent } from './bpmn-diagram-list/bpmn-diagram-list.
     CommonModule,
     SharedModule,
     MatExpansionModule,
+    FormsModule,
     ApprovalWorkflowRoutingModule
   ]
 })

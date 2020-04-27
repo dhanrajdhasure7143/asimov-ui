@@ -1,18 +1,12 @@
 [
-
   {
- 
-  "context" : ["**"],
- 
-  "target" : "http://localhost:9191",
- 
-  "secure": false,
- 
-  "logLevel": "debug",
- 
-  "changeOrigin": true
- 
-  }
- 
+    
+      "context": [
+        "/api/**"
+      ],
+      "target": "http://bpsdev.epsoftinc.in/",
+      "secure": false,
+      "logLevel": "debug",
+      "changeOrigin": true
+    }
   ]
- 

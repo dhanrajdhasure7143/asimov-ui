@@ -1,23 +1,30 @@
 <div class="container-fluid">
   <div class="row col-md-12 approve_bpmn_list_header">
-    <div class="col-md-2"><b>Process ID</b></div>
+    <div class="col-md-1"><b>Process ID</b></div>
     <div class="col-md-2"><b>Process Name</b></div>
     <div class="col-md-2"><b>Modified Date/Time</b></div>
     <div class="col-md-2"><b>Resource</b></div>
     <div class="col-md-2"><b>Role</b></div>
-    <div class="col-md-2"><b>Actions</b></div>
+    <div class="col-md-2"><b>Overview</b></div>
+    <div class="col-md-1"><b>Actions</b></div>
+
   </div><br/><br/>
   <mat-accordion>
-    <mat-expansion-panel *ngFor="let each_diag of approve_bpmn_list;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(i,each_diag.bpmnXmlNotation)">
+
+    <mat-expansion-panel #matExpansionPanel *ngFor="let each_diag of griddata;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
+      hideToggle>
       <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="row col-md-12">
-            <div class="col-md-2">{{each_diag.bpmnProcessId}}</div>
-            <div class="col-md-2">{{each_diag.bpmnProcessName}}</div>
-            <div class="col-md-2">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
-            <div class="col-md-2">{{each_diag.resource}}</div>
-            <div class="col-md-2">{{each_diag.role}}</div>
-            <div class="col-md-2">{{each_diag.actions}}</div>
+            <div class="col-md-1" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.processIntelligenceId}}</div>
+            <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.bpmnProcessName}}</div>
+            <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.modified_timestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+            <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.userName}}</div>
+            <div class="col-md-2">{{role}}</div>
+            <div class="col-md-2 overview_icon" *ngIf="each_diag.bpmnProcessInfo" (click)="expandPanel($event,i,each_diag.bpmnProcessInfo.bpmnXmlNotation)">
+              <img  src="..\assets\icons\bpmn_Overview.svg"> 
+          </div>
+            <div class="col-md-1" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.bpmnProcessStatus}}</div>
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -34,24 +41,52 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let each_info of each_diag.details">
-                <td>{{each_info.dateTime | date:'dd/MM/yy HH:mm:ss'}}</td>
-                <td>{{each_info.modellerName}}</td>
-                <td *ngIf="each_info.action">{{each_info.action}}</td>
-                <td *ngIf="!each_info.action">
-                  <button class="btn btn-success" (click)="approveDenyDiagram(true)">Approve</button>
-                  <button class="btn btn-danger" (click)="approveDenyDiagram(false)">Deny</button>
-                </td>
-                <td *ngIf="each_info.action">{{each_info.message}}</td>
-                <td *ngIf="!each_info.action"><input type="text" placeholder="Enter your Message"/></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+                <tr>
+                    <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.modified_timestamp | date:'dd/MM/yy HH:mm:ss'}}</td>
+                    <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.userName}}</td>
+                    <td>
+                      <button class="btn btn-success" (click)="approveDiagram(each_diag)">Approve</button>
+                      <button class="btn btn-danger" (click)="denyDiagram(each_diag,i)">Deny</button>
+                    </td>
+                    <td><input type="text"  [(ngModel)]="message[i]" placeholder="Enter your Message"/></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
         <div class="col-md-5">
-          <bpmn-diagram [id]="'diagram_container'+i" [viewMode]="true"></bpmn-diagram>
+          <bpmn-diagram *ngIf="each_diag.bpmnProcessInfo" [id]="'diagram_container'+i" [viewMode]="true"></bpmn-diagram>
         </div>
+
       </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

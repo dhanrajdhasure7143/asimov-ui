@@ -1,6 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
+import { environment } from 'src/environments/environment';
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  }),
+};
+const API_URL = environment.bps_url;
 
 @Injectable({
   providedIn: 'root'
@@ -46,4 +52,20 @@ export class RestApiService {
   toolSet(){
     return this.http.get("/load-toolset");
   }
+  bpmnlist(user){
+      //GET /bpsprocess/approver/info/{roleName} 
+  return this.http.get<any[]>(API_URL+'bpsprocess/approvalTnfoByUser/'+user);
+  }
+
+  approve_producemessage(bpmnProcessInfo){
+    return this.http.post<any[]>(API_URL+'bpsprocess/produceMessage',bpmnProcessInfo,httpOptions);
+  }
+  approve_savedb(bpmndata){
+    return this.http.post<any[]>(API_URL+'bpsprocess/save/bpms/notation/approval/workflow',bpmndata,httpOptions);
+  }
+denyDiagram(msg_obj){
+ // POST /bpsprocess/save/bpms/notation/approval/workflow
+ 
+  return this.http.post<any[]>(API_URL+'bpsprocess/save/bpms/notation/approval/workflow',msg_obj,httpOptions);
+}
 }
