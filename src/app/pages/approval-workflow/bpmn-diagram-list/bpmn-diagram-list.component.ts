@@ -3,7 +3,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { DiagListData } from './model/bpmn-diag-list-data';
 import { BpmnDiagramComponent } from 'src/app/shared/bpmn-diagram/bpmn-diagram.component';
 import { RestApiService } from '../../services/rest-api.service';
-
+import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 @Component({
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
@@ -20,6 +20,7 @@ export class BpmnDiagramListComponent implements OnInit {
   approver_info: any;
   role: any = 'BPMN_Process_Modeler';
   expanded: any=true;
+  bpmnModeler: any;
   constructor(private dt: DataTransferService, private model: DiagListData, private rest_Api: RestApiService) { }
 
   ngOnInit() {
@@ -28,15 +29,24 @@ export class BpmnDiagramListComponent implements OnInit {
     this.bpmnlist();
   }
   expandPanel(event,i,bpmnXmlNotation): void {
-    event.stopPropagation(); // Preventing event bubbling
-
-    if (this.expanded) {
-     this.diagramComp.initializeDiag('diagram_container' + i, bpmnXmlNotation);
-      this._matExpansionPanel.open(); // Here's the magic
-      this.expanded = false;
-    }else{
-      this._matExpansionPanel.close()
-    }
+    this.bpmnModeler = new BpmnJS({
+      container: '.diagram_container'+i,
+      keyboard: {
+        bindTo: window
+      }
+    });
+    this.bpmnModeler.clear();
+    this.bpmnModeler.importXML(atob(bpmnXmlNotation), function(err){
+      if(err){
+        this.notifier.show({
+          type: "error",
+          message: "Could not import Bpmn diagram!",
+          id: "ae12" 
+        });
+      }
+    })
+    let canvas = this.bpmnModeler.get('canvas');
+    canvas.zoom('fit-viewport');
   }
   // getDiagram(i, bpmnXmlNotation) {
   //   console.log(this.diagramComp);

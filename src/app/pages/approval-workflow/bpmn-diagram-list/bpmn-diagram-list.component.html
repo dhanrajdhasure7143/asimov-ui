@@ -54,7 +54,7 @@
               </table>
             </div>
         <div class="col-md-5">
-          <bpmn-diagram *ngIf="each_diag.bpmnProcessInfo" [id]="'diagram_container'+i" [viewMode]="true"></bpmn-diagram>
+          <div *ngIf="each_diag.bpmnProcessInfo" [class]="'diagram_container'+i"></div>
         </div>
 
       </div>
