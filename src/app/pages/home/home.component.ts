@@ -28,6 +28,10 @@ export class HomeComponent implements OnInit {
     this.dt.changeHints(this.hints.homeHints);
   }
 
+  navigateToModule(){
+    this.router.navigateByUrl('/pages/'+this.dataArr[this.selectedIndex].link);
+  }
+
   loopTrackBy(index, term){
     return index;
   }

@@ -4,7 +4,10 @@
 
 export const environment = {
   production: false,
-  api_url: 'http://10.11.1.236:8080/'
+  pi_url: 'http://pidev.epsoftinc.in',
+  bps_url: 'http://bpsdev.epsoftinc.in',
+  loopback_url: 'http://10.11.0.107:3000',
+  local_url: 'http:localhost:9191'
 };
 
 /*

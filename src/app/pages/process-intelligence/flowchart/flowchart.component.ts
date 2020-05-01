@@ -8,6 +8,19 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 
+enum ProcessGraphList{
+  'Sales_work_04-03-2020',
+  'Sales_work_05-03-2020',
+  'Sales_work_06-03-2020',
+  'Sales_work_07-03-2020'
+}
+
+enum VariantList{
+  'Most Common Varaint',
+  'In Active',
+  'Active'
+}
+
 @Component({
   selector: 'app-flowchart',
   templateUrl: './flowchart.component.html',
@@ -37,6 +50,10 @@ export class FlowchartComponent implements OnInit {
      vertical:true,
     }
     fetchData : any = [];
+    process_graph_list;
+    process_graph_options;
+    variant_list_options;
+    variant_list;
   constructor(private dt:DataTransferService, private router:Router, private bpmnservice:SharebpmndiagramService,
      private pgModel:ProcessGraphModel, private hints:PiHints) { }
 
@@ -46,7 +63,10 @@ export class FlowchartComponent implements OnInit {
     this.dt.changeHints(this.hints.processGraphHints);
     this.varaint_data=this.data;
     //this.dataValuesFilter();
-
+    this.process_graph_options = ProcessGraphList;
+    this.process_graph_list = Object.keys(ProcessGraphList).filter(val => isNaN(ProcessGraphList[val]));
+    this.variant_list_options = VariantList;
+    this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
   }
 
   ngAfterContentChecked(){
@@ -82,4 +102,7 @@ generateBpmn(){
   this.router.navigate(['/pages/businessProcess/uploadProcessModel'])
 }
   
+loopTrackBy(index, term){
+  return index;
+}
 }
