@@ -6,6 +6,8 @@ import { element } from 'protractor';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { RestApiService } from '../../services/rest-api.service';
 import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuContent.component';
+import { FormGroup, FormControl } from '@angular/forms';
+
 
 
 @Component({
@@ -16,40 +18,40 @@ import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuCont
 export class RpaStudioComponent implements OnInit {
   public stud:any = [];
   public emailValue:any = []
+  public databaseValue:any = [];
+  public developercondValue:any = [];
+  public excelValue:any = [];
   public optionsVisible : boolean = true;
   result:any = [];
   jsPlumbInstance;
-  image: any =  '../../../../assets/images/PNG_Format/network@2x.png';
-      new :any = '../../../../assets/images/PNG_Format/browser.png'
-      image2 :any = '../../../../assets/images/PNG_Format/browser@2x.png'
-      image3 :any = '../../../../assets/images/PNG_Format/search_1@2x.png'
-            image4 :any = '../../../../assets/images/PNG_Format/network@2x.png'
-            image5 :any = '../../../../assets/images/PNG_Format/Database.png'
-            image6 :any = '../../../../assets/images/PNG_Format/Database@2x.png'
-            image7 :any = '../../../../assets/images/PNG_Format/Expanded.png'
-            image8 :any = '../../../../assets/images/PNG_Format/Expanded@2x.png'
-            image9 : any ='../../../../assets/images/PNG_Format/filter.png'
-            image0 :any = '../../../../assets/images/PNG_Format/ftp.png'
   nodes = [];
-  public simpleList = [
-    [
-      { 'name': 'John' },
-      { 'name': 'Smith' },
-      { 'name': 'George' },
-    ],
-    [
-      { 'name': 'Jennifer' },
-      { 'name': 'Laura' },
-      { 'name': 'Georgina' },
-    ]
-  ];
   zoomArr = [0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8];
   indexofArr = 6;
   templateNodes: any = [];
   show: number;
   toolSetData: void;
   changePx: { x: number; y: number; };
+  // forms
+  public hiddenPopUp:boolean = false;
+  public form: FormGroup;
+  unsubcribe: any
+  public fields: any[] = [];
+  resp: any[] = [];
+  formHeader: any[] = [];
+  selectedNode: any= [];
+  formVales:any[] = [];
+  fieldValues: any[] = [];
+  allFormValues: any[] = [];
+  saveBotdata:any = [];
+  selectedTasks: any[] = [];
   constructor(private rest:RestApiService) { 
+    this.form = new FormGroup({
+      fields: new FormControl(JSON.stringify(this.fields))
+    })
+    this.unsubcribe = this.form.valueChanges.subscribe((update) => {
+      console.log(update);
+      this.fields = JSON.parse(update.fields);
+    });
     this.show = 5;
 
   }
@@ -60,6 +62,7 @@ export class RpaStudioComponent implements OnInit {
       let subValue:any = []
       this.toolSetData;
       let data1:any = [];
+      // data1 = this.nData
       data1 = data
       data1.General.forEach(element => {
         data1.Advanced.forEach(el => {
@@ -67,27 +70,36 @@ export class RpaStudioComponent implements OnInit {
         subValue.push(el.OCR);
         subValue.push(element.Email);
         this.emailValue.push(element.Email);
-        subValue.push(element.Database)
-        subValue.push(element["Developer Condition"])
-        subValue.push(element["Excel File"])
+        subValue.push(element.Database);
+        this.databaseValue.push(element.Database);
+        subValue.push(element["Developer Condition"]);
+        subValue.push(element["Database"])
+        this.developercondValue.push(element["Developer Condition"]);
+        subValue.push(element["Excel File"]);
+        this.excelValue.push(element["Excel File"]);
+        console.log(subValue)
         subValue.forEach(ele => {
           value.push(ele)
+          console.log(value);
+      // Object.keys(ele).forEach(function(key) {
+      //   value.push(Object.keys(ele[key]));
+      //   console.log(value)
+      // })
     })
     });
   })
   value.forEach(element => {
-    element.forEach(ele1 => {
     let temp:any = {
-      name : ele1.name,
-      path : 'data:' + 'image/png' + ';base64,' + ele1.icon
+      name : element.name,
+      path : 'data:' + 'image/png' + ';base64,' + element.icon,
+      tasks: element.taskList
     };
     this.templateNodes.push(temp)
     })
   })
-  })
 
   var element:any = document.querySelector('.drag-area');
-let value = element.getBoundingClientRect().width / element.offsetWidth;
+  let value = element.getBoundingClientRect().width / element.offsetWidth;
 
   document.querySelector('.zoomout').addEventListener('click',()=>{
      if(this.indexofArr >0){
@@ -112,8 +124,19 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
   })
   }
 
-  
+  getFields() {
+    return this.fields;
+  }
 
+  ngDistroy() {
+    this.unsubcribe();
+  }
+  onFormSubmit(event){
+    console.log(event);
+    this.fieldValues = event
+    // localStorage.setItem('formValue', event)
+  }
+  
   increaseShow() {
     this.show += 5; 
   }
@@ -132,7 +155,10 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
     list.splice(list.indexOf(item), 1);
   }
 
-  onDrop(event: DndDropEvent) {
+  onDrop(event: DndDropEvent,e:any) {
+
+    e.event.toElement.oncontextmenu = new Function("return false;");
+
     this.stud = [];
     this.optionsVisible = true;
     const obs = fromEvent(document.body, '  ').subscribe(e => {
@@ -147,10 +173,8 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
     
     const node = event.data;
     const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
+    console.log(nodeWithCoordinates);
     this.nodes.push(nodeWithCoordinates);
-    
-    
-
     setTimeout(() => {
       this.populateNodes(nodeWithCoordinates);
     }, 240);
@@ -227,30 +251,95 @@ let value = element.getBoundingClientRect().width / element.offsetWidth;
       y: evt.event.clientY - rect.top
     };
   }
-  onRightClick(n,e,i) {    
+  callFunction(menu){
+    this.optionsVisible = false;
+    this.hiddenPopUp = false;
+    this.fields = []
+    console.log(menu);
+    this.selectedNode.id = menu.id;
+    // this.selectedNode.push(menu.id)
+    console.log(this.selectedNode);
+    
+  }
+  onRightClick(n: any,e: { target: { id: string; } },i: string | number) {
+    this.selectedNode = n
+    console.log(e);
     this.stud = [];
-    if(e.target.id == "Login Mail"){
+    if(n.tasks.length>0){
       this.optionsVisible = true;
       let value:any = []
-      this.emailValue.forEach(ele => {
-        value.push(ele)
-  })
-  value.forEach(element => {
-    element.forEach(ele1 => {
+    n.tasks.forEach(element => {
     let temp:any = {
-      name : ele1.name,
-      path : 'data:' + 'image/png' + ';base64,' + ele1.icon
+      name : element.name,
+      id : element.taskId
     };
     this.stud.push(temp)
-    })
   })
-    }else
+    }
+    // if (!n) {
+    //   this.optionsVisible = false
+    // }
+    else 
     {
       this.optionsVisible = false
       this.stud = [{
         name : "No Options"
       }]
+
     }
+  }
+  formNodeFunc(node){
+    this.formHeader = node
+    if(this.selectedNode.id){
+    this.rest.attribute(this.selectedNode.id).subscribe((data)=> this.response(data))
+    }
+  }
+  response(data){
+    this.fields = [];
+    this.hiddenPopUp = true;
+    console.log(data);
+    this.formVales = data
+    this.fields = data
+    this.form = new FormGroup({
+      fields: new FormControl(JSON.stringify(this.fields))
+    })
+    this.unsubcribe = this.form.valueChanges.subscribe((update) => {
+      console.log(update);
+      this.fields = JSON.parse(update.fields);
+    });
+  }
+  closeFun(){
+    this.hiddenPopUp = false;
+    this.fields = []
+  }
+  saveBotFun(){
+    console.log(this.formVales);
+    this.allFormValues = []
+    this.saveBotdata = []
+    this.formVales.forEach((ele,i) => {
+      let obj:any
+      let objKeys = Object.keys(this.fieldValues);
+      obj = {
+        "metaAttrId": ele.taskId,
+        "atrribute_type": ele.type,
+        "metaAttrValue": ele.name,
+         "attrValue": this.fieldValues[objKeys[i]]
+      }
+      this.allFormValues.push(obj)    
+  })
+  console.log(this.allFormValues);
+  this.saveBotdata = {
+    "botName": "metbotIntegration4",
+    "tasks": this.allFormValues,
+    "createdBy": "admin",
+    "lastSubmittedBy": "admin"
+  }
+  console.log(this.saveBotdata);
+  this.rest.saveBot(this.saveBotdata).subscribe(data => this.successCallBack(data))
+  }
+  successCallBack(data) {
+    console.log(data);
+    
   }
 } 
 
