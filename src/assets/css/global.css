@@ -83,7 +83,7 @@ h6{
   font-size: 12px;
   cursor: pointer;
   margin: 5px;
-  position: absolute;
+  position: fixed;
   bottom: 10px;
   right: 10px;
 }

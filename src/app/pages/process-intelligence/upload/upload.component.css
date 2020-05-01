@@ -1,0 +1,80 @@
+#foot {
+    border-top: 1px solid #999999;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+    height: 300px;
+    display: flex;
+    right: 0;
+    left: 0;
+    bottom:-300px;
+    background: white;
+}
+.slide-up{
+    bottom: 0px !important;
+    transition: 1s;
+}
+.slide-down{
+    bottom: -300px !important;
+    transition: 0.5s;
+}
+.db_heading{
+    background-color: #f4f4f4;
+    height:35px;
+    width: 100%;
+}
+.db_headingOne{
+font-size: 17px;
+font-weight: bold;
+margin-top: 7px;
+}
+.cross_close{
+    margin-left: 90px;
+    float:right;
+    margin-top: -30px;
+    margin-right: -85px;
+}
+.databaseForm{
+    margin-top: 15px;
+}
+.databaseForm label{
+    font-size: 12px;
+}
+.databaseForm input,.databaseForm select{
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px !important;
+    box-shadow: none;
+    border-radius: 0px;
+}
+.errspan{
+    position: relative;
+    z-index: 2;
+    color: #dc3545;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    padding-right: 10px;
+    line-height: 12px;
+}
+.connection-buttons{
+    margin-left: 20%;
+}
+.connection-buttons button{
+    width: 150px;
+    border-radius: 20px;
+    outline-style: none;
+}
+.connection_btn{
+    background-color:white;
+    border: 1px solid #0061cf !important;
+    color: #0061cf;
+}
+.connection_btn:hover{
+    background-color:#0061cf;
+    color: white;
+}
+.save_btn{
+    background-color:#0061cf;
+    color: white;
+    border: 1px solid #0061cf;
+}

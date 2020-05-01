@@ -1,5 +1,10 @@
+<!-- <ngx-spinner
+  bdColor="rgba(255,255,255,0.9)">
+  <img src='/assets/images/loader.gif'/>
+</ngx-spinner> -->
+
 <div class="container" class="head_bar">
-    <div class="row">
+    <div class="">
         <div class="col-sm-4" id="bar_content">
             <h5 style="font-weight:600;color: rgb(90, 88, 88)">     <img src="assets/images/Group 208.svg" style="padding-right: 10px">Process Graph</h5>
         </div>
@@ -9,7 +14,8 @@
 <div class="row">
     <div class="col-md-8">
         <div>
-            <div class="tooltip_button tooltip1"><img src="..\assets\images\PI\options_icon.svg" id="variants">
+            <div class="lableHide"></div>
+            <!-- <div class="tooltip_button tooltip1"><img src="..\assets\images\PI\options_icon.svg" id="variants">
                 <div class="tooltiptext1">
                     <p>Case Frequency</p>
                     <hr>
@@ -26,36 +32,40 @@
                         <label><input type="checkbox" value="">Option 3</label>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="form-group left_dropdwn1">
                     <select class="form-control left_dropdwn" name="status" id="process_graph_list">
-                        <option [value]="each" *ngFor="let each of process_graph_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{process_graph_options[each]}}</option>
+                        <option [value]="each" *ngFor="let each of process_graph_list ;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{process_graph_options[each]}}</option>
                     </select>
                 </div>
                 <div>
-                    <p class="zoom_label"> ZOOM<span class="zoom_value">{{rangevalue}}</span></p>
-                          
+                    <p class="zoom_label"> ZOOM<span class="zoom_value"> {{rangevalue}}</span> <span class="varient-totalcount" *ngIf="isDefaultData">UPLOADED CASES:195 WITH 1216 ACTIVITIES</span></p>    
                 </div>
-                    <app-piflowchart [model1]="model1" [model2]="model2"></app-piflowchart>
+                <!-- <div class="varient-totalcount">
+                    <p>Hello</p>
+                </div> -->
+                    <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownload]="isdownload"></app-piflowchart>
 
                     <div class="buttons">
-                            <button class="down_btn"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
+                            <button (click)="downloadsvg()" class="down_btn"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
                             
-                        <button class="play_btn"><img class="actions_butns" src="..\assets\images\PI\play_icon.svg"></button>
+                        <button (click)="playAnimation()" class="play_btn" *ngIf="!isplay"><img class="actions_butns" src="..\assets\images\PI\play_icon.svg"></button>
+                        <button (click)="playAnimation()" class="play_btn stopbtn" *ngIf="isplay"><i class="fa fa-stop"></i></button>
                     </div>
                     <div>
                         <p class="download_label">Download</p>
-                        <p class="play_label">Play</p>
+                        <p class="play_label" *ngIf="!isplay">Play</p>
+                        <p class="play_label" *ngIf="isplay">Stop</p>
                     </div>
         </div>  
     </div>
     <div class="col-md-1">
         <div>
-        <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider [(ngModel)]="value" [options]="options" ></ng5-slider></div>
+        <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
         </div>
         <p class="slider_label Activities_slider">Activities</p>
         <div>
-        <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(ngModel)]="trackValue" [options]="options" ></ng5-slider></div>
+        <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(ngModel)]="pathvalue" [options]="options" ></ng5-slider></div>
         </div>
         <p class="slider_label Paths_slider">Paths</p>
     </div>
@@ -63,29 +73,38 @@
             <div class="varaint_headingOne">
                 <h5 class="varaint_heading">Explore by Variant</h5>
                 <div class="checkbox ">
-                    <label class="select_box"><input id="check_box" type="checkbox" value=""><span class="select_boxlabel">Select All</span> </label>
+                    <label class="select_box"><input id="check_box"  type="checkbox" #check_box='ngModel'   [(ngModel)]="checkboxValue" (change)="seleceAllVariants()"><span class="select_boxlabel">Select All</span> </label>
                 </div>
             </div>
                 <div class="form-group select_drpdwnone">
-                    <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint()" name="status" id="variant_drpdwn">
+                    <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
                         <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
                     </select>
                 </div>
-                <div>
-                    <p><span class="case_details">Case Details</span> <span class="case_time">Time Taken</span></p>
+                <div class="">
+                    <p class="case_heading"><span class="col-md-8 case-details">Case Details</span> <span class="col-sm-4 case-time">Time Taken</span></p>
                 </div>
+                <!-- [ngClass]="data.selected ==='active'? 'active':''" -->
                 <div class="details_box">
-                    <div class="show_details" *ngFor="let data of varaint_data">
-                            <span class="dot">{{data.case}}%</span>
-                            <p><span class="details_one">{{data.name}}</span> <span class="details_time">{{data.hours}}.00 Hrs</span> <br><span class="details_two">{{data.detail}}</span> </p>
-                        <div  class="details_hide"><p><span class="hide_detailsone"> {{data.varaintDetails}}</span> <span class="hide_detailstwo">{{data.casesCovred}}</span></p><hr>
-                        </div>
-                        <div class="details_hide">
-                                <button class="play_button"><img src="..\assets\images\PI\play_green_icon.svg"><span class="hide_plybtn">Play</span></button>
-                                <div class="checkbox varaint_export">
-                                        <label ><input type="checkbox" class="selectbox" value=""><span class="select_boxlabel">Select this varaint to export BPMN</span> </label>
+                    <div class="show_details" [ngClass]="data.selected ==='active'? 'active':''" *ngFor="let data of varaint_data; let i=index">
+                            <div class="row cases" (click)="caseIdSelect(data,i)">
+                                <span class="col-md-2 dot">{{data.casepercent}}%</span>
+                                        <span class="col-md-5 details_one">{{data.name}}</span>
+                                        <span class="col-md-4 details_time pull-right">{{data.Days}} Days</span>
+                                        <span class=" col-md-8 details_two">{{data.detail}}</span>
+                                </div>
+                    <div class="details_hide">
+                            <div  class="details_hideOne" (click)="caseIdSelect(data,i)">
+                                <span class="hide_detailsone"> {{data.varaintDetails}}</span> <span class="pull-right">{{data.casesCovred}}</span>
+                            </div>
+                            <hr>
+                            <div class=" ">
+                                    <button class="play_button" (click)="playAnimation()"><i class="fa fa-play"></i><span class="hide_plybtn">Play</span></button>
+                                    <div class="checkbox varaint_export">
+                                            <label ><input type="checkbox" class="selectbox" value=""><span class="select_boxlabel">Select this varaint to export BPMN</span> </label>
                                     </div>
-                        </div>    
+                            </div>
+                        </div>   
                     </div>
                 </div>
             <div>
@@ -96,25 +115,34 @@
 </div>
 </div>
 
-<div id="toolTipDIV" class="custom_tooltip">
-    <div class="node_tooltip"></div>
-    <div>
-        <p id="receive">Receive invoice </p>
-        <button type='button' class='filter_btn'  (click)="slideup()"><img src="..\assets\images\PI\filter_icon.svg"></button>
-    </div>
-        <div>
-            <p id="toolTipParagraph"></p>
-            <p id="toolTipText"></p>
-            <hr>
-        </div>
-        <div>
-            <button id="performance_btn"><img src="..\assets\images\PI\performance-clock.svg"></button>
-            <button id="frequency_btn"><img src="..\assets\images\PI\activity.svg"></button>
-        </div>
-        <div>
-            <p id="frequency_label">Frequency</p>
-            <p id="performance_label">Performance</p>
-    </div>
-</div>
 
-<app-filter [dataValues]='dataValues' [reports]='reports' ></app-filter>
+<div id="toolTipDIV" class="custom_tooltip">
+        <div class="node_tooltip"></div>
+        <div>
+            <p id="receive"><span id="nodename"></span></p>
+            <hr>
+            <!-- <button type='button' class='filter_btn'  (click)="slideup()"><img src="..\assets\images\PI\filter_icon.svg"></button> -->
+        </div>
+            <div [hidden]='isfrequency'>
+                <p id="toolTipParagraph"></p>
+                <p id="toolTipText"></p>
+                
+            </div>
+            <div [hidden]='!isfrequency'>
+                    <p id="toolTipParagraphone"></p>
+                    <p id="toolTipTextone"></p>
+            </div>
+            <div>
+                <button  id="performance_btn" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" (click)="performance()"><img src="..\assets\images\PI\performance-clock.svg"></button>
+                <button  id="frequency_btn" [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" (click)="frequency()"><img src="..\assets\images\PI\activity.svg"></button>
+            </div>
+            <div>
+                <p [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" id="frequency_label"><span class="isenablebtn">Frequency</span> </p>
+                <p [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
+        </div>
+    </div>
+
+
+<!-- <app-filter [model1]='model1' [reports]='reports' ></app-filter> -->
+
+

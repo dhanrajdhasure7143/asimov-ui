@@ -37,10 +37,45 @@
                     {{headValue}}
                     </th>
                 </tr>
+                <tr>
+                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader">
+                    <select name="category" class="form-control" *ngIf="headValue == 'Case ID' || headValue == 'Case ID '">
+                    <option>String</option>
+                    <option Selected>Integer</option>
+                    <option>Date/Time</option>
+                    </select>
+                    <select name="category" class="form-control" *ngIf="headValue == 'Actvity'">
+                    <option selected>String</option>
+                    <option>Integer</option>
+                    <option>Date/Time</option>
+                    </select>
+                    <select name="category" class="form-control" *ngIf="headValue == 'Start Timestamp'">
+                    <option>String</option>
+                    <option>Integer</option>
+                    <option selected>Date/Time</option>
+                    </select>
+                    <select name="category" class="form-control" *ngIf="headValue == 'End Timestamp'">
+                    <option>String</option>
+                    <option>Integer</option>
+                    <option selected>Date/Time</option>
+                    </select>
+                    <select name="category" class="form-control" *ngIf="headValue == 'Resource'">
+                    <option selected>String</option>
+                    <option>Integer</option>
+                    <option>Date/Time</option>
+                    </select>
+                    <select name="category" class="form-control" *ngIf="headValue == 'Role'">
+                    <option selected>String</option>
+                    <option>Integer</option>
+                    <option>Date/Time</option>
+                    </select>
+                    </th>
+                    
+                    </tr>
             </thead>
             <tbody #container>
                 <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" class="tableRow">
-                  <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event)"
+                  <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val)"
                     [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1" 
                     [class.invalid]="invalidCells['row'+i] && invalidCells['row'+i].indexOf('cell'+j)>-1"> 
                     {{row[j] || ' '}} 
@@ -51,3 +86,35 @@
       </form>
     </div>
 </div>
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+ 
+    <!-- Modal content -->
+    <div class="modal-content">
+    <div class="modal-header">
+    <span class="close" (click)="closePopup();">&times;</span>
+    <h4>Save Process</h4>
+    </div>
+    <div class="modal-body">
+    <form> 
+    <div class="container m-contanier">
+    <label for="category"><b>Select Category</b></label>
+    <select name="category" class="form-control">
+    <option>One</option>
+    <option>Two</option>
+    <option>Three</option>
+    </select>
+    <label for="psw"><b>Enter Process Name</b></label>
+    <input type="text" placeholder="" name="psw" required class="p-name">
+    <div class="clearfix m-btn">
+    <button type="button" class="btn btn-primary pi_btn" (click)="generateGraph()">Save & Generate</button>
+    </div>
+    </div>
+    </form>
+    
+    
+    </div>
+    </div>
+    
+    </div>

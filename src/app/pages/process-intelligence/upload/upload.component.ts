@@ -21,6 +21,8 @@ export class UploadComponent implements OnInit {
   xes_mime:string;
   db_mime:string;
   data;
+  public dbDetails={};
+  public isSave:boolean=true;
 
   constructor(private router: Router, private dt:DataTransferService, private rest:RestApiService, 
     private global: GlobalScript, private hints:PiHints, private ngxXml2jsonService: NgxXml2jsonService) { }
@@ -36,16 +38,22 @@ export class UploadComponent implements OnInit {
 
   getUID(id,name){
     if(id == 0){
-      let extension = name.split('.')[1];
-      if(extension == 'csv'){
-        id = 2;
-      }
-      if(extension.indexOf('xls') > -1){
-        id = 1
-      }
+    let extension = this.getFileExtension(name);
+    if(extension == 'csv'){
+    id = 2;
+    }
+    if(extension.indexOf('xls') > -1){
+    id = 1
+    }
     }
     return id;
-  }
+    }
+    
+    getFileExtension(filename)
+   {
+    var ext = /^.+\.([^.]+)$/.exec(filename);
+    return ext == null ? "" : ext[1];
+   }
  
   onSelect(event,upload_id) {
     let file:File = event.addedFiles[0];
@@ -84,13 +92,13 @@ export class UploadComponent implements OnInit {
       this.data = <any[][]>(XLSX.utils.sheet_to_json(ws, {header: 1, raw: false, range: 0}));
       // const ws2: XLSX.WorkSheet = wb.Sheets[wb.SheetNames[1]];
       this.dt.changePiData(this.data);    
-      this.router.navigate(['/pages/processIntelligence/datadocument']);  
+      this.router.navigate(['/pages/processIntelligence/datadocument']);
     };
     reader.readAsBinaryString(target[0]);
   }
 
   readCSVFile(e){
-    let reader = new FileReader();  
+    let reader = new FileReader();
     reader.readAsText(e.addedFiles[0]);
     let _self = this;  
     reader.onload = () => { 
@@ -131,5 +139,17 @@ export class UploadComponent implements OnInit {
     }
     fileReader.readAsText(file);
   }
+  onDbSelect(){
+    document.getElementById("foot").classList.remove("slide-down");
+    document.getElementById("foot").classList.add("slide-up");
+}
+slideDown(){
+  document.getElementById("foot").classList.add("slide-down");
+  document.getElementById("foot").classList.remove("slide-up");
+}
+testConnection(){
+console.log("userName",this.dbDetails);
+  this.isSave=false;
+}
 
 }

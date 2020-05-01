@@ -18,9 +18,10 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-2 upload_zone" id="upload_db">
-                        <ngx-dropzone (change)="onSelect($event,4)" [multiple]=false [accept]="db_mime" >
-                                <ngx-dropzone-label><img src ="assets/images/DataBase.svg">
+                <div class="col-sm-2 upload_zone" id="upload_db" (click)="onDbSelect()">
+                        <ngx-dropzone [multiple]=false [accept]="db_mime" >
+                                <ngx-dropzone-label>
+                                        <img src ="assets/images/DataBase.svg"> 
                                         <h5 style="color:#006ed5;font-weight: 300">
                                         <label>DB File</label></h5>
                                 </ngx-dropzone-label>
@@ -28,3 +29,95 @@
                 </div>
         </div>
 </div>
+
+<div id="foot">
+        <div  class="db_heading">               
+             <div class="container">
+                     <div class="col-md-12 row db_headingOne">
+                     <p>Database</p>
+                         <button type="button" class="close cross_close" aria-label="Close" (click)="slideDown()">
+                             <span aria-hidden="true">&times;</span>
+                         </button>
+                     </div>
+                     <div class='databaseForm'>
+                             <form autocomplete="off" class="col-sm-12" #database="ngForm">
+                                     <div class="row">
+                                             <div class="form-group col-sm-3">
+                                                     <div>
+                                                     <label for="type">Type</label>
+                                                     <select class="form-control" name="type" id="type" #type="ngModel" [(ngModel)]="dbDetails.dbType" required>
+                                                             <option [value]="undefined" disabled hidden>Select Type</option>
+                                                             <option value="Oracle">Oracle</option>
+                                                             <option value="RCBMS">RCBMS</option>
+                                                             <option value="MYSQL">MYSQL</option>
+                                                     </select>
+                                                     <span *ngIf="((type.invalid && database.submitted) || (type.errors && type.touched) )" 
+                                                             class='fa fa-info-circle errspan'> Type is required </span>
+                                                     </div>
+                                                     <div>
+                                                     <label for="connection">Connection Name</label>
+                                                     <input type="text" name="connection" #connection="ngModel" [(ngModel)]="dbDetails.connectionName" class="form-control" placeholder="Enter Connection Name" required/>
+                                                     <span *ngIf="((connection.invalid && database.submitted) || (connection.errors && connection.touched) )" 
+                                                             class='fa fa-info-circle errspan'> Connection Name is required </span>
+                                                     </div>
+                                                     <div>
+                                                     <label for="hostname">Host Name / IP</label>
+                                                     <input type="text" name="hostname" #hostname="ngModel" [(ngModel)]="dbDetails.hostName" class="form-control" placeholder="Enter Host Name" required/>
+                                                     <span *ngIf="((hostname.invalid && database.submitted) || (hostname.errors && hostname.touched) )" 
+                                                             class='fa fa-info-circle errspan'> Host Name/IPis required </span>
+                                                     </div>
+                                             </div>
+                                             <div class="form-group col-sm-3">
+                                                     <div>
+                                                     <label for="portnumber">Port Number</label>
+                                                     <select class="form-control" name="portnumber" id="portnumber" #portnumber='ngModel' [(ngModel)]="dbDetails.portNumber" required>
+                                                             <option [value]="undefined" disabled hidden>Select Port Number</option>
+                                                             <option value="8080">8080</option>
+                                                             <option value="8080">9090</option>
+                                                             <option value="8080">0101</option>
+                                                     </select>
+                                                     <span *ngIf="((portnumber.invalid && database.submitted) || (portnumber.errors && portnumber.touched) )" 
+                                                             class='fa fa-info-circle errspan'> Port Number is required </span>
+                                                     </div>
+                                                     <div>
+                                                     <label for="dbname">DB Name</label>
+                                                     <input type="text" name="dbname" #dbname='ngModel' [(ngModel)]="dbDetails.dbName" class="form-control" placeholder="Enter DB Name" required/>
+                                                     <span *ngIf="((dbname.invalid && database.submitted) || (dbname.errors && dbname.touched) )" 
+                                                             class='fa fa-info-circle errspan'> DB Name is required </span>
+                                                     </div>
+                                                     <div>
+                                                     <label for="tablename">Table Name</label>
+                                                     <input type="text" name="tablename" #tablename='ngModel' [(ngModel)]='dbDetails.tableName' class="form-control" placeholder="Enter Table Name" required/>
+                                                     <span *ngIf="((tablename.invalid && database.submitted) || (tablename.errors && tablename.touched) )" 
+                                                             class='fa fa-info-circle errspan'> Table Name is required </span>
+                                                     </div>
+                                             </div>
+                                             <div class='col-md-6'>
+                                             <div class="form-group col-sm-6">
+                                                     <div>
+                                                     <label for="username">User Name</label>
+                                                     <input type="text" name="username" #username='ngModel' class="form-control" [(ngModel)]='dbDetails.userName' placeholder="Enter User Name" required/>
+                                                     <span *ngIf="((username.invalid && database.submitted) || (username.errors && username.touched) )" 
+                                                             class='fa fa-info-circle errspan'> User Name is required </span>
+                                                     </div>
+                                                     <div>
+                                                     <label for="password">Password</label>
+                                                     <input type="password" name="password" #password='ngModel' [(ngModel)]='dbDetails.password' class="form-control" placeholder="Enter Password" required/>
+                                                     <span *ngIf="((password.invalid && database.submitted) || (password.errors && password.touched) )" 
+                                                             class='fa fa-info-circle errspan'> Password is required </span>
+                                                     </div>
+                                             </div>
+                                             <div class='col-sm-12 row connection-buttons'>
+                                                     <button class='btn btn-primary connection_btn' [disabled]='database.invalid || showErr' (click)="testConnection()">Test Connection</button>
+                                                     <button class='btn btn-primary save_btn' [disabled]='isSave'>Connect/Save</button>
+                                             </div>
+                                             
+                                             </div>
+                                             <!-- <div class="form-group col-sm-3">
+                                             </div> -->
+                                     </div>
+                             </form>
+                     </div>
+             </div>
+         </div>
+     </div>
