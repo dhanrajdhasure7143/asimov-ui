@@ -4,7 +4,7 @@
  
   "context" : ["**"],
  
-  "target" : "http://localhost:9191",
+  "target" : "http://bpsdev.epsoftinc.in/",
  
   "secure": false,
  

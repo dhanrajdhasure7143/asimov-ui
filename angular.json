@@ -133,6 +133,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "asimov"
+    }
+  },
+  "defaultProject": "asimov",
+  "cli": {
+    "analytics": false
+  }
 }
