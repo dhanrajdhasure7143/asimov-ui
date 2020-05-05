@@ -14,7 +14,7 @@
     <img class="imageI" src="/assets/images/Path 510.svg">
   </button>
   <button  type="button"
-  class="btn btn_style" aria-hidden="true" placement="bottom">
+  class="btn btn_style" aria-hidden="true" placement="bottom" (click)="saveBotFun()">
   <img class="imageI" src="/assets/images/Layer 1.svg">
 </button>
 <button  type="button"
@@ -106,20 +106,21 @@ class="btn btn_style" aria-hidden="true" placement="bottom">
   </div>
 </div>
   <div class="col-md-10 main">
-    <div class="drag-area" dndDropzone (dndDrop)="onDrop($event)">
+    <div class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)">
       <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{node.name}}"  class="dndDropzone" (contextmenu)="onRightClick(node.name, $event)"
+        <div id="{{node.name}}"  class="dndDropzone" (dblclick)="formNodeFunc(node.name)" (contextmenu)="onRightClick(node, $event,i)"
         [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
           <div class="connector-name">{{node.name}}</div>
           <div>
             <nav *ngIf ="optionsVisible" id="context-menu" class="context-menu contextmenu">
               <div class="context-menu1">
                 <div class="context-menu__item" *ngFor="let menu of stud">
-                  <a class="context-menu__link" id="{{menu.name}}" data-action="View">{{menu.name}}</a>
+                  <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu)"
+                   data-action="View">{{menu.name}}</a>
                 </div>
               </div>
             </nav>
-          </div>
+          </div>  
         </div>
       </ng-container>
     </div>
@@ -127,5 +128,16 @@ class="btn btn_style" aria-hidden="true" placement="bottom">
 </div>
 </div>
 
-
+<!--foms  -->
+<div *ngIf="hiddenPopUp" class="pop-up conainer">
+<div class="card">
+  <div class="card-header">
+    {{formHeader}}
+    <span class="cloos-css" (click)="closeFun()" >X</span>
+  </div>
+  <div class="container card-body">
+    <app-dynamic-forms [fields]="getFields()" (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
+  </div>
+</div>
+</div>
 

@@ -262,3 +262,26 @@
     margin: 45px;
     white-space: nowrap;
 }
+.card-header{
+  background: #f1eeee;
+    padding: 8px;
+    color: #0062cf;
+    font-weight: 700;
+    font-size: 16px;
+}
+.card{
+  border-top: 1px solid gray;
+  border-left: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    border-right: 1px solid lightgray;
+}
+.pop-up{
+  position: absolute;
+    bottom: 7px;
+    width: 98%;
+    background: white;
+    z-index: 1000;
+}
+.class-css{
+  cursor: pointer;float: right;font-weight: 700;border: 1px solid gray;padding: 1px 6px
+}
