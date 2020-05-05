@@ -5,6 +5,7 @@ import { RpaStudioComponent } from './rpa-studio/rpa-studio.component';
 import { RpautomationRoutingModule } from './rpautomation-routing.module';
 import { DndModule } from 'ngx-drag-drop';
 import {  ContextMenuModule } from 'ngx-contextmenu';
+import { DynamicFormBuilderModule } from './dynamic-form-builder/dynamic-form-builder.module';
 
 
 
@@ -16,7 +17,8 @@ import {  ContextMenuModule } from 'ngx-contextmenu';
     CommonModule,
     RpautomationRoutingModule,
     DndModule,
-    ContextMenuModule.forRoot()
+    ContextMenuModule.forRoot(),
+    DynamicFormBuilderModule
   ]
 })
 export class RpautomationModule { }

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -46,4 +47,10 @@ export class RestApiService {
   toolSet(){
     return this.http.get("/load-toolset");
   }
+  attribute(data:any){
+  return this.http.get('/get-attributes/'+data)
+  }
+  saveBot(data:any):Observable<any>{
+    return this.http.post('/save-bot',data)
+    }
 }
