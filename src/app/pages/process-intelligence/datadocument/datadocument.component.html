@@ -39,32 +39,32 @@
                 </tr>
                 <tr>
                     <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader">
-                    <select name="category" class="form-control" *ngIf="headValue == 'Case ID' || headValue == 'Case ID '">
+                    <select [disabled]='true' name="category" class="form-control" *ngIf="headValue == 'Case ID' || headValue == 'Case ID '">
                     <option>String</option>
                     <option Selected>Integer</option>
                     <option>Date/Time</option>
                     </select>
-                    <select name="category" class="form-control" *ngIf="headValue == 'Actvity'">
+                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'Actvity'">
                     <option selected>String</option>
                     <option>Integer</option>
                     <option>Date/Time</option>
                     </select>
-                    <select name="category" class="form-control" *ngIf="headValue == 'Start Timestamp'">
+                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'Start Timestamp'">
                     <option>String</option>
                     <option>Integer</option>
                     <option selected>Date/Time</option>
                     </select>
-                    <select name="category" class="form-control" *ngIf="headValue == 'End Timestamp'">
+                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'End Timestamp'">
                     <option>String</option>
                     <option>Integer</option>
                     <option selected>Date/Time</option>
                     </select>
-                    <select name="category" class="form-control" *ngIf="headValue == 'Resource'">
+                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'Resource'">
                     <option selected>String</option>
                     <option>Integer</option>
                     <option>Date/Time</option>
                     </select>
-                    <select name="category" class="form-control" *ngIf="headValue == 'Role'">
+                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'Role'">
                     <option selected>String</option>
                     <option>Integer</option>
                     <option>Date/Time</option>

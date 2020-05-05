@@ -74,62 +74,62 @@ export class DatadocumentComponent implements OnInit {
     return index;
   }
   selectedCell(tr_index, index,e, v){
-    this.headerName = v;
-    if(!e.srcElement.classList.contains("valid") && this.headerName){
-    let hdr_ar_index = this.headerData.indexOf(this.headerName);
-    let reg_expression;
-    let isDateCheck:boolean = false;
-    if(hdr_ar_index == 0){
-    reg_expression = new RegExp(/^[a-z\s0-9]{0,255}$/i);
-    } //alphanum check
-    isDateCheck = hdr_ar_index == 2 || hdr_ar_index == 3;
-    if(hdr_ar_index == 1 || hdr_ar_index == 4 || hdr_ar_index == 5 ){
-    reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i); //string check
-    }
-    let isInvalid:boolean = false;
-    for(var x = 0;x < this.fileData.length;x++){
-    if(!this.validCells['row'+x])
-    this.validCells['row'+x]=[];
-    if(!this.invalidCells['row'+x])
-    this.invalidCells['row'+x]=[];
-    let each_cell = this.fileData[x][index];
-    if( ( reg_expression && reg_expression.test(each_cell) ) || isDateCheck ){
-    if(isDateCheck){
-    try{
-    formatDate(each_cell, 'dd/MM/yyyy HH:mm:ss', 'en-US');
-    this.invalidCells['row'+x].splice(this.invalidCells['row'+x].indexOf('cell'+index), 1);
-    if(this.validCells['row'+x].indexOf('cell'+index) == -1)
-    this.validCells['row'+x].push('cell'+index);
-    }catch(e){
-    isInvalid = true;
-    if(this.invalidCells['row'+x].indexOf('cell'+index) == -1)
-    this.invalidCells['row'+x].push('cell'+index);
-    this.global.notify("Incorrect value for cell -"+(x+1), "error");
-    break;
-    }
-    }else{
-    this.invalidCells['row'+x].splice(this.invalidCells['row'+x].indexOf('cell'+index), 1);
-    if(this.validCells['row'+x].indexOf('cell'+index) == -1)
-    this.validCells['row'+x].push('cell'+index);
-    }
-    }else{
-    isInvalid = true;
-    if(this.invalidCells['row'+x].indexOf('cell'+index) == -1)
-    this.invalidCells['row'+x].push('cell'+index);
-    this.global.notify("Incorrect value for cell - "+(x+1), "error");
-    break;
-    }
-    }
-    if(!isInvalid){
-    if(this.step_id == this.headerData.length){
-    this.isValidPiData = true;
-    }else{
-    this.step_id = this.step_id+1;
-    }
-    this.headerData[index]=this.headerName;
-    this.headerName=this.headerData[hdr_ar_index+1];
-    }
-    }
+      this.headerName = v;
+      if(!e.srcElement.classList.contains("valid") && this.headerName){
+        let hdr_ar_index = this.headerData.indexOf(this.headerName);
+        let reg_expression;
+        let isDateCheck:boolean = false;
+      if(hdr_ar_index == 0){
+        reg_expression = new RegExp(/^\d+$/);
+      } //alphanum check
+        isDateCheck = hdr_ar_index == 2 || hdr_ar_index == 3;
+      if(hdr_ar_index == 1 || hdr_ar_index == 4 || hdr_ar_index == 5 ){
+        reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i); //string check
+      }
+      let isInvalid:boolean = false;
+      for(var x = 0;x < this.fileData.length;x++){
+      if(!this.validCells['row'+x])
+        this.validCells['row'+x]=[];
+      if(!this.invalidCells['row'+x])
+        this.invalidCells['row'+x]=[];
+        let each_cell = this.fileData[x][index];
+      if( ( reg_expression && reg_expression.test(each_cell) ) || isDateCheck ){
+      if(isDateCheck){
+      try{
+      formatDate(each_cell, 'dd/MM/yyyy HH:mm:ss', 'en-US');
+        this.invalidCells['row'+x].splice(this.invalidCells['row'+x].indexOf('cell'+index), 1);
+      if(this.validCells['row'+x].indexOf('cell'+index) == -1)
+        this.validCells['row'+x].push('cell'+index);
+      }catch(e){
+      isInvalid = true;
+      if(this.invalidCells['row'+x].indexOf('cell'+index) == -1)
+        this.invalidCells['row'+x].push('cell'+index);
+        this.global.notify("Incorrect value for header " +this.headerName+ " at cell - "+(x+1), "error");
+      break;
+      }
+      }else{
+      this.invalidCells['row'+x].splice(this.invalidCells['row'+x].indexOf('cell'+index), 1);
+      if(this.validCells['row'+x].indexOf('cell'+index) == -1)
+      this.validCells['row'+x].push('cell'+index);
+      }
+      }else{
+      isInvalid = true;
+      if(this.invalidCells['row'+x].indexOf('cell'+index) == -1)
+      this.invalidCells['row'+x].push('cell'+index);
+      this.global.notify("Incorrect value for header " +this.headerName+ " at cell - "+(x+1), "error");
+      break;
+      }
+      }
+      if(!isInvalid){
+      if(this.step_id == this.headerData.length){
+      this.isValidPiData = true;
+      }else{
+      this.step_id = this.step_id+1;
+      }
+      this.headerData[index]=this.headerName;
+      this.headerName=this.headerData[hdr_ar_index+1];
+      }
+      }
     }
 
   resetColMap(){

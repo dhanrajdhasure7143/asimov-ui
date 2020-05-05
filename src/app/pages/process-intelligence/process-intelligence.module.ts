@@ -17,6 +17,7 @@ import { FilterComponent } from './filter/filter.component'
 import { FlowchartComponent } from './flowchart/flowchart.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { PiHints } from './model/process-intelligence-module-hints';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { PiHints } from './model/process-intelligence-module-hints';
     NgxChartsModule,
     NgxDropzoneModule,
     ProcessIntelligenceRoutingModule,
-    SharedModule
+    SharedModule,
+    MatExpansionModule
   ],
   providers:[PiHints]
 
