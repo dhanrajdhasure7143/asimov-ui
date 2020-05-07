@@ -103,14 +103,15 @@ li.breadcrumb_li{
   width: 36%;
 }
 div.breadcrumb {
-  font-size: 13px;
+  font-size: 12px;
 }
 div.breadcrumb span{
   user-select: none;
   cursor: pointer;
 }
 div.breadcrumb span:hover{
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-size: 13px;
 }
 div.breadcrumb span:focus, div.breadcrumb span:active{
   outline: none;
@@ -155,7 +156,7 @@ label{
 }
 li a:hover, li a:active{
   background-color: #0061cf !important;
-  color:white;
+  color:white !important;
 }
 li a:hover label, li a:active label{
   color:white;
@@ -218,21 +219,19 @@ i.fas.fa-chevron-down {
   position: absolute;
   background-color: inherit;
   min-width: 105px;
-  overflow: auto;
   z-index: 1;
   border:1px solid #0062cf;
-  margin-left: -21px;
+  margin-left: -40px;
   margin-right: 0px;
 }
-
 .dropdown-content a {
   color: #0062cf;
-  padding: 12px 8px;
+  padding: 0px 0px !important;
   text-decoration: none;
   display: block;
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {background-color: #ddd !important;}
 
 .show {display: block;} 
 .fa-cog{

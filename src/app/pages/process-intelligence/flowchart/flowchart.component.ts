@@ -58,6 +58,7 @@ export class FlowchartComponent implements OnInit {
   public arrayLink: any;
   linkData = [];
   linkdataArray = [];
+  public nestedArray:any[]=[];
   options: Options = {
     floor: 0,
     ceil: 100,
@@ -93,7 +94,7 @@ export class FlowchartComponent implements OnInit {
     this.rangevalue = ZoomSlider.rangeValue;
   }
 
-  onchangeVaraint(datavariant, index) {
+  onchangeVaraint(datavariant) {
     // console.log("variantdata",datavariant);
     switch (datavariant) {
       case "0":
@@ -230,6 +231,7 @@ export class FlowchartComponent implements OnInit {
 
       var outArr = [];
       var m = this
+
       modelDataArray[0].nodeDataArraycase.forEach(function (value, i) {
         // console.log(value);
         modelDataArray[1].nodeDataArraycase.forEach(function (value1, j) {
@@ -241,13 +243,11 @@ export class FlowchartComponent implements OnInit {
                 value.linkArray.forEach(e1 => {
                   console.log(e1 + "::::");
                   value1.linkArray.forEach(e2 => {
-
                     if (e1 != e2) {
-
-
+  
                       value.linkArray.push(e2);
                       console.log(value);
-
+  
                       value.linkArray = m.removeDuplicates(value.linkArray);
                     }
                   });
@@ -264,26 +264,118 @@ export class FlowchartComponent implements OnInit {
                     console.log(value);
                   });
                 }
-
+  
               }
-
+  
             }
-            outArr.push(value);
-
+            if (value.hasOwnProperty('toolCount') && value1.hasOwnProperty('toolCount')){
+            var sum = value.toolCount.map(function (num, idx) {
+              return num + value1.toolCount[idx];
+            });
+            value.toolCount=sum
           }
-
-
+          // value.toolCount=sum
+            outArr.push(value);
+          }
         });
-
       });
-      console.log('outerArr',outArr);
-      
-      console.log(this.removeDuplicates(outArr))
+console.log('outArr1',outArr);
+
+      if(this.selectedCaseArry.length > 2){
+var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
+console.log('outArr12',outArr);
+
+        this.multynodeArray(outArr,modalData)
+      }
+    // this.nestedArray=outArr;
+
+      // if(this.selectedCaseArry.length >2){
+      //   console.log(this.selectedCaseArry);
+        
+      // for(var i=2; i < this.selectedCaseArry.length; i++){
+      //   // var k=2;
+      //   // while(this.selectedCaseArry.length ){
+
+      //     console.log('nestedArray',this.nestedArray,this.selectedCaseArry[i]);
+        
+      //   if (this.keyExists(this.selectedCaseArry[i], this.pgModel.flowchartData) == true) {
+      //     var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[i]]
+      //     // console.log('modalData',modalData);
+          
+      //   this.multynodeArray(this.nestedArray,modalData)
+        
+      //     // k+1;
+      //   }
+
+      //   }
+
+      // }
+
+    // }
+    
+
           this.model1=outArr
           this.model2=this.flowchartData(this.model1)
 
       this.isDefaultData = false;
     }
+  }
+
+  multynodeArray(outArray,modeaValue){
+    var outArr=[];
+    var m=this
+    console.log('outArraym',outArray);
+    console.log('modeaValuem',modeaValue);
+    
+    outArray.forEach(function (value, i) {
+      // console.log(value);
+      modeaValue.nodeDataArraycase.forEach(function (value1, j) {
+        //console.log(value1)
+        if (value.name === value1.name) {
+          if (value.hasOwnProperty('linkArray') && value1.hasOwnProperty('linkArray')) {
+            // console.log(value.linkArray.length);
+            if (value.linkArray.length != 0 && value1.linkArray.length != 0) {
+              value.linkArray.forEach(e1 => {
+                // console.log(e1 + "::::");
+                value1.linkArray.forEach(e2 => {
+                  if (e1 != e2) {
+
+                    value.linkArray.push(e2);
+                    // console.log(value);
+
+                    value.linkArray = m.removeDuplicates(value.linkArray);
+                  }
+                });
+              });
+            } else {
+              if (value.linkArray.length == 0) {
+                value1.linkArray.forEach(e2 => {
+                  value.linkArray.push(e2);
+                  // console.log(value);
+                });
+              } else {
+                value.linkArray.forEach(e1 => {
+                  value.linkArray.push(e1);
+                  // console.log(value);
+                });
+              }
+
+            }
+
+          }
+          if (value.hasOwnProperty('toolCount') && value1.hasOwnProperty('toolCount')){
+          var sum = value.toolCount.map(function (num, idx) {
+            return num + value1.toolCount[idx];
+          });
+          value.toolCount=sum
+        }
+        // value.toolCount=sum
+          outArr.push(value);
+          console.log('outarraynested',outArr);
+        }
+      });
+    });
+    // this.nestedArray=outArr;
   }
   removeDuplicates(array) {
     return array.filter((a, b) => array.indexOf(a) === b)
@@ -353,10 +445,7 @@ export class FlowchartComponent implements OnInit {
   flowchartData(dataArray) {
     this.linkData = [];
     this.linkdataArray = [];
-    // console.log('model',this.pgModel.allData);
-
     this.nodeArray = dataArray;
-
     for (var i = 0; i < this.nodeArray.length; i++) {
       //console.log(this.nodeArray[i]);
       var link = this.nodeArray[i].linkArray;
@@ -367,7 +456,7 @@ export class FlowchartComponent implements OnInit {
           var obj = {};
           obj['from'] = this.getFromKey(label);
           obj['to'] = this.getFromKey(link[a]);
-          // obj['text'] = this.nodeArray[i].toolCount[0]
+          obj['text'] = this.nodeArray[i].toolCount[0]
           this.linkdataArray.push(obj);
         }
 

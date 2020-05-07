@@ -10,7 +10,7 @@ export class ProcessGraphModel{
         "count": 80,
         "linkArray": ["Scan Invoice"],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
-        "toolCount": [1, 342, 58, 40, 40, 91, 42, 58]
+        "toolCount": [1, 2, 3, 4, 5, 6, 7, 8]
         },
         {
         "key": 1,
@@ -26,7 +26,7 @@ export class ProcessGraphModel{
         "count": 80,
         "linkArray": ["Due Date Passed"],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
-        "toolCount": [1, 342, 58, 40, 0, 91, 42, 58]
+        "toolCount": [7, 32, 58, 40, 0, 91, 42, 58]
         },
         {
         "key": 3,
@@ -34,7 +34,7 @@ export class ProcessGraphModel{
         "count": 80,
         "linkArray": ["Clear Invoice"],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
-        "toolCount": [2, 342, 58, 40, 40, 91, 42, 58]
+        "toolCount": [6, 342, 58, 40, 40, 91, 42, 58]
         },
         {
         "key": 4,
@@ -68,7 +68,7 @@ export class ProcessGraphModel{
             "count": 80,
             "linkArray": ["Scan Invoice", "Book Invoice"],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
-            "toolCount": [1, 342, 58, 40, 40, 91, 42, 58]
+            "toolCount": [10, 20, 30, 40, 50, 60, 70, 80]
             },
             {
             "key": 1,
@@ -84,7 +84,7 @@ export class ProcessGraphModel{
             "count": 80,
             "linkArray": ["Due Date Passed", "Clear Invoice"],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
-            "toolCount": [1, 342, 58, 40, 0, 91, 42, 58]
+            "toolCount": [7, 32, 58, 40, 0, 91, 42, 58]
             },
             {
             "key": 3,
@@ -165,7 +165,7 @@ export class ProcessGraphModel{
             "key": 5,
             "name": "Due Date Passed",
             "count": 80,
-            "linkArray": [],
+            "linkArray": ["Scan Invoice"],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [66, 342, 58, 0, 0, 42, 58, 66]
             },

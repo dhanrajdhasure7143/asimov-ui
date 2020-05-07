@@ -1,0 +1,25 @@
+.login-btn{
+    margin-left: 82% !important;
+}
+.login-bg img{
+    width: 600px;
+}
+.inner-addon img {
+    position: absolute;
+    padding: 10px;
+    pointer-events: none;
+    width: 40px;
+}
+.left-addon input  { padding-left:  50px; }
+.left-addon select { padding-left:  50px;}
+.right-addon input { padding-right: 20px; }
+
+#particles-js {
+    position: absolute;
+    z-index: 0;
+    width: 50%;
+    height: 620px;
+    background-color: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }

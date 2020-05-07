@@ -1,8 +1,10 @@
 <div class="container">
         <div class="row">
+                <div class='col-md-6 test'>
                 <h1>Connect Your Data</h1>
                 <h4 class="subtitle">Select below options to get your data</h4>
-                <div class="col-sm-2 upload_zone" id="upload_xl">
+                
+                <div class="col-sm-3 upload_zone" id="upload_xl">
                         <ngx-dropzone (change)="onSelect($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/Group 279.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
@@ -10,7 +12,7 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-2 upload_zone" id="upload_xes">
+                <div class="col-sm-3 upload_zone" id="upload_xes">
                         <ngx-dropzone (change)="onSelect($event,3)" [multiple]=false [accept]="xes_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/XES.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
@@ -18,8 +20,8 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-2 upload_zone" id="upload_db" (click)="onDbSelect()">
-                        <ngx-dropzone [multiple]=false [accept]="db_mime" >
+                <div class="col-sm-3 upload_zone" id="upload_db" (click)="onDbSelect()">
+                        <ngx-dropzone [multiple]=false [accept]="db_mime" [disableClick]=true >
                                 <ngx-dropzone-label>
                                         <img src ="assets/images/DataBase.svg"> 
                                         <h5 style="color:#006ed5;font-weight: 300">
@@ -27,6 +29,43 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
+                </div>
+                <div class="col-md-6">
+                        <div>
+                                <h4>My Work space</h4>
+                        </div>
+                                <div class="row col-md-12">
+                                  <div class="col-md-3">Process Name</div>
+                                  <div class="col-md-3">Date Time</div>
+                                  <div class="col-md-3">Category Type</div>
+                                  <div class="col-md-2">Status</div>
+                                  <!-- <div class="col-md-1">
+                                    Comment
+                                  </div> -->
+                                </div>
+                                <div class="row col-md-12">
+                                  <mat-accordion>
+                                    <mat-expansion-panel >
+                                      <mat-expansion-panel-header>
+                                        <mat-panel-title>
+                                          <div class="row">
+                                            <div class="col-md-3">Process name</div>
+                                            <div class="col-md-3">05/05/2020</div>
+                                            <div class="col-md-3">Get the approver name</div>
+                                            <div class="col-md-2">Active</div>
+                                            <!-- <div class="col-md-1">
+                                              <span class="comment">
+                                                <i class="fa fa-comment"></i> <span class="comment-tip"></span>
+                                              </span>
+                                            </div> -->
+                                          </div>
+                                        </mat-panel-title>
+                                      </mat-expansion-panel-header>
+                                      <div [class]="'diagram_container'+i"></div>
+                                    </mat-expansion-panel>
+                                  </mat-accordion>
+                                </div>
+                            </div>
         </div>
 </div>
 
@@ -108,7 +147,7 @@
                                                      </div>
                                              </div>
                                              <div class='col-sm-12 row connection-buttons'>
-                                                     <button class='btn btn-primary connection_btn' [disabled]='database.invalid || showErr' (click)="testConnection()">Test Connection</button>
+                                                     <button class='btn btn-primary connection_btn' [disabled]='database.invalid' (click)="testConnection()">Test Connection</button>
                                                      <button class='btn btn-primary save_btn' [disabled]='isSave'>Connect/Save</button>
                                              </div>
                                              

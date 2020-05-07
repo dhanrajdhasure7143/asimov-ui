@@ -21,7 +21,7 @@ export class UploadComponent implements OnInit {
   xes_mime:string;
   db_mime:string;
   data;
-  public dbDetails={};
+  public dbDetails:any={};
   public isSave:boolean=true;
 
   constructor(private router: Router, private dt:DataTransferService, private rest:RestApiService, 

@@ -1,0 +1,18 @@
+.abrand_div img{
+    width:190px;
+}
+.notification-icon{
+    margin-top: -24px !important;
+    margin-right: 20px;
+    cursor: pointer;
+}
+.dropdown-content a{
+    height: 30px !important;
+}
+.icon_middle label{
+    margin-top: 5px;
+    line-height: 1.4 !important;
+}
+.dropdown-content a{
+    padding-left: 0px !important;
+}
