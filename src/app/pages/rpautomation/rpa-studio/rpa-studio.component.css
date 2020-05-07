@@ -281,7 +281,13 @@
     width: 98%;
     background: white;
     z-index: 1000;
+    top:410px;
 }
 .class-css{
   cursor: pointer;float: right;font-weight: 700;border: 1px solid gray;padding: 1px 6px
+}
+.download{
+    position: absolute;
+    top: 387px;
+    left:0px;
 }

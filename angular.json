@@ -35,7 +35,8 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/enjoyhint/src/jquery.enjoyhint.js",
               "src/enjoyhint/src/enjoyhint.js",
-              "src/assets/js/kinetic.js"
+              "src/assets/js/kinetic.js",
+           
             ]
           },
           "configurations": {
