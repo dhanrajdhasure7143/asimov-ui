@@ -16,6 +16,7 @@ export class UploadProcessModelComponent implements OnInit,AfterViewInit {
    hideUploadContainer:boolean=false;
    hideCreateContainer:boolean=false;
    hideOptionsContainer:boolean=true;
+   receivedConfbpmn:any;
    bpmnModeler;
    viewer:any;
    oldBpmnModeler;
@@ -66,6 +67,26 @@ export class UploadProcessModelComponent implements OnInit,AfterViewInit {
      (err =>{
        console.log(err);
      }));
+     this.bpmnservice.sendConfdata.subscribe(x=>{
+      this.receivedConfbpmn=x;
+      if(this.receivedConfbpmn){
+        let bpmnFileName = this.receivedConfbpmn;
+        let bpmnFilePath = "assets/resources/"+bpmnFileName;
+        this.rest.getBPMNFileContent(bpmnFilePath).subscribe(x => {
+          this.newBpmnModeler.importXML(x, function(err){
+            if(err){
+              return console.error('could not import BPMN 2.0 diagram', err);
+            }
+          })
+          })
+        
+      }
+    },
+   
+    (err =>{
+      console.log(err);
+    }));
+   
    }
    
    uploadBpmn(){

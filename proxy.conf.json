@@ -1,12 +1,17 @@
 [
   {
-    
-      "context": [
-        "/api/**"
-      ],
-      "target": "http://bpsdev.epsoftinc.in/",
-      "secure": false,
-      "logLevel": "debug",
-      "changeOrigin": true
-    }
+ 
+  "context" : ["**"],
+ 
+  "target" : "http://bpsdev.epsoftinc.in/",
+ 
+  "secure": false,
+ 
+  "logLevel": "debug",
+ 
+  "changeOrigin": true
+ 
+  }
+ 
   ]
+ 
