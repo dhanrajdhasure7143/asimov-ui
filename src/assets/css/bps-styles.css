@@ -246,6 +246,23 @@ div[class^='diagram_container']{
 .viewOnly .viewport{
   transform: scale(0.4);
 }
+.overview_icon:not([aria-disabled=true]) {
+  cursor: pointer !important;
+}
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+  cursor: default;
+}
+.mat-expansion-panel-header {
+ padding: 0 0px !important;
+}
+
+button{
+cursor: pointer
+}
+.overview_icon
+{
+  padding-left: 48px !important;
+}
 /* shared bpmn-diagram component styles - Ends*/
 /* bpmn-diagram-list component styles - Starts*/
 .account_pay_details_table tr{

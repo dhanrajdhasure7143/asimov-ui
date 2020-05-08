@@ -7,6 +7,7 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from '../../services/rest-api.service';
 import { GlobalScript } from '../../../shared/global-script';
 import { PiHints } from '../model/process-intelligence-module-hints';
+import { ngxCsv } from 'ngx-csv/ngx-csv';
 
 declare var target:any;
 
@@ -131,5 +132,21 @@ export class UploadComponent implements OnInit {
     }
     fileReader.readAsText(file);
   }
+  downloadCSV() {
+    var data=[];
+    var options = {
+      fieldSeparator: ',',
+      quoteStrings: '"',
+      decimalseparator: '.',
+      showLabels: true,
+      showTitle: true,
+      useBom: true,
+      headers: ['Case_id', 'Start_Timestamp', 'End_Timestamp', 'Activity', 'Resource','Role']
+    };
+
+    new ngxCsv(data,'Sample_Template',options);
+  
+  }
+
 
 }

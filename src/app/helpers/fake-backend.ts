@@ -11,12 +11,23 @@ export class BackendURLInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         this.setLocalStorage(req);
         //authentication service logic - post integration with AIOTAL
+                 console.log(this.config.bussinessProcessEndPoint,"fdfgdgdgdsfgdsfgdsfgs");
+                 
+       if (req.url.indexOf('bpsprocess') > -1) {
         req = req.clone({
-            url : this.getRequestUrl(req) + req.url,
-            body: req.body,
-            headers: req.headers,
-            // responseType: 'arraybuffer'
+         url: this.config.bussinessProcessEndPoint + req.url,
+          body: req.body,
+          headers: req.headers
         });
+
+    }
+    else{
+        req = req.clone({
+            url: this.config.bussinessProcessEndPoint + req.url,
+             body: req.body,
+             headers: req.headers
+           });
+    }
         return next.handle(req);
     }
 
