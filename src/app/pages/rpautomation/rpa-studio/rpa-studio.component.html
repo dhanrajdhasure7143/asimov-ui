@@ -37,15 +37,37 @@ class="btn btn_style" aria-hidden="true" placement="bottom">
     <button  type="button"
       class="btn btn_style1" aria-hidden="true" placement="bottom">
       <div class="row rob-s">
-      <img class="imageI1" src="/assets/images/iconfinder_icon-play_211876.svg">
-      <p>start</p>
+      <div *ngIf="!playToggle">
+    <button (click)="playBot(); playToggle = true">
+        <p class="start-icon"><i class="fa fa-play"></i>
+          <span class="start-play">start</span>
+        </p>
+    </button>
+    </div>
+     <div *ngIf="playToggle">
+    <button (click)="pauseBot(); playToggle = false">
+      <p class="start-icon"><i class="fa fa-pause"></i>
+        <span class="start-play">pause</span></p>
+    </button>
+    </div>
+
     </div>
     </button>
     <button  type="button"
       class="btn btn_style1" aria-hidden="true" placement="bottom">
       <div class="row rob-s">
-      <img class="imageI1" src="/assets/images/Rectangle 111.svg">
-      <p>run</p>
+        <div *ngIf="!playToggle1">
+          <button (click)="stopBot(); playToggle1 = true">
+            <p class="start-icon"><i class="fa fa-stop"></i>
+              <span class="start-play">Stop</span></p>
+          </button>
+        </div>
+        <div *ngIf="playToggle1">
+        <button (click)="resumeBot(); playToggle1 = false">
+          <p class="start-icon"><i class="fa fa-step-forward"></i>
+            <span class="start-play">Resume</span></p>
+        </button>
+      </div>
   </div>
     </button>
     <button  type="button"
@@ -98,21 +120,24 @@ class="btn btn_style" aria-hidden="true" placement="bottom">
 <div class="nodes" *ngFor="let node of templateNodes | slice:0:show; let i=index">
     <div class="" [dndDraggable]="node">
       <span>
-          <img [src]="node.path" class="con-img"> 
+          <img [src]="node.path" class="con-img">
       </span>
     </div>
   </div>
   <div class="slice-icon" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
   </div>
 </div>
+
+
   <div class="col-md-10 main">
-    <div class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)">
+    <div #content>
+       <div class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)"id="content">
       <ng-container *ngFor="let node of nodes; let i = index">
         <div id="{{node.name}}"  class="dndDropzone" (dblclick)="formNodeFunc(node.name)" (contextmenu)="onRightClick(node, $event,i)"
         [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
           <div class="connector-name">{{node.name}}</div>
           <div>
-            <nav *ngIf ="optionsVisible" id="context-menu" class="context-menu contextmenu">
+            <nav *ngIf ="selectedNode.name===node.name"  id="context-menu" class="context-menu contextmenu">
               <div class="context-menu1">
                 <div class="context-menu__item" *ngFor="let menu of stud">
                   <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu)"
@@ -120,10 +145,16 @@ class="btn btn_style" aria-hidden="true" placement="bottom">
                 </div>
               </div>
             </nav>
-          </div>  
+          </div>
         </div>
       </ng-container>
-    </div>
+         </div>
+      </div>
+      </div>
+  <div class="download">
+    <button type="button"aria-hidden="true" placement="bottom"(click)="downloadPDF()" id="donwloadpdf">
+      <img src="..\assets\downloadimage.svg">
+    </button>
   </div>
 </div>
 </div>

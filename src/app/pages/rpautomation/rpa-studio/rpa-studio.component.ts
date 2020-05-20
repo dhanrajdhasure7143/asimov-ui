@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef  } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb } from 'jsplumb';
@@ -7,6 +7,9 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
 import { RestApiService } from '../../services/rest-api.service';
 import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuContent.component';
 import { FormGroup, FormControl } from '@angular/forms';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as $ from 'jquery';
 
 
 
@@ -21,7 +24,13 @@ export class RpaStudioComponent implements OnInit {
   public databaseValue:any = [];
   public developercondValue:any = [];
   public excelValue:any = [];
-  public optionsVisible : boolean = true;
+  public optionsVisible : any;
+  // currentTime = 0;
+  // interval;
+  start :any;
+  pause :any;
+  resume :any;
+  stop:any;
   result:any = [];
   jsPlumbInstance;
   nodes = [];
@@ -31,6 +40,7 @@ export class RpaStudioComponent implements OnInit {
   show: number;
   toolSetData: void;
   changePx: { x: number; y: number; };
+
   // forms
   public hiddenPopUp:boolean = false;
   public form: FormGroup;
@@ -44,7 +54,8 @@ export class RpaStudioComponent implements OnInit {
   allFormValues: any[] = [];
   saveBotdata:any = [];
   selectedTasks: any[] = [];
-  constructor(private rest:RestApiService) { 
+
+  constructor(private rest:RestApiService) {
     this.form = new FormGroup({
       fields: new FormControl(JSON.stringify(this.fields))
     })
@@ -57,6 +68,7 @@ export class RpaStudioComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.rest.toolSet().subscribe(data => {
       let value:any = [];
       let subValue:any = []
@@ -136,9 +148,9 @@ export class RpaStudioComponent implements OnInit {
     this.fieldValues = event
     // localStorage.setItem('formValue', event)
   }
-  
+
   increaseShow() {
-    this.show += 5; 
+    this.show += 5;
   }
   ngAfterViewInit() {
 
@@ -170,7 +182,7 @@ export class RpaStudioComponent implements OnInit {
       x: mousePos.x + 'px',
       y: mousePos.y + 'px'
     };
-    
+
     const node = event.data;
     const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
     console.log(nodeWithCoordinates);
@@ -187,12 +199,12 @@ export class RpaStudioComponent implements OnInit {
     this.nodes[nodeIndex].y = dragNode.y;
   }
   populateNodes(nodeData){
-        
+
     const nodeIds = this.nodes.map(function (obj) {
       return obj.name;
     });
     var self = this;
-    this.jsPlumbInstance.draggable(nodeIds, 
+    this.jsPlumbInstance.draggable(nodeIds,
       {
       containment: true,
       stop: function (element) {
@@ -201,10 +213,10 @@ export class RpaStudioComponent implements OnInit {
     });
 
     const rightEndPointOptions = {
-      endpoint: ['Rectangle', { 
+      endpoint: ['Rectangle', {
         radius: 4,
-        cssClass:"myEndpoint", 
-        width:8, 
+        cssClass:"myEndpoint",
+        width:8,
         height:8
       }],
       isSource: true,
@@ -219,10 +231,10 @@ export class RpaStudioComponent implements OnInit {
     };
 
     const leftEndPointOptions = {
-      endpoint: ['Rectangle', { 
+      endpoint: ['Rectangle', {
         radius: 4,
-        cssClass:"myEndpoint", 
-        width:8, 
+        cssClass:"myEndpoint",
+        width:8,
         height:8
       }],
       isTarget: true,
@@ -243,7 +255,7 @@ export class RpaStudioComponent implements OnInit {
 
 
 
-  
+
   getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {
@@ -259,15 +271,15 @@ export class RpaStudioComponent implements OnInit {
     this.selectedNode.id = menu.id;
     // this.selectedNode.push(menu.id)
     console.log(this.selectedNode);
-    
+
   }
   onRightClick(n: any,e: { target: { id: string; } },i: string | number) {
     this.selectedNode = n
-    console.log(e);
+    console.log(i);
     this.stud = [];
     if(n.tasks.length>0){
       this.optionsVisible = true;
-      let value:any = []
+      let value:any =[]
     n.tasks.forEach(element => {
     let temp:any = {
       name : element.name,
@@ -276,10 +288,7 @@ export class RpaStudioComponent implements OnInit {
     this.stud.push(temp)
   })
     }
-    // if (!n) {
-    //   this.optionsVisible = false
-    // }
-    else 
+    else
     {
       this.optionsVisible = false
       this.stud = [{
@@ -325,7 +334,7 @@ export class RpaStudioComponent implements OnInit {
         "metaAttrValue": ele.name,
          "attrValue": this.fieldValues[objKeys[i]]
       }
-      this.allFormValues.push(obj)    
+      this.allFormValues.push(obj)
   })
   console.log(this.allFormValues);
   this.saveBotdata = {
@@ -339,7 +348,62 @@ export class RpaStudioComponent implements OnInit {
   }
   successCallBack(data) {
     console.log(data);
-    
+
   }
-} 
+  downloadPDF() {
+    const HTML_Width = $('#content').width();
+    const HTML_Height = $('#content').height();
+    const top_left_margin = 15;
+    const PDF_Width = HTML_Width + (top_left_margin * 2);
+    const PDF_Height = (PDF_Width) + (top_left_margin * 2);
+    const canvas_image_width = HTML_Width;
+    const canvas_image_height = HTML_Height;
+
+    const totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+    window.scrollTo(0, 0);
+    html2canvas($('#content')[0], { allowTaint: true }).then((canvas) => {
+      canvas.getContext('2d');
+
+      console.log(canvas.height + '  ' + canvas.width);
+
+
+      const imgData = canvas.toDataURL('data:' + 'image/png' + ';base64,', 1.0);
+      const pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+      // pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+
+
+
+      for (let i = 1; i <= totalPDFPages; i++) {
+        pdf.addPage(PDF_Width, PDF_Height);
+        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+      }
+
+      pdf.save('RPA.pdf');
+    });
+  }
+  playBot(botId){
+    this.start;
+  }
+  pauseBot(botId){
+    this.rest.getUserResume(botId).subscribe(data =>{
+      this.pause = data;
+    })
+  }
+  resumeBot(botId){
+    this.rest.getUserPause(botId).subscribe(data =>{
+      this.start = data;
+    })
+  }
+  stopBot(botId){
+    this.stop;
+  }
+}
+
+
+
+
+
+
+
 

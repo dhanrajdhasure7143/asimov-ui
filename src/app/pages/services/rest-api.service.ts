@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
 
 @Injectable({
   providedIn: 'root'
@@ -53,4 +54,11 @@ export class RestApiService {
   saveBot(data:any):Observable<any>{
     return this.http.post('/save-bot',data)
     }
+  getUserPause(botId):Observable<any> {
+    return this.http.post('/pause-bot/41',botId)
+  }
+
+  getUserResume(botId):Observable<any> {
+    return this.http.post('/resume-bot/41',botId)
+  }
 }
