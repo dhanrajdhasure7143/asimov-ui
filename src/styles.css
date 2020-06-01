@@ -34,7 +34,7 @@ body, html {
 }
 /* Scroll bar styles :: ends */
 /* Top Nav :: starts */
-ul.nav.nav-tabs.justify-content-start {
+/* ul.nav.nav-tabs.justify-content-start {
     padding: 0% 10%;
     background: #f2f9ff;
 }
@@ -75,7 +75,7 @@ ul.nav.nav-tabs.justify-content-start {
 }
 .nav-tabs .nav-item {
   margin-bottom: -25px;
-}
+} */
 /* generic styles */
 .right{
   float:right;
@@ -105,11 +105,26 @@ div[class^='diagram_container'] .djs-container svg{
 .bjs-powered-by{
   display:none !important;/* Against the license agreement */
 }
-.tabscomp .nav-link{
+/* .tabscomp .nav-link{
   padding-left: 50px !important;
-}
+} */
 th {
   color: #464646;
   font-size: 13px;
   font-weight: 700;
+}
+ul.nav.nav-tabs.justify-content-start li {
+  height: 38px !important;
+}
+ul.nav.nav-tabs.justify-content-start li a {
+    color: #000;
+    background: lightgray;
+}
+ul.nav.nav-tabs.justify-content-start{
+  justify-content: start;
+    margin-left: 3px;
+}
+a.nav-link.active {
+  color: white !important;
+  background: #0061cf !important;
 }

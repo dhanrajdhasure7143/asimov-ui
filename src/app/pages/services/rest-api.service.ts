@@ -55,10 +55,20 @@ export class RestApiService {
     return this.http.post('/save-bot',data)
     }
   getUserPause(botId):Observable<any> {
-    return this.http.post('/pause-bot/41',botId)
+    return this.http.post('/pause-bot/'+41,botId)
+  }
+  getUserResume(botId):Observable<any> {
+    return this.http.post('/resume-bot/'+41,botId)
+  }
+  botStatistics(){
+    return this.http.get("/bot-statistics")
+  }
+  listEnvironments(){
+    return this.http.get("/agent/get-environments")
   }
 
-  getUserResume(botId):Observable<any> {
-    return this.http.post('/resume-bot/41',botId)
+  
+  execution(data:any):Observable<any>{
+    return this.http.post('/start-bot/'+41,data)
   }
 }
