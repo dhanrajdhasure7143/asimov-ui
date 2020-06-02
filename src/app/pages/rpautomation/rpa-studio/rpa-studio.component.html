@@ -2,9 +2,7 @@
   <button  type="button"
     class="btn btn-primary" aria-hidden="true" placement="bottom" (click)="onCreate()"> Create
   </button>
-  <button  type="button"
-  class="btn btn-primary" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" > Environments  
-</button>
+ 
 </div>
 
 <!-- tabs -->
@@ -29,6 +27,15 @@
 </div>
 </div>
 </div>
+<div class="rpa-nav">
+  <div class="rpa-nav-btn">
+<button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" > 
+<i class="fas fa-globe"></i><br>
+Environments  
+</button>
+</div>
+</div>
+
 <!--foms  -->
 <div *ngIf="hiddenCreateBotPopUp" class="pop-up conainer">
   <div class="card">
