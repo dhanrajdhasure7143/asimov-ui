@@ -290,3 +290,17 @@
     right: 25px;
     top: 110px;
 }
+
+.fas{
+  font-size: 20px;
+}
+
+.rpa-nav{
+  padding:10px;
+  display: flex;
+  justify-content: center;
+}
+
+.rpa-nav-btn{
+  display:inline-block;
+}

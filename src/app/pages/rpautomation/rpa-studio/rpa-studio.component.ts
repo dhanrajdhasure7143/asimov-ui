@@ -133,7 +133,6 @@ export class RpaStudioComponent implements OnInit {
   })
 }
 
-
   getFields() {
     return this.fields;
   }
