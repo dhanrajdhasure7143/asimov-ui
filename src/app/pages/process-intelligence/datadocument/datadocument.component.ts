@@ -134,7 +134,7 @@ export class DatadocumentComponent implements OnInit {
   }
   openModal(template) {
     this.modalRef = this.modalService.show(template);
-    console.log()
+
   }
 
   searchTable(){
