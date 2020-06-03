@@ -26,7 +26,7 @@ export class BpmnDiagramListComponent implements OnInit {
   ngOnInit() {
     this.dt.changeParentModule({ "route": "/pages/approvalWorkflow/home", "title": "Approval Workflow" });
     this.dt.changeChildModule(undefined);
-    this.bpmnlist();
+    // this.bpmnlist();
   }
   expandPanel(event,i,bpmnXmlNotation): void {
     this.bpmnModeler = new BpmnJS({
@@ -56,23 +56,23 @@ export class BpmnDiagramListComponent implements OnInit {
   loopTrackBy(index, term) {
     return index;
   }
-  bpmnlist() {
-    this.rest_Api.bpmnlist(this.user).subscribe(data => this.griddata = data);
-  }
-  approveDiagram(data) {
-    this.approve_producemessage(data);
-    this.approve_savedb(data);
-  }
-  approve_producemessage(data) {
-    this.rest_Api.approve_producemessage(data.bpmnProcessInfo).subscribe(data => console.log(data));
-  }
-  approve_savedb(data) {
-    this.rest_Api.approve_savedb(data).subscribe(data => console.log(data));
-  }
-  denyDiagram(data, i) {
-    this.approver_info = { "message": this.message[i], "remarks": data.remarks, "rejectedTimestamp": data.rejectedTimestamp, "approvedBy": data.approvedBy, "approvedAt": data.approvedAt, "role": this.role };
-    this.rest_Api.denyDiagram(this.approver_info).subscribe(data => console.log(data));
-  }
+  // bpmnlist() {
+  //   this.rest_Api.bpmnlist(this.user).subscribe(data => this.griddata = data);
+  // }
+  // approveDiagram(data) {
+  //   this.approve_producemessage(data);
+  //   this.approve_savedb(data);
+  // }
+  // approve_producemessage(data) {
+  //   this.rest_Api.approve_producemessage(data.bpmnProcessInfo).subscribe(data => console.log(data));
+  // }
+  // approve_savedb(data) {
+  //   this.rest_Api.approve_savedb(data).subscribe(data => console.log(data));
+  // }
+  // denyDiagram(data, i) {
+  //   this.approver_info = { "message": this.message[i], "remarks": data.remarks, "rejectedTimestamp": data.rejectedTimestamp, "approvedBy": data.approvedBy, "approvedAt": data.approvedAt, "role": this.role };
+  //   this.rest_Api.denyDiagram(this.approver_info).subscribe(data => console.log(data));
+  // }
 
 }
 

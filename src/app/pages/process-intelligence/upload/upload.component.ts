@@ -29,7 +29,7 @@ export class UploadComponent implements OnInit {
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
     this.dt.changeChildModule("");
-    this.xlsx_csv_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.csv';
+    this.xlsx_csv_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.csv,.xlsx,.xls';
     this.xes_mime = '.xes';
     this.db_mime = '.json';
     this.dt.changeHints(this.hints.uploadHints);

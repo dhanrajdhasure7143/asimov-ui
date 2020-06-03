@@ -41,6 +41,7 @@
     "kinetic": "^5.2.0",
     "ng-bpmn": "^3.0.0",
     "ng5-slider": "^1.2.4",
+    "ngx-bootstrap": "^5.6.1",
     "ngx-contextmenu": "^5.4.0",
     "ngx-csv": "^0.3.2",
     "ngx-drag-drop": "^2.0.0",
