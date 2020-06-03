@@ -158,7 +158,7 @@
   width: 12px;
 }
 .btn_style{
-    margin: 0px -6px 0px 10px;
+    margin: 0px -6px 0px 14px;
     background-color: white;
     border-radius: 2px;
 }
@@ -185,7 +185,7 @@
   bottom: 15px;
   margin: 10px 10px -5px 10px;
   border-radius: 20px;
-  width: 18%;
+  width: 22%;
   z-index: 1000;
 }
 .rob-s{
@@ -197,8 +197,8 @@
 }
 .status{
   position: absolute;
-  right: 115px;
-  top: 170px;
+  right: -172px;
+  top: 0px;
 }
 .rob-status{
   border: 1px solid lightgray;
@@ -246,8 +246,8 @@
 }
 .status-zoom{
   position: absolute;
-    right: 110px;
-    top: 520px;
+    right: -177px;
+    top: 350px;
 }
 .context-menu__item{
   padding: 6px;
@@ -261,6 +261,10 @@
   position: absolute;
     margin: 45px;
     white-space: nowrap;
+}
+.context-menu__item a {
+    background-color: white;
+    color: black;
 }
 .card-header{
   background: #f1eeee;
@@ -278,29 +282,16 @@
 .pop-up{
   position: absolute;
     bottom: 7px;
-    width: 98%;
+    left: -150px;
+    width: 1335px;
     background: white;
     z-index: 1000;
 }
 .class-css{
   cursor: pointer;float: right;font-weight: 700;border: 1px solid gray;padding: 1px 6px
 }
-.createBtn{
+.download{
   position: absolute;
-    right: 25px;
-    top: 110px;
-}
-
-.fas{
-  font-size: 20px;
-}
-
-.rpa-nav{
-  padding:10px;
-  display: flex;
-  justify-content: center;
-}
-
-.rpa-nav-btn{
-  display:inline-block;
+  top: 387px;
+  /* left:0px; */
 }

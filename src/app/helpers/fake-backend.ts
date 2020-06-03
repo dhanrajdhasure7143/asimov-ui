@@ -15,9 +15,16 @@ export class BackendURLInterceptor implements HttpInterceptor {
                  
        if (req.url.indexOf('bpsprocess') > -1) {
         req = req.clone({
+<<<<<<< HEAD
          url: this.config.bussinessProcessEndPoint + req.url,
           body: req.body,
           headers: req.headers
+=======
+            url : this.getRequestUrl(req),
+            body: req.body,
+            headers: req.headers,
+            // responseType: 'arraybuffer'
+>>>>>>> develop
         });
 
     }
@@ -38,6 +45,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
 
     getRequestUrl(req){
         let url = "";
+        if(req.url.indexOf('rpa-service') > -1)
+            url = this.config.rpaEndPoint + req.url;
         if(req.url.indexOf('bpsprocess') > -1)
             url = this.config.bussinessProcessEndPoint + req.url;
         if(req.url.indexOf('bpsprocess') == -1 && req.url.indexOf('upload') > -1)

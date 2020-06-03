@@ -1,38 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb } from 'jsplumb';
-import { element } from 'protractor';
-import { ContextMenuComponent } from 'ngx-contextmenu';
 import { RestApiService } from '../../services/rest-api.service';
-import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuContent.component';
 import { FormGroup, FormControl } from '@angular/forms';
-
-
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as $ from 'jquery';
 
 @Component({
-  selector: 'app-rpa-studio',
-  templateUrl: './rpa-studio.component.html',
-  styleUrls: ['./rpa-studio.component.css']
+  selector: 'app-rpa-studio-workspace',
+  templateUrl: './rpa-studio-workspace.component.html',
+  styleUrls: ['./rpa-studio-workspace.component.css']
 })
-export class RpaStudioComponent implements OnInit {
-  model: any = {};
+export class RpaStudioWorkspaceComponent implements AfterViewInit {
+  jsPlumbInstance;
   public stud:any = [];
-  public emailValue:any = []
-  public databaseValue:any = [];
-  public developercondValue:any = [];
-  public excelValue:any = [];
   public optionsVisible : boolean = true;
   result:any = [];
-  jsPlumbInstance;
   nodes = [];
-  zoomArr = [0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8];
-  indexofArr = 6;
-  templateNodes: any = [];
-  show: number;
-  toolSetData: void;
-  
-  listEnvironmentData:any =[];
+  selectedNode: any= [];
   changePx: { x: number; y: number; };
   // forms
   public hiddenPopUp:boolean = false;
@@ -40,115 +27,19 @@ export class RpaStudioComponent implements OnInit {
   public form: FormGroup;
   unsubcribe: any
   public fields: any[] = [];
-  resp: any[] = [];
   formHeader: any[] = [];
-  selectedNode: any= [];
   formVales:any[] = [];
+  dragelement:any
+  dagvalue:any
+  zoomArr = [0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8];
+  indexofArr = 6;
   fieldValues: any[] = [];
   allFormValues: any[] = [];
   saveBotdata:any = [];
-  selectedTasks: any[] = [];
-  exectionValue: any;
-  tabsArray: any[] = [];
-  tabActiveId: string;
-  constructor(private rest:RestApiService) { 
-    this.form = new FormGroup({
-      fields: new FormControl(JSON.stringify(this.fields))
-    })
-    this.unsubcribe = this.form.valueChanges.subscribe((update) => {
-      console.log(update);
-      this.fields = JSON.parse(update.fields);
-    });
-    this.show = 5;
+  constructor(private rest:RestApiService) {
+    
+   }
 
-  }
-
-  ngOnInit() {
-    this.rest.toolSet().subscribe(data => {
-      let value:any = [];
-      let subValue:any = []
-      this.toolSetData;
-      let data1:any = [];
-      // data1 = this.nData
-      data1 = data
-      data1.General.forEach(element => {
-        data1.Advanced.forEach(el => {
-        subValue.push(el.NLP);
-        subValue.push(el.OCR);
-        subValue.push(element.Email);
-        this.emailValue.push(element.Email);
-        subValue.push(element.Database);
-        this.databaseValue.push(element.Database);
-        subValue.push(element["Developer Condition"]);
-        subValue.push(element["Database"])
-        this.developercondValue.push(element["Developer Condition"]);
-        subValue.push(element["Excel File"]);
-        this.excelValue.push(element["Excel File"]);
-        console.log(subValue)
-        subValue.forEach(ele => {
-          value.push(ele)
-          console.log(value);
-      // Object.keys(ele).forEach(function(key) {
-      //   value.push(Object.keys(ele[key]));
-      //   console.log(value)
-      // })
-    })
-    });
-  })
-  value.forEach(element => {
-    let temp:any = {
-      name : element.name,
-      path : 'data:' + 'image/png' + ';base64,' + element.icon,
-      tasks: element.taskList
-    };
-    this.templateNodes.push(temp)
-    })
-  })
- 
- 
-
-  var element:any = document.querySelector('.drag-area');
-  let value = element.getBoundingClientRect().width / element.offsetWidth;
-
-  document.querySelector('.zoomout').addEventListener('click',()=>{
-     if(this.indexofArr >0){
-      this.indexofArr -= 1;
-        value = this.zoomArr[this.indexofArr];
-     element.style['transform'] = `scale(${value})`
-     }
-   })
-
-   document.querySelector('.zoomin').addEventListener('click',()=>{
-    if(this.indexofArr < this.zoomArr.length-1){
-      this.indexofArr += 1;
-      value = this.zoomArr[this.indexofArr];
-      element.style['transform'] = `scale(${value})`
-    }
-  })
-
-  document.querySelector('.reset').addEventListener('click',()=>{
-    this.indexofArr = 6;
-      value = this.zoomArr[this.indexofArr];
-      element.style['transform'] = `scale(${value})`
-  })
-}
-
-  getFields() {
-    return this.fields;
-  }
-
-  ngDistroy() {
-    this.unsubcribe();
-  }
-  onFormSubmit(event){
-    console.log(event);
-    this.fieldValues = event
-    // localStorage.setItem('formValue', event)
-  }
-  
-  increaseShow() {
-    this.show += 5; 
-  }
   ngAfterViewInit() {
 
     this.jsPlumbInstance = jsPlumb.getInstance();
@@ -165,8 +56,8 @@ export class RpaStudioComponent implements OnInit {
   }
 
   onDrop(event: DndDropEvent,e:any) {
-    console.log("dfg"+event);
-    
+    this.dragelement = document.querySelector('.drag-area');
+    this.dagvalue = this.dragelement.getBoundingClientRect().width / this.dragelement.offsetWidth;
     e.event.toElement.oncontextmenu = new Function("return false;");
 
     this.stud = [];
@@ -298,6 +189,13 @@ export class RpaStudioComponent implements OnInit {
 
     }
   }
+  getFields() {
+    return this.fields;
+  }
+
+  ngDistroy() {
+    this.unsubcribe();
+  }
   formNodeFunc(node){
     this.formHeader = node
     if(this.selectedNode.id){
@@ -318,10 +216,10 @@ export class RpaStudioComponent implements OnInit {
       this.fields = JSON.parse(update.fields);
     });
   }
-  closeFun(){
-    this.hiddenPopUp = false;
-    this.hiddenCreateBotPopUp = false
-    this.fields = []
+  onFormSubmit(event){
+    console.log(event);
+    this.fieldValues = event
+    // localStorage.setItem('formValue', event)
   }
   saveBotFun(){
     console.log(this.formVales);
@@ -362,24 +260,61 @@ export class RpaStudioComponent implements OnInit {
     console.log(data);
     
   }
-
-  onCreateSubmit() {
-    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
+  reset(e){
+      this.indexofArr = 6;
+      this.dagvalue = this.zoomArr[this.indexofArr];
+      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+  }
+  zoomin(e){
+    if(this.indexofArr < this.zoomArr.length-1){
+      this.indexofArr += 1;
+      this.dagvalue = this.zoomArr[this.indexofArr];
+      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+    }
+  }
+  zoomout(e){
+    if(this.indexofArr >0){
+      this.indexofArr -= 1;
+      this.dagvalue = this.zoomArr[this.indexofArr];
+     this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+     }
+  }
+  closeFun(){
+    this.hiddenPopUp = false;
     this.hiddenCreateBotPopUp = false
-    let temp : any={};
-    temp = this.model;
-    this.model = {};
-    this.tabsArray.push(temp);
-    this.tabActiveId = temp.botNamee
-    console.log(this.tabsArray);
-    
+    this.fields = []
   }
-  onCreate(){
-    this.hiddenCreateBotPopUp = true
-  }
-  closeBot($event) {
-    this.tabsArray = this.tabsArray.filter((bot): boolean => $event !== bot);
-    this.tabActiveId = this.tabsArray.length > 0 ? this.tabsArray[this.tabsArray.length - 1].id : '';
-  }
-} 
+  downloadPDF() {
+    const HTML_Width = $('#content').width();
+    const HTML_Height = $('#content').height();
+    const top_left_margin = 15;
+    const PDF_Width = HTML_Width + (top_left_margin * 2);
+    const PDF_Height = (PDF_Width) + (top_left_margin * 2);
+    const canvas_image_width = HTML_Width;
+    const canvas_image_height = HTML_Height;
 
+    const totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+    window.scrollTo(0, 0);
+    html2canvas($('#content')[0], { allowTaint: true }).then((canvas) => {
+      canvas.getContext('2d');
+
+      console.log(canvas.height + '  ' + canvas.width);
+
+
+      const imgData = canvas.toDataURL('data:' + 'image/png' + ';base64,', 1.0);
+      const pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+      // pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+
+
+
+      for (let i = 1; i <= totalPDFPages; i++) {
+        pdf.addPage(PDF_Width, PDF_Height);
+        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+      }
+
+      pdf.save('RPA.pdf');
+    });
+  }
+
+}

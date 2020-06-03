@@ -1,0 +1,48 @@
+<div class="col-md-10 main">
+    <div #content id="content">
+       <div class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)">
+      <ng-container *ngFor="let node of nodes; let i = index">
+        <div id="{{node.name}}"  class="dndDropzone" (dblclick)="formNodeFunc(node.name)" (contextmenu)="onRightClick(node, $event,i)"
+        [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
+          <div class="connector-name">{{node.name}}</div>
+          <div>
+            <nav *ngIf ="selectedNode.name===node.name"  id="context-menu" class="context-menu contextmenu">
+              <div class="context-menu1">
+                <div class="context-menu__item" *ngFor="let menu of stud">
+                  <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu)"
+                   data-action="View">{{menu.name}}</a>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </ng-container>
+         </div>
+      </div>
+  <div class="download">
+    <button type="button"aria-hidden="true" placement="bottom"(click)="downloadPDF()" id="donwloadpdf">
+      <img src="..\assets\downloadimage.svg">
+    </button>
+  </div>
+</div>
+
+    <div class="status-zoom">
+      <div class="row">
+        <button class="btn reset" (click) = "reset($event)"><i class="fas fa-sync-alt"></i></button></div>
+      <div class="row">
+      <button class="btn zoomin" (click) = "zoomin($event)"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+    <div class="row">
+      <button class="btn zoomout" (click)="zoomout($event)"><i class="fa fa-minus" aria-hidden="true"></i></button></div>
+    </div>
+
+  <div *ngIf="hiddenPopUp" class="pop-up conainer">
+    <div class="card">
+      <div class="card-header">
+        {{formHeader}}
+        <span class="class-css" (click)="closeFun()" >X</span>
+      </div>
+      <div class="container card-body">
+        <app-dynamic-forms [fields]="getFields()" (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
+      </div>
+    </div>
+    </div>
