@@ -56,40 +56,27 @@
 <ng-template #template>
   <div class="modal-content">
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Preview Data</h4>
+    <h4 class="modal-title pull-left">Uploaded File Preview </h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="modal-body">
-  <div class="row" *ngIf="headerName" class="columnSelection">
-    <div class="col-md-4"><b>Select Column - Step {{step_id}}/6:"{{headerName}}"</b></div>
-    <div class="col-md-4"><small>(Click on the {{headerName}} Value Column for Data mapping)</small></div>
-    <div class="col-md-2"> <svg width="12" height="12" class="svg">
-        <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
-      </svg> Success Mapping
-    </div>
-    <div class="col-md-2">
-      <svg width="12" height="12" class="svg">
-        <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
-      </svg> Error Mapping
-    </div>
-  </div>
+ 
   <div class="">
     <form id="DataDocTableForm">
       <table class="table" id="process_data">
           <thead #header>
               <tr>
-                  <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader" (click)= "sort(headValue)">
+                  <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader" >
                   {{headValue}}
                   </th>
               </tr>
           </thead>
           <tbody #container>
               <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" class="tableRow">
-                <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event)"
-                  [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1" 
-                  [class.invalid]="invalidCells['row'+i] && invalidCells['row'+i].indexOf('cell'+j)>-1"> 
+                <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" 
+                  > 
                   {{row[j] || ' '}} 
                 </td>
               </tr>

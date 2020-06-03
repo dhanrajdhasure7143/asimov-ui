@@ -50,7 +50,7 @@ export class UploadComponent implements OnInit {
  
   onSelect(event,upload_id) {
     let file:File = event.addedFiles[0];
-    if(file)
+    if(file )
       this.checkUploadId(event, this.getUID(upload_id, file.name));
     else
       this.error_display(event);
@@ -98,7 +98,9 @@ export class UploadComponent implements OnInit {
       let csvRecordsArray:string[][] = []; 
       (<string>reader.result).split(/\r\n|\n/).forEach((each,i)=>{
         csvRecordsArray.push(each.split(','));
-      })
+      },
+      )
+      
       this.dt.changePiData(csvRecordsArray);    
       this.router.navigate(['/pages/processIntelligence/datadocument']);  
     };  
