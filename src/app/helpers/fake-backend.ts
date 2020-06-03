@@ -12,7 +12,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
         this.setLocalStorage(req);
         //authentication service logic - post integration with AIOTAL
         req = req.clone({
-            url : this.getRequestUrl(req) + req.url,
+            url : this.getRequestUrl(req),
             body: req.body,
             headers: req.headers,
             // responseType: 'arraybuffer'
@@ -27,6 +27,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
 
     getRequestUrl(req){
         let url = "";
+        if(req.url.indexOf('rpa-service') > -1)
+            url = this.config.rpaEndPoint + req.url;
         if(req.url.indexOf('bpsprocess') > -1)
             url = this.config.bussinessProcessEndPoint + req.url;
         if(req.url.indexOf('bpsprocess') == -1 && req.url.indexOf('upload') > -1)

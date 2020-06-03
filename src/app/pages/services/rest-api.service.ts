@@ -46,29 +46,29 @@ export class RestApiService {
     return this.http.get("/bpsprocess/fetchByUser/mounika"); // "target" : "http://10.11.1.236:8080",
   }
   toolSet(){
-    return this.http.get("/load-toolset");
+    return this.http.get("/rpa-service/load-toolset");
   }
   attribute(data:any){
-  return this.http.get('/get-attributes/'+data)
+  return this.http.get('/rpa-service/get-attributes/'+data)
   }
   saveBot(data:any):Observable<any>{
-    return this.http.post('/save-bot',data)
+    return this.http.post('/rpa-service/save-bot',data)
     }
   getUserPause(botId):Observable<any> {
-    return this.http.post('/pause-bot/'+41,botId)
+    return this.http.post('/rpa-service/pause-bot/'+41,botId)
   }
   getUserResume(botId):Observable<any> {
-    return this.http.post('/resume-bot/'+41,botId)
+    return this.http.post('/rpa-service/resume-bot/'+41,botId)
   }
   botStatistics(){
-    return this.http.get("/bot-statistics")
+    return this.http.get("/rpa-service/bot-statistics")
   }
   listEnvironments(){
-    return this.http.get("/agent/get-environments")
+    return this.http.get("/rpa-service/agent/get-environments")
   }
 
   
   execution(data:any):Observable<any>{
-    return this.http.post('/start-bot/'+41,data)
+    return this.http.post('/rpa-service/start-bot/'+41,data)
   }
 }

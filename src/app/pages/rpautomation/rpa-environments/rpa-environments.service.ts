@@ -20,7 +20,7 @@ export class EnvironmentsService {
       responseType: 'text'
     }
     console.log(data)
-    return this.http.post<any>("/agent/save-environment",data, requestOptions);
+    return this.http.post<any>("/rpa-service/agent/save-environment",data, requestOptions);
   }
 
   deleteenvironment(data:any):Observable<any>
@@ -28,7 +28,7 @@ export class EnvironmentsService {
     const requestOptions: Object = {
       responseType: 'text'
     }
-    return this.http.post<any>("/agent/delete-environment",data, requestOptions);
+    return this.http.post<any>("/rpa-service/agent/delete-environment",data, requestOptions);
   
   }
   updateenvironment(data:any):Observable<any>
@@ -37,6 +37,6 @@ export class EnvironmentsService {
       responseType: 'text'
     }
     console.log(data);
-    return this.http.put<any>("/agent/update-environment",data, requestOptions);
+    return this.http.put<any>("/rpa-service/agent/update-environment",data, requestOptions);
   }
 }
