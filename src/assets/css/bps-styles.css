@@ -29,7 +29,7 @@ div[class^='diagram_container']{
     padding: 5px;
   }
   mat-expansion-panel{
-    border-bottom: 1px solid #0062cf;
+    border-bottom: 1px solid #eee;
   }
   .comment{
     position: relative;

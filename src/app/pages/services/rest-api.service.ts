@@ -4,6 +4,12 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
 
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  }),
+};
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,6 +24,24 @@ export class RestApiService {
     responseType: 'text'
   }
   constructor(private http:HttpClient) { }
+
+  bpmnlist(user){
+    //GET /bpsprocess/approver/info/{roleName} 
+return this.http.get<any[]>('bpsprocess/approvalTnfoByUser/'+user);
+}
+
+approve_producemessage(bpmnProcessInfo){
+  return this.http.post<any[]>('bpsprocess/produceMessage',bpmnProcessInfo,httpOptions);
+}
+approve_savedb(bpmndata){
+  return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',bpmndata,httpOptions);
+}
+denyDiagram(msg_obj){
+// POST /bpsprocess/save/bpms/notation/approval/workflow
+
+return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',msg_obj,httpOptions);
+}
+
 
   getBPMNFileContent(filePath){
     // return this.http.post(filePath, this.xmlheaderOptions);
@@ -66,8 +90,6 @@ export class RestApiService {
   listEnvironments(){
     return this.http.get("/rpa-service/agent/get-environments")
   }
-
-  
   execution(data:any):Observable<any>{
     return this.http.post('/rpa-service/start-bot/'+41,data)
   }

@@ -27,9 +27,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
     ];
   }
-  myFunction() {                    
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
 
   loopTrackBy(index, term){
     return index;

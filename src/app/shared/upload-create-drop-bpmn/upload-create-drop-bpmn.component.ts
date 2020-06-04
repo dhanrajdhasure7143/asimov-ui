@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.service';
@@ -10,18 +10,16 @@ import { GlobalScript } from '../global-script';
   styleUrls: ['./upload-create-drop-bpmn.component.css']
 })
 export class UploadCreateDropBpmnComponent implements OnInit {
-  hideUploadCreate:boolean=false;
-  hideEditor:boolean=true;
+  @Input() isConfirmance:boolean = false;
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private global: GlobalScript) { }
 
   ngOnInit() {
   }
   onSelect(e){
-    this.hideUploadCreate=true;
-    this.hideEditor=false;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
       this.router.navigate(['/pages/businessProcess/uploadProcessModel'])
-      this.bpmnservice.onSelect(e.addedFiles[0].name)
+      this.bpmnservice.uploadBpmn(e.addedFiles[0].name)
+      // this.bpmnservice.onSelect(e.addedFiles[0].name)
 
     }else{
       let message = "Oops! Something went wrong";

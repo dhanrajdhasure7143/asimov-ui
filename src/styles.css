@@ -34,7 +34,7 @@ body, html {
 }
 /* Scroll bar styles :: ends */
 /* Top Nav :: starts */
-/* ul.nav.nav-tabs.justify-content-start {
+ul.nav.nav-tabs.justify-content-start {
     padding: 0% 10%;
     background: #f2f9ff;
 }
@@ -75,10 +75,24 @@ body, html {
 }
 .nav-tabs .nav-item {
   margin-bottom: -25px;
-} */
+}
 /* generic styles */
+.text-bold{
+  font-weight: bold;
+}
 .right{
   float:right;
+}
+.box-heading{
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.box-border{
+  border: 1px solid #eee;
+  border-radius: 4px;
+}
+mat-expansion-panel:hover, mat-expansion-panel.mat-expanded{
+  color: #0062cf;
 }
 .mat-expansion-panel-content.open{
   padding: 10px;
@@ -105,9 +119,9 @@ div[class^='diagram_container'] .djs-container svg{
 .bjs-powered-by{
   display:none !important;/* Against the license agreement */
 }
-/* .tabscomp .nav-link{
+.tabscomp .nav-link{
   padding-left: 50px !important;
-} */
+}
 th {
   color: #464646;
   font-size: 13px;
@@ -128,6 +142,7 @@ a.nav-link.active {
   color: white !important;
   background: #0061cf !important;
 }
+
 
 
 /*RPA-Environments*/

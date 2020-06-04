@@ -44,6 +44,7 @@ span.user_name::before{
 }
 .brand{
     padding-bottom:10px;
+    color: #0061cf;
 }
 
 span.password::before{
@@ -136,6 +137,9 @@ sup{
 }
 .fa-registered{
   font-weight: 400;
+  font-size: 12px;
+  position: relative;
+  top: -5px;
 }
 .icon_middle {
   float: right;
@@ -152,6 +156,11 @@ label{
 }
 .abrand_div {
   display: inline-block;
+}
+.abrand_div small{
+  position: relative;
+  top: -12px;
+  color: #0062cf;
 }
 li a:hover, li a:active{
   background-color: #0061cf !important;
@@ -174,7 +183,6 @@ svg:hover {
 }
 #brand{
   color: #0062cf;
-  font-weight:550;
   font-size:50px;
 } 
 li{
@@ -240,6 +248,25 @@ padding-right: 5px;
 }
 .fa-sign-out-alt{
 padding-right: 5px;
+}
+.home_title{
+  margin: 40px 0;
+}
+.user_list li{
+  text-align: center;
+}
+.user_list .dropdown-menu>li>a:hover{
+  color: white;
+}
+.user_list .dropdown-menu>li>a{
+  margin: 0;
+  padding: 5px;
+  height: 30px;
+  color: #0062cf;
+  text-align: left;
+}
+.user_list .dropdown-menu{
+  border: 1px solid #0062cf;
 }
 /* header component styles - Ends*/
 /* Module title styles - Starts*/
