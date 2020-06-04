@@ -8,7 +8,8 @@ export class ProcessGraphModel{
         "key": 0,
         "name": "Vendor Creates Invoice",
         "count": 80,
-        "linkArray": ["Scan Invoice"],
+        // "linkArray": ["Scan Invoice"],
+        "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
         "toolCount": [1, 2, 3, 4, 5, 6, 7, 8]
         },
@@ -16,7 +17,8 @@ export class ProcessGraphModel{
         "key": 1,
         "name": "Scan Invoice",
         "count": 80,
-        "linkArray": ["Clear Invoice"],
+        // "linkArray": ["Clear Invoice"],
+        "linkArray": [{ linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Enter in SAP", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
         "toolCount": [1, 342, 58, 40, 40, 91,24,65]
         },
@@ -24,7 +26,8 @@ export class ProcessGraphModel{
         "key": 2,
         "name": "Enter in SAP",
         "count": 80,
-        "linkArray": ["Due Date Passed"],
+        // "linkArray": ["Due Date Passed"],
+        "linkArray": [{ linkNode: "Vendor Creates Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
         "toolCount": [7, 32, 58, 40, 0, 91, 42, 58]
         },
@@ -32,7 +35,8 @@ export class ProcessGraphModel{
         "key": 3,
         "name": "Book Invoice",
         "count": 80,
-        "linkArray": ["Clear Invoice"],
+        // "linkArray": ["Clear Invoice"],
+        "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Due Date Passed", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
         "toolCount": [6, 342, 58, 40, 40, 91, 42, 58]
         },
@@ -40,7 +44,8 @@ export class ProcessGraphModel{
         "key": 4,
         "name": "Clear Invoice",
         "count": 80,
-        "linkArray": ["Due Date Passed"],
+        // "linkArray": ["Due Date Passed"],
+        "linkArray": [{ linkNode: "Due Date Passed", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
         "toolCount": [2, 342, 58, 0, 40, 91, 42, 58]
         },
@@ -48,7 +53,8 @@ export class ProcessGraphModel{
         "key": 5,
         "name": "Due Date Passed",
         "count": 80,
-        "linkArray": [],
+        // "linkArray": [],
+        "linkArray": [{ linkNode: "Vendor Creates Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Enter in SAP", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
         "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
         "toolCount": [1, 342, 58, 0, 0, 42, 58, 66]
         },
@@ -66,7 +72,8 @@ export class ProcessGraphModel{
             "key": 0,
             "name": "Vendor Creates Invoice",
             "count": 80,
-            "linkArray": ["Scan Invoice", "Book Invoice"],
+            // "linkArray": ["Scan Invoice", "Book Invoice"],
+            "linkArray": [{ linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Enter in SAP", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [10, 20, 30, 40, 50, 60, 70, 80]
             },
@@ -74,7 +81,8 @@ export class ProcessGraphModel{
             "key": 1,
             "name": "Scan Invoice",
             "count": 80,
-            "linkArray": ["Enter in SAP"],
+            // "linkArray": ["Enter in SAP"],
+            "linkArray": [{ linkNode: "Vendor Creates Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [1, 342, 58, 40, 40, 91,24,65]
             },
@@ -82,7 +90,8 @@ export class ProcessGraphModel{
             "key": 2,
             "name": "Enter in SAP",
             "count": 80,
-            "linkArray": ["Due Date Passed", "Clear Invoice"],
+            // "linkArray": ["Due Date Passed", "Clear Invoice"],
+            "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [7, 32, 58, 40, 0, 91, 42, 58]
             },
@@ -90,7 +99,8 @@ export class ProcessGraphModel{
             "key": 3,
             "name": "Book Invoice",
             "count": 80,
-            "linkArray": ["Clear Invoice"],
+            // "linkArray": ["Clear Invoice"],
+            "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Due Date Passed", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [2, 342, 58, 40, 40, 91, 42, 58]
             },
@@ -98,7 +108,8 @@ export class ProcessGraphModel{
             "key": 4,
             "name": "Clear Invoice",
             "count": 80,
-            "linkArray": ["Book Invoice"],
+            // "linkArray": ["Book Invoice"],
+            "linkArray": [{ linkNode: "Vendor Creates Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Enter in SAP", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [2, 342, 58, 0, 40, 91, 42, 58]
             },
@@ -106,7 +117,8 @@ export class ProcessGraphModel{
             "key": 5,
             "name": "Due Date Passed",
             "count": 80,
-            "linkArray": [],
+            // "linkArray": [],
+            "linkArray": [{ linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [1, 342, 58, 0, 0, 42, 58, 66]
             },
@@ -125,7 +137,8 @@ export class ProcessGraphModel{
             "key": 0,
             "name": "Vendor Creates Invoice",
             "count": 80,
-            "linkArray": [ "Book Invoice"],
+            // "linkArray": [ "Book Invoice"],
+            "linkArray": [{ linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency","End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [20, 342, 58, 40, 40, 91, 42, 58]
             },
@@ -133,7 +146,8 @@ export class ProcessGraphModel{
             "key": 1,
             "name": "Scan Invoice",
             "count": 80,
-            "linkArray": ["Enter in SAP"],
+            // "linkArray": ["Enter in SAP"],
+            "linkArray": [{ linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [1, 342, 58, 40, 40, 91,24,65]
             },
@@ -141,7 +155,8 @@ export class ProcessGraphModel{
             "key": 2,
             "name": "Enter in SAP",
             "count": 80,
-            "linkArray": [],
+            // "linkArray": [],
+            "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [21, 342, 58, 40, 0, 91, 42, 58]
             },
@@ -149,7 +164,8 @@ export class ProcessGraphModel{
             "key": 3,
             "name": "Book Invoice",
             "count": 80,
-            "linkArray": ["Clear Invoice"],
+            // "linkArray": ["Clear Invoice"],
+            "linkArray": [{ linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [62, 342, 58, 40, 40, 91, 42, 58]
             },
@@ -157,7 +173,8 @@ export class ProcessGraphModel{
             "key": 4,
             "name": "Clear Invoice",
             "count": 80,
-            "linkArray": [],
+            // "linkArray": [],
+            "linkArray": [{ linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [23, 342, 58, 0, 40, 91, 42, 58]
             },
@@ -165,7 +182,8 @@ export class ProcessGraphModel{
             "key": 5,
             "name": "Due Date Passed",
             "count": 80,
-            "linkArray": ["Scan Invoice"],
+            // "linkArray": ["Scan Invoice"],
+            "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
             "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
             "toolCount": [66, 342, 58, 0, 0, 42, 58, 66]
             },

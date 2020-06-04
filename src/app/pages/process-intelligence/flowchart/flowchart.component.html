@@ -15,7 +15,7 @@
     <div class="col-md-8">
         <div>
             <div class="lableHide"></div>
-            <!-- <div class="tooltip_button tooltip1"><img src="..\assets\images\PI\options_icon.svg" id="variants">
+            <div class="tooltip_button tooltip1"><img src="..\assets\images\PI\options_icon.svg" id="variants">
                 <div class="tooltiptext1">
                     <p>Case Frequency</p>
                     <hr>
@@ -32,7 +32,7 @@
                         <label><input type="checkbox" value="">Option 3</label>
                     </div>
                 </div>
-            </div> -->
+            </div>
             <div class="form-group left_dropdwn1">
                     <select class="form-control left_dropdwn" name="status" id="process_graph_list">
                         <option [value]="each" *ngFor="let each of process_graph_list ;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{process_graph_options[each]}}</option>
@@ -123,12 +123,12 @@
             <hr>
             <!-- <button type='button' class='filter_btn'  (click)="slideup()"><img src="..\assets\images\PI\filter_icon.svg"></button> -->
         </div>
-            <div [hidden]='isfrequency'>
+            <div [hidden]='isfrequency' class='tooltip_body'>
                 <p id="toolTipParagraph"></p>
                 <p id="toolTipText"></p>
                 
             </div>
-            <div [hidden]='!isfrequency'>
+            <div [hidden]='!isfrequency' class='tooltip_body'>
                     <p id="toolTipParagraphone"></p>
                     <p id="toolTipTextone"></p>
             </div>
@@ -141,6 +141,33 @@
                 <p [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
         </div>
     </div>
+
+    <div id="linkToolTipDIV" class="custom_tooltip">
+        <div class="node_tooltip"></div>
+        <div>
+            <p id="receive"><span id="nodename">Connector</span></p>
+            <hr>
+            <!-- <button type='button' class='filter_btn'  (click)="slideup()"><img src="..\assets\images\PI\filter_icon.svg"></button> -->
+        </div>
+            <div [hidden]='isfrequency' class='tooltip_body'>
+                <p id="linktoolTipParagraph"></p>
+                <p id="linktoolTipText"></p>
+                
+            </div>
+            <div [hidden]='!isfrequency' class='tooltip_body'>
+                    <p id="linktoolTipParagraphone"></p>
+                    <p id="linktoolTipTextone"></p>
+            </div>
+            <div>
+                <button  id="performance_btn" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" (click)="performance()"><img src="..\assets\images\PI\performance-clock.svg"></button>
+                <button  id="frequency_btn" [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" (click)="frequency()"><img src="..\assets\images\PI\activity.svg"></button>
+            </div>
+            <div>
+                <p [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" id="frequency_label"><span class="isenablebtn">Frequency</span> </p>
+                <p [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
+        </div>
+    </div>
+
 
 
 <!-- <app-filter [model1]='model1' [reports]='reports' ></app-filter> -->

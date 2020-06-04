@@ -146,7 +146,7 @@ export class FlowchartComponent implements OnInit {
     // this.model1 = element.nodeDataArraycase;
     // this.model2 = element.linkarraycase;
 
-    console.log("data1", selectedData);
+    // console.log("data1", selectedData);
     // console.log("model1",this.model1);
 
 
@@ -182,8 +182,8 @@ export class FlowchartComponent implements OnInit {
         this.selectedCaseArry.push(casevalue);
       }
     };
-    console.log("selectedcase", this.selectedCaseArry)
-    // console.log("selectedcase.lentgh",this.selectedCaseArry.length)
+    // console.log("selectedcase", this.selectedCaseArry)
+    // console.log("selectedcase.length",this.selectedCaseArry.length)
     this.caselength = this.selectedCaseArry.length;
 
     if (this.selectedCaseArry.length == 1) {
@@ -196,6 +196,8 @@ export class FlowchartComponent implements OnInit {
       // console.log('selectedCaseArry',this.selectedCaseArry)
 
       if (this.keyExists(this.selectedCaseArry[0], this.pgModel.flowchartData) == true) {
+        // console.log('log',this.selectedCaseArry[0], this.pgModel.flowchartData);
+        
         var modalData = this.pgModel.flowchartData[0][selectedData.casepercent]
         this.model1 = modalData.nodeDataArraycase
         this.model2 = this.flowchartData(this.model1)
@@ -220,7 +222,7 @@ export class FlowchartComponent implements OnInit {
         }
 
       }
-      console.log('modalData[0]', modelDataArray);
+      // console.log('modalData[0]', modelDataArray);
 
       // var combine_obj={};
       // for(var key in modelDataArray[0].nodeDataArraycase) combine_obj[key]=modelDataArray[0].nodeDataArraycase[key];
@@ -238,15 +240,15 @@ export class FlowchartComponent implements OnInit {
           //console.log(value1)
           if (value.name === value1.name) {
             if (value.hasOwnProperty('linkArray') && value1.hasOwnProperty('linkArray')) {
-              console.log(value.linkArray.length);
+              // console.log(value.linkArray.length);
               if (value.linkArray.length != 0 && value1.linkArray.length != 0) {
                 value.linkArray.forEach(e1 => {
-                  console.log(e1 + "::::");
+                  // console.log(e1 + "::::");
                   value1.linkArray.forEach(e2 => {
                     if (e1 != e2) {
   
                       value.linkArray.push(e2);
-                      console.log(value);
+                      // console.log(value);
   
                       value.linkArray = m.removeDuplicates(value.linkArray);
                     }
@@ -256,12 +258,12 @@ export class FlowchartComponent implements OnInit {
                 if (value.linkArray.length == 0) {
                   value1.linkArray.forEach(e2 => {
                     value.linkArray.push(e2);
-                    console.log(value);
+                    // console.log(value);
                   });
                 } else {
                   value.linkArray.forEach(e1 => {
                     value.linkArray.push(e1);
-                    console.log(value);
+                    // console.log(value);
                   });
                 }
   
@@ -381,7 +383,7 @@ console.log('outArr12',outArr);
     return array.filter((a, b) => array.indexOf(a) === b)
    };
   keyExists(key, search) {
-    console.log('test')
+    // console.log('test')
     var existingObj = search.find(function (element) {
       return typeof element[key] !== 'undefined';
     });
@@ -436,7 +438,6 @@ console.log('outArr12',outArr);
 
   performance() {
     this.isfrequency = true;
-
   }
   frequency() {
     this.isfrequency = false;
@@ -446,22 +447,39 @@ console.log('outArr12',outArr);
     this.linkData = [];
     this.linkdataArray = [];
     this.nodeArray = dataArray;
-    for (var i = 0; i < this.nodeArray.length; i++) {
-      //console.log(this.nodeArray[i]);
-      var link = this.nodeArray[i].linkArray;
-      // this.linkdata.push(link);
+     var linkToolArray=[];
+    for (var i = 1; i < this.nodeArray.length-1; i++) {
+      // console.log('linkArray',this.nodeArray[i].linkArray);
+      var datalink = this.nodeArray[i].linkArray;
+      // console.log('datalink',datalink);
+      var link=[]
+      var linktool=[]
       var label = this.nodeArray[i].name;
-      if (link != undefined) {
-        for (var a = 0; a < link.length; a++) {
-          var obj = {};
+      for(var j=0; j< datalink.length; j++){
+        // link.push(datalink[j].linkNode)
+        var obj = {};
           obj['from'] = this.getFromKey(label);
-          obj['to'] = this.getFromKey(link[a]);
-          obj['text'] = this.nodeArray[i].toolCount[0]
-          this.linkdataArray.push(obj);
-        }
+          obj['to'] = this.getFromKey(datalink[j].linkNode);
+          obj['text'] = this.nodeArray[i].toolCount[0];
+          obj['toolData']=datalink[j].tool
+           obj['toolDataCount']=datalink[j].toolCount
 
+          this.linkdataArray.push(obj);
+      }
+          
+      // var label = this.nodeArray[i].name;
+      // if (link != undefined) {
+        // for (var a = 0; a < link.length; a++) {
+        //   var obj = {};
+        //   obj['from'] = this.getFromKey(label);
+        //   obj['to'] = this.getFromKey(link[a]);
+        //   obj['text'] = this.nodeArray[i].toolCount[0];
+        //   // obj['linktool'] = linkToolArray[l]
+        //   this.linkdataArray.push(obj);
+        // }
+
+        console.log('linkdataArray',this.linkdataArray);
         if (this.nodeArray[i].tool.includes('Start Frequency')) {
-          // console.log(this.nodeArray[i].name)
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           obj['from'] = -1;
@@ -471,7 +489,6 @@ console.log('outArr12',outArr);
           this.linkdataArray.push(obj);
         }
         if (this.nodeArray[i].tool.includes('End Frequency')) {
-          // console.log(this.nodeArray[i].name)
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           obj['from'] = this.getFromKey(this.nodeArray[i].name);
@@ -480,10 +497,17 @@ console.log('outArr12',outArr);
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
         }
-        // console.log('node',this.nodeArray);
 
-      }
+      // }
     }
+    // for(var x=0; x<link.length; x++){
+    //   var obj = {};
+    //   obj['from'] = this.getFromKey(link[x].linkNode);
+    //       obj['to'] = this.getFromKey(link[x].linkNode);
+    //       obj['toolData']=link[x].tool
+    //       obj['toolDataCount']=link[x].toolCount
+    //       this.linkdataArray.push(obj);
+    // }
     // this.model1=this.pgModel.allData.nodeDataArraycase;
 
     // this.model2=this.linkdataArray;
@@ -494,7 +518,6 @@ console.log('outArr12',outArr);
   getFromKey(name) {
     for (var i = 0; i < this.nodeArray.length; i++) {
       if (name == this.nodeArray[i].name) {
-        // console.log(this.nodeArray[i].key);
         return this.nodeArray[i].key;
       }
     }

@@ -92,11 +92,11 @@ export class PiflowchartComponent implements OnInit {
       var rows="";
       var name=obj.data.name;
       
-      for( var i=0; i<obj.data.toolFrequency.length; i++ ){
-        toolData += obj.data.toolFrequency[i]+"<br>";
+      for( var i=0; i<obj.data.tool.length-3; i++ ){
+        toolData += obj.data.tool[i]+"<br>";
       }
-      for( var i=0; i<obj.data.toolFrequencyCount.length; i++ ){
-        rows += obj.data.toolFrequencyCount[i]+"<br>";
+      for( var i=0; i<obj.data.toolCount.length-3; i++ ){
+        rows += obj.data.toolCount[i]+"<br>";
       }
       document.getElementById('nodename').innerHTML=name;
       document.getElementById('toolTipParagraph').innerHTML =  toolData;
@@ -104,11 +104,13 @@ export class PiflowchartComponent implements OnInit {
 
       var toolDataone="";
       var rowsone="";
-      for( var i=0; i<obj.data.toolPerformance.length; i++ ){
-        toolDataone += obj.data.toolPerformance[i]+"<br>";
+      console.log('objData',obj.data);
+      
+      for( var i=5; i<obj.data.tool.length; i++){
+        toolDataone += obj.data.tool[i]+"<br>";
       }
-      for( var i=0; i<obj.data.toolPreformanceCount.length; i++ ){
-        rowsone += obj.data.toolPreformanceCount[i]+"<br>";
+      for( var i=5; i<obj.data.toolCount.length; i++ ){
+        rowsone += obj.data.toolCount[i]+"<br>";
       }
       document.getElementById('toolTipParagraphone').innerHTML =  toolDataone;
       document.getElementById('toolTipTextone').innerHTML = '<br>'+ rowsone;
@@ -341,8 +343,77 @@ export class PiflowchartComponent implements OnInit {
                         editable:false
                     },
                     // editing the text automatically updates the model data
-                    new go.Binding("text").makeTwoWay())
+                    new go.Binding("text").makeTwoWay()),
+                    {
+                      // toolTip:
+                      mouseEnter:function(e,obj,diagram) {
+                        var data=e.diagram
+                        // new go.Binding("text").makeTwoWay();
+                        showLinkToolTip(e,obj,data);
+                      },
+                      mouseLeave:function(){
+                        hideLinkToolTip()
+                      }
+
+
+                      }
         );
+
+        function showLinkToolTip(e,obj,diagram) {
+          var toolTipDIV = document.getElementById('linkToolTipDIV');
+          var node = obj.part;
+          console.log(obj.port,obj.fromNode.Bp);
+          // resizable
+            // node.port.fill="#0162cb";
+            // node.port.stroke='#0162cb';
+          //   var pt = diagram.lastInput.viewPoint;
+          // toolTipDIV.style.left =(pt.x + 130) + "px";
+          // toolTipDIV.style.top = (pt.y +  150) + "px";
+    
+            var pt = obj.location;
+          toolTipDIV.style.left = (pt.x) + "px";
+          toolTipDIV.style.top = (pt.y+330) + "px";
+        
+          var toolData="";
+          var rows="";
+          var name=obj.data.name;
+          console.log('obj',obj.part.data.toolData);
+          
+          for( var i=0; i<obj.part.data.toolData.length-5; i++ ){
+            toolData += obj.data.toolData[i]+"<br>";
+          }
+          for( var i=0; i<obj.data.toolDataCount.length-5; i++ ){
+            rows += obj.data.toolDataCount[i]+"<br>";
+          }
+          // document.getElementById('nodename').innerHTML=name;
+          document.getElementById('linktoolTipParagraph').innerHTML =  toolData;
+          document.getElementById('linktoolTipText').innerHTML = '<br>'+ rows;
+    
+          var toolDataone="";
+          var rowsone="";
+          console.log('objData',obj.data);
+          
+          for( var i=5; i<obj.data.toolData.length; i++){
+            toolDataone += obj.data.toolData[i]+"<br>";
+          }
+          for( var i=5; i<obj.data.toolDataCount.length; i++ ){
+            rowsone += obj.data.toolDataCount[i]+"<br>";
+          }
+          document.getElementById('linktoolTipParagraphone').innerHTML =  toolDataone;
+          document.getElementById('linktoolTipTextone').innerHTML = '<br>'+ rowsone;
+          toolTipDIV.style.display = "block";
+              // var nodetext=obj.findObject("NodeTEXT")
+              // var textNode = obj.findObject("TEXT");
+              // var countNode= node.findObject("countNode");
+              //       textNode.stroke="rgba(0, 0, 0, .87)";
+              //       nodetext.stroke="white"
+              //       countNode.fill='white';
+              //       obj.scale = 1.8 ;
+        }
+        function hideLinkToolTip(){
+          var toolTipDIV = document.getElementById('linkToolTipDIV');
+     toolTipDIV.style.display = "none";
+        }
         
     this.myDiagram.model = new go.GraphLinksModel(this.model1, this.model2);
   }
