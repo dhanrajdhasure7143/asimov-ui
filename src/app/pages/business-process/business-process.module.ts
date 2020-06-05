@@ -13,9 +13,10 @@ import { CreateBpmnDiagramComponent } from './create-bpmn-diagram/create-bpmn-di
 import { BpsHomeComponent } from './home/home.component';
 import { UploadProcessModelComponent } from './upload-process-model/upload-process-model.component';
 import { BpsHints } from './model/bpmn-module-hints';
+import { ListOfChangesComponent } from './list-of-changes/list-of-changes.component';
 
 @NgModule({
-  declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent],
+  declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent],
   imports: [
     CommonModule,
     NgxSpinnerModule,

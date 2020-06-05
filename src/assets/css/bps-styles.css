@@ -1,293 +1,296 @@
 /* create bpmn diagram component styles - Starts*/
 .update_info{
-    position: absolute;
-    right: 60px;
-    color: #0062cf;
+  position: absolute;
+  right: 60px;
+  color: #0062cf;
 }
 #canvas{
-    height: 500px;
-    width: 100%;
-    background-color: white;
+  height: 500px;
+  width: 100%;
+  background-color: white;
 }
 .btn_row{
-    margin: 10px 80px;
+  margin: 10px 80px;
 }
 .upload-btn-wrapper input[type=file] {
-    font-size: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    width: 100px;
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100px;
 }
 /* create bpmn diagram component styles - Ends*/
+/*List-of-changes component - Starts*/
+#foot {
+border-top: 1px solid #999999;
+position: fixed;
+width: 100%;
+z-index: 1000;
+height: 300px;
+display: flex;
+right: 0;
+left: 0;
+bottom:-300px;
+background: white;
+}
+.cross_close{
+margin-left: 90px;
+float:right;
+margin-top: -30px;
+margin-right: -85px;
+}
+/*List-of-changes component - Ends*/
 /* home component styles - Starts*/
 div[class^='diagram_container']{
-    height: 200px;
-    border: 1px dotted #ccc;
-    /* overflow: hidden auto; */
-    padding: 5px;
-  }
-  mat-expansion-panel{
-    border-bottom: 1px solid #eee;
-  }
-  .comment{
-    position: relative;
-  }
-  .comment-tip{
-    position: absolute;
-    background-color: #717386;
-    color: white;
-    padding: 5px 10px;
-    border-radius: 20px;
-    display: none;
-    z-index: 3;
-  }
-  .fa-comment{
-    color: #ccc;
-  }
-  .comment-tip::before{
-    content: '';
-    border-width: 8px;
-    border-style: solid;
-    border-color: transparent transparent #717386;
-    position: absolute;
-    top: -14px;
-  }
-  .comment:hover .comment-tip{
-    display: block;
-  }
+  height: 200px;
+  border: 1px dotted #ccc;
+  /* overflow: hidden auto; */
+  padding: 5px;
+}
+mat-expansion-panel{
+  border-bottom: 1px solid #0062cf;
+}
+.comment{
+  position: relative;
+}
+.comment-tip{
+  position: absolute;
+  background-color: #717386;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  display: none;
+  z-index: 3;
+}
+.fa-comment{
+  color: #ccc;
+}
+.comment-tip::before{
+  content: '';
+  border-width: 8px;
+  border-style: solid;
+  border-color: transparent transparent #717386;
+  position: absolute;
+  top: -14px;
+}
+.comment:hover .comment-tip{
+  display: block;
+}
 /* home component styles - Ends*/
 /* upload process model component styles - Starts*/
 .row{
-    margin-left: 0;
-    margin-right: 0;
-  }
-  .diif-screen{
-    height: 633px;
-    text-align: right;
-    padding: 0;
-  }
-  .show-confirmance-button{
-    color: #0162cb;
-    border: none;
-    background: none;
-    text-decoration: underline;
-    font-size: large;
-  }
-  .show-confirmance-button-div{
-    bottom: 0;
-    position: absolute;
-  }
-  .kpis-and-submit-button-div{
-    bottom: 0;
-    position: absolute;
-    right: 0;
-  }
-  .view-kpis-button{
-    background-color: white;
-      border-color: #0162cb;
-      height: 28px;
-      border-radius: 14px;
-      top: 0;
-      color: #0162cb;
-  }
-  .submit-for-approval-button{
-    margin-left: 20px;
-      height: 28px;
-      background-color: #0162cb;
-      color: white;
-      border-color: #0162cb;
-      border-radius: 14px;
-  }
-  /* header related css */
-    #canvas, #canvas1, #canvas2{
-      height: 600px;
-  }
-  .options-container{
-    height: 633px;
-    border-left: 5px dotted grey;
-    padding: 0;
-  }
-  .upload-container{
-    height: 633px;
-  }
-  .upload-panel{
-    border: 1px solid;
-      margin-top: 203px;
-      height: 205px;
-      border-radius: 25px;
-      border-color: #8080804a;
-  }
-  .upload-logo{
-    margin-top: 20px;
-      margin-left: 124px;
-  }
-  .upload-logo-resize{
-    height: 53px;
-  }
-  .upload-title-resize{
-    margin-left: 43px;
-      color: #8080808c;
-      font-size: 27px;
-  }
-  .upload-subtitle-resize{
-    margin-left: 75px;
-      margin-top: 1px;
-      color: #8080808c;
-      font-size: 15px;
-  }
-  
-  .upload-btn-wrapper {
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-  }
-  .upload-btn {
-    
-    color: white;
-      background-color: #0162cb;
-      padding-left: 30px;
-      padding-right: 30px;
-      border-radius: 25px;
-      margin-top: 10px;
-      border: none;
-      margin-left: 132px;
-      
-  }
-  .upload-btn-wrapper input[type=file] {
-    font-size: 100px;
-    position: absolute;
-    left: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+.diif-screen{
+  height: 633px;
+  text-align: right;
+  padding: 0;
+}
+.show-confirmance-button{
+  color: #0162cb;
+  border: none;
+  background: none;
+  text-decoration: underline;
+  font-size: large;
+}
+.show-confirmance-button-div{
+  bottom: 0;
+  position: absolute;
+}
+.kpis-and-submit-button-div{
+  bottom: 0;
+  position: absolute;
+  right: 0;
+}
+.view-kpis-button{
+  background-color: white;
+    border-color: #0162cb;
+    height: 28px;
+    border-radius: 14px;
     top: 0;
-    opacity: 0;
-  }
-  .create-container{
-    height: 633px;
-  }
-  .create-panel{
-    border: 1px solid;
-      margin-top: 203px;
-      height: 205px;
-      border-radius: 25px;
-      border-color: #8080804a;
-  }
-  .create-logo{
-    margin-top: 20px;
-      margin-left: 101px;
-  }
-  .create-logo-resize{
-    height: 50px;
-  }
-  .create-title-resize{
+    color: #0162cb;
+}
+.submit-for-approval-button{
+  margin-left: 20px;
+    height: 28px;
+    background-color: #0162cb;
+    color: white;
+    border-color: #0162cb;
+    border-radius: 14px;
+}
+/* header related css */
+  #canvas, #canvas1, #canvas2{
+    height: 600px;
+}
+.options-container{
+  height: 633px;
+  border-left: 5px dotted grey;
+  padding: 0;
+}
+.upload-container{
+  height: 633px;
+}
+.upload-panel{
+  border: 1px solid;
+    margin-top: 203px;
+    height: 205px;
+    border-radius: 25px;
+    border-color: #8080804a;
+}
+.upload-logo{
+  margin-top: 20px;
+    margin-left: 124px;
+}
+.upload-logo-resize{
+  height: 53px;
+}
+.upload-title-resize{
+  margin-left: 43px;
     color: #8080808c;
-    margin-left: 25px;
-    font-size: 27px
-  }
-  .create-subtitle-resize{
+    font-size: 27px;
+}
+.upload-subtitle-resize{
+  margin-left: 75px;
+    margin-top: 1px;
+    color: #8080808c;
     font-size: 15px;
-      color: #8080808c;
-      margin-left: 71px;
-      margin-top: 12px;
-  }
-  .create-button-css{
+}
+
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.upload-btn {
+  
+  color: white;
+    background-color: #0162cb;
+    padding-left: 30px;
+    padding-right: 30px;
+    border-radius: 25px;
+    margin-top: 10px;
+    border: none;
     margin-left: 132px;
-      margin-top: 12px;
-      border-radius: 25px;
-      padding-right: 30px;
-      border: none;
-      color: white;
-      background-color: #0162cb;
-      padding-left: 30px;
-  }
-  .highlight {
-    background-color: green; /* color elements as green */
-    opacity: 0.4;
-    pointer-events: none; /* no pointer events, allows clicking through onto the element */
-  }
+    
+}
+.upload-btn-wrapper input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+.create-container{
+  height: 633px;
+}
+.create-panel{
+  border: 1px solid;
+    margin-top: 203px;
+    height: 205px;
+    border-radius: 25px;
+    border-color: #8080804a;
+}
+.create-logo{
+  margin-top: 20px;
+    margin-left: 101px;
+}
+.create-logo-resize{
+  height: 50px;
+}
+.create-title-resize{
+  color: #8080808c;
+  margin-left: 25px;
+  font-size: 27px
+}
+.create-subtitle-resize{
+  font-size: 15px;
+    color: #8080808c;
+    margin-left: 71px;
+    margin-top: 12px;
+}
+.create-button-css{
+  margin-left: 132px;
+    margin-top: 12px;
+    border-radius: 25px;
+    padding-right: 30px;
+    border: none;
+    color: white;
+    background-color: #0162cb;
+    padding-left: 30px;
+}
+.highlight {
+  background-color: green; /* color elements as green */
+  opacity: 0.4;
+  pointer-events: none; /* no pointer events, allows clicking through onto the element */
+}
 /* upload process model component styles - Ends*/
 /* bps component styles - Starts*/
 .bps-heading{
-    border: 1px #e6dbdb12 solid;
-    height: 51px;
-    background-color: #FAFAFA;
-    display: flex;
-  
-  }
-  .bps-heading-image{
-    width: 4%;
-    margin-left: 42px;
-    height: 40px
-  }
-  .bps-heading-title{
-    width: 20%;
-    margin-left: 16px;
-    height: 40px
-  }
-  label{
-    margin-top: 12px;
-    font-size: large;
-  }
+  border: 1px #e6dbdb12 solid;
+  height: 51px;
+  background-color: #FAFAFA;
+  display: flex;
+
+}
+.bps-heading-image{
+  width: 4%;
+  margin-left: 42px;
+  height: 40px
+}
+.bps-heading-title{
+  width: 20%;
+  margin-left: 16px;
+  height: 40px
+}
+label{
+  margin-top: 12px;
+  font-size: large;
+}
 /* bps component styles - Ends*/
 /* shared bpmn-diagram component styles - Starts*/
 .full_width{
-  width: 100%;
+width: 100%;
 }
 .approve_bpmn_list_header{
-  width:100%;
-  margin: 10px 20px;
+width:100%;
+margin: 10px 20px;
 }
 .viewOnly{
-  height: 300px;
+height: 300px;
 }
 .viewOnly .djs-palette{
-  display: none;
+display: none;
 }
 .viewOnly .viewport{
-  transform: scale(0.4);
-}
-.overview_icon:not([aria-disabled=true]) {
-  cursor: pointer !important;
-}
-.mat-expansion-panel-header:not([aria-disabled=true]) {
-  cursor: default;
-}
-.mat-expansion-panel-header {
- padding: 0 0px !important;
-}
-
-button{
-cursor: pointer
-}
-.overview_icon
-{
-  padding-left: 48px !important;
+transform: scale(0.4);
 }
 /* shared bpmn-diagram component styles - Ends*/
 /* bpmn-diagram-list component styles - Starts*/
 .account_pay_details_table tr{
-  border-bottom: 1px solid #ccc;  
-  cursor: pointer;
+border-bottom: 1px solid #ccc;  
+cursor: pointer;
 }
 .account_pay_details_table tr:hover{
-  color: blue;
+color: blue;
 }
 .account_pay_details_table tr, .account_pay_details_table td{
-  padding: 10px 0;
+padding: 10px 0;
 }
 .account_pay_details_table input{
-  height: 20px;
+height: 20px;
 }
 .account_pay_details_table button{
-  height: 20px;
-  border-radius: 20px;
-  padding: 3px 10px;
-  font-size: 10px;
-  margin-left: 0;
-  margin-right: 2px;
+height: 20px;
+border-radius: 20px;
+padding: 3px 10px;
+font-size: 10px;
+margin-left: 0;
+margin-right: 2px;
 }
 .diagramCanvas:hover{
-  background-color: #ccc;
-  cursor: pointer;
+background-color: #ccc;
+cursor: pointer;
 }
 /* bpmn-diagram-list component styles - Ends*/

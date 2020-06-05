@@ -1,27 +1,48 @@
-<div class="box_area">
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class='col-md-8 drop_box' id="upload_bpmn">
-            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn'" >
-                <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
-                    <h3>Upload Process Model</h3>
-                    <h5>Drag and drop files here-(.bpmn)</h5>
-                    <button class="btn bpmn-btn">Select</button>
-                </ngx-dropzone-label>
-            </ngx-dropzone>
+<div class="box_area" [hidden]="bpmnupload">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class='col-md-9 drop_box' id="upload_bpmn">
+                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn'" >
+                    <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
+                        <h3>Upload Process Model</h3>
+                        <h5>Drag and drop files here-(.bpmn)</h5>
+                        <button class="btn bpmn-btn">Select</button>
+                    </ngx-dropzone-label>
+                </ngx-dropzone>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class='col-md-9 drop_box create_box'>
+                <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
+                <h3>Define Your Own Process</h3>
+                <h5>Do process model from Scratch level</h5>
+                <button class="btn bpmn-btn" id="create_bpmn" (click)="createBpmn()">Create</button>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class='col-md-8 drop_box create_box'>
-            <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
-            <h3>Define Your Own Process</h3>
-            <h5>Do process model from Scratch level</h5>
-            <button class="btn bpmn-btn" id="create_bpmn" (click)="createBpmn()">Create</button>
-        </div>
+    <div class="bpmneditor">
+            <div class="canvas2" [hidden]="hideEditor"  id="canvas2">
+                </div>
+                </div>
+    <div class="bpmn_create" [hidden]="create_editor">
+            <div class="container-fluid">
+                    <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>
+                    <div>
+                        <span class="err-msg"></span>
+                        <div id="canvas"></div>
+                    </div>
+                    <div class="row btn_row"> 
+                        <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
+                        <div class="upload-btn-wrapper right">
+                            <button class="btn" (click)="ipfile.click()">Upload Again</button>
+                            <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
+                        </div>
+                        <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+                        <button class="right btn" (click)="saveprocess()">Save Process</button>
+                    </div>
+                   
+                </div>
+            
     </div>
-</div>
-<div class="bpmneditor">
-    <div id="canvas2" [hidden]="hideEditor"  id="canvas2">
-        </div>
-        </div>
+            

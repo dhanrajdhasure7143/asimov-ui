@@ -1,36 +1,40 @@
 /* Shared Module - upload create drop component styles - Starts*/
 .drop_box{
-    border: 1px solid #ccc;
-    border-radius: 7px;
-    height: 243px;
-    text-align: center;
-    color: #717386;
-    padding: 0;
-    margin: 10px auto;
-  }
-  .drop_box ngx-dropzone{
-    height: 240px;
-    margin: 0 auto;
-  }
-  
-  .drop_box h1{
-    margin-bottom: 2px;
-  }
-  .drop_box h4{
-    margin-top: 2px;
-  }
-  .bpmn-btn{
-    color: white;
-    background-color: #0062cf;
-    border-radius: 20px;
-    width: 120px;
-    margin-top: 20px;
-    outline: none;
-  }
-  .bpmn-btn:focus, .bpmn-btn:active{
-    outline: none;
-  }
-  .create_box{
-    padding-top: 30px;
-  }
+  border: 1px solid #ccc;
+  border-radius: 7px;
+  height: 263px;
+  text-align: center;
+  color: #717386;
+  padding: 0;
+  margin: 10px auto;
+}
+.drop_box ngx-dropzone{
+  height: 260px;
+  margin: 0 auto;
+}
+
+.drop_box h1{
+  margin-bottom: 2px;
+}
+.drop_box h4{
+  margin-top: 2px;
+}
+.bpmn-btn{
+  color: white;
+  background-color: #0062cf;
+  border-radius: 20px;
+  width: 120px;
+  margin-top: 20px;
+  outline: none;
+}
+.bpmn-btn:focus, .bpmn-btn:active{
+  outline: none;
+}
+.bpmn-btn:hover{
+  color:white !important;
+  font-weight: 700 !important;
+}
+.create_box{
+  padding-top: 30px;
+}
 /* Shared Module - upload create drop component styles - Ends*/

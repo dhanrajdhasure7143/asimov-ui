@@ -1,19 +1,21 @@
 <div class="container-fluid">
-    <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>
-    <div>
-        <span class="err-msg"></span>
-        <div id="canvas"></div>
-    </div>
-    <div class="row btn_row"> 
-        <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
-        <div class="upload-btn-wrapper right">
-            <button class="btn" (click)="ipfile.click()">Upload Again</button>
-            <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
+        <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>
+        <div>
+            <span class="err-msg"></span>
+            <div id="canvas"></div>
         </div>
-        <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+        <div class="row btn_row"> 
+            <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
+            <div class="upload-btn-wrapper right">
+                <button class="btn" (click)="ipfile.click()">Upload Again</button>
+                <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
+            </div>
+            <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+            <button class="right btn" (click)="saveprocess()">Save Process</button>
+        </div>
+        <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+            <p style="color: white">Auto Saving... </p>  
+        </ngx-spinner>
     </div>
-    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
-        <p style="color: white">Auto Saving... </p>  
-    </ngx-spinner>
-</div>
-  
+      
+    
