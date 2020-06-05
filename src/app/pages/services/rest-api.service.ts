@@ -66,9 +66,13 @@ export class RestApiService {
   listEnvironments(){
     return this.http.get("/rpa-service/agent/get-environments")
   }
-
-  
   execution(data:any):Observable<any>{
     return this.http.post('/rpa-service/start-bot/'+41,data)
+  }
+  deployremotemachine(botId){
+    return this.http.post('/rpa-service/agent/deploy-bot/',botId)
+  }
+  getpredefinedbots(){
+    return this.http.get("/assets/definebots.json")/*jitendra: need to replace URL*/
   }
 }

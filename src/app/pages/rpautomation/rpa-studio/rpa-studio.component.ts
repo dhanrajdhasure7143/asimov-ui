@@ -250,10 +250,6 @@ export class RpaStudioComponent implements OnInit {
     this.jsPlumbInstance.addEndpoint(nodeData.name, leftEndPointOptions);
 
   }
-
-
-
-  
   getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
     return {

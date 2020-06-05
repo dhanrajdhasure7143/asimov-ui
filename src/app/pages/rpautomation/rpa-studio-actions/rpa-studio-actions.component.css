@@ -10,6 +10,9 @@
   border-radius: 2px;
   padding: 0px 12px;
 }
+.active .btn_style1{
+  background-color: blue;
+}
 
 .collection_btn{
     position: absolute;
@@ -39,11 +42,11 @@
   .status{
     position: absolute;
     right:-172px;
-    top: 0px;
+    top: 20px;
   }
   .rob-status{
     border: 1px solid lightgray;
-    width: 34px;
+    width: 50px;
     text-align: center;
   }
   .rob-status p{
@@ -67,4 +70,49 @@
   position: relative;
   top: 16px;
   right: 21px;
+}
+.dropdown-menu-arrow {
+    top: -2px;
+    left: -12%;
+    width: 0;
+    height: 0;
+    position: relative;
+}
+.dropdown-menu-arrow:before,
+.dropdown-menu-arrow:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-width: 7px 8px;
+  border-style: solid;
+  border-color: transparent;
+  z-index: 1001;
+}
+.dropdown-menu-arrow:after {
+  bottom: -18px;
+  right: -8px;
+  border-bottom-color: #fff;
+}
+.dropdown-menu-arrow:before {
+  bottom: -17px;
+  right: -8px;
+  border-bottom-color: rgba(0,0,0,.15);
+}
+.drag-area{
+  position: absolute;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  left: 153px;
+  top: 38px;
+  padding: 5px;
+  margin: 2px 0 0;
+}
+.context-menu__item a{
+ background-color: #fff;
+ color: #000;
+ text-decoration: none;
+ font-size: 15px;
 }

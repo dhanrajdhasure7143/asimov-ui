@@ -8,7 +8,7 @@ export interface environmentobservable{
      deployStatus    : Boolean,
      environmentType : String ,
      hostAddress     : String,
-     userName        : String,
+     username        : String,
      password        : String,
      agentPath       : String,
      activeStatus    : number,

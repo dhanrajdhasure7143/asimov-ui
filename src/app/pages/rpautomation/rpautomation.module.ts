@@ -14,13 +14,18 @@ import { RpaStudioActionsComponent } from './rpa-studio-actions/rpa-studio-actio
 import { RpaenvironmentsComponent } from './rpa-environments/rpa-environments.component';
 import { DataTablesModule } from 'angular-datatables';
 import { HttpClientModule } from '@angular/common/http';
+import { RpaWorkspaceComponent } from './rpa-workspace/rpa-workspace.component';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 
 
 
 
 @NgModule({
-  declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent],
+  declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent],
   imports: [
     CommonModule,
     RpautomationRoutingModule,
@@ -31,7 +36,10 @@ import { HttpClientModule } from '@angular/common/http';
     DynamicFormBuilderModule,
     ReactiveFormsModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BsDropdownModule.forRoot(),
+    TooltipModule.forRoot(),
+    ModalModule.forRoot()
   ]
 })
 export class RpautomationModule { }
