@@ -89,7 +89,9 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     this.bpmnModel = new BpmnModel();
     this.rest.submitBPMNforApproval(this.bpmnModel).subscribe(res=>{
       this.spinner.hide();
-    })
+    },err=>{
+      this.spinner.hide();
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel']);})
   }
   downloadBpmn(){
     if(this.bpmnModeler){

@@ -77,22 +77,8 @@ ul.nav.nav-tabs.justify-content-start {
   margin-bottom: -25px;
 }
 /* generic styles */
-.text-bold{
-  font-weight: bold;
-}
 .right{
   float:right;
-}
-.box-heading{
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-.box-border{
-  border: 1px solid #eee;
-  border-radius: 4px;
-}
-mat-expansion-panel:hover, mat-expansion-panel.mat-expanded{
-  color: #0062cf;
 }
 .mat-expansion-panel-content.open{
   padding: 10px;
@@ -113,6 +99,9 @@ ngx-dropzone{
 div[class^='diagram_container'] .djs-palette{
   display: none;
 }
+.djs-palette.two-column.open{
+  width: 48px !important;
+}
 div[class^='diagram_container'] .djs-container svg{
   margin-left: 5px;
 }
@@ -127,95 +116,3 @@ th {
   font-size: 13px;
   font-weight: 700;
 }
-ul.nav.nav-tabs.justify-content-start li {
-  height: 38px !important;
-}
-ul.nav.nav-tabs.justify-content-start li a {
-    color: #000;
-    background: lightgray;
-}
-ul.nav.nav-tabs.justify-content-start{
-  justify-content: start;
-    margin-left: 3px;
-}
-a.nav-link.active {
-  color: white !important;
-  background: #0061cf !important;
-}
-
-
-
-/*RPA-Environments*/
-.env-table>thead>tr>th{
-  padding:18px;
-  color: black;
-  font-weight: bold;
-  font-size:15px;
-  background-color:white;
-}
-
-
-
-.env-btn-shadow{
-
-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-
-.env-btn{
-display:inline-block;
-}
-
-
-.card-header{
-  background: #f1eeee;
-    padding: 8px;
-    color: #0062cf;
-    font-weight: 700;
-    font-size: 16px;
-}
-.card{
-  border-top: 1px solid gray;
-  border-left: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
-    border-right: 1px solid lightgray;
-}
-.card-body{
-    padding:20px;
-    overflow-y: scroll;
-}
-.pop-up{
-  position: absolute;
-    bottom: 0px;
-    width: 100%;
-    background: white;
-    z-index: 1000;
-    transition: width 2s;
-    overflow-y: scroll;
-}
-.class-css{
-  cursor: pointer;float: right;font-weight: 700;border: 1px solid gray;padding: 1px 6px
-}
-.iconfont{
-font-size:15px; 
-color:white;
-}
-.icon-button{  
- width: 50px; 
-height: 50px; 
-padding: 7px 10px; 
-border-radius: 25px; 
-font-size: 10px; 
-text-align: center; 
-
-}
-
-
-.data > input[type=search]{
-height: 70px;
-}
-
-.formelement{
-padding:10px;
-}
-/*RPA-Environments*/
