@@ -6,11 +6,13 @@ import { RestApiService } from '../../pages/services/rest-api.service';
 import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.service';
 import { GlobalScript } from '../global-script';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
+import { UploadProcessModelComponent } from 'src/app/pages/business-process/upload-process-model/upload-process-model.component';
 
 @Component({
   selector: 'app-upload-create-drop-bpmn',
   templateUrl: './upload-create-drop-bpmn.component.html',
-  styleUrls: ['./upload-create-drop-bpmn.component.css']
+  styleUrls: ['./upload-create-drop-bpmn.component.css'],
+  providers: [UploadProcessModelComponent]
 })
 export class UploadCreateDropBpmnComponent implements OnInit {
   bpmnModeler:any;
@@ -23,20 +25,23 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   hideEditor:boolean=true;
   create_editor:boolean=true;
   counter:number = 0;
-  constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private global: GlobalScript, private rest:RestApiService) { }
+  constructor(private router:Router,private bpmnservice:SharebpmndiagramService, 
+    private global: GlobalScript, private rest:RestApiService, private uploadProcessModel:UploadProcessModelComponent) { }
 
   ngOnInit() {
   }
   onSelect(e){
-this.bpmnupload= true;
-this.hideEditor=false;
+    this.bpmnupload= true;
+    this.hideEditor=false;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
-      //this.router.navigate(['/pages/businessProcess/uploadProcessModel'])
-      this.bpmnservice.uploadBpmn(e.addedFiles[0].name);
-     
-      this.bpmnservice.send.subscribe(x =>   localStorage.setItem("res1",x));
-    
-      this.router.navigate(['/pages/businessProcess/uploadProcessModel']);
+      if( this.router.url.indexOf("uploadProcessModel") > -1 ){
+        this.bpmnservice.changeConfNav(true);
+        this.uploadProcessModel.uploadConfBpmn(e.addedFiles[0].name);
+      }else{
+        this.bpmnservice.changeConfNav(false);
+        this.bpmnservice.uploadBpmn(e.addedFiles[0].name);
+        this.router.navigate(['/pages/businessProcess/uploadProcessModel']);
+      }
     }else{
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
@@ -71,7 +76,6 @@ this.hideEditor=false;
   createBpmn(){
     this.bpmnupload= true;
     this.create_editor=false;
-  console.log(this.router.url);
      if(this.router.url == "/pages/businessProcess/home"){
       this.router.navigateByUrl('/pages/businessProcess/createDiagram');
      }

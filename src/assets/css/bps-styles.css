@@ -22,6 +22,36 @@
 }
 /* create bpmn diagram component styles - Ends*/
 /*List-of-changes component - Starts*/
+.overlay_close{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: grey;
+}
+.mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
+  background-color: #f8dafe;
+  color: black !important;
+}
+.changeCount{
+  padding: 4px !important;
+  color: darkblue;
+  font-weight: bold;
+  font-size: 13px;
+}
+mat-tab-body{
+  overflow: scroll;
+}
+.changeTable{
+  width: 50%;
+  margin: auto;
+}
+.changeTable tr{
+  border-bottom: 1px solid #eee;
+  border-collapse: collapse;
+}
+.changeTable tr td, .changeTable tr th{
+  padding: 5px;
+}
 #foot {
 border-top: 1px solid #999999;
 position: fixed;

@@ -2,6 +2,15 @@ import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angu
 import { RpaStudioWorkspaceComponent } from '../rpa-studio-workspace/rpa-studio-workspace.component';
 import { RestApiService } from '../../services/rest-api.service';
 
+class BotStatistics{
+  New:string;
+  Pause:string;
+  Stop:string;
+  Running:string;
+  Success:string;
+  Failure:string;
+}
+
 @Component({
   selector: 'app-rpa-studio-actions',
   templateUrl: './rpa-studio-actions.component.html',
@@ -10,6 +19,8 @@ import { RestApiService } from '../../services/rest-api.service';
 export class RpaStudioActionsComponent implements OnInit {
   public environment:any = [];
   public optionList : boolean = true;
+  public playToggle : boolean = true;
+  public playToggle1 : boolean = true;
   public environmentValue:any = []
   @Input('tabsArrayLength') public tabsArrayLength: number;
   @Input('botState') public botState: any;
@@ -23,11 +34,11 @@ export class RpaStudioActionsComponent implements OnInit {
   stop:any;
   listEnvironmentData:any =[];
   dropdownList: any = [];
-  botStatisticsData: object = {};
+  botStatisticsData: BotStatistics = new BotStatistics();
   constructor(private rest:RestApiService) { }
 
   ngOnInit() {
-    this.rest.botStatistics().subscribe(Status =>{
+    this.rest.botStatistics().subscribe((Status:BotStatistics) =>{
       this.botStatisticsData =Status;
       console.log(this.botStatisticsData);
     })

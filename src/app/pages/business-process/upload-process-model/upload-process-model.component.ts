@@ -18,12 +18,10 @@ export class UploadProcessModelComponent implements OnInit,AfterViewInit {
    hideOptionsContainer:boolean=true;
    bpmnModeler;
    viewer:any;
-   oldBpmnModeler;
-   newBpmnModeler;
-   changes:any = {};
+   confBpmnModeler;
    reSize:boolean=false;
-   newBpmnXml;
-   oldBpmnXml;
+   bpmnXml;
+   confBpmnXml;
    receivedbpmn:any;
    createDiagram:boolean = false;
    isHiddenDiff:boolean=true;
@@ -42,140 +40,79 @@ export class UploadProcessModelComponent implements OnInit,AfterViewInit {
          bindTo: window
        }
      });
-     this.newBpmnModeler = new BpmnJS({
-       container: '#canvas2',
-       keyboard: {
-         bindTo: window
-       }
-     });
    }
    ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
-       this.res1=localStorage.getItem("res1");
-       if(this.res1){
-         let bpmnFileName = this.res1;
-         let bpmnFilePath = "assets/resources/"+bpmnFileName;
-         this.rest.getBPMNFileContent(bpmnFilePath).subscribe(res => {
-         this.oldxmlstring = res;
-           this.bpmnModeler.importXML(res, function(err){
-             if(err){
-               return console.error('could not import BPMN 2.0 diagram', err);
-             }
-           })
-          })
+    this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
+      let _self = this;
+      this.bpmnModeler.importXML(res, function(err){
+        if(err){
+          return console.error('could not import BPMN 2.0 diagram', err);
         }
-           this.bpmnservice.send.subscribe(x=>{
-            this.receivedbpmn=x;
-            if(this.receivedbpmn){
-              let bpmnFileName = this.receivedbpmn;
-              let bpmnFilePath = "assets/resources/"+bpmnFileName;
-              this.rest.getBPMNFileContent(bpmnFilePath).subscribe(res => {
-                this.newxmlsttring = res;  
-                this.newBpmnModeler.importXML(res,function(err){
-             
-                    if(err){
-               return console.error('could not import BPMN 2.0 diagram',err);
-             }
-           })
-           })
-         
-       }
-     },
-     (err =>{
-       console.log(err);
-     }));
+        _self.bpmnXml = res;
+      })
+    });
    }
-  
-   
-  //  uploadBpmn(){
-  //    alert("hi")
-  //   this.hideUploadContainer=!this.hideUploadContainer
-  //   this.hideCreateContainer=!this.hideCreateContainer
-  //    this.isHiddenDiff=!this.isHiddenDiff
-     
-  //    let newFile = (<HTMLInputElement>document.getElementById("Finput2")).files[0];
-  //    if(newFile){
-  //      let newFileName = newFile.name;
-  //      newFileName = "assets/resources/"+newFileName;
-  //      this.rest.getBPMNFileContent(newFileName).subscribe(res => {
-  //        this.newBpmnXml = res;
-  //        this.newBpmnModeler.importXML(res, function(err){
-  //          if(err){
-  //            return console.error('could not import BPMN 2.0 diagram', err);
-  //          }
-  //        });
-  //      });
-  //    }
-  //    if(newFile){
-  //      this.loadModels(this.oldBpmnXml, this.newBpmnXml, this);
-  //    }
-  //    this.showdiagram(this.newBpmnXml)
-  //  }
-  slideup(){
-    document.getElementById("foot").classList.remove("slide-down");
-  document.getElementById("foot").classList.add("slide-up");
-  }
- uploadBpmn(){
 
-    let newFile = this.receivedbpmn;  
-    if(newFile){
- let newFileName = newFile;
- let newFilepath = "assets/resources/"+newFileName;
-this.rest.getBPMNFileContent(newFilepath).subscribe(res => {
- this.newBpmnXml = res;
-  this.newBpmnModeler.importXML(res, function(err){
- if(err){
-   return console.error('could not import BPMN 2.0 diagram', err);
-         }
-             });
-        });
+   uploadConfBpmn(confBpmnData){
+     this.bpmnservice.uploadConfirmanceBpmn(confBpmnData);
+     let _self = this;
+    this.rest.getBPMNFileContent("assets/resources/"+confBpmnData).subscribe(res => {
+      _self.confBpmnModeler = new BpmnJS({
+        container: '#canvas2',
+        keyboard: {
+          bindTo: window
         }
-        if(newFile){
-           this.loadModels(this.oldxmlstring, this.newxmlsttring);
-         }
-      // this.showdiagram(this.newBpmnXml)
-    }
-showdiagram(diagramxml){
+      });
+      _self.confBpmnModeler.importXML(res, function(err){
+        if(err){
+          return console.error('could not import BPMN 2.0 diagram', err);
+        }
+        _self.confBpmnXml = res;
+        _self.bpmnservice.uploadConfirmanceBpmnXML(res);
+      })
+    });
+   }
+   
+  slideup(){
+    this.getBpmnDifferences();
+    document.getElementById("foot").classList.remove("slide-down");
+    document.getElementById("foot").classList.add("slide-up");
+  }
+
+  showdiagram(diagramxml){
     this.viewer.importXML(diagramxml,function(){
       let canvas=this.viewer.get('canvas1')
       canvas.addMarker('Bake the pizza', 'highlight');
-        })
-         }
-    displayContainer(id, err){
-      let container:HTMLElement = document.getElementById(id);
-      if (err) {
-        container.classList.remove('with-diagram');
-        container.classList.add('with-error');
-        container.getElementsByClassName("err-msg")[0].textContent = err.message;
-      } else {
-        container.classList.add('with-diagram');
-        container.classList.remove('with-error');
-        container.getElementsByClassName("err-msg")[0].textContent = "";
-      }
+    })
+  }
+  displayContainer(id, err){
+    let container:HTMLElement = document.getElementById(id);
+    if (err) {
+      container.classList.remove('with-diagram');
+      container.classList.add('with-error');
+      container.getElementsByClassName("err-msg")[0].textContent = err.message;
+    } else {
+      container.classList.add('with-diagram');
+      container.classList.remove('with-error');
+      container.getElementsByClassName("err-msg")[0].textContent = "";
     }
- 
-   loadModels(a, b) {
-     let changes;
-      new BpmnModdle().fromXML(a, function(err, adefs) {
-        
-    //if (err) {
-      //return done(err);
-    //}
-
-      // _self.displayContainer(a, err);
-               new BpmnModdle().fromXML(b, function(err, bdefs) {
-          //_self.displayContainer(b, err);
-          //if (err) {
-         //   return done(err);
-         // } else {
-          //  return done(null, adefs, bdefs);
-         // }
-          changes = diff(adefs, bdefs);
-         console.log(changes._changed);
-          //_self.hasChanges = !(changes._layoutChanged == {} && _changes._changed == {} && 
-            //_changes._removed == {} && _changes._added == {});
-       });
-  });
- }
+  }
+  getBpmnDifferences(){
+    let _self = this;
+    new BpmnModdle().fromXML(this.bpmnXml, function(err, bpmnDataResDef) {
+      if (err) {
+        // return done(err);
+      }
+      new BpmnModdle().fromXML(_self.bpmnservice.getConfBpmnXML(), function(errConf, confBpmnDataResDef) {
+        if (errConf) {
+          // return done(err);
+        } 
+        let bpmnDiffs = diff(bpmnDataResDef, confBpmnDataResDef);
+        console.log(bpmnDiffs);
+        _self.bpmnservice.updateDifferences(bpmnDiffs)
+      });
+    });
+  }
 }

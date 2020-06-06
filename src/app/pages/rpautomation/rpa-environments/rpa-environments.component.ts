@@ -221,6 +221,8 @@ import { checkboxlist } from './checkboxlist';
       this.environments.forEach(x => ! x.checked)
       this.updateflag=false;
   }
+
+  savedata(){}
   
 
   
