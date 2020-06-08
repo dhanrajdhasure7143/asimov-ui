@@ -285,3 +285,22 @@
 .class-css{
   cursor: pointer;float: right;font-weight: 700;border: 1px solid gray;padding: 1px 6px
 }
+.createBtn{
+  position: absolute;
+    right: 25px;
+    top: 110px;
+}
+
+.fas{
+  font-size: 20px;
+}
+
+.rpa-nav{
+  padding:10px;
+  display: flex;
+  justify-content: center;
+}
+
+.rpa-nav-btn{
+  display:inline-block;
+}

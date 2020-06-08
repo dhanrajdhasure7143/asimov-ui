@@ -45,26 +45,26 @@ export class ProcessintelligencebpmnComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit() {
-    this.subscription = this.bpmnservice.send.subscribe(x=>{
-      this.receivedbpmn=x;
-      //console.log(this.receivedbpmn[0].name);
+    // this.subscription = this.bpmnservice.send.subscribe(x=>{
+    //   this.receivedbpmn=x;
+    //   //console.log(this.receivedbpmn[0].name);
   
-      if(this.receivedbpmn){
-        let bpmnFileName = this.receivedbpmn;
-        let bpmnFilePath = "assets/resources/"+bpmnFileName;
-        this.rest.getBPMNFileContent(bpmnFilePath).subscribe(res => {
-          this.bpmnModeler.importXML(res, function(err){
-            if(err){
-              return console.error('could not import BPMN 2.0 diagram', err);
-            }
-          })
-          })
+    //   if(this.receivedbpmn){
+    //     let bpmnFileName = this.receivedbpmn;
+    //     let bpmnFilePath = "assets/resources/"+bpmnFileName;
+    //     this.rest.getBPMNFileContent(bpmnFilePath).subscribe(res => {
+    //       this.bpmnModeler.importXML(res, function(err){
+    //         if(err){
+    //           return console.error('could not import BPMN 2.0 diagram', err);
+    //         }
+    //       })
+    //       })
         
-      }
-    },
-    (err =>{
-      console.log(err);
-    }));
+    //   }
+    // },
+    // (err =>{
+    //   console.log(err);
+    // }));
   }
   
   navigateCreate(){

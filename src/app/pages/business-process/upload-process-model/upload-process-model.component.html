@@ -1,20 +1,19 @@
-<div class="diif-screen"  [ngClass]="reSize?'col-md-7':'col-md-12'" >
-    <div class="row" >
-        <div class="col-md-6  show-confirmance-button-div">
-            <button class="show-confirmance-button" (click)="reSize=!reSize" [hidden]="reSize">Show Confirmance</button>
-    
+<div class="diif-screen"  [ngClass]="reSize?'col-md-6':'col-md-12'" >
+        <div class="row" >
+            <div class="col-md-6  show-confirmance-button-div">
+                <button class="show-confirmance-button" (click)="reSize=!reSize" [hidden]="reSize">Show Confirmance</button>
+                <button class="btn" (click)="slideup()" [disabled]="!reSize" >Show Differences</button>
+            
+            </div>
+            <div [ngClass]="!reSize?'col-md-6':'col-md-12'"  class="kpis-and-submit-button-div">
+                <button class="view-kpis-button"><img src="..\assets\view.svg">View KPI's</button>
+                <button class="submit-for-approval-button" routerLink="/pages/approvalWorkflow/home" [hidden]="!reSize">Submit for Approval</button>
+            </div>
         </div>
-        <div [ngClass]="!reSize?'col-md-6':'col-md-12'"  class="kpis-and-submit-button-div">
-            <button class="view-kpis-button"><img src="..\assets\view.svg">View KPI's</button>
-            <button class="submit-for-approval-button" routerLink="/pages/approvalWorkflow/home" [hidden]="!reSize">Submit for Approval</button>
-        </div>
+        <div class="canvas1"  id="canvas1" ></div>
+    </div>       
+    <div class="options-container col-md-6" [hidden]="!reSize">
+        <app-upload-create-drop-bpmn></app-upload-create-drop-bpmn> 
+        <div class="canvas2"  id="canvas2" ></div>
     </div>
-    <div class="canvas1"  id="canvas1" ></div>
-</div>       
-<div class="options-container col-md-5" [hidden]="!reSize">
-    <app-upload-create-drop-bpmn></app-upload-create-drop-bpmn>    
-    <!-- <div class="bpmneditor">
-        <div id="canvas2"  [hidden]="isHiddenDiff" id="canvas2">
-        </div>
-    </div>
-</div> -->
+      <app-list-of-changes></app-list-of-changes>  

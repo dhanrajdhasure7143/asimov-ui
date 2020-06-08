@@ -1,0 +1,65 @@
+<div id="foot" class="container">
+        <button type="button" class="overlay_close" aria-label="Close" (click)="slideDown()">
+                <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="row col-md-12">
+                <mat-tab-group>
+                        <mat-tab>
+                                <ng-template mat-tab-label>
+                                        Added <sup class="changeCount">{{jsonLength(changes._added)}}</sup>
+                                </ng-template>
+                                <div *ngIf="jsonLength(changes._added)==0">
+                                        No Added Changes
+                                </div>
+                                <div *ngIf="jsonLength(changes._added)!=0">
+                                        {{changes._added|json}}
+                                </div>
+                        </mat-tab>
+                        <mat-tab>
+                                <ng-template mat-tab-label>
+                                        Changed <sup class="changeCount">{{jsonLength(changes._changed)}}</sup>
+                                </ng-template>
+                                <div *ngIf="jsonLength(changes._changed)==0">
+                                        No Changed Changes
+                                </div>
+                                <div *ngIf="jsonLength(changes._changed)!=0">
+                                        {{changes._changed|json}}
+                                </div>
+                        </mat-tab>
+                        <mat-tab>
+                                <ng-template mat-tab-label>
+                                        Layout Changes <sup class="changeCount">{{jsonLength(changes._layoutChanged)}}</sup>
+                                </ng-template>
+                                <div *ngIf="jsonLength(changes._layoutChanged)==0">
+                                        No Layout Changes
+                                </div>
+                                <div *ngIf="jsonLength(changes._layoutChanged)!=0">
+                                         {{changes._layoutChanged|json}}
+                                </div>
+                        </mat-tab>
+                        <mat-tab>
+                                <ng-template mat-tab-label>
+                                        Removed <sup class="changeCount">{{jsonLength(changes._removed)==0?0:getArray(changes._removed).length}}</sup>
+                                </ng-template>
+                                <div *ngIf="jsonLength(changes._removed)==0">
+                                        No Removed Changes
+                                </div>
+                                <div *ngIf="jsonLength(changes._removed)!=0">
+                                        <table class="changeTable">
+                                                <tr>
+                                                        <th>ID</th>
+                                                        <th>Name</th>
+                                                        <th>Type</th>
+                                                </tr>
+                                                <tr *ngFor="let each_removed_change of getArray(changes._removed)">
+                                                        <td>{{each_removed_change.id}}</td> 
+                                                        <td>{{each_removed_change.name}}</td> 
+                                                        <td>{{each_removed_change.$type}}</td> 
+                                                </tr>
+                                        </table> 
+                                </div>
+                        </mat-tab>
+                </mat-tab-group>
+        </div>
+</div>
+    

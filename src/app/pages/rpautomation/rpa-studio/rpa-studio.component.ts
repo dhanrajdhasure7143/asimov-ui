@@ -16,6 +16,7 @@ import { FormGroup, FormControl } from '@angular/forms';
   styleUrls: ['./rpa-studio.component.css']
 })
 export class RpaStudioComponent implements OnInit {
+  model: any = {};
   public stud:any = [];
   public emailValue:any = []
   public databaseValue:any = [];
@@ -30,9 +31,12 @@ export class RpaStudioComponent implements OnInit {
   templateNodes: any = [];
   show: number;
   toolSetData: void;
+  
+  listEnvironmentData:any =[];
   changePx: { x: number; y: number; };
   // forms
   public hiddenPopUp:boolean = false;
+  public hiddenCreateBotPopUp:boolean = false;
   public form: FormGroup;
   unsubcribe: any
   public fields: any[] = [];
@@ -44,6 +48,9 @@ export class RpaStudioComponent implements OnInit {
   allFormValues: any[] = [];
   saveBotdata:any = [];
   selectedTasks: any[] = [];
+  exectionValue: any;
+  tabsArray: any[] = [];
+  tabActiveId: string;
   constructor(private rest:RestApiService) { 
     this.form = new FormGroup({
       fields: new FormControl(JSON.stringify(this.fields))
@@ -97,6 +104,8 @@ export class RpaStudioComponent implements OnInit {
     this.templateNodes.push(temp)
     })
   })
+ 
+ 
 
   var element:any = document.querySelector('.drag-area');
   let value = element.getBoundingClientRect().width / element.offsetWidth;
@@ -122,7 +131,7 @@ export class RpaStudioComponent implements OnInit {
       value = this.zoomArr[this.indexofArr];
       element.style['transform'] = `scale(${value})`
   })
-  }
+}
 
   getFields() {
     return this.fields;
@@ -156,7 +165,8 @@ export class RpaStudioComponent implements OnInit {
   }
 
   onDrop(event: DndDropEvent,e:any) {
-
+    console.log("dfg"+event);
+    
     e.event.toElement.oncontextmenu = new Function("return false;");
 
     this.stud = [];
@@ -310,6 +320,7 @@ export class RpaStudioComponent implements OnInit {
   }
   closeFun(){
     this.hiddenPopUp = false;
+    this.hiddenCreateBotPopUp = false
     this.fields = []
   }
   saveBotFun(){
@@ -340,6 +351,35 @@ export class RpaStudioComponent implements OnInit {
   successCallBack(data) {
     console.log(data);
     
+  }
+  execution(){
+    let eqObj:any
+    this.rest.execution(eqObj).subscribe(data => {this.exectionVal(data)},(error) => {
+      alert(error);
+    })
+  }
+  exectionVal(data){
+    console.log(data);
+    
+  }
+
+  onCreateSubmit() {
+    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
+    this.hiddenCreateBotPopUp = false
+    let temp : any={};
+    temp = this.model;
+    this.model = {};
+    this.tabsArray.push(temp);
+    this.tabActiveId = temp.botNamee
+    console.log(this.tabsArray);
+    
+  }
+  onCreate(){
+    this.hiddenCreateBotPopUp = true
+  }
+  closeBot($event) {
+    this.tabsArray = this.tabsArray.filter((bot): boolean => $event !== bot);
+    this.tabActiveId = this.tabsArray.length > 0 ? this.tabsArray[this.tabsArray.length - 1].id : '';
   }
 } 
 

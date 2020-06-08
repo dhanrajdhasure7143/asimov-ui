@@ -1,0 +1,70 @@
+.btn_style{
+    margin: 0px -6px 0px 10px;
+    background-color: white;
+    border-radius: 2px;
+    border: 1px solid lightgray;
+}
+.btn_style1{
+  margin: 0px 5px 0px 10px;
+  background-color: transparent;
+  border-radius: 2px;
+  padding: 0px 12px;
+}
+
+.collection_btn{
+    position: absolute;
+    bottom: 47px;
+    margin: 0px;
+    right: -180px;
+}
+.robotic-run {
+    position: absolute;
+    top: 0px;
+    border: 1px solid lightgray;
+    height: 40px;
+    left: 40%;
+    bottom: 15px;
+    margin: 10px 10px -5px 10px;
+    border-radius: 20px;
+    width: 25%;
+    z-index: 1000;
+  }
+  .rob-s{
+    padding: 0px 8px;
+  }
+  .rob-s p{
+    font-size: 12px;
+    color: black;
+  }
+  .status{
+    position: absolute;
+    right:-172px;
+    top: 0px;
+  }
+  .rob-status{
+    border: 1px solid lightgray;
+    width: 34px;
+    text-align: center;
+  }
+  .rob-status p{
+    font-size: 9px;
+    color: black;
+    margin: 0;
+  }
+  .imageI{
+    width: 16px;
+    filter: brightness(0.1) !important;
+}
+.imageI1{
+  width: 12px;
+  filter: brightness(0.1) !important;
+}
+.start-icon{
+  position: absolute;
+  top: 5px;
+}
+.start-play{
+  position: relative;
+  top: 16px;
+  right: 21px;
+}

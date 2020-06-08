@@ -1,0 +1,127 @@
+<div *ngIf="tabsArrayLength > 0" class="">
+    <div class="col-md-12">
+      <div class="collection_btn">
+        <button  type="button"
+          class="btn btn_style" aria-hidden="true" placement="bottom">
+          <img class="imageI"  src="/assets/images/Expanded.svg">
+        </button>
+        <button  type="button"
+        class="btn btn_style" aria-hidden="true" placement="bottom">
+        <img class="imageI"  src="/assets/images/Expanded.svg">
+      </button>
+        <button  type="button"
+          class="btn btn_style" aria-hidden="true" placement="bottom">
+          <img class="imageI" src="/assets/images/Path 509.svg">
+        </button>
+        <button  type="button"
+        class="btn btn_style" aria-hidden="true" placement="bottom">
+        <img class="imageI" src="/assets/images/Path 510.svg">
+      </button>
+      <button  type="button"
+      class="btn btn_style" aria-hidden="true" placement="bottom" (click)="saveBotFunAct()">
+      <img class="imageI" src="/assets/images/Layer 1.svg">
+    </button>
+    <button  type="button"
+    class="btn btn_style" aria-hidden="true" placement="bottom">
+    <img class="imageI" src="/assets/images/iconfinder_icon-play_211876.svg">
+    </button>
+    <button  type="button"
+    class="btn btn_style" aria-hidden="true" placement="bottom">
+    <img class="imageI" src="/assets/images/Group 286.svg">
+    </button>
+    <!-- <div>
+     
+    </div> -->
+    <button  type="button"
+    class="btn btn_style" aria-hidden="true" placement="bottom">
+    <img class="imageI" src="/assets/images/reload_pp.svg">
+    </button>
+      </div>
+    </div>
+    
+    <div class="col-md-12">
+      <div class="robotic-run">
+        <button  type="button"
+        class="btn btn_style1" aria-hidden="true" placement="bottom">
+        <div class="row rob-s">
+        <div *ngIf="!playToggle">
+      <button (click)="executionAct(); playToggle = true">
+          <p class="start-icon"><i class="fa fa-play"></i>
+            <span class="start-play">start</span>
+          </p>
+      </button>
+      </div>
+       <div *ngIf="playToggle">
+      <button (click)="pauseBot(41); playToggle = false"><!-- Vaidehi: prod build issue fix: need to replace with real ID -->
+        <p class="start-icon"><i class="fa fa-pause"></i>
+          <span class="start-play">pause</span></p>
+      </button>
+      </div>
+  
+      </div>
+      </button>
+      <button  type="button"
+      class="btn btn_style1" aria-hidden="true" placement="bottom">
+      <div class="row rob-s">
+        <div *ngIf="!playToggle1">
+          <button (click)="stopBot(41); playToggle1 = true"><!-- Vaidehi: prod build issue fix: need to replace with real ID -->
+            <p class="start-icon"><i class="fa fa-stop"></i>
+              <span class="start-play">Stop</span></p>
+          </button>
+        </div>
+        <div *ngIf="playToggle1">
+        <button (click)="resumeBot(41); playToggle1 = false"><!-- Vaidehi: prod build issue fix: need to replace with real ID -->
+          <p class="start-icon"><i class="fa fa-step-forward"></i>
+            <span class="start-play">Resume</span></p>
+        </button>
+      </div>
+  </div>
+    </button>
+        <button  type="button"
+        class="btn btn_style1" aria-hidden="true" placement="bottom">
+        <div class="row rob-s">
+        <img class="imageI1" src="/assets/images/settings.svg">
+        <p>settings</p>
+        </div>
+      </button>
+      <button  type="button"
+      class="btn btn_style1" aria-hidden="true" placement="bottom">
+      <div class="row rob-s">
+          <img class="imageI1" src="/assets/images/robot.svg">
+          <p>robot</p>
+      </div>
+    </button>
+      </div>
+    </div>
+
+    <div>
+        <app-rpa-studio-workspace></app-rpa-studio-workspace>
+    </div>
+
+    <div class="status">
+      <div class="row" style="text-align: center;">Bots</div>
+      <div class="row rob-status">
+        <h4>{{botStatisticsData.New}}</h4>
+        <p>New</p>
+      </div>
+      <div class="row rob-status">
+        <h4>{{botStatisticsData.Pause}}</h4>
+        <p>Pause</p>
+      </div>
+      <div class="row rob-status">
+        <h4>{{botStatisticsData.Stop}}</h4>
+        <p>Stop</p>
+      </div>
+      <div class="row rob-status">
+        <h4>{{botStatisticsData.Running}}</h4>
+        <p>Running</p>
+      </div>
+      <div class="row rob-status">
+        <h4>{{botStatisticsData.Success}}</h4>
+        <p>Success</p>
+      </div>
+      <div class="row rob-status">
+        <h4>{{botStatisticsData.Failure}}</h4>
+        <p>Failure</p>
+      </div>
+    </div>

@@ -2,6 +2,7 @@
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 @import "enjoyhint/enjoyhint.css";
 @import "~angular-notifier/styles";
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 body, html {
@@ -98,6 +99,9 @@ ngx-dropzone{
 }
 div[class^='diagram_container'] .djs-palette{
   display: none;
+}
+.djs-palette.two-column.open{
+  width: 48px !important;
 }
 div[class^='diagram_container'] .djs-container svg{
   margin-left: 5px;

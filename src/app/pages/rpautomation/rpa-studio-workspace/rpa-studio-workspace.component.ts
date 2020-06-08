@@ -1,0 +1,320 @@
+import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { DndDropEvent } from 'ngx-drag-drop';
+import { fromEvent } from 'rxjs';
+import { jsPlumb } from 'jsplumb';
+import { RestApiService } from '../../services/rest-api.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
+import * as $ from 'jquery';
+
+@Component({
+  selector: 'app-rpa-studio-workspace',
+  templateUrl: './rpa-studio-workspace.component.html',
+  styleUrls: ['./rpa-studio-workspace.component.css']
+})
+export class RpaStudioWorkspaceComponent implements AfterViewInit {
+  jsPlumbInstance;
+  public stud:any = [];
+  public optionsVisible : boolean = true;
+  result:any = [];
+  nodes = [];
+  selectedNode: any= [];
+  changePx: { x: number; y: number; };
+  // forms
+  public hiddenPopUp:boolean = false;
+  public hiddenCreateBotPopUp:boolean = false;
+  public form: FormGroup;
+  unsubcribe: any
+  public fields: any[] = [];
+  formHeader: any[] = [];
+  formVales:any[] = [];
+  dragelement:any
+  dagvalue:any
+  zoomArr = [0.5,0.6,0.7,0.8,0.9,1,1.1,1.2,1.3,1.4,1.5,1.6,1.7,1.8];
+  indexofArr = 6;
+  fieldValues: any[] = [];
+  allFormValues: any[] = [];
+  saveBotdata:any = [];
+  constructor(private rest:RestApiService) {
+    
+   }
+
+  ngAfterViewInit() {
+
+    this.jsPlumbInstance = jsPlumb.getInstance();
+    var self = this;
+    this.jsPlumbInstance.importDefaults({
+      Connector: ["Flowchart", { curviness: 90 }],
+      overlays: [
+        ["Arrow", { width: 12, length: 12, location: 0.5 }]
+      ]
+    });
+  }
+  public removeItem(item: any, list: any[]): void {
+    list.splice(list.indexOf(item), 1);
+  }
+
+  onDrop(event: DndDropEvent,e:any) {
+    this.dragelement = document.querySelector('.drag-area');
+    this.dagvalue = this.dragelement.getBoundingClientRect().width / this.dragelement.offsetWidth;
+    e.event.toElement.oncontextmenu = new Function("return false;");
+
+    this.stud = [];
+    this.optionsVisible = true;
+    const obs = fromEvent(document.body, '  ').subscribe(e => {
+    });
+    this.changePx = this.getMousePos(event.event.target, event);
+
+    var mousePos = this.getMousePos(event.event.target, event);
+    const dropCoordinates = {
+      x: mousePos.x + 'px',
+      y: mousePos.y + 'px'
+    };
+    
+    const node = event.data;
+    const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
+    console.log(nodeWithCoordinates);
+    this.nodes.push(nodeWithCoordinates);
+    setTimeout(() => {
+      this.populateNodes(nodeWithCoordinates);
+    }, 240);
+  }
+  updateCoordinates(dragNode) {
+    var nodeIndex = this.nodes.findIndex((node) => {
+      return (node.name == dragNode.name);
+    });
+    this.nodes[nodeIndex].x = dragNode.x;
+    this.nodes[nodeIndex].y = dragNode.y;
+  }
+  populateNodes(nodeData){
+        
+    const nodeIds = this.nodes.map(function (obj) {
+      return obj.name;
+    });
+    var self = this;
+    this.jsPlumbInstance.draggable(nodeIds, 
+      {
+      containment: true,
+      stop: function (element) {
+       self.updateCoordinates(element)
+      }
+    });
+
+    const rightEndPointOptions = {
+      endpoint: ['Rectangle', { 
+        radius: 4,
+        cssClass:"myEndpoint", 
+        width:8, 
+        height:8
+      }],
+      isSource: true,
+      connectorStyle: { stroke: '#006ed5',strokeWidth: 2 },
+      anchor: 'Right',
+      maxConnections: -1,
+      cssClass: "path",
+      Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
+      connectorClass: "path",
+      connectorOverlays: [['Arrow', {width: 12, length: 12, location: 1 }]],
+
+    };
+
+    const leftEndPointOptions = {
+      endpoint: ['Rectangle', { 
+        radius: 4,
+        cssClass:"myEndpoint", 
+        width:8, 
+        height:8
+      }],
+      isTarget: true,
+      connectorStyle: { stroke: '#006ed5',strokeWidth: 2 },
+      anchor: 'Left',
+      maxConnections: -1,
+      Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
+      cssClass: "path",
+      connectorClass: "path",
+      connectorOverlays: [
+      ]
+    };
+
+    this.jsPlumbInstance.addEndpoint(nodeData.name, rightEndPointOptions);
+    this.jsPlumbInstance.addEndpoint(nodeData.name, leftEndPointOptions);
+
+  }
+
+
+
+  
+  getMousePos(canvas, evt) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: evt.event.clientX - rect.left,
+      y: evt.event.clientY - rect.top
+    };
+  }
+  callFunction(menu){
+    this.optionsVisible = false;
+    this.hiddenPopUp = false;
+    this.fields = []
+    console.log(menu);
+    this.selectedNode.id = menu.id;
+    // this.selectedNode.push(menu.id)
+    console.log(this.selectedNode);
+    
+  }
+  onRightClick(n: any,e: { target: { id: string; } },i: string | number) {
+    this.selectedNode = n
+    console.log(e);
+    this.stud = [];
+    if(n.tasks.length>0){
+      this.optionsVisible = true;
+      let value:any = []
+    n.tasks.forEach(element => {
+    let temp:any = {
+      name : element.name,
+      id : element.taskId
+    };
+    this.stud.push(temp)
+  })
+    }
+    // if (!n) {
+    //   this.optionsVisible = false
+    // }
+    else 
+    {
+      this.optionsVisible = false
+      this.stud = [{
+        name : "No Options"
+      }]
+
+    }
+  }
+  getFields() {
+    return this.fields;
+  }
+
+  ngDistroy() {
+    this.unsubcribe();
+  }
+  formNodeFunc(node){
+    this.formHeader = node
+    if(this.selectedNode.id){
+    this.rest.attribute(this.selectedNode.id).subscribe((data)=> this.response(data))
+    }
+  }
+  response(data){
+    this.fields = [];
+    this.hiddenPopUp = true;
+    console.log(data);
+    this.formVales = data
+    this.fields = data
+    this.form = new FormGroup({
+      fields: new FormControl(JSON.stringify(this.fields))
+    })
+    this.unsubcribe = this.form.valueChanges.subscribe((update) => {
+      console.log(update);
+      this.fields = JSON.parse(update.fields);
+    });
+  }
+  onFormSubmit(event){
+    console.log(event);
+    this.fieldValues = event
+    // localStorage.setItem('formValue', event)
+  }
+  saveBotFun(){
+    console.log(this.formVales);
+    this.allFormValues = []
+    this.saveBotdata = []
+    this.formVales.forEach((ele,i) => {
+      let obj:any
+      let objKeys = Object.keys(this.fieldValues);
+      obj = {
+        "metaAttrId": ele.taskId,
+        "atrribute_type": ele.type,
+        "metaAttrValue": ele.name,
+         "attrValue": this.fieldValues[objKeys[i]]
+      }
+      this.allFormValues.push(obj)    
+  })
+  console.log(this.allFormValues);
+  this.saveBotdata = {
+    "botName": "metbotIntegration4",
+    "tasks": this.allFormValues,
+    "createdBy": "admin",
+    "lastSubmittedBy": "admin"
+  }
+  console.log(this.saveBotdata);
+  this.rest.saveBot(this.saveBotdata).subscribe(data => this.successCallBack(data))
+  }
+  successCallBack(data) {
+    console.log(data);
+    
+  }
+  execution(){
+    let eqObj:any
+    this.rest.execution(eqObj).subscribe(data => {this.exectionVal(data)},(error) => {
+      alert(error);
+    })
+  }
+  exectionVal(data){
+    console.log(data);
+    
+  }
+  reset(e){
+      this.indexofArr = 6;
+      this.dagvalue = this.zoomArr[this.indexofArr];
+      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+  }
+  zoomin(e){
+    if(this.indexofArr < this.zoomArr.length-1){
+      this.indexofArr += 1;
+      this.dagvalue = this.zoomArr[this.indexofArr];
+      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+    }
+  }
+  zoomout(e){
+    if(this.indexofArr >0){
+      this.indexofArr -= 1;
+      this.dagvalue = this.zoomArr[this.indexofArr];
+     this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+     }
+  }
+  closeFun(){
+    this.hiddenPopUp = false;
+    this.hiddenCreateBotPopUp = false
+    this.fields = []
+  }
+  downloadPDF() {
+    const HTML_Width = $('#content').width();
+    const HTML_Height = $('#content').height();
+    const top_left_margin = 15;
+    const PDF_Width = HTML_Width + (top_left_margin * 2);
+    const PDF_Height = (PDF_Width) + (top_left_margin * 2);
+    const canvas_image_width = HTML_Width;
+    const canvas_image_height = HTML_Height;
+
+    const totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+
+    window.scrollTo(0, 0);
+    html2canvas($('#content')[0], { allowTaint: true }).then((canvas) => {
+      canvas.getContext('2d');
+
+      console.log(canvas.height + '  ' + canvas.width);
+
+
+      const imgData = canvas.toDataURL('data:' + 'image/png' + ';base64,', 1.0);
+      const pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
+      // pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+
+
+
+      for (let i = 1; i <= totalPDFPages; i++) {
+        pdf.addPage(PDF_Width, PDF_Height);
+        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
+      }
+
+      pdf.save('RPA.pdf');
+    });
+  }
+
+}
