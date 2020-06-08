@@ -1,0 +1,42 @@
+[
+  {
+      "botName": "MacTest",
+      "botId": 64
+  },
+  {
+      "botName": "Demo bot for Agent execution",
+      "botId": 59
+  },
+  {
+      "botName": "testing",
+      "botId": 54
+  },
+  {
+      "botName": "order_data_receive_store_sendEmail",
+      "botId": 55
+  },
+  {
+      "botName": "order_data_receive_store_sendEmail",
+      "botId": 56
+  },
+  {
+      "botName": "random_stock_exchanges",
+      "botId": 52
+  },
+  {
+      "botName": "order_data_receive_store_sendEmail",
+      "botId": 57
+  },
+  {
+      "botName": "BotTest199",
+      "botId": 7
+  },
+  {
+      "botName": "KGF3",
+      "botId": 8
+  },
+  {
+      "botName": "metbotIntegration4",
+      "botId": 18
+  }
+]

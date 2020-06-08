@@ -2,8 +2,8 @@
     <div class="col-md-12">
       <div class="collection_btn">
         <button  type="button"
-          class="btn btn_style" aria-hidden="true" placement="bottom">
-          <img class="imageI"  src="/assets/images/Expanded.svg">
+          class="btn btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
+          <img class="imageI"  src="/assets/images/Deploy.svg">
         </button>
         <button  type="button"
         class="btn btn_style" aria-hidden="true" placement="bottom">
@@ -29,16 +29,24 @@
     class="btn btn_style" aria-hidden="true" placement="bottom">
     <img class="imageI" src="/assets/images/Group 286.svg">
     </button>
-    <!-- <div>
-     
-    </div> -->
+      <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle"type="button" data-toggle="dropdown" (click)="listenvironments()">Action <span class="caret"></span></button>
+          <ul *ngIf ="optionList"class="dropdown-menu">
+                <li *ngFor="let list of environment;let i = index">
+                  <div class="checkbox">
+                      <div class="environments">
+                          <label [for]="list+i"><input type="checkbox"value="{{list.checked}}"[checked]="list.Checked"[id]="list+i"[name]="list"[(ngModel)]="list.Checked"(ngModelChange)="getCheckboxValues($event,item)">{{list.environmentName}}</label><hr>
+                      </div>
+                  </div>
+                  </li>  
+            </ul>
+        </div>
     <button  type="button"
     class="btn btn_style" aria-hidden="true" placement="bottom">
     <img class="imageI" src="/assets/images/reload_pp.svg">
     </button>
-      </div>
-    </div>
-    
+      </div>    
+    </div> 
     <div class="col-md-12">
       <div class="robotic-run">
         <button  type="button"
@@ -83,17 +91,32 @@
         <img class="imageI1" src="/assets/images/settings.svg">
         <p>settings</p>
         </div>
-      </button>
+      </button>  
       <button  type="button"
-      class="btn btn_style1" aria-hidden="true" placement="bottom">
-      <div class="row rob-s">
+      class="btn btn_style1 " aria-hidden="true" placement="bottom"(click)="getallpredefinebots()">
+      <div class="row rob-s"[style.display]="'block'">
           <img class="imageI1" src="/assets/images/robot.svg">
           <p>robot</p>
       </div>
     </button>
+    <ng-container *ngIf="optionPredefinedbotList"[style.display]="'none'">
+        <div >  
+            <div class="node_tooltip"></div>
+          <div class="drag-area">
+            <nav id="context-menu" class="context-menu contextmenu">
+              <div class="context-menu1">
+                <div class="context-menu__item" *ngFor="let bots of predefined">
+                  <div class="checkbox">
+                      <a class="context-menu__link" data-action="View">{{bots.botName}}</a><br><hr>
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </ng-container>
       </div>
     </div>
-
     <div>
         <app-rpa-studio-workspace></app-rpa-studio-workspace>
     </div>
@@ -102,26 +125,18 @@
       <div class="row" style="text-align: center;">Bots</div>
       <div class="row rob-status">
         <h4>{{botStatisticsData.New}}</h4>
-        <p>New</p>
-      </div>
-      <div class="row rob-status">
-        <h4>{{botStatisticsData.Pause}}</h4>
-        <p>Pause</p>
-      </div>
-      <div class="row rob-status">
-        <h4>{{botStatisticsData.Stop}}</h4>
-        <p>Stop</p>
-      </div>
-      <div class="row rob-status">
-        <h4>{{botStatisticsData.Running}}</h4>
-        <p>Running</p>
+        <p>NEW</p>
       </div>
       <div class="row rob-status">
         <h4>{{botStatisticsData.Success}}</h4>
-        <p>Success</p>
+        <p>ACTIVE</p>
       </div>
       <div class="row rob-status">
         <h4>{{botStatisticsData.Failure}}</h4>
-        <p>Failure</p>
+        <p>ERRORS</p>
+      </div>
+      <div class="row rob-status">
+        <h4>{{botStatisticsData.Running}}</h4>
+        <p>RUNNING</p>
       </div>
     </div>

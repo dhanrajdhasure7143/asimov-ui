@@ -13,7 +13,7 @@
         <div *ngIf="updateflag==false" class="env-btn">
           <button class="btn-outline-primary btn env-btn-shadow" disabled><i class="fas fa-edit iconfont"></i></button>
         </div>
-        <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" class="table table-striped  table-sm row-border hover env-table">
+        <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" class="table rpa-table table-striped  table-sm row-border hover env-table">
           <thead>
             <tr>
               <th><input type="checkbox" [checked]="isAllCheckBoxChecked()" (change)="checkAllCheckBox($event)"></th>
@@ -32,12 +32,12 @@
           </thead>
           <tbody >
             <tr  *ngFor="let environment of environments;let i=index; let odd = odd;" [ngClass]="odd ? 'odd_col' : 'even_col'">
-            <td><input type="checkbox" value="{{environment.id}}" [(ngModel)]="environments[i].checked" (change)="checktoupdate()"></td>
+            <td class="rpa-checkbox"><input type="checkbox" value="{{environment.id}}" [(ngModel)]="environments[i].checked" (change)="checktoupdate()"></td>
               <td>{{environment.environmentName}}</td>
               <td>{{environment.environmentType}}</td>
               <td>{{environment.agentPath}}</td>
               <td>**.**.***</td>
-              <td>{{environment.userName}}</td>
+              <td>{{environment.username}}</td>
               <td>{{environment.password}}</td>
               <td>{{environment.connectionType}}</td>
               <td>{{environment.portNumber}}</td>
@@ -109,7 +109,7 @@
             <div class="row">
               <div class="col-md-3 formelement">
                 <label for="update_userName">Username*</label>
-                <input type="text" class="form-control" formControlName="update_userName" value="{{updateenvdata.userName}}" [(ngModel)]="updateenvdata.userName" placeholder="Username" >
+                <input type="text" class="form-control" formControlName="update_userName" value="{{updateenvdata.userName}}" [(ngModel)]="updateenvdata.username" placeholder="Username" >
                 <span *ngIf="updateForm.get('update_userName').invalid && updateForm.get('update_userName').touched" style="color:red">Invalid Input</span>
               
               </div>
@@ -166,7 +166,7 @@
               <div class="row">
                 <div class="col-md-3 formelement">
                   <label for="environmentName">Environment Name*</label>
-                  <input type="text" class="form-control data" formControlName="environmentName" #environmentName value=""  placeholder="Environment Name" >
+                  <input type="text" class="form-control data" formControlName="environmentName" #environmentName value=""  placeholder="Enter Environment Name" >
                   <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get('environmentName').touched" style="color:red">Invalid Input</span>
                 </div>
                 <div class="col-md-3 formelement ">
@@ -197,8 +197,8 @@
                 <div class="row">
                 <div class="col-md-3 formelement">
                   <label for="userName">Username*</label>
-                  <input type="text" class="form-control" formControlName="userName"  value=""  placeholder="Username" >
-                  <span *ngIf="insertForm.get('userName').invalid && insertForm.get('userName').touched" style="color:red">Invalid Input</span>
+                  <input type="text" class="form-control" formControlName="username"  value=""  placeholder="Username" >
+                  <span *ngIf="insertForm.get('userName').invalid && insertForm.get('username').touched" style="color:red">Invalid Input</span>
               
                 </div>
                 

@@ -6,7 +6,7 @@
         [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
           <div class="connector-name">{{node.name}}</div>
           <div>
-            <nav *ngIf ="selectedNode.name===node.name"  id="context-menu" class="context-menu contextmenu">
+            <nav *ngIf ="selectedNode.name==node.name"  id="context-menu" class="context-menu contextmenu">
               <div class="context-menu1">
                 <div class="context-menu__item" *ngFor="let menu of stud">
                   <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu)"

@@ -9,7 +9,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
     constructor(@Inject(APP_CONFIG) private config) { }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-        this.setLocalStorage(req);
+        // this.setLocalStorage(req);
         //authentication service logic - post integration with AIOTAL
         req = req.clone({
             url : this.getRequestUrl(req),

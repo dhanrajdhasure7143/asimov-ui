@@ -177,9 +177,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.stud.push(temp)
   })
     }
-    // if (!n) {
-    //   this.optionsVisible = false
-    // }
+    
     else 
     {
       this.optionsVisible = false

@@ -203,4 +203,16 @@ height: 70px;
 .formelement{
 padding:10px;
 }
+#particles-js {
+  position: absolute;
+  z-index: 0;
+  width: 50%;
+  height: 620px;
+  background-color: none;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 /*RPA-Environments*/
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

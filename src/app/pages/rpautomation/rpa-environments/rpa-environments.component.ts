@@ -36,7 +36,7 @@ import { checkboxlist } from './checkboxlist';
       environmentType:["", Validators.required],
       agentPath:["", Validators.required],
       hostAddress:["", Validators.required],
-      userName:["", Validators.required],
+      username:["", Validators.required],
       password:["", Validators.required],
       connectionType:["SSH", Validators.required],
       portNumber:["22", Validators.required],
@@ -49,7 +49,7 @@ import { checkboxlist } from './checkboxlist';
       update_environmentType: ["", Validators.required],
       update_agentPath: ["", Validators.required],
       update_hostAddress: ["", Validators.required],
-      update_userName: ["", Validators.required],
+      update_username: ["", Validators.required],
       update_password: ["", Validators.required],
       update_connectionType: ["", Validators.required],
       update_portNumber: ["", Validators.required],
@@ -66,12 +66,16 @@ import { checkboxlist } from './checkboxlist';
     
     this.dtOptions = {
       pagingType: 'full_numbers',
+      
       pageLength: 4,
       scrollX: true,
       dom:'<<"data"f><t>lip>',
+      columnDefs:[ { orderable: false, targets: [0], orderData:[0], }],
       responsive:true,
       retrieve:true,
       };
+
+      
     this.getallData();
     this.createpopup=false;
     this.updatepopup=false;
