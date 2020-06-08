@@ -22,7 +22,7 @@
       <img class="imageI" src="/assets/images/Layer 1.svg">
     </button>
     <button  type="button"
-    class="btn btn_style" aria-hidden="true" placement="bottom">
+    class="btn btn_style" aria-hidden="true" (click)="schedulerPopUp()" placement="bottom">
     <img class="imageI" src="/assets/images/iconfinder_icon-play_211876.svg">
     </button>
     <button  type="button"
@@ -140,3 +140,97 @@
         <p>RUNNING</p>
       </div>
     </div>
+
+
+          <!-- forms -->
+          <div *ngIf="hiddenSchedlerPopUp" class="pop-up conainer">
+            <div class="card">
+              <div class="card-header">
+                Scheduler
+                <span class="class-css" (click)="closeFun()" >X</span>
+              </div>  
+          <div class="container card-body">
+            <div class="">
+            <ngb-tabset>
+              <ngb-tab title="Config">
+                <ng-template style="background: white;" ngbTabContent>
+            <form style="background: white;" name="form" (ngSubmit)="f.form.valid && onCreateSubmit()" #f="ngForm" novalidate>
+                <div class="form-group">
+                    <label for="botName">Time zone</label>
+                    <select class="form-control"   name="selectedTimeZone" #timezone="ngModel" [(ngModel)]="selectedTimeZone" [ngModelOptions]="{standalone: true}"
+            required>
+            <option *ngFor="let timeZone of timesZones" [(ngValue)]="timeZone">{{timeZone}}</option>
+            <option [ngValue]="undefined" selected disabled>Select a Type</option>
+          </select>
+          <hr>
+          <label>Schedule</label>
+          <cron-editor #cronEditorDemo [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions">Cron
+            here...</cron-editor>
+            <!-- date start -->
+            <div class="col-md-12 row">
+            <div class="col-md-3 form-group">
+              <div class="input-group">
+                <label for="alertTo">From Date</label>
+              </div>
+              <div class="input-group ">
+                <input class="form-control pointer"  placeholder="yyyy-mm-dd" 
+                name="d1" #c1="ngModel" [(ngModel)]="startDate"   (click)="d1.toggle()"  
+                [maxDate]="endDate" ngbDatepicker #d1="ngbDatepicker">
+              </div>
+            </div>
+              <div class="col-md-3">
+                <form [formGroup]="form">
+                <ngb-timepicker class="time" [(ngModel)]="startTime" formControlName="startTime"></ngb-timepicker>
+              </form>
+              <!-- <p>Result : {{form.value | json}}</p> -->
+            </div>
+              <div class="col-md-3 form-group">
+                <div class="input-group">
+                <label for="alertTo">To Date</label>
+              </div>
+              <div class="input-group">
+                <input 
+                      class="form-control pointer" 
+                      placeholder="yyyy-mm-dd" 
+                      name="d2" 
+                      #c2="ngModel" 
+                      [(ngModel)]="endDate" 
+                      (click)="d2.toggle()"
+                      [minDate]="startDate"  
+                      [disabled] = "selectTime" 
+                      ngbDatepicker 
+                      #d2="ngbDatepicker">
+              </div>
+             </div>
+             <div class="col-md-3">
+              <form [formGroup]="form">
+              <ngb-timepicker class="time" [(ngModel)]="endTime" formControlName="endTime"></ngb-timepicker>
+            </form>
+            <!-- <p>Result : {{form.value | json}}</p> -->
+          </div>
+            </div>
+            <!-- date end -->
+            <!-- <div class="col-md-12">
+              <h3><b>{{cronExpression}}</b></h3>
+            </div> -->
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary" (click)="saveCron()">Save</button>
+                </div>
+            </form>
+                </ng-template>
+              </ngb-tab>
+              <ngb-tab  title="Schedule">
+                <ng-template style="background: white;" ngbTabContent>
+                  <div style="background: white;">
+                  <ul style="background: white;"  *ngFor ="let scheduleItem of scheduleLists" >
+                    <li class="col-md-12" style="padding: 0px; margin: 0px;">{{scheduleItem}}</li>
+                  </ul>  
+                </div>
+                </ng-template>
+              </ngb-tab>
+            </ngb-tabset>
+          </div>
+          </div>
+          </div>
+          </div>

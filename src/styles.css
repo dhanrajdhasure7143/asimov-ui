@@ -117,6 +117,7 @@ ul.nav.nav-tabs.justify-content-start li {
   height: 38px !important;
 }
 ul.nav.nav-tabs.justify-content-start li a {
+  height: 38px;
     color: #000;
     background: lightgray;
 }

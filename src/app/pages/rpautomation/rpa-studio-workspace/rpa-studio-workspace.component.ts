@@ -7,6 +7,8 @@ import { FormGroup, FormControl } from '@angular/forms';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as $ from 'jquery';
+import { NotifierService } from 'angular-notifier';
+
 
 @Component({
   selector: 'app-rpa-studio-workspace',
@@ -36,7 +38,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   fieldValues: any[] = [];
   allFormValues: any[] = [];
   saveBotdata:any = [];
-  constructor(private rest:RestApiService) {
+  constructor(private rest:RestApiService,private notifier: NotifierService) {
     
    }
 
@@ -73,6 +75,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     };
     
     const node = event.data;
+    node.id = this.idGenerator();
     const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
     console.log(nodeWithCoordinates);
     this.nodes.push(nodeWithCoordinates);
@@ -80,9 +83,15 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.populateNodes(nodeWithCoordinates);
     }, 240);
   }
+  idGenerator() {
+    var S4 = function () {
+      return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+    };
+    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
+  }
   updateCoordinates(dragNode) {
     var nodeIndex = this.nodes.findIndex((node) => {
-      return (node.name == dragNode.name);
+      return (node.id == dragNode.id);
     });
     this.nodes[nodeIndex].x = dragNode.x;
     this.nodes[nodeIndex].y = dragNode.y;
@@ -90,7 +99,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   populateNodes(nodeData){
         
     const nodeIds = this.nodes.map(function (obj) {
-      return obj.name;
+      return obj.id;
     });
     var self = this;
     this.jsPlumbInstance.draggable(nodeIds, 
@@ -137,8 +146,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       ]
     };
 
-    this.jsPlumbInstance.addEndpoint(nodeData.name, rightEndPointOptions);
-    this.jsPlumbInstance.addEndpoint(nodeData.name, leftEndPointOptions);
+    this.jsPlumbInstance.addEndpoint(nodeData.id, rightEndPointOptions);
+    this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
 
   }
 
@@ -158,6 +167,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.fields = []
     console.log(menu);
     this.selectedNode.id = menu.id;
+    let type ="info";
+      let message = `${menu.name} is Selected`
+      this.notifier.notify( type, message );
     // this.selectedNode.push(menu.id)
     console.log(this.selectedNode);
     
@@ -201,6 +213,13 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
   }
   response(data){
+    if(data.error == "No Data Found"){
+      this.fields = [];
+      this.hiddenPopUp = false;
+      let type ="info";
+      let message = "No Data Found"
+      this.notifier.notify( type, message );
+    }else{
     this.fields = [];
     this.hiddenPopUp = true;
     console.log(data);
@@ -212,7 +231,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.unsubcribe = this.form.valueChanges.subscribe((update) => {
       console.log(update);
       this.fields = JSON.parse(update.fields);
-    });
+    })
+  }
   }
   onFormSubmit(event){
     console.log(event);
@@ -245,6 +265,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   this.rest.saveBot(this.saveBotdata).subscribe(data => this.successCallBack(data))
   }
   successCallBack(data) {
+    if(data.error){
+      let type ="info";
+      let message = "Failed to Save Data"
+      this.notifier.notify( type, message );
+    }else{
+      let type ="info";
+      let message = "Data is Saved Successfully"
+      this.notifier.notify( type, message );
+    console.log(data);
+    }
     console.log(data);
     
   }
@@ -255,8 +285,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     })
   }
   exectionVal(data){
+    if(data.error){
+      let type ="info";
+      let message = "Failed to execute"
+      this.notifier.notify( type, message );
+    }else{
+      let type ="info";
+      let message = "Bot is executed Successfully"
+      this.notifier.notify( type, message );
     console.log(data);
-    
+    }
   }
   reset(e){
       this.indexofArr = 6;
