@@ -45,7 +45,9 @@ export class DatadocumentComponent implements OnInit {
     });
   }
   generatepg(){
-    this.router.navigate(['/pages/processIntelligence/flowChart']);
+    // this.router.navigate(['/pages/processIntelligence/flowChart']);
+    document.getElementById("foot").classList.remove("slide-down");
+  document.getElementById("foot").classList.add("slide-up");
   }
   sort(property) {
     this.isDesc = !this.isDesc; //change the direction    

@@ -1,0 +1,58 @@
+
+<div id="foot">
+    <div  class="filter_heading">               
+    <div class="container filter_headinglabels">
+        <div class="row">
+          
+            <div class="col-md-12">
+                <p class="header-style" >Save Process</p>
+                <button type="button" class="close cross_close resize" aria-label="Close" (click)="slideDown()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="container">
+            <div class="row">
+               
+               
+    
+                <div class="col-md-12">
+                    
+                    <div class="reports">
+                        <div class="process-name">
+                            <!-- <p >Select Category</p> -->
+                            <label class="process-name" >Select Category</label>
+                            <div>
+                               
+                                  <select  id="category" [(ngModel)]="category"  >
+                                        <option value="infrastructure">Infratructure</option>
+                                      </select>  
+                            </div>
+
+                        </div>
+                        <div class="process-name">
+                            <!-- <p >Enter process name</p> -->
+                            <label class="process-name">Enter process name</label>
+                            <div>
+                            <input type="name" id="name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}" required> 
+                            </div>
+                        </div>
+                    <div>
+                <button class="apply_button" (click)="applyFilter()" [disabled]="(category==''|| name=='')">Save & Generate</button>
+                </div>
+                
+                
+
+
+                </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</div>
+    
+
