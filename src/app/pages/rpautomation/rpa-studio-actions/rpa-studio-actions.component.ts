@@ -106,15 +106,21 @@ export class RpaStudioActionsComponent implements OnInit {
      return this.stop;
     }
     listenvironments(d){
-      this.selectedDropdown = d
-      this.environment = [];
+      const selectedEnvironments:any = [];
+      this.environment = []; 
       console.log(this.listEnvironmentData.length>0);
+      const stored: string = localStorage.getItem('data');
+      if(stored){
+        // split comma-separated string into array of environment names
+        selectedEnvironments.push(...stored.split(',')); 
+      }
       if(this.listEnvironmentData){
         this.optionList = true;
         let value:any = []
        this.listEnvironmentData.forEach(element => {
       let temp:any = {
-        environmentName : element.environmentName
+        environmentName : element.environmentName,
+        checked:element.environmentId
       };
       this.environment.push(temp)
     })
@@ -129,11 +135,36 @@ export class RpaStudioActionsComponent implements OnInit {
   
       }
     }
+    getCheckboxValues(event, data){
+      let index = this.environment.findIndex(x => x.order==data);
+      if (event) {
+        let obj = data;
+    
+        this.environment.push(obj);
+    
+        let some;
+        if(localStorage.getItem('cheked') === null ){
+          some = [];
+        } else{
+          some = JSON.parse(localStorage.getItem('checked'));
+    
+        }
+        some.push(this.environment)
+        localStorage.setItem('checked',JSON.stringify(some));
+        localStorage.CBState = JSON.stringify(some);
+      }
+      else {
+    
+        this.environment.splice(index, 1);
+        localStorage.removeItem('checked');
+      }
+      console.log(this.environment);
+    }
     getallpredefinebots(){
      this.predefined =[];
       console.log(this.predefinedbotsData);
       if(this.predefinedbotsData){
-        this.optionPredefinedbotList =true;
+        this.optionPredefinedbotList =!this.optionPredefinedbotList;
         this.predefinedbotsData.forEach(element =>{
           let temp:any ={
             botName : element.botName
@@ -155,5 +186,6 @@ export class RpaStudioActionsComponent implements OnInit {
         this.deploymachinedata =data;
       })
     }
+  
     }
 

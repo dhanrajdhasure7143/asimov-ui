@@ -18,7 +18,7 @@ import { RpaWorkspaceComponent } from './rpa-workspace/rpa-workspace.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-
+import { RpaHints } from './model/rpa-module-hints';
 
 
 
@@ -40,6 +40,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot()
-  ]
+  ],
+  providers: [RpaHints]
 })
 export class RpautomationModule { }

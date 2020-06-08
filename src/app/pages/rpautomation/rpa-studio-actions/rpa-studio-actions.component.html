@@ -31,10 +31,13 @@
     </button>
       <div class="dropdown">
           <button class="btn btn-primary dropdown-toggle"type="button" data-toggle="dropdown" (click)="listenvironments()">Action <span class="caret"></span></button>
-          <span class="dropdown-menu-arrow"></span>
           <ul *ngIf ="optionList"class="dropdown-menu">
-                <li *ngFor="let list of environment">
-                    <span><input type ="checkbox"></span>&nbsp;&nbsp;{{list.environmentName}}<br><hr>          
+                <li *ngFor="let list of environment;let i = index">
+                  <div class="checkbox">
+                      <div class="environments">
+                          <label [for]="list+i"><input type="checkbox"value="{{list.checked}}"[checked]="list.Checked"[id]="list+i"[name]="list"[(ngModel)]="list.Checked"(ngModelChange)="getCheckboxValues($event,item)">{{list.environmentName}}</label><hr>
+                      </div>
+                  </div>
                   </li>  
             </ul>
         </div>
@@ -42,10 +45,8 @@
     class="btn btn_style" aria-hidden="true" placement="bottom">
     <img class="imageI" src="/assets/images/reload_pp.svg">
     </button>
-      </div>
-      
-    </div>
-    
+      </div>    
+    </div> 
     <div class="col-md-12">
       <div class="robotic-run">
         <button  type="button"
@@ -93,18 +94,21 @@
       </button>  
       <button  type="button"
       class="btn btn_style1 " aria-hidden="true" placement="bottom"(click)="getallpredefinebots()">
-      <div class="row rob-s">
+      <div class="row rob-s"[style.display]="'block'">
           <img class="imageI1" src="/assets/images/robot.svg">
           <p>robot</p>
       </div>
     </button>
-    <ng-container *ngIf="optionPredefinedbotList">
-        <div>  
+    <ng-container *ngIf="optionPredefinedbotList"[style.display]="'none'">
+        <div >  
+            <div class="node_tooltip"></div>
           <div class="drag-area">
             <nav id="context-menu" class="context-menu contextmenu">
               <div class="context-menu1">
                 <div class="context-menu__item" *ngFor="let bots of predefined">
-                  <a class="context-menu__link" data-action="View">{{bots.botName}}</a><hr>
+                  <div class="checkbox">
+                      <a class="context-menu__link" data-action="View">{{bots.botName}}</a><br><hr>
+                  </div>
                 </div>
               </div>
             </nav>

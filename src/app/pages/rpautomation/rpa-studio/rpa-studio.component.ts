@@ -2,11 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb } from 'jsplumb';
+import { Router } from '@angular/router';
+import { DataTransferService } from "../../services/data-transfer.service";
 import { element } from 'protractor';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { RestApiService } from '../../services/rest-api.service';
 import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuContent.component';
 import { FormGroup, FormControl } from '@angular/forms';
+import { RpaHints } from '../model/rpa-module-hints';
 
 
 
@@ -51,7 +54,8 @@ export class RpaStudioComponent implements OnInit {
   exectionValue: any;
   tabsArray: any[] = [];
   tabActiveId: string;
-  constructor(private rest:RestApiService) { 
+  constructor(private router: Router, private dt:DataTransferService,private rest:RestApiService,
+    private hints:RpaHints) { 
     this.form = new FormGroup({
       fields: new FormControl(JSON.stringify(this.fields))
     })
@@ -64,6 +68,9 @@ export class RpaStudioComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Automation"});
+    this.dt.changeChildModule("");
+    this.dt.changeHints(this.hints.rpaHomeHints);
     this.rest.toolSet().subscribe(data => {
       let value:any = [];
       let subValue:any = []
