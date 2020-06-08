@@ -17,6 +17,7 @@ import { FilterComponent } from './filter/filter.component'
 import { FlowchartComponent } from './flowchart/flowchart.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { PiHints } from './model/process-intelligence-module-hints';
+import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PiHints } from './model/process-intelligence-module-hints';
     PiflowchartComponent, 
     FilterComponent,
     FlowchartComponent,
-    SearchPipe
+    SearchPipe,
+    PibpmnfilterComponent
   ],
   imports: [
     CommonModule,
