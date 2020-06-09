@@ -169,7 +169,7 @@ export class RpaStudioActionsComponent implements OnInit {
         this.predefined.push(temp)
       })
     }
-
+  }
       schedulerPopUp(){
       this.hiddenSchedlerPopUp = true
       let data:any
@@ -196,8 +196,6 @@ export class RpaStudioActionsComponent implements OnInit {
       this.hiddenSchedlerPopUp = false;
     }
   
-    }
-  }
   botstatistics() {
     this.rest.botStatistics().subscribe(Status => {
       this.botStatisticsData = Status;
@@ -252,4 +250,3 @@ export class RpaStudioActionsComponent implements OnInit {
     })
   }
 }
-
