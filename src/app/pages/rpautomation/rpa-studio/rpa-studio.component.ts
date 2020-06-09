@@ -124,6 +124,7 @@ export class RpaStudioComponent implements OnInit {
     
   }
   onCreate(){
+    this.model.botType="";
     this.hiddenCreateBotPopUp = true
   }
   closeBot($event) {

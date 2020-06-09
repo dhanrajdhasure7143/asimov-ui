@@ -1,44 +1,53 @@
-import { Component, OnInit,OnDestroy, ChangeDetectorRef, ViewChild } from '@angular/core';
+import { Component,  OnInit,OnDestroy, ChangeDetectorRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import {HttpClient,HttpErrorResponse} from '@angular/common/http';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import 'rxjs/add/operator/map';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
-import { environmentobservable } from './environmentobservable';
+import { environmentobservable } from '../model/environmentobservable';
 import { EnvironmentsService } from './rpa-environments.service';
-import { checkboxlist } from './checkboxlist';
+import Swal from 'sweetalert2';
+import { RestApiService } from '../../services/rest-api.service';
+import {Router} from "@angular/router";
 @Component({
   selector: 'app-environments',
   templateUrl:'./rpa-environments.component.html',
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements OnDestroy, OnInit{
+    @ViewChild('closebutton', {static: false}) closebutton  
+    @ViewChild(DataTableDirective,{static: false}) dtElement: DataTableDirective;
+    @Output()
+    title:EventEmitter<string> = new EventEmitter<string>();
     public environments : environmentobservable [];
     public createpopup:Boolean;
     public button:string;
     public updatepopup:Boolean;
     public delete_elements:number[];
     public masterSelected:Boolean;
-    public checkitems: checkboxlist[];
     public updateenvdata:environmentobservable;
     public environmentName:FormControl;
     public insertForm:FormGroup;
     public updateForm:FormGroup;
     public updateflag:Boolean;
+    public deleteflag:Boolean;
     private updateid:number;
-  isDtInitialized:boolean = false;
-  dtTrigger: Subject<any> =new Subject();
-  dtOptions: DataTables.Settings = {};
-  constructor(private httpService:HttpClient, private formBuilder: FormBuilder,private environmentservice:EnvironmentsService, private chanref:ChangeDetectorRef) { 
-    console.log("app doing good")
-    this.insertForm=this.formBuilder.group({
+    public term:string;
+    isDtInitialized:boolean = false;
+    dtTrigger: Subject<any> =new Subject();
+    dtOptions: DataTables.Settings = {};
+    
+  constructor(private api:RestApiService, private router:Router, private formBuilder: FormBuilder,private environmentservice:EnvironmentsService, private chanref:ChangeDetectorRef) { 
+    const ipPattern = 
+    "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+      this.insertForm=this.formBuilder.group({
       environmentName:["", Validators.required],
       environmentType:["", Validators.required],
       agentPath:["", Validators.required],
-      hostAddress:["", Validators.required],
+      hostAddress:["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
       username:["", Validators.required],
       password:["", Validators.required],
-      connectionType:["SSH", Validators.required],
+      connectionType:["SSH", Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
       portNumber:["22", Validators.required],
       comments:[""],
       
@@ -48,34 +57,30 @@ import { checkboxlist } from './checkboxlist';
       update_environmentName: ["", Validators.required],
       update_environmentType: ["", Validators.required],
       update_agentPath: ["", Validators.required],
-      update_hostAddress: ["", Validators.required],
+      update_hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
       update_username: ["", Validators.required],
       update_password: ["", Validators.required],
-      update_connectionType: ["", Validators.required],
-      update_portNumber: ["", Validators.required],
+      update_connectionType: ["",Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
+      update_portNumber: ["",  Validators.compose([Validators.required, Validators.pattern("[0-9]*")])],
       update_comments: [""]
     
     })
     this.updateflag=false;
-
+    this.deleteflag=false;
     
   }
-  @ViewChild(DataTableDirective,{static: false}) 
-  dtElement: DataTableDirective;
   ngOnInit() {
-    
+    this.title.emit("Environments")
     this.dtOptions = {
-      pagingType: 'full_numbers',
-      
-      pageLength: 4,
+      pagingType: 'simple',
+      pageLength: 10,
       scrollX: true,
-      dom:'<<"data"f><t>lip>',
-      columnDefs:[ { orderable: false, targets: [0], orderData:[0], }],
+      dom:'<f<t>lp>',
+      columnDefs:[ { orderable: false, targets: [0]}],
       responsive:true,
       retrieve:true,
       };
 
-      
     this.getallData();
     this.createpopup=false;
     this.updatepopup=false;
@@ -85,7 +90,7 @@ import { checkboxlist } from './checkboxlist';
  async getallData()
   {
 
-    await this.environmentservice.getfulldata().subscribe(
+    await this.api.listEnvironments().subscribe(
     data => {
         this.environments = data as environmentobservable [];	
         this.chanref.detectChanges();
@@ -99,7 +104,7 @@ import { checkboxlist } from './checkboxlist';
 
   checkAllCheckBox(ev) {
     this.environments.forEach(x => x.checked = ev.target.checked)
-    this.updateflag=false;
+    this.checkEnableDisableBtn()
 	}
 
   isAllCheckBoxChecked() {
@@ -117,13 +122,20 @@ import { checkboxlist } from './checkboxlist';
    if(this.insertForm.valid)
    {
      let environment=this.insertForm.value;
-     await this.environmentservice.addenvironment(environment).subscribe( res =>
+     await this.api.addenvironment(environment).subscribe( res =>
       {
-        alert(res);
-        
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: res,
+          showConfirmButton: false,
+          timer: 2000
+        })
         this.rerender();
         this.insertForm.reset();
         this.createpopup=false; 
+        this.insertForm.get("portNumber").setValue("22");
+        this.insertForm.get("connectionType").setValue("SSH");
     });
   }
   else
@@ -138,8 +150,14 @@ import { checkboxlist } from './checkboxlist';
     console.log(this.updateForm.value);
     if(this.updateForm.valid)
     {
-      await this.environmentservice.updateenvironment(this.updateenvdata).subscribe( res => {
-      alert(res);
+      await this.api.updateenvironment(this.updateenvdata).subscribe( res => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: res,
+          showConfirmButton: false,
+          timer: 2000
+        })
       this.chanref.detectChanges();
       this.rerender();
       this.updatepopup=false;
@@ -160,6 +178,7 @@ import { checkboxlist } from './checkboxlist';
       if(data.environmentId==this.updateid)
       {
         this.updateenvdata=data;
+        console.log(this.updateenvdata);
         break;
       }
     }
@@ -173,16 +192,42 @@ import { checkboxlist } from './checkboxlist';
     this.updatepopup=false;
   }
 
+
   async deleteEnvironments(){
 
 		const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
     if(selectedEnvironments.length!=0)
     {
-      await this.environmentservice.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
-        alert(res);  
-        this.chanref.detectChanges();
-        this.rerender();
+      
+      this.closebutton.nativeElement.click();
+    
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+    
+          this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: res,
+              showConfirmButton: false,
+              timer: 2000
+    
+            })
+            this.chanref.detectChanges();
+            this.rerender();
+          })
+          
+        }
       })
+      
     }
   }
  
@@ -194,7 +239,8 @@ import { checkboxlist } from './checkboxlist';
   checktoupdate()
   {
     const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
-    if(selectedEnvironments.length==1){
+    if(selectedEnvironments.length==1)
+    {
       this.updateflag=true;
       this.updateid=selectedEnvironments[0];
     }else
@@ -203,9 +249,32 @@ import { checkboxlist } from './checkboxlist';
     }
   }
 
+  
+
+  checktodelete()
+  {
+    const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+    if(selectedEnvironments.length>0)
+    {
+      this.deleteflag=true;
+    }else
+    {
+      this.deleteflag=false;
+    }
+  }
+
+
   ngOnDestroy(): void {
     // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
+  }
+
+
+
+  checkEnableDisableBtn()
+  {
+    this.checktoupdate();
+    this.checktodelete();
   }
 
   rerender(): void {
@@ -218,12 +287,18 @@ import { checkboxlist } from './checkboxlist';
           this.environments = data as environmentobservable [];	
           this.chanref.detectChanges();
           this.dtTrigger.next();
+          this.environments.forEach(x => ! x.checked)
+          this.checkEnableDisableBtn()
         });
 
       });
-    
-      this.environments.forEach(x => ! x.checked)
-      this.updateflag=false;
+      
+  }
+
+
+  navigatetoworkspace()
+  {
+    this.router.navigate(["/environments",{ queryParams: { id: '1' } }]);
   }
   
 
