@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angu
 import { RpaStudioWorkspaceComponent } from '../rpa-studio-workspace/rpa-studio-workspace.component';
 import { RestApiService } from '../../services/rest-api.service';
 import { element } from 'protractor';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 
 
 @Component({
@@ -35,9 +37,49 @@ export class RpaStudioActionsComponent implements OnInit {
   selectedDropdown: any = [];
   predefineddropdown: any = [];
   botStatisticsData: object = {};
-  predefinedbotsData: any = [];
-  deploymachinedata: any;
-  constructor(private rest: RestApiService) { }
+  predefinedbotsData:any =[];
+  deploymachinedata:any;
+  // scheduler
+  hiddenSchedlerPopUp : boolean = false;
+  startTime = {hour: 1, minute: 60};
+  endTime = {hour: 1, minute: 60};
+  scheduleLists: any[] = [];
+  form: FormGroup;
+  public startDate: Date;
+  public endDate: Date;
+  public cronExpression = '* * * * *';
+  public isCronDisabled = false;
+  public selectedTimeZone :any;
+  public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  public cronOptions: CronOptions = {
+    formInputClass: 'form-control cron-editor-input',
+    formSelectClass: 'form-control cron-editor-select',
+    formRadioClass: 'cron-editor-radio',
+    formCheckboxClass: 'cron-editor-checkbox',
+
+    defaultTime: "00:00:00",
+
+    hideMinutesTab: false,
+    hideHourlyTab: false,
+    hideDailyTab: false,
+    hideWeeklyTab: false,
+    hideMonthlyTab: false,
+    hideYearlyTab: false,
+    hideAdvancedTab: false,
+    hideSpecificWeekDayTab : false,
+    hideSpecificMonthWeekTab : false,
+
+    use24HourTime: true,
+    hideSeconds: false,
+
+    cronFlavor: "standard"
+  }
+  constructor(private fb : FormBuilder,private rest : RestApiService) { 
+    this.form = this.fb.group({
+      'startTime' : [this.startTime, Validators.required],
+      'endTime' : [this.endTime, Validators.required],
+    })
+  }
 
   ngOnInit() {
     this.deploybot();
@@ -127,12 +169,33 @@ export class RpaStudioActionsComponent implements OnInit {
         this.predefined.push(temp)
       })
     }
-    else {
-      this.optionPredefinedbotList = false
-      this.predefined = [{
-        botName: "No Options"
-      }]
 
+      schedulerPopUp(){
+      this.hiddenSchedlerPopUp = true
+      let data:any
+      this.rest.scheduleList(data).subscribe((data)=> this.scheduleResponse(data))
+    }
+    scheduleResponse(data){
+      console.log(data);
+      this.scheduleLists = data
+    }
+    saveCron(){
+      let sche :any;
+      sche = {
+        "scheduleInterval" : this.cronExpression,
+        "timeZone":this.selectedTimeZone,
+        "startDate": `${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
+        "endDate"  : `${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
+      }
+    alert(
+      JSON.stringify(sche)
+    )
+      // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
+    }
+    closeFun(){
+      this.hiddenSchedlerPopUp = false;
+    }
+  
     }
   }
   botstatistics() {

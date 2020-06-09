@@ -19,6 +19,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RpaHints } from './model/rpa-module-hints';
+import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 
 
 
@@ -35,6 +36,7 @@ import { RpaHints } from './model/rpa-module-hints';
     ContextMenuModule.forRoot(),
     DynamicFormBuilderModule,
     ReactiveFormsModule,
+    CronEditorModule,
     HttpClientModule,
     FormsModule,
     BsDropdownModule.forRoot(),

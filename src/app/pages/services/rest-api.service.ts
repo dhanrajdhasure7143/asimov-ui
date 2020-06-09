@@ -75,4 +75,8 @@ export class RestApiService {
   getpredefinedbots(){
     return this.http.get("/assets/definebots.json")/*jitendra: need to replace URL*/
   }
+  scheduleList(data:any):Observable<any>{
+    return this.http.post('/rpa-service/getschedulesintervals-bot/'+42,data)
+  }
+  
 }
