@@ -25,6 +25,7 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
+              "node_modules/sweetalert2/src/sweetalert2.scss",
               "node_modules/@fortawesome/fontawesome-free/css/all.css",
               "src/assets/css/global.css",
               "src/styles.css",
