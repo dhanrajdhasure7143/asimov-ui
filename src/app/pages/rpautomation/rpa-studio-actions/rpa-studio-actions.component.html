@@ -1,20 +1,16 @@
 <div *ngIf="tabsArrayLength > 0" class="">
-    <div class="col-md-12">
-      <div class="collection_btn">
-        <button  type="button"
-          class="btn btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
-          <img class="imageI"  src="/assets/images/Deploy.svg">
-        </button>
-        <button  type="button"
-        class="btn btn_style" aria-hidden="true" placement="bottom">
-        <img class="imageI"  src="/assets/images/Expanded.svg">
+  <div class="col-md-12">
+    <div class="collection_btn">
+      <button type="button" class="btn btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
+        <img class="imageI" src="/assets/images/Deploy.svg">
       </button>
-        <button  type="button"
-          class="btn btn_style" aria-hidden="true" placement="bottom">
-          <img class="imageI" src="/assets/images/Path 509.svg">
-        </button>
-        <button  type="button"
-        class="btn btn_style" aria-hidden="true" placement="bottom">
+      <button type="button" class="btn btn_style" aria-hidden="true" placement="bottom">
+        <img class="imageI" src="/assets/images/Expanded.svg">
+      </button>
+      <button type="button" class="btn btn_style" aria-hidden="true" placement="bottom">
+        <img class="imageI" src="/assets/images/Path 509.svg">
+      </button>
+      <button type="button" class="btn btn_style" aria-hidden="true" placement="bottom">
         <img class="imageI" src="/assets/images/Path 510.svg">
       </button>
       <button  type="button"
@@ -30,35 +26,35 @@
     <img class="imageI" src="/assets/images/Group 286.svg">
     </button>
       <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle"type="button" data-toggle="dropdown" (click)="listenvironments()">Action <span class="caret"></span></button>
-          <ul *ngIf ="optionList"class="dropdown-menu">
-                <li *ngFor="let list of environment;let i = index">
-                  <div class="checkbox">
-                      <div class="environments">
-                          <label [for]="list+i"><input type="checkbox"value="{{list.checked}}"[checked]="list.Checked"[id]="list+i"[name]="list"[(ngModel)]="list.Checked"(ngModelChange)="getCheckboxValues($event,item)">{{list.environmentName}}</label><hr>
-                      </div>
-                  </div>
-                  </li>  
-            </ul>
-        </div>
-    <button  type="button"
-    class="btn btn_style" aria-hidden="true" placement="bottom">
-    <img class="imageI" src="/assets/images/reload_pp.svg">
-    </button>
-      </div>    
-    </div> 
-    <div class="col-md-12">
-      <div class="robotic-run">
-        <button  type="button"
-        class="btn btn_style1" aria-hidden="true" placement="bottom">
-        <div class="row rob-s">
-        <div *ngIf="!playToggle">
-      <button (click)="executionAct(); playToggle = true">
-          <p class="start-icon"><i class="fa fa-play"></i>
-            <span class="start-play">start</span>
-          </p>
-      </button>
+        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
+          (click)="listenvironments()">Action <span class="caret"></span></button>
+        <ul *ngIf="optionList" class="dropdown-menu">
+          <li *ngFor="let list of environment;let i = index">
+            <div class="checkbox">
+              <div class="environments">
+                <label [for]="list+i"><input type="checkbox" value="" [id]="list+i" [name]="list"
+                    [(ngModel)]="list.Checked"
+                    (ngModelChange)="getCheckboxValues($event,list)">{{list.environmentName}}</label>
+                <hr>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
+      <button type="button" class="btn btn_style" aria-hidden="true" placement="bottom">
+        <img class="imageI" src="/assets/images/reload_pp.svg">
+      </button>
+    </div>
+  </div>
+  <div class="col-md-12">
+    <div class="robotic-run">
+      <button type="button" class="btn btn_style1"disabled aria-hidden="true" placement="bottom"(click)="saveBotFunAct()">
+        <div class="row rob-s">
+          <img class="imageI1" src="/assets/images/iconfinder_icon-play_211876.svg">
+          <p>start</p>
+        </div>
+      </button>
+      <!-- </div>
        <div *ngIf="playToggle">
       <button (click)="pauseBot(); playToggle = false">
         <p class="start-icon"><i class="fa fa-pause"></i>
@@ -67,10 +63,9 @@
       </div>
   
       </div>
-      </button>
-      <button  type="button"
-      class="btn btn_style1" aria-hidden="true" placement="bottom">
-      <div class="row rob-s">
+      </button> -->
+      <button type="button" class="btn btn_style1"disabled aria-hidden="true" placement="bottom">
+        <!-- <div class="row rob-s">
         <div *ngIf="!playToggle1">
           <button (click)="stopBot(); playToggle1 = true">
             <p class="start-icon"><i class="fa fa-stop"></i>
@@ -83,31 +78,35 @@
             <span class="start-play">Resume</span></p>
         </button>
       </div>
+  </div> -->
+  <div class="row rob-s">
+    <img class="imageI1" src="/assets/images/Rectangle 111.svg">
+    <p>Stop</p>
   </div>
-    </button>
-        <button  type="button"
-        class="btn btn_style1" aria-hidden="true" placement="bottom">
+      </button>
+      <button type="button" class="btn btn_style1" aria-hidden="true" placement="bottom">
         <div class="row rob-s">
-        <img class="imageI1" src="/assets/images/settings.svg">
-        <p>settings</p>
+          <img class="imageI1" src="/assets/images/settings.svg">
+          <p>settings</p>
         </div>
-      </button>  
-      <button  type="button"
-      class="btn btn_style1 " aria-hidden="true" placement="bottom"(click)="getallpredefinebots()">
-      <div class="row rob-s"[style.display]="'block'">
+      </button>
+      <button type="button" class="btn btn_style1 " aria-hidden="true" placement="bottom"
+        (click)="getallpredefinebots()">
+        <div class="row rob-s" [style.display]="'block'">
           <img class="imageI1" src="/assets/images/robot.svg">
           <p>robot</p>
-      </div>
-    </button>
-    <ng-container *ngIf="optionPredefinedbotList"[style.display]="'none'">
-        <div >  
-            <div class="node_tooltip"></div>
+        </div>
+      </button>
+      <ng-container *ngIf="optionPredefinedbotList" [style.display]="'none'">
+        <div>
+          <div class="node_tooltip"></div>
           <div class="drag-area">
             <nav id="context-menu" class="context-menu contextmenu">
               <div class="context-menu1">
                 <div class="context-menu__item" *ngFor="let bots of predefined">
                   <div class="checkbox">
-                      <a class="context-menu__link" data-action="View">{{bots.botName}}</a><br><hr>
+                    <a class="context-menu__link" data-action="View">{{bots.botName}}</a><br>
+                    <hr>
                   </div>
                 </div>
               </div>
@@ -115,11 +114,11 @@
           </div>
         </div>
       </ng-container>
-      </div>
     </div>
-    <div>
-        <app-rpa-studio-workspace></app-rpa-studio-workspace>
-    </div>
+  </div>
+  <div>
+    <app-rpa-studio-workspace></app-rpa-studio-workspace>
+  </div>
 
     <div class="status">
       <div class="row" style="text-align: center;">Bots</div>

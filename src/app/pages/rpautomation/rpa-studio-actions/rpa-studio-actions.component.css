@@ -5,24 +5,15 @@
     border: 1px solid lightgray;
 }
 .btn_style1{
-  margin: 0px 5px 0px 10px;
+  margin: 0px 5px 0px 3px;
   background-color: transparent;
   border-radius: 2px;
   padding: 0px 12px;
 }
- .btn_style1 :active{
+.btn_style1 :visited,.btn_style1 :focus,.btn_style1 :active{
   background-color: blue;
   color:#fff;
 }
-.btn_style1 :visited{
-  background-color: blue;
-  color:#fff;
-}
-.btn_style1 :focus{
-  background:blue;
-  color:#fff;
-}
-
 .collection_btn{
     position: absolute;
     bottom: 65px;
@@ -36,13 +27,13 @@
     height: 50px;
     left: 40%;
     bottom: 15px;
-    margin: 10px 10px -5px 10px;
+    margin: 10px 10px 10px;
     border-radius: 20px;
     width: 25%;
     z-index: 1000;
   }
   .rob-s{
-    padding: 0px 8px;
+    padding: 0px 10px;
   }
   
   .rob-s p{

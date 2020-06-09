@@ -55,10 +55,10 @@ export class RestApiService {
     return this.http.post('/rpa-service/save-bot',data)
     }
   getUserPause(botId):Observable<any> {
-    return this.http.post('/rpa-service/pause-bot/'+41,botId)
+    return this.http.post('/rpa-service/pause-bot/',botId)
   }
   getUserResume(botId):Observable<any> {
-    return this.http.post('/rpa-service/resume-bot/'+41,botId)
+    return this.http.post('/rpa-service/resume-bot/',botId)
   }
   botStatistics(){
     return this.http.get("/rpa-service/bot-statistics")
