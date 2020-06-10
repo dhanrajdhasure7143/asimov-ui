@@ -17,11 +17,32 @@
             <div class="lableHide"></div>
             <div class="tooltip_button tooltip1"><img src="..\assets\images\PI\options_icon.svg" id="variants">
                 <div class="tooltiptext1">
-                    <p>Case Frequency</p>
-                    <hr>
-                    <p>Activity Performance</p>
-                    <hr>
-                    <p>ThroughPut Time</p>
+                    <div>
+                        <h5 class="btn-default dropdown-toggle" [ngClass]="isfrequencymetrics==true?'isactive':''" (click)='onfrequency()' type="button">Frequency         <span class="caret"></span>
+                        </h5>
+                        <!-- <hr> -->
+                        <div *ngIf='isfrequencymetrics'>
+                            <p>Absolute Frequency</p>
+                            <p>Case Frequency</p>
+                            <p>Max Repititons</p>
+                            <p>Start Frequency</p>
+                            <p>End Frequency</p>
+                            
+                        </div>
+                      </div>
+                      <hr>
+                      <div>
+                        <h5 class="btn-default dropdown-toggle" (click)='onPerformance()' [ngClass]="isperformancemetrics==true?'isactive':''" type="button">Performance        <span class="caret"></span></h5>
+                        <!-- <hr> -->
+                        <div *ngIf='isperformancemetrics'>
+                            <p>Median Duration</p>
+                            <p>Mean Duration</p>
+                            <p>Max Duration</p>
+                            <p>Min Duration</p>
+                        </div>
+                        <!-- <hr> -->
+                      </div>
+                    <!-- <p>ThroughPut Time</p>
                     <div class="checkbox">
                         <label><input type="checkbox" value="">Option 1</label>
                     </div>
@@ -30,7 +51,7 @@
                     </div>
                     <div class="checkbox">
                         <label><input type="checkbox" value="">Option 3</label>
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <div class="form-group left_dropdwn1">

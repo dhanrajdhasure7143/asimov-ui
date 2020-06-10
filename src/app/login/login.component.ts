@@ -16,7 +16,7 @@ export class LoginComponent{
 
 
   ngOnInit() {
-    this.getParticles();
+    // this.getParticles();
     particlesJS("particles-js", {
       "particles": {
         "number": {
@@ -120,7 +120,7 @@ export class LoginComponent{
     });
   }
 
-  getParticles(){
+  // getParticles(){
     
-  }
+  // }
 }

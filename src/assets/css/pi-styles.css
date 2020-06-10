@@ -442,10 +442,10 @@ margin-top: 10px;
     width:0px !important;
     height: 0px !important;
 } */
-hr{
+/* hr{
     margin-top: -5px !important;
     margin-bottom: 5px !important;
-}
+} */
 .left_dropdwn{
     background:none !important;
     width: 160px !important;
@@ -1141,9 +1141,9 @@ label{
   background-color: transparent;
   z-index: 2;
 }
-ul li{
+/* ul li{
   display: inline;
-}
+} */
 .row{
   margin-left: 0;
   margin-right: 0;

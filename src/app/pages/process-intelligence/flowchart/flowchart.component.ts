@@ -71,6 +71,8 @@ export class FlowchartComponent implements OnInit {
   process_graph_options;
   variant_list_options;
   variant_list;
+  public isfrequencymetrics:boolean=false;
+  public isperformancemetrics:boolean=false;
   constructor(private dt: DataTransferService, private router: Router, private bpmnservice: SharebpmndiagramService,
     private pgModel: ProcessGraphModel, private hints: PiHints,
     private spinner: NgxSpinnerService) {
@@ -521,6 +523,15 @@ console.log('outArr12',outArr);
         return this.nodeArray[i].key;
       }
     }
+  }
+
+  onfrequency(){
+    this.isfrequencymetrics= !this.isfrequencymetrics;
+    this.isperformancemetrics=false;
+  }
+  onPerformance(){
+    this.isperformancemetrics= !this.isperformancemetrics;
+    this.isfrequencymetrics=false;
   }
 
 }

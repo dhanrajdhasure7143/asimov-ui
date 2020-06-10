@@ -18,6 +18,7 @@ import { FlowchartComponent } from './flowchart/flowchart.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { PiHints } from './model/process-intelligence-module-hints';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { DataselectionComponent } from './dataselection/dataselection.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
     PiflowchartComponent, 
     FilterComponent,
     FlowchartComponent,
-    SearchPipe
+    SearchPipe,
+    DataselectionComponent
   ],
   imports: [
     CommonModule,

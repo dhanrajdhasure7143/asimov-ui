@@ -7,6 +7,7 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { RestApiService } from '../../services/rest-api.service';
 import { GlobalScript } from '../../../shared/global-script';
 import { PiHints } from '../model/process-intelligence-module-hints';
+import { HttpClient, HttpEventType,HttpHeaders } from '@angular/common/http';
 
 declare var target:any;
 
@@ -23,9 +24,16 @@ export class UploadComponent implements OnInit {
   data;
   public dbDetails:any={};
   public isSave:boolean=true;
+  selectedFile: File = null;
+  files: File[] = []
 
-  constructor(private router: Router, private dt:DataTransferService, private rest:RestApiService, 
-    private global: GlobalScript, private hints:PiHints, private ngxXml2jsonService: NgxXml2jsonService) { }
+  constructor(private router: Router, 
+    private dt:DataTransferService, 
+    private rest:RestApiService, 
+    private global: GlobalScript, 
+    private hints:PiHints, 
+    private ngxXml2jsonService: NgxXml2jsonService,
+    private http: HttpClient,) { }
 
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
@@ -34,19 +42,47 @@ export class UploadComponent implements OnInit {
     this.xes_mime = '.xes';
     this.db_mime = '.json';
     this.dt.changeHints(this.hints.uploadHints);
+    let accessToken='eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiVGVzdGluZyIsInRlbmFudElkIjoiNGUyZDY2ZGItZDE2Yi00OTU4LTg2OGYtN2MzMDZlZjc2NWJjIiwiZG9tYWluIjpudWxsLCJyb2xlcyI6W3siYXBwSWQiOiIyIiwiYXBwTmFtZSI6IjIuMCIsImlkIjoiOCIsInJvbGVOYW1lIjoiQWRtaW4iLCJwZXJtaXNzaW9ucyI6W119XX0sInVzZXJTZXNzaW9uSWQiOiIyMzIwIiwiaWF0IjoxNTkxNzg5NTUzLCJleHAiOjE1OTE3OTI1NTN9.D8aPQAC8ui9QHCJ4Ya4tHiM_O-Y4RvXl90YmubSffUdRBsW7KMZR1EJu3XfMT3zEBrlh8hWay7NFcEQSSfgykZ0H_AK3NIvoL2jrlH4nEX1ET7NEkx3xWeTXhPiNZYbkgJcgqmEGUgzbQZ9i65s2MmgZpfHI-LfwJHnTgTl4ToymnH-VwbJfuVhNzil3-KBRPOfjOGIJk8mpMyZFT3ZxIv1bKbf-t7s3BVum0sQ_D5BV1XY0FcEKm6Ui-6qL4a93jDPux47QtOALh5X0k1UxVL_TG-QjUhqdK00YcJk0Et9QO4-FX7Q63bOdGd4lzTW71yw_sNu_zcL2xTIPYioWCA'
+    localStorage.setItem('accessToken',accessToken)
   }
+
+    onselectfile(event){
+      console.log('selectedFile',event);
+      this.files.push(...event.addedFiles);
+      console.log('selectedFile',this.files);
+      this.selectedFile = <File>event.addedFiles;
+      this.onUpload()
+    }
+
+    onUpload() {
+      const fd = new FormData();
+      fd.append('file', this.selectedFile),
+      fd.append('permissionStatus', 'yes'),
+      this.rest.fileUpload(fd)
+      // this.http.post('/processintelligence/v1/connectorconfiguration/upload', fd, {
+      //           reportProgress: true,
+      //           observe: 'events',
+      // })
+                .subscribe(res => {
+ 
+                  }, err => {
+                
+            });
+
+}
+  
 
   getUID(id,name){
     if(id == 0){
-    let extension = this.getFileExtension(name);
+      let extension = this.getFileExtension(name);
     if(extension == 'csv'){
-    id = 2;
+      id = 2;
     }
     if(extension.indexOf('xls') > -1){
-    id = 1
+      id = 1
     }
     }
-    return id;
+      return id;
     }
     
     getFileExtension(filename)
@@ -139,17 +175,26 @@ export class UploadComponent implements OnInit {
     }
     fileReader.readAsText(file);
   }
-  onDbSelect(){
-    document.getElementById("foot").classList.remove("slide-down");
-    document.getElementById("foot").classList.add("slide-up");
-}
-slideDown(){
-  document.getElementById("foot").classList.add("slide-down");
-  document.getElementById("foot").classList.remove("slide-up");
-}
+//   onDbSelect(){
+//     document.getElementById("foot").classList.remove("slide-down");
+//     document.getElementById("foot").classList.add("slide-up");
+// }
+// slideDown(){
+//   document.getElementById("foot").classList.add("slide-down");
+//   document.getElementById("foot").classList.remove("slide-up");
+// }
 testConnection(){
 console.log("userName",this.dbDetails);
   this.isSave=false;
 }
+
+onDbSelect(){
+  var modal = document.getElementById('myModal');
+  modal.style.display="block";
+  }
+  closePopup(){
+    var modal = document.getElementById('myModal');
+    modal.style.display="none";
+    }
 
 }

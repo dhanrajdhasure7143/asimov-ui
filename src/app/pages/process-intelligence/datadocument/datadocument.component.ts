@@ -86,8 +86,8 @@ export class DatadocumentComponent implements OnInit {
     modal.style.display = "block";
     // this.router.navigate(['/pages/processIntelligence/flowChart']);
   }
-  generateGraph() {
-    this.router.navigate(['/pages/processIntelligence/flowChart']);
+  caseIdSelection() {
+    this.router.navigate(['/pages/processIntelligence/selection']);
 
   }
   sort(property) {
