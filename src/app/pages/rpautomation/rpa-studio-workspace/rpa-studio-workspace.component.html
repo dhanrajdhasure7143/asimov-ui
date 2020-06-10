@@ -5,7 +5,7 @@
           <div id="{{node.id}}"  class="dndDropzone" (dblclick)="formNodeFunc(node.name)" (contextmenu)="onRightClick(node, $event,i)"
           [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
             <div class="connector-name">{{node.name}}</div>
-            <div *ngIf ="selectedNode.id==node.id" class="node_tooltip">
+            <div *ngIf ="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
               <nav  id="context-menu" class="context-menu contextmenu">
                 <div class="context-menu1">
                   <div class="context-menu__item" *ngFor="let menu of stud">

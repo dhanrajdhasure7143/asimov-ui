@@ -18,16 +18,16 @@
       <img class="imageI" src="/assets/images/Layer 1.svg">
     </button>
     <button  type="button"
-    class="btn btn_style" aria-hidden="true" (click)="schedulerPopUp()" placement="bottom">
+    class="btn btn_style" aria-hidden="true" placement="bottom">
     <img class="imageI" src="/assets/images/iconfinder_icon-play_211876.svg">
     </button>
     <button  type="button"
-    class="btn btn_style" aria-hidden="true" placement="bottom">
+    class="btn btn_style" aria-hidden="true" (click)="schedulerPopUp()" placement="bottom">
     <img class="imageI" src="/assets/images/Group 286.svg">
     </button>
       <div class="dropdown">
         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown"
-          (click)="listenvironments()">Action <span class="caret"></span></button>
+          (click)="listenvironments()">Envrionments <span class="caret"></span></button>
         <ul *ngIf="optionList" class="dropdown-menu">
           <li *ngFor="let list of environment;let i = index">
             <div class="checkbox">

@@ -169,87 +169,84 @@ export class RpaStudioActionsComponent implements OnInit {
         this.predefined.push(temp)
       })
     }
-
-    //   schedulerPopUp(){
-    //   this.hiddenSchedlerPopUp = true
-    //   let data:any
-    //   this.rest.scheduleList(data).subscribe((data)=> this.scheduleResponse(data))
-    // }
-    // scheduleResponse(data){
-    //   console.log(data);
-    //   this.scheduleLists = data
-    // }
-    // saveCron(){
-    //   let sche :any;
-    //   sche = {
-    //     "scheduleInterval" : this.cronExpression,
-    //     "timeZone":this.selectedTimeZone,
-    //     "startDate": `${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
-    //     "endDate"  : `${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
-    //   }
-    // alert(
-    //   JSON.stringify(sche)
-    // )
-    //   // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
-    // }
-    // closeFun(){
-    //   this.hiddenSchedlerPopUp = false;
-    // }
-  
-    }
   }
-  // botstatistics() {
-  //   this.rest.botStatistics().subscribe(Status => {
-  //     this.botStatisticsData = Status;
-  //     console.log(this.botStatisticsData);
-  //   })
-  // }
-  // getEnvironmentlist() {
-  //   this.rest.listEnvironments().subscribe(data => {
-  //     this.listEnvironmentData = data;
-  //     let value: any = [];
-  //     let subValue: any = []
-  //     let showlist: any = [];
-  //     showlist.forEach(el => {
-  //       subValue.push(el.environmentName);
-  //       this.environmentValue.push(el.environmentName);
-  //       console.log(subValue)
-  //       subValue.forEach(ele => {
-  //         value.push(ele)
-  //         console.log(value);
-  //       })
-  //     });
-  //     value.forEach(element => {
-  //       let temp: any = {
-  //         environmentName: element.environmentName,
-  //         checked: element.environmentId
-  //       };
-  //       this.dropdownList.push(temp)
-  //     })
-  //   })
-  // }
-  // getpredefinedbotlist() {
-  //   this.rest.getpredefinedbots().subscribe(data => {
-  //     this.predefinedbotsData = data;
-  //     let pre_value: any = [];
-  //     let predefine_value: any = [];
-  //     let showbots: any = [];
-  //     showbots.forEach(ele => {
-  //       predefine_value.push(ele.botName);
-  //       this.predefinedbotValue.push(ele.botName);
-  //       console.log(predefine_value)
-  //       predefine_value.forEach(elem => {
-  //         pre_value.push(elem)
-  //         console.log(pre_value)
-  //       })
-  //     });
-  //     pre_value.forEach(element => {
-  //       let temp: any = {
-  //         botName: element.botName
-  //       };
-  //       this.predefinedList.push(temp)
-  //     })
-  //   })
-  // }
-// }
-
+      schedulerPopUp(){
+      this.hiddenSchedlerPopUp = true
+      let data:any
+      this.rest.scheduleList(data).subscribe((data)=> this.scheduleResponse(data))
+    }
+    scheduleResponse(data){
+      console.log(data);
+      this.scheduleLists = data
+    }
+    saveCron(){
+      let sche :any;
+      sche = {
+        "scheduleInterval" : this.cronExpression,
+        "timeZone":this.selectedTimeZone,
+        "startDate": `${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
+        "endDate"  : `${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
+      }
+    alert(
+      JSON.stringify(sche)
+    )
+      // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
+    }
+    closeFun(){
+      this.hiddenSchedlerPopUp = false;
+    }
+  
+  botstatistics() {
+    this.rest.botStatistics().subscribe(Status => {
+      this.botStatisticsData = Status;
+      console.log(this.botStatisticsData);
+    })
+  }
+  getEnvironmentlist() {
+    this.rest.listEnvironments().subscribe(data => {
+      this.listEnvironmentData = data;
+      let value: any = [];
+      let subValue: any = []
+      let showlist: any = [];
+      showlist.forEach(el => {
+        subValue.push(el.environmentName);
+        this.environmentValue.push(el.environmentName);
+        console.log(subValue)
+        subValue.forEach(ele => {
+          value.push(ele)
+          console.log(value);
+        })
+      });
+      value.forEach(element => {
+        let temp: any = {
+          environmentName: element.environmentName,
+          checked: element.environmentId
+        };
+        this.dropdownList.push(temp)
+      })
+    })
+  }
+  getpredefinedbotlist() {
+    this.rest.getpredefinedbots().subscribe(data => {
+      this.predefinedbotsData = data;
+      let pre_value: any = [];
+      let predefine_value: any = [];
+      let showbots: any = [];
+      showbots.forEach(ele => {
+        predefine_value.push(ele.botName);
+        this.predefinedbotValue.push(ele.botName);
+        console.log(predefine_value)
+        predefine_value.forEach(elem => {
+          pre_value.push(elem)
+          console.log(pre_value)
+        })
+      });
+      pre_value.forEach(element => {
+        let temp: any = {
+          botName: element.botName
+        };
+        this.predefinedList.push(temp)
+      })
+    })
+  }
+}

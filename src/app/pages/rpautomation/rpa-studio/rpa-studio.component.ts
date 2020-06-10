@@ -135,11 +135,15 @@ export class RpaStudioComponent implements OnInit {
     
   }
   onCreate(){
+    this.model.botType="";
     this.hiddenCreateBotPopUp = true
   }
   closeBot($event) {
     this.tabsArray = this.tabsArray.filter((bot): boolean => $event !== bot);
     this.tabActiveId = this.tabsArray.length > 0 ? this.tabsArray[this.tabsArray.length - 1].id : '';
+  }
+  closeFun(){
+    this.hiddenCreateBotPopUp = false
   }
 } 
 

@@ -108,4 +108,39 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   scheduleList(data:any):Observable<any>{
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+42,data)
   }
+  addenvironment(data:any):Observable<any>
+  {
+    const requestOptions: Object = {
+      responseType: 'text'
+    }
+    console.log(data)
+    return this.http.post<any>("/rpa-service/agent/save-environment",data, requestOptions);
+  }
+
+  deleteenvironment(data:any):Observable<any>
+  {
+    const requestOptions: Object = {
+      responseType: 'text'
+    }
+    return this.http.post<any>("/rpa-service/agent/delete-environment",data, requestOptions);
+  
+  }
+  updateenvironment(data:any):Observable<any>
+  {
+    const requestOptions: Object = {
+      responseType: 'text'
+    }
+    return this.http.put<any>("/rpa-service/agent/update-environment",data, requestOptions);
+  }
+
+  getAllRpaWorkSpaces(id:any)
+  {
+    if(id==0)
+    {
+      return this.http.get('/rpa-service/load-process-info/'+0);
+    }
+    else{ 
+      return this.http.get('/rpa-service/load-process-info/processid='+id);    
+    }
+  }
 }

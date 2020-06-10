@@ -24,29 +24,33 @@
 </div>
 <div class="col-md-10">
 <app-rpa-studio-tabs [tabsArray]= "tabsArray" (closeTabEvent)="closeBot($event)" [tabActiveId]="tabActiveId"></app-rpa-studio-tabs>
-</div>
-</div>
-</div>
 <div class="rpa-nav">
   <div class="rpa-nav-btn">
-<button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" > 
-<i class="fas fa-globe"></i><br>
-Environments  
-</button>
+    <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" > 
+      <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpa-nav-btn-img">
+        <br>
+        Open Environments
+    </button>  
 </div>
 <div class="rpa-nav-btn">
   <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/workspace']" > 
-  <i class="fas fa-globe"></i><br>
-  Workspace  
+    <img src="..\\assets\\images\\RPA\\rpa-nav-workspace.svg" class="rpa-nav-btn-img">
+     <br> 
+  Open Workspace  
   </button>
   </div>
+
+</div>
+</div>
+</div>
 </div>
 
+
 <!--foms  -->
-<div *ngIf="hiddenCreateBotPopUp" class="pop-up conainer"id="Create_Bot_Form">
+<div *ngIf="hiddenCreateBotPopUp" class="pop-up conainer">
   <div class="card">
     <div class="card-header">
-      Creat
+      Create
       <span class="class-css" (click)="closeFun()" >X</span>
     </div>  
   <div class="container card-body">
@@ -60,11 +64,11 @@ Environments
           <div class="col-md-6">
           
             <label for="botName">Bot Name</label>
-            <input type="text" class="form-control" name="botName" [(ngModel)]="model.botName" 
-            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && botName.invalid }" required />
+            <input type="text" placeholder="Enter Bot Name" class="form-control" name="botName" [(ngModel)]="model.botName" 
+            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && model.botName.invalid }" required />
           
             <div *ngIf="f.submitted && botName.invalid" class="invalid-feedback">
-                <div *ngIf="botName.errors.required">Bot Name is required</div>
+                <div *ngIf="model.botName.errors.required">Bot Name is required</div>
             </div>
           
           </div>
@@ -73,13 +77,14 @@ Environments
           <div class="col-md-6">
             <label for="botType">Bot Type</label>
               
-            <select  class="form-control rpa-select" name="botType" [(ngModel)]="model.botType" #botType="ngModel" >
+            <select  class="form-control" name="botType" [(ngModel)]="model.botType">
+              <option value="" selected>--Select Bot Type--</option>
               <option  value="Attended">Attended</option>
               <option  value="Unattended">Unattended</option>
             </select>
             
-            <div *ngIf="f.submitted && botType.invalid" class="invalid-feedback">
-                <div *ngIf="botType.errors.required">Bot Name is required</div>
+            <div *ngIf="f.submitted && model.botType.invalid" class="invalid-feedback">
+                <div *ngIf="model.botType.errors.required">Bot Name is required</div>
             </div>
           
           </div>
@@ -90,11 +95,11 @@ Environments
         
           <div class="col-md-12">
             <label for="botDescription">Bot Description</label>
-            <input type="text" class="form-control" name="botDescription" [(ngModel)]="model.botDescription" 
-            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && botDescription.invalid }" required />
+            <input type="text"  placeholder="Enter Bot Description" class="form-control" name="botDescription" [(ngModel)]="model.botDescription" 
+            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && model.botDescription.invalid }" required />
             
-            <div *ngIf="f.submitted && botDescription.invalid" class="invalid-feedback">
-                <div *ngIf="botDescription.errors.required">Bot Description is required</div>
+            <div *ngIf="f.submitted && model.botDescription.invalid" class="invalid-feedback">
+                <div *ngIf="model.botDescription.errors.required">Bot Description is required</div>
             </div>
           
           </div>

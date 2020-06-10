@@ -308,3 +308,23 @@
   .rpa-select{
     font-size: 18px;
   }
+  .rpa-nav{
+    padding:10px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .rpa-nav-btn{
+    
+    padding-top:30px;
+    display:inline-block;
+  }
+  
+    .rpa-select{
+      font-size: 18px;
+    }
+  
+    .rpa-nav-btn-img{
+      height:50px;
+      width:50px;
+    }
