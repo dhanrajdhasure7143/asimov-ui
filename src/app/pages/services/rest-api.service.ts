@@ -4,17 +4,11 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    'Content-Type': 'application/json'
-  }),
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class RestApiService {
-  xmlheaderOptions = {
+  httpOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'text/xml',
       'Access-Control-Allow-Methods': 'GET',
@@ -31,15 +25,15 @@ return this.http.get<any[]>('bpsprocess/approvalTnfoByUser/'+user);
 }
 
 approve_producemessage(bpmnProcessInfo){
-  return this.http.post<any[]>('bpsprocess/produceMessage',bpmnProcessInfo,httpOptions);
+  return this.http.post<any[]>('bpsprocess/produceMessage',bpmnProcessInfo);//httpOptions
 }
 approve_savedb(bpmndata){
-  return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',bpmndata,httpOptions);
+  return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',bpmndata);//httpOptions
 }
 denyDiagram(msg_obj){
 // POST /bpsprocess/save/bpms/notation/approval/workflow
 
-return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',msg_obj,httpOptions);
+return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',msg_obj);//httpOptions
 }
 
 
@@ -79,10 +73,10 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
     return this.http.post('/rpa-service/save-bot',data)
     }
   getUserPause(botId):Observable<any> {
-    return this.http.post('/rpa-service/pause-bot/'+41,botId)
+    return this.http.post('/rpa-service/pause-bot/',botId)
   }
   getUserResume(botId):Observable<any> {
-    return this.http.post('/rpa-service/resume-bot/'+41,botId)
+    return this.http.post('/rpa-service/resume-bot/',botId)
   }
   botStatistics(){
     return this.http.get("/rpa-service/bot-statistics")
@@ -93,4 +87,14 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   execution(data:any):Observable<any>{
     return this.http.post('/rpa-service/start-bot/'+41,data)
   }
+  deployremotemachine(botId){
+    return this.http.post('/rpa-service/agent/deploy-bot/',botId)
+  }
+  getpredefinedbots(){
+    return this.http.get("/assets/definebots.json")/*jitendra: need to replace URL*/
+  }
+  scheduleList(data:any):Observable<any>{
+    return this.http.post('/rpa-service/getschedulesintervals-bot/'+42,data)
+  }
+  
 }

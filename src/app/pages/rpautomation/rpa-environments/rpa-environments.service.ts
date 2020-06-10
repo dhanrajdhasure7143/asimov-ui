@@ -10,7 +10,7 @@ export class EnvironmentsService {
   constructor(private http:HttpClient) { }
 
   getfulldata<environmentobservable>():Observable<environmentobservable> {
-    return this.http.get<environmentobservable>("/agent/get-environments");
+    return this.http.get<environmentobservable>("/rpa-service/agent/get-environments");
   }
 
   addenvironment(data:any):Observable<any>

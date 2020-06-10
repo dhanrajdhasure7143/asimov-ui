@@ -1,0 +1,104 @@
+.cron-editor-main .cron-editor-container {
+  margin-top: 10px;
+}
+
+.cron-editor-main .cron-editor-container .cron-editor-radio {
+  width: 20px;
+  display: inline-block;
+}
+
+.cron-editor-main .cron-editor-container .cron-editor-select,
+.cron-editor-main .cron-editor-container .cron-editor-input,
+.cron-editor-main .cron-editor-container .cron-editor-checkbox {
+  display: inline-block;
+}
+
+.cron-editor-main .cron-editor-container .well-time-wrapper {
+  padding-left: 20px;
+}
+
+.cron-editor-main .cron-editor-container .inline-block {
+  display: inline-block;
+}
+
+.cron-editor-main .cron-editor-container .minutes,
+.cron-editor-main .cron-editor-container .hours,
+.cron-editor-main .cron-editor-container .days,
+.cron-editor-main .cron-editor-container .seconds {
+  width: 70px;
+}
+
+.cron-editor-main .cron-editor-container .months {
+  width: 120px;
+}
+
+.cron-editor-main .cron-editor-container .month-days {
+  width: 130px;
+}
+
+.cron-editor-main .cron-editor-container .months-small {
+  width: 60px;
+}
+
+.cron-editor-main .cron-editor-container .day-order-in-month {
+  width: 95px;
+}
+
+.cron-editor-main .cron-editor-container .week-days {
+  width: 120px;
+}
+
+.cron-editor-main .cron-editor-container .advanced-cron-editor-input {
+  width: 200px;
+}
+
+.cron-editor-main .cron-editor-container .hour-types {
+  width: 70px;
+}
+
+.nav-tabs li a {
+  cursor: pointer;
+  height: 36px !important;
+}
+/* schduler */
+.nav-tabs .nav-link {
+  border: 1px solid transparent;
+  border-top-left-radius: .25rem;
+  border-top-right-radius: .25rem;
+}
+.nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+  color: #495057;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
+}
+/* .nav-link {
+  display: block;
+  padding: .5rem 1rem;
+}
+.nav-tabs .nav-item {
+  margin-bottom: 0px;
+} */
+
+/* justify-content-start {
+  -ms-flex-pack: start!important;
+  justify-content: flex-start!important;
+} */
+.nav-tabs {
+  border-bottom: 4px solid #dee2e6;
+  justify-content: flex-start;
+  -webkit-box-pack: start;
+  width: auto;
+}
+.nav {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+.active {
+  text-decoration: none;
+  background-color: #fff;
+}

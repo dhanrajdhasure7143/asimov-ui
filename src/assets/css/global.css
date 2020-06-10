@@ -274,6 +274,7 @@ padding-right: 5px;
   background-color: #f8f8f8;
   padding: 6px;
   margin-bottom: 20px;
+  margin-top: 18px;
 }
 .module-heading-image{
   width: 36px;
@@ -287,5 +288,28 @@ padding-right: 5px;
 /* Common styles - Starts*/
 button:active, button:focus, input:active, input:focus{
   outline: none !important;
+}
+.abrand_div img{
+  width:185px;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px!important;
+  margin: 2px 0 0;
+  font-size: 16px!important;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  box-shadow: 0 8px 12px rgba(0,0,0,.175);
 }
 /* Common styles - Ends*/

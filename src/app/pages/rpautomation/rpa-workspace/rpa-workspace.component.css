@@ -1,0 +1,15 @@
+.rpa-workspace-header 
+{
+    justify-content: space-between;
+    background-color: whitesmoke;
+    padding:8px;
+    font-weight: 700;
+    
+}
+
+span{
+    color:#0062cf;
+    padding-right: 1.5rem;
+    float:right;
+    font-weight:100;
+}

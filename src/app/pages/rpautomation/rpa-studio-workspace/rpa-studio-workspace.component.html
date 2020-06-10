@@ -1,23 +1,23 @@
 <div class="col-md-10 main">
     <div #content id="content">
-       <div class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)">
-      <ng-container *ngFor="let node of nodes; let i = index">
-        <div id="{{node.name}}"  class="dndDropzone" (dblclick)="formNodeFunc(node.name)" (contextmenu)="onRightClick(node, $event,i)"
-        [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
-          <div class="connector-name">{{node.name}}</div>
-          <div>
-            <nav *ngIf ="selectedNode.name===node.name"  id="context-menu" class="context-menu contextmenu">
-              <div class="context-menu1">
-                <div class="context-menu__item" *ngFor="let menu of stud">
-                  <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu)"
-                   data-action="View">{{menu.name}}</a>
+      <div class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)">
+        <ng-container *ngFor="let node of nodes; let i = index">
+          <div id="{{node.id}}"  class="dndDropzone" (dblclick)="formNodeFunc(node.name)" (contextmenu)="onRightClick(node, $event,i)"
+          [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
+            <div class="connector-name">{{node.name}}</div>
+            <div *ngIf ="selectedNode.id==node.id" class="node_tooltip">
+              <nav  id="context-menu" class="context-menu contextmenu">
+                <div class="context-menu1">
+                  <div class="context-menu__item" *ngFor="let menu of stud">
+                    <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu)"
+                     data-action="View">{{menu.name}}</a>
+                  </div>
                 </div>
-              </div>
-            </nav>
+              </nav>
+            </div>  
           </div>
-        </div>
-      </ng-container>
-         </div>
+        </ng-container>
+      </div>
       </div>
   <div class="download">
     <button type="button"aria-hidden="true" placement="bottom"(click)="downloadPDF()" id="donwloadpdf">

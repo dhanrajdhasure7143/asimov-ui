@@ -1,6 +1,6 @@
 <div class="createBtn">
   <button  type="button"
-    class="btn btn-primary" aria-hidden="true" placement="bottom" (click)="onCreate()"> Create
+    class="btn btn-primary" aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()"> Create
   </button>
  
 </div>
@@ -34,29 +34,80 @@
 Environments  
 </button>
 </div>
+<div class="rpa-nav-btn">
+  <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/workspace']" > 
+  <i class="fas fa-globe"></i><br>
+  Workspace  
+  </button>
+  </div>
 </div>
 
 <!--foms  -->
-<div *ngIf="hiddenCreateBotPopUp" class="pop-up conainer">
+<div *ngIf="hiddenCreateBotPopUp" class="pop-up conainer"id="Create_Bot_Form">
   <div class="card">
     <div class="card-header">
       Creat
       <span class="class-css" (click)="closeFun()" >X</span>
     </div>  
-<div class="container card-body">
-  <form name="form" (ngSubmit)="f.form.valid && onCreateSubmit()" #f="ngForm" novalidate>
+  <div class="container card-body">
+    
+    <form name="form" (ngSubmit)="f.form.valid && onCreateSubmit()" #f="ngForm" novalidate>
+        
       <div class="form-group">
-          <label for="botName">Bot Name</label>
-          <input type="text" class="form-control" name="botName" [(ngModel)]="model.botName" 
-          #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && botName.invalid }" required />
-          <div *ngIf="f.submitted && botName.invalid" class="invalid-feedback">
-              <div *ngIf="botName.errors.required">Bot Name is required</div>
+        
+        <div class="row">
+          
+          <div class="col-md-6">
+          
+            <label for="botName">Bot Name</label>
+            <input type="text" class="form-control" name="botName" [(ngModel)]="model.botName" 
+            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && botName.invalid }" required />
+          
+            <div *ngIf="f.submitted && botName.invalid" class="invalid-feedback">
+                <div *ngIf="botName.errors.required">Bot Name is required</div>
+            </div>
+          
           </div>
+          
+          
+          <div class="col-md-6">
+            <label for="botType">Bot Type</label>
+              
+            <select  class="form-control rpa-select" name="botType" [(ngModel)]="model.botType" #botType="ngModel" >
+              <option  value="Attended">Attended</option>
+              <option  value="Unattended">Unattended</option>
+            </select>
+            
+            <div *ngIf="f.submitted && botType.invalid" class="invalid-feedback">
+                <div *ngIf="botType.errors.required">Bot Name is required</div>
+            </div>
+          
+          </div>
+        
+        </div>
+      
+        <div class="row">
+        
+          <div class="col-md-12">
+            <label for="botDescription">Bot Description</label>
+            <input type="text" class="form-control" name="botDescription" [(ngModel)]="model.botDescription" 
+            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && botDescription.invalid }" required />
+            
+            <div *ngIf="f.submitted && botDescription.invalid" class="invalid-feedback">
+                <div *ngIf="botDescription.errors.required">Bot Description is required</div>
+            </div>
+          
+          </div>
+
+        </div>
+
       </div>
+    
       <div class="form-group">
-          <button class="btn btn-primary">Submit</button>
+        <button class="btn btn-primary">Submit</button>
       </div>
-  </form>
-</div>
-</div>
-</div>
+    </form>
+
+  </div>
+  </div>
+  </div>
