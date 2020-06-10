@@ -21,8 +21,11 @@ export class ListOfChangesComponent implements OnInit {
     })
   }
   slideDown(){
-    document.getElementById("foot").classList.add("slide-down");
-    document.getElementById("foot").classList.remove("slide-up");
+    let ele = document.getElementById("foot");
+    if(ele){
+      ele.classList.add("slide-down");
+      ele.classList.remove("slide-up");
+    }
   }
   jsonLength(json){
     let value = 0;
@@ -32,8 +35,15 @@ export class ListOfChangesComponent implements OnInit {
     return value;
   }
   getArray(json){
-    let process_name = Object.keys(json);
-    return json[process_name[0]]["flowElements"]
+    if(json){
+      let process_name = Object.keys(json);
+      if(process_name.length != 0)
+        return json[process_name[0]]["flowElements"]
+      else
+        return [];
+    }else{
+      return [];
+    }
   }
   
 }

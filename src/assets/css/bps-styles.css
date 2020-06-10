@@ -118,6 +118,9 @@ mat-expansion-panel{
   text-align: right;
   padding: 0;
 }
+.bpmn-split{
+  height: 80vh !important;
+}
 .show-confirmance-button{
   color: #0162cb;
   border: none;

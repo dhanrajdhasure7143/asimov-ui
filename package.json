@@ -30,6 +30,7 @@
     "@swimlane/ngx-charts": "^12.1.0",
     "angular-datatables": "^9.0.2",
     "angular-notifier": "^6.0.1",
+    "angular-split": "^3.0.3",
     "bootstrap": "3.4.1",
     "bpmn": "^0.2.2",
     "bpmn-js": "^6.3.0",

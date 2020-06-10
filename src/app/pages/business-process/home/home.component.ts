@@ -25,10 +25,15 @@ export class BpsHomeComponent implements OnInit {
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.bpsHomeHints);
     // this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
-    //   this.saved_diagrams = res; 
-    //   this.bkp_saved_diagrams = res; 
+    //   console.log(res);
+    //   // this.saved_diagrams = res; 
+    //   // this.bkp_saved_diagrams = res; 
+    // },
+    // (err) => {
+    //   console.log(err);
     // });
   }
+
   getDiagram(byteBpmn,i){
     this.bpmnModeler = new BpmnJS({
       container: '.diagram_container'+i,

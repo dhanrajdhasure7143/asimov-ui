@@ -1,6 +1,5 @@
 export class BpmnModel{
-    id:number;
-    bpmnModelId:string;
+    bpmnModelId:number;
     bpmnModelModifiedBy:string;
     bpmnModelModifiedTime:Date;
     bpmnModelTempId:number;

@@ -29,8 +29,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
-    this.bpmnModel.id = 0;
-    this.bpmnModel.bpmnModelId = '0';
+    this.bpmnModel.bpmnModelId = 0;
     this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
     this.bpmnModel.bpmnModelTempStatus = "initial";
   }

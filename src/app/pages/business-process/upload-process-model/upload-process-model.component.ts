@@ -1,10 +1,12 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
-import { RestApiService } from '../../services/rest-api.service';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import BpmnModdle from 'bpmn-moddle';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import { SplitComponent, SplitAreaDirective } from 'angular-split';
+
+import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
+import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
@@ -12,7 +14,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
   templateUrl: './upload-process-model.component.html',
   styleUrls: ['./upload-process-model.component.css']
 })
-export class UploadProcessModelComponent implements OnInit,AfterViewInit {
+export class UploadProcessModelComponent implements OnInit {
    hideUploadContainer:boolean=false;
    hideCreateContainer:boolean=false;
    hideOptionsContainer:boolean=true;
@@ -20,51 +22,58 @@ export class UploadProcessModelComponent implements OnInit,AfterViewInit {
    viewer:any;
    confBpmnModeler;
    reSize:boolean=false;
-   bpmnXml;
    confBpmnXml;
    receivedbpmn:any;
    createDiagram:boolean = false;
    isHiddenDiff:boolean=true;
+   displayChanges:boolean=false;
   res1: string;
   oldxmlstring: string;
   newxmlsttring: string;
   //bpmnupload:boolean=false;
   //hideEditor:boolean=false;
+  split: SplitComponent;
+  area1: SplitAreaDirective;
+  area2: SplitAreaDirective;
+
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, 
       private dt:DataTransferService) { }
  
-   ngAfterViewInit(){
-     this.bpmnModeler = new BpmnJS({
-       container: '#canvas1',
-       keyboard: {
-         bindTo: window
-       }
-     });
-   }
    ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
     this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
       let _self = this;
+      this.bpmnModeler = new BpmnJS({
+        container: '#canvas1',
+        keyboard: {
+          bindTo: window
+        }
+      });
+      // this.confBpmnModeler = new BpmnJS({
+      //   container: '#canvas2',
+      //   keyboard: {
+      //     bindTo: window
+      //   }
+      // });
       this.bpmnModeler.importXML(res, function(err){
         if(err){
           return console.error('could not import BPMN 2.0 diagram', err);
         }
-        _self.bpmnXml = res;
       })
     });
    }
 
    uploadConfBpmn(confBpmnData){
+    this.confBpmnModeler = new BpmnJS({
+      container: '#canvas2',
+      keyboard: {
+        bindTo: window
+      }
+    });
      this.bpmnservice.uploadConfirmanceBpmn(confBpmnData);
      let _self = this;
     this.rest.getBPMNFileContent("assets/resources/"+confBpmnData).subscribe(res => {
-      _self.confBpmnModeler = new BpmnJS({
-        container: '#canvas2',
-        keyboard: {
-          bindTo: window
-        }
-      });
       _self.confBpmnModeler.importXML(res, function(err){
         if(err){
           return console.error('could not import BPMN 2.0 diagram', err);
@@ -77,8 +86,11 @@ export class UploadProcessModelComponent implements OnInit,AfterViewInit {
    
   slideup(){
     this.getBpmnDifferences();
-    document.getElementById("foot").classList.remove("slide-down");
-    document.getElementById("foot").classList.add("slide-up");
+    let ele = document.getElementById("foot");
+    if(ele){
+      ele.classList.add("slide-up");
+      ele.classList.remove("slide-down");
+    }
   }
 
   showdiagram(diagramxml){
@@ -100,19 +112,13 @@ export class UploadProcessModelComponent implements OnInit,AfterViewInit {
     }
   }
   getBpmnDifferences(){
-    let _self = this;
-    new BpmnModdle().fromXML(this.bpmnXml, function(err, bpmnDataResDef) {
-      if (err) {
-        // return done(err);
-      }
-      new BpmnModdle().fromXML(_self.bpmnservice.getConfBpmnXML(), function(errConf, confBpmnDataResDef) {
-        if (errConf) {
-          // return done(err);
-        } 
-        let bpmnDiffs = diff(bpmnDataResDef, confBpmnDataResDef);
-        console.log(bpmnDiffs);
-        _self.bpmnservice.updateDifferences(bpmnDiffs)
-      });
-    });
+    this.displayChanges = true;
+    let bpmnDiffs = diff(this.bpmnModeler._definitions, this.confBpmnModeler._definitions);
+    console.log(bpmnDiffs);
+    this.bpmnservice.updateDifferences(bpmnDiffs)
+  }
+
+  dragEnd(e){
+    
   }
 }

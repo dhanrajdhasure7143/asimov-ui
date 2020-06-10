@@ -5,7 +5,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NotifierModule } from "angular-notifier";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import {MatTabsModule} from '@angular/material/tabs';
+import { AngularSplitModule } from 'angular-split';
 
 import { SharedModule } from '../../shared/shared.module';
 import { BusinessProcessRoutingModule } from './business-process-routing.module';
@@ -28,7 +28,7 @@ import { ListOfChangesComponent } from './list-of-changes/list-of-changes.compon
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    MatTabsModule
+    AngularSplitModule.forRoot()
   ],
   providers: [BpsHints]
 })
