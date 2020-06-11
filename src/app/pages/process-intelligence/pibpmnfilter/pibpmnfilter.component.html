@@ -12,42 +12,29 @@
             </div>
         </div>
     </div>
-
-    
     <div class="container">
             <div class="row">
-               
-               
-    
                 <div class="col-md-12">
-                    
                     <div class="reports">
-                        <div class="process-name">
-                            
-                            <label class="process-name" >Select Category</label>
-                            <div>
-                               
-                                  <select  id="category" [(ngModel)]="category"  >
+                        <form #processForm=ngForm>
+                            <div class="process-name">
+                                <label class="process-name" >Select Category</label>
+                                <div>
+                                    <select  id="category" name="category" [(ngModel)]="category"  required>
                                         <option value="infrastructure">Infratructure</option>
-                                      </select>
-  
+                                        </select>
+                                </div>
                             </div>
-
-                        </div>
-                        <div class="process-name">
-                            
-                            <label class="process-name">Enter process name</label>
-                            <div>
-                            <input type="name" id="name" [(ngModel)]="name" [ngModelOptions]="{standalone: true}" required> 
+                            <div class="process-name">
+                                <label class="process-name">Enter process name</label>
+                                <div>
+                                <input type="name" id="name" name="name" [(ngModel)]="name" required> 
+                                </div>
                             </div>
+                        <div>
+                            <button class="apply_button" type="submit" (click)="applyFilter()" [disabled]="!processForm.valid">Save & Generate</button>
                         </div>
-                    <div>
-                <button class="apply_button" (click)="applyFilter()" [disabled]="(category==''|| name=='')">Save & Generate</button>
-                </div>
-                
-                
-
-
+                    </form>
                 </div>
                 </div>
             </div>

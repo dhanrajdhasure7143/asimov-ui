@@ -14,8 +14,8 @@ export class SharebpmndiagramService {
   public bpmnDifferences = new BehaviorSubject({});
   sendDiff=this.bpmnDifferences.asObservable();
 
-  public confBpmnXMLData = new BehaviorSubject({});
-  sendConfBpmnXMLData=this.confBpmnXMLData.asObservable();
+  public confBpmnXMLDef = new BehaviorSubject({});
+  sendConfBpmnXMLDef=this.confBpmnXMLDef.asObservable();
 
   public isConfNav = new BehaviorSubject(false);
   confNav = this.isConfNav.asObservable();
@@ -28,8 +28,8 @@ export class SharebpmndiagramService {
   uploadConfirmanceBpmn(sentDiagram){
     this.showConfirmancedata.next(sentDiagram)
   }
-  uploadConfirmanceBpmnXML(confXML){
-    this.confBpmnXMLData.next(confXML)
+  uploadConfirmanceBpmnXMLDef(confXML){
+    this.confBpmnXMLDef.next(confXML)
   }
   updateDifferences(diff){
     this.bpmnDifferences.next(diff);
@@ -43,8 +43,8 @@ export class SharebpmndiagramService {
   getConfBpmnData(){
     return this.showConfirmancedata.value;
   }
-  getConfBpmnXML(){
-    return this.confBpmnXMLData.value;
+  getConfBpmnXMLDef(){
+    return this.confBpmnXMLDef.value;
   }
   changeConfNav(yesNo){
     this.isConfNav.next(yesNo);

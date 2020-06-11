@@ -50,12 +50,6 @@ export class UploadProcessModelComponent implements OnInit {
           bindTo: window
         }
       });
-      // this.confBpmnModeler = new BpmnJS({
-      //   container: '#canvas2',
-      //   keyboard: {
-      //     bindTo: window
-      //   }
-      // });
       this.bpmnModeler.importXML(res, function(err){
         if(err){
           return console.error('could not import BPMN 2.0 diagram', err);
@@ -79,13 +73,12 @@ export class UploadProcessModelComponent implements OnInit {
           return console.error('could not import BPMN 2.0 diagram', err);
         }
         _self.confBpmnXml = res;
-        _self.bpmnservice.uploadConfirmanceBpmnXML(res);
+        _self.bpmnservice.uploadConfirmanceBpmnXMLDef( _self.confBpmnModeler._definitions);
       })
     });
    }
    
   slideup(){
-    this.getBpmnDifferences();
     let ele = document.getElementById("foot");
     if(ele){
       ele.classList.add("slide-up");
@@ -112,10 +105,9 @@ export class UploadProcessModelComponent implements OnInit {
     }
   }
   getBpmnDifferences(){
-    this.displayChanges = true;
-    let bpmnDiffs = diff(this.bpmnModeler._definitions, this.confBpmnModeler._definitions);
-    console.log(bpmnDiffs);
-    this.bpmnservice.updateDifferences(bpmnDiffs)
+    let bpmnDiffs = diff(this.bpmnModeler._definitions, this.bpmnservice.getConfBpmnXMLDef());
+    this.bpmnservice.updateDifferences(bpmnDiffs);
+    this.slideup();
   }
 
   dragEnd(e){

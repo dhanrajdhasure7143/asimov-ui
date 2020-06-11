@@ -28,6 +28,22 @@
   top: 10px;
   color: grey;
 }
+.change{
+  font-size: 12px;
+  background-color: blue;
+  padding: 2px 5px;
+  font-weight: bold;
+  color: white;
+}
+.added{
+  background-color: green;
+}
+.removed{
+  background-color: red;
+}
+.layout{
+  background-color: orange;
+}
 .mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
   background-color: #f8dafe;
   color: black !important;
@@ -43,14 +59,14 @@ mat-tab-body{
 }
 .changeTable{
   width: 50%;
-  margin: auto;
+  margin: 5px auto;
 }
 .changeTable tr{
   border-bottom: 1px solid #eee;
   border-collapse: collapse;
 }
 .changeTable tr td, .changeTable tr th{
-  padding: 5px;
+  padding: 5px 5px 5px 20px;
 }
 #foot {
 border-top: 1px solid #999999;

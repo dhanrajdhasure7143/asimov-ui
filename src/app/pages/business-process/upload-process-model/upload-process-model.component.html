@@ -2,8 +2,8 @@
   <as-split-area [size]="reSize?50:100">
     <div class="row" >
         <div class="col-md-6  show-confirmance-button-div">
-            <button class="show-confirmance-button" (click)="reSize=!reSize" [hidden]="reSize">Show Confirmance</button>
-            <button class="btn" (click)="slideup()" [disabled]="!reSize" >Show Differences</button>
+            <button class="show-confirmance-button" (click)="reSize=!reSize" [hidden]="reSize">Show Conformance</button>
+            <button class="btn" (click)="getBpmnDifferences()" [disabled]="!reSize" >Show Differences</button>
         </div>
         <div [ngClass]="!reSize?'col-md-6':'col-md-12'"  class="kpis-and-submit-button-div">
             <button class="view-kpis-button"><img src="..\assets\view.svg">View KPI's</button>
@@ -17,4 +17,4 @@
     <div class="canvas2"  id="canvas2" ></div>
   </as-split-area>
 </as-split>
-<app-list-of-changes *ngIf="displayChanges"></app-list-of-changes>  
+<app-list-of-changes></app-list-of-changes>  

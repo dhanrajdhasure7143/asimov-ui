@@ -45,5 +45,9 @@ export class ListOfChangesComponent implements OnInit {
       return [];
     }
   }
+
+  getProcessType(type){
+    return type.replace('bpmn:','');
+  }
   
 }

@@ -11,7 +11,7 @@
           </div>
       </div>
       <div class="col-md-4 col-sm-4">
-          <button class="btn btn-primary pi_btn" id="generateGraph" (click)="generatepg()" [disabled]="isValidPiData" >
+          <button class="btn btn-primary pi_btn" id="generateGraph" (click)="generatepg()" [disabled]="!isValidPiData" >
               <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
       </div>
     </div>
