@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 
 import { DataTransferService } from "../../services/data-transfer.service";
 import { PiHints } from '../model/process-intelligence-module-hints';
@@ -34,7 +35,11 @@ export class DatadocumentComponent implements OnInit {
   cathead6: any;
   dTypeArray = [];
 
-  constructor(private router: Router, private dt: DataTransferService, private hints: PiHints, private global: GlobalScript) { }
+  // constructor(private router: Router, private dt: DataTransferService, private hints: PiHints, private global: GlobalScript) { }
+  // searchTerm:string;
+  modalRef: BsModalRef;
+
+  constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript,private modalService: BsModalService)    { }
 
   ngOnInit() {
     this.resetColMap();
@@ -89,6 +94,10 @@ export class DatadocumentComponent implements OnInit {
   caseIdSelection() {
     this.router.navigate(['/pages/processIntelligence/selection']);
 
+  // generatepg(){
+  //   // this.router.navigate(['/pages/processIntelligence/flowChart']);
+  //   document.getElementById("foot").classList.remove("slide-down");
+  // document.getElementById("foot").classList.add("slide-up");
   }
   sort(property) {
     this.isDesc = !this.isDesc; //change the direction    
@@ -177,6 +186,10 @@ export class DatadocumentComponent implements OnInit {
     this.validCells = [];
     this.invalidCells = [];
     this.isValidPiData = false;
+  }
+  openModal(template) {
+    this.modalRef = this.modalService.show(template);
+
   }
 
   searchTable() {

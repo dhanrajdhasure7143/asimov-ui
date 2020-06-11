@@ -44,6 +44,7 @@ span.user_name::before{
 }
 .brand{
     padding-bottom:10px;
+    color: #0061cf;
 }
 
 span.password::before{
@@ -137,6 +138,9 @@ sup{
 }
 .fa-registered{
   font-weight: 400;
+  font-size: 12px;
+  position: relative;
+  top: -5px;
 }
 .icon_middle {
   float: right;
@@ -153,6 +157,11 @@ label{
 }
 .abrand_div {
   display: inline-block;
+}
+.abrand_div small{
+  position: relative;
+  top: -12px;
+  color: #0062cf;
 }
 li a:hover, li a:active{
   background-color: #0061cf !important;
@@ -175,7 +184,6 @@ svg:hover {
 }
 #brand{
   color: #0062cf;
-  font-weight:550;
   font-size:50px;
 } 
 .header_nav li{
@@ -240,12 +248,32 @@ padding-right: 5px;
 .fa-sign-out-alt{
 padding-right: 5px;
 }
+.home_title{
+  margin: 40px 0;
+}
+.user_list li{
+  text-align: center;
+}
+.user_list .dropdown-menu>li>a:hover{
+  color: white;
+}
+.user_list .dropdown-menu>li>a{
+  margin: 0;
+  padding: 5px;
+  height: 30px;
+  color: #0062cf;
+  text-align: left;
+}
+.user_list .dropdown-menu{
+  border: 1px solid #0062cf;
+}
 /* header component styles - Ends*/
 /* Module title styles - Starts*/
 .module-heading{
   background-color: #f8f8f8;
   padding: 6px;
   margin-bottom: 20px;
+  margin-top: 18px;
 }
 .module-heading-image{
   width: 36px;
@@ -259,5 +287,28 @@ padding-right: 5px;
 /* Common styles - Starts*/
 button:active, button:focus, input:active, input:focus{
   outline: none !important;
+}
+.abrand_div img{
+  width:185px;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px!important;
+  margin: 2px 0 0;
+  font-size: 16px!important;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  box-shadow: 0 8px 12px rgba(0,0,0,.175);
 }
 /* Common styles - Ends*/

@@ -29,8 +29,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
-    this.bpmnModel.id = 0;
-    this.bpmnModel.bpmnModelId = '0';
+    this.bpmnModel.bpmnModelId = 0;
     this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
     this.bpmnModel.bpmnModelTempStatus = "initial";
   }
@@ -89,7 +88,9 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     this.bpmnModel = new BpmnModel();
     this.rest.submitBPMNforApproval(this.bpmnModel).subscribe(res=>{
       this.spinner.hide();
-    })
+    },err=>{
+      this.spinner.hide();
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel']);})
   }
   downloadBpmn(){
     if(this.bpmnModeler){

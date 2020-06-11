@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { SharedModule } from '../../shared/shared.module';
 import { ProcessIntelligenceRoutingModule } from './process-intelligence-routing.module';
 import { ProcessIntelligenceComponent } from './process-intelligence.component';
@@ -19,6 +19,7 @@ import { SearchPipe } from './pipes/search.pipe';
 import { PiHints } from './model/process-intelligence-module-hints';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DataselectionComponent } from './dataselection/dataselection.component';
+import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { DataselectionComponent } from './dataselection/dataselection.component'
     FilterComponent,
     FlowchartComponent,
     SearchPipe,
-    DataselectionComponent
+    DataselectionComponent,
+    PibpmnfilterComponent
   ],
   imports: [
     CommonModule,
@@ -41,7 +43,9 @@ import { DataselectionComponent } from './dataselection/dataselection.component'
     NgxDropzoneModule,
     ProcessIntelligenceRoutingModule,
     SharedModule,
-    MatExpansionModule
+    MatExpansionModule,
+    ModalModule.forRoot()
+
   ],
   providers:[PiHints]
 
