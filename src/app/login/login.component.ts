@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import 'particles.js/particles';
-// import * as particlesJS from 'particlesjs';
+import * as particlesJS from 'particlesjs';
 
 declare var particlesJS :any;
 

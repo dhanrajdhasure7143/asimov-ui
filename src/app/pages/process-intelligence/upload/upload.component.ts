@@ -72,7 +72,7 @@ export class UploadComponent implements OnInit {
       // const fd: FileReader = new FileReader();
      fd.append('file', this.selectedFile),
       fd.append('permissionStatus', 'yes'),
-    
+    // this.rest.fileupload(fd)
       this.http.post('/processintelligence/v1/connectorconfiguration/upload', fd, httpOptions)
                 .subscribe(res => {
  console.log('res',res);
@@ -80,7 +80,6 @@ export class UploadComponent implements OnInit {
                   }, err => {
                 
             });
-
 }
   
 

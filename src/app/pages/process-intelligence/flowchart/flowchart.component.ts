@@ -9,6 +9,7 @@ import { PiHints } from '../model/process-intelligence-module-hints';
 import { createLoweredSymbol, ThrowStmt } from '@angular/compiler';
 import { NgControl } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
+import { RestApiService } from '../../services/rest-api.service';
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -73,9 +74,15 @@ export class FlowchartComponent implements OnInit {
   variant_list;
   public isfrequencymetrics:boolean=false;
   public isperformancemetrics:boolean=false;
-  constructor(private dt: DataTransferService, private router: Router, private bpmnservice: SharebpmndiagramService,
-    private pgModel: ProcessGraphModel, private hints: PiHints,
-    private spinner: NgxSpinnerService) {
+  fullgraph:any;
+
+  constructor(private dt: DataTransferService,
+    private router: Router,
+    private bpmnservice: SharebpmndiagramService,
+    private pgModel: ProcessGraphModel,
+    private hints: PiHints,
+    private spinner: NgxSpinnerService,
+    private rest:RestApiService) {
     // this.spinner.show();
   }
 
@@ -90,10 +97,25 @@ export class FlowchartComponent implements OnInit {
     this.process_graph_list = Object.keys(ProcessGraphList).filter(val => isNaN(ProcessGraphList[val]));
     this.variant_list_options = VariantList;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
+    this.getVaraintData();
+    this.getbyVaraintFullGraph();
   }
 
   ngAfterContentChecked() {
     this.rangevalue = ZoomSlider.rangeValue;
+  }
+
+  getVaraintData(){
+    let pid=244
+    this.rest.getAllVaraintList().subscribe(res=>{
+      console.log('res',res);
+
+    })
+  }
+  getbyVaraintFullGraph(){
+    this.rest.getbyVariantfullGraph().subscribe(data=>{this.fullgraph=data
+    console.log("fullgraph",data);
+    })
   }
 
   onchangeVaraint(datavariant) {

@@ -15,6 +15,13 @@
 .right-addon input { padding-right: 20px; }
 
 #particles-js {
+    /* position: absolute;
+    z-index: 0;
+    width: 50%;
+    height: 620px;
+    background-color: none;
+    background-repeat: no-repeat;
+    background-size: cover; */
     position: absolute;
     z-index: 0;
     width: 50%;
