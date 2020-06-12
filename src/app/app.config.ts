@@ -10,12 +10,14 @@ export interface AsimovAppConfig {
     loopbackHost: string;
     imagePath: string;
     isProduction: boolean;
+    accessTokenEndPoint:string;
 }
 
 export const AppConfig: AsimovAppConfig = {
     processIntelligenceEndPoint: environment.pi_url,//pi_url
     bussinessProcessEndPoint: environment.bps_url,//bps_url
     rpaEndPoint: environment.rpa_url,
+    accessTokenEndPoint:environment.idm_url,
     loopbackHost: environment.loopback_url,
     imagePath: '', 
     isProduction: true,

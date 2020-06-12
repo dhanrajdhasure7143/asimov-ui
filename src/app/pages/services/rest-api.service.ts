@@ -3,23 +3,24 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
-
+import { DataTransferService } from './data-transfer.service';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
   }),
 };
 
-const authHttpOptions = {
-  headers: new HttpHeaders({
-    'Authorization': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJnb3BpLnBhbGxhQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJnb3BpLnBhbGxhQGVwc29mdGluYy5jb20iLCJpZCI6IjEwMyIsImRlcGFydG1lbnQiOm51bGwsInRlbmFudElkIjoiZWFjYTAwMDItMzNhZC00ZDFmLTk2MDEtMWU4ZjMzOGRkNWI5IiwiZG9tYWluIjpudWxsLCJyb2xlcyI6W3siYXBwSWQiOiIyIiwiYXBwTmFtZSI6IjIuMCIsImlkIjoiNSIsInJvbGVOYW1lIjoiUHJvY2VzcyBBcmNoaXRlY3QiLCJwZXJtaXNzaW9ucyI6WyJ1cGxvYWQtcHJvY2VzcyIsImRlc2lnbi1wcm9jZXNzIiwiYnBzLXdvcmtzcGFjZS12aWV3IiwiYnBzLWRlc2lnbmVyLXZpZXciLCJicHMtcmV1cGxvYWQiLCJicHMtc2F2ZSIsImJwcy1kb3dubG9hZCIsImJwcy1zdWJtaXQiLCJicHMtdG91ci1ndWlkZSIsImJwcy13b3JrZmxvdy12aWV3IiwiYnBzLXdvcmtmbG93LXVwZGF0ZSJdfV19LCJ1c2VyU2Vzc2lvbklkIjoiMjMxMSIsImlhdCI6MTU5MTc4MTkzNywiZXhwIjoxNTkxNzg0OTM3fQ.YykZ7LMWl9KiX-JkZUFAs_7vTFMDtTX1FlKBs51P7vamds7ZZ0DHVMiOPhBnwtgKCtIN8kLp1XC3giyqjAJg3hZ2UI7FtEll5gD1eNnBsmCQzz75sIbGci3AfZ1Z_483yRbwfiwM8w6HqbqUiCZ2HbKWN_AgVLM8JAIkKohNxIiupNnOp3VcluXvEH9McLZ116T7SURQ5f8daXE3PMWrlvTRx9B2d0PlXUAXGIWL3z06nuRBYjY5ay-aS2lns85BSyDCdrQmDNYogxsVlyX0EpTDhuAKfh-PPyhCtZTFitARitjlEnPEfl0sKQK9zZYskNUPe-FOdjMnbsrUq53NrQ',
-  }),
-};
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestApiService {
+  authHttpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': 'Bearer '+this.dt.getaccesstoken()
+    }),
+  };
   xmlheaderOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'text/xml',
@@ -29,8 +30,12 @@ export class RestApiService {
     }),
     responseType: 'text'
   }
-  constructor(private http:HttpClient) { }
-
+  constructor(private http:HttpClient,private dt:DataTransferService) { }
+  getAccessToken(){
+    let data = {"userId":"gopi.palla@epsoftinc.com",
+                "password":"Welcome@123"};
+    return this.http.post('/api/login/beta/accessToken',data);
+  }
   bpmnlist(user){
     //GET /bpsprocess/approver/info/{roleName} 
 return this.http.get<any[]>('bpsprocess/approvalTnfoByUser/'+user);
@@ -55,7 +60,7 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   }
 
   autoSaveBPMNFileContent(bpmnModel){
-    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel, authHttpOptions);
+    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel, this.authHttpOptions);
   }
 
   submitBPMNforApproval(bpmnModel){
@@ -73,7 +78,7 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   }
 
   getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/mounika"); //authHttpOptions
+    return this.http.get("/bpsprocess/fetchByUser/mounika",this.authHttpOptions); 
   }
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
