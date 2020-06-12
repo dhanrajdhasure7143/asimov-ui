@@ -1,4 +1,4 @@
-<as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
+        <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>        <as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
   <as-split-area [size]="reSize?50:100">
     <div class="row" >
         <div class="col-md-6  show-confirmance-button-div">
@@ -6,7 +6,7 @@
             <button class="btn" (click)="getBpmnDifferences()" [disabled]="!reSize" >Show Differences</button>
         </div>
         <div [ngClass]="!reSize?'col-md-6':'col-md-12'"  class="kpis-and-submit-button-div">
-            <button class="view-kpis-button"><img src="..\assets\view.svg">View KPI's</button>
+            <button class="view-kpis-button"><img src="..\assets\images\viewKPI.svg">View KPI's</button>
             <button class="submit-for-approval-button" routerLink="/pages/approvalWorkflow/home" [hidden]="!reSize">Submit for Approval</button>
         </div>
     </div>
@@ -17,4 +17,8 @@
     <div class="canvas2"  id="canvas2" ></div>
   </as-split-area>
 </as-split>
+<button class="right btn" (click)="saveprocess()">Save Process</button>
+<button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+
+
 <app-list-of-changes></app-list-of-changes>  
