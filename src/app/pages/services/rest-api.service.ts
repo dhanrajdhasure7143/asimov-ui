@@ -9,17 +9,17 @@ const httpOptions = {
   }),
 };
 
-const authHttpOptions = {
-  headers: new HttpHeaders({
-    'Authorization': 'Bearer '+localStorage.getItem("accessToken")
-  }),
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class RestApiService {
   
+  authHttpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': 'Bearer '+localStorage.getItem("accessToken")
+    }),
+  };
+
   xmlheaderOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'text/xml',
@@ -64,16 +64,16 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   getBpsprocessinfobyuser(){
     return this.http.get("/bpsprocess/fetchByUser/{userName}")}//second api call
   saveBPMNprocessinfofromtemp(){
-    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",BpmnModel,authHttpOptions)//third api call
+    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",BpmnModel,this.authHttpOptions)//third api call
   }
   submitBPMNforApproval(bpmnModel){
-    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel,authHttpOptions)//fourth api call
+    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel,this.authHttpOptions)//fourth api call
   }
   getBPMNtempnotations(){
     return this.http.get("/bpsprocess/temp/bpmn/{bpmnModelTempId}/notation/")//fifth api call
   }
   autoSaveBPMNFileContent(bpmnModel){
-    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel, authHttpOptions)//sixth api call
+    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel, this.authHttpOptions)//sixth api call
   }
 
   sendUploadedFile(file:FormData, uid){
@@ -87,7 +87,7 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   }
 
   getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/mounika",authHttpOptions); 
+    return this.http.get("/bpsprocess/fetchByUser/mounika",this.authHttpOptions); 
   }
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
