@@ -16,10 +16,10 @@ export class LoginComponent{
   constructor(private router:Router,private rest:RestApiService,private dt:DataTransferService) { }
   getAccessToken(){
    
-this.rest.getAccessToken().subscribe((res:AccessTokenResponse) =>
-   {
-     this.dt.setaccesstoken(res.accessToken);
-     this.router.navigateByUrl("pages/home")
-    });
+// this.rest.getAccessToken().subscribe((res:AccessTokenResponse) =>
+//    {
+//      this.dt.setaccesstoken(res.accessToken);
+//      this.router.navigateByUrl("pages/home")
+//     });
   }
 }
