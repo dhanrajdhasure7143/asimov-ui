@@ -3,7 +3,7 @@
                 <span aria-hidden="true">&times;</span>
         </button>
         <div class="row col-md-12 vertical-overflow">
-                <table class="changeTable">
+                <table class="changeTable" *ngIf="hasChanges(changes)">
                         <tr>
                                 <th>Name</th>
                                 <th>Type</th>
@@ -29,7 +29,7 @@
                                 <td>{{getProcessType(each_layout_change.$type)}}</td> 
                                 <td><span class="change layout">Layout</span></td> 
                         </tr>
-                </table> 
+                </table>
         </div>
 </div>
     

@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { RestApiService } from '../pages/services/rest-api.service';
-import { DataTransferService } from '../pages/services/data-transfer.service';
-export interface AccessTokenResponse{
-  accessToken:string;
-  refreshToken:string;
-}
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,13 +9,12 @@ export interface AccessTokenResponse{
 })
 export class LoginComponent{
 
-  constructor(private router:Router,private rest:RestApiService,private dt:DataTransferService) { }
+  constructor(private router:Router,private rest:RestApiService) { }
   getAccessToken(){
    
-// this.rest.getAccessToken().subscribe((res:AccessTokenResponse) =>
-//    {
-//      this.dt.setaccesstoken(res.accessToken);
-//      this.router.navigateByUrl("pages/home")
-//     });
+this.rest.getAccessToken().subscribe(res =>{
+     localStorage.setItem("accessToken", res['accessToken']);
+     this.router.navigateByUrl("pages/home")
+    });
   }
 }

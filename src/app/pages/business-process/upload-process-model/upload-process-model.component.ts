@@ -55,6 +55,9 @@ export class UploadProcessModelComponent implements OnInit {
           return console.error('could not import BPMN 2.0 diagram', err);
         }
       })
+      this.bpmnModeler.on('element.changed', function(){
+        alert();        
+      })
     });
    }
 
@@ -105,7 +108,7 @@ export class UploadProcessModelComponent implements OnInit {
     }
   }
   getBpmnDifferences(){
-    let bpmnDiffs = diff(this.bpmnModeler._definitions, this.bpmnservice.getConfBpmnXMLDef());
+    let bpmnDiffs = diff(this.bpmnModeler.getDefinitions(), this.bpmnservice.getConfBpmnXMLDef());
     this.bpmnservice.updateDifferences(bpmnDiffs);
     this.slideup();
   }

@@ -24,6 +24,7 @@ export class BpsHomeComponent implements OnInit {
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.bpsHomeHints);
+    debugger;
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       console.log();
       this.saved_diagrams = res; 
