@@ -32,7 +32,10 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.bussinessProcessEndPoint + req.url;
         if(req.url.indexOf('bpsprocess') == -1 && req.url.indexOf('upload') > -1)
             url = this.config.bussinessProcessEndPoint + req.url;
+        if(req.url.indexOf('accessToken') > -1)
+            url = this.config.accessTokenEndPoint + req.url;
         return url;
+        
     }
 }
 

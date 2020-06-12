@@ -15,6 +15,15 @@ export class DataTransferService {
   private parentModule:BehaviorSubject<any> = new BehaviorSubject<any>({});
   current_parent_module = this.parentModule.asObservable();
 
+  private validacesstoken:BehaviorSubject<any> = new BehaviorSubject<any>({});
+ 
+
+  setaccesstoken(token){
+    this.validacesstoken.next(token);
+  }
+  getaccesstoken(){
+    return this.validacesstoken.value;
+  }
   changeParentModule(module:any){
     this.parentModule.next(module);
   }

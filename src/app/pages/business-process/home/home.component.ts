@@ -24,14 +24,14 @@ export class BpsHomeComponent implements OnInit {
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.bpsHomeHints);
-    // this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
+    this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       console.log();
-    //   this.saved_diagrams = res; 
-    //   this.bkp_saved_diagrams = res; 
-    // },
-    // (err) => {
-    //   console.log(err);
-    // });
+      this.saved_diagrams = res; 
+      this.bkp_saved_diagrams = res; 
+    },
+    (err) => {
+      console.log(err);
+    });
   }
 
   getDiagram(byteBpmn,i){
