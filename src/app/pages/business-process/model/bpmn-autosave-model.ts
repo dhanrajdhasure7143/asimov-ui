@@ -2,6 +2,8 @@ export class BpmnModel{
     bpmnModelId:number;
     bpmnModelModifiedBy:string;
     bpmnModelModifiedTime:Date;
+    createdTimestamp:Date
+    modifiedTimestamp:Date
     bpmnModelTempId:number;
     bpmnModelTempStatus:string;
     bpmnModelTempVersion:string;
@@ -21,4 +23,7 @@ export class BpmnModel{
     bpmnXmlNotation:string;
     bpmnProcessStatus:string;
     bpmnProcessName:string;
+    reviewComments:string;
+    version:string;
+    versionId:number
 }

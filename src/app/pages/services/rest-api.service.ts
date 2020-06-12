@@ -63,8 +63,8 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   }
   getBpsprocessinfobyuser(){
     return this.http.get("/bpsprocess/fetchByUser/{userName}")}//second api call
-  saveBPMNprocessinfofromtemp(){
-    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",BpmnModel,this.authHttpOptions)//third api call
+  saveBPMNprocessinfofromtemp(bpmnModel){
+    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel,this.authHttpOptions)//third api call
   }
   submitBPMNforApproval(bpmnModel){
     return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel,this.authHttpOptions)//fourth api call
@@ -87,7 +87,7 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   }
 
   getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/mounika",this.authHttpOptions); 
+    return this.http.get("/bpsprocess/fetchByUser/gopi",this.authHttpOptions); 
   }
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
