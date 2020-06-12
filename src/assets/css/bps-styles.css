@@ -21,6 +21,11 @@
   width: 100px;
 }
 /* create bpmn diagram component styles - Ends*/
+/* bps home component styles - Starts*/
+.dropdown_icon{
+  margin-right:16px;
+}
+/*bps home component styles - Ends */
 /* bpmn diagram list component styles - Starts*/
 .overview_icon:not([aria-disabled=true]) {
   cursor: pointer !important;
