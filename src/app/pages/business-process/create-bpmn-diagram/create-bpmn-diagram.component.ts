@@ -169,6 +169,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       data=>{
         
         alert("saved successfully")
+        this.router.navigateByUrl("/pages/approvalWorkflow/home")
         
         this.spinner.hide()
       },

@@ -1,7 +1,7 @@
 <div class="box_area" [hidden]="bpmnupload">
         <div class="row">
             <div class="col-md-2"></div>
-            <div class='col-md-9 drop_box' id="upload_bpmn">
+            <div class='col-md-8 drop_box' id="upload_bpmn">
                 <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn'" >
                     <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
                         <h3>Upload Process Model</h3>
@@ -13,7 +13,7 @@
         </div>
         <div class="row">
             <div class="col-md-2"></div>
-            <div class='col-md-9 drop_box create_box'>
+            <div class='col-md-8 drop_box create_box'>
                 <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
                 <h3>Define Your Own Process</h3>
                 <h5>Do process model from Scratch level</h5>
