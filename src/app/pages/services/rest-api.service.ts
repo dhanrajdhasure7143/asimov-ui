@@ -36,20 +36,20 @@ export class RestApiService {
 
   bpmnlist(user){
     //GET /bpsprocess/approver/info/{roleName} 
-return this.http.get<any[]>('bpsprocess/approvalTnfoByUser/'+user);
+return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
 }
 
 approve_producemessage(bpmnProcessInfo){
-  return this.http.post<any[]>('bpsprocess/produceMessage',bpmnProcessInfo,httpOptions);
+  return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo,httpOptions);
 }
 approve_savedb(bpmndata){
-  return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',bpmndata,httpOptions);
+  return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata,httpOptions);
 }
 
 denyDiagram(msg_obj){
 // POST /bpsprocess/save/bpms/notation/approval/workflow
 
-return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',msg_obj,httpOptions);
+return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj,httpOptions);
 }
 
 

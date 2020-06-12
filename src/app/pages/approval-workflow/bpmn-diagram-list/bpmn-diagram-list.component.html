@@ -13,7 +13,7 @@
 
     <mat-expansion-panel #matExpansionPanel *ngFor="let each_diag of griddata;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
       hideToggle>
-      <mat-expansion-panel-header>
+  <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="row col-md-12">
             <div class="col-md-1" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.processIntelligenceId}}</div>
@@ -54,7 +54,8 @@
               </table>
             </div>
         <div class="col-md-5">
-          <div *ngIf="each_diag.bpmnProcessInfo" [class]="'diagram_container'+i"></div>
+          <!-- <div *ngIf="each_diag.bpmnProcessInfo" [class]="'diagram_container'+i"></div> -->
+          <bpmn-diagram *ngIf="each_diag.bpmnProcessInfo" [id]="'diagram_container'+i" [viewMode]="true"></bpmn-diagram>
         </div>
 
       </div>
