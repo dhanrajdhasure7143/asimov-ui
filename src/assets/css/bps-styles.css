@@ -21,6 +21,26 @@
   width: 100px;
 }
 /* create bpmn diagram component styles - Ends*/
+/* bpmn diagram list component styles - Starts*/
+.overview_icon:not([aria-disabled=true]) {
+  cursor: pointer !important;
+}
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+  cursor: default;
+}
+.mat-expansion-panel-header {
+ padding: 0 0px !important;
+}
+
+button{
+cursor: pointer
+}
+.overview_icon
+{
+  padding-left: 48px !important;
+}
+
+/* bpmn diagram list component styles - Ends*/
 /*List-of-changes component - Starts*/
 .overlay_close{
   position: absolute;

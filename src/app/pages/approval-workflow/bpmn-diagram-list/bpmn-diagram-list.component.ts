@@ -26,9 +26,10 @@ export class BpmnDiagramListComponent implements OnInit {
   ngOnInit() {
     this.dt.changeParentModule({ "route": "/pages/approvalWorkflow/home", "title": "Approval Workflow" });
     this.dt.changeChildModule(undefined);
-    // this.bpmnlist();
+     this.bpmnlist();
   }
   expandPanel(event,i,bpmnXmlNotation): void {
+    event.stopPropagation(); 
     this.bpmnModeler = new BpmnJS({
       container: '.diagram_container'+i,
       keyboard: {
@@ -48,6 +49,17 @@ export class BpmnDiagramListComponent implements OnInit {
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
   }
+  getDiagram(i, bpmnXmlNotation){
+    this.diagramComp.initializeDiag('diagram_container'+i, bpmnXmlNotation);
+    if (this.expanded) {
+     this.diagramComp.initializeDiag('diagram_container' + i, bpmnXmlNotation);
+      this._matExpansionPanel.open(); // Here's the magic
+      this.expanded = false;
+    }else{
+      this._matExpansionPanel.close()
+    }
+  }
+
   // getDiagram(i, bpmnXmlNotation) {
   //   console.log(this.diagramComp);
   //   this.diagramComp.initializeDiag('diagram_container' + i, bpmnXmlNotation);
@@ -56,23 +68,23 @@ export class BpmnDiagramListComponent implements OnInit {
   loopTrackBy(index, term) {
     return index;
   }
-  // bpmnlist() {
-  //   this.rest_Api.bpmnlist(this.user).subscribe(data => this.griddata = data);
-  // }
-  // approveDiagram(data) {
-  //   this.approve_producemessage(data);
-  //   this.approve_savedb(data);
-  // }
-  // approve_producemessage(data) {
-  //   this.rest_Api.approve_producemessage(data.bpmnProcessInfo).subscribe(data => console.log(data));
-  // }
-  // approve_savedb(data) {
-  //   this.rest_Api.approve_savedb(data).subscribe(data => console.log(data));
-  // }
-  // denyDiagram(data, i) {
-  //   this.approver_info = { "message": this.message[i], "remarks": data.remarks, "rejectedTimestamp": data.rejectedTimestamp, "approvedBy": data.approvedBy, "approvedAt": data.approvedAt, "role": this.role };
-  //   this.rest_Api.denyDiagram(this.approver_info).subscribe(data => console.log(data));
-  // }
+   bpmnlist() {
+     this.rest_Api.bpmnlist(this.user).subscribe(data => this.griddata = data);
+   }
+   approveDiagram(data) {
+     this.approve_producemessage(data);
+     this.approve_savedb(data);
+   }
+   approve_producemessage(data) {
+     this.rest_Api.approve_producemessage(data.bpmnProcessInfo).subscribe(data => console.log(data));
+   }
+   approve_savedb(data) {
+     this.rest_Api.approve_savedb(data).subscribe(data => console.log(data));
+   }
+   denyDiagram(data, i) {
+     this.approver_info = { "message": this.message[i], "remarks": data.remarks, "rejectedTimestamp": data.rejectedTimestamp, "approvedBy": data.approvedBy, "approvedAt": data.approvedAt, "role": this.role };
+     this.rest_Api.denyDiagram(this.approver_info).subscribe(data => console.log(data));
+   }
 
 }
 
