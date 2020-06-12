@@ -6,4 +6,19 @@ export class BpmnModel{
     bpmnModelTempStatus:string;
     bpmnModelTempVersion:string;
     bpmnProcessMeta:string;
+    approverName:string;
+    bpmnJsonNotation:string;
+    bpmnNotationAutomationTask:string;
+    bpmnNotationHumanTask:string;
+    bpmnProcessApproved:number;
+    userName:string;
+    tenantId:number;
+    bpmnJsonNotationreviewComments:string;
+    processIntelligenceId:number;
+    id:number;
+    emailTo:string;
+    category:string;
+    bpmnXmlNotation:string;
+    bpmnProcessStatus:string;
+    bpmnProcessName:string;
 }
