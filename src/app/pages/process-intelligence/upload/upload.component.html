@@ -5,7 +5,7 @@
                 <h4 class="subtitle">Select below options to get your data</h4>
                 
                 <div class="col-sm-3 upload_zone" id="upload_xl">
-                        <ngx-dropzone (change)="onselectfile($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
+                        <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/Group 279.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
                                         <label>XLSX/CSV</label></h5>
@@ -34,34 +34,35 @@
                         <div>
                                 <h4>My Work space</h4>
                         </div>
-                                <div class="row col-md-12">
+                                <div class="col-md-12 row text-bold">
+                                  <div class="col-md-3">Process ID</div>
+                                  <div class="col-md-3">Date</div>
                                   <div class="col-md-3">Process Name</div>
-                                  <div class="col-md-3">Date Time</div>
-                                  <div class="col-md-3">Category Type</div>
                                   <div class="col-md-2">Status</div>
-                                  <!-- <div class="col-md-1">
-                                    Comment
-                                  </div> -->
                                 </div>
-                                <div class="col-md-12">
-                                  <mat-accordion>
-                                    <mat-expansion-panel >
+                                <div class="col-md-12 work_space">
+                                  <mat-accordion >
+                                    <mat-expansion-panel *ngFor='let process_list of process_graph_list.data;trackBy:loopTrackBy;let i=index' (afterExpand)="onGraphSelection(process_list)">
                                       <mat-expansion-panel-header>
                                         <mat-panel-title>
                                           <div class="row">
-                                            <div class="col-md-3">Process name</div>
-                                            <div class="col-md-3">05/05/2020</div>
-                                            <div class="col-md-4">Get the approver name</div>
-                                            <div class="col-md-2">Active</div>
-                                            <!-- <div class="col-md-1">
-                                              <span class="comment">
-                                                <i class="fa fa-comment"></i> <span class="comment-tip"></span>
-                                              </span>
-                                            </div> -->
+                                            <div class="col-md-3 text-center">{{process_list.piId}}</div>
+                                            <div class="col-md-4 text-center">{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</div>
+                                            <div class="col-md-3 text-center">{{process_list.piName|titlecase}}</div>
+                                            <div class="col-md-2 text-center">{{process_list.status}}</div>
                                           </div>
                                         </mat-panel-title>
                                       </mat-expansion-panel-header>
-                                      <div [class]="'diagram_container'+i"></div>
+                                      <div [class]="'diagram_container'">
+                                              <!-- <div *ngIf='isgraph'>
+                                                <app-piflowchart [model1]="model1" [model2]="model2"></app-piflowchart>
+
+                                              </div> -->
+                                              <div class="sample" style="position: relative;">
+                                                <!-- <h4>test</h4> -->
+                                                        <div id="myDiagramDiv" style=" height: 375px; background: white;"></div>
+                                                    </div>
+                                      </div>
                                     </mat-expansion-panel>
                                   </mat-accordion>
                                 </div>

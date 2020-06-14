@@ -35,14 +35,12 @@ export class FlowchartComponent implements OnInit {
   public select_varaint: any = 0;
   public model1;
   public model2;
-  public test: any;
-  public test1: any;
   // public mymodel= this.pgModel.testdata[0].nodeDataArraycase1;
   public data = (this.pgModel.data);
   public reports = this.pgModel.reports;
   public filterLength: number;
   public dataValues: any[];
-  public varaint_data: any[];
+  public varaint_data: any=[];
   public rangevalue: any;
   pathvalue: number = 0;
   public isplay: boolean = false;
@@ -68,13 +66,17 @@ export class FlowchartComponent implements OnInit {
     hidePointerLabels: true,
     vertical: true,
   }
-  process_graph_list;
+  process_graph_list:any=[];
   process_graph_options;
   variant_list_options;
   variant_list;
   public isfrequencymetrics:boolean=false;
   public isperformancemetrics:boolean=false;
   fullgraph:any;
+  graphIds:any;
+  isvaraintPlay:boolean=false;
+  varaint_GraphData:any=[];
+  varaint_GraphDataArray:any[]=[];
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -92,57 +94,69 @@ export class FlowchartComponent implements OnInit {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/flowChart", "title": "Process Graph" });
     this.dt.changeHints(this.hints.processGraphHints);
-    this.varaint_data = this.data;
+    // this.varaint_data = this.data;
     this.process_graph_options = ProcessGraphList;
-    this.process_graph_list = Object.keys(ProcessGraphList).filter(val => isNaN(ProcessGraphList[val]));
+    // this.process_graph_list = Object.keys(ProcessGraphList).filter(val => isNaN(ProcessGraphList[val]));
     this.variant_list_options = VariantList;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
-    this.getVaraintData();
-    this.getbyVaraintFullGraph();
+    this.getAlluserProcessPiIds();
   }
 
   ngAfterContentChecked() {
     this.rangevalue = ZoomSlider.rangeValue;
   }
-
-  getVaraintData(){
-    let pid=244
-    this.rest.getAllVaraintList().subscribe(res=>{
-      console.log('res',res);
-
-    })
+  getAlluserProcessPiIds(){
+    this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data
+      console.log('data',data);})
   }
-  getbyVaraintFullGraph(){
-    this.rest.getbyVariantfullGraph().subscribe(data=>{this.fullgraph=data
-    console.log("fullgraph",data);
-    })
+  onchangegraphId(selectedpiId){
+    let piId=selectedpiId
+    this.rest.getAllVaraintList(piId).subscribe(data=>{this.varaint_data=data // variant List call
+      // console.log('this.varaint_data',data);
+      for(var i=0; i<this.varaint_data.data.length; i++){
+          this.varaint_data.data[i].selected= "inactive";
+      }
+      })
+      this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data //process graph full data call
+        let fullgraphOne=JSON.parse(this.fullgraph.data);
+        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase
+        console.log('this.model1',this.model1);
+        
+        this.model2 = this.flowchartData(this.model1)
+        })
+
+        this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
+        console.log('varaint_GraphData',this.varaint_GraphData.data);
+        this.varaint_GraphDataArray.push(this.varaint_GraphData.data)
+        // console.log('varaint_GraphData',this.varaint_GraphDataArray);
+        })
   }
 
   onchangeVaraint(datavariant) {
     // console.log("variantdata",datavariant);
     switch (datavariant) {
       case "0":
-        this.varaint_data = this.data;
-        this.varaint_data.sort(function (a, b) {
+        // this.varaint_data = this.varaint_dat;
+        this.varaint_data.data.sort(function (a, b) {
           return b.casepercent - a.casepercent;
         });
         break;
       case "1":
-        this.varaint_data = this.data;
-        this.varaint_data.sort(function (a, b) {
+        // this.varaint_data = this.data;
+        this.varaint_data.data.sort(function (a, b) {
           return a.casepercent - b.casepercent;
         });
         break;
       case "2":
-        this.varaint_data = this.data;
-        this.varaint_data.sort(function (a, b) {
-          return b.Days - a.Days;
+        // this.varaint_data = this.data;
+        this.varaint_data.data.sort(function (a, b) {
+          return b.days - a.days;
         });
         break;
       case "3":
-        this.varaint_data = this.data;
-        this.varaint_data.sort(function (a, b) {
-          return a.Days - b.Days;
+        // this.varaint_data = this.data;
+        this.varaint_data.data.sort(function (a, b) {
+          return a.days - b.days;
         });
         break;
     }
@@ -174,35 +188,37 @@ export class FlowchartComponent implements OnInit {
     // console.log("model1",this.model1);
 
 
-    if (this.varaint_data[index].selected == "inactive") {
+    if (this.varaint_data.data[index].selected == "inactive") {
       var select = {
         case: selectedData.case,
         casepercent: selectedData.casepercent,
         name: selectedData.name,
         detail: selectedData.detail,
-        Days: selectedData.Days,
+        days: selectedData.days,
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
         selected: "active"
       };
-      this.varaint_data[index] = select;
+      this.isvaraintPlay=true;
+      this.varaint_data.data[index] = select;
     } else {
       var select = {
         case: selectedData.case,
         casepercent: selectedData.casepercent,
         name: selectedData.name,
         detail: selectedData.detail,
-        Days: selectedData.Days,
+        days: selectedData.days,
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
         selected: "inactive"
       };
-      this.varaint_data[index] = select;
+      this.isvaraintPlay=false;
+      this.varaint_data.data[index] = select;
     }
     this.selectedCaseArry = [];
-    for (var i = 0; i < this.varaint_data.length; i++) {
-      if (this.varaint_data[i].selected == "active") {
-        var casevalue = this.varaint_data[i].casepercent
+    for (var i = 0; i < this.varaint_data.data.length; i++) {
+      if (this.varaint_data.data[i].selected == "active") {
+        var casevalue = this.varaint_data.data[i].case
         this.selectedCaseArry.push(casevalue);
       }
     };
@@ -217,12 +233,15 @@ export class FlowchartComponent implements OnInit {
       // this.model1=this.pgModel.allData.nodeDataArraycase;
       // this.model2=this.flowchartData(this.pgModel.nodeDataArraycase)
       this.isDefaultData = false;
-      // console.log('selectedCaseArry',this.selectedCaseArry)
-
-      if (this.keyExists(this.selectedCaseArry[0], this.pgModel.flowchartData) == true) {
+      console.log("selectedcase", this.selectedCaseArry)
+    console.log("selectedData.case",selectedData.case);
+    
+      if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphDataArray) == true) {
         // console.log('log',this.selectedCaseArry[0], this.pgModel.flowchartData);
         
-        var modalData = this.pgModel.flowchartData[0][selectedData.casepercent]
+        var modalData = this.varaint_GraphData.data[this.selectedCaseArry[0]]
+        console.log('modalData',modalData);
+        
         this.model1 = modalData.nodeDataArraycase
         this.model2 = this.flowchartData(this.model1)
       }
@@ -233,8 +252,8 @@ export class FlowchartComponent implements OnInit {
         // console.log('key',this.keyExists(this.selectedCaseArry[i],this.pgModel.flowchartData)==true);
         // console.log("selectedCaseArry",this.selectedCaseArry);
 
-        if (this.keyExists(this.selectedCaseArry[i], this.pgModel.flowchartData) == true) {
-          var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[i]]
+        if (this.keyExists(this.selectedCaseArry[i], this.varaint_GraphDataArray) == true) {
+          var modalData = this.varaint_GraphData.data[this.selectedCaseArry[i]]
           modelDataArray.push(modalData)
 
           // console.log('modalData[0]',modalData);
@@ -407,15 +426,15 @@ console.log('outArr12',outArr);
     return array.filter((a, b) => array.indexOf(a) === b)
    };
   keyExists(key, search) {
-    // console.log('test')
+    console.log('test',key, search)
     var existingObj = search.find(function (element) {
       return typeof element[key] !== 'undefined';
     });
     if (existingObj[key]) {
-      // console.log('was found');
+      console.log('was found');
       return true
     } else {
-      // console.log('not-found');
+      console.log('not-found');
       return false
     }
   }
@@ -479,8 +498,12 @@ console.log('outArr12',outArr);
       var link=[]
       var linktool=[]
       var label = this.nodeArray[i].name;
+      
       for(var j=0; j< datalink.length; j++){
         // link.push(datalink[j].linkNode)
+        // console.log('datalink.length',datalink[j].length);
+        
+        // if(link != undefined ||link != null){
         var obj = {};
           obj['from'] = this.getFromKey(label);
           obj['to'] = this.getFromKey(datalink[j].linkNode);
@@ -489,7 +512,8 @@ console.log('outArr12',outArr);
            obj['toolDataCount']=datalink[j].toolCount
 
           this.linkdataArray.push(obj);
-      }
+      // }
+    }
           
       // var label = this.nodeArray[i].name;
       // if (link != undefined) {

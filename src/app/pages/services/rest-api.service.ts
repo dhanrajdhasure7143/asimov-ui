@@ -10,30 +10,17 @@ const httpOptions = {
   }),
 };
 
-// const httpRequest = new XMLHttpRequest();
-// // httpRequest.open('POST', url, true);
-// httpRequest.setRequestHeader( 'Access-Control-Allow-Origin', '*');
-// httpRequest.setRequestHeader( 'Content-Type', 'application/json' );
-// httpRequest.setRequestHeader('Authentication','eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiVGVzdGluZyIsInRlbmFudElkIjoiNGUyZDY2ZGItZDE2Yi00OTU4LTg2OGYtN2MzMDZlZjc2NWJjIiwiZG9tYWluIjpudWxsLCJyb2xlcyI6W3siYXBwSWQiOiIyIiwiYXBwTmFtZSI6IjIuMCIsImlkIjoiOCIsInJvbGVOYW1lIjoiQWRtaW4iLCJwZXJtaXNzaW9ucyI6W119XX0sInVzZXJTZXNzaW9uSWQiOiIyMzI3IiwiaWF0IjoxNTkxODA3NDg5LCJleHAiOjE1OTE4MTA0ODl9.4bEKlft70DDFHnp3LJFjI5wpdeJ4sHwisGDEqVTEodfQPAQg_sDCRx3rKoNozRLQg9Ux4FcBY6qT8JeIIHekxBkRq-zQewSWw0fCbD-36DAMHRtkpsOGqFf-NV_hApgQ8suZdKi-lbxUpXa3FMdoWgz1Vn-8Dr1sImdhqWBaVRI6lFRQcFNxv-5g-gskiROBmCqSqD21a-h-4A38Yw_pnf0RnO7etkWK11kVy78t2d8e5j8CwkjvVgM4iXLhBDWaJLOFANgIeIE_mxpbZFJM6hgSiVTSGIeUg0H9w15FUzdNNNCH7Dz5gs0QsAFUGX8A9GgUUWDaXdC4mQypRI4k6w')
-
 const authHttpOptions = {
   headers: new HttpHeaders({
-    // 'Authentication': 'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiVGVzdGluZyIsInRlbmFudElkIjoiNGUyZDY2ZGItZDE2Yi00OTU4LTg2OGYtN2MzMDZlZjc2NWJjIiwiZG9tYWluIjpudWxsLCJyb2xlcyI6W3siYXBwSWQiOiIyIiwiYXBwTmFtZSI6IjIuMCIsImlkIjoiOCIsInJvbGVOYW1lIjoiQWRtaW4iLCJwZXJtaXNzaW9ucyI6W119XX0sInVzZXJTZXNzaW9uSWQiOiIyMzIyIiwiaWF0IjoxNTkxNzk2NjQ1LCJleHAiOjE1OTE3OTk2NDV9.ti8xzURGep_9Kbc9CMqEgwgpgVq2Gotijo7QmsncI-znUnHeTHC8RbOB2m_ID0NNjGQ3tTQhyN2Y1flw8u0_-tkoHvM5PFIxs08g7AoK7QBvu0pzQcaOCmNBsBoRE57zAowWWVU-ay6kabNiQ9ciHihhGVJTi_UvLrjKrw9mx_Fj05797Vg1qTFGTluM-UIY4NlotaQviB66-zF3I0tRVdBO0pLbKMhgZ2Y-6xKg3yxiHnTq7T-nmvPLdRWbw7H2Ou4rWLKWkBLIj18iXGANaVHNXBYdrv_i5QfhuT1zBOsmyeBR9rA0V1HKwL_PVOTC16QMVvoM7ILTtkcz6sf9lg',
-      'Authentication':'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiVGVzdGluZyIsInRlbmFudElkIjoiNGUyZDY2ZGItZDE2Yi00OTU4LTg2OGYtN2MzMDZlZjc2NWJjIiwiZG9tYWluIjpudWxsLCJyb2xlcyI6W3siYXBwSWQiOiIyIiwiYXBwTmFtZSI6IjIuMCIsImlkIjoiOCIsInJvbGVOYW1lIjoiQWRtaW4iLCJwZXJtaXNzaW9ucyI6W119XX0sInVzZXJTZXNzaW9uSWQiOiIyMzI3IiwiaWF0IjoxNTkxODA3NDg5LCJleHAiOjE1OTE4MTA0ODl9.4bEKlft70DDFHnp3LJFjI5wpdeJ4sHwisGDEqVTEodfQPAQg_sDCRx3rKoNozRLQg9Ux4FcBY6qT8JeIIHekxBkRq-zQewSWw0fCbD-36DAMHRtkpsOGqFf-NV_hApgQ8suZdKi-lbxUpXa3FMdoWgz1Vn-8Dr1sImdhqWBaVRI6lFRQcFNxv-5g-gskiROBmCqSqD21a-h-4A38Yw_pnf0RnO7etkWK11kVy78t2d8e5j8CwkjvVgM4iXLhBDWaJLOFANgIeIE_mxpbZFJM6hgSiVTSGIeUg0H9w15FUzdNNNCH7Dz5gs0QsAFUGX8A9GgUUWDaXdC4mQypRI4k6w'
+      'Authorization':'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiZGV2ZWxvcG1lbnQiLCJ0ZW5hbnRJZCI6IjRlMmQ2NmRiLWQxNmItNDk1OC04NjhmLTdjMzA2ZWY3NjViYyIsImRvbWFpbiI6bnVsbCwicm9sZXMiOlt7ImFwcElkIjoiMiIsImFwcE5hbWUiOiIyLjAiLCJpZCI6IjgiLCJyb2xlTmFtZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOltdfV19LCJ1c2VyU2Vzc2lvbklkIjoiMjYzOSIsImlhdCI6MTU5MjEyMDc1MiwiZXhwIjoxNTkyMTIzNzUyfQ.YveTcnH9l4r7cPVhGc9IklgQ0cWLoa4eeHdfIsZwGcN-qrIZHVobYNE22GnosztAobHDEZmjUBRW2BwZWi_5byjTQaheNAITHVXuSnrxfaX9sXzEzE5DovPj_DrRMhzXwxpQ8OgriocVdcOjCeHa7hWqyCFMITneJLf7340n5Wx8t08-xjOUjVDwB-Ak1BjSs4c7SRVY-UXxNTiJrELmbl67-3lr2FSalJM-cUcODVOo2OzsEb2tQoGYoXIEFn4kYM0V5yjLQgX1uzmY_29rPafNb31uD662cRVd8f-z6eKCxJV2b4d5Fhnna7KVcDU2JjVGV_rgANz0XahyRl1xgw'
   }),
 };
 
-const authHttpOptionsone = {
-  headers: new HttpHeaders({
-    // 'Content-Type': 'application/json',
-    // 'Access-Control-Allow-Origin':' *',
-    // 'Cache-Control': 'no-cache no-cache, no-store, max-age=0, must-revalidate',
-    //   'Connection': 'keep-alive',
-    //   'Access-Control-Allow-Methods':'GET, POST, PATCH, PUT, DELETE, OPTIONS',
-      ' Authorization':'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiVGVzdGluZyIsInRlbmFudElkIjoiNGUyZDY2ZGItZDE2Yi00OTU4LTg2OGYtN2MzMDZlZjc2NWJjIiwiZG9tYWluIjpudWxsLCJyb2xlcyI6W3siYXBwSWQiOiIyIiwiYXBwTmFtZSI6IjIuMCIsImlkIjoiOCIsInJvbGVOYW1lIjoiQWRtaW4iLCJwZXJtaXNzaW9ucyI6W119XX0sInVzZXJTZXNzaW9uSWQiOiIyMzI3IiwiaWF0IjoxNTkxODA3NDg5LCJleHAiOjE1OTE4MTA0ODl9.4bEKlft70DDFHnp3LJFjI5wpdeJ4sHwisGDEqVTEodfQPAQg_sDCRx3rKoNozRLQg9Ux4FcBY6qT8JeIIHekxBkRq-zQewSWw0fCbD-36DAMHRtkpsOGqFf-NV_hApgQ8suZdKi-lbxUpXa3FMdoWgz1Vn-8Dr1sImdhqWBaVRI6lFRQcFNxv-5g-gskiROBmCqSqD21a-h-4A38Yw_pnf0RnO7etkWK11kVy78t2d8e5j8CwkjvVgM4iXLhBDWaJLOFANgIeIE_mxpbZFJM6hgSiVTSGIeUg0H9w15FUzdNNNCH7Dz5gs0QsAFUGX8A9GgUUWDaXdC4mQypRI4k6w'
-  }),
-};
-
+// const authHttpOptions = {
+//   headers: new HttpHeaders({
+//       'Authorization':'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiZGV2ZWxvcG1lbnQiLCJ0ZW5hbnRJZCI6IjRlMmQ2NmRiLWQxNmItNDk1OC04NjhmLTdjMzA2ZWY3NjViYyIsImRvbWFpbiI6bnVsbCwicm9sZXMiOlt7ImFwcElkIjoiMiIsImFwcE5hbWUiOiIyLjAiLCJpZCI6IjgiLCJyb2xlTmFtZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOltdfV19LCJ1c2VyU2Vzc2lvbklkIjoiMjU1OCIsImlhdCI6MTU5MjAyMTkzMiwiZXhwIjoxNTkyMDI0OTMyfQ.C--xgyNDzc-m55_ilQhnZbuhJ63gqzNQOCafo9tknUCcp147vBTrlh6zg10qq-0aJ61X8RJEFCz0GUHON-W9o7F04BzPDchOPMVO4gFMzh6BOFzeW_PdAZvmXGmtjDouUw4HaW8JWSBmdnRKE1QkIMNixXXxxbC3hv9Ja-o_RD0RZfKnJi11cLKosjFFkGniUhVMiH8vy1b9SeULzeDVmmguibPtxqAylUl9lGq8814WgtPs9OzvuxcG1WBQ1FHVkXWtg5dSmLvOWJdCf8qlkh0XC_J8NtS6RbVQH2SwL2hYFgGKib4N_wuwm_ZeYU0INubI-p3W2Sqc_s27iPH7KQ'
+//   }),
+// };
 
 
 @Injectable({
@@ -163,21 +150,36 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
       return this.http.get('/rpa-service/load-process-info/processid='+id);    
     }
   }
+
+
+  // PI module rest api's
+
   fileupload(file){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file,authHttpOptionsone)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file,authHttpOptions)
   }
-  getAllPiIds(){
-    return this.http.get('/processintelligence/v1/processgraph/piIds',authHttpOptionsone)
+  getCategoriesList(){
+    return this.http.get('/processintelligence/v1/processgraph/categories',authHttpOptions)
   }
-  // getAllVaraintList(pid){
-  //   const text='eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJzaWdpcmlyYW5qaXRoQGdtYWlsLmNvbSIsInVzZXJEZXRhaWxzIjp7InVzZXJJZCI6InNpZ2lyaXJhbmppdGhAZ21haWwuY29tIiwiaWQiOiIxNTgiLCJkZXBhcnRtZW50IjoiRmluYW5jZSIsInRlbmFudElkIjoiOGYyOTdhNDEtYjZhMy00YjkxLThiZjgtMTI3ZWE3ZjJiODI0IiwiZG9tYWluIjpudWxsLCJyb2xlcyI6W3siYXBwSWQiOiIyIiwiYXBwTmFtZSI6IjIuMCIsImlkIjoiOCIsInJvbGVOYW1lIjoiQWRtaW4iLCJwZXJtaXNzaW9ucyI6W119XX0sInVzZXJTZXNzaW9uSWQiOiIyMzI2IiwiaWF0IjoxNTkxODA1NTc5LCJleHAiOjE1OTE4MDg1Nzl9.OdRHAYfhn0dsoteUljscgrgMt9yWFHYi0mMnxCOZenHWIjS0Pd9DzGpfxpTzeHVnHAhCatyQ0qzHUT9qSbZYL3J-aGUPaEOnEOj_1JML_581g0gauBIe9SVa5I4xmmn0PrsHyQrajZkzyDbQmjLJ9xpfMP8jQQ8WVxuAiJVpJbP-ynNS4plE8_5r8GR8bAYduX59PJh99eDuY7Yj3mHCU5dO1D-V7jikjORCUkJxOgw3BbK0DXuO3zyx2CgOluUwFCLgYa6wXCmUGa1701mKtrW84NPg-yylRsvzqOLAqo-3GqnxiAnyVFVM_Wp4gbKsfgiNI5rL41d_6-lS4Lx_QQ'
-  //     return this.http.get('/processintelligence/v1/processgraph/variantList?pid='+pid,{headers: {observe: 'response',Authentication:text,},responseType:"text",})
-  // }
-  getAllVaraintList(){
-    return this.http.get("/processintelligence/v1/processgraph/variantList?pid=244",authHttpOptionsone)
+  addCategory(data){
+    return this.http.post('/processintelligence/v1/processgraph/categories',data,authHttpOptions)
   }
-  getbyVariantfullGraph(){
-    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid=244",authHttpOptionsone)
+  getAlluserProcessPiIds(){
+    return this.http.get('/processintelligence/v1/processgraph/userProcess',authHttpOptions)
+  }
+  getAllVaraintList(piId){
+    return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId,authHttpOptions)
+  }
+  getfullGraph(piId){
+    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId,authHttpOptions)
+  }
+  toSaveconnectorConfig(body){
+    return this.http.post('/processintelligence/v1/connectorconfiguration',body,authHttpOptions)
+  }
+  getvaraintGraph(piId){
+    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,authHttpOptions)
+  }
+  saveConnectorConfig(body){
+    return this.http.post('/processintelligence/v1/connectorconfiguration/',body)
   }
 
 }

@@ -124,3 +124,7 @@
     color: white;
     border: 1px solid #0061cf;
 }
+.work_space{
+    height: 300px;
+    overflow:scroll; 
+}

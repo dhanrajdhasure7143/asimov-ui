@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from '../../../shared/global-script';
+import Swal from 'sweetalert2';
+import { RestApiService } from '../../services/rest-api.service';
 
 @Component({
   selector: 'app-dataselection',
@@ -27,35 +29,124 @@ export class DataselectionComponent implements OnInit {
   id:any=[];
   public selected:any;
   headerId:any;
-  headerArray:any=[];
+  headerArray:any[]=[];
   name:any;
+  categoriesList:any=[];
+  public categoryName:any;
+  public othercategory:any;
+  isotherCategory:boolean=false;
+  isgenerate:boolean=false;
+  test:any;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
                 private hints:PiHints, 
-                private global:GlobalScript) { }
+                private global:GlobalScript,
+                private rest:RestApiService) { }
 
   ngOnInit() {
     this.resetColMap();
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
     this.dt.changeChildModule({"route":"/pages/processIntelligence/selection", "title":"Data Selection"});
     this.dt.changeHints(this.hints.dataDocumentHints);
-    this.dt.current_piData.subscribe(res => {
-      if(res){
+    // this.dt.current_piData.subscribe(res => {
+    //   if(res){
+      var restwo=localStorage.getItem('fileData')
+      var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
+        console.log('fileData',this.headerData);
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
-      }
-    });
+    //   }
+    // });
+
   }
   generatepg(){
+ 
+    this.getCategoriesList();
     var modal = document.getElementById('myModal');
     modal.style.display="block";
     // this.router.navigate(['/pages/processIntelligence/flowChart']);
     }
     generateGraph(){
-    this.router.navigate(['/pages/processIntelligence/flowChart']);
+      if(this.categoryName =='other'){
+        let otherCategory={
+        "categoryId": 0,
+        "categoryName": this.othercategory
+        }
+      this.rest.addCategory(otherCategory).subscribe(res=>{
+        console.log('addCategoryResponse',res)   })
+    }
+    
+
+//             const test=[{"Order ID": "caseId"},
+//     {"Start Timestamp": "Start Timestamp"},
+//   {"End Timestamp": "End Timestamp"},
+// {activity:"activity"},
+// {resource:"resource"},]
+
+  var renamesObj=[];
+    for(var i=0; i<this.headerArray.length; i++){
+      for (let [key, value] of Object.entries(this.headerArray[i])) {
+        var obj={}
+        var lowercase=value.toString().charAt(0).toLowerCase() + value.toString().slice(1)
+        obj[key]=lowercase.split(' ').join('')
+        renamesObj.push(obj)  
+      }
+  }
+  console.log("renamesObj",renamesObj);
+  var renamesObjOne=[]
+  for(var j=0;j<renamesObj.length;j++){
+    for (let [key, value] of Object.entries(renamesObj[j])) {
+      renamesObjOne.push(value)
+    }  
+  }
+  console.log("renamesObjOne",renamesObjOne);
+
+      var date=new Date()
+      var tenantId="abc456789"
+    const connectorBody={
+      "name": "CsvSchemaSpool-"+tenantId+date.toISOString().split(':').join(''),
+      "config": {
+        "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
+        "input.path": "/var/kafka",
+        "input.file.pattern": localStorage.getItem("fileName"),
+        "error.path": "/var/kafka",
+        // "topic": "connector-spooldir-testing-topic02",
+        "topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
+        "finished.path": "/var/kafka/data",
+        "halt.on.error": "false",
+        "csv.first.row.as.header": "true",
+        "cleanup.policy": "DELETE",
+        "schema.generation.enabled": "true",
+        "parser.timestamp.date.formats": "yyyy/MM/dd’ ‘HH:mm:ss.SSSZ",
+        "csv.case.sensitive.field.names": "TRUE",
+        "parser.timestamp.timezone": "UTC",
+        "key.converter":"io.confluent.connect.avro.AvroConverter",
+        "key.converter.schema.registry.url":"http://10.11.0.101:8081",
+        "value.converter":"io.confluent.connect.avro.AvroConverter",
+        "value.converter.schema.registry.url":"http://10.11.0.101:8081",
+        "transforms": "RenameField,ReplaceField,TimestampConverter,ValueToKey,InsertField",
+        "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+        "transforms.RenameField.renames": "Start Time:startTime,End Time:endTime,Operation:activity,Agent:resource,CaseID:caseID",
+        "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+        "transforms.ReplaceField.whitelist": renamesObjOne.join(),
+        "transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.TimestampConverter.field": "startTime,endTime",
+        "transforms.TimestampConverter.target.type": "Timestamp",
+        "transforms.TimestampConverter.format": "yyyy/MM/dd HH:mm:ss",
+        "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+        "transforms.ValueToKey.fields": "caseID",
+        "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+        "transforms.InsertField.static.field": "piId",
+        "transforms.InsertField.static.value": date.toISOString().split(':').join('')
+      }   }
+      // this.rest.saveConnectorConfig(connectorBody).subscribe(res=>{
+        console.log('resp',connectorBody);
+        
+      // })
+    // this.router.navigate(['/pages/processIntelligence/flowChart']);
     }
   sort(ind,property) {
       console.log('property',ind,property);
@@ -88,24 +179,44 @@ export class DataselectionComponent implements OnInit {
       this.name=''
     console.log('log',tr_index, index,e, v);
     this.id.push(v)
-    this.selected=v;
     console.log('id',this.id);
-    if(this.id.length == 1){
-        this.name=v
+    if(this.id.length == 0){
+      this.headerName=''
+    }
+    else if(this.id.length == 1){
+      Swal.fire({
+        title: 'Confirmation?',
+        text: "Are you sure want to use this as CASE ID!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes',
+        allowOutsideClick:false
+      }).then((result) => {
+        if (result.value) {
+          this.name=v
         obj[this.name]='caseId';
         this.headerArray.push(obj)
         this.headerName = 'caseId';
+        this.selected=v;
         // this.global.notify(this.headerName, "success");
         for(var x = 0;x < this.fileData.length;x++){
             if(!this.validCells['row'+x])
               this.validCells['row'+x]=[];
               this.validCells['row'+x].push('cell'+index);
             }
+        }else if (result.dismiss === Swal.DismissReason.cancel) {
+          this.id=[];
+        }
+      })
+
     }else{
         this.name=v
         obj[this.name]=v;
         this.headerArray.push(obj)
       this.headerName = v;
+      this.selected=v;
       for(var x = 0;x < this.fileData.length;x++){
         if(!this.validCells['row'+x])
           this.validCells['row'+x]=[];
@@ -113,38 +224,12 @@ export class DataselectionComponent implements OnInit {
         }
     }
     console.log('headerArray',this.headerArray);
-    
-    //   if(!e.srcElement.classList.contains("valid") ){
-        // let hdr_ar_index = this.headerData.indexOf(this.headerName);
-        // let reg_expression;
-        // let isDateCheck:boolean = false;
-    //   if(hdr_ar_index == 0){
-        // reg_expression = new RegExp(/^\d+$/);
-    //   } //alphanum check
-        // isDateCheck = hdr_ar_index == 2 || hdr_ar_index == 3;
-    //   if(hdr_ar_index == 1 || hdr_ar_index == 4 || hdr_ar_index == 5 ){
-    //     reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i); //string check
-    //   }
-    //   for(var x = 0;x < this.fileData.length;x++){
-    //   if(!this.validCells['row'+x])
-    //     this.validCells['row'+x]=[];
-       
-        // let each_cell = this.fileData[x][index];
-    //   if( ( reg_expression && reg_expression.test(each_cell) ) || isDateCheck ){
-    //   if(isDateCheck){
-    //   try{
-    //   formatDate(each_cell, 'dd/MM/yyyy HH:mm:ss', 'en-US');
-    //   if(this.validCells['row'+x].indexOf('cell'+index) == -1)
-        // this.validCells['row'+x].push('cell'+index);
-    //   }catch(e){
-    //   }
-    //   }else{
-    //   if(this.validCells['row'+x].indexOf('cell'+index) == -1)
-    //   this.validCells['row'+x].push('cell'+index);
-    //   }
-    //   }
-    //   }
-    //   }
+    if(this.headerArray.length == this.headerData.length){
+      this.isgenerate=true;
+    }
+    else{
+      this.isgenerate=false;
+    }
     }
 
   resetColMap(){
@@ -167,4 +252,26 @@ export class DataselectionComponent implements OnInit {
     var modal = document.getElementById('myModal');
     modal.style.display="none";
     }
+  
+  getCategoriesList(){
+    this.rest.getCategoriesList().subscribe(res=>{this.categoriesList=res
+    console.log('list',this.categoriesList.data)})
+  }
+
+  onchangeCategories(categoryName){
+    if(categoryName =='other'){
+      this.isotherCategory=true;
+    }
+  }
+  resetcaseId(){
+    // var tagDiv=document.getElementsByClassName[0]('select_tag');
+    // tagDiv.style.display='none';
+    this.validCells = [];
+    this.invalidCells = [];
+    this.headerArray=[];
+    this.id=[];
+    this.headerName=''
+    this.selected=''
+  }
+
 }

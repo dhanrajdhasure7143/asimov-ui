@@ -10,9 +10,9 @@
               <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
           </div>
       </div>
-      <div class="col-md-4 col-sm-4">
-          <button class="btn btn-primary pi_btn" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData">
-              <img src="assets/images/Group 77.svg" style="padding-right: 10px">Next</button>
+      <div class="col-md-4 col-sm-12">
+          <button class="btn btn-primary pi_btn pull-right" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData">
+              <img src="assets/images/Group 77.svg" style="padding-right: 15px">Next</button>
       </div>
     </div>
     <div class="row" *ngIf="headerName" class="columnSelection">
@@ -39,7 +39,7 @@
                 </tr>
                 <tr>
                     <th *ngFor="let headValue of headerData;let i1=index;" class="tableHeader">
-                    <select [disabled]='false' name="cathead1" [(ngModel)]="cathead1" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead1)" *ngIf="headValue == 'Case ID' || headValue == 'Case ID '">
+                    <select [disabled]='false' name="cathead1" [(ngModel)]="cathead1" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead1)" *ngIf="headValue == 'Order ID' || headValue == 'Order ID '">
                     <option>String</option>
                     <option>Integer</option>
                     <option>Date/Time</option>

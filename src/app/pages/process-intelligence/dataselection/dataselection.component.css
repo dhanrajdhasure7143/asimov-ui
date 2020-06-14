@@ -2,7 +2,7 @@
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
+    z-index: 10000; /* Sit on top */
     left: 0;
     top: 0;
     width: 100%; /* Full width */
@@ -124,8 +124,12 @@
     width: 35%;
     }
     .select_tag{
+        display: none;
+    }
+    .activetag{
+        display: block;
         position: absolute;
-        z-index: 10000;
+        z-index: 1000;
         border: 1px solid black;
         color: white;
         background-color: red;
@@ -133,4 +137,13 @@
         margin-top: 150px !important;
         text-align: center;
         border-radius: 20px;
+        cursor: default;
+    }
+    .reset_btn{
+        color: #000;
+        font-weight: 600;
+    }
+    .reset_btn:hover{
+        font-weight: bold !important;
+        /* font-size: 14px; */
     }

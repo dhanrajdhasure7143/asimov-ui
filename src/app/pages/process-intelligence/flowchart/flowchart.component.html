@@ -55,8 +55,9 @@
                 </div>
             </div>
             <div class="form-group left_dropdwn1">
-                    <select class="form-control left_dropdwn" name="status" id="process_graph_list">
-                        <option [value]="each" *ngFor="let each of process_graph_list ;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{process_graph_options[each]}}</option>
+                    <select class="form-control left_dropdwn" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
+                        <option value="undefined" hidden disabled>Select Process Graph</option>
+                        <option *ngFor="let process_list of process_graph_list.data;let i=index;trackBy:loopTrackBy" [value]="process_list.piId">{{process_list.piId}}</option>
                     </select>
                 </div>
                 <div>
@@ -107,11 +108,11 @@
                 </div>
                 <!-- [ngClass]="data.selected ==='active'? 'active':''" -->
                 <div class="details_box">
-                    <div class="show_details" [ngClass]="data.selected ==='active'? 'active':''" *ngFor="let data of varaint_data; let i=index">
+                    <div class="show_details" [ngClass]="data.selected ==='active'? 'active':''" *ngFor="let data of varaint_data.data; let i=index">
                             <div class="row cases" (click)="caseIdSelect(data,i)">
                                 <span class="col-md-2 dot">{{data.casepercent}}%</span>
                                         <span class="col-md-5 details_one">{{data.name}}</span>
-                                        <span class="col-md-4 details_time pull-right">{{data.Days}} Days</span>
+                                        <span class="col-md-4 details_time pull-right">{{data.days}} Days</span>
                                         <span class=" col-md-8 details_two">{{data.detail}}</span>
                                 </div>
                     <div class="details_hide">
@@ -119,8 +120,8 @@
                                 <span class="hide_detailsone"> {{data.varaintDetails}}</span> <span class="pull-right">{{data.casesCovred}}</span>
                             </div>
                             <hr>
-                            <div class=" ">
-                                    <button class="play_button" (click)="playAnimation()"><i class="fa fa-play"></i><span class="hide_plybtn">Play</span></button>
+                            <div class="varaint_bottom">
+                                    <button *ngIf="isvaraintPlay" class="play_button" (click)="playAnimation()"><i class="fa fa-play"></i><span class="hide_plybtn">Play</span></button>
                                     <div class="checkbox varaint_export">
                                             <label ><input type="checkbox" class="selectbox" value=""><span class="select_boxlabel">Select this varaint to export BPMN</span> </label>
                                     </div>

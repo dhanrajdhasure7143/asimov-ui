@@ -26,14 +26,14 @@ export class BackendURLInterceptor implements HttpInterceptor {
 
     getRequestUrl(req){
         let url = "";
-        if(req.url.indexOf('rpa-service') > -1 || req.url.indexOf('processintelligence') > -1)
+        if(req.url.indexOf('rpa-service') > -1)
             url = this.config.rpaEndPoint + req.url;
-            // if(req.url.indexOf('processintelligence') > -1)
-            // url = this.config.processIntelligenceEndPoint + req.url;
+            if(req.url.indexOf('processintelligence') > -1)
+            url = this.config.processIntelligenceEndPoint + req.url;
         if(req.url.indexOf('bpsprocess') > -1)
             url = this.config.bussinessProcessEndPoint + req.url;
-        if(req.url.indexOf('bpsprocess') == -1 && req.url.indexOf('upload') > -1)
-            url = this.config.bussinessProcessEndPoint + req.url;
+        // if(req.url.indexOf('bpsprocess') == -1 && req.url.indexOf('upload') > -1)
+        //     url = this.config.bussinessProcessEndPoint + req.url;
         return url;
     }
 }

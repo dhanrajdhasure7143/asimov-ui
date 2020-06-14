@@ -46,8 +46,12 @@ export class DatadocumentComponent implements OnInit {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/datadocument", "title": "Data Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
-    this.dt.current_piData.subscribe(res => {
-      if (res) {
+    // this.dt.current_piData.subscribe(resOne => {
+    //   console.log('res',resOne);
+      
+    //   if (resOne) {
+        var restwo=localStorage.getItem('fileData')
+        var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
         this.bkp_headerData = res[0];
@@ -82,8 +86,8 @@ export class DatadocumentComponent implements OnInit {
                      
           }
         }
-      }
-    });
+    //   }
+    // });
 
   }
   generatepg() {
