@@ -14,13 +14,18 @@ export class BpmnDiagramListComponent implements OnInit {
   @ViewChild('matExpansionPanel', { static: false }) _matExpansionPanel:any
   @ViewChild(BpmnDiagramComponent, { static: false }) diagramComp: BpmnDiagramComponent;
   approve_bpmn_list = this.model.diagList;
-  user: any = 'gopi';
+  user: any = 'mounika';
   message: any[] = [];
   griddata: any;
   approver_info: any;
   role: any = 'BPMN_Process_Modeler';
   expanded: any=true;
   bpmnModeler: any;
+  isHidden:boolean=false;
+  approvalstatus: any='REJECTED';
+  rejectedby: any='mouni';
+  remarks: any='ignore';
+  approve_hide: boolean=false;
   constructor(private dt: DataTransferService, private model: DiagListData, private rest_Api: RestApiService) { }
 
   ngOnInit() {
@@ -28,8 +33,29 @@ export class BpmnDiagramListComponent implements OnInit {
     this.dt.changeChildModule(undefined);
      this.bpmnlist();
   }
+  getColor(status) {
+    //console.log(status) 
+    switch (status) {
+      case 'PENDING':
+        return 'orange';
+      case 'DENIED':
+        return 'red';
+      case 'APPROVED':
+        return 'green';
+      case 'INPROGRESS':
+        return 'orange';
+    }
+  }
+
   expandPanel(event,i,bpmnXmlNotation): void {
-    event.stopPropagation(); 
+   // event.stopPropagation(); 
+   if(this.griddata[i].approvalStatus=='APPROVED' || this.griddata[i].approvalStatus=='REJECTED'){
+     this.isHidden=true;
+     this.approve_hide=true;
+   }
+   else{
+     this.isHidden=false;
+   }
     this.bpmnModeler = new BpmnJS({
       container: '.diagram_container'+i,
       keyboard: {
@@ -59,6 +85,15 @@ export class BpmnDiagramListComponent implements OnInit {
       this._matExpansionPanel.close()
     }
   }
+  inputMessage(e,i){
+    if(e.target.value == ''){
+      this.isHidden=true;
+    }
+    else {
+      this.isHidden=false;
+    }
+   
+  }
 
   // getDiagram(i, bpmnXmlNotation) {
   //   console.log(this.diagramComp);
@@ -73,7 +108,7 @@ export class BpmnDiagramListComponent implements OnInit {
    }
    approveDiagram(data) {
      this.approve_producemessage(data);
-     this.approve_savedb(data);
+    // this.approve_savedb(data);
    }
    approve_producemessage(data) {
      this.rest_Api.approve_producemessage(data.bpmnProcessInfo).subscribe(data => console.log(data));
@@ -82,8 +117,8 @@ export class BpmnDiagramListComponent implements OnInit {
      this.rest_Api.approve_savedb(data).subscribe(data => console.log(data));
    }
    denyDiagram(data, i) {
-     this.approver_info = { "message": this.message[i], "remarks": data.remarks, "rejectedTimestamp": data.rejectedTimestamp, "approvedBy": data.approvedBy, "approvedAt": data.approvedAt, "role": this.role };
-     this.rest_Api.denyDiagram(this.approver_info).subscribe(data => console.log(data));
+    this.approver_info = { "approvalStatus":this.approvalstatus,"rejectedBy":this.rejectedby,"remarks": this.remarks,"message": this.message[i], "bpmnModelId":data.bpmnProcessInfo.bpmnModelId,"userName":data.bpmnProcessInfo.userName,"emailTo":data.bpmnProcessInfo.emailTo,"bpmnProcessName":data.bpmnProcessInfo.bpmnProcessName};
+    this.rest_Api.denyDiagram(this.approver_info).subscribe(data => console.log(data));
    }
 
 }

@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container bpmn_list">
   <div class="row col-md-12 approve_bpmn_list_header">
     <div class="col-md-1"><b>Process ID</b></div>
     <div class="col-md-2"><b>Process Name</b></div>
@@ -18,19 +18,19 @@
           <div class="row col-md-12">
             <div class="col-md-1" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.processIntelligenceId}}</div>
             <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.bpmnProcessName}}</div>
-            <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.modified_timestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+            <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.createdTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
             <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.userName}}</div>
             <div class="col-md-2">{{role}}</div>
             <div class="col-md-2 overview_icon" *ngIf="each_diag.bpmnProcessInfo" (click)="expandPanel($event,i,each_diag.bpmnProcessInfo.bpmnXmlNotation)">
               <img  src="..\assets\icons\bpmn_Overview.svg"> 
           </div>
-            <div class="col-md-1" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.bpmnProcessStatus}}</div>
+            <div class="col-md-1" *ngIf="each_diag.bpmnProcessInfo" [ngStyle]="{'color':getColor(each_diag.approvalStatus)}">{{each_diag.approvalStatus}}</div>
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="row col-md-12">
         <div class="col-md-7">
-          <h5>Account Payable - ID : {{each_diag.acc_pay_id}}</h5>
+          <h5><u>Account Payable - ID : {{each_diag.acc_pay_id}}</u></h5>
           <table class="full_width account_pay_details_table">
             <thead>
               <tr>
@@ -42,41 +42,33 @@
             </thead>
             <tbody>
                 <tr>
-                    <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.modified_timestamp | date:'dd/MM/yy HH:mm:ss'}}</td>
+                    <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.createdTimestamp | date:'dd/MM/yy HH:mm:ss'}}</td>
                     <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.userName}}</td>
                     <td>
-                      <button class="btn btn-success" (click)="approveDiagram(each_diag)">Approve</button>
-                      <button class="btn btn-danger" (click)="denyDiagram(each_diag,i)">Deny</button>
+                        <!-- *ngIf="each_diag.approvalStatus=='APPROVED'?isHidden=true;isHidden=false" -->
+                      <button  class="btn btn-success" (click)="approveDiagram(each_diag)"[disabled]="approve_hide">Approve</button>
+                      <button  class="btn btn-danger" (click)="denyDiagram(each_diag,i)" [disabled]="isHidden">Deny</button>
                     </td>
-                    <td><input type="text"  [(ngModel)]="message[i]" placeholder="Enter your Message"/></td>
+                    <td><input type="text"  [disabled]="isHidden" (input)="inputMessage($event,i)" [(ngModel)]="message[i]" placeholder="Enter your Message"/><i class="right fa fa-arrow-right arrow" aria-hidden="true"></i></td>
                   </tr>
+              
                 </tbody>
+               
               </table>
+              <h6 class="total_count">Total:1/1</h6>
             </div>
         <div class="col-md-5">
           <!-- <div *ngIf="each_diag.bpmnProcessInfo" [class]="'diagram_container'+i"></div> -->
           <bpmn-diagram *ngIf="each_diag.bpmnProcessInfo" [id]="'diagram_container'+i" [viewMode]="true"></bpmn-diagram>
         </div>
-
+        <div class="btn-download">
+          <button class="down-btn"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
+          <h3 class="download-label">Download</h3>
+        </div>
       </div>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
