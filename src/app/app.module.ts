@@ -14,12 +14,14 @@ import { LoginComponent } from './login/login.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GlobalScript } from './shared/global-script';
+import { LoaderService } from './services/loader/loader.service';
+import { LoaderInterceptor } from './helpers/loader-interceptor.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    
+
   ],
 
   imports: [
@@ -35,6 +37,8 @@ import { GlobalScript } from './shared/global-script';
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    LoaderService,
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     BackendURLProvider,
     GlobalScript,
     NotifierService

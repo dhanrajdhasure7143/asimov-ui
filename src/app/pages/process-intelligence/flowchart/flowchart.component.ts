@@ -110,13 +110,30 @@ export class FlowchartComponent implements OnInit {
     //   this.model1 = fullgraphOne.allSelectData.nodeDataArraycase
     //   console.log('this.model1',this.model1);
     //   this.model2 = this.flowchartData(this.model1)
+    //   let loction=''
+    //   for(var i=0;i<this.model1.length;i++){
+    //     let loc1=455
+    //     let loc2=Math.floor((Math.random()*100))*j
+    //     loction=loc1+' '+loc2;
+    //     this.model1[i].loc=loction
+    //   }
+      
+     
+    //   for(var j=0;j<this.model2.length;j++){
+    //     let loc1=-Math.floor((Math.random()*10))
+    //     // let loc2=-150+i*70
+    //     // loction=loc1+' '+loc2;
+    //     this.model2[j].curviness=loc1
+    //   }
+      
     // })
     this.route.params.subscribe(data=>{this.piIdNumber=data
     })
     if(this.piIdNumber!=null){
       piId=this.piIdNumber.piId
     }
-    this.onchangegraphId(piId)
+    this.onchangegraphId(piId);
+    
   }
 
   ngAfterContentChecked() {
@@ -133,6 +150,7 @@ export class FlowchartComponent implements OnInit {
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
+      this.onchangeVaraint("0");
       })
       this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data //process graph full data call
         let fullgraphOne=JSON.parse(this.fullgraph.data);
@@ -154,7 +172,9 @@ export class FlowchartComponent implements OnInit {
           // loction=loc1+' '+loc2;
           this.model2[j].curviness=loc1
         }
-        })
+        });
+
+       
 
         // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
         // console.log('varaint_GraphData',this.varaint_GraphData.data);
@@ -164,7 +184,7 @@ export class FlowchartComponent implements OnInit {
   }
 
   onchangeVaraint(datavariant) {
-    // console.log("variantdata",datavariant);
+    console.log("variantdata",datavariant);
     switch (datavariant) {
       case "0":
         // this.varaint_data = this.varaint_dat;

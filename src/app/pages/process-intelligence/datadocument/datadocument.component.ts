@@ -56,7 +56,8 @@ export class DatadocumentComponent implements OnInit {
         this.headerData = res[0];
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
-        // console.log(this.headerData);
+        this.fileData = this.fileData.slice(0, this.fileData.length-2);
+         console.log(this.fileData);
         for (var f = 0; f < this.headerData.length; f++) {
           switch (f) {
             case 0:

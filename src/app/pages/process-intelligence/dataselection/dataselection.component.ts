@@ -130,7 +130,7 @@ export class DataselectionComponent implements OnInit {
   console.log("renamesObj",renamesObj);
   for(var k=0;k<renamesObj.length;k++){
     for (let [key, value] of Object.entries(renamesObj[k])) {
-      renamestring+=key+':'+value+',';
+      renamestring+=key.trim()+':'+value+',';
       
     }
   }
@@ -150,15 +150,15 @@ export class DataselectionComponent implements OnInit {
       var date=new Date()
       var tenantId="abc456789"
     const connectorBody={
-      "name": "CsvSchemaSpool-"+tenantId+date.toISOString().split(':').join(''),
-      // "name": "CsvSchemaSpool-"+tenantId+,
+      //"name": "CsvSchemaSpool-"+tenantId+date.toISOString().split(':').join(''),
+       "name": "CsvSchemaSpool-abcdef"+this.processId,
       "config": {
         "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
         "input.path": "/var/kafka",
         "input.file.pattern": localStorage.getItem("fileName"),
         "error.path": "/var/kafka",
-        // "topic": "connector-spooldir-testing-topic02",
-        "topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
+         "topic": "qpconnector-spooldir-abcdef"+this.processId,
+        //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",
         "csv.first.row.as.header": "true",
@@ -182,16 +182,17 @@ export class DataselectionComponent implements OnInit {
         "transforms.TimestampConverter.target.type": "Timestamp",
         "transforms.TimestampConverter.format": "yyyy/MM/dd HH:mm:ss",
         "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-        "transforms.ValueToKey.fields": "CaseID",
+        "transforms.ValueToKey.fields": "caseID",
         "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
         "transforms.InsertField.static.field": "piId",
-        "transforms.InsertField.static.value": date.toISOString().split(':').join(''),
+        "transforms.InsertField.static.value": this.processId,
       }   }
       this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
         // var piId=connectorBody.config["transforms.InsertField.static.value"]
         // localStorage.setItem('piId',this.processId)
         console.log('resp',res);
-        const piid={"piId":this.processId}
+        //const piid={"piId":this.processId}
+        const piid={"piId":411}
             this.router.navigate(['/pages/processIntelligence/flowChart',piid]);
         
       })
@@ -227,7 +228,7 @@ export class DataselectionComponent implements OnInit {
       let obj={}
       this.name=''
     console.log('log',tr_index, index,e, v);
-    this.id.push(v)
+    this.id.push(v.trim())
     console.log('id',this.id);
     if(this.id.length == 0){
       this.headerName=''
@@ -244,11 +245,13 @@ export class DataselectionComponent implements OnInit {
         allowOutsideClick:false
       }).then((result) => {
         if (result.value) {
-          this.name=v
-        obj[this.name]='CaseID';
+          this.name=v.trim();
+        obj[this.name]='caseID';
+        console.log(obj);
         this.headerArray.push(obj)
-        this.headerName = 'CaseID';
+        this.headerName = 'caseID';
         this.selected=v;
+        console.log(this.selected)
         // this.global.notify(this.headerName, "success");
         for(var x = 0;x < this.fileData.length;x++){
             if(!this.validCells['row'+x])
@@ -261,7 +264,7 @@ export class DataselectionComponent implements OnInit {
       })
 
     }else{
-      this.headerName = v;
+      this.headerName = v.trim();
       this.selected=v;
       // if(v=='Start Timestamp'){
       //   v='Start Time'
@@ -269,8 +272,11 @@ export class DataselectionComponent implements OnInit {
       // if(v=='End Timestamp'){
       //   v='End Time'
       // }
+      
         this.name=v
+        console.log(v +":::::::::::"+this.name)
         obj[this.name]=v;
+        console.log(obj);
         this.headerArray.push(obj)
       for(var x = 0;x < this.fileData.length;x++){
         if(!this.validCells['row'+x])
