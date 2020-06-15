@@ -31,18 +31,18 @@ export class AuthenticationService {
 
   loginExpired() {
     // logic has to be implemented once integrated with AIOTAL project
-    location.reload();
+    // location.reload();
   }
 
   backendServerDown() {
     // logic has to be implemented once integrated with AIOTAL project
-    location.reload();    
+    // location.reload();    
   }
 
   
   forbiddenAccess() {
     // logic has to be implemented once integrated with AIOTAL project
-    location.reload();   
+    // location.reload();   
   }
 
   get isLoggedIn() {

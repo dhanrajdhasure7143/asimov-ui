@@ -20,6 +20,7 @@ import { PiHints } from './model/process-intelligence-module-hints';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DataselectionComponent } from './dataselection/dataselection.component';
 import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
     ProcessIntelligenceRoutingModule,
     SharedModule,
     MatExpansionModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    Ng2SearchPipeModule
 
   ],
   providers:[PiHints]

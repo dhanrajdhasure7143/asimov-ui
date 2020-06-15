@@ -100,6 +100,16 @@ export class FlowchartComponent implements OnInit {
     this.variant_list_options = VariantList;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     this.getAlluserProcessPiIds();
+    
+    // var piId=localStorage.getItem('piId')
+    var piId=411
+    // this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data
+    //   let fullgraphOne=JSON.parse(this.fullgraph.data);
+    //   this.model1 = fullgraphOne.allSelectData.nodeDataArraycase
+    //   console.log('this.model1',this.model1);
+    //   this.model2 = this.flowchartData(this.model1)
+    // })
+    this.onchangegraphId(piId)
   }
 
   ngAfterContentChecked() {
@@ -119,17 +129,31 @@ export class FlowchartComponent implements OnInit {
       })
       this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data //process graph full data call
         let fullgraphOne=JSON.parse(this.fullgraph.data);
-        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase
+        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+
         console.log('this.model1',this.model1);
+        let loction=''
+        for(var i=0;i<this.model1.length;i++){
+          let loc1=455
+          let loc2=-150+i*70
+          loction=loc1+' '+loc2;
+          this.model1[i].loc=loction
+        }
         
         this.model2 = this.flowchartData(this.model1)
+        for(var j=0;j<this.model2.length;j++){
+          let loc1=30*j
+          // let loc2=-150+i*70
+          // loction=loc1+' '+loc2;
+          this.model2[j].curviness=loc1
+        }
         })
 
-        this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        console.log('varaint_GraphData',this.varaint_GraphData.data);
-        this.varaint_GraphDataArray.push(this.varaint_GraphData.data)
-        // console.log('varaint_GraphData',this.varaint_GraphDataArray);
-        })
+        // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
+        // console.log('varaint_GraphData',this.varaint_GraphData.data);
+        // this.varaint_GraphDataArray.push(this.varaint_GraphData.data)
+        // // console.log('varaint_GraphData',this.varaint_GraphDataArray);
+        // })
   }
 
   onchangeVaraint(datavariant) {

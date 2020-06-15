@@ -56,7 +56,7 @@ export class DatadocumentComponent implements OnInit {
         this.headerData = res[0];
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
-        console.log(this.headerData);
+        // console.log(this.headerData);
         for (var f = 0; f < this.headerData.length; f++) {
           switch (f) {
             case 0:
@@ -96,7 +96,21 @@ export class DatadocumentComponent implements OnInit {
     // this.router.navigate(['/pages/processIntelligence/flowChart']);
   }
   caseIdSelection() {
+    var headerstype=[];
+    var headerstypeArray=[]
+    headerstype.push(this.cathead1,this.cathead2,this.cathead3,this.cathead4,this.cathead5)
+    for(var i=0;i<this.headerData.length;i++){
+      var obj={};
+      obj[this.headerData[i]]=headerstype[i]
+      headerstypeArray.push(obj)
+    }
+  //  obj[this.headerData[0]]=this.cathead1
+    // headerstype.push(obj)
+
+    console.log('headerstypeArray',headerstypeArray);
+    localStorage.setItem('headertypeObj',JSON.stringify(headerstypeArray))
     this.router.navigate(['/pages/processIntelligence/selection']);
+
 
   // generatepg(){
   //   // this.router.navigate(['/pages/processIntelligence/flowChart']);
@@ -104,7 +118,7 @@ export class DatadocumentComponent implements OnInit {
   // document.getElementById("foot").classList.add("slide-up");
   }
   sort(property) {
-    this.isDesc = !this.isDesc; //change the direction    
+    this.isDesc = !this.isDesc; //change the direction 
     let direction = this.isDesc ? 1 : -1;
     let index = this.headerData.indexOf(property);
     return this.checkNsort(direction, index);
@@ -210,8 +224,8 @@ export class DatadocumentComponent implements OnInit {
   }
 
   getDataType(index, fData, dType) {
-    console.log(index);
-    console.log(fData);
+    // console.log(index);
+    // console.log(fData);
 
     if(dType.indexOf('Timestamp') != -1){
       if (index == 0 ) {
@@ -310,7 +324,7 @@ export class DatadocumentComponent implements OnInit {
   isDate(date){
     if(!isNaN(Date.parse(date)))
 	{
-    console.log("Valid Date \n");
+    // console.log("Valid Date \n");
     return true;
 	} else {
     return false;
@@ -318,8 +332,8 @@ export class DatadocumentComponent implements OnInit {
   }
 
   getDataTypeChange(hData, cData){
-    console.log(hData);
-    console.log(cData);
+    // console.log(hData);
+    // console.log(cData);
    //if(this.dTypeArray.length == 0){
       this.dTypeArray.push({'colType': hData, 'type': cData});
     //} else {
@@ -332,9 +346,9 @@ export class DatadocumentComponent implements OnInit {
         // }
       }
     }
-    console.log(this.dTypeArray)
+    // console.log(this.dTypeArray)
     let diffArray = this.removeDuplicates(this.dTypeArray);
-    console.log(diffArray)
+    // console.log(diffArray)
     localStorage.setItem("DDType",JSON.stringify(diffArray));
     
   }

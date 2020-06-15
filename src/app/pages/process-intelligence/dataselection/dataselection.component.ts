@@ -36,7 +36,15 @@ export class DataselectionComponent implements OnInit {
   public othercategory:any;
   isotherCategory:boolean=false;
   isgenerate:boolean=false;
-  test:any;
+  cathead1: any;
+  cathead2: any;
+  cathead3: any;
+  cathead4: any;
+  cathead5: any;
+  cathead6: any;
+  headertypeArray:any=[];
+  processId:any;
+  processName:any;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
@@ -49,6 +57,20 @@ export class DataselectionComponent implements OnInit {
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
     this.dt.changeChildModule({"route":"/pages/processIntelligence/selection", "title":"Data Selection"});
     this.dt.changeHints(this.hints.dataDocumentHints);
+
+    var headertype=JSON.parse(localStorage.getItem('headertypeObj'))
+    console.log('storage',headertype)
+    for(var i=0;i<headertype.length;i++){
+      for (let [key, value] of Object.entries(headertype[i])) {
+        this.headertypeArray.push(value)
+      } 
+    }
+    console.log(this.headertypeArray);
+    this.cathead1=this.headertypeArray[0]
+    this.cathead2=this.headertypeArray[1];
+    this.cathead3=this.headertypeArray[2];
+    this.cathead4=this.headertypeArray[3]
+    this.cathead5=this.headertypeArray[4]
     // this.dt.current_piData.subscribe(res => {
     //   if(res){
       var restwo=localStorage.getItem('fileData')
@@ -61,9 +83,10 @@ export class DataselectionComponent implements OnInit {
     //   }
     // });
 
+    
+
   }
   generatepg(){
- 
     this.getCategoriesList();
     var modal = document.getElementById('myModal');
     modal.style.display="block";
@@ -90,24 +113,45 @@ export class DataselectionComponent implements OnInit {
     for(var i=0; i<this.headerArray.length; i++){
       for (let [key, value] of Object.entries(this.headerArray[i])) {
         var obj={}
-        var lowercase=value.toString().charAt(0).toLowerCase() + value.toString().slice(1)
-        obj[key]=lowercase.split(' ').join('')
-        renamesObj.push(obj)  
+        // var lowercase=value.toString().charAt(0).toLowerCase() + value.toString().slice(1)
+        var lowercase=value
+        if(lowercase=='Start Timestamp'){
+          lowercase='Start Time'
+        }
+        if(lowercase=='End Timestamp'){
+          lowercase='End Time'
+        }
+        obj[key]=lowercase.toString().split(' ').join('')
+        
+        renamesObj.push(obj) 
       }
   }
+  let renamestring='';
   console.log("renamesObj",renamesObj);
+  for(var k=0;k<renamesObj.length;k++){
+    for (let [key, value] of Object.entries(renamesObj[k])) {
+      renamestring+=key+':'+value+',';
+      
+    }
+  }
+  renamestring=renamestring.slice(0,-1)
+      console.log('keys',renamestring);
+
   var renamesObjOne=[]
   for(var j=0;j<renamesObj.length;j++){
     for (let [key, value] of Object.entries(renamesObj[j])) {
       renamesObjOne.push(value)
     }  
   }
-  console.log("renamesObjOne",renamesObjOne);
-
+  // console.log("renamesObjOne",renamesObjOne);
+  if(this.categoryName =='other'){
+    this.categoryName=this.othercategory
+  }
       var date=new Date()
       var tenantId="abc456789"
     const connectorBody={
       "name": "CsvSchemaSpool-"+tenantId+date.toISOString().split(':').join(''),
+      // "name": "CsvSchemaSpool-"+tenantId+,
       "config": {
         "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
         "input.path": "/var/kafka",
@@ -129,24 +173,28 @@ export class DataselectionComponent implements OnInit {
         "value.converter.schema.registry.url":"http://10.11.0.101:8081",
         "transforms": "RenameField,ReplaceField,TimestampConverter,ValueToKey,InsertField",
         "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-        "transforms.RenameField.renames": "Start Time:startTime,End Time:endTime,Operation:activity,Agent:resource,CaseID:caseID",
+        // "transforms.RenameField.renames": "Start Time:startTime,End Time:endTime,Operation:activity,Agent:resource,CaseID:caseID",
+        "transforms.RenameField.renames": renamestring,
         "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
         "transforms.ReplaceField.whitelist": renamesObjOne.join(),
         "transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-        "transforms.TimestampConverter.field": "startTime,endTime",
+        "transforms.TimestampConverter.field": "StartTime,EndTime",
         "transforms.TimestampConverter.target.type": "Timestamp",
         "transforms.TimestampConverter.format": "yyyy/MM/dd HH:mm:ss",
         "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-        "transforms.ValueToKey.fields": "caseID",
+        "transforms.ValueToKey.fields": "CaseID",
         "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
         "transforms.InsertField.static.field": "piId",
-        "transforms.InsertField.static.value": date.toISOString().split(':').join('')
+        "transforms.InsertField.static.value": date.toISOString().split(':').join(''),
       }   }
-      // this.rest.saveConnectorConfig(connectorBody).subscribe(res=>{
-        console.log('resp',connectorBody);
+      this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
+        // var piId=connectorBody.config["transforms.InsertField.static.value"]
+        localStorage.setItem('piId',this.processId)
+        console.log('resp',res);
+            this.router.navigate(['/pages/processIntelligence/flowChart']);
         
-      // })
-    // this.router.navigate(['/pages/processIntelligence/flowChart']);
+      })
+
     }
   sort(ind,property) {
       console.log('property',ind,property);
@@ -196,9 +244,9 @@ export class DataselectionComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.name=v
-        obj[this.name]='caseId';
+        obj[this.name]='CaseID';
         this.headerArray.push(obj)
-        this.headerName = 'caseId';
+        this.headerName = 'CaseID';
         this.selected=v;
         // this.global.notify(this.headerName, "success");
         for(var x = 0;x < this.fileData.length;x++){
@@ -212,11 +260,17 @@ export class DataselectionComponent implements OnInit {
       })
 
     }else{
+      this.headerName = v;
+      this.selected=v;
+      // if(v=='Start Timestamp'){
+      //   v='Start Time'
+      // }
+      // if(v=='End Timestamp'){
+      //   v='End Time'
+      // }
         this.name=v
         obj[this.name]=v;
         this.headerArray.push(obj)
-      this.headerName = v;
-      this.selected=v;
       for(var x = 0;x < this.fileData.length;x++){
         if(!this.validCells['row'+x])
           this.validCells['row'+x]=[];
@@ -272,6 +326,7 @@ export class DataselectionComponent implements OnInit {
     this.id=[];
     this.headerName=''
     this.selected=''
+    this.isgenerate=false;
   }
 
 }

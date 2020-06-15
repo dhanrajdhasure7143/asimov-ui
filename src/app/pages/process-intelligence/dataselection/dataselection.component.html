@@ -6,12 +6,12 @@
       </div>
       <div class="col-md-4 col-sm-4">
           <div class="searchblock">
-              <input type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm" (keyup)="searchTable()">
-              <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
+              <!-- <input type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm" >
+              <i class="fa fa-search" aria-hidden="true" style="color: gray"></i> -->
           </div>
       </div>
       <div class="col-md-4 col-sm-12">
-          <button class="btn btn-primary pi_btn pull-right" [disabled]="isgenerate" id="generateGraph" (click)="generatepg()">
+          <button class="btn btn-primary pi_btn pull-right" [disabled]="!isgenerate" id="generateGraph" (click)="generatepg()">
               <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
       </div>
     </div>
@@ -38,39 +38,41 @@
                     {{headValue}}</th>
                 </tr>
                 <tr>
-                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader">
-                        <div [ngClass]="selected==headValue?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="headerName =='caseId'" class='reset_btn' (click)='resetcaseId()'><i class='fa fa-times'></i></button> </div>
-                    <select [disabled]='true' name="category" class="form-control" *ngIf="headValue == 'Order ID' || headValue == 'Case ID '">
-                    <option>String</option>
-                    <option Selected>Integer</option>
-                    <option>Date/Time</option>
-                    </select>
-                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'Actvity'">
-                    <option selected>String</option>
-                    <option>Integer</option>
-                    <option>Date/Time</option>
-                    </select>
-                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'Start Timestamp'">
-                    <option>String</option>
-                    <option>Integer</option>
-                    <option selected>Date/Time</option>
-                    </select>
-                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'End Timestamp'">
-                    <option>String</option>
-                    <option>Integer</option>
-                    <option selected>Date/Time</option>
-                    </select>
-                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'Resource'">
-                    <option selected>String</option>
-                    <option>Integer</option>
-                    <option>Date/Time</option>
-                    </select>
-                    <select name="category" [disabled]='true' class="form-control" *ngIf="headValue == 'Role'">
-                    <option selected>String</option>
-                    <option>Integer</option>
-                    <option>Date/Time</option>
-                    </select>
-                    </th>
+                    <th *ngFor="let headValue of headerData;let i1=index;" class="tableHeader">
+                        <div *ngIf='selected==headValue' [ngClass]="selected==headValue?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==headValue" class='reset_btn' (click)='resetcaseId()'><i class='fa fa-times'></i></button> </div>
+                        <select [disabled]='true' name="cathead1" [(ngModel)]="cathead1" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead1)" *ngIf="headValue == 'Case ID' || headValue == 'Case ID '">
+                        <option>String</option>
+                        <option>Integer</option>
+                        <option>Date/Time</option>
+                        </select>
+                        <select name="cathead2" [disabled]='true' [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead2)" *ngIf="headValue == 'Actvity'">
+                        <option>String</option>
+                        <option>Integer</option>
+                        <option>Date/Time</option>
+                        </select>
+                        <select name="cathead3" [disabled]='true' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead3)" *ngIf="headValue == 'Start Timestamp'">
+                        <option>String</option>
+                        <option>Integer</option>
+                        <option>Date/Time</option>
+                        </select>
+                        <select name="cathead4" [disabled]='true' [(ngModel)]="cathead4" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead4)" *ngIf="headValue == 'End Timestamp'">
+                        <option>String</option>
+                        <option>Integer</option>
+                        <option>Date/Time</option>
+                        </select>
+                        <select name="cathead5" [disabled]='true' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead5)" *ngIf="headValue == 'Resource'">
+                        <option>String</option>
+                        <option>Integer</option>
+                        <option>Date/Time</option>
+                        </select>
+                        <select name="cathead6" [disabled]='true' [(ngModel)]="cathead6" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headValue == 'Role'">
+                        <option>String</option>
+                        <option>Integer</option>
+                        <option>Date/Time</option>
+                        </select>
+                        </th>
+
+                    
                     
                     </tr>
             </thead>
@@ -95,10 +97,10 @@
         <h4>Save Process</h4>
       </div>
     <div class="modal-body">
-        <form> 
+        <form autocomplete="off" #processForm="ngForm"> 
           <div class="container m-contanier">
             <label for="category"><b>Select Category</b></label>
-              <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName">
+              <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
                   <option value="undefined" hidden disabled>Select</option>
                   <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
 
@@ -108,8 +110,10 @@
               <label for="otherCategory"><b>Enter Category</b></label>
               <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
               </div>
-            <label for="psw"><b>Enter Process Name</b></label>
-            <input type="text" placeholder="" name="psw" required class="p-name">
+              <label for="piId"><b>Enter Process Id</b></label>
+              <input type="text" name="piId" [(ngModel)]=processId required class="form-control" placeholder="Process Id">
+            <label for="piName"><b>Enter Process Name</b></label>
+            <input type="text" name="piName" [(ngModel)]="processName" required class="form-control" placeholder="Process Name">
               <div class="clearfix m-btn">
                 <button type="button" class="btn btn-primary pi_btn" (click)="generateGraph()">Save & Generate</button>
               </div>

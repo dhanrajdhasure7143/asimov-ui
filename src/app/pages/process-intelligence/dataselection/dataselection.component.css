@@ -123,7 +123,7 @@
     padding: 16px;
     width: 35%;
     }
-    .select_tag{
+    #select_tagOne{
         display: none;
     }
     .activetag{

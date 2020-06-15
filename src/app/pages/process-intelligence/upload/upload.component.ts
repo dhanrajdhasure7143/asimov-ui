@@ -136,6 +136,8 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(this.data);
       let excelfile=[];
       excelfile=this.data;
+      // console.log(excelfile);
+      localStorage.removeItem("fileData")
 localStorage.setItem("fileData",JSON.stringify(excelfile))
       this.router.navigate(['/pages/processIntelligence/datadocument']);
     };
@@ -146,13 +148,18 @@ localStorage.setItem("fileData",JSON.stringify(excelfile))
     let reader = new FileReader();
     reader.readAsText(e.addedFiles[0]);
     let _self = this;  
-    reader.onload = () => { 
+    reader.onload = () => {
       let csvRecordsArray:string[][] = []; 
       (<string>reader.result).split(/\r\n|\n/).forEach((each,i)=>{
         csvRecordsArray.push(each.split(','));
       })
-      this.dt.changePiData(csvRecordsArray);    
-      this.router.navigate(['/pages/processIntelligence/datadocument']);  
+      this.dt.changePiData(csvRecordsArray); 
+      let excelfile=[];
+      excelfile=csvRecordsArray;
+      // console.log(excelfile);
+      localStorage.removeItem("fileData")
+localStorage.setItem("fileData",JSON.stringify(excelfile))
+      this.router.navigate(['/pages/processIntelligence/datadocument']);    
     };  
     reader.onerror = function () { 
       _self.global.notify("Oops! Something went wrong", "error"); 
@@ -237,7 +244,7 @@ onDbSelect(){
       
       this.model1 = fullgraph.allSelectData.nodeDataArraycase
       this.model2 = this.flowchartData(this.model1)
-      this.flowGraph()
+      // this.flowGraph()
       })
     
   }

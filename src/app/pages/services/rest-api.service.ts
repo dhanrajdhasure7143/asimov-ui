@@ -12,7 +12,7 @@ const httpOptions = {
 
 const authHttpOptions = {
   headers: new HttpHeaders({
-      'Authorization':'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiZGV2ZWxvcG1lbnQiLCJ0ZW5hbnRJZCI6IjRlMmQ2NmRiLWQxNmItNDk1OC04NjhmLTdjMzA2ZWY3NjViYyIsImRvbWFpbiI6bnVsbCwicm9sZXMiOlt7ImFwcElkIjoiMiIsImFwcE5hbWUiOiIyLjAiLCJpZCI6IjgiLCJyb2xlTmFtZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOltdfV19LCJ1c2VyU2Vzc2lvbklkIjoiMjYzOSIsImlhdCI6MTU5MjEyMDc1MiwiZXhwIjoxNTkyMTIzNzUyfQ.YveTcnH9l4r7cPVhGc9IklgQ0cWLoa4eeHdfIsZwGcN-qrIZHVobYNE22GnosztAobHDEZmjUBRW2BwZWi_5byjTQaheNAITHVXuSnrxfaX9sXzEzE5DovPj_DrRMhzXwxpQ8OgriocVdcOjCeHa7hWqyCFMITneJLf7340n5Wx8t08-xjOUjVDwB-Ak1BjSs4c7SRVY-UXxNTiJrELmbl67-3lr2FSalJM-cUcODVOo2OzsEb2tQoGYoXIEFn4kYM0V5yjLQgX1uzmY_29rPafNb31uD662cRVd8f-z6eKCxJV2b4d5Fhnna7KVcDU2JjVGV_rgANz0XahyRl1xgw'
+      'Authorization':'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiZGV2ZWxvcG1lbnQiLCJ0ZW5hbnRJZCI6IjRlMmQ2NmRiLWQxNmItNDk1OC04NjhmLTdjMzA2ZWY3NjViYyIsImRvbWFpbiI6bnVsbCwicm9sZXMiOlt7ImFwcElkIjoiMiIsImFwcE5hbWUiOiIyLjAiLCJpZCI6IjgiLCJyb2xlTmFtZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOltdfV19LCJ1c2VyU2Vzc2lvbklkIjoiMjY4MSIsImlhdCI6MTU5MjE5NTczNCwiZXhwIjoxNTkyMTk4NzM0fQ.24b3MZohVUe4i3qLQIJwkgaQ9WsHlteXL09nbIqvdt-WSx4kQwnEEjsDAk9cxYAfNTZcx_rdLOowqH48HIPz_atL2cU0DUNKLt8ka2Sn-5wqQ6uVxk2k11Mu6cmPNXC0tN0QJc5A0wKyf_QRa8FFeMSArrwu6a5P61oFklVRWCMmMJ91b2UJRqcMg6kJdbUtDIFeH-WdcARkndHzGZrcDcVfxOR__6xV0UqFaz7lN64ODu0j0mPe8qrfJjGPF2bCeLPPMZJbJBgUYXoEi3h5kWCBrnOtmrg6pscP8Agf-z2PlQ2H9DBmyYarkc7WJ29PzWwXu-GswEzVkLsKIraUhA'
   }),
 };
 
@@ -172,14 +172,14 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   getfullGraph(piId){
     return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId,authHttpOptions)
   }
-  toSaveconnectorConfig(body){
-    return this.http.post('/processintelligence/v1/connectorconfiguration',body,authHttpOptions)
-  }
+  // toSaveconnectorConfig(body,categoryName,piId,processName){
+  //   return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+piId+'&piName='+processName,body,authHttpOptions)
+  // }
   getvaraintGraph(piId){
     return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,authHttpOptions)
   }
-  saveConnectorConfig(body){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/',body)
+  saveConnectorConfig(body,categoryName,processName,piId){
+    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,authHttpOptions)
   }
 
 }
