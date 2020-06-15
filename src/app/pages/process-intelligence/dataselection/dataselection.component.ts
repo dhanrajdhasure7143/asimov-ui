@@ -117,11 +117,17 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         var obj={}
         // var lowercase=value.toString().charAt(0).toLowerCase() + value.toString().slice(1)
         var lowercase=value
-        if(lowercase=='Start Timestamp'){
-          lowercase='Start Time'
+        if(lowercase=='Start Timestamp' || lowercase=='Start Time'){
+          lowercase='start Time'
         }
-        if(lowercase=='End Timestamp'){
-          lowercase='End Time'
+        if(lowercase=='End Timestamp' || lowercase=='End Time'){
+          lowercase='end Time'
+        }
+        if(lowercase=='Operation' || lowercase=='Activity'){
+          lowercase='activity'
+        }
+        if(lowercase=='Agent' || lowercase=='Resource'){
+          lowercase='resource'
         }
         obj[key]=lowercase.toString().split(' ').join('')
         
@@ -185,21 +191,21 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
         "transforms.ReplaceField.whitelist": renamesObjOne.join(),
         "transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-        "transforms.TimestampConverter.field": "StartTime,EndTime",
+        "transforms.TimestampConverter.field": "startTime,endTime",
         "transforms.TimestampConverter.target.type": "Timestamp",
         "transforms.TimestampConverter.format": "yyyy/MM/dd HH:mm:ss",
         "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-        "transforms.ValueToKey.fields": "CaseID",
+        "transforms.ValueToKey.fields": "caseID",
         "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-        "transforms.InsertField.static.field": "piId",
-        "transforms.InsertField.static.value": this.processId,
+        "transforms.InsertField.static.field": "piIdName",
+        "transforms.InsertField.static.value": this.processId+"-p"+this.processId
       }   }
       this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
         // var piId=connectorBody.config["transforms.InsertField.static.value"]
         // localStorage.setItem('piId',this.processId)
         console.log('resp',res);
-        //const piid={"piId":this.processId}
-        const piid={"piId":411}
+        const piid={"piId":this.processId}
+        //const piid={"piId":411}
             this.router.navigate(['/pages/processIntelligence/flowChart',piid]);
         
       })
@@ -253,10 +259,10 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       }).then((result) => {
         if (result.value) {
           this.name=v.trim();
-        obj[this.name]='CaseID';
+        obj[this.name]='caseID';
         console.log(obj);
         this.headerArray.push(obj)
-        this.headerName = 'CaseID';
+        this.headerName = 'caseID';
         this.selected=v;
         console.log(this.selected)
         // this.global.notify(this.headerName, "success");

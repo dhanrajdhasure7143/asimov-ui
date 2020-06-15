@@ -154,7 +154,7 @@ export class DatadocumentComponent implements OnInit {
       } //alphanum check
       isDateCheck = hdr_ar_index == 3 || hdr_ar_index == 4;
       if (hdr_ar_index == 2 || hdr_ar_index == 5 || hdr_ar_index == 6) {
-        reg_expression = new RegExp(/[^a-z\d]/i ); //string check   /^[a-z\s ,]{0,255}$/i
+        reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i ); //string check   /^[a-z\s ,]{0,255}$/i
       }
       let isInvalid: boolean = false;
       for (var x = 0; x < this.fileData.length; x++) {
@@ -231,7 +231,7 @@ export class DatadocumentComponent implements OnInit {
     // console.log(index);
     // console.log(fData);
 
-    if(dType.indexOf('Timestamp') != -1){
+    if(dType.indexOf('Timestamp') != -1 || dType.indexOf('Time') != -1){
       if (index == 0 ) {
         if (this.isDate(fData) == true) {
           this.cathead1 = "Date/Time";
