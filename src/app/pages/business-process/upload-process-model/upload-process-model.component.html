@@ -1,24 +1,48 @@
-        <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>        <as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
+<div class="row drop_div">
+  <div class="col-md-6">
+    <button class="btn" (click)="reSize=!reSize" *ngIf="isShowConformance">Show Conformance</button>
+    <button class="btn" (click)="getBpmnDifferences()" *ngIf="reSize && isConfNavigation" >Show Differences</button>
+  </div>
+  <div class="col-md-2">
+      <b>BPMN Notation&nbsp;</b>
+      <select class="form-control" [(ngModel)]="selected_notation" (change)="displayBPMN()">
+          <option value="undefined" selected>-- Select Notation --</option>
+          <option [value]="bpmnIndex" *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index">
+              {{each_bpmn.bpmnProcessName}}</option>
+      </select>
+  </div>
+  <div class="col-md-2">
+      <b>Approver List&nbsp;</b>
+      <select class="form-control">
+          <option [value]="each_approver.bpmnModelId" *ngFor="let each_approver of approver_list">
+              {{each_approver.bpmnProcessName}}</option>
+      </select>
+  </div>
+  <div class="col-md-2"></div>
+</div>
+  <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>        <as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
   <as-split-area [size]="reSize?50:100">
-    <div class="row" >
-        <div class="col-md-6  show-confirmance-button-div">
-            <button class="show-confirmance-button" (click)="reSize=!reSize" [hidden]="reSize">Show Conformance</button>
-            <button class="btn" (click)="getBpmnDifferences()" [disabled]="!reSize" >Show Differences</button>
-        </div>
-        <div [ngClass]="!reSize?'col-md-6':'col-md-12'"  class="kpis-and-submit-button-div">
-            <button class="view-kpis-button"><img src="..\assets\images\viewKPI.svg">View KPI's</button>
-            <button class="submit-for-approval-button" routerLink="/pages/approvalWorkflow/home" [hidden]="!reSize">Submit for Approval</button>
-        </div>
+    <div *ngIf="isShowConformance" class="bps_overlay">
+      <div class="canvas1 readOnly"  id="canvas1"></div>
     </div>
-    <div class="canvas1"  id="canvas1"></div>
+    <div class="canvas1" *ngIf="!isShowConformance"  id="canvas1"></div>
   </as-split-area>
   <as-split-area [size]="resize?50:0" [hidden]="!reSize">
     <app-upload-create-drop-bpmn></app-upload-create-drop-bpmn> 
     <div class="canvas2"  id="canvas2" ></div>
   </as-split-area>
 </as-split>
-<button class="right btn" (click)="saveprocess()">Save Process</button>
-<button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
-
-
+<div class="row btn_row"> 
+  <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
+  <div class="upload-btn-wrapper right">
+      <button class="btn" (click)="ipfile.click()">Upload Again</button>
+      <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
+  </div>
+  <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+  <button class="right btn btn-success" (click)="automate()" [disabled]="!diplayApproveBtn">Automate</button>
+  <button class="right btn" (click)="saveprocess()">Save Process</button>
+</div>
 <app-list-of-changes></app-list-of-changes>  
+<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+  <p style="color: white">Auto Saving... </p>  
+</ngx-spinner>

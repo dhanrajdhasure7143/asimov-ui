@@ -99,7 +99,8 @@ slideup(){
 
 generateBpmn(){
   this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
-  this.router.navigate(['/pages/businessProcess/uploadProcessModel'])
+  this.bpmnservice.setNewDiagName('pizza-collaboration');
+  this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}})
 }
   
 loopTrackBy(index, term){

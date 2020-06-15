@@ -7,14 +7,12 @@
       <div class="row col-md-12">
         <h4 class="col-md-7 box-heading">My Work Space</h4>
       </div>
-      <div class="row col-md-12 text-bold">
+      <div class="row col-md-12 text-bold workspace-title">
         <div class="col-md-3">Process Name</div>
         <div class="col-md-3">Date Time</div>
         <div class="col-md-3">Approver</div>
         <div class="col-md-2">Status</div>
-        <div class="col-md-1">
-          Comment
-        </div>
+        <div class="col-md-1">Comment</div>
       </div>
       <div class="row col-md-12"  id="bpmn_list">
         <mat-accordion>
@@ -25,7 +23,7 @@
                   <div class="col-md-3">{{each_diag.bpmnProcessName}}</div>
                   <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
                   <div class="col-md-3">{{each_diag.approverName}}</div>
-                  <div class="col-md-2">{{each_diag.bpmnProcessStatus}}</div>
+                  <div class="col-md-2">{{each_diag.bpmnProcessStatus | titlecase}}</div>
                   <div class="col-md-1">
                     <span class="comment">
                       <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments}}</span>
@@ -34,7 +32,9 @@
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
-            <div [class]="'diagram_container'+i"></div>
+            <div class="bps_overlay">
+              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnXmlNotation, i)"></div>
+            </div>
           </mat-expansion-panel>
         </mat-accordion>
       </div>

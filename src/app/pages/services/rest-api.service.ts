@@ -58,11 +58,12 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get(filePath, {headers: {observe: 'response'}, responseType: 'text'});
   }
 
-  getApproverforuser(){
-    return this.http.get("/bpsprocess/approver/info/{roleName}")//first api call
+  getApproverforuser(role){
+    return this.http.get("/bpsprocess/approver/info/"+role,this.authHttpOptions)//first api call
   }
-  getBpsprocessinfobyuser(){
-    return this.http.get("/bpsprocess/fetchByUser/{userName}")}//second api call
+  getUserBpmnsList(){
+    return this.http.get("/bpsprocess/fetchByUser/gopi",this.authHttpOptions); 
+  }
   saveBPMNprocessinfofromtemp(bpmnModel){
     return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel,this.authHttpOptions)//third api call
   }
@@ -86,9 +87,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return api_method_call != ""?this.http.post('/'+api_method_call, file, {responseType: 'text'}):null;// "target" : "http://10.11.1.189:8080",
   }
 
-  getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/gopi",this.authHttpOptions); 
-  }
+  
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
   }

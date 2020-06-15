@@ -19,8 +19,22 @@ export class SharebpmndiagramService {
 
   public isConfNav = new BehaviorSubject(false);
   confNav = this.isConfNav.asObservable();
+  
+  public newDiagName = new BehaviorSubject('');
+  new_DiagName = this.newDiagName.asObservable();
+
+  public bpmnCategory = new BehaviorSubject('');
+  bpmn_Category = this.newDiagName.asObservable();
 
   constructor() { }
+
+  setNewDiagName(name){
+    this.newDiagName.next(name)
+  }
+
+  setBpmnCategory(category){
+    this.bpmnCategory.next(category)
+  }
 
   uploadBpmn(diagram){
     this.bpmnData.next(diagram)

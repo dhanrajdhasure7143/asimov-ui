@@ -17,7 +17,7 @@
                 <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
                 <h3>Define Your Own Process</h3>
                 <h5>Do process model from Scratch level</h5>
-                <button class="btn bpmn-btn" id="create_bpmn" (click)="createBpmn()">Create</button>
+                <button class="btn bpmn-btn" id="create_bpmn" (click)="slideUp()">Create</button>
             </div>
         </div>
     </div>
@@ -39,10 +39,53 @@
                             <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
                         </div>
                         <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
-                        <button class="right btn" (click)="saveprocess()">Save Process</button>
+                        <button class="right btn" (click)="saveprocess(null)">Save Process</button>
                     </div>
                    
                 </div>
             
     </div>
-            
+
+    <div id="foot">
+        <div  class="filter_heading">               
+        <div class="container filter_headinglabels">
+            <div class="row">
+              
+                <div class="col-md-12">
+                    <p class="header-style" >Create BPMN</p>
+                    <button type="button" class="close cross_close resize" aria-label="Close" (click)="slideDown()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="reports">
+                            <form #createBpmnForm=ngForm>
+                                <div class="process-name">
+                                    <label class="process-name" >Select BPMN Category</label>
+                                    <div>
+                                        <select  id="category" name="category" [(ngModel)]="category"  required>
+                                            <option value="infrastructure">Infrastructure</option>
+                                            </select>
+                                    </div>
+                                </div>
+                                <div class="process-name">
+                                    <label class="process-name">Enter BPMN Name</label>
+                                    <div>
+                                    <input type="text" id="bpmnProcessName" name="bpmnProcessName" [(ngModel)]="bpmnProcessName" required> 
+                                    </div>
+                                </div>
+                            <div>
+                                <button class="apply_button" type="submit" (click)="createBpmn()" [disabled]="!createBpmnForm.valid">Proceed</button>
+                            </div>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>    

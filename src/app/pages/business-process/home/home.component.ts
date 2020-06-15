@@ -25,7 +25,6 @@ export class BpsHomeComponent implements OnInit {
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.bpsHomeHints);
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
-      console.log();
       this.saved_diagrams = res; 
       this.bkp_saved_diagrams = res; 
     },
@@ -33,8 +32,12 @@ export class BpsHomeComponent implements OnInit {
       console.log(err);
     });
   }
-
+  openDiagram(binaryXMLContent, i){
+    this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
+    this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: i }});
+  }
   getDiagram(byteBpmn,i){
+    if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     this.bpmnModeler = new BpmnJS({
       container: '.diagram_container'+i,
       keyboard: {

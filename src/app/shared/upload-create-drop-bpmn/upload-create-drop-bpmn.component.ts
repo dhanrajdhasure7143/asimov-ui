@@ -25,22 +25,26 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   hideEditor:boolean=true;
   create_editor:boolean=true;
   counter:number = 0;
+  bpmnProcessName;
+  category;
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, 
     private global: GlobalScript, private rest:RestApiService, private uploadProcessModel:UploadProcessModelComponent) { }
 
   ngOnInit() {
   }
   onSelect(e){
+    this.slideUp();
     this.bpmnupload= true;
     this.hideEditor=false;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
+      this.bpmnservice.setNewDiagName(e.addedFiles[0].name.replace('.bpmn',''));
       if( this.router.url.indexOf("uploadProcessModel") > -1 ){
         this.bpmnservice.changeConfNav(true);
         this.uploadProcessModel.uploadConfBpmn(e.addedFiles[0].name);
       }else{
         this.bpmnservice.changeConfNav(false);
         this.bpmnservice.uploadBpmn(e.addedFiles[0].name);
-        this.router.navigate(['/pages/businessProcess/uploadProcessModel']);
+        this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
       }
     }else{
       let message = "Oops! Something went wrong";
@@ -49,6 +53,17 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       this.global.notify(message,"error");
     }
   }
+
+  slideDown(){
+    document.getElementById("foot").classList.add("slide-down");
+    document.getElementById("foot").classList.remove("slide-up");
+  }
+  
+  slideUp(){
+    document.getElementById("foot").classList.remove("slide-down");
+    document.getElementById("foot").classList.add("slide-up");
+  }
+
   autoSaveBpmnDiagram(){
     // this.spinner.show();
       let _self = this;
@@ -69,22 +84,25 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     },
     err => {
       // this.spinner.hide();
-     
     })
   }
 
   createBpmn(){
+    this.bpmnservice.setNewDiagName(this.bpmnProcessName);
+    this.bpmnservice.setBpmnCategory(this.category);
     this.bpmnupload= true;
     this.create_editor=false;
+    this.bpmnservice.changeConfNav(false);
      if(this.router.url == "/pages/businessProcess/home"){
       this.router.navigateByUrl('/pages/businessProcess/createDiagram');
-     }
-     else{this.bpmnModeler = new BpmnJS({
-      container: '#canvas',
-      keyboard: {
-        bindTo: window
-      }
-    });
+     }else{
+      this.bpmnservice.changeConfNav(true);
+       this.bpmnModeler = new BpmnJS({
+          container: '#canvas',
+          keyboard: {
+            bindTo: window
+          }
+        });
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
     this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {

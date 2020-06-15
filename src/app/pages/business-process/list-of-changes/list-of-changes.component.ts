@@ -23,7 +23,7 @@ export class ListOfChangesComponent implements OnInit {
     })
   }
   slideDown(){
-    let ele = document.getElementById("foot");
+    let ele = document.getElementById("bpmn_differences");
     if(ele){
       ele.classList.add("slide-down");
       ele.classList.remove("slide-up");

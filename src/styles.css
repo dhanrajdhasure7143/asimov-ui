@@ -7,6 +7,11 @@
 /* You can add global styles to this file, and also import other style files */
 body, html {
   font-family: 'Roboto';
+  user-select: none;
+}
+button:disabled{
+  cursor: no-drop;
+  background-color: grey;
 }
 .breadcrumb{
     background-color: white !important;
