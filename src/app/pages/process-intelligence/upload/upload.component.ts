@@ -237,15 +237,17 @@ onDbSelect(){
   onGraphSelection(selectedpiIdData){
     this.isgraph=true;
     console.log("selected PIID",selectedpiIdData);
-    this.rest.getfullGraph(selectedpiIdData.piId).subscribe(data=>{this.fullgraph=data
-      // console.log("fullgraph",this.fullgraph.data.allSelectData);
-      let fullgraph=JSON.parse(this.fullgraph.data)
-      console.log("fullgraph",fullgraph);
+    const piid={"piId":selectedpiIdData.piId}
+    this.router.navigate(['/pages/processIntelligence/flowChart',piid])
+    // this.rest.getfullGraph(selectedpiIdData.piId).subscribe(data=>{this.fullgraph=data
+    //   // console.log("fullgraph",this.fullgraph.data.allSelectData);
+    //   let fullgraph=JSON.parse(this.fullgraph.data)
+    //   console.log("fullgraph",fullgraph);
       
-      this.model1 = fullgraph.allSelectData.nodeDataArraycase
-      this.model2 = this.flowchartData(this.model1)
+    //   this.model1 = fullgraph.allSelectData.nodeDataArraycase
+    //   this.model2 = this.flowchartData(this.model1)
       // this.flowGraph()
-      })
+      // })
     
   }
 

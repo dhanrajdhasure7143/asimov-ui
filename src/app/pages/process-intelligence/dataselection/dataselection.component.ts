@@ -189,9 +189,10 @@ export class DataselectionComponent implements OnInit {
       }   }
       this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
         // var piId=connectorBody.config["transforms.InsertField.static.value"]
-        localStorage.setItem('piId',this.processId)
+        // localStorage.setItem('piId',this.processId)
         console.log('resp',res);
-            this.router.navigate(['/pages/processIntelligence/flowChart']);
+        const piid={"piId":this.processId}
+            this.router.navigate(['/pages/processIntelligence/flowChart',piid]);
         
       })
 

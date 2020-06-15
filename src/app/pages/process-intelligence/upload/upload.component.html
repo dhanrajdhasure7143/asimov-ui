@@ -31,7 +31,7 @@
                 </div>
                 </div>
                 <div class="col-md-6">
-                        <div>
+                        <!-- <div>
                                 <h4>My Work space</h4>
                         </div>
                                 <div class="col-md-12 row text-bold">
@@ -54,17 +54,32 @@
                                         </mat-panel-title>
                                       </mat-expansion-panel-header>
                                       <div [class]="'diagram_container'">
-                                              <!-- <div *ngIf='isgraph'>
-                                                <app-piflowchart [model1]="model1" [model2]="model2"></app-piflowchart>
-
-                                              </div> -->
                                               <div class="sample">
                                                         <div id="myDiagramDiv" style=" height: 375px; background: white;"></div>
                                                     </div>
                                       </div>
                                     </mat-expansion-panel>
                                   </mat-accordion>
-                                </div>
+                                </div> -->
+                                <table class="table table-hover text-center pilist_table">
+                                        <thead class="text-center">
+                                        <tr class="text-center">
+                                                <th class="text-center">Process ID</th>
+                                                <th class="text-center">Date</th>
+                                                <th class="text-center">Process Name</th>
+                                                <th class="text-center">Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class='text-center'>
+                                                <tr class='pList' *ngFor='let process_list of process_graph_list.data;trackBy:loopTrackBy;let i=index' (click)="onGraphSelection(process_list)">
+                                                        <td>{{process_list.piId}}</td>
+                                                        <td>{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</td>
+                                                        <td>{{process_list.piName|titlecase}}</td>
+                                                        <td>{{process_list.status}}</td>
+                                                </tr>
+                                        </tbody>
+                                       
+                                </table>
                             </div>
         </div>
 </div>

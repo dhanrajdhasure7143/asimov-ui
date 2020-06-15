@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Options } from 'ng5-slider';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ZoomSlider } from '../../../zoomSlider';
 import { ProcessGraphModel } from '../model/process-graph-flowchart-model';
 import { DataTransferService } from '../../services/data-transfer.service';
@@ -77,6 +77,7 @@ export class FlowchartComponent implements OnInit {
   isvaraintPlay:boolean=false;
   varaint_GraphData:any=[];
   varaint_GraphDataArray:any[]=[];
+  piIdNumber:any;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -84,7 +85,8 @@ export class FlowchartComponent implements OnInit {
     private pgModel: ProcessGraphModel,
     private hints: PiHints,
     private spinner: NgxSpinnerService,
-    private rest:RestApiService) {
+    private rest:RestApiService,
+    private route:ActivatedRoute) {
     // this.spinner.show();
   }
 
@@ -102,13 +104,18 @@ export class FlowchartComponent implements OnInit {
     this.getAlluserProcessPiIds();
     
     // var piId=localStorage.getItem('piId')
-    var piId=411
+    var piId;
     // this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data
     //   let fullgraphOne=JSON.parse(this.fullgraph.data);
     //   this.model1 = fullgraphOne.allSelectData.nodeDataArraycase
     //   console.log('this.model1',this.model1);
     //   this.model2 = this.flowchartData(this.model1)
     // })
+    this.route.params.subscribe(data=>{this.piIdNumber=data
+    })
+    if(this.piIdNumber!=null){
+      piId=this.piIdNumber.piId
+    }
     this.onchangegraphId(piId)
   }
 
