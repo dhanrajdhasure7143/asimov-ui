@@ -6,7 +6,7 @@
       <span class="loading-message">Please wait...</span>
   </div>
 </div> -->
-<div class="loading-spinner" [hidden]="!loading">
+<div class="loading-spinner" *ngIf="loading">
 <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
-<span class="loading-message">Please wait...{{loading}}</span>
+<span class="loading-message">Please wait...</span>
 </div>

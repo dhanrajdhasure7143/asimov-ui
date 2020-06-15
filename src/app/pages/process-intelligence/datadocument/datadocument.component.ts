@@ -33,6 +33,7 @@ export class DatadocumentComponent implements OnInit {
   cathead4: any;
   cathead5: any;
   cathead6: any;
+  cathead7: any;
   dTypeArray = [];
 
   // constructor(private router: Router, private dt: DataTransferService, private hints: PiHints, private global: GlobalScript) { }
@@ -54,9 +55,11 @@ export class DatadocumentComponent implements OnInit {
         var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
+        this.headerData = this.headerData;
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
-        this.fileData = this.fileData.slice(0, this.fileData.length-2);
+        this.fileData = this.fileData.slice(0, this.fileData.length-1);
+        this.fileData = this.fileData;
          console.log(this.fileData);
         for (var f = 0; f < this.headerData.length; f++) {
           switch (f) {
@@ -80,10 +83,10 @@ export class DatadocumentComponent implements OnInit {
                       {
                         this.getDataType(4, this.fileData[0][4], this.headerData[4]);
                       }
-                    // case 5:
-                    //   {
-                    //     this.getDataType(5, this.fileData[0][5]);
-                    //   }
+                    case 5:
+                      {
+                        this.getDataType(5, this.fileData[0][5], this.headerData[5]);
+                      }
                      
           }
         }
@@ -99,7 +102,7 @@ export class DatadocumentComponent implements OnInit {
   caseIdSelection() {
     var headerstype=[];
     var headerstypeArray=[]
-    headerstype.push(this.cathead1,this.cathead2,this.cathead3,this.cathead4,this.cathead5)
+    headerstype.push(this.cathead1,this.cathead2,this.cathead3,this.cathead4,this.cathead5, this.cathead6)
     for(var i=0;i<this.headerData.length;i++){
       var obj={};
       obj[this.headerData[i]]=headerstype[i]
@@ -146,12 +149,12 @@ export class DatadocumentComponent implements OnInit {
       let hdr_ar_index = this.headerData.indexOf(this.headerName);
       let reg_expression;
       let isDateCheck: boolean = false;
-      if (hdr_ar_index == 0) {
+      if (hdr_ar_index == 0 || hdr_ar_index == 1) {
         reg_expression = new RegExp(/^\d+$/);
       } //alphanum check
-      isDateCheck = hdr_ar_index == 2 || hdr_ar_index == 3;
-      if (hdr_ar_index == 1 || hdr_ar_index == 4 || hdr_ar_index == 5) {
-        reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i); //string check
+      isDateCheck = hdr_ar_index == 3 || hdr_ar_index == 4;
+      if (hdr_ar_index == 2 || hdr_ar_index == 5 || hdr_ar_index == 6) {
+        reg_expression = new RegExp(/[^a-z\d]/i ); //string check   /^[a-z\s ,]{0,255}$/i
       }
       let isInvalid: boolean = false;
       for (var x = 0; x < this.fileData.length; x++) {
@@ -259,7 +262,7 @@ export class DatadocumentComponent implements OnInit {
       }
       if (index == 4) {
         if (this.isDate(fData) == true) {
-          this.cathead5 = "Integer";
+          this.cathead5 = "Date/Time";
         } else {
           this.cathead5 = "String";
         }
@@ -269,6 +272,13 @@ export class DatadocumentComponent implements OnInit {
           this.cathead6 = "Date/Time";
         } else {
           this.cathead6 = "String";
+        }
+      }
+      if (index == 6) {
+        if (this.isDate(fData) == true) {
+          this.cathead7 = "Date/Time";
+        } else {
+          this.cathead7 = "String";
         }
       }
     } else {
@@ -312,6 +322,13 @@ export class DatadocumentComponent implements OnInit {
           this.cathead6 = "Integer";
         } else {
           this.cathead6 = "String";
+        }
+      }
+      if (index == 6) {
+        if (this.isNumeric(fData) == true) {
+          this.cathead7 = "Integer";
+        } else {
+          this.cathead7 = "String";
         }
       }
     }

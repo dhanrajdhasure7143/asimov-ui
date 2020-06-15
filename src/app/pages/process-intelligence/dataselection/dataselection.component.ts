@@ -42,6 +42,7 @@ export class DataselectionComponent implements OnInit {
   cathead4: any;
   cathead5: any;
   cathead6: any;
+  cathead7: any;
   headertypeArray:any=[];
   processId:any;
   processName:any;
@@ -69,8 +70,9 @@ export class DataselectionComponent implements OnInit {
     this.cathead1=this.headertypeArray[0]
     this.cathead2=this.headertypeArray[1];
     this.cathead3=this.headertypeArray[2];
-    this.cathead4=this.headertypeArray[3]
-    this.cathead5=this.headertypeArray[4]
+    this.cathead4=this.headertypeArray[3];
+    this.cathead5=this.headertypeArray[4];
+    this.cathead6=this.headertypeArray[5];
     // this.dt.current_piData.subscribe(res => {
     //   if(res){
       var restwo=localStorage.getItem('fileData')
@@ -108,7 +110,7 @@ export class DataselectionComponent implements OnInit {
 //   {"End Timestamp": "End Timestamp"},
 // {activity:"activity"},
 // {resource:"resource"},]
-
+this.processId = Math.floor(100000 + Math.random() * 900000);
   var renamesObj=[];
     for(var i=0; i<this.headerArray.length; i++){
       for (let [key, value] of Object.entries(this.headerArray[i])) {
@@ -123,14 +125,17 @@ export class DataselectionComponent implements OnInit {
         }
         obj[key]=lowercase.toString().split(' ').join('')
         
-        renamesObj.push(obj) 
+        renamesObj.push(obj) ;
+
       }
   }
   let renamestring='';
   console.log("renamesObj",renamesObj);
   for(var k=0;k<renamesObj.length;k++){
     for (let [key, value] of Object.entries(renamesObj[k])) {
+      if(key != 'S.No'){
       renamestring+=key.trim()+':'+value+',';
+      }
       
     }
   }
@@ -140,7 +145,9 @@ export class DataselectionComponent implements OnInit {
   var renamesObjOne=[]
   for(var j=0;j<renamesObj.length;j++){
     for (let [key, value] of Object.entries(renamesObj[j])) {
+      if(key != 'S.No'){
       renamesObjOne.push(value)
+      }
     }  
   }
   // console.log("renamesObjOne",renamesObjOne);
@@ -151,13 +158,13 @@ export class DataselectionComponent implements OnInit {
       var tenantId="abc456789"
     const connectorBody={
       //"name": "CsvSchemaSpool-"+tenantId+date.toISOString().split(':').join(''),
-       "name": "CsvSchemaSpool-abcdef"+this.processId,
+       "name": "CsvSchemaSpool-"+this.processId,
       "config": {
         "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
         "input.path": "/var/kafka",
         "input.file.pattern": localStorage.getItem("fileName"),
         "error.path": "/var/kafka",
-         "topic": "qpconnector-spooldir-abcdef"+this.processId,
+         "topic": "qpconnector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",
@@ -165,7 +172,7 @@ export class DataselectionComponent implements OnInit {
         "cleanup.policy": "DELETE",
         "schema.generation.enabled": "true",
         "parser.timestamp.date.formats": "yyyy/MM/dd’ ‘HH:mm:ss.SSSZ",
-        "csv.case.sensitive.field.names": "TRUE",
+        "csv.case.sensitive.field.names": "true",
         "parser.timestamp.timezone": "UTC",
         "key.converter":"io.confluent.connect.avro.AvroConverter",
         "key.converter.schema.registry.url":"http://10.11.0.101:8081",
@@ -182,7 +189,7 @@ export class DataselectionComponent implements OnInit {
         "transforms.TimestampConverter.target.type": "Timestamp",
         "transforms.TimestampConverter.format": "yyyy/MM/dd HH:mm:ss",
         "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-        "transforms.ValueToKey.fields": "caseID",
+        "transforms.ValueToKey.fields": "CaseID",
         "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
         "transforms.InsertField.static.field": "piId",
         "transforms.InsertField.static.value": this.processId,
@@ -246,10 +253,10 @@ export class DataselectionComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.name=v.trim();
-        obj[this.name]='caseID';
+        obj[this.name]='CaseID';
         console.log(obj);
         this.headerArray.push(obj)
-        this.headerName = 'caseID';
+        this.headerName = 'CaseID';
         this.selected=v;
         console.log(this.selected)
         // this.global.notify(this.headerName, "success");
