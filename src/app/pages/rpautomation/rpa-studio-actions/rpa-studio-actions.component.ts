@@ -5,7 +5,10 @@ import { element } from 'protractor';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 
+import Swal from 'sweetalert2';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-rpa-studio-actions',
   templateUrl: './rpa-studio-actions.component.html',
@@ -19,7 +22,13 @@ export class RpaStudioActionsComponent implements OnInit {
   public environmentValue: any = [];
   public predefinedbotValue: any = [];
   public selectedEnvironments: any = []
-
+  public versionsList: any = [];
+  public startbot:Boolean;
+  public pausebot:Boolean;
+  public resumebot:Boolean;
+  public savebotrespose:any;
+  public selectedenv:any=[];
+  public finalenv:any=[];
   @Input('tabsArrayLength') public tabsArrayLength: number;
   @Input('botState') public botState: any;
   @Output() closeTabEvent = new EventEmitter<void>();
@@ -74,7 +83,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
     cronFlavor: "standard"
   }
-  constructor(private fb : FormBuilder,private rest : RestApiService) { 
+  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient) { 
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
       'endTime' : [this.endTime, Validators.required],
@@ -82,35 +91,106 @@ export class RpaStudioActionsComponent implements OnInit {
   }
 
   ngOnInit() {
+<<<<<<< Updated upstream
     this.deploybot();
     // this.botstatistics();
     // this.getEnvironmentlist();
     // this.getpredefinedbotlist();
+=======
+    this.startbot=false;
+    this.pausebot=false;
+    this.resumebot=false;
+    this.botstatistics();
+    this.getEnvironmentlist();
+    this.getpredefinedbotlist();
+>>>>>>> Stashed changes
   }
+
   deploybot() {
-    this.rest.deployremotemachine(this.saveBotFunAct).subscribe(data => {
+    
+    this.rest.deployremotemachine(this.savebotrespose.botId).subscribe(data => {
       this.deploymachinedata = data;
+      console.log()
     })
+    
   }
+
+  deploydummybot()
+  {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: "Bot deployed successfully",
+      showConfirmButton: false,
+      timer: 2000})
+  }
+  
   saveBotFunAct() {
-    this.childBotWorkspace.saveBotFun();
+    
+    this.startbot=true;
+    this.pausebot=false;
+    this.resumebot=false;
+    this.environment.forEach(data=>{
+        if(data.Checked==true)
+        {
+          this.finalenv.push(data.environmentId)
+        }
+    })
+    if(this.savebotrespose==undefined)
+    {
+      
+      this.childBotWorkspace.saveBotFun(this.botState,this.finalenv).subscribe(data=>{
+        this.childBotWorkspace.successCallBack(data);
+        this.savebotrespose=data;
+      });
+    }
+    else
+    {
+      this.childBotWorkspace.updateBotFun(this.savebotrespose).subscribe(data=>{
+        this.childBotWorkspace.successCallBack(data);
+        this.savebotrespose=data;
+      });
+    }
   }
+ 
+ 
+
   executionAct() {
-    this.childBotWorkspace.execution()
+    this.startbot=true;
+    this.pausebot=false;
+    this.resumebot=false;
+    console.log(this.savebotrespose.botId)
+    this.childBotWorkspace.execution(this.savebotrespose.botId)
+
   }
+  
   pauseBot(botId) {
-    this.rest.getUserPause(botId).subscribe(data => {
+    
+    this.pausebot=false;
+    this.startbot=false;
+    this.resumebot=true;
+    this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
       this.pause = data;
     })
   }
+
   resumeBot(botId) {
-    this.rest.getUserResume(botId).subscribe(data => {
+    
+    this.pausebot=true;
+    this.startbot=false;
+    this.resumebot=false;
+    this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
       this.resume = data;
     })
   }
+
   stopBot(botId) {
+    this.startbot=true;
+    this.pausebot=false;
+    this.resumebot=false;
     return this.stop;
   }
+
   listenvironments() {
     const selectedEnvironments: any = [];
     this.environment = [];
@@ -138,25 +218,38 @@ export class RpaStudioActionsComponent implements OnInit {
       }]
     }
   }
+
   getCheckboxValues(event, data) {
+    let selectedEnvironments;
     let index = this.environment.findIndex(x => x.listEnvironmentData == data);
-    if (event) {
-      let selectedEnvironments;
-      if (localStorage.getItem('cheked') === null) {
+    if (event) 
+    {
+
+      if (localStorage.getItem('cheked') === null) 
+      {
         selectedEnvironments = [];
-      } else {
+      } 
+      else 
+      {
         selectedEnvironments = JSON.parse(localStorage.getItem('environmentId'));
       }
       selectedEnvironments.push(this.environment)
       localStorage.setItem('environmentId', JSON.stringify(selectedEnvironments));
       localStorage.CBState = JSON.stringify(selectedEnvironments);
     }
-    else {
+    else 
+    {
       this.environment.splice(index, 1);
       localStorage.removeItem('environmentId');
     }
+    console.log(selectedEnvironments)
+    console.log("booochiiiiiiii")
     console.log(this.environment);
   }
+  
+  
+  
+  
   getallpredefinebots() {
     this.predefined = [];
     console.log(this.predefinedbotsData);
@@ -179,6 +272,8 @@ export class RpaStudioActionsComponent implements OnInit {
       console.log(data);
       this.scheduleLists = data
     }
+    
+    
     saveCron(){
       let sche :any;
       sche = {
@@ -186,22 +281,28 @@ export class RpaStudioActionsComponent implements OnInit {
         "timeZone":this.selectedTimeZone,
         "startDate": `${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
         "endDate"  : `${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
+
       }
-    alert(
-      JSON.stringify(sche)
-    )
+      this.childBotWorkspace.saveCron(sche)
       // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
     }
+    
+    
+    
     closeFun(){
       this.hiddenSchedlerPopUp = false;
     }
   
-  botstatistics() {
+  
+  
+    botstatistics() {
     this.rest.botStatistics().subscribe(Status => {
       this.botStatisticsData = Status;
       console.log(this.botStatisticsData);
     })
   }
+  
+  
   getEnvironmentlist() {
     this.rest.listEnvironments().subscribe(data => {
       this.listEnvironmentData = data;
@@ -226,27 +327,31 @@ export class RpaStudioActionsComponent implements OnInit {
       })
     })
   }
-  getpredefinedbotlist() {
-    this.rest.getpredefinedbots().subscribe(data => {
-      this.predefinedbotsData = data;
-      let pre_value: any = [];
-      let predefine_value: any = [];
-      let showbots: any = [];
-      showbots.forEach(ele => {
-        predefine_value.push(ele.botName);
-        this.predefinedbotValue.push(ele.botName);
-        console.log(predefine_value)
-        predefine_value.forEach(elem => {
-          pre_value.push(elem)
-          console.log(pre_value)
-        })
-      });
-      pre_value.forEach(element => {
-        let temp: any = {
-          botName: element.botName
-        };
-        this.predefinedList.push(temp)
+
+
+  getVersionlist() {
+    this.versionsList=[];
+    let versionsdata:any=[];
+    this.rest.getBotVersion(this.savebotrespose.botId).subscribe(data => {
+      versionsdata=data;
+      versionsdata.forEach(version =>{
+        this.versionsList.push(version)
       })
+      console.log(this.versionsList)
     })
   }
+
+
+
+  getpredefinedbotlist() {
+    this.rest.getpredefinedbots().subscribe(data => {
+      console.log(data);
+      this.predefinedbotsData=data;   
+    });
+   }
+
+
+  
 }
+
+

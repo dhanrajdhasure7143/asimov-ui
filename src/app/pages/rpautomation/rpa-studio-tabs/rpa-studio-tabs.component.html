@@ -1,13 +1,14 @@
 <ngb-tabset #t="ngbTabset" [activeId]="tabActiveId" [destroyOnHide]="false" >
     <ngb-tab style="height: 38px;" class="bot-tabs" id="{{ tab.botName }}" *ngFor="let tab of tabsArray">
         <ng-template ngbTabTitle>
-            <span>{{ tab.botName }}</span>
-            <span class="close" (click)="$event.preventDefault();closeTab(tab)">&times; </span>
+            <span class="tabs-title"style="float:left" >{{ tab.botName }}</span>
+            <span class="close" style="float:right" (click)="$event.preventDefault();closeTab(tab)">&times; </span>
         </ng-template>
 
         <ng-template ngbTabContent>
 
-            <app-rpa-studio-actions [tabsArrayLength]="tabsArray.length" [botState]="tab"></app-rpa-studio-actions>
+            <app-rpa-studio-actions [tabsArrayLength]="tabsArray.length" [botState]="tab">
+            </app-rpa-studio-actions>
             <!-- <app-rpa-studio-workspace (closeTabEvent)="closeTab($event)"  
                 [tabsArrayLength]="tabsArray.length" [botState]="tab"></app-rpa-studio-workspace> -->
         </ng-template>

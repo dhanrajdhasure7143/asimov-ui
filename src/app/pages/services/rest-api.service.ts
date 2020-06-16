@@ -94,9 +94,16 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   attribute(data:any){
   return this.http.get('/rpa-service/get-attributes/'+data)
   }
-  saveBot(data:any):Observable<any>{
-    return this.http.post('/rpa-service/save-bot',data)
+    saveBot(data:any):Observable<any>
+    {
+      return this.http.post('/rpa-service/save-bot',data)
     }
+
+    updateBot(data:any):Observable<any>
+    {
+      return this.http.post('/rpa-service/update-bot',data)
+    }
+  
   getUserPause(botId):Observable<any> {
     return this.http.post('/rpa-service/pause-bot/',botId)
   }
@@ -109,18 +116,25 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   listEnvironments(){
     return this.http.get("/rpa-service/agent/get-environments")
   }
-  execution(data:any):Observable<any>{
-    return this.http.post('/rpa-service/start-bot/',data)
+  execution(botid:number,data:any):Observable<any>{
+    let url='/rpa-service/start-bot/'+botid;
+    console.log(url);
+    return this.http.post(url,data)
   }
+
   deployremotemachine(botId){
-    return this.http.post('/rpa-service/agent/deploy-bot/',botId)
+    let data=null;
+    return this.http.post('/rpa-service/agent/deploy-bot?botId='+botId,data);
   }
+  
   getpredefinedbots(){
-    return this.http.get("/assets/definebots.json")/*jitendra: need to replace URL*/
+    return this.http.get("/rpa-service/getall-predefinedbots")/*jitendra: need to replace URL*/
   }
+
   scheduleList(data:any):Observable<any>{
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+42,data)
   }
+
   addenvironment(data:any):Observable<any>
   {
     const requestOptions: Object = {
@@ -156,4 +170,11 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
       return this.http.get('/rpa-service/load-process-info/processid='+id);    
     }
   }
+
+
+  getBotVersion(botid)
+  {
+   return this.http.get("/rpa-service/bot-version?botId="+botid);
+  }
+
 }

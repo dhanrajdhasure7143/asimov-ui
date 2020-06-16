@@ -8,8 +8,10 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import * as $ from 'jquery';
 import { NotifierService } from 'angular-notifier';
-
-
+import { RpaDragHints } from '../model/rpa-workspace-module-hints';
+import { DataTransferService } from "../../services/data-transfer.service";
+import Swal from 'sweetalert2';
+//import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
   templateUrl: './rpa-studio-workspace.component.html',
@@ -19,6 +21,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   jsPlumbInstance;
   public stud:any = [];
   public optionsVisible : boolean = true;
+  public scheduler:any;
   result:any = [];
   nodes = [];
   selectedNode: any= [];
@@ -38,9 +41,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   fieldValues: any[] = [];
   allFormValues: any[] = [];
   saveBotdata:any = [];
-  constructor(private rest:RestApiService,private notifier: NotifierService) {
+  constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService,) {
     
    }
+
+   ngOnInit() 
+   {
+    this.dt.changeHints(this.hints.rpaWorkspaceHints );
+   }
+
+
 
   ngAfterViewInit() {
 
@@ -236,34 +246,112 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   onFormSubmit(event){
     console.log(event);
+
     this.fieldValues = event
+    this.hiddenPopUp=false;
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: "Saved Successfully",
+      showConfirmButton: false,
+      timer: 2000})
+    // localStorage.setItem('formValue', event)
     // localStorage.setItem('formValue', event)
   }
-  saveBotFun(){
+
+  saveBotFun(botProperties,env)
+  {
+    //console.log(environments)
     console.log(this.formVales);
     this.allFormValues = []
     this.saveBotdata = []
+    let mainObj:any = [];
+    let tstAtt:any;
+    let obj:any = [];
+    let objAttr:any;
     this.formVales.forEach((ele,i) => {
-      let obj:any
+     
       let objKeys = Object.keys(this.fieldValues);
-      obj = {
+      objAttr = {
         "metaAttrId": ele.taskId,
         "atrribute_type": ele.type,
         "metaAttrValue": ele.name,
          "attrValue": this.fieldValues[objKeys[i]]
       }
-      this.allFormValues.push(obj)    
+     
+      obj.push(objAttr);
+        
   })
+  tstAtt={"attributes":obj};
+  mainObj.push(tstAtt);
   console.log(this.allFormValues);
   this.saveBotdata = {
-    "botName": "metbotIntegration4",
-    "tasks": this.allFormValues,
+    "botName": botProperties.botName,
+    "botType" : botProperties.botType,
+    "description":botProperties.botDescription,
+    "department":botProperties.botDepartment,
+    "envIds":env,
+    "tasks": mainObj,
     "createdBy": "admin",
-    "lastSubmittedBy": "admin"
+    "lastSubmittedBy": "admin",
+    "scheduler" : this.scheduler
   }
-  console.log(this.saveBotdata);
-  this.rest.saveBot(this.saveBotdata).subscribe(data => this.successCallBack(data))
+
+    return this.rest.saveBot(this.saveBotdata)
   }
+
+
+  
+  updateBotFun(botProperties)
+  {
+
+    console.log(this.formVales);
+    this.saveBotdata = [];
+    let mainObj:any = [];
+    let tstAtt:any;
+    let obj:any = [];
+    let objAttr:any;
+    this.formVales.forEach((ele,i) => {
+     
+      let objKeys = Object.keys(this.fieldValues);
+      objAttr = {
+        "metaAttrId": ele.taskId,
+        "atrribute_type": ele.type,
+        "metaAttrValue": ele.name,
+         "attrValue": this.fieldValues[objKeys[i]]
+      }
+     
+      obj.push(objAttr);
+        
+  })
+  
+  tstAtt={"attributes":obj};
+  mainObj.push(tstAtt);
+  this.allFormValues.push(obj);
+  console.log(this.allFormValues);
+  this.saveBotdata = {
+    "botId":botProperties.botId,
+    "botName": botProperties.botName,
+    "botType" : botProperties.botType,
+    "description":botProperties.description,
+    "department":botProperties.department,
+    "envIds":botProperties.envIds,
+    "tasks": mainObj,
+    "createdBy": "admin",
+    "lastSubmittedBy": "admin",
+    "scheduler" : botProperties.scheduler
+  }
+
+    return this.rest.updateBot(this.saveBotdata)
+  }
+
+
+  saveCron(sche){
+  this.scheduler = sche
+    }
+  
+  
+
   successCallBack(data) {
     if(data.error){
       let type ="info";
@@ -278,9 +366,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     console.log(data);
     
   }
-  execution(){
+  execution(botid){
     let eqObj:any
-    this.rest.execution(eqObj).subscribe(data => {this.exectionVal(data)},(error) => {
+    this.rest.execution(botid,eqObj).subscribe(data => {this.exectionVal(data)},(error) => {
       alert(error);
     })
   }

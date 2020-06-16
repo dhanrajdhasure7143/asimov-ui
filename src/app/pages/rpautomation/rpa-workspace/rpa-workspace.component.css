@@ -52,14 +52,14 @@
   }
   /* /* To style the document scrollbar, remove `.custom-scrollbar` */
   .rpa-custom-scrollbar::-webkit-scrollbar {
-    width: 1px;
+    width: 3px;
   }
   .rpa-custom-scrollbar::-webkit-scrollbar-track {
     background :rgb(255, 255, 255);
     border-radius: 10px;
   }
   .rpa-custom-scrollbar::-webkit-scrollbar-thumb {
-    background : rgb(255, 255, 255);
+    background : rgb(209, 209, 209);
     border-radius: 10px;
   } 
 
@@ -86,3 +86,4 @@
    
     fill:#0062cf;
   }
+  
