@@ -131,10 +131,9 @@ export class FlowchartComponent implements OnInit {
     })
     if(this.piIdNumber!=null){
       piId=this.piIdNumber.piId
-      this.graphIds = piId;
+      // this.graphIds = piId;
     }
     this.onchangegraphId(piId);
-    
   }
 
   ngAfterContentChecked() {
@@ -174,9 +173,6 @@ export class FlowchartComponent implements OnInit {
           this.model2[j].curviness=loc1
         }
         });
-
-       
-
         // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
         // console.log('varaint_GraphData',this.varaint_GraphData.data);
         // this.varaint_GraphDataArray.push(this.varaint_GraphData.data)

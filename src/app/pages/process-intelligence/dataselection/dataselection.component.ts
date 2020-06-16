@@ -123,7 +123,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         if(lowercase=='End Timestamp' || lowercase=='End Time'){
           lowercase='end Time'
         }
-        if(lowercase=='Operation' || lowercase=='Activity'){
+        if(lowercase=='Operation' || lowercase=='Activity' || lowercase=='Actvity'){
           lowercase='activity'
         }
         if(lowercase=='Agent' || lowercase=='Resource'){
@@ -170,7 +170,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "input.path": "/var/kafka",
         "input.file.pattern": localStorage.getItem("fileName"),
         "error.path": "/var/kafka",
-         "topic": "qpconnector-spooldir-"+this.processId,
+         "topic": "qopconnector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",
@@ -203,7 +203,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
         // var piId=connectorBody.config["transforms.InsertField.static.value"]
         // localStorage.setItem('piId',this.processId)
-        console.log('resp',res);
+        console.log('resp',connectorBody);
         const piid={"piId":this.processId}
         //const piid={"piId":411}
             this.router.navigate(['/pages/processIntelligence/flowChart',piid]);
@@ -271,7 +271,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
               this.validCells['row'+x]=[];
               this.validCells['row'+x].push('cell'+index);
             }
-        }else if (result.dismiss === Swal.DismissReason.cancel) {
+        }else if (result.dismiss === Swal.DismissReason.cancel){
           this.id=[];
         }
       })
@@ -290,7 +290,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         console.log(v +":::::::::::"+this.name)
         obj[this.name]=v;
         console.log(obj);
-        this.headerArray.push(obj)
+      this.headerArray.push(obj)
       for(var x = 0;x < this.fileData.length;x++){
         if(!this.validCells['row'+x])
           this.validCells['row'+x]=[];

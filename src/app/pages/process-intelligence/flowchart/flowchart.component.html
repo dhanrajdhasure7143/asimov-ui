@@ -12,8 +12,8 @@
 </div> -->
 <div class="container">
 <div class="row">
-    <div class="col-md-8">
-        <div>
+    <div class="col-md-9 row">
+        <div class='col-sm-11'>
             <div class="lableHide"></div>
             <div class="tooltip_button tooltip1"><img src="..\assets\images\PI\options_icon.svg" id="variants">
                 <div class="tooltiptext1">
@@ -81,9 +81,19 @@
                         <p class="play_label" *ngIf="!isplay">Play</p>
                         <p class="play_label" *ngIf="isplay">Stop</p>
                     </div>
-        </div>  
+        </div>
+        <div class="col-sm-1">
+                <div>
+                <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
+                </div>
+                <p class="slider_label Activities_slider">Activities</p>
+                <div>
+                <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(ngModel)]="pathvalue" [options]="options" ></ng5-slider></div>
+                </div>
+                <p class="slider_label Paths_slider">Paths</p>
+            </div> 
     </div>
-    <div class="col-md-1">
+    <!-- <div class="col-md-1">
         <div>
         <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
         </div>
@@ -92,7 +102,7 @@
         <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(ngModel)]="pathvalue" [options]="options" ></ng5-slider></div>
         </div>
         <p class="slider_label Paths_slider">Paths</p>
-    </div>
+    </div> -->
         <div class="col-md-3 tracking_detsils1" >
             <div class="varaint_headingOne">
                 <h5 class="varaint_heading">Explore by Variant</h5>
