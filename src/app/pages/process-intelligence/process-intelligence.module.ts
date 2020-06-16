@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { NgxDropzoneModule } from 'ngx-dropzone';
-
+import { ModalModule } from 'ngx-bootstrap/modal';
 import { SharedModule } from '../../shared/shared.module';
 import { ProcessIntelligenceRoutingModule } from './process-intelligence-routing.module';
 import { ProcessIntelligenceComponent } from './process-intelligence.component';
@@ -17,6 +17,7 @@ import { FilterComponent } from './filter/filter.component'
 import { FlowchartComponent } from './flowchart/flowchart.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { PiHints } from './model/process-intelligence-module-hints';
+import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { PiHints } from './model/process-intelligence-module-hints';
     PiflowchartComponent, 
     FilterComponent,
     FlowchartComponent,
-    SearchPipe
+    SearchPipe,
+    PibpmnfilterComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,9 @@ import { PiHints } from './model/process-intelligence-module-hints';
     NgxChartsModule,
     NgxDropzoneModule,
     ProcessIntelligenceRoutingModule,
-    SharedModule
+    SharedModule,
+    ModalModule.forRoot()
+
   ],
   providers:[PiHints]
 

@@ -1,40 +1,43 @@
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-5 offset-1">
-            <app-upload-create-drop-bpmn></app-upload-create-drop-bpmn>
-        </div>
-        <div class="col-md-7">
-            <div class="row col-md-12">
-              <div class="col-md-3">Process Name</div>
-              <div class="col-md-3">Date Time</div>
-              <div class="col-md-3">Approver</div>
-              <div class="col-md-2">Status</div>
-              <div class="col-md-1">
-                Comment
-              </div>
-            </div>
-            <div class="row col-md-12"  id="bpmn_list">
-              <mat-accordion>
-                <mat-expansion-panel *ngFor="let each_diag of saved_diagrams;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
-                  <mat-expansion-panel-header>
-                    <mat-panel-title>
-                      <div class="row col-md-12">
-                        <div class="col-md-3">Get Process name{{each_diag.bpmnProcessName}}</div>
-                        <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
-                        <div class="col-md-3">Get the approver name</div>
-                        <div class="col-md-2">{{each_diag.bpmnProcessStatus}}Active</div>
-                        <div class="col-md-1">
-                          <span class="comment">
-                            <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments}}</span>
-                          </span>
-                        </div>
-                      </div>
-                    </mat-panel-title>
-                  </mat-expansion-panel-header>
-                  <div [class]="'diagram_container'+i"></div>
-                </mat-expansion-panel>
-              </mat-accordion>
-            </div>
-        </div>
+  <div class="row">
+    <div class="col-md-4 offset-1">
+        <app-upload-create-drop-bpmn isConfirmance="false"></app-upload-create-drop-bpmn>
     </div>
+    <div class="col-md-8 box-border">
+      <div class="row col-md-12">
+        <h4 class="col-md-7 box-heading">My Work Space</h4>
+      </div>
+      <div class="row col-md-12 text-bold workspace-title">
+        <div class="col-md-3">Process Name</div>
+        <div class="col-md-3">Date Time</div>
+        <div class="col-md-3">Approver</div>
+        <div class="col-md-2">Status</div>
+        <div class="col-md-1">Comment</div>
+      </div>
+      <div class="row col-md-12"  id="bpmn_list">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let each_diag of saved_diagrams;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
+            <mat-expansion-panel-header class="dropdown_icon">
+              <mat-panel-title>
+                <div class="row col-md-12">
+                  <div class="col-md-3">{{each_diag.bpmnProcessName}}</div>
+                  <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+                  <div class="col-md-3">{{each_diag.approverName}}</div>
+                  <div class="col-md-2">{{each_diag.bpmnProcessStatus | titlecase}}</div>
+                  <div class="col-md-1">
+                    <span class="comment">
+                      <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments}}</span>
+                    </span>
+                  </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="bps_overlay">
+              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnXmlNotation, i)"></div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    </div>
+  </div>
 </div>

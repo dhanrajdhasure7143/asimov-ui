@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { RestApiService } from '../pages/services/rest-api.service';
 
 @Component({
   selector: 'app-login',
@@ -8,5 +9,12 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent{
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private rest:RestApiService) { }
+  getAccessToken(){
+   
+this.rest.getAccessToken().subscribe(res =>{
+     localStorage.setItem("accessToken", res['accessToken']);
+     this.router.navigateByUrl("pages/home")
+    });
+  }
 }

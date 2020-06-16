@@ -112,6 +112,17 @@ export class RpaStudioComponent implements OnInit {
     list.splice(list.indexOf(item), 1);
   }
 
+  execution(){
+    let eqObj:any
+    this.rest.execution(eqObj).subscribe(data => {this.exectionVal(data)},(error) => {
+      alert(error);
+    })
+  }
+  exectionVal(data){
+    console.log(data);
+    
+  }
+
   onCreateSubmit() {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
     this.hiddenCreateBotPopUp = false

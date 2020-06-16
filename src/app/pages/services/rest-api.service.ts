@@ -1,35 +1,80 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
+import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
+
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+  }),
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class RestApiService {
+  
+  authHttpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': 'Bearer '+localStorage.getItem("accessToken")
+    }),
+  };
+
   xmlheaderOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'text/xml',
       'Access-Control-Allow-Methods': 'GET',
-      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Origin': '/*',
       'Access-Control-Allow-Headers': 'Access-Control-Allow-Headers, Access-Control-Allow-Origin, Access-Control-Request-Method',
     }),
     responseType: 'text'
   }
   constructor(private http:HttpClient) { }
+  getAccessToken(){
+    let data = {"userId":"gopi.palla@epsoftinc.com",
+                "password":"Welcome@123"};
+    return this.http.post('/api/login/beta/accessToken',data);
+  }
+  bpmnlist(user){
+    //GET /bpsprocess/approver/info/{roleName} 
+return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user,this.authHttpOptions);
+}
+
+approve_producemessage(bpmnProcessInfo){
+  return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo,this.authHttpOptions);
+}
+approve_savedb(bpmndata){
+  return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata,this.authHttpOptions);
+}
+denyDiagram(msg_obj){
+// POST /bpsprocess/save/bpms/notation/approval/workflow
+
+return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj,this.authHttpOptions);
+}
+
 
   getBPMNFileContent(filePath){
     // return this.http.post(filePath, this.xmlheaderOptions);
     return this.http.get(filePath, {headers: {observe: 'response'}, responseType: 'text'});
   }
 
-  autoSaveBPMNFileContent(bpmnModel){
-    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel);
+  getApproverforuser(role){
+    return this.http.get("/bpsprocess/approver/info/"+role,this.authHttpOptions)//first api call
   }
-
+  getUserBpmnsList(){
+    return this.http.get("/bpsprocess/fetchByUser/gopi",this.authHttpOptions); 
+  }
+  saveBPMNprocessinfofromtemp(bpmnModel){
+    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel,this.authHttpOptions)//third api call
+  }
   submitBPMNforApproval(bpmnModel){
-    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)
+    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel,this.authHttpOptions)//fourth api call
+  }
+  getBPMNtempnotations(){
+    return this.http.get("/bpsprocess/temp/bpmn/{bpmnModelTempId}/notation/")//fifth api call
+  }
+  autoSaveBPMNFileContent(bpmnModel){
+    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel, this.authHttpOptions)//sixth api call
   }
 
   sendUploadedFile(file:FormData, uid){
@@ -42,9 +87,7 @@ export class RestApiService {
     return api_method_call != ""?this.http.post('/'+api_method_call, file, {responseType: 'text'}):null;// "target" : "http://10.11.1.189:8080",
   }
 
-  getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/mounika"); // "target" : "http://10.11.1.236:8080",
-  }
+  
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
   }
@@ -67,7 +110,7 @@ export class RestApiService {
     return this.http.get("/rpa-service/agent/get-environments")
   }
   execution(data:any):Observable<any>{
-    return this.http.post('/rpa-service/start-bot/'+41,data)
+    return this.http.post('/rpa-service/start-bot/',data)
   }
   deployremotemachine(botId){
     return this.http.post('/rpa-service/agent/deploy-bot/',botId)

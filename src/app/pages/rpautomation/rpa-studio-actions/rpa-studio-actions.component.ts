@@ -83,9 +83,9 @@ export class RpaStudioActionsComponent implements OnInit {
 
   ngOnInit() {
     this.deploybot();
-    this.botstatistics();
-    this.getEnvironmentlist();
-    this.getpredefinedbotlist();
+    // this.botstatistics();
+    // this.getEnvironmentlist();
+    // this.getpredefinedbotlist();
   }
   deploybot() {
     this.rest.deployremotemachine(this.saveBotFunAct).subscribe(data => {

@@ -1,19 +1,41 @@
-<div class="container-fluid">
-    <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>
-    <div>
-        <span class="err-msg"></span>
-        <div id="canvas"></div>
+<div class="row col-md-12 drop_div">
+    <div class="col-md-6"></div>
+    <div class="col-md-2">
+        <b>BPMN Notation&nbsp;</b>
+        <select class="form-control" [(ngModel)]="selected_notation" (change)="displayBPMN()">
+            <option value="undefined" selected>-- Select Notation --</option>
+            <option [value]="bpmnIndex" *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index">
+                {{each_bpmn.bpmnProcessName}}</option>
+        </select>
     </div>
-    <div class="row btn_row"> 
-        <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
-        <div class="upload-btn-wrapper right">
-            <button class="btn" (click)="ipfile.click()">Upload Again</button>
-            <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
-        </div>
-        <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+    <div class="col-md-2">
+        <b>Approver List&nbsp;</b>
+        <select class="form-control">
+            <option [value]="each_approver.bpmnModelId" *ngFor="let each_approver of approver_list">
+                {{each_approver.bpmnProcessName}}</option>
+        </select>
     </div>
-    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
-        <p style="color: white">Auto Saving... </p>  
-    </ngx-spinner>
+    <div class="col-md-2"></div>
 </div>
-  
+<div class="container-fluid">
+        <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>
+        <div>
+            <span class="err-msg"></span>
+            <div id="canvas"></div>
+        </div>
+        <div class="row btn_row"> 
+            <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
+            <div class="upload-btn-wrapper right">
+                <button class="btn" (click)="ipfile.click()">Upload Again</button>
+                <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
+            </div>
+            <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+            <button class="right btn btn-success" (click)="automate()" [disabled]="!diplayApproveBtn">Automate</button>
+            <button class="right btn" (click)="saveprocess(null)">Save Process</button>
+        </div>
+        <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+            <p style="color: white">Auto Saving... </p>  
+        </ngx-spinner>
+    </div>
+      
+    
