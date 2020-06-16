@@ -96,7 +96,7 @@
           <div class="col-md-12">
             <label for="botDescription">Bot Description</label>
             <input type="text"  placeholder="Enter Bot Description" class="form-control" name="botDescription" [(ngModel)]="model.botDescription" 
-            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && model.botDescription.invalid }" required />
+            #botDescription="ngModel" [ngClass]="{ 'is-invalid': f.submitted && model.botDescription.invalid }" required />
             
             <div *ngIf="f.submitted && model.botDescription.invalid" class="invalid-feedback">
                 <div *ngIf="model.botDescription.errors.required">Bot Description is required</div>

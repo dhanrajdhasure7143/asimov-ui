@@ -26,24 +26,22 @@
                 </div>
                 </div>
     <div class="bpmn_create" [hidden]="create_editor">
-            <div class="container-fluid">
-                    <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>
-                    <div>
-                        <span class="err-msg"></span>
-                        <div id="canvas"></div>
-                    </div>
-                    <div class="row btn_row"> 
-                        <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
-                        <div class="upload-btn-wrapper right">
-                            <button class="btn" (click)="ipfile.click()">Upload Again</button>
-                            <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
-                        </div>
-                        <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
-                        <button class="right btn" (click)="saveprocess(null)">Save Process</button>
-                    </div>
-                   
+        <div class="container-fluid">
+            <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>
+            <div>
+                <span class="err-msg"></span>
+                <div id="canvas"></div>
+            </div>
+            <div class="row btn_row"> 
+                <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
+                <div class="upload-btn-wrapper right">
+                    <button class="btn" (click)="ipfile.click()">Upload Again</button>
+                    <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
                 </div>
-            
+                <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+                <button class="right btn" (click)="saveprocess(null)">Save Process</button>
+            </div>
+        </div>
     </div>
 
     <div id="foot">
@@ -52,7 +50,7 @@
             <div class="row">
               
                 <div class="col-md-12">
-                    <p class="header-style" >Create BPMN</p>
+                    <p class="header-style" >BPMN Details</p>
                     <button type="button" class="close cross_close resize" aria-label="Close" (click)="slideDown()">
                         <span aria-hidden="true">&times;</span>
                     </button>

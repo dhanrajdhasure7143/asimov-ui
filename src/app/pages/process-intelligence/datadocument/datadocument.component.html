@@ -64,14 +64,14 @@
   <div class="">
     <form id="DataDocTableForm">
       <table class="table" id="process_data">
-          <thead #header>
+          <thead><!-- #header -->
               <tr>
                   <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader" >
                   {{headValue}}
                   </th>
               </tr>
           </thead>
-          <tbody #container>
+          <tbody><!-- #container -->
               <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" class="tableRow">
                 <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" 
                   > 

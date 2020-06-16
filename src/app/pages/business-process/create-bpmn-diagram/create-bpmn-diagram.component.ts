@@ -209,9 +209,18 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   uploadBpmn(e){
-    if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
-      this.router.navigate(['/pages/businessProcess/uploadProcessModel'])
-      this.bpmnservice.uploadBpmn(e.addedFiles[0].name)
+    let fileName = e.target.value.split("\\").pop();
+    if(fileName){
+      let _self = this;
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
+      this.bpmnservice.uploadBpmn(fileName);
+      this.bpmnservice.setNewDiagName(fileName.split('.bpmn')[0])
+      this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
+        this.bpmnModeler.importXML(res, function(err){
+          _self.oldXml = res.trim();
+          _self.newXml = res.trim();
+        });
+      });
     }else{
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
@@ -246,7 +255,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
           'Your changes has been saved and submitted for approval successfully.',
           'success'
         )
-        this.router.navigateByUrl("/pages/approvalWorkflow/home")
+        // this.router.navigateByUrl("/pages/approvalWorkflow/home")
         this.spinner.hide()
       },
       err => {
