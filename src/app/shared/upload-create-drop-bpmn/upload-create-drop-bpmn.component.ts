@@ -113,6 +113,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       });
     });
     let _self = this;
+    this.slideDown();
     this.bpmnModeler.on('element.changed', function(){
       let now = new Date().getTime();
       if(now - _self.last_updated_time > 10*1000){

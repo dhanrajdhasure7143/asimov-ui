@@ -154,27 +154,7 @@
   .imageI{
     width: 16px;;
 }
-.imageI1{
-  width: 12px;
-}
-.btn_style{
-    margin: 0px -6px 0px 10px;
-    background-color: white;
-    border-radius: 2px;
-}
-.btn_style1{
-  margin: 0px -6px 0px 10px;
-  background-color: transparent;
-  border-radius: 2px;
-  padding: 0px 12px;
-}
 
-.collection_btn{
-    position: absolute;
-    left: 60%;
-    bottom: 15px;
-    margin: 10px 10px -5px 10px;
-}
 
 .robotic-run {
   position: absolute;
@@ -327,4 +307,20 @@
     .rpa-nav-btn-img{
       height:50px;
       width:50px;
+    }
+
+
+    .mainLoginInput{
+      height:40px;
+      padding:0px;
+      font-size:30px;
+      margin:5px 0px;
+    }
+
+    .paddclass{
+      position:absolute;
+      width:75px;
+      margin:0px 0px 0px -10px;
+      padding:0px;
+      z-index:1;
     }

@@ -1,8 +1,9 @@
+
+<br><br><br>
 <div class="createBtn">
-  <button  type="button"
-    class="btn btn-primary" aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()"> Create
+  <button  type="button" class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()">
+    Create
   </button>
- 
 </div>
 
 <!-- tabs -->
@@ -11,8 +12,13 @@
 
 <div *ngIf="tabsArray.length > 0" class="container">
 <div class="col-md-12 row">
-<div class="col-md-2 side-slide">
-<div class="nodes" *ngFor="let node of templateNodes | slice:0:show; let i=index">
+<div class="col-md-2 side-slide" id="dragandrop">
+  <div class="paddclass">
+    <input class="mainLoginInput" style="border: 1px solid gainsboro;" type="text" [(ngModel)]="userFilter.name" name="node" placeholder="search"
+      class="form-control" autocomplete="off">
+  </div>
+  <div style="margin: 40px 0px 0px 0px;">
+<div class="nodes" *ngFor="let node of templateNodes | filterBy: userFilter | slice:0:show;  let i=index">
     <div class="" [dndDraggable]="node">
       <span>
           <img [src]="node.path" class="con-img"> 
@@ -20,6 +26,7 @@
     </div>
   </div>
   <div class="slice-icon" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
+  </div>
   </div>
 </div>
 <div class="col-md-10">
@@ -36,7 +43,7 @@
   <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/workspace']" > 
     <img src="..\\assets\\images\\RPA\\rpa-nav-workspace.svg" class="rpa-nav-btn-img">
      <br> 
-  Open Workspace  
+  Open Workspace
   </button>
   </div>
 
@@ -47,7 +54,7 @@
 
 
 <!--foms  -->
-<div *ngIf="hiddenCreateBotPopUp" class="pop-up conainer">
+<div *ngIf="hiddenCreateBotPopUp"  class="pop-up conainer">
   <div class="card">
     <div class="card-header">
       Create
@@ -55,7 +62,7 @@
     </div>  
   <div class="container card-body">
     
-    <form name="form" (ngSubmit)="f.form.valid && onCreateSubmit()" #f="ngForm" novalidate>
+    <form [formGroup]="insertbot" (ngSubmit)="onCreateSubmit()" >
         
       <div class="form-group">
         
@@ -64,12 +71,10 @@
           <div class="col-md-6">
           
             <label for="botName">Bot Name</label>
-            <input type="text" placeholder="Enter Bot Name" class="form-control" name="botName" [(ngModel)]="model.botName" 
-            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && model.botName.invalid }" required />
-          
-            <div *ngIf="f.submitted && botName.invalid" class="invalid-feedback">
-                <div *ngIf="model.botName.errors.required">Bot Name is required</div>
-            </div>
+            <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" class="form-control" name="botName" required/>
+            <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" >
+              Invalid Input
+              </div>
           
           </div>
           
@@ -77,31 +82,42 @@
           <div class="col-md-6">
             <label for="botType">Bot Type</label>
               
-            <select  class="form-control" name="botType" [(ngModel)]="model.botType">
-              <option value="" selected>--Select Bot Type--</option>
+            <select  class="form-control" formControlName="botType" name="botType" >
+              <option value="" [selected]="true">--Select Bot Type--</option>
               <option  value="Attended">Attended</option>
               <option  value="Unattended">Unattended</option>
             </select>
-            
-            <div *ngIf="f.submitted && model.botType.invalid" class="invalid-feedback">
-                <div *ngIf="model.botType.errors.required">Bot Name is required</div>
-            </div>
+            <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched" style="color: red" >
+              Invalid Input
+              </div>
           
           </div>
         
         </div>
       
         <div class="row">
-        
-          <div class="col-md-12">
-            <label for="botDescription">Bot Description</label>
-            <input type="text"  placeholder="Enter Bot Description" class="form-control" name="botDescription" [(ngModel)]="model.botDescription" 
-            #botName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && model.botDescription.invalid }" required />
+          <div class="col-md-6">
+            <label for="botDepartment">Department</label>
+              
+            <select  class="form-control" formControlName="botDepartment" name="botDepartment" >
+              <option value="" [selected]="true">--Select Department--</option>
+              <option  value="Development">Development</option>
+              <option  value="HR">HR</option>
+              <option  value="QA">QA</option>
+     
+            </select>
+            <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" >
+              Invalid Input
+              </div>
             
-            <div *ngIf="f.submitted && model.botDescription.invalid" class="invalid-feedback">
-                <div *ngIf="model.botDescription.errors.required">Bot Description is required</div>
-            </div>
           
+          </div>
+          <div class="col-md-6">
+            <label for="botDescription">Bot Description</label>
+            <input type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" class="form-control" name="botDescription"  />
+            <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" >
+            Invalid Input
+            </div>
           </div>
 
         </div>
@@ -109,7 +125,7 @@
       </div>
     
       <div class="form-group">
-        <button class="btn btn-primary">Submit</button>
+        <button class="btn btn-primary" [disabled]="insertbot.invalid" >Submit</button>
       </div>
     </form>
 

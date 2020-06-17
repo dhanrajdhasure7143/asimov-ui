@@ -2,13 +2,13 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb } from 'jsplumb';
-import { Router } from '@angular/router';
+import { Router,ActivatedRoute } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { element } from 'protractor';
 import { ContextMenuComponent } from 'ngx-contextmenu';
 import { RestApiService } from '../../services/rest-api.service';
 import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuContent.component';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { RpaHints } from '../model/rpa-module-hints';
 
 
@@ -26,6 +26,7 @@ export class RpaStudioComponent implements OnInit {
   public developercondValue:any = [];
   public excelValue:any = [];
   public optionsVisible : boolean = true;
+  public state:any;
   result:any = [];
   jsPlumbInstance;
   nodes = [];
@@ -41,7 +42,9 @@ export class RpaStudioComponent implements OnInit {
   public hiddenPopUp:boolean = false;
   public hiddenCreateBotPopUp:boolean = false;
   public form: FormGroup;
-  unsubcribe: any
+  public userFilter:any={name:""};
+  public insertbot:FormGroup;
+  unsubcribe: any;
   public fields: any[] = [];
   resp: any[] = [];
   formHeader: any[] = [];
@@ -54,12 +57,31 @@ export class RpaStudioComponent implements OnInit {
   exectionValue: any;
   tabsArray: any[] = [];
   tabActiveId: string;
-  constructor(private router: Router, private dt:DataTransferService,private rest:RestApiService,
-    private hints:RpaHints) { 
+  constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
+    private hints:RpaHints, private formBuilder:FormBuilder) { 
     this.show = 5;
+    
+    this.insertbot=this.formBuilder.group({
+      botName:["", Validators.required],
+      botDepartment:["", Validators.required],
+      botDescription:[""],
+      botType:["", Validators.required],
+  });
+  
   }
 
   ngOnInit() {
+    if(localStorage.getItem("enablecreate"))
+    {
+      this.hiddenCreateBotPopUp=true;
+      localStorage.removeItem("enablecreate");
+      this.insertbot.reset();
+    }
+    else
+    {
+      this.hiddenCreateBotPopUp=false;
+    }
+
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Automation"});
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.rpaHomeHints);
@@ -112,30 +134,24 @@ export class RpaStudioComponent implements OnInit {
     list.splice(list.indexOf(item), 1);
   }
 
-  execution(){
-    let eqObj:any
-    this.rest.execution(eqObj).subscribe(data => {this.exectionVal(data)},(error) => {
-      alert(error);
-    })
-  }
-  exectionVal(data){
-    console.log(data);
-    
-  }
-
   onCreateSubmit() {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
     this.hiddenCreateBotPopUp = false
     let temp : any={};
+    this.model=this.insertbot.value;
+    console.log(this.model);
     temp = this.model;
+
     this.model = {};
-    this.tabsArray.push(temp);
+  
+    this.tabsArray.push(temp);  
     this.tabActiveId = temp.botNamee
     console.log(this.tabsArray);
+    this.insertbot.reset();
     
   }
   onCreate(){
-    this.model.botType="";
+    this.insertbot.reset();
     this.hiddenCreateBotPopUp = true
   }
   closeBot($event) {

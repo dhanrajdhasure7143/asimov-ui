@@ -95,13 +95,20 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   attribute(data:any){
   return this.http.get('/rpa-service/get-attributes/'+data)
   }
-  saveBot(data:any):Observable<any>{
-    return this.http.post('/rpa-service/save-bot',data)
+    saveBot(data:any):Observable<any>
+    {
+      return this.http.post('/rpa-service/save-bot',data)
     }
-  getUserPause(botId):Observable<any> {
+
+    updateBot(data:any)
+    {
+      return this.http.post('/rpa-service/update-bot',data)
+    }
+  
+  getUserPause(botId){
     return this.http.post('/rpa-service/pause-bot/',botId)
   }
-  getUserResume(botId):Observable<any> {
+  getUserResume(botId){
     return this.http.post('/rpa-service/resume-bot/',botId)
   }
   botStatistics(){
@@ -110,18 +117,25 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   listEnvironments(){
     return this.http.get("/rpa-service/agent/get-environments")
   }
-  execution(data:any):Observable<any>{
-    return this.http.post('/rpa-service/start-bot/',data)
+  execution(botid:number,data:any){
+    let url='/rpa-service/start-bot/'+botid;
+    console.log(url);
+    return this.http.post(url,data)
   }
+
   deployremotemachine(botId){
-    return this.http.post('/rpa-service/agent/deploy-bot/',botId)
+    let data=null;
+    return this.http.post('/rpa-service/agent/deploy-bot?botId='+botId,data);
   }
+  
   getpredefinedbots(){
-    return this.http.get("/assets/definebots.json")/*jitendra: need to replace URL*/
+    return this.http.get("/rpa-service/getall-predefinedbots")/*jitendra: need to replace URL*/
   }
-  scheduleList(data:any):Observable<any>{
+
+  scheduleList(data:any){
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+42,data)
   }
+
   addenvironment(data:any):Observable<any>
   {
     const requestOptions: Object = {
@@ -131,7 +145,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.post<any>("/rpa-service/agent/save-environment",data, requestOptions);
   }
 
-  deleteenvironment(data:any):Observable<any>
+  deleteenvironment(data:any) :Observable<any>
   {
     const requestOptions: Object = {
       responseType: 'text'
@@ -156,6 +170,13 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     else{ 
       return this.http.get('/rpa-service/load-process-info/processid='+id);    
     }
+  }
+  saveConnectorConfig(body,categoryName,processName,piId){
+    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,httpOptions)
+  }
+  getBotVersion(botid)
+  {
+   return this.http.get("/rpa-service/bot-version?botId="+botid);
   }
 
 
@@ -182,9 +203,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   getvaraintGraph(piId){
     return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,httpOptions)
   }
-  saveConnectorConfig(body,categoryName,processName,piId){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,httpOptions)
-  }
+
 
 }
 

@@ -20,9 +20,8 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { RpaHints } from './model/rpa-module-hints';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
-
-
-
+import { RpaDragHints } from './model/rpa-workspace-module-hints';
+import { FilterPipeModule } from 'ngx-filter-pipe';
 
 
 @NgModule({
@@ -31,6 +30,7 @@ import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module'
     CommonModule,
     RpautomationRoutingModule,
     DndModule,
+    FilterPipeModule,
     DataTablesModule,
     NgbModule,
     ContextMenuModule.forRoot(),
@@ -43,6 +43,6 @@ import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module'
     TooltipModule.forRoot(),
     ModalModule.forRoot()
   ],
-  providers: [RpaHints]
+  providers: [RpaHints,RpaDragHints]
 })
 export class RpautomationModule { }
