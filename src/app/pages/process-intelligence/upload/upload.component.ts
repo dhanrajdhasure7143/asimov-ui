@@ -125,7 +125,7 @@ export class UploadComponent implements OnInit {
     const reader: FileReader = new FileReader();
     
     reader.onload = (e: any) => {
-      console.log('this.data',e);
+      // console.log('this.data',e);
       const bstr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(bstr, {type: 'binary'});
       const wsname: string = wb.SheetNames[0];
@@ -176,7 +176,7 @@ localStorage.setItem("fileData",JSON.stringify(excelfile))
       const xml = parser.parseFromString(_xml, "text/xml");
       let _obj = _self.ngxXml2jsonService.xmlToJson(xml);
       if(!_obj['log'])
-      console.log(_obj['log']);
+      // console.log(_obj['log']);
       var resultTable = _obj['log']['trace'][0]['event'];
       let xesData = [];
       resultTable.forEach(e => {
@@ -200,7 +200,7 @@ localStorage.setItem("fileData",JSON.stringify(excelfile))
 //   document.getElementById("foot").classList.remove("slide-up");
 // }
 testConnection(){
-console.log("userName",this.dbDetails);
+// console.log("userName",this.dbDetails);
   this.isSave=false;
 }
 
@@ -219,9 +219,9 @@ onDbSelect(){
       quoteStrings: '"',
       decimalseparator: '.',
       showLabels: true,
-      showTitle: true,
+      showTitle: false,
       useBom: true,
-      headers: ['Case_id', 'Start_Timestamp', 'End_Timestamp', 'Activity', 'Resource','Role']
+      headers: ['S.No', 'Order Number', 'Start Timestamp', 'End Timestamp', 'Resource']
     };
 
     new ngxCsv(data,'Sample_Template',options);
@@ -229,14 +229,15 @@ onDbSelect(){
 
   getAlluserProcessPiIds(){
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data
-      console.log('data',this.process_graph_list)})
+      // console.log('data',this.process_graph_list)
+    })
   }
   loopTrackBy(index, term){
     return index;
   }
   onGraphSelection(selectedpiIdData){
     this.isgraph=true;
-    console.log("selected PIID",selectedpiIdData);
+    // console.log("selected PIID",selectedpiIdData);
     const piid={"piId":selectedpiIdData.piId}
     this.router.navigate(['/pages/processIntelligence/flowChart',piid])
     // this.rest.getfullGraph(selectedpiIdData.piId).subscribe(data=>{this.fullgraph=data

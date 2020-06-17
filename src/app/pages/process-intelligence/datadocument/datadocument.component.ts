@@ -60,7 +60,7 @@ export class DatadocumentComponent implements OnInit {
         this.fileData = this.fileData.slice(1);
         this.fileData = this.fileData.slice(0, this.fileData.length-1);
         this.fileData = this.fileData;
-         console.log(this.fileData);
+        //  console.log(this.fileData);
         for (var f = 0; f < this.headerData.length; f++) {
           switch (f) {
             case 0:
@@ -111,7 +111,7 @@ export class DatadocumentComponent implements OnInit {
   //  obj[this.headerData[0]]=this.cathead1
     // headerstype.push(obj)
 
-    console.log('headerstypeArray',headerstypeArray);
+    // console.log('headerstypeArray',headerstypeArray);
     localStorage.setItem('headertypeObj',JSON.stringify(headerstypeArray))
     this.router.navigate(['/pages/processIntelligence/selection']);
 

@@ -132,7 +132,7 @@ export class FlowchartComponent implements OnInit {
     })
     if(this.piIdNumber!=null){
       piId=this.piIdNumber.piId
-      // this.graphIds = piId;
+      this.graphIds = piId;
     }
     setTimeout(() => {
       this.onchangegraphId(piId);

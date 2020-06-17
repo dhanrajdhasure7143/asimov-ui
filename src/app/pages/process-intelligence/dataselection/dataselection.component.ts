@@ -60,13 +60,13 @@ export class DataselectionComponent implements OnInit {
     this.dt.changeHints(this.hints.dataDocumentHints);
 
     var headertype=JSON.parse(localStorage.getItem('headertypeObj'))
-    console.log('storage',headertype)
+    // console.log('storage',headertype)
     for(var i=0;i<headertype.length;i++){
       for (let [key, value] of Object.entries(headertype[i])) {
         this.headertypeArray.push(value)
       } 
     }
-    console.log(this.headertypeArray);
+    // console.log(this.headertypeArray);
     this.cathead1=this.headertypeArray[0]
     this.cathead2=this.headertypeArray[1];
     this.cathead3=this.headertypeArray[2];
@@ -79,7 +79,7 @@ export class DataselectionComponent implements OnInit {
       var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
-        console.log('fileData',this.headerData);
+        // console.log('fileData',this.headerData);
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
     //   }
