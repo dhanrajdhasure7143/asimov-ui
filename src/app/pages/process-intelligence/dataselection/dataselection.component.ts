@@ -101,7 +101,8 @@ export class DataselectionComponent implements OnInit {
         "categoryName": this.othercategory
         }
       this.rest.addCategory(otherCategory).subscribe(res=>{
-        console.log('addCategoryResponse',res)   })
+        // console.log('addCategoryResponse',res)   
+      })
     }
     
 
@@ -136,7 +137,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       }
   }
   let renamestring='';
-  console.log("renamesObj",renamesObj);
   for(var k=0;k<renamesObj.length;k++){
     for (let [key, value] of Object.entries(renamesObj[k])) {
       if(key != 'S.No'){
@@ -146,7 +146,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     }
   }
   renamestring=renamestring.slice(0,-1)
-      console.log('keys',renamestring);
+      // console.log('keys',renamestring);
 
   var renamesObjOne=[]
   for(var j=0;j<renamesObj.length;j++){
@@ -203,7 +203,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
         // var piId=connectorBody.config["transforms.InsertField.static.value"]
         // localStorage.setItem('piId',this.processId)
-        console.log('resp',connectorBody);
         const piid={"piId":this.processId}
         //const piid={"piId":411}
             this.router.navigate(['/pages/processIntelligence/flowChart',piid]);
@@ -212,12 +211,9 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
 
     }
   sort(ind,property) {
-      console.log('property',ind,property);
-      
     this.isDesc = !this.isDesc; //change the direction    
     let direction = this.isDesc ? 1 : -1;
     let index = this.headerData.indexOf(property);
-    console.log(index);
     
     return this.checkNsort(direction, index);
   }
@@ -250,7 +246,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       }else{
     // console.log('log',tr_index, index,e, v);
     this.id.push(v.trim())
-    console.log('id',this.id);
+    // console.log('id',this.id);
     if(this.id.length == 0){
       this.headerName=''
     }
@@ -268,11 +264,11 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         if (result.value) {
           this.name=v.trim();
         obj[this.name]='caseID';
-        console.log(obj);
+        // console.log(obj);
         this.headerArray.push(obj)
         this.headerName = 'caseID';
         this.selected=v;
-        console.log(this.selected)
+        // console.log(this.selected)
         // this.global.notify(this.headerName, "success");
         for(var x = 0;x < this.fileData.length;x++){
             if(!this.validCells['row'+x])
@@ -295,9 +291,9 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       // }
       
         this.name=v
-        console.log(v +":::::::::::"+this.name)
+        // console.log(v +":::::::::::"+this.name)
         obj[this.name]=v;
-        console.log(obj);
+        // console.log(obj);
       this.headerArray.push(obj)
       for(var x = 0;x < this.fileData.length;x++){
         if(!this.validCells['row'+x])
@@ -305,7 +301,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
           this.validCells['row'+x].push('cell'+index);
         }
     }
-    console.log('headerArray',this.headerArray);
+    // console.log('headerArray',this.headerArray);
     if(this.headerArray.length == 5){
       this.isgenerate=true;
     }
@@ -338,12 +334,15 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
   
   getCategoriesList(){
     this.rest.getCategoriesList().subscribe(res=>{this.categoriesList=res
-    console.log('list',this.categoriesList.data)})
+    // console.log('list',this.categoriesList.data)
+  })
   }
 
   onchangeCategories(categoryName){
     if(categoryName =='other'){
       this.isotherCategory=true;
+    }else{
+      this.isotherCategory=false;
     }
   }
   resetcaseId(){

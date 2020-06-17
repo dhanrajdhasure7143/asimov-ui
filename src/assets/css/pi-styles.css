@@ -405,7 +405,7 @@ height: 20px;
 .custom_tooltip hr{
   margin-top: -5px !important;
   margin-bottom: 5px !important;
-width: 100%;
+  width: 100%;
 }
 .left_dropdwn{
   background:none !important;
@@ -566,7 +566,7 @@ border: 1px solid lightgray !important;
   display: none;
   padding: 5px;
   border-radius: 10px;
-  width: 200px;
+  width: auto;
   margin-right: 20px;
   height: 230px;
   align-self: auto !important;
@@ -609,6 +609,7 @@ border: 1px solid lightgray !important;
   font-size: 8px;
   font-weight: bold;
   margin-right: 30px;
+  padding-left: 8px;
   }
 #receive{
   font-size: 11px;

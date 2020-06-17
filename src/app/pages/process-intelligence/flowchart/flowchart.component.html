@@ -6,7 +6,7 @@
     <div class="col-md-9">
         <div class='col-sm-12'>
             <div class="lableHide"></div>
-            <div class="tooltip_button tooltip1"><img src="..\assets\images\PI\options_icon.svg" id="variants">
+            <div class="tooltip_button tooltip1" [hidden]='true'><img src="..\assets\images\PI\options_icon.svg" id="variants">
                 <div class="tooltiptext1">
                     <div>
                         <h5 class="btn-default dropdown-toggle" [ngClass]="isfrequencymetrics==true?'isactive':''" (click)='onfrequency()' type="button">Frequency         <span class="caret"></span>

@@ -48,7 +48,6 @@ export class DatadocumentComponent implements OnInit {
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/datadocument", "title": "Data Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
     // this.dt.current_piData.subscribe(resOne => {
-    //   console.log('res',resOne);
       
     //   if (resOne) {
         var restwo=localStorage.getItem('fileData')
@@ -60,7 +59,6 @@ export class DatadocumentComponent implements OnInit {
         this.fileData = this.fileData.slice(1);
         this.fileData = this.fileData.slice(0, this.fileData.length-1);
         this.fileData = this.fileData;
-        //  console.log(this.fileData);
         for (var f = 0; f < this.headerData.length; f++) {
           switch (f) {
             case 0:
@@ -111,7 +109,6 @@ export class DatadocumentComponent implements OnInit {
   //  obj[this.headerData[0]]=this.cathead1
     // headerstype.push(obj)
 
-    // console.log('headerstypeArray',headerstypeArray);
     localStorage.setItem('headertypeObj',JSON.stringify(headerstypeArray))
     this.router.navigate(['/pages/processIntelligence/selection']);
 
@@ -228,9 +225,6 @@ export class DatadocumentComponent implements OnInit {
   }
 
   getDataType(index, fData, dType) {
-    // console.log(index);
-    // console.log(fData);
-
     if(dType.indexOf('Timestamp') != -1 || dType.indexOf('Time') != -1){
       if (index == 0 ) {
         if (this.isDate(fData) == true) {
@@ -342,7 +336,6 @@ export class DatadocumentComponent implements OnInit {
   isDate(date){
     if(!isNaN(Date.parse(date)))
 	{
-    // console.log("Valid Date \n");
     return true;
 	} else {
     return false;
@@ -350,8 +343,6 @@ export class DatadocumentComponent implements OnInit {
   }
 
   getDataTypeChange(hData, cData){
-    // console.log(hData);
-    // console.log(cData);
    //if(this.dTypeArray.length == 0){
       this.dTypeArray.push({'colType': hData, 'type': cData});
     //} else {
@@ -359,20 +350,15 @@ export class DatadocumentComponent implements OnInit {
         if(this.dTypeArray[i].colType == hData){
           this.dTypeArray[i].type = cData;
         // } else {
-        //   console.log("in else")
         //   this.dTypeArray.push({colType: hData, type: cData});
         // }
       }
     }
-    // console.log(this.dTypeArray)
     let diffArray = this.removeDuplicates(this.dTypeArray);
-    // console.log(diffArray)
-    localStorage.setItem("DDType",JSON.stringify(diffArray));
-    
+    // localStorage.setItem("DDType",JSON.stringify(diffArray));
   }
   removeDuplicates(arr) {
     let newArray = []; 
-              
             // Declare an empty object 
             let uniqueObject = {}; 
               
