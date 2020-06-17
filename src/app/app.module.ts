@@ -14,12 +14,14 @@ import { LoginComponent } from './login/login.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GlobalScript } from './shared/global-script';
+import { LoaderService } from './services/loader/loader.service';
+import { LoaderInterceptor } from './helpers/loader-interceptor.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    
+
   ],
 
   imports: [

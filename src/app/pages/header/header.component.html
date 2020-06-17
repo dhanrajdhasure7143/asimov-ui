@@ -5,16 +5,25 @@
         <div class=" c1">
           <div class="abrand">
             <div class="row">
-              <div class="col-md-3">
+              <div class="col-md-2">
+                <div class="abrand_div" routerLink="/pages/home">
+                    <img src="assets/images/logo_img.png">
+                  <!-- <h3 id="brand">GiB-2.0 <sup><i class="fa fa-registered" aria-hidden="true"></i></sup></h3>
+                  <small id="sm">State of Automation</small> -->
+                </div>
+              </div>
+              <div class="col-md-10 header_nav">
+                <ul class="nav navbar-nav  navbar-right ">
+              <!-- <div class="col-md-3">
                 <div class="abrand_div" routerLink="/pages/home">
                   <div id="brand">EP<b>Soft</b><sup><i class="fa fa-registered" aria-hidden="true"></i></sup></div>
-                  <small id="sm">Intelligent Automation Platform</small>
+                  <small id="sm">Intelligent Automation Platform</small> -->
                 <!-- <div class="abrand_div" routerLink="/pages/home">
-                  <img src="assets/images/logo_img.png"></div>-->
-                </div> 
-              </div>
+                  <img src="assets/images/logo_img.png">
+                </div> -->
+              <!-- </div>
               <div class="col-md-9">
-                <ul class="nav navbar-nav  navbar-right user_list">
+                <ul class="nav navbar-nav  navbar-right user_list"> -->
                   <li class="breadcrumb_li"> <div class="breadcrumb">
                       <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
                       <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
@@ -26,15 +35,15 @@
                     <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img"> 
                       <label>{{each_page.title}}</label> </a>
                   </li>
-                  <li class=""> <img src="assets/images/Group 192.svg"> </li>
+                  <li class="notification-icon"> <img src="assets/images/Group 192.svg"> </li>
                   <li class=""> <img src="assets/images/pro1.png"> 
                     <div class="dropdown">
                       <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
-                      <ul class="dropdown-menu">
-                        <li><a href="#home"><i class="far fa-user"></i> My Profile</a></li>
-                        <li><a href="#about"><i class="fas fa-cog"></i>Settings</a></li>
-                        <li><a href="#contact"><i class="fas fa-sign-out-alt"></i>Signout</a></li>
-                      </ul>
+                      <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
+                        <a href="#home"><i class="far fa-user"></i> My Profile</a>
+                        <a href="#about"><i class="fas fa-cog"></i>Settings</a>
+                        <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a>
+                      </div>
                     </div>
                   </li>
                 </ul>

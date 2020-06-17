@@ -5,7 +5,8 @@ import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json'
+    // 'Content-Type': 'application/json',
+    'Authorization': 'Bearer '+localStorage.getItem("accessToken")
   }),
 };
 
@@ -31,7 +32,7 @@ export class RestApiService {
   }
   constructor(private http:HttpClient) { }
   getAccessToken(){
-    let data = {"userId":"gopi.palla@epsoftinc.com",
+    let data = {"userId":"venkata.simhadri@epsoftinc.com",
                 "password":"Welcome@123"};
     return this.http.post('/api/login/beta/accessToken',data);
   }
@@ -99,15 +100,15 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
       return this.http.post('/rpa-service/save-bot',data)
     }
 
-    updateBot(data:any):Observable<any>
+    updateBot(data:any)
     {
       return this.http.post('/rpa-service/update-bot',data)
     }
   
-  getUserPause(botId):Observable<any> {
+  getUserPause(botId){
     return this.http.post('/rpa-service/pause-bot/',botId)
   }
-  getUserResume(botId):Observable<any> {
+  getUserResume(botId){
     return this.http.post('/rpa-service/resume-bot/',botId)
   }
   botStatistics(){
@@ -116,7 +117,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   listEnvironments(){
     return this.http.get("/rpa-service/agent/get-environments")
   }
-  execution(botid:number,data:any):Observable<any>{
+  execution(botid:number,data:any){
     let url='/rpa-service/start-bot/'+botid;
     console.log(url);
     return this.http.post(url,data)
@@ -131,7 +132,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/rpa-service/getall-predefinedbots")/*jitendra: need to replace URL*/
   }
 
-  scheduleList(data:any):Observable<any>{
+  scheduleList(data:any){
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+42,data)
   }
 
@@ -144,7 +145,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.post<any>("/rpa-service/agent/save-environment",data, requestOptions);
   }
 
-  deleteenvironment(data:any):Observable<any>
+  deleteenvironment(data:any) :Observable<any>
   {
     const requestOptions: Object = {
       responseType: 'text'
@@ -170,11 +171,39 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
       return this.http.get('/rpa-service/load-process-info/processid='+id);    
     }
   }
-
-
+  saveConnectorConfig(body,categoryName,processName,piId){
+    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,httpOptions)
+  }
   getBotVersion(botid)
   {
    return this.http.get("/rpa-service/bot-version?botId="+botid);
   }
 
+
+  // PI module rest api's
+
+  fileupload(file){
+    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file,httpOptions)
+  }
+  getCategoriesList(){
+    return this.http.get('/processintelligence/v1/processgraph/categories',httpOptions)
+  }
+  addCategory(data){
+    return this.http.post('/processintelligence/v1/processgraph/categories',data,httpOptions)
+  }
+  getAlluserProcessPiIds(){
+    return this.http.get('/processintelligence/v1/processgraph/userProcess',httpOptions)
+  }
+  getAllVaraintList(piId){
+    return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId,httpOptions)
+  }
+  getfullGraph(piId){
+    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId,httpOptions)
+  }
+  getvaraintGraph(piId){
+    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,httpOptions)
+  }
+
+
 }
+

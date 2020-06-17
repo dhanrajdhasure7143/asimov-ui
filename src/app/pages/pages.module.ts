@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -11,13 +11,17 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { SharebpmndiagramService } from './services/sharebpmndiagram.service';
 import { PagesHints } from './model/pages.model';
+import { LoaderService } from '../services/loader/loader.service';
+import { LoaderInterceptor } from '../helpers/loader-interceptor.service';
+import { MyLoaderComponent } from './my-loader/my-loader.component';
 
 @NgModule({
   declarations: [
     PagesComponent,
     HomeComponent,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    MyLoaderComponent
   ],
   imports: [
     CommonModule,
@@ -27,6 +31,9 @@ import { PagesHints } from './model/pages.model';
     PagesRoutingModule,
     SharedModule
   ],
-  providers: [SharebpmndiagramService, PagesHints]
+  providers: [SharebpmndiagramService, PagesHints,
+  //  LoaderService,
+  //  { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+]
 })
 export class PagesModule { }

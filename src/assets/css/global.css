@@ -7,7 +7,7 @@
 /* App Module - login component styles -Starts*/
 .form{
     position:absolute;
-    left:50%;
+    left:40%;
     transform:translate(-33%,108%);
     border-radius: 10px;
     padding:0px 30px;
@@ -84,7 +84,7 @@ h6{
   font-size: 12px;
   cursor: pointer;
   margin: 5px;
-  position: absolute;
+  position: fixed;
   bottom: 10px;
   right: 10px;
 }
@@ -104,14 +104,15 @@ li.breadcrumb_li{
   width: 36%;
 }
 div.breadcrumb {
-  font-size: 13px;
+  font-size: 12px;
 }
 div.breadcrumb span{
   user-select: none;
   cursor: pointer;
 }
 div.breadcrumb span:hover{
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-size: 13px;
 }
 div.breadcrumb span:focus, div.breadcrumb span:active{
   outline: none;
@@ -164,7 +165,7 @@ label{
 }
 li a:hover, li a:active{
   background-color: #0061cf !important;
-  color:white;
+  color:white !important;
 }
 li a:hover label, li a:active label{
   color:white;
@@ -185,20 +186,20 @@ svg:hover {
   color: #0062cf;
   font-size:50px;
 } 
-li{
+.header_nav li{
   color: #0062cf;
   list-style-type: none;
   position: relative;
 }
-li a {
+.header_nav li a {
   display: block;
   color: #0062cf;
   text-align: center;
-  padding: 12px;
+  /* padding: 12px; */
   text-decoration: none;
-  height: 90px;
+  /* height: 90px; */
 }
-ul {
+.header_nav ul {
   list-style-type: none;
   display: flex;
   align-items: center;
@@ -226,21 +227,19 @@ i.fas.fa-chevron-down {
   position: absolute;
   background-color: inherit;
   min-width: 105px;
-  overflow: auto;
   z-index: 1;
   border:1px solid #0062cf;
-  margin-left: -21px;
+  margin-left: -40px;
   margin-right: 0px;
 }
-
 .dropdown-content a {
   color: #0062cf;
-  padding: 12px 8px;
+  padding: 0px 0px !important;
   text-decoration: none;
-  display: block;
+  /* display: block; */
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {background-color: white !important;}
 
 .show {display: block;} 
 .fa-cog{
@@ -262,7 +261,7 @@ padding-right: 5px;
   margin: 0;
   padding: 5px;
   height: 30px;
-  color: #0062cf;
+  color: black !important;
   text-align: left;
 }
 .user_list .dropdown-menu{
@@ -274,7 +273,7 @@ padding-right: 5px;
   background-color: #f8f8f8;
   padding: 6px;
   margin-bottom: 20px;
-  margin-top: 18px;
+  /* margin-top: 18px; */
 }
 .module-heading-image{
   width: 36px;

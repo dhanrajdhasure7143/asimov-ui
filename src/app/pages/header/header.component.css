@@ -1,0 +1,26 @@
+.abrand_div img{
+    width:190px;
+}
+.abrand_div{
+    cursor: pointer;
+    outline: none !important;
+}
+.notification-icon{
+    margin-top: -24px !important;
+    margin-right: 20px;
+    cursor: pointer;
+}
+.icon_middle label{
+    margin-top: 5px;
+    line-height: 1.4 !important;
+}
+.drop_down a{
+    padding: 10px 10px !important;
+    color: black !important;
+    font-size: 14px;
+}
+.drop_down a:hover{
+    color: #0162cb !important;
+    font-weight: bold !important;
+}
+

@@ -7,6 +7,7 @@ import { DatadocumentComponent } from './datadocument/datadocument.component';
 import { ProcessintelligenceComponent } from './processintelligence/processintelligence.component';
 import { ProcessintelligencebpmnComponent } from './processintelligencebpmn/processintelligencebpmn.component';
 import { FlowchartComponent } from './flowchart/flowchart.component';
+import { DataselectionComponent } from './dataselection/dataselection.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,7 @@ const routes: Routes = [
     {path:'processIntelligence', component:ProcessintelligenceComponent},
     {path:'processintelligencebpmn', component:ProcessintelligencebpmnComponent},
     {path:'flowChart', component:FlowchartComponent},
+    {path:'selection', component:DataselectionComponent},
     {path:'**', redirectTo:'/upload', pathMatch: 'full'}
   ]}
 ];

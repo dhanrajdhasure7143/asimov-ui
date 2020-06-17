@@ -17,7 +17,12 @@ import { FilterComponent } from './filter/filter.component'
 import { FlowchartComponent } from './flowchart/flowchart.component';
 import { SearchPipe } from './pipes/search.pipe';
 import { PiHints } from './model/process-intelligence-module-hints';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { DataselectionComponent } from './dataselection/dataselection.component';
 import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 @NgModule({
   declarations: [
@@ -30,6 +35,7 @@ import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
     FilterComponent,
     FlowchartComponent,
     SearchPipe,
+    DataselectionComponent,
     PibpmnfilterComponent
   ],
   imports: [
@@ -40,7 +46,10 @@ import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
     NgxDropzoneModule,
     ProcessIntelligenceRoutingModule,
     SharedModule,
-    ModalModule.forRoot()
+    MatExpansionModule,
+    ModalModule.forRoot(),
+    Ng2SearchPipeModule,
+    NgxSpinnerModule
 
   ],
   providers:[PiHints]

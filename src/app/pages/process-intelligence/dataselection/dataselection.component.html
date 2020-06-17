@@ -1,0 +1,129 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-4" id="title">
+          <!-- <h5 style="font-weight:600;color: rgb(90, 88, 88)">     <img src="assets/images/Group 208.svg" style="padding-right: 10px">Data Document</h5> -->
+          <button class="btn btn-warning pi_btn" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
+      </div>
+      <div class="col-md-4 col-sm-4">
+          <div class="searchblock">
+              <!-- <input type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm" >
+              <i class="fa fa-search" aria-hidden="true" style="color: gray"></i> -->
+          </div>
+      </div>
+      <div class="col-md-4 col-sm-12">
+          <button class="btn btn-primary pi_btn pull-right" [disabled]="!isgenerate" id="generateGraph" (click)="generatepg()">
+              <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
+      </div>
+    </div>
+    <!-- <div class="row" *ngIf="headerName" class="columnSelection">
+      <div class="col-md-4"><b>Select Column - Step {{step_id}}/6:"{{headerName}}"</b></div>
+      <div class="col-md-4"><small>(Click on the {{headerName}} Value Column for Data mapping)</small></div> -->
+
+      <!-- <div class="col-md-2"> <svg width="12" height="12" class="svg">
+          <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
+        </svg> Success Mapping
+      </div> -->
+      <!-- <div class="col-md-2">
+        <svg width="12" height="12" class="svg">
+          <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
+        </svg> Error Mapping
+      </div> -->
+    <!-- </div> -->
+    <div class="">
+      <form id="DataDocTableForm">
+        <table class="table" id="process_data">
+            <thead #header>
+                <tr>
+                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy;let i=index" class="tableHeader" (click)= "sort(i,headValue)">
+                    {{headValue}}</th>
+                </tr>
+                <tr>
+                    <th *ngFor="let headValue of headerData;let i1=index;" class="tableHeader">
+                        <div *ngIf='selected==headValue' [ngClass]="selected==headValue?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==headValue" class='reset_btn' (click)='resetcaseId()'><i class='fa fa-times'></i></button> </div>
+                        <select name="cathead1" [disabled]='true' [(ngModel)]="cathead1"  class="form-control"  *ngIf="headValue == 'S.No'">
+                          <option>String</option>
+                          <option>Integer</option>
+                          <option>Date/Time</option>
+                          </select> 
+                        <select [disabled]='true' name="cathead2" [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead1)" *ngIf="headValue == 'Case ID' || headValue == 'Order Number' || headValue == 'caseID'">
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                      </select>
+                      <select name="cathead3" [disabled]='true' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead2)" *ngIf="headValue == 'Actvity' || headValue == 'Operation'">
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                      </select>
+                      <select name="cathead4" [disabled]='true' [(ngModel)]="cathead4" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead3)" *ngIf="headValue == 'Start Timestamp' || headValue == 'Start Time'">
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                      </select>
+                      <select name="cathead5" [disabled]='true' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead4)" *ngIf="headValue == 'End Timestamp' || headValue == 'End Time'">
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                      </select>
+                      <select name="cathead6" [disabled]='true' [(ngModel)]="cathead6" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead5)" *ngIf="headValue == 'Resource' || headValue == 'Agent'">
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                      </select>
+                      <select name="cathead7" [disabled]='true' [(ngModel)]="cathead7" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headValue == 'Role'">
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                      </select>
+                        </th>
+
+                    
+                    
+                    </tr>
+            </thead>
+            <tbody #container>
+                    
+                <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" class="tableRow">
+                  <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val)"
+                    [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1"> 
+                    {{row[j] || ' '}}
+                  </td>
+                </tr>
+            </tbody>
+        </table>
+      </form>
+    </div>
+</div>
+
+<div id="myModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" (click)="closePopup();">&times;</span>
+        <h4>Save Process</h4>
+      </div>
+    <div class="modal-body">
+        <form autocomplete="off" #processForm="ngForm"> 
+          <div class="container m-contanier">
+            <label for="category"><b>Select Category</b></label>
+              <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
+                  <option value="undefined" hidden disabled>Select</option>
+                  <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
+
+                <option value="other">Other</option>
+              </select>
+              <div *ngIf='isotherCategory'>
+              <label for="otherCategory"><b>Enter Category</b></label>
+              <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
+              </div>
+              <!-- <label for="piId"><b>Enter Process Id</b></label>
+              <input type="text" name="piId" [(ngModel)]=processId required class="form-control" placeholder="Process Id"> -->
+            <label for="piName"><b>Enter Process Name</b></label>
+            <input type="text" name="piName" [(ngModel)]="processName" required class="form-control" placeholder="Process Name">
+              <div class="clearfix m-btn">
+                <button type="button" class="btn btn-primary pi_btn" (click)="generateGraph()">Save & Generate</button>
+              </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

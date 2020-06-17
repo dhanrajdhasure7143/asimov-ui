@@ -1,65 +1,210 @@
 export class ProcessGraphModel{
-    public model1 = [
-        {"key":-1, "loc":"455 -150", "category":"Start"},
-        {"key":0,  "loc":"390 -65", "name":"Shopping",  tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:20,clickCount: 0,"selected": "inactive" },
-        {"key":1, "loc":"253 12", "name":"Browse Items",tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:40,clickCount: 0,"selected": "inactive" },
-        {"key":2, "loc":"253 146", "name":"Search Items",tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:80,clickCount: 0,"selected": "inactive" },
-        {"key":3, "loc":"412 112", "name":"View Item",  tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:50,clickCount: 0,"selected": "inactive"},
-        {"key":4, "loc":"561 -17", "name":"View Cart",  tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:10,clickCount: 0,"selected": "inactive"},
-        {"key":5, "loc":"494 171", "name":"Update Cart",tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:5,clickCount: 0,"selected": "inactive"},
-        {"key":6, "loc":"650 66", "name":"Checkout",    tool:["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency"],toolCount:[1,342,58,40,40],count:80,clickCount: 0,"selected": "inactive"},
-        {"key":-2, "loc":"717 160", "category":"End"}
-    ];
 
-    public model2 = [
-        { "from": -1, "to": 0,"curviness": 0 },
-        { "from": 0, "to": 1,  "progress": "true", "text": 20 },
-        { "from": 0, "to": 2,  "progress": "true", "text": 40 },
-        { "from": 1, "to": 2,  "progress": "true", "text": 60 },
-        { "from": 2, "to": 3,  "progress": "true", "text": 80 },
-        { "from": 2, "to": 2,  "text": 65, "curviness": 20},
-        { "from": 3, "to": 0,  "text": 10},
-        { "from": 3, "to": 4,  "progress": "true","text": 7 },
-        { "from": 4, "to": 6,  "text": 85, },
-        { "from": 4, "to": 5,  "text": 22, "curviness": 0 },
-        { "from": 6, "to": 5,  "text": 13 },
-        { "from": 6, "to":-2,"curviness": 0},
-      ];
-
-      public data = [{ case:69, name:"of Cases", detail:"130 events per case on avarage", hours:72.00,varaintDetails:"5 of 25 Varaint",casesCovred:"80% cases Covered"},
-      { case:82, name:"of Cases", detail:"160 events per case on avarage", hours:72.00,varaintDetails:"8 of 25 Varaint",casesCovred:"20% cases Covered"},
-      { case:79, name:"of Cases", detail:"1130 events per case on avarage", hours:12.00,varaintDetails:"89 of 125 Varaint",casesCovred:"23% cases Covered"},
-      { case:29, name:"of Cases", detail:"123 events per case on avarage", hours:32.00,varaintDetails:"35 of 225 Varaint",casesCovred:"80% cases Covered"},
-      { case:19, name:"of Cases", detail:"130 events per case on avarage", hours:42.00,varaintDetails:"12 of 25 Varaint",casesCovred:"63% cases Covered"},
-      { case:99, name:"of Cases", detail:"1389 events per case on avarage", hours:62.00,varaintDetails:"5 of 25 Varaint",casesCovred:"89% cases Covered"},
-      { case:89, name:"of Cases", detail:"1389 events per case on avarage", hours:82.00,varaintDetails:"21 of 25 Varaint",casesCovred:"82% cases Covered"},
-      { case:69, name:"of Cases", detail:"138 events per case on avarage", hours:78.00,varaintDetails:"3 of 25 Varaint",casesCovred:"35% cases Covered"},
-      { case:81, name:"of Cases", detail:"10 events per case on avarage", hours:55.00,varaintDetails:"8 of 25 Varaint",casesCovred:"98% cases Covered"},
-      { case:25, name:"of Cases", detail:"140 events per case on avarage", hours:64.00,varaintDetails:"8 of 25 Varaint",casesCovred:"12% cases Covered"},
-      { case:55, name:"of Cases", detail:"90 events per case on avarage", hours:78.00,varaintDetails:"20 of 25 Varaint",casesCovred:"32% cases Covered"},
-      { case:43, name:"of Cases", detail:"130 events per case on avarage", hours:63.00,varaintDetails:"5 of 25 Varaint",casesCovred:"69% cases Covered"},
-      { case:12, name:"of Cases", detail:"130 events per case on avarage", hours:89.00,varaintDetails:"5 of 25 Varaint",casesCovred:"78% cases Covered"},
-      { case:76, name:"of Cases", detail:"130 events per case on avarage", hours:12.00,varaintDetails:"5 of 25 Varaint",casesCovred:"12% cases Covered"},
-      { case:32, name:"of Cases", detail:"130 events per case on avarage", hours:180.00,varaintDetails:"5 of 25 Varaint",casesCovred:"36% cases Covered"},
-    ];
-
-    public inactive_data = [
-        { case:22, name:"of Cases", detail:"130 events per case on avarage", hours:52.00,varaintDetails:"4 of 25 Varaint",casesCovred:"80% cases Covered"},
-        { case:69, name:"of Cases", detail:"130 events per case on avarage", hours:32.00,varaintDetails:"3 of 25 Varaint",casesCovred:"80% cases Covered"},
-        { case:12, name:"of Cases", detail:"130 events per case on avarage", hours:72.00,varaintDetails:"105 of 125 Varaint",casesCovred:"80% cases Covered"},
-        { case:76, name:"of Cases", detail:"130 events per case on avarage", hours:52.00,varaintDetails:"6 of 25 Varaint",casesCovred:"80% cases Covered"},
-        { case:25, name:"of Cases", detail:"130 events per case on avarage", hours:32.00,varaintDetails:"6 of 125 Varaint",casesCovred:"80% cases Covered"},
-        { case:55, name:"of Cases", detail:"130 events per case on avarage", hours:22.00,varaintDetails:"21 of 25 Varaint",casesCovred:"80% cases Covered"},
-    ];
-
-    public active_data = [
-        { case:12, name:"of Cases", detail:"130 events per case on avarage", hours:52.00,varaintDetails:"4 of 25 Varaint",casesCovred:"90% cases Covered"},
-        { case:79, name:"of Cases", detail:"120 events per case on avarage", hours:2.00,varaintDetails:"3 of 25 Varaint",casesCovred:"8% cases Covered"},
-        { case:62, name:"of Cases", detail:"110 events per case on avarage", hours:92.00,varaintDetails:"23 of 25 Varaint",casesCovred:"60% cases Covered"},
-        { case:46, name:"of Cases", detail:"30 events per case on avarage", hours:122.00,varaintDetails:"9 of 25 Varaint",casesCovred:"55% cases Covered"},
-        { case:53, name:"of Cases", detail:"160 events per case on avarage", hours:342.00,varaintDetails:"6 of 25 Varaint",casesCovred:"25% cases Covered"},
-        { case:50, name:"of Cases", detail:"190 events per case on avarage", hours:98.00,varaintDetails:"6 of 25 Varaint",casesCovred:"63% cases Covered"},
-    ];
-
-    public reports = [{cases:20,activities:50,roles:1053,resources:25,started:"06/03/2020",ended:"25/03/2020"}];
-}
+    public flowchartData=[{41:{"nodeDataArraycase": [{
+        "key": -1,
+        "name": "Start"
+        },
+        {
+        "key": 0,
+        "name": "Vendor Creates Invoice",
+        "count": 80,
+        // "linkArray": ["Scan Invoice"],
+        "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+        "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+        "toolCount": [1, 2, 3, 4, 5, 6, 7, 8]
+        },
+        {
+        "key": 1,
+        "name": "Scan Invoice",
+        "count": 80,
+        // "linkArray": ["Clear Invoice"],
+        "linkArray": [{ linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Enter in SAP", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+        "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+        "toolCount": [1, 342, 58, 40, 40, 91,24,65]
+        },
+        {
+        "key": 2,
+        "name": "Enter in SAP",
+        "count": 80,
+        // "linkArray": ["Due Date Passed"],
+        "linkArray": [{ linkNode: "Vendor Creates Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+        "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+        "toolCount": [7, 32, 58, 40, 0, 91, 42, 58]
+        },
+        {
+        "key": 3,
+        "name": "Book Invoice",
+        "count": 80,
+        // "linkArray": ["Clear Invoice"],
+        "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Due Date Passed", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+        "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+        "toolCount": [6, 342, 58, 40, 40, 91, 42, 58]
+        },
+        {
+        "key": 4,
+        "name": "Clear Invoice",
+        "count": 80,
+        // "linkArray": ["Due Date Passed"],
+        "linkArray": [{ linkNode: "Due Date Passed", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+        "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+        "toolCount": [2, 342, 58, 0, 40, 91, 42, 58]
+        },
+        {
+        "key": 5,
+        "name": "Due Date Passed",
+        "count": 80,
+        // "linkArray": [],
+        "linkArray": [{ linkNode: "Vendor Creates Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Enter in SAP", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+        "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+        "toolCount": [1, 342, 58, 0, 0, 42, 58, 66]
+        },
+        {
+        "key": -2,
+        "name": "End"
+        }
+        ]
+    },
+           14:{ "nodeDataArraycase": [{
+            "key": -1,
+            "name": "Start"
+            },
+            {
+            "key": 0,
+            "name": "Vendor Creates Invoice",
+            "count": 80,
+            // "linkArray": ["Scan Invoice", "Book Invoice"],
+            "linkArray": [{ linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Enter in SAP", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [10, 20, 30, 40, 50, 60, 70, 80]
+            },
+            {
+            "key": 1,
+            "name": "Scan Invoice",
+            "count": 80,
+            // "linkArray": ["Enter in SAP"],
+            "linkArray": [{ linkNode: "Vendor Creates Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [1, 342, 58, 40, 40, 91,24,65]
+            },
+            {
+            "key": 2,
+            "name": "Enter in SAP",
+            "count": 80,
+            // "linkArray": ["Due Date Passed", "Clear Invoice"],
+            "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [7, 32, 58, 40, 0, 91, 42, 58]
+            },
+            {
+            "key": 3,
+            "name": "Book Invoice",
+            "count": 80,
+            // "linkArray": ["Clear Invoice"],
+            "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Due Date Passed", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [2, 342, 58, 40, 40, 91, 42, 58]
+            },
+            {
+            "key": 4,
+            "name": "Clear Invoice",
+            "count": 80,
+            // "linkArray": ["Book Invoice"],
+            "linkArray": [{ linkNode: "Vendor Creates Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Enter in SAP", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [2, 342, 58, 0, 40, 91, 42, 58]
+            },
+            {
+            "key": 5,
+            "name": "Due Date Passed",
+            "count": 80,
+            // "linkArray": [],
+            "linkArray": [{ linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }, { linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [1, 342, 58, 0, 0, 42, 58, 66]
+            },
+            {
+            "key": -2,
+            "name": "End"
+            }
+            ]
+           },
+    
+           13:{ "nodeDataArraycase": [{
+            "key": -1,
+            "name": "Start"
+            },
+            {
+            "key": 0,
+            "name": "Vendor Creates Invoice",
+            "count": 80,
+            // "linkArray": [ "Book Invoice"],
+            "linkArray": [{ linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency","End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [20, 342, 58, 40, 40, 91, 42, 58]
+            },
+            {
+            "key": 1,
+            "name": "Scan Invoice",
+            "count": 80,
+            // "linkArray": ["Enter in SAP"],
+            "linkArray": [{ linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons","Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [1, 342, 58, 40, 40, 91,24,65]
+            },
+            {
+            "key": 2,
+            "name": "Enter in SAP",
+            "count": 80,
+            // "linkArray": [],
+            "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [21, 342, 58, 40, 0, 91, 42, 58]
+            },
+            {
+            "key": 3,
+            "name": "Book Invoice",
+            "count": 80,
+            // "linkArray": ["Clear Invoice"],
+            "linkArray": [{ linkNode: "Clear Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [62, 342, 58, 40, 40, 91, 42, 58]
+            },
+            {
+            "key": 4,
+            "name": "Clear Invoice",
+            "count": 80,
+            // "linkArray": [],
+            "linkArray": [{ linkNode: "Book Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [23, 342, 58, 0, 40, 91, 42, 58]
+            },
+            {
+            "key": 5,
+            "name": "Due Date Passed",
+            "count": 80,
+            // "linkArray": ["Scan Invoice"],
+            "linkArray": [{ linkNode: "Scan Invoice", tool: ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Total Duration", "Median Duration", "Mean Duration", "Max Duration", "Min Duration"], toolCount: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10] }],
+            "tool": ["Absolute Frequency", "Case Frequency", "Max Repititons", "Start Frequency", "End Frequency", "Throughput", "Frequency", "Max Repititons"],
+            "toolCount": [66, 342, 58, 0, 0, 42, 58, 66]
+            },
+            {
+            "key": -2,
+            "name": "End"
+            }
+            ]
+           },
+    }];
+    
+    public data =[
+        { case:"case1",casepercent:"41", name:"of Cases", detail:"6 events per case on average", Days:4.60, varaintDetails:"1 of 8 Variant", casesCovred:"41% cases Covered","selected": "inactive"},
+        { case:"case2",casepercent:"14", name:"of Cases", detail:"7 events per case on average", Days:3.50, varaintDetails:"2 of 8 Variant", casesCovred:"14% cases Covered","selected": "inactive"},
+        { case:"case3",casepercent:"13", name:"of Cases", detail:"7 events per case on average", Days:4.30, varaintDetails:"3 of 8 Variant", casesCovred:"13% cases Covered","selected": "inactive"},
+        { case:"case4",casepercent:"12", name:"of Cases", detail:"6 events per case on average", Days:3.00, varaintDetails:"4 of 8 Variant", casesCovred:"12% cases Covered","selected": "inactive"},
+        { case:"case5",casepercent:"10", name:"of Cases", detail:"6 events per case on average", Days:4.50, varaintDetails:"5 of 8 Variant", casesCovred:"10% cases Covered","selected": "inactive"},
+        { case:"case6",casepercent:"8", name:"of Cases", detail:"5 events per case on average", Days:4.90, varaintDetails:"6 of 8 Variant", casesCovred:"8% cases Covered","selected": "inactive"},
+        { case:"case7",casepercent:"1", name:"of Cases", detail:"7 events per case on average", Days:5.10, varaintDetails:"7 of 8 Variant", casesCovred:"1% cases Covered","selected": "inactive"},
+        { case:"case8",casepercent:"1", name:"of Cases", detail:"12 events per case on average", Days:61.90, varaintDetails:"8 of 8 Variant", casesCovred:"1% cases Covered","selected": "inactive"}
+       ]
+    
+        public reports = [{cases:20,activities:50,roles:1053,resources:25,started:"06/03/2020",ended:"25/03/2020"}];
+    }
