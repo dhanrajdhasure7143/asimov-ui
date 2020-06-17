@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
-import { ActivatedRoute,} from "@angular/router";
+import { ActivatedRoute, Router} from "@angular/router";
 import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-rpa-workspace',
@@ -15,7 +15,10 @@ public others:any=[];
 public orchestrations:any=[];
 public dataas;
 public id:any;
-constructor(private api:RestApiService,private http:HttpClient,private route:ActivatedRoute) {}
+public startbot:Boolean;
+public pausebot:Boolean;
+
+constructor(private api:RestApiService ,private route:ActivatedRoute, private router:Router) {}
   
   ngOnInit() 
   {
@@ -72,7 +75,10 @@ constructor(private api:RestApiService,private http:HttpClient,private route:Act
     })
   }
   
-
-
+  navigatetocreate() 
+  {
+    localStorage.setItem('enablecreate', "true");
+    this.router.navigate(["/pages/rpautomation/home"]);
+  }
 
 }

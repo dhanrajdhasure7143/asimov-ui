@@ -64,9 +64,9 @@ h6{
     color:rgba(11, 108, 236, 0.774);
     font-weight:700;
 }
-.btn{
+/* .btn{
     background-color: #0062cf;
-}
+} */
      .ure{
          color:#0062cf;
          margin-left:1em;
@@ -122,8 +122,8 @@ div.breadcrumb span:focus, div.breadcrumb span:active{
 }
 .active a{
   text-decoration: none;;
-  background-color: #0062cf;
-  color:white;
+  /* background-color: #0062cf; */
+  color:#000;
 }
 .active a label{
   color: white;

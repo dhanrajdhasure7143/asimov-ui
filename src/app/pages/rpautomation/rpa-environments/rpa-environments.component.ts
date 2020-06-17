@@ -33,6 +33,7 @@ import {Router} from "@angular/router";
     public deleteflag:Boolean;
     private updateid:number;
     public term:string;
+    public submitted:Boolean;
     isDtInitialized:boolean = false;
     dtTrigger: Subject<any> =new Subject();
     dtOptions: DataTables.Settings = {};
@@ -121,6 +122,7 @@ import {Router} from "@angular/router";
   {
    if(this.insertForm.valid)
    {
+     this.submitted=true;
      let environment=this.insertForm.value;
      await this.api.addenvironment(environment).subscribe( res =>
       {
@@ -136,6 +138,7 @@ import {Router} from "@angular/router";
         this.createpopup=false; 
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
+        this.submitted=false;
     });
   }
   else
@@ -296,15 +299,6 @@ import {Router} from "@angular/router";
   }
 
 
-  navigatetoworkspace()
-  {
-    this.router.navigate(["/environments",{ queryParams: { id: '1' } }]);
-  }
-  
-
-  
-
- 
 
 }
 

@@ -129,6 +129,7 @@ ul.nav.nav-tabs.justify-content-start li a {
   height: 38px;
     color: #000;
     background: lightgray;
+    
 }
 ul.nav.nav-tabs.justify-content-start{
   justify-content: start;
@@ -138,6 +139,7 @@ a.nav-link.active {
   color: white !important;
   background: #0061cf !important;
 }
+
 
 
 /*RPA-Environments*/

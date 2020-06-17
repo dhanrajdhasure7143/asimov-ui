@@ -54,6 +54,7 @@
     "ngx-csv": "^0.3.2",
     "ngx-drag-drop": "^2.0.0",
     "ngx-dropzone": "^2.2.2",
+    "ngx-filter-pipe": "^2.1.2",
     "ngx-spinner": "^8.1.0",
     "ngx-webstorage-service": "^4.1.0",
     "ngx-xml2json": "^1.0.2",

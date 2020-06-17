@@ -1,4 +1,183 @@
 /* RPA Studio styles - Starts */
+.collection_btn{
+    position: absolute;
+    bottom: 56px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border: 1px solid rgb(219, 219, 219);
+    width: 87%;
+    left: 169px;
+       
+  }
+  .imageI{
+    width: 16px;
+    filter: brightness(0.1) !important;
+}
+
+.imageI1{
+  width: 30px;
+  height: 25px;
+  filter: brightness(0.1) !important;
+}
+.btn_style{
+  margin: 0px -6px 0px 10px;
+  background-color: white;
+  border-radius: 2px;
+  
+}
+.btn_title{
+font-size:12px;
+color:black;
+}
+.btn_style1{
+margin: 0px 5px 0px 3px;
+background-color: transparent;
+border-radius: 2px;
+padding: 0px 12px;
+}
+ /* :visited,.btn_style1 :focus,.btn_style1 :active{
+background-color: blue;
+color:#fff;
+} */
+.btn_style1 img:active, .btn_style1 img:hover {
+  background-color: blue;
+  color: white;
+}
+.drag-area1{
+  position: absolute;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  left: 19px;
+  top: 60px;
+  padding: 5px;
+  margin: 2px 0 0;
+  background-color: #fff;
+}
+.context-menu__item a{
+ background-color: #fff;
+ color: #000;
+ text-decoration: none;
+ font-size: 15px;
+}
+.environments label{
+font-size: 16px;
+}
+.download{
+  position: absolute;
+  top: 387px;
+  left:-69px;
+}
+
+.rpa-checkbox{
+  display: flex;
+  justify-content:center;
+}
+.rpa-table thead th {
+border-bottom-width: thin;
+border-bottom-color:#d9d9d9;
+}
+.rpa-table tfoot th{
+  border-top-color:#d9d9d9;
+  border-bottom-width: thin; 
+  font-weight: 200; 
+}
+.rpa-table tbody tr td{
+  border-top-color:#d9d9d9;
+  border-bottom-width: thin; 
+  font-weight: 200;
+  padding-top: 20px;
+  padding-bottom: 20px; 
+}
+
+.rpa-tablebox{
+padding-top:10px;
+padding-bottom:10px;
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+border-radius: 10px;
+height: 500px;
+}
+.rpa-table.dataTable thead .rpa-checkbox-th{
+  background : none;
+}
+.env-btn button svg{
+fill:white;
+height: 20px;
+width:20px;
+stroke-width: 100;
+}
+.env-search{
+display:inline-block;
+float:right;
+}
+.env-data-tool{
+padding:10px;
+}
+.rpa-env-nav
+{
+padding-top:60px;
+text-align: center;
+padding-bottom: 70px;
+}
+
+.rpa-env-btn-image{
+  fill:#ffffff;
+  height:17px;
+  width:14px;
+  stroke-width: 12px;
+}
+
+.rpa-nav-btn-img{
+  height:50px;
+  width:50px;
+}
+.robotic-run {
+    position: absolute;
+    top: 0px;
+    border: 1px solid lightgray;
+    height: 50px;
+    left: 40%;
+    bottom: 15px;
+    margin: 10px 10px 10px;
+    border-radius: 20px;
+    width: 25%;
+    z-index: 1000;
+  }
+  .rob-s{
+    padding: 0px 10px;
+  }
+  
+  .rob-s p{
+    font-size: 12px;
+    color: black;
+  }
+  .rob-s p:active{
+    font-size: 14px;
+    color:#fff;
+  }
+  .status{
+    position: absolute;
+    right:-172px;
+    top: 20px;
+  }
+  .rob-status{
+    border: 1px solid lightgray;
+    width: 50px;
+    text-align: center;
+  }
+  .rob-status p{
+    font-size: 9px;
+    color: black;
+    margin: 0;
+  }
 
 
+  .rpa-close{
+    float: none;
+    margin-left: 8px;
+  }
 /* RPA Studio styles - ends */
