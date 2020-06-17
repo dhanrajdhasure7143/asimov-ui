@@ -96,13 +96,6 @@
         </div>
       
         <div class="row">
-<<<<<<< Updated upstream
-        
-          <div class="col-md-12">
-            <label for="botDescription">Bot Description</label>
-            <input type="text"  placeholder="Enter Bot Description" class="form-control" name="botDescription" [(ngModel)]="model.botDescription" 
-            #botDescription="ngModel" [ngClass]="{ 'is-invalid': f.submitted && model.botDescription.invalid }" required />
-=======
           <div class="col-md-6">
             <label for="botDepartment">Department</label>
               
@@ -116,7 +109,6 @@
             <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" >
               Invalid Input
               </div>
->>>>>>> Stashed changes
             
           
           </div>

@@ -176,5 +176,8 @@ padding-bottom: 70px;
   }
 
 
-
+  .rpa-close{
+    float: none;
+    margin-left: 8px;
+  }
 /* RPA Studio styles - ends */

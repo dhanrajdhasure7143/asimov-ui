@@ -140,14 +140,7 @@ a.nav-link.active {
   background: #0061cf !important;
 }
 
-a.nav-link.active span.tabs-title{
-  float: left;
 
-}
-a.nav-link.active span.close{
-  float: right;
-
-}
 
 /*RPA-Environments*/
 .env-table>thead>tr>th{

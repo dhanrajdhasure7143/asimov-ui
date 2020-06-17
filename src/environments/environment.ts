@@ -6,10 +6,11 @@ export const environment = {
   production: false,
   pi_url: 'http://pidev.epsoftinc.in',
   bps_url: 'http://bpsdev.epsoftinc.in',
-  rpa_url: 'http://rpaqa.epsoftinc.in',
+  rpa_url: 'http://rpadev.epsoftinc.in',
   loopback_url: 'http://10.11.0.107:3000',
   idm_url:'http://idmdev.epsoftinc.in'
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

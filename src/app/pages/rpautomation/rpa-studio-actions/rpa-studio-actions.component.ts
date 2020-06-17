@@ -91,19 +91,12 @@ export class RpaStudioActionsComponent implements OnInit {
   }
 
   ngOnInit() {
-<<<<<<< Updated upstream
-    this.deploybot();
-    // this.botstatistics();
-    // this.getEnvironmentlist();
-    // this.getpredefinedbotlist();
-=======
     this.startbot=false;
     this.pausebot=false;
     this.resumebot=false;
     this.botstatistics();
     this.getEnvironmentlist();
     this.getpredefinedbotlist();
->>>>>>> Stashed changes
   }
 
   deploybot() {
@@ -242,9 +235,6 @@ export class RpaStudioActionsComponent implements OnInit {
       this.environment.splice(index, 1);
       localStorage.removeItem('environmentId');
     }
-    console.log(selectedEnvironments)
-    console.log("booochiiiiiiii")
-    console.log(this.environment);
   }
   
   
@@ -337,7 +327,7 @@ export class RpaStudioActionsComponent implements OnInit {
       versionsdata.forEach(version =>{
         this.versionsList.push(version)
       })
-      console.log(this.versionsList)
+   
     })
   }
 
@@ -345,7 +335,6 @@ export class RpaStudioActionsComponent implements OnInit {
 
   getpredefinedbotlist() {
     this.rest.getpredefinedbots().subscribe(data => {
-      console.log(data);
       this.predefinedbotsData=data;   
     });
    }

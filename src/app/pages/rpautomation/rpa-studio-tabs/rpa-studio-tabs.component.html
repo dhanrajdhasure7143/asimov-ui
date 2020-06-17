@@ -1,8 +1,8 @@
 <ngb-tabset #t="ngbTabset" [activeId]="tabActiveId" [destroyOnHide]="false" >
     <ngb-tab style="height: 38px;" class="bot-tabs" id="{{ tab.botName }}" *ngFor="let tab of tabsArray">
         <ng-template ngbTabTitle>
-            <span class="tabs-title"style="float:left" >{{ tab.botName }}</span>
-            <span class="close" style="float:right" (click)="$event.preventDefault();closeTab(tab)">&times; </span>
+            <span  >{{ tab.botName }}</span>
+            <span class="rpa-close" (click)="$event.preventDefault();closeTab(tab)">&times; </span>
         </ng-template>
 
         <ng-template ngbTabContent>
