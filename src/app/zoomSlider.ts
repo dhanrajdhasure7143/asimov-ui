@@ -257,8 +257,8 @@ export  class ZoomSlider {
 
       // zoomRangeContainer.style.width = rangeWidth + 'px';
       // zoomRangeContainer.style.height = sliderHeight + 'px';
-      zoomRangeContainer.style.marginLeft="255px",
-      zoomRangeContainer.style.marginTop="-447px",
+      zoomRangeContainer.style.marginLeft="273px",
+      zoomRangeContainer.style.marginTop="-430px",
       zoomRangeContainer.style.zIndex="1000",
       zoomRangeContainer.style.position="absolute",
       zoomRangeInput.style.color="red",

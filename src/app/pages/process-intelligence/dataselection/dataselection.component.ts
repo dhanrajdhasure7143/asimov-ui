@@ -240,7 +240,15 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
   selectedCell(tr_index, index,e, v,row){
       let obj={}
       this.name=''
-    console.log('log',tr_index, index,e, v);
+      if(v=='S.No' || index==0){
+        for(var x = 0;x < this.fileData.length;x++){
+          if(!this.validCells['row'+x])
+            this.validCells['row'+x]=[];
+            this.validCells['row'+x].push('cell'+index);
+          }
+        return;
+      }else{
+    // console.log('log',tr_index, index,e, v);
     this.id.push(v.trim())
     console.log('id',this.id);
     if(this.id.length == 0){
@@ -298,12 +306,13 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         }
     }
     console.log('headerArray',this.headerArray);
-    if(this.headerArray.length == this.headerData.length){
+    if(this.headerArray.length == 5){
       this.isgenerate=true;
     }
     else{
       this.isgenerate=false;
     }
+  }
     }
 
   resetColMap(){

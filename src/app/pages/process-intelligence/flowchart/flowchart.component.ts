@@ -87,10 +87,11 @@ export class FlowchartComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private rest:RestApiService,
     private route:ActivatedRoute) {
-    // this.spinner.show();
   }
 
   ngOnInit() {
+    this.spinner.show();
+
     // this.model1 = this.pgModel.defaultmodel.nodeDataArraycase;
     // this.model2 = this.pgModel.defaultmodel.linkarraycase;
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -133,7 +134,10 @@ export class FlowchartComponent implements OnInit {
       piId=this.piIdNumber.piId
       // this.graphIds = piId;
     }
-    this.onchangegraphId(piId);
+    setTimeout(() => {
+      this.onchangegraphId(piId);
+    }, 120000);
+    
   }
 
   ngAfterContentChecked() {
@@ -167,11 +171,10 @@ export class FlowchartComponent implements OnInit {
         
         this.model2 = this.flowchartData(this.model1)
         for(var j=0;j<this.model2.length;j++){
-          let loc1=30*j
-          // let loc2=-150+i*70
-          // loction=loc1+' '+loc2;
-          this.model2[j].curviness=loc1
+          let loc3=25*j
+          this.model2[j].curviness=loc3
         }
+        this.spinner.hide();
         });
         // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
         // console.log('varaint_GraphData',this.varaint_GraphData.data);

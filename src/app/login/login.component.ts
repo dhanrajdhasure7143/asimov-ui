@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-// import 'particles.js/particles';
+import 'particles.js/particles';
 import * as particlesJS from 'particlesjs';
 
 declare var particlesJS :any;
@@ -128,12 +128,9 @@ export class LoginComponent{
   // }
 
   getAccessToken(){
-    let user={"userId":this.userName,
-    "password":this.password}
-
-    console.log(user);
-    
-this.rest.getAccessToken(user).subscribe(res =>{
+    // let user={"userId":this.userName,
+    // "password":this.password}
+  this.rest.getAccessToken().subscribe(res =>{
      localStorage.setItem("accessToken", res['accessToken']);
      this.router.navigateByUrl("pages/home")
     });

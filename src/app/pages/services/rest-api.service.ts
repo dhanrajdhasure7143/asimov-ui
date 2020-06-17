@@ -5,7 +5,8 @@ import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Content-Type': 'application/json',
+    // 'Content-Type': 'application/json',
+    'Authorization': 'Bearer '+localStorage.getItem("accessToken")
   }),
 };
 
@@ -30,9 +31,9 @@ export class RestApiService {
     responseType: 'text'
   }
   constructor(private http:HttpClient) { }
-  getAccessToken(data){
-    // let data = {"userId":"venkata.simhadri@epsoftinc.com",
-    //             "password":"Welcome@123"};
+  getAccessToken(){
+    let data = {"userId":"venkata.simhadri@epsoftinc.com",
+                "password":"Welcome@123"};
     return this.http.post('/api/login/beta/accessToken',data);
   }
   bpmnlist(user){
@@ -161,31 +162,28 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   // PI module rest api's
 
   fileupload(file){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file,httpOptions)
   }
   getCategoriesList(){
-    return this.http.get('/processintelligence/v1/processgraph/categories',this.authHttpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/categories',httpOptions)
   }
   addCategory(data){
-    return this.http.post('/processintelligence/v1/processgraph/categories',data,this.authHttpOptions)
+    return this.http.post('/processintelligence/v1/processgraph/categories',data,httpOptions)
   }
   getAlluserProcessPiIds(){
-    return this.http.get('/processintelligence/v1/processgraph/userProcess',this.authHttpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/userProcess',httpOptions)
   }
   getAllVaraintList(piId){
-    return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId,this.authHttpOptions)
+    return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId,httpOptions)
   }
   getfullGraph(piId){
-    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId,this.authHttpOptions)
+    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId,httpOptions)
   }
-  // toSaveconnectorConfig(body,categoryName,piId,processName){
-  //   return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+piId+'&piName='+processName,body,this.authHttpOptions)
-  // }
   getvaraintGraph(piId){
-    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,this.authHttpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,httpOptions)
   }
   saveConnectorConfig(body,categoryName,processName,piId){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,this.authHttpOptions)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,httpOptions)
   }
 
 }

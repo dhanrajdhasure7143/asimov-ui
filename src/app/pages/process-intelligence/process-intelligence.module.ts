@@ -21,6 +21,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { DataselectionComponent } from './dataselection/dataselection.component';
 import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { NgxSpinnerModule } from 'ngx-spinner';
+
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     SharedModule,
     MatExpansionModule,
     ModalModule.forRoot(),
-    Ng2SearchPipeModule
+    Ng2SearchPipeModule,
+    NgxSpinnerModule
 
   ],
   providers:[PiHints]

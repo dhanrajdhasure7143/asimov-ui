@@ -36,4 +36,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.parent_subscription.unsubscribe();
     this.child_subscription.unsubscribe();
   }
+  logout(){
+    localStorage.clear();
+    this.router.navigate(["/"])
+  }
 }
