@@ -2,8 +2,28 @@ export class BpmnModel{
     bpmnModelId:number;
     bpmnModelModifiedBy:string;
     bpmnModelModifiedTime:Date;
+    createdTimestamp:Date
+    modifiedTimestamp:Date
     bpmnModelTempId:number;
     bpmnModelTempStatus:string;
     bpmnModelTempVersion:string;
     bpmnProcessMeta:string;
+    approverName:string;
+    bpmnJsonNotation:string;
+    bpmnNotationAutomationTask:string;
+    bpmnNotationHumanTask:string;
+    bpmnProcessApproved:number;
+    userName:string;
+    tenantId:number;
+    bpmnJsonNotationreviewComments:string;
+    processIntelligenceId:number;
+    id:number;
+    emailTo:string;
+    category:string;
+    bpmnXmlNotation:string;
+    bpmnProcessStatus:string;
+    bpmnProcessName:string;
+    reviewComments:string;
+    version:string;
+    versionId:number
 }

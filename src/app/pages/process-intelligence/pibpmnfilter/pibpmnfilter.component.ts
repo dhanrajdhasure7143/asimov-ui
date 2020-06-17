@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./pibpmnfilter.component.css']
 })
 export class PibpmnfilterComponent implements OnInit {
-  disableSavegenerate:boolean=true;
   category='';
   name=''
 
@@ -16,16 +15,12 @@ export class PibpmnfilterComponent implements OnInit {
   ngOnInit() {
   }
   applyFilter(){
-    // if(document.getElementById("name")!= null && document.getElementById("category")!=null){ 
-    //   this.disableSavegenerate=!this.disableSavegenerate
-    // }
+    //save details in db
     this.router.navigate(['/pages/processIntelligence/flowChart']);
-    
   }
   slideDown(){
     document.getElementById("foot").classList.add("slide-down");
     document.getElementById("foot").classList.remove("slide-up");
-    
   }
 
 }

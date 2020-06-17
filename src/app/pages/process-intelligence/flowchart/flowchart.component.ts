@@ -216,14 +216,14 @@ export class FlowchartComponent implements OnInit {
     document.getElementById("foot").classList.add("slide-up");
   }
 
-  generateBpmn() {
-    this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");
-    this.router.navigate(['/pages/businessProcess/uploadProcessModel'])
-  }
+  // generateBpmn() {
+  //   this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");
+  //   this.router.navigate(['/pages/businessProcess/uploadProcessModel'])
+  // }
 
-  loopTrackBy(index, term) {
-    return index;
-  }
+  // loopTrackBy(index, term) {
+  //   return index;
+  // }
 
   caseIdSelect(selectedData, index) {
     this.isplay = false;
@@ -628,4 +628,13 @@ console.log('outArr12',outArr);
     this.isfrequencymetrics=false;
   }
 
+generateBpmn(){
+  this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
+  this.bpmnservice.setNewDiagName('pizza-collaboration');
+  this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}})
+}
+  
+loopTrackBy(index, term){
+  return index;
+}
 }

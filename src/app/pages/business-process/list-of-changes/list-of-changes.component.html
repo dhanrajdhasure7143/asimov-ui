@@ -1,9 +1,9 @@
-<div id="foot" class="container">
+<div id="bpmn_differences" class="container">
         <button type="button" class="overlay_close" aria-label="Close" (click)="slideDown()">
                 <span aria-hidden="true">&times;</span>
         </button>
-        <div class="row col-md-12">
-                <table class="changeTable">
+        <div class="row col-md-12 vertical-overflow">
+                <table class="changeTable" *ngIf="hasChanges(changes)">
                         <tr>
                                 <th>Name</th>
                                 <th>Type</th>
@@ -11,25 +11,25 @@
                         </tr>
                         <tr *ngFor="let each_removed_change of getArray(changes._removed)">
                                 <td>{{each_removed_change.name}}</td> 
-                                <td>{{each_removed_change.$type}}</td> 
+                                <td>{{getProcessType(each_removed_change.$type)}}</td> 
                                 <td><span class="change removed">Removed</span></td> 
                         </tr>
                         <tr *ngFor="let each_added_change of getArray(changes._added)">
                                 <td>{{each_added_change.name}}</td> 
-                                <td>{{each_added_change.$type}}</td> 
-                                <td><span class="change removed">Added</span></td> 
+                                <td>{{getProcessType(each_added_change.$type)}}</td> 
+                                <td><span class="change added">Added</span></td> 
                         </tr>
                         <tr *ngFor="let each_change of getArray(changes._changed)">
                                 <td>{{each_change.name}}</td> 
-                                <td>{{each_change.$type}}</td> 
-                                <td><span class="change changed">Changed</span></td> 
+                                <td>{{getProcessType(each_change.$type)}}</td> 
+                                <td><span class="change">Changed</span></td> 
                         </tr>
                         <tr *ngFor="let each_layout_change of getArray(changes._layoutChanged)">
                                 <td>{{each_layout_change.name}}</td> 
-                                <td>{{each_layout_change.$type}}</td> 
+                                <td>{{getProcessType(each_layout_change.$type)}}</td> 
                                 <td><span class="change layout">Layout</span></td> 
                         </tr>
-                </table> 
+                </table>
         </div>
 </div>
     

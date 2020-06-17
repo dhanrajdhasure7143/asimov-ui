@@ -6,24 +6,26 @@
             </div>
             <div class="col-sm-6">
                 <div class="form">
-                    <form id="a">
+                    <form autocomplete="off" id="a" #loginform="ngForm" (ngSubmit)="getAccessToken()">
                         <div class="brand">
                             <img src="assets/images/logo_img.png">
                             <!-- <h1><b>EPSoft</b></h1>
                             <div><small>Intelligent Automation Platform</small></div> -->
                         </div>
-                        <span class="col-sm-12 inner-addon left-addon">
+                        <div class="form-group col-sm-12 inner-addon left-addon">
                                 <img src="assets/images/username_icon.png">
-                                <input type="text" id="us" placeholder="Enter User Name">
-                        </span>
-                        <span class="col-sm-12 inner-addon left-addon">
+                                <input type="text" id="us" placeholder="Enter User Name" class="form-control" name='username' #username='ngModel' [(ngModel)]="userName" required>
+                        </div>
+                        <div class="form-group col-sm-12 inner-addon left-addon">
                                 <img src="assets/images/password_icon.png">
-                                <input type="password" id="pwd" placeholder="Enter Password">
-                        </span>
+                                <input type="password" id="pwd" placeholder="Enter Password" class="form-control" name="psw" #psw='ngModel' [(ngModel)]="password" required>
+                        </div>
                         <!-- <a href="#" class="fp"><h6>Forgot password?</h6></a> -->
                         <div class="col-sm-10">
-                        <button class="btn btn-primary login-btn" type="submit" id="btn" routerLink="/pages/home">Login</button>
+                        <button class="btn btn-primary login-btn" type="submit" [disabled]="loginform.invalid">Login</button>
                     </div>
+                        <!-- <a href="#" class="fp"><h6>Forgot password?</h6></a>
+                        <button class="btn btn-primary" type="submit" id="btn">Login</button> -->
                     </form>
                 </div> 
             </div>

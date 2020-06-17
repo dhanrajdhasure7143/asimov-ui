@@ -62,7 +62,7 @@ float: left !important;
 
 /* data document component styles - Ends*/
 /* filter component styles - Starts*/
-#foot {
+#foot, #bpmn_differences {
     border-top: 1px solid #999999;
     position: fixed;
     width: 100%;
@@ -1210,6 +1210,10 @@ label{
   margin-left: 51px;
   width: 20%;
   height: 33px;
+}
+.apply_button:disabled{
+  opacity: 0.6;
+  cursor: no-drop;
 }
 .resize{
   margin-top: -45px

@@ -285,6 +285,9 @@ padding-right: 5px;
 }
 /* Module title styles - Ends*/
 /* Common styles - Starts*/
+.vertical-overflow{
+  overflow-y: auto;
+}
 button:active, button:focus, input:active, input:focus{
   outline: none !important;
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
+import { GlobalScript } from 'src/app/shared/global-script';
 
 @Component({
   selector: 'app-list-of-changes',
@@ -13,7 +14,8 @@ export class ListOfChangesComponent implements OnInit {
   changed_Count;
   layoutChanged_Count;
   removed_Count;
-  constructor(private bpmnservice:SharebpmndiagramService) { }
+  isHavingChange:boolean = false;
+  constructor(private bpmnservice:SharebpmndiagramService, private global:GlobalScript) { }
 
   ngOnInit() {
     this.bpmnservice.sendDiff.subscribe(res => {
@@ -21,7 +23,7 @@ export class ListOfChangesComponent implements OnInit {
     })
   }
   slideDown(){
-    let ele = document.getElementById("foot");
+    let ele = document.getElementById("bpmn_differences");
     if(ele){
       ele.classList.add("slide-down");
       ele.classList.remove("slide-up");
@@ -44,6 +46,15 @@ export class ListOfChangesComponent implements OnInit {
     }else{
       return [];
     }
+  }
+
+  getProcessType(type){
+    return type.replace('bpmn:','');
+  }
+
+  hasChanges(changes){
+    this.isHavingChange = this.getArray(changes._removed) + this.getArray(changes._added) + this.getArray(changes._changed) + this.getArray(changes._layoutChanged) != 0;
+    return this.isHavingChange;
   }
   
 }

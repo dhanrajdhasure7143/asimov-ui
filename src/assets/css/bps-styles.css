@@ -4,6 +4,10 @@
   right: 60px;
   color: #0062cf;
 }
+.drop_div{
+  position: relative;
+  z-index: 30;
+}
 #canvas{
   height: 500px;
   width: 100%;
@@ -11,6 +15,8 @@
 }
 .btn_row{
   margin: 10px 80px;
+  z-index: 30;
+  position: relative;
 }
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
@@ -21,12 +27,53 @@
   width: 100px;
 }
 /* create bpmn diagram component styles - Ends*/
+/* bps home component styles - Starts*/
+.dropdown_icon{
+  margin-right:16px;
+}
+/*bps home component styles - Ends */
+/* bpmn diagram list component styles - Starts*/
+.overview_icon:not([aria-disabled=true]) {
+  cursor: pointer !important;
+}
+.mat-expansion-panel-header:not([aria-disabled=true]) {
+  cursor: default;
+}
+.mat-expansion-panel-header {
+ padding: 0 0px !important;
+}
+
+button{
+cursor: pointer
+}
+.overview_icon
+{
+  padding-left: 48px !important;
+}
+
+/* bpmn diagram list component styles - Ends*/
 /*List-of-changes component - Starts*/
 .overlay_close{
   position: absolute;
   right: 10px;
   top: 10px;
   color: grey;
+}
+.change{
+  font-size: 12px;
+  background-color: blue;
+  padding: 2px 5px;
+  font-weight: bold;
+  color: white;
+}
+.added{
+  background-color: green;
+}
+.removed{
+  background-color: red;
+}
+.layout{
+  background-color: orange;
 }
 .mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
   background-color: #f8dafe;
@@ -43,16 +90,16 @@ mat-tab-body{
 }
 .changeTable{
   width: 50%;
-  margin: auto;
+  margin: 5px auto;
 }
 .changeTable tr{
   border-bottom: 1px solid #eee;
   border-collapse: collapse;
 }
 .changeTable tr td, .changeTable tr th{
-  padding: 5px;
+  padding: 5px 5px 5px 20px;
 }
-#foot {
+#foot, #bpmn_differences {
 border-top: 1px solid #999999;
 position: fixed;
 width: 100%;
@@ -72,14 +119,45 @@ margin-right: -85px;
 }
 /*List-of-changes component - Ends*/
 /* home component styles - Starts*/
+div[class^='diagram_container'] svg{
+  zoom: 50%;
+  position: relative;
+  z-index: -10;
+}
 div[class^='diagram_container']{
-  height: 200px;
-  border: 1px dotted #ccc;
+  height: 400px;
+  border: 1px solid #0062cf;
+  border-radius: 10px;
   /* overflow: hidden auto; */
   padding: 5px;
 }
+.readOnly svg{
+  position: relative;
+  z-index: -10;
+}
+.bps_overlay{
+  height: 400px;
+  z-index: 30;
+  cursor: pointer;
+  opacity: 0.9;
+}
+.bps_overlay:hover{
+  background-color: #f1f1f1;
+}
 mat-expansion-panel{
-  border-bottom: 1px solid #0062cf;
+  border-bottom: 1px solid #eee;
+  box-shadow: none !important;
+}
+.mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) mat-panel-title,
+.mat-expansion-panel.mat-expanded mat-panel-title{
+  color: #0062cf !important;
+}
+.box-heading{
+  font-weight: bold;
+  color: #5b5b5b;
+}
+.workspace-title{
+  padding-right: 100px !important;
 }
 .comment{
   position: relative;
@@ -108,6 +186,72 @@ mat-expansion-panel{
   display: block;
 }
 /* home component styles - Ends*/
+/*List-of-changes component - Starts*/
+.overlay_close{
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  color: grey;
+}
+.change{
+  font-size: 12px;
+  background-color: blue;
+  padding: 2px 5px;
+  font-weight: bold;
+  color: white;
+}
+.added{
+  background-color: green;
+}
+.removed{
+  background-color: red;
+}
+.layout{
+  background-color: orange;
+}
+.mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
+  background-color: #f8dafe;
+  color: black !important;
+}
+.changeCount{
+  padding: 4px !important;
+  color: darkblue;
+  font-weight: bold;
+  font-size: 13px;
+}
+mat-tab-body{
+  overflow: scroll;
+}
+.changeTable{
+  width: 50%;
+  margin: 5px auto;
+}
+.changeTable tr{
+  border-bottom: 1px solid #eee;
+  border-collapse: collapse;
+}
+.changeTable tr td, .changeTable tr th{
+  padding: 5px 5px 5px 20px;
+}
+#foot, #bpmn_differences {
+border-top: 1px solid #999999;
+position: fixed;
+width: 100%;
+z-index: 1000;
+height: 300px;
+display: flex;
+right: 0;
+left: 0;
+bottom:-300px;
+background: white;
+}
+.cross_close{
+margin-left: 90px;
+float:right;
+margin-top: -30px;
+margin-right: -85px;
+}
+/*List-of-changes component - Ends*/
 /* upload process model component styles - Starts*/
 .row{
   margin-left: 0;
@@ -120,17 +264,6 @@ mat-expansion-panel{
 }
 .bpmn-split{
   height: 80vh !important;
-}
-.show-confirmance-button{
-  color: #0162cb;
-  border: none;
-  background: none;
-  text-decoration: underline;
-  font-size: large;
-}
-.show-confirmance-button-div{
-  bottom: 0;
-  position: absolute;
 }
 .kpis-and-submit-button-div{
   bottom: 0;

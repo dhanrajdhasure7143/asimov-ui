@@ -36,9 +36,7 @@ import { LoaderInterceptor } from './helpers/loader-interceptor.service';
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    LoaderService,
-    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
+    // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     BackendURLProvider,
     GlobalScript,
     NotifierService

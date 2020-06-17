@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
-import {observableToBeFn} from "rxjs/internal/testing/TestScheduler";
+import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 
 const httpOptions = {
   headers: new HttpHeaders({
@@ -10,16 +9,17 @@ const httpOptions = {
   }),
 };
 
-const authHttpOptions = { 
-  headers: new HttpHeaders({
-      'Authorization':'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOiJBaW90YWwiLCJzdWIiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJ1c2VyRGV0YWlscyI6eyJ1c2VySWQiOiJ2ZW5rYXRhLnNpbWhhZHJpQGVwc29mdGluYy5jb20iLCJpZCI6IjIiLCJkZXBhcnRtZW50IjoiZGV2ZWxvcG1lbnQiLCJ0ZW5hbnRJZCI6IjRlMmQ2NmRiLWQxNmItNDk1OC04NjhmLTdjMzA2ZWY3NjViYyIsImRvbWFpbiI6bnVsbCwicm9sZXMiOlt7ImFwcElkIjoiMiIsImFwcE5hbWUiOiIyLjAiLCJpZCI6IjgiLCJyb2xlTmFtZSI6IkFkbWluIiwicGVybWlzc2lvbnMiOltdfV19LCJ1c2VyU2Vzc2lvbklkIjoiMjc4MCIsImlhdCI6MTU5MjI5MzcwOSwiZXhwIjoxNTkyMjk2NzA5fQ.lhOVFL57KzSup7b8zq_PuoNnIf9O8Vj-u7HOwOfsxFjgaDB8hZ_FQNnI3Gjyeoo6aeSF5IP4uSZdxi9nmHO-uHcnkUS62R7mgBHlLXodFALq05L-NKGcM5vSCA-dwuHUMVkwn0v7iaiAYF-UbUe8BwlwOnRZcLNa5iZglMrSRjq9A2OGsAyCQ7hf5UWBTM2yhiyDIEhdi5cWyGUalygQmrCfXuO0cuvmMucg9XQhmI-HjFuvUcyl0qGfeyb1P6Vh-yZv4kLWWbAYNI064tJif1b2UZ3QENtHt_FJCEPuQAqfHK0gBvTEz7JiKQQfI8MfV3fsxn8oliMNayZQj_TPQg'
-  }),
-};
-
 @Injectable({
   providedIn: 'root'
 })
 export class RestApiService {
+  
+  authHttpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': 'Bearer '+localStorage.getItem("accessToken")
+    }),
+  };
+
   xmlheaderOptions = {
     headers: new HttpHeaders({
       'Content-Type':  'text/xml',
@@ -30,22 +30,26 @@ export class RestApiService {
     responseType: 'text'
   }
   constructor(private http:HttpClient) { }
-
+  getAccessToken(data){
+    // let data = {"userId":"venkata.simhadri@epsoftinc.com",
+    //             "password":"Welcome@123"};
+    return this.http.post('/api/login/beta/accessToken',data);
+  }
   bpmnlist(user){
     //GET /bpsprocess/approver/info/{roleName} 
-return this.http.get<any[]>('bpsprocess/approvalTnfoByUser/'+user);
+return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user,this.authHttpOptions);
 }
 
 approve_producemessage(bpmnProcessInfo){
-  return this.http.post<any[]>('bpsprocess/produceMessage',bpmnProcessInfo,httpOptions);
+  return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo,this.authHttpOptions);
 }
 approve_savedb(bpmndata){
-  return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',bpmndata,httpOptions);
+  return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata,this.authHttpOptions);
 }
 denyDiagram(msg_obj){
 // POST /bpsprocess/save/bpms/notation/approval/workflow
 
-return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',msg_obj,httpOptions);
+return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj,this.authHttpOptions);
 }
 
 
@@ -54,12 +58,23 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
     return this.http.get(filePath, {headers: {observe: 'response'}, responseType: 'text'});
   }
 
-  autoSaveBPMNFileContent(bpmnModel){
-    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel, authHttpOptions);
+  getApproverforuser(role){
+    return this.http.get("/bpsprocess/approver/info/"+role,this.authHttpOptions)//first api call
   }
-
+  getUserBpmnsList(){
+    return this.http.get("/bpsprocess/fetchByUser/gopi",this.authHttpOptions); 
+  }
+  saveBPMNprocessinfofromtemp(bpmnModel){
+    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel,this.authHttpOptions)//third api call
+  }
   submitBPMNforApproval(bpmnModel){
-    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)
+    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel,this.authHttpOptions)//fourth api call
+  }
+  getBPMNtempnotations(){
+    return this.http.get("/bpsprocess/temp/bpmn/{bpmnModelTempId}/notation/")//fifth api call
+  }
+  autoSaveBPMNFileContent(bpmnModel){
+    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel, this.authHttpOptions)//sixth api call
   }
 
   sendUploadedFile(file:FormData, uid){
@@ -72,9 +87,7 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
     return api_method_call != ""?this.http.post('/'+api_method_call, file, {responseType: 'text'}):null;// "target" : "http://10.11.1.189:8080",
   }
 
-  getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/mounika"); //authHttpOptions
-  }
+  
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
   }
@@ -148,31 +161,31 @@ return this.http.post<any[]>('bpsprocess/save/bpms/notation/approval/workflow',m
   // PI module rest api's
 
   fileupload(file){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file,authHttpOptions)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file)
   }
   getCategoriesList(){
-    return this.http.get('/processintelligence/v1/processgraph/categories',authHttpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/categories',this.authHttpOptions)
   }
   addCategory(data){
-    return this.http.post('/processintelligence/v1/processgraph/categories',data,authHttpOptions)
+    return this.http.post('/processintelligence/v1/processgraph/categories',data,this.authHttpOptions)
   }
   getAlluserProcessPiIds(){
-    return this.http.get('/processintelligence/v1/processgraph/userProcess',authHttpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/userProcess',this.authHttpOptions)
   }
   getAllVaraintList(piId){
-    return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId,authHttpOptions)
+    return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId,this.authHttpOptions)
   }
   getfullGraph(piId){
-    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId,authHttpOptions)
+    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId,this.authHttpOptions)
   }
   // toSaveconnectorConfig(body,categoryName,piId,processName){
-  //   return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+piId+'&piName='+processName,body,authHttpOptions)
+  //   return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+piId+'&piName='+processName,body,this.authHttpOptions)
   // }
   getvaraintGraph(piId){
-    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,authHttpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,this.authHttpOptions)
   }
   saveConnectorConfig(body,categoryName,processName,piId){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,authHttpOptions)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,this.authHttpOptions)
   }
 
 }
