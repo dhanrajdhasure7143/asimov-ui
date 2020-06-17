@@ -103,7 +103,9 @@ export class RpaStudioActionsComponent implements OnInit {
     
     this.rest.deployremotemachine(this.savebotrespose.botId).subscribe(data => {
       this.deploymachinedata = data;
-      console.log()
+      this.childBotWorkspace.successCallBack(data);
+     
+      
     })
     
   }
