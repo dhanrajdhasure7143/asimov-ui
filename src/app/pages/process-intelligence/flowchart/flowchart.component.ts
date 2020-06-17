@@ -136,7 +136,8 @@ export class FlowchartComponent implements OnInit {
     }
     setTimeout(() => {
       this.onchangegraphId(piId);
-    }, 120000);
+    // }, 120000);
+  }, 100);
     
   }
 
@@ -153,6 +154,9 @@ export class FlowchartComponent implements OnInit {
       // console.log('this.varaint_data',data);
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
+          // this.varaint_data.data[i].days=this.timeConversion(this.varaint_data.data[i].days);
+          // console.log( this.varaint_data.data[i].days);
+          
       }
       this.onchangeVaraint("0");
       })
@@ -160,7 +164,7 @@ export class FlowchartComponent implements OnInit {
         let fullgraphOne=JSON.parse(this.fullgraph.data);
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
 
-        console.log('this.model1',this.model1);
+        // console.log('this.model1',this.model1);
         let loction=''
         for(var i=0;i<this.model1.length;i++){
           let loc1=455
@@ -184,7 +188,7 @@ export class FlowchartComponent implements OnInit {
   }
 
   onchangeVaraint(datavariant) {
-    console.log("variantdata",datavariant);
+    // console.log("variantdata",datavariant);
     switch (datavariant) {
       case "0":
         // this.varaint_data = this.varaint_dat;
@@ -284,14 +288,14 @@ export class FlowchartComponent implements OnInit {
       // this.model1=this.pgModel.allData.nodeDataArraycase;
       // this.model2=this.flowchartData(this.pgModel.nodeDataArraycase)
       this.isDefaultData = false;
-      console.log("selectedcase", this.selectedCaseArry)
-    console.log("selectedData.case",selectedData.case);
+    //   console.log("selectedcase", this.selectedCaseArry)
+    // console.log("selectedData.case",selectedData.case);
     
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphDataArray) == true) {
         // console.log('log',this.selectedCaseArry[0], this.pgModel.flowchartData);
         
         var modalData = this.varaint_GraphData.data[this.selectedCaseArry[0]]
-        console.log('modalData',modalData);
+        // console.log('modalData',modalData);
         
         this.model1 = modalData.nodeDataArraycase
         this.model2 = this.flowchartData(this.model1)
@@ -375,11 +379,11 @@ export class FlowchartComponent implements OnInit {
           }
         });
       });
-console.log('outArr1',outArr);
+// console.log('outArr1',outArr);
 
       if(this.selectedCaseArry.length > 2){
 var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
-console.log('outArr12',outArr);
+// console.log('outArr12',outArr);
 
         this.multynodeArray(outArr,modalData)
       }
@@ -420,8 +424,8 @@ console.log('outArr12',outArr);
   multynodeArray(outArray,modeaValue){
     var outArr=[];
     var m=this
-    console.log('outArraym',outArray);
-    console.log('modeaValuem',modeaValue);
+    // console.log('outArraym',outArray);
+    // console.log('modeaValuem',modeaValue);
     
     outArray.forEach(function (value, i) {
       // console.log(value);
@@ -477,21 +481,21 @@ console.log('outArr12',outArr);
     return array.filter((a, b) => array.indexOf(a) === b)
    };
   keyExists(key, search) {
-    console.log('test',key, search)
+    // console.log('test',key, search)
     var existingObj = search.find(function (element) {
       return typeof element[key] !== 'undefined';
     });
     if (existingObj[key]) {
-      console.log('was found');
+      // console.log('was found');
       return true
     } else {
-      console.log('not-found');
+      // console.log('not-found');
       return false
     }
   }
   compareJSON(obj1, obj2) {
-    console.log('obj1', obj1.nodeDataArraycase)
-    console.log('obj2', obj2)
+    // console.log('obj1', obj1.nodeDataArraycase)
+    // console.log('obj2', obj2)
     var ret = {};
     for (var i in obj2) {
       if (!obj1.hasOwnProperty(i) || obj2[i] !== obj1[i]) {
@@ -577,7 +581,7 @@ console.log('outArr12',outArr);
         //   this.linkdataArray.push(obj);
         // }
 
-        console.log('linkdataArray',this.linkdataArray);
+        // console.log('linkdataArray',this.linkdataArray);
         if (this.nodeArray[i].tool.includes('Start Frequency')) {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
@@ -639,5 +643,22 @@ generateBpmn(){
   
 loopTrackBy(index, term){
   return index;
+}
+timeConversion(millisec) {
+  console.log("millisec",millisec);
+  
+  var seconds:any = (millisec / 1000).toFixed(1);
+  var minutes:any = (millisec / (1000 * 60)).toFixed(1);
+  var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
+  var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+  if (seconds < 60) {
+      return seconds + " Sec";
+  } else if (minutes < 60) {
+      return minutes + " Min";
+  } else if (hours < 24) {
+      return hours + " Hrs";
+  } else {
+      return days + " Days"
+  }
 }
 }

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  pi_url: 'http://10.11.0.107:2222',
+  pi_url: 'http://pidev.epsoftinc.in',
   bps_url: 'http://bpsdev.epsoftinc.in',
   rpa_url: 'http://rpadev.epsoftinc.in',
   loopback_url: 'http://10.11.0.107:3000',

@@ -96,7 +96,7 @@ export class PiflowchartComponent implements OnInit {
         toolData += obj.data.tool[i]+"<br>";
       }
       for( var i=0; i<obj.data.toolCount.length-5; i++ ){
-        rows += obj.data.toolCount[i]+"<br>";
+        rows +=obj.data.toolCount[i]+"<br>";
       }
       document.getElementById('nodename').innerHTML=name;
       document.getElementById('toolTipParagraph').innerHTML =  toolData;
@@ -110,7 +110,7 @@ export class PiflowchartComponent implements OnInit {
         toolDataone += obj.data.tool[i]+"<br>";
       }
       for( var i=5; i<obj.data.toolCount.length; i++ ){
-        rowsone += obj.data.toolCount[i]+"<br>";
+        rowsone += timeConversion(obj.data.toolCount[i])+"<br>";
       }
       document.getElementById('toolTipParagraphone').innerHTML =  toolDataone;
       document.getElementById('toolTipTextone').innerHTML = '<br>'+ rowsone;
@@ -362,7 +362,7 @@ export class PiflowchartComponent implements OnInit {
         function showLinkToolTip(e,obj,diagram) {
           var toolTipDIV = document.getElementById('linkToolTipDIV');
           var node = obj.part;
-          console.log(obj.port,obj.fromNode.Bp);
+          // console.log(obj.port,obj.fromNode.Bp);
           // resizable
             // node.port.fill="#0162cb";
             // node.port.stroke='#0162cb';
@@ -376,29 +376,97 @@ export class PiflowchartComponent implements OnInit {
         
           var toolData="";
           var rows="";
+          var toolDataone="";
+          var rowsone="";
           var name=obj.data.name;
-          console.log('obj',obj.part.data.toolData);
+          // console.log('obj',obj.part.data.toolData);
+          var me=this;
           
-          for( var i=0; i<obj.part.data.toolData.length-4; i++ ){
-            toolData += obj.data.toolData[i]+"<br>";
+          for( var i=0; i<obj.part.data.toolData.length; i++ ){
+            // if(obj.part.data.toolData[i]=='Absolute Frequency'){}
+            switch(obj.part.data.toolData[i]){
+                  case "Absolute Frequency":
+                  toolData += obj.data.toolData[i]+"<br>";
+
+                  rows += obj.data.toolDataCount[i]+"<br>";
+                  break;
+                  case "Case Frequency":
+                  toolData += obj.data.toolData[i]+"<br>";
+                  rows += obj.data.toolDataCount[i]+"<br>";
+                  break;
+                  case "Max Repititons":
+                  toolData += obj.data.toolData[i]+"<br>";
+                  rows += obj.data.toolDataCount[i]+"<br>";
+                  break;
+                  case "Start Frequency":
+                  toolData += obj.data.toolData[i]+"<br>";
+                  rows += obj.data.toolDataCount[i]+"<br>";
+                  break;
+                  case "End Frequency":
+                  toolData += obj.data.toolData[i]+"<br>";
+                  rows += obj.data.toolDataCount[i]+"<br>";
+                  break;
+                  case "Total Duration":
+                  toolDataone += obj.data.toolData[i]+"<br>";
+                  
+              rowsone += timeConversion(obj.data.toolDataCount[i])+"<br>";
+              break;
+              case "Median Duration":
+                  toolDataone += obj.data.toolData[i]+"<br>";
+              rowsone +=timeConversion(obj.data.toolDataCount[i])+"<br>";
+              break;
+              case "Mean Duration":
+                  toolDataone += obj.data.toolData[i]+"<br>";
+              rowsone +=timeConversion(obj.data.toolDataCount[i])+"<br>";
+              break;
+              case "Max Duration":
+                  toolDataone += obj.data.toolData[i]+"<br>";
+              rowsone +=timeConversion(obj.data.toolDataCount[i])+"<br>";
+              break;
+              case "Min Duration":
+                  toolDataone += obj.data.toolData[i]+"<br>";
+              rowsone +=timeConversion(obj.data.toolDataCount[i])+"<br>";
+              break;
+            }
+            // toolData += obj.data.toolData[i]+"<br>";
           }
-          for( var i=0; i<obj.data.toolDataCount.length-4; i++ ){
-            rows += obj.data.toolDataCount[i]+"<br>";
-          }
+          // for( var i=0; i<obj.data.toolDataCount.length-5; i++ ){
+          //   rows += obj.data.toolDataCount[i]+"<br>";
+          // }
           // document.getElementById('nodename').innerHTML=name;
           document.getElementById('linktoolTipParagraph').innerHTML =  toolData;
           document.getElementById('linktoolTipText').innerHTML = '<br>'+ rows;
-    
-          var toolDataone="";
-          var rowsone="";
-          console.log('objData',obj.data);
+  
+          // console.log('objData',obj.data);
           
-          for( var i=4; i<obj.data.toolData.length; i++){
-            toolDataone += obj.data.toolData[i]+"<br>";
-          }
-          for( var i=4; i<obj.data.toolDataCount.length; i++ ){
-            rowsone += obj.data.toolDataCount[i]+"<br>";
-          }
+        //   for( var i=0; i<obj.data.toolData.length; i++){
+        //     // toolDataone += obj.data.toolData[i]+"<br>";
+        //     switch(obj.data.toolData[i]){
+        //       case "Total Duration":
+        //           toolDataone += obj.data.toolData[i]+"<br>";
+        //       rowsone += obj.data.toolDataCount[i]+"<br>";
+        //       break;
+        //       case "Median Duration":
+        //           toolDataone += obj.data.toolData[i]+"<br>";
+        //       rowsone += obj.data.toolDataCount[i]+"<br>";
+        //       break;
+        //       case "Mean Duration":
+        //           toolDataone += obj.data.toolData[i]+"<br>";
+        //       rowsone += obj.data.toolDataCount[i]+"<br>";
+        //       break;
+        //       case "Max Duration":
+        //           toolDataone += obj.data.toolData[i]+"<br>";
+        //       rowsone += obj.data.toolDataCount[i]+"<br>";
+        //       break;
+        //       case "Min Duration":
+        //           toolDataone += obj.data.toolData[i]+"<br>";
+        //       rowsone += obj.data.toolDataCount[i]+"<br>";
+        //       break;
+        // }
+        //   }
+          // for( var i=3; i<obj.data.toolDataCount.length; i++ ){
+          //   rowsone += obj.data.toolDataCount[i]+"<br>";
+          // }
           document.getElementById('linktoolTipParagraphone').innerHTML =  toolDataone;
           document.getElementById('linktoolTipTextone').innerHTML = '<br>'+ rowsone;
           toolTipDIV.style.display = "block";
@@ -414,6 +482,22 @@ export class PiflowchartComponent implements OnInit {
           var toolTipDIV = document.getElementById('linkToolTipDIV');
      toolTipDIV.style.display = "none";
         }
+        function timeConversion(millisec) {
+         
+          var seconds:any = (millisec / 1000).toFixed(1);
+          var minutes:any = (millisec / (1000 * 60)).toFixed(1);
+          var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
+          var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+          if (seconds < 60) {
+              return seconds + " Sec";
+          } else if (minutes < 60) {
+              return minutes + " Min";
+          } else if (hours < 24) {
+              return hours + " Hrs";
+          } else {
+              return days + " Days"
+          }
+      }
         
     this.myDiagram.model = new go.GraphLinksModel(this.model1, this.model2);
   }
@@ -474,6 +558,23 @@ export class PiflowchartComponent implements OnInit {
     var blob = new Blob([svgstr], { type: "image/svg+xml" });
     this.myCallback(blob);
   }
+//   timeConversion(millisec) {
+//     console.log("millisec",millisec);
+    
+//     var seconds:any = (millisec / 1000).toFixed(1);
+//     var minutes:any = (millisec / (1000 * 60)).toFixed(1);
+//     var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
+//     var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+//     if (seconds < 60) {
+//         return seconds + " Sec";
+//     } else if (minutes < 60) {
+//         return minutes + " Min";
+//     } else if (hours < 24) {
+//         return hours + " Hrs";
+//     } else {
+//         return days + " Days"
+//     }
+// }
 
 
 }
