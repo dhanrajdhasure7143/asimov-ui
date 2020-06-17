@@ -65,7 +65,7 @@ export class UploadProcessModelComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
     this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
     this.route.queryParams.subscribe(params => {
-      this.selected_notation = parseInt(params['bpsId']) || undefined;
+      this.selected_notation = parseInt(params['bpsId']);
       this.isShowConformance = params['isShowConformance'] == 'true';
     });
      // this.randomId = UUID.UUID(); // Backend BPMN Model Id should be string
@@ -306,7 +306,7 @@ export class UploadProcessModelComponent implements OnInit {
     this.bpmnModel.bpmnNotationHumanTask=btoa(unescape(encodeURIComponent(this.uploaded_xml)));
     this.bpmnModel.bpmnProcessApproved=0;
     this.bpmnModel.bpmnProcessStatus="PENDING";
-    this.bpmnModel.bpmnModelTempId=this.autosaveObj.bpmnModelTempId;
+    this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
     this.bpmnModel.bpmnXmlNotation=btoa(unescape(encodeURIComponent(this.uploaded_xml)));
     this.bpmnModel.category= "infrastructure";//category for uploaded file
     this.bpmnModel.emailTo= "swaroop.attaluri@epsoftinc.com";//Change the email id
