@@ -1,25 +1,20 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 
-const httpOptions = {
-  headers: new HttpHeaders({
-    // 'Content-Type': 'application/json',
-    'Authorization': 'Bearer '+localStorage.getItem("accessToken")
-  }),
-};
+// const httpOptions = {
+//   headers: new HttpHeaders({
+//     // 'Content-Type': 'application/json',
+//     'Authorization': 'Bearer '+localStorage.getItem("accessToken")
+//   }),
+// };
 
 @Injectable({
   providedIn: 'root'
 })
-export class RestApiService {
-  
-  authHttpOptions = {
-    headers: new HttpHeaders({
-      'Authorization': 'Bearer '+localStorage.getItem("accessToken")
-    }),
-  };
+export class RestApiService{
+  authHttpOptions;
 
   xmlheaderOptions = {
     headers: new HttpHeaders({
@@ -38,19 +33,19 @@ export class RestApiService {
   }
   bpmnlist(user){
     //GET /bpsprocess/approver/info/{roleName} 
-return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user,this.authHttpOptions);
+return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
 }
 
 approve_producemessage(bpmnProcessInfo){
-  return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo,this.authHttpOptions);
+  return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
 }
 approve_savedb(bpmndata){
-  return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata,this.authHttpOptions);
+  return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata);
 }
 denyDiagram(msg_obj){
 // POST /bpsprocess/save/bpms/notation/approval/workflow
 
-return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj,this.authHttpOptions);
+return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj);
 }
 
 
@@ -60,22 +55,22 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   }
 
   getApproverforuser(role){
-    return this.http.get("/bpsprocess/approver/info/"+role,this.authHttpOptions)//first api call
+    return this.http.get("/bpsprocess/approver/info/"+role)//first api call
   }
   getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/gopi",this.authHttpOptions); 
+    return this.http.get("/bpsprocess/fetchByUser/gopi"); 
   }
   saveBPMNprocessinfofromtemp(bpmnModel){
-    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel,this.authHttpOptions)//third api call
+    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel)//third api call
   }
   submitBPMNforApproval(bpmnModel){
-    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel,this.authHttpOptions)//fourth api call
+    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)//fourth api call
   }
   getBPMNtempnotations(){
     return this.http.get("/bpsprocess/temp/bpmn/{bpmnModelTempId}/notation/")//fifth api call
   }
   autoSaveBPMNFileContent(bpmnModel){
-    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel, this.authHttpOptions)//sixth api call
+    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel)//sixth api call
   }
 
   sendUploadedFile(file:FormData, uid){
@@ -172,7 +167,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     }
   }
   saveConnectorConfig(body,categoryName,processName,piId){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body,httpOptions)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body)
   }
   getBotVersion(botid)
   {
@@ -183,25 +178,25 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   // PI module rest api's
 
   fileupload(file){
-    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file,httpOptions)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/upload',file)
   }
   getCategoriesList(){
-    return this.http.get('/processintelligence/v1/processgraph/categories',httpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/categories')
   }
   addCategory(data){
-    return this.http.post('/processintelligence/v1/processgraph/categories',data,httpOptions)
+    return this.http.post('/processintelligence/v1/processgraph/categories',data)
   }
   getAlluserProcessPiIds(){
-    return this.http.get('/processintelligence/v1/processgraph/userProcess',httpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/userProcess')
   }
   getAllVaraintList(piId){
-    return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId,httpOptions)
+    return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId)
   }
   getfullGraph(piId){
-    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId,httpOptions)
+    return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId)
   }
   getvaraintGraph(piId){
-    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId,httpOptions)
+    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId)
   }
 
 

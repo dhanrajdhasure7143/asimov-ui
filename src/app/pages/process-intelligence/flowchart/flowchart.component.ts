@@ -136,7 +136,7 @@ export class FlowchartComponent implements OnInit {
     }
     setTimeout(() => {
       this.onchangegraphId(piId);
-    }, 120000);
+    }, 3*60*1000);
     
   }
 
