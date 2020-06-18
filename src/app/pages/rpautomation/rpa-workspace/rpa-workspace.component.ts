@@ -47,10 +47,11 @@ constructor(private api:RestApiService ,private route:ActivatedRoute, private ro
       console.log(this.id)
       this.getallservices(this.id);
     }
+    this.getallorcservices();
     
   }
 
- async getallservices(processid:any)
+  async getallservices(processid:any)
   {
       await this.api.getAllRpaWorkSpaces(processid).subscribe(data=>{
       
@@ -63,17 +64,16 @@ constructor(private api:RestApiService ,private route:ActivatedRoute, private ro
       { 
         this.workspaces.automationTasks.forEach(automation =>{ this.automationtasks.push(automation)})
       }
-      if(typeof this.workspaces.others !== 'undefined')
-      {
-        this.workspaces.others.forEach(automation =>{ this.others.push(automation)})  
-      }
-      if(typeof this.workspaces.orchestration !== 'undefined')
-      { 
-        this.workspaces.orchestration.forEach(automation =>{ this.orchestrations.push(automation)})  
-      }
 
     })
   }
+  async getallorcservices()
+  {
+      await this.api.getAllOrcRpaWorkSpaces().subscribe(data=>{
+        this.orchestrations=data;
+    })
+  }
+  
   
   navigatetocreate() 
   {
