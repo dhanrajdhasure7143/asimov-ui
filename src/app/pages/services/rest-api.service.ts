@@ -204,6 +204,9 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId)
   }
 
-
+  getProcessStatistics()
+  { 
+    return this.http.get("/rpa-service/process-statistics")
+  }
 }
 

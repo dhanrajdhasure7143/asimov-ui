@@ -147,14 +147,15 @@
     border-radius: 6px;
   }
   .side-slide{
-    border: 1px solid lightgray;
     width: 52px;
     padding: 0px;
   }
   .imageI{
     width: 16px;;
 }
-
+ #search{
+   margin-right:40px;
+ }
 
 .robotic-run {
   position: absolute;
