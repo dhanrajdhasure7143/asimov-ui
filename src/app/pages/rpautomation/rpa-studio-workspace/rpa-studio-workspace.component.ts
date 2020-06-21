@@ -41,6 +41,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   fieldValues: any[] = [];
   allFormValues: any[] = [];
   saveBotdata:any = [];
+  alldataforms:any=[];
+  public finaldataobjects:any=[]
   constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService,) {
     
    }
@@ -176,6 +178,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.hiddenPopUp = false;
     this.fields = []
     console.log(menu);
+    this.formHeader=menu.name;
     this.selectedNode.id = menu.id;
     let type ="info";
       let message = `${menu.name} is Selected`
@@ -217,9 +220,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.unsubcribe();
   }
   formNodeFunc(node){
-    this.formHeader = node
     if(this.selectedNode.id){
-    this.rest.attribute(this.selectedNode.id).subscribe((data)=> this.response(data))
+    this.rest.attribute(this.selectedNode.id).subscribe((data)=>{
+       this.response(data)
+      })
     }
   }
   response(data){
@@ -227,6 +231,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.fields = [];
       this.hiddenPopUp = false;
       let type ="info";
+      
       let message = "No Data Found"
       this.notifier.notify( type, message );
     }else{
@@ -234,6 +239,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.hiddenPopUp = true;
     console.log(data);
     this.formVales = data
+    this.alldataforms.push(this.formVales)
     this.fields = data
     this.form = new FormGroup({
       fields: new FormControl(JSON.stringify(this.fields))
@@ -245,18 +251,35 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   }
   onFormSubmit(event){
-    console.log(event);
-
+    
     this.fieldValues = event
     this.hiddenPopUp=false;
+    let objAttr:any;
+    let obj:any=[];
+    this.formVales.forEach((ele,i) => {
+     
+      let objKeys = Object.keys(this.fieldValues);
+      objAttr = {
+        "metaAttrId": ele.id,
+        "metaAttrValue": ele.name,
+         "attrValue": this.fieldValues[objKeys[i]]
+      }
+      obj.push(objAttr);
+        
+  })
+  let cutedata={"taskName":this.selectedNode.name,
+                "taskId":this.selectedNode.id,
+                "inSeqId":1,
+                "outSeqId":2,
+                "attributes":obj
+              }
+  this.finaldataobjects.push(cutedata);
     Swal.fire({
       position: 'top-end',
       icon: 'success',
       title: "Saved Successfully",
       showConfirmButton: false,
       timer: 2000})
-    // localStorage.setItem('formValue', event)
-    // localStorage.setItem('formValue', event)
   }
 
   saveBotFun(botProperties,env)
@@ -264,34 +287,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     //console.log(environments)
     console.log(this.formVales);
     this.allFormValues = []
-    this.saveBotdata = []
-    let mainObj:any = [];
-    let tstAtt:any;
-    let obj:any = [];
-    let objAttr:any;
-    this.formVales.forEach((ele,i) => {
-     
-      let objKeys = Object.keys(this.fieldValues);
-      objAttr = {
-        "metaAttrId": ele.taskId,
-        "atrribute_type": ele.type,
-        "metaAttrValue": ele.name,
-         "attrValue": this.fieldValues[objKeys[i]]
-      }
-     
-      obj.push(objAttr);
-        
-  })
-  tstAtt={"attributes":obj};
-  mainObj.push(tstAtt);
-  console.log(this.allFormValues);
-  this.saveBotdata = {
+    this.saveBotdata = [];
+    this.saveBotdata = {
     "botName": botProperties.botName,
     "botType" : botProperties.botType,
     "description":botProperties.botDescription,
     "department":botProperties.botDepartment,
     "envIds":env,
-    "tasks": mainObj,
+    "tasks": this.finaldataobjects,
     "createdBy": "admin",
     "lastSubmittedBy": "admin",
     "scheduler" : this.scheduler

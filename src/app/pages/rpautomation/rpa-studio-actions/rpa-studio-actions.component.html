@@ -17,7 +17,7 @@
         </ul>
       </div>-->
       <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
-      <button  type="button"
+      <button  type="button" id="stopbot"
       class="btn btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot(1)">
       <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
       <div class="btn_title">Stop</div>
@@ -33,13 +33,24 @@
         </button>
         </div>
       <div class="dropdown">
-        <button class="btn btn_style dropdown-toggle" type="button" data-toggle="dropdown"
+        <button class="btn btn_style dropdown-toggle" id="bots" type="button" data-toggle="dropdown"
           (click)="getpredefinedbotlist()"> <img src="/assets/images/robot.svg" class="imageI1"><div class="btn_title">Bots</div></button>
-        <ul *ngIf="optionList" class="dropdown-menu" style="width:400px">
+        <ul *ngIf="predefinedbotsData.length > 0" class="dropdown-menu  rpa-custom-scrollbar" style="width:400px">
           <li *ngFor="let bots of predefinedbotsData; let i = index">
             <div class="checkbox">
               <div class="environments">
                 <button>{{bots.botName}}</button>
+                <hr>
+              </div>
+            </div>
+          </li>
+        </ul>
+        
+        <ul *ngIf="predefinedbotsData.length <= 0" class="dropdown-menu ">
+          <li>
+            <div class="checkbox">
+              <div class="environments">
+                <label [for]="list+i">No Records Found</label>
                 <hr>
               </div>
             </div>
@@ -50,19 +61,19 @@
         <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
         <div class="btn_title">Deploy</div>
       </button>
-      <button type="button" class="btn btn_style" aria-hidden="true" placement="bottom">
+      <button type="button" class="btn btn_style" id="edit" aria-hidden="true" placement="bottom">
         <img class="imageI1" src="/assets/images/Expanded.svg">
         <div class="btn_title">Edit</div>
       </button>
       <button  type="button"
-      class="btn btn_style" aria-hidden="true" placement="bottom" (click)="saveBotFunAct()">
+      class="btn btn_style" aria-hidden="true" placement="bottom" id="savebot" (click)="saveBotFunAct()">
       <img class="imageI1" src="/assets/images/Layer 1.svg">
       <div class="btn_title">Save</div>
     </button>
     
     <div *ngIf="startbot==false && pausebot==false && resumebot==false">
       <button  type="button"
-      class="btn btn_style" aria-hidden="true" placement="bottom" [disabled]="true">
+      class="btn btn_style" aria-hidden="true" placement="bottom" id="startbot" [disabled]="true">
       <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
       <div class="btn_title">Start</div>
       </button>
@@ -92,14 +103,14 @@
       </div>
   
     <button  type="button"
-    class="btn btn_style" aria-hidden="true" (click)="schedulerPopUp()" placement="bottom">
+    class="btn btn_style" aria-hidden="true" id="schedule" (click)="schedulerPopUp()" id="schedule" placement="bottom">
     <img class="imageI1" src="/assets/images/Group 286.svg">
     <div class="btn_title">Schedule</div>
     </button>
       <div class="dropdown">
-        <button class="btn btn_style dropdown-toggle" type="button" data-toggle="dropdown"
+        <button class="btn btn_style dropdown-toggle" id="Environments" type="button" data-toggle="dropdown"
           (click)="listenvironments()"> <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1"><div class="btn_title">Environments</div></button>
-        <ul *ngIf="optionList" class="dropdown-menu">
+        <ul *ngIf="environment.length > 0" class="dropdown-menu rpa-custom-scrollbar">
           <li *ngFor="let list of environment;let i = index">
             <div class="checkbox">
               <div class="environments">
@@ -111,11 +122,21 @@
             </div>
           </li>
         </ul>
+        <ul *ngIf="environment.length <= 0" class="dropdown-menu ">
+          <li>
+            <div class="checkbox">
+              <div class="environments">
+                <label [for]="list+i">No Records Found</label>
+                <hr>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
       <div class="dropdown">
-        <button class="btn btn_style dropdown-toggle" type="button" data-toggle="dropdown"
+        <button class="btn btn_style dropdown-toggle" id="versions" type="button" data-toggle="dropdown"
           (click)="getVersionlist()"> <img src="..\\assets\\images\\RPA\\Version_icon.svg" class="imageI1"><div class="btn_title">Versions</div></button>
-        <ul *ngIf="optionList" class="dropdown-menu">
+        <ul *ngIf="versionsList.length > 0" class="dropdown-menu rpa-custom-scrollbar">
           <li *ngFor="let version of versionsList; let i = index">
             <div class="checkbox">
               <div class="environments">
@@ -125,13 +146,25 @@
             </div>
           </li>
         </ul>
+        
+        <ul *ngIf="versionsList.length <= 0" class="dropdown-menu">
+          <li>
+            <div class="checkbox">
+              <div class="environments">
+                <label [for]="list+i">No Records Found</label>
+                <hr>
+              </div>
+            </div>
+          </li>
+        </ul>
+
       </div>
-      <button type="button" class="btn btn_style" aria-hidden="true" placement="bottom">
+      <button type="button" id="reset" class="btn btn_style" aria-hidden="true" placement="bottom">
         <img class="imageI1" src="/assets/images/reload_pp.svg">
         <div class="btn_title">Reset</div>
       </button>
       <button  type="button"
-      class="btn btn_style" aria-hidden="true" placement="bottom">
+      class="btn btn_style" id="delete" aria-hidden="true" placement="bottom">
       <img class="imageI1" src="/assets/images/RPA/delete_icon2.svg">
       <div class="btn_title">Delete</div>
       </button>

@@ -3,14 +3,14 @@
 <div class="container rpa-tablebox mx-3">
   <div class="env-data-tool"> 
   <div class="env-btn">
-      <button class="btn-outline-primary btn env-btn-shadow" value="Create" data-toggle="tooltip" data-placement="bottom" title="Create Environment" (click)="create()">
+      <button class="btn-outline-primary btn env-btn-shadow" value="Create" data-toggle="tooltip" data-placement="bottom" title="Create Environment" id="addenvbtn" (click)="create()">
         <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
       </button>
     </div>
     
     <div *ngIf="deleteflag==true" class="env-btn">
       
-      <button class="btn btn-outline-primary env-btn-shadow"   title="Delete Environment"  value="Delete" (click)="deleteEnvironments()" >
+      <button class="btn btn-outline-primary env-btn-shadow"   title="Delete Environment"  value="Delete" id="deleteenvbtn" (click)="deleteEnvironments()" >
         <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
        
       </button>
@@ -19,7 +19,7 @@
     
     <div *ngIf="deleteflag==false" class="env-btn">
     
-      <button class="btn btn-outline-primary env-btn-shadow" data-toggle="tooltip" data-placement="top" title="Delete Environment" disabled>
+      <button class="btn btn-outline-primary env-btn-shadow" data-toggle="tooltip" data-placement="top" id="deleteenvbtn" title="Delete Environment" disabled>
 
         <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
               
@@ -29,7 +29,7 @@
     
     <div *ngIf="updateflag==true" class="env-btn">
     
-      <button class="btn-outline-primary btn env-btn-shadow" data-toggle="tooltip" data-placement="bottom" title="Edit Environment"  (click)="updatedata()">
+      <button class="btn-outline-primary btn env-btn-shadow" id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Edit Environment"  (click)="updatedata()">
     
         <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
         
@@ -43,7 +43,7 @@
     <div *ngIf="updateflag==false" class="env-btn">
       
       
-      <button class="btn-outline-primary btn env-btn-shadow" data-toggle="tooltip" data-placement="top" title="Edit Environment" disabled>
+      <button class="btn-outline-primary btn env-btn-shadow" data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Edit Environment" disabled>
         
         
         <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
@@ -59,10 +59,10 @@
       <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
     </div>-->
   </div>
-    <table datatable [dtTrigger]="dtTrigger" [dtOptions]="dtOptions" class="table rpa-table table-striped  table-sm row-border hover env-table">
+    <table datatable [dtTrigger]="dtTrigger" id="listofenv" [dtOptions]="dtOptions" class="table rpa-table table-striped  table-sm row-border hover env-table" >
       <thead>
         <tr>
-          <th  class="rpa-checkbox-th"><input type="checkbox" [checked]="isAllCheckBoxChecked()" (change)="checkAllCheckBox($event)"></th>
+          <th  class="rpa-checkbox-th checkboxes"><input type="checkbox" [checked]="isAllCheckBoxChecked()" id="checkall" (change)="checkAllCheckBox($event)"></th>
           <th>Environment Name</th>
           <th>Environment Type</th>
           <th>Agent Path</th>
@@ -78,7 +78,7 @@
       </thead>
       <tbody >
         <tr  *ngFor="let environment of environments;let i=index; let odd = odd;" [ngClass]="odd ? 'odd_col' : 'even_col'">
-        <td class="rpa-checkbox"><input type="checkbox" value="{{environment.id}}" [(ngModel)]="environments[i].checked" (change)="checkEnableDisableBtn()"></td>
+        <td class="rpa-checkbox" ><input type="checkbox" class="checkupdateordelete" value="{{environment.id}}" [(ngModel)]="environments[i].checked" (change)="checkEnableDisableBtn()"></td>
           <td *ngIf="environment.environmentName==''">-</td>
           <td *ngIf="environment.environmentName!=''"> {{environment.environmentName}}</td>
           <td *ngIf="environment.environmentName==''">-</td>
@@ -122,7 +122,7 @@
   
   
   
-  <div *ngIf="updatepopup" class="pop-up conainer">
+  <div *ngIf="updatepopup" class="pop-up conainer ">
     <div class="card">
       <div class="card-header">
         Update Environment
@@ -218,7 +218,7 @@
           <button class="class-css" (click)="close()" >X</button>
         </div>
   
-        <div class="container card-body py-5 scroll" >
+        <div class="container card-body py-5 slide-up" >
           
           <form [formGroup]="insertForm" (ngSubmit)="savedata()">
           <div class="row">
