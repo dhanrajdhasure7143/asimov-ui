@@ -227,8 +227,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
   }
   response(data){
-    console.log("=================_notifier")
-    console.log(data)
     if(data.error == "No Data Found"){
       this.fields = [];
       this.hiddenPopUp = false;
@@ -276,8 +274,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
                 "attributes":obj
               }
   this.finaldataobjects.push(cutedata);
-  console.log("boochi 2.0:");
-  console.log(this.finaldataobjects)  
     Swal.fire({
       position: 'top-end',
       icon: 'success',
