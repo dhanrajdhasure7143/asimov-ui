@@ -624,7 +624,7 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
         var obj = {};
           obj['from'] = this.getFromKey(label);
           obj['to'] = this.getFromKey(datalink[j].linkNode);
-          obj['text'] = this.nodeArray[i].toolCount[0];
+          obj['text'] = datalink[j].toolCount[0];
 
           let testedg=label+' --> '+datalink[j].linkNode
           obj['textOne'] = testedg;
@@ -871,7 +871,7 @@ flowchartDataOne(dataArray,index) {
   for (var i = 1; i < this.nodeArray.length-1; i++) {
     // console.log('linkArray',this.nodeArray[i].linkArray);
     var datalink = this.nodeArray[i].linkArray;
-    // console.log('datalink',datalink);
+     console.log('datalink',datalink);
     var link=[]
     var linktool=[]
     var label = this.nodeArray[i].name;
@@ -882,15 +882,15 @@ flowchartDataOne(dataArray,index) {
       
       // if(link != undefined ||link != null){
         
-
+      console.log(index);
       var obj = {};
         obj['from'] = this.getFromKey(label);
         obj['to'] = this.getFromKey(datalink[j].linkNode);
         if(index==5||index==6||index==7||index==8||index==9){
-          obj['text'] = this.timeConversion(this.nodeArray[i].toolCount[index]);
+          obj['text'] = this.timeConversion(datalink[j].toolCount[index-2]);
         }else{
         
-          obj['text'] = this.nodeArray[i].toolCount[index];
+          obj['text'] = datalink[j].toolCount[index];
         }
         let testedg=label+' --> '+datalink[j].linkNode
         obj['textOne'] = testedg;

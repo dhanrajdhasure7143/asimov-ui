@@ -382,8 +382,8 @@ export class PiflowchartComponent implements OnInit {
         function showLinkToolTip(e,obj,diagram) {
           var node = obj.part;
           var shape = obj.findObject("LINK");
-          // console.log("from",shape.fromNode.hb);
-          // console.log("to",shape.toNode.hb);
+          console.log("from",shape.fromNode.hb);
+           console.log("to",shape.toNode.hb);
           // console.log(shape);
           // console.log(shape.part.Animation);
           // e.diagram['Eb'].Xt='#0162cf'
@@ -409,7 +409,7 @@ export class PiflowchartComponent implements OnInit {
           // console.log("");
           if(shape.fromNode.hb.key==-1 || shape.fromNode.hb.key==-2){
             // me.isfrequency=true
-            // console.log('-1',shape.toNode.hb.tool);
+             console.log('-1',shape.toNode.hb.tool);
             for( var j=0; j<shape.toNode.hb.tool.length-5; j++ ){
               toolData += shape.toNode.hb.tool[j]+"<br>";
               rows += shape.toNode.hb.toolCount[j]+"<br>";
@@ -421,7 +421,7 @@ export class PiflowchartComponent implements OnInit {
             //   toolDataone += shape.toNode.hb.tool[a]+"<br>";
             //   rowsone += shape.toNode.hb.toolCount[a]+"<br>";
             // }
-            // console.log("me",me.toolData1);
+             console.log("me",toolData);
           }else if(shape.toNode.hb.key==-1 || shape.toNode.hb.key==-2){
             me.isstartLink=false
             me.myOutputVal.emit(me.isstartLink)
@@ -436,7 +436,7 @@ export class PiflowchartComponent implements OnInit {
             //   toolDataone += shape.fromNode.hb.tool[b]+"<br>";
             //   rowsone += shape.fromNode.hb.toolCount[b]+"<br>";
             //   }
-            // console.log("me",me.toolData1);
+             console.log("me",toolData);
             
           }else{
             me.isstartLink=true;
