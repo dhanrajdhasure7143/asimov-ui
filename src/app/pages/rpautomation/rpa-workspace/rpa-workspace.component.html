@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-3  my-1 border-right col-border ">
+        <div class="col-sm-4  my-1 border-right col-border  " id="automatedtasks">
             <div class="rpa-workspace-header text-dark" >
                 Automation 
                 <span class="rpa-workspace-span" >
@@ -29,8 +29,8 @@
             <div class="rpa-workspace-total">Total : {{automationtasks.length}}</div>
                 
         </div>
-        <div class="col-sm-3 my-1 col-border">
-            <div class="rpa-workspace-header " >
+        <div class="col-sm-4 my-1 col-border" id="humantasks">
+            <div class="rpa-workspace-header "  >
                Human
                <span class="rpa-workspace-span">
                 <img src="..\\assets\\images\\RPA\\menu_icon.svg" class="rpa-workspace-toolicon">
@@ -45,7 +45,7 @@
               </span>
             </div>
             
-            <div class="rpa-workspace-body rpa-container rpa-custom-scrollbar">
+            <div class="rpa-workspace-body rpa-container rpa-custom-scrollbar" >
                 <div class="rpa-item" *ngFor="let manualtask of manualtasks" >
                 
                   
@@ -59,7 +59,7 @@
             </div>
             <div class="rpa-workspace-total">Total : {{manualtasks.length}}</div>
         </div>
-        <div class="col-sm-3 my-1 col-border">
+        <div class="col-sm-4 my-1 col-border" id="orchestrations">
             <div class="rpa-workspace-header " >
                 Orchestration(Human+Bots)
                 <span class="rpa-workspace-span">
@@ -75,50 +75,51 @@
                   </span>
             </div>
             
-            <div class="rpa-workspace-body rpa-custom-scrollbar">
-                <div class="rpa-item" *ngFor="let orchestration of orchestrations" >
+            <div class="rpa-workspace-body  rpa-container rpa-custom-scrollbar">
+              <div class="rpa-item" *ngFor="let orchestration of orchestrations" >
+              
                 
-                  
-                    <img src="..\\assets\\images\\RPA\\rpa-human-n-bot.svg" class="rpa-workspace-icons">      
-             
-                      
-                      <br>
-                    <div class="rpa-workspace-title"> {{orchestration.taskName}}</div>
-                
-                </div>
-            </div>
-            <div class="rpa-workspace-total">Total : {{orchestrations.length}}</div>
-        </div>
-        
-        <div class="col-sm-3 my-1">
-            <div class="rpa-workspace-header " >
-                Others
+                  <img src="..\\assets\\images\\RPA\\rpa-human-n-bot.svg" class="rpa-workspace-icons">      
+           
+                    
+                    <br>
+                  <div class="rpa-workspace-title"> {{orchestration.processName}}</div>
+              
+              </div>
+          </div>
+          <div class="rpa-workspace-total">Total : {{orchestrations.length}}</div>
+      </div>
+      <!--
+      <div class="col-sm-3 my-1">
+          <div class="rpa-workspace-header " >
+              Others
+              <span class="rpa-workspace-span">
+                  <img src="..\\assets\\images\\RPA\\menu_icon.svg" class="rpa-workspace-toolicon">
+                    
+                </span>
                 <span class="rpa-workspace-span">
-                    <img src="..\\assets\\images\\RPA\\menu_icon.svg" class="rpa-workspace-toolicon">
-                      
-                  </span>
-                  <span class="rpa-workspace-span">
-                      <img src="..\\assets\\images\\RPA\\search.svg" class="rpa-workspace-toolicon">
-                  </span>
-                  <span class="rpa-workspace-span">
-                    <img src="..\\assets\\images\\RPA\\plus.svg" class="rpa-workspace-toolicon">
-                      
-                  </span>
-            </div>
-            <div class="rpa-workspace-body rpa-custom-scrollbar">
-                <div class="rpa-item" *ngFor="let other of others" >
+                    <img src="..\\assets\\images\\RPA\\search.svg" class="rpa-workspace-toolicon">
+                </span>
+                <span class="rpa-workspace-span">
+                  <img src="..\\assets\\images\\RPA\\plus.svg" class="rpa-workspace-toolicon">
+                    
+                </span>
+          </div>
+          <div class="rpa-workspace-body rpa-custom-scrollbar">
+              <div class="rpa-item" *ngFor="let other of others" >
+              
                 
-                  
-                    <img src="..\\assets\\images\\RPA\\rpa-others.svg" class="rpa-workspace-icons">      
-             
-                      
-                      <br>
-                    <div class="rpa-workspace-title"> {{other.taskName}}</div>
-                
-                </div>
-            </div>
-            <div class="rpa-workspace-total">Total : {{others.length}}</div>
-        </div>
+                  <img src="..\\assets\\images\\RPA\\rpa-others.svg" class="rpa-workspace-icons">      
+           
+                    
+                    <br>
+                  <div class="rpa-workspace-title"> {{other.taskName}}</div>
+              
+              </div>
+          </div>
+          <div class="rpa-workspace-total">Total : {{others.length}}</div>
+      </div>-->
+        
     </div>
 </div>
 <div class="container">

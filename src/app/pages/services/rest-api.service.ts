@@ -166,6 +166,11 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
       return this.http.get('/rpa-service/load-process-info/processid='+id);    
     }
   }
+  getAllOrcRpaWorkSpaces()
+  {
+      return this.http.get('/rpa-service/process-name');
+   
+  }
   saveConnectorConfig(body,categoryName,processName,piId){
     return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body)
   }
@@ -199,6 +204,9 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId)
   }
 
-
+  getProcessStatistics()
+  { 
+    return this.http.get("/rpa-service/process-statistics")
+  }
 }
 
