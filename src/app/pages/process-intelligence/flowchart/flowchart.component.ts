@@ -78,6 +78,18 @@ export class FlowchartComponent implements OnInit {
   varaint_GraphData:any=[];
   varaint_GraphDataArray:any[]=[];
   piIdNumber:any;
+  public isedgespinner:boolean=false;
+  spinMetrics0:boolean=true;
+  spinMetrics1:boolean=false;
+  spinMetrics2:boolean=false;
+  spinMetrics3:boolean=false;
+  spinMetrics4:boolean=false;
+  spinMetrics5:boolean=false;
+  spinMetrics6:boolean=false;
+  spinMetrics7:boolean=false;
+  spinMetrics8:boolean=false;
+  spinMetrics9:boolean=false;
+  wpiIdNumber:any;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -128,15 +140,29 @@ export class FlowchartComponent implements OnInit {
     //   }
       
     // })
-    this.route.params.subscribe(data=>{this.piIdNumber=data
-    })
-    if(this.piIdNumber!=null){
-      piId=this.piIdNumber.piId
-      this.graphIds = piId;
-    }
-    setTimeout(() => {
-      this.onchangegraphId(piId);
-    }, 3*60*1000);
+    this.route.queryParams.subscribe(params => {
+      if(params['wpiId']!=undefined){
+        this.wpiIdNumber = parseInt(params['wpiId']);
+        piId=this.wpiIdNumber;
+        this.graphIds = piId;
+        setTimeout(() => {
+          this.onchangegraphId(piId);
+      }, 500);
+      }
+      if(params['piId']!=undefined){
+        this.piIdNumber = parseInt(params['piId']);
+        piId=this.piIdNumber;
+        this.graphIds = piId;
+        setTimeout(() => {
+          this.onchangegraphId(piId);
+        }, 3*60*1000);
+      }
+    });
+    
+  //   setTimeout(() => {
+  //     this.onchangegraphId(piId);
+  //   // }, 3*60*1000);
+  // }, 300);
     
   }
 
@@ -174,9 +200,26 @@ export class FlowchartComponent implements OnInit {
         
         this.model2 = this.flowchartData(this.model1)
         for(var j=0;j<this.model2.length;j++){
-          let loc3=25*j
-          this.model2[j].curviness=loc3
+          // for (let [key, value] of Object.entries(this.model2[j])) {
+            console.log(this.model2[j].from);
+
+                            // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
+                // this.model2[j].from>0 && this.model2[j].to<0
+                // this.model2[j].from ==-2||this.model2[j].to==-2
+            if(this.model2[j].from ==-1||this.model2[j].from==-2){
+              let loc3=-25*j
+            this.model2[j].curviness=loc3
+
+            }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+                let loc3=20*j
+                this.model2[j].curviness=loc3
+          }else{
+              let loc3=25*j
+            this.model2[j].curviness=loc3
+            }
         }
+        console.log(this.model2);
+        
         this.spinner.hide();
         });
         // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
@@ -539,6 +582,7 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
   frequency() {
     this.isfrequency = false;
   }
+  
 
   flowchartData(dataArray) {
     this.linkData = [];
@@ -562,6 +606,10 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
           obj['from'] = this.getFromKey(label);
           obj['to'] = this.getFromKey(datalink[j].linkNode);
           obj['text'] = this.nodeArray[i].toolCount[0];
+
+          let testedg=label+' --> '+datalink[j].linkNode
+          obj['textOne'] = testedg;
+
           obj['toolData']=datalink[j].tool
            obj['toolDataCount']=datalink[j].toolCount
 
@@ -584,20 +632,31 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
         if (this.nodeArray[i].tool.includes('Start Frequency')) {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(this.nodeArray[i].toolCount[3]!=0){
           obj['from'] = -1;
           obj['to'] = this.getFromKey(this.nodeArray[i].name);
-          obj['text'] = this.nodeArray[i].toolCount[3]
+          obj['text'] = this.nodeArray[i].toolCount[3];
+          
+          let testedg="Start --> "+this.nodeArray[i].name
+          obj['textOne'] = testedg;
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
+          }
         }
         if (this.nodeArray[i].tool.includes('End Frequency')) {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(this.nodeArray[i].toolCount[4]!=0){
           obj['from'] = this.getFromKey(this.nodeArray[i].name);
           obj['to'] = -2;
-          obj['text'] = this.nodeArray[i].toolCount[4]
+          obj['text'] = this.nodeArray[i].toolCount[4];
+
+          let testedg=this.nodeArray[i].name+' --> End'
+          obj['textOne'] = testedg;
+
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
+          }
         }
 
       // }
@@ -613,7 +672,7 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
     // this.model1=this.pgModel.allData.nodeDataArraycase;
 
     // this.model2=this.linkdataArray;
-    // console.log('linkarray', this.linkdataArray)
+    console.log('linkarray', this.linkdataArray)
     return this.linkdataArray;
   }
 
@@ -626,12 +685,39 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
   }
 
   onfrequency(){
+    // console.log(this.isfrequencymetrics);
+    
     this.isfrequencymetrics= !this.isfrequencymetrics;
     this.isperformancemetrics=false;
   }
   onPerformance(){
     this.isperformancemetrics= !this.isperformancemetrics;
     this.isfrequencymetrics=false;
+
+  }
+  spinnermetrics(){
+    this.isedgespinner= !this.isedgespinner;
+    if(this.isedgespinner==false){
+      this.isfrequencymetrics=false;
+      this.isperformancemetrics=false;
+      this.model2 = this.flowchartData(this.model1)
+      // for(var j=0;j<this.model2.length;j++){
+      //   let loc3=25*j
+      //   this.model2[j].curviness=loc3
+      // }
+      for(var j=0;j<this.model2.length;j++){
+        if(this.model2[j].from ==-1||this.model2[j].from==-2){
+          let loc3=-25*j
+        this.model2[j].curviness=loc3
+        }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+            let loc3=20*j
+            this.model2[j].curviness=loc3
+      }else{
+          let loc3=25*j
+        this.model2[j].curviness=loc3
+        }
+      }
+    }
   }
 
 generateBpmn(){
@@ -644,8 +730,6 @@ loopTrackBy(index, term){
   return index;
 }
 timeConversion(millisec) {
-  console.log("millisec",millisec);
-  
   var seconds:any = (millisec / 1000).toFixed(1);
   var minutes:any = (millisec / (1000 * 60)).toFixed(1);
   var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
@@ -660,4 +744,183 @@ timeConversion(millisec) {
       return days + " Days"
   }
 }
+
+selectedMetric(selectedValue){
+  console.log('spinMetrics0',this.spinMetrics0);
+  
+  console.log("selectedValue",selectedValue);
+ 
+  let index;
+  switch(selectedValue){
+    case "absoluteFrequency":
+        index=0;
+    // this.isSpinner="absoluteFrequency"
+    break;
+    case "caseFrequency":
+        index=1;
+        // this.isSpinner="caseFrequency"
+    break;
+    case "maxRepititons":
+        index=2;
+        // this.isSpinner="maxRepititons"
+    break;
+    case "startFrequency":
+        index=3;
+    break;
+    case "endFrequency":
+        index=4;
+    break;
+    case "totalDuration":
+        index=5;
+    break;
+    case "medianDuration":
+        index=6;
+    break;
+    case "meanDuration":
+        index=7;
+    break;
+    case "maxDuration":
+        index=8;
+    break;
+    case "minDuration":
+        index=9;
+    break;
+  }
+  console.log(index);
+  for(var i=1;i<this.model1.length-1;i++){
+    console.log(this.model1[i].count);
+    if(index==5||index==6||index==7||index==8||index==9){
+      this.model1[i].count=this.timeConversion(this.model1[i].toolCount[index])
+    }else{
+      this.model1[i].count=this.model1[i].toolCount[index]
+      this.model1=this.model1
+      // this.model1[i].countOne=this.model1[i].toolCount[index]
+    }
+
+  }
+  console.log("model",this.model1);
+
+  this.model2 = this.flowchartDataOne(this.model1,index)
+  for(var j=0;j<this.model2.length;j++){
+    if(this.model2[j].from ==-1||this.model2[j].from==-2){
+      let loc3=-25*j
+    this.model2[j].curviness=loc3
+
+    }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+        let loc3=20*j
+        this.model2[j].curviness=loc3
+  }else{
+      let loc3=25*j
+    this.model2[j].curviness=loc3
+    }
+  }
+  
+}
+flowchartDataOne(dataArray,index) {
+  console.log('index',index);
+  
+  this.linkData = [];
+  this.linkdataArray = [];
+  this.nodeArray = dataArray;
+   var linkToolArray=[];
+  for (var i = 1; i < this.nodeArray.length-1; i++) {
+    // console.log('linkArray',this.nodeArray[i].linkArray);
+    var datalink = this.nodeArray[i].linkArray;
+    // console.log('datalink',datalink);
+    var link=[]
+    var linktool=[]
+    var label = this.nodeArray[i].name;
+    
+    for(var j=0; j< datalink.length; j++){
+      // link.push(datalink[j].linkNode)
+      // console.log('datalink.length',datalink[j].length);
+      
+      // if(link != undefined ||link != null){
+        
+
+      var obj = {};
+        obj['from'] = this.getFromKey(label);
+        obj['to'] = this.getFromKey(datalink[j].linkNode);
+        if(index==5||index==6||index==7||index==8||index==9){
+          obj['text'] = this.timeConversion(this.nodeArray[i].toolCount[index]);
+        }else{
+        
+          obj['text'] = this.nodeArray[i].toolCount[index];
+        }
+        let testedg=label+' --> '+datalink[j].linkNode
+        obj['textOne'] = testedg;
+
+        obj['toolData']=datalink[j].tool
+         obj['toolDataCount']=datalink[j].toolCount
+
+        this.linkdataArray.push(obj);
+  }
+      if (this.nodeArray[i].tool.includes('Start Frequency')) {
+        var obj = {};
+        // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+        // obj['from'] = -1;
+        // obj['to'] = this.getFromKey(this.nodeArray[i].name);
+        if(this.nodeArray[i].toolCount[3]!=0){
+          obj['from'] = -1;
+          obj['to'] = this.getFromKey(this.nodeArray[i].name);
+          obj['text'] = this.nodeArray[i].toolCount[3]
+        }
+        // obj['text'] = this.nodeArray[i].toolCount[3]
+        let testedg="Start --> "+this.nodeArray[i].name
+        obj['textOne'] = testedg;
+        obj["extraNode"] = 'true';
+        this.linkdataArray.push(obj);
+      }
+      if (this.nodeArray[i].tool.includes('End Frequency')) {
+        var obj = {};
+        // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+        // obj['from'] = this.getFromKey(this.nodeArray[i].name);
+        // obj['to'] = -2;
+        if(this.nodeArray[i].toolCount[4]!=0){
+          obj['from'] = this.getFromKey(this.nodeArray[i].name);
+          obj['to'] = -2;
+          obj['text'] = this.nodeArray[i].toolCount[4]
+        }
+        let testedg=this.nodeArray[i].name+" --> End"
+        obj['textOne'] = testedg;
+
+        // obj['text'] = this.nodeArray[i].toolCount[4]
+        obj["extraNode"] = 'true';
+        this.linkdataArray.push(obj);
+      }
+  }
+console.log('this.linkdataArray',this.linkdataArray);
+
+  return this.linkdataArray;
+}
+openNav(){
+  document.getElementById("mySidenav").style.width = "300px";
+  document.getElementById("main").style.marginRight = "300px";
+  }
+closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+  document.getElementById("main").style.marginRight= "0";
+  }
+  resetspinnermetrics(){
+    this.model2 = this.flowchartData(this.model1)
+    for(var j=0;j<this.model2.length;j++){
+      // for (let [key, value] of Object.entries(this.model2[j])) {
+        console.log(this.model2[j].from);
+
+                        // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
+            // this.model2[j].from>0 && this.model2[j].to<0
+            // this.model2[j].from ==-2||this.model2[j].to==-2
+        if(this.model2[j].from ==-1||this.model2[j].from==-2){
+          let loc3=-25*j
+        this.model2[j].curviness=loc3
+
+        }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+            let loc3=20*j
+            this.model2[j].curviness=loc3
+      }else{
+          let loc3=25*j
+        this.model2[j].curviness=loc3
+        }
+    }
+  }
 }

@@ -119,8 +119,8 @@
   
   /* Process Intelligance flowchart component css */
   .tracking_detsils1{
-    border-left:1px solid lightgray;
-    border-right: 1px solid lightgray;
+    border:1px solid #f4f4f4;
+    border-radius: 10px;
     height: 460px;
     padding-left:0px;
     padding-right: 0px;
@@ -138,5 +138,69 @@
   .tooltiptext1 p{
     color: black;
     padding-left: 10px;
+  }
+  .edgemetrics_spinner{
+    background-color: #f4f4f4;
+    color: black !important;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 5px 0px;
+  }
+  .form-check-input{
+    padding: 10px 10px;
+  }
+  .edgemetrics_spinner span input{
+    margin-left: 8px;
+    margin-right: 7px;
+  }
+  .isactive{
+    color: white !important;
+    background-color: #0162cf
+  }
+  .edgemetrics_spinner span{
+    padding: 10px 0px;
+  }
+
+
+
+
+
+  .sidenav {
+    /* height: auto; */
+    height: fit-content;
+    width: 0;
+    position: absolute;
+    z-index: 0;
+    top: 150px;
+    right: 0;
+    /* background-color:#777575; */
+    overflow: scroll;
+    transition: 0.5s;
+    padding-top: 40px;
+  }
+
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 0px;
+    font-size: 36px;
+    margin-right: 20px;
+  }
+  
+  #main {
+    transition: margin-right .5s;
+    padding: 16px;
+  }
+  
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 50px;}
+  }
+  .reset_btn{
+    margin-left: 70%;
+    border: none !important;
+    background: none;
+    height: 20px;
+    color: #0162cf;
+    padding: 0px;
   }
   

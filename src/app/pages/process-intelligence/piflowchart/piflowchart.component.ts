@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 import * as go from 'gojs';
-import {ZoomSlider} from '../../../zoomSlider';
+// import {ZoomSlider} from '../../../zoomSlider';
 // import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var $:any;
@@ -31,13 +31,13 @@ export class PiflowchartComponent implements OnInit {
   //   me.spinner.hide()},5000);
     
     this.flowGraph();
-    this.zoomSlider();
+    // this.zoomSlider();
   }
   ngOnChanges(){
       this.myDiagram.div = null;
       this.flowGraph();
       
-    this.zoomSlider();
+    // this.zoomSlider();
     if(this.isplay == true){
       this.playAnimation();
     };
@@ -45,7 +45,7 @@ export class PiflowchartComponent implements OnInit {
       this.makeSvg();
     }
 
-    $(".zoomSlider").nextAll().remove();
+    // $(".zoomSlider").nextAll().remove();
      
   }
 
@@ -298,7 +298,8 @@ export class PiflowchartComponent implements OnInit {
         //  corner: 10,
         //  adjusting: go.Link.Stretch, 
          reshapable: true, 
-         toShortLength: 7 },
+         toShortLength: 7 ,
+         name: "LINK",},
         new go.Binding("points").makeTwoWay(),
         new go.Binding("curviness"),
         new go.Binding("zOrder"),
@@ -343,12 +344,26 @@ export class PiflowchartComponent implements OnInit {
                         editable:false
                     },
                     // editing the text automatically updates the model data
-                    new go.Binding("text").makeTwoWay()),
+                    new go.Binding("text").makeTwoWay()
+                    ),
+                    $(go.TextBlock, { segmentIndex: NaN, segmentFraction: 0.43,segmentOffset: new go.Point(0, -10),alignmentFocus: new go.Spot(1, 0.5, 5, 0)  }, // the label text
+                    {
+                        // textAlign: "right",
+                        font: "8pt robot, arial, sans-serif,bold",
+                        stroke: "#919191",
+                        margin: 4,
+                        editable:false
+                    },
+                    // editing the text automatically updates the model data
+                    new go.Binding("text","textOne").makeTwoWay()
+                    ),
                     {
                       // toolTip:
                       mouseEnter:function(e,obj,diagram) {
                         var data=e.diagram
                         // new go.Binding("text").makeTwoWay();
+                        console.log(e.diagram);
+                        
                         showLinkToolTip(e,obj,data);
                       },
                       mouseLeave:function(){
@@ -360,6 +375,12 @@ export class PiflowchartComponent implements OnInit {
         );
 
         function showLinkToolTip(e,obj,diagram) {
+          var shape = obj.findObject("LINK");
+          // console.log("from",shape.fromNode.hb);
+          // console.log("to",shape.toNode.hb);
+          // console.log(e.diagram.stroke);
+          
+            shape.strokeWidth = 50;
           var toolTipDIV = document.getElementById('linkToolTipDIV');
           var node = obj.part;
           // console.log(obj.port,obj.fromNode.Bp);
@@ -379,15 +400,39 @@ export class PiflowchartComponent implements OnInit {
           var toolDataone="";
           var rowsone="";
           var name=obj.data.name;
-          // console.log('obj',obj.part.data.toolData);
+          // console.log("");
           var me=this;
-          
+          if(shape.fromNode.hb.key==-1 || shape.fromNode.hb.key==-2){
+            // me.isfrequency=true
+            // console.log('-1',shape.toNode.hb.tool);
+            for( var j=0; j<shape.toNode.hb.tool.length-5; j++ ){
+              toolData += shape.toNode.hb.tool[j]+"<br>";
+              rows += shape.toNode.hb.toolCount[j]+"<br>";
+            }
+            // for( var a=5; a<shape.toNode.hb.tool.length; a++ ){
+            //   toolDataone += shape.toNode.hb.tool[a]+"<br>";
+            //   rowsone += shape.toNode.hb.toolCount[a]+"<br>";
+            // }
+            
+          }else if(shape.toNode.hb.key==-1 || shape.toNode.hb.key==-2){
+            // me.isfrequency=true
+            // console.log("end",shape.fromNode.hb.tool);
+            
+            for( var k=0; k<=shape.fromNode.hb.tool.length-6; k++ ){
+            toolData += shape.fromNode.hb.tool[k]+"<br>";
+            rows += shape.fromNode.hb.toolCount[k]+"<br>";
+            }
+            // for( var b=5; b<=shape.fromNode.hb.tool.length; b++ ){
+            //   toolDataone += shape.fromNode.hb.tool[b]+"<br>";
+            //   rowsone += shape.fromNode.hb.toolCount[b]+"<br>";
+            //   }
+          }else{
           for( var i=0; i<obj.part.data.toolData.length; i++ ){
+
             // if(obj.part.data.toolData[i]=='Absolute Frequency'){}
             switch(obj.part.data.toolData[i]){
                   case "Absolute Frequency":
                   toolData += obj.data.toolData[i]+"<br>";
-
                   rows += obj.data.toolDataCount[i]+"<br>";
                   break;
                   case "Case Frequency":
@@ -430,6 +475,7 @@ export class PiflowchartComponent implements OnInit {
             }
             // toolData += obj.data.toolData[i]+"<br>";
           }
+        }
           // for( var i=0; i<obj.data.toolDataCount.length-5; i++ ){
           //   rows += obj.data.toolDataCount[i]+"<br>";
           // }
@@ -500,17 +546,18 @@ export class PiflowchartComponent implements OnInit {
       }
         
     this.myDiagram.model = new go.GraphLinksModel(this.model1, this.model2);
+    // this.myDiagram.commandHandler.increaseZoom
   }
-  zoomSlider(){
-    new ZoomSlider(this.myDiagram).remove();
+  // zoomSlider(){
+  //   new ZoomSlider(this.myDiagram).remove();
 
-    var zoomSlider = new ZoomSlider(this.myDiagram,
-      {
-          alignment: go.Spot.BottomCenter, alignmentFocus: go.Spot.BottomCenter,
-           size: 200,orientation: 'horizontal'
-         }
-         );
-  }
+  //   var zoomSlider = new ZoomSlider(this.myDiagram,
+  //     {
+  //         alignment: go.Spot.BottomCenter, alignmentFocus: go.Spot.BottomCenter,
+  //          size: 200,orientation: 'horizontal'
+  //        }
+  //        );
+  // }
   playAnimation(){
     
     var animation = new go.Animation();
@@ -575,6 +622,14 @@ export class PiflowchartComponent implements OnInit {
 //         return days + " Days"
 //     }
 // }
-
+zoomIn(){
+  this.myDiagram.commandHandler.increaseZoom();
+}
+zoomOut(){
+  this.myDiagram.commandHandler.decreaseZoom();
+}
+restZoom(){
+  this.myDiagram.commandHandler.resetZoom();
+}
 
 }
