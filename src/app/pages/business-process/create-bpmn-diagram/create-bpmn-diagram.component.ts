@@ -32,6 +32,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   saved_bpmn_list:any[] = [];
   approver_list:any[] = [];
   selected_notation;
+  selected_approver;
   randomId;
   notationListOldValue = undefined;
   notationListNewValue = undefined;
@@ -42,13 +43,11 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
-    // this.randomId = UUID.UUID(); // Backend BPMN Model Id should be string
-    this.randomId = Math.floor(Math.random()*999999);//Values get repeated
+    this.randomId = UUID.UUID();
     this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
     this.bpmnModel.bpmnModelTempStatus = "initial";
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_bpmn_list = res; 
-      console.log(this.saved_bpmn_list)
     });
     this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
     this.bpmnModel.reviewComments="";
@@ -61,8 +60,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       this.bpmnModel.bpmnXmlNotation=btoa(this.newXml);
       this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
     });
-   
-    this.rest.getApproverforuser('Process Architect').subscribe( (res:any[]) =>  {//BPMN_Process_Modeler
+    this.rest.getApproverforuser('Admin').subscribe( (res:any[]) =>  {//Process Architect
       this.approver_list = res; 
     });
   }
@@ -242,8 +240,12 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     }
   }
   submitDiagramForApproval(){
-    let _self = this;
-    this.bpmnModel.approverName="vaidehi";//get from approval list
+    if(!this.selected_approver){
+      Swal.fire("No approver", "Please select approver from the list given above", "error");
+      return;
+    }
+   let _self = this;
+   this.bpmnModel.approverName = this.selected_approver;
     this.bpmnModel.bpmnJsonNotation= btoa(_self.newXml);
     this.bpmnModel.bpmnModelId= this.selected_notation ? this.saved_bpmn_list[this.selected_notation]['bpmnModelId']:this.randomId;
     this.bpmnModel.bpmnNotationAutomationTask=btoa(_self.newXml);
@@ -268,7 +270,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
           'Your changes has been saved and submitted for approval successfully.',
           'success'
         )
-        this.router.navigateByUrl("/pages/approvalWorkflow/home")
+        // this.router.navigateByUrl("/pages/approvalWorkflow/home")
         this.spinner.hide()
       },
       err => {

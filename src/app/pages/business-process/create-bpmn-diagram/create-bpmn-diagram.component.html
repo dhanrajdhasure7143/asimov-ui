@@ -10,9 +10,9 @@
     </div>
     <div class="col-md-2">
         <b>Approver List&nbsp;</b>
-        <select class="form-control">
-            <option [value]="each_approver.bpmnModelId" *ngFor="let each_approver of approver_list">
-                {{each_approver.bpmnProcessName}}</option>
+        <select class="form-control" [(ngModel)]="selected_approver">
+            <option [value]="each_approver.id" *ngFor="let each_approver of approver_list">
+                {{each_approver.firstName+" "+each_approver.lastName}}</option>
         </select>
     </div>
     <div class="col-md-2"></div>

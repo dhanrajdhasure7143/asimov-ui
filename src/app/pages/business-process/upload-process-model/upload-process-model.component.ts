@@ -12,6 +12,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
+import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-upload-process-model',
@@ -49,6 +50,7 @@ export class UploadProcessModelComponent implements OnInit {
   saved_bpmn_list:any[] = [];
   approver_list:any[] = [];
   selected_notation;
+  selected_approver;
   diplayApproveBtn:boolean = false;
   isDiagramChanged:boolean = false;
   notationListOldValue = undefined;
@@ -66,10 +68,10 @@ export class UploadProcessModelComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
     this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
     this.route.queryParams.subscribe(params => {
-      this.selected_notation = parseInt(params['bpsId']) || undefined;
+      this.selected_notation = parseInt(params['bpsId']);
       this.isShowConformance = params['isShowConformance'] == 'true';
     });
-    this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
+    this.randomId = UUID.UUID(); 
     this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
     this.bpmnModel.reviewComments="";
     this.bpmnModel.approverName="vaidehi";
@@ -84,20 +86,18 @@ export class UploadProcessModelComponent implements OnInit {
       this.bpmnModel.bpmnXmlNotation=btoa(this.newXml);
       this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
     });
-     // this.randomId = UUID.UUID(); // Backend BPMN Model Id should be string
-  
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_bpmn_list = res; 
       this.initiateDiagram();
     });
-    this.rest.getApproverforuser('Process Architect').subscribe( (res:any[]) =>  {//BPMN_Process_Modeler
+    this.rest.getApproverforuser('Admin').subscribe( (res:any[]) =>  {//Process Architect
       this.approver_list = res; 
     });
    }
-  //  ngAfterViewInit(){
+   
     initiateDiagram(){
       let _self=this;
-     if(this.selected_notation){
+     if(this.selected_notation >= 0){
       this.bpmnModeler = new BpmnJS({
         container: '#canvas1',
         keyboard: {
@@ -120,26 +120,40 @@ export class UploadProcessModelComponent implements OnInit {
      }else{
       this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
         let _self = this;
-        this.bpmnModeler = new BpmnJS({
-          container: '#canvas1',
+        let modeler_obj = this.isShowConformance?this.confBpmnModeler:this.bpmnModeler;
+        modeler_obj = new BpmnJS({
+          container: this.isShowConformance?'#canvas2':'#canvas1',
           keyboard: {
             bindTo: window
           }
         });
-        this.bpmnModeler.importXML(res, function(err){
+        modeler_obj.importXML(res, function(err){
           if(err){
             return console.error('could not import BPMN 2.0 diagram', err);
           }
         })
-        this.bpmnModeler.on('element.changed', function(){
-          let now = new Date().getTime();
-          _self.isDiagramChanged = true;
-          if(now - _self.last_updated_time > 10*1000){
-            _self.autoSaveDiagram();
-            _self.last_updated_time = now;
-          }
-        })
+        if(!this.isShowConformance){
+          modeler_obj.on('element.changed', function(){
+            let now = new Date().getTime();
+            _self.isDiagramChanged = true;
+            if(now - _self.last_updated_time > 10*1000){
+              _self.autoSaveDiagram();
+              _self.last_updated_time = now;
+            }
+          })
+        }
       });
+     }
+   }
+
+   initConfDiag(){
+     if(!this.bpmnModeler){
+       this.bpmnModeler = new BpmnJS({
+         container: '#canvas1',
+         keyboard: {
+           bindTo: window
+         }
+       });
      }
    }
 
@@ -190,7 +204,7 @@ export class UploadProcessModelComponent implements OnInit {
           if(this.selected_notation == "undefined"){
             this.diplayApproveBtn = false;
             this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
-              this.bpmnModeler.importXML(res, function(err){
+              this.confBpmnModeler.importXML(res, function(err){
                 _self.oldXml = res.trim();
                 _self.newXml = res.trim();
               });
@@ -198,7 +212,7 @@ export class UploadProcessModelComponent implements OnInit {
           }
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-          this.bpmnModeler.importXML(selected_xml, function(err){
+          this.confBpmnModeler.importXML(selected_xml, function(err){
             _self.oldXml = selected_xml;
             _self.newXml = selected_xml;
           });
@@ -259,7 +273,6 @@ export class UploadProcessModelComponent implements OnInit {
     let fileName = e.target.value.split("\\").pop();
     if(fileName){
       let _self = this;
-      
       this.bpmnservice.uploadBpmn(fileName);
       this.bpmnservice.setNewDiagName(fileName.split('.bpmn')[0])
       this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
@@ -267,9 +280,8 @@ export class UploadProcessModelComponent implements OnInit {
           _self.oldXml = res.trim();
           _self.newXml = res.trim();
           this.bpmnModel.bpmnXmlNotation=btoa(_self.newXml);
-          
         });
-         this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
+        this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
          this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
          this.bpmnModel.reviewComments="";
          this.bpmnModel.approverName="vaidehi";
@@ -327,8 +339,12 @@ export class UploadProcessModelComponent implements OnInit {
    }
 
    submitDiagramForApproval(){
+     if(!this.selected_approver){
+       Swal.fire("No approver", "Please select approver from the list given above", "error");
+       return;
+     }
     let _self = this;
-    this.bpmnModel.approverName="vaidehi";//approver name
+    this.bpmnModel.approverName = this.selected_approver;
     this.bpmnModel.bpmnJsonNotation= btoa(unescape(encodeURIComponent(this.uploaded_xml)));
     this.bpmnModel.bpmnModelId=this.selected_notation? this.saved_bpmn_list[this.selected_notation]['bpmnModelId']:this.randomId;
     this.bpmnModel.bpmnProcessName=this.selected_notation? this.saved_bpmn_list[this.selected_notation]['bpmnProcessName']:this.bpmnservice.newDiagName.value;
@@ -336,7 +352,7 @@ export class UploadProcessModelComponent implements OnInit {
     this.bpmnModel.bpmnNotationHumanTask=btoa(unescape(encodeURIComponent(this.uploaded_xml)));
     this.bpmnModel.bpmnProcessApproved=0;
     this.bpmnModel.bpmnProcessStatus="PENDING";
-    this.bpmnModel.bpmnModelTempId=this.autosaveObj.bpmnModelTempId;
+    this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
     this.bpmnModel.bpmnXmlNotation=btoa(unescape(encodeURIComponent(this.uploaded_xml)));
     this.bpmnModel.category= "infrastructure";//category for uploaded file
     this.bpmnModel.emailTo= "swaroop.attaluri@epsoftinc.com";//Change the email id

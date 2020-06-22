@@ -26,26 +26,35 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   create_editor:boolean=true;
   counter:number = 0;
   bpmnProcessName;
-  category;
+  categoryName;
+  othercategory;
+  isotherCategory:boolean=false;
+  categoriesList:any=[];
   randomId: number;
   bpmnfile: any;
+
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, 
     private global: GlobalScript, private rest:RestApiService, private uploadProcessModel:UploadProcessModelComponent) { }
 
   ngOnInit() {
+    this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
   }
+
+  loopTrackBy(index, term){
+    return index;
+  }
+  
   onSelect(e){
-    //this.slideUp();
+    this.slideUp();
     this.bpmnupload= true;
     this.hideEditor=false;
-    let _self =this;
+    let _self=this;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
       this.bpmnservice.setNewDiagName(e.addedFiles[0].name.replace('.bpmn',''));
       if( this.router.url.indexOf("uploadProcessModel") > -1 ){
         this.bpmnservice.changeConfNav(true);
         this.uploadProcessModel.uploadConfBpmn(e.addedFiles[0].name);
-        console.log(this.bpmnservice.getBpmnData());
-this.bpmnfile=this.bpmnservice.newDiagName.value;
+        this.bpmnfile=this.bpmnservice.newDiagName.value;
         this.rest.getBPMNFileContent("assets/resources/"+this.bpmnfile).subscribe(res => {
           this.bpmnModeler.importXML(res, function(err){
             _self.oldXml = res.trim();
@@ -104,16 +113,16 @@ this.bpmnfile=this.bpmnservice.newDiagName.value;
         message = "Please upload proper *.bpmn file";
       this.global.notify(message, "error");
     }
- 
   }
+
   slideDown(){
-    document.getElementById("foot").classList.add("slide-down");
-    document.getElementById("foot").classList.remove("slide-up");
+    var modal = document.getElementById('myModal');
+    modal.style.display="none";
   }
   
   slideUp(){
-    document.getElementById("foot").classList.remove("slide-down");
-    document.getElementById("foot").classList.add("slide-up");
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
   }
 
   autoSaveBpmnDiagram(){
@@ -139,10 +148,25 @@ this.bpmnfile=this.bpmnservice.newDiagName.value;
     })
   }
 
+  onchangeCategories(categoryName){
+    if(categoryName =='other'){
+      this.isotherCategory=true;
+    }else{
+      this.isotherCategory=false;
+    }
+  }
+
   createBpmn(){
     this.randomId = Math.floor(Math.random()*999999);//Values get repeated
+    if(this.categoryName =='other'){
+      let otherCategory={
+        "categoryId": 0,
+        "categoryName": this.othercategory
+      }
+      this.rest.addCategory(otherCategory).subscribe(res=>{})
+    }
     this.bpmnservice.setNewDiagName(this.bpmnProcessName);
-    this.bpmnservice.setBpmnCategory(this.category);
+    this.bpmnservice.setBpmnCategory(this.categoryName);
     this.bpmnupload= true;
     this.create_editor=false;
     this.bpmnservice.changeConfNav(false);
@@ -164,22 +188,16 @@ this.bpmnfile=this.bpmnservice.newDiagName.value;
       this.bpmnModel.bpmnXmlNotation=btoa(this.newXml);
       this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
       this.bpmnModel.reviewComments="";
-    this.bpmnModel.approverName="vaidehi";
-    this.bpmnModel.bpmnModelId=this.randomId;
-    this.bpmnModel.userName="gopi";
-    this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
-    this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
-    this.bpmnModel.bpmnModelTempStatus = "initial";
+      this.bpmnModel.approverName="vaidehi";
+      this.bpmnModel.bpmnModelId=this.randomId;
+      this.bpmnModel.userName="gopi";
+      this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
+      this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
+      this.bpmnModel.bpmnModelTempStatus = "initial";
       this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
       this.bpmnModeler.importXML(res, function(err){
         _self.oldXml = res.trim();
         _self.newXml = res.trim();
-        //this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
-    //this.bpmnModel.reviewComments="";
-    //this.bpmnModel.approverName="vaidehi";
-    //this.bpmnModel.bpmnModelId=this.randomId;
-    //this.bpmnModel.userName="gopi";
-    //this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
       });
     });
     let _self = this;

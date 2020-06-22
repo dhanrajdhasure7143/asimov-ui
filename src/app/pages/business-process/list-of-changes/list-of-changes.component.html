@@ -30,6 +30,9 @@
                                 <td><span class="change layout">Layout</span></td> 
                         </tr>
                 </table>
+                <div class="center" *ngIf="!hasChanges(changes)">
+                        No Differences between the two given diagrams
+                </div>
         </div>
 </div>
     

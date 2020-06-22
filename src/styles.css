@@ -83,6 +83,9 @@ button:disabled{
   margin-bottom: -25px;
 } */
 /* generic styles */
+.center{
+  text-align: center;
+}
 .right{
   float:right;
 }

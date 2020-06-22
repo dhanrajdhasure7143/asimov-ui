@@ -44,46 +44,31 @@
         </div>
     </div>
 
-    <div id="foot">
-        <div  class="filter_heading">               
-        <div class="container filter_headinglabels">
-            <div class="row">
-              
-                <div class="col-md-12">
-                    <p class="header-style" >BPMN Details</p>
-                    <button type="button" class="close cross_close resize" aria-label="Close" (click)="slideDown()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" (click)="slideDown();">&times;</span>
+            <h4>BPMN Details</h4>
         </div>
-        <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="reports">
-                            <form #createBpmnForm=ngForm>
-                                <div class="process-name">
-                                    <label class="process-name" >Select BPMN Category</label>
-                                    <div>
-                                        <select  id="category" name="category" [(ngModel)]="category"  required>
-                                            <option value="infrastructure">Infrastructure</option>
-                                            </select>
-                                    </div>
-                                </div>
-                                <div class="process-name">
-                                    <label class="process-name">Enter BPMN Name</label>
-                                    <div>
-                                    <input type="text" id="bpmnProcessName" name="bpmnProcessName" [(ngModel)]="bpmnProcessName" required> 
-                                    </div>
-                                </div>
-                            <div>
-                                <button class="apply_button" type="submit" (click)="createBpmn()" [disabled]="!createBpmnForm.valid">Proceed</button>
-                            </div>
-                        </form>
+        <div class="modal-body">
+            <form autocomplete="off" #createBpmnForm="ngForm"> 
+                <div class="container m-contanier">
+                <label for="category"><b>Select Category</b></label>
+                    <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
+                        <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
+                    <option value="other">Other</option>
+                    </select>
+                    <div *ngIf='isotherCategory'>
+                    <label for="otherCategory"><b>Enter Category</b></label>
+                    <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
                     </div>
+                <label for="piName"><b>Enter Process Name</b></label>
+                <input type="text" name="bpmnName" [(ngModel)]="bpmnProcessName" required class="form-control" placeholder="Process Name">
+                    <div class="clearfix m-btn">
+                        <button class="apply_button" type="submit" (click)="createBpmn()" [disabled]="!createBpmnForm.valid">Proceed</button>
                     </div>
                 </div>
-            </div>
-        
+            </form>
         </div>
-    </div>    
+    </div>
+</div>

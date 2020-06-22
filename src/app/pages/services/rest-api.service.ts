@@ -156,8 +156,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.put<any>("/rpa-service/agent/update-environment",data, requestOptions);
   }
 
-  getAllRpaWorkSpaces(id:any)
-  {
+  getAllRpaWorkSpaces(id:any){
     if(id==0)
     {
       return this.http.get('/rpa-service/load-process-info/'+0);

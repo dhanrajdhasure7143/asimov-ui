@@ -123,16 +123,10 @@ export class LoginComponent{
     // });
   }
 
-  // getParticles(){
-    
-  // }
-
   getAccessToken(){
-    // let user={"userId":this.userName,
-    // "password":this.password}
-  this.rest.getAccessToken().subscribe(res =>{
-     localStorage.setItem("accessToken", res['accessToken']);
-     this.router.navigateByUrl("pages/home")
+    this.rest.getAccessToken().subscribe(res =>{
+      localStorage.setItem("accessToken", res['accessToken']);
+      this.router.navigateByUrl("pages/home")
     });
   }
 }

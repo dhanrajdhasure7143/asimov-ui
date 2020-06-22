@@ -1,9 +1,9 @@
 <div class="row drop_div">
   <div class="col-md-6">
-    <button class="btn" (click)="reSize=!reSize" *ngIf="isShowConformance">Show Conformance</button>
+    <button class="btn" (click)="reSize=!reSize;initConfDiag()" *ngIf="isShowConformance">Show Conformance</button>
     <button class="btn" (click)="getBpmnDifferences()" *ngIf="reSize && isConfNavigation" >Show Differences</button>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-2" *ngIf="!isShowConformance||(isShowConformance && reSize)">
       <b>BPMN Notation&nbsp;</b>
       <select class="form-control" [(ngModel)]="selected_notation" (change)="displayBPMN()">
           <option value="undefined" selected>{{bpmnModel.bpmnProcessName}}</option>
@@ -12,24 +12,24 @@
       </select>
   </div>
   <div class="col-md-2">
-      <b>Approver List&nbsp;</b>
-      <select class="form-control">
-          <option [value]="each_approver.bpmnModelId" *ngFor="let each_approver of approver_list">
-              {{each_approver.bpmnProcessName}}</option>
-      </select>
+    <b>Approver List&nbsp;</b>
+    <select class="form-control" [(ngModel)]="selected_approver">
+        <option [value]="each_approver.id" *ngFor="let each_approver of approver_list">
+            {{each_approver.firstName+" "+each_approver.lastName}}</option>
+    </select>
   </div>
   <div class="col-md-2"></div>
 </div>
   <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>        <as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
-  <as-split-area [size]="reSize?50:100">
+  <as-split-area [size]="isShowConformance?(reSize?50:100):0"><!-- [hidden]="!reSize"-->
     <div *ngIf="isShowConformance" class="bps_overlay">
-      <div class="canvas1 readOnly"  id="canvas1"></div>
+      <div class="canvas2 readOnly"  id="canvas2"></div>
     </div>
-    <div class="canvas1" *ngIf="!isShowConformance"  id="canvas1"></div>
+    <div class="canvas2" *ngIf="!isShowConformance"  id="canvas2"></div>
   </as-split-area>
-  <as-split-area [size]="resize?50:0" [hidden]="!reSize">
-    <app-upload-create-drop-bpmn></app-upload-create-drop-bpmn> 
-    <div class="canvas2"  id="canvas2" ></div>
+  <as-split-area [size]="isShowConformance?(reSize?50:0):100">
+    <app-upload-create-drop-bpmn *ngIf="isShowConformance && reSize && !isConfNavigation"></app-upload-create-drop-bpmn> 
+    <div class="canvas1"  id="canvas1" *ngIf="isConfNavigation"></div>
   </as-split-area>
 </as-split>
 <div class="row btn_row"> 
