@@ -90,6 +90,7 @@ export class FlowchartComponent implements OnInit {
   spinMetrics8:boolean=false;
   spinMetrics9:boolean=false;
   wpiIdNumber:any;
+  startLinkvalue:boolean;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -99,6 +100,10 @@ export class FlowchartComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private rest:RestApiService,
     private route:ActivatedRoute) {
+  }
+
+  readOutputValueEmitted(val){
+    this.startLinkvalue = val;
   }
 
   ngOnInit() {
@@ -189,11 +194,11 @@ export class FlowchartComponent implements OnInit {
         let fullgraphOne=JSON.parse(this.fullgraph.data);
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
 
-        // console.log('this.model1',this.model1);
+        console.log('this.model1',this.model1);
         let loction=''
         for(var i=0;i<this.model1.length;i++){
           let loc1=455
-          let loc2=-150+i*70
+          let loc2=-150+i*80
           loction=loc1+' '+loc2;
           this.model1[i].loc=loction
         }
@@ -206,15 +211,29 @@ export class FlowchartComponent implements OnInit {
                             // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
                 // this.model2[j].from>0 && this.model2[j].to<0
                 // this.model2[j].from ==-2||this.model2[j].to==-2
+                
             if(this.model2[j].from ==-1||this.model2[j].from==-2){
+               if(this.model2[j].from==-1 && this.model2[j].to==0){
+                let loc3=0
+                this.model2[j].curviness=loc3
+              }else{
               let loc3=-25*j
             this.model2[j].curviness=loc3
-
+              }
             }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+              if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
+                let loc3=0
+                this.model2[j].curviness=loc3
+              }else{
                 let loc3=20*j
                 this.model2[j].curviness=loc3
+              }
+                
+          }else if(this.model2[j].from+1==this.model2[j].to){
+            let loc3=0
+            this.model2[j].curviness=loc3
           }else{
-              let loc3=25*j
+              let loc3=30*j
             this.model2[j].curviness=loc3
             }
         }
@@ -222,11 +241,11 @@ export class FlowchartComponent implements OnInit {
         
         this.spinner.hide();
         });
-        // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        // console.log('varaint_GraphData',this.varaint_GraphData.data);
-        // this.varaint_GraphDataArray.push(this.varaint_GraphData.data)
-        // // console.log('varaint_GraphData',this.varaint_GraphDataArray);
-        // })
+        this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
+        // console.log('varaint_GraphData',JSON.parse(this.varaint_GraphData.data));
+        this.varaint_GraphDataArray=JSON.parse(this.varaint_GraphData.data)
+        console.log('varaint_GraphData',this.varaint_GraphDataArray);
+        })
   }
 
   onchangeVaraint(datavariant) {
@@ -319,7 +338,7 @@ export class FlowchartComponent implements OnInit {
         this.selectedCaseArry.push(casevalue);
       }
     };
-    // console.log("selectedcase", this.selectedCaseArry)
+    console.log("selectedcase", this.selectedCaseArry)
     // console.log("selectedcase.length",this.selectedCaseArry.length)
     this.caselength = this.selectedCaseArry.length;
 
@@ -336,8 +355,8 @@ export class FlowchartComponent implements OnInit {
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphDataArray) == true) {
         // console.log('log',this.selectedCaseArry[0], this.pgModel.flowchartData);
         
-        var modalData = this.varaint_GraphData.data[this.selectedCaseArry[0]]
-        // console.log('modalData',modalData);
+        var modalData = this.varaint_GraphDataArray[this.selectedCaseArry[0]]
+        console.log('modalData',modalData);
         
         this.model1 = modalData.nodeDataArraycase
         this.model2 = this.flowchartData(this.model1)
@@ -523,7 +542,7 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
     return array.filter((a, b) => array.indexOf(a) === b)
    };
   keyExists(key, search) {
-    // console.log('test',key, search)
+    console.log('test',key, search)
     var existingObj = search.find(function (element) {
       return typeof element[key] !== 'undefined';
     });
@@ -707,13 +726,27 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
       // }
       for(var j=0;j<this.model2.length;j++){
         if(this.model2[j].from ==-1||this.model2[j].from==-2){
+          if(this.model2[j].from==-1 && this.model2[j].to==0){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
           let loc3=-25*j
         this.model2[j].curviness=loc3
+          }
         }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+          if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
             let loc3=20*j
             this.model2[j].curviness=loc3
-      }else{
-          let loc3=25*j
+          }
+      }else if(this.model2[j].from+1==this.model2[j].to){
+        let loc3=0
+        this.model2[j].curviness=loc3
+      }
+      else{
+          let loc3=30*j
         this.model2[j].curviness=loc3
         }
       }
@@ -803,14 +836,26 @@ selectedMetric(selectedValue){
   this.model2 = this.flowchartDataOne(this.model1,index)
   for(var j=0;j<this.model2.length;j++){
     if(this.model2[j].from ==-1||this.model2[j].from==-2){
+      if(this.model2[j].from==-1 && this.model2[j].to==0){
+        let loc3=0
+        this.model2[j].curviness=loc3
+      }else{
       let loc3=-25*j
     this.model2[j].curviness=loc3
-
+      }
     }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+      if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
+        let loc3=0
+        this.model2[j].curviness=loc3
+      }else{
         let loc3=20*j
         this.model2[j].curviness=loc3
+      }
+  }else if(this.model2[j].from+1==this.model2[j].to){
+    let loc3=0
+    this.model2[j].curviness=loc3
   }else{
-      let loc3=25*j
+      let loc3=30*j
     this.model2[j].curviness=loc3
     }
   }
@@ -911,14 +956,27 @@ closeNav() {
             // this.model2[j].from>0 && this.model2[j].to<0
             // this.model2[j].from ==-2||this.model2[j].to==-2
         if(this.model2[j].from ==-1||this.model2[j].from==-2){
+          if(this.model2[j].from==-1 && this.model2[j].to==0){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
           let loc3=-25*j
         this.model2[j].curviness=loc3
+        }
 
         }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+          if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
             let loc3=20*j
             this.model2[j].curviness=loc3
+          }
+      }else if(this.model2[j].from+1==this.model2[j].to){
+        let loc3=0
+        this.model2[j].curviness=loc3
       }else{
-          let loc3=25*j
+          let loc3=30*j
         this.model2[j].curviness=loc3
         }
     }

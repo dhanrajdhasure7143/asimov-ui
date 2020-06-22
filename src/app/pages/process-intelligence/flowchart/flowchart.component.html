@@ -24,7 +24,7 @@
                             <div class="col-sm-7">Case Details</div> <div class="col-sm-5">Time Taken</div>
                         </div>
                         <div class="col-sm-12 details_box">
-                            <div class="show_details" [ngClass]="data.selected ==='active'?'active':''" *ngFor="let data of varaint_data.data; let i=index">
+                            <div class="show_details" [ngClass]="data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
                                     <div class="row cases" (click)="caseIdSelect(data,i)">
                                         <span class="col-md-2 dot">{{data.casepercent}}%</span>
                                                 <span class="col-md-5 details_one">{{data.name|titlecase}}</span>
@@ -142,7 +142,7 @@
                     </form>
                 </div>
             </div>
-        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownload]="isdownload"></app-piflowchart>
+        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownload]="isdownload" (myOutputVal)="readOutputValueEmitted($event)"></app-piflowchart>
     </div>
     <div class='col-md-1'>
         <div class="path_slider1 pull-right">
@@ -208,7 +208,7 @@
     <div id="linkToolTipDIV" class="custom_tooltip">
         <div class="node_tooltip"></div>
         <div>
-            <p id="receive"><span id="nodename">Connector</span></p>
+            <p id="receive"><span id="linkname">Connector</span></p>
             <hr>
         </div>
             <div [hidden]='isfrequency' class='tooltip_body'>
@@ -221,12 +221,12 @@
                     <p id="linktoolTipTextone"></p>
             </div>
             <div>
-                <button  id="performance_btn" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" (click)="performance()"><img src="..\assets\images\PI\performance-clock.svg"></button>
+                <button *ngIf="startLinkvalue"  id="performance_btn" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" (click)="performance()"><img src="..\assets\images\PI\performance-clock.svg"></button>
                 <button  id="frequency_btn" [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" (click)="frequency()"><img src="..\assets\images\PI\activity.svg"></button>
             </div>
             <div>
                 <p [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" id="frequency_label"><span class="isenablebtn">Frequency</span> </p>
-                <p [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
+                <p *ngIf="startLinkvalue" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
         </div>
     </div>
 

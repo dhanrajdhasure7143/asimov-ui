@@ -358,14 +358,18 @@ padding-left: 5px;
 }
 .show_details:hover .details_hide{
   transition: 2s !important;
-  display:block;
+  display:block !important;
 } 
 .show_details:hover .dot{
 border:1px solid #0162cb;
 color: #0162cb;
 }
 .show_details:hover .cases span{
-  color: blue;
+  color: #0061cf;
+}
+.show_details{
+  position: relative;
+  z-index: 10;
 }
 
 .show_details:hover {
@@ -641,16 +645,16 @@ transition: 0.5s;
 }
 
 
-.active .dot{
+.activevaraint .dot{
   color:green !important;
   border:1.5px solid green !important;
 }
 
-.active{
+.activevaraint{
   border-left:2px solid green !important;
   background: lightgray;
 }
-.active .play_button{
+.activevaraint .play_button{
 color: green !important;
 }
 #toolTipParagraphone,#linktoolTipParagraphone{

@@ -18,8 +18,11 @@ export class PiflowchartComponent implements OnInit {
   public model:go.Model;
   @Output()
     public nodeClicked = new EventEmitter();
+    @Output() myOutputVal = new EventEmitter<boolean>();
     public myDiagram: go.Diagram ;
     public isfrequency:boolean=false;
+    toolData1:any=[];
+    isstartLink:boolean=true;
 
 
   constructor() { }
@@ -50,6 +53,7 @@ export class PiflowchartComponent implements OnInit {
   }
 
   flowGraph() {
+    var me=this;
  
     var $ = go.GraphObject.make; // for conciseness in defining templates
     // some constants that will be reused within templates
@@ -121,14 +125,14 @@ export class PiflowchartComponent implements OnInit {
                 textNode.stroke="rgba(0, 0, 0, .87)";
                 nodetext.stroke="white"
                 countNode.fill='white';
-                obj.scale = 1.8 ;
+                obj.scale = 1.5 ;
     }
   
     function hideToolTip(obj) {
       var node = obj.part;
      var toolTipDIV = document.getElementById('toolTipDIV');
      toolTipDIV.style.display = "none";
-      var nodetext=obj.findObject("NodeTEXT")
+      var nodetext=obj.findObject("NodeTEXT");
       var textNode = obj.findObject("TEXT");
       var countNode= node.findObject("countNode");
             node.port.fill="white";
@@ -362,34 +366,36 @@ export class PiflowchartComponent implements OnInit {
                       mouseEnter:function(e,obj,diagram) {
                         var data=e.diagram
                         // new go.Binding("text").makeTwoWay();
-                        console.log(e.diagram);
+                        // console.log("R",e.diagram['Eb'].Xt);
+                        // console.log("R",e.diagram.commandHandler.showContextMenu);
+                        // console.log(e.diagram.commit);
+                        
                         
                         showLinkToolTip(e,obj,data);
                       },
                       mouseLeave:function(){
                         hideLinkToolTip()
                       }
-
-
                       }
         );
 
         function showLinkToolTip(e,obj,diagram) {
+          var node = obj.part;
           var shape = obj.findObject("LINK");
           // console.log("from",shape.fromNode.hb);
           // console.log("to",shape.toNode.hb);
-          // console.log(e.diagram.stroke);
-          
-            shape.strokeWidth = 50;
+          // console.log(shape);
+          // console.log(shape.part.Animation);
+          // e.diagram['Eb'].Xt='#0162cf'
+          // shape.strokeWidth = 50;
+            // shape.strokeWidth = 50;
           var toolTipDIV = document.getElementById('linkToolTipDIV');
+          // document.getElementById('linkname').innerHTML=shape.fromNode.hb.name+"-"+shape.toNode.hb.name
           var node = obj.part;
           // console.log(obj.port,obj.fromNode.Bp);
-          // resizable
-            // node.port.fill="#0162cb";
-            // node.port.stroke='#0162cb';
             var pt = diagram.lastInput.viewPoint;
-          toolTipDIV.style.left =(pt.x + 110) + "px";
-          toolTipDIV.style.top = (pt.y +  150) + "px";
+          toolTipDIV.style.left =(pt.x + 60) + "px";
+          toolTipDIV.style.top = (pt.y+210) + "px";
     
           //   var pt = obj.location;
           // toolTipDIV.style.left = (pt.x) + "px";
@@ -401,7 +407,6 @@ export class PiflowchartComponent implements OnInit {
           var rowsone="";
           var name=obj.data.name;
           // console.log("");
-          var me=this;
           if(shape.fromNode.hb.key==-1 || shape.fromNode.hb.key==-2){
             // me.isfrequency=true
             // console.log('-1',shape.toNode.hb.tool);
@@ -409,12 +414,17 @@ export class PiflowchartComponent implements OnInit {
               toolData += shape.toNode.hb.tool[j]+"<br>";
               rows += shape.toNode.hb.toolCount[j]+"<br>";
             }
+            // me.toolData1=(toolDataone)
+            me.isstartLink=false
+            me.myOutputVal.emit(me.isstartLink)
             // for( var a=5; a<shape.toNode.hb.tool.length; a++ ){
             //   toolDataone += shape.toNode.hb.tool[a]+"<br>";
             //   rowsone += shape.toNode.hb.toolCount[a]+"<br>";
             // }
-            
+            // console.log("me",me.toolData1);
           }else if(shape.toNode.hb.key==-1 || shape.toNode.hb.key==-2){
+            me.isstartLink=false
+            me.myOutputVal.emit(me.isstartLink)
             // me.isfrequency=true
             // console.log("end",shape.fromNode.hb.tool);
             
@@ -426,7 +436,11 @@ export class PiflowchartComponent implements OnInit {
             //   toolDataone += shape.fromNode.hb.tool[b]+"<br>";
             //   rowsone += shape.fromNode.hb.toolCount[b]+"<br>";
             //   }
+            // console.log("me",me.toolData1);
+            
           }else{
+            me.isstartLink=true;
+            me.myOutputVal.emit(me.isstartLink)
           for( var i=0; i<obj.part.data.toolData.length; i++ ){
 
             // if(obj.part.data.toolData[i]=='Absolute Frequency'){}
@@ -473,6 +487,7 @@ export class PiflowchartComponent implements OnInit {
               rowsone +=timeConversion(obj.data.toolDataCount[i])+"<br>";
               break;
             }
+            console.log(toolDataone);
             // toolData += obj.data.toolData[i]+"<br>";
           }
         }

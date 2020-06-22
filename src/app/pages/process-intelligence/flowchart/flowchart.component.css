@@ -160,7 +160,9 @@
   .edgemetrics_spinner span{
     padding: 10px 0px;
   }
-
+  .activevaraint .details_one,.activevaraint .details_time,.activevaraint .details_two{
+    color: #0162cf;
+  }
 
 
 
@@ -202,5 +204,9 @@
     height: 20px;
     color: #0162cf;
     padding: 0px;
+  }
+  #linkname{
+    font-size: 14px;
+    font-weight: bold;
   }
   
