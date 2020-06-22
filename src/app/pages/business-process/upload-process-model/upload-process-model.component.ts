@@ -56,6 +56,7 @@ export class UploadProcessModelComponent implements OnInit {
   randomId;
   oldXml;
   newXml;
+  bpmnfile: any;
 
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript) { }
@@ -65,11 +66,26 @@ export class UploadProcessModelComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
     this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
     this.route.queryParams.subscribe(params => {
-      this.selected_notation = parseInt(params['bpsId']);
+      this.selected_notation = parseInt(params['bpsId']) || undefined;
       this.isShowConformance = params['isShowConformance'] == 'true';
     });
+    this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
+    this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
+    this.bpmnModel.reviewComments="";
+    this.bpmnModel.approverName="vaidehi";
+    this.bpmnModel.bpmnModelId=this.randomId;
+    this.bpmnModel.userName="gopi";
+    this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
+    this.bpmnfile=this.bpmnservice.bpmnData.value;
+    this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
+    this.bpmnModel.bpmnModelTempStatus = "initial";
+    this.rest.getBPMNFileContent("assets/resources/"+this.bpmnfile).subscribe(res => {
+      this.newXml=res;
+      this.bpmnModel.bpmnXmlNotation=btoa(this.newXml);
+      this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
+    });
      // this.randomId = UUID.UUID(); // Backend BPMN Model Id should be string
-     this.randomId = Math.floor(Math.random()*999999);//Values get repeated
+  
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_bpmn_list = res; 
       this.initiateDiagram();
@@ -243,15 +259,29 @@ export class UploadProcessModelComponent implements OnInit {
     let fileName = e.target.value.split("\\").pop();
     if(fileName){
       let _self = this;
-      this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
+      
       this.bpmnservice.uploadBpmn(fileName);
       this.bpmnservice.setNewDiagName(fileName.split('.bpmn')[0])
       this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
         this.bpmnModeler.importXML(res, function(err){
           _self.oldXml = res.trim();
           _self.newXml = res.trim();
+          this.bpmnModel.bpmnXmlNotation=btoa(_self.newXml);
+          
         });
+         this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
+         this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
+         this.bpmnModel.reviewComments="";
+         this.bpmnModel.approverName="vaidehi";
+         this.bpmnModel.bpmnModelId=this.randomId;
+         this.bpmnModel.userName="gopi";
+         this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
+         this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
+         this.bpmnModel.bpmnModelTempStatus = "initial";
+         this.bpmnfile=this.bpmnservice.bpmnData.value;
+         this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
       });
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
     }else{
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
@@ -306,7 +336,7 @@ export class UploadProcessModelComponent implements OnInit {
     this.bpmnModel.bpmnNotationHumanTask=btoa(unescape(encodeURIComponent(this.uploaded_xml)));
     this.bpmnModel.bpmnProcessApproved=0;
     this.bpmnModel.bpmnProcessStatus="PENDING";
-    this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
+    this.bpmnModel.bpmnModelTempId=this.autosaveObj.bpmnModelTempId;
     this.bpmnModel.bpmnXmlNotation=btoa(unescape(encodeURIComponent(this.uploaded_xml)));
     this.bpmnModel.category= "infrastructure";//category for uploaded file
     this.bpmnModel.emailTo= "swaroop.attaluri@epsoftinc.com";//Change the email id
