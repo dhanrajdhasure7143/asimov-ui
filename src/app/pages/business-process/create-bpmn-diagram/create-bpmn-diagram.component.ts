@@ -48,7 +48,20 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     this.bpmnModel.bpmnModelTempStatus = "initial";
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_bpmn_list = res; 
+      console.log(this.saved_bpmn_list)
     });
+    this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
+    this.bpmnModel.reviewComments="";
+    this.bpmnModel.approverName="vaidehi";
+    this.bpmnModel.bpmnModelId=this.randomId;
+    this.bpmnModel.userName="gopi";
+    this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
+    this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+      this.newXml=res;
+      this.bpmnModel.bpmnXmlNotation=btoa(this.newXml);
+      this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
+    });
+   
     this.rest.getApproverforuser('Process Architect').subscribe( (res:any[]) =>  {//BPMN_Process_Modeler
       this.approver_list = res; 
     });
@@ -255,7 +268,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
           'Your changes has been saved and submitted for approval successfully.',
           'success'
         )
-        // this.router.navigateByUrl("/pages/approvalWorkflow/home")
+        this.router.navigateByUrl("/pages/approvalWorkflow/home")
         this.spinner.hide()
       },
       err => {

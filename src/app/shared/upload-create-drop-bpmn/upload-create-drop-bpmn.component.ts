@@ -27,20 +27,42 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   counter:number = 0;
   bpmnProcessName;
   category;
+  randomId: number;
+  bpmnfile: any;
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, 
     private global: GlobalScript, private rest:RestApiService, private uploadProcessModel:UploadProcessModelComponent) { }
 
   ngOnInit() {
   }
   onSelect(e){
-    this.slideUp();
+    //this.slideUp();
     this.bpmnupload= true;
     this.hideEditor=false;
+    let _self =this;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
       this.bpmnservice.setNewDiagName(e.addedFiles[0].name.replace('.bpmn',''));
       if( this.router.url.indexOf("uploadProcessModel") > -1 ){
         this.bpmnservice.changeConfNav(true);
         this.uploadProcessModel.uploadConfBpmn(e.addedFiles[0].name);
+        console.log(this.bpmnservice.getBpmnData());
+this.bpmnfile=this.bpmnservice.newDiagName.value;
+        this.rest.getBPMNFileContent("assets/resources/"+this.bpmnfile).subscribe(res => {
+          this.bpmnModeler.importXML(res, function(err){
+            _self.oldXml = res.trim();
+            _self.newXml = res.trim();
+            this.bpmnModel.bpmnXmlNotation=btoa(_self.newXml);
+            
+          });
+           this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
+           this.bpmnModel.reviewComments="";
+           this.bpmnModel.approverName="vaidehi";
+           this.bpmnModel.bpmnModelId=this.randomId;
+            this.bpmnModel.userName="gopi";
+            this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
+            this.bpmnModel.bpmnModelTempStatus = "initial";
+           this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
+            this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
+        });
       }else{
         this.bpmnservice.changeConfNav(false);
         this.bpmnservice.uploadBpmn(e.addedFiles[0].name);
@@ -53,7 +75,37 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       this.global.notify(message,"error");
     }
   }
-
+  uploadBpmn(e){
+    debugger
+    let fileName = e.target.value.split("\\").pop();
+    if(fileName){
+      let _self = this;
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
+      this.bpmnservice.uploadBpmn(fileName);
+      this.bpmnservice.setNewDiagName(fileName.split('.bpmn')[0])
+      this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
+        this.bpmnModeler.importXML(res, function(err){
+          _self.oldXml = res.trim();
+          _self.newXml = res.trim();
+          //this.bpmnModel.bpmnXmlNotation=btoa(_self.newXml);
+          
+        });
+        this.bpmnModel.bpmnProcessName = this.bpmnservice.newDiagName.value;
+    this.bpmnModel.bpmnModelId=this.randomId;
+    this.bpmnModel.bpmnModelModifiedBy="gopi";//localStorage.getItem("userName")
+    this.bpmnModel.bpmnModelTempStatus="PENDING";
+    this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
+    this.bpmnModel.bpmnModelTempStatus = "initial";
+        this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
+      });
+    }else{
+      let message = "Oops! Something went wrong";
+      if(e.rejectedFiles[0].reason == "type")
+        message = "Please upload proper *.bpmn file";
+      this.global.notify(message, "error");
+    }
+ 
+  }
   slideDown(){
     document.getElementById("foot").classList.add("slide-down");
     document.getElementById("foot").classList.remove("slide-up");
@@ -88,6 +140,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   createBpmn(){
+    this.randomId = Math.floor(Math.random()*999999);//Values get repeated
     this.bpmnservice.setNewDiagName(this.bpmnProcessName);
     this.bpmnservice.setBpmnCategory(this.category);
     this.bpmnupload= true;
@@ -107,13 +160,29 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     canvas.zoom('fit-viewport');
     this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
       let _self = this;
+      this.newXml=res;
+      this.bpmnModel.bpmnXmlNotation=btoa(this.newXml);
+      this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
+      this.bpmnModel.reviewComments="";
+    this.bpmnModel.approverName="vaidehi";
+    this.bpmnModel.bpmnModelId=this.randomId;
+    this.bpmnModel.userName="gopi";
+    this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
+    this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
+    this.bpmnModel.bpmnModelTempStatus = "initial";
+      this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
       this.bpmnModeler.importXML(res, function(err){
         _self.oldXml = res.trim();
         _self.newXml = res.trim();
+        //this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
+    //this.bpmnModel.reviewComments="";
+    //this.bpmnModel.approverName="vaidehi";
+    //this.bpmnModel.bpmnModelId=this.randomId;
+    //this.bpmnModel.userName="gopi";
+    //this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
       });
     });
     let _self = this;
-    this.slideDown();
     this.bpmnModeler.on('element.changed', function(){
       let now = new Date().getTime();
       if(now - _self.last_updated_time > 10*1000){
@@ -121,7 +190,9 @@ export class UploadCreateDropBpmnComponent implements OnInit {
         _self.last_updated_time = now;
       }
     })
-  }}
+  }
+  this.slideDown();
+}
   saveprocess(){
     alert("saved successfully");
     //this.router.navigate('')

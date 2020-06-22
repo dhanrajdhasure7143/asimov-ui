@@ -3,7 +3,7 @@
     <div class="col-md-2">
         <b>BPMN Notation&nbsp;</b>
         <select class="form-control" [(ngModel)]="selected_notation" (change)="displayBPMN()">
-            <option value="undefined" selected>-- Select Notation --</option>
+            <option value="undefined" selected>{{bpmnModel.bpmnProcessName}}</option>
             <option [value]="bpmnIndex" *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index">
                 {{each_bpmn.bpmnProcessName}}</option>
         </select>
