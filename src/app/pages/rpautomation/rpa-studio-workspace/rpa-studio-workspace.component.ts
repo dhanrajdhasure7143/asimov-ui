@@ -32,7 +32,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   public form: FormGroup;
   unsubcribe: any
   public fields: any[] = [];
-  formHeader: any[] = [];
+  formHeader:string;
   formVales:any[] = [];
   dragelement:any
   dagvalue:any
@@ -178,7 +178,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.hiddenPopUp = false;
     this.fields = []
     console.log(menu);
-    this.formHeader=menu.name;
+    this.formHeader= this.selectedNode.name+" - "+menu.name;
     this.selectedNode.id = menu.id;
     let type ="info";
       let message = `${menu.name} is Selected`
@@ -192,15 +192,23 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     console.log(e);
     this.stud = [];
     if(n.tasks.length>0){
-      this.optionsVisible = true;
-      let value:any = []
-    n.tasks.forEach(element => {
-    let temp:any = {
-      name : element.name,
-      id : element.taskId
-    };
-    this.stud.push(temp)
-  })
+      if(this.optionsVisible == true)
+      {
+        this.optionsVisible = false;
+      }else
+      { 
+        this.optionsVisible = true;
+        let value:any = []
+        n.tasks.forEach(element => {
+        let temp:any = {
+          name : element.name,
+          id : element.taskId
+        };
+        this.stud.push(temp)
+      })
+
+      }
+    
     }
     
     else 
@@ -220,6 +228,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.unsubcribe();
   }
   formNodeFunc(node){
+    console.log(node)
     if(this.selectedNode.id){
     this.rest.attribute(this.selectedNode.id).subscribe((data)=>{
        this.response(data)
@@ -293,13 +302,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     "botType" : botProperties.botType,
     "description":botProperties.botDescription,
     "department":botProperties.botDepartment,
+    "botMainSchedulerEntity":this.scheduler,
     "envIds":env,
     "tasks": this.finaldataobjects,
     "createdBy": "admin",
     "lastSubmittedBy": "admin",
-    "scheduler" : this.scheduler
+    //"scheduler" : this.scheduler
   }
-
+    console.log(this.saveBotdata)
     return this.rest.saveBot(this.saveBotdata)
   }
 

@@ -1,11 +1,9 @@
-
-<br><br><br>
 <div class="createBtn">
   <button  type="button" class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()">
     Create
   </button>
 </div>
-
+<br><br><br>
 <!-- tabs -->
 <div class="container">
 <div class="row col-md-10" *ngIf="tabsArray.length > 0">
@@ -75,7 +73,7 @@
             <label for="botName">Bot Name</label>
             <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" class="form-control" name="botName" required/>
             <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" >
-              Invalid Input
+              Bot Name Required*
               </div>
           
           </div>
@@ -90,7 +88,7 @@
               <option  value=0>Unattended</option>
             </select>
             <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched" style="color: red" >
-              Invalid Input
+              Bot Type Required*
               </div>
           
           </div>
@@ -109,7 +107,7 @@
      
             </select>
             <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" >
-              Invalid Input
+              Department Required
               </div>
             
           
@@ -118,7 +116,7 @@
             <label for="botDescription">Bot Description</label>
             <input type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" class="form-control" name="botDescription"  />
             <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" >
-            Invalid Input
+            Bot Description Required*
             </div>
           </div>
 
