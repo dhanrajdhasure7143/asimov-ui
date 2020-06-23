@@ -92,6 +92,7 @@ import {Router} from "@angular/router";
       columnDefs:[ { orderable: false, targets: [0]}],
       responsive:true,
       retrieve:true,
+      scrollY: "true",
       };
 
     this.getallData();

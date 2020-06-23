@@ -234,6 +234,8 @@
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 8px;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  
+  background-color: white;
   left: 153px;
   top: 47px;
   padding: 5px;
