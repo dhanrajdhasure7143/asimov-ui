@@ -32,6 +32,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   categoriesList:any=[];
   randomId: number;
   bpmnfile: any;
+  overlayValue:any;
+  category;
 
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, 
     private global: GlobalScript, private rest:RestApiService, private uploadProcessModel:UploadProcessModelComponent) { }
@@ -45,7 +47,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
   
   onSelect(e){
-    this.slideUp();
+    
     this.bpmnupload= true;
     this.hideEditor=false;
     let _self=this;
@@ -75,7 +77,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       }else{
         this.bpmnservice.changeConfNav(false);
         this.bpmnservice.uploadBpmn(e.addedFiles[0].name);
-        this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
+        this.slideUp('upload')
+        // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
       }
     }else{
       let message = "Oops! Something went wrong";
@@ -120,7 +123,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     modal.style.display="none";
   }
   
-  slideUp(){
+  slideUp(x){
+    this.overlayValue=x
     var modal = document.getElementById('myModal');
     modal.style.display="block";
   }
@@ -157,6 +161,12 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   createBpmn(){
+    if(this.overlayValue=='upload'){
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
+      this.bpmnservice.setNewDiagName(this.bpmnProcessName);
+  this.bpmnservice.setBpmnCategory(this.category);
+  }
+  else{
     this.randomId = Math.floor(Math.random()*999999);//Values get repeated
     if(this.categoryName =='other'){
       let otherCategory={
@@ -209,6 +219,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       }
     })
   }
+}
   this.slideDown();
 }
   saveprocess(){

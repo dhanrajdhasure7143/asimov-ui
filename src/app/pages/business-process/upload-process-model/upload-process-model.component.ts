@@ -46,6 +46,11 @@ export class UploadProcessModelComponent implements OnInit {
   uploaded_xml:any;
   counter:number = 0;
   autosaveObj:any;
+  categoryName;
+  isotherCategory:boolean=false;
+
+  categoriesList:any=[];
+
   isConfNavigation:boolean=false;
   saved_bpmn_list:any[] = [];
   approver_list:any[] = [];
@@ -64,6 +69,8 @@ export class UploadProcessModelComponent implements OnInit {
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript) { }
  
    ngOnInit() {
+    this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
+
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
     this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
@@ -273,6 +280,7 @@ export class UploadProcessModelComponent implements OnInit {
     let fileName = e.target.value.split("\\").pop();
     if(fileName){
       let _self = this;
+      this.slideup()
       this.bpmnservice.uploadBpmn(fileName);
       this.bpmnservice.setNewDiagName(fileName.split('.bpmn')[0])
       this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
@@ -428,4 +436,19 @@ export class UploadProcessModelComponent implements OnInit {
     this.bpmnservice.updateDifferences(bpmnDiffs);
     this.slideup();
   }
+  slideUp(){
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
+  }
+  slideDown(){
+    var modal = document.getElementById('myModal');
+    modal.style.display="none";
+}
+onchangeCategories(categoryName){
+  if(categoryName =='other'){
+    this.isotherCategory=true;
+  }else{
+    this.isotherCategory=false;
+  }
+}
 }

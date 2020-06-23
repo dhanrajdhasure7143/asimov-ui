@@ -46,3 +46,31 @@
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
   <p style="color: white">Auto Saving... </p>  
 </ngx-spinner>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" (click)="slideDown();">&times;</span>
+            <h4>BPMN Details</h4>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" #createBpmnForm="ngForm"> 
+                <div class="container m-contanier">
+                <label for="category"><b>Select Category</b></label>
+                    <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
+                        <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
+                    <option value="other">Other</option>
+                    </select>
+                    <div *ngIf='isotherCategory'>
+                    <label for="otherCategory"><b>Enter Category</b></label>
+                    <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
+                    </div>
+                <label for="piName"><b>Enter Process Name</b></label>
+                <input type="text" name="bpmnName" [(ngModel)]="bpmnProcessName" required class="form-control" placeholder="Process Name">
+                    <div class="clearfix m-btn">
+                        <button class="apply_button" type="submit" (click)="createBpmn()" [disabled]="!createBpmnForm.valid">Proceed</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

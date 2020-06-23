@@ -21,7 +21,10 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   oldXml;
   newXml;
   updated_date_time;
+  categoryName;
+  isotherCategory:boolean=false;
 
+  categoriesList:any=[];
   autosaveObj:any;
   bpmnModel:BpmnModel = new BpmnModel();
   counter:number = 0;
@@ -41,6 +44,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     private router:Router, private bpmnservice:SharebpmndiagramService, private global:GlobalScript) {}
 
   ngOnInit(){
+    this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
     this.randomId = UUID.UUID();
@@ -220,10 +224,14 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   uploadBpmn(e){
+    
     let fileName = e.target.value.split("\\").pop();
+  
+
     if(fileName){
       let _self = this;
       this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
+      this.slideUp()
       this.bpmnservice.uploadBpmn(fileName);
       this.bpmnservice.setNewDiagName(fileName.split('.bpmn')[0])
       this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
@@ -312,5 +320,20 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
         this.spinner.hide();
       })
   }
+  slideUp(){
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
+  }
+  slideDown(){
+    var modal = document.getElementById('myModal');
+    modal.style.display="none";
+}
+onchangeCategories(categoryName){
+  if(categoryName =='other'){
+    this.isotherCategory=true;
+  }else{
+    this.isotherCategory=false;
+  }
+}
   
 }
