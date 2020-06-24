@@ -119,8 +119,8 @@
                                 <span><input type="radio"  class="form-check-input" name="check" #absolute='ngModel' value="absoluteFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Absolute Frequency</span><br>
                                 <span><input type="radio"  class="form-check-input" name="check" #caseFrequency='ngModel' value="caseFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics1'> Case Frequency</span><br>
                                 <span><input type="radio"  class="form-check-input" name="check" #maxRepititons='ngModel' value="maxRepititons" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics2'> Max Repetitions</span><br>
-                                <span><input type="radio"  class="form-check-input" name="check" #startFrequency='ngModel' value="startFrequency" (change)='selectedMetric($event.target.value)'[(ngModel)]='spinMetrics3'> Start Frequency</span><br>
-                                <span><input type="radio"  class="form-check-input" name="check" #endFrequency='ngModel' value="endFrequency" (change)='selectedMetric($event.target.value)'  [(ngModel)]='spinMetrics4'> End Frequency</span><br>
+                                <!-- <span><input type="radio"  class="form-check-input" name="check" #startFrequency='ngModel' value="startFrequency" (change)='selectedMetric($event.target.value)'[(ngModel)]='spinMetrics3'> Start Frequency</span><br>
+                                <span><input type="radio"  class="form-check-input" name="check" #endFrequency='ngModel' value="endFrequency" (change)='selectedMetric($event.target.value)'  [(ngModel)]='spinMetrics4'> End Frequency</span><br> -->
                         </div>
                       </div>
                       <hr>
@@ -133,7 +133,7 @@
                                 
                                 <span><input type="radio" class="form-check-input" name="check" #totalDuration='ngModel' value="totalDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics5'> Total Duration</span><br>
                                 <span><input type="radio" class="form-check-input" name="check" #medianDuration='ngModel' value="medianDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics6'> Median Duration</span> <br>
-                                <span><input type="radio" class="form-check-input" name="check" #meanDuration='ngModel' value="meanDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics7'> Mean Duratio</span> <br>
+                                <span><input type="radio" class="form-check-input" name="check" #meanDuration='ngModel' value="meanDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics7'> Mean Duration</span> <br>
                                 <span><input type="radio" class="form-check-input" name="check" #maxDuration='ngModel' value="maxDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics8'> Max Duration</span><br>
                                 <span><input type="radio" class="form-check-input" name="check" #minDuration='ngModel' value="minDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics9'> Min Duration</span> <br>
                         </div>

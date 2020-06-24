@@ -73,7 +73,7 @@
                                                 <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
                                         <input type="text" placeholder="Search" name="searchGraph" #searchGraph="ngModel" [(ngModel)]="searchgraph">
                                 </div>
-                                <table class="col-sm-12 table table-hover text-center pilist_table">
+                                <table class="col-sm-12 table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
                                         <thead class="text-center">
                                         <tr class="text-center">
                                                 <th class="text-center table_header"(click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process ID</th>

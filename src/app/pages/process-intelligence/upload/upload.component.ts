@@ -51,6 +51,8 @@ export class UploadComponent implements OnInit {
     this.db_mime = '.json';
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
+
+   
    
   }
     onUpload(event,id) {
@@ -228,6 +230,7 @@ onDbSelect(){
   getAlluserProcessPiIds(){
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data
       // console.log('data',this.process_graph_list)
+    
     })
   }
   loopTrackBy(index, term){
@@ -264,6 +267,8 @@ onDbSelect(){
           });
       }
   }
+
+
   
 }
 

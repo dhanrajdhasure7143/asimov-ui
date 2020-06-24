@@ -92,6 +92,624 @@ export class FlowchartComponent implements OnInit {
   wpiIdNumber:any;
   startLinkvalue:boolean;
 
+  gResponse ={
+    "status": 4200,
+    "message": "Successfully fetched the Performance Metrics",
+    "data": {
+        "allSelectData": {
+            "nodeDataArraycase": [
+                {
+                    "key": -1,
+                    "category": "Start",
+                    "count": 80
+                },
+                {
+                    "key": 0,
+                    "name": "Vendor Creates Invoice",
+                    "count": 80,
+                    "linkArray": [
+                        {
+                            "linkNode": "Due Date Passed",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                51,
+                                50,
+                                2,
+                                0,
+                                0,
+                                2780760000,
+                                63780000,
+                                54524705,
+                                89700000,
+                                3180000
+                            ]
+                        },
+                        {
+                            "linkNode": "Scan Invoice",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                144,
+                                144,
+                                1,
+                                0,
+                                0,
+                                6352680000,
+                                40560000,
+                                44115833,
+                                88140000,
+                                840000
+                            ]
+                        }
+                    ],
+                    "tool": [
+                        "Absolute Frequency",
+                        "Case Frequency",
+                        "Max Repititons",
+                        "Start Frequency",
+                        "End Frequency",
+                        "Total Duration",
+                        "Median Duration",
+                        "Mean Duration",
+                        "Max Duration",
+                        "Min Duration"
+                    ],
+                    "toolCount": [
+                        196,
+                        195,
+                        2,
+                        195,
+                        1,
+                        372120000,
+                        2040000,
+                        1898571,
+                        3360000,
+                        360000
+                    ]
+                },
+                {
+                    "key": 1,
+                    "name": "Scan Invoice",
+                    "count": 80,
+                    "linkArray": [
+                        {
+                            "linkNode": "Enter in SAP",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                194,
+                                193,
+                                2,
+                                0,
+                                0,
+                                70398420000,
+                                20070000,
+                                362878453,
+                                5962500000,
+                                180000
+                            ]
+                        }
+                    ],
+                    "tool": [
+                        "Absolute Frequency",
+                        "Case Frequency",
+                        "Max Repititons",
+                        "Start Frequency",
+                        "End Frequency",
+                        "Total Duration",
+                        "Median Duration",
+                        "Mean Duration",
+                        "Max Duration",
+                        "Min Duration"
+                    ],
+                    "toolCount": [
+                        196,
+                        195,
+                        2,
+                        1,
+                        0,
+                        192060000,
+                        420000,
+                        979897,
+                        7500000,
+                        60000
+                    ]
+                },
+                {
+                    "key": 2,
+                    "name": "Enter in SAP",
+                    "count": 80,
+                    "linkArray": [
+                        {
+                            "linkNode": "Clear Invoice",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                20,
+                                20,
+                                1,
+                                0,
+                                0,
+                                5959020000,
+                                73560000,
+                                297951000,
+                                3262920000,
+                                2520000
+                            ]
+                        },
+                        {
+                            "linkNode": "Book Invoice",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                176,
+                                175,
+                                2,
+                                0,
+                                0,
+                                34604100000,
+                                48780000,
+                                196614204,
+                                6687300000,
+                                240000
+                            ]
+                        }
+                    ],
+                    "tool": [
+                        "Absolute Frequency",
+                        "Case Frequency",
+                        "Max Repititons",
+                        "Start Frequency",
+                        "End Frequency",
+                        "Total Duration",
+                        "Median Duration",
+                        "Mean Duration",
+                        "Max Duration",
+                        "Min Duration"
+                    ],
+                    "toolCount": [
+                        196,
+                        195,
+                        2,
+                        0,
+                        0,
+                        147960000,
+                        420000,
+                        754897,
+                        2700000,
+                        60000
+                    ]
+                },
+                {
+                    "key": 3,
+                    "name": "Book Invoice",
+                    "count": 80,
+                    "linkArray": [
+                        {
+                            "linkNode": "Clear Invoice",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                106,
+                                105,
+                                2,
+                                0,
+                                0,
+                                7692360000,
+                                3660000,
+                                72569433,
+                                1628820000,
+                                360000
+                            ]
+                        },
+                        {
+                            "linkNode": "Change Baseline Date",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                55,
+                                55,
+                                1,
+                                0,
+                                0,
+                                15832080000,
+                                19380000,
+                                287856000,
+                                4658580000,
+                                900000
+                            ]
+                        },
+                        {
+                            "linkNode": "Cancel Invoice Receipt",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                15,
+                                15,
+                                1,
+                                0,
+                                0,
+                                619980000,
+                                26640000,
+                                41332000,
+                                173400000,
+                                840000
+                            ]
+                        }
+                    ],
+                    "tool": [
+                        "Absolute Frequency",
+                        "Case Frequency",
+                        "Max Repititons",
+                        "Start Frequency",
+                        "End Frequency",
+                        "Total Duration",
+                        "Median Duration",
+                        "Mean Duration",
+                        "Max Duration",
+                        "Min Duration"
+                    ],
+                    "toolCount": [
+                        196,
+                        195,
+                        2,
+                        0,
+                        20,
+                        386100000,
+                        840000,
+                        1969897,
+                        21420000,
+                        120000
+                    ]
+                },
+                {
+                    "key": 4,
+                    "name": "Clear Invoice",
+                    "count": 80,
+                    "linkArray": [
+                        {
+                            "linkNode": "Vendor Creates Invoice",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                1,
+                                1,
+                                1,
+                                0,
+                                0,
+                                4799820000,
+                                4799820000,
+                                4799820000,
+                                4799820000,
+                                4799820000
+                            ]
+                        },
+                        {
+                            "linkNode": "Due Date Passed",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                130,
+                                130,
+                                1,
+                                0,
+                                0,
+                                30304500000,
+                                25200000,
+                                233111538,
+                                3668160000,
+                                1200000
+                            ]
+                        }
+                    ],
+                    "tool": [
+                        "Absolute Frequency",
+                        "Case Frequency",
+                        "Max Repititons",
+                        "Start Frequency",
+                        "End Frequency",
+                        "Total Duration",
+                        "Median Duration",
+                        "Mean Duration",
+                        "Max Duration",
+                        "Min Duration"
+                    ],
+                    "toolCount": [
+                        181,
+                        180,
+                        2,
+                        0,
+                        50,
+                        688740000,
+                        1140000,
+                        3805193,
+                        21120000,
+                        0
+                    ]
+                },
+                {
+                    "key": 5,
+                    "name": "Due Date Passed",
+                    "count": 80,
+                    "linkArray": [
+                        {
+                            "linkNode": "Scan Invoice",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                51,
+                                50,
+                                2,
+                                0,
+                                0,
+                                2937060000,
+                                480000,
+                                57589411,
+                                475500000,
+                                180000
+                            ]
+                        },
+                        {
+                            "linkNode": "Book Invoice",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                20,
+                                20,
+                                1,
+                                0,
+                                0,
+                                862620000,
+                                16680000,
+                                43131000,
+                                537420000,
+                                1380000
+                            ]
+                        }
+                    ],
+                    "tool": [
+                        "Absolute Frequency",
+                        "Case Frequency",
+                        "Max Repititons",
+                        "Start Frequency",
+                        "End Frequency",
+                        "Total Duration",
+                        "Median Duration",
+                        "Mean Duration",
+                        "Max Duration",
+                        "Min Duration"
+                    ],
+                    "toolCount": [
+                        181,
+                        180,
+                        2,
+                        0,
+                        110,
+                        263100000,
+                        1020000,
+                        1453591,
+                        20220000,
+                        240000
+                    ]
+                },
+                {
+                    "key": 6,
+                    "name": "Change Baseline Date",
+                    "count": 80,
+                    "linkArray": [
+                        {
+                            "linkNode": "Clear Invoice",
+                            "tool": [
+                                "Absolute Frequency",
+                                "Case Frequency",
+                                "Max Repititons",
+                                "Start Frequency",
+                                "End Frequency",
+                                "Total Duration",
+                                "Median Duration",
+                                "Mean Duration",
+                                "Max Duration",
+                                "Min Duration"
+                            ],
+                            "toolCount": [
+                                55,
+                                55,
+                                1,
+                                0,
+                                0,
+                                1343760000,
+                                8700000,
+                                24432000,
+                                160260000,
+                                0
+                            ]
+                        }
+                    ],
+                    "tool": [
+                        "Absolute Frequency",
+                        "Case Frequency",
+                        "Max Repititons",
+                        "Start Frequency",
+                        "End Frequency",
+                        "Total Duration",
+                        "Median Duration",
+                        "Mean Duration",
+                        "Max Duration",
+                        "Min Duration"
+                    ],
+                    "toolCount": [
+                        55,
+                        55,
+                        1,
+                        0,
+                        0,
+                        211380000,
+                        1440000,
+                        3843272,
+                        17820000,
+                        60000
+                    ]
+                },
+                {
+                    "key": 7,
+                    "name": "Cancel Invoice Receipt",
+                    "count": 80,
+                    "linkArray": [],
+                    "tool": [
+                        "Absolute Frequency",
+                        "Case Frequency",
+                        "Max Repititons",
+                        "Start Frequency",
+                        "End Frequency",
+                        "Total Duration",
+                        "Median Duration",
+                        "Mean Duration",
+                        "Max Duration",
+                        "Min Duration"
+                    ],
+                    "toolCount": [
+                        15,
+                        15,
+                        1,
+                        0,
+                        15,
+                        36060000,
+                        960000,
+                        2404000,
+                        15900000,
+                        300000
+                    ]
+                },
+                {
+                    "key": -2,
+                    "category": "End",
+                    "count": 80
+                }
+            ]
+        }
+    }
+}
   constructor(private dt: DataTransferService,
     private router: Router,
     private bpmnservice: SharebpmndiagramService,
@@ -160,7 +778,7 @@ export class FlowchartComponent implements OnInit {
         this.graphIds = piId;
         setTimeout(() => {
           this.onchangegraphId(piId);
-        }, 3*60*1000);
+        }, 3*60*1000); //3*60*1000
       }
     });
     
@@ -182,6 +800,7 @@ export class FlowchartComponent implements OnInit {
     let piId=selectedpiId
     this.rest.getAllVaraintList(piId).subscribe(data=>{this.varaint_data=data // variant List call
       // console.log('this.varaint_data',data);
+      
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
           // this.varaint_data.data[i].days=this.timeConversion(this.varaint_data.data[i].days);
@@ -191,7 +810,9 @@ export class FlowchartComponent implements OnInit {
       this.onchangeVaraint("0");
       })
       this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data //process graph full data call
-        let fullgraphOne=JSON.parse(this.fullgraph.data);
+         let fullgraphOne=this.fullgraph.data;
+        //let fullgraphOne=this.gResponse.data;
+        console.log("fullgraphOne",fullgraphOne);
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
 
         console.log('this.model1',this.model1);
@@ -626,8 +1247,8 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
           obj['to'] = this.getFromKey(datalink[j].linkNode);
           obj['text'] = datalink[j].toolCount[0];
 
-          let testedg=label+' --> '+datalink[j].linkNode
-          obj['textOne'] = testedg;
+          //let testedg=label+' --> '+datalink[j].linkNode
+          //obj['textOne'] = testedg;
 
           obj['toolData']=datalink[j].tool
            obj['toolDataCount']=datalink[j].toolCount
@@ -656,8 +1277,8 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
           obj['to'] = this.getFromKey(this.nodeArray[i].name);
           obj['text'] = this.nodeArray[i].toolCount[3];
           
-          let testedg="Start --> "+this.nodeArray[i].name
-          obj['textOne'] = testedg;
+          //let testedg="Start --> "+this.nodeArray[i].name
+          //obj['textOne'] = testedg;
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
           }
@@ -670,8 +1291,8 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
           obj['to'] = -2;
           obj['text'] = this.nodeArray[i].toolCount[4];
 
-          let testedg=this.nodeArray[i].name+' --> End'
-          obj['textOne'] = testedg;
+          //let testedg=this.nodeArray[i].name+' --> End'
+          //obj['textOne'] = testedg;
 
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
@@ -887,13 +1508,13 @@ flowchartDataOne(dataArray,index) {
         obj['from'] = this.getFromKey(label);
         obj['to'] = this.getFromKey(datalink[j].linkNode);
         if(index==5||index==6||index==7||index==8||index==9){
-          obj['text'] = this.timeConversion(datalink[j].toolCount[index-2]);
+          obj['text'] = this.timeConversion(datalink[j].toolCount[index]);
         }else{
         
           obj['text'] = datalink[j].toolCount[index];
         }
-        let testedg=label+' --> '+datalink[j].linkNode
-        obj['textOne'] = testedg;
+        // let testedg=label+' --> '+datalink[j].linkNode
+        // obj['textOne'] = testedg;
 
         obj['toolData']=datalink[j].tool
          obj['toolDataCount']=datalink[j].toolCount
@@ -911,8 +1532,8 @@ flowchartDataOne(dataArray,index) {
           obj['text'] = this.nodeArray[i].toolCount[3]
         }
         // obj['text'] = this.nodeArray[i].toolCount[3]
-        let testedg="Start --> "+this.nodeArray[i].name
-        obj['textOne'] = testedg;
+        // let testedg="Start --> "+this.nodeArray[i].name
+        // obj['textOne'] = testedg;
         obj["extraNode"] = 'true';
         this.linkdataArray.push(obj);
       }
@@ -926,8 +1547,8 @@ flowchartDataOne(dataArray,index) {
           obj['to'] = -2;
           obj['text'] = this.nodeArray[i].toolCount[4]
         }
-        let testedg=this.nodeArray[i].name+" --> End"
-        obj['textOne'] = testedg;
+        // let testedg=this.nodeArray[i].name+" --> End"
+        // obj['textOne'] = testedg;
 
         // obj['text'] = this.nodeArray[i].toolCount[4]
         obj["extraNode"] = 'true';

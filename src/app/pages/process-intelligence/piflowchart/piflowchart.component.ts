@@ -382,15 +382,31 @@ export class PiflowchartComponent implements OnInit {
         function showLinkToolTip(e,obj,diagram) {
           var node = obj.part;
           var shape = obj.findObject("LINK");
+          if(shape.fromNode.hb == undefined){
+            console.log("in iffff");
+            shape.fromNode.hb.name = "Start";
+          }
+          if(shape.toNode.hb == undefined){
+            console.log("in iffffelseee");
+            shape.toNode.hb.name = "End";
+          }
           console.log("from",shape.fromNode.hb);
            console.log("to",shape.toNode.hb);
+           if(shape.fromNode.hb == undefined){
+            console.log("in iffff");
+            shape.fromNode.hb.name = "Start";
+          }
+          if(shape.toNode.hb == undefined){
+            console.log("in iffffelseee");
+            shape.toNode.hb.name = "End";
+          }
           // console.log(shape);
           // console.log(shape.part.Animation);
           // e.diagram['Eb'].Xt='#0162cf'
           // shape.strokeWidth = 50;
             // shape.strokeWidth = 50;
           var toolTipDIV = document.getElementById('linkToolTipDIV');
-          // document.getElementById('linkname').innerHTML=shape.fromNode.hb.name+"-"+shape.toNode.hb.name
+           document.getElementById('linkname').innerHTML=truncate(shape.fromNode.hb.name, '1')+"-"+truncate(shape.toNode.hb.name, '2')
           var node = obj.part;
           // console.log(obj.port,obj.fromNode.Bp);
             var pt = diagram.lastInput.viewPoint;
@@ -421,7 +437,7 @@ export class PiflowchartComponent implements OnInit {
             //   toolDataone += shape.toNode.hb.tool[a]+"<br>";
             //   rowsone += shape.toNode.hb.toolCount[a]+"<br>";
             // }
-             console.log("me",toolData);
+             console.log("me",toolData, rows);
           }else if(shape.toNode.hb.key==-1 || shape.toNode.hb.key==-2){
             me.isstartLink=false
             me.myOutputVal.emit(me.isstartLink)
@@ -539,6 +555,21 @@ export class PiflowchartComponent implements OnInit {
               //       countNode.fill='white';
               //       obj.scale = 1.8 ;
         }
+
+        function truncate(input, type) {
+          if(type == 1 && input == undefined){
+            input ="Start";
+          }
+          if(type == 2 && input == undefined){
+            input = "End"
+          }
+         
+          if (input.length > 8)
+             return input.substring(0,8) + '...';
+          else
+             return input;
+      
+      }
         function hideLinkToolTip(){
           var toolTipDIV = document.getElementById('linkToolTipDIV');
      toolTipDIV.style.display = "none";

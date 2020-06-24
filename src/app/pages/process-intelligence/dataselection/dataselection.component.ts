@@ -173,7 +173,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "input.path": "/var/kafka",
         "input.file.pattern": localStorage.getItem("fileName"),
         "error.path": "/var/kafka",
-         "topic": "qopconnector-spooldir-"+this.processId,
+         "topic": "tytyconnector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",

@@ -5,6 +5,7 @@ export let APP_CONFIG = new InjectionToken('app.config');
 
 export interface AsimovAppConfig {
     processIntelligenceEndPoint: string;
+    processIntelligenceNodeEndPoint: string;
     bussinessProcessEndPoint: string;
     rpaEndPoint:string;
     loopbackHost: string;
@@ -15,6 +16,7 @@ export interface AsimovAppConfig {
 
 export const AppConfig: AsimovAppConfig = {
     processIntelligenceEndPoint: environment.pi_url,//pi_url
+    processIntelligenceNodeEndPoint: environment.pi_node_url,
     bussinessProcessEndPoint: environment.bps_url,//bps_url
     rpaEndPoint: environment.rpa_url,
     accessTokenEndPoint:environment.idm_url,

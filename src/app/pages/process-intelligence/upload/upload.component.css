@@ -159,3 +159,15 @@ input[type="text"]{
 .table_header{
     cursor: pointer;
 }
+
+table.tableBodyScroll tbody {
+    display: block;
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+  
+  table.tableBodyScroll thead, table.tableBodyScroll tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
