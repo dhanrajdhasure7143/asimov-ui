@@ -24,11 +24,13 @@ import { RpaDragHints } from './model/rpa-workspace-module-hints';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import {RpaEnvHints} from "./model/rpa-environments-module-hints";
 import {RpaWorkspace} from "./model/rpa-workspaceslist-module-hints";
+import { NgxPasswordToggleModule } from 'ngx-password-toggle';
 @NgModule({
   declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent],
   imports: [
     CommonModule,
     RpautomationRoutingModule,
+    NgxPasswordToggleModule,
     DndModule,
     FilterPipeModule,
     DataTablesModule,

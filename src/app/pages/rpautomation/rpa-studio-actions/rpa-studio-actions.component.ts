@@ -165,65 +165,77 @@ export class RpaStudioActionsComponent implements OnInit {
     this.startbot=false;
     this.pausebot=true;
     this.resumebot=false;
-    console.log(this.savebotrespose.botId)
-    this.childBotWorkspace.execution(this.savebotrespose.botId)
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: this.pause.status,
-      showConfirmButton: false,
-      timer: 2000
-    })
+    let response:any;
+    if(this.savebotrespose!=undefined)
+    {
+      this.rest.execution(this.savebotrespose.botId).subscribe(res =>{
+        response = res;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: response,
+          showConfirmButton: false,
+          timer: 2000
+        })
+      })
+    }
   }
   
   pauseBot() {
-    
-    this.pausebot=false;
-    this.startbot=false;
-    this.resumebot=true;
-    this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
+    if(this.savebotrespose!=undefined)
+    {
+      this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
       this.pause = data;
-      
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: this.pause.status,
-      showConfirmButton: false,
-      timer: 2000})
-    })
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: this.pause.status,
+          showConfirmButton: false,
+          timer: 2000}) 
+          this.pausebot=false;
+          this.startbot=false;
+          this.resumebot=true;
+        })
+    }
   }
 
   resumeBot() {
-    
-    this.pausebot=true;
-    this.startbot=false;
-    this.resumebot=false;
-    this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
-      this.resume = data;
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: this.resume.status,
-        showConfirmButton: false,
-        timer: 2000})
-    })
+    if(this.savebotrespose!=undefined)
+    {
+      this.pausebot=true;
+      this.startbot=false;
+      this.resumebot=false;
+      this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
+        this.resume = data;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: this.resume.status,
+          showConfirmButton: false,
+          timer: 2000})
+        })
+    }
   }
 
   stopBot() {
-    this.startbot=true;
-    this.pausebot=false;
-    this.resumebot=false;
     let data="";
-    this.rest.stopbot(this.savebotrespose.botId,data).subscribe(data=>{
-      console.log(data)
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Execute Stopped",
-        showConfirmButton: false,
-        timer: 2000})
-
-    })
+    if(this.savebotrespose!=undefined)
+    {
+      this.rest.stopbot(this.savebotrespose.botId,data).subscribe(data=>{
+        console.log(data)
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: "Bot Execute Stopped",
+          showConfirmButton: false,
+          timer: 2000})
+  
+          this.startbot=true;
+          this.pausebot=false;
+          this.resumebot=false;
+      })
+    }
+    
     
   }
 /*

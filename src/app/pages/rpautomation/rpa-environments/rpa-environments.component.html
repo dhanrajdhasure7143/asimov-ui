@@ -202,7 +202,7 @@ Username">
                       <label for="update_password">Password*</label>
                       <input type="password" class="form-control" formControlName="update_password" value="{{updateenvdata.password}}" [(ngModel)]="updateenvdata.password" placeholder="Enter
 
-Password">
+Password"  passwordToggle >
                       <span *ngIf="updateForm.get('update_password').invalid && updateForm.get
 
 ('update_password').touched" style="color:red">Password Required*</span>
@@ -310,7 +310,7 @@ placeholder="Enter Environment Type" >-->
 
                   <div class="col-md-3 formelement">
                       <label for="password">Password*</label>
-                      <input type="password" class="form-control" formControlName="password" value="" placeholder="Enter Password">
+                      <input type="password" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                       <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" style="color:red">Password Required*</span>
                   </div>
 
