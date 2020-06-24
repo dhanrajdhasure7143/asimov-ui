@@ -133,8 +133,11 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         obj[key]=lowercase.toString().split(' ').join('')
         
         renamesObj.push(obj) ;
+    
+        
 
       }
+      console.log("renamesObj",renamesObj);
   }
   let renamestring='';
   for(var k=0;k<renamesObj.length;k++){
@@ -170,7 +173,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "input.path": "/var/kafka",
         "input.file.pattern": localStorage.getItem("fileName"),
         "error.path": "/var/kafka",
-         "topic": "qopconnector-spooldir-"+this.processId,
+         "topic": "tytyconnector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",
@@ -203,9 +206,9 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
         // var piId=connectorBody.config["transforms.InsertField.static.value"]
         // localStorage.setItem('piId',this.processId)
-        const piid={"piId":this.processId}
+        // const piid={"piId":this.processId}
         //const piid={"piId":411}
-            this.router.navigate(['/pages/processIntelligence/flowChart',piid]);
+            this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
         
       })
 
@@ -280,7 +283,19 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         }
       })
 
-    }else{
+    }else if(this.id.length == 2){
+      this.selected=v;
+      this.headerName='Activity';
+      this.name=v
+      obj[this.name]=v;
+    this.headerArray.push(obj)
+      for(var x = 0;x < this.fileData.length;x++){
+        if(!this.validCells['row'+x])
+          this.validCells['row'+x]=[];
+          this.validCells['row'+x].push('cell'+index);
+        }
+    }
+    else{
       this.headerName = v.trim();
       this.selected=v;
       // if(v=='Start Timestamp'){
@@ -309,6 +324,8 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       this.isgenerate=false;
     }
   }
+  console.log("id",this.id);
+  
     }
 
   resetColMap(){

@@ -32,6 +32,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.bussinessProcessEndPoint + req.url;
         else if(req.url.indexOf('processintelligence') > -1)
             url = this.config.processIntelligenceEndPoint + req.url;
+        else if(req.url.indexOf('ReddisCopy') > -1)
+        url = this.config.processIntelligenceNodeEndPoint + req.url;
         else if(req.url.indexOf('accessToken') > -1)
             url = this.config.accessTokenEndPoint + req.url;
         return url;

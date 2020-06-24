@@ -35,7 +35,7 @@
                                  </a>
                         </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 row">
                         <!-- <div>
                                 <h4>My Work space</h4>
                         </div>
@@ -66,21 +66,32 @@
                                     </mat-expansion-panel>
                                   </mat-accordion>
                                 </div> -->
-                                <table class="table table-hover text-center pilist_table">
+                                <div class='col-sm-8'>
+                                <h4>My Workspace</h4>
+                                </div>
+                                <div class='col-sm-4 inner-addon right-addon' *ngIf="process_graph_list.data">
+                                                <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
+                                        <input type="text" placeholder="Search" name="searchGraph" #searchGraph="ngModel" [(ngModel)]="searchgraph">
+                                </div>
+                                <table class="col-sm-12 table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
                                         <thead class="text-center">
                                         <tr class="text-center">
-                                                <th class="text-center">Process ID</th>
-                                                <th class="text-center">Date</th>
-                                                <th class="text-center">Process Name</th>
-                                                <th class="text-center">Status</th>
+                                                <th class="text-center table_header"(click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process ID</th>
+                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Date</th>
+                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process Name</th>
+                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Category</th>
+                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Status</th>
+                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Action</th>
                                         </tr>
                                         </thead>
                                         <tbody class='text-center'>
-                                                <tr class='pList' *ngFor='let process_list of process_graph_list.data;trackBy:loopTrackBy;let i=index' (click)="onGraphSelection(process_list)">
-                                                        <td>{{process_list.piId}}</td>
+                                                <tr class='pList' *ngFor='let process_list of process_graph_list.data|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
+                                                        <td class="th-sm">{{process_list.piId}}</td>
                                                         <td>{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</td>
                                                         <td>{{process_list.piName|titlecase}}</td>
+                                                        <td>{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
                                                         <td>{{process_list.status}}</td>
+                                                        <td class="process_view" (click)="onGraphSelection(process_list)" title="View Process Graph"><i class='fa fa-eye'></i></td>
                                                 </tr>
                                         </tbody>
                                        
