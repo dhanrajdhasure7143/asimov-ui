@@ -812,16 +812,23 @@ export class FlowchartComponent implements OnInit {
       this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data //process graph full data call
          let fullgraphOne=this.fullgraph.data;
         //let fullgraphOne=this.gResponse.data;
-        console.log("fullgraphOne",fullgraphOne);
+        // console.log("fullgraphOne",fullgraphOne);
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
 
         console.log('this.model1',this.model1);
         let loction=''
         for(var i=0;i<this.model1.length;i++){
+          if(this.model1[i].key==-1||this.model1[i].key==-2){
+            let loc1=530
+          let loc2=-150+i*80
+          loction=loc1+' '+loc2;
+          this.model1[i].loc=loction
+          }else{
           let loc1=455
           let loc2=-150+i*80
           loction=loc1+' '+loc2;
           this.model1[i].loc=loction
+          }
         }
         
         this.model2 = this.flowchartData(this.model1)
