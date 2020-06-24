@@ -10,6 +10,7 @@ import { createLoweredSymbol, ThrowStmt } from '@angular/compiler';
 import { NgControl } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from '../../services/rest-api.service';
+import Swal from 'sweetalert2';
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -778,7 +779,7 @@ export class FlowchartComponent implements OnInit {
         this.graphIds = piId;
         setTimeout(() => {
           this.onchangegraphId(piId);
-        }, 3*60*1000); //3*60*1000
+        }, 4*60*1000); //3*60*1000
       }
     });
     
@@ -810,9 +811,18 @@ export class FlowchartComponent implements OnInit {
       this.onchangeVaraint("0");
       })
       this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data //process graph full data call
+        if(this.fullgraph.hasOwnProperty('display_msg')){
+          Swal.fire(
+            'Oops!',
+            'It is Not You it is Us, Please try again after some time',
+            'error'
+          );
+          this.spinner.hide();
+        } else{
          let fullgraphOne=this.fullgraph.data;
         //let fullgraphOne=this.gResponse.data;
         // console.log("fullgraphOne",fullgraphOne);
+
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
 
         console.log('this.model1',this.model1);
@@ -872,7 +882,9 @@ export class FlowchartComponent implements OnInit {
         console.log(this.model2);
         
         this.spinner.hide();
+    }
         });
+
         
         // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
         // // console.log('varaint_GraphData',JSON.parse(this.varaint_GraphData.data));
