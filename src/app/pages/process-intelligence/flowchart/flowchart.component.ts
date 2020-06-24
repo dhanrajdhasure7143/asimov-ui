@@ -799,7 +799,7 @@ export class FlowchartComponent implements OnInit {
   onchangegraphId(selectedpiId){
     let piId=selectedpiId
     this.rest.getAllVaraintList(piId).subscribe(data=>{this.varaint_data=data // variant List call
-      // console.log('this.varaint_data',data);
+      console.log('this.varaint_data',data);
       
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
@@ -832,7 +832,10 @@ export class FlowchartComponent implements OnInit {
                             // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
                 // this.model2[j].from>0 && this.model2[j].to<0
                 // this.model2[j].from ==-2||this.model2[j].to==-2
-                
+                if(j==0 && this.model2[j].to>1 ){
+                  let loc3=160
+                this.model2[j].curviness=loc3
+                }else{
             if(this.model2[j].from ==-1||this.model2[j].from==-2){
                if(this.model2[j].from==-1 && this.model2[j].to==0){
                 let loc3=0
@@ -858,15 +861,17 @@ export class FlowchartComponent implements OnInit {
             this.model2[j].curviness=loc3
             }
         }
+      }
         console.log(this.model2);
         
         this.spinner.hide();
         });
-        this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        // console.log('varaint_GraphData',JSON.parse(this.varaint_GraphData.data));
-        this.varaint_GraphDataArray=JSON.parse(this.varaint_GraphData.data)
-        console.log('varaint_GraphData',this.varaint_GraphDataArray);
-        })
+        
+        // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
+        // // console.log('varaint_GraphData',JSON.parse(this.varaint_GraphData.data));
+        // this.varaint_GraphDataArray=JSON.parse(this.varaint_GraphData.data)
+        // console.log('varaint_GraphData',this.varaint_GraphDataArray);
+        // })
   }
 
   onchangeVaraint(datavariant) {
@@ -887,13 +892,13 @@ export class FlowchartComponent implements OnInit {
       case "2":
         // this.varaint_data = this.data;
         this.varaint_data.data.sort(function (a, b) {
-          return b.days - a.days;
+          return a.days - b.days;
         });
         break;
       case "3":
         // this.varaint_data = this.data;
         this.varaint_data.data.sort(function (a, b) {
-          return a.days - b.days;
+          return b.days - a.days;
         });
         break;
     }
@@ -1346,6 +1351,10 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
       //   this.model2[j].curviness=loc3
       // }
       for(var j=0;j<this.model2.length;j++){
+        if(j==0 && this.model2[j].to>1 ){
+          let loc3=160
+        this.model2[j].curviness=loc3
+        }else{
         if(this.model2[j].from ==-1||this.model2[j].from==-2){
           if(this.model2[j].from==-1 && this.model2[j].to==0){
             let loc3=0
@@ -1370,6 +1379,7 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
           let loc3=30*j
         this.model2[j].curviness=loc3
         }
+      }
       }
     }
   }
@@ -1456,6 +1466,10 @@ selectedMetric(selectedValue){
 
   this.model2 = this.flowchartDataOne(this.model1,index)
   for(var j=0;j<this.model2.length;j++){
+    if(j==0 && this.model2[j].to>1 ){
+      let loc3=160
+    this.model2[j].curviness=loc3
+    }else{
     if(this.model2[j].from ==-1||this.model2[j].from==-2){
       if(this.model2[j].from==-1 && this.model2[j].to==0){
         let loc3=0
@@ -1480,6 +1494,7 @@ selectedMetric(selectedValue){
     this.model2[j].curviness=loc3
     }
   }
+}
   
 }
 flowchartDataOne(dataArray,index) {
@@ -1560,22 +1575,26 @@ console.log('this.linkdataArray',this.linkdataArray);
   return this.linkdataArray;
 }
 openNav(){
-  document.getElementById("mySidenav").style.width = "300px";
-  document.getElementById("main").style.marginRight = "300px";
+  document.getElementById("mySidenav").style.width = "310px";
+  document.getElementById("main").style.marginRight = "310px";
   }
 closeNav() {
-  document.getElementById("mySidenav").style.width = "0";
-  document.getElementById("main").style.marginRight= "0";
+  document.getElementById("mySidenav").style.width = "0px";
+  document.getElementById("main").style.marginRight= "0px";
   }
   resetspinnermetrics(){
     this.model2 = this.flowchartData(this.model1)
     for(var j=0;j<this.model2.length;j++){
       // for (let [key, value] of Object.entries(this.model2[j])) {
-        console.log(this.model2[j].from);
+        // console.log(this.model2[j].from);
 
                         // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
             // this.model2[j].from>0 && this.model2[j].to<0
             // this.model2[j].from ==-2||this.model2[j].to==-2
+      if(j==0 && this.model2[j].to>1 ){
+        let loc3=160
+      this.model2[j].curviness=loc3
+      }else{
         if(this.model2[j].from ==-1||this.model2[j].from==-2){
           if(this.model2[j].from==-1 && this.model2[j].to==0){
             let loc3=0
@@ -1601,5 +1620,9 @@ closeNav() {
         this.model2[j].curviness=loc3
         }
     }
+  }
+  }
+  caseParcent(parcent){
+  return parcent.toString().slice(0,5);
   }
 }

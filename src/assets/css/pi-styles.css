@@ -276,10 +276,6 @@ float: left !important;
   font-size: 11px !important;
   margin-top: 8px;
 }
-#check_box{
-  margin-top: 1px;
-  margin-left: -17px !important;
-}
 .varaint_select{
   float:right;
   font-weight:normal;
@@ -382,16 +378,11 @@ padding: 5px !important;
   padding: 5px;
 }
 .play_button{
-  background: none !important;
-  border: none !important;
   font-weight: bold;
-  font-size: 11px;
-  padding-top: 0px;
-  position: relative;
-  z-index: 1000;
-}
-.hide_plybtn{
-  margin-left: 3px;
+  font-size: 14px;
+  color: green;
+  margin-bottom: 4px;
+
 }
 .selectbox{
   margin-top: 0px;
@@ -644,18 +635,9 @@ bottom: -300px !important;
 transition: 0.5s;
 }
 
-
-.activevaraint .dot{
-  color:green !important;
-  border:1.5px solid green !important;
-}
-
 .activevaraint{
   border-left:2px solid green !important;
   background: lightgray;
-}
-.activevaraint .play_button{
-color: green !important;
 }
 #toolTipParagraphone,#linktoolTipParagraphone{
   float: left;

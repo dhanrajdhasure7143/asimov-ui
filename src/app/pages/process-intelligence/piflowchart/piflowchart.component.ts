@@ -383,21 +383,21 @@ export class PiflowchartComponent implements OnInit {
           var node = obj.part;
           var shape = obj.findObject("LINK");
           if(shape.fromNode.hb == undefined){
-            console.log("in iffff");
+            // console.log("in iffff");
             shape.fromNode.hb.name = "Start";
           }
           if(shape.toNode.hb == undefined){
-            console.log("in iffffelseee");
+            // console.log("in iffffelseee");
             shape.toNode.hb.name = "End";
           }
-          console.log("from",shape.fromNode.hb);
-           console.log("to",shape.toNode.hb);
+          // console.log("from",shape.fromNode.hb);
+          //  console.log("to",shape.toNode.hb);
            if(shape.fromNode.hb == undefined){
-            console.log("in iffff");
+            // console.log("in iffff");
             shape.fromNode.hb.name = "Start";
           }
           if(shape.toNode.hb == undefined){
-            console.log("in iffffelseee");
+            // console.log("in iffffelseee");
             shape.toNode.hb.name = "End";
           }
           // console.log(shape);
@@ -503,7 +503,7 @@ export class PiflowchartComponent implements OnInit {
               rowsone +=timeConversion(obj.data.toolDataCount[i])+"<br>";
               break;
             }
-            console.log(toolDataone);
+            // console.log(toolDataone);
             // toolData += obj.data.toolData[i]+"<br>";
           }
         }

@@ -6,8 +6,35 @@
        
         <!-- <div class='pull-right'> <button class="btn btn-pramary" (click)="openNav()"> &#9776; Toggle1</button></div> -->
         <div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
+            <div>
                 <button class="closebtn" (click)="closeNav()">&times;</button>
-                <div class="sidenavOne">
+            </div>
+            <div class='variants_slider'>
+            <div class="col-sm-12 form-group select_drpdwnone">
+                    <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                    </select>
+                </div>
+                <div class='col-sm-12 row variant2'>
+                        <div class="col-sm-7 check_box">
+                            <input id="check_box"  type="checkbox" #check_box='ngModel'   [(ngModel)]="checkboxValue" (change)="seleceAllVariants()"><span class="">Select all</span>
+                        </div>
+                        <div class='col-sm-5 event2'>Time Taken</div>
+                </div>
+                <div class='col-sm-12 row variant_border' [ngClass]="data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index" (click)="caseIdSelect(data,i)">
+                    <div class='col-sm-1 event3'>#{{i+1}}</div>
+                    <div class='col-sm-9 variant_parcent'>
+                        <div class='col-sm-12'>{{caseParcent(data.casepercent)}}% of cases</div>
+                        <div class='col-sm-12 events1'><p>{{data.detail}}</p></div>
+                        <div class='col-sm-3'></div>
+                        <div class="col-sm-9 variant_play"><button class="play_button" (click)="playAnimation()"><i class="fa fa-play"></i><span class="">Play</span></button></div>
+
+                    </div>
+                    <div class='col-sm-2'>{{timeConversion(data.days)}}</div>
+                </div>
+                </div>
+                
+                <!-- <div class="sidenavOne">
                         <div class="varaint_headingOne">
                             <h5 class="varaint_heading">Explore by Variant</h5>
                             <div class="checkbox ">
@@ -47,7 +74,7 @@
                         </div>
                     <div>
                 </div>
-        </div>
+        </div> -->
 
     </div>
 

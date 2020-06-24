@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, throwError } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class AuthenticationService {
 
   public loggedIn = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router:Router) { }
 
   login(username: string, password: string) {
     return this.http.post<any>(`/oauth/token`, { 'username' : username, 'password' : password })
@@ -42,7 +43,9 @@ export class AuthenticationService {
   
   forbiddenAccess() {
     // logic has to be implemented once integrated with AIOTAL project
-    // location.reload();   
+    // location.reload();
+    localStorage.clear();
+    this.router.navigate(['/login'])   
   }
 
   get isLoggedIn() {
