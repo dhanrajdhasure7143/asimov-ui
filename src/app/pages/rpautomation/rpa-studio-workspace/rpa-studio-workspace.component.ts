@@ -26,6 +26,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   nodes = [];
   selectedNode: any= [];
   changePx: { x: number; y: number; };
+  public selectedTask:any;
   // forms
   public hiddenPopUp:boolean = false;
   public hiddenCreateBotPopUp:boolean = false;
@@ -95,12 +96,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.populateNodes(nodeWithCoordinates);
     }, 240);
   }
+
   idGenerator() {
     var S4 = function () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
     };
     return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
   }
+
   updateCoordinates(dragNode) {
     var nodeIndex = this.nodes.findIndex((node) => {
       return (node.id == dragNode.id);
@@ -108,6 +111,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.nodes[nodeIndex].x = dragNode.x;
     this.nodes[nodeIndex].y = dragNode.y;
   }
+  
+  
+  
   populateNodes(nodeData){
         
     const nodeIds = this.nodes.map(function (obj) {
@@ -173,18 +179,23 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       y: evt.event.clientY - rect.top
     };
   }
+
+
+
+
   callFunction(menu){
     this.optionsVisible = false;
     this.hiddenPopUp = false;
-    this.fields = []
-    console.log(menu);
-    this.formHeader= this.selectedNode.name+" - "+menu.name;
-    this.selectedNode.id = menu.id;
-    let type ="info";
+   // this.fields = []
+    //console.log(menu);
+      this.formHeader= this.selectedNode.name+" - "+menu.name;
+      //this.selectedNode.id = menu.id;
+      let type ="info";
       let message = `${menu.name} is Selected`
       this.notifier.notify( type, message );
-    // this.selectedNode.push(menu.id)
-    console.log(this.selectedNode);
+    //this.selectedNode.push(menu.id)
+      this.selectedTask=menu; 
+      console.log(menu);
     
   }
   onRightClick(n: any,e: { target: { id: string; } },i: string | number) {
@@ -220,6 +231,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
     }
   }
+
   getFields() {
     return this.fields;
   }
@@ -227,20 +239,24 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   ngDistroy() {
     this.unsubcribe();
   }
-  formNodeFunc(node){
+
+  formNodeFunc(node)
+  {
     console.log(node)
-    if(this.selectedNode.id){
-    this.rest.attribute(this.selectedNode.id).subscribe((data)=>{
+    if(this.selectedTask.id)
+    {
+      this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
        this.response(data)
       })
     }
   }
-  response(data){
+  
+  response(data)
+  {
     if(data.error == "No Data Found"){
       this.fields = [];
       this.hiddenPopUp = false;
       let type ="info";
-      
       let message = "No Data Found"
       this.notifier.notify( type, message );
     }else{
@@ -259,29 +275,30 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     })
   }
   }
-  onFormSubmit(event){
-    
+
+
+  onFormSubmit(event){  
     this.fieldValues = event
     this.hiddenPopUp=false;
     let objAttr:any;
     let obj:any=[];
-    this.formVales.forEach((ele,i) => {
-     
+    this.formVales.forEach((ele,i) => { 
       let objKeys = Object.keys(this.fieldValues);
       objAttr = {
         "metaAttrId": ele.id,
         "metaAttrValue": ele.name,
-         "attrValue": this.fieldValues[objKeys[i]]
+        "attrValue": this.fieldValues[objKeys[i]]
       }
       obj.push(objAttr);
         
   })
-  let cutedata={"taskName":this.selectedNode.name,
-                "taskId":this.selectedNode.id,
-                "inSeqId":1,
-                "outSeqId":2,
-                "attributes":obj
-              }
+  let cutedata={
+    "taskName":this.selectedNode.name,
+    "taskId":this.selectedNode.id,
+    "inSeqId":1,
+    "outSeqId":2,
+    "attributes":obj
+  }
   this.finaldataobjects.push(cutedata);
     Swal.fire({
       position: 'top-end',
@@ -295,8 +312,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   {
     //console.log(environments)
     console.log(this.formVales);
-    this.allFormValues = []
-    this.saveBotdata = [];
     this.saveBotdata = {
     "botName": botProperties.botName,
     "botType" : botProperties.botType,
@@ -307,7 +322,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     "tasks": this.finaldataobjects,
     "createdBy": "admin",
     "lastSubmittedBy": "admin",
-    //"scheduler" : this.scheduler
+    "scheduler" : this.scheduler
   }
     console.log(this.saveBotdata)
     return this.rest.saveBot(this.saveBotdata)
@@ -381,10 +396,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   execution(botid){
     let eqObj:any
-    this.rest.execution(botid,eqObj).subscribe(data => {this.exectionVal(data)},(error) => {
+    this.rest.execution(botid).subscribe(data => {this.exectionVal(data)},(error) => {
       alert(error);
     })
   }
+
+
   exectionVal(data){
     if(data.error){
       let type ="info";
@@ -397,11 +414,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     console.log(data);
     }
   }
+
+
   reset(e){
       this.indexofArr = 6;
       this.dagvalue = this.zoomArr[this.indexofArr];
       this.dragelement.style['transform'] = `scale(${this.dagvalue})`
   }
+  
   zoomin(e){
     if(this.indexofArr < this.zoomArr.length-1){
       this.indexofArr += 1;
