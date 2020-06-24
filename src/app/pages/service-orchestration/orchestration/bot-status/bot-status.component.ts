@@ -320,6 +320,18 @@ getprocessStatus()
   this.api.getProcessStatistics().subscribe(data=>{
     this.processStatus=data
     console.log(data)
+    if(this.processStatus.ONHOLD==undefined)
+    {
+      this.processStatus.ONHOLD="NA";
+    }
+    if(this.processStatus.INPROGRESS==undefined)
+    {
+      this.processStatus.INPROGRESS="NA";
+    }
+    if(this.processStatus.REJECTED==undefined)
+    {
+      this.processStatus.REJECTED="NA";
+    }
   })
 }
 
