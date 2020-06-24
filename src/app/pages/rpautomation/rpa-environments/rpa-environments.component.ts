@@ -127,6 +127,7 @@ import {Router} from "@angular/router";
   
   create()
   {
+    
     this.createpopup=true;
     this.updatepopup=false;
   }
@@ -142,7 +143,7 @@ import {Router} from "@angular/router";
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: res,
+          title: res.status,
           showConfirmButton: false,
           timer: 2000
         })
@@ -170,7 +171,7 @@ import {Router} from "@angular/router";
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: res,
+          title: res.status,
           showConfirmButton: false,
           timer: 2000
         })
@@ -232,7 +233,7 @@ import {Router} from "@angular/router";
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: res,
+              title: res.status,
               showConfirmButton: false,
               timer: 2000
     

@@ -114,10 +114,15 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   listEnvironments(){
     return this.http.get("/rpa-service/agent/get-environments")
   }
-  execution(botid:number,data:any){
+  execution(botid:number){
+    let data="";
+    const requestOptions: Object = {
+      responseType: 'text'
+    }
     let url='/rpa-service/start-bot/'+botid;
-    return this.http.post(url,data)
+    return this.http.post(url,data,requestOptions)
   }
+  
   stopbot(botid:number,data:any){
     let url='/rpa-service/stop-bot/'+botid;
     return this.http.post(url,data)
@@ -138,27 +143,19 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
 
   addenvironment(data:any):Observable<any>
   {
-    const requestOptions: Object = {
-      responseType: 'text'
-    }
-    console.log(data)
-    return this.http.post<any>("/rpa-service/agent/save-environment",data, requestOptions);
+    return this.http.post<any>("/rpa-service/agent/save-environment",data);
   }
 
   deleteenvironment(data:any) :Observable<any>
   {
-    const requestOptions: Object = {
-      responseType: 'text'
-    }
-    return this.http.post<any>("/rpa-service/agent/delete-environment",data, requestOptions);
-  
+    return this.http.post<any>("/rpa-service/agent/delete-environment",data);
   }
   updateenvironment(data:any):Observable<any>
   {
     const requestOptions: Object = {
       responseType: 'text'
     }
-    return this.http.put<any>("/rpa-service/agent/update-environment",data, requestOptions);
+    return this.http.put<any>("/rpa-service/agent/update-environment",data);
   }
 
   getAllRpaWorkSpaces(id:any)
