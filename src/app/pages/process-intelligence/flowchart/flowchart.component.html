@@ -6,14 +6,20 @@
        
         <!-- <div class='pull-right'> <button class="btn btn-pramary" (click)="openNav()"> &#9776; Toggle1</button></div> -->
         <div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
-            <div>
+            <!-- <div>
                 <button class="closebtn" (click)="closeNav()">&times;</button>
-            </div>
+            </div> -->
             <div class='variants_slider'>
-            <div class="col-sm-12 form-group select_drpdwnone">
-                    <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+            <div class="col-sm-12 select_drpdwnone">
+                    <div class="col-sm-12"><button class="closebtn" (click)="closeNav()">&times;</button></div>
+                    <div class="col-sm-12 form-group">
+                        <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
                         <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
-                    </select>
+                        </select>
+                    </div>
+                    <!-- <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                    </select> -->
                 </div>
                 <div class='col-sm-12 row variant2'>
                         <div class="col-sm-7 check_box">
@@ -141,11 +147,11 @@
                         <h5 class="btn-default dropdown-toggle" [ngClass]="isfrequencymetrics==true?'isactive':''" (click)='onfrequency()' type="button">Frequency         <span class="caret"></span>
                         </h5>
                         <div *ngIf='isfrequencymetrics' class='col-md-12 edgemetrics_spinner'>
-                                <button class='btn reset_btn' type='reset' (click)="resetspinnermetrics()">reset</button>
+                                <button class='btn reset_btn' type='button' (click)="resetspinnermetrics()">reset</button>
                                 <hr>
-                                <span><input type="radio"  class="form-check-input" name="check" #absolute='ngModel' value="absoluteFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Absolute Frequency</span><br>
-                                <span><input type="radio"  class="form-check-input" name="check" #caseFrequency='ngModel' value="caseFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics1'> Case Frequency</span><br>
-                                <span><input type="radio"  class="form-check-input" name="check" #maxRepititons='ngModel' value="maxRepititons" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics2'> Max Repetitions</span><br>
+                                <span><input type="radio"  class="form-check-input" name="check" value="absoluteFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Absolute Frequency</span><br>
+                                <span><input type="radio"  class="form-check-input" name="check" value="caseFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Case Frequency</span><br>
+                                <span><input type="radio"  class="form-check-input" name="check" value="maxRepititons" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Repetitions</span><br>
                                 <!-- <span><input type="radio"  class="form-check-input" name="check" #startFrequency='ngModel' value="startFrequency" (change)='selectedMetric($event.target.value)'[(ngModel)]='spinMetrics3'> Start Frequency</span><br>
                                 <span><input type="radio"  class="form-check-input" name="check" #endFrequency='ngModel' value="endFrequency" (change)='selectedMetric($event.target.value)'  [(ngModel)]='spinMetrics4'> End Frequency</span><br> -->
                         </div>
@@ -155,14 +161,14 @@
                         <h5 class="btn-default dropdown-toggle" (click)='onPerformance()' [ngClass]="isperformancemetrics==true?'isactive':''" type="button">Performance        <span class="caret"></span></h5>
 
                         <div *ngIf='isperformancemetrics' class='edgemetrics_spinner'>
-                                <button class='btn reset_btn' type='reset' (click)="resetspinnermetrics()">reset</button>
+                                <button class='btn reset_btn' type='button' (click)="resetspinnermetrics()">reset</button>
                                 <hr>
                                 
-                                <span><input type="radio" class="form-check-input" name="check" #totalDuration='ngModel' value="totalDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics5'> Total Duration</span><br>
-                                <span><input type="radio" class="form-check-input" name="check" #medianDuration='ngModel' value="medianDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics6'> Median Duration</span> <br>
-                                <span><input type="radio" class="form-check-input" name="check" #meanDuration='ngModel' value="meanDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics7'> Mean Duration</span> <br>
-                                <span><input type="radio" class="form-check-input" name="check" #maxDuration='ngModel' value="maxDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics8'> Max Duration</span><br>
-                                <span><input type="radio" class="form-check-input" name="check" #minDuration='ngModel' value="minDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics9'> Min Duration</span> <br>
+                                <span><input type="radio" class="form-check-input" name="check" value="totalDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Total Duration</span><br>
+                                <span><input type="radio" class="form-check-input" name="check" value="medianDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Median Duration</span> <br>
+                                <span><input type="radio" class="form-check-input" name="check" value="meanDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Mean Duration</span> <br>
+                                <span><input type="radio" class="form-check-input" name="check" value="maxDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Duration</span><br>
+                                <span><input type="radio" class="form-check-input" name="check" value="minDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Min Duration</span> <br>
                         </div>
                         <!-- <hr> -->
                       </div>
