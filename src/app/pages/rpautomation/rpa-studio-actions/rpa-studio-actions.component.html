@@ -18,7 +18,7 @@
       </div>-->
       <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
       <button  type="button" id="stopbot"
-      class="btn btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot(1)">
+      class="btn btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot()">
       <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
       <div class="btn_title">Stop</div>
       </button>
@@ -31,7 +31,7 @@
         <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
         <div class="btn_title">Stop</div>
         </button>
-        </div>
+      </div>
       <div class="dropdown">
         <button class="btn btn_style dropdown-toggle" id="bots" type="button" data-toggle="dropdown"
           (click)="getpredefinedbotlist()"> <img src="/assets/images/robot.svg" class="imageI1"><div class="btn_title">Bots</div></button>
@@ -57,7 +57,7 @@
           </li>
         </ul>
       </div>
-      <button type="button" id="deployBot"  class="btn btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
+      <button type="button" id="deployBot" [disabled]="savebotrespose==undefined" class="btn btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
         <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
         <div class="btn_title">Deploy</div>
       </button>
@@ -65,8 +65,8 @@
         <img class="imageI1" src="/assets/images/Expanded.svg">
         <div class="btn_title">Edit</div>
       </button>
-      <button  type="button"
-      class="btn btn_style" aria-hidden="true" placement="bottom" id="savebot" (click)="saveBotFunAct()">
+      <button  type="button" 
+      class="btn btn_style" aria-hidden="true" [disabled]="envflag" placement="bottom" id="savebot" (click)="saveBotFunAct()">
       <img class="imageI1" src="/assets/images/Layer 1.svg">
       <div class="btn_title">Save</div>
     </button>
@@ -88,7 +88,7 @@
         </div>
     <div *ngIf="pausebot==true">
       <button  type="button"
-      class="btn btn_style" aria-hidden="true" placement="bottom" (click)="pauseBot(1)">
+      class="btn btn_style" aria-hidden="true" placement="bottom" (click)="pauseBot()">
       <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
       <div class="btn_title">Pause</div>
       </button>
@@ -96,7 +96,7 @@
 
       <div *ngIf="resumebot==true">
         <button  type="button"
-        class="btn btn_style" aria-hidden="true" placement="bottom" (click)="resumeBot(1)">
+        class="btn btn_style" aria-hidden="true" placement="bottom" (click)="resumeBot()">
         <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
         <div class="btn_title">Resume</div>
         </button>
@@ -108,15 +108,14 @@
     <div class="btn_title">Schedule</div>
     </button>
       <div class="dropdown">
-        <button class="btn btn_style dropdown-toggle" id="Environments" type="button" data-toggle="dropdown"
-          (click)="listenvironments()"> <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1"><div class="btn_title">Environments</div></button>
+        <button class="btn btn_style dropdown-toggle" id="Environments" type="button" data-toggle="dropdown">
+           <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1">
+        <div class="btn_title">Environments</div></button>
         <ul *ngIf="environment.length > 0" class="dropdown-menu rpa-custom-scrollbar">
           <li *ngFor="let list of environment;let i = index">
             <div class="checkbox">
               <div class="environments">
-                <label [for]="list+i"><input type="checkbox" value="" [id]="list+i" [name]="list"
-                    [(ngModel)]="list.Checked"
-                    (ngModelChange)="getCheckboxValues($event,list)">{{list.environmentName}}</label>
+                <label [for]="list+i"><input type="checkbox" (change)="checkuncheckenv(list.environmentId)">{{list.environmentName}}</label>
                 <hr>
               </div>
             </div>

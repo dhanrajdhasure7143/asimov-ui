@@ -101,10 +101,12 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     }
   
   getUserPause(botId){
-    return this.http.post('/rpa-service/pause-bot/',botId)
+    let data:any;
+    return this.http.post('/rpa-service/pause-bot/'+botId,data)
   }
   getUserResume(botId){
-    return this.http.post('/rpa-service/resume-bot/',botId)
+    let data:any;
+    return this.http.post('/rpa-service/resume-bot/'+botId,data)
   }
   botStatistics(){
     return this.http.get("/rpa-service/bot-statistics")
@@ -114,7 +116,10 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   }
   execution(botid:number,data:any){
     let url='/rpa-service/start-bot/'+botid;
-    console.log(url);
+    return this.http.post(url,data)
+  }
+  stopbot(botid:number,data:any){
+    let url='/rpa-service/stop-bot/'+botid;
     return this.http.post(url,data)
   }
 

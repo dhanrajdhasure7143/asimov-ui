@@ -86,6 +86,7 @@ export class RpaStudioComponent implements OnInit {
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.rpaHomeHints);
     this.rest.toolSet().subscribe(data => {
+      console.log(data);
       let value:any = [];
       let subValue:any = []
       this.toolSetData;
@@ -101,7 +102,7 @@ export class RpaStudioComponent implements OnInit {
         subValue.push(element.Database);
         this.databaseValue.push(element.Database);
         subValue.push(element["Developer Condition"]);
-        subValue.push(element["Database"])
+        //subValue.push(element["Database"])
         this.developercondValue.push(element["Developer Condition"]);
         subValue.push(element["Excel File"]);
         this.excelValue.push(element["Excel File"]);
