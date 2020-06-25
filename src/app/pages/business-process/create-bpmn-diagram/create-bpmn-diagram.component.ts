@@ -218,7 +218,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   initialSave(diagramModel:BpmnModel){
-    diagramModel.modifiedTimestamp = new Date();
+    // diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>console.log("initailly saved"));
   }
   submitDiagramForApproval(){
