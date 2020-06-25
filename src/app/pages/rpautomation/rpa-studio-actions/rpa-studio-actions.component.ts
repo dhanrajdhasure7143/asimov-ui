@@ -29,6 +29,7 @@ export class RpaStudioActionsComponent implements OnInit {
   public savebotrespose:any;
   public selectedenv:any=[];
   public finalenv:any=[];
+  public envflag:Boolean=true;
   @Input('tabsArrayLength') public tabsArrayLength: number;
   @Input('botState') public botState: any;
   @Output() closeTabEvent = new EventEmitter<void>();
@@ -103,22 +104,19 @@ export class RpaStudioActionsComponent implements OnInit {
     
     this.rest.deployremotemachine(this.savebotrespose.botId).subscribe(data => {
       this.deploymachinedata = data;
-      this.childBotWorkspace.successCallBack(data);
-     
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title:this.deploymachinedata.status,
+        showConfirmButton: false,
+        timer: 2000
+      })
       
     })
     
   }
 
-  deploydummybot()
-  {
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: "Bot deployed successfully",
-      showConfirmButton: false,
-      timer: 2000})
-  }
+
   
   saveBotFunAct() {
     
@@ -126,7 +124,7 @@ export class RpaStudioActionsComponent implements OnInit {
     this.pausebot=false;
     this.resumebot=false;
     this.environment.forEach(data=>{
-        if(data.Checked==true)
+        if(data.checked==true)
         {
           this.finalenv.push(data.environmentId)
         }
@@ -135,8 +133,14 @@ export class RpaStudioActionsComponent implements OnInit {
     {
       
       this.childBotWorkspace.saveBotFun(this.botState,this.finalenv).subscribe(data=>{
-        this.childBotWorkspace.successCallBack(data);
         this.savebotrespose=data;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: "Bot Saved Sucessfully",
+          showConfirmButton: false,
+          timer: 2000
+        })
       });
     }
     else
@@ -144,6 +148,13 @@ export class RpaStudioActionsComponent implements OnInit {
       this.childBotWorkspace.updateBotFun(this.savebotrespose).subscribe(data=>{
         this.childBotWorkspace.successCallBack(data);
         this.savebotrespose=data;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: "Bot Updated Sucessfully",
+          showConfirmButton: false,
+          timer: 2000
+        })
       });
     }
   }
@@ -151,41 +162,83 @@ export class RpaStudioActionsComponent implements OnInit {
  
 
   executionAct() {
-    this.startbot=true;
-    this.pausebot=false;
+    this.startbot=false;
+    this.pausebot=true;
     this.resumebot=false;
-    console.log(this.savebotrespose.botId)
-    this.childBotWorkspace.execution(this.savebotrespose.botId)
-
+    let response:any;
+    if(this.savebotrespose!=undefined)
+    {
+      this.rest.execution(this.savebotrespose.botId).subscribe(res =>{
+        response = res;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: response,
+          showConfirmButton: false,
+          timer: 2000
+        })
+      })
+    }
   }
   
-  pauseBot(botId) {
-    
-    this.pausebot=false;
-    this.startbot=false;
-    this.resumebot=true;
-    this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
+  pauseBot() {
+    if(this.savebotrespose!=undefined)
+    {
+      this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
       this.pause = data;
-    })
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: this.pause.status,
+          showConfirmButton: false,
+          timer: 2000}) 
+          this.pausebot=false;
+          this.startbot=false;
+          this.resumebot=true;
+        })
+    }
   }
 
-  resumeBot(botId) {
+  resumeBot() {
+    if(this.savebotrespose!=undefined)
+    {
+      this.pausebot=true;
+      this.startbot=false;
+      this.resumebot=false;
+      this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
+        this.resume = data;
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: this.resume.status,
+          showConfirmButton: false,
+          timer: 2000})
+        })
+    }
+  }
+
+  stopBot() {
+    let data="";
+    if(this.savebotrespose!=undefined)
+    {
+      this.rest.stopbot(this.savebotrespose.botId,data).subscribe(data=>{
+        console.log(data)
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: "Bot Execute Stopped",
+          showConfirmButton: false,
+          timer: 2000})
+  
+          this.startbot=true;
+          this.pausebot=false;
+          this.resumebot=false;
+      })
+    }
     
-    this.pausebot=true;
-    this.startbot=false;
-    this.resumebot=false;
-    this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
-      this.resume = data;
-    })
+    
   }
-
-  stopBot(botId) {
-    this.startbot=true;
-    this.pausebot=false;
-    this.resumebot=false;
-    return this.stop;
-  }
-
+/*
   listenvironments() {
     const selectedEnvironments: any = [];
     this.environment = [];
@@ -213,8 +266,8 @@ export class RpaStudioActionsComponent implements OnInit {
       }]
     }
   }
-
-  getCheckboxValues(event, data) {
+*/
+  /*getCheckboxValues(event, data) {
     let selectedEnvironments;
     let index = this.environment.findIndex(x => x.listEnvironmentData == data);
     if (event) 
@@ -237,9 +290,63 @@ export class RpaStudioActionsComponent implements OnInit {
       this.environment.splice(index, 1);
       localStorage.removeItem('environmentId');
     }
+  }*/
+  
+  /*getEnvironmentlist() {
+    this.rest.listEnvironments().subscribe(data => {
+      data["checked"]=false;
+      this.listEnvironmentData = data;
+      let value: any = [];
+      let subValue: any = []
+      let showlist: any = [];
+      showlist.forEach(el => {
+        subValue.push(el.environmentName);
+        this.environmentValue.push(el.environmentName);
+        console.log(subValue)
+        subValue.forEach(ele => {
+          value.push(ele)
+          console.log(value);
+        })
+      });
+      value.forEach(element => {
+        let temp: any = {
+          environmentName: element.environmentName,
+          checked: element.environmentId
+        };
+        this.dropdownList.push(temp)
+      })
+    })
   }
-  
-  
+*/
+getEnvironmentlist() {
+  this.rest.listEnvironments().subscribe(data => {
+    this.listEnvironmentData=data;
+    this.listEnvironmentData.forEach(env=>{
+      env["checked"]=false;
+      this.environment.push(env);
+    })
+    console.log(this.environment)
+  })
+}
+  checkuncheckenv(id:any)
+  {
+    if(this.environment.find(data=>data.environmentId==id).checked==false)
+    { 
+      this.environment.find(data=>data.environmentId==id).checked=true
+    }
+    else if(  this.environment.find(data=>data.environmentId==id).checked==true)
+    {
+      this.environment.find(data=>data.environmentId==id).checked=false
+    }
+    if(this.environment.filter(data => data.checked==true).length > 0)
+    {
+      this.envflag=false;
+    }
+    else if(this.childBotWorkspace.finaldataobjects.length!=0 && this.environment.filter(data => data.checked==true).length > 0)
+    {
+      this.envflag=true;
+    }
+  }  
   
   
   getallpredefinebots() {
@@ -255,11 +362,14 @@ export class RpaStudioActionsComponent implements OnInit {
       })
     }
   }
-      schedulerPopUp(){
+   
+  
+  schedulerPopUp(){
       this.hiddenSchedlerPopUp = true
       let data:any
       this.rest.scheduleList(data).subscribe((data)=> this.scheduleResponse(data))
     }
+  
     scheduleResponse(data){
       console.log(data);
       this.scheduleLists = data
@@ -295,31 +405,6 @@ export class RpaStudioActionsComponent implements OnInit {
   }
   
   
-  getEnvironmentlist() {
-    this.rest.listEnvironments().subscribe(data => {
-      this.listEnvironmentData = data;
-      let value: any = [];
-      let subValue: any = []
-      let showlist: any = [];
-      showlist.forEach(el => {
-        subValue.push(el.environmentName);
-        this.environmentValue.push(el.environmentName);
-        console.log(subValue)
-        subValue.forEach(ele => {
-          value.push(ele)
-          console.log(value);
-        })
-      });
-      value.forEach(element => {
-        let temp: any = {
-          environmentName: element.environmentName,
-          checked: element.environmentId
-        };
-        this.dropdownList.push(temp)
-      })
-    })
-  }
-
 
   getVersionlist() {
     this.versionsList=[];

@@ -107,22 +107,17 @@
     ::ng-deep #myDiagramDiv canvas {
     outline: none;
     }
-
-
-
-
     #bar_content{
       width:50%;
       margin-top: -10px;
       margin-left: 10%;
   }
   
-  /* Process Intelligance flowchart component css */
   .tracking_detsils1{
-    border-left:1px solid lightgray;
-    border-right: 1px solid lightgray;
-    height: 460px;
-    padding-left:0px;
+    border:1px solid #f4f4f4;
+    border-radius: 10px;
+    /* height: 460px; */
+    /* padding-left:0px; */
     padding-right: 0px;
   }
   .varaint_heading{
@@ -139,4 +134,121 @@
     color: black;
     padding-left: 10px;
   }
+  .edgemetrics_spinner{
+    background-color: #f4f4f4;
+    color: black !important;
+    font-weight: 500;
+    font-size: 12px;
+    padding: 5px 0px;
+  }
+  .form-check-input{
+    padding: 10px 10px;
+  }
+  .edgemetrics_spinner span input{
+    margin-left: 8px;
+    margin-right: 7px;
+  }
+  .isactive{
+    color: white !important;
+    background-color: #0162cf
+  }
+  .edgemetrics_spinner span{
+    padding: 10px 0px;
+  }
+  .activevaraint{
+    color: #0162cf;
+  }
+  .events1 p{
+    font-size: 12px;
+  }
+  .activevaraint {
+    border: 1px solid green !important;
+  }
+
+  .sidenav {
+    width: 0;
+    position: absolute;
+    z-index: 100;
+    top: 150px;
+    right: 0;
+    padding-left:0px;
+    /* background-color:#777575; */
+    transition: 0.5s;
+    padding-top: 10px;
+  }
+  .variants_slider{
+    max-height: 700px;
+    overflow: scroll;
+  }
+
+  .sidenav .closebtn {
+    /* position: absolute; */
+    top: 0;
+    right: 0px;
+    font-size: 36px;
+    margin-left: 80%;
+    margin-top: 0px;
+  }
   
+  #main {
+    transition: margin-right .5s;
+    /* padding: 16px; */
+  }
+  
+  /* @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 50px;}
+  } */
+  .reset_btn{
+    margin-left: 70%;
+    border: none !important;
+    background: none;
+    height: 20px;
+    color: #0162cf;
+    padding: 0px;
+  }
+  #linkname{
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .variant_border{
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    /* box-shadow: 0 3px 8px -6px rgba(0,0,0,.50); */
+    margin-left: 0px;
+    cursor: pointer;
+  }
+  .variant_border:hover{
+    background-color: #f4f4f4;
+    box-shadow: 3px 3px 20px -3px rgba(0,0,0,.50);
+  }
+  .check_box span{
+    margin-left: 5px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .event2{
+    padding-left: 40px;
+    font-weight: 600;
+    font-size: 12px;
+    padding-right: 0px;
+  }
+  .variant2{
+    padding-bottom: 10px; 
+  }
+  .variant_parcent{
+    padding: 0px !important;
+  }
+  .variant_border .event3{
+    padding-top: 10px;
+    text-align: center;
+    padding-left: 0px;
+  }
+  .variant_play{
+    display: none;
+  }
+  .variant_border:hover .variant_play{
+    display:block !important;
+  }
+  .activevaraint .variant_play{
+    display:block !important;
+  }

@@ -1,25 +1,25 @@
-
-<br><br><br>
 <div class="createBtn">
   <button  type="button" class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()">
     Create
   </button>
 </div>
-
+<br><br><br>
 <!-- tabs -->
-<div class="col-md-12" *ngIf="tabsArray.length > 0">
+<div class="container">
+<div class="row col-md-10" *ngIf="tabsArray.length > 0">
 </div>
 
 <div *ngIf="tabsArray.length > 0" class="container">
 <div class="col-md-12 row">
-<div class="col-md-2 side-slide" id="dragandrop">
-  <div class="paddclass">
-    <input class="mainLoginInput" style="border: 1px solid gainsboro;" type="text" [(ngModel)]="userFilter.name" name="node" placeholder="search"
+<div class="col-md-2 side-slide">
+  <div class="paddclass" id="search">
+    <input class="mainLoginInput" style="border: 1px solid gainsboro;" type="text" [(ngModel)]="userFilter.name" name="node" placeholder="Search"
       class="form-control" autocomplete="off">
   </div>
-  <div style="margin: 40px 0px 0px 0px;">
+
+  <div style="margin: 40px 0px 0px 0px;border: 1px solid lightgray;"   id="dragicons">
 <div class="nodes" *ngFor="let node of templateNodes | filterBy: userFilter | slice:0:show;  let i=index">
-    <div class="" [dndDraggable]="node">
+    <div class="" title="{{node.name}}" [dndDraggable]="node">
       <span>
           <img [src]="node.path" class="con-img"> 
       </span>
@@ -29,7 +29,7 @@
   </div>
   </div>
 </div>
-<div class="col-md-10">
+<div class="col-md-10" id="draganddrop">
 <app-rpa-studio-tabs [tabsArray]= "tabsArray" (closeTabEvent)="closeBot($event)" [tabActiveId]="tabActiveId"></app-rpa-studio-tabs>
 <div class="rpa-nav">
   <div class="rpa-nav-btn">
@@ -51,7 +51,7 @@
 </div>
 </div>
 </div>
-
+</div>
 
 <!--foms  -->
 <div *ngIf="hiddenCreateBotPopUp"  class="pop-up conainer">
@@ -73,7 +73,7 @@
             <label for="botName">Bot Name</label>
             <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" class="form-control" name="botName" required/>
             <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" >
-              Invalid Input
+              Bot Name Required*
               </div>
           
           </div>
@@ -84,11 +84,11 @@
               
             <select  class="form-control" formControlName="botType" name="botType" >
               <option value="" [selected]="true">--Select Bot Type--</option>
-              <option  value="Attended">Attended</option>
-              <option  value="Unattended">Unattended</option>
+              <option  value=1>Attended</option>
+              <option  value=0>Unattended</option>
             </select>
             <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched" style="color: red" >
-              Invalid Input
+              Bot Type Required*
               </div>
           
           </div>
@@ -101,13 +101,13 @@
               
             <select  class="form-control" formControlName="botDepartment" name="botDepartment" >
               <option value="" [selected]="true">--Select Department--</option>
-              <option  value="Development">Development</option>
-              <option  value="HR">HR</option>
-              <option  value="QA">QA</option>
+              <option  value=1>Development</option>
+              <option  value=2>HR</option>
+              <option  value=3>QA</option>
      
             </select>
             <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" >
-              Invalid Input
+              Department Required
               </div>
             
           
@@ -116,7 +116,7 @@
             <label for="botDescription">Bot Description</label>
             <input type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" class="form-control" name="botDescription"  />
             <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" >
-            Invalid Input
+            Bot Description Required*
             </div>
           </div>
 

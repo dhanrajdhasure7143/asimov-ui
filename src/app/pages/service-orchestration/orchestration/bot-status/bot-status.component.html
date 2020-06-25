@@ -88,21 +88,26 @@
 <!-- <p style="background-color: white; ">Some text..</p></div> -->
 <div style="background-color: white;padding: 0% 10% 3% 10%; ">
   <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #61af4e; font-family: fantasy;">22</h3>
+      <h3 style="color: #61af4e; font-family: fantasy;">{{processStatus.APPROVED}}</h3>
       <h6>Approved</h6>
   </div>
   <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #ed9040; font-family: fantasy;">04</h3>
+      <h3 style="color: #ed9040; font-family: fantasy;">{{processStatus.PENDING}}</h3>
       <h6>Pending</h6>
   </div>
   <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #888888; font-family: fantasy;">0</h3>
+      <h3 style="color: #888888; font-family: fantasy;">{{processStatus.ONHOLD}}</h3>
       <h6>onHold</h6>
   </div>
   <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #ff5555; font-family: fantasy;">10</h3>
+      <h3 style="color: #ff5555; font-family: fantasy;">{{processStatus.REJECTED}}</h3>
       <h6>Rejected</h6>
   </div>
+
+  <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+    <h3 style="color: #b98282; font-family: fantasy;">{{processStatus.INPROGRESS}}</h3>
+    <h6>InProgress</h6>
+</div>
 </div>
 </div>
 </div>

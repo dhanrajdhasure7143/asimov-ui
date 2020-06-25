@@ -1,6 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-sm-4  my-1 border-right col-border ">
+        <div class="col-sm-4  my-1 border-right col-border  " id="automatedtasks">
             <div class="rpa-workspace-header text-dark" >
                 Automation 
                 <span class="rpa-workspace-span" >
@@ -29,8 +29,8 @@
             <div class="rpa-workspace-total">Total : {{automationtasks.length}}</div>
                 
         </div>
-        <div class="col-sm-4 my-1 col-border">
-            <div class="rpa-workspace-header " >
+        <div class="col-sm-4 my-1 col-border" id="humantasks">
+            <div class="rpa-workspace-header "  >
                Human
                <span class="rpa-workspace-span">
                 <img src="..\\assets\\images\\RPA\\menu_icon.svg" class="rpa-workspace-toolicon">
@@ -45,7 +45,7 @@
               </span>
             </div>
             
-            <div class="rpa-workspace-body rpa-container rpa-custom-scrollbar">
+            <div class="rpa-workspace-body rpa-container rpa-custom-scrollbar" >
                 <div class="rpa-item" *ngFor="let manualtask of manualtasks" >
                 
                   
@@ -59,7 +59,7 @@
             </div>
             <div class="rpa-workspace-total">Total : {{manualtasks.length}}</div>
         </div>
-        <div class="col-sm-4 my-1 col-border">
+        <div class="col-sm-4 my-1 col-border" id="orchestrations">
             <div class="rpa-workspace-header " >
                 Orchestration(Human+Bots)
                 <span class="rpa-workspace-span">

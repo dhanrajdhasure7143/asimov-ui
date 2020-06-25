@@ -1,167 +1,216 @@
 
  <ngx-spinner bdColor="rgba(255,255,255,0.9)"> <img src='\assets\images\PI\loader_vr_1.gif'/></ngx-spinner>
 
-<div class="container">
+<div class="container-fluid">
 <div class="row">
-    <div class="col-md-9">
-        <div class='col-sm-12'>
+       
+        <!-- <div class='pull-right'> <button class="btn btn-pramary" (click)="openNav()"> &#9776; Toggle1</button></div> -->
+        <div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
+            <!-- <div>
+                <button class="closebtn" (click)="closeNav()">&times;</button>
+            </div> -->
+            <div class='variants_slider'>
+            <div class="col-sm-12 select_drpdwnone">
+                    <div class="col-sm-12"><button class="closebtn" (click)="closeNav()">&times;</button></div>
+                    <div class="col-sm-12 form-group">
+                        <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                        </select>
+                    </div>
+                    <!-- <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                    </select> -->
+                </div>
+                <div class='col-sm-12 row variant2'>
+                        <div class="col-sm-7 check_box">
+                            <input id="check_box"  type="checkbox" #check_box='ngModel'   [(ngModel)]="checkboxValue" (change)="seleceAllVariants()"><span class="">Select all</span>
+                        </div>
+                        <div class='col-sm-5 event2'>Time Taken</div>
+                </div>
+                <div class='col-sm-12 row variant_border' [ngClass]="data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index" (click)="caseIdSelect(data,i)">
+                    <div class='col-sm-1 event3'>#{{i+1}}</div>
+                    <div class='col-sm-9 variant_parcent'>
+                        <div class='col-sm-12'>{{caseParcent(data.casepercent)}}% of cases</div>
+                        <div class='col-sm-12 events1'><p>{{data.detail}}</p></div>
+                        <div class='col-sm-3'></div>
+                        <div class="col-sm-9 variant_play"><button class="play_button" (click)="playAnimation()"><i class="fa fa-play"></i><span class="">Play</span></button></div>
+
+                    </div>
+                    <div class='col-sm-2'>{{timeConversion(data.days)}}</div>
+                </div>
+                </div>
+                
+                <!-- <div class="sidenavOne">
+                        <div class="varaint_headingOne">
+                            <h5 class="varaint_heading">Explore by Variant</h5>
+                            <div class="checkbox ">
+                                <label class="select_box"><input id="check_box"  type="checkbox" #check_box='ngModel'   [(ngModel)]="checkboxValue" (change)="seleceAllVariants()"><span class="select_boxlabel">Select All</span> </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-12 form-group select_drpdwnone">
+                            <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+                                <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 row case_heading">
+                            <div class="col-sm-7">Case Details</div> <div class="col-sm-5">Time Taken</div>
+                        </div>
+                        <div class="col-sm-12 details_box">
+                            <div class="show_details" [ngClass]="data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
+                                    <div class="row cases" (click)="caseIdSelect(data,i)">
+                                        <span class="col-md-2 dot">{{data.casepercent}}%</span>
+                                                <span class="col-md-5 details_one">{{data.name|titlecase}}</span>
+                                                <span class="col-md-4 details_time pull-right">{{data.days}} Days</span>
+                                                <span class=" col-md-8 details_two">{{data.detail}}</span>
+                                        </div>
+                            <div class="details_hide">
+                                    <div  class="details_hideOne" (click)="caseIdSelect(data,i)">
+                                        <span class="hide_detailsone"> {{data.varaintDetails}}</span> <span class="pull-right">{{data.casesCovred}}</span>
+                                    </div>
+                                    <hr>
+                                    <div class="varaint_bottom">
+                                            <button *ngIf="isvaraintPlay" class="play_button" (click)="playAnimation()"><i class="fa fa-play"></i><span class="hide_plybtn">Play</span></button>
+                                            <div class="checkbox varaint_export">
+                                                    <label ><input type="checkbox" class="selectbox" value=""><span class="select_boxlabel">Select this varaint to export BPMN</span> </label>
+                                            </div>
+                                    </div>
+                                </div>   
+                            </div>
+                        </div>
+                    <div>
+                </div>
+        </div> -->
+
+    </div>
+
+
+<div id="main">
+    <div class='col-md-12 row'>
+        <div class='col-md-2'>
+                <div class="form-group">
+                        <select class="form-control" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
+                            <option value="undefined" hidden disabled>Select Process Graph</option>
+                            <option *ngFor="let process_list of process_graph_list.data;let i=index;trackBy:loopTrackBy" [value]="process_list.piId">{{process_list.piName|titlecase}}</option>
+                        </select>
+                    </div>
+        </div>
+        <div class='col-sm-3'>
+            <!-- <div>
+                <button class='btn' (click)='zoomIn()'>Zoom In</button>
+                <button class='btn' (click)='zoomOut()'>Zoom Out</button>
+                <button class='btn' (click)='zoomReset()'>Reset Zoom</button>
+            </div> -->
+                        <!-- <p class="zoom_label"> ZOOM<span class="zoom_value"> {{rangevalue}}</span> 
+                            <span class="varient-totalcount" *ngIf="isDefaultData">UPLOADED CASES:195 WITH 1216 ACTIVITIES</span>
+                        </p>       -->
+        </div>
+        <!-- <div> -->
+                <div class="col-md-2 row">
+                        <div class="col-sm-6">
+                            <button (click)="downloadsvg()" title="Download" class="down_btn"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
+                        </div>
+                        <div class='col-sm-6'>
+                            <button (click)="playAnimation()" class="play_btn stopbtn" title="Play" *ngIf="!isplay"><i class="fa fa-play"></i></button>
+                            <button (click)="playAnimation()" class="play_btn stopbtn" title="Stop" *ngIf="isplay"><i class="fa fa-stop"></i></button>
+                        </div>
+                                <!-- <div class="col-sm-6">
+                                <p class="download_label">Download</p>
+                                </div>
+                                <div class='col-sm-6'>
+                                <p class="play_label" *ngIf="!isplay">Play</p>
+                                <p class="play_label" *ngIf="isplay">Stop</p>
+                                </div> -->
+                <!-- </div> -->
+        </div>
+        <div class="col-sm-3">
+                <div class='row'>
+                            <div class="col-sm-6">
+                                    <button class="kpi_btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button class="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
+                                </div>
+                        </div>
+        </div>
+        <div class="col-sm-2 ">
+                <button class="pull-right varaintlist_btn" (click)="openNav()"> &#9776; Variant List</button>
+            </div>
+    <!-- </div> -->
+</div>
+    <div class="col-md-11">
             <div class="lableHide"></div>
-            <div class="tooltip_button tooltip1" [hidden]='true'><img src="..\assets\images\PI\options_icon.svg" id="variants">
-                <div class="tooltiptext1">
+            <div class="tooltip_button tooltip1"><img (click)='spinnermetrics()' src="..\assets\images\PI\options_icon.svg" id="variants">
+                <div *ngIf='isedgespinner' class="tooltiptext1">
+                        <form action="">
                     <div>
                         <h5 class="btn-default dropdown-toggle" [ngClass]="isfrequencymetrics==true?'isactive':''" (click)='onfrequency()' type="button">Frequency         <span class="caret"></span>
                         </h5>
-                        <div *ngIf='isfrequencymetrics'>
-                            <p>Absolute Frequency</p>
-                            <p>Case Frequency</p>
-                            <p>Max Repititons</p>
-                            <p>Start Frequency</p>
-                            <p>End Frequency</p>
+                        <div *ngIf='isfrequencymetrics' class='col-md-12 edgemetrics_spinner'>
+                                <button class='btn reset_btn' type='button' (click)="resetspinnermetrics()">reset</button>
+                                <hr>
+                                <span><input type="radio"  class="form-check-input" name="check" value="absoluteFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Absolute Frequency</span><br>
+                                <span><input type="radio"  class="form-check-input" name="check" value="caseFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Case Frequency</span><br>
+                                <span><input type="radio"  class="form-check-input" name="check" value="maxRepititons" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Repetitions</span><br>
+                                <!-- <span><input type="radio"  class="form-check-input" name="check" #startFrequency='ngModel' value="startFrequency" (change)='selectedMetric($event.target.value)'[(ngModel)]='spinMetrics3'> Start Frequency</span><br>
+                                <span><input type="radio"  class="form-check-input" name="check" #endFrequency='ngModel' value="endFrequency" (change)='selectedMetric($event.target.value)'  [(ngModel)]='spinMetrics4'> End Frequency</span><br> -->
                         </div>
                       </div>
                       <hr>
                       <div>
                         <h5 class="btn-default dropdown-toggle" (click)='onPerformance()' [ngClass]="isperformancemetrics==true?'isactive':''" type="button">Performance        <span class="caret"></span></h5>
-                        <!-- <hr> -->
-                        <div *ngIf='isperformancemetrics'>
-                            <p>Median Duration</p>
-                            <p>Mean Duration</p>
-                            <p>Max Duration</p>
-                            <p>Min Duration</p>
+
+                        <div *ngIf='isperformancemetrics' class='edgemetrics_spinner'>
+                                <button class='btn reset_btn' type='button' (click)="resetspinnermetrics()">reset</button>
+                                <hr>
+                                
+                                <span><input type="radio" class="form-check-input" name="check" value="totalDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Total Duration</span><br>
+                                <span><input type="radio" class="form-check-input" name="check" value="medianDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Median Duration</span> <br>
+                                <span><input type="radio" class="form-check-input" name="check" value="meanDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Mean Duration</span> <br>
+                                <span><input type="radio" class="form-check-input" name="check" value="maxDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Duration</span><br>
+                                <span><input type="radio" class="form-check-input" name="check" value="minDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Min Duration</span> <br>
                         </div>
                         <!-- <hr> -->
                       </div>
-                    <!-- <p>ThroughPut Time</p>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Option 1</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Option 2</label>
-                    </div>
-                    <div class="checkbox">
-                        <label><input type="checkbox" value="">Option 3</label>
-                    </div> -->
+                    </form>
                 </div>
             </div>
-            <div class="path_slider1">
-                    <div>
-                    <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
-                    </div>
-                    <p class="slider_label Activities_slider">Activities</p>
-                    <div>
-                    <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(ngModel)]="pathvalue" [options]="options" ></ng5-slider></div>
-                    </div>
-                    <p class="slider_label Paths_slider">Paths</p>
-                </div>
-            <div class="form-group left_dropdwn1">
-                    <select class="form-control left_dropdwn" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
-                        <option value="undefined" hidden disabled>Select Process Graph</option>
-                        <option *ngFor="let process_list of process_graph_list.data;let i=index;trackBy:loopTrackBy" [value]="process_list.piId">{{process_list.piId}}</option>
-                    </select>
-                </div>
-                <div>
-                    <p class="zoom_label"> ZOOM<span class="zoom_value"> {{rangevalue}}</span> 
-                        <!-- <span class="varient-totalcount" *ngIf="isDefaultData">UPLOADED CASES:195 WITH 1216 ACTIVITIES</span> -->
-                    </p>    
-                </div>
-                <!-- <div class="varient-totalcount">
-                    <p>Hello</p>
-                </div> -->
-                    <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownload]="isdownload"></app-piflowchart>
-
-                    <!-- <div class="buttons">
-                            <button (click)="downloadsvg()" class="down_btn"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
-                            
-                        <button (click)="playAnimation()" class="play_btn" *ngIf="!isplay"><img class="actions_butns" src="..\assets\images\PI\play_icon.svg"></button>
-                        <button (click)="playAnimation()" class="play_btn stopbtn" *ngIf="isplay"><i class="fa fa-stop"></i></button>
-                    </div>
-                    <div>
-                        <p class="download_label">Download</p>
-                        <p class="play_label" *ngIf="!isplay">Play</p>
-                        <p class="play_label" *ngIf="isplay">Stop</p>
-                    </div> -->
-        </div>
-        <!-- <div class="col-sm-1">
-                <div>
-                <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
-                </div>
-                <p class="slider_label Activities_slider">Activities</p>
-                <div>
-                <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(ngModel)]="pathvalue" [options]="options" ></ng5-slider></div>
-                </div>
-                <p class="slider_label Paths_slider">Paths</p>
-            </div>  -->
+        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownload]="isdownload" (myOutputVal)="readOutputValueEmitted($event)"></app-piflowchart>
     </div>
-        <div class="col-md-3 row tracking_detsils1">
-            
-                <div class="varaint_headingOne">
-                    <h5 class="varaint_heading">Explore by Variant</h5>
-                    <div class="checkbox ">
-                        <label class="select_box"><input id="check_box"  type="checkbox" #check_box='ngModel'   [(ngModel)]="checkboxValue" (change)="seleceAllVariants()"><span class="select_boxlabel">Select All</span> </label>
-                    </div>
-                </div>
-                
-                <div class="form-group select_drpdwnone">
-                    <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
-                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
-                    </select>
-                </div>
-                <div class="">
-                    <p class="case_heading"><span class="col-md-8 case-details">Case Details</span> <span class="col-sm-4 case-time">Time Taken</span></p>
-                </div>
-                <div class="details_box">
-                    <div class="show_details" [ngClass]="data.selected ==='active'?'active':''" *ngFor="let data of varaint_data.data; let i=index">
-                            <div class="row cases" (click)="caseIdSelect(data,i)">
-                                <span class="col-md-2 dot">{{data.casepercent}}%</span>
-                                        <span class="col-md-5 details_one">{{data.name|titlecase}}</span>
-                                        <span class="col-md-4 details_time pull-right">{{data.days}} Days</span>
-                                        <span class=" col-md-8 details_two">{{data.detail}}</span>
-                                </div>
-                    <div class="details_hide">
-                            <div  class="details_hideOne" (click)="caseIdSelect(data,i)">
-                                <span class="hide_detailsone"> {{data.varaintDetails}}</span> <span class="pull-right">{{data.casesCovred}}</span>
-                            </div>
-                            <hr>
-                            <div class="varaint_bottom">
-                                    <button *ngIf="isvaraintPlay" class="play_button" (click)="playAnimation()"><i class="fa fa-play"></i><span class="hide_plybtn">Play</span></button>
-                                    <div class="checkbox varaint_export">
-                                            <label ><input type="checkbox" class="selectbox" value=""><span class="select_boxlabel">Select this varaint to export BPMN</span> </label>
-                                    </div>
-                            </div>
-                        </div>   
-                    </div>
-                </div>
+    <div class='col-md-1'>
+        <div class="path_slider1 pull-right">
             <div>
-            <!-- <div><button class="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
-            <div class="kpibtn"><button class="kpi_btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button></div>
-            </div> -->
+            <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
+            </div>
+            <p class="slider_label Activities_slider">Activities</p>
+            <div>
+            <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(ngModel)]="pathvalue" [options]="options" ></ng5-slider></div>
+            </div>
+            <p class="slider_label Paths_slider">Paths</p>
         </div>
-</div>
-<div class="col-md-9 row">
-            <div class="col-sm-6">
-                <button (click)="downloadsvg()" class="down_btn"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
-            </div>
-            <div class='col-sm-6'>
-                <button (click)="playAnimation()" class="play_btn stopbtn" *ngIf="!isplay"><i class="fa fa-play"></i></button>
-                <button (click)="playAnimation()" class="play_btn stopbtn" *ngIf="isplay"><i class="fa fa-stop"></i></button>
-            </div>
-                    <div class="col-sm-6">
-                    <p class="download_label">Download</p>
-                    </div>
-                    <div class='col-sm-6'>
-                    <p class="play_label" *ngIf="!isplay">Play</p>
-                    <p class="play_label" *ngIf="isplay">Stop</p>
-                    </div>
     </div>
-    <div class='col-md-3 row'>
-        <div class="col-sm-6">
-                <button class="kpi_btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button>
-            </div>
-            <div class="col-sm-6">
-                <button class="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
-            </div>
+    <!-- <div class='col-md-12 row'>
+        <div class='col-sm-8'></div>
+            <div class="col-sm-2">
+                    <button class="kpi_btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button>
+                </div>
+                <div class="col-sm-2">
+                    <button class="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
+                </div>
+        </div> -->
+
+    </div>  <!-- Id main -->
     </div>
+
 </div>
+
+
+
+
+
+
+
+
 
 <div id="toolTipDIV" class="custom_tooltip">
         <div class="node_tooltip"></div>
@@ -192,9 +241,8 @@
     <div id="linkToolTipDIV" class="custom_tooltip">
         <div class="node_tooltip"></div>
         <div>
-            <p id="receive"><span id="nodename">Connector</span></p>
+            <p id="receive"><span id="linkname">Connector</span></p>
             <hr>
-            <!-- <button type='button' class='filter_btn'  (click)="slideup()"><img src="..\assets\images\PI\filter_icon.svg"></button> -->
         </div>
             <div [hidden]='isfrequency' class='tooltip_body'>
                 <p id="linktoolTipParagraph"></p>
@@ -206,12 +254,12 @@
                     <p id="linktoolTipTextone"></p>
             </div>
             <div>
-                <button  id="performance_btn" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" (click)="performance()"><img src="..\assets\images\PI\performance-clock.svg"></button>
+                <button *ngIf="startLinkvalue"  id="performance_btn" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" (click)="performance()"><img src="..\assets\images\PI\performance-clock.svg"></button>
                 <button  id="frequency_btn" [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" (click)="frequency()"><img src="..\assets\images\PI\activity.svg"></button>
             </div>
             <div>
                 <p [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" id="frequency_label"><span class="isenablebtn">Frequency</span> </p>
-                <p [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
+                <p *ngIf="startLinkvalue" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
         </div>
     </div>
 

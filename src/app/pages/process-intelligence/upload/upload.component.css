@@ -129,7 +129,7 @@
     overflow:scroll; 
 }
 .pList{
-    cursor: pointer;
+    /* cursor: pointer; */
     box-shadow: 0 3px 8px -6px rgba(0,0,0,.50);
 }
 .pList:hover{
@@ -139,3 +139,35 @@
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 
 }
+.process_view{
+    cursor: pointer;
+}
+.process_view:hover{
+    color: #0061cf;
+}
+input[type="text"]{
+  padding:4px !important;
+}
+.inner-addon i{
+    position: absolute;
+    padding-left: 88%;
+    pointer-events: none;
+    width: 50px;
+    margin-top: 10px
+}
+.right-addon input{ padding-right: 20px; }
+.table_header{
+    cursor: pointer;
+}
+
+table.tableBodyScroll tbody {
+    display: block;
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+  
+  table.tableBodyScroll thead, table.tableBodyScroll tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }

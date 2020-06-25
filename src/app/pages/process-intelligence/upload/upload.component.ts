@@ -9,7 +9,6 @@ import { GlobalScript } from '../../../shared/global-script';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 import Swal from 'sweetalert2';
-import * as go from 'gojs';
 
 declare var target:any;
 @Component({
@@ -34,9 +33,8 @@ export class UploadComponent implements OnInit {
   linkData = [];
   linkdataArray = [];
   isgraph:boolean=false;
-  public model:go.Model;
-  public myDiagram: go.Diagram ;
-
+  searchgraph:any;
+  orderAsc:boolean = true;
 
   constructor(private router: Router, 
     private dt:DataTransferService, 
@@ -53,6 +51,8 @@ export class UploadComponent implements OnInit {
     this.db_mime = '.json';
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
+
+   
    
   }
     onUpload(event,id) {
@@ -230,6 +230,7 @@ onDbSelect(){
   getAlluserProcessPiIds(){
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data
       // console.log('data',this.process_graph_list)
+    
     })
   }
   loopTrackBy(index, term){
@@ -237,9 +238,9 @@ onDbSelect(){
   }
   onGraphSelection(selectedpiIdData){
     this.isgraph=true;
-    // console.log("selected PIID",selectedpiIdData);
-    const piid={"piId":selectedpiIdData.piId}
-    this.router.navigate(['/pages/processIntelligence/flowChart',piid])
+    let selected_process_id = selectedpiIdData.piId
+    this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: selected_process_id }});
+
     // this.rest.getfullGraph(selectedpiIdData.piId).subscribe(data=>{this.fullgraph=data
     //   // console.log("fullgraph",this.fullgraph.data.allSelectData);
     //   let fullgraph=JSON.parse(this.fullgraph.data)
@@ -251,6 +252,23 @@ onDbSelect(){
       // })
     
   }
+  getcategoryName(categoryName){
+    return categoryName.charAt(0).toUpperCase()+categoryName.slice(1);
+  }
+    sortDataTable(arrayColNames, asc) { // if not asc, desc
+      for (var i=0;i<arrayColNames.length;i++) {
+          var columnName = arrayColNames[i];
+          this.process_graph_list.data = this.process_graph_list.data.sort(function(a,b){
+              if (asc) {
+                  return (a[columnName] > b[columnName]) ? 1 : -1;
+              } else {
+                  return (a[columnName] < b[columnName]) ? 1 : -1;
+              }
+          });
+      }
+  }
+
+
   
 }
 

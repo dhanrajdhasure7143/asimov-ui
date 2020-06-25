@@ -276,10 +276,6 @@ float: left !important;
   font-size: 11px !important;
   margin-top: 8px;
 }
-#check_box{
-  margin-top: 1px;
-  margin-left: -17px !important;
-}
 .varaint_select{
   float:right;
   font-weight:normal;
@@ -287,10 +283,11 @@ float: left !important;
 .case_heading{
 font-size: 11px;
 color: black;
+padding-bottom: 10px;
 }
-.case-details{
+/* .case-details{
 padding-left: 22px;
-}
+} */
 .details_one{
   font-size: 13px;
   padding-left: 5px;
@@ -328,20 +325,20 @@ border-color: white !important
 .hide_detailsone{
 padding-left: 5px;
 }
-.select_drpdwnone{
+/* .select_drpdwnone{
   margin-left: 5px;
   margin-right: 5px;
-}
+} */
 .select_drpdwn{
-  background:none !important;
-  width: 100% !important;
-  font-size: 13px;
+  /* background:none !important; */
+  /* font-size: 13px; */
   border:none !important;
   box-shadow: none !important;
-  border-radius: 0% !important;
+  border-radius: 0px !important;
+  border-top: 0px;
   border-bottom: 1px solid lightgray !important;
-  padding-left: 0px !important;
-  padding-bottom: 0px !important;
+  /* padding-left: 0px !important; */
+  /* padding-bottom: 0px !important; */
 }
 .dot {
   height: 60px;
@@ -357,14 +354,18 @@ padding-left: 5px;
 }
 .show_details:hover .details_hide{
   transition: 2s !important;
-  display:block;
+  display:block !important;
 } 
 .show_details:hover .dot{
 border:1px solid #0162cb;
 color: #0162cb;
 }
 .show_details:hover .cases span{
-  color: blue;
+  color: #0061cf;
+}
+.show_details{
+  position: relative;
+  z-index: 10;
 }
 
 .show_details:hover {
@@ -372,21 +373,16 @@ background-color: #f4f4f4;
 padding: 5px !important;
 }
 .details_box{
-  overflow: scroll;
-  height: 340px;
+  /* overflow: scroll; */
+  /* height: 340px; */
   padding: 5px;
 }
 .play_button{
-  background: none !important;
-  border: none !important;
   font-weight: bold;
-  font-size: 11px;
-  padding-top: 0px;
-  position: relative;
-  z-index: 1000;
-}
-.hide_plybtn{
-  margin-left: 3px;
+  font-size: 14px;
+  color: green;
+  margin-bottom: 4px;
+
 }
 .selectbox{
   margin-top: 0px;
@@ -440,14 +436,15 @@ height: 20px;
 }
 
 .zoom_label{
-  margin-left: 28% !important;
-  padding-top: 8px;
+  /* margin-left: 28% !important; */
+  padding-top: 4px;
   font-size: 12px;
   font-weight: bold;
   color: gray;
 }
 .zoom_value{
-margin-left: 170px;
+/* margin-left: 170px; */
+float: right;
 z-index: 1000;
 font-size: 13px;
 }
@@ -461,26 +458,27 @@ padding: 2px;
   position:absolute;
   display: inline-block;
   z-index: 1000;
-  margin-top: 100px;
+  margin-top: 50px;
   background-color: none;
   color: blue;
   padding: 10px;
   height: 40px;
+  cursor: pointer;
 }
 .lableHide{
   position:absolute;
   display: inline-block;
-  z-index: 1000;
-  margin-top: 45px;
+  z-index: 100;
+  margin-top: 10px;
   background-color: none;
   height: 60px;
-  width: 175px;
+  width: 195px;
   background-color: white;
 }
 
 .tooltiptext1 {
-visibility: hidden;
-width: 145px !important;
+/* visibility: hidden; */
+width: 160px !important;
 background-color: white !important;
 border-radius: 6px !important;
 padding: 0px 0px;
@@ -512,15 +510,15 @@ border-style: solid;
 border-color: transparent transparent gray transparent ;
 }
 
-.tooltip1:hover .tooltiptext1 {
+/* .tooltip1:hover .tooltiptext1 {
   visibility: visible;
-}
+} */
 
-.generate_btn{
+.generate_btn,.varaintlist_btn{
 background-color: #0162cb !important;
 color: white;
 }
-.generate_btn,.kpi_btn{
+.generate_btn,.kpi_btn,.varaintlist_btn{
   border: 1px solid #0162cb  !important;
   border-radius: 25px;
   font-weight: bold;
@@ -637,18 +635,9 @@ bottom: -300px !important;
 transition: 0.5s;
 }
 
-
-.active .dot{
-  color:green !important;
-  border:1.5px solid green !important;
-}
-
-.active{
+.activevaraint{
   border-left:2px solid green !important;
   background: lightgray;
-}
-.active .play_button{
-color: green !important;
 }
 #toolTipParagraphone,#linktoolTipParagraphone{
   float: left;
@@ -715,11 +704,11 @@ font-size: 13px;
 .isactive{
   background: lightgray;
 }
-.path_slider1{
+/* .path_slider1{
   position: absolute;
   z-index: 1000;
   margin-left: 90%;
-}
+} */
 ::ng-deep #myDiagramDiv canvas {
   outline: none;
   }

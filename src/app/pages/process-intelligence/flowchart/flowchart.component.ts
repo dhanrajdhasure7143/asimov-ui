@@ -10,6 +10,7 @@ import { createLoweredSymbol, ThrowStmt } from '@angular/compiler';
 import { NgControl } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from '../../services/rest-api.service';
+import Swal from 'sweetalert2';
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -78,7 +79,12 @@ export class FlowchartComponent implements OnInit {
   varaint_GraphData:any=[];
   varaint_GraphDataArray:any[]=[];
   piIdNumber:any;
+  public isedgespinner:boolean=false;
+  spinMetrics0:any="absoluteFrequency";
+  wpiIdNumber:any;
+  startLinkvalue:boolean;
 
+  
   constructor(private dt: DataTransferService,
     private router: Router,
     private bpmnservice: SharebpmndiagramService,
@@ -87,6 +93,10 @@ export class FlowchartComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private rest:RestApiService,
     private route:ActivatedRoute) {
+  }
+
+  readOutputValueEmitted(val){
+    this.startLinkvalue = val;
   }
 
   ngOnInit() {
@@ -128,15 +138,29 @@ export class FlowchartComponent implements OnInit {
     //   }
       
     // })
-    this.route.params.subscribe(data=>{this.piIdNumber=data
-    })
-    if(this.piIdNumber!=null){
-      piId=this.piIdNumber.piId
-      this.graphIds = piId;
-    }
-    setTimeout(() => {
-      this.onchangegraphId(piId);
-    }, 3*60*1000);
+    this.route.queryParams.subscribe(params => {
+      if(params['wpiId']!=undefined){
+        this.wpiIdNumber = parseInt(params['wpiId']);
+        piId=this.wpiIdNumber;
+        this.graphIds = piId;
+        setTimeout(() => {
+          this.onchangegraphId(piId);
+      }, 500);
+      }
+      if(params['piId']!=undefined){
+        this.piIdNumber = parseInt(params['piId']);
+        piId=this.piIdNumber;
+        this.graphIds = piId;
+        setTimeout(() => {
+          this.onchangegraphId(piId);
+        }, 4*60*1000); //3*60*1000
+      }
+    });
+    
+  //   setTimeout(() => {
+  //     this.onchangegraphId(piId);
+  //   // }, 3*60*1000);
+  // }, 300);
     
   }
 
@@ -150,7 +174,8 @@ export class FlowchartComponent implements OnInit {
   onchangegraphId(selectedpiId){
     let piId=selectedpiId
     this.rest.getAllVaraintList(piId).subscribe(data=>{this.varaint_data=data // variant List call
-      // console.log('this.varaint_data',data);
+      console.log('this.varaint_data',data);
+      
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
           // this.varaint_data.data[i].days=this.timeConversion(this.varaint_data.data[i].days);
@@ -160,29 +185,85 @@ export class FlowchartComponent implements OnInit {
       this.onchangeVaraint("0");
       })
       this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data //process graph full data call
-        let fullgraphOne=JSON.parse(this.fullgraph.data);
+        if(this.fullgraph.hasOwnProperty('display_msg')){
+          Swal.fire(
+            'Oops!',
+            'It is Not You it is Us, Please try again after some time',
+            'error'
+          );
+          this.spinner.hide();
+        } else{
+         let fullgraphOne=this.fullgraph.data;
+        //let fullgraphOne=this.gResponse.data;
+        // console.log("fullgraphOne",fullgraphOne);
+
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
 
-        // console.log('this.model1',this.model1);
+        console.log('this.model1',this.model1);
         let loction=''
         for(var i=0;i<this.model1.length;i++){
-          let loc1=455
-          let loc2=-150+i*70
+          if(this.model1[i].key==-1||this.model1[i].key==-2){
+            let loc1=530
+          let loc2=-150+i*80
           loction=loc1+' '+loc2;
           this.model1[i].loc=loction
+          }else{
+          let loc1=455
+          let loc2=-150+i*80
+          loction=loc1+' '+loc2;
+          this.model1[i].loc=loction
+          }
         }
         
         this.model2 = this.flowchartData(this.model1)
         for(var j=0;j<this.model2.length;j++){
-          let loc3=25*j
-          this.model2[j].curviness=loc3
+          // for (let [key, value] of Object.entries(this.model2[j])) {
+            console.log(this.model2[j].from);
+
+                            // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
+                // this.model2[j].from>0 && this.model2[j].to<0
+                // this.model2[j].from ==-2||this.model2[j].to==-2
+                if(j==0 && this.model2[j].to>1 ){
+                  let loc3=160
+                this.model2[j].curviness=loc3
+                }else{
+            if(this.model2[j].from ==-1||this.model2[j].from==-2){
+               if(this.model2[j].from==-1 && this.model2[j].to==0){
+                let loc3=0
+                this.model2[j].curviness=loc3
+              }else{
+              let loc3=-25*j
+            this.model2[j].curviness=loc3
+              }
+            }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+              if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
+                let loc3=0
+                this.model2[j].curviness=loc3
+              }else{
+                let loc3=20*j
+                this.model2[j].curviness=loc3
+              }
+                
+          }else if(this.model2[j].from+1==this.model2[j].to){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
+              let loc3=30*j
+            this.model2[j].curviness=loc3
+            }
         }
+      }
+        console.log(this.model2);
+        
         this.spinner.hide();
+    }
         });
+
+        
         // this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        // console.log('varaint_GraphData',this.varaint_GraphData.data);
-        // this.varaint_GraphDataArray.push(this.varaint_GraphData.data)
-        // // console.log('varaint_GraphData',this.varaint_GraphDataArray);
+        // // console.log('varaint_GraphData',JSON.parse(this.varaint_GraphData.data));
+        // this.varaint_GraphDataArray=JSON.parse(this.varaint_GraphData.data)
+        // console.log('varaint_GraphData',this.varaint_GraphDataArray);
         // })
   }
 
@@ -204,13 +285,13 @@ export class FlowchartComponent implements OnInit {
       case "2":
         // this.varaint_data = this.data;
         this.varaint_data.data.sort(function (a, b) {
-          return b.days - a.days;
+          return a.days - b.days;
         });
         break;
       case "3":
         // this.varaint_data = this.data;
         this.varaint_data.data.sort(function (a, b) {
-          return a.days - b.days;
+          return b.days - a.days;
         });
         break;
     }
@@ -276,7 +357,7 @@ export class FlowchartComponent implements OnInit {
         this.selectedCaseArry.push(casevalue);
       }
     };
-    // console.log("selectedcase", this.selectedCaseArry)
+    console.log("selectedcase", this.selectedCaseArry)
     // console.log("selectedcase.length",this.selectedCaseArry.length)
     this.caselength = this.selectedCaseArry.length;
 
@@ -293,8 +374,8 @@ export class FlowchartComponent implements OnInit {
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphDataArray) == true) {
         // console.log('log',this.selectedCaseArry[0], this.pgModel.flowchartData);
         
-        var modalData = this.varaint_GraphData.data[this.selectedCaseArry[0]]
-        // console.log('modalData',modalData);
+        var modalData = this.varaint_GraphDataArray[this.selectedCaseArry[0]]
+        console.log('modalData',modalData);
         
         this.model1 = modalData.nodeDataArraycase
         this.model2 = this.flowchartData(this.model1)
@@ -480,7 +561,7 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
     return array.filter((a, b) => array.indexOf(a) === b)
    };
   keyExists(key, search) {
-    // console.log('test',key, search)
+    console.log('test',key, search)
     var existingObj = search.find(function (element) {
       return typeof element[key] !== 'undefined';
     });
@@ -539,6 +620,7 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
   frequency() {
     this.isfrequency = false;
   }
+  
 
   flowchartData(dataArray) {
     this.linkData = [];
@@ -561,7 +643,11 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
         var obj = {};
           obj['from'] = this.getFromKey(label);
           obj['to'] = this.getFromKey(datalink[j].linkNode);
-          obj['text'] = this.nodeArray[i].toolCount[0];
+          obj['text'] = datalink[j].toolCount[0];
+
+          //let testedg=label+' --> '+datalink[j].linkNode
+          //obj['textOne'] = testedg;
+
           obj['toolData']=datalink[j].tool
            obj['toolDataCount']=datalink[j].toolCount
 
@@ -584,20 +670,31 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
         if (this.nodeArray[i].tool.includes('Start Frequency')) {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(this.nodeArray[i].toolCount[3]!=0){
           obj['from'] = -1;
           obj['to'] = this.getFromKey(this.nodeArray[i].name);
-          obj['text'] = this.nodeArray[i].toolCount[3]
+          obj['text'] = this.nodeArray[i].toolCount[3];
+          
+          //let testedg="Start --> "+this.nodeArray[i].name
+          //obj['textOne'] = testedg;
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
+          }
         }
         if (this.nodeArray[i].tool.includes('End Frequency')) {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(this.nodeArray[i].toolCount[4]!=0){
           obj['from'] = this.getFromKey(this.nodeArray[i].name);
           obj['to'] = -2;
-          obj['text'] = this.nodeArray[i].toolCount[4]
+          obj['text'] = this.nodeArray[i].toolCount[4];
+
+          //let testedg=this.nodeArray[i].name+' --> End'
+          //obj['textOne'] = testedg;
+
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
+          }
         }
 
       // }
@@ -613,7 +710,7 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
     // this.model1=this.pgModel.allData.nodeDataArraycase;
 
     // this.model2=this.linkdataArray;
-    // console.log('linkarray', this.linkdataArray)
+    console.log('linkarray', this.linkdataArray)
     return this.linkdataArray;
   }
 
@@ -632,6 +729,15 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
   onPerformance(){
     this.isperformancemetrics= !this.isperformancemetrics;
     this.isfrequencymetrics=false;
+
+  }
+  spinnermetrics(){
+    this.isedgespinner= !this.isedgespinner;
+    // if(this.isedgespinner==false){
+    //   this.isfrequencymetrics=false;
+    //   this.isperformancemetrics=false;
+    //   // this.model2 = this.flowchartData(this.model1)
+    // }
   }
 
 generateBpmn(){
@@ -645,8 +751,6 @@ loopTrackBy(index, term){
   return index;
 }
 timeConversion(millisec) {
-  console.log("millisec",millisec);
-  
   var seconds:any = (millisec / 1000).toFixed(1);
   var minutes:any = (millisec / (1000 * 60)).toFixed(1);
   var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
@@ -661,4 +765,223 @@ timeConversion(millisec) {
       return days + " Days"
   }
 }
+
+selectedMetric(selectedValue){
+  console.log('spinMetrics0',this.spinMetrics0);
+  console.log("selectedValue",selectedValue);
+ 
+  let index;
+  switch(selectedValue){
+    case "absoluteFrequency":
+        index=0;
+    break;
+    case "caseFrequency":
+        index=1;
+    break;
+    case "maxRepititons":
+        index=2;
+    break;
+    case "startFrequency":
+        index=3;
+    break;
+    case "endFrequency":
+        index=4;
+    break;
+    case "totalDuration":
+        index=5;
+    break;
+    case "medianDuration":
+        index=6;
+    break;
+    case "meanDuration":
+        index=7;
+    break;
+    case "maxDuration":
+        index=8;
+    break;
+    case "minDuration":
+        index=9;
+    break;
+  }
+  // console.log(index);
+  for(var i=1;i<this.model1.length-1;i++){
+    // console.log(this.model1[i].count);
+    if(index==5||index==6||index==7||index==8||index==9){
+      this.model1[i].count=this.timeConversion(this.model1[i].toolCount[index])
+    }else{
+      this.model1[i].count=this.model1[i].toolCount[index]
+      this.model1=this.model1
+      // this.model1[i].countOne=this.model1[i].toolCount[index]
+    }
+
+  }
+  console.log("model",this.model1);
+
+  this.model2 = this.flowchartDataOne(this.model1,index)
+  for(var j=0;j<this.model2.length;j++){
+    if(j==0 && this.model2[j].to>1 ){
+      let loc3=160
+    this.model2[j].curviness=loc3
+    }else{
+    if(this.model2[j].from ==-1||this.model2[j].from==-2){
+      if(this.model2[j].from==-1 && this.model2[j].to==0){
+        let loc3=0
+        this.model2[j].curviness=loc3
+      }else{
+      let loc3=-25*j
+    this.model2[j].curviness=loc3
+      }
+    }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+      if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
+        let loc3=0
+        this.model2[j].curviness=loc3
+      }else{
+        let loc3=20*j
+        this.model2[j].curviness=loc3
+      }
+  }else if(this.model2[j].from+1==this.model2[j].to){
+    let loc3=0
+    this.model2[j].curviness=loc3
+  }else{
+      let loc3=30*j
+    this.model2[j].curviness=loc3
+    }
+  }
+}
+  
+}
+flowchartDataOne(dataArray,index) {
+  // console.log('index',index);
+  
+  this.linkData = [];
+  this.linkdataArray = [];
+  this.nodeArray = dataArray;
+   var linkToolArray=[];
+  for (var i = 1; i < this.nodeArray.length-1; i++) {
+    // console.log('linkArray',this.nodeArray[i].linkArray);
+    var datalink = this.nodeArray[i].linkArray;
+    //  console.log('datalink',datalink);
+    var link=[]
+    var linktool=[]
+    var label = this.nodeArray[i].name;
+    
+    for(var j=0; j< datalink.length; j++){
+      // link.push(datalink[j].linkNode)
+      // console.log('datalink.length',datalink[j].length);
+      
+      // if(link != undefined ||link != null){
+        
+      // console.log(index);
+      var obj = {};
+        obj['from'] = this.getFromKey(label);
+        obj['to'] = this.getFromKey(datalink[j].linkNode);
+        if(index==5||index==6||index==7||index==8||index==9){
+          obj['text'] = this.timeConversion(datalink[j].toolCount[index]);
+        }else{
+        
+          obj['text'] = datalink[j].toolCount[index];
+        }
+        // let testedg=label+' --> '+datalink[j].linkNode
+        // obj['textOne'] = testedg;
+
+        obj['toolData']=datalink[j].tool
+         obj['toolDataCount']=datalink[j].toolCount
+
+        this.linkdataArray.push(obj);
+  }
+      if (this.nodeArray[i].tool.includes('Start Frequency')) {
+        var obj = {};
+        // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+        // obj['from'] = -1;
+        // obj['to'] = this.getFromKey(this.nodeArray[i].name);
+        if(this.nodeArray[i].toolCount[3]!=0){
+          obj['from'] = -1;
+          obj['to'] = this.getFromKey(this.nodeArray[i].name);
+          obj['text'] = this.nodeArray[i].toolCount[3]
+        }
+        // obj['text'] = this.nodeArray[i].toolCount[3]
+        // let testedg="Start --> "+this.nodeArray[i].name
+        // obj['textOne'] = testedg;
+        obj["extraNode"] = 'true';
+        this.linkdataArray.push(obj);
+      }
+      if (this.nodeArray[i].tool.includes('End Frequency')) {
+        var obj = {};
+        // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+        // obj['from'] = this.getFromKey(this.nodeArray[i].name);
+        // obj['to'] = -2;
+        if(this.nodeArray[i].toolCount[4]!=0){
+          obj['from'] = this.getFromKey(this.nodeArray[i].name);
+          obj['to'] = -2;
+          obj['text'] = this.nodeArray[i].toolCount[4]
+        }
+        // let testedg=this.nodeArray[i].name+" --> End"
+        // obj['textOne'] = testedg;
+
+        // obj['text'] = this.nodeArray[i].toolCount[4]
+        obj["extraNode"] = 'true';
+        this.linkdataArray.push(obj);
+      }
+  }
+console.log('this.linkdataArray',this.linkdataArray);
+
+  return this.linkdataArray;
+}
+openNav(){
+  document.getElementById("mySidenav").style.width = "310px";
+  document.getElementById("main").style.marginRight = "310px";
+  }
+closeNav() {
+  document.getElementById("mySidenav").style.width = "0px";
+  document.getElementById("main").style.marginRight= "0px";
+  }
+  resetspinnermetrics(){
+    this.model2 = this.flowchartData(this.model1)
+    for(var j=0;j<this.model2.length;j++){
+      // for (let [key, value] of Object.entries(this.model2[j])) {
+        // console.log(this.model2[j].from);
+
+                        // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
+            // this.model2[j].from>0 && this.model2[j].to<0
+            // this.model2[j].from ==-2||this.model2[j].to==-2
+      if(j==0 && this.model2[j].to>1 ){
+        let loc3=160
+      this.model2[j].curviness=loc3
+      }else{
+        if(this.model2[j].from ==-1||this.model2[j].from==-2){
+          if(this.model2[j].from==-1 && this.model2[j].to==0){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
+          let loc3=-25*j
+        this.model2[j].curviness=loc3
+        }
+
+        }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+          if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
+            let loc3=20*j
+            this.model2[j].curviness=loc3
+          }
+      }else if(this.model2[j].from+1==this.model2[j].to){
+        let loc3=0
+        this.model2[j].curviness=loc3
+      }else{
+          let loc3=30*j
+        this.model2[j].curviness=loc3
+        }
+    }
+  }
+  this.spinMetrics0="";
+    this.spinMetrics0="absoluteFrequency";
+  console.log('spinMetrics0',this.spinMetrics0);
+  
+  }
+  caseParcent(parcent){
+    let perc=parcent.toString().split('.')
+  // return parcent.toString().slice(0,5);
+  return perc[0]+'.'+perc[1].slice(0,2);
+  }
 }

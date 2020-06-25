@@ -8,6 +8,8 @@ import { environmentobservable } from '../model/environmentobservable';
 import { EnvironmentsService } from './rpa-environments.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
+import { DataTransferService} from "../../services/data-transfer.service";
+import {RpaEnvHints} from "../model/rpa-environments-module-hints";
 import {Router} from "@angular/router";
 @Component({
   selector: 'app-environments',
@@ -38,7 +40,14 @@ import {Router} from "@angular/router";
     dtTrigger: Subject<any> =new Subject();
     dtOptions: DataTables.Settings = {};
     
-  constructor(private api:RestApiService, private router:Router, private formBuilder: FormBuilder,private environmentservice:EnvironmentsService, private chanref:ChangeDetectorRef) { 
+  constructor(private api:RestApiService, 
+    private router:Router, 
+    private formBuilder: FormBuilder,
+    private environmentservice:EnvironmentsService, 
+    private chanref:ChangeDetectorRef, 
+    private dt:DataTransferService,
+    private hints:RpaEnvHints
+    ) { 
     const ipPattern = 
     "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
       this.insertForm=this.formBuilder.group({
@@ -71,6 +80,9 @@ import {Router} from "@angular/router";
     
   }
   ngOnInit() {
+    
+    this.dt.changeHints(this.hints.rpaenvhints);
+    //console.log(this.hints.rpaenvhints)
     this.title.emit("Environments")
     this.dtOptions = {
       pagingType: 'simple',
@@ -80,6 +92,7 @@ import {Router} from "@angular/router";
       columnDefs:[ { orderable: false, targets: [0]}],
       responsive:true,
       retrieve:true,
+      scrollY: "true",
       };
 
     this.getallData();
@@ -114,6 +127,7 @@ import {Router} from "@angular/router";
   
   create()
   {
+    
     this.createpopup=true;
     this.updatepopup=false;
   }
@@ -129,7 +143,7 @@ import {Router} from "@angular/router";
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: res,
+          title: res.status,
           showConfirmButton: false,
           timer: 2000
         })
@@ -157,7 +171,7 @@ import {Router} from "@angular/router";
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: res,
+          title: res.status,
           showConfirmButton: false,
           timer: 2000
         })
@@ -219,7 +233,7 @@ import {Router} from "@angular/router";
             Swal.fire({
               position: 'top-end',
               icon: 'success',
-              title: res,
+              title: res.status,
               showConfirmButton: false,
               timer: 2000
     

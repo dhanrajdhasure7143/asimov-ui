@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import { RestApiService } from 'src/app/pages/services/rest-api.service';
 
 
 @Component({
@@ -8,6 +9,7 @@ import { Chart } from 'chart.js';
   styleUrls: ['./bot-status.component.css']
 })
 export class BotStatusComponent implements OnInit {
+  processStatus:any;
   gaugeType = "full";
   gaugeValue = 28.3;
   gaugeLabel = "Overall Running";
@@ -99,11 +101,11 @@ export class BotStatusComponent implements OnInit {
       }
     ]
   }
-  constructor() { }
+  constructor(private api:RestApiService) { }
   ngOnInit() {
    var getElementById:any = document.getElementById('myChart');
     var ctx = getElementById.getContext("2d");
-  
+  this.getprocessStatus();
   var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
   gradientStroke.addColorStop(0, '#dce9fd');
   gradientStroke.addColorStop(1, '#a3a0fb');
@@ -312,6 +314,27 @@ active(){
     ]
   }
 }
+
+getprocessStatus()
+{
+  this.api.getProcessStatistics().subscribe(data=>{
+    this.processStatus=data
+    console.log(data)
+    if(this.processStatus.ONHOLD==undefined)
+    {
+      this.processStatus.ONHOLD="NA";
+    }
+    if(this.processStatus.INPROGRESS==undefined)
+    {
+      this.processStatus.INPROGRESS="NA";
+    }
+    if(this.processStatus.REJECTED==undefined)
+    {
+      this.processStatus.REJECTED="NA";
+    }
+  })
+}
+
 loopTrackBy(index, term){
   return index;
 }
