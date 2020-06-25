@@ -192,13 +192,13 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   uploadAgainBpmn(){
-    this.slideDown();
     this.isLoading = true;
     let _self = this;
     var myReader: FileReader = new FileReader();
     myReader.onloadend = (ev) => {
       let fileString:string = myReader.result.toString();
       let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
+      this.slideDown();
       this.bpmnservice.uploadBpmn(encrypted_bpmn);//is it needed? similary storing process name, category
       this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
       this.bpmnModel.bpmnProcessName = this.bpmnProcessName;
@@ -218,6 +218,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   initialSave(diagramModel:BpmnModel){
+    diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>console.log("initailly saved"));
   }
   submitDiagramForApproval(){
