@@ -268,6 +268,17 @@ margin-right: -85px;
 .bpmn-split{
   height: 80vh !important;
 }
+.upload_again_btn{
+  display: inline !important;
+  margin: 0 !important;
+}
+.upload_again_btn ngx-dropzone-label{
+  margin: 0 !important;
+}
+.upload_again_btn button{
+  margin: 5px 13px;
+  float: right;
+}
 .kpis-and-submit-button-div{
   bottom: 0;
   position: absolute;

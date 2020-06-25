@@ -21,7 +21,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   updated_date_time;
   bpmnModel:BpmnModel = new BpmnModel();
   last_updated_time = new Date().getTime();
-  bpmnupload:boolean=false;
   hideEditor:boolean=true;
   create_editor:boolean=true;
   counter:number = 0;
@@ -32,8 +31,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   categoriesList:any=[];
   randomId: number;
   bpmnfile: any;
-  overlayValue:any;
-  category;
+  uploaded_file:File;
 
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, 
     private global: GlobalScript, private rest:RestApiService, private uploadProcessModel:UploadProcessModelComponent) { }
@@ -47,39 +45,10 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
   
   onSelect(e){
-    
-    this.bpmnupload= true;
+    this.slideUp();
     this.hideEditor=false;
-    let _self=this;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
-      this.bpmnservice.setNewDiagName(e.addedFiles[0].name.replace('.bpmn',''));
-      if( this.router.url.indexOf("uploadProcessModel") > -1 ){
-        this.bpmnservice.changeConfNav(true);
-        this.uploadProcessModel.uploadConfBpmn(e.addedFiles[0].name);
-        this.bpmnfile=this.bpmnservice.newDiagName.value;
-        this.rest.getBPMNFileContent("assets/resources/"+this.bpmnfile).subscribe(res => {
-          this.bpmnModeler.importXML(res, function(err){
-            _self.oldXml = res.trim();
-            _self.newXml = res.trim();
-            this.bpmnModel.bpmnXmlNotation=btoa(_self.newXml);
-            
-          });
-           this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
-           this.bpmnModel.reviewComments="";
-           this.bpmnModel.approverName="vaidehi";
-           this.bpmnModel.bpmnModelId=this.randomId;
-            this.bpmnModel.userName="gopi";
-            this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
-            this.bpmnModel.bpmnModelTempStatus = "initial";
-           this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
-            this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
-        });
-      }else{
-        this.bpmnservice.changeConfNav(false);
-        this.bpmnservice.uploadBpmn(e.addedFiles[0].name);
-        this.slideUp('upload')
-        // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
-      }
+      this.uploaded_file = e.addedFiles[0];
     }else{
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
@@ -87,69 +56,17 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       this.global.notify(message,"error");
     }
   }
-  uploadBpmn(e){
-    debugger
-    let fileName = e.target.value.split("\\").pop();
-    if(fileName){
-      let _self = this;
-      this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
-      this.bpmnservice.uploadBpmn(fileName);
-      this.bpmnservice.setNewDiagName(fileName.split('.bpmn')[0])
-      this.rest.getBPMNFileContent("assets/resources/"+this.bpmnservice.getBpmnData()).subscribe(res => {
-        this.bpmnModeler.importXML(res, function(err){
-          _self.oldXml = res.trim();
-          _self.newXml = res.trim();
-          //this.bpmnModel.bpmnXmlNotation=btoa(_self.newXml);
-          
-        });
-        this.bpmnModel.bpmnProcessName = this.bpmnservice.newDiagName.value;
-    this.bpmnModel.bpmnModelId=this.randomId;
-    this.bpmnModel.bpmnModelModifiedBy="gopi";//localStorage.getItem("userName")
-    this.bpmnModel.bpmnModelTempStatus="PENDING";
-    this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
-    this.bpmnModel.bpmnModelTempStatus = "initial";
-        this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
-      });
-    }else{
-      let message = "Oops! Something went wrong";
-      if(e.rejectedFiles[0].reason == "type")
-        message = "Please upload proper *.bpmn file";
-      this.global.notify(message, "error");
-    }
-  }
 
   slideDown(){
+    this.uploaded_file = null;
     var modal = document.getElementById('myModal');
     modal.style.display="none";
   }
   
-  slideUp(x){
-    this.overlayValue=x
+  slideUp(){
+    this.uploaded_file = null;
     var modal = document.getElementById('myModal');
     modal.style.display="block";
-  }
-
-  autoSaveBpmnDiagram(){
-    // this.spinner.show();
-      let _self = this;
-      this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
-        _self.updated_date_time = new Date();
-        _self.bpmnModel.bpmnModelModifiedTime = _self.updated_date_time;
-        _self.bpmnModel.bpmnModelTempId = _self.counter;
-        _self.bpmnModel.bpmnModelTempVersion = '0.0.'+_self.counter;
-        _self.bpmnModel.bpmnProcessMeta = btoa(_self.newXml);
-        _self.autoSaveDiagram();
-      });
-  }  
-  
-  autoSaveDiagram(){
-    this.rest.autoSaveBPMNFileContent(this.bpmnModel).subscribe(res => {
-      this.counter++;
-      // this.spinner.hide();
-    },
-    err => {
-      // this.spinner.hide();
-    })
   }
 
   onchangeCategories(categoryName){
@@ -160,14 +77,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     }
   }
 
-  createBpmn(){
-    if(this.overlayValue=='upload'){
-      this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
-      this.bpmnservice.setNewDiagName(this.bpmnProcessName);
-  this.bpmnservice.setBpmnCategory(this.category);
-  }
-  else{
-    this.randomId = Math.floor(Math.random()*999999);//Values get repeated
+  saveCategory(){
     if(this.categoryName =='other'){
       let otherCategory={
         "categoryId": 0,
@@ -175,55 +85,61 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       }
       this.rest.addCategory(otherCategory).subscribe(res=>{})
     }
+  }
+
+  uploadCreateBpmn(){
+    this.randomId = Math.floor(Math.random()*999999);//Values get repeated
+    this.saveCategory();
     this.bpmnservice.setNewDiagName(this.bpmnProcessName);
     this.bpmnservice.setBpmnCategory(this.categoryName);
-    this.bpmnupload= true;
     this.create_editor=false;
-    this.bpmnservice.changeConfNav(false);
-     if(this.router.url == "/pages/businessProcess/home"){
-      this.router.navigateByUrl('/pages/businessProcess/createDiagram');
-     }else{
-      this.bpmnservice.changeConfNav(true);
-       this.bpmnModeler = new BpmnJS({
-          container: '#canvas',
-          keyboard: {
-            bindTo: window
-          }
-        });
-    let canvas = this.bpmnModeler.get('canvas');
-    canvas.zoom('fit-viewport');
-    this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
-      let _self = this;
-      this.newXml=res;
-      this.bpmnModel.bpmnXmlNotation=btoa(this.newXml);
-      this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
-      this.bpmnModel.reviewComments="";
-      this.bpmnModel.approverName="vaidehi";
-      this.bpmnModel.bpmnModelId=this.randomId;
-      this.bpmnModel.userName="gopi";
-      this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
-      this.bpmnModel.bpmnModelModifiedBy = "Vaidehi";//localStorage.getItem("userName")
-      this.bpmnModel.bpmnModelTempStatus = "initial";
-      this.rest.saveBPMNprocessinfofromtemp(this.bpmnModel).subscribe(res=>console.log(res));
-      this.bpmnModeler.importXML(res, function(err){
-        _self.oldXml = res.trim();
-        _self.newXml = res.trim();
+    this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
+    this.bpmnModel.bpmnModelId=this.randomId;
+    this.bpmnservice.setSelectedBPMNModelId(this.randomId);
+    this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
+    if(this.uploaded_file){
+      var myReader: FileReader = new FileReader();
+      myReader.onloadend = (ev) => {
+        let fileString:string = myReader.result.toString();
+        let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
+        if( this.router.url.indexOf("uploadProcessModel") > -1 ){
+          this.bpmnservice.changeConfNav(true);
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
+          // this.uploadProcessModel.uploadConfBpmn(encrypted_bpmn);
+        }else{
+          this.bpmnservice.changeConfNav(false);
+          this.bpmnservice.uploadBpmn(encrypted_bpmn);
+        }
+        this.bpmnModel.bpmnXmlNotation = encrypted_bpmn;
+        this.initialSave(this.bpmnModel, "upload");
+      };
+      myReader.readAsText(this.uploaded_file);
+    }else{
+      this.bpmnservice.changeConfNav(false);
+      this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+        let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
+        this.bpmnservice.uploadBpmn(encrypted_bpmn);
+        this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
+        this.initialSave(this.bpmnModel, "create");
       });
-    });
-    let _self = this;
-    this.bpmnModeler.on('element.changed', function(){
-      let now = new Date().getTime();
-      if(now - _self.last_updated_time > 10*1000){
-        _self.autoSaveBpmnDiagram();
-        _self.last_updated_time = now;
-      }
-    })
+    }
   }
-}
-  this.slideDown();
-}
-  saveprocess(){
-    alert("saved successfully");
-    //this.router.navigate('')
-  }   
+
+
+  initialSave(diagramModel:BpmnModel, target:string){
+    this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
+      let isBPSHome = this.router.url == "/pages/businessProcess/home";
+      if(!isBPSHome){
+        this.bpmnservice.changeConfNav(true);
+        this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
+      }else{
+        if(target == "create"){
+            this.router.navigateByUrl('/pages/businessProcess/createDiagram');
+        }else if(target == "upload"){
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
+        }
+      }
+    });
+  }
+ 
 }

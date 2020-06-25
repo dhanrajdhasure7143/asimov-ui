@@ -635,8 +635,9 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
   }
 
 generateBpmn(){
-  this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
+  // this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
   this.bpmnservice.setNewDiagName('pizza-collaboration');
+  this.bpmnservice.changeConfNav(false);
   this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}})
 }
   

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { DataTransferService } from '../services/data-transfer.service';
 
 @Component({
   selector: 'app-bussiness-process',
@@ -7,11 +8,18 @@ import { Component } from '@angular/core';
                 <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
                 <span class="module-heading-title">Business Process Studio</span>
               </div>
-            </div><router-outlet></router-outlet>`,
+            </div><router-outlet></router-outlet><div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
+            <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
+            </div></div>`,
   styleUrls: ['./business-process.component.css'] 
 })
-export class BusinessProcessComponent {
+export class BusinessProcessComponent implements OnInit {
+  isLoading:boolean = false;
 
-  constructor() { }
+  constructor(private dt:DataTransferService) { }
+
+  ngOnInit(){
+    this.dt.is_loading.subscribe(res => this.isLoading = res);
+  }
 
 }

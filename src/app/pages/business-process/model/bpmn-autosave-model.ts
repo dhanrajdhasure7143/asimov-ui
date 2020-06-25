@@ -1,29 +1,28 @@
 export class BpmnModel{
     bpmnModelId:number;
-    bpmnModelModifiedBy:string;
+    bpmnModelModifiedBy:string = "Vaidehi"; // localStorage.getItem("userName")
     bpmnModelModifiedTime:Date;
-    createdTimestamp:Date
-    modifiedTimestamp:Date
+    createdTimestamp:Date;
+    modifiedTimestamp:Date;
     bpmnModelTempId:number;
-    bpmnModelTempStatus:string;
+    bpmnModelTempStatus:string = "Initial";
     bpmnModelTempVersion:string;
     bpmnProcessMeta:string;
-    approverName:string;
+    approverName:string = "";
     bpmnJsonNotation:string;
     bpmnNotationAutomationTask:string;
     bpmnNotationHumanTask:string;
     bpmnProcessApproved:number;
-    userName:string;
+    userName:string = "gopi"; // localStorage.getItem("userName")
     tenantId:number;
-    bpmnJsonNotationreviewComments:string;
     processIntelligenceId:number;
     id:number;
-    emailTo:string;
+    emailTo:string = "saivijaya.malladi@epsoftinc.com"; // email of logged user
     category:string;
     bpmnXmlNotation:string;
     bpmnProcessStatus:string;
     bpmnProcessName:string;
-    reviewComments:string;
+    reviewComments:string = "";
     version:string;
     versionId:number
 }

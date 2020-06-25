@@ -6,6 +6,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { NotifierModule } from "angular-notifier";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AngularSplitModule } from 'angular-split';
+
 import { SharedModule } from '../../shared/shared.module';
 import { BusinessProcessRoutingModule } from './business-process-routing.module';
 import { BusinessProcessComponent } from './business-process.component';
@@ -14,24 +15,26 @@ import { BpsHomeComponent } from './home/home.component';
 import { UploadProcessModelComponent } from './upload-process-model/upload-process-model.component';
 import { BpsHints } from './model/bpmn-module-hints';
 import { ListOfChangesComponent } from './list-of-changes/list-of-changes.component';
-
-
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
-  declarations: [BusinessProcessComponent,  CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent],
+  declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent],
   imports: [
     CommonModule,
-  // 
     NgxSpinnerModule,
     NgxDropzoneModule,
     MatExpansionModule,
     NotifierModule,
-  
     BusinessProcessRoutingModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularSplitModule.forRoot()
+    AngularSplitModule.forRoot(),
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    MatProgressSpinnerModule
   ],
   providers: [BpsHints]
 })

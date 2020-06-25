@@ -1,44 +1,48 @@
 <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-4 offset-1">
-          <app-upload-create-drop-bpmn isConfirmance="false"></app-upload-create-drop-bpmn>
+  <div class="row">
+    <div class="col-md-4 offset-1">
+        <app-upload-create-drop-bpmn isConfirmance="false"></app-upload-create-drop-bpmn>
+    </div>
+    <div class="col-md-8 box-border">
+      <div class="row col-md-12">
+        <h4 class="col-md-7 box-heading">My Workspace</h4>
+        <div class="col-md-2"></div>
+        <div class="col-md-3">
+          <input type="search" class="form-control" [(ngModel)]="searchTerm" placeholder="Search Workspace"/>
+        </div>
       </div>
-      <div class="col-md-8 box-border">
-        <div class="row col-md-12">
-          <h4 class="col-md-7 box-heading">My Work Space</h4>
-         
-        </div>
-        <div class="row col-md-12 text-bold workspace-title">
-          <div class="col-md-3">Process Name</div>
-          <div class="col-md-3">Date Time</div>
-          <div class="col-md-3">Approver</div>
-          <div class="col-md-2">Status</div>
-          <div class="col-md-1">Comment</div>
-        </div>
-        <div class="row col-md-12"  id="bpmn_list">
-          <mat-accordion>
-            <mat-expansion-panel *ngFor="let each_diag of saved_diagrams;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
-              <mat-expansion-panel-header class="dropdown_icon">
-                <mat-panel-title>
-                  <div class="row col-md-12">
-                    <div class="col-md-3">{{each_diag.bpmnProcessName }}</div>
-                    <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
-                    <div class="col-md-3">{{each_diag.approverName}}</div>
-                    <div class="col-md-2">{{each_diag.bpmnProcessStatus | titlecase}}</div>
-                    <div class="col-md-1">
-                      <span class="comment">
-                        <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments}}</span>
-                      </span>
-                    </div>
+      <div class="row col-md-12 text-bold workspace-title">
+        <div class="col-md-3"><b>Process Name</b></div>
+        <div class="col-md-3"><b>Last Modified</b></div>
+        <div class="col-md-3"><b>Approver</b></div>
+        <div class="col-md-2"><b>Status</b></div>
+        <div class="col-md-1"><b>Comment</b></div>
+      </div>
+      <div class="row col-md-12"  id="bpmn_list">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 15, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
+            <mat-expansion-panel-header class="dropdown_icon">
+              <mat-panel-title>
+                <div class="row col-md-12">
+                  <div class="col-md-3">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</div>
+                  <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+                  <div class="col-md-3">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
+                  <div class="col-md-2">{{each_diag.bpmnProcessStatus ? each_diag.bpmnProcessStatus: '-'}}</div>
+                  <div class="col-md-1">
+                    <span class="comment">
+                      <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments?each_diag.reviewComments:'-'}}</span>
+                    </span>
                   </div>
-                </mat-panel-title>
-              </mat-expansion-panel-header>
-              <div class="bps_overlay">
-                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnXmlNotation, i)"></div>
-              </div>
-            </mat-expansion-panel>
-          </mat-accordion>
-        </div>
+                </div>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="bps_overlay">
+              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnXmlNotation, i)"></div>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
       </div>
     </div>
   </div>
+</div>
