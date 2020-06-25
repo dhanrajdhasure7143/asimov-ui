@@ -17,25 +17,37 @@ export class BpsHomeComponent implements OnInit {
   bpmnModeler: any;
   saved_diagrams:any[] = [];
   bkp_saved_diagrams:any[] = [];
+  p: number = 1;
+  searchTerm;
+  isLoading:boolean = false;
+
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints ) { }
 
   ngOnInit(){
+    this.isLoading = true;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.bpsHomeHints);
-    this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
+    this.getBPMNList();
+  }
+
+  async getBPMNList(){
+    await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
       this.bkp_saved_diagrams = res; 
+      this.isLoading = false;
     },
     (err) => {
-      console.log(err);
+      this.isLoading = false;
     });
   }
+
   openDiagram(binaryXMLContent, i){
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: i }});
   }
+
   getDiagram(byteBpmn,i){
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     this.bpmnModeler = new BpmnJS({

@@ -15,7 +15,6 @@ export class MyLoaderComponent implements OnInit {
 
     this.loaderService.isLoading.subscribe((v) => {
       this.loading = v;
-      console.log(this.loading);
     });
 
   }

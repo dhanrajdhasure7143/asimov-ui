@@ -23,6 +23,8 @@ export class SharebpmndiagramService {
   public newDiagName = new BehaviorSubject('');
   new_DiagName = this.newDiagName.asObservable();
 
+  public bpmnId = new BehaviorSubject(0);
+  
   public bpmnCategory = new BehaviorSubject('');
   bpmn_Category = this.newDiagName.asObservable();
 
@@ -32,6 +34,9 @@ export class SharebpmndiagramService {
     this.newDiagName.next(name)
   }
 
+  setSelectedBPMNModelId(id){
+    this.bpmnId.next(id)
+  }
   setBpmnCategory(category){
     this.bpmnCategory.next(category)
   }

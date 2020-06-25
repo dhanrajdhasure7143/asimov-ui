@@ -3,16 +3,15 @@
     <div class="col-md-2">
         <b>BPMN Notation&nbsp;</b>
         <select class="form-control" [(ngModel)]="selected_notation" (change)="displayBPMN()">
-            <option value="undefined" selected>-- Select Notation --</option>
-            <option [value]="bpmnIndex" *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index">
+            <option [value]="bpmnIndex" *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [selected]="each_bpmn.bpmnModelId == selected_modelId">
                 {{each_bpmn.bpmnProcessName}}</option>
         </select>
     </div>
     <div class="col-md-2">
         <b>Approver List&nbsp;</b>
-        <select class="form-control">
-            <option [value]="each_approver.bpmnModelId" *ngFor="let each_approver of approver_list">
-                {{each_approver.bpmnProcessName}}</option>
+        <select class="form-control" [(ngModel)]="selected_approver">
+            <option [value]="each_approver.firstName+' '+each_approver.lastName" *ngFor="let each_approver of approver_list">
+                {{each_approver.firstName+" "+each_approver.lastName}}</option>
         </select>
     </div>
     <div class="col-md-2"></div>
@@ -25,10 +24,11 @@
         </div>
         <div class="row btn_row"> 
             <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
-            <div class="upload-btn-wrapper right">
-                <button class="btn" (click)="ipfile.click()">Upload Again</button>
-                <input type="file" id="Finput2" #ipfile (change)="uploadBpmn($event)" value="Select New Diagram" accept=".bpmn"/>
-            </div>
+            <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'" >
+                <ngx-dropzone-label>
+                    <button class="btn bpmn-btn">Upload Again</button>
+                </ngx-dropzone-label>
+            </ngx-dropzone>
             <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
             <button class="right btn btn-success" (click)="automate()" [disabled]="!diplayApproveBtn">Automate</button>
             <button class="right btn" (click)="saveprocess(null)">Save Process</button>
@@ -37,5 +37,34 @@
             <p style="color: white">Auto Saving... </p>  
         </ngx-spinner>
     </div>
-      
-    
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" (click)="slideDown();">&times;</span>
+                <h4>BPMN Details</h4>
+            </div>
+            <div class="modal-body">
+                <form autocomplete="off" #createBpmnForm="ngForm"> 
+                    <div class="container m-contanier">
+                    <label for="category"><b>Select Category</b></label>
+                        <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
+                            <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
+                        <option value="other">Other</option>
+                        </select>
+                        <div *ngIf='isotherCategory'>
+                        <label for="otherCategory"><b>Enter Category</b></label>
+                        <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
+                        </div>
+                    <label for="piName"><b>Enter Process Name</b></label>
+                    <input type="text" name="bpmnName" [(ngModel)]="bpmnProcessName" required class="form-control" placeholder="Process Name">
+                        <div class="clearfix m-btn">
+                            <button class="apply_button" type="submit" (click)="uploadAgainBpmn()" [disabled]="!createBpmnForm.valid">Proceed</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
+    <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
+    </div></div>

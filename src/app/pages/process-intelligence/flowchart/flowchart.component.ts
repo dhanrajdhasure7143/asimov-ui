@@ -154,7 +154,7 @@ export class FlowchartComponent implements OnInit {
         this.graphIds = piId;
         setTimeout(() => {
           this.onchangegraphId(piId);
-        }, 5*60*1000); //3*60*1000
+        }, 6*60*1000); //3*60*1000
       }
     });
     
@@ -742,8 +742,9 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
   }
 
 generateBpmn(){
-  this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
+  // this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
   this.bpmnservice.setNewDiagName('pizza-collaboration');
+  this.bpmnservice.changeConfNav(false);
   this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}})
 }
   
