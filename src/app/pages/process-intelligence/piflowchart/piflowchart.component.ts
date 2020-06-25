@@ -15,10 +15,12 @@ export class PiflowchartComponent implements OnInit {
   @Input()  public model2 ;
   @Input() public isplay;
   @Input() public isdownload;
+  @Input() public spinMetrics0;
   public model:go.Model;
   @Output()
     public nodeClicked = new EventEmitter();
     @Output() myOutputVal = new EventEmitter<boolean>();
+    @Output() mytoolTip=new EventEmitter<boolean>();
     public myDiagram: go.Diagram ;
     public isfrequency:boolean=false;
     toolData1:any=[];
@@ -382,6 +384,11 @@ export class PiflowchartComponent implements OnInit {
         function showLinkToolTip(e,obj,diagram) {
           var node = obj.part;
           var shape = obj.findObject("LINK");
+          if((shape.fromNode.hb.key==-1&&me.spinMetrics0=="absoluteFrequency")||(shape.fromNode.hb.key==-1&&me.spinMetrics0=="caseFrequency")||(shape.toNode.hb.key==-2&&me.spinMetrics0=="absoluteFrequency") || (shape.toNode.hb.key==-2&&me.spinMetrics0=="caseFrequency")||shape.fromNode.hb.key>=0){
+            me.mytoolTip.emit(true)
+          }else{
+            me.mytoolTip.emit(false)
+          }
           if(shape.fromNode.hb == undefined){
             // console.log("in iffff");
             shape.fromNode.hb.name = "Start";
@@ -426,9 +433,11 @@ export class PiflowchartComponent implements OnInit {
           if(shape.fromNode.hb.key==-1 || shape.fromNode.hb.key==-2){
             // me.isfrequency=true
              console.log('-1',shape.toNode.hb.tool);
-            for( var j=0; j<shape.toNode.hb.tool.length-5; j++ ){
-              toolData += shape.toNode.hb.tool[j]+"<br>";
-              rows += shape.toNode.hb.toolCount[j]+"<br>";
+             if(me.spinMetrics0=="absoluteFrequency"||me.spinMetrics0=="caseFrequency"){
+              for( var j=0; j<shape.toNode.hb.tool.length-5; j++ ){
+                toolData += shape.toNode.hb.tool[j]+"<br>";
+                rows += shape.toNode.hb.toolCount[j]+"<br>";
+              }
             }
             // me.toolData1=(toolDataone)
             me.isstartLink=false
@@ -443,10 +452,12 @@ export class PiflowchartComponent implements OnInit {
             me.myOutputVal.emit(me.isstartLink)
             // me.isfrequency=true
             // console.log("end",shape.fromNode.hb.tool);
-            
-            for( var k=0; k<=shape.fromNode.hb.tool.length-6; k++ ){
-            toolData += shape.fromNode.hb.tool[k]+"<br>";
-            rows += shape.fromNode.hb.toolCount[k]+"<br>";
+			 
+            if(me.spinMetrics0=="absoluteFrequency"||me.spinMetrics0=="caseFrequency"){
+              for( var k=0; k<=shape.fromNode.hb.tool.length-6; k++ ){
+                toolData += shape.fromNode.hb.tool[k]+"<br>";
+                rows += shape.fromNode.hb.toolCount[k]+"<br>";
+              }
             }
             // for( var b=5; b<=shape.fromNode.hb.tool.length; b++ ){
             //   toolDataone += shape.fromNode.hb.tool[b]+"<br>";

@@ -83,6 +83,7 @@ export class FlowchartComponent implements OnInit {
   spinMetrics0:any="absoluteFrequency";
   wpiIdNumber:any;
   startLinkvalue:boolean;
+  linkToolTip:boolean;
 
   
   constructor(private dt: DataTransferService,
@@ -153,7 +154,7 @@ export class FlowchartComponent implements OnInit {
         this.graphIds = piId;
         setTimeout(() => {
           this.onchangegraphId(piId);
-        }, 4*60*1000); //3*60*1000
+        }, 5*60*1000); //3*60*1000
       }
     });
     
@@ -896,13 +897,16 @@ flowchartDataOne(dataArray,index) {
         if(this.nodeArray[i].toolCount[3]!=0){
           obj['from'] = -1;
           obj['to'] = this.getFromKey(this.nodeArray[i].name);
-          obj['text'] = this.nodeArray[i].toolCount[3]
+          if(index==0||index==1){
+          obj['text'] = this.nodeArray[i].toolCount[3];
+          }
+          obj["extraNode"] = 'true';
+          this.linkdataArray.push(obj);
         }
         // obj['text'] = this.nodeArray[i].toolCount[3]
         // let testedg="Start --> "+this.nodeArray[i].name
         // obj['textOne'] = testedg;
-        obj["extraNode"] = 'true';
-        this.linkdataArray.push(obj);
+
       }
       if (this.nodeArray[i].tool.includes('End Frequency')) {
         var obj = {};
@@ -912,14 +916,17 @@ flowchartDataOne(dataArray,index) {
         if(this.nodeArray[i].toolCount[4]!=0){
           obj['from'] = this.getFromKey(this.nodeArray[i].name);
           obj['to'] = -2;
+          if(index==0||index==1){
           obj['text'] = this.nodeArray[i].toolCount[4]
+          }
+          obj["extraNode"] = 'true';
+        this.linkdataArray.push(obj);
         }
         // let testedg=this.nodeArray[i].name+" --> End"
         // obj['textOne'] = testedg;
 
         // obj['text'] = this.nodeArray[i].toolCount[4]
-        obj["extraNode"] = 'true';
-        this.linkdataArray.push(obj);
+        
       }
   }
 console.log('this.linkdataArray',this.linkdataArray);
@@ -983,4 +990,9 @@ closeNav() {
   // return parcent.toString().slice(0,5);
   return perc[0]+'.'+perc[1].slice(0,2);
   }
+  readOutputValueEmittedOne(toolTipValue){
+    console.log("toolTipValue",toolTipValue);
+    this.linkToolTip=toolTipValue
+  }
+  
 }
