@@ -281,6 +281,7 @@ export class UploadProcessModelComponent implements OnInit {
   }
 
   initialSave(diagramModel:BpmnModel){
+    diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
       this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
         this.saved_bpmn_list = res; 
