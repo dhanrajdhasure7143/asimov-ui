@@ -26,6 +26,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   categoriesList:any=[];
   autosaveObj:any;
   bpmnModel:BpmnModel = new BpmnModel();
+  isLoading:boolean = false;
   diplayApproveBtn:boolean = false;
   isDiagramChanged:boolean = false;
   last_updated_time = new Date().getTime();
@@ -48,18 +49,18 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
     this.getUserBpmnList();
+    this.getApproverList();
     // this.randomId = UUID.UUID();
     this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
   }
 
   async getUserBpmnList(){
-    this.dt.displayLoader(true);
+    this.isLoading = true;
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_bpmn_list = res; 
-      this.selected_notation = res.length - 1;//with Order BY modified time in DB, this line should be removed
-      this.notationListOldValue = res.length - 1;//with Order BY modified time in DB, this line should be removed
-      this.getApproverList();
-      this.dt.displayLoader(false);
+      this.selected_notation = 0;
+      this.notationListOldValue = 0;
+      this.isLoading = false;
     });
    }
 
@@ -125,7 +126,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
         }
       })
     }else{
-      this.dt.displayLoader(true);
+      this.isLoading = true;
       this.isDiagramChanged = false;
       this.diplayApproveBtn = true;
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
@@ -133,7 +134,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       this.bpmnModeler.importXML(selected_xml, function(err){
         _self.oldXml = selected_xml;
         _self.newXml = selected_xml;
-        _self.dt.displayLoader(false);
+        _self.isLoading = false;
       });
     }
       
@@ -191,7 +192,8 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   uploadAgainBpmn(){
-    this.dt.displayLoader(true);
+    this.slideDown();
+    this.isLoading = true;
     let _self = this;
     var myReader: FileReader = new FileReader();
     myReader.onloadend = (ev) => {
@@ -207,7 +209,9 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       this.bpmnModeler.importXML(fileString, function(err){
         _self.oldXml = fileString.trim();
         _self.newXml = fileString.trim();
-        _self.dt.displayLoader(false);
+        _self.bpmnProcessName = "";
+        _self.categoryName = "";
+        _self.isLoading = false;
       });
     }
     myReader.readAsText(this.uploadedFile);
@@ -221,7 +225,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
-    this.dt.displayLoader(true);
+    this.isLoading = true;
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     this.bpmnModel.approverName = this.selected_approver;
@@ -241,14 +245,14 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       _self.bpmnModel.bpmnXmlNotation = final_notation;
       _self.rest.submitBPMNforApproval(_self.bpmnModel).subscribe(
         data=>{
-          _self.dt.displayLoader(false);
+          _self.isLoading = false;
           Swal.fire(
             'Saved!',
             'Your changes has been saved and submitted for approval successfully.',
             'success'
           )
         },err => {
-          _self.dt.displayLoader(false);
+          _self.isLoading = false;
           Swal.fire(
             'Oops!',
             'Something went wrong. Please try again',
@@ -260,7 +264,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   
   saveprocess(newVal){
     this.isDiagramChanged = false;
-    this.dt.displayLoader(true);
+    this.isLoading = true;
     let _self=this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     this.bpmnModel.bpmnModelModifiedTime = new Date();
@@ -275,7 +279,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
       _self.rest.saveBPMNprocessinfofromtemp(_self.bpmnModel).subscribe(
         data=>{
-          _self.dt.displayLoader(false);
+          _self.isLoading = false;
           _self.getUserBpmnList();
           Swal.fire(
             'Saved!',
@@ -293,7 +297,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
           }
         },
         err => {
-          _self.dt.displayLoader(false);
+          _self.isLoading = false;
           Swal.fire(
             'Oops!',
             'Something went wrong. Please try again',
@@ -310,7 +314,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       this.uploadedFile = e.addedFiles[0];
     }else{
       this.uploadedFile = null;
-      this.dt.displayLoader(false);
+      this.isLoading = false;
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
         message = "Please upload proper *.bpmn file";

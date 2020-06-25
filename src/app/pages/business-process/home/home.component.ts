@@ -19,12 +19,13 @@ export class BpsHomeComponent implements OnInit {
   bkp_saved_diagrams:any[] = [];
   p: number = 1;
   searchTerm;
+  isLoading:boolean = false;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints ) { }
 
   ngOnInit(){
-    this.dt.displayLoader(true);
+    this.isLoading = true;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.bpsHomeHints);
@@ -35,11 +36,10 @@ export class BpsHomeComponent implements OnInit {
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_diagrams = res; 
       this.bkp_saved_diagrams = res; 
-      this.dt.displayLoader(false);
+      this.isLoading = false;
     },
     (err) => {
-      this.dt.displayLoader(false);
-      console.log(err);
+      this.isLoading = false;
     });
   }
 

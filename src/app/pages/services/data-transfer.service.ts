@@ -40,11 +40,4 @@ export class DataTransferService {
     this.piData.next(piData);
   }
 
-  private isLoading:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  is_loading = this.isLoading.asObservable();
-
-  displayLoader(yesNo:boolean){
-    this.isLoading.next(yesNo);
-  }
-
 }

@@ -90,18 +90,17 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   uploadCreateBpmn(){
     this.randomId = Math.floor(Math.random()*999999);//Values get repeated
     this.saveCategory();
-    this.bpmnservice.setNewDiagName(this.bpmnProcessName);
-    this.bpmnservice.setBpmnCategory(this.categoryName);
     this.create_editor=false;
-    this.bpmnModel.bpmnProcessName=this.bpmnservice.newDiagName.value;
+    this.bpmnModel.bpmnProcessName=this.bpmnProcessName;
     this.bpmnModel.bpmnModelId=this.randomId;
     this.bpmnservice.setSelectedBPMNModelId(this.randomId);
-    this.bpmnModel.category=this.bpmnservice.bpmnCategory.value;
+    this.bpmnModel.category=this.categoryName;
     if(this.uploaded_file){
       var myReader: FileReader = new FileReader();
       myReader.onloadend = (ev) => {
         let fileString:string = myReader.result.toString();
         let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
+        this.slideDown();
         if( this.router.url.indexOf("uploadProcessModel") > -1 ){
           this.bpmnservice.changeConfNav(true);
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
