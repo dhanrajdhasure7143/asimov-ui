@@ -7,6 +7,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 import { BpsHints } from '../model/bpmn-module-hints';
 
+
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -17,6 +18,7 @@ export class BpsHomeComponent implements OnInit {
   bpmnModeler: any;
   saved_diagrams:any[] = [];
   bkp_saved_diagrams:any[] = [];
+  
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints ) { }
 

@@ -6,7 +6,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { NotifierModule } from "angular-notifier";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AngularSplitModule } from 'angular-split';
-
 import { SharedModule } from '../../shared/shared.module';
 import { BusinessProcessRoutingModule } from './business-process-routing.module';
 import { BusinessProcessComponent } from './business-process.component';
@@ -16,14 +15,18 @@ import { UploadProcessModelComponent } from './upload-process-model/upload-proce
 import { BpsHints } from './model/bpmn-module-hints';
 import { ListOfChangesComponent } from './list-of-changes/list-of-changes.component';
 
+
+
 @NgModule({
-  declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent],
+  declarations: [BusinessProcessComponent,  CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent],
   imports: [
     CommonModule,
+  // 
     NgxSpinnerModule,
     NgxDropzoneModule,
     MatExpansionModule,
     NotifierModule,
+  
     BusinessProcessRoutingModule,
     SharedModule,
     FormsModule,
