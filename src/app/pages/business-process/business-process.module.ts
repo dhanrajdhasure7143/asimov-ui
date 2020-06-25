@@ -15,6 +15,9 @@ import { BpsHomeComponent } from './home/home.component';
 import { UploadProcessModelComponent } from './upload-process-model/upload-process-model.component';
 import { BpsHints } from './model/bpmn-module-hints';
 import { ListOfChangesComponent } from './list-of-changes/list-of-changes.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent],
@@ -28,7 +31,10 @@ import { ListOfChangesComponent } from './list-of-changes/list-of-changes.compon
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularSplitModule.forRoot()
+    AngularSplitModule.forRoot(),
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    MatProgressSpinnerModule
   ],
   providers: [BpsHints]
 })

@@ -83,6 +83,9 @@ button:disabled{
   margin-bottom: -25px;
 } */
 /* generic styles */
+.center{
+  text-align: center;
+}
 .right{
   float:right;
 }
@@ -114,6 +117,25 @@ div[class^='diagram_container'] .djs-container svg{
 .bjs-powered-by{
   display:none !important;/* Against the license agreement */
 }
+/*spinner styles*/
+.spincenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+}
+.spinoverlay{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  background-color: #bebcbc66;
+}
+/*spinner styles*/
 /* .tabscomp .nav-link{
   padding-left: 50px !important;
 } */
@@ -139,7 +161,9 @@ a.nav-link.active {
   color: white !important;
   background: #0061cf !important;
 }
-
+.mat-progress-spinner circle{
+  stroke: #0062cf;
+}
 
 
 /*RPA-Environments*/
