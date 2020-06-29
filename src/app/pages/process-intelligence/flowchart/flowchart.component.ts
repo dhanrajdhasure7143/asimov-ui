@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ZoomSlider } from '../../../zoomSlider';
@@ -11,6 +11,7 @@ import { NgControl } from '@angular/forms';
 import { NgxSpinnerService } from "ngx-spinner";
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
+import { Location} from '@angular/common'
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -33,6 +34,8 @@ enum VariantList {
   providers: [ProcessGraphModel]
 })
 export class FlowchartComponent implements OnInit {
+  // @ViewChild('toggleButton') toggleButton: ElementRef;
+
   public select_varaint: any = 0;
   public model1;
   public model2;
@@ -83,9 +86,2523 @@ export class FlowchartComponent implements OnInit {
   spinMetrics0:any="absoluteFrequency";
   wpiIdNumber:any;
   startLinkvalue:boolean;
-  linkToolTip:boolean;
-
+  @ViewChild("toogleBtn",{static: false}) toogleBtn;
   
+
+  testVariant={
+    "status": 4200,
+    "message": "Inserted To Reddis Successfully.",
+    "data": [
+        {
+            "case0": {
+                "nodeDataArraycase": [
+                    {
+                        "key": -1,
+                        "category": "Start",
+                        "count": 80
+                    },
+                    {
+                        "key": 0,
+                        "name": "Vendor Creates Invoice",
+                        "traceNo": -1632194889,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Scan Invoice",
+                                "traceNumber": -1632194889,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    80,
+                                    80,
+                                    1,
+                                    0,
+                                    0,
+                                    3605280000,
+                                    44610000,
+                                    45066000,
+                                    85560000,
+                                    10200000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            80,
+                            80,
+                            1,
+                            80,
+                            0,
+                            180000000,
+                            2310000,
+                            2250000,
+                            3300000,
+                            780000
+                        ]
+                    },
+                    {
+                        "key": 1,
+                        "name": "Scan Invoice",
+                        "traceNo": -1632194889,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Enter in SAP",
+                                "traceNumber": -1632194889,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    26,
+                                    26,
+                                    1,
+                                    0,
+                                    0,
+                                    12967020000,
+                                    420000,
+                                    498731538,
+                                    5962500000,
+                                    240000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            80,
+                            80,
+                            1,
+                            0,
+                            0,
+                            35520000,
+                            420000,
+                            444000,
+                            600000,
+                            360000
+                        ]
+                    },
+                    {
+                        "key": 2,
+                        "name": "Enter in SAP",
+                        "traceNo": -1632194889,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Book Invoice",
+                                "traceNumber": -1632194889,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    80,
+                                    80,
+                                    1,
+                                    0,
+                                    0,
+                                    16017120000,
+                                    73320000,
+                                    200214000,
+                                    1509840000,
+                                    2160000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            80,
+                            80,
+                            1,
+                            0,
+                            0,
+                            60480000,
+                            540000,
+                            756000,
+                            1800000,
+                            60000
+                        ]
+                    },
+                    {
+                        "key": 3,
+                        "name": "Book Invoice",
+                        "traceNo": -1632194889,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Clear Invoice",
+                                "traceNumber": -1632194889,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    26,
+                                    26,
+                                    1,
+                                    0,
+                                    0,
+                                    1092180000,
+                                    2940000,
+                                    42006923,
+                                    507840000,
+                                    360000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            80,
+                            80,
+                            1,
+                            0,
+                            0,
+                            83040000,
+                            810000,
+                            1038000,
+                            1920000,
+                            360000
+                        ]
+                    },
+                    {
+                        "key": 4,
+                        "name": "Clear Invoice",
+                        "traceNo": -1632194889,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Due Date Passed",
+                                "traceNumber": -1632194889,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    80,
+                                    80,
+                                    1,
+                                    0,
+                                    0,
+                                    18776640000,
+                                    29490000,
+                                    234708000,
+                                    1433580000,
+                                    3300000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            80,
+                            80,
+                            1,
+                            0,
+                            0,
+                            303840000,
+                            510000,
+                            3798000,
+                            17220000,
+                            120000
+                        ]
+                    },
+                    {
+                        "key": 5,
+                        "name": "Due Date Passed",
+                        "traceNo": -1632194889,
+                        "count": 80,
+                        "linkArray": [],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            80,
+                            80,
+                            1,
+                            0,
+                            80,
+                            108960000,
+                            1260000,
+                            1362000,
+                            2160000,
+                            600000
+                        ]
+                    },
+                    {
+                        "key": -2,
+                        "category": "End",
+                        "count": 80
+                    }
+                ]
+            },
+            "case1": {
+                "nodeDataArraycase": [
+                    {
+                        "key": -1,
+                        "category": "Start",
+                        "count": 80
+                    },
+                    {
+                        "key": 0,
+                        "name": "Vendor Creates Invoice",
+                        "traceNo": -626246640,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Scan Invoice",
+                                "traceNumber": -626246640,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    30,
+                                    30,
+                                    1,
+                                    0,
+                                    0,
+                                    1294440000,
+                                    36000000,
+                                    43148000,
+                                    88140000,
+                                    15660000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            30,
+                            30,
+                            1,
+                            30,
+                            0,
+                            25560000,
+                            540000,
+                            852000,
+                            2160000,
+                            420000
+                        ]
+                    },
+                    {
+                        "key": 1,
+                        "name": "Scan Invoice",
+                        "traceNo": -626246640,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Enter in SAP",
+                                "traceNumber": -626246640,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    8,
+                                    8,
+                                    1,
+                                    0,
+                                    0,
+                                    200760000,
+                                    480000,
+                                    25095000,
+                                    197880000,
+                                    240000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            30,
+                            30,
+                            1,
+                            0,
+                            0,
+                            98040000,
+                            600000,
+                            3268000,
+                            7500000,
+                            300000
+                        ]
+                    },
+                    {
+                        "key": 2,
+                        "name": "Enter in SAP",
+                        "traceNo": -626246640,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Book Invoice",
+                                "traceNumber": -626246640,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    30,
+                                    30,
+                                    1,
+                                    0,
+                                    0,
+                                    2730000000,
+                                    46260000,
+                                    91000000,
+                                    326040000,
+                                    2580000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            30,
+                            30,
+                            1,
+                            0,
+                            0,
+                            16080000,
+                            180000,
+                            536000,
+                            2700000,
+                            60000
+                        ]
+                    },
+                    {
+                        "key": 3,
+                        "name": "Book Invoice",
+                        "traceNo": -626246640,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Change Baseline Date",
+                                "traceNumber": -626246640,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    8,
+                                    8,
+                                    1,
+                                    0,
+                                    0,
+                                    169920000,
+                                    11760000,
+                                    21240000,
+                                    43800000,
+                                    11760000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            30,
+                            30,
+                            1,
+                            0,
+                            0,
+                            26160000,
+                            540000,
+                            872000,
+                            1980000,
+                            360000
+                        ]
+                    },
+                    {
+                        "key": 4,
+                        "name": "Change Baseline Date",
+                        "traceNo": -626246640,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Clear Invoice",
+                                "traceNumber": -626246640,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    30,
+                                    30,
+                                    1,
+                                    0,
+                                    0,
+                                    774000000,
+                                    8700000,
+                                    25800000,
+                                    160260000,
+                                    1380000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            30,
+                            30,
+                            1,
+                            0,
+                            0,
+                            38040000,
+                            1440000,
+                            1268000,
+                            1740000,
+                            420000
+                        ]
+                    },
+                    {
+                        "key": 5,
+                        "name": "Clear Invoice",
+                        "traceNo": -626246640,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Due Date Passed",
+                                "traceNumber": -626246640,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    8,
+                                    8,
+                                    1,
+                                    0,
+                                    0,
+                                    160260000,
+                                    22080000,
+                                    20032500,
+                                    24780000,
+                                    1560000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            30,
+                            30,
+                            1,
+                            0,
+                            0,
+                            236400000,
+                            9780000,
+                            7880000,
+                            18360000,
+                            480000
+                        ]
+                    },
+                    {
+                        "key": 6,
+                        "name": "Due Date Passed",
+                        "traceNo": -626246640,
+                        "count": 80,
+                        "linkArray": [],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            30,
+                            30,
+                            1,
+                            0,
+                            30,
+                            49680000,
+                            1020000,
+                            1656000,
+                            8640000,
+                            420000
+                        ]
+                    },
+                    {
+                        "key": -2,
+                        "category": "End",
+                        "count": 80
+                    }
+                ]
+            },
+            "case2": {
+                "nodeDataArraycase": [
+                    {
+                        "key": -1,
+                        "category": "Start",
+                        "count": 80
+                    },
+                    {
+                        "key": 0,
+                        "name": "Vendor Creates Invoice",
+                        "traceNo": -1744478328,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Due Date Passed",
+                                "traceNumber": -1744478328,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    11,
+                                    11,
+                                    1,
+                                    0,
+                                    0,
+                                    648000000,
+                                    62100000,
+                                    58909090,
+                                    89700000,
+                                    4260000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            25,
+                            25,
+                            1,
+                            25,
+                            0,
+                            47520000,
+                            2040000,
+                            1900800,
+                            3360000,
+                            360000
+                        ]
+                    },
+                    {
+                        "key": 1,
+                        "name": "Due Date Passed",
+                        "traceNo": -1744478328,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Scan Invoice",
+                                "traceNumber": -1744478328,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    25,
+                                    25,
+                                    1,
+                                    0,
+                                    0,
+                                    1432920000,
+                                    360000,
+                                    57316800,
+                                    461640000,
+                                    180000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            25,
+                            25,
+                            1,
+                            0,
+                            0,
+                            10800000,
+                            420000,
+                            432000,
+                            780000,
+                            240000
+                        ]
+                    },
+                    {
+                        "key": 2,
+                        "name": "Scan Invoice",
+                        "traceNo": -1744478328,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Enter in SAP",
+                                "traceNumber": -1744478328,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    11,
+                                    11,
+                                    1,
+                                    0,
+                                    0,
+                                    2846040000,
+                                    94740000,
+                                    258730909,
+                                    997500000,
+                                    17160000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            25,
+                            25,
+                            1,
+                            0,
+                            0,
+                            14160000,
+                            120000,
+                            566400,
+                            2340000,
+                            60000
+                        ]
+                    },
+                    {
+                        "key": 3,
+                        "name": "Enter in SAP",
+                        "traceNo": -1744478328,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Book Invoice",
+                                "traceNumber": -1744478328,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    25,
+                                    25,
+                                    1,
+                                    0,
+                                    0,
+                                    1533540000,
+                                    28860000,
+                                    61341600,
+                                    625980000,
+                                    2700000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            25,
+                            25,
+                            1,
+                            0,
+                            0,
+                            33000000,
+                            1320000,
+                            1320000,
+                            2340000,
+                            240000
+                        ]
+                    },
+                    {
+                        "key": 4,
+                        "name": "Book Invoice",
+                        "traceNo": -1744478328,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Change Baseline Date",
+                                "traceNumber": -1744478328,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    11,
+                                    11,
+                                    1,
+                                    0,
+                                    0,
+                                    9297960000,
+                                    24060000,
+                                    845269090,
+                                    4658580000,
+                                    900000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            25,
+                            25,
+                            1,
+                            0,
+                            0,
+                            69960000,
+                            1440000,
+                            2798400,
+                            14940000,
+                            300000
+                        ]
+                    },
+                    {
+                        "key": 5,
+                        "name": "Change Baseline Date",
+                        "traceNo": -1744478328,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Clear Invoice",
+                                "traceNumber": -1744478328,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    25,
+                                    25,
+                                    1,
+                                    0,
+                                    0,
+                                    569760000,
+                                    24000000,
+                                    22790400,
+                                    108720000,
+                                    0
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            25,
+                            25,
+                            1,
+                            0,
+                            0,
+                            173340000,
+                            1680000,
+                            6933600,
+                            17820000,
+                            60000
+                        ]
+                    },
+                    {
+                        "key": 6,
+                        "name": "Clear Invoice",
+                        "traceNo": -1744478328,
+                        "count": 80,
+                        "linkArray": [],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            25,
+                            25,
+                            1,
+                            0,
+                            25,
+                            45060000,
+                            1020000,
+                            1802400,
+                            19380000,
+                            0
+                        ]
+                    },
+                    {
+                        "key": -2,
+                        "category": "End",
+                        "count": 80
+                    }
+                ]
+            },
+            "case3": {
+                "nodeDataArraycase": [
+                    {
+                        "key": -1,
+                        "category": "Start",
+                        "count": 80
+                    },
+                    {
+                        "key": 0,
+                        "name": "Vendor Creates Invoice",
+                        "traceNo": -1984157503,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Due Date Passed",
+                                "traceNumber": -1984157503,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    24,
+                                    24,
+                                    1,
+                                    0,
+                                    0,
+                                    1392060000,
+                                    78270000,
+                                    58002500,
+                                    85140000,
+                                    5280000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            24,
+                            24,
+                            1,
+                            24,
+                            0,
+                            42600000,
+                            1620000,
+                            1775000,
+                            3360000,
+                            360000
+                        ]
+                    },
+                    {
+                        "key": 1,
+                        "name": "Due Date Passed",
+                        "traceNo": -1984157503,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Scan Invoice",
+                                "traceNumber": -1984157503,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    10,
+                                    10,
+                                    1,
+                                    0,
+                                    0,
+                                    566400000,
+                                    42360000,
+                                    56640000,
+                                    350400000,
+                                    240000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            24,
+                            24,
+                            1,
+                            0,
+                            0,
+                            8760000,
+                            360000,
+                            365000,
+                            780000,
+                            240000
+                        ]
+                    },
+                    {
+                        "key": 2,
+                        "name": "Scan Invoice",
+                        "traceNo": -1984157503,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Enter in SAP",
+                                "traceNumber": -1984157503,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    24,
+                                    24,
+                                    1,
+                                    0,
+                                    0,
+                                    1666020000,
+                                    56280000,
+                                    69417500,
+                                    435060000,
+                                    2280000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            24,
+                            24,
+                            1,
+                            0,
+                            0,
+                            27960000,
+                            1680000,
+                            1165000,
+                            2340000,
+                            60000
+                        ]
+                    },
+                    {
+                        "key": 3,
+                        "name": "Enter in SAP",
+                        "traceNo": -1984157503,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Book Invoice",
+                                "traceNumber": -1984157503,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    10,
+                                    10,
+                                    1,
+                                    0,
+                                    0,
+                                    460680000,
+                                    1560000,
+                                    46068000,
+                                    360420000,
+                                    240000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            24,
+                            24,
+                            1,
+                            0,
+                            0,
+                            18360000,
+                            450000,
+                            765000,
+                            1920000,
+                            300000
+                        ]
+                    },
+                    {
+                        "key": 4,
+                        "name": "Book Invoice",
+                        "traceNo": -1984157503,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Clear Invoice",
+                                "traceNumber": -1984157503,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    24,
+                                    24,
+                                    1,
+                                    0,
+                                    0,
+                                    3004920000,
+                                    78600000,
+                                    125205000,
+                                    1628820000,
+                                    2700000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            24,
+                            24,
+                            1,
+                            0,
+                            0,
+                            39120000,
+                            540000,
+                            1630000,
+                            12660000,
+                            120000
+                        ]
+                    },
+                    {
+                        "key": 5,
+                        "name": "Clear Invoice",
+                        "traceNo": -1984157503,
+                        "count": 80,
+                        "linkArray": [],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            24,
+                            24,
+                            1,
+                            0,
+                            24,
+                            57360000,
+                            1140000,
+                            2390000,
+                            17340000,
+                            360000
+                        ]
+                    },
+                    {
+                        "key": -2,
+                        "category": "End",
+                        "count": 80
+                    }
+                ]
+            },
+            "case4": {
+                "nodeDataArraycase": [
+                    {
+                        "key": -1,
+                        "category": "Start",
+                        "count": 80
+                    },
+                    {
+                        "key": 0,
+                        "name": "Vendor Creates Invoice",
+                        "traceNo": -1147616841,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Scan Invoice",
+                                "traceNumber": -1147616841,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    20,
+                                    20,
+                                    1,
+                                    0,
+                                    0,
+                                    812400000,
+                                    41370000,
+                                    40620000,
+                                    88140000,
+                                    840000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            20,
+                            20,
+                            1,
+                            20,
+                            0,
+                            41340000,
+                            1890000,
+                            2067000,
+                            3360000,
+                            600000
+                        ]
+                    },
+                    {
+                        "key": 1,
+                        "name": "Scan Invoice",
+                        "traceNo": -1147616841,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Enter in SAP",
+                                "traceNumber": -1147616841,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    4,
+                                    4,
+                                    1,
+                                    0,
+                                    0,
+                                    279660000,
+                                    420000,
+                                    69915000,
+                                    278640000,
+                                    180000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            20,
+                            20,
+                            1,
+                            0,
+                            0,
+                            8820000,
+                            450000,
+                            441000,
+                            660000,
+                            240000
+                        ]
+                    },
+                    {
+                        "key": 2,
+                        "name": "Enter in SAP",
+                        "traceNo": -1147616841,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Clear Invoice",
+                                "traceNumber": -1147616841,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    20,
+                                    20,
+                                    1,
+                                    0,
+                                    0,
+                                    5959020000,
+                                    73560000,
+                                    297951000,
+                                    3262920000,
+                                    2520000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            20,
+                            20,
+                            1,
+                            0,
+                            0,
+                            12300000,
+                            180000,
+                            615000,
+                            1980000,
+                            60000
+                        ]
+                    },
+                    {
+                        "key": 3,
+                        "name": "Clear Invoice",
+                        "traceNo": -1147616841,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Due Date Passed",
+                                "traceNumber": -1147616841,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    4,
+                                    4,
+                                    1,
+                                    0,
+                                    0,
+                                    160320000,
+                                    10890000,
+                                    40080000,
+                                    135480000,
+                                    3060000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            20,
+                            20,
+                            1,
+                            0,
+                            0,
+                            23460000,
+                            1200000,
+                            1173000,
+                            2340000,
+                            180000
+                        ]
+                    },
+                    {
+                        "key": 4,
+                        "name": "Due Date Passed",
+                        "traceNo": -1147616841,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Book Invoice",
+                                "traceNumber": -1147616841,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    20,
+                                    20,
+                                    1,
+                                    0,
+                                    0,
+                                    862620000,
+                                    16680000,
+                                    43131000,
+                                    537420000,
+                                    1380000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            20,
+                            20,
+                            1,
+                            0,
+                            0,
+                            84120000,
+                            1410000,
+                            4206000,
+                            20220000,
+                            240000
+                        ]
+                    },
+                    {
+                        "key": 5,
+                        "name": "Book Invoice",
+                        "traceNo": -1147616841,
+                        "count": 80,
+                        "linkArray": [],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            20,
+                            20,
+                            1,
+                            0,
+                            20,
+                            145320000,
+                            2250000,
+                            7266000,
+                            21420000,
+                            420000
+                        ]
+                    },
+                    {
+                        "key": -2,
+                        "category": "End",
+                        "count": 80
+                    }
+                ]
+            },
+            "case5": {
+                "nodeDataArraycase": [
+                    {
+                        "key": -1,
+                        "category": "Start",
+                        "count": 80
+                    },
+                    {
+                        "key": 0,
+                        "name": "Vendor Creates Invoice",
+                        "traceNo": -1258767366,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Scan Invoice",
+                                "traceNumber": -1258767366,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    15,
+                                    15,
+                                    1,
+                                    0,
+                                    0,
+                                    706860000,
+                                    50400000,
+                                    47124000,
+                                    83820000,
+                                    1260000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            15,
+                            15,
+                            1,
+                            15,
+                            0,
+                            28980000,
+                            2100000,
+                            1932000,
+                            3300000,
+                            480000
+                        ]
+                    },
+                    {
+                        "key": 1,
+                        "name": "Scan Invoice",
+                        "traceNo": -1258767366,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Enter in SAP",
+                                "traceNumber": -1258767366,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    3,
+                                    3,
+                                    1,
+                                    0,
+                                    0,
+                                    458820000,
+                                    197700000,
+                                    152940000,
+                                    260640000,
+                                    480000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            15,
+                            15,
+                            1,
+                            0,
+                            0,
+                            7440000,
+                            540000,
+                            496000,
+                            720000,
+                            240000
+                        ]
+                    },
+                    {
+                        "key": 2,
+                        "name": "Enter in SAP",
+                        "traceNo": -1258767366,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Book Invoice",
+                                "traceNumber": -1258767366,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    15,
+                                    15,
+                                    1,
+                                    0,
+                                    0,
+                                    13504200000,
+                                    232560000,
+                                    900280000,
+                                    6687300000,
+                                    5040000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            15,
+                            15,
+                            1,
+                            0,
+                            0,
+                            5760000,
+                            120000,
+                            384000,
+                            1320000,
+                            60000
+                        ]
+                    },
+                    {
+                        "key": 3,
+                        "name": "Book Invoice",
+                        "traceNo": -1258767366,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Cancel Invoice Receipt",
+                                "traceNumber": -1258767366,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    3,
+                                    3,
+                                    1,
+                                    0,
+                                    0,
+                                    247680000,
+                                    55920000,
+                                    82560000,
+                                    173400000,
+                                    18360000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            15,
+                            15,
+                            1,
+                            0,
+                            0,
+                            20820000,
+                            1500000,
+                            1388000,
+                            2040000,
+                            120000
+                        ]
+                    },
+                    {
+                        "key": 4,
+                        "name": "Cancel Invoice Receipt",
+                        "traceNo": -1258767366,
+                        "count": 80,
+                        "linkArray": [],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            15,
+                            15,
+                            1,
+                            0,
+                            15,
+                            36060000,
+                            960000,
+                            2404000,
+                            15900000,
+                            300000
+                        ]
+                    },
+                    {
+                        "key": -2,
+                        "category": "End",
+                        "count": 80
+                    }
+                ]
+            },
+            "case6": {
+                "nodeDataArraycase": [
+                    {
+                        "key": -1,
+                        "category": "Start",
+                        "count": 80
+                    },
+                    {
+                        "key": 0,
+                        "name": "Vendor Creates Invoice",
+                        "traceNo": 1828606658,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Due Date Passed",
+                                "traceNumber": 1828606658,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    2,
+                                    1,
+                                    2,
+                                    0,
+                                    0,
+                                    121380000,
+                                    60690000,
+                                    60690000,
+                                    81180000,
+                                    40200000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            2,
+                            1,
+                            2,
+                            1,
+                            0,
+                            6120000,
+                            3060000,
+                            3060000,
+                            3300000,
+                            2820000
+                        ]
+                    },
+                    {
+                        "key": 1,
+                        "name": "Due Date Passed",
+                        "traceNo": 1828606658,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Scan Invoice",
+                                "traceNumber": 1828606658,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    2,
+                                    1,
+                                    2,
+                                    0,
+                                    0,
+                                    420000,
+                                    210000,
+                                    210000,
+                                    240000,
+                                    180000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            2,
+                            1,
+                            2,
+                            0,
+                            0,
+                            780000,
+                            390000,
+                            390000,
+                            480000,
+                            300000
+                        ]
+                    },
+                    {
+                        "key": 2,
+                        "name": "Scan Invoice",
+                        "traceNo": 1828606658,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Enter in SAP",
+                                "traceNumber": 1828606658,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    2,
+                                    1,
+                                    2,
+                                    0,
+                                    0,
+                                    330900000,
+                                    165450000,
+                                    165450000,
+                                    325800000,
+                                    5100000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            2,
+                            1,
+                            2,
+                            0,
+                            0,
+                            120000,
+                            60000,
+                            60000,
+                            60000,
+                            60000
+                        ]
+                    },
+                    {
+                        "key": 3,
+                        "name": "Enter in SAP",
+                        "traceNo": 1828606658,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Book Invoice",
+                                "traceNumber": 1828606658,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    2,
+                                    1,
+                                    2,
+                                    0,
+                                    0,
+                                    65460000,
+                                    32730000,
+                                    32730000,
+                                    62340000,
+                                    3120000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            2,
+                            1,
+                            2,
+                            0,
+                            0,
+                            1980000,
+                            990000,
+                            990000,
+                            1320000,
+                            660000
+                        ]
+                    },
+                    {
+                        "key": 4,
+                        "name": "Book Invoice",
+                        "traceNo": 1828606658,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Clear Invoice",
+                                "traceNumber": 1828606658,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    2,
+                                    1,
+                                    2,
+                                    0,
+                                    0,
+                                    18960000,
+                                    9480000,
+                                    9480000,
+                                    15720000,
+                                    3240000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            2,
+                            1,
+                            2,
+                            0,
+                            0,
+                            1680000,
+                            840000,
+                            840000,
+                            1260000,
+                            420000
+                        ]
+                    },
+                    {
+                        "key": 5,
+                        "name": "Clear Invoice",
+                        "traceNo": 1828606658,
+                        "count": 80,
+                        "linkArray": [
+                            {
+                                "linkNode": "Vendor Creates Invoice",
+                                "traceNumber": 1828606658,
+                                "tool": [
+                                    "Absolute Frequency",
+                                    "Case Frequency",
+                                    "Max Repititons",
+                                    "Start Frequency",
+                                    "End Frequency",
+                                    "Total Duration",
+                                    "Median Duration",
+                                    "Mean Duration",
+                                    "Max Duration",
+                                    "Min Duration"
+                                ],
+                                "toolCount": [
+                                    1,
+                                    1,
+                                    1,
+                                    0,
+                                    0,
+                                    4799820000,
+                                    4799820000,
+                                    4799820000,
+                                    4799820000,
+                                    4799820000
+                                ]
+                            }
+                        ],
+                        "tool": [
+                            "Absolute Frequency",
+                            "Case Frequency",
+                            "Max Repititons",
+                            "Start Frequency",
+                            "End Frequency",
+                            "Total Duration",
+                            "Median Duration",
+                            "Mean Duration",
+                            "Max Duration",
+                            "Min Duration"
+                        ],
+                        "toolCount": [
+                            2,
+                            1,
+                            2,
+                            0,
+                            1,
+                            22620000,
+                            11310000,
+                            11310000,
+                            21120000,
+                            1500000
+                        ]
+                    },
+                    {
+                        "key": -2,
+                        "category": "End",
+                        "count": 80
+                    }
+                ]
+            }
+        }
+    ]
+}
+    
+
   constructor(private dt: DataTransferService,
     private router: Router,
     private bpmnservice: SharebpmndiagramService,
@@ -93,12 +2610,27 @@ export class FlowchartComponent implements OnInit {
     private hints: PiHints,
     private spinner: NgxSpinnerService,
     private rest:RestApiService,
-    private route:ActivatedRoute) {
+    private route:ActivatedRoute,
+    private renderer: Renderer2,
+    private location:Location) {  }
+
+  @HostListener('document:click', ['$event.target'])
+  public onClick(targetElement) {
+      const clickedInside = this.toogleBtn.nativeElement.contains(targetElement);
+      if (!clickedInside) {
+        this.isedgespinner=false
+          // console.log("outside");  
+      }else{
+        // console.log("Inside");
+        // this.isedgespinner= !this.isedgespinner;
+      }
   }
 
   readOutputValueEmitted(val){
     this.startLinkvalue = val;
   }
+
+  
 
   ngOnInit() {
     this.spinner.show();
@@ -173,6 +2705,24 @@ export class FlowchartComponent implements OnInit {
       console.log('data',data);})
   }
   onchangegraphId(selectedpiId){
+    // location.replace("/pages/processIntelligence/flowChart?wpiId="+selectedpiId)
+    this.route.queryParams.subscribe(params => {
+      let token = params['wpiId'];
+      let tokenOne=params['piId']
+      if (token) {
+          // this.cache.set({t: 't'}, token);
+          // window.location.href = this.router.url.split('?')[0];
+          let url=this.router.url.split('?')
+          this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
+          console.log(url[0]+'?wpiId='+selectedpiId); 
+      }else{
+        let url=this.router.url.split('?')
+        // window.location.href = url[0]+'?piId='+selectedpiId;
+        this.location.replaceState(url[0]+'?piId='+selectedpiId);
+
+      }
+  });
+
     let piId=selectedpiId
     this.rest.getAllVaraintList(piId).subscribe(data=>{this.varaint_data=data // variant List call
       console.log('this.varaint_data',data);
@@ -369,17 +2919,19 @@ export class FlowchartComponent implements OnInit {
       // this.model1=this.pgModel.allData.nodeDataArraycase;
       // this.model2=this.flowchartData(this.pgModel.nodeDataArraycase)
       this.isDefaultData = false;
-    //   console.log("selectedcase", this.selectedCaseArry)
+      console.log("selectedcase", this.selectedCaseArry)
     // console.log("selectedData.case",selectedData.case);
     
-      if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphDataArray) == true) {
+      if (this.keyExists(this.selectedCaseArry[0], this.testVariant.data) == true) {
         // console.log('log',this.selectedCaseArry[0], this.pgModel.flowchartData);
         
-        var modalData = this.varaint_GraphDataArray[this.selectedCaseArry[0]]
+        var modalData = this.testVariant.data[0][this.selectedCaseArry[0]]
         console.log('modalData',modalData);
         
         this.model1 = modalData.nodeDataArraycase
+        this.nodeAlignment();
         this.model2 = this.flowchartData(this.model1)
+        this.linkCurvinessGenerate();
       }
     }
     else {
@@ -645,12 +3197,15 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
           obj['from'] = this.getFromKey(label);
           obj['to'] = this.getFromKey(datalink[j].linkNode);
           obj['text'] = datalink[j].toolCount[0];
-
+          // highData
           //let testedg=label+' --> '+datalink[j].linkNode
           //obj['textOne'] = testedg;
 
           obj['toolData']=datalink[j].tool
            obj['toolDataCount']=datalink[j].toolCount
+           if(datalink[j].toolCount[0]>100){
+            obj['highData']=true
+           }
 
           this.linkdataArray.push(obj);
       // }
@@ -742,9 +3297,8 @@ var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
   }
 
 generateBpmn(){
-  // this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
+  this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
   this.bpmnservice.setNewDiagName('pizza-collaboration');
-  this.bpmnservice.changeConfNav(false);
   this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}})
 }
   
@@ -881,12 +3435,17 @@ flowchartDataOne(dataArray,index) {
         }else{
         
           obj['text'] = datalink[j].toolCount[index];
+          if(datalink[j].toolCount[index]>100){
+            obj['highData']=true
+          }
+
         }
         // let testedg=label+' --> '+datalink[j].linkNode
         // obj['textOne'] = testedg;
 
         obj['toolData']=datalink[j].tool
          obj['toolDataCount']=datalink[j].toolCount
+         
 
         this.linkdataArray.push(obj);
   }
@@ -983,17 +3542,70 @@ closeNav() {
   }
   this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
-  console.log('spinMetrics0',this.spinMetrics0);
-  
+  // console.log('spinMetrics0',this.spinMetrics0);
   }
   caseParcent(parcent){
     let perc=parcent.toString().split('.')
   // return parcent.toString().slice(0,5);
   return perc[0]+'.'+perc[1].slice(0,2);
   }
-  readOutputValueEmittedOne(toolTipValue){
-    console.log("toolTipValue",toolTipValue);
-    this.linkToolTip=toolTipValue
+
+  nodeAlignment(){
+    let loction=''
+    for(var i=0;i<this.model1.length;i++){
+      if(this.model1[i].key==-1||this.model1[i].key==-2){
+        let loc1=530
+      let loc2=-150+i*80
+      loction=loc1+' '+loc2;
+      this.model1[i].loc=loction
+      }else{
+      let loc1=455
+      let loc2=-150+i*80
+      loction=loc1+' '+loc2;
+      this.model1[i].loc=loction
+      }
+    }
+  }
+
+  linkCurvinessGenerate(){
+    // this.model2 = this.flowchartData(this.model1)
+    for(var j=0;j<this.model2.length;j++){
+      // for (let [key, value] of Object.entries(this.model2[j])) {
+        // console.log(this.model2[j].from);
+
+                        // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
+            // this.model2[j].from>0 && this.model2[j].to<0
+            // this.model2[j].from ==-2||this.model2[j].to==-2
+      if(j==0 && this.model2[j].to>1 ){
+        let loc3=160
+      this.model2[j].curviness=loc3
+      }else{
+        if(this.model2[j].from ==-1||this.model2[j].from==-2){
+          if(this.model2[j].from==-1 && this.model2[j].to==0){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
+          let loc3=-25*j
+        this.model2[j].curviness=loc3
+        }
+
+        }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
+          if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
+            let loc3=0
+            this.model2[j].curviness=loc3
+          }else{
+            let loc3=20*j
+            this.model2[j].curviness=loc3
+          }
+      }else if(this.model2[j].from+1==this.model2[j].to){
+        let loc3=0
+        this.model2[j].curviness=loc3
+      }else{
+          let loc3=30*j
+        this.model2[j].curviness=loc3
+        }
+    }
+  }
   }
   
 }

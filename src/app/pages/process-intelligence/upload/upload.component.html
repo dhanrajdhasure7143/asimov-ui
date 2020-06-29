@@ -66,26 +66,37 @@
                                     </mat-expansion-panel>
                                   </mat-accordion>
                                 </div> -->
-                                <div class='col-sm-8'>
+                                <div class='col-sm-4'>
                                 <h4>My Workspace</h4>
                                 </div>
-                                <div class='col-sm-4 inner-addon right-addon' *ngIf="process_graph_list.data">
-                                                <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
-                                        <input type="text" placeholder="Search" name="searchGraph" #searchGraph="ngModel" [(ngModel)]="searchgraph">
+                                <form action="">
+                                <div class="col-sm-8 row">
+                                        <div class="col-sm-8">
+                                        <select class="form-control" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
+                                                <option value="undefined" hidden disabled>Search by Category</option>
+                                                <option value="allcategories">All Categories</option>
+                                                <option [value]="each.categoryName" *ngFor="let each of categoryList.data;let i=index">{{each.categoryName}}</option>
+                                        </select>
+                                        </div>
+                                        <div class='col-sm-4 inner-addon right-addon'>
+                                        <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
+                                        <input type="text" placeholder="Search" name="searchGraph" [(ngModel)]="searchgraph">
+                                        </div>
                                 </div>
+                                </form>
                                 <table class="col-sm-12 table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
                                         <thead class="text-center">
                                         <tr class="text-center">
-                                                <th class="text-center table_header"(click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process ID</th>
+                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process ID</th>
                                                 <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Date</th>
                                                 <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process Name</th>
                                                 <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Category</th>
                                                 <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Status</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Action</th>
+                                                <th class="text-center table_header" >Action</th>
                                         </tr>
                                         </thead>
                                         <tbody class='text-center'>
-                                                <tr class='pList' *ngFor='let process_list of process_graph_list.data|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
+                                                <tr class='pList' *ngFor='let process_list of process_graph_list|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
                                                         <td class="th-sm">{{process_list.piId}}</td>
                                                         <td>{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</td>
                                                         <td>{{process_list.piName|titlecase}}</td>

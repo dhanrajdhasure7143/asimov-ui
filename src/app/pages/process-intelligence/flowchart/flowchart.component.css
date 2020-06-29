@@ -245,10 +245,23 @@
   }
   .variant_play{
     display: none;
+    z-index: 10;
   }
   .variant_border:hover .variant_play{
     display:block !important;
   }
   .activevaraint .variant_play{
     display:block !important;
+    
+    
+  }
+  .tooltip_header{
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .tooltipmetrics_header{
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
   }

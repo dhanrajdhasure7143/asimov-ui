@@ -566,7 +566,7 @@ border: 1px solid lightgray !important;
   border-radius: 10px;
   width: auto;
   margin-right: 20px;
-  height: 230px;
+  max-height: 430px;
   align-self: auto !important;
 }
 .node_tooltip{
@@ -688,9 +688,9 @@ transition: 0.5s;
     font-size: 14px !important;
     color: black;
 }
-.tooltip_body{
-  height: 130px;
-}
+/* .tooltip_body{
+  height: 230px;
+} */
 .tooltiptext1 hr{
   margin-top: 0px !important;
   margin-bottom: 2px !important;
