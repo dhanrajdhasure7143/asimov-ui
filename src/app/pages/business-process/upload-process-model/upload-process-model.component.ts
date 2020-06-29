@@ -102,6 +102,20 @@ export class UploadProcessModelComponent implements OnInit {
       this.approver_list = res; 
     });
    }
+  //  ngOnDestroy(){
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: 'Your current changes will be lost on changing diagram.',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Save and Continue',
+  //     cancelButtonText: 'Discard'
+  //   }).then((res)=>{
+  //     if(res.value){
+  //       this.saveprocess(null);
+  //     }
+  //   })
+  // }
    
     initiateDiagram(){
       let _self=this;
