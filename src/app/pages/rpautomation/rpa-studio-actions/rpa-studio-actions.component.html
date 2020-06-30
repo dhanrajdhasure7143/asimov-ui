@@ -17,7 +17,7 @@
         </ul>
       </div>-->
       <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
-      <button  type="button" id="stopbot"
+      <button  type="button" id="stopbot" title="Stop Bot Execution"
       class="btn btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot()">
       <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
       <div class="btn_title">Stop</div>
@@ -27,13 +27,13 @@
         
       <div *ngIf="pausebot==true || resumebot==true">
         <button  type="button"
-        class="btn btn_style" aria-hidden="true" placement="bottom" (click)="stopBot(1)">
+        class="btn btn_style"  title="Stop Bot Execution" aria-hidden="true" placement="bottom" (click)="stopBot(1)">
         <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
         <div class="btn_title">Stop</div>
         </button>
       </div>
       <div class="dropdown">
-        <button class="btn btn_style dropdown-toggle" id="bots" type="button" data-toggle="dropdown"
+        <button class="btn btn_style dropdown-toggle" id="bots" title="Predefined Bots" type="button" data-toggle="dropdown"
           (click)="getpredefinedbotlist()"> <img src="/assets/images/robot.svg" class="imageI1"><div class="btn_title">Bots</div></button>
         <ul *ngIf="predefinedbotsData.length > 0" class="dropdown-menu  rpa-custom-scrollbar" style="width:400px">
           <li *ngFor="let bots of predefinedbotsData; let i = index">
@@ -57,23 +57,23 @@
           </li>
         </ul>
       </div>
-      <button type="button" id="deployBot" [disabled]="savebotrespose==undefined" class="btn btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
+      <button type="button" id="deployBot" title="Deploy Bot Agent" [disabled]="savebotrespose==undefined" class="btn btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
         <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
         <div class="btn_title">Deploy</div>
       </button>
-      <button type="button" class="btn btn_style" id="edit" aria-hidden="true" placement="bottom">
+      <button type="button" class="btn btn_style" title="Edit Bot" id="edit" [disabled]="savebotrespose==undefined" aria-hidden="true" placement="bottom">
         <img class="imageI1" src="/assets/images/Expanded.svg">
         <div class="btn_title">Edit</div>
       </button>
       <button  type="button" 
-      class="btn btn_style" aria-hidden="true" [disabled]="envflag" placement="bottom" id="savebot" (click)="saveBotFunAct()">
+      class="btn btn_style" aria-hidden="true" title="Save Bot" [disabled]="!(envflag==false &&  0 < childBotWorkspace.finaldataobjects.length)"  placement="bottom" id="savebot" (click)="saveBotFunAct()">
       <img class="imageI1" src="/assets/images/Layer 1.svg">
       <div class="btn_title">Save</div>
     </button>
-    
+   
     <div *ngIf="startbot==false && pausebot==false && resumebot==false">
       <button  type="button"
-      class="btn btn_style" aria-hidden="true" placement="bottom" id="startbot" [disabled]="true">
+      class="btn btn_style" aria-hidden="true" title="Start Bot" placement="bottom" id="startbot" [disabled]="true">
       <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
       <div class="btn_title">Start</div>
       </button>
@@ -81,14 +81,14 @@
 
       <div *ngIf="startbot==true && pausebot==false && resumebot==false">
         <button  type="button"
-        class="btn btn_style" aria-hidden="true" placement="bottom" (click)="executionAct()">
+        class="btn btn_style" aria-hidden="true" title="Start Bot" placement="bottom" (click)="executionAct()">
         <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
         <div class="btn_title">Start</div>
         </button>
         </div>
     <div *ngIf="pausebot==true">
       <button  type="button"
-      class="btn btn_style" aria-hidden="true" placement="bottom" (click)="pauseBot()">
+      class="btn btn_style" aria-hidden="true" placement="bottom" title="Pause Bot" (click)="pauseBot()">
       <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
       <div class="btn_title">Pause</div>
       </button>
@@ -96,19 +96,19 @@
 
       <div *ngIf="resumebot==true">
         <button  type="button"
-        class="btn btn_style" aria-hidden="true" placement="bottom" (click)="resumeBot()">
+        class="btn btn_style" aria-hidden="true" placement="bottom" title="Resume Bot" (click)="resumeBot()">
         <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
         <div class="btn_title">Resume</div>
         </button>
       </div>
   
     <button  type="button"
-    class="btn btn_style" aria-hidden="true" id="schedule" (click)="schedulerPopUp()" id="schedule" placement="bottom">
+    class="btn btn_style" aria-hidden="true" id="schedule" title="Schedule Bot" (click)="schedulerPopUp()" id="schedule" placement="bottom">
     <img class="imageI1" src="/assets/images/Group 286.svg">
     <div class="btn_title">Schedule</div>
     </button>
       <div class="dropdown">
-        <button class="btn btn_style dropdown-toggle" id="Environments" type="button" data-toggle="dropdown">
+        <button class="btn btn_style dropdown-toggle" id="Environments" title="Select Environments" type="button" data-toggle="dropdown">
            <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1">
         <div class="btn_title">Environments</div></button>
         <ul *ngIf="environment.length > 0" class="dropdown-menu rpa-custom-scrollbar">
@@ -133,7 +133,7 @@
         </ul>
       </div>
       <div class="dropdown">
-        <button class="btn btn_style dropdown-toggle" id="versions" type="button" data-toggle="dropdown"
+        <button class="btn btn_style dropdown-toggle" title="Bot Versions" [disabled]="savebotrespose==undefined" id="versions" type="button" data-toggle="dropdown"
           (click)="getVersionlist()"> <img src="..\\assets\\images\\RPA\\Version_icon.svg" class="imageI1"><div class="btn_title">Versions</div></button>
         <ul *ngIf="versionsList.length > 0" class="dropdown-menu rpa-custom-scrollbar">
           <li *ngFor="let version of versionsList; let i = index">
@@ -158,12 +158,12 @@
         </ul>
 
       </div>
-      <button type="button" id="reset" class="btn btn_style" aria-hidden="true" placement="bottom">
+      <button type="button" id="reset" class="btn btn_style" title="Reset Bot" aria-hidden="true" placement="bottom">
         <img class="imageI1" src="/assets/images/reload_pp.svg">
         <div class="btn_title">Reset</div>
       </button>
       <button  type="button"
-      class="btn btn_style" id="delete" aria-hidden="true" placement="bottom">
+      class="btn btn_style" id="delete"  [disabled]="savebotrespose==undefined" title="Delete Bot" aria-hidden="true" placement="bottom">
       <img class="imageI1" src="/assets/images/RPA/delete_icon2.svg">
       <div class="btn_title">Delete</div>
       </button>
@@ -273,14 +273,32 @@
               </ngb-tab>
               <ngb-tab  title="Schedule">
                 <ng-template style="background: white;" ngbTabContent>
-                  <div style="background: white;">
-               <!--   <ul style="background: white;"  *ngFor ="let scheduleItem of scheduleLists" >
-                    <li class="col-md-12" style="padding: 0px; margin: 0px;">{{scheduleItem.}}</li>
-                  </ul>  -->
-                  <ul style="background: white;">
-                <li>No data Found</li>
-              </ul>  
-              </div>
+                  <div class="container" style="background: white;">
+                    <div class="row">
+                      <table class="table table-striped">
+                        <thead>
+                        <tr>
+                          <th>scheduleInterval</th>
+                          <th>LastRunTime</th>
+                          <th>botId</th>
+                          <th>timeZone</th>
+                          <th>nextRunTime</th>
+                          <th>executionStatus</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let schedule of scheduleLists">
+                          <td>{{schedule.scheduleInterval}}</td>
+                          <td>{{schedule.lastRunTime}}</td>
+                          <td>{{schedule.botId}}</td>
+                          <td>{{schedule.timeZone}}</td>
+                          <td>{{schedule.nextRunTime}}</td>
+                          <td>{{schedule.executionStatus}}</td>
+                        </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </ng-template>
               </ngb-tab>
             </ngb-tabset>

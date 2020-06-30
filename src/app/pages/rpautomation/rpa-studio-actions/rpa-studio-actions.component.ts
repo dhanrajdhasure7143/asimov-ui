@@ -159,7 +159,7 @@ export class RpaStudioActionsComponent implements OnInit {
     }
   }
  
- 
+  
 
   executionAct() {
     this.startbot=false;
@@ -328,8 +328,11 @@ getEnvironmentlist() {
     console.log(this.environment)
   })
 }
+
+
   checkuncheckenv(id:any)
   {
+   // console.log(this.environment.filter(data => data.checked==true).length)
     if(this.environment.find(data=>data.environmentId==id).checked==false)
     { 
       this.environment.find(data=>data.environmentId==id).checked=true
@@ -338,16 +341,14 @@ getEnvironmentlist() {
     {
       this.environment.find(data=>data.environmentId==id).checked=false
     }
-    if(this.environment.filter(data => data.checked==true).length > 0)
-    {
-      this.envflag=false;
-    }
-    else if(this.childBotWorkspace.finaldataobjects.length!=0 && this.environment.filter(data => data.checked==true).length > 0)
-    {
-      this.envflag=true;
-    }
-  }  
+    this.environment.filter(data =>{ 
+      if(data.checked==true){
+        this.envflag=false;
+      }
+    })
+    
   
+  } 
   
   getallpredefinebots() {
     this.predefined = [];
