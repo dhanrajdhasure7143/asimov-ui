@@ -5,6 +5,7 @@
   height: 263px;
   text-align: center;
   color: #717386;
+  margin-top: 28px !important;
   padding: 0;
   margin: 10px auto;
 }
@@ -24,7 +25,9 @@
   background-color: #0062cf;
   border-radius: 20px;
   width: 120px;
+
   margin-top: 20px;
+  border-radius: 20px !important;
   outline: none;
 }
 .bpmn-btn:focus, .bpmn-btn:active{

@@ -1,19 +1,19 @@
 <div class="row col-md-12 drop_div">
-    <div class="col-md-6"></div>
     <div class="col-md-2">
         <b>BPMN Notation&nbsp;</b>
-        <select class="form-control" [(ngModel)]="selected_notation" (change)="displayBPMN()">
+        <select class="form-control " [(ngModel)]="selected_notation" (change)="displayBPMN()">
             <option [value]="bpmnIndex" *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [selected]="each_bpmn.bpmnModelId == selected_modelId">
                 {{each_bpmn.bpmnProcessName}}</option>
         </select>
     </div>
     <div class="col-md-2">
         <b>Approver List&nbsp;</b>
-        <select class="form-control" [(ngModel)]="selected_approver">
+        <select class="form-control " [(ngModel)]="selected_approver">
             <option [value]="each_approver.firstName+' '+each_approver.lastName" *ngFor="let each_approver of approver_list">
                 {{each_approver.firstName+" "+each_approver.lastName}}</option>
         </select>
     </div>
+    <div class="col-md-6"></div>
     <div class="col-md-2"></div>
 </div>
 <div class="container-fluid">
@@ -29,8 +29,8 @@
                     <button class="btn bpmn-btn">Upload Again</button>
                 </ngx-dropzone-label>
             </ngx-dropzone>
-            <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
-            <button class="right btn btn-success" (click)="automate()" [disabled]="!diplayApproveBtn">Automate</button>
+            <button class="right btn btn-success continueandAutomate" (click)="submitDiagramForApproval()">Continue for Approval</button>
+            <button class="right btn btn-success continueandAutomate" (click)="automate()" [disabled]="!diplayApproveBtn">Automate</button>
             <button class="right btn" (click)="saveprocess(null)">Save Process</button>
         </div>
         <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
@@ -51,7 +51,6 @@
                             <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
                         <option value="other">Other</option>
                         </select>
-                        <br>
                         <div *ngIf='isotherCategory'>
                         <label for="otherCategory"><b>Enter Category</b></label>
                         <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
