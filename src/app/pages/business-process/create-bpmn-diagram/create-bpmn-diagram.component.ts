@@ -53,6 +53,20 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     // this.randomId = UUID.UUID();
     this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
   }
+  ngOnDestroy(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Your current changes will be lost on changing diagram.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Save and Continue',
+      cancelButtonText: 'Discard'
+    }).then((res)=>{
+      if(res.value){
+        this.saveprocess(null);
+      }
+    })
+  }
 
   async getUserBpmnList(){
     this.isLoading = true;
@@ -147,7 +161,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       _self.newXml = xml;
       if(_self.oldXml != _self.newXml){
         _self.spinner.show();
-        _self.bpmnModel.bpmnModelModifiedTime = new Date();
+        _self.bpmnModel.modifiedTimestamp = new Date();
         _self.bpmnModel.bpmnProcessMeta = btoa(unescape(encodeURIComponent(_self.newXml)));
         _self.bpmnModel.bpmnProcessName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
         _self.bpmnModel.bpmnModelId = _self.randomId;

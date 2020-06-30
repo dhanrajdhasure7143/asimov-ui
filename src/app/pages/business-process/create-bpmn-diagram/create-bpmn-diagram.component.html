@@ -51,6 +51,7 @@
                             <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
                         <option value="other">Other</option>
                         </select>
+                        <br>
                         <div *ngIf='isotherCategory'>
                         <label for="otherCategory"><b>Enter Category</b></label>
                         <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">

@@ -1,52 +1,53 @@
 <div class="box_area" [hidden]="bpmnupload">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class='col-md-8 drop_box' id="upload_bpmn">
-                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn'" >
-                    <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
-                        <h3>Upload Process Model</h3>
-                        <h5>Drag and drop files here (.bpmn)</h5>
-                        <button class="btn bpmn-btn">Select</button>
-                    </ngx-dropzone-label>
-                </ngx-dropzone>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class='col-md-8 drop_box create_box'>
-                <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
-                <h3>Define Your Own Process</h3>
-                <h5>Do process model from Scratch level</h5>
-                <button class="btn bpmn-btn" id="create_bpmn" (click)="slideUp()">Create</button>
-            </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class='col-md-8 drop_box' id="upload_bpmn">
+            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn'" >
+                <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
+                    <h3>Upload Process Model</h3>
+                    <h5>Drag and drop files here (.bpmn)</h5>
+                    <button class="btn bpmn-btn">Select</button>
+                </ngx-dropzone-label>
+            </ngx-dropzone>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class='col-md-8 drop_box create_box'>
+            <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
+            <h3>Define Your Own Process</h3>
+            <h5>Do process model from Scratch level</h5>
+            <button class="btn bpmn-btn" id="create_bpmn" (click)="slideUp()">Create</button>
+        </div>
+    </div>
+</div>
 
 <div id="myModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="close" (click)="slideDown();">&times;</span>
-            <h4>BPMN Details</h4>
-        </div>
-        <div class="modal-body">
-            <form autocomplete="off" #createBpmnForm="ngForm"> 
-                <div class="container m-contanier">
-                <label for="category"><b>Select Category</b></label>
-                    <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
-                        <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
-                    <option value="other">Other</option>
-                    </select>
-                    <div *ngIf='isotherCategory'>
-                    <label for="otherCategory"><b>Enter Category</b></label>
-                    <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
-                    </div>
-                <label for="piName"><b>Enter Process Name</b></label>
-                <input type="text" name="bpmnName" [(ngModel)]="bpmnProcessName" required class="form-control" placeholder="Process Name">
-                    <div class="clearfix m-btn">
-                        <button class="apply_button" type="submit" (click)="uploadCreateBpmn()" [disabled]="!createBpmnForm.valid">Proceed</button>
-                    </div>
-                </div>
-            </form>
-        </div>
+<div class="modal-content">
+    <div class="modal-header">
+        <span class="close" (click)="slideDown();">&times;</span>
+        <h4>BPMN Details</h4>
     </div>
+    <div class="modal-body">
+        <form autocomplete="off" #createBpmnForm="ngForm"> 
+            <div class="container m-contanier">
+            <label for="category"><b>Select Category</b></label>
+                <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
+                    <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
+                <option value="other">Other</option>
+                </select>
+                <br>
+                <div *ngIf='isotherCategory'>    
+                <label for="otherCategory"><b>Enter Category</b></label>
+                <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
+                </div>
+            <label for="piName"><b>Enter Process Name</b></label>
+            <input type="text" name="bpmnName" [(ngModel)]="bpmnProcessName" required class="form-control" placeholder="Process Name">
+                <div class="clearfix m-btn">
+                        <button class="apply_button" type="submit" (click)="uploadCreateBpmn()" [disabled]="!createBpmnForm.valid">Proceed</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 </div>
