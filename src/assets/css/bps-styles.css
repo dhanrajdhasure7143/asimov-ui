@@ -474,3 +474,18 @@ background-color: #ccc;
 cursor: pointer;
 }
 /* bpmn-diagram-list component styles - Ends*/
+.box-border{
+  border:1px solid #8080808c;
+  border-radius: 20px;
+}
+input[type=search]{
+  border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.box_area{
+  margin-top: 20px;
+}
+.continueandAutomate{
+  color:#0062cf;
+}

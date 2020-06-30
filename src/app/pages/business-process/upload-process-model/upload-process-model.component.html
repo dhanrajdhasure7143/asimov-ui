@@ -3,7 +3,7 @@
     <button class="btn" (click)="reSize=true" *ngIf="isShowConformance">Show Conformance</button>
     <button class="btn" (click)="getBpmnDifferences()" *ngIf="reSize && isConfNavigation" >Show Differences</button>
   </div>
-  <div class="col-md-2" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
+  <div class="col-md-2 notationStyle" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
       <b>BPMN Notation&nbsp;</b>
       <select class="form-control" [(ngModel)]="selected_notation" (change)="displayBPMN()">
           <option value="undefined" selected>{{bpmnModel.bpmnProcessName}}</option>
@@ -11,7 +11,7 @@
               {{each_bpmn.bpmnProcessName}}</option>
       </select>
   </div>
-  <div class="col-md-2" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
+  <div class="col-md-2 approverStyle" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
     <b>Approver List&nbsp;</b>
     <select class="form-control" [(ngModel)]="selected_approver">
         <option [value]="each_approver.firstName+' '+each_approver.lastName" *ngFor="let each_approver of approver_list">
@@ -39,7 +39,7 @@
         <button class="btn bpmn-btn">Upload Again</button>
     </ngx-dropzone-label>
   </ngx-dropzone>
-  <button class="right btn btn-success" (click)="submitDiagramForApproval()">Continue for Approval</button>
+  <button class="right btn btn-success" (click)="submitDiagramForApproval()">Submit for Approval</button>
   <button class="right btn btn-success" (click)="automate()" [disabled]="isShowConformance && !isConfNavigation">Automate</button>
   <button class="right btn" (click)="saveprocess()" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">Save Process</button>
 </div>
@@ -61,7 +61,6 @@
                     <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
                 <option value="other">Other</option>
                 </select>
-                <br>
                 <div *ngIf='isotherCategory'>
                   <label for="otherCategory"><b>Enter Category</b></label>
                   <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">

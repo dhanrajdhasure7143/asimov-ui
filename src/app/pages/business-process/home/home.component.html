@@ -3,37 +3,38 @@
     <div class="col-md-4 offset-1">
         <app-upload-create-drop-bpmn isConfirmance="false"></app-upload-create-drop-bpmn>
     </div>
-    <div class="col-md-8 box-border">
+    
+    <div class="col-md-8 box-border myworkspace-style">
       <div class="row col-md-12">
         <h4 class="col-md-7 box-heading">My Workspace</h4>
         <div class="col-md-2"></div>
-        <div class="col-md-3">     
-            <input type="search" class="form-control" [(ngModel)]="searchTerm" placeholder="Search Workspace"/>
-           </div>
-      </div>
+        <div class="col-md-3 ">
+          <input type="search"   class="form-control" [(ngModel)]="searchTerm" placeholder="Search Workspace"/>
+        </div>
+        
+    </div>
+    
       <div class="row col-md-12 text-bold workspace-title">
-          <div class="col-md-3"><b>Process Name</b></div>
-          <div class="col-md-3"><b>Last Modified</b></div>
-          <div class="col-md-3"><b>Approver</b></div>
-          <div class="col-md-2"><b>Status</b></div>
-          <div class="col-md-1"><b>Comment</b></div>
+        <div class="col-md-3" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
+        <div class="col-md-3"  (click)="sort('modifiedTimestamp',1)"><b>Last Modified<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>
+        <div class="col-md-3"  (click)="sort('approverName',2)"><b>Approver<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></div>
+        <div class="col-md-2"  (click)="sort('bpmnProcessStatus',3)"><b>Status<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></div>
+        <div class="col-md-1"  (click)="sort('reviewComments',4)"><b>Message<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></div>
       </div>
       <div class="row col-md-12"  id="bpmn_list">
-          <mat-accordion>
-          <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
-           *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 15, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
-          (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 15, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12">
-                    <div class="col-md-3">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</div>
-                    <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
-                    <div class="col-md-3">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
-                    <div class="col-md-2">{{each_diag.bpmnProcessStatus ? each_diag.bpmnProcessStatus: '-'}}</div>
-                    <div class="col-md-1">
-                      <span class="comment">
-                        <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments?each_diag.reviewComments:'-'}}</span>
-                      </span>
+                  <div class="col-md-3">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</div>
+                  <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+                  <div class="col-md-3">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
+                  <div class="col-md-2">{{each_diag.bpmnProcessStatus ? each_diag.bpmnProcessStatus: '-'}}</div>
+                  <div class="col-md-1">
+                    <span class="comment">
+                      <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments?each_diag.reviewComments:'-'}}</span>
+                    </span>
                   </div>
                 </div>
               </mat-panel-title>
@@ -44,10 +45,11 @@
           </mat-expansion-panel>
         </mat-accordion>
         <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      </div>
+      
+     </div>
     </div>
   </div>
 </div>
 <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
-    <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
-    </div></div>
+  <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
+  </div></div>
