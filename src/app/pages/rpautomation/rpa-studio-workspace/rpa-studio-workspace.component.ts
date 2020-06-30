@@ -293,19 +293,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         
   })
   let cutedata={
-    "taskName":this.selectedNode.name,
-    "taskId":this.selectedNode.id,
+    "taskName":this.selectedTask.name,
+    "tMetaId":this.selectedTask.id,
     "inSeqId":1,
     "outSeqId":2,
     "attributes":obj
   }
   this.finaldataobjects.push(cutedata);
-    Swal.fire({
-      position: 'top-end',
-      icon: 'success',
-      title: "Saved Successfully",
-      showConfirmButton: false,
-      timer: 2000})
+  this.notifier.notify( "info", "Data Saved Successfully" );
   }
 
   saveBotFun(botProperties,env)
