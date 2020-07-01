@@ -77,8 +77,6 @@
     to {opacity: 1}
     }
     
-    
-
 .databaseForm{
     margin-top: 15px;
 }
@@ -163,14 +161,30 @@ input[type="text"]{
     cursor: pointer;
 }
 
-table.tableBodyScroll tbody {
+/* table.tableBodyScroll tbody {
     display: block;
     max-height: 400px;
     overflow-y: scroll;
-  }
+  } */
   
   table.tableBodyScroll thead, table.tableBodyScroll tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
+  }
+  .pilist_table{
+      border: 2px solid #f4f4f4;
+  }
+  .searc_cat{
+      position: absolute;
+      z-index: 1;
+      /* margin-top: 0px; */
+      margin-left: 10px;
+      margin-bottom: 10px;
+  }
+  .search_btn{
+      font-size: 16px;
+      margin-bottom: 10px;
+      margin-left: -30px;
+      margin-top: 10px;
   }

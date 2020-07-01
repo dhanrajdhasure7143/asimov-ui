@@ -23,18 +23,20 @@
                 </div>
                 <div class='col-sm-12 row variant2'>
                         <div class="col-sm-7 check_box">
-                            <input id="check_box"  type="checkbox" #check_box='ngModel'   [(ngModel)]="checkboxValue" (change)="seleceAllVariants()"><span class="">Select all</span>
+                            <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selecetAllVariants()"><span class="">Select all</span>
                         </div>
                         <div class='col-sm-5 event2'>Time Taken</div>
                 </div>
-                <div class='col-sm-12 row variant_border' [ngClass]="data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
+                <!-- [ngClass]="data.selected ==='active'?'activevaraint':''" -->
+                <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
                     <div (click)="caseIdSelect(data,i)"  class='col-sm-1 event3'>#{{i+1}}</div>
                     <div class='col-sm-9 variant_parcent'>
                         <div (click)="caseIdSelect(data,i)" class='col-sm-12'>{{caseParcent(data.casepercent)}}% of cases</div>
                         <div (click)="caseIdSelect(data,i)" class='col-sm-12 events1'><p>{{data.detail}}</p></div>
                     
                         <div class='col-sm-3'></div>
-                        <div class="col-sm-9 variant_play" *ngIf="isvaraintPlay">
+                        <!-- *ngIf="isvaraintPlay" -->
+                        <div class="col-sm-9 variant_play" >
                             <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
                             <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
                         </div>
@@ -111,8 +113,14 @@
         </div>
         <!-- <div> -->
                 <div class="col-md-2 row">
-                        <div class="col-sm-6">
-                            <button (click)="downloadsvg()" title="Download" class="down_btn"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
+                        <div class="col-sm-6  dropdown">
+                            <button title="Download" data-toggle="dropdown" class="down_btn dropdown-toggle"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
+                    <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
+                        
+                            <p class="" (click)="downloadPdf()">PDF</p>
+                            <p class="" (click)="downloadSvg()">SVG</p>
+                       
+                        </div>
                         </div>
                         <div class='col-sm-6'>
                             <button (click)="playAnimation()" class="play_btn stopbtn" title="Play" *ngIf="!isplay"><i class="fa fa-play"></i></button>
@@ -179,16 +187,16 @@
                     </form>
                 </div>
             </div>
-        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownload]="isdownload" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)"></app-piflowchart>
+        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"></app-piflowchart>
     </div>
     <div class='col-md-1'>
         <div class="path_slider1 pull-right">
             <div>
-            <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
+            <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider (valueChange)="onchangeActivity($event)" [options]="options" ></ng5-slider></div>
             </div>
             <p class="slider_label Activities_slider">Activities</p>
             <div>
-            <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(ngModel)]="pathvalue" [options]="options" ></ng5-slider></div>
+            <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(value)]="value" [options]="options" (valueChange)="onChangePath($event)" ></ng5-slider></div>
             </div>
             <p class="slider_label Paths_slider">Paths</p>
         </div>

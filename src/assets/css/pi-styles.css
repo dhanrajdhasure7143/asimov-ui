@@ -1156,3 +1156,37 @@ label{
   font-size: 30px;
   margin-top: -36px;
 }
+/*data table style in upload component*/
+.dataTables_length label{
+  display: none;
+}
+#myTableId_filter{
+  display: none;
+}
+.dataTables_filter input[type=search]{
+  height: 30px !important;
+  padding: 0px 5px;
+  border-bottom: 1px solid rgb(121, 118, 118) !important;
+  width: 60%;
+}
+.dataTables_filter label{
+/* font-size: 11px !important; */
+color:rgb(121, 118, 118) !important;
+margin-bottom: 12px;
+font-family: Roboto, "Helvetica Neue", sans-serif;
+font-weight: 100;
+font-size: 14px;
+/* border-bottom: 1px solid rgb(121, 118, 118) !important; */
+}
+.border_bottom,.dataTables_filter input[type=search]{
+  border-left: 0px !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+  border-bottom: 1px solid rgb(121, 118, 118) !important;
+  padding: 0px 5px;
+}
+table.dataTable {
+  border-collapse: collapse !important;
+}

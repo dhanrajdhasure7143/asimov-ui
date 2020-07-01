@@ -66,43 +66,50 @@
                                     </mat-expansion-panel>
                                   </mat-accordion>
                                 </div> -->
-                                <div class='col-sm-4'>
+                                <div class='col-sm-12'>
                                 <h4>My Workspace</h4>
                                 </div>
                                 <form action="">
-                                <div class="col-sm-8 row">
-                                        <div class="col-sm-8">
-                                        <select class="form-control" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
+                                <!-- <div class="col-sm- row"> -->
+                                        <div class="col-sm-2"></div>
+                                        <div class="col-sm-6">
+                                        <div class="col-sm-10 pull-right searc_cat">
+                                        <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
                                                 <option value="undefined" hidden disabled>Search by Category</option>
                                                 <option value="allcategories">All Categories</option>
                                                 <option [value]="each.categoryName" *ngFor="let each of categoryList.data;let i=index">{{each.categoryName}}</option>
                                         </select>
                                         </div>
-                                        <div class='col-sm-4 inner-addon right-addon'>
+                                        
+                                        
+                                        </div>
+                                        <div class="col-sm-2" *ngIf="isSearch"><button class="search_btn" (click)="onsearchSelect()"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></button></div>
+                                        
+                                        <!-- <div class='col-sm-4 inner-addon right-addon'>
                                         <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
                                         <input type="text" placeholder="Search" name="searchGraph" [(ngModel)]="searchgraph">
-                                        </div>
-                                </div>
+                                        </div> -->
+                                <!-- </div> -->
                                 </form>
-                                <table class="col-sm-12 table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
+                                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="col-sm-12 table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
                                         <thead class="text-center">
                                         <tr class="text-center">
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process ID</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Date</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process Name</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Category</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Status</th>
-                                                <th class="text-center table_header" >Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class='text-center'>
+                                                <th class="text-center table_header">Process ID</th>
+                                                <th class="text-center table_header">Date</th>
+                                                <th class="text-center table_header">Process Name</th>
+                                                <th class="text-center table_header">Category</th>
+                                                <th class="text-center table_header">Status</th>
+                                                <th class="text-center table_header">Action</th>
+                                        </tr>                                        
+                                        </thead>                                        
+                                        <tbody class='text-center'>                                        
                                                 <tr class='pList' *ngFor='let process_list of process_graph_list|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
-                                                        <td class="th-sm">{{process_list.piId}}</td>
-                                                        <td>{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</td>
-                                                        <td>{{process_list.piName|titlecase}}</td>
-                                                        <td>{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
-                                                        <td>{{process_list.status}}</td>
-                                                        <td class="process_view" (click)="onGraphSelection(process_list)" title="View Process Graph"><i class='fa fa-eye'></i></td>
+                                                <td class="th-sm">{{process_list.piId}}</td>
+                                                <td>{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</td>
+                                                <td>{{process_list.piName|titlecase}}</td>
+                                                <td>{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
+                                                <td>{{process_list.status}}</td>
+                                                <td class="process_view" (click)="onGraphSelection(process_list)" title="View Process Graph"><i class='fa fa-eye'></i></td>
                                                 </tr>
                                         </tbody>
                                        

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 import * as go from 'gojs';
+import * as jsPDF from 'jspdf'
 // import {ZoomSlider} from '../../../zoomSlider';
 // import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -14,12 +15,15 @@ export class PiflowchartComponent implements OnInit {
   @Input()  public model1 ;
   @Input()  public model2 ;
   @Input() public isplay;
-  @Input() public isdownload;
+  @Input() public isdownloadsvg;
+  @Input() public isdownloadpdf;
   @Input() public spinMetrics0;
   public model:go.Model;
   @Output()
     public nodeClicked = new EventEmitter();
     @Output() myOutputVal = new EventEmitter<boolean>();
+    @Output() issvg=new EventEmitter<boolean>()
+    @Output() ispdf=new EventEmitter<boolean>()
     public myDiagram: go.Diagram ;
     public isfrequency:boolean=false;
     toolData1:any=[];
@@ -44,8 +48,14 @@ export class PiflowchartComponent implements OnInit {
     if(this.isplay == true){
       this.playAnimation();
     };
-    if(this.isdownload == true){
+   
+    if(this.isdownloadsvg == true){
       this.makeSvg();
+    }
+    if(this.isdownloadpdf==true){
+      console.log(this.isdownloadpdf);
+      
+      this.generateImages (2000,2000)
     }
 
     // $(".zoomSlider").nextAll().remove();
@@ -65,8 +75,8 @@ export class PiflowchartComponent implements OnInit {
     this.myDiagram =
         $(go.Diagram, "myDiagramDiv", // must name or refer to the DIV HTML element
             {
-              initialContentAlignment: go.Spot.TopCenter,
-                initialAutoScale: go.Diagram.Uniform,
+              initialContentAlignment: go.Spot.Center,
+                initialAutoScale: go.Diagram.UniformToFill,
                 hasHorizontalScrollbar: true,
                 hasVerticalScrollbar: true,
                 // have mouse wheel events zoom in and out instead of scroll up and down
@@ -308,21 +318,18 @@ export class PiflowchartComponent implements OnInit {
         new go.Binding("curviness"),
         new go.Binding("zOrder"),
       // mark each Shape to get the link geometry with isPanelMain: true
-      $(go.Shape, { isPanelMain: true, stroke: "black", strokeWidth: 0,name: "LINK1", },
-              new go.Binding('strokeWidth','extraNode',function(progress) {
-          return progress ? 0 : 7;
-        }),
+      $(go.Shape, { isPanelMain: true, stroke: "blue", strokeWidth: 0,name: "LINK1", },
+        //       new go.Binding('strokeWidth','extraNode',function(extraNode) {
+        //   return extraNode ? 0 : 7;
+        // }),
         new go.Binding('strokeWidth','highData',function(highData) {
           return highData ? 0 : 7;
         }),
         ),
-      $(go.Shape, { isPanelMain: true, stroke: "rgb(44,62,80)", strokeWidth: 5 },
+      $(go.Shape, { isPanelMain: true, stroke: "rgb(44,62,80)", strokeWidth: 5,name:"LINK2" },
       new go.Binding('strokeWidth','extraNode',function(extraNode) {
         return extraNode ? 0 : 7;
-      }),
-        // new go.Binding('stroke','progress',function(progress) {
-        //   return progress ? "green" : 'blue';
-        // }), 
+      }), 
         new go.Binding('stroke', 'highData', function(highData) {
           return highData ? "red"  : 'blue';
         }),
@@ -331,8 +338,8 @@ export class PiflowchartComponent implements OnInit {
         }),
       ),
       $(go.Shape, { isPanelMain: true, stroke: "white", strokeWidth: 3, name: "PIPE", strokeDashArray: [10, 10] },
-      new go.Binding('stroke','extraNode',function(progress) {
-        return progress ? "purple" : "white";
+      new go.Binding('stroke','extraNode',function(extraNode) {
+        return extraNode ? "purple" : "white";
       })
       ,
       // new go.Binding('strokeDashArray', 'inprogress', function(inprogress) {
@@ -373,8 +380,8 @@ export class PiflowchartComponent implements OnInit {
                         
                         showLinkToolTip(e,obj,data);
                       },
-                      mouseLeave:function(){
-                        hideLinkToolTip()
+                      mouseLeave:function(e,obj){
+                        hideLinkToolTip(obj)
                       }
                       }
         );
@@ -385,18 +392,22 @@ export class PiflowchartComponent implements OnInit {
           var shape = obj.findObject("LINK");
           var shape1 = obj.findObject("LINK1");
           var shape2 = obj.findObject("PIPE");
-          // console.log(shape1);
-          // shape1.stroke="white";
-          // // shape2.stroke="white"
-              // shape1.strokeWidth=10;
-              // shape2.strokeWidth=8;
-              // shape2.stroke="purple";
-          // shape2.strokeDashArray= [10, 10]
-          // node.fromPort.stroke="red"
-          // node.fromPort.strokeWidth=2;
-          // node.toPort.stroke="red"
-          // node.toPort.strokeWidth=2;
-          
+          console.log();
+          if(shape.fromNode.hb.key==-1||shape.toNode.hb.key==-2){
+            // console.log(shape1);
+            
+            // shape1.shadowOffset=10
+            // shape1.strokeWidth=10
+            shape2.stroke="blue"
+            shape2.strokeWidth=6;
+          }else{
+            shape1.strokeWidth=10;
+            // shape2.stroke="green"
+            // shape2.strokeWidth=10;
+
+
+          }
+
           if((shape.fromNode.hb.key==-1&&me.spinMetrics0=="absoluteFrequency")||(shape.fromNode.hb.key==-1&&me.spinMetrics0=="caseFrequency")||(shape.toNode.hb.key===-2 && me.spinMetrics0=="absoluteFrequency")||(shape.toNode.hb.key===-2 && me.spinMetrics0=="caseFrequency")||(shape.fromNode.hb.key>=0&&shape.toNode.hb.key>=0)){
 
             // console.log("spinMetrics0",me.spinMetrics0);
@@ -600,9 +611,24 @@ export class PiflowchartComponent implements OnInit {
              return input;
       
       }
-        function hideLinkToolTip(){
+        function hideLinkToolTip(obj){
           var toolTipDIV = document.getElementById('linkToolTipDIV');
           toolTipDIV.style.display = "none";
+          var shape = obj.findObject("LINK");
+          // var node = obj.part;
+          var shape1 = obj.findObject("LINK1");
+          var shape2 = obj.findObject("PIPE");
+          if(shape.fromNode.hb.key==-1||shape.toNode.hb.key==-2){
+            // console.log(shape1);
+            
+            // shape1.shadowOffset=10
+            // shape1.strokeWidth=10
+            shape2.stroke="purple"
+            shape2.strokeWidth=3;
+          }else{
+            shape1.strokeWidth=0;
+            // shape2.stroke="white"
+          }
         }
         function timeConversion(millisec) {
          
@@ -635,11 +661,19 @@ export class PiflowchartComponent implements OnInit {
   //        );
   // }
   playAnimation(){
-    
     var animation = new go.Animation();
       animation.easing = go.Animation.EaseLinear;
       this.myDiagram.links.each(function(link) {
-        animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 0)},);
+        animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 10)
+        // animation.add(link.findObject("LINK1"), "strokeWidth",7,7)
+        // animation.add(link.findObject("PIPE"), "strokeWidth",7,9)
+        // animation.add(link.findObject("PIPE"), "stroke","red","green")
+        // animation.add(link.findObject("LINK2"), "strokeWidth",5,5)
+        // animation.add(link.findObject("LINK2"), "stroke",'red','red')
+        // animation.add(link.findObject("LINK1"), "strokeWidth",7,7)
+        // var shape2 = this.myDiagram.link.findObject("LINK1");
+        // console.log(shape2.strokeWidth);
+      },);
       // Run indefinitely
       animation.runCount = Infinity;
       animation.start();
@@ -672,7 +706,11 @@ export class PiflowchartComponent implements OnInit {
       window.URL.revokeObjectURL(url);
       document.body.removeChild(a);
     });
-    this.isdownload=false;
+    this.isdownloadsvg=false;
+    // this.isdownloadpdf=false
+      this.issvg.emit(this.isdownloadsvg)
+   
+  
   }
 
   makeSvg() {
@@ -707,5 +745,49 @@ zoomOut(){
 restZoom(){
   this.myDiagram.commandHandler.resetZoom();
 }
+generateImages (width:any, height:any) {
+  // console.log(width);
+  // console.log(height);
+  // sanitize input
+  width = parseInt(width);
+  height = parseInt(height);
+  if (isNaN(width)) width = 100;
+  if (isNaN(height)) height = 100;
+  // Give a minimum size of 50x50
+  // width = Math.max(width, 50);
+  // height = Math.max(height, 50);
+  var imgDiv = document.getElementById('myDiagramDiv');
+  // console.log(imgDiv)
+  //imgDiv.innerHTML = ''; // clear out the old images, if any
+  var db = this.myDiagram.documentBounds;
+  // console.log(db);
+  var boundswidth = db.width;
+  var boundsheight = db.height;
+  var imgWidth = width;
+  var imgHeight = height;
+  //var p = db.position.copy();
+  var d = this.myDiagram.documentBounds;
+  //making images
+  // for (var i = 0; i< boundsheight; i += imgHeight) {
+  var img:any
+  //for (var j = 0; j < boundswidth; j += imgWidth) {
+  img= this.myDiagram.makeImage({
+  scale: 0,
+  type: "image/jpeg",
+  background: "white",
+  //position: new go.Point(db.x, db.y),
+  size: new go.Size(2000, 2000)
+  });
+  //}
+  //}
+  // console.log(img);
+  var doc = new jsPDF();
+  doc.addImage(img.src, 'JPEG', 15, 40, 180, 160);
+  //if you need more page use addPage();
+  // doc.addPage();
+  doc.save("diagram.pdf");
+  this.isdownloadpdf=false;
+  this.ispdf.emit(this.isdownloadpdf);
+  }
 
 }

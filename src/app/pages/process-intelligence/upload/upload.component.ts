@@ -9,6 +9,7 @@ import { GlobalScript } from '../../../shared/global-script';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 import Swal from 'sweetalert2';
+import { Subject } from 'rxjs';
 
 declare var target:any;
 @Component({
@@ -37,7 +38,10 @@ export class UploadComponent implements OnInit {
   searchgraph:any;
   orderAsc:boolean = true;
   categoryList:any=[];
-  category:any
+  category:any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  isSearch:boolean=true;
 
   constructor(private router: Router, 
     private dt:DataTransferService, 
@@ -55,9 +59,10 @@ export class UploadComponent implements OnInit {
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
     this. getAllCategories();
-
-   
-   
+  }
+  ngOnDestroy(){
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
     onUpload(event,id) {
       this.selectedFile = <File>event.addedFiles[0];
@@ -232,10 +237,13 @@ onDbSelect(){
   }
 
   getAlluserProcessPiIds(){
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10
+    };
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_List=data
-      // console.log('data',this.process_graph_list)
       this.process_graph_list=this.process_List.data
-    
+      this.dtTrigger.next();
     })
   }
   loopTrackBy(index, term){
@@ -288,6 +296,13 @@ onDbSelect(){
       });
     }
   }
+  onsearchSelect(){
+    this.isSearch=false;
+    var searcgraph=document.getElementById("myTableId_filter")
+    searcgraph.style.display="block"
+    
+  }
+  
 }
 
 
