@@ -75,7 +75,7 @@ export class PiflowchartComponent implements OnInit {
     this.myDiagram =
         $(go.Diagram, "myDiagramDiv", // must name or refer to the DIV HTML element
             {
-              initialContentAlignment: go.Spot.Center,
+              initialContentAlignment: go.Spot.TopCenter,
                 initialAutoScale: go.Diagram.UniformToFill,
                 hasHorizontalScrollbar: true,
                 hasVerticalScrollbar: true,
