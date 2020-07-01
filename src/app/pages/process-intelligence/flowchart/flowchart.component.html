@@ -192,11 +192,11 @@
     <div class='col-md-1'>
         <div class="path_slider1 pull-right">
             <div>
-            <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider (valueChange)="onchangeActivity($event)" [options]="options" ></ng5-slider></div>
+            <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider (userChange)="onchangeActivity($event)" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
             </div>
             <p class="slider_label Activities_slider">Activities</p>
             <div>
-            <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(value)]="value" [options]="options" (valueChange)="onChangePath($event)" ></ng5-slider></div>
+            <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(value)]="value" [(ngModel)]="pathvalue" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
             </div>
             <p class="slider_label Paths_slider">Paths</p>
         </div>

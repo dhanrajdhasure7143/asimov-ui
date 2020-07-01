@@ -300,13 +300,11 @@ export class FlowchartComponent implements OnInit {
 
         
         this.rest.getvaraintGraph(piId).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        // console.log('varaint_GraphData',JSON.parse(this.varaint_GraphData.data));
-        // this.varaint_GraphDataArray=JSON.parse(this.varaint_GraphData.data)
-        console.log('varaint_GraphData',this.varaint_GraphData);
+        // console.log('varaint_GraphData',this.varaint_GraphData);
         })
 
         this.rest.getSliderVariantGraph(piId).subscribe(data=>{this.sliderVariant=data
-            console.log("this.sliderVariant",this.sliderVariant);
+            // console.log("this.sliderVariant",this.sliderVariant);
         })
   }
 
@@ -1139,13 +1137,13 @@ closeNav() {
   
 
   onchangeActivity(value){
-    // console.log("activityValue",value);
-    this.activityValue=value;
+    console.log("activityValue",this.activityValue);
+    // this.activityValue=value;
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue) 
   }
   onChangePath(value){
-    // console.log("pathValue",value);
-    this.pathvalue=value;
+    console.log("pathValue",this.pathvalue);
+    // this.pathvalue=value;
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue)
   }
    
@@ -1157,16 +1155,31 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
       if (activity_slider == item.ActivitySlider && path_slider == item.PathSlider) {
           sliderGraphArray.push(item);
       }
+    //   console.log("sliderGraphArray",sliderGraphArray);
+      
   });
+  if(sliderGraphArray.length==0){
+    Swal.fire(
+        'Oops!',
+        'Slider metcrics not available for this slider values',
+        'info'
+      );
+      this.model1=sliderGraphArray;
+      this.nodesAlignment()
+      this.model2 = this.flowchartData(this.model1)
+      this.linkCurvinessGenerate();
+      return;
+
+  }
     var obj={"key": -1,"category": "Start","count": 80,"extraNode":'true'}
     var obj1={"key": -2,"category": "End","count": 80,"extraNode":'true'}
     var modelOne=[]
     modelOne[0]=obj
         for(var i=0;i<sliderGraphArray.length;i++){
-            modelOne.push(sliderGraphArray[i])
+            modelOne.push(sliderGraphArray[i]);
         }
     modelOne.push(obj1)
-    console.log("sliderGraphArray",modelOne);
+    // console.log("modelOne",modelOne);
     this.model1=modelOne;
     this.nodesAlignment()
     this.model2 = this.flowchartData(this.model1)
