@@ -1164,19 +1164,24 @@ label{
   display: none;
 }
 .dataTables_filter input[type=search]{
-  height: 30px !important;
-  padding: 0px 5px;
+  height: 33px !important;
+  padding: 0px px;
   border-bottom: 1px solid rgb(121, 118, 118) !important;
   width: 60%;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  padding-right: 20px !important;
+  width: 130px !important;
 }
 .dataTables_filter label{
-/* font-size: 11px !important; */
-color:rgb(121, 118, 118) !important;
+font-size: 0px !important;
+/* color:white !important; */
 margin-bottom: 12px;
-font-family: Roboto, "Helvetica Neue", sans-serif;
-font-weight: 100;
-font-size: 14px;
 /* border-bottom: 1px solid rgb(121, 118, 118) !important; */
+}
+.dataTables_filter{
+margin-top: -38px;
 }
 .border_bottom,.dataTables_filter input[type=search]{
   border-left: 0px !important;

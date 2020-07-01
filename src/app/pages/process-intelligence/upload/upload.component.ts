@@ -239,7 +239,10 @@ onDbSelect(){
   getAlluserProcessPiIds(){
     this.dtOptions = {
       pagingType: 'full_numbers',
-      pageLength: 6
+      pageLength: 6,
+      language: {
+        searchPlaceholder: 'Search',
+      }
     };
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_List=data
       this.process_graph_list=this.process_List.data
