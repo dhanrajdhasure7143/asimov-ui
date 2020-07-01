@@ -70,7 +70,7 @@
           
           <div class="col-md-6">
           
-            <label for="botName">Bot Name</label>
+            <label for="botName">Bot Name*</label>
             <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" class="form-control" name="botName" required/>
             <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" >
               Bot Name Required*
@@ -80,7 +80,7 @@
           
           
           <div class="col-md-6">
-            <label for="botType">Bot Type</label>
+            <label for="botType">Bot Type*</label>
               
             <select  class="form-control" formControlName="botType" name="botType" >
               <option value="" [selected]="true">--Select Bot Type--</option>
@@ -97,17 +97,17 @@
       
         <div class="row">
           <div class="col-md-6">
-            <label for="botDepartment">Department</label>
+            <label for="botDepartment">Category*</label>
               
             <select  class="form-control" formControlName="botDepartment" name="botDepartment" >
-              <option value="" [selected]="true">--Select Department--</option>
+              <option value="" [selected]="true">--Select Category--</option>
               <option  value=1>Development</option>
               <option  value=2>HR</option>
               <option  value=3>QA</option>
      
             </select>
             <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" >
-              Department Required
+              Category Required*
               </div>
             
           
