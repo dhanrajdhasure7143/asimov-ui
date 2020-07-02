@@ -35,7 +35,7 @@ export class RpaStudioComponent implements OnInit {
   templateNodes: any = [];
   show: number;
   toolSetData: void;
-  
+
   listEnvironmentData:any =[];
   changePx: { x: number; y: number; };
   // forms
@@ -58,16 +58,16 @@ export class RpaStudioComponent implements OnInit {
   tabsArray: any[] = [];
   tabActiveId: string;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
-    private hints:RpaHints, private formBuilder:FormBuilder) { 
+    private hints:RpaHints, private formBuilder:FormBuilder) {
     this.show = 5;
-    
+
     this.insertbot=this.formBuilder.group({
       botName:["", Validators.required],
       botDepartment:["", Validators.required],
       botDescription:[""],
       botType:["", Validators.required],
   });
-  
+
   }
 
   ngOnInit() {
@@ -82,7 +82,7 @@ export class RpaStudioComponent implements OnInit {
       this.hiddenCreateBotPopUp=false;
     }
 
-    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Automation"});
+    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.rpaHomeHints);
     this.rest.toolSet().subscribe(data => {
@@ -128,7 +128,7 @@ export class RpaStudioComponent implements OnInit {
   })
 }
   increaseShow() {
-    this.show += 5; 
+    this.show += 5;
   }
 
   public removeItem(item: any, list: any[]): void {
@@ -144,12 +144,12 @@ export class RpaStudioComponent implements OnInit {
     temp = this.model;
 
     this.model = {};
-  
-    this.tabsArray.push(temp);  
+
+    this.tabsArray.push(temp);
     this.tabActiveId = temp.botNamee
     console.log(this.tabsArray);
     this.insertbot.reset();
-    
+
   }
   onCreate(){
     this.insertbot.reset();
@@ -162,5 +162,5 @@ export class RpaStudioComponent implements OnInit {
   closeFun(){
     this.hiddenCreateBotPopUp = false
   }
-} 
+}
 

@@ -20,10 +20,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
     this.child_subscription = this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
-    this.pages = [ 
+    this.pages = [
       {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
       {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-      {"img":"assets/images/robothand.svg", "title":"RPA  Studio", "link":"/pages/rpautomation/home"},
+      {"img":"assets/images/robothand.svg", "title":"RPA", "link":"/pages/rpautomation/home"},
       {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
     ];
   }
@@ -31,7 +31,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   loopTrackBy(index, term){
     return index;
   }
- 
+
   ngOnDestroy(){
     this.parent_subscription.unsubscribe();
     this.child_subscription.unsubscribe();
