@@ -158,6 +158,7 @@ mat-expansion-panel{
 .box-heading{
   font-weight: bold;
   color: #5b5b5b;
+  margin: 20px 0;
 }
 .workspace-title{
   padding-right: 100px !important;
@@ -475,8 +476,8 @@ cursor: pointer;
 }
 /* bpmn-diagram-list component styles - Ends*/
 .box-border{
-  border:1px solid #8080808c;
-  border-radius: 20px;
+  border:1px solid #ccc;
+  border-radius: 7px;
 }
 input[type=search]{
   border-top: none;

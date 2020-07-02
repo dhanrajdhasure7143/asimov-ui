@@ -2,15 +2,14 @@
 .drop_box{
   border: 1px solid #ccc;
   border-radius: 7px;
-  height: 263px;
+  height: 253px;
   text-align: center;
   color: #717386;
-  margin-top: 28px !important;
   padding: 0;
   margin: 10px auto;
 }
 .drop_box ngx-dropzone{
-  height: 260px;
+  height: 250px;
   margin: 0 auto;
 }
 

@@ -18,6 +18,7 @@ import { ListOfChangesComponent } from './list-of-changes/list-of-changes.compon
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatInputModule, MatIconModule, MatFormFieldModule} from '@angular/material';
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent],
@@ -34,7 +35,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     AngularSplitModule.forRoot(),
     NgxPaginationModule,
     Ng2SearchPipeModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatInputModule, MatIconModule, MatFormFieldModule 
   ],
   providers: [BpsHints]
 })

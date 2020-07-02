@@ -130,7 +130,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       let isBPSHome = this.router.url == "/pages/businessProcess/home";
       if(!isBPSHome){
         this.bpmnservice.changeConfNav(true);
-        this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
+        this.uploadProcessModel.getUserBpmnList();
+        // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
       }else{
         if(target == "create"){
             this.router.navigateByUrl('/pages/businessProcess/createDiagram');
