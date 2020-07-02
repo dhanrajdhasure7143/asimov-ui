@@ -105,7 +105,7 @@
         <form autocomplete="off" #processForm="ngForm"> 
           <div class="container m-contanier">
             <label for="category"><b>Select Category</b></label>
-              <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
+              <select name="category" class="form-control border_bottom" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
                   <option value="undefined" hidden disabled>Select</option>
                   <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
 
@@ -113,12 +113,12 @@
               </select>
               <div *ngIf='isotherCategory'>
               <label for="otherCategory"><b>Enter Category</b></label>
-              <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
+              <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control border_bottom">
               </div>
               <!-- <label for="piId"><b>Enter Process Id</b></label>
               <input type="text" name="piId" [(ngModel)]=processId required class="form-control" placeholder="Process Id"> -->
             <label for="piName"><b>Enter Process Name</b></label>
-            <input type="text" name="piName" [(ngModel)]="processName" required class="form-control" placeholder="Process Name">
+            <input type="text" name="piName" [(ngModel)]="processName" required class="form-control border_bottom" placeholder="Process Name">
               <div class="clearfix m-btn">
                 <button type="button" class="btn btn-primary pi_btn" (click)="generateGraph()">Save & Generate</button>
               </div>

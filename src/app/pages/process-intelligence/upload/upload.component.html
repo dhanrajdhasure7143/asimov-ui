@@ -1,10 +1,10 @@
 <div class="container">
         <div class="row">
-                <div class='col-md-6 row'>
+                <div class='col-md-6'>
+                <div class="row">
                 <h1>Connect Your Data</h1>
                 <h4 class="subtitle">Select below options to get your data</h4>
-                
-                <div class="col-sm-3 upload_zone" id="upload_xl">
+                <div class="col-sm-3 upload_zone" id="">
                         <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/Group 279.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
@@ -12,7 +12,7 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-3 upload_zone" id="upload_xes">
+                <div class="col-sm-3 upload_zone" id="">
                         <ngx-dropzone (change)="onSelect($event,3)" [multiple]=false [accept]="xes_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/XES.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
@@ -34,8 +34,9 @@
                                          <u>Download Sample Template</u>
                                  </a>
                         </div>
+                        </div>
                 </div>
-                <div class="col-md-6 row">
+                <div class="col-md-6">
                         <!-- <div>
                                 <h4>My Work space</h4>
                         </div>
@@ -66,36 +67,66 @@
                                     </mat-expansion-panel>
                                   </mat-accordion>
                                 </div> -->
-                                <div class='col-sm-8'>
+                                <div class='col-sm-4'>
                                 <h4>My Workspace</h4>
                                 </div>
-                                <div class='col-sm-4 inner-addon right-addon' *ngIf="process_graph_list.data">
-                                                <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
-                                        <input type="text" placeholder="Search" name="searchGraph" #searchGraph="ngModel" [(ngModel)]="searchgraph">
-                                </div>
-                                <table class="col-sm-12 table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
+                                <form action="">
+                                <!-- <div class="col-sm- row"> -->
+                                        <!-- <div class="col-sm-"></div> -->
+                                        <div class="col-sm-7" *ngIf="isSearch">
+                                                <div class="col-sm-9 pull-right cat1">
+                                                <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
+                                                        <option value="undefined" hidden disabled>Search by Category</option>
+                                                        <option value="allcategories">All Categories</option>
+                                                        <option [value]="each.categoryName" *ngFor="let each of categoryList.data;let i=index">{{each.categoryName}}</option>
+                                                </select>
+                                                </div>
+                                        </div>
+                                        <div class="col-sm-6" *ngIf="!isSearch">
+                                                        <div class="col-sm-10">
+                                                        <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
+                                                                <option value="undefined" hidden disabled>Search by Category</option>
+                                                                <option value="allcategories">All Categories</option>
+                                                                <option [value]="each.categoryName" *ngFor="let each of categoryList.data;let i=index">{{each.categoryName}}</option>
+                                                        </select>
+                                                        </div>
+                                                        </div>
+                                        <div class="col-sm-1">
+                                                <button class="search_btn pull-right" *ngIf="isSearch" (click)="onsearchSelect()"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></button>
+                                                <div *ngIf="!isSearch" class="search-cat col-sm-12"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></div>
+                                        </div>
+                                        
+                                        <!-- <div class='col-sm-4 inner-addon right-addon'>
+                                        <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
+                                        <input type="text" placeholder="Search" name="searchGraph" [(ngModel)]="searchgraph">
+                                        </div> -->
+                                <!-- </div> -->
+                                </form>
+                                <div class="col-sm-12 graph_table">
+                                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
                                         <thead class="text-center">
                                         <tr class="text-center">
-                                                <th class="text-center table_header"(click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process ID</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Date</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Process Name</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Category</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Status</th>
-                                                <th class="text-center table_header" (click)="sortDataTable(['Process ID', 'Date', 'Process Name','Category','Status'], orderAsc)">Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class='text-center'>
-                                                <tr class='pList' *ngFor='let process_list of process_graph_list.data|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
-                                                        <td class="th-sm">{{process_list.piId}}</td>
-                                                        <td>{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</td>
-                                                        <td>{{process_list.piName|titlecase}}</td>
-                                                        <td>{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
-                                                        <td>{{process_list.status}}</td>
-                                                        <td class="process_view" (click)="onGraphSelection(process_list)" title="View Process Graph"><i class='fa fa-eye'></i></td>
+                                                <th class="text-center table_header">Process ID</th>
+                                                <th class="text-center table_header">Date</th>
+                                                <th class="text-center table_header">Process Name</th>
+                                                <th class="text-center table_header">Category</th>
+                                                <th class="text-center table_header">Status</th>
+                                                <th class="text-center table_header">Action</th>
+                                        </tr>                                        
+                                        </thead>                                        
+                                        <tbody class='text-center'>                                        
+                                                <tr class='pList' *ngFor='let process_list of process_graph_list|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
+                                                <td class="th-sm">{{process_list.piId}}</td>
+                                                <td class="">{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</td>
+                                                <td>{{process_list.piName|titlecase}}</td>
+                                                <td>{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
+                                                <td>{{process_list.status}}</td>
+                                                <td class="process_view" (click)="onGraphSelection(process_list)" title="View Process Graph"><i class='fa fa-eye'></i></td>
                                                 </tr>
                                         </tbody>
                                        
                                 </table>
+                                </div>
                             </div>
         </div>
 </div>

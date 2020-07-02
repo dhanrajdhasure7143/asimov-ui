@@ -566,7 +566,7 @@ border: 1px solid lightgray !important;
   border-radius: 10px;
   width: auto;
   margin-right: 20px;
-  height: 230px;
+  max-height: 430px;
   align-self: auto !important;
 }
 .node_tooltip{
@@ -688,9 +688,9 @@ transition: 0.5s;
     font-size: 14px !important;
     color: black;
 }
-.tooltip_body{
-  height: 130px;
-}
+/* .tooltip_body{
+  height: 230px;
+} */
 .tooltiptext1 hr{
   margin-top: 0px !important;
   margin-bottom: 2px !important;
@@ -1157,4 +1157,43 @@ label{
 .close{
   font-size: 30px;
   margin-top: -36px;
+}
+/*data table style in upload component*/
+.dataTables_length label{
+  display: none;
+}
+#myTableId_filter{
+  display: none;
+}
+.dataTables_filter input[type=search]{
+  height: 33px !important;
+  padding: 0px px;
+  border-bottom: 1px solid rgb(121, 118, 118) !important;
+  width: 60%;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  padding-right: 20px !important;
+  width: 130px !important;
+}
+.dataTables_filter label{
+font-size: 0px !important;
+/* color:white !important; */
+margin-bottom: 12px;
+/* border-bottom: 1px solid rgb(121, 118, 118) !important; */
+}
+.dataTables_filter{
+margin-top: -38px;
+}
+.border_bottom,.dataTables_filter input[type=search]{
+  border-left: 0px !important;
+  border-right: 0px !important;
+  border-top: 0px !important;
+  box-shadow: none !important;
+  border-radius: 0px !important;
+  border-bottom: 1px solid rgb(121, 118, 118) !important;
+  padding: 0px 5px;
+}
+table.dataTable {
+  border-collapse: collapse !important;
 }
