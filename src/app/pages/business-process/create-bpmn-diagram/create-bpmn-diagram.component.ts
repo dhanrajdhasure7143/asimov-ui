@@ -282,7 +282,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     this.isLoading = true;
     let _self=this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
-    this.bpmnModel.bpmnModelModifiedTime = new Date();
+    // this.bpmnModel.bpmnModelModifiedTime = new Date();
     this.bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     this.bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     this.bpmnModel.category = sel_List['category'];
@@ -323,6 +323,8 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   slideUp(e){
+    this.categoryName = "";
+    this.bpmnProcessName = "";
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
       var modal = document.getElementById('myModal');
       modal.style.display="block";

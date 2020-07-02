@@ -8,13 +8,11 @@
         <h4 class="col-md-7 box-heading">My Workspace</h4>
         <div class="col-md-2"></div>
         <div class="col-md-3 ">
-          <input type="search"   class="form-control" [(ngModel)]="searchTerm" placeholder="Search Workspace"/>
-          <!-- <mat-form-field appearance="fill">
-            <mat-label>Phone number</mat-label>
-            <input class="toolbar-search" type="text" matInput>
-            <mat-placeholder>Search</mat-placeholder>
+          <mat-form-field>
+            <mat-label>Search Workspace</mat-label>
+            <input class="toolbar-search" type="text" matInput [(ngModel)]="searchTerm">
             <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
-          </mat-form-field> -->
+          </mat-form-field>
         </div>
       </div>
     
@@ -27,7 +25,7 @@
       </div>
       <div class="row col-md-12"  id="bpmn_list">
         <mat-accordion>
-          <mat-expansion-panel *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
+          <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12">
@@ -45,6 +43,7 @@
             </mat-expansion-panel-header>
             <div class="bps_overlay">
               <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnXmlNotation, i)"></div>
+              <div class="info">Click to open</div>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

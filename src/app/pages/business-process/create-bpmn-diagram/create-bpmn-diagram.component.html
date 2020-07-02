@@ -1,17 +1,22 @@
-<div class="row col-md-12 drop_div">
+<div class="row col-md-12 drop__div">
+    <div class="col-md-1"></div>
     <div class="col-md-2">
-        <b>BPMN Notation&nbsp;</b>
-        <select class="form-control " [(ngModel)]="selected_notation" (change)="displayBPMN()">
-            <option [value]="bpmnIndex" *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [selected]="each_bpmn.bpmnModelId == selected_modelId">
-                {{each_bpmn.bpmnProcessName}}</option>
-        </select>
+        <mat-form-field>
+            <mat-label>BPMN Notation</mat-label>
+            <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()">
+              <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex"><!--[selected]="each_bpmn.bpmnModelId == selected_modelId"-->
+                {{each_bpmn.bpmnProcessName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <div class="col-md-2">
-        <b>Approver List&nbsp;</b>
-        <select class="form-control " [(ngModel)]="selected_approver">
-            <option [value]="each_approver.firstName+' '+each_approver.lastName" *ngFor="let each_approver of approver_list">
-                {{each_approver.firstName+" "+each_approver.lastName}}</option>
-        </select>
+        <mat-form-field>
+            <mat-label>Approver List</mat-label>
+            <mat-select [(ngModel)]="selected_approver">
+              <mat-option *ngFor="let each_approver of approver_list" [value]="each_approver.firstName+' '+each_approver.lastName">
+                {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
     </div>
     <div class="col-md-6"></div>
     <div class="col-md-2"></div>

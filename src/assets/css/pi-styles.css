@@ -1049,7 +1049,7 @@ label{
     border-right:dotted 10px #d02525;
   }
   #canvas, #canvas1, #canvas2{
-    height: 800px;
+    height: 72vh;
     width: 100%;
     /* background-color: #efefef; */
 }

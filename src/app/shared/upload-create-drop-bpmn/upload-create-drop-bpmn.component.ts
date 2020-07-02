@@ -64,6 +64,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
   
   slideUp(){
+    this.categoryName = "";
+    this.bpmnProcessName = "";
     this.uploaded_file = null;
     var modal = document.getElementById('myModal');
     modal.style.display="block";

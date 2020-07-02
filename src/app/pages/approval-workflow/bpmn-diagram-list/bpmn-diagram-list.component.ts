@@ -14,7 +14,7 @@ export class BpmnDiagramListComponent implements OnInit {
   @ViewChild('matExpansionPanel', { static: false }) _matExpansionPanel:any
   @ViewChild(BpmnDiagramComponent, { static: false }) diagramComp: BpmnDiagramComponent;
   approve_bpmn_list = this.model.diagList;
-  user: any = 'mounika';
+  user: any = 'Sowmya Peddeti';
   message: any[] = [];
   griddata: any;
   approver_info: any;
