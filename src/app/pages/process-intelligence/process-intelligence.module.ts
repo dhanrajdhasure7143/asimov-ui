@@ -22,6 +22,7 @@ import { DataselectionComponent } from './dataselection/dataselection.component'
 import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {DataTablesModule} from 'angular-datatables';
 
 
 @NgModule({
@@ -49,8 +50,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatExpansionModule,
     ModalModule.forRoot(),
     Ng2SearchPipeModule,
-    NgxSpinnerModule
-
+    NgxSpinnerModule,
+    DataTablesModule,
   ],
   providers:[PiHints]
 

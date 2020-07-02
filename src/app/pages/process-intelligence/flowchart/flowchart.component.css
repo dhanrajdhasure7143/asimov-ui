@@ -32,7 +32,7 @@
     width: 0px !important;
     background:white;
     border-radius: 50% !important;
-    border: 1px solid gray;
+    border: 0px solid gray;
   
   }
   
@@ -63,11 +63,15 @@
     font-size: 15px !important;
     margin-left: -34px !important;
     margin-bottom: -25px !important;
+    position: absolute !important;
+    z-index: 10000 !important;
   }
   ::ng-deep  .custom-slider .ng5-slider-ceil {
     color:gray !important;
     font-size: 15px !important;
     margin-left: -40px !important;
+    position: absolute !important;
+    z-index: 100000 !important;
   }
 
   ::ng-deep #myDiagramDiv canvas {
@@ -119,6 +123,7 @@
     /* height: 460px; */
     /* padding-left:0px; */
     padding-right: 0px;
+    background-color: white;
   }
   .varaint_heading{
     font-size: 11px;
@@ -245,10 +250,29 @@
   }
   .variant_play{
     display: none;
+    z-index: 10;
   }
-  .variant_border:hover .variant_play{
+  /* .variant_border:hover .variant_play{
     display:block !important;
-  }
+  } */
   .activevaraint .variant_play{
     display:block !important;
+    
+    
+  }
+  .tooltip_header{
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .tooltipmetrics_header{
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .download_selection p{
+    cursor: pointer;
+  }
+  .download_selection p:hover{
+      font-weight: bold;
   }

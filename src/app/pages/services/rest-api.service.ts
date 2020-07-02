@@ -204,7 +204,11 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/ReddisCopy/getGraphData?pid="+piId+"&data_type=full_graph", {responseType: 'json'})
   }
   getvaraintGraph(piId){
-    return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId)
+    return this.http.get("/ReddisCopy/getGraphData?pid="+piId+"&data_type=variant_graph")
+    // return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId)
+  }
+  getSliderVariantGraph(piId){
+    return this.http.get("/ReddisCopy/getGraphData?pid="+piId+"&data_type=slider_graph")
   }
 
   getProcessStatistics()

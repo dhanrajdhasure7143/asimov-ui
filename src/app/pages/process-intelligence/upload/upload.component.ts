@@ -9,6 +9,7 @@ import { GlobalScript } from '../../../shared/global-script';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 import Swal from 'sweetalert2';
+import { Subject } from 'rxjs';
 
 declare var target:any;
 @Component({
@@ -25,6 +26,7 @@ export class UploadComponent implements OnInit {
   public isSave:boolean=true;
   selectedFile: File = null;
   filedetails:any;
+  process_List:any;
   process_graph_list:any=[];
   fullgraph:any=[];
   public model1;
@@ -35,6 +37,11 @@ export class UploadComponent implements OnInit {
   isgraph:boolean=false;
   searchgraph:any;
   orderAsc:boolean = true;
+  categoryList:any=[];
+  category:any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger: Subject<any> = new Subject();
+  isSearch:boolean=true;
 
   constructor(private router: Router, 
     private dt:DataTransferService, 
@@ -51,9 +58,11 @@ export class UploadComponent implements OnInit {
     this.db_mime = '.json';
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
-
-   
-   
+    this. getAllCategories();
+  }
+  ngOnDestroy(){
+    // Do not forget to unsubscribe the event
+    this.dtTrigger.unsubscribe();
   }
     onUpload(event,id) {
       this.selectedFile = <File>event.addedFiles[0];
@@ -228,9 +237,16 @@ onDbSelect(){
   }
 
   getAlluserProcessPiIds(){
-    this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data
-      // console.log('data',this.process_graph_list)
-    
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 6,
+      language: {
+        searchPlaceholder: 'Search',
+      }
+    };
+    this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_List=data
+      this.process_graph_list=this.process_List.data
+      this.dtTrigger.next();
     })
   }
   loopTrackBy(index, term){
@@ -258,7 +274,7 @@ onDbSelect(){
     sortDataTable(arrayColNames, asc) { // if not asc, desc
       for (var i=0;i<arrayColNames.length;i++) {
           var columnName = arrayColNames[i];
-          this.process_graph_list.data = this.process_graph_list.data.sort(function(a,b){
+          this.process_graph_list= this.process_graph_list.sort(function(a,b){
               if (asc) {
                   return (a[columnName] > b[columnName]) ? 1 : -1;
               } else {
@@ -267,8 +283,28 @@ onDbSelect(){
           });
       }
   }
-
-
+  getAllCategories(){
+    this.rest.getCategoriesList().subscribe(res=>{this.categoryList=res
+    })
+  }
+  searchByCategory(category){
+    if(category=="allcategories"){
+      this.process_graph_list=this.process_List.data;
+    }else{
+      this.process_graph_list=[]
+      this.process_List.data.forEach(element => {
+        if(element.categoryName==category){
+        this.process_graph_list.push(element)
+        }
+      });
+    }
+  }
+  onsearchSelect(){
+    this.isSearch=false;
+    var searcgraph=document.getElementById("myTableId_filter")
+    searcgraph.style.display="block"
+    
+  }
   
 }
 
