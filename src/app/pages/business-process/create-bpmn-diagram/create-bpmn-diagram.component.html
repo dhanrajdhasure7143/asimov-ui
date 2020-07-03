@@ -29,14 +29,14 @@
         </div>
         <div class="row btn_row"> 
             <button class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
+            <button class="right btn btn-success continueandAutomate" (click)="submitDiagramForApproval()">Submit for Approval</button>
             <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'" >
                 <ngx-dropzone-label>
                     <button class="btn bpmn-btn">Upload Again</button>
                 </ngx-dropzone-label>
             </ngx-dropzone>
-            <button class="right btn btn-success continueandAutomate" (click)="submitDiagramForApproval()">Continue for Approval</button>
-            <button class="right btn btn-success continueandAutomate" (click)="automate()" [disabled]="!diplayApproveBtn">Automate</button>
             <button class="right btn" (click)="saveprocess(null)">Save Process</button>
+            <button class="right btn btn-success continueandAutomate" (click)="automate()" [disabled]="!diplayApproveBtn">Automate</button>
         </div>
         <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
             <p style="color: white">Auto Saving... </p>  
@@ -52,14 +52,14 @@
                 <form autocomplete="off" #createBpmnForm="ngForm"> 
                     <div class="container m-contanier">
                     <label for="category"><b>Select Category</b></label>
-                        <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
-                            <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
+                    <select name="category" class="form-control" (change)='onchangeCategories(categoryName)' #category="ngModel" [(ngModel)]="categoryName" required>
+                        <option *ngFor='let categories of categoriesList.data;let i=index;trackBy:loopTrackBy' [value]="categories.categoryName">{{categories.categoryName}} </option>
                         <option value="other">Other</option>
-                        </select>
-                        <div *ngIf='isotherCategory'>
+                    </select>
+                    <div *ngIf='isotherCategory'>
                         <label for="otherCategory"><b>Enter Category</b></label>
                         <input type="text" placeholder="Enter Category" name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required class="form-control">
-                        </div>
+                    </div><br/>
                     <label for="piName"><b>Enter Process Name</b></label>
                     <input type="text" name="bpmnName" [(ngModel)]="bpmnProcessName" required class="form-control" placeholder="Process Name">
                         <div class="clearfix m-btn">

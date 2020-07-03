@@ -3,7 +3,7 @@ export class BpmnModel{
     bpmnModelModifiedBy:string = "Vaidehi"; // localStorage.getItem("userName")
     // bpmnModelModifiedTime:Date;
     createdTimestamp:Date;
-    modifiedTimestamp:Date;
+    // modifiedTimestamp:Date;
     bpmnModelTempId:number;
     bpmnModelTempStatus:string = "Initial";
     bpmnModelTempVersion:string;
