@@ -1021,9 +1021,11 @@ label{
   }
   .btn {
     color: white;
-    background-color: blue;
+    background-color: #0062cf;
+    background-color: #0062cf !important;
     border-radius: 13px;
     margin-left: 13px;
+    border-radius: 20px !important;
     /* width: 134px; */
     margin-top: 5px;
   }
@@ -1047,7 +1049,7 @@ label{
     border-right:dotted 10px #d02525;
   }
   #canvas, #canvas1, #canvas2{
-    height: 800px;
+    height: 72vh;
     width: 100%;
     /* background-color: #efefef; */
 }

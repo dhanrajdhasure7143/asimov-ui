@@ -102,6 +102,20 @@ export class UploadProcessModelComponent implements OnInit {
       this.approver_list = res; 
     });
    }
+  //  ngOnDestroy(){
+  //   Swal.fire({
+  //     title: 'Are you sure?',
+  //     text: 'Your current changes will be lost on changing diagram.',
+  //     icon: 'warning',
+  //     showCancelButton: true,
+  //     confirmButtonText: 'Save and Continue',
+  //     cancelButtonText: 'Discard'
+  //   }).then((res)=>{
+  //     if(res.value){
+  //       this.saveprocess(null);
+  //     }
+  //   })
+  // }
    
     initiateDiagram(){
       let _self=this;
@@ -187,7 +201,7 @@ export class UploadProcessModelComponent implements OnInit {
       _self.newXml = xml;
       if(_self.oldXml != _self.newXml){
         _self.spinner.show();
-        _self.bpmnModel.bpmnModelModifiedTime = new Date();
+        // _self.bpmnModel.bpmnModelModifiedTime = new Date();
         _self.bpmnModel.bpmnProcessMeta = btoa(unescape(encodeURIComponent(_self.newXml)));
         _self.bpmnModel.bpmnProcessName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
         _self.bpmnModel.bpmnModelId = _self.randomId;
@@ -281,7 +295,7 @@ export class UploadProcessModelComponent implements OnInit {
   }
 
   initialSave(diagramModel:BpmnModel){
-    diagramModel.modifiedTimestamp = new Date();
+    // diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
       this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
         this.saved_bpmn_list = res; 
@@ -340,7 +354,7 @@ export class UploadProcessModelComponent implements OnInit {
     this.isLoading = true;
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
-    this.bpmnModel.bpmnModelModifiedTime = new Date();
+    // this.bpmnModel.bpmnModelModifiedTime = new Date();
     this.bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     this.bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     this.bpmnModel.category = sel_List['category'];
@@ -416,6 +430,8 @@ export class UploadProcessModelComponent implements OnInit {
   }
 
   slideUp(e){
+    this.categoryName = "";
+    this.bpmnProcessName = "";
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
       var modal = document.getElementById('myModal');
       modal.style.display="block";

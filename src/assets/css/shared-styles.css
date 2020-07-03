@@ -2,14 +2,14 @@
 .drop_box{
   border: 1px solid #ccc;
   border-radius: 7px;
-  height: 263px;
+  height: 253px;
   text-align: center;
   color: #717386;
   padding: 0;
   margin: 10px auto;
 }
 .drop_box ngx-dropzone{
-  height: 260px;
+  height: 250px;
   margin: 0 auto;
 }
 
@@ -24,7 +24,9 @@
   background-color: #0062cf;
   border-radius: 20px;
   width: 120px;
+
   margin-top: 20px;
+  border-radius: 20px !important;
   outline: none;
 }
 .bpmn-btn:focus, .bpmn-btn:active{

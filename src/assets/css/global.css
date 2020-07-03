@@ -16,7 +16,7 @@
 #a input{
     outline:none;
 }
-input[type="text"], input[type="password"]
+input[type="text"]:not(.mat-input-element), input[type="password"]
 {
   /* width: 138%; */
   border:none;
@@ -313,6 +313,10 @@ button:active, button:focus, input:active, input:focus{
   border: 1px solid rgba(0,0,0,.15);
   border-radius: 4px;
   box-shadow: 0 8px 12px rgba(0,0,0,.175);
+}
+mat-expansion-panel-header{
+  height: 35px !important;
+  font-size: 13px !important;
 }
 /* Foot overlay Modal Styles - Starts */
 

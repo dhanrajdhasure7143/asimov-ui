@@ -64,6 +64,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
   
   slideUp(){
+    this.categoryName = "";
+    this.bpmnProcessName = "";
     this.uploaded_file = null;
     var modal = document.getElementById('myModal');
     modal.style.display="block";
@@ -124,14 +126,14 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     }
   }
 
-
   initialSave(diagramModel:BpmnModel, target:string){
-    diagramModel.modifiedTimestamp = new Date();
+    // diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
       let isBPSHome = this.router.url == "/pages/businessProcess/home";
       if(!isBPSHome){
         this.bpmnservice.changeConfNav(true);
-        this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
+        this.uploadProcessModel.getUserBpmnList();
+        // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
       }else{
         if(target == "create"){
             this.router.navigateByUrl('/pages/businessProcess/createDiagram');

@@ -71,7 +71,7 @@ export class BpmnDiagramComponent implements OnInit {
       let _self = this;
       this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
         _self.updated_date_time = new Date();
-        _self.bpmnModel.bpmnModelModifiedTime = _self.updated_date_time;
+        // _self.bpmnModel.bpmnModelModifiedTime = _self.updated_date_time;
         _self.bpmnModel.bpmnModelTempId = _self.counter;
         _self.bpmnModel.bpmnModelTempVersion = '0.0.'+_self.counter;
         _self.bpmnModel.bpmnProcessMeta = btoa(_self.newXml);
