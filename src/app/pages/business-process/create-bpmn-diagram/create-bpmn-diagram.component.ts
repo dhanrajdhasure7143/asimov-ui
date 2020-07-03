@@ -161,7 +161,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       _self.newXml = xml;
       if(_self.oldXml != _self.newXml){
         _self.spinner.show();
-        _self.bpmnModel.modifiedTimestamp = new Date();
+        // _self.bpmnModel.modifiedTimestamp = new Date();
         _self.bpmnModel.bpmnProcessMeta = btoa(unescape(encodeURIComponent(_self.newXml)));
         _self.bpmnModel.bpmnProcessName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
         _self.bpmnModel.bpmnModelId = _self.randomId;
