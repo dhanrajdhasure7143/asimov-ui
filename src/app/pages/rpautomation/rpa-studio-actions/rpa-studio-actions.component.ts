@@ -9,6 +9,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-rpa-studio-actions',
   templateUrl: './rpa-studio-actions.component.html',
@@ -117,6 +118,12 @@ export class RpaStudioActionsComponent implements OnInit {
   }
 
 
+  reset()
+  {
+    this.childBotWorkspace.resetdata();
+  }
+
+
   
   saveBotFunAct() {
     
@@ -162,9 +169,6 @@ export class RpaStudioActionsComponent implements OnInit {
   
 
   executionAct() {
-    this.startbot=false;
-    this.pausebot=true;
-    this.resumebot=false;
     let response:any;
     if(this.savebotrespose!=undefined)
     {
@@ -176,7 +180,12 @@ export class RpaStudioActionsComponent implements OnInit {
           title: response,
           showConfirmButton: false,
           timer: 2000
+          
         })
+        
+          this.startbot=false;
+          this.pausebot=true;
+          this.resumebot=false;
       })
     }
   }
@@ -346,8 +355,8 @@ getEnvironmentlist() {
         this.envflag=false;
       }
     })
+
     
-  
   } 
   
   getallpredefinebots() {
@@ -366,6 +375,7 @@ getEnvironmentlist() {
    
   
   schedulerPopUp(){
+      document.getElementById("scheduler").style.display="block";
       this.hiddenSchedlerPopUp = true
       let data:any
       this.rest.scheduleList(data).subscribe((data)=> this.scheduleResponse(data))
@@ -393,6 +403,7 @@ getEnvironmentlist() {
     
     
     closeFun(){
+      document.getElementById("scheduler").style.display="none";
       this.hiddenSchedlerPopUp = false;
     }
   
