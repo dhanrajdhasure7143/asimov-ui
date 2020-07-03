@@ -664,8 +664,8 @@ export class PiflowchartComponent implements OnInit {
     var animation = new go.Animation();
       animation.easing = go.Animation.EaseLinear;
       this.myDiagram.links.each(function(link) {
-        animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 10)
-        // animation.add(link.findObject("LINK1"), "strokeWidth",7,7)
+        animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 0)
+        // animation.add(link.findObject("LINK1"), "strokeDashOffset",7,7)
         // animation.add(link.findObject("PIPE"), "strokeWidth",7,9)
         // animation.add(link.findObject("PIPE"), "stroke","red","green")
         // animation.add(link.findObject("LINK2"), "strokeWidth",5,5)
@@ -709,8 +709,6 @@ export class PiflowchartComponent implements OnInit {
     this.isdownloadsvg=false;
     // this.isdownloadpdf=false
       this.issvg.emit(this.isdownloadsvg)
-   
-  
   }
 
   makeSvg() {
@@ -746,8 +744,6 @@ restZoom(){
   this.myDiagram.commandHandler.resetZoom();
 }
 generateImages (width:any, height:any) {
-  // console.log(width);
-  // console.log(height);
   // sanitize input
   width = parseInt(width);
   height = parseInt(height);
@@ -772,22 +768,22 @@ generateImages (width:any, height:any) {
   var img:any
   //for (var j = 0; j < boundswidth; j += imgWidth) {
   img= this.myDiagram.makeImage({
-  scale: 0,
-  type: "image/jpeg",
-  background: "white",
-  //position: new go.Point(db.x, db.y),
-  size: new go.Size(2000, 2000)
+    scale: 0,
+    type: "image/jpeg",
+    background: "white",
+    //position: new go.Point(db.x, db.y),
+    size: new go.Size(2000, 2000)
   });
   //}
   //}
   // console.log(img);
   var doc = new jsPDF();
-  doc.addImage(img.src, 'JPEG', 15, 40, 180, 160);
+    doc.addImage(img.src, 'JPEG', 15, 40, 180, 160);
   //if you need more page use addPage();
   // doc.addPage();
-  doc.save("diagram.pdf");
-  this.isdownloadpdf=false;
-  this.ispdf.emit(this.isdownloadpdf);
+    doc.save("diagram.pdf");
+    this.isdownloadpdf=false;
+    this.ispdf.emit(this.isdownloadpdf);
   }
 
 }

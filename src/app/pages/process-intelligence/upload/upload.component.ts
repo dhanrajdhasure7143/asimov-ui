@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { NgxXml2jsonService } from 'ngx-xml2json';
@@ -10,6 +10,7 @@ import { PiHints } from '../model/process-intelligence-module-hints';
 import { ngxCsv } from 'ngx-csv/ngx-csv';
 import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 
 declare var target:any;
 @Component({
@@ -42,6 +43,8 @@ export class UploadComponent implements OnInit {
   dtOptions: DataTables.Settings = {};
   dtTrigger: Subject<any> = new Subject();
   isSearch:boolean=true;
+  @ViewChild(DataTableDirective,{static:true})
+  dtElement: DataTableDirective;
 
   constructor(private router: Router, 
     private dt:DataTransferService, 
@@ -61,7 +64,6 @@ export class UploadComponent implements OnInit {
     this. getAllCategories();
   }
   ngOnDestroy(){
-    // Do not forget to unsubscribe the event
     this.dtTrigger.unsubscribe();
   }
     onUpload(event,id) {
@@ -289,22 +291,36 @@ onDbSelect(){
   }
   searchByCategory(category){
     if(category=="allcategories"){
-      this.process_graph_list=this.process_List.data;
+      this.dtElement.dtInstance.then((dtInstance) => {
+        this.process_graph_list=this.process_List.data;
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+      });
     }else{
       this.process_graph_list=[]
-      this.process_List.data.forEach(element => {
-        if(element.categoryName==category){
-        this.process_graph_list.push(element)
-        }
-      });
+      this.dtElement.dtInstance.then((dtInstance) => {
+
+        this.process_List.data.forEach(element => {
+          if(element.categoryName==category){
+          this.process_graph_list.push(element)
+          }
+        });
+        // Destroy the table first
+        dtInstance.destroy();
+        // Call the dtTrigger to rerender again
+        this.dtTrigger.next();
+      })
     }
   }
   onsearchSelect(){
     this.isSearch=false;
     var searcgraph=document.getElementById("myTableId_filter")
-    searcgraph.style.display="block"
-    
+    searcgraph.style.display="block";
   }
+
+
   
 }
 
