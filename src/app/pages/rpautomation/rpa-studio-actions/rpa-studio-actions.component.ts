@@ -402,7 +402,7 @@ getEnvironmentlist() {
     
     
     
-    closeFun(){
+    close(){
       document.getElementById("scheduler").style.display="none";
       this.hiddenSchedlerPopUp = false;
     }
