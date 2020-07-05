@@ -1071,9 +1071,14 @@ closeNav() {
   // console.log('spinMetrics0',this.spinMetrics0);
   }
   caseParcent(parcent){
+  
+    if(String(parcent).indexOf('.') != -1){
     let perc=parcent.toString().split('.')
   // return parcent.toString().slice(0,5);
   return perc[0]+'.'+perc[1].slice(0,2);
+    }else{
+      return parcent;
+    }
   }
 
   nodeAlignment(){

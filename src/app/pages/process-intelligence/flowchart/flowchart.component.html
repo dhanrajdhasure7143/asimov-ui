@@ -159,7 +159,7 @@
                         <h5 class="btn-default dropdown-toggle" [ngClass]="isfrequencymetrics==true?'isactive':''" (click)='onfrequency()' type="button">Frequency         <span class="caret"></span>
                         </h5>
                         <div *ngIf='isfrequencymetrics' class='col-md-12 edgemetrics_spinner'>
-                                <button class='btn reset_btn' type='button' (click)="resetspinnermetrics()">reset</button>
+                                <button class='reset_btn' type='button' (click)="resetspinnermetrics()">reset</button>
                                 <hr>
                                 <span><input type="radio"  class="form-check-input" name="check" value="absoluteFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Absolute Frequency</span><br>
                                 <span><input type="radio"  class="form-check-input" name="check" value="caseFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Case Frequency</span><br>
@@ -173,7 +173,7 @@
                         <h5 class="btn-default dropdown-toggle" (click)='onPerformance()' [ngClass]="isperformancemetrics==true?'isactive':''" type="button">Performance        <span class="caret"></span></h5>
 
                         <div *ngIf='isperformancemetrics' class='edgemetrics_spinner'>
-                                <button class='btn reset_btn' type='button' (click)="resetspinnermetrics()">reset</button>
+                                <button class='reset_btn' type='button' (click)="resetspinnermetrics()">reset</button>
                                 <hr>
                                 
                                 <span><input type="radio" class="form-check-input" name="check" value="totalDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Total Duration</span><br>
