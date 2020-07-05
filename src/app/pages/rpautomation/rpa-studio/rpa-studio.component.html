@@ -36,14 +36,15 @@
     <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" >
       <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpa-nav-btn-img">
         <br>
-        Open Environments
+      Environments
     </button>
 </div>
 <div class="rpa-nav-btn">
   <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/workspace']" >
     <img src="..\\assets\\images\\RPA\\rpa-nav-workspace.svg" class="rpa-nav-btn-img">
-     <br>
-  Open Workspace
+
+     <br> 
+  Workspace
   </button>
   </div>
 
@@ -54,13 +55,15 @@
 </div>
 
 <!--foms  -->
-<div *ngIf="hiddenCreateBotPopUp"  class="pop-up conainer">
-  <div class="card">
-    <div class="card-header">
-      Create
-      <span class="class-css" (click)="closeFun()" >X</span>
-    </div>
-  <div class="container card-body">
+<div id="create-bot" class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="close()">&times;</span>
+          <h4>Create Bot</h4>
+      </div>
+      <div class="rpa-modal-body">
+     
+  <div class="container">
 
     <form [formGroup]="insertbot" (ngSubmit)="onCreateSubmit()" >
 
@@ -83,7 +86,7 @@
             <label for="botType">Bot Type*</label>
 
             <select  class="form-control" formControlName="botType" name="botType" >
-              <option value="" [selected]="true">--Select Bot Type--</option>
+              <option value="" selected>--Select Bot Type--</option>
               <option  value=1>Attended</option>
               <option  value=0>Unattended</option>
             </select>
@@ -100,7 +103,7 @@
             <label for="botDepartment">Category*</label>
 
             <select  class="form-control" formControlName="botDepartment" name="botDepartment" >
-              <option value="" [selected]="true">--Select Category--</option>
+              <option  value="" selected>--Select Category--</option>
               <option  value=1>Development</option>
               <option  value=2>HR</option>
               <option  value=3>QA</option>
@@ -128,7 +131,7 @@
         <button class="btn btn-primary" [disabled]="insertbot.invalid" >Submit</button>
       </div>
     </form>
-
   </div>
-  </div>
-  </div>
+</div>
+</div>
+</div>

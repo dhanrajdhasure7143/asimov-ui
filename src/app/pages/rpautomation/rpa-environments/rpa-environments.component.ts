@@ -22,9 +22,9 @@ import {Router} from "@angular/router";
     @Output()
     title:EventEmitter<string> = new EventEmitter<string>();
     public environments : environmentobservable [];
-    public createpopup:Boolean;
+    public createpopup=document.getElementById('create');
     public button:string;
-    public updatepopup:Boolean;
+    public updatepopup=document.getElementById('update-popup');
     public delete_elements:number[];
     public masterSelected:Boolean;
     public updateenvdata:environmentobservable;
@@ -80,7 +80,8 @@ import {Router} from "@angular/router";
     
   }
   ngOnInit() {
-    
+    this.createpopup=document.getElementById('create')
+    this.updatepopup=document.getElementById('update-popup');
     this.dt.changeHints(this.hints.rpaenvhints);
     //console.log(this.hints.rpaenvhints)
     this.title.emit("Environments")
@@ -96,8 +97,8 @@ import {Router} from "@angular/router";
       };
 
     this.getallData();
-    this.createpopup=false;
-    this.updatepopup=false;
+    this.createpopup.style.display='none';
+    this.updatepopup.style.display='none';
   }
 
 
@@ -127,11 +128,12 @@ import {Router} from "@angular/router";
   
   create()
   {
-    
-    this.createpopup=true;
-    this.updatepopup=false;
+    this.createpopup.style.display='block';
+    this.updatepopup.style.display='none';
+  
   }
 
+  
   async saveEnvironment()
   {
    if(this.insertForm.valid)
@@ -149,7 +151,7 @@ import {Router} from "@angular/router";
         })
         this.rerender();
         this.insertForm.reset();
-        this.createpopup=false; 
+        this.createpopup.style.display='none'; 
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
         this.submitted=false;
@@ -177,7 +179,7 @@ import {Router} from "@angular/router";
         })
       this.chanref.detectChanges();
       this.rerender();
-      this.updatepopup=false;
+      this.updatepopup.style.display='none';
       });
       
     }
@@ -189,6 +191,9 @@ import {Router} from "@angular/router";
 
   updatedata()
   {
+    document.getElementById("update-popup").style.display="block"
+    this.createpopup.style.display='none';
+
     let data:environmentobservable;
     for(data of this.environments)
     {
@@ -199,14 +204,15 @@ import {Router} from "@angular/router";
         break;
       }
     }
-    this.createpopup=false;
-    this.updatepopup=true;
+    //this.createpopup.style.display='none';
+    
   }
 
   close()
   {
-    this.createpopup=false;
-    this.updatepopup=false;
+    
+    document.getElementById('scheduler').style.display='none';
+    document.getElementById('update-popup').style.display='none';
   }
 
 
@@ -311,8 +317,5 @@ import {Router} from "@angular/router";
       });
       
   }
-
-
-
 }
 
