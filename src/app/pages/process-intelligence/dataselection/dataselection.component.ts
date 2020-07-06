@@ -36,6 +36,7 @@ export class DataselectionComponent implements OnInit {
   public othercategory:any;
   isotherCategory:boolean=false;
   isgenerate:boolean=false;
+  isUploadFileName: any;
   cathead1: any;
   cathead2: any;
   cathead3: any;
@@ -165,13 +166,17 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
   }
       var date=new Date()
       var tenantId="abc456789"
+  this.rest.fileName.subscribe(res => {
+    console.log(res);
+    this.isUploadFileName = res;
+  });
     const connectorBody={
       //"name": "CsvSchemaSpool-"+tenantId+date.toISOString().split(':').join(''),
        "name": "CsvSchemaSpool-"+this.processId,
       "config": {
         "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
         "input.path": "/var/kafka",
-        "input.file.pattern": localStorage.getItem("fileName"),
+        "input.file.pattern": this.isUploadFileName,
         "error.path": "/var/kafka",
          "topic": "tytyconnector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),

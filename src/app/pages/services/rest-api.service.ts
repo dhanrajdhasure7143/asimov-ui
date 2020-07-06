@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 
 // const httpOptions = {
@@ -25,6 +25,7 @@ export class RestApiService{
     }),
     responseType: 'text'
   }
+  public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient) { }
   getAccessToken(){
     let data = {"userId":"venkata.simhadri@epsoftinc.com",

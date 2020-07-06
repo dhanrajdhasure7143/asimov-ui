@@ -74,7 +74,8 @@ export class UploadComponent implements OnInit {
     this.rest.fileupload(fd).subscribe(res => {this.filedetails=res
                   // console.log('res',this.filedetails.data);
                   let fileName=this.filedetails.data.split(':');
-                  localStorage.setItem("fileName",fileName[1])
+                 // localStorage.setItem("fileName",fileName[1])
+                  this.rest.fileName.next(fileName[1]);
                   this.onSelect(event,id)
                   },err=>{
                     Swal.fire({
