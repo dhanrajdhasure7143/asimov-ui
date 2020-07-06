@@ -499,13 +499,67 @@ margin-left: 0;
 margin-right: 2px;
 }
 .diagramCanvas:hover{
-  background-color: #ccc;
-  cursor: pointer;
+background-color: #ccc;
+cursor: pointer;
 }
+.list_header{
+  color:#737373;
+  font-size: 15px;
+  text-align:center;
+}
+.child_list_header{
+  color:#737373;
+  font-size: 15px;
+}
+.bpmn_list{
+  margin-right: 95px !important;
+  margin-left: 96px !important;
+}
+.btn-download{
+ margin-top: 10px;
+  float: right;
+}
+#btn_app{
+background-color: #3ea307 !important;
+}
+#btn_deny{
+  background-color: #dd1818!important;
+}
+/* .list_diag .djs-palette{
+  display: none;
+} */
+.list_diag{
+  /* height: 400px; */
+  z-index: 30;
+  cursor: pointer;
+  opacity: 0.9;
+  float:right !important;
+  width:41% !important;
+}
+.bps_search{
+  width:20% !important;
+  float:right !important;
+}
+.text-cell{
+   text-align: center; 
+  padding-left:63px !important;
+}
+.text-cell-last{
+  text-align-last: center;
+  padding-left:109px !important;
+}
+/* #diag_hover:hover{
+  background-color: #f1f1f1;
+  z-index: 30;
+  opacity: 0.9;
+} */
+
+
 /* bpmn-diagram-list component styles - Ends*/
+
 .box-border{
-  border:1px solid #ccc;
-  border-radius: 7px;
+  border:1px solid #8080808c;
+  border-radius: 20px;
 }
 input[type=search]{
   border-top: none;

@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   template: `<div class="module-heading">
               <div class="container">
                 <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
-                <span class="module-heading-title"> Approval Workflow </span>
+                <span class="module-heading-title"> Business Process Studio </span>
               </div>
             </div><router-outlet></router-outlet>`
 })

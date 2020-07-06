@@ -1,0 +1,12 @@
+
+  mat-expansion-panel.active{
+      background-color: #fcfcfc;
+      border:2px solid #e8e8e8;
+  }
+ 
+/* .child_hr{
+  border:1px solid #e8e8e8;
+ padding:0px;
+ margin:0px;
+  width: 100%;
+} */
