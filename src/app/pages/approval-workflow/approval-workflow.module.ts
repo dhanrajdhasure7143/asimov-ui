@@ -10,6 +10,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { ApprovalHomeHints } from './bpmn-diagram-list/model/bpmn_approval_workflow';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule} from '@angular/material';
 
 
 
@@ -24,7 +25,9 @@ import { ApprovalHomeHints } from './bpmn-diagram-list/model/bpmn_approval_workf
     NgxPaginationModule,
     Ng2SearchPipeModule,
     ApprovalWorkflowRoutingModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatInputModule, MatIconModule, MatFormFieldModule,
+    MatOptionModule, MatSelectModule
   ],
   providers: [ApprovalHomeHints]
 })

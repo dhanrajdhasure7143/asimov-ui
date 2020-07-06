@@ -29,15 +29,13 @@ export class BpmnDiagramListComponent implements OnInit {
   index: any;
   searchTerm;
   isLoading:boolean = true;
-  isHidden:boolean=false;
   approvalstatus: any='REJECTED';
   rejectedby: any='mouni';
   remarks: any='ignore';
-  approve_hide: boolean=false;
   selectedrow: any;
   orderAsc:boolean = true;
-  sortIndex:number=1;
-  saved_diagrams: any;
+  sortIndex:number=2;
+  approval_msg: string="";
   constructor(private dt: DataTransferService,private hints:ApprovalHomeHints,private bpmnservice:SharebpmndiagramService, private model: DiagListData, private rest_Api: RestApiService,private router: Router) { }
 
   ngOnInit() {
@@ -47,8 +45,7 @@ export class BpmnDiagramListComponent implements OnInit {
      this.bpmnlist();
      this.dt.changeHints(this.hints.bpsApprovalHomeHints);
   }
-  getColor(status) {
-    //console.log(status) 
+  getColor(status) { 
     switch (status) {
       case 'PENDING':
         return 'orange';
@@ -60,22 +57,13 @@ export class BpmnDiagramListComponent implements OnInit {
         return 'orange';
     }
   }
-
+  collapseExpansion(){
+    this.approval_msg="";
+  }
   expandPanel(event,i,bpmnXmlNotation): void {
-   // event.stopPropagation(); 
    this.index=i;
-  //  this.griddata.map(item => {item.isHidden = false;return item;})
-  //  this.griddata.map(item=>{item.approve_hide=false;return item;})
-  // if(this.griddata[i].approvalStatus=='APPROVED' || this.griddata[i].approvalStatus=='REJECTED'){
-  //   this.griddata[i].bpmnProcessInfo.isHidden=true;
-  //   this.griddata[i].approve_hide=true;
-  // }
-  // else{
-  //   this.griddata[i].bpmnProcessInfo.isHidden=true;
-  // }
-
-
-  if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
+   this.approval_msg=this.griddata[i].bpmnProcessInfo.reviewComments;
+   if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     this.bpmnModeler = new BpmnJS({
       container: '.diagram_container'+i,
       keyboard: {
@@ -95,63 +83,43 @@ export class BpmnDiagramListComponent implements OnInit {
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
   }
-  // getDiagram(i, bpmnXmlNotation){
-  //   this.diagramComp.initializeDiag('diagram_container'+i, bpmnXmlNotation);
-  //   if (this.expanded) {
-  //    this.diagramComp.initializeDiag('diagram_container' + i, bpmnXmlNotation);
-  //     this._matExpansionPanel.open(); // Here's the magic
-  //     this.expanded = false;
-  //   }else{
-  //     this._matExpansionPanel.close()
-  //   }
-  // }
   openDiagram(binaryXMLContent, i){
   this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
   this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: i }});
   }
-  inputMessage(e,i){
-    if(e.target.value == ''){
-      this.griddata[i].bpmnProcessInfo.isHidden=true;
-    }
-    else {
-      this.griddata[i].bpmnProcessInfo.isHidden=false;
-    }
-   
+  checkStatus(app_status){
+    return (app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected');
   }
-
-  // getDiagram(i, bpmnXmlNotation) {
-  //   console.log(this.diagramComp);
-  //   this.diagramComp.initializeDiag('diagram_container' + i, bpmnXmlNotation);
-  // }
-
   loopTrackBy(index, term) {
     return index;
   }
   clicked(i){
 this.selectedrow =i;
   }
+  downloadBpmn(){
+    if(this.bpmnModeler){
+      let _self = this;
+      this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
+        _self.griddata[_self.index].bpmnProcessInfo['bpmnXmlNotation'] = btoa(unescape(encodeURIComponent(xml)));
+        var blob = new Blob([xml], { type: "application/xml" });
+        var url = window.URL.createObjectURL(blob);
+        var link = document.createElement("a");
+        link.href = url;
+        let fileName = _self.griddata[_self.index].bpmnProcessInfo['bpmnProcessName'];
+        if(fileName.trim().length == 0 ) fileName = "newDiagram";
+        link.download = fileName+".bpmn";
+        link.innerHTML = "Click here to download the diagram file";
+        link.click();
+      });
+    }
+  }
    bpmnlist() {
-    
      this.rest_Api.bpmnlist(this.user).subscribe(data => {
       this.isLoading = false;
+      data[0].approvalStatus='APPROVED';
+      data[1].approvalStatus='REJECTED';
       this.griddata = data; 
-      this.griddata.map(item => {item.role = 'BPMN_Process_Modeler';return item})
-      this.griddata.map(item => {item.xpandStatus = false;return item;})
-      this.griddata.map(item => {item.isHidden = false;return item;})
-      this.griddata.map(item=>{item.approve_hide=false;return item;})
-
-      for(let i=0;i<=this.griddata.length;i++){
-        if(this.griddata[i].approvalStatus=='APPROVED' || this.griddata[i].approvalStatus=='REJECTED'){
-          this.griddata[i].bpmnProcessInfo.isHidden=true;
-          this.griddata[i].approve_hide=true;
-        }
-        else{
-          this.griddata[i].bpmnProcessInfo.isHidden=true;
-        }
-      }
-    
      });
-
    }
    @HostListener('document:click',['$event'])
    clickout(event) {
@@ -164,14 +132,15 @@ this.selectedrow =i;
     // this.approve_savedb(data);
    }
    approve_producemessage(data) {
-     this.rest_Api.approve_producemessage(data.bpmnProcessInfo).subscribe(data => console.log(data));
+     this.rest_Api.approve_producemessage(data).subscribe(data => console.log(data));
    }
    approve_savedb(data) {
      this.rest_Api.approve_savedb(data).subscribe(data => console.log(data));
    }
-   denyDiagram(data, i) {
-    this.approver_info = { "approvalStatus":this.approvalstatus,"rejectedBy":this.rejectedby,"remarks": this.remarks,"message": this.message[i], "bpmnModelId":data.bpmnProcessInfo.bpmnModelId,"userName":data.bpmnProcessInfo.userName,"emailTo":data.bpmnProcessInfo.emailTo,"bpmnProcessName":data.bpmnProcessInfo.bpmnProcessName};
-    this.rest_Api.denyDiagram(this.approver_info).subscribe(data => console.log(data));
+   denyDiagram(data) {
+     let approver_info=data;
+     approver_info['message']=this.approval_msg;
+    this.rest_Api.denyDiagram(approver_info).subscribe(data => console.log(data));
    }
    sort(colKey,ind) { // if not asc, desc
     this.sortIndex=ind
@@ -194,13 +163,6 @@ this.selectedrow =i;
           return (a[colKey] < b[colKey]) ? 1 : -1;
         }
       }
-      
-
-
-      // if (asc) 
-      //  return (a.bpmnProcessInfo[colKey] > b.bpmnProcessInfo[colKey]) ? 1 : -1;
-      // else 
-      //  return (a[colKey] < b[colKey]) ? 1 : -1;
     });
   }
 }

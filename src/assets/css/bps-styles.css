@@ -525,9 +525,6 @@ background-color: #3ea307 !important;
 #btn_deny{
   background-color: #dd1818!important;
 }
-/* .list_diag .djs-palette{
-  display: none;
-} */
 .list_diag{
   /* height: 400px; */
   z-index: 30;
@@ -537,7 +534,6 @@ background-color: #3ea307 !important;
   width:41% !important;
 }
 .bps_search{
-  width:20% !important;
   float:right !important;
 }
 .text-cell{
@@ -547,25 +543,23 @@ background-color: #3ea307 !important;
 .text-cell-last{
   text-align-last: center;
   padding-left:109px !important;
-}
-/* #diag_hover:hover{
-  background-color: #f1f1f1;
-  z-index: 30;
-  opacity: 0.9;
-} */
-
-
-/* bpmn-diagram-list component styles - Ends*/
-
-.box-border{
+}.box-border{
   border:1px solid #8080808c;
   border-radius: 20px;
 }
-input[type=search]{
-  border-top: none;
-    border-left: none;
-    border-right: none;
+.diag_info{
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 12px;
+  width: 100px;
+  text-align: center;
+  position: relative;
+  top: -30px;
+  left: 8px;
 }
+/* bpmn-diagram-list component styles - Ends*/
+
+
 .box_area{
   margin-top: 20px;
 }
