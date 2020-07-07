@@ -1,43 +1,58 @@
-<div class="container bpmn_list">
-  <div class="row col-md-12 approve_bpmn_list_header">
-    <div class="col-md-1"><b>Process ID</b></div>
-    <div class="col-md-2"><b>Process Name</b></div>
-    <div class="col-md-2"><b>Modified Date/Time</b></div>
-    <div class="col-md-2"><b>Resource</b></div>
-    <div class="col-md-2"><b>Role</b></div>
-    <div class="col-md-2"><b>Overview</b></div>
-    <div class="col-md-1"><b>Actions</b></div>
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+        <mat-form-field>
+            <mat-label>Search Workspace</mat-label>
+            <input class="toolbar-search" type="text" matInput [(ngModel)]="searchTerm">
+            <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
+          </mat-form-field>
+    </div>
+  </div>
+</div>
 
-  </div><br/><br/>
+<div class="container-fluid bpmn_list">
+  <div class="row col-md-12 approve_bpmn_list_header">
+    <div class="col-md-2 list_header" (click)="sort('processIntelligenceId',0)"><b>Process ID<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
+    <div class="col-md-2 list_header" (click)="sort('bpmnProcessName',1)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>
+    <div class="col-md-2 list_header" (click)="sort('createdTimestamp',2)"><b>Requested Time<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></div>
+    <div class="col-md-2 list_header" (click)="sort('userName',3)"><b>Resource<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></div>
+    <div class="col-md-2 list_header" (click)="sort('role',4)"><b>Role<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></div>
+    <div class="col-md-2 list_header" (click)="sort('approvalStatus',5)"><b>Actions<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></b></div>
+  </div><br/><br/><br>
+  <div class="row col-md-12"  id="bpmn_list">
   <mat-accordion>
 
-    <mat-expansion-panel #matExpansionPanel *ngFor="let each_diag of griddata;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
-      hideToggle>
+    <mat-expansion-panel  #matExpansionPanel *ngFor="let each_diag of griddata | filter: searchTerm | paginate: { itemsPerPage: 14, currentPage: p };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
+    [(expanded)]="each_diag.xpandStatus"
+    (click)="clicked(i)"
+    [class.activePanel]="i==selectedrow"
+    (opened)="collapseExpansion()"
+    (afterExpand)="expandPanel($event,i,each_diag.bpmnProcessInfo.bpmnXmlNotation)">
   <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="row col-md-12">
-            <div class="col-md-1" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.processIntelligenceId}}</div>
-            <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.bpmnProcessName}}</div>
-            <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.createdTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
-            <div class="col-md-2" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.userName}}</div>
-            <div class="col-md-2">{{role}}</div>
-            <div class="col-md-2 overview_icon" *ngIf="each_diag.bpmnProcessInfo" (click)="expandPanel($event,i,each_diag.bpmnProcessInfo.bpmnXmlNotation)">
-              <img  src="..\assets\icons\bpmn_Overview.svg"> 
-          </div>
-            <div class="col-md-1" *ngIf="each_diag.bpmnProcessInfo" [ngStyle]="{'color':getColor(each_diag.approvalStatus)}">{{each_diag.approvalStatus}}</div>
+            <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.processIntelligenceId ? each_diag.bpmnProcessInfo.processIntelligenceId : '-' }}</div>
+            <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.bpmnProcessName ? each_diag.bpmnProcessInfo.bpmnProcessName : '-'}}</div>
+            <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.createdTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+            <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.userName  ? (each_diag.bpmnProcessInfo.userName | titlecase) : '-'}}</div>
+            <div class="col-md-2 text-cell">{{each_diag.role ? each_diag.role : '-'}}</div>
+            <div class="col-md-2  text-cell-last" *ngIf="each_diag.bpmnProcessInfo" [ngStyle]="{'color':getColor(each_diag.approvalStatus)}">{{each_diag.approvalStatus ? each_diag.approvalStatus : '-'}}</div>
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <!-- <hr class="child_hr"> -->
       <div class="row col-md-12">
         <div class="col-md-7">
-          <h5><u>Account Payable - ID : {{each_diag.acc_pay_id}}</u></h5>
+          <h4 class="child_list_header"><u>Account Payable - ID : {{each_diag.acc_pay_id}}</u></h4>
+          <br>
           <table class="full_width account_pay_details_table">
             <thead>
               <tr>
-                <th> Date/Time </th>
-                <th> Modeler Name </th>
-                <th> Action </th>
-                <th> Message </th>
+                <th class="child_list_header"> Date/Time </th>
+                <th class="child_list_header"> Modeler Name </th>
+                <th class="child_list_header"> Action </th>
+                <th class="child_list_header"> Message </th>
               </tr>
             </thead>
             <tbody>
@@ -45,31 +60,42 @@
                     <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.createdTimestamp | date:'dd/MM/yy HH:mm:ss'}}</td>
                     <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.userName}}</td>
                     <td>
-                        <!-- *ngIf="each_diag.approvalStatus=='APPROVED'?isHidden=true;isHidden=false" -->
-                      <button  class="btn btn-success" (click)="approveDiagram(each_diag)"[disabled]="approve_hide">Approve</button>
-                      <button  class="btn btn-danger" (click)="denyDiagram(each_diag,i)" [disabled]="isHidden">Deny</button>
+                      <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_diag)"[disabled]="approval_msg.length==0 || checkStatus(each_diag.approvalStatus)">Approve</button>
+                      <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_diag)" [disabled]="approval_msg.length==0 || checkStatus(each_diag.approvalStatus)">Deny</button>
                     </td>
-                    <td><input type="text"  [disabled]="isHidden" (input)="inputMessage($event,i)" [(ngModel)]="message[i]" placeholder="Enter your Message"/><i class="right fa fa-arrow-right arrow" aria-hidden="true"></i></td>
+                    <td><input type="text"   [(ngModel)]="approval_msg" [disabled]="checkStatus(each_diag.approvalStatus)" placeholder="Enter your Message"  required/><i class="right fa fa-arrow-right arrow" aria-hidden="true"></i></td>
                   </tr>
               
                 </tbody>
                
               </table>
-              <h6 class="total_count">Total:1/1</h6>
+              <!-- <pagination-controls (pageChange)="child_P = $event"></pagination-controls> -->
             </div>
-        <div class="col-md-5">
-          <!-- <div *ngIf="each_diag.bpmnProcessInfo" [class]="'diagram_container'+i"></div> -->
-          <bpmn-diagram *ngIf="each_diag.bpmnProcessInfo" [id]="'diagram_container'+i" [viewMode]="true"></bpmn-diagram>
+        <div class="col-md-3 list_diag">
+          <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnProcessInfo.bpmnXmlNotation, i)"></div>
+          <div class="row">
+            <div class="col-md-6">
+                <div class="diag_info">Click to open</div>
+            </div>
+            <div class="col-md-6">
+                <div class="btn-download">
+                    <button class="down-btn" (click)="downloadBpmn()"><img  src="..\assets\images\PI\download_icon.svg"></button>
+                    <h6 class="download-label">Download</h6>
+                  </div>
+            </div>
+          </div>
+
         </div>
-        <div class="btn-download">
-          <button class="down-btn"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
-          <h3 class="download-label">Download</h3>
-        </div>
+        
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div>
-
+</div>
+<div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
+  <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
+  </div></div>
 
 
 
