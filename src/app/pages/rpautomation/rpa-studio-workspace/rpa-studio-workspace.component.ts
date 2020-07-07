@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb } from 'jsplumb';
@@ -43,6 +43,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   allFormValues: any[] = [];
   saveBotdata:any = [];
   alldataforms:any=[];
+  @ViewChild('screen',{static: false}) screen: ElementRef;
+  @ViewChild('canvas',{static: false}) canvas: ElementRef;
+  @ViewChild('downloadLink',{static: false}) downloadLink: ElementRef;
   public finaldataobjects:any=[]
   constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService,) {
     
@@ -458,36 +461,67 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.hiddenCreateBotPopUp = false
     this.fields = []
   }
-  downloadPDF() {
-    const HTML_Width = $('#content').width();
-    const HTML_Height = $('#content').height();
-    const top_left_margin = 15;
-    const PDF_Width = HTML_Width + (top_left_margin * 2);
-    const PDF_Height = (PDF_Width) + (top_left_margin * 2);
-    const canvas_image_width = HTML_Width;
-    const canvas_image_height = HTML_Height;
 
-    const totalPDFPages = Math.ceil(HTML_Height / PDF_Height) - 1;
+  downloadPng(){
+    html2canvas(this.screen.nativeElement,{
+      width: 1200,
+      height: 600,
+      scrollX: 400,
+      scrollY: 200,
+      foreignObjectRendering: true
+    }).then(canvas => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
+      this.downloadLink.nativeElement.download = 'bot_image.png';
+      this.downloadLink.nativeElement.click();
+    });
+  }
 
-    window.scrollTo(0, 0);
-    html2canvas($('#content')[0], { allowTaint: true }).then((canvas) => {
-      canvas.getContext('2d');
+  downloadJpeg(){
+  
+    html2canvas(this.screen.nativeElement,{
 
-      console.log(canvas.height + '  ' + canvas.width);
+      width: 1000,
+      height: 480,
+      scrollX: 350,
+      scrollY: 140,
+      foreignObjectRendering: true }).then(canvas => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.downloadLink.nativeElement.href = canvas.toDataURL('image/jpeg');
+      this.downloadLink.nativeElement.download = 'bot_image.jpeg';
+      this.downloadLink.nativeElement.click();
+    });
+  }
 
+  downloadPdf() { 
+    
+    const div = document.getElementById('screen');
+    const options = {
+      background: 'white',
+      scale: 1,
+      width: 1200,
+      height: 600,
+      scrollX: 400,
+      scrollY: 200,
+      foreignObjectRendering: true
+    };
 
-      const imgData = canvas.toDataURL('data:' + 'image/png' + ';base64,', 1.0);
-      const pdf = new jsPDF('p', 'pt', [PDF_Width, PDF_Height]);
-      // pdf.addImage(imgData, 'JPG', top_left_margin, top_left_margin, canvas_image_width, canvas_image_height);
+    html2canvas(div, options).then((canvas) => {
 
+      var img = canvas.toDataURL("image/PNG");
+      var doc = new jsPDF('l', 'mm', 'a4', 1);
 
+      // Add image Canvas to PDF
+      const bufferX = 5;
+      const bufferY = 5;
+      const imgProps = (<any>doc).getImageProperties(img);
+      const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+      doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
 
-      for (let i = 1; i <= totalPDFPages; i++) {
-        pdf.addPage(PDF_Width, PDF_Height);
-        pdf.addImage(imgData, 'JPG', top_left_margin, -(PDF_Height * i) + (top_left_margin * 4), canvas_image_width, canvas_image_height);
-      }
-
-      pdf.save('RPA.pdf');
+      return doc;
+    }).then((doc) => {
+      doc.save('bot_image.pdf');  
     });
   }
 
