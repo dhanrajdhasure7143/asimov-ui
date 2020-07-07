@@ -10,6 +10,7 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 })
 export class BotStatusComponent implements OnInit {
   processStatus:any;
+  BotStatus:any;
   gaugeType = "full";
   gaugeValue = 28.3;
   gaugeLabel = "Overall Running";
@@ -106,6 +107,7 @@ export class BotStatusComponent implements OnInit {
    var getElementById:any = document.getElementById('myChart');
     var ctx = getElementById.getContext("2d");
   this.getprocessStatus();
+  this.getBotStatus();
   var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
   gradientStroke.addColorStop(0, '#dce9fd');
   gradientStroke.addColorStop(1, '#a3a0fb');
@@ -337,5 +339,14 @@ getprocessStatus()
 
 loopTrackBy(index, term){
   return index;
+}
+
+getBotStatus()
+{
+  this.api.getBotStatistics().subscribe(data=>{
+    this.BotStatus=data;
+    console.log(data)
+  
+  })
 }
 }
