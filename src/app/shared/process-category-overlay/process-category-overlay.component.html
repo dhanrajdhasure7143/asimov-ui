@@ -1,0 +1,36 @@
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" (click)="slideDown();">&times;</span>
+            <h4>{{title}}</h4>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" #processCategoryForm="ngForm"> 
+                <div class="container m-contanier">
+                    <mat-form-field class="row col-md-12">
+                        <mat-label>Select Category</mat-label>
+                        <mat-select  name="category" (selectionChange)="onchangeCategories(categoryName)" #category="ngModel" [(ngModel)]="categoryName" required panelClass="overlayMatSelect">
+                            <mat-option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
+                                {{categories.categoryName}}</mat-option>
+                            <mat-option value="other">Other</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <br/>
+                    <mat-form-field class="row col-md-12" *ngIf='isotherCategory'>
+                        <mat-label>Enter Category</mat-label>
+                        <input type="text" matInput name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required>
+                    </mat-form-field>
+                    <br/>
+                    <mat-form-field class="row col-md-12">
+                        <mat-label>Enter Process Name</mat-label>
+                        <input type="text" matInput name="processName" [(ngModel)]="processName" required>
+                    </mat-form-field>
+                    <br/>
+                    <div class="center">
+                        <button class="btn bpmn-btn" type="submit" (click)="proceedChanges()" [disabled]="!processCategoryForm.valid">Proceed</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

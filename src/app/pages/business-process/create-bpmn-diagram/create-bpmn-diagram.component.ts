@@ -10,6 +10,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { GlobalScript } from '../../../shared/global-script';
+import { BpsHints } from '../model/bpmn-module-hints';
 
 @Component({
   selector: 'app-create-bpmn-diagram',
@@ -20,10 +21,6 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   bpmnModeler:any;
   oldXml;
   newXml;
-  categoryName;
-  bpmnProcessName;
-  isotherCategory:boolean=false;
-  categoriesList:any=[];
   autosaveObj:any;
   bpmnModel:BpmnModel = new BpmnModel();
   isLoading:boolean = false;
@@ -41,13 +38,13 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   uploadedFile;
 
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
-    private router:Router, private bpmnservice:SharebpmndiagramService, private global:GlobalScript) {}
+    private router:Router, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints) {}
 
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
+    this.dt.changeHints(this.hints.bpsCreateHints);
     this.selected_modelId = this.bpmnservice.bpmnId.value;
-    this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
     this.getUserBpmnList();
     this.getApproverList();
     // this.randomId = UUID.UUID();
@@ -161,7 +158,6 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       _self.newXml = xml;
       if(_self.oldXml != _self.newXml){
         _self.spinner.show();
-        // _self.bpmnModel.modifiedTimestamp = new Date();
         _self.bpmnModel.bpmnProcessMeta = btoa(unescape(encodeURIComponent(_self.newXml)));
         _self.bpmnModel.bpmnProcessName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
         _self.bpmnModel.bpmnModelId = _self.randomId;
@@ -205,26 +201,23 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     }
   }
 
-  uploadAgainBpmn(){
+  uploadAgainBpmn(e){
     this.isLoading = true;
     let _self = this;
     var myReader: FileReader = new FileReader();
     myReader.onloadend = (ev) => {
       let fileString:string = myReader.result.toString();
       let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
-      this.slideDown();
       this.bpmnservice.uploadBpmn(encrypted_bpmn);//is it needed? similary storing process name, category
       this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
-      this.bpmnModel.bpmnProcessName = this.bpmnProcessName;
+      this.bpmnModel.bpmnProcessName = e.processName;
       this.bpmnModel.bpmnModelId=this.randomId;
       this.bpmnservice.setSelectedBPMNModelId(this.randomId);
-      this.bpmnModel.category=this.categoryName;
+      this.bpmnModel.category=e.categoryName;
       this.initialSave(this.bpmnModel);
       this.bpmnModeler.importXML(fileString, function(err){
         _self.oldXml = fileString.trim();
         _self.newXml = fileString.trim();
-        _self.bpmnProcessName = "";
-        _self.categoryName = "";
         _self.isLoading = false;
       });
     }
@@ -232,8 +225,9 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   initialSave(diagramModel:BpmnModel){
-    // diagramModel.modifiedTimestamp = new Date();
-    this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>console.log("initailly saved"));
+    this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
+      this.getUserBpmnList();
+    });
   }
   submitDiagramForApproval(){
     if(!this.selected_approver){
@@ -265,7 +259,8 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
             'Saved!',
             'Your changes has been saved and submitted for approval successfully.',
             'success'
-          )
+          );
+        _self.router.navigateByUrl("/pages/approvalWorkflow/home");
         },err => {
           _self.isLoading = false;
           Swal.fire(
@@ -282,7 +277,6 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     this.isLoading = true;
     let _self=this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
-    // this.bpmnModel.bpmnModelModifiedTime = new Date();
     this.bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     this.bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     this.bpmnModel.category = sel_List['category'];
@@ -323,8 +317,6 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
   }
 
   slideUp(e){
-    this.categoryName = "";
-    this.bpmnProcessName = "";
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
       var modal = document.getElementById('myModal');
       modal.style.display="block";
@@ -336,18 +328,6 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       if(e.rejectedFiles[0].reason == "type")
         message = "Please upload proper *.bpmn file";
       this.global.notify(message, "error");
-    }
-  }
-  slideDown(){
-    this.uploadedFile = null;
-    var modal = document.getElementById('myModal');
-    modal.style.display="none";
-  }
-  onchangeCategories(categoryName){
-    if(categoryName =='other'){
-      this.isotherCategory=true;
-    }else{
-      this.isotherCategory=false;
     }
   }
   
