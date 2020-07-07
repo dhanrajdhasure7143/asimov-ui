@@ -122,7 +122,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         if(lowercase=='Start Timestamp' || lowercase=='Start Time'){
           lowercase='start Time'
         }
-        if(lowercase=='End Timestamp' || lowercase=='End Time'){
+        if(lowercase=='End Timestamp' || lowercase=='End Time' || lowercase=='Complete Timestamp' || lowercase=='Complete Time'){
           lowercase='end Time'
         }
         if(lowercase=='Operation' || lowercase=='Activity' || lowercase=='Actvity'){
@@ -208,6 +208,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "transforms.InsertField.static.field": "piIdName",
         "transforms.InsertField.static.value": this.processId+"-p"+this.processId
       }   }
+     
       this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
         // var piId=connectorBody.config["transforms.InsertField.static.value"]
         // localStorage.setItem('piId',this.processId)
