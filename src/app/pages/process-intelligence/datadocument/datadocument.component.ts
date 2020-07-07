@@ -27,6 +27,7 @@ export class DatadocumentComponent implements OnInit {
   headerName: any;
   bkp_headerData;
   searchTerm: string;
+  cathead: any;
   cathead1: any;
   cathead2: any;
   cathead3: any;
@@ -60,6 +61,7 @@ export class DatadocumentComponent implements OnInit {
         this.fileData = this.fileData.slice(0, this.fileData.length-1);
         this.fileData = this.fileData;
         for (var f = 0; f < this.headerData.length; f++) {
+         
           switch (f) {
             case 0:
               {
@@ -75,6 +77,7 @@ export class DatadocumentComponent implements OnInit {
                   }
                 case 3:
                   {
+                    console.log(this.headerData[3]);
                     this.getDataType(3, this.fileData[0][3], this.headerData[3]);
                   }
                   case 4:
@@ -143,16 +146,18 @@ export class DatadocumentComponent implements OnInit {
   selectedCell(tr_index, index, e, v) {
     this.headerName = v;
     if (!e.srcElement.classList.contains("valid") && this.headerName) {
-      let hdr_ar_index = this.headerData.indexOf(this.headerName);
+     //let hdr_ar_index = this.headerData.indexOf(this.headerName);
       let reg_expression;
       let isDateCheck: boolean = false;
-      if (hdr_ar_index == 0 || hdr_ar_index == 1) {
-        reg_expression = new RegExp(/^\d+$/);
-      } //alphanum check
-      isDateCheck = hdr_ar_index == 3 || hdr_ar_index == 4;
-      if (hdr_ar_index == 2 || hdr_ar_index == 5 || hdr_ar_index == 6) {
-        reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i ); //string check   /^[a-z\s ,]{0,255}$/i
-      }
+      if (this.headerName.indexOf('Timestamp') == -1 || this.headerName.indexOf('Time') == -1) {
+        //reg_expression = new RegExp(/^\d+$/);
+        reg_expression = new RegExp(/^[-\w\s]+$/);
+      } //alphanum check else
+      // isDateCheck = hdr_ar_index == 3 || hdr_ar_index == 4;
+      // if (hdr_ar_index == 2 || hdr_ar_index == 5 || hdr_ar_index == 6) {
+      //   reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i ); //string check   /^[a-z\s ,]{0,255}$/i
+      // }
+      isDateCheck = this.headerName.indexOf('Timestamp') != -1 || this.headerName.indexOf('Time') != -1
       let isInvalid: boolean = false;
       for (var x = 0; x < this.fileData.length; x++) {
         if (!this.validCells['row' + x])
@@ -187,6 +192,7 @@ export class DatadocumentComponent implements OnInit {
           break;
         }
       }
+    
       if (!isInvalid) {
         if (this.step_id == this.headerData.length) {
           this.isValidPiData = true;
@@ -194,8 +200,9 @@ export class DatadocumentComponent implements OnInit {
           this.step_id = this.step_id + 1;
         }
         this.headerData[index] = this.headerName;
-        this.headerName = this.headerData[hdr_ar_index + 1];
+       // this.headerName = this.headerData[hdr_ar_index + 1];
       }
+    
     }
   }
 
@@ -224,51 +231,53 @@ export class DatadocumentComponent implements OnInit {
     modal.style.display = "none";
   }
 
-  getDataType(index, fData, dType) {
-    if(dType.indexOf('Timestamp') != -1 || dType.indexOf('Time') != -1){
-      if (index == 0 ) {
+  getDataType(index, fData, headValue) {
+    console.log(headValue,">>>>", index,"<<<<<<<<<<<",fData);
+    if(headValue.indexOf('Timestamp') != -1 || headValue.indexOf('Time') != -1){
+      if (headValue == 'S.No' ) {
         if (this.isDate(fData) == true) {
           this.cathead1 = "Date/Time";
         } else {
           this.cathead1 = "String";
         }
       } 
-      if (index == 1) {
+      if (headValue == 'Case ID' || headValue == 'Order Number' || headValue == 'caseID' || headValue == 'ID') {
         if (this.isDate(fData) == true) {
           this.cathead2 = "Date/Time";
         } else {
           this.cathead2 = "String";
         }
       }
-      if (index == 2) {
+      if (headValue == 'Actvity' || headValue == 'Operation' || headValue == 'Activity') {
         if (this.isDate(fData) == true) {
           this.cathead3 = "Date/Time";
         } else {
           this.cathead3 = "String";
         }
       }
-      if (index == 3) {
+      if (headValue == 'Start Timestamp' || headValue == 'Start Time') {
+        console.log("ihhhh", fData)
         if (this.isDate(fData) == true) {
           this.cathead4 = "Date/Time";
         } else {
           this.cathead4 = "String";
         }
       }
-      if (index == 4) {
+      if (headValue == 'End Timestamp' || headValue == 'End Time' || headValue == 'Complete Timestamp') {
         if (this.isDate(fData) == true) {
           this.cathead5 = "Date/Time";
         } else {
           this.cathead5 = "String";
         }
       }
-      if (index == 5) {
+      if (headValue == 'Resource' || headValue == 'Agent') {
         if (this.isDate(fData) == true) {
           this.cathead6 = "Date/Time";
         } else {
           this.cathead6 = "String";
         }
       }
-      if (index == 6) {
+      if (headValue == 'Role') {
         if (this.isDate(fData) == true) {
           this.cathead7 = "Date/Time";
         } else {
@@ -276,49 +285,50 @@ export class DatadocumentComponent implements OnInit {
         }
       }
     } else {
-      if (index == 0 ) {
+      if (headValue == 'S.No' ) {
         if (this.isNumeric(fData) == true) {
           this.cathead1 = "Integer";
         } else {
           this.cathead1 = "String";
         }
       } 
-      if (index == 1) {
+      if (headValue == 'Case ID' || headValue == 'Order Number' || headValue == 'caseID' || headValue == 'ID') {
         if (this.isNumeric(fData) == true) {
           this.cathead2 = "Integer";
         } else {
           this.cathead2 = "String";
         }
       }
-      if (index == 2) {
+      if (headValue == 'Actvity' || headValue == 'Operation' || headValue == 'Activity') {
         if (this.isNumeric(fData) == true) {
           this.cathead3 = "Integer";
         } else {
           this.cathead3 = "String";
         }
       }
-      if (index == 3) {
+      if (headValue == 'Start Timestamp' || headValue == 'Start Time') {
+        console.log("ihhhhfff", fData)
         if (this.isNumeric(fData) == true) {
           this.cathead4 = "Integer";
         } else {
           this.cathead4 = "String";
         }
       }
-      if (index == 4) {
+      if (headValue == 'End Timestamp' || headValue == 'End Time' || headValue == 'Complete Time') {
         if (this.isNumeric(fData) == true) {
           this.cathead5 = "Integer";
         } else {
           this.cathead5 = "String";
         }
       }
-      if (index == 5) {
+      if (headValue == 'Resource' || headValue == 'Agent') {
         if (this.isNumeric(fData) == true) {
           this.cathead6 = "Integer";
         } else {
           this.cathead6 = "String";
         }
       }
-      if (index == 6) {
+      if (headValue == 'Role') {
         if (this.isNumeric(fData) == true) {
           this.cathead7 = "Integer";
         } else {
@@ -328,6 +338,8 @@ export class DatadocumentComponent implements OnInit {
     }
     
   }
+
+
 
   isNumeric(num) {
     return !isNaN(num)

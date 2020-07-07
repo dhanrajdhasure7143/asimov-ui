@@ -45,12 +45,12 @@
                           <option>Integer</option>
                           <option>Date/Time</option>
                           </select> 
-                        <select [disabled]='true' name="cathead2" [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead1)" *ngIf="headValue == 'Case ID' || headValue == 'Order Number' || headValue == 'caseID'">
+                        <select [disabled]='true' name="cathead2" [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead1)" *ngIf="headValue == 'Case ID' || headValue == 'Order Number' || headValue == 'caseID' || headValue == 'ID'">
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
-                      <select name="cathead3" [disabled]='true' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead2)" *ngIf="headValue == 'Actvity' || headValue == 'Operation'">
+                      <select name="cathead3" [disabled]='true' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead2)" *ngIf="headValue == 'Actvity' || headValue == 'Operation'|| headValue == 'Activity'">
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
@@ -60,7 +60,7 @@
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
-                      <select name="cathead5" [disabled]='true' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead4)" *ngIf="headValue == 'End Timestamp' || headValue == 'End Time'">
+                      <select name="cathead5" [disabled]='true' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead4)" *ngIf="headValue == 'End Timestamp' || headValue == 'End Time' || headValue == 'Complete Timestamp'">
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>

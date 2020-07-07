@@ -23,7 +23,7 @@
                 </div>
                 <div class='col-sm-12 row variant2'>
                         <div class="col-sm-7 check_box">
-                            <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selecetAllVariants()"><span class="">Select all</span>
+                            <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()"><span class="">Select all</span>
                         </div>
                         <div class='col-sm-5 event2'>Time Taken</div>
                 </div>
@@ -34,15 +34,16 @@
                         <div (click)="caseIdSelect(data,i)" class='col-sm-12'>{{caseParcent(data.casepercent)}}% of cases</div>
                         <div (click)="caseIdSelect(data,i)" class='col-sm-12 events1'><p>{{data.detail}}</p></div>
                     
-                        <div class='col-sm-3'></div>
+                        <div (click)="caseIdSelect(data,i)" class='col-sm-3'></div>
                         <!-- *ngIf="isvaraintPlay" -->
-                        <div class="col-sm-9 variant_play" >
+                        <div class="col-sm-9" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
+                                <!-- <div class="col-sm-9 variant_play" [ngClass]="isvariantSelected==data.name?'variant_playOne':''"> -->
                             <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
                             <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
                         </div>
 
                     </div>
-                    <div class='col-sm-2'>{{timeConversion(data.days)}}</div>
+                    <div class='col-sm-2' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
                 </div>
                 </div>
                 
@@ -95,14 +96,27 @@
     <div class='col-md-12 row'>
         <div class='col-md-2'>
                 <div class="form-group">
-                        <select class="form-control" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
+                        <select class="form-control border_bottom" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
                             <option value="undefined" hidden disabled>Select Process Graph</option>
                             <option *ngFor="let process_list of process_graph_list.data;let i=index;trackBy:loopTrackBy" [value]="process_list.piId">{{process_list.piName|titlecase}}</option>
                         </select>
                     </div>
         </div>
         <div class='col-sm-3'>
-            <!-- <div>
+            <!-- <div class="col-sm-6 activity_selection border_bottom" (click)="activityDropDown()">Activity Selection<span class="caret"></span></div>
+            <div class="activity_selection1 col-sm-8" *ngIf="isActivity_dropdwn">
+                   <div class="col-sm-6"> <button class='apply_btn' type='button' (click)="activitySelectedGraph()">Apply</button></div>
+                   <div class="col-sm-12"><button class='reset_btn' type='button' (click)="resetActivity()">reset</button></div>
+                      <mat-form-field>
+                            <mat-label>Activity</mat-label>
+                            <mat-select [(ngModel)]="activity_value" #activitySelect multiple class=""> 
+                                <mat-option *ngFor="let eachNode of activity_list;let j=index;trackBy:loopTrackBy" [value]="eachNode.name">{{eachNode.name}}</mat-option>
+                                    <button class="btn btn-primary" (click)="activitySelectedGraph()">Apply</button>
+                            </mat-select>
+                          </mat-form-field>
+                    </div> -->
+                
+                    <!-- <div>
                 <button class='btn' (click)='zoomIn()'>Zoom In</button>
                 <button class='btn' (click)='zoomOut()'>Zoom Out</button>
                 <button class='btn' (click)='zoomReset()'>Reset Zoom</button>
@@ -117,7 +131,7 @@
                             <button title="Download" data-toggle="dropdown" class="down_btn dropdown-toggle"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
                     <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
                         
-                            <p class="" (click)="downloadPdf()">PDF</p>
+                            <!-- <p class="" (click)="downloadPdf()">PDF</p> -->
                             <p class="" (click)="downloadSvg()">SVG</p>
                        
                         </div>
@@ -187,6 +201,7 @@
                     </form>
                 </div>
             </div>
+            <!-- <div *ngIf="!isNodata" class="nodata_slider"><h1>No data found</h1></div> -->
         <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"></app-piflowchart>
     </div>
     <div class='col-md-1'>

@@ -23,6 +23,7 @@ import { PibpmnfilterComponent } from './pibpmnfilter/pibpmnfilter.component';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DataTablesModule} from 'angular-datatables';
+import {MatOptionModule, MatSelectModule} from '@angular/material';
 
 
 @NgModule({
@@ -52,6 +53,7 @@ import {DataTablesModule} from 'angular-datatables';
     Ng2SearchPipeModule,
     NgxSpinnerModule,
     DataTablesModule,
+    MatOptionModule,MatSelectModule
   ],
   providers:[PiHints]
 
