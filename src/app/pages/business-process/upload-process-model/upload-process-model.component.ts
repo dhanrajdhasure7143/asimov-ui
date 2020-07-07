@@ -2,8 +2,7 @@ import { Component, OnInit ,AfterViewInit, Input} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner"; 
-// import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
+import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
@@ -119,34 +118,36 @@ export class UploadProcessModelComponent implements OnInit {
     initiateDiagram(){
       let _self=this;
       let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-      this[modeler_obj] = new BpmnJS({
-        container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
-        keyboard: {
-          bindTo: window
-        }
-      });
-      this[modeler_obj].on('element.changed', function(){
-        let now = new Date().getTime();
-        _self.isDiagramChanged = true;
-        if(now - _self.last_updated_time > 10*1000){
-          _self.autoSaveBpmnDiagram();
-          _self.last_updated_time = now;
-        }
-      })
-      if(this.isShowConformance && !this.reSize){ 
-        this.rest.getBPMNFileContent("assets/resources/pizza-collaboration.bpmn").subscribe(res => {
-          this[modeler_obj].importXML(res, function(err){
+      if(!this[modeler_obj]){
+        this[modeler_obj] = new BpmnJS({
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
+          keyboard: {
+            bindTo: window
+          }
+        });
+        this[modeler_obj].on('element.changed', function(){
+          let now = new Date().getTime();
+          _self.isDiagramChanged = true;
+          if(now - _self.last_updated_time > 10*1000){
+            _self.autoSaveBpmnDiagram();
+            _self.last_updated_time = now;
+          }
+        })
+        if(this.isShowConformance && !this.reSize){ 
+          this.rest.getBPMNFileContent("assets/resources/pizza-collaboration.bpmn").subscribe(res => {
+            this[modeler_obj].importXML(res, function(err){
+              if(err){
+                return console.error('could not import BPMN 2.0 diagram', err);
+              }
+            })
+          });
+        }else{
+          this[modeler_obj].importXML(atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation))), function(err){
             if(err){
               return console.error('could not import BPMN 2.0 diagram', err);
             }
           })
-        });
-      }else{
-        this[modeler_obj].importXML(atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation))), function(err){
-          if(err){
-            return console.error('could not import BPMN 2.0 diagram', err);
-          }
-        })
+        }
       }
    }
 
@@ -249,6 +250,7 @@ export class UploadProcessModelComponent implements OnInit {
     let _self = this;
     var myReader: FileReader = new FileReader();
     myReader.onloadend = (ev) => {
+      this.isLoading = true;
       let fileString:string = myReader.result.toString();
       let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
       this.bpmnservice.uploadBpmn(encrypted_bpmn);//is it needed? similary storing process name, category
@@ -289,13 +291,18 @@ export class UploadProcessModelComponent implements OnInit {
   }
 
   initialSave(diagramModel:BpmnModel){
+    this.isLoading = true;
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
+      this.isLoading = true;
       this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
         this.saved_bpmn_list = res; 
-        if(!this.selected_notation){
+        // if(!this.selected_notation){
           this.selected_notation = 0;
           this.notationListOldValue = 0;
-        }
+        // }
+        this.isLoading = false;
+      }, err => {
+        this.isLoading = false;
       })
     });
   }

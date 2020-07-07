@@ -52,8 +52,6 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   }
 
   slideDown(){
-    this.processName = "";
-    this.categoryName = "";
     var modal = document.getElementById('myModal');
     modal.style.display="none";
   }
