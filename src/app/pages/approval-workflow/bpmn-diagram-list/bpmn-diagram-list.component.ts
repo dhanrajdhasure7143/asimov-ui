@@ -7,6 +7,7 @@ import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { Router } from '@angular/router';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { ApprovalHomeHints } from './model/bpmn_approval_workflow';
+import { GlobalScript } from 'src/app/shared/global-script';
 
 @Component({
   selector: 'app-bpmn-diagram-list',
@@ -29,14 +30,14 @@ export class BpmnDiagramListComponent implements OnInit {
   index: any;
   searchTerm;
   isLoading:boolean = true;
-  approvalstatus: any='REJECTED';
+  //approvalstatus: any='REJECTED';
   rejectedby: any='mouni';
   remarks: any='ignore';
   selectedrow: any;
   orderAsc:boolean = true;
   sortIndex:number=2;
   approval_msg: string="";
-  constructor(private dt: DataTransferService,private hints:ApprovalHomeHints,private bpmnservice:SharebpmndiagramService, private model: DiagListData, private rest_Api: RestApiService,private router: Router) { }
+  constructor(private dt: DataTransferService,private hints:ApprovalHomeHints,private bpmnservice:SharebpmndiagramService,private global:GlobalScript, private model: DiagListData, private rest_Api: RestApiService,private router: Router) { }
 
   ngOnInit() {
     this.isLoading= true;
@@ -88,7 +89,7 @@ export class BpmnDiagramListComponent implements OnInit {
   this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: i }});
   }
   checkStatus(app_status){
-    return (app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected');
+    return app_status && (app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected');
   }
   loopTrackBy(index, term) {
     return index;
@@ -116,9 +117,8 @@ this.selectedrow =i;
    bpmnlist() {
      this.rest_Api.bpmnlist(this.user).subscribe(data => {
       this.isLoading = false;
-      data[0].approvalStatus='APPROVED';
-      data[1].approvalStatus='REJECTED';
-      this.griddata = data; 
+      this.griddata = data;
+      this.griddata.map(item => {item.xpandStatus = false;return item;}) 
      });
    }
    @HostListener('document:click',['$event'])
@@ -126,21 +126,44 @@ this.selectedrow =i;
      if(!document.getElementById("bpmn_list").contains(event.target) && this.index>=0)
        this.griddata[this.index].xpandStatus=false;
    }
+
  
    approveDiagram(data) {
      this.approve_producemessage(data);
     // this.approve_savedb(data);
    }
    approve_producemessage(data) {
-     this.rest_Api.approve_producemessage(data).subscribe(data => console.log(data));
+    data.bpmnProcessInfo.reviewComments= this.approval_msg;
+     data.approvalStatus='APPROVED';
+     delete(data.xpandStatus);
+     this.rest_Api.approve_producemessage(data).subscribe(
+        data =>{
+          let message = "Diagram approved successfully";
+              this.bpmnlist();
+              this.global.notify(message,'success');
+              },
+        err=>{
+          let message = "Oops! Something went wrong";
+          this.global.notify(message,'error');
+              });
    }
    approve_savedb(data) {
      this.rest_Api.approve_savedb(data).subscribe(data => console.log(data));
    }
    denyDiagram(data) {
-     let approver_info=data;
-     approver_info['message']=this.approval_msg;
-    this.rest_Api.denyDiagram(approver_info).subscribe(data => console.log(data));
+     data.bpmnProcessInfo.reviewComments= this.approval_msg;
+     data.approvalStatus='REJECTED';
+     delete(data.xpandStatus);
+    this.rest_Api.denyDiagram(data).subscribe(
+      data => {
+        let message =  "Diagram rejected successfully";
+        this.bpmnlist();
+        this.global.notify(message,'success');
+      },
+      err=>{
+        let message = "Oops! Something went wrong";
+        this.global.notify(message,'error');
+      });
    }
    sort(colKey,ind) { // if not asc, desc
     this.sortIndex=ind
