@@ -63,7 +63,7 @@
                       <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_diag)"[disabled]="approval_msg.length==0 || checkStatus(each_diag.approvalStatus)">Approve</button>
                       <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_diag)" [disabled]="approval_msg.length==0 || checkStatus(each_diag.approvalStatus)">Deny</button>
                     </td>
-                    <td><input type="text"   [(ngModel)]="approval_msg" [disabled]="checkStatus(each_diag.approvalStatus)" placeholder="Enter your Message"  required/><i class="right fa fa-arrow-right arrow" aria-hidden="true"></i></td>
+                    <td><input type="text" [value]="each_diag.bpmnProcessInfo.reviewComments"  [(ngModel)]="approval_msg" [disabled]="checkStatus(each_diag.approvalStatus)" placeholder="Enter your Message"  required/><i class="right fa fa-arrow-right arrow" aria-hidden="true"></i></td>
                   </tr>
               
                 </tbody>
