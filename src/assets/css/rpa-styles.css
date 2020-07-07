@@ -14,23 +14,34 @@
        
   }
   .imageI{
+
     width: 16px;
     filter: brightness(0.1) !important;
 }
 
 .imageI1{
-  width: 30px;
+  
   height: 25px;
+  width:25px;
   filter: brightness(0.1) !important;
 }
-.btn_style{
+.rpa-btn_style{
   margin: 0px -6px 0px 10px;
   background-color: white;
   border-radius: 2px;
+  /*padding:15px;*/
+  padding-right:15px;
+  padding-left:15px;
   
+  padding-top:5px;
+  
+  padding-bottom:5px;
+}
+.rpa-btn_style:disabled{
+  background-color:rgb(199, 199, 199);
 }
 .btn_title{
-font-size:12px;
+font-size:10px;
 color:black;
 }
 .btn_style1{
@@ -43,6 +54,7 @@ padding: 0px 12px;
 background-color: blue;
 color:#fff;
 } */
+
 .btn_style1 img:active, .btn_style1 img:hover {
   background-color: blue;
   color: white;
@@ -199,3 +211,82 @@ padding-bottom: 70px;
     background : rgb(209, 209, 209);
     border-radius: 10px;
   } 
+
+ 
+  /* The  rpa-modal (background) */
+.rpa-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+  }
+  
+  /*  rpa-modal Content */
+  .rpa-modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 100%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+  }
+  
+  /* The Close Button */
+  .rpa-modal-close {
+  color: #000;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  }
+  
+  .rpa-modal-close:hover,
+  .rpa-modal-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  }
+  
+  .rpa-modal-header {
+  padding: 2px 16px;
+  background-color: #e5e5e5;
+  color: #000;
+  }
+  .rpa-modal-header .close {
+  margin-top: 5px;
+ }
+  
+  .rpa-modal-body {padding: 2px 16px;}
+  
+  
+  /* Add Animation */
+  @-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 0; opacity: 1}
+  }
+  
+  @keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+  }
+  
+  @-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+  }
+  
+  @keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+  }

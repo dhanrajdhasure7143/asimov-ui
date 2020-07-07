@@ -1,6 +1,6 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 
 // const httpOptions = {
@@ -25,6 +25,7 @@ export class RestApiService{
     }),
     responseType: 'text'
   }
+  public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient) { }
   getAccessToken(){
     let data = {"userId":"venkata.simhadri@epsoftinc.com",
@@ -195,20 +196,24 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   getAlluserProcessPiIds(){
     return this.http.get('/processintelligence/v1/processgraph/userProcess')
   }
-  getAllVaraintList(piId){
+  getAllVaraintList(listBody){
     //return this.http.get("/processintelligence/v1/processgraph/variantList?pid="+piId)
-    return this.http.get("/ReddisCopy/getGraphData?pid="+piId+"&data_type=varients_list", {responseType: 'json'})
+    return this.http.post("/ReddisCopy/getGraphData",listBody, {responseType: 'json'})
   }
-  getfullGraph(piId){
+  getfullGraph(fullGraphbody){
     //return this.http.get("/processintelligence/v1/processgraph/fullGraph?pid="+piId)
-    return this.http.get("/ReddisCopy/getGraphData?pid="+piId+"&data_type=full_graph", {responseType: 'json'})
+    return this.http.post("/ReddisCopy/getGraphData",fullGraphbody, {responseType: 'json'})
   }
-  getvaraintGraph(piId){
-    return this.http.get("/ReddisCopy/getGraphData?pid="+piId+"&data_type=variant_graph")
+  getvaraintGraph(variantgraphbody){
+    return this.http.post("/ReddisCopy/getGraphData",variantgraphbody)
     // return this.http.get('/processintelligence/v1/processgraph/variantGraph?pid='+piId)
   }
-  getSliderVariantGraph(piId){
-    return this.http.get("/ReddisCopy/getGraphData?pid="+piId+"&data_type=slider_graph")
+  getSliderVariantGraph(sliderGraphbody){
+    return this.http.post("/ReddisCopy/getGraphData",sliderGraphbody)
+  }
+
+  getVariantGraphCombo(body){
+    return this.http.post("/ReddisCopy/getGraphData",body)
   }
 
   getProcessStatistics()

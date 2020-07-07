@@ -209,6 +209,7 @@
     background: none;
     height: 20px;
     color: #0162cf;
+    /* color: #ffffff; */
     padding: 0px;
   }
   #linkname{
@@ -249,16 +250,17 @@
     padding-left: 0px;
   }
   .variant_play{
-    display: none;
+    /* display: none; */
     z-index: 10;
   }
   /* .variant_border:hover .variant_play{
     display:block !important;
   } */
-  .activevaraint .variant_play{
-    display:block !important;
-    
-    
+  /* .activevaraint .variant_play{
+    display:block !important;   
+  } */
+  .variant_playOne{
+    display:block !important;   
   }
   .tooltip_header{
     font-size: 14px;
@@ -275,4 +277,45 @@
   }
   .download_selection p:hover{
       font-weight: bold;
+  }
+  .activity_selection{
+    /* border: 1px solid lightgray;
+    border-radius: 10px; */
+    padding:5px;
+  }
+  .activity_selection1{
+    position: absolute;
+    z-index: 4;
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin-top: 38px;
+    border-radius: 10px;
+  }
+  .activity_selection1::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 10%;
+    margin-left: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent gray transparent ;
+    }
+    .activity_selection span{
+      margin-left: 22px;
+    }
+  .apply_btn{
+    color: #0162cf;
+  }
+  .nodata_slider{
+    position: absolute;
+    z-index: 100;
+    margin-top: 100px;
+    font-weight: bold;
+    color: #adaaaa;
+    margin-left: 40%;
+  }
+  .download_selection p{
+    padding-left:20px;
+    color: #0162cf;
   }

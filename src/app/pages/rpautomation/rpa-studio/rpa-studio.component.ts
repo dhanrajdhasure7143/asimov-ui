@@ -35,7 +35,7 @@ export class RpaStudioComponent implements OnInit {
   templateNodes: any = [];
   show: number;
   toolSetData: void;
-
+  
   listEnvironmentData:any =[];
   changePx: { x: number; y: number; };
   // forms
@@ -58,19 +58,20 @@ export class RpaStudioComponent implements OnInit {
   tabsArray: any[] = [];
   tabActiveId: string;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
-    private hints:RpaHints, private formBuilder:FormBuilder) {
+    private hints:RpaHints, private formBuilder:FormBuilder) { 
     this.show = 5;
-
+    
     this.insertbot=this.formBuilder.group({
       botName:["", Validators.required],
       botDepartment:["", Validators.required],
       botDescription:[""],
       botType:["", Validators.required],
   });
-
+  
   }
 
-  ngOnInit() {
+  ngOnInit() 
+  {
     if(localStorage.getItem("enablecreate"))
     {
       this.hiddenCreateBotPopUp=true;
@@ -80,55 +81,38 @@ export class RpaStudioComponent implements OnInit {
     else
     {
       this.hiddenCreateBotPopUp=false;
-    }
-
-    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
+    }   
+    this.toolSetData;
+    let data1:any = [];
+    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.rpaHomeHints);
     this.rest.toolSet().subscribe(data => {
       console.log(data);
-      let value:any = [];
-      let subValue:any = []
-      this.toolSetData;
-      let data1:any = [];
-      // data1 = this.nData
       data1 = data
+  
       data1.General.forEach(element => {
-        data1.Advanced.forEach(el => {
-        subValue.push(el.NLP);
-        subValue.push(el.OCR);
-        subValue.push(element.Email);
-        this.emailValue.push(element.Email);
-        subValue.push(element.Database);
-        this.databaseValue.push(element.Database);
-        subValue.push(element["Developer Condition"]);
-        //subValue.push(element["Database"])
-        this.developercondValue.push(element["Developer Condition"]);
-        subValue.push(element["Excel File"]);
-        this.excelValue.push(element["Excel File"]);
-        console.log(subValue)
-        subValue.forEach(ele => {
-          value.push(ele)
-          console.log(value);
-      // Object.keys(ele).forEach(function(key) {
-      //   value.push(Object.keys(ele[key]));
-      //   console.log(value)
-      // })
+        let temp:any = {
+          name : element.name,
+          path : 'data:' + 'image/png' + ';base64,' + element.icon,
+          tasks: element.taskList
+        };
+        this.templateNodes.push(temp)
+        })
+        
+      data1.Advanced.forEach(element => {
+        let temp:any = {
+          name : element.name,
+          path : 'data:' + 'image/png' + ';base64,' + element.icon,
+          tasks: element.taskList
+        };
+        this.templateNodes.push(temp)
+        })
     })
-    });
-  })
-  value.forEach(element => {
-    let temp:any = {
-      name : element.name,
-      path : 'data:' + 'image/png' + ';base64,' + element.icon,
-      tasks: element.taskList
-    };
-    this.templateNodes.push(temp)
-    })
-  })
-}
+  }
+
   increaseShow() {
-    this.show += 5;
+    this.show += 5; 
   }
 
   public removeItem(item: any, list: any[]): void {
@@ -137,6 +121,8 @@ export class RpaStudioComponent implements OnInit {
 
   onCreateSubmit() {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
+    
+    document.getElementById("create-bot").style.display ="none";
     this.hiddenCreateBotPopUp = false
     let temp : any={};
     this.model=this.insertbot.value;
@@ -144,23 +130,24 @@ export class RpaStudioComponent implements OnInit {
     temp = this.model;
 
     this.model = {};
-
-    this.tabsArray.push(temp);
+  
+    this.tabsArray.push(temp);  
     this.tabActiveId = temp.botNamee
     console.log(this.tabsArray);
     this.insertbot.reset();
-
+    
   }
   onCreate(){
     this.insertbot.reset();
-    this.hiddenCreateBotPopUp = true
+    document.getElementById('create-bot').style.display='block';
   }
   closeBot($event) {
     this.tabsArray = this.tabsArray.filter((bot): boolean => $event !== bot);
     this.tabActiveId = this.tabsArray.length > 0 ? this.tabsArray[this.tabsArray.length - 1].id : '';
   }
-  closeFun(){
+  close(){
+    document.getElementById("create-bot").style.display ="none";
     this.hiddenCreateBotPopUp = false
   }
-}
+} 
 

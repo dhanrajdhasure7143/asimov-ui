@@ -129,32 +129,34 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     });
 
     const rightEndPointOptions = {
-      endpoint: ['Rectangle', { 
-        radius: 4,
+      endpoint: ['Dot', { 
+        radius: 2,
         cssClass:"myEndpoint", 
         width:8, 
-        height:8
+        height:8,
       }],
+    paintStyle:{stroke:"#0062cf", fill:"#0062cf",strokeWidth:2  },
       isSource: true,
-      connectorStyle: { stroke: '#006ed5',strokeWidth: 2 },
+      connectorStyle: { stroke: '#404040',strokeWidth: 1.5 },
       anchor: 'Right',
       maxConnections: -1,
       cssClass: "path",
       Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
       connectorClass: "path",
-      connectorOverlays: [['Arrow', {width: 12, length: 12, location: 1 }]],
+      connectorOverlays: [['Arrow', {width: 10, length: 10, location: 1 }]],
 
     };
 
     const leftEndPointOptions = {
-      endpoint: ['Rectangle', { 
-        radius: 4,
+      endpoint: ['Dot', {
+        radius: 2,
         cssClass:"myEndpoint", 
         width:8, 
-        height:8
+        height:8,
       }],
+      paintStyle:{stroke:"#0062cf", fill:"#0062cf" ,strokeWidth:2},
       isTarget: true,
-      connectorStyle: { stroke: '#006ed5',strokeWidth: 2 },
+      connectorStyle: { stroke: '#404040',strokeWidth: 1.5 },
       anchor: 'Left',
       maxConnections: -1,
       Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
@@ -198,6 +200,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       console.log(menu);
     
   }
+
+
+  deletenode(node)
+  {
+    console.log(this.jsPlumbInstance.getAllConnections())
+    this.nodes.splice(this.nodes.indexOf(node),1)
+    console.log(this.nodes)
+    this.jsPlumbInstance.remove(node.id)
+  }
+
   onRightClick(n: any,e: { target: { id: string; } },i: string | number) {
     this.selectedNode = n
     console.log(e);
@@ -297,7 +309,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     "tMetaId":this.selectedTask.id,
     "inSeqId":1,
     "outSeqId":2,
-    "attributes":obj
+    "attributes":obj,
   }
   this.finaldataobjects.push(cutedata);
   this.notifier.notify( "info", "Data Saved Successfully" );
@@ -323,7 +335,17 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     return this.rest.saveBot(this.saveBotdata)
   }
 
+  closemenu()
+  {
+      this.optionsVisible=false;
+  }
 
+  resetdata()
+  { 
+    this.jsPlumbInstance.deleteEveryEndpoint()
+    this.nodes=[];
+    this.finaldataobjects=[];
+  }
   
   updateBotFun(botProperties)
   {
