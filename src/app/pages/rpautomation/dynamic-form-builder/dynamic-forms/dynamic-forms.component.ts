@@ -12,7 +12,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
       <div class="form-group row">
         <div class="col-md-3"></div>
         <div class="">
-          <button type="submit" [disabled]="!form.valid" class="btn btn-primary">Save</button>
+          <button type="submit"  class="btn btn-primary">Save</button>
         </div>
       </div>
     </form>
