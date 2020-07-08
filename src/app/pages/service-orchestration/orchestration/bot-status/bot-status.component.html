@@ -50,22 +50,18 @@
     <table style="background-color: white; " class="table">
       <thead>
           <tr>
-        <th scope="col">Process Name</th>
-    <th scope="col">process Owner</th>
-    <th scope="col">Bot Assaigned</th>
-    <th scope="row">Bot state</th>
-    <th scope="row">Project Strat Time</th>
-    <th scope="row">Project End Time</th>
+        <th scope="col">Name</th>
+    <th scope="col">Description</th>
+    <th scope="row">Business Vertical</th>
+    <th scope="row">Created Date and Time</th>
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let data of feesDetails.bookingDetails; let i = index;trackBy:loopTrackBy">
-              <td scope="col">{{i +1}}</td>
-              <td scope="col">{{data.slot.shiftType}}</td>
-              <td scope="col">{{data.slot.start}}</td>
-              <td>{{data.rent}}</td>
-              <td>{{data.electricCharges}}</td>
-              <td>{{data.administrationCharges}}</td>
+          <tr *ngFor="let data of activeBots; let i = index;trackBy:loopTrackBy">
+              <td scope="col">{{data.botName}}</td>
+              <td scope="col">{{data.description}}</td>
+              <td>{{data.department}}</td>
+              <td>{{data.createdTS}}</td>
 
           </tr>
       </tbody>

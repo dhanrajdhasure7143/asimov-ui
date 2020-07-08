@@ -12,6 +12,7 @@ export class BotStatusComponent implements OnInit {
   processStatus:any;
   BotStatus:any;
   gaugeType = "full";
+  activeBots:any=[];
   gaugeValue = 28.3;
   gaugeLabel = "Overall Running";
   gaugeThickness = 20;
@@ -108,6 +109,7 @@ export class BotStatusComponent implements OnInit {
     var ctx = getElementById.getContext("2d");
   this.getprocessStatus();
   this.getBotStatus();
+  this.getAllActiveBots();
   var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
   gradientStroke.addColorStop(0, '#dce9fd');
   gradientStroke.addColorStop(1, '#a3a0fb');
@@ -349,4 +351,12 @@ getBotStatus()
   
   })
 }
+  getAllActiveBots()
+  {
+    this.api.getAllActiveBots().subscribe(data=>
+    {
+      this.activeBots=data
+    })
+  }
+
 }
