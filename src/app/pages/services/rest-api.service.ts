@@ -234,5 +234,17 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/rpa-service/process-statistics")
   }
 
+  getBotStatistics()
+  {
+    return this.http.get("/rpa-service/bot-statistics")
+  }
+  
+  getAllActiveBots()
+  {
+    return this.http.get("/rpa-service/get-all-bots")
+  }
+
+
+
 }
 
