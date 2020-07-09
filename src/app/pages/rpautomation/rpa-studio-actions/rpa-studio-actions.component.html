@@ -61,7 +61,7 @@
         <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
         <div class="btn_title">Deploy</div>
       </button>
-      <button type="button" class="  rpa-btn_style" title="Edit Bot" id="edit" [disabled]="savebotrespose==undefined" aria-hidden="true" placement="bottom">
+      <button type="button" class="  rpa-btn_style" title="Edit Bot" id="edit" [disabled]="savebotrespose==undefined" aria-hidden="true" placement="bottom" (click)="modify()">
         <img class="imageI1" src="/assets/images/Expanded.svg">
         <div class="btn_title">Edit</div>
       </button>
@@ -71,25 +71,25 @@
       <div class="btn_title">Save</div>
     </button>
    
-    <div *ngIf="startbot==false && pausebot==false && resumebot==false">
+
       <button  type="button"
-      class="  rpa-btn_style" aria-hidden="true" title="Start Bot" placement="bottom" id="startbot" [disabled]="true">
+      class="  rpa-btn_style" aria-hidden="true" title="Start Bot" placement="bottom" id="startbot" [disabled]="savebotrespose==undefined" (click)="executionAct()">
       <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
       <div class="btn_title">Start</div>
       </button>
-    </div>
 
-      <div *ngIf="startbot==true && pausebot==false && resumebot==false">
+      <div *ngIf="pausebot!=true && resumebot!=true">
         <button  type="button"
-        class="  rpa-btn_style" aria-hidden="true" title="Start Bot" placement="bottom" (click)="executionAct()">
-        <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
-        <div class="btn_title">Start</div>
+        class="  rpa-btn_style" aria-hidden="true" placement="bottom" title="Pause Bot" [disabled]="true">
+        <img class="imageI1" src="/assets/images/RPA/pause_icon.svg">
+        <div class="btn_title">Pause</div>
         </button>
         </div>
+
     <div *ngIf="pausebot==true">
       <button  type="button"
       class="  rpa-btn_style" aria-hidden="true" placement="bottom" title="Pause Bot" (click)="pauseBot()">
-      <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
+      <img class="imageI1" src="/assets/images/RPA/pause_icon.svg">
       <div class="btn_title">Pause</div>
       </button>
       </div>
@@ -97,7 +97,7 @@
       <div *ngIf="resumebot==true">
         <button  type="button"
         class="  rpa-btn_style" aria-hidden="true" placement="bottom" title="Resume Bot" (click)="resumeBot()">
-        <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
+        <img class="imageI1" src="/assets/images/RPA/resume_icon.svg">
         <div class="btn_title">Resume</div>
         </button>
       </div>
@@ -170,7 +170,7 @@
     </div>
   </div>
   <div>
-    <app-rpa-studio-workspace></app-rpa-studio-workspace>
+    <app-rpa-studio-workspace  [bot]="botState"></app-rpa-studio-workspace>
   </div>
     <div class="status" id="botStatus"> 
       <div class="row" style="text-align: center;">Bots</div>

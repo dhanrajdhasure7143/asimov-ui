@@ -138,6 +138,19 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/rpa-service/getall-predefinedbots")/*jitendra: need to replace URL*/
   }
 
+
+
+  getbotlist(botType, botDepartment)
+  {
+    return this.http.get("/rpa-service/get-all-bots/"+0+"/"+botDepartment+"/"+botType)
+  }
+
+
+  getbotdata(botid)
+  {
+    return this.http.get("/rpa-service/get-bot/"+botid);
+  }
+
   scheduleList(data:any){
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+42,data)
   }

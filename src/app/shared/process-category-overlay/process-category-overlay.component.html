@@ -1,7 +1,7 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="close" (click)="slideDown();">&times;</span>
+            <span class="close" (click)="processCategoryForm.reset();slideDown();">&times;</span>
             <h4>{{title}}</h4>
         </div>
         <div class="modal-body">
@@ -27,7 +27,7 @@
                     </mat-form-field>
                     <br/>
                     <div class="center">
-                        <button class="btn bpmn-btn" type="submit" (click)="proceedChanges()" [disabled]="!processCategoryForm.valid">Proceed</button>
+                        <button class="btn bpmn-btn" type="submit" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="!processCategoryForm.valid">Proceed</button>
                     </div>
                 </div>
             </form>

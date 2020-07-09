@@ -209,9 +209,8 @@ import {Router} from "@angular/router";
   }
 
   close()
-  {
-    
-    document.getElementById('scheduler').style.display='none';
+  { 
+    document.getElementById('create').style.display='none';
     document.getElementById('update-popup').style.display='none';
   }
 

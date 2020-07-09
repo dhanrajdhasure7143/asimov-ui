@@ -37,7 +37,7 @@
     /* background: red; */
     color: #fff;
     padding: 16px;
-    background-image: linear-gradient(to right, #ff4ca6, #ff4c6a);
+    /*background-image: linear-gradient(to right, #ff4ca6, #ff4c6a);*/
     width: 60%;
     margin: 0px auto;
   }
@@ -232,8 +232,18 @@
 .status-zoom{
   position: absolute;
     right: -177px;
-    top: 350px;
+    top: 300px;
 }
+.downloadBtn{
+  padding-left:1130px;
+  padding-top:70px;
+}
+.dropdown-menu{
+ margin-left:1130px;
+ min-width:10px;
+}
+
+
 .context-menu__item{
   padding: 6px;
   border-bottom: 1px solid lightgray;
