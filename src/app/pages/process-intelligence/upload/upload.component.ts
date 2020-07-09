@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { NgxXml2jsonService } from 'ngx-xml2json';
@@ -51,7 +51,7 @@ export class UploadComponent implements OnInit {
     private rest:RestApiService, 
     private global: GlobalScript, 
     private hints:PiHints, 
-    private ngxXml2jsonService: NgxXml2jsonService,) { }
+    private ngxXml2jsonService: NgxXml2jsonService,private location: Location) { }
 
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
@@ -243,11 +243,16 @@ onDbSelect(){
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 6,
-      language: {
-        searchPlaceholder: 'Search',
-      }
+      language: {searchPlaceholder: 'Search',},
+      // "order": [[ 0, 'asc' ], [ 1, 'asc' ]]
+      "order": [],
     };
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_List=data
+      this.process_List.data.sort(function(a, b) {
+        a = new Date(a.createdTime);
+        b = new Date(b.createdTime);
+        return a>b ? -1 : a<b ? 1 : 0;
+    });
       this.process_graph_list=this.process_List.data
       this.dtTrigger.next();
     })
@@ -320,7 +325,6 @@ onDbSelect(){
     var searcgraph=document.getElementById("myTableId_filter")
     searcgraph.style.display="block";
   }
-
 
   
 }

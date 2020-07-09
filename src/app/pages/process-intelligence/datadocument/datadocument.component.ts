@@ -36,6 +36,7 @@ export class DatadocumentComponent implements OnInit {
   cathead6: any;
   cathead7: any;
   dTypeArray = [];
+  p=1;
 
   // constructor(private router: Router, private dt: DataTransferService, private hints: PiHints, private global: GlobalScript) { }
   // searchTerm:string;

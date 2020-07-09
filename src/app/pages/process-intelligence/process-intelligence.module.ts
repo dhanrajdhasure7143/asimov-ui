@@ -24,6 +24,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DataTablesModule} from 'angular-datatables';
 import {MatOptionModule, MatSelectModule} from '@angular/material';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import {MatOptionModule, MatSelectModule} from '@angular/material';
     Ng2SearchPipeModule,
     NgxSpinnerModule,
     DataTablesModule,
-    MatOptionModule,MatSelectModule
+    MatOptionModule,MatSelectModule,
+    NgxPaginationModule
   ],
   providers:[PiHints]
 

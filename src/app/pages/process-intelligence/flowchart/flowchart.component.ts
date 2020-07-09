@@ -95,7 +95,7 @@ export class FlowchartComponent implements OnInit {
 
   sliderVariant:any=[];  
   isActivity_dropdwn:boolean=false;
-  activity_value:any;
+  activity_value:any=[];
   selectedActivity:any=[];
   activity_list:any=[];
   fullgraph_model:any;
@@ -103,7 +103,10 @@ export class FlowchartComponent implements OnInit {
   @ViewChild('activitySelect',{static: false}) activitySelect;
   variantCombo:any=[];
   isvariantSelectedOne:boolean=false;
-  sliderGraphData:any=[]
+  sliderGraphData:any=[];
+  startPoint:boolean=false;
+  endPoint:boolean=false;
+  isEndpoint_dropdwn:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -1297,17 +1300,28 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
   activityDropDown(){
     this.isActivity_dropdwn = !this.isActivity_dropdwn;
   }
-  activitySelectedGraph(){
-    this.activitySelect.close();
+  filterByActivity(){
+    var checkboxes = document.getElementsByName("activity_filter");
+  var CheckedBoxes = [];
+  this.activity_value = [];
+  for (var i=0; i<checkboxes.length; i++) {
+      CheckedBoxes.push(checkboxes[i]);
+  }
+// CheckedBoxes.map(e => e.value);
+  for (var j=0; j<CheckedBoxes.length; j++) {
+    if (CheckedBoxes[j].checked==true) {
+      this.activity_value.push(CheckedBoxes[j].value);
+    }
+    }
+// console.log("activity_value1",this.activity_value);
+// return;
+    // this.activitySelect.close();
     this.activityValue=0;
     this.pathvalue=0;
     this.isNodata=true;
     // console.log(activity);
     var model3=[]
-    
-    // this.selectedActivity.push(this.activity_value)
-    // console.log("activity_value1",this.selectedActivity,this.activity_value);
-    console.log("activity_value1",this.activity_value);
+
     model3[0]=this.fullgraph_model[0]
     for(var i=0;i<this.activity_value.length;i++){
       for(var j=0;j<this.fullgraph_model.length;j++){
@@ -1329,10 +1343,120 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
   resetActivity(){
     this.activityValue=0;
     this.pathvalue=0;
-    this.activity_value=[];
     this.model1=this.fullgraph_model
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1);
     this.linkCurvinessGenerate();
+  }
+  endpointsDropDown(){
+    this.isEndpoint_dropdwn=!this.isEndpoint_dropdwn
+  }
+  filterByEndpoints(){
+    var endpointModel=[];
+    var endpointModelOne=[];
+    // console.log("this.model1",this.model1);
+    // endpointModel=this.flowchartData(this.model1)
+    endpointModel=this.fullgraph_model
+// console.log('endpointModel',endpointModel[0]);
+this.model1=[]
+this.linkdataArray=[]
+ if(this.startPoint==true&&this.endPoint==false){
+      for(var i=1; i<endpointModel.length-1;i++){
+        if (endpointModel[i].tool.includes('Start Frequency')) {
+          var obj = {};
+          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(endpointModel[i].toolCount[3]!=0){
+          obj['from'] = -1;
+          obj['to'] = this.getFromKey(endpointModel[i].name);
+          endpointModelOne.push(endpointModel[i])
+          obj['text'] = endpointModel[i].toolCount[3];
+          obj["extraNode"] = 'true';
+          obj["curviness"] =40*i;
+          this.linkdataArray.push(obj);
+          }
+        }
+      }
+      this.model1[0]=endpointModel[0]
+      for(var j=0;j<endpointModelOne.length;j++){
+        this.model1.push(endpointModelOne[j])
+      }
+      // this.model1.push(endpointModel[endpointModel.length-1])
+      this.nodeAlignment();
+      this.model2=this.linkdataArray
+      console.log("this.model2",this.model2);
+    }else if(this.startPoint==false&&this.endPoint==true){
+      for(var i=1; i<endpointModel.length-1;i++){
+        if (endpointModel[i].tool.includes('End Frequency')) {
+          var obj = {};
+          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(endpointModel[i].toolCount[4]!=0){
+            obj['from'] = this.getFromKey(this.nodeArray[i].name);
+            obj['to'] = -2;
+          endpointModelOne.push(endpointModel[i])
+          obj['text'] = endpointModel[i].toolCount[4];
+          obj["extraNode"] = 'true';
+          obj["curviness"] =40*i;
+          this.linkdataArray.push(obj);
+          }
+        }
+      }
+      // this.model1[0]=endpointModel[0]
+      for(var j=0;j<endpointModelOne.length;j++){
+        this.model1.push(endpointModelOne[j])
+      }
+      this.model1.push(endpointModel[endpointModel.length-1])
+      this.nodeAlignment();
+      this.model2=this.linkdataArray
+      console.log("this.model2",this.model2);
+    }else if(this.startPoint==true&&this.endPoint==true){
+      for(var i=1; i<endpointModel.length-1;i++){
+        if (endpointModel[i].tool.includes('Start Frequency')) {
+          var obj = {};
+          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(endpointModel[i].toolCount[3]!=0){
+          obj['from'] = -1;
+          obj['to'] = this.getFromKey(endpointModel[i].name);
+          endpointModelOne.push(endpointModel[i])
+          obj['text'] = endpointModel[i].toolCount[3];
+          obj["extraNode"] = 'true';
+          obj["curviness"] =40*i;
+          this.linkdataArray.push(obj);
+          }
+        }
+        if (endpointModel[i].tool.includes('End Frequency')) {
+          var obj = {};
+          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(endpointModel[i].toolCount[4]!=0){
+            obj['from'] = this.getFromKey(this.nodeArray[i].name);
+            obj['to'] = -2;
+          endpointModelOne.push(endpointModel[i])
+          obj['text'] = endpointModel[i].toolCount[4];
+          obj["extraNode"] = 'true';
+          obj["curviness"] =40*i;
+          this.linkdataArray.push(obj);
+          }
+        }
+      }
+      this.model1[0]=endpointModel[0]
+      for(var j=0;j<endpointModelOne.length;j++){
+        this.model1.push(endpointModelOne[j])
+      }
+      this.nodeAlignment()
+      this.model1.push(endpointModel[endpointModel.length-1])
+      this.model2=this.linkdataArray;
+    }
+  }
+  cancel(){
+    this.isActivity_dropdwn=false;
+  }
+  cancelByEndpoints(){
+    this.startPoint=false;
+    this.endPoint=false;
+    this.isEndpoint_dropdwn=false;
+  }
+  resetfilter(){
+    this.resetActivity();
+    this.startPoint=false;
+    this.endPoint=false;
   }
 }

@@ -102,19 +102,44 @@
                         </select>
                     </div>
         </div>
-        <div class='col-sm-3'>
-            <!-- <div class="col-sm-6 activity_selection border_bottom" (click)="activityDropDown()">Activity Selection<span class="caret"></span></div>
+        <div class='col-sm-3 row'>
+            <div class="col-sm-6 activity_selection border_bottom" (click)="activityDropDown()">Activity Selection<span class="caret"></span></div>
+            
             <div class="activity_selection1 col-sm-8" *ngIf="isActivity_dropdwn">
-                   <div class="col-sm-6"> <button class='apply_btn' type='button' (click)="activitySelectedGraph()">Apply</button></div>
-                   <div class="col-sm-12"><button class='reset_btn' type='button' (click)="resetActivity()">reset</button></div>
-                      <mat-form-field>
+                    <form action="" #activityFilter="ngForm">
+                   <div class="col-sm-12"><button class='reset_btn' type='reset' (click)="resetActivity()">reset</button></div>
+                      <!-- <mat-form-field>
                             <mat-label>Activity</mat-label>
                             <mat-select [(ngModel)]="activity_value" #activitySelect multiple class=""> 
                                 <mat-option *ngFor="let eachNode of activity_list;let j=index;trackBy:loopTrackBy" [value]="eachNode.name">{{eachNode.name}}</mat-option>
-                                    <button class="btn btn-primary" (click)="activitySelectedGraph()">Apply</button>
+                                    <button class="btn btn-primary" (click)="filterByActivity()">Apply</button>
                             </mat-select>
-                          </mat-form-field>
-                    </div> -->
+                          </mat-form-field> -->
+                          <hr>
+                          <div class="activity_filter3">
+                            <div class="activity_filter1" *ngFor="let eachNode of activity_list;let j=index;trackBy:loopTrackBy">
+                            <input id="test" type="checkbox" name="activity_filter" [value]="eachNode.name"> <span>{{eachNode.name}}</span><br>
+                            </div>
+                        </div>
+                            <hr>
+                        <div class="col-sm-6"><button class="btn btn-warning cancel_btn" (click)="cancel()">Cancel</button></div>
+                        <div class="col-sm-4"><button class="btn apply_btn" (click)="filterByActivity()" [disabled]="activityFilter.invalid">Apply</button></div>
+                    </form>
+                    </div>
+                
+                    <div class="col-sm-6">
+                    <div class="activity_selection border_bottom" (click)="endpointsDropDown()"> End Points <span class="caret"></span></div>
+                    <div class="col-sm-12 activity_selection2" *ngIf="isEndpoint_dropdwn">
+                        <div class="col-sm-12"><button class='reset_btnOne' type='button' (click)="resetfilter()">reset</button></div>
+                        <hr>
+                            <input id="test" type="checkbox" [(ngModel)]="startPoint"> <span>Start</span><br>
+                            <input id="test" type="checkbox" [(ngModel)]="endPoint"> <span>End</span> <br>
+                            <hr>
+                            <div class="col-sm-6 cancel_btn1"><button class="btn cancel_btn" (click)="cancelByEndpoints()">Cancel</button></div>
+                            <div class="col-sm-6 apply_btn1"><button class="btn apply_btn" (click)="filterByEndpoints()">Apply</button></div>
+                        </div>
+                    </div>
+                    
                 
                     <!-- <div>
                 <button class='btn' (click)='zoomIn()'>Zoom In</button>

@@ -47,6 +47,7 @@ export class DataselectionComponent implements OnInit {
   headertypeArray:any=[];
   processId:any;
   processName:any;
+  p=1;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
@@ -178,8 +179,8 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "input.path": "/var/kafka",
         "input.file.pattern": this.isUploadFileName,
         "error.path": "/var/kafka",
-         "topic": "tytyconnector-spooldir-"+this.processId,
-        //  "topic": "topqconnector-spooldir-"+this.processId,
+        //  "topic": "tytyconnector-spooldir-"+this.processId,
+         "topic": "topqconnector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",

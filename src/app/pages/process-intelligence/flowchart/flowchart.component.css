@@ -61,7 +61,7 @@
   ::ng-deep  .custom-slider .ng5-slider-floor {
     color:gray!important;
     font-size: 15px !important;
-    margin-left: -34px !important;
+    margin-left: -32px !important;
     margin-bottom: -25px !important;
     position: absolute !important;
     z-index: 10000 !important;
@@ -69,7 +69,8 @@
   ::ng-deep  .custom-slider .ng5-slider-ceil {
     color:gray !important;
     font-size: 15px !important;
-    margin-left: -40px !important;
+    margin-left: -32px !important;
+    margin-bottom: 25px !important;
     position: absolute !important;
     z-index: 100000 !important;
   }
@@ -286,10 +287,15 @@
   .activity_selection1{
     position: absolute;
     z-index: 4;
-    border: 1px solid lightgray;
     padding: 10px;
     margin-top: 38px;
     border-radius: 10px;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
   }
   .activity_selection1::after {
     content: "";
@@ -304,9 +310,6 @@
     .activity_selection span{
       margin-left: 22px;
     }
-  .apply_btn{
-    color: #0162cf;
-  }
   .nodata_slider{
     position: absolute;
     z-index: 100;
@@ -319,3 +322,71 @@
     padding-left:20px;
     color: #0162cf;
   }
+
+  .activity_selection{
+    padding:5px;
+  }
+  .activity_selection2{
+    position: absolute;
+    z-index: 4;
+    /* width: 118px; */
+    padding: 10px;
+    margin-top: 2px;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  }
+    .reset_btnOne{
+      margin-left: 60%;
+      border: none !important;
+      background: none;
+      height: 20px;
+      color: #0162cf;
+      padding: 0px;
+    }
+.activity_selection2 hr{
+  margin-bottom: 2px;
+  width: 120% !important;
+  margin-left: -9px !important;
+}
+.activity_selection1 hr{
+  margin-bottom: 5px;
+  width: 110% !important;
+  margin-left: -9px !important;
+}
+.apply_btn , .cancel_btn{
+  color: #fff;
+  background-color: #0162cf !important;
+  height: 20px;
+  padding: 0px !important;
+  width: 65px;
+  font-size: 12px;
+  border: none;
+}
+.activity_filter1 span,.activity_selection2 span{
+  margin-left: 5px;
+}
+.activity_filter3{
+  overflow: scroll;
+  max-height: 150px;
+}
+.apply_btn{
+  background-color: #0162cf !important;
+}
+.cancel_btn{
+  background-color: gray !important;
+}
+.cancel_btn1 button{
+  margin-left: -16px;
+  /* position: relative;
+  z-index: 5; */
+}
+.apply_btn1 button{
+  margin-left: -12px;
+  /* margin-left: 5px; */
+  /* position: relative;
+  z-index: 5; */
+}
