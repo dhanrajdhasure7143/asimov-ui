@@ -96,7 +96,7 @@ button:disabled{
 /* notifications to right */
 notifier-notification{
   right: 12px;
-  left: calc(100% - 350px) !important;
+  left: calc(100% - 325px) !important;
 }
 /* remove dropzone dotted border */
 ngx-dropzone{

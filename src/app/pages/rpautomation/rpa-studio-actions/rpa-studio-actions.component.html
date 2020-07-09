@@ -61,7 +61,7 @@
         <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
         <div class="btn_title">Deploy</div>
       </button>
-      <button type="button" class="  rpa-btn_style" title="Edit Bot" id="edit" [disabled]="savebotrespose==undefined" aria-hidden="true" placement="bottom">
+      <button type="button" class="  rpa-btn_style" title="Edit Bot" id="edit" [disabled]="savebotrespose==undefined" aria-hidden="true" placement="bottom" (click)="modify()">
         <img class="imageI1" src="/assets/images/Expanded.svg">
         <div class="btn_title">Edit</div>
       </button>
@@ -170,7 +170,7 @@
     </div>
   </div>
   <div>
-    <app-rpa-studio-workspace></app-rpa-studio-workspace>
+    <app-rpa-studio-workspace  [bot]="botState"></app-rpa-studio-workspace>
   </div>
     <div class="status" id="botStatus"> 
       <div class="row" style="text-align: center;">Bots</div>
