@@ -59,6 +59,7 @@ export class RpaStudioComponent implements OnInit {
   exectionValue: any;
   tabsArray: any[] = [];
   tabActiveId: string;
+  public checkbotname:Boolean;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
     private hints:RpaHints, private formBuilder:FormBuilder) { 
     this.show = 5;
@@ -118,6 +119,21 @@ export class RpaStudioComponent implements OnInit {
         };
         this.templateNodes.push(temp)
         })
+    })
+  }
+
+  checkBotnamevalidation()
+  {
+    let botname=this.insertbot.get("botName").value;
+    
+    this.rest.checkbotname(botname).subscribe(data=>{
+    if(data==true && this.tabsArray.find(data=>data.botName==botname)==undefined)  
+    { 
+      this.checkbotname=false;
+    }else
+    {
+      this.checkbotname=true;
+    }
     })
   }
 
