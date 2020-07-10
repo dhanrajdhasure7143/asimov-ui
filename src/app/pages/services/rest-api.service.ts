@@ -244,7 +244,11 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/rpa-service/get-all-bots")
   }
 
-
+  checkbotname(botname)
+  {
+    let data="";
+    return this.http.post("/rpa-service/check-bot/0?botName="+botname,data)
+  }
 
 }
 

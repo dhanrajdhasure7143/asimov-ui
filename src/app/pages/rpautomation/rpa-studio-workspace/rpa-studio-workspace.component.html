@@ -7,10 +7,10 @@
         <ng-container *ngFor="let node of nodes; let i = index">
           <div id="{{node.id}}"  class="dndDropzone" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i)"
           [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
-
+            <span class="node-delete" (click)="deletenode(node)">x</span>
             <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
             <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
-            <span class="node-delete" (click)="deletenode(node)">x</span>
+            
             <div *ngIf ="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
               <nav  id="context-menu" class="context-menu contextmenu">
                 <div class="context-menu1">

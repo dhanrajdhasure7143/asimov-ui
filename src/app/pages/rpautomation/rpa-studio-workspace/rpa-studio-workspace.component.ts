@@ -120,6 +120,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       
       this.jsPlumbInstance.connect(
         {
+          endpoint: ['Dot', {
+            radius: 2,
+            cssClass:"myEndpoint", 
+            width:8, 
+            height:8,
+          }],
           source:element.sourceTaskId, 
           target:element.targetTaskId,
           anchor: "Continuous",
@@ -347,14 +353,56 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   formNodeFunc(node)
   {
-    console.log(node)
+   /* console.log(node)
     if(this.selectedTask.id)
     {
       this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
        this.response(data)
       })
-    }
+    }*/
+     //console.log(node)
+     let task=this.finaldataobjects.find(data =>data.nodeId.split("__")[1]==node.id );
+     if(task==undefined)
+     {
+       this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
+         this.response(data)
+       })
+     }
+     else if(this.selectedTask==undefined)
+     {
+       let finalattributes:any=[];
+       this.rest.attribute(task.tMetaId).subscribe((data)=>{ 
+         finalattributes=data  
+         task.attributes.forEach(element => {
+               finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
+           });
+           
+           this.response(finalattributes)
+       });
+     }
+     else if(task.tMetaId==this.selectedTask.id)
+     {
+       let finalattributes:any=[];
+       this.rest.attribute(this.selectedTask.id).subscribe((data)=>{ 
+         finalattributes=data  
+         task.attributes.forEach(element => {
+               finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
+           });
+           
+           this.response(finalattributes)
+       });
+     }
+     else if(this.selectedTask.id != task.tMetaId)
+     {
+       this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
+         this.response(data)
+       })
+     }
+  
   }
+
+
+
   
   response(data)
   {

@@ -77,11 +77,14 @@
           <div class="col-md-6">
 
             <label for="botName">Bot Name*</label>
-            <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name"  ngModel maxlength="30" class="form-control" name="botName" required/>
+            <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name"  ngModel maxlength="30" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
             <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" >
               Bot Name Required*
               </div>
-
+              <div *ngIf="checkbotname && insertbot.get('botName').touched" style="color: red" >
+                Bot Name is already exists*
+              </div>
+  
           </div>
 
 
@@ -114,7 +117,7 @@
             </select>
             <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" >
               Category Required*
-              </div>
+            </div>
 
 
           </div>
@@ -122,7 +125,7 @@
             <label for="botDescription">Bot Description</label>
             <textarea type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" ngModel maxlength="500" class="form-control" name="botDescription"  ></textarea>
             <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" >
-            Bot Description Required*
+              Bot Description Required*
             </div>
           </div>
 
@@ -137,7 +140,7 @@
       </div>
 
       <div class="form-group">
-        <button class="btn btn-primary" [disabled]="insertbot.invalid" >Submit</button>
+        <button class="btn btn-primary" [disabled]="insertbot.invalid || checkbotname" >Submit</button>
       </div>
     </form>
   </div>

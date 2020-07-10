@@ -8,7 +8,7 @@ template:`
       <div *ngIf="!field.value" class="drop-container dropzone" dropZone (hovered)="toggleHover($event)"
         (dropped)="field.onUpload($event)" [class.hovering]="isHovering">
           <label class="upload-button">
-            <input type="file" multiple="" (change)="field.onUpload($event)"> Choose File to Upload
+            <input type="file" multiple="" [formControlName]="field.name" (change)="field.onUpload($event)"> Choose File to Upload
           </label>
       </div>
       <div *ngIf="field.value">

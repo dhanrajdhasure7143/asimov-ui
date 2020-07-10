@@ -5,8 +5,9 @@ import { FormGroup } from '@angular/forms';
     selector: 'dropdown',
     template: `
       <div [formGroup]="form">
-        <select class="form-control" [id]="field.name" [formControlName]="field.name">
-          <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
+        <select class="form-control" [value]="field.value" [id]="field.name" [formControlName]="field.name">
+        <option [selected]='true' value="" >--select {{field.name}}--</option>  
+        <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         </select>
       </div> 
     `
