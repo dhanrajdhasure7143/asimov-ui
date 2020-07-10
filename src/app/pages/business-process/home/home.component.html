@@ -17,11 +17,11 @@
       </div>
     
       <div class="row col-md-12 text-bold workspace-title">
-        <div class="col-md-3" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
-        <div class="col-md-3"  (click)="sort('modifiedTimestamp',1)"><b>Last Modified<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>
-        <div class="col-md-3"  (click)="sort('approverName',2)"><b>Approver<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></div>
-        <div class="col-md-2"  (click)="sort('bpmnProcessStatus',3)"><b>Status<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></div>
-        <div class="col-md-1"  (click)="sort('reviewComments',4)"><b>Message<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></div>
+        <div class="col-md-2 first_col" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
+        <div class="col-md-2 col-half-offsett"  (click)="sort('modifiedTimestamp',1)"><b>Last Modified<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>
+        <div class="col-md-2 col-half-offsett"  (click)="sort('approverName',2)"><b>Approver<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></div>
+        <div class="col-md-2 col-half-offsett"  (click)="sort('bpmnProcessStatus',3)"><b>Status<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></div>
+        <div class="col-md-2 col-half-offsett"  (click)="sort('reviewComments',4)"><b>Message<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></div>
       </div>
       <div class="row col-md-12"  id="bpmn_list">
         <mat-accordion>
@@ -29,11 +29,11 @@
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12">
-                  <div class="col-md-3">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</div>
-                  <div class="col-md-3">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
-                  <div class="col-md-3">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
-                  <div class="col-md-2">{{each_diag.bpmnProcessStatus | titlecase}}</div>
-                  <div class="col-md-1">
+                  <div class="col-md-2 first_col">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</div>
+                  <div class="col-md-2 col-half-offset">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+                  <div class="col-md-2 col-half-offset">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
+                  <div class="col-md-2 col-half-offset">{{each_diag.bpmnProcessStatus | titlecase}}</div>
+                  <div class="col-md-2 col-half-offset">
                     <span class="comment">
                       <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments?each_diag.reviewComments:'-'}}</span>
                     </span>
@@ -47,8 +47,7 @@
             </div>
           </mat-expansion-panel>
         </mat-accordion>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      
+        <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
      </div>
     </div>
   </div>

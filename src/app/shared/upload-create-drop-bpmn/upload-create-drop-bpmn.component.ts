@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { RestApiService } from '../../pages/services/rest-api.service';
 import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.service';
 import { GlobalScript } from '../global-script';
+import { UUID } from 'angular2-uuid';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
 
 @Component({
@@ -20,7 +21,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   hideEditor:boolean=true;
   create_editor:boolean=true;
   counter:number = 0;
-  randomId: number;
+  randomId: string;
   bpmnfile: any;
   uploaded_file:File;
 
@@ -53,7 +54,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   uploadCreateBpmn(e){
-    this.randomId = Math.floor(Math.random()*999999);//Values get repeated
+    this.randomId = UUID.UUID();
+    //this.randomId = Math.floor(Math.random()*999999);//Values get repeated
     this.create_editor=false;
     this.bpmnModel.bpmnProcessName=e.processName;
     this.bpmnModel.bpmnModelId=this.randomId;
