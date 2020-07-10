@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from "../services/data-transfer.service";
 import { PagesHints } from '../model/pages.model';
 
@@ -14,9 +14,28 @@ export class HomeComponent implements OnInit {
   dataArr:any[];
   selectedIndex: number=0;
 
-  constructor(private router: Router, private dt:DataTransferService, private hints:PagesHints) { }
+  constructor(private router: Router, private dt:DataTransferService, private route: ActivatedRoute, private hints:PagesHints) { 
+
+    this.route.queryParams.subscribe(params => {
+      
+      
+      var acToken=params['accessToken']
+      var refToken = params['refreshToken']
+      var accessToken=atob(acToken);
+    var refreshToken=atob(refToken);
+    localStorage.setItem("accessToken", accessToken);
+    localStorage.setItem("refreshToken", refreshToken);
+
+     
+       
+    
+    
+    });
+    
+  }
 
   ngOnInit() {
+
     this.dt.changeParentModule(undefined);
     this.dt.changeChildModule(undefined);
     this.dataArr = [
