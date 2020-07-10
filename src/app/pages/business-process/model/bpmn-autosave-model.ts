@@ -1,11 +1,12 @@
 export class BpmnModel{
-    bpmnModelId:number;
+    bpmnModelId:string;
     bpmnModelModifiedBy:string = "Vaidehi"; // localStorage.getItem("userName")
     // bpmnModelModifiedTime:Date;
     createdTimestamp:Date;
     // modifiedTimestamp:Date;
     bpmnModelTempId:number;
-    bpmnModelTempStatus:string = "Initial";
+    bpmnTempId:number;
+    //bpmnModelTempStatus:string = "Initial";
     bpmnModelTempVersion:string;
     bpmnProcessMeta:string;
     approverName:string = "";

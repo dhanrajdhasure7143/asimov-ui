@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-bussiness-process',
   template: `<div class="module-heading">
               <div class="container">
+                <i class="fa fa-arrow-left" aria-hidden="true" (click)="route()"></i>&nbsp;&nbsp;&nbsp;
                 <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
                 <span class="module-heading-title">Business Process Studio</span>
               </div>
@@ -12,6 +13,9 @@ import { Component } from '@angular/core';
 })
 export class BusinessProcessComponent {
 
-  constructor() { }
-
+  constructor(private router:Router) { }
+route()
+{
+this.router.navigate(['/pages/home']);
+}
 }
