@@ -163,7 +163,7 @@
         <div class="btn_title">Reset</div>
       </button>
       <button  type="button"
-      class="  rpa-btn_style" id="delete"  [disabled]="savebotrespose==undefined" title="Delete Bot" aria-hidden="true" placement="bottom">
+      class="  rpa-btn_style" id="delete"  [disabled]="savebotrespose==undefined" title="Delete Bot" aria-hidden="true" (click)="delete()" placement="bottom">
       <img class="imageI1" src="/assets/images/RPA/delete_icon2.svg">
       <div class="btn_title">Delete</div>
       </button>
