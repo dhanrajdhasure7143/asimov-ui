@@ -48,13 +48,6 @@ float: left !important;
 .sel_row{
   width: 669px;
 }
-#generateGraph{
-    background-color: #006ed5;
-}
-.pi_btn{
-  border-radius: 19px !important;
-  font-size: 12px !important;
-}
 #search_process_data{
     border: none;
     border-bottom: 1px solid gray;
@@ -509,52 +502,9 @@ border-width: 5px;
 border-style: solid;
 border-color: transparent transparent gray transparent ;
 }
-
-/* .tooltip1:hover .tooltiptext1 {
-  visibility: visible;
-} */
-
-.generate_btn,.varaintlist_btn{
-background-color: #0162cb !important;
-color: white;
-}
-.generate_btn,.kpi_btn,.varaintlist_btn{
-  border: 1px solid #0162cb  !important;
-  border-radius: 25px;
-  font-weight: bold;
-  font-size: 12px;
-  height:25px;
-  width: 120px;
-}
-.down_btn{
-  outline: none;
-  border: 1px solid lightgray;
-  border: none !important;
-  color: #0162cb;
-}
-button{
-  box-shadow: none !important;
-}
-
-.play_btn {
-  background-color: white;
-  outline: none;
-  color:#0162cb;
-  border: none !important;
-  cursor: pointer;
-}
-.actions_butns{
-  height:30px;
-  cursor: pointer;
-}
 .play_label,.download_label{
   font-size: 11px;
   padding-left: 5px;
-}
-.stopbtn{
-height: 32px;
-width: 31px;
-border: 1px solid lightgray !important;
 }
 .custom_tooltip{
   position: absolute; 
@@ -839,25 +789,18 @@ button{
   margin-top: 36px;
   height: 27px;
   width: 25%;
-  /* border: 1px solid; */
   margin-left: 287px;
 }
 .buttons-to-navigate{
-  /* border: 1px solid; */
   margin-left: 84px;
   display: flex
 }
-/* a{
-  margin-left: 7px;
-} */
 .asimov-logo{
-  /* border: 1px solid black; */
   width: 14%;
   margin-top: 10px;
   height: 74px;
 }
 .notification{
-  /* border: 1px solid black; */
   margin-left: 18px;
   width: 6%;
 }
@@ -873,12 +816,6 @@ button{
     width: 100%;
 
 }
-/*bootstrap classes should not be altered*/
-/* .container{
-  float: left;
-  width: 100%; 
-} */
-
 .bps-heading{
   border: 1px #e6dbdb12 solid;
   height: 51px;
@@ -887,13 +824,11 @@ button{
 
 }
 .bps-heading-image{
-  /* border: 1px solid; */
   width: 4%;
   margin-left: 42px;
   height: 40px
 }
 .bps-heading-title{
-  /* border: 1px solid; */
   width: 20%;
   margin-left: 16px;
   height: 40px
@@ -907,18 +842,15 @@ label{
     margin-left: -8px;
   }
   .sharedcontent{
-      /* border: 1px solid black; */
       height: 542px;
       padding: 0;
       display: inline-flex
   }
   .bpmn-editor-container{
-      /* border: 1px solid black; */
       height: 641px;
 
   }
   .bpmn-options-container{
-      /* border: 1px solid black; */
       height: 541px;
       display: inline-flex
   }
@@ -930,13 +862,10 @@ label{
     border: none;
     color: white;
     border-radius: 25px;
-    /* padding: 20px; */
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    /* margin: 4px 2px; */
-    /* margin-left: 197px; */
     cursor: pointer;
   }
   .buttons-to-resize{
@@ -967,10 +896,8 @@ label{
   }
   .options{
     display: inline-flex;
-    /* border-left-style: dotted; */
   }
   .upload-image{
-    /* border: 1px solid; */
     margin-top: 13px;
     margin-left: 28px;
     padding-left: 56px;
@@ -979,7 +906,6 @@ label{
 
   }
   .create-image{
-    /* border: 1px solid; */
     margin-top: 13px;
     margin-left: 28px;
     width: 84%;
@@ -991,7 +917,6 @@ label{
     margin-top: 7px;
     margin-left: -17px;
     font-size: large;
-    /* font-size: x-large; */
   }
   .option-image-second-label{
     margin-left: -18px;
@@ -1007,7 +932,6 @@ label{
   }
   .upload-button{
     background-color: blue;
-    /* color: black; */
     color: white;
     margin-left: 11px;
     margin-top: 6px;
@@ -1018,18 +942,7 @@ label{
     position: relative;
     overflow: hidden;
     display: inline-block;
-  }
-  .btn {
-    color: white;
-    background-color: #0062cf;
-    /* background-color: #0062cf !important; */
-    border-radius: 13px;
-    margin-left: 13px;
-    border-radius: 20px !important;
-    /* width: 134px; */
-    margin-top: 5px;
-  }
-  
+  }  
   .upload-btn-wrapper input[type=file] {
     font-size: 100px;
     position: absolute;
@@ -1037,10 +950,8 @@ label{
     top: 0;
     opacity: 0;
   }
-  /*new code*/
   .diagram-container {
     height: 1200px;
-    /* width: 900px; */
   }
   .mainDiffContainer .col-md-6{
     padding: 2px;
@@ -1051,7 +962,6 @@ label{
   #canvas, #canvas1, #canvas2{
     height: 72vh;
     width: 100%;
-    /* background-color: #efefef; */
 }
 .overlay{
   width: 100%;
@@ -1064,9 +974,6 @@ label{
   background-color: transparent;
   z-index: 2;
 }
-/* ul li{
-  display: inline;
-} */
 .row{
   margin-left: 0;
   margin-right: 0;

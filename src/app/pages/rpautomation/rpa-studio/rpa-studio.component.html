@@ -1,5 +1,5 @@
-<div class="createBtn">
-  <button  type="button" class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()">
+<div class="header_addon pull-right">
+  <button  type="button" class="btn btn-primary eiap-btn"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="slideUp()">
     Create
   </button>
 </div>
@@ -53,8 +53,7 @@
 </div>
 </div>
 </div>
-
-<!--foms  -->
+<!-- <process-category-overlay headerTitle="Create Bot" (proceed)="onCreateSubmit($event)" isRpa="true" buttonName="Submit"></process-category-overlay> -->
 <div id="create-bot" class="rpa-modal">
   <div class="rpa-modal-content">
       <div class="rpa-modal-header">
@@ -127,11 +126,11 @@
 
       </div>
 
-      <div class="form-group">
-        <button class="btn btn-primary" [disabled]="insertbot.invalid" >Submit</button>
+      <div class="form-group center">
+        <button class="btn btn-primary eiap-btn" [disabled]="insertbot.invalid" >Submit</button>
       </div>
     </form>
   </div>
 </div>
 </div>
-</div>
+</div> 

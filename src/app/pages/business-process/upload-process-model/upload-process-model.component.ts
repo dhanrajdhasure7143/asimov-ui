@@ -76,7 +76,6 @@ export class UploadProcessModelComponent implements OnInit {
     this.getUserBpmnList(null);
     this.getApproverList();
     this.randomId = UUID.UUID(); 
-    //this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
    }
 
    async getUserBpmnList(isFromConf){

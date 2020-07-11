@@ -10,8 +10,6 @@ import { ProcessIntelligenceRoutingModule } from './process-intelligence-routing
 import { ProcessIntelligenceComponent } from './process-intelligence.component';
 import { UploadComponent } from './upload/upload.component';
 import { DatadocumentComponent } from './datadocument/datadocument.component';
-import { ProcessintelligenceComponent } from './processintelligence/processintelligence.component';
-import { ProcessintelligencebpmnComponent } from './processintelligencebpmn/processintelligencebpmn.component';
 import { PiflowchartComponent } from './piflowchart/piflowchart.component';
 import { FilterComponent } from './filter/filter.component'
 import { FlowchartComponent } from './flowchart/flowchart.component';
@@ -31,8 +29,6 @@ import {MatOptionModule, MatSelectModule} from '@angular/material';
     ProcessIntelligenceComponent, 
     UploadComponent, 
     DatadocumentComponent, 
-    ProcessintelligenceComponent, 
-    ProcessintelligencebpmnComponent,
     PiflowchartComponent, 
     FilterComponent,
     FlowchartComponent,

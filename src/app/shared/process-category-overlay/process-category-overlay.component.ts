@@ -8,7 +8,8 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 })
 export class ProcessCategoryOverlayComponent implements OnInit {
 
-  @Input() title = "Process Category Details";
+  @Input() headerTitle:string = "Process Category Details";
+  @Input() buttonName:string = "Proceed";
   @Output() proceed = new EventEmitter<any>();
 
   processName = "";
@@ -16,6 +17,9 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   othercategory;
   isotherCategory:boolean=false;
   categoriesList:any=[];
+  botName = "";
+  botType = "";
+  botDescription = "";
 
   constructor( private rest:RestApiService) { }
 
@@ -43,9 +47,10 @@ export class ProcessCategoryOverlayComponent implements OnInit {
 
   proceedChanges(){
     this.saveCategory();
-    let data = {
+    let data;
+    data = {
       "processName": this.processName,
-      "categoryName": this.categoryName
+      "categoryName": this.categoryName =='other'?this.othercategory:this.categoryName
     }
     this.slideDown();
     this.proceed.emit(data);

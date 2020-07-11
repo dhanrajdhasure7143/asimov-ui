@@ -137,7 +137,7 @@ export class RpaStudioComponent implements OnInit {
     this.insertbot.reset();
     
   }
-  onCreate(){
+  slideUp(){
     this.insertbot.reset();
     document.getElementById('create-bot').style.display='block';
   }
