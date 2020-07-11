@@ -45,7 +45,7 @@
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="bps_overlay">
-              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnXmlNotation, i)"></div>
+              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnXmlNotation, each_diag.bpmnModelId)"></div>
               <div class="info">Click to open</div>
             </div>
           </mat-expansion-panel>

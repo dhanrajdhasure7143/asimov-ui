@@ -68,11 +68,10 @@ export class UploadProcessModelComponent implements OnInit {
     this.dt.changeHints(this.hints.bpsUploadHints);
     this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
     this.route.queryParams.subscribe(params => {
-      this.selected_notation = parseInt(params['bpsId']);
+      this.selected_modelId = params['bpsId'];
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.isRouterNotation = this.selected_notation >= 0;
     });
-    this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getUserBpmnList(null);
     this.getApproverList();
     this.randomId = UUID.UUID(); 
@@ -86,6 +85,7 @@ export class UploadProcessModelComponent implements OnInit {
         this.selected_notation = 0;
         this.notationListOldValue = 0;
       }else{
+        this.getSelectedNotation(); 
         this.notationListOldValue = this.selected_notation;
       }
       this.isLoading = false;
@@ -94,6 +94,13 @@ export class UploadProcessModelComponent implements OnInit {
     });
    }
 
+   getSelectedNotation(){
+    this.saved_bpmn_list.forEach((each_bpmn,i) => {
+      if(each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()){
+        this.selected_notation = i;
+      }
+    })
+   }
    async getApproverList(){
      await this.rest.getApproverforuser('Admin').subscribe( (res:any[]) =>  {//Process Architect
       this.approver_list = res; 

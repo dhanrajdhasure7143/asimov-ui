@@ -84,9 +84,9 @@ export class BpmnDiagramListComponent implements OnInit {
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
   }
-  openDiagram(binaryXMLContent, i){
+  openDiagram(binaryXMLContent, bpmnModelId){
   this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-  this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: i }});
+  this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
   }
   checkStatus(app_status){
     return app_status && (app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected');

@@ -132,10 +132,19 @@ div[class^='diagram_container'] .djs-container svg{
   background-color: #bebcbc66;
 }
 /*spinner styles*/
+/* pagination styles */
+.ngx-pagination{
+  padding: 0;
+}
+/* pagination styles */
+
 /* button styles */
 .header_addon{
   position: relative;
   top: -55px;
+}
+.btn{
+  margin-right: 5px;
 }
 .btn-thin{
   height: 25px;
