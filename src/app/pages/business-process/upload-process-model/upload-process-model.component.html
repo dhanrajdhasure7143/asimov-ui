@@ -1,4 +1,4 @@
-<div class="row drop_div">
+<div class="row header_addon">
   <div class="col-md-6">
     <button class="btn" (click)="reSize=true" *ngIf="isShowConformance">Show Conformance</button>
     <button class="btn" (click)="getBpmnDifferences()" *ngIf="reSize && isConfNavigation" >Show Differences</button>
@@ -23,8 +23,8 @@
     </mat-form-field>
   </div>
 </div>
-  <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>        
-  <as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
+  <span class="update_info header_addon" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>        
+  <as-split class="ex-percent header_addon" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
   <as-split-area [size]="isShowConformance?(reSize?50:100):0"><!-- [hidden]="!reSize"-->
     <div *ngIf="isShowConformance" class="bps_overlay">
       <div class="canvas2 readOnly"  id="canvas2"></div>
