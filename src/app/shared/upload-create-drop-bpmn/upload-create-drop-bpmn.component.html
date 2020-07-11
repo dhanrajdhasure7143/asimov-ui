@@ -6,7 +6,7 @@
                 <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
                     <h3>Upload Process Model</h3>
                     <h5>Drag and drop files here (.bpmn)</h5>
-                    <button class="btn bpmn-btn">Select</button>
+                    <button class="btn btn-primary eiap-btn">Select</button>
                 </ngx-dropzone-label>
             </ngx-dropzone>
         </div>
@@ -17,8 +17,8 @@
             <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
             <h3>Define Your Own Process</h3>
             <h5>Do process model from Scratch level</h5>
-            <button class="btn bpmn-btn" id="create_bpmn" (click)="slideUp()">Create</button>
+            <button class="btn btn-primary eiap-btn" id="create_bpmn" (click)="slideUp()">Create</button>
         </div>
     </div>
 </div>
-<process-category-overlay title="BPMN Details" (proceed)="uploadCreateBpmn($event)"></process-category-overlay>
+<process-category-overlay headerTitle="BPMN Details" (proceed)="uploadCreateBpmn($event)"></process-category-overlay>

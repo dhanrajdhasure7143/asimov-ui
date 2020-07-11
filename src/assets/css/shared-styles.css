@@ -20,21 +20,8 @@
   margin-top: 2px;
 }
 .bpmn-btn{
-  color: white;
-  background-color: #0062cf;
-  border-radius: 20px;
   width: 120px;
-
   margin-top: 20px;
-  border-radius: 20px !important;
-  outline: none;
-}
-.bpmn-btn:focus, .bpmn-btn:active{
-  outline: none;
-}
-.bpmn-btn:hover{
-  color:white !important;
-  font-weight: 700 !important;
 }
 .create_box{
   padding-top: 30px;

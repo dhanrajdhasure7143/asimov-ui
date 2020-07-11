@@ -72,7 +72,7 @@
               <!-- <pagination-controls (pageChange)="child_P = $event"></pagination-controls> -->
             </div>
         <div class="col-md-3 list_diag">
-          <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnProcessInfo.bpmnXmlNotation, i)"></div>
+          <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnProcessInfo.bpmnXmlNotation, each_diag.bpmnProcessInfo.bpmnModelId)"></div>
           <div class="row">
             <div class="col-md-6">
                 <div class="diag_info">Click to open</div>

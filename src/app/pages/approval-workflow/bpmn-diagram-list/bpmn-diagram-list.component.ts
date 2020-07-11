@@ -31,7 +31,7 @@ export class BpmnDiagramListComponent implements OnInit {
   searchTerm;
   isLoading:boolean = true;
   //approvalstatus: any='REJECTED';
-  rejectedby: any='mouni';
+  rejectedby: any='Sowmya Peddeti';
   remarks: any='ignore';
   selectedrow: any;
   orderAsc:boolean = true;
@@ -50,7 +50,7 @@ export class BpmnDiagramListComponent implements OnInit {
     switch (status) {
       case 'PENDING':
         return 'orange';
-      case 'DENIED':
+      case 'REJECTED':
         return 'red';
       case 'APPROVED':
         return 'green';
@@ -84,9 +84,9 @@ export class BpmnDiagramListComponent implements OnInit {
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
   }
-  openDiagram(binaryXMLContent, i){
+  openDiagram(binaryXMLContent, bpmnModelId){
   this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-  this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: i }});
+  this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
   }
   checkStatus(app_status){
     return app_status && (app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected');
@@ -133,10 +133,31 @@ this.selectedrow =i;
     // this.approve_savedb(data);
    }
    approve_producemessage(data) {
-    data.bpmnProcessInfo.reviewComments= this.approval_msg;
-     data.approvalStatus='APPROVED';
+     this.approver_info={
+      "approverName": this.user,
+      "bpmnJsonNotation": data.bpmnProcessInfo.bpmnJsonNotation,
+      "bpmnModelId": data.bpmnProcessInfo.bpmnModelId,
+      "bpmnNotationAutomationTask":  data.bpmnProcessInfo.bpmnNotationAutomationTask,
+      "bpmnNotationHumanTask":  data.bpmnProcessInfo.bpmnNotationHumanTask,
+      "bpmnProcessApproved": data.bpmnProcessInfo.bpmnProcessApproved,
+      "bpmnProcessName": data.bpmnProcessInfo.bpmnProcessName,
+      "bpmnProcessStatus": "APPROVED",
+      "bpmnTempId": data.bpmnProcessInfo.bpmnTempId,
+      "bpmnXmlNotation": data.bpmnProcessInfo.bpmnXmlNotation,
+      "category": data.bpmnProcessInfo.category,
+      "createdTimestamp": data.bpmnProcessInfo.createdTimestamp,
+      "emailTo": data.bpmnProcessInfo.emailTo,
+      "id": data.bpmnProcessInfo.id,
+      //"modifiedTimestamp":  data.bpmnProcessInfo.modifiedTimestamp,
+      "processIntelligenceId": data.bpmnProcessInfo.processIntelligenceId,
+      "reviewComments":this.approval_msg,
+      "tenantId": data.bpmnProcessInfo.tenantId,
+      "userName": data.bpmnProcessInfo.userName,
+      //"version": data.bpmnProcessInfo.version,
+      //"versionId":data.bpmnProcessInfo.versionId
+     };
      delete(data.xpandStatus);
-     this.rest_Api.approve_producemessage(data).subscribe(
+     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
         data =>{
           let message = "Diagram approved successfully";
               this.bpmnlist();
@@ -152,7 +173,10 @@ this.selectedrow =i;
    }
    denyDiagram(data) {
      data.bpmnProcessInfo.reviewComments= this.approval_msg;
+     data.remarks = this.approval_msg;
      data.approvalStatus='REJECTED';
+     data.rejectedBy=this.rejectedby;
+     data.bpmnProcessInfo.bpmnProcessStatus='REJECTED';
      delete(data.xpandStatus);
     this.rest_Api.denyDiagram(data).subscribe(
       data => {

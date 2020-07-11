@@ -68,15 +68,13 @@ export class UploadProcessModelComponent implements OnInit {
     this.dt.changeHints(this.hints.bpsUploadHints);
     this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
     this.route.queryParams.subscribe(params => {
-      this.selected_notation = parseInt(params['bpsId']);
+      this.selected_modelId = params['bpsId'];
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.isRouterNotation = this.selected_notation >= 0;
     });
-    this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getUserBpmnList(null);
     this.getApproverList();
-    // this.randomId = UUID.UUID(); 
-    this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
+    this.randomId = UUID.UUID(); 
    }
 
    async getUserBpmnList(isFromConf){
@@ -87,6 +85,7 @@ export class UploadProcessModelComponent implements OnInit {
         this.selected_notation = 0;
         this.notationListOldValue = 0;
       }else{
+        this.getSelectedNotation(); 
         this.notationListOldValue = this.selected_notation;
       }
       this.isLoading = false;
@@ -95,6 +94,13 @@ export class UploadProcessModelComponent implements OnInit {
     });
    }
 
+   getSelectedNotation(){
+    this.saved_bpmn_list.forEach((each_bpmn,i) => {
+      if(each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()){
+        this.selected_notation = i;
+      }
+    })
+   }
    async getApproverList(){
      await this.rest.getApproverforuser('Admin').subscribe( (res:any[]) =>  {//Process Architect
       this.approver_list = res; 
@@ -318,11 +324,15 @@ export class UploadProcessModelComponent implements OnInit {
    this.bpmnModel.approverName = this.selected_approver;
    this.bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
    this.bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-   this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
+   delete(this.bpmnModel.bpmnModelTempId);
+    delete(this.bpmnModel.bpmnProcessMeta);
+   //this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
+   this.bpmnModel.bpmnTempId=2;
    this.bpmnModel.category = sel_List['category'];
-   this.bpmnModel.id= 5;
+   //this.bpmnModel.id= 5;
    this.bpmnModel.processIntelligenceId= 5;//?? FOR SHowconformance screen alone??
    this.bpmnModel.tenantId=7;
+   this.bpmnModel.bpmnProcessStatus="open";
    this.bpmnModel.bpmnProcessApproved = 0;
    this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
     let final_notation = btoa(unescape(encodeURIComponent(xml)));

@@ -127,6 +127,16 @@ margin-right: -85px;
 }
 /*List-of-changes component - Ends*/
 /* home component styles - Starts*/
+.first_col{
+  text-align: center;
+}
+.col-half-offset, .col-half-offsett{
+  margin-left:4.166666667%;
+  text-align:center;
+}
+.col-half-offset:nth-child(4) {
+  margin-left: 3.1666%;
+}
 #bpmn_list{
   height: 62vh;
   overflow: hidden auto;
@@ -557,6 +567,7 @@ background-color: #3ea307 !important;
   top: -30px;
   left: 8px;
 }
+
 /* bpmn-diagram-list component styles - Ends*/
 
 

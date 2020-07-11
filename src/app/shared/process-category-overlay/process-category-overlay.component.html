@@ -2,7 +2,7 @@
     <div class="modal-content">
         <div class="modal-header">
             <span class="close" (click)="processCategoryForm.reset();slideDown();">&times;</span>
-            <h4>{{title}}</h4>
+            <h4>{{headerTitle}}</h4>
         </div>
         <div class="modal-body">
             <form autocomplete="off" #processCategoryForm="ngForm"> 
@@ -18,7 +18,7 @@
                     <br/>
                     <mat-form-field class="row col-md-12" *ngIf='isotherCategory'>
                         <mat-label>Enter Category</mat-label>
-                        <input type="text" matInput name="otherCategory" #otherCategory="ngModel" [(ngModel)]="othercategory" required>
+                        <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" required>
                     </mat-form-field>
                     <br/>
                     <mat-form-field class="row col-md-12">
@@ -27,9 +27,45 @@
                     </mat-form-field>
                     <br/>
                     <div class="center">
-                        <button class="btn bpmn-btn" type="submit" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="!processCategoryForm.valid">Proceed</button>
+                        <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="!processCategoryForm.valid">{{buttonName}}</button>
                     </div>
                 </div>
+                <!-- <div class="container m-contanier" *ngIf="isRpa=='true'">
+                    <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Bot Name</mat-label>
+                            <input type="text" matInput name="botName" [(ngModel)]="botName" required>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Bot Type</mat-label>
+                            <mat-select  name="botType" [(ngModel)]="botType" required panelClass="overlayMatSelect">
+                                <mat-option value=1>Attended</mat-option>
+                                <mat-option value=0>Unattended</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Select Category</mat-label>
+                            <mat-select  name="category" (selectionChange)="onchangeCategories(categoryName)" [(ngModel)]="categoryName" required panelClass="overlayMatSelect">
+                                <mat-option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
+                                    {{categories.categoryName}}</mat-option>
+                                <mat-option value="other">Other</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="row col-md-12" *ngIf='isotherCategory'>
+                            <mat-label>Enter Category</mat-label>
+                            <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" required>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Bot Description</mat-label>
+                            <textarea matInput name="botDescription" [(ngModel)]="botDescription" placeholder="Enter Bot Description" maxlength="500"></textarea>
+                        </mat-form-field>
+                      </div>
+                      <div class="center">
+                        <button class="btn btn-primary eiap-btn" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="processCategoryForm.invalid" >Submit</button>
+                      </div>
+                </div> -->
             </form>
         </div>
     </div>

@@ -37,21 +37,21 @@
   </as-split-area>
 </as-split>
 <div class="row btn_row"> 
-  <button id="download" class="left" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
-  <button class="right btn btn-success" id="approvalSubmit" (click)="submitDiagramForApproval()">Submit for Approval</button>
+  <button id="download" class="left" (click)="downloadBpmn()"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+  <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Submit for Approval</button>
   <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'"  *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
     <ngx-dropzone-label>
-        <button class="btn bpmn-btn">Upload Again</button>
+        <button class="btn btn-primary eiap-btn">Upload Again</button>
     </ngx-dropzone-label>
   </ngx-dropzone>
-  <button class="right btn" id="save" (click)="saveprocess()" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">Save Process</button>
-  <button class="right btn btn-success" id="automate" (click)="automate()">Automate</button> <!-- [disabled]="isShowConformance && !isConfNavigation" -->
+  <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess()" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">Save Process</button>
+  <button class="right btn btn-primary eiap-btn" id="automate" (click)="automate()">Automate</button> <!-- [disabled]="isShowConformance && !isConfNavigation" -->
 </div>
 <app-list-of-changes></app-list-of-changes>  
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
   <p style="color: white">Auto Saving... </p>  
 </ngx-spinner>
-<process-category-overlay title="BPMN Details" (proceed)="uploadAgainBpmn($event)"></process-category-overlay>
+<process-category-overlay headerTitle="BPMN Details" (proceed)="uploadAgainBpmn($event)"></process-category-overlay>
 <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
   <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
   </div></div>

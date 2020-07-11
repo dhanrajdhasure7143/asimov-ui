@@ -47,8 +47,8 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getUserBpmnList();
     this.getApproverList();
-    // this.randomId = UUID.UUID();
-    this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
+    this.randomId = UUID.UUID();
+    //this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
   }
   ngOnDestroy(){
     Swal.fire({
@@ -240,11 +240,15 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     this.bpmnModel.approverName = this.selected_approver;
     this.bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     this.bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-    this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
+    delete(this.bpmnModel.bpmnModelTempId);
+    delete(this.bpmnModel.bpmnProcessMeta);
+    //this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
+    this.bpmnModel.bpmnTempId=2;
     this.bpmnModel.category = sel_List['category'];
-    this.bpmnModel.id= 5;
+    //this.bpmnModel.id= 5;
     this.bpmnModel.processIntelligenceId= 5;//?? FOR SHowconformance screen alone??
     this.bpmnModel.tenantId=7;
+    this.bpmnModel.bpmnProcessStatus="open";
     this.bpmnModel.bpmnProcessApproved = 0;
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
@@ -260,7 +264,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
             'Your changes has been saved and submitted for approval successfully.',
             'success'
           );
-        _self.router.navigateByUrl("/pages/approvalWorkflow/home");
+       _self.router.navigateByUrl("/pages/approvalWorkflow/home");
         },err => {
           _self.isLoading = false;
           Swal.fire(
