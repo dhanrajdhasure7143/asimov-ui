@@ -76,8 +76,9 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
    }
 
    async getApproverList(){
-     await this.rest.getApproverforuser('Admin').subscribe( (res:any[]) =>  {//Process Architect
-      this.approver_list = res; 
+     await this.rest.getApproverforuser('Admin').subscribe( res =>  {//Process Architect
+      if(Array.isArray(res))
+        this.approver_list = res; 
     });
    }
 
