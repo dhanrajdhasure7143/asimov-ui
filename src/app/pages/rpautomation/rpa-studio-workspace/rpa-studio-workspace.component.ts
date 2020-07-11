@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Input } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb } from 'jsplumb';
@@ -10,7 +10,11 @@ import * as $ from 'jquery';
 import { NotifierService } from 'angular-notifier';
 import { RpaDragHints } from '../model/rpa-workspace-module-hints';
 import { DataTransferService } from "../../services/data-transfer.service";
+import { HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
+import { data } from 'jquery';
+import { colorSets } from '@swimlane/ngx-charts/release/utils';
+import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
@@ -28,12 +32,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   changePx: { x: number; y: number; };
   public selectedTask:any;
   // forms
+  fileData:any;
   public hiddenPopUp:boolean = false;
   public hiddenCreateBotPopUp:boolean = false;
   public form: FormGroup;
   unsubcribe: any
   public fields: any[] = [];
   formHeader:string;
+  disable: boolean = false;
   formVales:any[] = [];
   dragelement:any
   dagvalue:any
@@ -47,13 +53,41 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   @ViewChild('canvas',{static: false}) canvas: ElementRef;
   @ViewChild('downloadLink',{static: false}) downloadLink: ElementRef;
   public finaldataobjects:any=[]
-  constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService,) {
+  @Input("bot") public finalbot:any;
+  constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService, private http:HttpClient, private child_rpa_studio:RpaStudioComponent) {
     
    }
 
    ngOnInit() 
    {
     this.dt.changeHints(this.hints.rpaWorkspaceHints );
+    if(this.finalbot.botId!= undefined)
+    {
+      this.finaldataobjects=this.finalbot.tasks;
+      //console.log(this.finaldataobjects)
+      console.log(this.child_rpa_studio.templateNodes)
+     
+      this.finaldataobjects.forEach(element => {
+
+        let nodename=  element.nodeId.split("__")[0];
+        let nodeid=element.nodeId.split("__")[1];
+        let node={
+          id:nodeid,
+          name:nodename,
+          selectedNodeTask:"",
+          path:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).path,
+          tasks:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
+          x:element.x,
+          y:element.y,
+        }
+        console.log(node)
+        this.nodes.push(node);
+          setTimeout(() => {
+            this.populateNodes(node);
+          }, 240);
+        
+      });
+    }
    }
 
 
@@ -68,7 +102,52 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         ["Arrow", { width: 12, length: 12, location: 0.5 }]
       ]
     });
+
+    if(this.finalbot.botId!= undefined)
+    {
+      console.log(this.finalbot.sequences)
+        this.addconnections()
+    }
+
   }
+
+  public addconnections()
+  {
+    //this.jsPlumbInstance.reset();
+    //jsPlumb.reset();
+    //this.jsPlumbInstance = jsPlumb.getInstance();
+    this.finalbot.sequences.forEach(element => {
+      
+      this.jsPlumbInstance.connect(
+        {
+          endpoint: ['Dot', {
+            radius: 2,
+            cssClass:"myEndpoint", 
+            width:8, 
+            height:8,
+          }],
+          source:element.sourceTaskId, 
+          target:element.targetTaskId,
+          anchor: "Continuous",
+          connectorStyle: { stroke: '#404040',strokeWidth: 1.5 },
+          maxConnections: -1,
+          cssClass: "path",
+          Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
+          connectorClass: "path",
+          connectorOverlays: [['Arrow', {width: 10, length: 10, location: 1 }]],
+          
+          isTarget: true,
+     
+        }
+
+      )
+
+      
+    });
+    console.log(data);
+  
+  }
+
   public removeItem(item: any, list: any[]): void {
     list.splice(list.indexOf(item), 1);
   }
@@ -91,7 +170,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     };
     
     const node = event.data;
+    console.log(node)
     node.id = this.idGenerator();
+    node.selectedNodeTask="";
     const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
     console.log(nodeWithCoordinates);
     this.nodes.push(nodeWithCoordinates);
@@ -188,13 +269,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
 
 
-  callFunction(menu){
+  callFunction(menu,tempnode){
     this.optionsVisible = false;
     this.hiddenPopUp = false;
-   // this.fields = []
-    //console.log(menu);
-      this.formHeader= this.selectedNode.name+" - "+menu.name;
-      //this.selectedNode.id = menu.id;
+     this.nodes.find(data=>data.id==tempnode.id).selectedNodeTask=menu.name
+    this.formHeader= this.selectedNode.name+" - "+menu.name;
+    
       let type ="info";
       let message = `${menu.name} is Selected`
       this.notifier.notify( type, message );
@@ -207,10 +287,26 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   deletenode(node)
   {
-    console.log(this.jsPlumbInstance.getAllConnections())
-    this.nodes.splice(this.nodes.indexOf(node),1)
-    console.log(this.nodes)
-    this.jsPlumbInstance.remove(node.id)
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+    if (result.value) {
+      this.nodes.splice(this.nodes.indexOf(node),1)
+      this.jsPlumbInstance.remove(node.id)
+
+      //this.nodes = this.nodes.filter((node): boolean => nodeId !== node.id);
+      //this.jsPlumbInstance.removeAllEndpoints(nodeId);
+    } 
+    else if (result.dismiss === Swal.DismissReason.cancel) {
+    }
+  })
+
   }
 
   onRightClick(n: any,e: { target: { id: string; } },i: string | number) {
@@ -257,14 +353,56 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   formNodeFunc(node)
   {
-    console.log(node)
+   /* console.log(node)
     if(this.selectedTask.id)
     {
       this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
        this.response(data)
       })
-    }
+    }*/
+     //console.log(node)
+     let task=this.finaldataobjects.find(data =>data.nodeId.split("__")[1]==node.id );
+     if(task==undefined)
+     {
+       this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
+         this.response(data)
+       })
+     }
+     else if(this.selectedTask==undefined)
+     {
+       let finalattributes:any=[];
+       this.rest.attribute(task.tMetaId).subscribe((data)=>{ 
+         finalattributes=data  
+         task.attributes.forEach(element => {
+               finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
+           });
+           
+           this.response(finalattributes)
+       });
+     }
+     else if(task.tMetaId==this.selectedTask.id)
+     {
+       let finalattributes:any=[];
+       this.rest.attribute(this.selectedTask.id).subscribe((data)=>{ 
+         finalattributes=data  
+         task.attributes.forEach(element => {
+               finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
+           });
+           
+           this.response(finalattributes)
+       });
+     }
+     else if(this.selectedTask.id != task.tMetaId)
+     {
+       this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
+         this.response(data)
+       })
+     }
+  
   }
+
+
+
   
   response(data)
   {
@@ -278,6 +416,11 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.fields = [];
     this.hiddenPopUp = true;
     console.log(data);
+    data.forEach(element => {
+      if(element.type == "multipart"){
+        element.onUpload = this.onUpload.bind(this)
+      }
+    });
     this.formVales = data
     this.alldataforms.push(this.formVales)
     this.fields = data
@@ -291,9 +434,15 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   }
 
+  onUpload(e){
+    console.log(e)
+    this.fileData = e.target.value
+     return e.target.files[0].name
+  }
 
   onFormSubmit(event){  
     this.fieldValues = event
+    this.fieldValues['file'] = this.fileData
     this.hiddenPopUp=false;
     let objAttr:any;
     let obj:any=[];
@@ -308,19 +457,25 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         
   })
   let cutedata={
+    
     "taskName":this.selectedTask.name,
     "tMetaId":this.selectedTask.id,
-    "inSeqId":1,
+    "inSeqId":1,    
+    "taskSubCategoryId":"1",
     "outSeqId":2,
+    "nodeId":this.selectedNode.name+"__"+this.selectedNode.id,
+    "x":this.selectedNode.x,
+    "y":this.selectedNode.y,
     "attributes":obj,
   }
   this.finaldataobjects.push(cutedata);
+  console.log(this.finaldataobjects)
   this.notifier.notify( "info", "Data Saved Successfully" );
   }
 
   saveBotFun(botProperties,env)
   {
-    //console.log(environments)
+    console.log(botProperties.predefinedBot)
     console.log(this.formVales);
     this.saveBotdata = {
     "botName": botProperties.botName,
@@ -329,13 +484,32 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     "department":botProperties.botDepartment,
     "botMainSchedulerEntity":this.scheduler,
     "envIds":env,
+    "isPredefined":botProperties.predefinedBot,
     "tasks": this.finaldataobjects,
     "createdBy": "admin",
     "lastSubmittedBy": "admin",
-    "scheduler" : this.scheduler
+    "scheduler" : this.scheduler,
+    "sequences": this.getsequences(),
   }
     console.log(this.saveBotdata)
     return this.rest.saveBot(this.saveBotdata)
+   // return this.("/rpa-service/save-bot",this.saveBotdata);
+  }
+
+
+  getsequences()
+  { 
+    let connections:any=[];
+    let nodeconn:any;
+    this.jsPlumbInstance.getAllConnections().forEach(data => {
+      nodeconn={
+        sequenceName:data.getId(),
+        sourceTaskId:data.sourceId,
+        targetTaskId:data.targetId,
+      }
+      connections.push(nodeconn)
+    })
+    return connections;
   }
 
   closemenu()
@@ -387,7 +561,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     "tasks": mainObj,
     "createdBy": "admin",
     "lastSubmittedBy": "admin",
-    "scheduler" : botProperties.scheduler
+    "scheduler" : botProperties.scheduler,
   }
 
     return this.rest.updateBot(this.saveBotdata)
@@ -402,11 +576,13 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   successCallBack(data) {
     if(data.error){
+      this.disable=false;
       let type ="info";
       let message = "Failed to Save Data"
       this.notifier.notify( type, message );
     }else{
       let type ="info";
+      this.disable=true;
       let message = "Data is Saved Successfully"
       this.notifier.notify( type, message );
     console.log(data);
@@ -522,6 +698,38 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       return doc;
     }).then((doc) => {
       doc.save('bot_image.pdf');  
+    });
+  }
+
+  modifyEnableDisable()
+  {
+      this.disable = !this.disable;
+      if (this.disable) {
+      Swal.fire({
+      position:'top-end',
+      icon:"warning",
+      title:"Designer Disabled Now",
+      showConfirmButton:false,
+      timer:2000})
+          }
+      else {
+      Swal.fire({
+      position:'top-end',
+      icon:'success',
+      title:'Designer Enabled Now',
+      showConfirmButton:false,
+      timer:2000})
+      }
+    }
+  
+  
+  
+
+
+  squences()
+  {
+    this.jsPlumbInstance.getAllConnections().forEach(element => {
+    
     });
   }
 

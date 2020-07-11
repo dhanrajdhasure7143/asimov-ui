@@ -1,6 +1,9 @@
 <div class="header_addon pull-right">
-  <button  type="button" class="btn btn-primary eiap-btn"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="slideUp()">
+  <button  type="button" class="btn btn-primary eiap-btn"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()">
     Create
+  </button>
+  <button  type="button" class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
+    Load
   </button>
 </div>
 <br><br><br>
@@ -73,11 +76,14 @@
           <div class="col-md-6">
 
             <label for="botName">Bot Name*</label>
-            <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name"  ngModel maxlength="30" class="form-control" name="botName" required/>
+            <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name"  ngModel maxlength="30" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
             <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" >
               Bot Name Required*
               </div>
-
+              <div *ngIf="checkbotname && insertbot.get('botName').touched" style="color: red" >
+                Bot Name is already exists*
+              </div>
+  
           </div>
 
 
@@ -110,7 +116,7 @@
             </select>
             <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" >
               Category Required*
-              </div>
+            </div>
 
 
           </div>
@@ -118,19 +124,120 @@
             <label for="botDescription">Bot Description</label>
             <textarea type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" ngModel maxlength="500" class="form-control" name="botDescription"  ></textarea>
             <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" >
-            Bot Description Required*
+              Bot Description Required*
             </div>
+          </div>
+
+
+          
+          <div class="col-md-6">
+            <input type="checkbox"  formControlName="predefinedBot" value="true" (click)="predefined($event)" name="predefinedBot">&nbsp; <span style="font-size:16px">Predefined Bot</span>
           </div>
 
         </div>
 
       </div>
 
-      <div class="form-group center">
-        <button class="btn btn-primary eiap-btn" [disabled]="insertbot.invalid" >Submit</button>
+      <div class="form-group">
+        <button class="btn btn-primary" [disabled]="insertbot.invalid || checkbotname" >Submit</button>
       </div>
     </form>
   </div>
 </div>
 </div>
-</div> 
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--load bot overlay-->
+<div id="load-bot" class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="close()">&times;</span>
+          <h4>Load Bot</h4>
+      </div>
+  <div class="rpa-modal-body">
+     
+  <div class="container">
+
+    <form [formGroup]="loadbot" (ngSubmit)="getbotdata()" >
+
+      <div class="form-group">
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <label for="botDepartment" (change)="loadbotdata()">Category*</label>
+            <select  class="form-control" formControlName="botDepartment" name="botDepartment" >
+              <option  value="" selected>--Select Category--</option>
+              <option  value=1>Development</option>
+              <option  value=2>HR</option>
+              <option  value=3>QA</option>
+            </select>
+            <div *ngIf="loadbot.get('botDepartment').invalid && loadbot.get('botDepartment').touched" style="color: red" >
+              Category Required*
+              </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <label for="botType">Bot Type*</label>
+
+            <select  class="form-control" formControlName="botType" name="botType" (change)="loadbotdata()" >
+              <option value="" selected>--Select Bot Type--</option>
+              <option  value=1>Attended</option>
+              <option  value=0>Unattended</option>
+            </select>
+            <div *ngIf="loadbot.get('botType').invalid && loadbot.get('botType').touched" style="color: red" >
+              Bot Type Required*
+              </div>
+
+          </div>
+          
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="botType">Bot*</label>
+
+            <select  class="form-control" formControlName="bot" name="bot" >
+              <option value="" selected>--Select Bot--</option>
+              <option *ngFor="let bot of botlist" [value]="bot.botId">{{bot.botName}}</option>
+            </select>
+            <div *ngIf="loadbot.get('bot').invalid && loadbot.get('bot').touched" style="color: red" >
+              Bot  Required*
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" [disabled]="loadbot.invalid" >Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>

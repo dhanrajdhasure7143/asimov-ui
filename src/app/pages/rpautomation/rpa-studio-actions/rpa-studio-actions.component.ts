@@ -127,9 +127,6 @@ export class RpaStudioActionsComponent implements OnInit {
   
   saveBotFunAct() {
     
-    this.startbot=true;
-    this.pausebot=false;
-    this.resumebot=false;
     this.environment.forEach(data=>{
         if(data.checked==true)
         {
@@ -141,13 +138,32 @@ export class RpaStudioActionsComponent implements OnInit {
       
       this.childBotWorkspace.saveBotFun(this.botState,this.finalenv).subscribe(data=>{
         this.savebotrespose=data;
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: "Bot Saved Sucessfully",
-          showConfirmButton: false,
-          timer: 2000
-        })
+        if(this.savebotrespose.botId!=undefined)
+        {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: "Bot Saved Sucessfully",
+            showConfirmButton: false,
+            timer: 2000
+          })
+          this.startbot=true;
+          this.pausebot=false;
+          this.resumebot=false;
+          this.childBotWorkspace.disable=true;
+        }
+        else
+        {
+          
+          this.childBotWorkspace.disable=false;
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: "Bot failed to Save",
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }  
       });
     }
     else
@@ -387,24 +403,36 @@ getEnvironmentlist() {
     }
     
     
-    saveCron(){
-      let sche :any;
-      sche = {
-        "scheduleInterval" : this.cronExpression,
-        "timeZone":this.selectedTimeZone,
-        "startDate": `${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
-        "endDate"  : `${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
 
-      }
-      this.childBotWorkspace.saveCron(sche)
-      // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
-    }
+    saveCron(){
+    let sche :any;
+    sche = {
+    "TimeZone":this.selectedTimeZone,
+    "numberofRepetitions":1,
+    "scheduleIntervals" : [{
+    "scheduleInterval" :this.cronExpression,
+    "startDate":`${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
+    "endDate"  :`${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
+            }]
+          }
+    this.childBotWorkspace.saveCron(sche)
+    this.hiddenSchedlerPopUp = false;
+    Swal.fire({
+    position:'top-end',
+    icon:'success',
+    title:'Scheduler Data saved successfull',
+    showConfirmButton:false,
+    timer:2000
+          })
+    // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
+        }
+    
+    
     
     
     
     close(){
       document.getElementById("scheduler").style.display="none";
-      this.hiddenSchedlerPopUp = false;
     }
   
   
@@ -416,7 +444,9 @@ getEnvironmentlist() {
     })
   }
   
-  
+  modify(){
+    this.childBotWorkspace.modifyEnableDisable();
+  }
 
   getVersionlist() {
     this.versionsList=[];

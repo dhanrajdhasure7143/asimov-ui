@@ -27,6 +27,7 @@ export class RpaStudioComponent implements OnInit {
   public excelValue:any = [];
   public optionsVisible : boolean = true;
   public state:any;
+  public botlist:any=[];
   result:any = [];
   jsPlumbInstance;
   nodes = [];
@@ -44,6 +45,7 @@ export class RpaStudioComponent implements OnInit {
   public form: FormGroup;
   public userFilter:any={name:""};
   public insertbot:FormGroup;
+  public loadbot:FormGroup;
   unsubcribe: any;
   public fields: any[] = [];
   resp: any[] = [];
@@ -57,6 +59,7 @@ export class RpaStudioComponent implements OnInit {
   exectionValue: any;
   tabsArray: any[] = [];
   tabActiveId: string;
+  public checkbotname:Boolean;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
     private hints:RpaHints, private formBuilder:FormBuilder) { 
     this.show = 5;
@@ -66,12 +69,20 @@ export class RpaStudioComponent implements OnInit {
       botDepartment:["", Validators.required],
       botDescription:[""],
       botType:["", Validators.required],
+      predefinedBot:["false"]
   });
+  this.loadbot=this.formBuilder.group({
+   botType:["",Validators.required],
+   botDepartment:["",Validators.required],
+   bot:["",Validators.required],
+
+  })
   
   }
 
   ngOnInit() 
   {
+    console.log(this.insertbot.get("predefinedBot").value)
     if(localStorage.getItem("enablecreate"))
     {
       this.hiddenCreateBotPopUp=true;
@@ -84,13 +95,13 @@ export class RpaStudioComponent implements OnInit {
     }   
     this.toolSetData;
     let data1:any = [];
-    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
+    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
     this.dt.changeHints(this.hints.rpaHomeHints);
     this.rest.toolSet().subscribe(data => {
       console.log(data);
       data1 = data
-  
+      
       data1.General.forEach(element => {
         let temp:any = {
           name : element.name,
@@ -111,6 +122,21 @@ export class RpaStudioComponent implements OnInit {
     })
   }
 
+  checkBotnamevalidation()
+  {
+    let botname=this.insertbot.get("botName").value;
+    
+    this.rest.checkbotname(botname).subscribe(data=>{
+    if(data==true && this.tabsArray.find(data=>data.botName==botname)==undefined)  
+    { 
+      this.checkbotname=false;
+    }else
+    {
+      this.checkbotname=true;
+    }
+    })
+  }
+
   increaseShow() {
     this.show += 5; 
   }
@@ -128,26 +154,83 @@ export class RpaStudioComponent implements OnInit {
     this.model=this.insertbot.value;
     console.log(this.model);
     temp = this.model;
-
     this.model = {};
-  
     this.tabsArray.push(temp);  
     this.tabActiveId = temp.botNamee
     console.log(this.tabsArray);
     this.insertbot.reset();
     
   }
-  slideUp(){
+
+  onCreate(){
     this.insertbot.reset();
+    this.insertbot.get("botDepartment").setValue("");
+    this.insertbot.get("botType").setValue("");
     document.getElementById('create-bot').style.display='block';
   }
+
   closeBot($event) {
     this.tabsArray = this.tabsArray.filter((bot): boolean => $event !== bot);
     this.tabActiveId = this.tabsArray.length > 0 ? this.tabsArray[this.tabsArray.length - 1].id : '';
   }
+
   close(){
-    document.getElementById("create-bot").style.display ="none";
-    this.hiddenCreateBotPopUp = false
+    document.getElementById("create-bot").style.display ="none";  
+    document.getElementById("load-bot").style.display="none";
+  }
+
+  onLoad()
+  {
+    document.getElementById("load-bot").style.display="block";
+  }
+
+
+  loadbotdata()
+  {
+    this.botlist=[];
+    let botType=this.loadbot.get("botType").value
+    let botDepartment=this.loadbot.get("botDepartment").value
+    if(botType!="" && botDepartment !="")
+    {
+      this.rest.getbotlist(botType,botDepartment).subscribe(data=>{
+        this.botlist=data;
+      })
+    }
+  }
+
+  getbotdata()
+  {
+    let botid=this.loadbot.get("bot").value
+    console.log(botid)
+    let botdata:any;
+    this.rest.getbotdata(botid).subscribe(data=>{
+      botdata=data;
+      this.tabsArray.push(botdata);
+      this.tabActiveId=botdata.botName;
+      this.loadbot.reset();
+      this.loadbot.get("bot").setValue("");
+      this.loadbot.get("botType").setValue("");
+      this.loadbot.get("botDepartment").setValue("");
+      //this.loadbot.reset();
+      document.getElementById("load-bot").style.display="none";
+    })
+  }
+
+  predefined(event)
+  {
+
+    //console.log(event)
+    console.log("data")
+    console.log(this.insertbot.get("predefinedBot").value)
+  
+    /*if(this.insertbot.get("predefinedBot").value=="true")
+    {
+      this.insertbot.get("predefinedBot").setValue("false")
+    }
+    else
+    {
+      this.insertbot.get("predefinedBot").setValue("true")
+    }*/
   }
 } 
 

@@ -37,7 +37,7 @@
     /* background: red; */
     color: #fff;
     padding: 16px;
-    background-image: linear-gradient(to right, #ff4ca6, #ff4c6a);
+    /*background-image: linear-gradient(to right, #ff4ca6, #ff4c6a);*/
     width: 60%;
     margin: 0px auto;
   }
@@ -144,8 +144,8 @@
 
   .node-delete{
     float: right;
-    margin-top: -68px;
-   margin-right: -7px;
+    margin-top:-10px;
+    margin-right: -7px;
     border-radius: 10px;
     background-color:#0062cf;
     height:13px;
@@ -234,14 +234,25 @@
     right: -177px;
     top: 300px;
 }
-.downloadBtn{
-  padding-left:1130px;
-  padding-top:70px;
+
+.downloadBtn {
+margin-top: 70px;
 }
-.dropdown-menu{
- margin-left:1130px;
- min-width:10px;
+ 
+.dropdown-menu {
+min-width: 10px;
+margin-left: 8px;
 }
+
+
+.download {
+position: absolute;
+top: 387px;
+margin-left: 1130px;
+/* left:0px; */
+}
+
+
 
 
 .context-menu__item{
@@ -292,11 +303,7 @@
 .class-css{
   cursor: pointer;float: right;font-weight: 700;border: 1px solid gray;padding: 1px 6px
 }
-.download{
-  position: absolute;
-  top: 387px;
-  /* left:0px; */
-}
+
 .download_icon{
   position: relative;
   background-color: #ccc;

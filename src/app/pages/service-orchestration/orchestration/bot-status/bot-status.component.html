@@ -2,32 +2,45 @@
 
   <!-- 1 -->
   <div class="col-md-3" style="padding: 10px;">
-      <div style="border: 1px solid #f2f3ff;">
-    <h5 style="background-color: #f2f9ff;padding: 2%;">Bots</h5>
+    <div style="border: 1px solid #f2f3ff;">
+      <h5 style="background-color: #f2f9ff;padding: 2%;">Bots</h5>
     <!-- <p style="background-color: white; ">Some text..</p></div> -->
-    <div style="background-color: white;padding: 0% 10% 3% 10%; ">
-      <div class="bots_status" (click)="new()" style="border: 1px solid #f2f3ff;text-align: center;">
-          <img class="image" src="/assets/images/iconfinder_add_134224.svg">
-          <h3>10</h3>
-          <h6 class="status">New</h6>
+     <div style="background-color: white;padding: 0% 10% 3% 10%; ">
+      <div class="row">
+        <div class="col-sm-6">
+          <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+            <h3 style="color: #61af4e; font-family: fantasy;">{{BotStatus.New}}</h3>
+            <h6>NEW</h6>
+        </div>
+        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+            <h3 style="color: #ed9040; font-family: fantasy;">{{BotStatus.Pause}}</h3>
+            <h6>PAUSE</h6>
+        </div>
+        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+            <h3 style="color: #888888; font-family: fantasy;">{{BotStatus.Stop}}</h3>
+            <h6>STOP</h6>
+        </div>
+        </div>
+        <div class="col-sm-6">
+            
+      <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+        <h3 style="color: #ff5555; font-family: fantasy;">{{BotStatus.Running}}</h3>
+        <h6>RUNNING</h6>
+    </div>
+  
+    <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+      <h3 style="color: #b98282; font-family: fantasy;">{{BotStatus.Success}}</h3>
+      <h6>SUCCESS</h6>
+    </div> 
+    <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+        <h3 style="color: #b98282; font-family: fantasy;">{{BotStatus.Failure}}</h3>
+        <h6>FAILURE</h6>
+    </div>
+        </div>
       </div>
-      <div class="bots_status" (click)="active()" style="border: 1px solid #f2f3ff;text-align: center;">
-          <img class="image" src="/assets/images/iconfinder_activity_3324973.svg">
-          <h3>4</h3>
-          <h6 class="status">Active</h6>
-      </div>
-      <div class="bots_status" style="border: 1px solid #f2f3ff;text-align: center;">
-          <img class="image" src="/assets/images/Fill.svg">
-          <h3>0</h3>
-          <h6 class="status">Errors</h6>
-      </div>
-      <div class="bots_status" style="border: 1px solid #f2f3ff;text-align: center;">
-          <img class="image" src="/assets/images/iconfinder_server-web-hosting-storage-data_2205217 (1).svg">
-          <h3>22</h3>
-          <h6 class="status">Running</h6>
+      
       </div>
     </div>
-  </div>
   </div>
 
   <!-- 2 -->
@@ -37,22 +50,18 @@
     <table style="background-color: white; " class="table">
       <thead>
           <tr>
-        <th scope="col">Process Name</th>
-    <th scope="col">process Owner</th>
-    <th scope="col">Bot Assaigned</th>
-    <th scope="row">Bot state</th>
-    <th scope="row">Project Strat Time</th>
-    <th scope="row">Project End Time</th>
+        <th scope="col">Name</th>
+    <th scope="col">Description</th>
+    <th scope="row">Business Vertical</th>
+    <th scope="row">Created Date and Time</th>
           </tr>
       </thead>
       <tbody>
-          <tr *ngFor="let data of feesDetails.bookingDetails; let i = index;trackBy:loopTrackBy">
-              <td scope="col">{{i +1}}</td>
-              <td scope="col">{{data.slot.shiftType}}</td>
-              <td scope="col">{{data.slot.start}}</td>
-              <td>{{data.rent}}</td>
-              <td>{{data.electricCharges}}</td>
-              <td>{{data.administrationCharges}}</td>
+          <tr *ngFor="let data of activeBots; let i = index;trackBy:loopTrackBy">
+              <td scope="col">{{data.botName}}</td>
+              <td scope="col">{{data.description}}</td>
+              <td>{{data.department}}</td>
+              <td>{{data.createdTS}}</td>
 
           </tr>
       </tbody>
@@ -111,7 +120,6 @@
 </div>
 </div>
 </div>
-
 <!-- 2 -->
 <div class="col-md-6" style="padding: 10px;">
   <div style="border: 1px solid #f2f3ff;">
