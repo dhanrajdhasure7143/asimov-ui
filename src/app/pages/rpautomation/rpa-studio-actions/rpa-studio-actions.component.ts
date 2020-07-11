@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-
+import { RpaStudioTabsComponent } from '../rpa-studio-tabs/rpa-studio-tabs.component'
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
 
@@ -85,7 +85,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
     cronFlavor: "standard"
   }
-  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient) { 
+  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,private rpa_tabs:RpaStudioTabsComponent) { 
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
       'endTime' : [this.endTime, Validators.required],
@@ -122,7 +122,38 @@ export class RpaStudioActionsComponent implements OnInit {
   {
     this.childBotWorkspace.resetdata();
   }
+  delete()
+  {
+        Swal.fire({
+          title: 'Are you sure?',
+          text: "You won't be able to revert this!",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+        if (result.value) {
+          let response;
+          this.rest.getDeleteBot(this.savebotrespose.botId).subscribe(data=>{
+            response=data
+            if(response.status!=undefined)
+            {
+              Swal.fire({
+                position:'top-end',
+                icon:"success",
+                title:response.status,
+                showConfirmButton:false,
+                timer:2000})
+                this.rpa_tabs.closeTab(this.botState);
+            }
+          })
+          //this.nodes = this.nodes.filter((node): boolean => nodeId !== node.id);
+          //this.jsPlumbInstance.removeAllEndpoints(nodeId);
+        }
 
+      })
+    }
 
   
   saveBotFunAct() {
