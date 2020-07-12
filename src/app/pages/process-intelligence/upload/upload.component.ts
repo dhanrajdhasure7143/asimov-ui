@@ -51,7 +51,11 @@ export class UploadComponent implements OnInit {
     private rest:RestApiService, 
     private global: GlobalScript, 
     private hints:PiHints, 
-    private ngxXml2jsonService: NgxXml2jsonService,private location: Location) { }
+    private ngxXml2jsonService: NgxXml2jsonService) { 
+//       window.location.hash="/pages/processIntelligence/upload";
+// window.location.hash="/pages/processIntelligence/upload";//again because google chrome don't insert first hash into history
+// window.onhashchange=function(){window.location.hash="/pages/processIntelligence/upload";}
+    }
 
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});

@@ -25,6 +25,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import {DataTablesModule} from 'angular-datatables';
 import {MatOptionModule, MatSelectModule} from '@angular/material';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 
 
 @NgModule({
@@ -34,7 +35,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     DatadocumentComponent, 
     ProcessintelligenceComponent, 
     ProcessintelligencebpmnComponent,
-    PiflowchartComponent, 
+    PiflowchartComponent,
     FilterComponent,
     FlowchartComponent,
     SearchPipe,
@@ -55,7 +56,10 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxSpinnerModule,
     DataTablesModule,
     MatOptionModule,MatSelectModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BackButtonDisableModule.forRoot({
+      preserveScrollPosition: true
+    })
   ],
   providers:[PiHints]
 

@@ -200,8 +200,8 @@ export class PiflowchartComponent implements OnInit {
 
                 $(go.Shape, "RoundedRectangle", roundedRectangleParams,
                       { name: "countNode",
-                      width: 40, 
-                      height: 15, 
+                      width:50, 
+                      height: 15,
                       fill: "#0162cb",
                       alignment: go.Spot.BottomCenter, 
                       margin: 2,

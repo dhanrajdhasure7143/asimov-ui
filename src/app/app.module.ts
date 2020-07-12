@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { GlobalScript } from './shared/global-script';
 import { LoaderService } from './services/loader/loader.service';
 import { LoaderInterceptor } from './helpers/loader-interceptor.service';
+import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { LoaderInterceptor } from './helpers/loader-interceptor.service';
     ReactiveFormsModule,
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    NotifierModule
+    NotifierModule,
+    BackButtonDisableModule.forRoot()
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },

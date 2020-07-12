@@ -107,6 +107,10 @@ export class FlowchartComponent implements OnInit {
   startPoint:boolean=false;
   endPoint:boolean=false;
   isEndpoint_dropdwn:boolean=false;
+  performanceValue1:any;
+  performanceValue2:any;
+  performanceValue3:any;
+  timeRangeArray:any=[]
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -679,7 +683,7 @@ export class FlowchartComponent implements OnInit {
     return array.filter((a, b) => array.indexOf(a) === b)
    };
   keyExists(key, search) {
-    console.log('test',key, search)
+    // console.log('test',key, search)
     var existingObj = search.find(function (element) {
       return typeof element[key] !== 'undefined';
     });
@@ -709,12 +713,11 @@ export class FlowchartComponent implements OnInit {
 
   downloadSvg() {
     this.isdownloadsvg = true;
-    // console.log(this.isdownloadsvg);
   }
   svgValueEmitted(isSvg){
     setTimeout(()=> {
       this.isdownloadsvg=isSvg;
-  }, 1000);
+    }, 1000);
   }
   downloadPdf(){
     this.isdownloadpdf= true;
@@ -722,7 +725,7 @@ export class FlowchartComponent implements OnInit {
   pdfValueEmitted(isPdf){
     setTimeout(()=> {
       this.isdownloadpdf=isPdf
-  }, 1000);  
+    }, 1000);  
   }
 
   selectAllVariants() {
@@ -957,46 +960,13 @@ selectedMetric(selectedValue){
       this.model1=this.model1
       // this.model1[i].countOne=this.model1[i].toolCount[index]
     }
-
   }
   console.log("model",this.model1);
-
   this.model2 = this.flowchartDataOne(this.model1,index)
-  for(var j=0;j<this.model2.length;j++){
-    if(j==0 && this.model2[j].to>1 ){
-      let loc3=160
-    this.model2[j].curviness=loc3
-    }else{
-    if(this.model2[j].from ==-1||this.model2[j].from==-2){
-      if(this.model2[j].from==-1 && this.model2[j].to==0){
-        let loc3=0
-        this.model2[j].curviness=loc3
-      }else{
-      let loc3=-25*j
-    this.model2[j].curviness=loc3
-      }
-    }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
-      if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
-        let loc3=0
-        this.model2[j].curviness=loc3
-      }else{
-        let loc3=20*j
-        this.model2[j].curviness=loc3
-      }
-  }else if(this.model2[j].from+1==this.model2[j].to){
-    let loc3=0
-    this.model2[j].curviness=loc3
-  }else{
-      let loc3=30*j
-    this.model2[j].curviness=loc3
-    }
-  }
-}
-  
+  this.linkCurvinessGenerate();
 }
 flowchartDataOne(dataArray,index) {
-  // console.log('index',index);
-  
+  // console.log('index',index);  
   this.linkData = [];
   this.linkdataArray = [];
   this.nodeArray = dataArray;
@@ -1022,12 +992,10 @@ flowchartDataOne(dataArray,index) {
         if(index==5||index==6||index==7||index==8||index==9){
           obj['text'] = this.timeConversion(datalink[j].toolCount[index]);
         }else{
-        
           obj['text'] = datalink[j].toolCount[index];
           if(datalink[j].toolCount[index]>100){
             obj['highData']=true
           }
-
         }
         // let testedg=label+' --> '+datalink[j].linkNode
         // obj['textOne'] = testedg;
@@ -1332,14 +1300,32 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
         }
       }
     }
-    console.log("this.model1.length",this.fullgraph_model.length);
+    // console.log("this.model1.length",this.fullgraph_model.length);
     model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
     this.model1=model3
     this.nodeAlignment();
     console.log("this.model1",this.model1);
     this.model2 = this.flowchartData(this.model1);
-    this.linkCurvinessGenerate();
+    this.linkCurvinessGenerateOne();
   }
+  linkCurvinessGenerateOne(){
+    for(var j=0;j<this.model2.length;j++){
+      let loc3=20*j
+        this.model2[j].curviness=loc3
+    }
+  }
+  // nodeAlignmentOne(){
+  //   let loction=''
+  //   for(var i=0;i<this.model1.length;i++){
+  //     var test=Math.floor(100 + Math.random() * 900);
+
+  //     let loc1=test
+  //     let loc2=test
+  //     loction=loc1+' '+loc2;
+  //     this.model1[i].loc=loction
+
+  //   }
+  // }
   resetActivity(){
     this.activityValue=0;
     this.pathvalue=0;
@@ -1352,13 +1338,14 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
     this.isEndpoint_dropdwn=!this.isEndpoint_dropdwn
   }
   filterByEndpoints(){
+    this.model1=[];
+    this.model2=[];
     var endpointModel=[];
     var endpointModelOne=[];
-    // console.log("this.model1",this.model1);
+    console.log("this.model1",this.fullgraph_model);
     // endpointModel=this.flowchartData(this.model1)
     endpointModel=this.fullgraph_model
 // console.log('endpointModel',endpointModel[0]);
-this.model1=[]
 this.linkdataArray=[]
  if(this.startPoint==true&&this.endPoint==false){
       for(var i=1; i<endpointModel.length-1;i++){
@@ -1367,11 +1354,11 @@ this.linkdataArray=[]
           // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(endpointModel[i].toolCount[3]!=0){
           obj['from'] = -1;
-          obj['to'] = this.getFromKey(endpointModel[i].name);
+          obj['to'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
           endpointModelOne.push(endpointModel[i])
           obj['text'] = endpointModel[i].toolCount[3];
           obj["extraNode"] = 'true';
-          obj["curviness"] =40*i;
+          obj["curviness"] =60*i;
           this.linkdataArray.push(obj);
           }
         }
@@ -1390,12 +1377,12 @@ this.linkdataArray=[]
           var obj = {};
           // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(endpointModel[i].toolCount[4]!=0){
-            obj['from'] = this.getFromKey(this.nodeArray[i].name);
+            obj['from'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
             obj['to'] = -2;
           endpointModelOne.push(endpointModel[i])
           obj['text'] = endpointModel[i].toolCount[4];
           obj["extraNode"] = 'true';
-          obj["curviness"] =40*i;
+          obj["curviness"] =60*i;
           this.linkdataArray.push(obj);
           }
         }
@@ -1415,11 +1402,11 @@ this.linkdataArray=[]
           // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(endpointModel[i].toolCount[3]!=0){
           obj['from'] = -1;
-          obj['to'] = this.getFromKey(endpointModel[i].name);
+          obj['to'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
           endpointModelOne.push(endpointModel[i])
           obj['text'] = endpointModel[i].toolCount[3];
           obj["extraNode"] = 'true';
-          obj["curviness"] =40*i;
+          obj["curviness"] =60*i;
           this.linkdataArray.push(obj);
           }
         }
@@ -1427,12 +1414,14 @@ this.linkdataArray=[]
           var obj = {};
           // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(endpointModel[i].toolCount[4]!=0){
-            obj['from'] = this.getFromKey(this.nodeArray[i].name);
+            // console.log(endpointModel[i].name);
+            obj['from'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
             obj['to'] = -2;
           endpointModelOne.push(endpointModel[i])
+ 
           obj['text'] = endpointModel[i].toolCount[4];
           obj["extraNode"] = 'true';
-          obj["curviness"] =40*i;
+          obj["curviness"] =60*i;
           this.linkdataArray.push(obj);
           }
         }
@@ -1441,9 +1430,17 @@ this.linkdataArray=[]
       for(var j=0;j<endpointModelOne.length;j++){
         this.model1.push(endpointModelOne[j])
       }
-      this.nodeAlignment()
       this.model1.push(endpointModel[endpointModel.length-1])
+      this.nodeAlignment()
       this.model2=this.linkdataArray;
+      console.log("this.model2",this.model2);
+    }
+  }
+  getFromKeyOne(endpointModel,name) {
+    for (var i = 0; i < endpointModel.length; i++) {
+      if (name == endpointModel[i].name) {
+        return endpointModel[i].key;
+      }
     }
   }
   cancel(){
@@ -1458,5 +1455,128 @@ this.linkdataArray=[]
     this.resetActivity();
     this.startPoint=false;
     this.endPoint=false;
+  }
+
+  timeStampFilterOverlay(){
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
+    }
+  closePopup(){
+      var modal = document.getElementById('myModal');
+      modal.style.display="none";
+    }
+
+  onChangeTimeType(){
+  if (this.performanceValue2=="minutes") {
+    this.timeRangeArray=['0-100',"100-1000","1000-10000","10000 above"]
+  } else if (this.performanceValue2=="hours") {
+    this.timeRangeArray=['0-100',"100-500","500-1000","1000 above"]
+  } else if (this.performanceValue2=="days") {
+    this.timeRangeArray=['0-10',"10-100","100-200","200 above"]
+  }
+  }
+  filterByPerformance(){
+    console.log("this.perform",this.performanceValue1,this.performanceValue2,this.performanceValue3);
+    let index;
+    switch(this.performanceValue1){
+      case "totalDuration":
+          index=5;
+      break;
+      case "medianDuration":
+          index=6;
+      break;
+      case "meanDuration":
+          index=7;
+      break;
+      case "maxDuration":
+          index=8;
+      break;
+      case "minDuration":
+          index=9;
+      break;
+    }
+    for(var i=1;i<this.model1.length-1;i++){
+      if(index==5||index==6||index==7||index==8||index==9){
+        this.model1[i].count=this.timeConversionOne(this.model1[i].toolCount[index])
+      }
+    }
+    console.log("model",this.model1);
+    // var filterModel=this.flowchartDataTwo(this.model1,index)
+    // for(var j=0;j<filterModel.length;j++){
+    //   if(filterModel[j].text<10)
+    //   console.log("filterModel[j].",filterModel[j]);
+    // }
+    this.model2 = this.flowchartDataTwo(this.model1,index)
+    this.linkCurvinessGenerate();
+  }
+  flowchartDataTwo(dataArray,index) {
+    this.linkData = [];
+    this.linkdataArray = [];
+    this.nodeArray = dataArray;
+     var linkToolArray=[];
+    for (var i = 1; i < this.nodeArray.length-1; i++) {
+      // console.log('linkArray',this.nodeArray[i].linkArray);
+      var datalink = this.nodeArray[i].linkArray;
+      //  console.log('datalink',datalink);
+      var link=[]
+      var linktool=[]
+      var label = this.nodeArray[i].name;
+      
+      for(var j=0; j< datalink.length; j++){
+        var obj = {};
+          obj['from'] = this.getFromKey(label);
+          obj['to'] = this.getFromKey(datalink[j].linkNode);
+          if(index==5||index==6||index==7||index==8||index==9){
+            obj['text'] = this.timeConversionOne(datalink[j].toolCount[index]);
+          }else{
+            obj['text'] = datalink[j].toolCount[index];
+            if(datalink[j].toolCount[index]>100){
+              obj['highData']=true
+            }
+          }
+          obj['toolData']=datalink[j].tool
+           obj['toolDataCount']=datalink[j].toolCount
+          this.linkdataArray.push(obj);
+    }
+        if (this.nodeArray[i].tool.includes('Start Frequency')) {
+          var obj = {};
+          if(this.nodeArray[i].toolCount[3]!=0){
+            obj['from'] = -1;
+            obj['to'] = this.getFromKey(this.nodeArray[i].name);
+            // if(index==0||index==1){
+            // obj['text'] = this.nodeArray[i].toolCount[3];
+            // }
+            obj["extraNode"] = 'true';
+            this.linkdataArray.push(obj);
+          }  
+        }
+        if (this.nodeArray[i].tool.includes('End Frequency')) {
+          var obj = {};
+          if(this.nodeArray[i].toolCount[4]!=0){
+            obj['from'] = this.getFromKey(this.nodeArray[i].name);
+            obj['to'] = -2;
+            // if(index==0||index==1){
+            // obj['text'] = this.nodeArray[i].toolCount[4]
+            // }
+            obj["extraNode"] = 'true';
+          this.linkdataArray.push(obj);
+          }
+        }
+    }
+  console.log('this.linkdataArray',this.linkdataArray);
+    return this.linkdataArray;
+  }
+  timeConversionOne(millisec) {
+    var seconds:any = (millisec / 1000).toFixed(1);
+    var minutes:any = (millisec / (1000 * 60)).toFixed(1);
+    var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
+    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+    if (this.performanceValue2=="minutes") {
+        return minutes + " Min";
+    } else if (this.performanceValue2=="hours") {
+        return hours + " Hrs";
+    } else if (this.performanceValue2=="days") {
+        return days + " Days"
+    }
   }
 }

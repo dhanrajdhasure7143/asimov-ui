@@ -118,7 +118,7 @@
                           <hr>
                           <div class="activity_filter3">
                             <div class="activity_filter1" *ngFor="let eachNode of activity_list;let j=index;trackBy:loopTrackBy">
-                            <input id="test" type="checkbox" name="activity_filter" [value]="eachNode.name"> <span>{{eachNode.name}}</span><br>
+                            <input id="test" type="checkbox" name="activity_filter" [value]="eachNode.name" required> <span>{{eachNode.name}}</span><br>
                             </div>
                         </div>
                             <hr>
@@ -128,7 +128,7 @@
                     </div>
                 
                     <div class="col-sm-6">
-                    <div class="activity_selection border_bottom" (click)="endpointsDropDown()"> End Points <span class="caret"></span></div>
+                    <!-- <div class="activity_selection border_bottom" (click)="endpointsDropDown()"> End Points <span class="caret"></span></div>
                     <div class="col-sm-12 activity_selection2" *ngIf="isEndpoint_dropdwn">
                         <div class="col-sm-12"><button class='reset_btnOne' type='button' (click)="resetfilter()">reset</button></div>
                         <hr>
@@ -137,7 +137,8 @@
                             <hr>
                             <div class="col-sm-6 cancel_btn1"><button class="btn cancel_btn" (click)="cancelByEndpoints()">Cancel</button></div>
                             <div class="col-sm-6 apply_btn1"><button class="btn apply_btn" (click)="filterByEndpoints()">Apply</button></div>
-                        </div>
+                        </div> -->
+                        <button class="btn" (click)="timeStampFilterOverlay()">Timestamp Filtter</button>
                     </div>
                     
                 
@@ -152,7 +153,7 @@
         </div>
         <!-- <div> -->
                 <div class="col-md-2 row">
-                        <div class="col-sm-6  dropdown">
+                        <div class="col-sm-6 dropdown downloadIco">
                             <button title="Download" data-toggle="dropdown" class="down_btn dropdown-toggle"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
                     <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
                         
@@ -333,3 +334,47 @@
 <!-- <app-filter [model1]='model1' [reports]='reports' ></app-filter> -->
 
 
+<div id="myModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" (click)="closePopup();">&times;</span>
+        <h4>Time stamp</h4>
+      </div>
+    <div class="modal-body">
+        <form autocomplete="off" #timeStapForm="ngForm"> 
+          <div class="container m-contanier">
+            <label for="performance_metrics"><b>Select</b></label>
+              <select name="performance_metrics" class="form-control border_bottom" [(ngModel)]="performanceValue1" required>
+                  <option value="null" hidden disabled>Select</option>
+                  <option value="totalDuration">Total Duration</option>
+                  <option value="medianDuration">Median Duration</option>
+                  <option value="meanDuration">Mean Duration</option>
+                  <option value="maxDuration">Max Duration</option>
+                  <option value="minDuration">Min Duration</option>
+              </select>
+              <div>
+                <label for="timeStamp"><b>Select Type</b></label>
+                <select name="timeStamp" class="form-control border_bottom" (change)="onChangeTimeType()" [(ngModel)]="performanceValue2" required>
+                    <option value="null" hidden disabled>Select</option>
+                    <option value="days">Days</option>
+                    <option value="hours">Hours</option>
+                    <option value="minutes">Minutes</option>
+                </select>
+              </div>
+              <div>
+                <label for="timeRange"><b>Select Time range</b></label>
+                <select name="timeRange" class="form-control border_bottom" [(ngModel)]="performanceValue3" required>
+                    <option value="null" hidden disabled>Select</option>
+                    <option value="undefined" hidden disabled>Select</option>
+                    <option value=" " hidden disabled>Select</option>
+                    <option *ngFor="let each of timeRangeArray;let i=index;trackBy:loopTrackBy" [value]="each">{{each}}</option>
+                </select>
+              </div>
+              <div class="clearfix m-btn">
+                <button type="button" class="btn btn-primary" (click)="filterByPerformance()" [disabled]="timeStapForm.invalid">Apply</button>
+              </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
