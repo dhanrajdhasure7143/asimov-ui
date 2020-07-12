@@ -163,3 +163,12 @@ text-align: left !important;
 padding: 11px !important;
 margin: 0px !important;
 }
+
+.time{
+  font-size:12px;
+}
+
+.bt-padmrar{
+  padding:0px;
+  margin:0px;
+}

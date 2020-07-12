@@ -425,7 +425,7 @@ getEnvironmentlist() {
       document.getElementById("scheduler").style.display="block";
       this.hiddenSchedlerPopUp = true
       let data:any
-      this.rest.scheduleList(data).subscribe((data)=> this.scheduleResponse(data))
+      this.rest.scheduleList(this.savebotrespose.botId).subscribe((data)=> this.scheduleResponse(data))
     }
   
     scheduleResponse(data){
@@ -456,6 +456,7 @@ getEnvironmentlist() {
     timer:2000
           })
     // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
+    document.getElementById("scheduler").style.display="none";
         }
     
     
