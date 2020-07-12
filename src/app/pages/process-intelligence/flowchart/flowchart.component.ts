@@ -1310,8 +1310,13 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
   }
   linkCurvinessGenerateOne(){
     for(var j=0;j<this.model2.length;j++){
-      let loc3=20*j
+      if(j==0){
+        let loc3=140
         this.model2[j].curviness=loc3
+      }else{
+      let loc3=25*j
+        this.model2[j].curviness=loc3
+      }
     }
   }
   // nodeAlignmentOne(){
