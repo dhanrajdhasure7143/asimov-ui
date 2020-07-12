@@ -6,13 +6,6 @@
     cursor: pointer;
     height: 200px;
 }
-#launch_btn{
-    margin-top: 10em;
-    margin-left:40em;
-    background-color: #0061cf;
-    padding:5px 20px;
-    border-radius: 15px
-}
 .dataCardBox{
     width:18%;
 }

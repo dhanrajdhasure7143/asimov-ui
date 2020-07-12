@@ -56,9 +56,9 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams[this.index].xpandStatus=false;
   }
 
-  openDiagram(binaryXMLContent, i){
+  openDiagram(binaryXMLContent, bpmnModelId){
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-    this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: i }});
+    this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
   }
 
   getDiagram(byteBpmn,i){

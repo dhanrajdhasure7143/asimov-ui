@@ -138,6 +138,19 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/rpa-service/getall-predefinedbots")/*jitendra: need to replace URL*/
   }
 
+
+
+  getbotlist(botType, botDepartment)
+  {
+    return this.http.get("/rpa-service/get-all-bots/"+0+"/"+botDepartment+"/"+botType)
+  }
+
+
+  getbotdata(botid)
+  {
+    return this.http.get("/rpa-service/get-bot/"+botid);
+  }
+
   scheduleList(data:any){
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+42,data)
   }
@@ -220,5 +233,28 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   { 
     return this.http.get("/rpa-service/process-statistics")
   }
+
+  getBotStatistics()
+  {
+    return this.http.get("/rpa-service/bot-statistics")
+  }
+  
+  getAllActiveBots()
+  {
+    return this.http.get("/rpa-service/get-all-bots")
+  }
+
+  checkbotname(botname)
+  {
+    let data="";
+    return this.http.post("/rpa-service/check-bot/0?botName="+botname,data)
+  }
+  getDeleteBot(botId)
+  {
+    
+    return this.http.post("/rpa-service/delete-bot?botId="+botId,"")
+  }
+
+
 }
 

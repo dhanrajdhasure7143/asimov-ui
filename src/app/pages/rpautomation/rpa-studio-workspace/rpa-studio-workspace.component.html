@@ -1,16 +1,21 @@
-<div class="col-md-10 main">
+<div  #screen id="screen"  class="col-md-10 main">
+  <div class="dndDropzoneDisabled" *ngIf="disable">
+    Designer Disabled <span>To make changes click edit</span>
+  </div>
     <div #content id="content">
-      <div class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)" (click)="closemenu()">
+      <div class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
         <ng-container *ngFor="let node of nodes; let i = index">
           <div id="{{node.id}}"  class="dndDropzone" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i)"
           [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
-            <div class="connector-name">{{node.name}} </div>
             <span class="node-delete" (click)="deletenode(node)">x</span>
+            <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
+            <div class="connector-name" *ngIf="node.selectedNodeTask!=''">{{node.selectedNodeTask}}</div>
+            
             <div *ngIf ="selectedNode.id==node.id && optionsVisible" class="node_tooltip">
               <nav  id="context-menu" class="context-menu contextmenu">
                 <div class="context-menu1">
                   <div class="context-menu__item" *ngFor="let menu of stud">
-                    <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu)"
+                    <a class="context-menu__link" id="{{menu.name}}" (click)="callFunction(menu,node)"
                      data-action="View">{{menu.name}}</a>
                   </div>
                 </div>
@@ -20,12 +25,10 @@
         </ng-container>
       </div>
       </div>
-  <div class="download">
-    <button type="button"aria-hidden="true" placement="bottom"(click)="downloadPDF()" id="donwloadpdf">
-      <img src="..\assets\downloadimage.svg">
-    </button>
-  </div>
 </div>
+
+
+
 
     <div class="status-zoom" id="zoominzoomout">
       <div class="row">
@@ -35,6 +38,23 @@
     <div class="row">
       <button class="btn zoomout" (click)="zoomout($event)"><i class="fa fa-minus" aria-hidden="true"></i></button></div>
     </div>
+
+    <div class="download">
+  <button type="button" placement="bottom"
+  id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <img style="filter: none; width: 50px;" src="../../../../assets/downloadimage.svg">
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <div><a class="dropdown-item" (click)="downloadJpeg()">JPG</a></div>
+    <div><a class="dropdown-item" (click)="downloadPng()">PNG</a></div>
+    <div><a class="dropdown-item" (click)="downloadPdf()">PDF</a></div>
+  </div>
+</div>
+
+<div style="z-index: -1;" id="download">
+  <p #canvas></p>
+  <a #downloadLink></a>
+</div>
 
   <div *ngIf="hiddenPopUp" class="pop-up conainer">
     <div class="card">

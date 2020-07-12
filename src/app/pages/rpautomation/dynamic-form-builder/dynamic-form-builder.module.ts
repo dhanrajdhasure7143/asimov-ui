@@ -7,6 +7,7 @@ import { CheckBoxComponent } from './atoms/checkbox';
 import { DropDownComponent } from './atoms/dropdown';
 import { RadioComponent } from './atoms/radio';
 import { TextBoxComponent } from './atoms/textbox';
+import { FileComponent } from './atoms/file.component';
 
 
 
@@ -17,7 +18,8 @@ import { TextBoxComponent } from './atoms/textbox';
     CheckBoxComponent,
     DropDownComponent,
     RadioComponent,
-    TextBoxComponent
+    TextBoxComponent,
+    FileComponent
   ],
   imports: [
     CommonModule,

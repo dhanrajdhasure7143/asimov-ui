@@ -138,7 +138,7 @@
                             <div class="col-sm-6 cancel_btn1"><button class="btn cancel_btn" (click)="cancelByEndpoints()">Cancel</button></div>
                             <div class="col-sm-6 apply_btn1"><button class="btn apply_btn" (click)="filterByEndpoints()">Apply</button></div>
                         </div> -->
-                        <button class="btn" (click)="timeStampFilterOverlay()">Timestamp Filtter</button>
+                        <!-- <button class="btn" (click)="timeStampFilterOverlay()">Timestamp Filtter</button> -->
                     </div>
                     
                 
@@ -155,6 +155,8 @@
                 <div class="col-md-2 row">
                         <div class="col-sm-6 dropdown downloadIco">
                             <button title="Download" data-toggle="dropdown" class="down_btn dropdown-toggle"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
+                        <!-- <div class="col-sm-6  dropdown">
+                            <button title="Download" data-toggle="dropdown" class="action_btn dropdown-toggle"><img class="action-btn" src="..\assets\images\PI\download_icon.svg"></button> -->
                     <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
                         
                             <!-- <p class="" (click)="downloadPdf()">PDF</p> -->
@@ -163,8 +165,8 @@
                         </div>
                         </div>
                         <div class='col-sm-6'>
-                            <button (click)="playAnimation()" class="play_btn stopbtn" title="Play" *ngIf="!isplay"><i class="fa fa-play"></i></button>
-                            <button (click)="playAnimation()" class="play_btn stopbtn" title="Stop" *ngIf="isplay"><i class="fa fa-stop"></i></button>
+                            <button (click)="playAnimation()" class="action-btn" title="Play" *ngIf="!isplay"><i class="fa fa-play"></i></button>
+                            <button (click)="playAnimation()" class="action-btn" title="Stop" *ngIf="isplay"><i class="fa fa-stop"></i></button>
                         </div>
                                 <!-- <div class="col-sm-6">
                                 <p class="download_label">Download</p>
@@ -178,15 +180,15 @@
         <div class="col-sm-3">
                 <div class='row'>
                             <div class="col-sm-6">
-                                    <button class="kpi_btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button>
+                                    <button class="btn btn-thin eiap-btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <button class="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
+                                    <button class="btn btn-primary btn-thin eiap-btn" (click)="generateBpmn()">Generate BPMN</button>
                                 </div>
                         </div>
         </div>
         <div class="col-sm-2 ">
-                <button class="pull-right varaintlist_btn" (click)="openNav()"> &#9776; Variant List</button>
+                <button class="btn btn-primary btn-thin eiap-btn pull-right" (click)="openNav()"> &#9776; Variant List</button>
             </div>
     <!-- </div> -->
 </div>

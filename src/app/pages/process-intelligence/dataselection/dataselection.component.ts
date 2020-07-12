@@ -31,10 +31,10 @@ export class DataselectionComponent implements OnInit {
   headerId:any;
   headerArray:any[]=[];
   name:any;
-  categoriesList:any=[];
-  public categoryName:any;
-  public othercategory:any;
-  isotherCategory:boolean=false;
+  // categoriesList:any=[];
+  // public categoryName:any;
+  // public othercategory:any;
+  // isotherCategory:boolean=false;
   isgenerate:boolean=false;
   isUploadFileName: any;
   cathead1: any;
@@ -46,8 +46,9 @@ export class DataselectionComponent implements OnInit {
   cathead7: any;
   headertypeArray:any=[];
   processId:any;
-  processName:any;
+  // processName:any;
   p=1;
+  // processName:any;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
@@ -90,24 +91,12 @@ export class DataselectionComponent implements OnInit {
     
 
   }
-  generatepg(){
-    this.getCategoriesList();
+  slideUp(){
     var modal = document.getElementById('myModal');
     modal.style.display="block";
     // this.router.navigate(['/pages/processIntelligence/flowChart']);
     }
-    generateGraph(){
-      if(this.categoryName =='other'){
-        let otherCategory={
-        "categoryId": 0,
-        "categoryName": this.othercategory
-        }
-      this.rest.addCategory(otherCategory).subscribe(res=>{
-        // console.log('addCategoryResponse',res)   
-      })
-    }
-    
-
+    generateGraph(e){
 //             const test=[{"Order ID": "caseId"},
 //     {"Start Timestamp": "Start Timestamp"},
 //   {"End Timestamp": "End Timestamp"},
@@ -162,9 +151,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     }  
   }
   // console.log("renamesObjOne",renamesObjOne);
-  if(this.categoryName =='other'){
-    this.categoryName=this.othercategory
-  }
       var date=new Date()
       var tenantId="abc456789"
   this.rest.fileName.subscribe(res => {
@@ -179,8 +165,8 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "input.path": "/var/kafka",
         "input.file.pattern": this.isUploadFileName,
         "error.path": "/var/kafka",
-        //  "topic": "tytyconnector-spooldir-"+this.processId,
-         "topic": "topqconnector-spooldir-"+this.processId,
+         "topic": "tytyconnector-spooldir-"+this.processId,
+        //  "topic": "topqconnector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",
@@ -211,7 +197,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "transforms.InsertField.static.value": this.processId+"-p"+this.processId
       }   }
      
-      this.rest.saveConnectorConfig(connectorBody,this.categoryName,this.processId,this.processName).subscribe(res=>{
+      this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
         // var piId=connectorBody.config["transforms.InsertField.static.value"]
         // localStorage.setItem('piId',this.processId)
         // const piid={"piId":this.processId}
@@ -351,25 +337,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         return each_cell.indexOf(_self.searchTerm)>-1;
       })
     })
-  }
-  closePopup(){
-    var modal = document.getElementById('myModal');
-    modal.style.display="none";
-    }
-  
-  getCategoriesList(){
-    this.rest.getCategoriesList().subscribe(res=>{this.categoriesList=res
-    // console.log('list',this.categoriesList.data)
-  })
-  }
-
-  onchangeCategories(categoryName){
-    if(categoryName =='other'){
-      this.isotherCategory=true;
-    }else{
-      this.isotherCategory=false;
-    }
-  }
+  }  
   resetcaseId(){
     // var tagDiv=document.getElementsByClassName[0]('select_tag');
     // tagDiv.style.display='none';

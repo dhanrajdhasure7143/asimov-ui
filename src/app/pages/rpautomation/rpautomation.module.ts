@@ -25,6 +25,8 @@ import { FilterPipeModule } from 'ngx-filter-pipe';
 import {RpaEnvHints} from "./model/rpa-environments-module-hints";
 import {RpaWorkspace} from "./model/rpa-workspaceslist-module-hints";
 import { NgxPasswordToggleModule } from 'ngx-password-toggle';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 @NgModule({
   declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent],
   imports: [
@@ -43,7 +45,8 @@ import { NgxPasswordToggleModule } from 'ngx-password-toggle';
     FormsModule,
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    SharedModule
   ],
   providers: [RpaHints,RpaDragHints,RpaEnvHints,RpaWorkspace]
 })

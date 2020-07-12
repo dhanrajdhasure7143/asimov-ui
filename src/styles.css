@@ -9,10 +9,6 @@ body, html {
   font-family: 'Roboto';
   user-select: none;
 }
-button:disabled{
-  cursor: no-drop;
-  background-color: grey;
-}
 .breadcrumb{
     background-color: white !important;
 }
@@ -96,7 +92,7 @@ button:disabled{
 /* notifications to right */
 notifier-notification{
   right: 12px;
-  left: calc(100% - 350px) !important;
+  left: calc(100% - 325px) !important;
 }
 /* remove dropzone dotted border */
 ngx-dropzone{
@@ -136,6 +132,58 @@ div[class^='diagram_container'] .djs-container svg{
   background-color: #bebcbc66;
 }
 /*spinner styles*/
+/* pagination styles */
+.ngx-pagination{
+  padding: 0;
+}
+/* pagination styles */
+
+/* button styles */
+.header_addon{
+  position: relative;
+  top: -55px;
+}
+.btn{
+  margin-right: 5px;
+}
+.btn-thin{
+  height: 25px;
+  padding: 2px 20px !important;
+  font-size: 12px !important;
+  border-color:#0062cf !important;
+}
+.btn-primary{
+  background-color:#0062cf !important;
+  border-color:#0062cf !important;
+  outline: none;
+}
+.btn:focus, .btn:active{
+  outline: none;
+}
+.btn:hover{
+  font-weight: 700 !important;
+}
+button:disabled{
+  cursor: no-drop;
+  background-color: grey;
+}
+.eiap-btn{
+  border-radius: 20px !important;
+  margin-left: 13px;
+  margin-top: 5px;
+  min-width: 120px;
+}
+.action-btn{
+  width: 30px;
+  height: 30px;
+  color:#0162cb;
+  border: 1px solid lightgray !important;
+  cursor: pointer;
+  outline: none;
+  background-color: white;
+  box-shadow: none !important;
+}
+/* button styles */
 /* .tabscomp .nav-link{
   padding-left: 50px !important;
 } */

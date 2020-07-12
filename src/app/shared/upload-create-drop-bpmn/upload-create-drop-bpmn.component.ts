@@ -1,18 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { RestApiService } from '../../pages/services/rest-api.service';
-//import { NgxSpinnerService } from "ngx-spinner"; 
 import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.service';
 import { GlobalScript } from '../global-script';
+import { UUID } from 'angular2-uuid';
 import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-model';
-import { UploadProcessModelComponent } from 'src/app/pages/business-process/upload-process-model/upload-process-model.component';
 
 @Component({
   selector: 'app-upload-create-drop-bpmn',
   templateUrl: './upload-create-drop-bpmn.component.html',
-  styleUrls: ['./upload-create-drop-bpmn.component.css'],
-  providers: [UploadProcessModelComponent]
+  styleUrls: ['./upload-create-drop-bpmn.component.css']
 })
 export class UploadCreateDropBpmnComponent implements OnInit {
   bpmnModeler:any;
@@ -24,26 +21,19 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   hideEditor:boolean=true;
   create_editor:boolean=true;
   counter:number = 0;
-  bpmnProcessName;
-  categoryName;
-  othercategory;
-  isotherCategory:boolean=false;
-  categoriesList:any=[];
-  randomId: number;
+  randomId: string;
   bpmnfile: any;
   uploaded_file:File;
 
+  @Output() update = new EventEmitter<any>()
+
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, 
-    private global: GlobalScript, private rest:RestApiService, private uploadProcessModel:UploadProcessModelComponent) { }
+    private global: GlobalScript, private rest:RestApiService) { }
 
   ngOnInit() {
-    this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
+    
   }
 
-  loopTrackBy(index, term){
-    return index;
-  }
-  
   onSelect(e){
     this.slideUp();
     this.hideEditor=false;
@@ -57,52 +47,25 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     }
   }
 
-  slideDown(){
-    this.uploaded_file = null;
-    var modal = document.getElementById('myModal');
-    modal.style.display="none";
-  }
-  
   slideUp(){
-    this.categoryName = "";
-    this.bpmnProcessName = "";
     this.uploaded_file = null;
     var modal = document.getElementById('myModal');
     modal.style.display="block";
   }
 
-  onchangeCategories(categoryName){
-    if(categoryName =='other'){
-      this.isotherCategory=true;
-    }else{
-      this.isotherCategory=false;
-    }
-  }
-
-  saveCategory(){
-    if(this.categoryName =='other'){
-      let otherCategory={
-        "categoryId": 0,
-        "categoryName": this.othercategory
-      }
-      this.rest.addCategory(otherCategory).subscribe(res=>{})
-    }
-  }
-
-  uploadCreateBpmn(){
-    this.randomId = Math.floor(Math.random()*999999);//Values get repeated
-    this.saveCategory();
+  uploadCreateBpmn(e){
+    this.randomId = UUID.UUID();
+    //this.randomId = Math.floor(Math.random()*999999);//Values get repeated
     this.create_editor=false;
-    this.bpmnModel.bpmnProcessName=this.bpmnProcessName;
+    this.bpmnModel.bpmnProcessName=e.processName;
     this.bpmnModel.bpmnModelId=this.randomId;
     this.bpmnservice.setSelectedBPMNModelId(this.randomId);
-    this.bpmnModel.category=this.categoryName;
+    this.bpmnModel.category=e.categoryName;
     if(this.uploaded_file){
       var myReader: FileReader = new FileReader();
       myReader.onloadend = (ev) => {
         let fileString:string = myReader.result.toString();
         let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
-        this.slideDown();
         if( this.router.url.indexOf("uploadProcessModel") > -1 ){
           this.bpmnservice.changeConfNav(true);
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
@@ -132,7 +95,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       let isBPSHome = this.router.url == "/pages/businessProcess/home";
       if(!isBPSHome){
         this.bpmnservice.changeConfNav(true);
-        this.uploadProcessModel.getUserBpmnList();
+        this.update.emit(true);
+        // this.uploadProcessModel.getUserBpmnList();
         // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
       }else{
         if(target == "create"){
