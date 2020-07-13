@@ -11,10 +11,15 @@ export class BackendURLInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // this.setLocalStorage(req);
         //authentication service logic - post integration with AIOTAL
+        
+    var token=localStorage.getItem('accessToken');
+   // var encryptToken=at(token.accessToken)
+    //var encryptrefreshToken=btoa(token.refreshToken);
+    
         req = req.clone({
             url : this.getRequestUrl(req),
             body: req.body,
-            headers:  new HttpHeaders({'Authorization': 'Bearer '+localStorage.getItem("accessToken")})
+            headers:  new HttpHeaders({'Authorization': 'Bearer '+token})
         });
         return next.handle(req);
     }

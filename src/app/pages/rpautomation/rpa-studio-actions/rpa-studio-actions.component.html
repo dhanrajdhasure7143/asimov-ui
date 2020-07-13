@@ -222,7 +222,7 @@
             here...</cron-editor>
             <!-- date start -->
             <div class="col-md-12 row">
-            <div class="col-md-3 form-group">
+            <div class="col-md-2 form-group" style="margin-left:0px;margin-top:15px;">
               <div class="input-group">
                 <label for="alertTo">From Date</label>
               </div>
@@ -232,13 +232,13 @@
                 [maxDate]="endDate" ngbDatepicker #d1="ngbDatepicker">
               </div>
             </div>
-              <div class="col-md-3">
+              <div class="col-md-2">
                 <form [formGroup]="form">
-                <ngb-timepicker class="time" [(ngModel)]="startTime" formControlName="startTime"></ngb-timepicker>
+                <ngb-timepicker class="time btn-padmrar" [(ngModel)]="startTime" formControlName="startTime"></ngb-timepicker>
               </form>
               <!-- <p>Result : {{form.value | json}}</p> -->
             </div>
-              <div class="col-md-3 form-group">
+              <div class="col-md-2 form-group" style="margin-left:0px;margin-top:15px;">
                 <div class="input-group">
                 <label for="alertTo">To Date</label>
               </div>
@@ -256,9 +256,9 @@
                       #d2="ngbDatepicker">
               </div>
              </div>
-             <div class="col-md-3">
+             <div class="col-md-2">
               <form [formGroup]="form">
-              <ngb-timepicker class="time" [(ngModel)]="endTime" formControlName="endTime"></ngb-timepicker>
+              <ngb-timepicker  class="time btn-padmrar" [(ngModel)]="endTime" formControlName="endTime"></ngb-timepicker>
             </form>
             <!-- <p>Result : {{form.value | json}}</p> -->
           </div>
