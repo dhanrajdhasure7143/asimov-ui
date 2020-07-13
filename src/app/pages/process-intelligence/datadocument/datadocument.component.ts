@@ -56,10 +56,12 @@ export class DatadocumentComponent implements OnInit {
         var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
+       
         this.headerData = this.headerData;
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
         this.fileData = this.fileData.slice(0, this.fileData.length-1);
+        
         this.fileData = this.fileData;
         for (var f = 0; f < this.headerData.length; f++) {
          
@@ -195,11 +197,17 @@ export class DatadocumentComponent implements OnInit {
       }
     
       if (!isInvalid) {
-        if (this.step_id == this.headerData.length) {
+        // if (this.step_id == this.headerData.length-1) {
+        //   this.isValidPiData = true;
+        // } else {
+        //   this.step_id = this.step_id + 1;
+        // }
+
+        if (this.step_id == 5) {
           this.isValidPiData = true;
-        } else {
-          this.step_id = this.step_id + 1;
         }
+          this.step_id = this.step_id + 1;
+        
         this.headerData[index] = this.headerName;
        // this.headerName = this.headerData[hdr_ar_index + 1];
       }

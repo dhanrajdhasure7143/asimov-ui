@@ -23,7 +23,7 @@ export class DataselectionComponent implements OnInit {
   selectedRow: any;
   case_id:any;
   step_id:number;
-  headerName: any='';
+  headerName: any='caseID';
   bkp_headerData;
   searchTerm:string;
   id:any=[];
@@ -265,6 +265,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         this.headerArray.push(obj)
         this.headerName = 'caseID';
         this.selected=v;
+       // this.step_id = this.step_id + 1;
         // console.log(this.selected)
         // this.global.notify(this.headerName, "success");
         for(var x = 0;x < this.fileData.length;x++){
@@ -280,7 +281,8 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     }else if(this.id.length == 2){
       this.selected=v;
       this.headerName='Activity';
-      this.name=v
+      this.name=v;
+      this.step_id = this.step_id + 1;
       obj[this.name]=v;
     this.headerArray.push(obj)
       for(var x = 0;x < this.fileData.length;x++){
@@ -292,6 +294,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     else{
       this.headerName = v.trim();
       this.selected=v;
+      this.step_id = this.step_id + 1;
       // if(v=='Start Timestamp'){
       //   v='Start Time'
       // }
@@ -319,6 +322,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     }
   }
   console.log("id",this.id);
+ 
   
     }
 
@@ -341,11 +345,12 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
   resetcaseId(){
     // var tagDiv=document.getElementsByClassName[0]('select_tag');
     // tagDiv.style.display='none';
+    this.step_id = 1;
     this.validCells = [];
     this.invalidCells = [];
     this.headerArray=[];
     this.id=[];
-    this.headerName=''
+    this.headerName='caseID'
     this.selected=''
     this.isgenerate=false;
   }
