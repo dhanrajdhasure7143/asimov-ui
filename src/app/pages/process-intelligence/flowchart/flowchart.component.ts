@@ -69,7 +69,7 @@ export class FlowchartComponent implements OnInit {
     floor: 0,
     ceil: 1,
     // translate: (value: number): string => `${value}%`,
-    translate: (value: number): string => `${value}`,
+    translate: (value: number): string => `${value*100}`,
     hideLimitLabels: false,
     hidePointerLabels: false,
     vertical: true,
