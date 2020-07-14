@@ -105,7 +105,7 @@
         <div class='col-sm-3 row'>
             <div class="col-sm-6 activity_selection border_bottom" (click)="activityDropDown()">Activity Selection<span class="caret"></span></div>
             
-            <div class="activity_selection1 col-sm-8" *ngIf="isActivity_dropdwn">
+            <div class="activity_selection1 col-sm-8" [hidden]="!isActivity_dropdwn">
                     <form action="" #activityFilter="ngForm">
                    <div class="col-sm-12"><button class='reset_btn' type='reset' (click)="resetActivity()">reset</button></div>
                       <!-- <mat-form-field>
@@ -118,7 +118,7 @@
                           <hr>
                           <div class="activity_filter3">
                             <div class="activity_filter1" *ngFor="let eachNode of activity_list;let j=index;trackBy:loopTrackBy">
-                            <input id="test" type="checkbox" name="activity_filter" [value]="eachNode.name" required> <span>{{eachNode.name}}</span><br>
+                            <input type="checkbox" id="activity_node" name="activity_filter" [value]="eachNode.name" required> <span>{{eachNode.name}}</span><br>
                             </div>
                         </div>
                             <hr>
@@ -159,9 +159,10 @@
                             <button title="Download" data-toggle="dropdown" class="action_btn dropdown-toggle"><img class="action-btn" src="..\assets\images\PI\download_icon.svg"></button> -->
                     <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
                         
-                            <!-- <p class="" (click)="downloadPdf()">PDF</p> -->
-                            <p class="" (click)="downloadSvg()">SVG</p>
-                       
+                        <p class="" (click)="downloadjpeg()"><i class="far fa-file-image"></i><span>JPEG</span></p>
+                        <p class="" (click)="downloadpng()"><i class="far fa-file-image"></i><span>PNG</span></p>    
+                        <p class="" (click)="downloadPdf()"><i class="far fa-file-pdf"></i><span>PDF</span></p>
+                        <p class="" (click)="downloadSvg()"><i class="fas fa-file-image"></i><span>SVG</span></p>
                         </div>
                         </div>
                         <div class='col-sm-6'>
@@ -230,7 +231,7 @@
                 </div>
             </div>
             <!-- <div *ngIf="!isNodata" class="nodata_slider"><h1>No data found</h1></div> -->
-        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"></app-piflowchart>
+        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadJpeg]="isdownloadJpeg" [isdownloadPng]="isdownloadPng" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"(isjpeg)="jpegValueEmitted($event)"(ispng)="pngValueEmitted($event)"></app-piflowchart>
     </div>
     <div class='col-md-1'>
         <div class="path_slider1 pull-right">

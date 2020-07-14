@@ -57,6 +57,9 @@ export class FlowchartComponent implements OnInit {
   public caselength: number;
   public isdownloadsvg: boolean = false;
   public isdownloadpdf: boolean = false;
+  public isdownloadJpeg: boolean = false;
+  public isdownloadPng: boolean = false;
+
   public isDefaultData: boolean = true;
   public nodeArray: any[];
   public linkdata: any;
@@ -727,7 +730,22 @@ export class FlowchartComponent implements OnInit {
       this.isdownloadpdf=isPdf
     }, 1000);  
   }
-
+  downloadjpeg(){
+    this.isdownloadJpeg= true;
+  }
+  jpegValueEmitted(isJpeg){
+    setTimeout(()=> {
+      this.isdownloadJpeg=isJpeg
+    }, 1000);  
+  }  
+  downloadpng(){
+    this.isdownloadPng= true;
+  }
+  pngValueEmitted(isPng){
+    setTimeout(()=> {
+      this.isdownloadPng=isPng
+    }, 1000);  
+  }
   selectAllVariants() {
     this.activity_value=[];
     this.activityValue=0;
@@ -1307,6 +1325,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
     console.log("this.model1",this.model1);
     this.model2 = this.flowchartData(this.model1);
     this.linkCurvinessGenerateOne();
+    this.isActivity_dropdwn=false;
   }
   linkCurvinessGenerateOne(){
     for(var j=0;j<this.model2.length;j++){
