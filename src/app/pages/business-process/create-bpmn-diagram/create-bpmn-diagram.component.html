@@ -30,11 +30,11 @@
         <div class="row btn_row"> 
             <button class="left" id="download" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
             <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Submit for Approval</button>
-            <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'" >
+            <!-- <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'" >
                 <ngx-dropzone-label>
                     <button class="btn btn-primary eiap-btn">Upload Again</button>
                 </ngx-dropzone-label>
-            </ngx-dropzone>
+            </ngx-dropzone> -->
             <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)">Save Process</button>
             <button class="right btn btn-primary eiap-btn"  id="automate" (click)="automate()">Automate</button><!--[disabled]="!diplayApproveBtn" -->
         </div>
@@ -42,7 +42,7 @@
             <p style="color: white">Auto Saving... </p>  
         </ngx-spinner>
     </div>
-    <process-category-overlay headerTitle="BPMN Details" (proceed)="uploadAgainBpmn($event)"></process-category-overlay>
+    <!-- <process-category-overlay headerTitle="BPMN Details" (proceed)="uploadAgainBpmn($event)"></process-category-overlay> -->
     <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
     <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
     </div></div>

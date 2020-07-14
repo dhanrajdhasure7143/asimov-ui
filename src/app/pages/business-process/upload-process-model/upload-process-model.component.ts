@@ -96,9 +96,11 @@ export class UploadProcessModelComponent implements OnInit {
 
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
+      if(each_bpmn.bpmnModelId && this.selected_modelId){
       if(each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()){
         this.selected_notation = i;
       }
+    }
     })
    }
    async getApproverList(){
@@ -259,14 +261,14 @@ export class UploadProcessModelComponent implements OnInit {
     myReader.onloadend = (ev) => {
       this.isLoading = true;
       let fileString:string = myReader.result.toString();
-      let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
-      this.bpmnservice.uploadBpmn(encrypted_bpmn);//is it needed? similary storing process name, category
-      this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
-      this.bpmnModel.bpmnProcessName=e.processName;
-      this.bpmnModel.bpmnModelId=this.randomId;
-      this.bpmnservice.setSelectedBPMNModelId(this.randomId);
-      this.bpmnModel.category=e.categoryName;
-      this.initialSave(this.bpmnModel);
+      // let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
+      // this.bpmnservice.uploadBpmn(encrypted_bpmn);//is it needed? similary storing process name, category
+      // this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
+      // this.bpmnModel.bpmnProcessName=e.processName;
+      // this.bpmnModel.bpmnModelId=this.randomId;
+      // this.bpmnservice.setSelectedBPMNModelId(this.randomId);
+      // this.bpmnModel.category=e.categoryName;
+      //this.initialSave(this.bpmnModel);
       this.bpmnModeler.importXML(fileString, function(err){
         _self.oldXml = fileString.trim();
         _self.newXml = fileString.trim();
@@ -274,7 +276,7 @@ export class UploadProcessModelComponent implements OnInit {
       });
       // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
     }
-    myReader.readAsText(this.uploadedFile);
+    myReader.readAsText(e.addedFiles[0]);
   }
 
   initBpmnModeler(){
@@ -474,9 +476,11 @@ export class UploadProcessModelComponent implements OnInit {
 
   slideUp(e){
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
-      var modal = document.getElementById('myModal');
-      modal.style.display="block";
-      this.uploadedFile = e.addedFiles[0];
+      // var modal = document.getElementById('myModal');
+      // modal.style.display="block";
+     // this.uploadedFile = e.addedFiles[0];
+      this.uploadAgainBpmn(e);
+
     }else{
       this.uploadedFile = null;
       this.isLoading = false;
