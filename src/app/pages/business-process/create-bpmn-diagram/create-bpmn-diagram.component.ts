@@ -202,28 +202,28 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
     }
   }
 
-  uploadAgainBpmn(e){
-    this.isLoading = true;
-    let _self = this;
-    var myReader: FileReader = new FileReader();
-    myReader.onloadend = (ev) => {
-      let fileString:string = myReader.result.toString();
-      let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
-      this.bpmnservice.uploadBpmn(encrypted_bpmn);//is it needed? similary storing process name, category
-      this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
-      this.bpmnModel.bpmnProcessName = e.processName;
-      this.bpmnModel.bpmnModelId=this.randomId;
-      this.bpmnservice.setSelectedBPMNModelId(this.randomId);
-      this.bpmnModel.category=e.categoryName;
-      this.initialSave(this.bpmnModel);
-      this.bpmnModeler.importXML(fileString, function(err){
-        _self.oldXml = fileString.trim();
-        _self.newXml = fileString.trim();
-        _self.isLoading = false;
-      });
-    }
-    myReader.readAsText(this.uploadedFile);
-  }
+  // uploadAgainBpmn(e){
+  //   this.isLoading = true;
+  //   let _self = this;
+  //   var myReader: FileReader = new FileReader();
+  //   myReader.onloadend = (ev) => {
+  //     let fileString:string = myReader.result.toString();
+  //     let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
+  //     this.bpmnservice.uploadBpmn(encrypted_bpmn);//is it needed? similary storing process name, category
+  //     this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
+  //     this.bpmnModel.bpmnProcessName = e.processName;
+  //     this.bpmnModel.bpmnModelId=this.randomId;
+  //     this.bpmnservice.setSelectedBPMNModelId(this.randomId);
+  //     this.bpmnModel.category=e.categoryName;
+  //     this.initialSave(this.bpmnModel);
+  //     this.bpmnModeler.importXML(fileString, function(err){
+  //       _self.oldXml = fileString.trim();
+  //       _self.newXml = fileString.trim();
+  //       _self.isLoading = false;
+  //     });
+  //   }
+  //   myReader.readAsText(this.uploadedFile);
+  // }
 
   initialSave(diagramModel:BpmnModel){
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{

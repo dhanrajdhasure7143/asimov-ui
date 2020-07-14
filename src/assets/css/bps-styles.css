@@ -296,9 +296,9 @@ margin-right: -85px;
 .bjs-container{
   zoom: 0.8;
 }
-#canvas .bjs-container{
+/* #canvas .bjs-container{
   top: -100px;
-}
+} */
 .ex-percent{
   height: 72vh !important;
 }

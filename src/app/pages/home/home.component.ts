@@ -21,11 +21,12 @@ export class HomeComponent implements OnInit {
       
       var acToken=params['accessToken']
       var refToken = params['refreshToken']
+      if(acToken && refToken){      
       var accessToken=atob(acToken);
     var refreshToken=atob(refToken);
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
-
+    }
      
        
     
