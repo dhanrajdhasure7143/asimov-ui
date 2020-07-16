@@ -45,6 +45,8 @@ export class BpmnDiagramListComponent implements OnInit {
     this.dt.changeChildModule(undefined);
      this.bpmnlist();
      this.dt.changeHints(this.hints.bpsApprovalHomeHints);
+
+    
   }
   getColor(status) { 
     switch (status) {
@@ -88,7 +90,10 @@ export class BpmnDiagramListComponent implements OnInit {
   this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
   this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
   }
-  checkStatus(app_status){
+  checkStatus(app_status, dagre){
+    if(app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected'){
+      this.enablePanels(dagre.bpmnProcessInfo.bpmnModelId)
+    }
     return app_status && (app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected');
   }
   loopTrackBy(index, term) {
@@ -119,6 +124,7 @@ this.selectedrow =i;
       this.isLoading = false;
       this.griddata = data;
       this.griddata.map(item => {item.xpandStatus = false;return item;}) 
+      this.disable_panels();
      });
    }
    @HostListener('document:click',['$event'])
@@ -155,17 +161,20 @@ this.selectedrow =i;
         "tenantId": data.bpmnProcessInfo.tenantId,
         "userName": data.bpmnProcessInfo.userName,
         }; 
-  delete(data.xpandStatus);
+  //delete(data.xpandStatus);
    this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{ 
-        let message = "Diagram approved successfully"; //this has to change after approval API 
+        let message = "Diagram approved successfully"; //this has to change after approval API
+        //this.enablePanels(this.approver_info.bpmnModelId); 
         this.bpmnlist();
          this.global.notify(message,'success'); 
         },
          err=>{
             let message = "Oops! Something went wrong";
              this.global.notify(message,'error'); 
-            }); 
+            });
+          //  this.enablePanels(this.approver_info.bpmnModelId); 
+            this.bpmnlist(); 
           }
 
 disable_panels(){
@@ -177,9 +186,26 @@ this.griddata.forEach(each_bpmn => {
   let ind = panel_array.indexOf(each_bpmn.bpmnProcessInfo.bpmnModelId)
   if(ind > -1){
     each_bpmn.isDisabled = true;
-  }
+  } 
+  // else {
+  //   each_bpmn.isDisabled = false;
+  // }
 });
           }
+
+  enablePanels(bpmnID){
+    let panels = localStorage.getItem("pending_bpmnId");
+let panel_array = [];
+if(panels)
+if(panels.indexOf(",") != -1){
+panel_array = panels.split(",");
+panel_array.splice(panel_array.indexOf(bpmnID), 1);
+localStorage.setItem('pending_bpmnId', panel_array.join())
+} else {
+  localStorage.setItem('pending_bpmnId', null);
+}
+
+  }
 
    denyDiagram(data) {
      data.bpmnProcessInfo.reviewComments= this.approval_msg;

@@ -382,7 +382,7 @@ export class UploadProcessModelComponent implements OnInit {
         data=>{
           _self.isLoading = false;
           _self.isRouterNotation = false;
-          _self.getUserBpmnList(null);
+         // _self.getUserBpmnList(null);
           Swal.fire(
             'Saved!',
             'Your changes has been saved successfully.',

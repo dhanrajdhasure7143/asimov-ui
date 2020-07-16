@@ -294,7 +294,7 @@ export class CreateBpmnDiagramComponent implements OnInit,AfterViewInit {
       _self.rest.saveBPMNprocessinfofromtemp(_self.bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;
-          _self.getUserBpmnList();
+         // _self.getUserBpmnList();
           Swal.fire(
             'Saved!',
             'Your changes has been saved successfully.',
