@@ -60,10 +60,10 @@
                     <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.createdTimestamp | date:'dd/MM/yy HH:mm:ss'}}</td>
                     <td *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo.userName}}</td>
                     <td>
-                      <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_diag)"[disabled]="approval_msg.length==0 || checkStatus(each_diag.approvalStatus)">Approve</button>
-                      <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_diag)" [disabled]="approval_msg.length==0 || checkStatus(each_diag.approvalStatus)">Deny</button>
+                      <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_diag)"[disabled]="approval_msg.length==0 || checkStatus(each_diag.approvalStatus, each_diag) || each_diag.isDisabled">Approve</button>
+                      <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_diag)" [disabled]="approval_msg.length==0 || checkStatus(each_diag.approvalStatus, each_diag) || each_diag.isDisabled">Deny</button>
                     </td>
-                    <td><input type="text" [value]="each_diag.bpmnProcessInfo.reviewComments"  [(ngModel)]="approval_msg" [disabled]="checkStatus(each_diag.approvalStatus)" placeholder="Enter your Message"  required/><i class="right fa fa-arrow-right arrow" aria-hidden="true"></i></td>
+                    <td><input type="text" [value]="each_diag.bpmnProcessInfo.reviewComments"  [(ngModel)]="approval_msg" [attr.disabled]="checkStatus(each_diag.approvalStatus, each_diag) || each_diag.isDisabled" placeholder="Enter your Message"  required/><i class="right fa fa-arrow-right arrow" aria-hidden="true"></i></td>
                   </tr>
               
                 </tbody>
@@ -72,7 +72,7 @@
               <!-- <pagination-controls (pageChange)="child_P = $event"></pagination-controls> -->
             </div>
         <div class="col-md-3 list_diag">
-          <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnProcessInfo.bpmnXmlNotation, each_diag.bpmnProcessInfo.bpmnModelId)"></div>
+          <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnProcessInfo.bpmnXmlNotation, i)"></div>
           <div class="row">
             <div class="col-md-6">
                 <div class="diag_info">Click to open</div>
