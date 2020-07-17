@@ -10,7 +10,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuContent.component';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { RpaHints } from '../model/rpa-module-hints';
-
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -62,7 +62,7 @@ export class RpaStudioComponent implements OnInit {
   public checkbotname:Boolean;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
     private hints:RpaHints, private formBuilder:FormBuilder) { 
-    this.show = 5;
+    this.show = 8;
     
     this.insertbot=this.formBuilder.group({
       botName:["", Validators.required],
@@ -156,7 +156,7 @@ export class RpaStudioComponent implements OnInit {
     temp = this.model;
     this.model = {};
     this.tabsArray.push(temp);  
-    this.tabActiveId = temp.botNamee
+    this.tabActiveId = temp.botName
     console.log(this.tabsArray);
     this.insertbot.reset();
     
@@ -205,8 +205,20 @@ export class RpaStudioComponent implements OnInit {
     let botdata:any;
     this.rest.getbotdata(botid).subscribe(data=>{
       botdata=data;
-      this.tabsArray.push(botdata);
-      this.tabActiveId=botdata.botName;
+      if(this.tabsArray.find(data=>data.botName==botdata.botName)==undefined)
+      {
+        this.tabsArray.push(botdata);
+        this.tabActiveId=botdata.botName;
+      }
+      else
+      {
+        Swal.fire({
+          title: 'Selected Bot is already loaded', 
+          icon: 'warning',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }  
       this.loadbot.reset();
       this.loadbot.get("bot").setValue("");
       this.loadbot.get("botType").setValue("");
