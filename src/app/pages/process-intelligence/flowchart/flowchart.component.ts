@@ -127,7 +127,7 @@ export class FlowchartComponent implements OnInit {
     private location:Location,
     private global:GlobalScript) {  }
 
-  @HostListener('document:click', ['$event.target'])
+  @HostListener('document:click', ['$event.target'])  // spinner overlay hide on out side click
   public onClick(targetElement) {
       const clickedInside = this.toogleBtn.nativeElement.contains(targetElement);
       if (!clickedInside) {
@@ -198,37 +198,28 @@ export class FlowchartComponent implements OnInit {
         this.graphIds = piId;
         setTimeout(() => {
           this.onchangegraphId(piId);
-        }, 6*60*1000); //3*60*1000
+        }, 6*60*1000);
       }
     });
-    
-  //   setTimeout(() => {
-  //     this.onchangegraphId(piId);
-  //   // }, 3*60*1000);
-  // }, 300);
     
   }
 
   ngAfterContentChecked() {
     this.rangevalue = ZoomSlider.rangeValue;
   }
-  getAlluserProcessPiIds(){
+  getAlluserProcessPiIds(){ // Process graphs List
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data})
   }
-  onchangegraphId(selectedpiId){
+  onchangegraphId(selectedpiId){ 
     this.isNodata=true;
-    // location.replace("/pages/processIntelligence/flowChart?wpiId="+selectedpiId)
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
       let tokenOne=params['piId']
       if (token) {
-          // this.cache.set({t: 't'}, token);
-          // window.location.href = this.router.url.split('?')[0];
           let url=this.router.url.split('?')
           this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
       }else{
         let url=this.router.url.split('?')
-        // window.location.href = url[0]+'?piId='+selectedpiId;
         this.location.replaceState(url[0]+'?piId='+selectedpiId);
 
       }
