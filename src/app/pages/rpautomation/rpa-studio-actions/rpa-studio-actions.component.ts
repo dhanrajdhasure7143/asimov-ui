@@ -563,7 +563,7 @@ getEnvironmentlist() {
         {*/
           this.rest.getbotversiondata(this.savebotrespose.botId,vid).subscribe(data =>{
             response=data;
-            let index=this.rpa_studio.tabsArray.findIndex(data=>data.botId==response.botId);
+            let index=this.rpa_studio.tabsArray.findIndex(data=>data.botName==response.botName);
             this.rpa_studio.tabsArray[index]=response;
             console.log(response);
           })
