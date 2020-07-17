@@ -17,7 +17,7 @@
         </ul>
       </div>-->
       <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
-      <button  type="button" id="stopbot" title="Stop Bot Execution"
+      <button  type="button" id="stopbot" title="Stop Bot"
       class="rpa-btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot()">
       <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
       <div class="btn_title">Stop</div>
@@ -27,7 +27,7 @@
         
       <div *ngIf="pausebot==true || resumebot==true">
         <button  type="button"
-        class="  rpa-btn_style"  title="Stop Bot Execution" aria-hidden="true" placement="bottom" (click)="stopBot(1)">
+        class="  rpa-btn_style"  title="Stop Bot" aria-hidden="true" placement="bottom" (click)="stopBot(1)">
         <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
         <div class="btn_title">Stop</div>
         </button>
@@ -57,7 +57,7 @@
           </li>
         </ul>
       </div>
-      <button type="button" id="deployBot" title="Deploy Bot Agent" [disabled]="savebotrespose==undefined" class="  rpa-btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
+      <button type="button" id="deployBot" title="Deploy Bot Agent" [disabled]="savebotrespose==undefined" class="rpa-btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
         <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
         <div class="btn_title">Deploy</div>
       </button>
@@ -115,7 +115,7 @@
           <li *ngFor="let list of environment;let i = index">
             <div class="checkbox">
               <div class="environments">
-                <label [for]="list+i"><input type="checkbox" (change)="checkuncheckenv(list.environmentId)">{{list.environmentName}}</label>
+                <label [for]="list+i"><input type="checkbox" (change)="checkuncheckenv(list.environmentId)" [checked]="list.checked" >{{list.environmentName}}</label>
                 <hr>
               </div>
             </div>
@@ -137,7 +137,7 @@
           (click)="getVersionlist()"> <img src="..\\assets\\images\\RPA\\Version_icon.svg" class="imageI1"><div class="btn_title">Versions</div></button>
         <ul *ngIf="versionsList.length > 0" class="dropdown-menu rpa-custom-scrollbar">
           <li *ngFor="let version of versionsList; let i = index">
-            <div class="checkbox">
+            <div class="checkbox" (click)="switchversion(version.vId)" >
               <div class="environments">
                 <label [for]="version+i">V.{{version.vId}}</label>
                 <hr>
@@ -195,22 +195,22 @@
 
           <!-- forms -->
         
-<div id="scheduler" class="rpa-modal">
+<div [id]="schedulepopid" class="rpa-modal">
   <div class="rpa-modal-content">
       <div class="rpa-modal-header">
           <span class="rpa-modal-close" (click)="close()">&times;</span>
-          <h4>Scheduler</h4>
+          <h4>Schedule</h4>
       </div>
       <div class="rpa-modal-body">
         <br>
           <div class="container card-body">
             <div class="">
             <ngb-tabset>
-              <ngb-tab title="Config">
+              <ngb-tab title="Configuration">
                 <ng-template style="background: white;" ngbTabContent>
             <form style="background: white;" name="form" (ngSubmit)="f.form.valid && onCreateSubmit()" #f="ngForm" novalidate>
                 <div class="form-group">
-                    <label for="botName">Time zone</label>
+                    <label for="botName">Timezone</label>
                     <select class="form-control"   name="selectedTimeZone" #timezone="ngModel" [(ngModel)]="selectedTimeZone" [ngModelOptions]="{standalone: true}"
             required>
             <option *ngFor="let timeZone of timesZones" [(ngValue)]="timeZone">{{timeZone}}</option>
@@ -269,37 +269,38 @@
             </div> -->
                 </div>
                 <div class="form-group">
-                    <button class=" btn-primary" (click)="saveCron()">Save</button>
+                    <button class="btn btn-primary" (click)="saveCron()">Save</button>
                 </div>
             </form>
                 </ng-template>
               </ngb-tab>
-              <ngb-tab  title="Schedule" [disabled]="savebotrespose==undefined">
+              <ngb-tab  title="Schedule List" [disabled]="savebotrespose==undefined">
                 <ng-template style="background: white;" ngbTabContent>
                   <div class="container" style="background: white;">
                     <div class="row">
-                      <table class="table table-striped">
+                      <div class="col-md-12">
+                      <table class="table rpa-table table-striped  table-sm row-border hover env-table">
                         <thead>
                         <tr>
-                          <th>scheduleInterval</th>
-                          <th>LastRunTime</th>
-                          <th>botId</th>
-                          <th>timeZone</th>
-                          <th>nextRunTime</th>
-                          <th>executionStatus</th>
+                          <th>Schedule Interval</th>
+                          <th>Timezone</th>
+                          <th>Last Run Time</th>
+                          <th>Next Run Time</th>
+                          <th>Execution Status</th>
+                        
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let schedule of scheduleLists">
                           <td>{{schedule.scheduleInterval}}</td>
-                          <td>{{schedule.lastRunTime}}</td>
-                          <td>{{schedule.botId}}</td>
                           <td>{{schedule.timeZone}}</td>
+                          <td>{{schedule.lastRunTime}}</td>                       
                           <td>{{schedule.nextRunTime}}</td>
                           <td>{{schedule.executionStatus}}</td>
                         </tr>
                         </tbody>
                       </table>
+                      </div>
                     </div>
                   </div>
                 </ng-template>

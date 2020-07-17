@@ -91,8 +91,9 @@ body, html {
 }
 /* notifications to right */
 notifier-notification{
-  right: 12px;
-  left: calc(100% - 325px) !important;
+    position: absolute;
+    text-align: right;
+    left: calc(100% - 325px) !important;
 }
 /* remove dropzone dotted border */
 ngx-dropzone{
@@ -222,14 +223,10 @@ a.nav-link.active {
   font-size:15px;
   background-color:white;
 }
-
-
-
 .env-btn-shadow{
 
 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
 
 .env-btn{
 display:inline-block;

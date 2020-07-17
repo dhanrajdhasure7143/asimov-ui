@@ -191,6 +191,7 @@ padding-bottom: 70px;
   .rpa-close{
     float: none;
     margin-left: 8px;
+    font-size: 16px;
   }
 
   .rpa-custom-scrollbar {
@@ -289,4 +290,52 @@ padding-bottom: 70px;
   @keyframes fadeIn {
   from {opacity: 0} 
   to {opacity: 1}
+  }
+
+
+
+
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul{
+    border-bottom: none;
+  }
+
+  
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul > li > a.nav-link.active{
+    border-right: 1px solid rgb(70, 70, 70) !important;
+    background-color:white !important; 
+    color:rgb(71, 71, 71) !important;
+    border-radius: 0 !important;
+    padding: 5px 12px !important;
+    
+  }
+
+
+    
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul > li > a.nav-link{
+    border-right: 1px solid lightgray !important;
+    background-color:white !important; 
+    border-radius: 0 !important;
+    padding: 5px 12px !important;
+  
+  }
+
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul > li > a.nav-link.active > span:nth-child(1)
+  {
+    font-size:14px;
+    color:black;
+  }
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul > li > a.nav-link > span:nth-child(1)
+  {
+    font-size:14px;
+    color:rgb(149, 149, 149);
+  }
+
+
+  cron-editor > div > div.card-header > ul > li > a.nav-link
+  {
+    padding: 6px 13px!important;
+    border-radius: 4px 4px 0 0 !important;
+    font-weight:normal;
+    font-size:14px;
+    
   }

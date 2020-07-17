@@ -215,7 +215,7 @@
   height: 480px;
   background: #ffffff;
   overflow: scroll;
-  border: 1px solid lightgray;
+  /*border: 1px solid lightgray;*/
   margin: 0px 0px 0px 10px;
 }
 .zoomout {
@@ -274,6 +274,7 @@ margin-left: 1130px;
   position: absolute;
   margin: -15px 8px 8px 7px;
   white-space: nowrap;
+  background-color: white !important;
 }
 .context-menu__item a {
     background-color: white;

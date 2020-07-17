@@ -9,6 +9,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { RpaStudioTabsComponent } from '../rpa-studio-tabs/rpa-studio-tabs.component'
 import Swal from 'sweetalert2';
 import { environment } from 'src/environments/environment';
+import { RpaStudioComponent } from '../rpa-studio/rpa-studio.component';
 
 @Component({
   selector: 'app-rpa-studio-actions',
@@ -31,6 +32,7 @@ export class RpaStudioActionsComponent implements OnInit {
   public selectedenv:any=[];
   public finalenv:any=[];
   public envflag:Boolean=true;
+  public schedulepopid="";
   @Input('tabsArrayLength') public tabsArrayLength: number;
   @Input('botState') public botState: any;
   @Output() closeTabEvent = new EventEmitter<void>();
@@ -52,13 +54,13 @@ export class RpaStudioActionsComponent implements OnInit {
   deploymachinedata:any;
   // scheduler
   hiddenSchedlerPopUp : boolean = false;
-  startTime = {hour: 1, minute: 60};
-  endTime = {hour: 1, minute: 60};
+  startTime = {hour: 0, minute: 0};
+  endTime = {hour: 23, minute: 59};
   scheduleLists: any[] = [];
   form: FormGroup;
   public startDate: Date;
   public endDate: Date;
-  public cronExpression = '* * * * *';
+  public cronExpression = '0/1 * 1/1 * ?';
   public isCronDisabled = false;
   public selectedTimeZone :any;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
@@ -85,7 +87,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
     cronFlavor: "standard"
   }
-  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,private rpa_tabs:RpaStudioTabsComponent) { 
+  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent) { 
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
       'endTime' : [this.endTime, Validators.required],
@@ -99,6 +101,15 @@ export class RpaStudioActionsComponent implements OnInit {
     this.botstatistics();
     this.getEnvironmentlist();
     this.getpredefinedbotlist();
+    this.schedulepopid="schedule-"+this.botState.botName;
+    if(this.botState.botId!=undefined)
+    {
+      this.savebotrespose=this.botState;
+      this.botState.envIds.forEach(envdata=>{
+          this.environment.find(data=>data.environmentId==envdata).checked=true;
+      })
+    }
+
   }
 
   deploybot() {
@@ -120,7 +131,19 @@ export class RpaStudioActionsComponent implements OnInit {
 
   reset()
   {
-    this.childBotWorkspace.resetdata();
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+    if (result.value) {
+      this.childBotWorkspace.resetdata();
+    } 
+  })
   }
   delete()
   {
@@ -155,9 +178,10 @@ export class RpaStudioActionsComponent implements OnInit {
       })
     }
 
+
   
   saveBotFunAct() {
-    
+    this.finalenv=[];
     this.environment.forEach(data=>{
         if(data.checked==true)
         {
@@ -199,7 +223,7 @@ export class RpaStudioActionsComponent implements OnInit {
     }
     else
     {
-      this.childBotWorkspace.updateBotFun(this.savebotrespose).subscribe(data=>{
+      this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv).subscribe(data=>{
         this.childBotWorkspace.successCallBack(data);
         this.savebotrespose=data;
         Swal.fire({
@@ -221,18 +245,29 @@ export class RpaStudioActionsComponent implements OnInit {
     {
       this.rest.execution(this.savebotrespose.botId).subscribe(res =>{
         response = res;
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: response,
-          showConfirmButton: false,
-          timer: 2000
-          
-        })
-        
+        if(response.errorCode==undefined)
+        {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: response.status,
+            showConfirmButton: false,
+            timer: 2000            
+          })
           this.startbot=false;
           this.pausebot=true;
           this.resumebot=false;
+      
+        }else
+        {
+          Swal.fire({
+            position: 'top-end',
+            icon: 'warning',
+            title: response.errorMessage,
+            showConfirmButton: false,
+            timer: 2000            
+          })
+        }
       })
     }
   }
@@ -381,6 +416,17 @@ getEnvironmentlist() {
       env["checked"]=false;
       this.environment.push(env);
     })
+    if(this.botState.botId!=undefined)
+    {
+      this.botState.envIds.forEach(envdata=>{
+          this.environment.find(data=>data.environmentId==envdata).checked=true;
+      })
+    }
+    this.environment.filter(data =>{ 
+      if(data.checked==true){
+        this.envflag=false;
+      }
+    });
     console.log(this.environment)
   })
 }
@@ -422,7 +468,7 @@ getEnvironmentlist() {
    
   
   schedulerPopUp(){
-      document.getElementById("scheduler").style.display="block";
+      document.getElementById(this.schedulepopid).style.display="block";
       this.hiddenSchedlerPopUp = true
       let data:any
       this.rest.scheduleList(this.savebotrespose.botId).subscribe((data)=> this.scheduleResponse(data))
@@ -456,7 +502,7 @@ getEnvironmentlist() {
     timer:2000
           })
     // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
-    document.getElementById("scheduler").style.display="none";
+    document.getElementById(this.schedulepopid).style.display="none";
         }
     
     
@@ -464,7 +510,7 @@ getEnvironmentlist() {
     
     
     close(){
-      document.getElementById("scheduler").style.display="none";
+      document.getElementById(this.schedulepopid).style.display="none";
     }
   
   
@@ -500,6 +546,30 @@ getEnvironmentlist() {
     });
    }
 
+
+   switchversion(vid)
+   {
+    let response:any;
+   /* Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+        if (result.value) 
+        {*/
+          this.rest.getbotversiondata(this.savebotrespose.botId,vid).subscribe(data =>{
+            response=data;
+            let index=this.rpa_studio.tabsArray.findIndex(data=>data.botId==response.botId);
+            this.rpa_studio.tabsArray[index]=response;
+            console.log(response);
+          })
+        /*}
+    })*/
+   }
 
   
 }
