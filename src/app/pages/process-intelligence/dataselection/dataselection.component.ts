@@ -128,7 +128,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         
 
       }
-      console.log("renamesObj",renamesObj);
+      // console.log("renamesObj",renamesObj);
   }
   let renamestring='';
   for(var k=0;k<renamesObj.length;k++){
@@ -154,7 +154,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       var date=new Date()
       var tenantId="abc456789"
   this.rest.fileName.subscribe(res => {
-    console.log(res);
+    // console.log(res);
     this.isUploadFileName = res;
   });
     const connectorBody={
@@ -321,7 +321,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       this.isgenerate=false;
     }
   }
-  console.log("id",this.id);
+  // console.log("id",this.id);
  
   
     }

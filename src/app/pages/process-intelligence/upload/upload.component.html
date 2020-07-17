@@ -13,7 +13,7 @@
                         </ngx-dropzone>
                 </div>
                 <div class="col-sm-3 upload_zone" id="">
-                        <ngx-dropzone (change)="onSelect($event,3)" [multiple]=false [accept]="xes_mime" >
+                        <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false [accept]="xes_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/XES.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
                                         <label>XES</label></h5>
@@ -207,8 +207,8 @@
                                         </div>
                                 </div>
                                 <div class='col-sm-12 row connection-buttons'>
-                                        <button class='btn btn-primary connection_btn' [disabled]='database.invalid' (click)="testConnection()">Test Connection</button>
-                                        <button class='btn btn-primary save_btn' [disabled]='isSave'>Connect/Save</button>
+                                        <button class='btn btn-primary eiap-btn' [disabled]='database.invalid' (click)="testConnection()">Test Connection</button>
+                                        <button class='btn btn-primary eiap-btn' [disabled]='isSave'>Connect/Save</button>
                                 </div>
                                 
                                 </div>

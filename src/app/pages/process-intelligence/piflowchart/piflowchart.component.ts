@@ -400,7 +400,6 @@ export class PiflowchartComponent implements OnInit {
           var shape = obj.findObject("LINK");
           var shape1 = obj.findObject("LINK1");
           var shape2 = obj.findObject("PIPE");
-          console.log();
           if(shape.fromNode.hb.key==-1||shape.toNode.hb.key==-2){
             // console.log(shape1);
             

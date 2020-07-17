@@ -165,7 +165,6 @@ export class FlowchartComponent implements OnInit {
     // this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data
     //   let fullgraphOne=JSON.parse(this.fullgraph.data);
     //   this.model1 = fullgraphOne.allSelectData.nodeDataArraycase
-    //   console.log('this.model1',this.model1);
     //   this.model2 = this.flowchartData(this.model1)
     //   let loction=''
     //   for(var i=0;i<this.model1.length;i++){
@@ -227,7 +226,6 @@ export class FlowchartComponent implements OnInit {
           // window.location.href = this.router.url.split('?')[0];
           let url=this.router.url.split('?')
           this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
-        //   console.log(url[0]+'?wpiId='+selectedpiId); 
       }else{
         let url=this.router.url.split('?')
         // window.location.href = url[0]+'?piId='+selectedpiId;
@@ -242,12 +240,8 @@ export class FlowchartComponent implements OnInit {
        "pid":selectedpiId
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
-    //   console.log('this.varaint_data',data);
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
-          // this.varaint_data.data[i].days=this.timeConversion(this.varaint_data.data[i].days);
-          // console.log( this.varaint_data.data[i].days);
-          
       }
       this.onchangeVaraint("0");
       })
@@ -266,13 +260,9 @@ export class FlowchartComponent implements OnInit {
         } else{
          let fullgraphOne=this.fullgraph.data;
         //let fullgraphOne=this.gResponse.data;
-        // console.log("fullgraphOne",fullgraphOne.allSelectData.nodeDataArraycase);
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
-          console.log("this.activity_list",this.activity_list);
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
-
-        console.log('this.model1',this.model1);
         let loction=''
         for(var i=0;i<this.model1.length;i++){
           if(this.model1[i].key==-1||this.model1[i].key==-2){
@@ -291,8 +281,6 @@ export class FlowchartComponent implements OnInit {
         this.model2 = this.flowchartData(this.model1)
         for(var j=0;j<this.model2.length;j++){
           // for (let [key, value] of Object.entries(this.model2[j])) {
-            console.log(this.model2[j].from);
-
                             // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
                 // this.model2[j].from>0 && this.model2[j].to<0
                 // this.model2[j].from ==-2||this.model2[j].to==-2
@@ -325,9 +313,7 @@ export class FlowchartComponent implements OnInit {
             this.model2[j].curviness=loc3
             }
         }
-      }
-        console.log(this.model2);
-        
+      }        
         this.spinner.hide();
     }
         });
@@ -337,19 +323,16 @@ export class FlowchartComponent implements OnInit {
            "pid":selectedpiId
            }
         this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        // console.log('varaint_GraphData',this.varaint_GraphData);
         })
         const sliderGraphbody= { 
           "data_type":"slider_graph", 
            "pid":selectedpiId
            }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
-            // console.log("this.sliderVariant",this.sliderVariant);
         })
   }
 
   onchangeVaraint(datavariant) {
-    // console.log("variantdata",datavariant);
     switch (datavariant) {
       case "0":
         // this.varaint_data = this.varaint_dat;
@@ -394,8 +377,6 @@ export class FlowchartComponent implements OnInit {
   // }
  
   caseIdSelect(selectedData, index) {
-    console.log(selectedData,index);
-    
     this.activityValue=0;
     this.pathvalue=0;
     this.activity_value=[];
@@ -405,8 +386,6 @@ export class FlowchartComponent implements OnInit {
     // const element = this.pgModel.flowchartData[selectedData.case];
     // this.model1 = element.nodeDataArraycase;
     // this.model2 = element.linkarraycase;
-    // console.log("data1", selectedData);
-    // console.log("model1",this.model1);
 
     // single variant selection
     // this.isselected=index;
@@ -453,14 +432,11 @@ export class FlowchartComponent implements OnInit {
     };
 // multi variant selection end
 
-    console.log("selectedcase", this.selectedCaseArry)
-    console.log("selectedcase.length",this.selectedCaseArry.length)
     this.caselength = this.selectedCaseArry.length;
     if(this.selectedCaseArry.length == 0){
         let fullgraphOne=this.fullgraph.data;
             this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
                 this.nodesAlignment();
-            console.log('this.model1',this.model1);
             this.model2 = this.flowchartData(this.model1);
                 this.linkCurvinessGenerate();
                 // variant_playOne
@@ -474,15 +450,10 @@ export class FlowchartComponent implements OnInit {
       // this.model1=this.pgModel.allData.nodeDataArraycase;
       // this.model2=this.flowchartData(this.pgModel.nodeDataArraycase)
       this.isDefaultData = false;
-      console.log("selectedcase", this.selectedCaseArry)
-    // console.log("selectedData.case",selectedData.case);
     
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
-        // console.log('log',this.selectedCaseArry[0], this.pgModel.flowchartData);
         
-        var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]]
-        console.log('modalData',modalData);
-        
+        var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]]        
         this.model1 = modalData.nodeDataArraycase
         this.nodeAlignment();
         this.model2 = this.flowchartData(this.model1)
@@ -495,12 +466,9 @@ export class FlowchartComponent implements OnInit {
         "pid":this.graphIds,
         "cases" : this.selectedCaseArry
     }
-    console.log("variantComboArray",variantComboBody);
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
-    console.log("variantCombo",this.variantCombo);
     this.model1=this.variantCombo.data[0].nodeDataArraycase
     this.nodeAlignment();
-    console.log("this.model1",this.model1);
     this.model2 = this.flowchartData(this.model1);
     this.linkCurvinessGenerate();
     
@@ -509,14 +477,11 @@ export class FlowchartComponent implements OnInit {
 //     else {
 //       var modelDataArray = []
 //       for (var i = 0; i < this.selectedCaseArry.length; i++) {
-//         // console.log('key',this.keyExists(this.selectedCaseArry[i],this.pgModel.flowchartData)==true);
-//         // console.log("selectedCaseArry",this.selectedCaseArry);
 
 //         if (this.keyExists(this.selectedCaseArry[i], this.varaint_GraphDataArray) == true) {
 //           var modalData = this.varaint_GraphData.data[this.selectedCaseArry[i]]
 //           modelDataArray.push(modalData)
 
-//           // console.log('modalData[0]',modalData);
 
 
 //           // this.model1=result
@@ -525,33 +490,26 @@ export class FlowchartComponent implements OnInit {
 //         }
 
 //       }
-//       // console.log('modalData[0]', modelDataArray);
 
 //       // var combine_obj={};
 //       // for(var key in modelDataArray[0].nodeDataArraycase) combine_obj[key]=modelDataArray[0].nodeDataArraycase[key];
 //       // for(var key in modelDataArray[1].nodeDataArraycase) combine_obj[key]=modelDataArray[1].nodeDataArraycase[key];
 //       // // var diffirence= modelDataArray[0].nodeDataArraycase.filter(x=>!modelDataArray[1].nodeDataArraycase.includes(x));
 //       // // var compare= this.compareJSON(modelDataArray[0],modelDataArray[1])
-//       // console.log('combine_obj',combine_obj);
 
 //       var outArr = [];
 //       var m = this
 
 //       modelDataArray[0].nodeDataArraycase.forEach(function (value, i) {
-//         // console.log(value);
 //         modelDataArray[1].nodeDataArraycase.forEach(function (value1, j) {
-//           //console.log(value1)
 //           if (value.name === value1.name) {
 //             if (value.hasOwnProperty('linkArray') && value1.hasOwnProperty('linkArray')) {
-//               // console.log(value.linkArray.length);
 //               if (value.linkArray.length != 0 && value1.linkArray.length != 0) {
 //                 value.linkArray.forEach(e1 => {
-//                   // console.log(e1 + "::::");
 //                   value1.linkArray.forEach(e2 => {
 //                     if (e1 != e2) {
   
 //                       value.linkArray.push(e2);
-//                       // console.log(value);
   
 //                       value.linkArray = m.removeDuplicates(value.linkArray);
 //                     }
@@ -561,12 +519,10 @@ export class FlowchartComponent implements OnInit {
 //                 if (value.linkArray.length == 0) {
 //                   value1.linkArray.forEach(e2 => {
 //                     value.linkArray.push(e2);
-//                     // console.log(value);
 //                   });
 //                 } else {
 //                   value.linkArray.forEach(e1 => {
 //                     value.linkArray.push(e1);
-//                     // console.log(value);
 //                   });
 //                 }
   
@@ -584,18 +540,15 @@ export class FlowchartComponent implements OnInit {
 //           }
 //         });
 //       });
-// // console.log('outArr1',outArr);
 
 //       if(this.selectedCaseArry.length > 2){
 // var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
-// // console.log('outArr12',outArr);
 
 //         this.multynodeArray(outArr,modalData)
 //       }
 //     // this.nestedArray=outArr;
 
 //       // if(this.selectedCaseArry.length >2){
-//       //   console.log(this.selectedCaseArry);
         
 //       // for(var i=2; i < this.selectedCaseArry.length; i++){
 //       //   // var k=2;
@@ -676,7 +629,7 @@ export class FlowchartComponent implements OnInit {
         }
         // value.toolCount=sum
           outArr.push(value);
-          console.log('outarraynested',outArr);
+          // console.log('outarraynested',outArr);
         }
       });
     });
@@ -876,7 +829,7 @@ export class FlowchartComponent implements OnInit {
     // this.model1=this.pgModel.allData.nodeDataArraycase;
 
     // this.model2=this.linkdataArray;
-    console.log('linkarray', this.linkdataArray)
+    // console.log('linkarray', this.linkdataArray)
     return this.linkdataArray;
   }
 
@@ -932,9 +885,6 @@ timeConversion(millisec) {
 }
 
 selectedMetric(selectedValue){
-  console.log('spinMetrics0',this.spinMetrics0);
-  console.log("selectedValue",selectedValue);
- 
   let index;
   switch(selectedValue){
     case "absoluteFrequency":
@@ -968,9 +918,7 @@ selectedMetric(selectedValue){
         index=9;
     break;
   }
-  // console.log(index);
   for(var i=1;i<this.model1.length-1;i++){
-    // console.log(this.model1[i].count);
     if(index==5||index==6||index==7||index==8||index==9){
       this.model1[i].count=this.timeConversion(this.model1[i].toolCount[index])
     }else{
@@ -979,20 +927,16 @@ selectedMetric(selectedValue){
       // this.model1[i].countOne=this.model1[i].toolCount[index]
     }
   }
-  console.log("model",this.model1);
   this.model2 = this.flowchartDataOne(this.model1,index)
   this.linkCurvinessGenerate();
 }
 flowchartDataOne(dataArray,index) {
-  // console.log('index',index);  
   this.linkData = [];
   this.linkdataArray = [];
   this.nodeArray = dataArray;
    var linkToolArray=[];
   for (var i = 1; i < this.nodeArray.length-1; i++) {
-    // console.log('linkArray',this.nodeArray[i].linkArray);
     var datalink = this.nodeArray[i].linkArray;
-    //  console.log('datalink',datalink);
     var link=[]
     var linktool=[]
     var label = this.nodeArray[i].name;
@@ -1064,7 +1008,7 @@ flowchartDataOne(dataArray,index) {
         
       }
   }
-console.log('this.linkdataArray',this.linkdataArray);
+// console.log('this.linkdataArray',this.linkdataArray);
 
   return this.linkdataArray;
 }
@@ -1197,20 +1141,14 @@ closeNav() {
   
 
   onchangeActivity(value){
-    console.log("activityValue",this.activityValue);
-    // this.activityValue=value;
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue) 
   }
   onChangePath(value){
-    console.log("pathValue",this.pathvalue);
-    // this.pathvalue=value;
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue)
   }
    
 //sliderGraph Response
-sliderGraphResponse(graphData,activity_slider,path_slider) {
-  console.log("graphData",graphData);
-  
+sliderGraphResponse(graphData,activity_slider,path_slider) {  
   this.activity_value=[];
   if(activity_slider==1&&path_slider==1){
     this.isNodata=true;
@@ -1248,7 +1186,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
   //     return;
   // }
   this.sliderGraphData=sliderGraphArray;
-  console.log("slidergraphData",this.sliderGraphData);
   this.isNodata=true;
     var obj={"key": -1,"category": "Start","count": 80,"extraNode":'true'}
     var obj1={"key": -2,"category": "End","count": 80,"extraNode":'true'}
@@ -1258,7 +1195,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
             modelOne.push(sliderGraphArray[i]);
         }
     modelOne.push(obj1)
-    // console.log("modelOne",modelOne);
     this.model1=modelOne;
     this.nodesAlignment()
     this.model2 = this.flowchartData(this.model1)
@@ -1322,7 +1258,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
     model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
     this.model1=model3
     this.nodeAlignment();
-    console.log("this.model1",this.model1);
     this.model2 = this.flowchartData(this.model1);
     this.linkCurvinessGenerateOne();
     this.isActivity_dropdwn=false;
@@ -1366,7 +1301,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
     this.model2=[];
     var endpointModel=[];
     var endpointModelOne=[];
-    console.log("this.model1",this.fullgraph_model);
     // endpointModel=this.flowchartData(this.model1)
     endpointModel=this.fullgraph_model
 // console.log('endpointModel',endpointModel[0]);
@@ -1394,7 +1328,6 @@ this.linkdataArray=[]
       // this.model1.push(endpointModel[endpointModel.length-1])
       this.nodeAlignment();
       this.model2=this.linkdataArray
-      console.log("this.model2",this.model2);
     }else if(this.startPoint==false&&this.endPoint==true){
       for(var i=1; i<endpointModel.length-1;i++){
         if (endpointModel[i].tool.includes('End Frequency')) {
@@ -1418,7 +1351,6 @@ this.linkdataArray=[]
       this.model1.push(endpointModel[endpointModel.length-1])
       this.nodeAlignment();
       this.model2=this.linkdataArray
-      console.log("this.model2",this.model2);
     }else if(this.startPoint==true&&this.endPoint==true){
       for(var i=1; i<endpointModel.length-1;i++){
         if (endpointModel[i].tool.includes('Start Frequency')) {
@@ -1457,7 +1389,6 @@ this.linkdataArray=[]
       this.model1.push(endpointModel[endpointModel.length-1])
       this.nodeAlignment()
       this.model2=this.linkdataArray;
-      console.log("this.model2",this.model2);
     }
   }
   getFromKeyOne(endpointModel,name) {
@@ -1500,7 +1431,6 @@ this.linkdataArray=[]
   }
   }
   filterByPerformance(){
-    console.log("this.perform",this.performanceValue1,this.performanceValue2,this.performanceValue3);
     let index;
     switch(this.performanceValue1){
       case "totalDuration":
@@ -1524,7 +1454,6 @@ this.linkdataArray=[]
         this.model1[i].count=this.timeConversionOne(this.model1[i].toolCount[index])
       }
     }
-    console.log("model",this.model1);
     // var filterModel=this.flowchartDataTwo(this.model1,index)
     // for(var j=0;j<filterModel.length;j++){
     //   if(filterModel[j].text<10)
@@ -1587,7 +1516,7 @@ this.linkdataArray=[]
           }
         }
     }
-  console.log('this.linkdataArray',this.linkdataArray);
+  // console.log('this.linkdataArray',this.linkdataArray);
     return this.linkdataArray;
   }
   timeConversionOne(millisec) {

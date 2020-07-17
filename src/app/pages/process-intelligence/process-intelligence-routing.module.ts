@@ -6,6 +6,7 @@ import { UploadComponent } from './upload/upload.component';
 import { DatadocumentComponent } from './datadocument/datadocument.component';
 import { FlowchartComponent } from './flowchart/flowchart.component';
 import { DataselectionComponent } from './dataselection/dataselection.component';
+import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
     {path:'datadocument', component:DatadocumentComponent},
     {path:'flowChart', component:FlowchartComponent},
     {path:'selection', component:DataselectionComponent},
+    {path:'xesdocument', component:XesdocumentComponent},
     {path:'**', redirectTo:'/upload', pathMatch: 'full'}
   ]}
 ];

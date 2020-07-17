@@ -88,8 +88,7 @@ export class UploadComponent implements OnInit {
                       icon: 'error',
                     })
                   });
-}
-  
+} 
 
   getUID(id,name){
     if(id == 0){
@@ -187,34 +186,68 @@ localStorage.setItem("fileData",JSON.stringify(excelfile))
     let fileReader: FileReader = new FileReader();
     var _self =this;
     fileReader.onload = function(x) {
-      let _xml = `${fileReader.result}`
-      const parser = new DOMParser();
-      const xml = parser.parseFromString(_xml, "text/xml");
-      let _obj = _self.ngxXml2jsonService.xmlToJson(xml);
-      if(!_obj['log'])
-      // console.log(_obj['log']);
-      var resultTable = _obj['log']['trace'][0]['event'];
-      let xesData = [];
-      resultTable.forEach(e => {
-        let tmp_arr = [];
-        e.string.forEach(ev => {
-          tmp_arr.push(ev['@attributes']['value']);
-        })
-        xesData.push(tmp_arr);
-      });
-      _self.dt.changePiData(xesData)
-      _self.router.navigateByUrl('/pages/processIntelligence/datadocument');  
+    let _xml = `${fileReader.result}`
+    const parser = new DOMParser();
+    const xml = parser.parseFromString(_xml, "text/xml");
+    let _obj = _self.ngxXml2jsonService.xmlToJson(xml);
+    // console.log(_obj['log']);
+    // if(!_obj['log'])
+    // console.log(_obj['log']);
+    var resultTable = _obj['log']['trace'];
+    // console.log(resultTable);
+    let xesData = [];
+    
+    //resultTable.forEach(e => {
+    var e = resultTable;
+    
+    for(var i=0;i<e.length-1;i++){
+    // console.log(e[i].event)
+    var dType = [{
+    'attributes': []
+    }]
+    
+    //tmp_arr.push({key: 'caseID', value: e[i].string['@attributes']['value']})
+    e[i].event.forEach(d => {
+    let tmp_arr = [];
+    tmp_arr.push(e[i].string['@attributes']['value']);
+    d.string.forEach(ss => {
+    // dType.caseID = e[i].string['@attributes']['value'];
+    
+    if(ss['@attributes']['key'] == 'concept:name'){
+    //tmp_arr.push({key: ss['@attributes']['key'], value: ss['@attributes']['value']});
+    tmp_arr.push(ss['@attributes']['value']);
+    }
+    
+    if(ss['@attributes']['key'] == 'org:resource'){
+    //tmp_arr.push({key: ss['@attributes']['key'], value: ss['@attributes']['value']});
+    tmp_arr.push(ss['@attributes']['value']);
+    }
+    // tmp_arr.push({'caseID': e[i].string['@attributes']['value'], 'attributes':[{key: ss['@attributes']['key'], value: ss['@attributes']['value']}]})
+    });
+    //console.log(d.date['@attributes']['value'])
+    //tmp_arr.push({key: 'CaseID', value: e[i].string['@attributes']['value']})
+    
+    //tmp_arr.push({key: d.date['@attributes']['key'], value: d.date['@attributes']['value']});
+    tmp_arr.push(d.date['@attributes']['value']);
+    //tmp_arr.push({key: d.date['@attributes']['key'], value: d.date['@attributes']['value']})
+    xesData.push(tmp_arr);
+    });
+    // tmp_arr.push(dType);
+    
+    //console.log(e.string['@attributes']['value'])
+    
+    // e.string.forEach(ev => {
+    // tmp_arr.push(ev['@attributes']['value']);
+    // })
+    
+    
+    }
+    // console.log(xesData);
+    _self.dt.changePiData(xesData)
+    _self.router.navigateByUrl('/pages/processIntelligence/xesdocument'); 
     }
     fileReader.readAsText(file);
-  }
-//   onDbSelect(){
-//     document.getElementById("foot").classList.remove("slide-down");
-//     document.getElementById("foot").classList.add("slide-up");
-// }
-// slideDown(){
-//   document.getElementById("foot").classList.add("slide-down");
-//   document.getElementById("foot").classList.remove("slide-up");
-// }
+    }
 testConnection(){
 // console.log("userName",this.dbDetails);
   this.isSave=false;

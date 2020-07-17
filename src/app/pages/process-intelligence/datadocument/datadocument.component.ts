@@ -80,7 +80,6 @@ export class DatadocumentComponent implements OnInit {
                   }
                 case 3:
                   {
-                    console.log(this.headerData[3]);
                     this.getDataType(3, this.fileData[0][3], this.headerData[3]);
                   }
                   case 4:
@@ -241,7 +240,6 @@ export class DatadocumentComponent implements OnInit {
   }
 
   getDataType(index, fData, headValue) {
-    console.log(headValue,">>>>", index,"<<<<<<<<<<<",fData);
     if(headValue.indexOf('Timestamp') != -1 || headValue.indexOf('Time') != -1){
       if (headValue == 'S.No' ) {
         if (this.isDate(fData) == true) {
@@ -265,7 +263,6 @@ export class DatadocumentComponent implements OnInit {
         }
       }
       if (headValue == 'Start Timestamp' || headValue == 'Start Time') {
-        console.log("ihhhh", fData)
         if (this.isDate(fData) == true) {
           this.cathead4 = "Date/Time";
         } else {
@@ -316,7 +313,6 @@ export class DatadocumentComponent implements OnInit {
         }
       }
       if (headValue == 'Start Timestamp' || headValue == 'Start Time') {
-        console.log("ihhhhfff", fData)
         if (this.isNumeric(fData) == true) {
           this.cathead4 = "Integer";
         } else {

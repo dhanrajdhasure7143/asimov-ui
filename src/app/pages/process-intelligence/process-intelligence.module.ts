@@ -24,6 +24,7 @@ import {DataTablesModule} from 'angular-datatables';
 import {MatOptionModule, MatSelectModule} from '@angular/material';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
+import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
     FlowchartComponent,
     SearchPipe,
     DataselectionComponent,
-    PibpmnfilterComponent
+    PibpmnfilterComponent,
+    XesdocumentComponent
   ],
   imports: [
     CommonModule,
