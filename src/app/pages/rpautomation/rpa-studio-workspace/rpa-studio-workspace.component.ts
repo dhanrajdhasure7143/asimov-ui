@@ -74,7 +74,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         let node={
           id:nodeid,
           name:nodename,
-          selectedNodeTask:"",
+          selectedNodeTask:element.taskName,
           path:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).path,
           tasks:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
           x:element.x,
@@ -524,46 +524,29 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.finaldataobjects=[];
   }
   
-  updateBotFun(botProperties)
+  updateBotFun(botProperties,env)
   {
 
     console.log(this.formVales);
-    this.saveBotdata = [];
-    let mainObj:any = [];
-    let tstAtt:any;
-    let obj:any = [];
-    let objAttr:any;
-    this.formVales.forEach((ele,i) => {
-     
-      let objKeys = Object.keys(this.fieldValues);
-      objAttr = {
-        "metaAttrId": ele.taskId,
-        "atrribute_type": ele.type,
-        "metaAttrValue": ele.name,
-         "attrValue": this.fieldValues[objKeys[i]]
+    console.log(botProperties.predefinedBot)
+    console.log(this.formVales);
+    this.saveBotdata = {
+          "version":botProperties.version, 
+          "botId":botProperties.botId,      
+          "botName": botProperties.botName,
+          "botType" : botProperties.botType,
+          "description":botProperties.botDescription,
+          "department":botProperties.botDepartment,
+          "botMainSchedulerEntity":this.scheduler,
+          "envIds":env,
+          "isPredefined":botProperties.predefinedBot,
+          "tasks": this.finaldataobjects,
+          "createdBy": "admin",
+          "lastSubmittedBy": "admin",
+          "scheduler" : this.scheduler,
+          "sequences": this.getsequences(),
       }
-     
-      obj.push(objAttr);
-        
-  })
-  
-  tstAtt={"attributes":obj};
-  mainObj.push(tstAtt);
-  this.allFormValues.push(obj);
-  console.log(this.allFormValues);
-  this.saveBotdata = {
-    "botId":botProperties.botId,
-    "botName": botProperties.botName,
-    "botType" : botProperties.botType,
-    "description":botProperties.description,
-    "department":botProperties.department,
-    "envIds":botProperties.envIds,
-    "tasks": mainObj,
-    "createdBy": "admin",
-    "lastSubmittedBy": "admin",
-    "scheduler" : botProperties.scheduler,
-  }
-
+    console.log(this.saveBotdata)
     return this.rest.updateBot(this.saveBotdata)
   }
 

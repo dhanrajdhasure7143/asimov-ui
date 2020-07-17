@@ -117,11 +117,8 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   }
   execution(botid:number){
     let data="";
-    const requestOptions: Object = {
-      responseType: 'text'
-    }
     let url='/rpa-service/start-bot/'+botid;
-    return this.http.post(url,data,requestOptions)
+    return this.http.post(url,data)
   }
   
   stopbot(botid:number,data:any){
@@ -195,6 +192,10 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
    return this.http.get("/rpa-service/bot-version?botId="+botid);
   }
 
+  getbotversiondata(botId,vid)
+  { 
+    return this.http.get("/rpa-service/get-bot/"+botId+"/"+vid)
+  }
 
   // PI module rest api's
 
