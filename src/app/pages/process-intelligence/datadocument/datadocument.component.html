@@ -17,7 +17,7 @@
     </div>
     <div class="row" *ngIf="headerName" class="columnSelection">
       <div class="col-md-4"><b>Select Column - Step {{step_id}}/6:"{{headerName}}"</b></div>
-      <div class="col-md-4"><small>(Click on the {{headerName}} Value Column for Data mapping)</small></div>
+      <div class="col-md-4"><small>(Click on the {{headerName}} Value Column for Data Validation)</small></div>
       <div class="col-md-2"> <svg width="12" height="12" class="svg">
           <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
         </svg> Success Mapping
@@ -79,7 +79,7 @@
                     </tr>
             </thead>
             <tbody #container>
-                <tr *ngFor="let row of fileData|filter:searchTerm;trackBy:loopTrackBy;let i=index;" class="tableRow">
+                <tr *ngFor="let row of fileData|filter:searchTerm| paginate: { itemsPerPage: 50, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
                   <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val)"
                     [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1" 
                     [class.invalid]="invalidCells['row'+i] && invalidCells['row'+i].indexOf('cell'+j)>-1"> 
@@ -89,6 +89,8 @@
             </tbody>
         </table>
       </form>
+        <div class="col-sm-8"></div>
+      <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
     </div>
 </div>
 

@@ -57,6 +57,9 @@ export class FlowchartComponent implements OnInit {
   public caselength: number;
   public isdownloadsvg: boolean = false;
   public isdownloadpdf: boolean = false;
+  public isdownloadJpeg: boolean = false;
+  public isdownloadPng: boolean = false;
+
   public isDefaultData: boolean = true;
   public nodeArray: any[];
   public linkdata: any;
@@ -69,7 +72,7 @@ export class FlowchartComponent implements OnInit {
     floor: 0,
     ceil: 1,
     // translate: (value: number): string => `${value}%`,
-    translate: (value: number): string => `${value}`,
+    translate: (value: number): string => `${value*100}`,
     hideLimitLabels: false,
     hidePointerLabels: false,
     vertical: true,
@@ -95,7 +98,7 @@ export class FlowchartComponent implements OnInit {
 
   sliderVariant:any=[];  
   isActivity_dropdwn:boolean=false;
-  activity_value:any;
+  activity_value:any=[];
   selectedActivity:any=[];
   activity_list:any=[];
   fullgraph_model:any;
@@ -103,7 +106,14 @@ export class FlowchartComponent implements OnInit {
   @ViewChild('activitySelect',{static: false}) activitySelect;
   variantCombo:any=[];
   isvariantSelectedOne:boolean=false;
-  sliderGraphData:any=[]
+  sliderGraphData:any=[];
+  startPoint:boolean=false;
+  endPoint:boolean=false;
+  isEndpoint_dropdwn:boolean=false;
+  performanceValue1:any;
+  performanceValue2:any;
+  performanceValue3:any;
+  timeRangeArray:any=[]
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -117,7 +127,7 @@ export class FlowchartComponent implements OnInit {
     private location:Location,
     private global:GlobalScript) {  }
 
-  @HostListener('document:click', ['$event.target'])
+  @HostListener('document:click', ['$event.target'])  // spinner overlay hide on out side click
   public onClick(targetElement) {
       const clickedInside = this.toogleBtn.nativeElement.contains(targetElement);
       if (!clickedInside) {
@@ -155,7 +165,6 @@ export class FlowchartComponent implements OnInit {
     // this.rest.getfullGraph(piId).subscribe(data=>{this.fullgraph=data
     //   let fullgraphOne=JSON.parse(this.fullgraph.data);
     //   this.model1 = fullgraphOne.allSelectData.nodeDataArraycase
-    //   console.log('this.model1',this.model1);
     //   this.model2 = this.flowchartData(this.model1)
     //   let loction=''
     //   for(var i=0;i<this.model1.length;i++){
@@ -189,38 +198,28 @@ export class FlowchartComponent implements OnInit {
         this.graphIds = piId;
         setTimeout(() => {
           this.onchangegraphId(piId);
-        }, 6*60*1000); //3*60*1000
+        }, 6*60*1000);
       }
     });
-    
-  //   setTimeout(() => {
-  //     this.onchangegraphId(piId);
-  //   // }, 3*60*1000);
-  // }, 300);
     
   }
 
   ngAfterContentChecked() {
     this.rangevalue = ZoomSlider.rangeValue;
   }
-  getAlluserProcessPiIds(){
+  getAlluserProcessPiIds(){ // Process graphs List
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data})
   }
-  onchangegraphId(selectedpiId){
+  onchangegraphId(selectedpiId){ 
     this.isNodata=true;
-    // location.replace("/pages/processIntelligence/flowChart?wpiId="+selectedpiId)
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
       let tokenOne=params['piId']
       if (token) {
-          // this.cache.set({t: 't'}, token);
-          // window.location.href = this.router.url.split('?')[0];
           let url=this.router.url.split('?')
           this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
-        //   console.log(url[0]+'?wpiId='+selectedpiId); 
       }else{
         let url=this.router.url.split('?')
-        // window.location.href = url[0]+'?piId='+selectedpiId;
         this.location.replaceState(url[0]+'?piId='+selectedpiId);
 
       }
@@ -232,12 +231,8 @@ export class FlowchartComponent implements OnInit {
        "pid":selectedpiId
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
-    //   console.log('this.varaint_data',data);
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
-          // this.varaint_data.data[i].days=this.timeConversion(this.varaint_data.data[i].days);
-          // console.log( this.varaint_data.data[i].days);
-          
       }
       this.onchangeVaraint("0");
       })
@@ -256,13 +251,9 @@ export class FlowchartComponent implements OnInit {
         } else{
          let fullgraphOne=this.fullgraph.data;
         //let fullgraphOne=this.gResponse.data;
-        // console.log("fullgraphOne",fullgraphOne.allSelectData.nodeDataArraycase);
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
-          console.log("this.activity_list",this.activity_list);
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
-
-        console.log('this.model1',this.model1);
         let loction=''
         for(var i=0;i<this.model1.length;i++){
           if(this.model1[i].key==-1||this.model1[i].key==-2){
@@ -281,8 +272,6 @@ export class FlowchartComponent implements OnInit {
         this.model2 = this.flowchartData(this.model1)
         for(var j=0;j<this.model2.length;j++){
           // for (let [key, value] of Object.entries(this.model2[j])) {
-            console.log(this.model2[j].from);
-
                             // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
                 // this.model2[j].from>0 && this.model2[j].to<0
                 // this.model2[j].from ==-2||this.model2[j].to==-2
@@ -315,9 +304,7 @@ export class FlowchartComponent implements OnInit {
             this.model2[j].curviness=loc3
             }
         }
-      }
-        console.log(this.model2);
-        
+      }        
         this.spinner.hide();
     }
         });
@@ -327,19 +314,16 @@ export class FlowchartComponent implements OnInit {
            "pid":selectedpiId
            }
         this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
-        // console.log('varaint_GraphData',this.varaint_GraphData);
         })
         const sliderGraphbody= { 
           "data_type":"slider_graph", 
            "pid":selectedpiId
            }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
-            // console.log("this.sliderVariant",this.sliderVariant);
         })
   }
 
   onchangeVaraint(datavariant) {
-    // console.log("variantdata",datavariant);
     switch (datavariant) {
       case "0":
         // this.varaint_data = this.varaint_dat;
@@ -384,8 +368,6 @@ export class FlowchartComponent implements OnInit {
   // }
  
   caseIdSelect(selectedData, index) {
-    console.log(selectedData,index);
-    
     this.activityValue=0;
     this.pathvalue=0;
     this.activity_value=[];
@@ -395,8 +377,6 @@ export class FlowchartComponent implements OnInit {
     // const element = this.pgModel.flowchartData[selectedData.case];
     // this.model1 = element.nodeDataArraycase;
     // this.model2 = element.linkarraycase;
-    // console.log("data1", selectedData);
-    // console.log("model1",this.model1);
 
     // single variant selection
     // this.isselected=index;
@@ -443,14 +423,11 @@ export class FlowchartComponent implements OnInit {
     };
 // multi variant selection end
 
-    console.log("selectedcase", this.selectedCaseArry)
-    console.log("selectedcase.length",this.selectedCaseArry.length)
     this.caselength = this.selectedCaseArry.length;
     if(this.selectedCaseArry.length == 0){
         let fullgraphOne=this.fullgraph.data;
             this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
                 this.nodesAlignment();
-            console.log('this.model1',this.model1);
             this.model2 = this.flowchartData(this.model1);
                 this.linkCurvinessGenerate();
                 // variant_playOne
@@ -464,15 +441,10 @@ export class FlowchartComponent implements OnInit {
       // this.model1=this.pgModel.allData.nodeDataArraycase;
       // this.model2=this.flowchartData(this.pgModel.nodeDataArraycase)
       this.isDefaultData = false;
-      console.log("selectedcase", this.selectedCaseArry)
-    // console.log("selectedData.case",selectedData.case);
     
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
-        // console.log('log',this.selectedCaseArry[0], this.pgModel.flowchartData);
         
-        var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]]
-        console.log('modalData',modalData);
-        
+        var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]]        
         this.model1 = modalData.nodeDataArraycase
         this.nodeAlignment();
         this.model2 = this.flowchartData(this.model1)
@@ -485,12 +457,9 @@ export class FlowchartComponent implements OnInit {
         "pid":this.graphIds,
         "cases" : this.selectedCaseArry
     }
-    console.log("variantComboArray",variantComboBody);
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
-    console.log("variantCombo",this.variantCombo);
     this.model1=this.variantCombo.data[0].nodeDataArraycase
     this.nodeAlignment();
-    console.log("this.model1",this.model1);
     this.model2 = this.flowchartData(this.model1);
     this.linkCurvinessGenerate();
     
@@ -499,14 +468,11 @@ export class FlowchartComponent implements OnInit {
 //     else {
 //       var modelDataArray = []
 //       for (var i = 0; i < this.selectedCaseArry.length; i++) {
-//         // console.log('key',this.keyExists(this.selectedCaseArry[i],this.pgModel.flowchartData)==true);
-//         // console.log("selectedCaseArry",this.selectedCaseArry);
 
 //         if (this.keyExists(this.selectedCaseArry[i], this.varaint_GraphDataArray) == true) {
 //           var modalData = this.varaint_GraphData.data[this.selectedCaseArry[i]]
 //           modelDataArray.push(modalData)
 
-//           // console.log('modalData[0]',modalData);
 
 
 //           // this.model1=result
@@ -515,33 +481,26 @@ export class FlowchartComponent implements OnInit {
 //         }
 
 //       }
-//       // console.log('modalData[0]', modelDataArray);
 
 //       // var combine_obj={};
 //       // for(var key in modelDataArray[0].nodeDataArraycase) combine_obj[key]=modelDataArray[0].nodeDataArraycase[key];
 //       // for(var key in modelDataArray[1].nodeDataArraycase) combine_obj[key]=modelDataArray[1].nodeDataArraycase[key];
 //       // // var diffirence= modelDataArray[0].nodeDataArraycase.filter(x=>!modelDataArray[1].nodeDataArraycase.includes(x));
 //       // // var compare= this.compareJSON(modelDataArray[0],modelDataArray[1])
-//       // console.log('combine_obj',combine_obj);
 
 //       var outArr = [];
 //       var m = this
 
 //       modelDataArray[0].nodeDataArraycase.forEach(function (value, i) {
-//         // console.log(value);
 //         modelDataArray[1].nodeDataArraycase.forEach(function (value1, j) {
-//           //console.log(value1)
 //           if (value.name === value1.name) {
 //             if (value.hasOwnProperty('linkArray') && value1.hasOwnProperty('linkArray')) {
-//               // console.log(value.linkArray.length);
 //               if (value.linkArray.length != 0 && value1.linkArray.length != 0) {
 //                 value.linkArray.forEach(e1 => {
-//                   // console.log(e1 + "::::");
 //                   value1.linkArray.forEach(e2 => {
 //                     if (e1 != e2) {
   
 //                       value.linkArray.push(e2);
-//                       // console.log(value);
   
 //                       value.linkArray = m.removeDuplicates(value.linkArray);
 //                     }
@@ -551,12 +510,10 @@ export class FlowchartComponent implements OnInit {
 //                 if (value.linkArray.length == 0) {
 //                   value1.linkArray.forEach(e2 => {
 //                     value.linkArray.push(e2);
-//                     // console.log(value);
 //                   });
 //                 } else {
 //                   value.linkArray.forEach(e1 => {
 //                     value.linkArray.push(e1);
-//                     // console.log(value);
 //                   });
 //                 }
   
@@ -574,18 +531,15 @@ export class FlowchartComponent implements OnInit {
 //           }
 //         });
 //       });
-// // console.log('outArr1',outArr);
 
 //       if(this.selectedCaseArry.length > 2){
 // var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
-// // console.log('outArr12',outArr);
 
 //         this.multynodeArray(outArr,modalData)
 //       }
 //     // this.nestedArray=outArr;
 
 //       // if(this.selectedCaseArry.length >2){
-//       //   console.log(this.selectedCaseArry);
         
 //       // for(var i=2; i < this.selectedCaseArry.length; i++){
 //       //   // var k=2;
@@ -666,7 +620,7 @@ export class FlowchartComponent implements OnInit {
         }
         // value.toolCount=sum
           outArr.push(value);
-          console.log('outarraynested',outArr);
+          // console.log('outarraynested',outArr);
         }
       });
     });
@@ -676,7 +630,7 @@ export class FlowchartComponent implements OnInit {
     return array.filter((a, b) => array.indexOf(a) === b)
    };
   keyExists(key, search) {
-    console.log('test',key, search)
+    // console.log('test',key, search)
     var existingObj = search.find(function (element) {
       return typeof element[key] !== 'undefined';
     });
@@ -706,12 +660,11 @@ export class FlowchartComponent implements OnInit {
 
   downloadSvg() {
     this.isdownloadsvg = true;
-    // console.log(this.isdownloadsvg);
   }
   svgValueEmitted(isSvg){
     setTimeout(()=> {
       this.isdownloadsvg=isSvg;
-  }, 1000);
+    }, 1000);
   }
   downloadPdf(){
     this.isdownloadpdf= true;
@@ -719,9 +672,24 @@ export class FlowchartComponent implements OnInit {
   pdfValueEmitted(isPdf){
     setTimeout(()=> {
       this.isdownloadpdf=isPdf
-  }, 1000);  
+    }, 1000);  
   }
-
+  downloadjpeg(){
+    this.isdownloadJpeg= true;
+  }
+  jpegValueEmitted(isJpeg){
+    setTimeout(()=> {
+      this.isdownloadJpeg=isJpeg
+    }, 1000);  
+  }  
+  downloadpng(){
+    this.isdownloadPng= true;
+  }
+  pngValueEmitted(isPng){
+    setTimeout(()=> {
+      this.isdownloadPng=isPng
+    }, 1000);  
+  }
   selectAllVariants() {
     this.activity_value=[];
     this.activityValue=0;
@@ -852,7 +820,7 @@ export class FlowchartComponent implements OnInit {
     // this.model1=this.pgModel.allData.nodeDataArraycase;
 
     // this.model2=this.linkdataArray;
-    console.log('linkarray', this.linkdataArray)
+    // console.log('linkarray', this.linkdataArray)
     return this.linkdataArray;
   }
 
@@ -908,9 +876,6 @@ timeConversion(millisec) {
 }
 
 selectedMetric(selectedValue){
-  console.log('spinMetrics0',this.spinMetrics0);
-  console.log("selectedValue",selectedValue);
- 
   let index;
   switch(selectedValue){
     case "absoluteFrequency":
@@ -944,9 +909,7 @@ selectedMetric(selectedValue){
         index=9;
     break;
   }
-  // console.log(index);
   for(var i=1;i<this.model1.length-1;i++){
-    // console.log(this.model1[i].count);
     if(index==5||index==6||index==7||index==8||index==9){
       this.model1[i].count=this.timeConversion(this.model1[i].toolCount[index])
     }else{
@@ -954,54 +917,17 @@ selectedMetric(selectedValue){
       this.model1=this.model1
       // this.model1[i].countOne=this.model1[i].toolCount[index]
     }
-
   }
-  console.log("model",this.model1);
-
   this.model2 = this.flowchartDataOne(this.model1,index)
-  for(var j=0;j<this.model2.length;j++){
-    if(j==0 && this.model2[j].to>1 ){
-      let loc3=160
-    this.model2[j].curviness=loc3
-    }else{
-    if(this.model2[j].from ==-1||this.model2[j].from==-2){
-      if(this.model2[j].from==-1 && this.model2[j].to==0){
-        let loc3=0
-        this.model2[j].curviness=loc3
-      }else{
-      let loc3=-25*j
-    this.model2[j].curviness=loc3
-      }
-    }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
-      if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
-        let loc3=0
-        this.model2[j].curviness=loc3
-      }else{
-        let loc3=20*j
-        this.model2[j].curviness=loc3
-      }
-  }else if(this.model2[j].from+1==this.model2[j].to){
-    let loc3=0
-    this.model2[j].curviness=loc3
-  }else{
-      let loc3=30*j
-    this.model2[j].curviness=loc3
-    }
-  }
-}
-  
+  this.linkCurvinessGenerate();
 }
 flowchartDataOne(dataArray,index) {
-  // console.log('index',index);
-  
   this.linkData = [];
   this.linkdataArray = [];
   this.nodeArray = dataArray;
    var linkToolArray=[];
   for (var i = 1; i < this.nodeArray.length-1; i++) {
-    // console.log('linkArray',this.nodeArray[i].linkArray);
     var datalink = this.nodeArray[i].linkArray;
-    //  console.log('datalink',datalink);
     var link=[]
     var linktool=[]
     var label = this.nodeArray[i].name;
@@ -1019,12 +945,10 @@ flowchartDataOne(dataArray,index) {
         if(index==5||index==6||index==7||index==8||index==9){
           obj['text'] = this.timeConversion(datalink[j].toolCount[index]);
         }else{
-        
           obj['text'] = datalink[j].toolCount[index];
           if(datalink[j].toolCount[index]>100){
             obj['highData']=true
           }
-
         }
         // let testedg=label+' --> '+datalink[j].linkNode
         // obj['textOne'] = testedg;
@@ -1075,7 +999,7 @@ flowchartDataOne(dataArray,index) {
         
       }
   }
-console.log('this.linkdataArray',this.linkdataArray);
+// console.log('this.linkdataArray',this.linkdataArray);
 
   return this.linkdataArray;
 }
@@ -1208,20 +1132,14 @@ closeNav() {
   
 
   onchangeActivity(value){
-    console.log("activityValue",this.activityValue);
-    // this.activityValue=value;
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue) 
   }
   onChangePath(value){
-    console.log("pathValue",this.pathvalue);
-    // this.pathvalue=value;
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue)
   }
    
 //sliderGraph Response
-sliderGraphResponse(graphData,activity_slider,path_slider) {
-  console.log("graphData",graphData);
-  
+sliderGraphResponse(graphData,activity_slider,path_slider) {  
   this.activity_value=[];
   if(activity_slider==1&&path_slider==1){
     this.isNodata=true;
@@ -1259,7 +1177,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
   //     return;
   // }
   this.sliderGraphData=sliderGraphArray;
-  console.log("slidergraphData",this.sliderGraphData);
   this.isNodata=true;
     var obj={"key": -1,"category": "Start","count": 80,"extraNode":'true'}
     var obj1={"key": -2,"category": "End","count": 80,"extraNode":'true'}
@@ -1269,7 +1186,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
             modelOne.push(sliderGraphArray[i]);
         }
     modelOne.push(obj1)
-    // console.log("modelOne",modelOne);
     this.model1=modelOne;
     this.nodesAlignment()
     this.model2 = this.flowchartData(this.model1)
@@ -1297,17 +1213,28 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
   activityDropDown(){
     this.isActivity_dropdwn = !this.isActivity_dropdwn;
   }
-  activitySelectedGraph(){
-    this.activitySelect.close();
+  filterByActivity(){
+    var checkboxes = document.getElementsByName("activity_filter");
+  var CheckedBoxes = [];
+  this.activity_value = [];
+  for (var i=0; i<checkboxes.length; i++) {
+      CheckedBoxes.push(checkboxes[i]);
+  }
+// CheckedBoxes.map(e => e.value);
+  for (var j=0; j<CheckedBoxes.length; j++) {
+    if (CheckedBoxes[j].checked==true) {
+      this.activity_value.push(CheckedBoxes[j].value);
+    }
+    }
+// console.log("activity_value1",this.activity_value);
+// return;
+    // this.activitySelect.close();
     this.activityValue=0;
     this.pathvalue=0;
     this.isNodata=true;
     // console.log(activity);
     var model3=[]
-    
-    // this.selectedActivity.push(this.activity_value)
-    // console.log("activity_value1",this.selectedActivity,this.activity_value);
-    console.log("activity_value1",this.activity_value);
+
     model3[0]=this.fullgraph_model[0]
     for(var i=0;i<this.activity_value.length;i++){
       for(var j=0;j<this.fullgraph_model.length;j++){
@@ -1318,21 +1245,282 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
         }
       }
     }
-    console.log("this.model1.length",this.fullgraph_model.length);
+    // console.log("this.model1.length",this.fullgraph_model.length);
     model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
     this.model1=model3
     this.nodeAlignment();
-    console.log("this.model1",this.model1);
     this.model2 = this.flowchartData(this.model1);
-    this.linkCurvinessGenerate();
+    this.linkCurvinessGenerateOne();
+    this.isActivity_dropdwn=false;
   }
+  linkCurvinessGenerateOne(){
+    for(var j=0;j<this.model2.length;j++){
+      if(j==0){
+        let loc3=140
+        this.model2[j].curviness=loc3
+      }else{
+      let loc3=25*j
+        this.model2[j].curviness=loc3
+      }
+    }
+  }
+  // nodeAlignmentOne(){
+  //   let loction=''
+  //   for(var i=0;i<this.model1.length;i++){
+  //     var test=Math.floor(100 + Math.random() * 900);
+
+  //     let loc1=test
+  //     let loc2=test
+  //     loction=loc1+' '+loc2;
+  //     this.model1[i].loc=loction
+
+  //   }
+  // }
   resetActivity(){
     this.activityValue=0;
     this.pathvalue=0;
-    this.activity_value=[];
     this.model1=this.fullgraph_model
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1);
     this.linkCurvinessGenerate();
+  }
+  endpointsDropDown(){
+    this.isEndpoint_dropdwn=!this.isEndpoint_dropdwn
+  }
+  filterByEndpoints(){
+    this.model1=[];
+    this.model2=[];
+    var endpointModel=[];
+    var endpointModelOne=[];
+    // endpointModel=this.flowchartData(this.model1)
+    endpointModel=this.fullgraph_model
+// console.log('endpointModel',endpointModel[0]);
+this.linkdataArray=[]
+ if(this.startPoint==true&&this.endPoint==false){
+      for(var i=1; i<endpointModel.length-1;i++){
+        if (endpointModel[i].tool.includes('Start Frequency')) {
+          var obj = {};
+          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(endpointModel[i].toolCount[3]!=0){
+          obj['from'] = -1;
+          obj['to'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
+          endpointModelOne.push(endpointModel[i])
+          obj['text'] = endpointModel[i].toolCount[3];
+          obj["extraNode"] = 'true';
+          obj["curviness"] =60*i;
+          this.linkdataArray.push(obj);
+          }
+        }
+      }
+      this.model1[0]=endpointModel[0]
+      for(var j=0;j<endpointModelOne.length;j++){
+        this.model1.push(endpointModelOne[j])
+      }
+      // this.model1.push(endpointModel[endpointModel.length-1])
+      this.nodeAlignment();
+      this.model2=this.linkdataArray
+    }else if(this.startPoint==false&&this.endPoint==true){
+      for(var i=1; i<endpointModel.length-1;i++){
+        if (endpointModel[i].tool.includes('End Frequency')) {
+          var obj = {};
+          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(endpointModel[i].toolCount[4]!=0){
+            obj['from'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
+            obj['to'] = -2;
+          endpointModelOne.push(endpointModel[i])
+          obj['text'] = endpointModel[i].toolCount[4];
+          obj["extraNode"] = 'true';
+          obj["curviness"] =60*i;
+          this.linkdataArray.push(obj);
+          }
+        }
+      }
+      // this.model1[0]=endpointModel[0]
+      for(var j=0;j<endpointModelOne.length;j++){
+        this.model1.push(endpointModelOne[j])
+      }
+      this.model1.push(endpointModel[endpointModel.length-1])
+      this.nodeAlignment();
+      this.model2=this.linkdataArray
+    }else if(this.startPoint==true&&this.endPoint==true){
+      for(var i=1; i<endpointModel.length-1;i++){
+        if (endpointModel[i].tool.includes('Start Frequency')) {
+          var obj = {};
+          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(endpointModel[i].toolCount[3]!=0){
+          obj['from'] = -1;
+          obj['to'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
+          endpointModelOne.push(endpointModel[i])
+          obj['text'] = endpointModel[i].toolCount[3];
+          obj["extraNode"] = 'true';
+          obj["curviness"] =60*i;
+          this.linkdataArray.push(obj);
+          }
+        }
+        if (endpointModel[i].tool.includes('End Frequency')) {
+          var obj = {};
+          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
+          if(endpointModel[i].toolCount[4]!=0){
+            // console.log(endpointModel[i].name);
+            obj['from'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
+            obj['to'] = -2;
+          endpointModelOne.push(endpointModel[i])
+ 
+          obj['text'] = endpointModel[i].toolCount[4];
+          obj["extraNode"] = 'true';
+          obj["curviness"] =60*i;
+          this.linkdataArray.push(obj);
+          }
+        }
+      }
+      this.model1[0]=endpointModel[0]
+      for(var j=0;j<endpointModelOne.length;j++){
+        this.model1.push(endpointModelOne[j])
+      }
+      this.model1.push(endpointModel[endpointModel.length-1])
+      this.nodeAlignment()
+      this.model2=this.linkdataArray;
+    }
+  }
+  getFromKeyOne(endpointModel,name) {
+    for (var i = 0; i < endpointModel.length; i++) {
+      if (name == endpointModel[i].name) {
+        return endpointModel[i].key;
+      }
+    }
+  }
+  cancel(){
+    this.isActivity_dropdwn=false;
+  }
+  cancelByEndpoints(){
+    this.startPoint=false;
+    this.endPoint=false;
+    this.isEndpoint_dropdwn=false;
+  }
+  resetfilter(){
+    this.resetActivity();
+    this.startPoint=false;
+    this.endPoint=false;
+  }
+
+  timeStampFilterOverlay(){
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
+    }
+  closePopup(){
+      var modal = document.getElementById('myModal');
+      modal.style.display="none";
+    }
+
+  onChangeTimeType(){
+  if (this.performanceValue2=="minutes") {
+    this.timeRangeArray=['0-100',"100-1000","1000-10000","10000 above"]
+  } else if (this.performanceValue2=="hours") {
+    this.timeRangeArray=['0-100',"100-500","500-1000","1000 above"]
+  } else if (this.performanceValue2=="days") {
+    this.timeRangeArray=['0-10',"10-100","100-200","200 above"]
+  }
+  }
+  filterByPerformance(){
+    let index;
+    switch(this.performanceValue1){
+      case "totalDuration":
+          index=5;
+      break;
+      case "medianDuration":
+          index=6;
+      break;
+      case "meanDuration":
+          index=7;
+      break;
+      case "maxDuration":
+          index=8;
+      break;
+      case "minDuration":
+          index=9;
+      break;
+    }
+    for(var i=1;i<this.model1.length-1;i++){
+      if(index==5||index==6||index==7||index==8||index==9){
+        this.model1[i].count=this.timeConversionOne(this.model1[i].toolCount[index])
+      }
+    }
+    // var filterModel=this.flowchartDataTwo(this.model1,index)
+    // for(var j=0;j<filterModel.length;j++){
+    //   if(filterModel[j].text<10)
+    //   console.log("filterModel[j].",filterModel[j]);
+    // }
+    this.model2 = this.flowchartDataTwo(this.model1,index)
+    this.linkCurvinessGenerate();
+  }
+  flowchartDataTwo(dataArray,index) {
+    this.linkData = [];
+    this.linkdataArray = [];
+    this.nodeArray = dataArray;
+     var linkToolArray=[];
+    for (var i = 1; i < this.nodeArray.length-1; i++) {
+      // console.log('linkArray',this.nodeArray[i].linkArray);
+      var datalink = this.nodeArray[i].linkArray;
+      //  console.log('datalink',datalink);
+      var link=[]
+      var linktool=[]
+      var label = this.nodeArray[i].name;
+      
+      for(var j=0; j< datalink.length; j++){
+        var obj = {};
+          obj['from'] = this.getFromKey(label);
+          obj['to'] = this.getFromKey(datalink[j].linkNode);
+          if(index==5||index==6||index==7||index==8||index==9){
+            obj['text'] = this.timeConversionOne(datalink[j].toolCount[index]);
+          }else{
+            obj['text'] = datalink[j].toolCount[index];
+            if(datalink[j].toolCount[index]>100){
+              obj['highData']=true
+            }
+          }
+          obj['toolData']=datalink[j].tool
+           obj['toolDataCount']=datalink[j].toolCount
+          this.linkdataArray.push(obj);
+    }
+        if (this.nodeArray[i].tool.includes('Start Frequency')) {
+          var obj = {};
+          if(this.nodeArray[i].toolCount[3]!=0){
+            obj['from'] = -1;
+            obj['to'] = this.getFromKey(this.nodeArray[i].name);
+            // if(index==0||index==1){
+            // obj['text'] = this.nodeArray[i].toolCount[3];
+            // }
+            obj["extraNode"] = 'true';
+            this.linkdataArray.push(obj);
+          }  
+        }
+        if (this.nodeArray[i].tool.includes('End Frequency')) {
+          var obj = {};
+          if(this.nodeArray[i].toolCount[4]!=0){
+            obj['from'] = this.getFromKey(this.nodeArray[i].name);
+            obj['to'] = -2;
+            // if(index==0||index==1){
+            // obj['text'] = this.nodeArray[i].toolCount[4]
+            // }
+            obj["extraNode"] = 'true';
+          this.linkdataArray.push(obj);
+          }
+        }
+    }
+  // console.log('this.linkdataArray',this.linkdataArray);
+    return this.linkdataArray;
+  }
+  timeConversionOne(millisec) {
+    var seconds:any = (millisec / 1000).toFixed(1);
+    var minutes:any = (millisec / (1000 * 60)).toFixed(1);
+    var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
+    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+    if (this.performanceValue2=="minutes") {
+        return minutes + " Min";
+    } else if (this.performanceValue2=="hours") {
+        return hours + " Hrs";
+    } else if (this.performanceValue2=="days") {
+        return days + " Days"
+    }
   }
 }

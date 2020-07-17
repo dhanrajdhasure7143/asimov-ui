@@ -1,0 +1,11 @@
+.inner-addon i{
+    position: absolute;
+    padding-left: 60%;
+    pointer-events: none;
+    width: 50px;
+    margin-top: 10px
+}
+.right-addon input{ padding-right: 20px !important; }
+input[type="text"]{
+    padding:4px !important;
+  }

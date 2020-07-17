@@ -17,6 +17,8 @@ export class PiflowchartComponent implements OnInit {
   @Input() public isplay;
   @Input() public isdownloadsvg;
   @Input() public isdownloadpdf;
+  @Input() public isdownloadJpeg;
+  @Input() public isdownloadPng;
   @Input() public spinMetrics0;
   public model:go.Model;
   @Output()
@@ -24,6 +26,8 @@ export class PiflowchartComponent implements OnInit {
     @Output() myOutputVal = new EventEmitter<boolean>();
     @Output() issvg=new EventEmitter<boolean>()
     @Output() ispdf=new EventEmitter<boolean>()
+    @Output() isjpeg=new EventEmitter<boolean>()
+    @Output() ispng=new EventEmitter<boolean>()
     public myDiagram: go.Diagram ;
     public isfrequency:boolean=false;
     toolData1:any=[];
@@ -53,9 +57,13 @@ export class PiflowchartComponent implements OnInit {
       this.makeSvg();
     }
     if(this.isdownloadpdf==true){
-      console.log(this.isdownloadpdf);
-      
       this.generateImages (2000,2000)
+    }
+    if(this.isdownloadJpeg==true){
+      this.downloadJpegGraph();
+    }
+    if(this.isdownloadPng==true){
+      this.downloadPngGraph();
     }
 
     // $(".zoomSlider").nextAll().remove();
@@ -200,8 +208,8 @@ export class PiflowchartComponent implements OnInit {
 
                 $(go.Shape, "RoundedRectangle", roundedRectangleParams,
                       { name: "countNode",
-                      width: 40, 
-                      height: 15, 
+                      width:50, 
+                      height: 15,
                       fill: "#0162cb",
                       alignment: go.Spot.BottomCenter, 
                       margin: 2,
@@ -392,7 +400,6 @@ export class PiflowchartComponent implements OnInit {
           var shape = obj.findObject("LINK");
           var shape1 = obj.findObject("LINK1");
           var shape2 = obj.findObject("PIPE");
-          console.log();
           if(shape.fromNode.hb.key==-1||shape.toNode.hb.key==-2){
             // console.log(shape1);
             
@@ -402,10 +409,6 @@ export class PiflowchartComponent implements OnInit {
             shape2.strokeWidth=6;
           }else{
             shape1.strokeWidth=10;
-            // shape2.stroke="green"
-            // shape2.strokeWidth=10;
-
-
           }
 
           if((shape.fromNode.hb.key==-1&&me.spinMetrics0=="absoluteFrequency")||(shape.fromNode.hb.key==-1&&me.spinMetrics0=="caseFrequency")||(shape.toNode.hb.key===-2 && me.spinMetrics0=="absoluteFrequency")||(shape.toNode.hb.key===-2 && me.spinMetrics0=="caseFrequency")||(shape.fromNode.hb.key>=0&&shape.toNode.hb.key>=0)){
@@ -631,7 +634,6 @@ export class PiflowchartComponent implements OnInit {
           }
         }
         function timeConversion(millisec) {
-         
           var seconds:any = (millisec / 1000).toFixed(1);
           var minutes:any = (millisec / (1000 * 60)).toFixed(1);
           var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
@@ -678,15 +680,6 @@ export class PiflowchartComponent implements OnInit {
       animation.runCount = Infinity;
       animation.start();
   }
-
-  // performance(){
-  //   this.isfrequency=true;
-    
-  // }
-  // frequency(){
-  //   this.isfrequency=false;
-  // }
-  
   myCallback(blob) {
     var url = window.URL.createObjectURL(blob);
     var filename = "mySVGFile.svg";
@@ -717,23 +710,6 @@ export class PiflowchartComponent implements OnInit {
     var blob = new Blob([svgstr], { type: "image/svg+xml" });
     this.myCallback(blob);
   }
-//   timeConversion(millisec) {
-//     console.log("millisec",millisec);
-    
-//     var seconds:any = (millisec / 1000).toFixed(1);
-//     var minutes:any = (millisec / (1000 * 60)).toFixed(1);
-//     var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
-//     var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
-//     if (seconds < 60) {
-//         return seconds + " Sec";
-//     } else if (minutes < 60) {
-//         return minutes + " Min";
-//     } else if (hours < 24) {
-//         return hours + " Hrs";
-//     } else {
-//         return days + " Days"
-//     }
-// }
 zoomIn(){
   this.myDiagram.commandHandler.increaseZoom();
 }
@@ -763,10 +739,8 @@ generateImages (width:any, height:any) {
   var imgHeight = height;
   //var p = db.position.copy();
   var d = this.myDiagram.documentBounds;
-  //making images
-  // for (var i = 0; i< boundsheight; i += imgHeight) {
+
   var img:any
-  //for (var j = 0; j < boundswidth; j += imgWidth) {
   img= this.myDiagram.makeImage({
     scale: 0,
     type: "image/jpeg",
@@ -774,9 +748,6 @@ generateImages (width:any, height:any) {
     //position: new go.Point(db.x, db.y),
     size: new go.Size(2000, 2000)
   });
-  //}
-  //}
-  // console.log(img);
   var doc = new jsPDF();
     doc.addImage(img.src, 'JPEG', 15, 40, 180, 160);
   //if you need more page use addPage();
@@ -785,5 +756,54 @@ generateImages (width:any, height:any) {
     this.isdownloadpdf=false;
     this.ispdf.emit(this.isdownloadpdf);
   }
+  downloadJpegGraph(){
+    var blob = this.myDiagram.makeImageData({ background: "white", returnType: "blob", callback: this.jpeGCallback });
+    this.isdownloadJpeg=false;
+    this.isjpeg.emit(this.isdownloadJpeg);
+    this.isdownloadPng=false;
+    this.ispng.emit(this.isdownloadPng);
+  }
+  jpeGCallback(blob) {
+    var url = window.URL.createObjectURL(blob);
+    var filename = "Graph.jpeg";
+    var a = document.createElement("a")
+    // a.style = "display: none";
+    a.href = url;
+    a.download = filename;
+    if (window.navigator.msSaveBlob !== undefined) {
+      window.navigator.msSaveBlob(blob, filename);
+      return;
+    }
+    document.body.appendChild(a);
+    requestAnimationFrame(function() {
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    });
+  }
+  downloadPngGraph(){
+    var blob = this.myDiagram.makeImageData({ background: "white", returnType: "blob", callback: this.pngCallback });
+    this.isdownloadPng=false;
+    this.ispng.emit(this.isdownloadPng);
+  }
+  pngCallback(blob) {
+    var url = window.URL.createObjectURL(blob);
+    var filename = "Graph.png";
+    var a = document.createElement("a")
+    // a.style = "display: none";
+    a.href = url;
+    a.download = filename;
+    if (window.navigator.msSaveBlob !== undefined) {
+      window.navigator.msSaveBlob(blob, filename);
+      return;
+    }
+    document.body.appendChild(a);
+    requestAnimationFrame(function() {
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    });
+  }
+
 
 }

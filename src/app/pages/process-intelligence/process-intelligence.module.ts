@@ -22,6 +22,9 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {DataTablesModule} from 'angular-datatables';
 import {MatOptionModule, MatSelectModule} from '@angular/material';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
+import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 
 
 @NgModule({
@@ -34,7 +37,8 @@ import {MatOptionModule, MatSelectModule} from '@angular/material';
     FlowchartComponent,
     SearchPipe,
     DataselectionComponent,
-    PibpmnfilterComponent
+    PibpmnfilterComponent,
+    XesdocumentComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +53,11 @@ import {MatOptionModule, MatSelectModule} from '@angular/material';
     Ng2SearchPipeModule,
     NgxSpinnerModule,
     DataTablesModule,
-    MatOptionModule,MatSelectModule
+    MatOptionModule,MatSelectModule,
+    NgxPaginationModule,
+    BackButtonDisableModule.forRoot({
+      preserveScrollPosition: true
+    })
   ],
   providers:[PiHints]
 

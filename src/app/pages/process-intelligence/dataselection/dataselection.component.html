@@ -1,24 +1,26 @@
 <div class="container">
     <div class="row">
-      <div class="col-md-4 col-sm-4" id="title">
+      <div class="col-md-12 col-sm-12" id="title">
           <!-- <h5 style="font-weight:600;color: rgb(90, 88, 88)">     <img src="assets/images/Group 208.svg" style="padding-right: 10px">Data Document</h5> -->
           <button class="btn btn-warning eiap-btn" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
       </div>
-      <div class="col-md-4 col-sm-4">
-          <div class="searchblock">
+      <!-- <div class="col-md-4 col-sm-4">
+          <div class="searchblock"> -->
               <!-- <input type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm" >
               <i class="fa fa-search" aria-hidden="true" style="color: gray"></i> -->
-          </div>
-      </div>
-      <div class="col-md-4 col-sm-12">
+          <!-- </div>
+      </div> -->
+      <div class="col-md-12 col-sm-12">
           <button class="btn btn-primary eiap-btn pull-right" [disabled]="!isgenerate" id="generateGraph" (click)="slideUp()">
               <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
       </div>
     </div>
-    <!-- <div class="row" *ngIf="headerName" class="columnSelection">
-      <div class="col-md-4"><b>Select Column - Step {{step_id}}/6:"{{headerName}}"</b></div>
-      <div class="col-md-4"><small>(Click on the {{headerName}} Value Column for Data mapping)</small></div> -->
-
+    <div class="row" *ngIf="headerName" class="columnSelection">
+      <div class="col-md-4"><b>Select Column - Step {{step_id}}/5:"{{headerName}}"</b></div>
+      <div class="col-md-4" *ngIf="headerName == 'caseID' && step_id == 1"><small>(Click on the column that contains your Case IDs. The Case ID usually is a numeric value that is unique and identifies each case in your process.)</small></div>
+      <div class="col-md-4" *ngIf="headerName == 'Activity' && step_id == 2"><small>(Click on the column that contains your activities. Activities are the actions that take place in your process. For example, if your process is Purchasing then ”Create Purchase Order” is an activity in that process.)</small></div>
+      <div class="col-md-4" *ngIf="headerName.indexOf('Timestamp') != -1 || headerName.indexOf('Time') != -1"><small>(Click on the columns that contains the timestamp for each activity. Timestamps usually look something like “2016-02-01 14:24:30” although the exact format of the timestamp may differ.)</small></div>
+    </div>
       <!-- <div class="col-md-2"> <svg width="12" height="12" class="svg">
           <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
         </svg> Success Mapping
@@ -83,7 +85,7 @@
             </thead>
             <tbody #container>
                     
-                <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" class="tableRow">
+                <tr *ngFor="let row of fileData| paginate: { itemsPerPage: 50, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
                   <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val)"
                     [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1"> 
                     {{row[j] || ' '}}
@@ -92,6 +94,8 @@
             </tbody>
         </table>
       </form>
+      <div class="col-sm-8"></div>
+        <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
     </div>
 </div>
 <process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)"></process-category-overlay>

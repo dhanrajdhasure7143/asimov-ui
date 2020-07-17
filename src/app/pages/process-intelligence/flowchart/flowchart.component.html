@@ -102,19 +102,45 @@
                         </select>
                     </div>
         </div>
-        <div class='col-sm-3'>
-            <!-- <div class="col-sm-6 activity_selection border_bottom" (click)="activityDropDown()">Activity Selection<span class="caret"></span></div>
-            <div class="activity_selection1 col-sm-8" *ngIf="isActivity_dropdwn">
-                   <div class="col-sm-6"> <button class='apply_btn' type='button' (click)="activitySelectedGraph()">Apply</button></div>
-                   <div class="col-sm-12"><button class='reset_btn' type='button' (click)="resetActivity()">reset</button></div>
-                      <mat-form-field>
+        <div class='col-sm-3 row'>
+            <!-- <div class="col-sm-6 activity_selection border_bottom" (click)="activityDropDown()">Activity Selection<span class="caret"></span></div> -->
+            
+            <div class="activity_selection1 col-sm-8" [hidden]="!isActivity_dropdwn">
+                    <form action="" #activityFilter="ngForm">
+                   <div class="col-sm-12"><button class='reset_btn' type='reset' (click)="resetActivity()">reset</button></div>
+                      <!-- <mat-form-field>
                             <mat-label>Activity</mat-label>
                             <mat-select [(ngModel)]="activity_value" #activitySelect multiple class=""> 
                                 <mat-option *ngFor="let eachNode of activity_list;let j=index;trackBy:loopTrackBy" [value]="eachNode.name">{{eachNode.name}}</mat-option>
-                                    <button class="btn btn-primary" (click)="activitySelectedGraph()">Apply</button>
+                                    <button class="btn btn-primary" (click)="filterByActivity()">Apply</button>
                             </mat-select>
-                          </mat-form-field>
-                    </div> -->
+                          </mat-form-field> -->
+                          <hr>
+                          <div class="activity_filter3">
+                            <div class="activity_filter1" *ngFor="let eachNode of activity_list;let j=index;trackBy:loopTrackBy">
+                            <input type="checkbox" id="activity_node" name="activity_filter" [value]="eachNode.name" required> <span>{{eachNode.name}}</span><br>
+                            </div>
+                        </div>
+                            <hr>
+                        <div class="col-sm-6"><button class="btn btn-warning cancel_btn" (click)="cancel()">Cancel</button></div>
+                        <div class="col-sm-4"><button class="btn apply_btn" (click)="filterByActivity()" [disabled]="activityFilter.invalid">Apply</button></div>
+                    </form>
+                    </div>
+                
+                    <div class="col-sm-6">
+                    <!-- <div class="activity_selection border_bottom" (click)="endpointsDropDown()"> End Points <span class="caret"></span></div>
+                    <div class="col-sm-12 activity_selection2" *ngIf="isEndpoint_dropdwn">
+                        <div class="col-sm-12"><button class='reset_btnOne' type='button' (click)="resetfilter()">reset</button></div>
+                        <hr>
+                            <input id="test" type="checkbox" [(ngModel)]="startPoint"> <span>Start</span><br>
+                            <input id="test" type="checkbox" [(ngModel)]="endPoint"> <span>End</span> <br>
+                            <hr>
+                            <div class="col-sm-6 cancel_btn1"><button class="btn cancel_btn" (click)="cancelByEndpoints()">Cancel</button></div>
+                            <div class="col-sm-6 apply_btn1"><button class="btn apply_btn" (click)="filterByEndpoints()">Apply</button></div>
+                        </div> -->
+                        <!-- <button class="btn" (click)="timeStampFilterOverlay()">Timestamp Filtter</button> -->
+                    </div>
+                    
                 
                     <!-- <div>
                 <button class='btn' (click)='zoomIn()'>Zoom In</button>
@@ -127,13 +153,16 @@
         </div>
         <!-- <div> -->
                 <div class="col-md-2 row">
-                        <div class="col-sm-6  dropdown">
-                            <button title="Download" data-toggle="dropdown" class="action_btn dropdown-toggle"><img class="action-btn" src="..\assets\images\PI\download_icon.svg"></button>
+                        <div class="col-sm-6 dropdown downloadIco">
+                            <button title="Download" data-toggle="dropdown" class="down_btn dropdown-toggle"><img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
+                        <!-- <div class="col-sm-6  dropdown">
+                            <button title="Download" data-toggle="dropdown" class="action_btn dropdown-toggle"><img class="action-btn" src="..\assets\images\PI\download_icon.svg"></button> -->
                     <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
                         
-                            <!-- <p class="" (click)="downloadPdf()">PDF</p> -->
-                            <p class="" (click)="downloadSvg()">SVG</p>
-                       
+                        <!-- <p class="" (click)="downloadjpeg()"><i class="far fa-file-image"></i><span>JPEG</span></p>
+                        <p class="" (click)="downloadpng()"><i class="far fa-file-image"></i><span>PNG</span></p> -->   
+                        <p class="" (click)="downloadPdf()"><i class="far fa-file-pdf"></i><span>PDF</span></p> 
+                        <p class="" (click)="downloadSvg()"><i class="fas fa-file-image"></i><span>SVG</span></p>
                         </div>
                         </div>
                         <div class='col-sm-6'>
@@ -202,7 +231,7 @@
                 </div>
             </div>
             <!-- <div *ngIf="!isNodata" class="nodata_slider"><h1>No data found</h1></div> -->
-        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"></app-piflowchart>
+        <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadJpeg]="isdownloadJpeg" [isdownloadPng]="isdownloadPng" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"(isjpeg)="jpegValueEmitted($event)"(ispng)="pngValueEmitted($event)"></app-piflowchart>
     </div>
     <div class='col-md-1'>
         <div class="path_slider1 pull-right">
@@ -308,3 +337,47 @@
 <!-- <app-filter [model1]='model1' [reports]='reports' ></app-filter> -->
 
 
+<div id="myModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" (click)="closePopup();">&times;</span>
+        <h4>Time stamp</h4>
+      </div>
+    <div class="modal-body">
+        <form autocomplete="off" #timeStapForm="ngForm"> 
+          <div class="container m-contanier">
+            <label for="performance_metrics"><b>Select</b></label>
+              <select name="performance_metrics" class="form-control border_bottom" [(ngModel)]="performanceValue1" required>
+                  <option value="null" hidden disabled>Select</option>
+                  <option value="totalDuration">Total Duration</option>
+                  <option value="medianDuration">Median Duration</option>
+                  <option value="meanDuration">Mean Duration</option>
+                  <option value="maxDuration">Max Duration</option>
+                  <option value="minDuration">Min Duration</option>
+              </select>
+              <div>
+                <label for="timeStamp"><b>Select Type</b></label>
+                <select name="timeStamp" class="form-control border_bottom" (change)="onChangeTimeType()" [(ngModel)]="performanceValue2" required>
+                    <option value="null" hidden disabled>Select</option>
+                    <option value="days">Days</option>
+                    <option value="hours">Hours</option>
+                    <option value="minutes">Minutes</option>
+                </select>
+              </div>
+              <div>
+                <label for="timeRange"><b>Select Time range</b></label>
+                <select name="timeRange" class="form-control border_bottom" [(ngModel)]="performanceValue3" required>
+                    <option value="null" hidden disabled>Select</option>
+                    <option value="undefined" hidden disabled>Select</option>
+                    <option value=" " hidden disabled>Select</option>
+                    <option *ngFor="let each of timeRangeArray;let i=index;trackBy:loopTrackBy" [value]="each">{{each}}</option>
+                </select>
+              </div>
+              <div class="clearfix m-btn">
+                <button type="button" class="btn btn-primary" (click)="filterByPerformance()" [disabled]="timeStapForm.invalid">Apply</button>
+              </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

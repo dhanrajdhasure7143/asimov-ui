@@ -105,22 +105,7 @@
 }
 .connection-buttons button{
     width: 150px;
-    border-radius: 20px;
     outline-style: none;
-}
-.connection_btn{
-    background-color:white;
-    border: 1px solid #0061cf !important;
-    color: #0061cf;
-}
-.connection_btn:hover{
-    background-color:#0061cf;
-    color: white;
-}
-.save_btn{
-    background-color:#0061cf;
-    color: white;
-    border: 1px solid #0061cf;
 }
 .work_spacetable{
     height: 300px;

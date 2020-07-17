@@ -36,6 +36,7 @@ export class DatadocumentComponent implements OnInit {
   cathead6: any;
   cathead7: any;
   dTypeArray = [];
+  p=1;
 
   // constructor(private router: Router, private dt: DataTransferService, private hints: PiHints, private global: GlobalScript) { }
   // searchTerm:string;
@@ -55,10 +56,12 @@ export class DatadocumentComponent implements OnInit {
         var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
+       
         this.headerData = this.headerData;
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
         this.fileData = this.fileData.slice(0, this.fileData.length-1);
+        
         this.fileData = this.fileData;
         for (var f = 0; f < this.headerData.length; f++) {
          
@@ -77,7 +80,6 @@ export class DatadocumentComponent implements OnInit {
                   }
                 case 3:
                   {
-                    console.log(this.headerData[3]);
                     this.getDataType(3, this.fileData[0][3], this.headerData[3]);
                   }
                   case 4:
@@ -194,11 +196,17 @@ export class DatadocumentComponent implements OnInit {
       }
     
       if (!isInvalid) {
-        if (this.step_id == this.headerData.length) {
+        // if (this.step_id == this.headerData.length-1) {
+        //   this.isValidPiData = true;
+        // } else {
+        //   this.step_id = this.step_id + 1;
+        // }
+
+        if (this.step_id == 5) {
           this.isValidPiData = true;
-        } else {
-          this.step_id = this.step_id + 1;
         }
+          this.step_id = this.step_id + 1;
+        
         this.headerData[index] = this.headerName;
        // this.headerName = this.headerData[hdr_ar_index + 1];
       }
@@ -232,7 +240,6 @@ export class DatadocumentComponent implements OnInit {
   }
 
   getDataType(index, fData, headValue) {
-    console.log(headValue,">>>>", index,"<<<<<<<<<<<",fData);
     if(headValue.indexOf('Timestamp') != -1 || headValue.indexOf('Time') != -1){
       if (headValue == 'S.No' ) {
         if (this.isDate(fData) == true) {
@@ -256,7 +263,6 @@ export class DatadocumentComponent implements OnInit {
         }
       }
       if (headValue == 'Start Timestamp' || headValue == 'Start Time') {
-        console.log("ihhhh", fData)
         if (this.isDate(fData) == true) {
           this.cathead4 = "Date/Time";
         } else {
@@ -307,7 +313,6 @@ export class DatadocumentComponent implements OnInit {
         }
       }
       if (headValue == 'Start Timestamp' || headValue == 'Start Time') {
-        console.log("ihhhhfff", fData)
         if (this.isNumeric(fData) == true) {
           this.cathead4 = "Integer";
         } else {
