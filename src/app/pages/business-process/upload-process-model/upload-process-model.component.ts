@@ -376,7 +376,7 @@ export class UploadProcessModelComponent implements OnInit {
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
-    delete(bpmnModel.createdTimestamp);
+    bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.initBpmnModeler();
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {

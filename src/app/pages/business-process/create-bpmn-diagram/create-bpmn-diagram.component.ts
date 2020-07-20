@@ -290,7 +290,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
-    delete(bpmnModel.createdTimestamp);
+    bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));

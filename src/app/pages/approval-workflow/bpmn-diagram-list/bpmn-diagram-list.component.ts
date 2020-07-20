@@ -160,7 +160,7 @@ this.selectedrow =i;
         "reviewComments":this.approval_msg,
         "tenantId": data.bpmnProcessInfo.tenantId,
         "userName": data.bpmnProcessInfo.userName,
-        "createdTimestamp": new Date(),
+        "createdTimestamp": data.bpmnProcessInfo.createdTimestamp,
         "modifiedTimestamp": new Date()
         }; 
   //delete(data.xpandStatus);
