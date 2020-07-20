@@ -28,12 +28,12 @@
       </div>
       <div class="row col-md-12"  id="bpmn_list">
         <mat-accordion>
-          <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag.bpmnXmlNotation,i)">
+          <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12">
                   <div class="col-md-2 first_col">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</div>
-                  <div class="col-md-2 col-half-offset">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss'}}</div>
+                  <div class="col-md-2 col-half-offset">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss':'UTC'}}</div>
                   <div class="col-md-2 col-half-offset">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
                   <div class="col-md-2 col-half-offset">{{each_diag.bpmnProcessStatus | titlecase}}</div>
                   <div class="col-md-2 col-half-offset">

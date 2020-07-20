@@ -26,6 +26,8 @@ export class BpsHomeComponent implements OnInit {
   sortIndex:number=1;
   index:number;
   xpandStatus=false;
+  autosavedDiagramList = [];
+  autosavedDiagramVersion = [];
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints ) { }
@@ -36,6 +38,7 @@ export class BpsHomeComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/businessProcess/home","title":"BPMN Upload"});
     this.dt.changeHints(this.hints.bpsHomeHints);
     this.getBPMNList();
+    this.getAutoSavedDiagrams();
   }
 
   async getBPMNList(){
@@ -60,8 +63,19 @@ export class BpsHomeComponent implements OnInit {
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
   }
-
-  getDiagram(byteBpmn,i){
+  getAutoSavedDiagrams(){
+    this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
+      if(Array.isArray(res))
+        this.autosavedDiagramList = res; 
+    });
+   }
+   filterAutoSavedDiagrams(modelId){
+    this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
+      return each_asDiag.bpmnModelId == modelId;
+    })
+   }
+  getDiagram(eachBPMN,i){
+    let byteBpmn = eachBPMN.bpmnXmlNotation;
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     this.bpmnModeler = new BpmnJS({
@@ -71,6 +85,9 @@ export class BpsHomeComponent implements OnInit {
       }
     });
     this.bpmnModeler.clear();
+    this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
+    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+      byteBpmn = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
     this.bpmnModeler.importXML(atob(byteBpmn), function(err){
       if(err){
         this.notifier.show({

@@ -1,4 +1,4 @@
-import { Component, OnInit ,AfterViewInit, Input} from '@angular/core';
+import { Component, OnInit ,AfterViewInit, Input, HostListener} from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner"; 
@@ -40,7 +40,6 @@ export class UploadProcessModelComponent implements OnInit {
   area1: SplitAreaDirective;
   area2: SplitAreaDirective;
   last_updated_time = new Date().getTime();
-  bpmnModel:BpmnModel = new BpmnModel();
   autosaveObj:any;
   isConfNavigation:boolean=false;
   saved_bpmn_list:any[] = [];
@@ -58,6 +57,8 @@ export class UploadProcessModelComponent implements OnInit {
   selected_modelId;
   uploadedFile;
   isRouterNotation:boolean = false;
+  autosavedDiagramVersion = [];
+  autosavedDiagramList = [];
 
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints) { }
@@ -90,7 +91,7 @@ export class UploadProcessModelComponent implements OnInit {
       }
       this.isLoading = false;
       if(isFromConf) this.isUploaded = true;
-      this.initiateDiagram();
+      this.getAutoSavedDiagrams();
     });
    }
 
@@ -104,12 +105,28 @@ export class UploadProcessModelComponent implements OnInit {
     })
    }
    async getApproverList(){
-     await this.rest.getApproverforuser('Admin').subscribe( res =>  {//Process Architect
+     await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
       if(Array.isArray(res))
         this.approver_list = res; 
     });
    }
-  //  ngOnDestroy(){
+   getAutoSavedDiagrams(){
+    this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
+      if(Array.isArray(res))
+        this.autosavedDiagramList = res;
+      this.filterAutoSavedDiagrams(); 
+      if(!this.bpmnModeler)
+        this.initiateDiagram();
+    });
+   }
+   filterAutoSavedDiagrams(){
+    this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
+      return each_asDiag.bpmnModelId == this.saved_bpmn_list[this.selected_notation]["bpmnModelId"];
+    })
+   }
+   
+  //  @HostListener('window:beforeunload')
+  //  beforeDestroy(){
   //   Swal.fire({
   //     title: 'Are you sure?',
   //     text: 'Your current changes will be lost on changing diagram.',
@@ -151,7 +168,10 @@ export class UploadProcessModelComponent implements OnInit {
             })
           });
         }else{
-          this[modeler_obj].importXML(atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation))), function(err){
+          let selected_xml = this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation;
+          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+            selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
+          this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))), function(err){
             if(err){
               return console.error('could not import BPMN 2.0 diagram', err);
             }
@@ -163,6 +183,7 @@ export class UploadProcessModelComponent implements OnInit {
    displayBPMN(){
     let value = this.notationListOldValue;
     let _self = this;
+    this.filterAutoSavedDiagrams();
     if(this.isDiagramChanged){
       Swal.fire({
         title: 'Are you sure?',
@@ -183,7 +204,10 @@ export class UploadProcessModelComponent implements OnInit {
           this.notationListOldValue = this.selected_notation;
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-          this.confBpmnModeler.importXML(selected_xml, function(err){
+          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+            selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+          // this.confBpmnModeler.importXML(selected_xml, function(err){
+          this.bpmnModeler.importXML(selected_xml, function(err){
             _self.oldXml = selected_xml;
             _self.newXml = selected_xml;
           });
@@ -195,6 +219,8 @@ export class UploadProcessModelComponent implements OnInit {
       this.diplayApproveBtn = true;
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+      if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+        selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
       this.bpmnModeler.importXML(selected_xml, function(err){
         _self.oldXml = selected_xml;
         _self.newXml = selected_xml;
@@ -205,24 +231,28 @@ export class UploadProcessModelComponent implements OnInit {
 
   autoSaveBpmnDiagram(){
     let _self = this;
+    let bpmnModel={};
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       _self.oldXml = _self.newXml;
       _self.newXml = xml;
       if(_self.oldXml != _self.newXml){
         _self.spinner.show();
-        _self.bpmnModel.bpmnProcessMeta = btoa(unescape(encodeURIComponent(_self.newXml)));
-        _self.bpmnModel.bpmnProcessName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
-        _self.bpmnModel.bpmnModelId = _self.randomId;
-        _self.autoSaveDiagram(_self.bpmnModel);  
+        bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
+        bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
+        if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"])
+          bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
+        bpmnModel["bpmnModelModifiedBy"] = "gopi";//logged user
+        bpmnModel["bpmnModelModifiedTime"] = new Date();
+        _self.autoSaveDiagram(bpmnModel);  
       }
     });
   }
 
   autoSaveDiagram(model){
     this.rest.autoSaveBPMNFileContent(model).subscribe(
-      data=>{;
+      data=>{
+        this.getAutoSavedDiagrams();
         this.autosaveObj=data
-        this.bpmnModel.bpmnModelTempId=this.autosaveObj.bpmnModelTempId
         this.spinner.hide();
       },
       err => {
@@ -261,14 +291,6 @@ export class UploadProcessModelComponent implements OnInit {
     myReader.onloadend = (ev) => {
       this.isLoading = true;
       let fileString:string = myReader.result.toString();
-      // let encrypted_bpmn = btoa(unescape(encodeURIComponent(fileString)));
-      // this.bpmnservice.uploadBpmn(encrypted_bpmn);//is it needed? similary storing process name, category
-      // this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
-      // this.bpmnModel.bpmnProcessName=e.processName;
-      // this.bpmnModel.bpmnModelId=this.randomId;
-      // this.bpmnservice.setSelectedBPMNModelId(this.randomId);
-      // this.bpmnModel.category=e.categoryName;
-      //this.initialSave(this.bpmnModel);
       this.bpmnModeler.importXML(fileString, function(err){
         _self.oldXml = fileString.trim();
         _self.newXml = fileString.trim();
@@ -299,51 +321,33 @@ export class UploadProcessModelComponent implements OnInit {
     }
   }
 
-  initialSave(diagramModel:BpmnModel){
-    this.isLoading = true;
-    this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
-      this.isLoading = true;
-      this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
-        this.saved_bpmn_list = res; 
-        // if(!this.selected_notation){
-          this.selected_notation = 0;
-          this.notationListOldValue = 0;
-        // }
-        this.isLoading = false;
-      }, err => {
-        this.isLoading = false;
-      })
-    });
-  }
-
   submitDiagramForApproval(){
-    if(!this.selected_approver){
+  let bpmnModel:BpmnModel = new BpmnModel();
+  if(!this.selected_approver){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
     this.isLoading = true;
    let _self = this;
    let sel_List = this.saved_bpmn_list[this.selected_notation];
-   this.bpmnModel.approverName = this.selected_approver;
-   this.bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
-   this.bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-   delete(this.bpmnModel.bpmnModelTempId);
-    delete(this.bpmnModel.bpmnProcessMeta);
-   //this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
-   this.bpmnModel.bpmnTempId=2;
-   this.bpmnModel.category = sel_List['category'];
-   //this.bpmnModel.id= 5;
-   this.bpmnModel.processIntelligenceId= 5;//?? FOR SHowconformance screen alone??
-   this.bpmnModel.tenantId=7;
-   this.bpmnModel.bpmnProcessStatus="open";
-   this.bpmnModel.bpmnProcessApproved = 0;
+   bpmnModel.approverName = this.selected_approver;
+   bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
+   bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
+   //bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
+   bpmnModel.bpmnTempId=2;
+   bpmnModel.category = sel_List['category'];
+   bpmnModel.processIntelligenceId= 5;//?? FOR SHowconformance screen alone??
+   bpmnModel.tenantId=7;
+   bpmnModel.id = sel_List["id"];
+   bpmnModel.bpmnProcessStatus="PENDING";
+   bpmnModel.bpmnProcessApproved = 0;
    this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
     let final_notation = btoa(unescape(encodeURIComponent(xml)));
-     _self.bpmnModel.bpmnXmlNotation = final_notation;
-     _self.bpmnModel.bpmnJsonNotation = final_notation;
-     _self.bpmnModel.bpmnNotationAutomationTask = final_notation;
-     _self.bpmnModel.bpmnNotationHumanTask = final_notation;
-     _self.rest.submitBPMNforApproval(_self.bpmnModel).subscribe(
+     bpmnModel.bpmnXmlNotation = final_notation;
+     bpmnModel.bpmnJsonNotation = final_notation;
+     bpmnModel.bpmnNotationAutomationTask = final_notation;
+     bpmnModel.bpmnNotationHumanTask = final_notation;
+     _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
       data=>{
         _self.isLoading = false;
         Swal.fire(
@@ -366,19 +370,20 @@ export class UploadProcessModelComponent implements OnInit {
    saveprocess(newVal){
     this.isDiagramChanged = false;
     this.isLoading = true;
+    let bpmnModel:BpmnModel = new BpmnModel();
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
-    this.bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
-    this.bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
-    this.bpmnModel.category = sel_List['category'];
-    this.bpmnModel.approverName="";
+    bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
+    bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
+    bpmnModel.category = sel_List['category'];
+    delete(bpmnModel.createdTimestamp);
+    bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.initBpmnModeler();
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
-      _self.bpmnModel.bpmnXmlNotation = final_notation;
-      _self.bpmnModel.bpmnProcessMeta = final_notation;
+      bpmnModel.bpmnXmlNotation = final_notation;
       _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
-      _self.rest.saveBPMNprocessinfofromtemp(_self.bpmnModel).subscribe(
+      _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           _self.isLoading = false;
           _self.isRouterNotation = false;
@@ -389,10 +394,10 @@ export class UploadProcessModelComponent implements OnInit {
             'success'
           );
           if(newVal){
-            this.selected_notation = newVal;
-            let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
+            _self.selected_notation = newVal;
+            let current_bpmn_info = _self.saved_bpmn_list[_self.selected_notation];
             let selected_xml = atob(current_bpmn_info.bpmnXmlNotation);
-            this.bpmnModeler.importXML(selected_xml, function(err){
+            _self.bpmnModeler.importXML(selected_xml, function(err){
               _self.oldXml = selected_xml;
               _self.newXml = selected_xml;
             });

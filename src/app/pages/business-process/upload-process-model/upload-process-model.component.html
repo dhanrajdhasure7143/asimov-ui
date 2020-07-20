@@ -9,7 +9,7 @@
       <mat-label>BPMN Notation</mat-label>
       <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()">
         <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex"><!--[selected]="each_bpmn.bpmnModelId == selected_modelId"-->
-          {{each_bpmn.bpmnProcessName}}</mat-option>
+          {{each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>

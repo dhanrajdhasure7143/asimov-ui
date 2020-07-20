@@ -16,6 +16,7 @@ export class AuthenticationService {
   login(username: string, password: string) {
     return this.http.post<any>(`/oauth/token`, { 'username' : username, 'password' : password })
     .pipe(map(user => {
+      this.loggedIn.next(true)
       if (user && user['errorCode']) {
         return throwError({ error: { message: 'Username or password is incorrect' } });
       }
