@@ -9,6 +9,9 @@ import { ServiceOrchestrationComponent } from './service-orchestration.component
 import { OrchestrationComponent } from './orchestration/orchestration.component';
 import { BotStatusComponent } from './orchestration/bot-status/bot-status.component';
 import { BotManagementComponent } from './orchestration/bot-management/bot-management.component';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [OrchestrationComponent, BotStatusComponent, BotManagementComponent, ServiceOrchestrationComponent],
@@ -17,7 +20,10 @@ import { BotManagementComponent } from './orchestration/bot-management/bot-manag
     FormsModule,
     NgbModule,
     ServiceOrchestrationRoutingModule,
-    SharedModule
+    SharedModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule
   ],
   providers:[]
 })
