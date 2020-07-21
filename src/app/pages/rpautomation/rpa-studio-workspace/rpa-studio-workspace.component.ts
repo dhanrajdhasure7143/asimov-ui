@@ -60,40 +60,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
    ngOnInit() 
    {
-    this.dt.changeHints(this.hints.rpaWorkspaceHints );
-    if(this.finalbot.botId!= undefined)
-    {
-      this.finaldataobjects=this.finalbot.tasks;
-      //console.log(this.finaldataobjects)
-      console.log(this.child_rpa_studio.templateNodes)
-     
-      this.finaldataobjects.forEach(element => {
-
-        let nodename=  element.nodeId.split("__")[0];
-        let nodeid=element.nodeId.split("__")[1];
-        let node={
-          id:nodeid,
-          name:nodename,
-          selectedNodeTask:element.taskName,
-          path:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).path,
-          tasks:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
-          x:element.x,
-          y:element.y,
-        }
-        console.log(node)
-        this.nodes.push(node);
-          setTimeout(() => {
-            this.populateNodes(node);
-          }, 240);
-        
-      });
-    }
-   }
-
-
-
-  ngAfterViewInit() {
-
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -102,15 +68,64 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         ["Arrow", { width: 12, length: 12, location: 0.5 }]
       ]
     });
+    this.dt.changeHints(this.hints.rpaWorkspaceHints );
+    if(this.finalbot.botId!= undefined)
+    {
+      this.finaldataobjects=this.finalbot.tasks;
+      console.log(this.child_rpa_studio.templateNodes)
+      this.loadnodes();
+      
+    }
+   }
 
+
+
+  ngAfterViewInit() {
+/*
+    this.jsPlumbInstance = jsPlumb.getInstance();
+    var self = this;
+    this.jsPlumbInstance.importDefaults({
+      Connector: ["Flowchart", { curviness: 90 }],
+      overlays: [
+        ["Arrow", { width: 12, length: 12, location: 0.5 }]
+      ]
+    });
+*/
     if(this.finalbot.botId!= undefined)
     {
       console.log(this.finalbot.sequences)
+      //  this.loadnodes()
         this.addconnections()
     }
 
   }
 
+
+
+
+  public loadnodes()
+  {
+    this.finaldataobjects.forEach(element => {
+
+      let nodename=  element.nodeId.split("__")[0];
+      let nodeid=element.nodeId.split("__")[1];
+      let node={
+        id:nodeid,
+        name:nodename,
+        selectedNodeTask:element.taskName,
+        path:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).path,
+        tasks:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
+        x:element.x,
+        y:element.y,
+      }
+      console.log(node)
+      this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+        }, 240);
+      
+    });
+  }
   public addconnections()
   {
     //this.jsPlumbInstance.reset();
@@ -128,14 +143,15 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           }],
           source:element.sourceTaskId, 
           target:element.targetTaskId,
-          anchor: "Continuous",
-          connectorStyle: { stroke: '#404040',strokeWidth: 1.5 },
+          anchor:"Continuous",
+          connectorStyle: { stroke: '#404040',strokeWidth: 2 },
           maxConnections: -1,
           cssClass: "path",
           Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
           connectorClass: "path",
-          connectorOverlays: [['Arrow', {width: 10, length: 10, location: 1 }]],
-          
+          overlays: [
+            ["Arrow", { width: 12, length: 12, location: 1 }]
+          ],
           isTarget: true,
      
         }

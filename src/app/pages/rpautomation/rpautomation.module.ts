@@ -26,6 +26,9 @@ import {RpaEnvHints} from "./model/rpa-environments-module-hints";
 import {RpaWorkspace} from "./model/rpa-workspaceslist-module-hints";
 import { NgxPasswordToggleModule } from 'ngx-password-toggle';
 import { SharedModule } from 'src/app/shared/shared.module';
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent],
@@ -46,7 +49,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
     BsDropdownModule.forRoot(),
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
-    SharedModule
+    SharedModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule
   ],
   providers: [RpaHints,RpaDragHints,RpaEnvHints,RpaWorkspace]
 })
