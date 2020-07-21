@@ -63,9 +63,9 @@ export class BpmnDiagramListComponent implements OnInit {
   collapseExpansion(){
     this.approval_msg="";
   }
-  expandPanel(event,i,bpmnXmlNotation): void {
+  expandPanel(event,i,approval_msg,bpmnXmlNotation): void {
    this.index=i;
-   this.approval_msg=this.griddata[i].bpmnProcessInfo.reviewComments;
+   this.approval_msg=approval_msg;
    if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     this.bpmnModeler = new BpmnJS({
       container: '.diagram_container'+i,
@@ -90,9 +90,10 @@ export class BpmnDiagramListComponent implements OnInit {
   this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
   this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
   }
-  checkStatus(app_status, dagre){
+  checkStatus(diagram){
+    let app_status = diagram.bpmnProcessStatus;
     if(app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected'){
-      this.enablePanels(dagre.bpmnProcessInfo.bpmnModelId)
+      this.enablePanels(diagram.id)
     }
     return app_status && (app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected');
   }
@@ -134,37 +135,33 @@ this.selectedrow =i;
    }
 
    
-   approveDiagram(data) {
-     let disabled_items = localStorage.getItem("pending_bpmnId")
-   if(disabled_items) {
-     localStorage.setItem("pending_bpmnId", disabled_items+ ","+data.bpmnProcessInfo.bpmnModelId)
-   }
-   else{
-    localStorage.setItem("pending_bpmnId", data.bpmnProcessInfo.bpmnModelId)
-   }
-   this.disable_panels();
-     this.approver_info={
-        "approverName": this.user,
-        "bpmnJsonNotation": data.bpmnProcessInfo.bpmnJsonNotation,
-        "bpmnModelId": data.bpmnProcessInfo.bpmnModelId,
-        "bpmnNotationAutomationTask": data.bpmnProcessInfo.bpmnNotationAutomationTask,
-        "bpmnNotationHumanTask": data.bpmnProcessInfo.bpmnNotationHumanTask,
-        "bpmnProcessApproved": data.bpmnProcessInfo.bpmnProcessApproved,
-        "bpmnProcessName": data.bpmnProcessInfo.bpmnProcessName, 
-        "bpmnProcessStatus": "APPROVED",
-        "bpmnTempId": data.bpmnProcessInfo.bpmnTempId,
-        "bpmnXmlNotation": data.bpmnProcessInfo.bpmnXmlNotation,
-        "category": data.bpmnProcessInfo.category, 
-        "emailTo": data.bpmnProcessInfo.emailTo,
-        "processIntelligenceId": data.bpmnProcessInfo.processIntelligenceId, 
-        "reviewComments":this.approval_msg,
-        "tenantId": data.bpmnProcessInfo.tenantId,
-        "userName": data.bpmnProcessInfo.userName,
-        "createdTimestamp": data.bpmnProcessInfo.createdTimestamp,
-        "modifiedTimestamp": new Date()
-        }; 
-  //delete(data.xpandStatus);
-   this.rest_Api.approve_producemessage(this.approver_info).subscribe(
+  approveDiagram(data) {
+    let disabled_items = localStorage.getItem("pending_bpmnId")
+    let saved_id = disabled_items ? disabled_items+ ","+data.id: data.id;
+    localStorage.setItem("pending_bpmnId", saved_id)
+    this.disable_panels();
+    this.approver_info={
+      "approverName": this.user,
+      "bpmnJsonNotation": data.bpmnJsonNotation,
+      "bpmnModelId": data.bpmnModelId,
+      "bpmnNotationAutomationTask": data.bpmnNotationAutomationTask,
+      "bpmnNotationHumanTask": data.bpmnNotationHumanTask,
+      "bpmnProcessApproved": data.bpmnProcessApproved,
+      "bpmnProcessName": data.bpmnProcessName, 
+      "bpmnProcessStatus": "APPROVED",
+      "bpmnXmlNotation": data.bpmnXmlNotation,
+      "category": data.category, 
+      "createdTimestamp": data.createdTimestamp,
+      "emailTo": data.emailTo,
+      "id": data.id,
+      "modifiedTimestamp": new Date(),
+      "processIntelligenceId": data.processIntelligenceId, 
+      "reviewComments":this.approval_msg,
+      "tenantId": data.tenantId,
+      "userName": data.userName,
+      "version": data.version
+    }; 
+    this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{ 
         let message = "Diagram approved successfully"; //this has to change after approval API
         //this.enablePanels(this.approver_info.bpmnModelId); 
@@ -179,44 +176,47 @@ this.selectedrow =i;
             this.bpmnlist(); 
           }
 
-disable_panels(){
-let panels = localStorage.getItem("pending_bpmnId");
-let panel_array = [];
-if(panels)
-panel_array = panels.split(",");
-this.griddata.forEach(each_bpmn => {
-  let ind = panel_array.indexOf(each_bpmn.bpmnProcessInfo.bpmnModelId)
-  if(ind > -1){
-    each_bpmn.isDisabled = true;
-  } 
-  // else {
-  //   each_bpmn.isDisabled = false;
-  // }
-});
-          }
+  disable_panels(){
+    let panels = localStorage.getItem("pending_bpmnId");
+    let panel_array = [];
+    if(panels)
+    panel_array = panels.split(",");
+    this.griddata.forEach(each_bpmn => {
+      each_bpmn.bpmnProcessInfo.forEach(each_child_bpmn => {
+        let ind = panel_array.indexOf(each_child_bpmn.id)
+        if(ind > -1){
+          each_child_bpmn.isDisabled = true;
+        } 
+        // else {
+        //   each_bpmn.isDisabled = false;
+        // }
+      })
+    });
+  }
 
   enablePanels(bpmnID){
     let panels = localStorage.getItem("pending_bpmnId");
-let panel_array = [];
-if(panels)
-if(panels.indexOf(",") != -1){
-panel_array = panels.split(",");
-panel_array.splice(panel_array.indexOf(bpmnID), 1);
-localStorage.setItem('pending_bpmnId', panel_array.join())
-} else {
-  localStorage.setItem('pending_bpmnId', null);
-}
-
+    let panel_array = [];
+    if(panels)
+    if(panels.indexOf(",") != -1){
+      panel_array = panels.split(",");
+      panel_array.splice(panel_array.indexOf(bpmnID), 1);
+      localStorage.setItem('pending_bpmnId', panel_array.join())
+    } else {
+      localStorage.setItem('pending_bpmnId', null);
+    }
   }
 
    denyDiagram(data) {
-     data.bpmnProcessInfo.reviewComments= this.approval_msg;
-     data.remarks = this.approval_msg;
-     data.approvalStatus='REJECTED';
-     data.rejectedBy=this.rejectedby;
-     data.bpmnProcessInfo.bpmnProcessStatus='REJECTED';
-     delete(data.xpandStatus);
-    this.rest_Api.denyDiagram(data).subscribe(
+     let postData = data;
+     postData.reviewComments= this.approval_msg;
+     postData.remarks = this.approval_msg;
+     postData.approvalStatus='REJECTED';
+     postData.rejectedBy=this.rejectedby;
+     postData.bpmnProcessStatus='REJECTED';
+     postData.modifiedTimestamp = new Date();
+     delete(postData.xpandStatus);
+    this.rest_Api.denyDiagram(postData).subscribe(
       data => {
         let message =  "Diagram has been rejected.";
         this.bpmnlist();

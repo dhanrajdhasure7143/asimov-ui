@@ -81,7 +81,9 @@ export class UploadProcessModelComponent implements OnInit {
    async getUserBpmnList(isFromConf){
     this.isLoading = true;
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
-      this.saved_bpmn_list = res; 
+      this.saved_bpmn_list = res.filter(each_bpmn => {
+        return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
+      }); 
       if(!this.isRouterNotation){
         this.selected_notation = 0;
         this.notationListOldValue = 0;
@@ -97,11 +99,9 @@ export class UploadProcessModelComponent implements OnInit {
 
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
-      if(each_bpmn.bpmnModelId && this.selected_modelId){
-      if(each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()){
-        this.selected_notation = i;
+      if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()){
+          this.selected_notation = i;
       }
-    }
     })
    }
    async getApproverList(){
@@ -333,10 +333,9 @@ export class UploadProcessModelComponent implements OnInit {
    bpmnModel.approverName = this.selected_approver;
    bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
    bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-   //bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
    bpmnModel.bpmnTempId=2;
    bpmnModel.category = sel_List['category'];
-   bpmnModel.processIntelligenceId= 5;//?? FOR SHowconformance screen alone??
+   bpmnModel.processIntelligenceId= Math.floor(100000 + Math.random() * 900000);//?? FOR SHowconformance screen alone??
    bpmnModel.tenantId=7;
    bpmnModel.id = sel_List["id"];
    bpmnModel.bpmnProcessStatus="PENDING";
@@ -349,6 +348,7 @@ export class UploadProcessModelComponent implements OnInit {
      bpmnModel.bpmnNotationHumanTask = final_notation;
      _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
       data=>{
+        _self.isDiagramChanged = false;
         _self.isLoading = false;
         Swal.fire(
           'Saved!',

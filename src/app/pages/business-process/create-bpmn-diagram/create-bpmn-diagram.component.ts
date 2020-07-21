@@ -53,24 +53,28 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
  
   ngOnDestroy(){
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Your current changes will be lost on changing diagram.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Save and Continue',
-      cancelButtonText: 'Discard'
-    }).then((res)=>{
-      if(res.value){
-        this.saveprocess(null);
-      }
-    })
+    if(this.isDiagramChanged){
+      Swal.fire({
+        title: 'Are you sure?',
+        text: 'Your current changes will be lost on changing diagram.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Save and Continue',
+        cancelButtonText: 'Discard'
+      }).then((res)=>{
+        if(res.value){
+          this.saveprocess(null);
+        }
+      })
+    }
   }
 
   getUserBpmnList(){
     this.isLoading = true;
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
-      this.saved_bpmn_list = res; 
+      this.saved_bpmn_list = res.filter(each_bpmn => {
+        return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
+      }); 
       this.selected_notation = 0;
       this.notationListOldValue = 0;
       this.isLoading = false;
@@ -247,10 +251,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.approverName = this.selected_approver;
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-    //this.bpmnModel.bpmnModelTempId=this.autosaveObj ? this.autosaveObj.bpmnModelTempId: 999;
     bpmnModel.bpmnTempId=2;
     bpmnModel.category = sel_List['category'];
-    bpmnModel.processIntelligenceId= 5;//?? FOR SHowconformance screen alone??
+    bpmnModel.processIntelligenceId= Math.floor(100000 + Math.random() * 900000);//?? FOR SHowconformance screen alone??
     bpmnModel.tenantId=7;
     bpmnModel.id = sel_List["id"];
     bpmnModel.bpmnProcessStatus="PENDING";
@@ -263,6 +266,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       bpmnModel.bpmnXmlNotation = final_notation;
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
+          _self.isDiagramChanged = false;
           _self.isLoading = false;
           Swal.fire(
             'Saved!',

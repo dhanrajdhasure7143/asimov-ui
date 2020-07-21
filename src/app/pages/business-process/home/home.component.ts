@@ -59,7 +59,10 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams[this.index].xpandStatus=false;
   }
 
-  openDiagram(binaryXMLContent, bpmnModelId){
+  openDiagram(bpmnDiagram){
+    if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
+    let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
+    let bpmnModelId = bpmnDiagram.bpmnModelId;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
   }

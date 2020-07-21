@@ -32,26 +32,27 @@
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12">
-                  <div class="col-md-2 first_col">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</div>
+                  <div class="col-md-2 first_col">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName+" ( V1."+each_diag.version+" )": '-'}}</div>
                   <div class="col-md-2 col-half-offset">{{each_diag.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss':'UTC'}}</div>
                   <div class="col-md-2 col-half-offset">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
                   <div class="col-md-2 col-half-offset">{{each_diag.bpmnProcessStatus | titlecase}}</div>
                   <div class="col-md-2 col-half-offset">
                     <span class="comment">
-                      <i class="fa fa-comment"></i> <span class="comment-tip">{{each_diag.reviewComments?each_diag.reviewComments:'-'}}</span>
+                      <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i> 
                     </span>
                   </div>
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="bps_overlay">
-              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnXmlNotation, each_diag.bpmnModelId)"></div>
-              <div class="info">Click to open</div>
+              <span class="info" *ngIf="(each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus != 'PENDING')||(!each_diag.bpmnProcessStatus) ">Click to open</span>
+              <span class="info" *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
+              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)"></div>
             </div>
           </mat-expansion-panel>
         </mat-accordion>
-        <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
      </div>
+     <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>

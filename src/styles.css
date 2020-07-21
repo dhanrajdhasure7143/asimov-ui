@@ -137,6 +137,9 @@ div[class^='diagram_container'] .djs-container svg{
 .ngx-pagination{
   padding: 0;
 }
+.pagination{
+  margin: 0 !important;
+}
 /* pagination styles */
 
 /* button styles */
@@ -183,6 +186,17 @@ button:disabled{
   outline: none;
   background-color: white;
   box-shadow: none !important;
+}
+.eiap_tooltip{
+  background-color: #0061cf;
+}
+.error_msg{
+  font-size: 10px;
+  color: red;
+  visibility: hidden;
+}
+.error_msg.show{
+  visibility: visible;
 }
 /* button styles */
 /* .tabscomp .nav-link{

@@ -23,7 +23,7 @@
     </mat-form-field>
   </div>
 </div>
-  <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>        
+  <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss":'UTC'}}</b></span>        
   <as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
   <as-split-area [size]="isShowConformance?(reSize?50:100):0"><!-- [hidden]="!reSize"-->
     <div *ngIf="isShowConformance" class="bps_overlay">
@@ -38,7 +38,7 @@
 </as-split>
 <div class="row btn_row"> 
   <button id="download" class="left" (click)="downloadBpmn()"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
-  <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Submit for Approval</button>
+  <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
   <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'"  *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
       <!-- <ngx-dropzone class="upload_again_btn" (change)="uploadAgainBpmn($event)" [multiple]=false [accept]="'.bpmn'"  *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)"> -->
     <ngx-dropzone-label>
