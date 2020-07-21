@@ -336,7 +336,7 @@ export class UploadProcessModelComponent implements OnInit {
    bpmnModel.bpmnTempId=2;
    bpmnModel.category = sel_List['category'];
    bpmnModel.processIntelligenceId= Math.floor(100000 + Math.random() * 900000);//?? FOR SHowconformance screen alone??
-   bpmnModel.tenantId=7;
+   bpmnModel.tenantId=999;
    bpmnModel.id = sel_List["id"];
    bpmnModel.bpmnProcessStatus="PENDING";
    bpmnModel.bpmnProcessApproved = 0;

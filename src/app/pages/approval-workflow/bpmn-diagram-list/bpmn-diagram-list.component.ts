@@ -13,7 +13,7 @@ import { GlobalScript } from 'src/app/shared/global-script';
   selector: 'app-bpmn-diagram-list',
   templateUrl: './bpmn-diagram-list.component.html',
   styleUrls: ['./bpmn-diagram-list.component.css'],
-  providers: [DiagListData]
+  providers: [DiagListData],
 })
 export class BpmnDiagramListComponent implements OnInit {
   @ViewChild('matExpansionPanel', { static: false }) _matExpansionPanel:any
@@ -156,7 +156,7 @@ this.selectedrow =i;
       "id": data.id,
       "modifiedTimestamp": new Date(),
       "processIntelligenceId": data.processIntelligenceId, 
-      "reviewComments":this.approval_msg,
+      "reviewComments":data.reviewComments,
       "tenantId": data.tenantId,
       "userName": data.userName,
       "version": data.version
@@ -207,16 +207,46 @@ this.selectedrow =i;
     }
   }
 
-   denyDiagram(data) {
+   denyDiagram(data, parentInfo) {
+    // console.log(parentInfo);
      let postData = data;
-     postData.reviewComments= this.approval_msg;
-     postData.remarks = this.approval_msg;
-     postData.approvalStatus='REJECTED';
-     postData.rejectedBy=this.rejectedby;
-     postData.bpmnProcessStatus='REJECTED';
-     postData.modifiedTimestamp = new Date();
-     delete(postData.xpandStatus);
-    this.rest_Api.denyDiagram(postData).subscribe(
+    //  postData.reviewComments= this.approval_msg;
+    //  postData.remarks = this.approval_msg;
+    //  postData.approvalStatus='REJECTED';
+    //  postData.rejectedBy=this.rejectedby;
+    //  postData.bpmnProcessStatus='REJECTED';
+    //  postData.modifiedTimestamp = new Date();
+    //  delete(postData.xpandStatus);
+     let reqObj = {
+      "bpmnApprovalId": parentInfo.bpmnApprovalId,
+      "bpmnProcessInfo": {
+              "createdTimestamp": data.createdTimestamp,
+              "modifiedTimestamp": new Date(),
+              "version": data.version,
+              "emailTo": data.emailTo,
+              "id": data.id,
+              "bpmnModelId": data.bpmnModelId,
+              "bpmnProcessName": data.bpmnProcessName,
+              "tenantId": data.tenantId,
+              "reviewComments": data.reviewComments,
+              "bpmnProcessStatus": "REJECTED",
+              "bpmnProcessApproved": data.bpmnProcessApproved,
+              "userName": data.userName,
+              "bpmnXmlNotation":data.bpmnXmlNotation,
+              "approverName": data.approverName,
+              "bpmnJsonNotation":data.bpmnJsonNotation,
+              "processIntelligenceId": 5,
+              "bpmnNotationHumanTask":data.bpmnNotationHumanTask,
+              "bpmnNotationAutomationTask":data.bpmnNotationAutomationTask,
+              "category": data.category
+      },
+      "approvalStatus": "REJECTED",
+      "rejectedBy": data.approverName, 
+      "approvedBy":  data.approverName,
+      "role": parentInfo.role, 
+      "remarks":data.reviewComments
+    }
+    this.rest_Api.denyDiagram(reqObj).subscribe(
       data => {
         let message =  "Diagram has been rejected.";
         this.bpmnlist();
