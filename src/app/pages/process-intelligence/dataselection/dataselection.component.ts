@@ -44,6 +44,12 @@ export class DataselectionComponent implements OnInit {
   cathead5: any;
   cathead6: any;
   cathead7: any;
+  cathead8: any;
+  cathead9: any;
+  cathead10: any;
+  cathead11: any;
+  cathead12: any;
+  cathead13: any;
   headertypeArray:any=[];
   processId:any;
   // processName:any;
@@ -69,13 +75,19 @@ export class DataselectionComponent implements OnInit {
         this.headertypeArray.push(value)
       } 
     }
-    // console.log(this.headertypeArray);
+     console.log(this.headertypeArray);
     this.cathead1=this.headertypeArray[0]
     this.cathead2=this.headertypeArray[1];
     this.cathead3=this.headertypeArray[2];
     this.cathead4=this.headertypeArray[3];
     this.cathead5=this.headertypeArray[4];
     this.cathead6=this.headertypeArray[5];
+    this.cathead7=this.headertypeArray[6];
+    this.cathead8=this.headertypeArray[7];
+    this.cathead9=this.headertypeArray[8];
+    this.cathead10=this.headertypeArray[9];
+    this.cathead11=this.headertypeArray[10];
+    this.cathead12=this.headertypeArray[11];
     // this.dt.current_piData.subscribe(res => {
     //   if(res){
       var restwo=localStorage.getItem('fileData')
@@ -313,8 +325,8 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
           this.validCells['row'+x].push('cell'+index);
         }
     }
-    // console.log('headerArray',this.headerArray);
-    if(this.headerArray.length == 5){
+
+    if(this.step_id == this.headerData.length-1){
       this.isgenerate=true;
     }
     else{
