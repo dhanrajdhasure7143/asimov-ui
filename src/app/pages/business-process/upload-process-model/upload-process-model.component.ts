@@ -201,7 +201,7 @@ export class UploadProcessModelComponent implements OnInit {
         }
       }
     }
-    
+
    displayBPMN(){
     let value = this.notationListOldValue;
     let _self = this;
@@ -449,6 +449,13 @@ export class UploadProcessModelComponent implements OnInit {
         },
         err => {
           _self.isLoading = false;
+          if(err.error.message == "2002")
+          Swal.fire(
+            'Oops!',
+            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress diagram',
+            'warning'
+          )
+          else
           Swal.fire(
             'Oops!',
             'Something went wrong. Please try again',
