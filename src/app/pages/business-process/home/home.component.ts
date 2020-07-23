@@ -18,12 +18,12 @@ export class BpsHomeComponent implements OnInit {
   saved_diagrams:any[] = [];
   bkp_saved_diagrams:any[] = [];
   p: number = 1;
-  searchTerm;
+  searchTerm = "";
   isLoading:boolean = false;
   sortedData:any;
   data;
   orderAsc:boolean = true;
-  sortIndex:number=1;
+  sortIndex:number=2;
   index:number;
   xpandStatus=false;
   autosavedDiagramList = [];
@@ -63,8 +63,9 @@ export class BpsHomeComponent implements OnInit {
     if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
     let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
     let bpmnModelId = bpmnDiagram.bpmnModelId;
+    let bpmnVersion = bpmnDiagram.version;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-    this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
+    this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId , ver: bpmnVersion}});
   }
   getAutoSavedDiagrams(){
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
@@ -72,6 +73,18 @@ export class BpsHomeComponent implements OnInit {
         this.autosavedDiagramList = res; 
     });
    }
+   getColor(status) { 
+    switch (status) {
+      case 'PENDING':
+        return 'orange';
+      case 'REJECTED':
+        return 'red';
+      case 'APPROVED':
+        return 'green';
+      case 'INPROGRESS':
+        return 'orange';
+    }
+  }
    filterAutoSavedDiagrams(modelId){
     this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
       return each_asDiag.bpmnModelId == modelId;
@@ -88,15 +101,15 @@ export class BpsHomeComponent implements OnInit {
       }
     });
     this.bpmnModeler.clear();
-    this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
+    if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED")
+      this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
       byteBpmn = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
     this.bpmnModeler.importXML(atob(byteBpmn), function(err){
       if(err){
         this.notifier.show({
           type: "error",
-          message: "Could not import Bpmn diagram!",
-          id: "ae12" 
+          message: "Could not import Bpmn diagram!"
         });
       }
     })

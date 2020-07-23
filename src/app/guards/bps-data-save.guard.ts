@@ -14,18 +14,20 @@ export class BpsDataSaveGuard implements CanActivate, CanDeactivate<ActivatedRou
   }
   
   canDeactivate(next: ActivatedRouteSnapshot):any {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: 'Your current changes will be lost on changing diagram.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Save and Continue',
-      cancelButtonText: 'Discard'
-    }).then((res)=>{
-      if(res.value){
-        // this.saveprocess(null);
-        return true;
-      }
-    })
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: 'Your current changes will be lost on changing diagram.',
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonText: 'Save and Continue',
+    //   cancelButtonText: 'Discard'
+    // }).then((res)=>{
+    //   // if(){
+    //     // this.saveprocess(null);
+    //     return res.isConfirmed;
+    //   // }
+    // })
+    return confirm("WARNING!!\nIf you have unsaved changes, they will be lost.\nPlease click 'Cancel' and save your changes.");
   }
+
 }

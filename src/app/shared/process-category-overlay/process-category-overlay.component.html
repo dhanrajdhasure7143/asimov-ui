@@ -20,14 +20,14 @@
                     <div *ngIf='isotherCategory'>
                         <mat-form-field class="row col-md-12">
                             <mat-label>Enter Category</mat-label>
-                            <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9_- ]+" required>
+                            <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required>
                         </mat-form-field>
                         <span class="error_msg" [class.show]="other_category.dirty && other_category.invalid">Alphanumerics with _- are allowed</span>
                     </div>
                     <br/>
                     <mat-form-field class="row col-md-12">
                         <mat-label>Enter Process Name</mat-label>
-                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="[a-zA-Z0-9_-]+" required>
+                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="[a-zA-Z0-9 _-]+" required>
                     </mat-form-field>
                     <span class="error_msg" [class.show]="process_name.dirty && process_name.invalid">Alphanumerics with _- are allowed</span>
                     <br/>

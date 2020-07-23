@@ -193,10 +193,28 @@ button:disabled{
 .error_msg{
   font-size: 10px;
   color: red;
-  visibility: hidden;
+  display: none;
 }
 .error_msg.show{
-  visibility: visible;
+  display: block;
+}
+.label_icon{
+  font-size: 11px;
+  color: white;
+  background: grey;
+  padding: 3px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+}
+.bg-red{
+  background-color: red;
+}
+.bg-green{
+  background-color: green;
+}
+.bg-orange{
+  background-color: orange;
 }
 /* button styles */
 /* .tabscomp .nav-link{

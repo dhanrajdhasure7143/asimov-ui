@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { NgxSpinnerService } from "ngx-spinner"; 
-import { Router } from '@angular/router';
-import { UUID } from 'angular2-uuid';
+import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
 
 import { RestApiService } from '../../services/rest-api.service';
@@ -30,44 +29,47 @@ export class CreateBpmnDiagramComponent implements OnInit {
   approver_list:any[] = [];
   selected_notation = 0;
   selected_approver;
-  randomId;
+  rejectedOrApproved;
   notationListOldValue = 0;
   notationListNewValue = undefined;
   selected_modelId;
+  selected_version;
   uploadedFile;
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
 
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
-    private router:Router, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints) {}
+    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints) {}
 
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
     this.dt.changeHints(this.hints.bpsCreateHints);
-    this.selected_modelId = this.bpmnservice.bpmnId.value;
+    this.route.queryParams.subscribe(params => {
+      this.selected_modelId = params['bpsId'];
+      this.selected_version = params['ver'];
+    });
+    // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getUserBpmnList();
     this.getApproverList();
-    this.randomId = UUID.UUID();
-    //this.randomId = Math.floor(Math.random()*999999);  //Values get repeated
   }
  
-  ngOnDestroy(){
-    if(this.isDiagramChanged){
-      Swal.fire({
-        title: 'Are you sure?',
-        text: 'Your current changes will be lost on changing diagram.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Save and Continue',
-        cancelButtonText: 'Discard'
-      }).then((res)=>{
-        if(res.value){
-          this.saveprocess(null);
-        }
-      })
-    }
-  }
+  // ngOnDestroy(){
+  //   // if(this.isDiagramChanged){
+  //     Swal.fire({
+  //       title: 'Are you sure?',
+  //       text: 'Your current changes will be lost on changing diagram.',
+  //       icon: 'warning',
+  //       showCancelButton: true,
+  //       confirmButtonText: 'Save and Continue',
+  //       cancelButtonText: 'Discard'
+  //     }).then((res)=>{
+  //       if(res.value){
+  //         this.saveprocess(null);
+  //       }
+  //     })
+  //   // }
+  // }
 
   getUserBpmnList(){
     this.isLoading = true;
@@ -75,11 +77,22 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.saved_bpmn_list = res.filter(each_bpmn => {
         return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
       }); 
-      this.selected_notation = 0;
+      this.getSelectedNotation(); 
+      // this.selected_notation = 0;
       this.notationListOldValue = 0;
       this.isLoading = false;
+      this.getSelectedApprover();
       this.getAutoSavedDiagrams();
     });
+   }
+
+   getSelectedNotation(){
+    this.saved_bpmn_list.forEach((each_bpmn,i) => {
+      if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString() 
+          && each_bpmn.version >= 0 && this.selected_version == each_bpmn.version){
+          this.selected_notation = i;
+      }
+    })
    }
 
    getApproverList(){
@@ -89,19 +102,31 @@ export class CreateBpmnDiagramComponent implements OnInit {
     });
    }
 
+   getSelectedApprover(){
+    let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
+    let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
+    this.router.navigate([],{ relativeTo:this.route, queryParams:params });
+    this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
+    if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1)
+      this.selected_approver = current_bpmn_info["approverName"];
+    else
+      this.selected_approver = "";
+   }
+
    getAutoSavedDiagrams(){
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
       if(Array.isArray(res))
         this.autosavedDiagramList = res; 
-      this.filterAutoSavedDiagrams();
+        this.filterAutoSavedDiagrams();
       if(!this.bpmnModeler)
         this.initiateDiagram();
     });
    }
    filterAutoSavedDiagrams(){
-    this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
-      return each_asDiag.bpmnModelId == this.saved_bpmn_list[this.selected_notation]["bpmnModelId"];
-    })
+     let sel_not = this.saved_bpmn_list[this.selected_notation]
+      this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
+        return sel_not["bpmnProcessStatus"] != "APPROVED" && sel_not["bpmnProcessStatus"] != "REJECTED" && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
+      })
    }
   // ngAfterViewInit(){
     initiateDiagram(){
@@ -178,7 +203,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         _self.isLoading = false;
       });
     }
-      
+    this.getSelectedApprover();
   }
  
   autoSaveBpmnDiagram(){
@@ -234,11 +259,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
       });
     }
   }
-  initialSave(diagramModel:BpmnModel){
-    this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
-      this.getUserBpmnList();
-    });
-  }
   submitDiagramForApproval(){
     if(!this.selected_approver){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
@@ -253,7 +273,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
     bpmnModel.bpmnTempId=2;
     bpmnModel.category = sel_List['category'];
-    bpmnModel.processIntelligenceId= Math.floor(100000 + Math.random() * 900000);//?? FOR SHowconformance screen alone??
+    bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.tenantId=999;
     bpmnModel.id = sel_List["id"];
     bpmnModel.bpmnProcessStatus="PENDING";

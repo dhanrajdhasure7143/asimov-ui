@@ -27,13 +27,13 @@
     (click)="clicked(i)"
     [class.activePanel]="i==selectedrow"
     (opened)="collapseExpansion()"
-    (afterExpand)="expandPanel($event,i,each_diag.bpmnProcessInfo[0].reviewComments, each_diag.bpmnProcessInfo[0].bpmnXmlNotation)">
+    (afterExpand)="expandPanel($event,i,each_diag.bpmnProcessInfo[0].reviewComments, each_diag.bpmnProcessInfo[0])">
   <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="row col-md-12">
             <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].processIntelligenceId ? each_diag.bpmnProcessInfo[0].processIntelligenceId : '-' }}</div>
             <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].bpmnProcessName ? each_diag.bpmnProcessInfo[0].bpmnProcessName : '-'}}</div>
-            <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].modifiedTimestamp | date:'dd/MM/yy HH:mm:ss':'UTC'}}</div>
+            <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</div>
             <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].userName  ? (each_diag.bpmnProcessInfo[0].userName | titlecase) : '-'}}</div>
             <div class="col-md-2 text-cell">{{each_diag.role ? each_diag.role : '-'}}</div>
             <div class="col-md-2  text-cell-last" *ngIf="each_diag.bpmnProcessInfo" [ngStyle]="{'color':getColor(each_diag.bpmnProcessInfo[0].bpmnProcessStatus)}">{{each_diag.bpmnProcessInfo[0].bpmnProcessStatus ? each_diag.bpmnProcessInfo[0].bpmnProcessStatus : '-'}}</div>
@@ -57,7 +57,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let each_past_process of each_diag.bpmnProcessInfo | orderBy: 'modifiedTimestamp': true; let j=index;">
-                <td>{{each_past_process.modifiedTimestamp | date:'dd/MM/yy HH:mm:ss':'UTC'}}</td>
+                <td>{{each_past_process.modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</td>
                 <td>{{each_past_process.userName}}</td>
                 <td>{{"V 1."+each_past_process.version}}</td>
                 <td>{{each_past_process.bpmnProcessStatus}}</td>
@@ -65,7 +65,7 @@
                 <td>
                   <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled">Approve</button><!-- approval_msg.length==0 ||  -->
                   <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_past_process, each_diag)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled">Deny</button><!-- approval_msg.length==0 || -->
-                  <i class="fa fa-eye" (click)="expandPanel($event, i, each_past_process.reviewComments, each_past_process.bpmnXmlNotation)"></i>
+                  <i class="fa fa-eye" (click)="expandPanel($event, i, each_past_process.reviewComments, each_past_process)"></i>
                 </td>
               </tr>
             </tbody>
@@ -73,7 +73,7 @@
         </div>
         <div class="col-md-5 bps_overlay">
           <span class="info">Click to open</span>
-          <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram(each_diag.bpmnProcessInfo[0].bpmnXmlNotation, i)"></div>
+          <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram()"></div>
           <div class="row">
             <div class="col-md-6">
                 <div class="btn-download">

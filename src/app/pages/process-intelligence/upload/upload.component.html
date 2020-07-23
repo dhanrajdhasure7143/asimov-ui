@@ -117,7 +117,7 @@
                                         <tbody class='text-center'>                                        
                                                 <tr class='pList' *ngFor='let process_list of process_graph_list|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
                                                 <td class="th-sm">{{process_list.piId}}</td>
-                                                <td class="">{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</td>
+                                                <td class="">{{process_list.createdTime | date:'MM/dd/yyyy HH:mm:ss' }}</td>
                                                 <td>{{process_list.piName|titlecase}}</td>
                                                 <td>{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
                                                 <td>{{process_list.status}}</td>

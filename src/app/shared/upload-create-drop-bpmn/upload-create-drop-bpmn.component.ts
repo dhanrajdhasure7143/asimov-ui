@@ -55,7 +55,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
 
   uploadCreateBpmn(e){
     this.randomId = UUID.UUID();
-    //this.randomId = Math.floor(Math.random()*999999);//Values get repeated
     this.create_editor=false;
     this.bpmnModel.bpmnProcessName=e.processName;
     this.bpmnModel.bpmnModelId=this.randomId;

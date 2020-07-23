@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild,HostListener } from '@angular/core';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { DiagListData } from './model/bpmn-diag-list-data';
-import { BpmnDiagramComponent } from 'src/app/shared/bpmn-diagram/bpmn-diagram.component';
 import { RestApiService } from '../../services/rest-api.service';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { Router } from '@angular/router';
@@ -17,7 +16,6 @@ import { GlobalScript } from 'src/app/shared/global-script';
 })
 export class BpmnDiagramListComponent implements OnInit {
   @ViewChild('matExpansionPanel', { static: false }) _matExpansionPanel:any
-  @ViewChild(BpmnDiagramComponent, { static: false }) diagramComp: BpmnDiagramComponent;
   approve_bpmn_list = this.model.diagList;
   user: any = 'Sowmya Peddeti';
   message: any[] = [];
@@ -37,6 +35,7 @@ export class BpmnDiagramListComponent implements OnInit {
   orderAsc:boolean = true;
   sortIndex:number=2;
   approval_msg: string="";
+  selected_processInfo;
   constructor(private dt: DataTransferService,private hints:ApprovalHomeHints,private bpmnservice:SharebpmndiagramService,private global:GlobalScript, private model: DiagListData, private rest_Api: RestApiService,private router: Router) { }
 
   ngOnInit() {
@@ -63,32 +62,36 @@ export class BpmnDiagramListComponent implements OnInit {
   collapseExpansion(){
     this.approval_msg="";
   }
-  expandPanel(event,i,approval_msg,bpmnXmlNotation): void {
+  expandPanel(event,i,approval_msg, bpmnProcessInfo): void {
+    this.selected_processInfo = bpmnProcessInfo;
+    let bpmnXmlNotation = this.selected_processInfo["bpmnXmlNotation"];
    this.index=i;
    this.approval_msg=approval_msg;
-   if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
-    this.bpmnModeler = new BpmnJS({
-      container: '.diagram_container'+i,
-      keyboard: {
-        bindTo: window
-      }
-    });
-    this.bpmnModeler.clear();
+   if(!this.bpmnModeler){
+     this.bpmnModeler = new BpmnJS({
+       container: '.diagram_container'+i,
+       keyboard: {
+         bindTo: window
+       }
+     });
+   }
     this.bpmnModeler.importXML(atob(bpmnXmlNotation), function(err){
       if(err){
         this.notifier.show({
           type: "error",
-          message: "Could not import Bpmn diagram!",
-          id: "ae12" 
+          message: "Could not import Bpmn diagram!"
         });
       }
     })
-    let canvas = this.bpmnModeler.get('canvas');
-    canvas.zoom('fit-viewport');
   }
-  openDiagram(binaryXMLContent, bpmnModelId){
-  this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-  this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
+  openDiagram(){
+    let binaryXMLContent = this.selected_processInfo["bpmnXmlNotation"];
+    let bpmnModelId = this.selected_processInfo["bpmnModelId"];
+    if(binaryXMLContent && bpmnModelId){
+      let bpmnVersion = this.selected_processInfo["version"];
+      this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion }});
+    }
   }
   checkStatus(diagram){
     let app_status = diagram.bpmnProcessStatus;
