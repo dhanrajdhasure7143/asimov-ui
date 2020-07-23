@@ -21,6 +21,7 @@ export class BpmnDiagramListComponent implements OnInit {
   message: any[] = [];
   griddata: any;
   approver_info: any;
+  p:number = 1;
   //role: any = 'BPMN_Process_Modeler';
   expanded: any=true;
   bpmnModeler: any;

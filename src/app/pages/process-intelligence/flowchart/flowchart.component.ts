@@ -89,6 +89,7 @@ export class FlowchartComponent implements OnInit {
   varaint_GraphData:any=[];
   varaint_GraphDataArray:any[]=[];
   piIdNumber:any;
+  value;
   public isedgespinner:boolean=false;
   spinMetrics0:any="absoluteFrequency";
   wpiIdNumber:any;

@@ -37,6 +37,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   uploadedFile;
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
+  updated_date_time;
 
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints) {}

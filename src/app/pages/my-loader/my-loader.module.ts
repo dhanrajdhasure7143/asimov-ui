@@ -1,18 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MyLoaderComponent } from './my-loader.component';
+// import { CommonModule } from '@angular/common';
+// import { MyLoaderComponent } from './my-loader.component';
 
 
 
 
 @NgModule({
-  declarations: [MyLoaderComponent
+  declarations: [
+    // MyLoaderComponent
   ],
   imports: [
   
   ],
  
-  exports: [MyLoaderComponent],
+  exports: [
+    // MyLoaderComponent
+  ],
  
 })
 export class LoaderModule { }

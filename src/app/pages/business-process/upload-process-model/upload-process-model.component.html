@@ -48,7 +48,7 @@
         <button class="btn btn-primary eiap-btn">Upload Again</button>
     </ngx-dropzone-label>
   </ngx-dropzone>
-  <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess()" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">Save Process</button>
+  <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">Save Process</button>
   <button class="right btn btn-primary eiap-btn" id="automate" (click)="automate()">Automate</button> <!-- [disabled]="isShowConformance && !isConfNavigation" -->
 </div>
 <app-list-of-changes></app-list-of-changes>  

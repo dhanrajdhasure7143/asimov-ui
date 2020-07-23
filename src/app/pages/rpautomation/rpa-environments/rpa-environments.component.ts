@@ -101,7 +101,7 @@ import {Router} from "@angular/router";
     this.updatepopup.style.display='none';
   }
 
-
+  savedata(){}
  async getallData()
   {
 

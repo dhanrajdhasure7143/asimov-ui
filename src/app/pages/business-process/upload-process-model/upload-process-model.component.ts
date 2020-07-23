@@ -59,6 +59,7 @@ export class UploadProcessModelComponent implements OnInit {
   isRouterNotation:boolean = false;
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
+  updated_date_time;
 
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,) { }

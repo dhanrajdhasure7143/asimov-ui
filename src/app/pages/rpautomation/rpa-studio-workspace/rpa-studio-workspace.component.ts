@@ -40,6 +40,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   public fields: any[] = [];
   formHeader:string;
   disable: boolean = false;
+  lightTheme: boolean = false;
   formVales:any[] = [];
   dragelement:any
   dagvalue:any
