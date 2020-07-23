@@ -137,6 +137,9 @@ margin-right: -85px;
 .col-half-offset:nth-child(4) {
   margin-left: 3.1666%;
 }
+#bpmn_list .row{
+  font-size: 11px;
+}
 #bpmn_list{
   height: 59vh;
   overflow: hidden auto;

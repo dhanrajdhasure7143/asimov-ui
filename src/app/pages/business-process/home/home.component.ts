@@ -91,7 +91,7 @@ export class BpsHomeComponent implements OnInit {
     })
    }
   getDiagram(eachBPMN,i){
-    let byteBpmn = eachBPMN.bpmnXmlNotation;
+    let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     this.bpmnModeler = new BpmnJS({
@@ -104,15 +104,22 @@ export class BpsHomeComponent implements OnInit {
     if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED")
       this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
-      byteBpmn = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
-    this.bpmnModeler.importXML(atob(byteBpmn), function(err){
-      if(err){
-        this.notifier.show({
-          type: "error",
-          message: "Could not import Bpmn diagram!"
+      byteBpmn = atob(this.autosavedDiagramVersion[0]["bpmnProcessMeta"]);
+      if(byteBpmn == "undefined"){
+        this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+          this.bpmnModeler.importXML(res, function(err){
+            if(err){
+              console.error('could not import BPMN 2.0 diagram', err);
+            }
+          })
         });
+      }else{
+        this.bpmnModeler.importXML(byteBpmn, function(err){
+          if(err){
+            console.error('could not import BPMN 2.0 diagram', err);
+          }
+        })
       }
-    })
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
   }

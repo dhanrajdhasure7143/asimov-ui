@@ -182,18 +182,26 @@ export class UploadProcessModelComponent implements OnInit {
             })
           });
         }else{
-          let selected_xml = this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation;
+          let selected_xml = atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation)));
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
-            selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
-          this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))), function(err){
-            if(err){
-              return console.error('could not import BPMN 2.0 diagram', err);
-            }
-          })
+            selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+          if(selected_xml == "undefined"){
+            this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+              this[modeler_obj].importXML(res, function(err){
+                if(err)
+                  console.error('could not import BPMN 2.0 diagram', err);
+              });
+            });
+          }else{
+            this[modeler_obj].importXML(selected_xml, function(err){
+              if(err)
+                console.error('could not import BPMN 2.0 diagram', err)
+            })
+          }
         }
       }
-   }
-
+    }
+    
    displayBPMN(){
     let value = this.notationListOldValue;
     let _self = this;
@@ -221,10 +229,20 @@ export class UploadProcessModelComponent implements OnInit {
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
           // this.confBpmnModeler.importXML(selected_xml, function(err){
-          this.bpmnModeler.importXML(selected_xml, function(err){
-            _self.oldXml = selected_xml;
-            _self.newXml = selected_xml;
-          });
+            if(selected_xml == "undefined"){
+              this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+                let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
+                this.bpmnModeler.importXML(encrypted_bpmn, function(err){
+                  _self.oldXml = selected_xml;
+                  _self.newXml = selected_xml;
+                });
+              });
+            }else{
+              this.bpmnModeler.importXML(selected_xml, function(err){
+                _self.oldXml = selected_xml;
+                _self.newXml = selected_xml;
+              });
+            }
         }
       })
     }else{
@@ -235,11 +253,21 @@ export class UploadProcessModelComponent implements OnInit {
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-      this.bpmnModeler.importXML(selected_xml, function(err){
-        _self.oldXml = selected_xml;
-        _self.newXml = selected_xml;
-        _self.isLoading = false;
-      });
+        if(selected_xml == "undefined"){
+          this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+            this.bpmnModeler.importXML(res, function(err){
+              _self.oldXml = selected_xml;
+              _self.newXml = selected_xml;
+              _self.isLoading = false;
+            });
+          });
+        }else{
+          this.bpmnModeler.importXML(selected_xml, function(err){
+            _self.oldXml = selected_xml;
+            _self.newXml = selected_xml;
+            _self.isLoading = false;
+          });
+        }
     }
     this.getSelectedApprover();
   }

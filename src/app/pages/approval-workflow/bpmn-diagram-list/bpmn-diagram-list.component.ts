@@ -62,19 +62,20 @@ export class BpmnDiagramListComponent implements OnInit {
   collapseExpansion(){
     this.approval_msg="";
   }
-  expandPanel(event,i,approval_msg, bpmnProcessInfo): void {
+  expandPanel(i, bpmnProcessInfo): void {
     this.selected_processInfo = bpmnProcessInfo;
     let bpmnXmlNotation = this.selected_processInfo["bpmnXmlNotation"];
-   this.index=i;
-   this.approval_msg=approval_msg;
-   if(!this.bpmnModeler){
-     this.bpmnModeler = new BpmnJS({
-       container: '.diagram_container'+i,
-       keyboard: {
-         bindTo: window
-       }
-     });
-   }
+    let approval_msg = this.selected_processInfo["reviewComments"];
+    this.index=i;
+    this.approval_msg=approval_msg;
+    if(!this.bpmnModeler){
+      this.bpmnModeler = new BpmnJS({
+        container: '.diagram_container'+i,
+        keyboard: {
+          bindTo: window
+        }
+      });
+    }
     this.bpmnModeler.importXML(atob(bpmnXmlNotation), function(err){
       if(err){
         this.notifier.show({
@@ -83,11 +84,14 @@ export class BpmnDiagramListComponent implements OnInit {
         });
       }
     })
+    let canvas = this.bpmnModeler.get('canvas');
+    canvas.zoom('fit-viewport');
   }
   openDiagram(){
     let binaryXMLContent = this.selected_processInfo["bpmnXmlNotation"];
     let bpmnModelId = this.selected_processInfo["bpmnModelId"];
-    if(binaryXMLContent && bpmnModelId){
+    let bpmnProcessStatus = this.selected_processInfo["bpmnProcessStatus"];
+    if(binaryXMLContent && bpmnModelId && bpmnProcessStatus != "PENDING"){
       let bpmnVersion = this.selected_processInfo["version"];
       this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
       this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion }});
@@ -211,37 +215,28 @@ this.selectedrow =i;
   }
 
    denyDiagram(data, parentInfo) {
-    // console.log(parentInfo);
-     let postData = data;
-    //  postData.reviewComments= this.approval_msg;
-    //  postData.remarks = this.approval_msg;
-    //  postData.approvalStatus='REJECTED';
-    //  postData.rejectedBy=this.rejectedby;
-    //  postData.bpmnProcessStatus='REJECTED';
-    //  postData.modifiedTimestamp = new Date();
-    //  delete(postData.xpandStatus);
      let reqObj = {
       "bpmnApprovalId": parentInfo.bpmnApprovalId,
       "bpmnProcessInfo": {
-              "createdTimestamp": data.createdTimestamp,
-              "modifiedTimestamp": new Date(),
-              "version": data.version,
-              "emailTo": data.emailTo,
-              "id": data.id,
-              "bpmnModelId": data.bpmnModelId,
-              "bpmnProcessName": data.bpmnProcessName,
-              "tenantId": data.tenantId,
-              "reviewComments": data.reviewComments,
-              "bpmnProcessStatus": "REJECTED",
-              "bpmnProcessApproved": data.bpmnProcessApproved,
-              "userName": data.userName,
-              "bpmnXmlNotation":data.bpmnXmlNotation,
-              "approverName": data.approverName,
-              "bpmnJsonNotation":data.bpmnJsonNotation,
-              "processIntelligenceId": 5,
-              "bpmnNotationHumanTask":data.bpmnNotationHumanTask,
-              "bpmnNotationAutomationTask":data.bpmnNotationAutomationTask,
-              "category": data.category
+          "createdTimestamp": data.createdTimestamp,
+          "modifiedTimestamp": new Date(),
+          "version": data.version,
+          "emailTo": data.emailTo,
+          "id": data.id,
+          "bpmnModelId": data.bpmnModelId,
+          "bpmnProcessName": data.bpmnProcessName,
+          "tenantId": data.tenantId,
+          "reviewComments": data.reviewComments,
+          "bpmnProcessStatus": "REJECTED",
+          "bpmnProcessApproved": data.bpmnProcessApproved,
+          "userName": data.userName,
+          "bpmnXmlNotation":data.bpmnXmlNotation,
+          "approverName": data.approverName,
+          "bpmnJsonNotation":data.bpmnJsonNotation,
+          "processIntelligenceId": data.processIntelligenceId,
+          "bpmnNotationHumanTask":data.bpmnNotationHumanTask,
+          "bpmnNotationAutomationTask":data.bpmnNotationAutomationTask,
+          "category": data.category
       },
       "approvalStatus": "REJECTED",
       "rejectedBy": data.approverName, 

@@ -68,7 +68,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
         if( this.router.url.indexOf("uploadProcessModel") > -1 ){
           this.bpmnservice.changeConfNav(true);
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
-          // this.uploadProcessModel.uploadConfBpmn(encrypted_bpmn);
         }else{
           this.bpmnservice.changeConfNav(false);
           this.bpmnservice.uploadBpmn(encrypted_bpmn);

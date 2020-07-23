@@ -27,7 +27,7 @@
     (click)="clicked(i)"
     [class.activePanel]="i==selectedrow"
     (opened)="collapseExpansion()"
-    (afterExpand)="expandPanel($event,i,each_diag.bpmnProcessInfo[0].reviewComments, each_diag.bpmnProcessInfo[0])">
+    (afterExpand)="expandPanel(i, each_diag.bpmnProcessInfo[0])">
   <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="row col-md-12">
@@ -60,19 +60,20 @@
                 <td>{{each_past_process.modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</td>
                 <td>{{each_past_process.userName}}</td>
                 <td>{{"V 1."+each_past_process.version}}</td>
-                <td>{{each_past_process.bpmnProcessStatus}}</td>
+                <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}">{{each_past_process.bpmnProcessStatus}}</td>
                 <td><input type="text" [value]="each_past_process.reviewComments" name="reviewComments{{j}}" [(ngModel)]="each_past_process.reviewComments"  [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled" placeholder="Enter your Message"  required/></td><!-- [(ngModel)]="approval_msg" -->
                 <td>
                   <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled">Approve</button><!-- approval_msg.length==0 ||  -->
                   <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_past_process, each_diag)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled">Deny</button><!-- approval_msg.length==0 || -->
-                  <i class="fa fa-eye" (click)="expandPanel($event, i, each_past_process.reviewComments, each_past_process)"></i>
+                  <i class="fa fa-eye" (click)="expandPanel(i, each_past_process)"></i>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="col-md-5 bps_overlay">
-          <span class="info">Click to open</span>
+          <span class="info">
+            {{selected_processInfo && selected_processInfo['bpmnProcessStatus'] == 'PENDING'?'Cannot be edited till it is reviewed':'Click to open'}}</span>
           <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram()"></div>
           <div class="row">
             <div class="col-md-6">

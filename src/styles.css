@@ -216,6 +216,9 @@ button:disabled{
 .bg-orange{
   background-color: orange;
 }
+.invisible{
+  visibility: hidden;
+}
 /* button styles */
 /* .tabscomp .nav-link{
   padding-left: 50px !important;

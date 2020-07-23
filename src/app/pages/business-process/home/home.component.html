@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="right header_addon">
-    <a routerLink="/pages/approvalWorkflow/home">Approver Workflow</a>
+    <a routerLink="/pages/approvalWorkflow/home">Approval Workflow</a>
   </div>
   <div class="row">
     <div class="col-md-4 offset-1">
@@ -29,7 +29,7 @@
       </div>
       <div class="row col-md-12"  id="bpmn_list">
         <mat-accordion>
-          <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | search: searchTerm | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
+          <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12">
