@@ -135,6 +135,19 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/rpa-service/getall-predefinedbots")/*jitendra: need to replace URL*/
   }
 
+  //rest-api
+
+    getviewlogdata(botid,botverid)
+    {
+      return this.http.get("/rpa-service/logs/"+botid+"/"+botverid);
+    }
+
+    getViewlogbyrunid(botid,botverid,runid){
+      return this.http.get("/rpa-service/logs/"+botid+"/"+botverid+"/"+runid);
+    }
+
+
+
 
 
   getbotlist(botType, botDepartment)
@@ -257,6 +270,12 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.post("/rpa-service/delete-bot?botId="+botId,"")
   }
 
+
+  deployenvironment(envs)
+  {
+    return this.http.post("/rpa-service/agent/deploy-agent",envs)
+
+  }
 
 }
 

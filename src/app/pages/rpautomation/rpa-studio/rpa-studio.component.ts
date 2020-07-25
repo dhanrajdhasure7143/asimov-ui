@@ -244,5 +244,6 @@ export class RpaStudioComponent implements OnInit {
       this.insertbot.get("predefinedBot").setValue("true")
     }*/
   }
+  
 } 
 

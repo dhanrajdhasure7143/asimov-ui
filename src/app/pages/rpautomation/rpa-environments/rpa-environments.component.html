@@ -1,38 +1,40 @@
 
 
-<div class="container rpa-tablebox mx-3">
+<div class="container-fluid mx-3">
   <div class="env-data-tool"> 
   <div class="env-btn">
-      <button class="btn-outline-primary btn env-btn-shadow" value="Create" title="Create Environment" id="addenvbtn" (click)="create()" >
-        <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
+      <button   value="Create" title="Create Environment" id="addenvbtn" (click)="create()" >
+        <img style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
+        <div>New</div>
       </button>
     </div>
     
     <div *ngIf="deleteflag==true" class="env-btn">
       
-      <button class="btn btn-outline-primary env-btn-shadow"   title="Delete Environment"  value="Delete" id="deleteenvbtn" (click)="deleteEnvironments()" >
-        <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-       
+      <button   title="Delete Environment"  value="Delete" id="deleteenvbtn" (click)="deleteEnvironments()" >
+        <img style="height:20px"  src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
+        <div>Delete</div>
+      
       </button>
     
     </div>
     
     <div *ngIf="deleteflag==false" class="env-btn">
     
-      <button class="btn btn-outline-primary env-btn-shadow" data-toggle="tooltip" data-placement="top" id="deleteenvbtn" title="Delete Environment" disabled>
+      <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn" title="Delete Environment" disabled>
 
-        <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-              
+        <img  style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
+        <div>Delete</div>
       </button>
     
     </div>
     
     <div *ngIf="updateflag==true" class="env-btn">
     
-      <button class="btn-outline-primary btn env-btn-shadow" id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Edit Environment"  (click)="updatedata()">
+      <button  id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Edit Environment"  (click)="updatedata()">
     
-        <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
-        
+        <img  style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
+        <div>Update</div>
         
       </button>
     
@@ -43,17 +45,41 @@
     <div *ngIf="updateflag==false" class="env-btn">
       
       
-      <button class="btn-outline-primary btn env-btn-shadow" data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Edit Environment" disabled>
+      <button data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Edit Environment" disabled>
         
         
-        <img class="rpa-env-btn-image" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
+        <img  style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
         
-      
+        <div>Update</div>
       
       </button>
-    
+
     
     </div>
+    
+      <div *ngIf="deleteflag==true" class="env-btn">
+      
+        
+        <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn"  (click)="deploybotenvironment()" title="Deploy Bot Environment" >
+  
+          <img  style="height:20px" src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
+          <div>Deploy</div>
+        </button>
+
+      </div>
+      
+      <div *ngIf="deleteflag==false" class="env-btn">
+      
+
+
+        <button data-toggle="tooltip" id="updateenvbtn" data-placement="top" [disabled]="!(deleteflag==true)"  title="Deploy Bot Environment" disabled> 
+          <img  style="height:20px" src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
+          <div>Deploy</div>
+        </button>
+  
+      
+      </div>
+      
     
    <!-- <div class="env-search">
       <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
@@ -72,7 +98,8 @@
           <th>Connection Type</th>
           <th>Port</th>
           <th>Created At</th>
-          <th>Active</th>
+          <th>Status</th>
+          <th>Deployed</th>
           
         </tr>
       </thead>
@@ -98,9 +125,9 @@
           <td *ngIf="environment.createdTimeStamp!=''">{{environment.username}}</td>
           <td>
             <div  *ngIf="environment.activeStatus == 7" >Active</div>
-            <div  *ngIf="environment.activeStatus == 0" >New</div>
+            <div  *ngIf="environment.activeStatus == 0" >Inactive</div>
           </td>
-          
+          <td>Yes</td>
         </tr>
        </tbody>
        <tfoot>

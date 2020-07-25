@@ -318,5 +318,28 @@ import {Router} from "@angular/router";
       });
       
   }
+
+
+  deploybotenvironment()
+  {
+    const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+    if(selectedEnvironments.length!=0)
+    {
+      this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
+        let data:any=res
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: data[0].status,
+          showConfirmButton: false,
+          timer: 2000
+        })
+            
+      })
+    }
+  }
+
+
+
 }
 

@@ -1,0 +1,63 @@
+.rpa-home-block{
+
+    flex:1;
+    margin-left: 20px;
+    align-items: center;
+    text-align: center;
+    border:1px solid #0062cf;
+    padding-top:20px;
+    padding-bottom:20px;
+    padding-right:10px;
+    padding-left: 10px;
+    margin-right:20px
+    
+}
+.bot-data{
+    padding:5em;
+}
+
+.rpa-home{
+    margin-top:150px;
+    display:flex;
+    width:100%;
+    
+}
+
+
+.rpa-home-block > img:hover{
+    
+    fill:white
+}
+
+
+.rpa-home-btn-title{
+    color:black;
+}
+
+
+.rpa-home-block> h6{
+    color:#0062cf;
+}
+
+
+.rpa-home-bots{
+    padding:20px
+}
+
+
+.rpa-home-header{
+    display:flex;
+}
+
+.rpa-home-heading{
+    padding:10px;
+    flex:3;
+}
+.rpa-home-category{
+    flex:1;
+    padding-left:10px;
+}
+.rpa-home-process{
+    flex:1;   
+    padding-left:10px;
+}
