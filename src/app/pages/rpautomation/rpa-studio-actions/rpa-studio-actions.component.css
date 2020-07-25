@@ -172,3 +172,7 @@ margin: 0px !important;
   padding:0px;
   margin:0px;
 }
+.logs-container{
+  max-height: 400px;
+  overflow: auto;
+}

@@ -1,4 +1,4 @@
-<div class="header_addon pull-right">
+<div class="header_addon pull-right"   >
   <button  type="button" style="height:20px;padding-right:30px"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()">
     <img src="..\\assets\\images\\RPA\\rpa-env-add-btn.svg" >
     <br>
@@ -9,14 +9,15 @@
     <br>
     Load
   </button>
-</div>
-<br><br><br>
-<!-- tabs -->
-<div class="container">
-<div class="row col-md-10" *ngIf="tabsArray.length > 0">
+
 </div>
 
+<!-- tabs -->
+<div class="container-fluid"  *ngIf="tabsArray.length < 1">
+<!--<app-rpa-home></app-rpa-home>-->
+</div>
 <div *ngIf="tabsArray.length > 0" class="container">
+<br><br><br>
 <div class="col-md-12 row">
 <div class="col-md-2 side-slide">
   <div class="paddclass" id="search">
@@ -39,6 +40,7 @@
 <div class="col-md-10" id="draganddrop">
 <app-rpa-studio-tabs [tabsArray]= "tabsArray" (closeTabEvent)="closeBot($event)" [tabActiveId]="tabActiveId"></app-rpa-studio-tabs>
 <div class="rpa-nav">
+
   <div class="rpa-nav-btn">
     <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" >
       <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpa-nav-btn-img">
@@ -59,7 +61,7 @@
 </div>
 </div>
 </div>
-</div>
+
 <!-- <process-category-overlay headerTitle="Create Bot" (proceed)="onCreateSubmit($event)" isRpa="true" buttonName="Submit"></process-category-overlay> -->
 <div id="create-bot" class="rpa-modal">
   <div class="rpa-modal-content">

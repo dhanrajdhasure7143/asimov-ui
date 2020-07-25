@@ -109,7 +109,7 @@ border-bottom-color:#d9d9d9;
 .rpa-tablebox{
 padding-top:10px;
 padding-bottom:10px;
-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+/*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
 border-radius: 10px;
 height: 500px;
 }
@@ -128,7 +128,14 @@ float:right;
 }
 .env-data-tool{
 padding:10px;
+float: left;
 }
+
+#listofenv_filter > label > input[type=search]
+{
+  float:left !important;
+}
+
 .rpa-env-nav
 {
 padding-top:60px;
@@ -195,7 +202,7 @@ padding-bottom: 70px;
   }
 
   .rpa-custom-scrollbar {
-    height: 350px;
+    max-height: 350px;
     overflow-y: scroll;
    
     

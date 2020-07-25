@@ -26,17 +26,21 @@ import {RpaEnvHints} from "./model/rpa-environments-module-hints";
 import {RpaWorkspace} from "./model/rpa-workspaceslist-module-hints";
 import { NgxPasswordToggleModule } from 'ngx-password-toggle';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { RpaHomeComponent } from './rpa-home/rpa-home.component';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule} from '@angular/material';
 
 @NgModule({
-  declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent],
+  declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent, RpaHomeComponent],
   imports: [
     CommonModule,
     RpautomationRoutingModule,
     NgxPasswordToggleModule,
     DndModule,
+    MatTableModule,
     FilterPipeModule,
     DataTablesModule,
     NgbModule,
@@ -50,9 +54,12 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     TooltipModule.forRoot(),
     ModalModule.forRoot(),
     SharedModule,
-    MatPaginatorModule,
+    MatTableModule,
     MatSortModule,
-    MatTableModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatInputModule, MatIconModule, MatFormFieldModule,
+    MatOptionModule, MatSelectModule
   ],
   providers: [RpaHints,RpaDragHints,RpaEnvHints,RpaWorkspace]
 })
