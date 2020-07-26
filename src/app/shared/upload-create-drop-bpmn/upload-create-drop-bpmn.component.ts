@@ -55,7 +55,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
 
   uploadCreateBpmn(e){
     this.randomId = UUID.UUID();
-    //this.randomId = Math.floor(Math.random()*999999);//Values get repeated
     this.create_editor=false;
     this.bpmnModel.bpmnProcessName=e.processName;
     this.bpmnModel.bpmnModelId=this.randomId;
@@ -69,7 +68,6 @@ export class UploadCreateDropBpmnComponent implements OnInit {
         if( this.router.url.indexOf("uploadProcessModel") > -1 ){
           this.bpmnservice.changeConfNav(true);
           this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}});
-          // this.uploadProcessModel.uploadConfBpmn(encrypted_bpmn);
         }else{
           this.bpmnservice.changeConfNav(false);
           this.bpmnservice.uploadBpmn(encrypted_bpmn);
@@ -90,7 +88,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   initialSave(diagramModel:BpmnModel, target:string){
-    // diagramModel.modifiedTimestamp = new Date();
+    diagramModel.createdTimestamp = new Date();
+    diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
       let isBPSHome = this.router.url == "/pages/businessProcess/home";
       if(!isBPSHome){

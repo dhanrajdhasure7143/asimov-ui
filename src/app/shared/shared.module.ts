@@ -8,10 +8,11 @@ import { UploadCreateDropBpmnComponent } from '../shared/upload-create-drop-bpmn
 import { BpmnDiagramComponent } from './bpmn-diagram/bpmn-diagram.component';
 import { CronEditorModule } from './cron-editor/cron-editor.module';
 import { ProcessCategoryOverlayComponent } from './process-category-overlay/process-category-overlay.component';
+import { SearchPipe } from './pipes/search.pipe';
 
 
 @NgModule({
-  declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent],
+  declarations: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe],
   imports: [
     CommonModule,
     NgxDropzoneModule,
@@ -21,6 +22,6 @@ import { ProcessCategoryOverlayComponent } from './process-category-overlay/proc
     MatOptionModule, MatSelectModule
   ],
   providers: [],
-  exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent]
+  exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent, SearchPipe]
 })
 export class SharedModule { }

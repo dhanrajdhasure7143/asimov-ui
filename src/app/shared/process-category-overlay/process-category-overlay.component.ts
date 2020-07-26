@@ -14,7 +14,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
 
   processName = "";
   categoryName = "";
-  othercategory;
+  othercategory = "";
   isotherCategory:boolean=false;
   categoriesList:any=[];
   botName = "";
@@ -57,6 +57,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   }
 
   slideDown(){
+    this.isotherCategory = false;
     var modal = document.getElementById('myModal');
     modal.style.display="none";
   }

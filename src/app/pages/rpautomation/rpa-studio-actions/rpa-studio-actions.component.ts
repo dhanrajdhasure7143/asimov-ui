@@ -59,11 +59,13 @@ export class RpaStudioActionsComponent implements OnInit {
   scheduleLists: any[] = [];
   form: FormGroup;
   public startDate: Date;
+  selectTime;
   public endDate: Date;
   public cronExpression = '0/1 * 1/1 * ?';
   public isCronDisabled = false;
   public selectedTimeZone :any;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
+  i="";
   public cronOptions: CronOptions = {
     formInputClass: 'form-control cron-editor-input',
     formSelectClass: 'form-control cron-editor-select',
@@ -112,6 +114,8 @@ export class RpaStudioActionsComponent implements OnInit {
 
   }
 
+  onCreateSubmit(){}
+  
   deploybot() {
     
     this.rest.deployremotemachine(this.savebotrespose.botId).subscribe(data => {

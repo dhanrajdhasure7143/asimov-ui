@@ -101,7 +101,7 @@ import {Router} from "@angular/router";
     this.updatepopup.style.display='none';
   }
 
-
+  savedata(){}
  async getallData()
   {
 
@@ -221,7 +221,6 @@ import {Router} from "@angular/router";
     if(selectedEnvironments.length!=0)
     {
       
-      this.closebutton.nativeElement.click();
     
       Swal.fire({
         title: 'Are you sure?',
@@ -243,14 +242,17 @@ import {Router} from "@angular/router";
               timer: 2000
     
             })
-            this.chanref.detectChanges();
-            this.rerender();
+ 
+            //this.chanref.detectChanges();
           })
           
         }
       })
       
     }
+    this.rerender();
+          
+    
   }
  
 

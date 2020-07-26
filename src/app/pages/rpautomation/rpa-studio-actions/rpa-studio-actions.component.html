@@ -27,7 +27,7 @@
         
       <div *ngIf="pausebot==true || resumebot==true">
         <button  type="button"
-        class="  rpa-btn_style"  title="Stop Bot" aria-hidden="true" placement="bottom" (click)="stopBot(1)">
+        class="  rpa-btn_style"  title="Stop Bot" aria-hidden="true" placement="bottom" (click)="stopBot()">
         <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
         <div class="btn_title">Stop</div>
         </button>
@@ -50,7 +50,7 @@
           <li>
             <div class="checkbox">
               <div class="environments">
-                <label [for]="list+i">No Records Found</label>
+                <label [for]="'list'+i">No Records Found</label>
                 <hr>
               </div>
             </div>
@@ -125,7 +125,7 @@
           <li>
             <div class="checkbox">
               <div class="environments">
-                <label [for]="list+i">No Records Found</label>
+                <label [for]="'list'+i">No Records Found</label>
                 <hr>
               </div>
             </div>
@@ -150,7 +150,7 @@
           <li>
             <div class="checkbox">
               <div class="environments">
-                <label [for]="list+i">No Records Found</label>
+                <label [for]="'list'+i">No Records Found</label>
                 <hr>
               </div>
             </div>
@@ -175,19 +175,19 @@
     <div class="status" id="botStatus"> 
       <div class="row" style="text-align: center;">Bots</div>
       <div class="row rob-status">
-        <h4>{{botStatisticsData.New}}</h4>
+        <h4>{{botStatisticsData["New"]}}</h4>
         <p>NEW</p>
       </div>
       <div class="row rob-status">
-        <h4>{{botStatisticsData.Success}}</h4>
+        <h4>{{botStatisticsData["Success"]}}</h4>
         <p>ACTIVE</p>
       </div>
       <div class="row rob-status">
-        <h4>{{botStatisticsData.Failure}}</h4>
+        <h4>{{botStatisticsData["Failure"]}}</h4>
         <p>ERRORS</p>
       </div>
       <div class="row rob-status">
-        <h4>{{botStatisticsData.Running}}</h4>
+        <h4>{{botStatisticsData["Running"]}}</h4>
         <p>RUNNING</p>
       </div>
     </div>
@@ -213,7 +213,7 @@
                     <label for="botName">Timezone</label>
                     <select class="form-control"   name="selectedTimeZone" #timezone="ngModel" [(ngModel)]="selectedTimeZone" [ngModelOptions]="{standalone: true}"
             required>
-            <option *ngFor="let timeZone of timesZones" [(ngValue)]="timeZone">{{timeZone}}</option>
+            <option *ngFor="let timeZone of timesZones" [ngValue]="timeZone">{{timeZone}}</option>
             <option [ngValue]="undefined" selected disabled>Select a Type</option>
           </select>
           <hr>

@@ -54,7 +54,7 @@ export class BpmnDiagramComponent implements OnInit {
       this.bpmnModeler.on('element.changed', function(){
         let now = new Date().getTime();
         if(now - _self.last_updated_time > 10*1000){
-          _self.autoSaveBpmnDiagram();
+          // _self.autoSaveBpmnDiagram();
           _self.last_updated_time = now;
         }
       })
@@ -66,18 +66,18 @@ export class BpmnDiagramComponent implements OnInit {
     this.router.navigateByUrl("/pages/businessProcess/uploadProcessModel");
   }
 
-  autoSaveBpmnDiagram(){
-    this.spinner.show();
-      let _self = this;
-      this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
-        _self.updated_date_time = new Date();
-        // _self.bpmnModel.bpmnModelModifiedTime = _self.updated_date_time;
-        _self.bpmnModel.bpmnModelTempId = _self.counter;
-        _self.bpmnModel.bpmnModelTempVersion = '0.0.'+_self.counter;
-        _self.bpmnModel.bpmnProcessMeta = btoa(_self.newXml);
-        _self.autoSaveDiagram();
-      });
-  }
+  // autoSaveBpmnDiagram(){
+  //   this.spinner.show();
+  //     let _self = this;
+  //     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
+  //       _self.updated_date_time = new Date();
+  //       // _self.bpmnModel.bpmnModelModifiedTime = _self.updated_date_time;
+  //       _self.bpmnModel.bpmnModelTempId = _self.counter;
+  //       _self.bpmnModel.bpmnModelTempVersion = '0.0.'+_self.counter;
+  //       _self.bpmnModel.bpmnProcessMeta = btoa(_self.newXml);
+  //       _self.autoSaveDiagram();
+  //     });
+  // }
 
   autoSaveDiagram(){
     this.rest.autoSaveBPMNFileContent(this.bpmnModel).subscribe(res => {

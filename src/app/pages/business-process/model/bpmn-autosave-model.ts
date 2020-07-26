@@ -1,14 +1,8 @@
 export class BpmnModel{
     bpmnModelId:string;
-    bpmnModelModifiedBy:string = "Vaidehi"; // localStorage.getItem("userName")
-    // bpmnModelModifiedTime:Date;
-    createdTimestamp:Date;
-    // modifiedTimestamp:Date;
-    bpmnModelTempId:number;
+    createdTimestamp:Date = new Date();
+    modifiedTimestamp:Date = new Date();
     bpmnTempId:number;
-    //bpmnModelTempStatus:string = "Initial";
-    bpmnModelTempVersion:string;
-    bpmnProcessMeta:string;
     approverName:string = "";
     bpmnJsonNotation:string;
     bpmnNotationAutomationTask:string;
@@ -24,6 +18,4 @@ export class BpmnModel{
     bpmnProcessStatus:string;
     bpmnProcessName:string;
     reviewComments:string = "";
-    version:string;
-    versionId:number
 }

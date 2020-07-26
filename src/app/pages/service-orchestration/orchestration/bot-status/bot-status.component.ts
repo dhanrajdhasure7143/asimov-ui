@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {ViewChild, Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
-
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-bot-status',
@@ -11,6 +13,10 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 export class BotStatusComponent implements OnInit {
   processStatus:any;
   BotStatus:any;
+  displayedColumns: string[] = ["botName","botType","categoryName","createdBy" ,"createdTS","description"];
+  dataSource:MatTableDataSource<any>;
+  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static:false}) sort: MatSort;
   gaugeType = "full";
   activeBots:any=[];
   gaugeValue = 28.3;
@@ -353,9 +359,15 @@ getBotStatus()
 }
   getAllActiveBots()
   {
+    let response:any;
     this.api.getAllActiveBots().subscribe(data=>
     {
-      this.activeBots=data
+      this.activeBots=data;
+      response=data;
+      console.log(response)
+      this.dataSource= new MatTableDataSource(response);
+      this.dataSource.sort=this.sort;
+      this.dataSource.paginator=this.paginator;
     })
   }
 

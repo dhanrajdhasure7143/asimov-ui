@@ -18,14 +18,16 @@ export class BpsHomeComponent implements OnInit {
   saved_diagrams:any[] = [];
   bkp_saved_diagrams:any[] = [];
   p: number = 1;
-  searchTerm;
+  searchTerm = "";
   isLoading:boolean = false;
   sortedData:any;
   data;
   orderAsc:boolean = true;
-  sortIndex:number=1;
+  sortIndex:number=2;
   index:number;
   xpandStatus=false;
+  autosavedDiagramList = [];
+  autosavedDiagramVersion = [];
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints ) { }
@@ -36,6 +38,7 @@ export class BpsHomeComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/businessProcess/home","title":"BPMN Upload"});
     this.dt.changeHints(this.hints.bpsHomeHints);
     this.getBPMNList();
+    this.getAutoSavedDiagrams();
   }
 
   async getBPMNList(){
@@ -56,12 +59,39 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams[this.index].xpandStatus=false;
   }
 
-  openDiagram(binaryXMLContent, bpmnModelId){
+  openDiagram(bpmnDiagram){
+    if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
+    let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
+    let bpmnModelId = bpmnDiagram.bpmnModelId;
+    let bpmnVersion = bpmnDiagram.version;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-    this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId }});
+    this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId , ver: bpmnVersion}});
   }
-
-  getDiagram(byteBpmn,i){
+  getAutoSavedDiagrams(){
+    this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
+      if(Array.isArray(res))
+        this.autosavedDiagramList = res; 
+    });
+   }
+   getColor(status) { 
+    switch (status) {
+      case 'PENDING':
+        return 'orange';
+      case 'REJECTED':
+        return 'red';
+      case 'APPROVED':
+        return 'green';
+      case 'INPROGRESS':
+        return 'orange';
+    }
+  }
+   filterAutoSavedDiagrams(modelId){
+    this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
+      return each_asDiag.bpmnModelId == modelId;
+    })
+   }
+  getDiagram(eachBPMN,i){
+    let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
     this.bpmnModeler = new BpmnJS({
@@ -71,15 +101,25 @@ export class BpsHomeComponent implements OnInit {
       }
     });
     this.bpmnModeler.clear();
-    this.bpmnModeler.importXML(atob(byteBpmn), function(err){
-      if(err){
-        this.notifier.show({
-          type: "error",
-          message: "Could not import Bpmn diagram!",
-          id: "ae12" 
+    if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED")
+      this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
+    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+      byteBpmn = atob(this.autosavedDiagramVersion[0]["bpmnProcessMeta"]);
+      if(byteBpmn == "undefined"){
+        this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+          this.bpmnModeler.importXML(res, function(err){
+            if(err){
+              console.error('could not import BPMN 2.0 diagram', err);
+            }
+          })
         });
+      }else{
+        this.bpmnModeler.importXML(byteBpmn, function(err){
+          if(err){
+            console.error('could not import BPMN 2.0 diagram', err);
+          }
+        })
       }
-    })
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
   }

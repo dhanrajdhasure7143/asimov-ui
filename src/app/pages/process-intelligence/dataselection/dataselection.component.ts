@@ -103,6 +103,11 @@ export class DataselectionComponent implements OnInit {
     
 
   }
+
+  getDataTypeChange(a,b){
+    
+  }
+
   slideUp(){
     var modal = document.getElementById('myModal');
     modal.style.display="block";

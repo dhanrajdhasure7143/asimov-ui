@@ -137,6 +137,9 @@ div[class^='diagram_container'] .djs-container svg{
 .ngx-pagination{
   padding: 0;
 }
+.pagination{
+  margin: 0 !important;
+}
 /* pagination styles */
 
 /* button styles */
@@ -183,6 +186,38 @@ button:disabled{
   outline: none;
   background-color: white;
   box-shadow: none !important;
+}
+.eiap_tooltip{
+  background-color: #0061cf;
+}
+.error_msg{
+  font-size: 10px;
+  color: red;
+  display: none;
+}
+.error_msg.show{
+  display: block;
+}
+.label_icon{
+  font-size: 11px;
+  color: white;
+  background: grey;
+  padding: 3px;
+  border-radius: 5px;
+  margin-top: 10px;
+  text-align: center;
+}
+.bg-red{
+  background-color: red;
+}
+.bg-green{
+  background-color: green;
+}
+.bg-orange{
+  background-color: orange;
+}
+.invisible{
+  visibility: hidden;
 }
 /* button styles */
 /* .tabscomp .nav-link{

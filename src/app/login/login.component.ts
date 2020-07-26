@@ -5,6 +5,7 @@ import * as particlesJS from 'particlesjs';
 
 declare var particlesJS :any;
 import { RestApiService } from '../pages/services/rest-api.service';
+import { AuthenticationService } from '../services';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,7 @@ export class LoginComponent{
   password:any;
   userName:any;
 
-  constructor(private router:Router,private rest:RestApiService) { }
+  constructor(private router:Router,private rest:RestApiService, private authService:AuthenticationService) { }
 
   ngOnInit() {
     // this.getParticles();
@@ -121,6 +122,7 @@ export class LoginComponent{
     //   },
     //   "retina_detect": true
     // });
+    this.authService.logout();
   }
 
   getAccessToken(){

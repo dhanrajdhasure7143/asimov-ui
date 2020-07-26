@@ -34,6 +34,8 @@ styleUrls: ['./form-builder.component.css']
 export class FormBuilderComponent implements OnInit {
   @Input() field:any;
   @Input() form:any;
+  isValid;
+  isDirty;
 
 getisValid() { return this.form.controls[this.field.name].valid; }
 getisDirty() { return this.form.controls[this.field.name].dirty; }

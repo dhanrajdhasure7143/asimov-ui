@@ -56,22 +56,22 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   }
 
   getApproverforuser(role){
-    return this.http.get("/bpsprocess/approver/info/"+role)//first api call
+    return this.http.get("/bpsprocess/approver/info/"+role)
   }
   getUserBpmnsList(){
     return this.http.get("/bpsprocess/fetchByUser/gopi"); 
   }
   saveBPMNprocessinfofromtemp(bpmnModel){
-    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel)//third api call
+    return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel)
   }
   submitBPMNforApproval(bpmnModel){
-    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)//fourth api call
+    return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)
   }
-  getBPMNtempnotations(){
-    return this.http.get("/bpsprocess/temp/bpmn/{bpmnModelTempId}/notation/")//fifth api call
+  getBPMNTempNotations(){
+    return this.http.get("/bpsprocess/temp/bpmn/all/user?bpmnModelModifiedBy=gopi");
   }
   autoSaveBPMNFileContent(bpmnModel){
-    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel)//sixth api call
+    return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel)
   }
 
   sendUploadedFile(file:FormData, uid){

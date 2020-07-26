@@ -70,6 +70,8 @@ styles:[
 export class FileComponent {
   @Input() field:any = {};
   @Input() form:FormGroup;
+  isHovering;
+  toggleHover;
   getisValid() { return this.form.controls[this.field.name].valid; }
   getisDirty() { return this.form.controls[this.field.name].dirty; }
 
