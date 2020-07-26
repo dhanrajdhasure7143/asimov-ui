@@ -489,6 +489,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   onFormSubmit(event){ 
     console.log("hii"+ event);
     this.fieldValues = event
+    if(this.fieldValues['file1']){
+      this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
+    }
+    if(this.fieldValues['file2']){
+      this.fieldValues['file2'] = this.fieldValues['file2'].substring(12)
+    }
     if(this.fileData != undefined){
       this.fieldValues['file'] = this.fileData
       }
