@@ -170,18 +170,16 @@ this.selectedrow =i;
     }; 
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{ 
-        let message = "Diagram approved successfully"; //this has to change after approval API
-        //this.enablePanels(this.approver_info.bpmnModelId); 
+        let message = "Diagram submitted for approval"; //this has to change after approval API
         this.bpmnlist();
-         this.global.notify(message,'success'); 
-        },
-         err=>{
-            let message = "Oops! Something went wrong";
-             this.global.notify(message,'error'); 
-            });
-          //  this.enablePanels(this.approver_info.bpmnModelId); 
-            this.bpmnlist(); 
-          }
+        this.global.notify(message,'success'); 
+      },
+      err=>{
+        let message = "Oops! Something went wrong";
+        this.global.notify(message,'error'); 
+    });
+    this.bpmnlist(); 
+  }
 
   disable_panels(){
     let panels = localStorage.getItem("pending_bpmnId");

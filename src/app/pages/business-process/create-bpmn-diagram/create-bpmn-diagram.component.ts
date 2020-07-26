@@ -312,10 +312,19 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let bpmnModel:BpmnModel = new BpmnModel();
     let _self=this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
+    let status = sel_List["bpmnProcessStatus"];
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
-    bpmnModel.id = sel_List['id'];
+    if(status == "APPROVED" || status == "REJECTED"){
+      let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
+      all_bpmns.forEach(each => {
+        if(status == "INPROGRESS")
+          bpmnModel.id = each.id;
+      })
+    }else{
+      bpmnModel.id = sel_List['id'];
+    }
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
@@ -324,6 +333,17 @@ export class CreateBpmnDiagramComponent implements OnInit {
       _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
+          if(status == "APPROVED" || status == "REJECTED"){
+            let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
+            let last_version = 0;
+            all_bpmns.forEach(each => {
+              if(last_version < each.version)
+                last_version = each.version;
+            })
+            let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': last_version+1}
+            _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
+            _self.getUserBpmnList();
+          }
           _self.isLoading = false;
           Swal.fire(
             'Saved!',

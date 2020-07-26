@@ -421,7 +421,18 @@ export class UploadProcessModelComponent implements OnInit {
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
-    bpmnModel.id = sel_List['id'];
+    let status = sel_List["bpmnProcessStatus"];
+    if(status == "APPROVED" || status == "REJECTED"){
+      let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
+      for(var i = 0; i<all_bpmns.length; i++){
+        let each = all_bpmns[i];
+        if(each.bpmnProcessStatus == "INPROGRESS")
+          bpmnModel.id = each.id;
+          break;
+      }
+    }else{
+      bpmnModel.id = sel_List['id'];
+    }
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
     this.initBpmnModeler();
@@ -431,6 +442,17 @@ export class UploadProcessModelComponent implements OnInit {
       _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
+          if(status == "APPROVED" || status == "REJECTED"){
+            let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
+            let inprogress_version = 0;
+            all_bpmns.forEach(each => {
+              if(inprogress_version < each.version)
+              inprogress_version = each.version;
+            })
+            let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version}
+            _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
+            _self.getUserBpmnList(null);
+          }
           _self.isLoading = false;
           _self.isRouterNotation = false;
          // _self.getUserBpmnList(null);
