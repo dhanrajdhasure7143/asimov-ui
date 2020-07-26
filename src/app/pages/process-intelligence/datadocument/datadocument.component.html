@@ -38,92 +38,92 @@
                     </th>
                 </tr>
                 <tr>
-                  <th class="tableHeader">
-                    <select name="cathead1" [disabled]='false' [(ngModel)]="cathead1"  class="form-control"  *ngIf="headerData[0]">
+                  <th class="tableHeader" *ngIf="headerData[0]">
+                    <select name="cathead1" [disabled]='false' [(ngModel)]="cathead1"  class="form-control"  >
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
                   </th>
-                  <th>
-                    <select [disabled]='false' name="cathead2" [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead1)" *ngIf="headerData[1]">
+                  <th class="tableHeader" *ngIf="headerData[1]">
+                    <select [disabled]='false' name="cathead2" [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead2)">
                   <option>String</option>
                   <option>Integer</option>
                   <option>Date/Time</option>
                     </select>
                   </th>
-                  <th>
-                  <select name="cathead3" [disabled]='false' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead2)" *ngIf="headerData[2]">
+                  <th class="tableHeader" *ngIf="headerData[2]">
+                  <select name="cathead3" [disabled]='false' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead3)">
                   <option>String</option>
                   <option>Integer</option>
                   <option>Date/Time</option>
                   </select>
                 </th>
-                <th>
-                  <select name="cathead4" [disabled]='false' [(ngModel)]="cathead4" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead3)" *ngIf="headerData[3]">
+                <th class="tableHeader" *ngIf="headerData[3]">
+                  <select name="cathead4" [disabled]='false' [(ngModel)]="cathead4" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead4)">
                   <option>String</option>
                   <option>Integer</option>
                   <option>Date/Time</option>
                   </select>
                 </th>
-                <th>
-                  <select name="cathead5" [disabled]='false' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead4)" *ngIf="headerData[4]">
+                <th class="tableHeader" *ngIf="headerData[4]">
+                  <select name="cathead5" [disabled]='false' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead5)">
                   <option>String</option>
                   <option>Integer</option>
                   <option>Date/Time</option>
                   </select>
                 </th>
-                <th>
-                  <select name="cathead6" [disabled]='false' [(ngModel)]="cathead6" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead5)" *ngIf="headerData[5]">
+                <th class="tableHeader" *ngIf="headerData[5]">
+                  <select name="cathead6" [disabled]='false' [(ngModel)]="cathead6" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)">
                   <option>String</option>
                   <option>Integer</option>
                   <option>Date/Time</option>
                   </select>
                 </th>
-                 <th>
-                  <select name="cathead7" [disabled]='false' [(ngModel)]="cathead7" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headerData[6]">
+                 <th class="tableHeader" *ngIf="headerData[6]">
+                  <select name="cathead7" [disabled]='false' [(ngModel)]="cathead7" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead7)">
                   <option>String</option>
                   <option>Integer</option>
                   <option>Date/Time</option>
                   </select>
                   </th>
-                  <th>
-                    <select name="cathead8" [disabled]='false' [(ngModel)]="cathead8" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headerData[7]">
+                  <th class="tableHeader" *ngIf="headerData[7]">
+                    <select name="cathead8" [disabled]='false' [(ngModel)]="cathead8" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead8)">
                     <option>String</option>
                     <option>Integer</option>
                     <option>Date/Time</option>
                     </select>
                     </th>
-                    <th>
-                      <select name="cathead9" [disabled]='false' [(ngModel)]="cathead9" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headerData[8]">
+                    <th class="tableHeader" *ngIf="headerData[8]">
+                      <select name="cathead9" [disabled]='false' [(ngModel)]="cathead9" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead9)">
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
                       </th>
-                      <th>
-                        <select name="cathead10" [disabled]='false' [(ngModel)]="cathead10" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headerData[9]">
+                      <th class="tableHeader" *ngIf="headerData[9]">
+                        <select name="cathead10" [disabled]='false' [(ngModel)]="cathead10" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead10)">
                         <option>String</option>
                         <option>Integer</option>
                         <option>Date/Time</option>
                         </select>
                         </th>
-                        <th>
-                          <select name="cathead11" [disabled]='false' [(ngModel)]="cathead11" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headerData[10]">
+                        <th class="tableHeader" *ngIf="headerData[10]">
+                          <select name="cathead11" [disabled]='false' [(ngModel)]="cathead11" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead11)">
                           <option>String</option>
                           <option>Integer</option>
                           <option>Date/Time</option>
                           </select>
                           </th>
-                          <th>
-                            <select name="cathead12" [disabled]='false' [(ngModel)]="cathead12" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headerData[11]">
+                          <th class="tableHeader" *ngIf="headerData[11]">
+                            <select name="cathead12" [disabled]='false' [(ngModel)]="cathead12" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead12)">
                             <option>String</option>
                             <option>Integer</option>
                             <option>Date/Time</option>
                             </select>
                             </th>
-                            <th>
-                              <select name="cathead13" [disabled]='false' [(ngModel)]="cathead13" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headerData[12]">
+                            <th class="tableHeader" *ngIf="headerData[12]">
+                              <select name="cathead13" [disabled]='false' [(ngModel)]="cathead13" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead13)">
                               <option>String</option>
                               <option>Integer</option>
                               <option>Date/Time</option>
