@@ -32,6 +32,7 @@ export class PiflowchartComponent implements OnInit {
     public isfrequency:boolean=false;
     toolData1:any=[];
     isstartLink:boolean=true;
+    shape1Stroke:any;
 
   constructor() { }
 
@@ -47,7 +48,6 @@ export class PiflowchartComponent implements OnInit {
   ngOnChanges(){
       this.myDiagram.div = null;
       this.flowGraph();
-      
     // this.zoomSlider();
     if(this.isplay == true){
       this.playAnimation();
@@ -70,9 +70,8 @@ export class PiflowchartComponent implements OnInit {
      
   }
 
-  flowGraph() {
+  flowGraph() {       // process graph generation
     var me=this;
- 
     var $ = go.GraphObject.make; // for conciseness in defining templates
     // some constants that will be reused within templates
     var roundedRectangleParams = {
@@ -84,7 +83,8 @@ export class PiflowchartComponent implements OnInit {
         $(go.Diagram, "myDiagramDiv", // must name or refer to the DIV HTML element
             {
               initialContentAlignment: go.Spot.TopCenter,
-                initialAutoScale: go.Diagram.UniformToFill,
+                // initialAutoScale: go.Diagram.UniformToFill,
+                initialAutoScale: go.Diagram.Uniform,
                 hasHorizontalScrollbar: true,
                 hasVerticalScrollbar: true,
                 // have mouse wheel events zoom in and out instead of scroll up and down
@@ -97,11 +97,11 @@ export class PiflowchartComponent implements OnInit {
     // when the document is modified, add a "*" to the title and enable the "Save" button
     // this.myDiagram.addDiagramListener("Modified", function(e) {});
 
-    function showToolTip(e,obj, diagram) {
+    function showToolTip(e,obj, diagram) {        //show tooltip on nodes 
       var toolTipDIV = document.getElementById('toolTipDIV');
       var node = obj.part;
-        node.port.fill="#0162cb";
-        node.port.stroke='#0162cb';
+        // node.port.fill="#0162cb";
+        // node.port.stroke='#0162cb';
         var pt = diagram.lastInput.viewPoint;
       toolTipDIV.style.left =(pt.x + 130) + "px";
       toolTipDIV.style.top = (pt.y +  150) + "px";
@@ -140,24 +140,24 @@ export class PiflowchartComponent implements OnInit {
           var nodetext=obj.findObject("NodeTEXT")
           var textNode = obj.findObject("TEXT");
           var countNode= node.findObject("countNode");
-                textNode.stroke="rgba(0, 0, 0, .87)";
-                nodetext.stroke="white"
-                countNode.fill='white';
+                // textNode.stroke="rgba(0, 0, 0, .87)";
+                // nodetext.stroke="white"
+                // countNode.fill='white';
                 obj.scale = 1.5 ;
     }
   
-    function hideToolTip(obj) {
+    function hideToolTip(obj) {   //hide tooltip on nodes
       var node = obj.part;
      var toolTipDIV = document.getElementById('toolTipDIV');
      toolTipDIV.style.display = "none";
       var nodetext=obj.findObject("NodeTEXT");
       var textNode = obj.findObject("TEXT");
       var countNode= node.findObject("countNode");
-            node.port.fill="white";
-            node.port.stroke='black';
-            textNode.stroke="white";
-            nodetext.stroke="rgba(0, 0, 0, .87)";
-            countNode.fill='#0162cb';
+            // node.port.fill="white";
+            // node.port.stroke='black';
+            // textNode.stroke="white";
+            // nodetext.stroke="rgba(0, 0, 0, .87)";
+            // countNode.fill='#0162cb';
             obj.scale = 1;
         }
     var myToolTip = $(go.HTMLInfo, {
@@ -165,7 +165,9 @@ export class PiflowchartComponent implements OnInit {
       hide: hideToolTip
   
     });
-
+    var color1 = "rgb(80, 130, 210)";
+    var color2 = go.Brush.randomColor(150, 200);
+    var gradBrush = $(go.Brush, "Linear", {0:color1, 1: color2 });
     // define the Node template
     this.myDiagram.nodeTemplate =
         $(go.Node, "Auto", {
@@ -175,14 +177,16 @@ export class PiflowchartComponent implements OnInit {
                 shadowColor: "rgba(0, 0, 0, .14)" ,
                 width:180,
                 height:40,
-
+                // selectionAdorned: false,
+                locationSpot: go.Spot.Center,  // Node.location is the center of the Shape
+                // locationObjectName: "SHAPE",
             },
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            new go.Binding("zOrder"),
+            // new go.Binding("zOrder"),
             // define the node's outer shape, which will surround the TextBlock
-            $(go.Shape, "RoundedRectangle", roundedRectangleParams, {
+            $(go.Shape, "RoundedRectangle", roundedRectangleParams, {   //Node 
                 name: "SHAPE",
-                fill: "white",
+                // fill: gradBrush ,
                 strokeWidth: 0.5,
                 stroke: "black",
                 portId: "", // this Shape is the Node's port, not the whole Node
@@ -192,13 +196,13 @@ export class PiflowchartComponent implements OnInit {
                 toLinkable: false,
                 toLinkableSelfNode: false,
                 toLinkableDuplicates: false,
-            }),
-
+            }, new go.Binding("fill", "color")),
               $(go.Panel,
-            $(go.TextBlock, {
+            $(go.TextBlock, { //Node name
                     font: "bold 8pt helvetica, bold, ",
                     margin: 4,
-                    stroke: "rgba(0, 0, 0, .87)",
+                    // stroke: "rgba(0, 0, 0, .87)",
+                    stroke: "white",
                     editable: false,
                     name: "NodeTEXT",
                     alignment: go.Spot.TopCenter,
@@ -206,43 +210,41 @@ export class PiflowchartComponent implements OnInit {
                 },
                 new go.Binding("text","name").makeTwoWay()),),
 
-                $(go.Shape, "RoundedRectangle", roundedRectangleParams,
+                $(go.Shape, "RoundedRectangle", roundedRectangleParams, //Node count
                       { name: "countNode",
-                      width:50, 
-                      height: 15,
-                      fill: "#0162cb",
+                      width:0, 
+                      height: 0,
+                      // fill: "#0162cb",
                       alignment: go.Spot.BottomCenter, 
                       margin: 2,
                       stroke:null,
-                        },
+                        },new go.Binding("fill", "color")
                       ),
                 $(go.Panel,
-                  $(go.TextBlock , {
+                  $(go.TextBlock ,{
                     name: "TEXT",
                     font: "bold 7pt helvetica, bold ,",
                     stroke: "white",
                     position: new go.Point(0, 20),
                     editable: false,
-          },new go.Binding("text","count").makeTwoWay()),
+                },new go.Binding("text","count").makeTwoWay()),
               ),
-              
             {
-                selectionChanged: function(obj) { 
-                  var shape = obj.part.elt(0);                     
-                    shape.fill = obj.part.isSelected ? "#0162cb" : "white";
-                    // hideToolTip(obj);
-                    var data=obj.part.data
-                    data.clickCount=0;
-                  // var nodetext=obj.findObject("NodeTEXT");
-                  var node = obj.part;
-                    // nodetext.stroke="rgba(0, 0, 0, .87)";
-                    node.part.port.stroke='black';
-                  },
+                // selectionChanged: function(obj) { 
+                //   var shape = obj.part.elt(0);                     
+                //     shape.fill = obj.part.isSelected ? "#0162cb" : "";
+                //     // hideToolTip(obj);
+                //     var data=obj.part.data
+                //     data.clickCount=0;
+                //   // var nodetext=obj.findObject("NodeTEXT");
+                //   var node = obj.part;
+                //     // nodetext.stroke="rgba(0, 0, 0, .87)";
+                //     node.part.port.stroke='black';
+                //   },
                 mouseEnter:function(e,obj) {
                       var data=e.diagram
                       // zoomIN_node(obj,data)
                       showToolTip(e,obj,data);
-                      
                   },
                 mouseLeave:function(e,obj) {
                       var data=e.diagram
@@ -326,35 +328,44 @@ export class PiflowchartComponent implements OnInit {
         new go.Binding("curviness"),
         new go.Binding("zOrder"),
       // mark each Shape to get the link geometry with isPanelMain: true
-      $(go.Shape, { isPanelMain: true, stroke: "blue", strokeWidth: 0,name: "LINK1", },
+      $(go.Shape, { isPanelMain: true, strokeWidth: 3,name: "LINK1", },
+      new go.Binding("stroke","linkColor"),
         //       new go.Binding('strokeWidth','extraNode',function(extraNode) {
         //   return extraNode ? 0 : 7;
         // }),
-        new go.Binding('strokeWidth','highData',function(highData) {
-          return highData ? 0 : 7;
+        new go.Binding('stroke','extraNode',function(extraNode) {
+          return extraNode ? "purple" : "blue";
         }),
+        new go.Binding('strokeDashArray','extraNode',function(extraNode) {
+          return extraNode ? [10,10] : [];
+        }),
+        // new go.Binding('strokeWidth','highData',function(highData) {
+        //   return highData ? 0 : 7;
+        // }),
         ),
-      $(go.Shape, { isPanelMain: true, stroke: "rgb(44,62,80)", strokeWidth: 5,name:"LINK2" },
+      $(go.Shape, { isPanelMain: true, stroke: "rgb(44,62,80)", strokeWidth: 0,name:"LINK2" }, 
+      new go.Binding('stroke','extraNode',function(extraNode) {
+        return extraNode ? null :'' ;
+      }),
       new go.Binding('strokeWidth','extraNode',function(extraNode) {
-        return extraNode ? 0 : 7;
-      }), 
-        new go.Binding('stroke', 'highData', function(highData) {
-          return highData ? "red"  : 'blue';
-        }),
-        new go.Binding('strokeWidth','redColor',function(highData) {
-          return highData ? 4 : 5;
-        }),
+        return extraNode ? 0 : 2;
+      }),
+        // new go.Binding('stroke', 'highData', function(highData) {
+        //   return highData ? "red"  : 'blue';
+        // }),
+        // new go.Binding('strokeWidth','redColor',function(highData) {
+        //   return highData ? 5 : 5;
+        // }),
       ),
-      $(go.Shape, { isPanelMain: true, stroke: "white", strokeWidth: 3, name: "PIPE", strokeDashArray: [10, 10] },
+      $(go.Shape, { isPanelMain: true, stroke: "white", strokeWidth: 0, name: "PIPE", strokeDashArray: [10, 10] },
       new go.Binding('stroke','extraNode',function(extraNode) {
         return extraNode ? "purple" : "white";
-      })
-      ,
+      }),
       // new go.Binding('strokeDashArray', 'inprogress', function(inprogress) {
       //   return inprogress ? [5,5] /* green */ : [10,10];
       // }),
       ),
-      $(go.Shape, { toArrow: "Triangle", scale: 1.3, fill: "black", stroke: null }),
+      $(go.Shape, { toArrow: "Standard", scale: 1.4, fill: "black", stroke: null }),
       $(go.TextBlock,{ segmentOffset: new go.Point(0, 20) }, // the label text
                     {
                         textAlign: "center",
@@ -377,38 +388,31 @@ export class PiflowchartComponent implements OnInit {
                     new go.Binding("text","textOne").makeTwoWay()
                     ),
                     {
-                      // toolTip:
+                      // toolTip on Links:
                       mouseEnter:function(e,obj,diagram) {
                         var data=e.diagram
-                        // new go.Binding("text").makeTwoWay();
-                        // console.log("R",e.diagram['Eb'].Xt);
-                        // console.log("R",e.diagram.commandHandler.showContextMenu);
-                        // console.log(e.diagram.commit);
-                        
-                        
                         showLinkToolTip(e,obj,data);
-                      },
+                        },
                       mouseLeave:function(e,obj){
                         hideLinkToolTip(obj)
-                      }
+                        }
                       }
         );
 
-        function showLinkToolTip(e,obj,diagram) {
+        function showLinkToolTip(e,obj,diagram) {       //show tooltip on links
           var node = obj.part;
           var toolTipDIV = document.getElementById('linkToolTipDIV');
           var shape = obj.findObject("LINK");
           var shape1 = obj.findObject("LINK1");
           var shape2 = obj.findObject("PIPE");
           if(shape.fromNode.hb.key==-1||shape.toNode.hb.key==-2){
-            // console.log(shape1);
-            
-            // shape1.shadowOffset=10
-            // shape1.strokeWidth=10
-            shape2.stroke="blue"
-            shape2.strokeWidth=6;
+            shape2.stroke="red"
+            shape2.strokeWidth=3;
           }else{
-            shape1.strokeWidth=10;
+            me.shape1Stroke=shape1.stroke   
+            shape1.stroke="red"
+            shape2.stroke="red"
+            shape1.strokeWidth=3;
           }
 
           if((shape.fromNode.hb.key==-1&&me.spinMetrics0=="absoluteFrequency")||(shape.fromNode.hb.key==-1&&me.spinMetrics0=="caseFrequency")||(shape.toNode.hb.key===-2 && me.spinMetrics0=="absoluteFrequency")||(shape.toNode.hb.key===-2 && me.spinMetrics0=="caseFrequency")||(shape.fromNode.hb.key>=0&&shape.toNode.hb.key>=0)){
@@ -608,32 +612,29 @@ export class PiflowchartComponent implements OnInit {
             input = "End"
           }
          
-          if (input.length > 11)
-             return input.substring(0,11) + '...';
+          if (input.length > 9)
+             return input.substring(0,9) + '...';
           else
              return input;
       
       }
-        function hideLinkToolTip(obj){
+        function hideLinkToolTip(obj){         //Hide tooltip on links
           var toolTipDIV = document.getElementById('linkToolTipDIV');
           toolTipDIV.style.display = "none";
           var shape = obj.findObject("LINK");
-          // var node = obj.part;
           var shape1 = obj.findObject("LINK1");
           var shape2 = obj.findObject("PIPE");
           if(shape.fromNode.hb.key==-1||shape.toNode.hb.key==-2){
-            // console.log(shape1);
-            
-            // shape1.shadowOffset=10
-            // shape1.strokeWidth=10
             shape2.stroke="purple"
             shape2.strokeWidth=3;
           }else{
-            shape1.strokeWidth=0;
+            shape1.stroke=me.shape1Stroke
+            shape2.stroke="white"
+            shape1.strokeWidth=3;
             // shape2.stroke="white"
           }
         }
-        function timeConversion(millisec) {
+        function timeConversion(millisec) { // Time convert to days,hours,min and sec on tool tip data
           var seconds:any = (millisec / 1000).toFixed(1);
           var minutes:any = (millisec / (1000 * 60)).toFixed(1);
           var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
@@ -662,16 +663,16 @@ export class PiflowchartComponent implements OnInit {
   //        }
   //        );
   // }
-  playAnimation(){
+  playAnimation(){      //Animation for process graph
     var animation = new go.Animation();
       animation.easing = go.Animation.EaseLinear;
       this.myDiagram.links.each(function(link) {
         animation.add(link.findObject("PIPE"), "strokeDashOffset", 20, 0)
-        // animation.add(link.findObject("LINK1"), "strokeDashOffset",7,7)
-        // animation.add(link.findObject("PIPE"), "strokeWidth",7,9)
+        animation.add(link.findObject("LINK1"), "strokeWidth",0,0)
+        animation.add(link.findObject("LINK2"), "strokeWidth",5,5)
+        animation.add(link.findObject("PIPE"), "strokeWidth",3,3)
         // animation.add(link.findObject("PIPE"), "stroke","red","green")
-        // animation.add(link.findObject("LINK2"), "strokeWidth",5,5)
-        // animation.add(link.findObject("LINK2"), "stroke",'red','red')
+        // animation.add(link.findObject("PIPE"), "stroke",'red','blue')
         // animation.add(link.findObject("LINK1"), "strokeWidth",7,7)
         // var shape2 = this.myDiagram.link.findObject("LINK1");
         // console.log(shape2.strokeWidth);
@@ -679,6 +680,12 @@ export class PiflowchartComponent implements OnInit {
       // Run indefinitely
       animation.runCount = Infinity;
       animation.start();
+  }
+  makeSvg() {     //download process graph as SVG
+    var svg = this.myDiagram.makeSvg({ scale: 1, background: "white" });
+    var svgstr = new XMLSerializer().serializeToString(svg);
+    var blob = new Blob([svgstr], { type: "image/svg+xml" });
+    this.myCallback(blob);
   }
   myCallback(blob) {
     var url = window.URL.createObjectURL(blob);
@@ -703,13 +710,6 @@ export class PiflowchartComponent implements OnInit {
     // this.isdownloadpdf=false
       this.issvg.emit(this.isdownloadsvg)
   }
-
-  makeSvg() {
-    var svg = this.myDiagram.makeSvg({ scale: 1, background: "white" });
-    var svgstr = new XMLSerializer().serializeToString(svg);
-    var blob = new Blob([svgstr], { type: "image/svg+xml" });
-    this.myCallback(blob);
-  }
 zoomIn(){
   this.myDiagram.commandHandler.increaseZoom();
 }
@@ -719,7 +719,7 @@ zoomOut(){
 restZoom(){
   this.myDiagram.commandHandler.resetZoom();
 }
-generateImages (width:any, height:any) {
+generateImages (width:any, height:any) {      //download process graph as PDF
   // sanitize input
   width = parseInt(width);
   height = parseInt(height);
@@ -756,7 +756,7 @@ generateImages (width:any, height:any) {
     this.isdownloadpdf=false;
     this.ispdf.emit(this.isdownloadpdf);
   }
-  downloadJpegGraph(){
+  downloadJpegGraph(){    //download process graph as JPEG
     var blob = this.myDiagram.makeImageData({ background: "white", returnType: "blob", callback: this.jpeGCallback });
     this.isdownloadJpeg=false;
     this.isjpeg.emit(this.isdownloadJpeg);
@@ -781,7 +781,7 @@ generateImages (width:any, height:any) {
       document.body.removeChild(a);
     });
   }
-  downloadPngGraph(){
+  downloadPngGraph(){   //download process graph as PNG
     var blob = this.myDiagram.makeImageData({ background: "white", returnType: "blob", callback: this.pngCallback });
     this.isdownloadPng=false;
     this.ispng.emit(this.isdownloadPng);

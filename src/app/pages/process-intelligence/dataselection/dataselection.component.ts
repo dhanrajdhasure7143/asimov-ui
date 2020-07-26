@@ -177,6 +177,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     // console.log(res);
     this.isUploadFileName = res;
   });
+  if(this.isUploadFileName.includes("csv")){
     const connectorBody={
       //"name": "CsvSchemaSpool-"+tenantId+date.toISOString().split(':').join(''),
        "name": "CsvSchemaSpool-"+this.processId,
@@ -223,10 +224,56 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         // const piid={"piId":this.processId}
         //const piid={"piId":411}
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
-        
       })
+    }else{const xlsxConnectorBody={
+      "name": "xls-"+this.processId,
+      "config": {
+        "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
+        "tasks.max": "1",
+        "file": "/var/kafka/"+this.isUploadFileName,
+        "topic": "topqconnector-xls-"+this.processId,
+        "key.converter": "io.confluent.connect.avro.AvroConverter",
+        "key.converter.schema.registry.url": "http://10.11.0.101:8081",
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter.schema.registry.url": "http://10.11.0.101:8081",
+        "transforms": "RenameField,ReplaceField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string,InsertField,ValueToKey",
+        "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+        // "transforms.RenameField.renames": "Start Time:startTime,End Time:endTime,Operation:activity,Agent:resource,caseID:caseID",
+        "transforms.RenameField.renames": renamestring,
+        "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_startTime_unix.field": "startTime",
+        "transforms.convert_startTime_unix.target.type": "unix",
+        "transforms.convert_startTime_unix.format": "yyyy/MM/dd HH:mm:ss.SSS",
+        "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+        // "transforms.ReplaceField.whitelist": "caseID,activity,startTime,endTime,resource",
+        "transforms.ReplaceField.whitelist":renamesObjOne.join(),
+        "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_startTime_string.field": "startTime",
+        "transforms.convert_startTime_string.target.type": "string",
+        "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
+        "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+        "transforms.ValueToKey.fields": "caseID",
+        "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+        "transforms.InsertField.static.field": "piIdName",
+        "transforms.InsertField.static.value":this.processId+"-p"+this.processId,
+        "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_endTime_unix.field": "endTime",
+        "transforms.convert_endTime_unix.target.type": "unix",
+        "transforms.convert_endTime_unix.format": "yyyy/MM/dd HH:mm:ss.SSS",
+        "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_endTime_string.field": "endTime",
+        "transforms.convert_endTime_string.target.type": "string",
+        "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
+      }
+    }
+        this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+              this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
+        })
 
     }
+
+    }
+
   sort(ind,property) {
     this.isDesc = !this.isDesc; //change the direction    
     let direction = this.isDesc ? 1 : -1;

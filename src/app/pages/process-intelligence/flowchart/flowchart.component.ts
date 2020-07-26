@@ -44,7 +44,7 @@ export class FlowchartComponent implements OnInit {
   public data = (this.pgModel.data);
   public reports = this.pgModel.reports;
   public filterLength: number;
-  public dataValues: any[];
+  public dataValues: any=[];
   public varaint_data: any=[];
   public rangevalue: any;
   pathvalue: number = 0;
@@ -89,7 +89,6 @@ export class FlowchartComponent implements OnInit {
   varaint_GraphData:any=[];
   varaint_GraphDataArray:any[]=[];
   piIdNumber:any;
-  value;
   public isedgespinner:boolean=false;
   spinMetrics0:any="absoluteFrequency";
   wpiIdNumber:any;
@@ -114,7 +113,9 @@ export class FlowchartComponent implements OnInit {
   performanceValue1:any;
   performanceValue2:any;
   performanceValue3:any;
-  timeRangeArray:any=[]
+  timeRangeArray:any=[];
+  isFilterComponent:boolean=false;
+  overLayHide:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -204,14 +205,23 @@ export class FlowchartComponent implements OnInit {
     });
     
   }
-
+  ngOnChange(){
+    alert("false")
+    if(this.overLayHide==true){
+      alert("test")
+      this.closePopup()
+    }else{
+     
+    }
+  }
   ngAfterContentChecked() {
     this.rangevalue = ZoomSlider.rangeValue;
   }
-  getAlluserProcessPiIds(){ // Process graphs List
+
+  getAlluserProcessPiIds(){ // List of Process graphs
     this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data})
   }
-  onchangegraphId(selectedpiId){ 
+  onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isNodata=true;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
@@ -255,57 +265,15 @@ export class FlowchartComponent implements OnInit {
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
-        let loction=''
-        for(var i=0;i<this.model1.length;i++){
-          if(this.model1[i].key==-1||this.model1[i].key==-2){
-            let loc1=530
-          let loc2=-150+i*80
-          loction=loc1+' '+loc2;
-          this.model1[i].loc=loction
-          }else{
-          let loc1=455
-          let loc2=-150+i*80
-          loction=loc1+' '+loc2;
-          this.model1[i].loc=loction
-          }
-        }
-        
+        this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1)
-        for(var j=0;j<this.model2.length;j++){
-          // for (let [key, value] of Object.entries(this.model2[j])) {
-                            // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
-                // this.model2[j].from>0 && this.model2[j].to<0
-                // this.model2[j].from ==-2||this.model2[j].to==-2
-                if(j==0 && this.model2[j].to>1 ){
-                  let loc3=160
-                this.model2[j].curviness=loc3
-                }else{
-            if(this.model2[j].from ==-1||this.model2[j].from==-2){
-               if(this.model2[j].from==-1 && this.model2[j].to==0){
-                let loc3=0
-                this.model2[j].curviness=loc3
-              }else{
-              let loc3=-25*j
-            this.model2[j].curviness=loc3
-              }
-            }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
-              if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
-                let loc3=0
-                this.model2[j].curviness=loc3
-              }else{
-                let loc3=20*j
-                this.model2[j].curviness=loc3
-              }
-                
-          }else if(this.model2[j].from+1==this.model2[j].to){
-            let loc3=0
-            this.model2[j].curviness=loc3
-          }else{
-              let loc3=30*j
-            this.model2[j].curviness=loc3
-            }
-        }
-      }        
+        console.log("this.model2",this.model2);
+        this.gradientApplyforLinks()
+        this.gradientApplyforNode()
+        console.log(this.model2);
+        
+        this.linkCurvinessGenerate();
+        console.log( this.model1);
         this.spinner.hide();
     }
         });
@@ -428,8 +396,10 @@ export class FlowchartComponent implements OnInit {
     if(this.selectedCaseArry.length == 0){
         let fullgraphOne=this.fullgraph.data;
             this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
-                this.nodesAlignment();
+                this.nodeAlignment();
             this.model2 = this.flowchartData(this.model1);
+            this.gradientApplyforLinks()
+            this.gradientApplyforNode()
                 this.linkCurvinessGenerate();
                 // variant_playOne
                 this.isvariantSelectedOne=false;
@@ -449,6 +419,8 @@ export class FlowchartComponent implements OnInit {
         this.model1 = modalData.nodeDataArraycase
         this.nodeAlignment();
         this.model2 = this.flowchartData(this.model1)
+        this.gradientApplyforLinks()
+        this.gradientApplyforNode();
         this.linkCurvinessGenerate();
       }
     }else{
@@ -462,6 +434,8 @@ export class FlowchartComponent implements OnInit {
     this.model1=this.variantCombo.data[0].nodeDataArraycase
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1);
+    this.gradientApplyforLinks()
+    this.gradientApplyforNode()
     this.linkCurvinessGenerate();
     
     })
@@ -706,9 +680,11 @@ export class FlowchartComponent implements OnInit {
         // this.model2=this.pgModel.allSelectData.linkarraycase;
         let fullgraphOne=this.fullgraph.data;
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
-        this.nodesAlignment();
+        this.nodeAlignment();
         console.log('this.model1',this.model1);
         this.model2 = this.flowchartData(this.model1);
+        this.gradientApplyforLinks()
+        this.gradientApplyforNode();
         this.linkCurvinessGenerate();
         this.isDefaultData = false;
       }
@@ -782,6 +758,7 @@ export class FlowchartComponent implements OnInit {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(this.nodeArray[i].toolCount[3]!=0){
+
           obj['from'] = -1;
           obj['to'] = this.getFromKey(this.nodeArray[i].name);
           obj['text'] = this.nodeArray[i].toolCount[3];
@@ -913,15 +890,33 @@ selectedMetric(selectedValue){
   for(var i=1;i<this.model1.length-1;i++){
     if(index==5||index==6||index==7||index==8||index==9){
       this.model1[i].count=this.timeConversion(this.model1[i].toolCount[index])
+      this.model1[i].days=this.timeConversionDays(this.model1[i].toolCount[index])
     }else{
       this.model1[i].count=this.model1[i].toolCount[index]
       this.model1=this.model1
       // this.model1[i].countOne=this.model1[i].toolCount[index]
     }
   }
+  if(index==2){
+    for(var i=1;i<this.model1.length-1;i++){
+        this.model1[i].days=this.model1[i].toolCount[index]
+      }
+  }
   this.model2 = this.flowchartDataOne(this.model1,index)
+  if(index==2||index==5||index==6||index==7||index==8||index==9){
+    this.gradientApplyforLinksOne();
+    this.gradientApplyforNodeOne();
+    
+  }else{
+    // alert("test")
+    this.gradientApplyforLinks()
+    this.gradientApplyforNode()
+  }
+  // this.gradientApplyforNode();
   this.linkCurvinessGenerate();
+  console.log("model1",index ,this.model1);
 }
+
 flowchartDataOne(dataArray,index) {
   this.linkData = [];
   this.linkdataArray = [];
@@ -945,8 +940,10 @@ flowchartDataOne(dataArray,index) {
         obj['to'] = this.getFromKey(datalink[j].linkNode);
         if(index==5||index==6||index==7||index==8||index==9){
           obj['text'] = this.timeConversion(datalink[j].toolCount[index]);
+          obj['days'] = this.timeConversionDays(datalink[j].toolCount[index]);
         }else{
           obj['text'] = datalink[j].toolCount[index];
+          obj['days'] = datalink[j].toolCount[index];
           if(datalink[j].toolCount[index]>100){
             obj['highData']=true
           }
@@ -956,7 +953,6 @@ flowchartDataOne(dataArray,index) {
 
         obj['toolData']=datalink[j].tool
          obj['toolDataCount']=datalink[j].toolCount
-         
 
         this.linkdataArray.push(obj);
   }
@@ -972,6 +968,7 @@ flowchartDataOne(dataArray,index) {
           obj['text'] = this.nodeArray[i].toolCount[3];
           }
           obj["extraNode"] = 'true';
+          obj['days'] = 0;
           this.linkdataArray.push(obj);
         }
         // obj['text'] = this.nodeArray[i].toolCount[3]
@@ -991,6 +988,7 @@ flowchartDataOne(dataArray,index) {
           obj['text'] = this.nodeArray[i].toolCount[4]
           }
           obj["extraNode"] = 'true';
+          obj['days'] = 0;
         this.linkdataArray.push(obj);
         }
         // let testedg=this.nodeArray[i].name+" --> End"
@@ -1000,62 +998,26 @@ flowchartDataOne(dataArray,index) {
         
       }
   }
-// console.log('this.linkdataArray',this.linkdataArray);
-
   return this.linkdataArray;
 }
-openNav(){
+openNav(){ //variant list open
   document.getElementById("mySidenav").style.width = "310px";
   document.getElementById("main").style.marginRight = "310px";
   }
-closeNav() {
+closeNav() { // Variant list Close
   document.getElementById("mySidenav").style.width = "0px";
   document.getElementById("main").style.marginRight= "0px";
   }
-  resetspinnermetrics(){
+  resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
     this.model2 = this.flowchartData(this.model1)
-    for(var j=0;j<this.model2.length;j++){
-      // for (let [key, value] of Object.entries(this.model2[j])) {
-        // console.log(this.model2[j].from);
-
-                        // this.model2[j].to ==-1||this.model2[j].to==-2 //conditions
-            // this.model2[j].from>0 && this.model2[j].to<0
-            // this.model2[j].from ==-2||this.model2[j].to==-2
-      if(j==0 && this.model2[j].to>1 ){
-        let loc3=160
-      this.model2[j].curviness=loc3
-      }else{
-        if(this.model2[j].from ==-1||this.model2[j].from==-2){
-          if(this.model2[j].from==-1 && this.model2[j].to==0){
-            let loc3=0
-            this.model2[j].curviness=loc3
-          }else{
-          let loc3=-25*j
-        this.model2[j].curviness=loc3
-        }
-
-        }else if(this.model2[j].to ==-1||this.model2[j].to==-2){
-          if(this.model2[j].from==this.model1.length-3 && this.model2[j].to==-2){
-            let loc3=0
-            this.model2[j].curviness=loc3
-          }else{
-            let loc3=20*j
-            this.model2[j].curviness=loc3
-          }
-      }else if(this.model2[j].from+1==this.model2[j].to){
-        let loc3=0
-        this.model2[j].curviness=loc3
-      }else{
-          let loc3=30*j
-        this.model2[j].curviness=loc3
-        }
-    }
-  }
+    // this.gradientApplyforNode()
+    this.gradientApplyforLinks();
+    this.linkCurvinessGenerate();
   this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
   // console.log('spinMetrics0',this.spinMetrics0);
   }
-  caseParcent(parcent){
+  caseParcent(parcent){       // case persent value in variant list
   
     if(String(parcent).indexOf('.') != -1){
     let perc=parcent.toString().split('.')
@@ -1066,11 +1028,11 @@ closeNav() {
     }
   }
 
-  nodeAlignment(){
+  nodeAlignment(){      //add location to nodes in process graph
     let loction=''
     for(var i=0;i<this.model1.length;i++){
       if(this.model1[i].key==-1||this.model1[i].key==-2){
-        let loc1=530
+        let loc1=440
       let loc2=-150+i*80
       loction=loc1+' '+loc2;
       this.model1[i].loc=loction
@@ -1083,7 +1045,7 @@ closeNav() {
     }
   }
 
-  linkCurvinessGenerate(){
+  linkCurvinessGenerate(){          //generate Curviness for links between nodes in graph
     // this.model2 = this.flowchartData(this.model1)
     for(var j=0;j<this.model2.length;j++){
       // for (let [key, value] of Object.entries(this.model2[j])) {
@@ -1130,23 +1092,22 @@ closeNav() {
   }
   }
   
-  
-
-  onchangeActivity(value){
+  onchangeActivity(value){ //change activity slider  value
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue) 
   }
-  onChangePath(value){
+  onChangePath(value){      //change path slider  value
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue)
   }
-   
-//sliderGraph Response
-sliderGraphResponse(graphData,activity_slider,path_slider) {  
+                                
+sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on activity and path value filter the graph values
   this.activity_value=[];
   if(activity_slider==1&&path_slider==1){
     this.isNodata=true;
     this.model1=this.fullgraph_model
-    this.nodesAlignment()
-    this.model2 = this.flowchartData(this.model1)
+    this.nodeAlignment()
+    this.model2 = this.flowchartData(this.model1);
+    this.gradientApplyforLinks()
+    this.gradientApplyforNode()
     this.linkCurvinessGenerate();
   }else{
   var sliderGraphArray = [];
@@ -1188,45 +1149,54 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
         }
     modelOne.push(obj1)
     this.model1=modelOne;
-    this.nodesAlignment()
-    this.model2 = this.flowchartData(this.model1)
+    this.nodeAlignment()
+    this.model2 = this.flowchartData(this.model1);
+    this.gradientApplyforLinks()
+    this.gradientApplyforNode();
     this.linkCurvinessGenerate();
   // return sliderGraphArray;
       }
     }
 
-  nodesAlignment(){
-    var loction=''
-    for(var i=0;i<this.model1.length;i++){
-      if(this.model1[i].key==-1||this.model1[i].key==-2){
-        let loc1=530
-      let loc2=-150+i*80
-      loction=loc1+' '+loc2;
-      this.model1[i].loc=loction
-      }else{
-      let loc1=455
-      let loc2=-150+i*80
-      loction=loc1+' '+loc2;
-      this.model1[i].loc=loction
-      }
-    }
-  }
+  // nodesAlignment(){             
+  //   var loction=''
+  //   for(var i=0;i<this.model1.length;i++){
+  //     if(this.model1[i].key==-1||this.model1[i].key==-2){
+  //       let loc1=440
+  //     let loc2=-150+i*80
+  //     loction=loc1+' '+loc2;
+  //     this.model1[i].loc=loction
+  //     }else{
+  //     let loc1=455
+  //     let loc2=-150+i*80
+  //     loction=loc1+' '+loc2;
+  //     this.model1[i].loc=loction
+  //     }
+  //   }
+  // }
   activityDropDown(){
     this.isActivity_dropdwn = !this.isActivity_dropdwn;
   }
-  filterByActivity(){
-    var checkboxes = document.getElementsByName("activity_filter");
-  var CheckedBoxes = [];
-  this.activity_value = [];
-  for (var i=0; i<checkboxes.length; i++) {
-      CheckedBoxes.push(checkboxes[i]);
+  readselectedNodeEmied(SelectedActivities){
+    // console.log(SelectedActivities);
+    this.filterByActivity(SelectedActivities)
   }
-// CheckedBoxes.map(e => e.value);
-  for (var j=0; j<CheckedBoxes.length; j++) {
-    if (CheckedBoxes[j].checked==true) {
-      this.activity_value.push(CheckedBoxes[j].value);
-    }
-    }
+  filterByActivity(SelectedActivities){
+//     var checkboxes = document.getElementsByName("activity_filter");
+//   var CheckedBoxes = [];
+  // this.activity_value = [];
+//   for (var i=0; i<checkboxes.length; i++) {
+//       CheckedBoxes.push(checkboxes[i]);
+//   }
+// // CheckedBoxes.map(e => e.value);
+//   for (var j=0; j<CheckedBoxes.length; j++) {
+//     if (CheckedBoxes[j].checked==true) {
+//       this.activity_value.push(CheckedBoxes[j].value);
+//     }
+//     }
+this.activity_value=SelectedActivities;
+this.model1=[]
+this.model2=[]
 // console.log("activity_value1",this.activity_value);
 // return;
     // this.activitySelect.close();
@@ -1251,6 +1221,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
     this.model1=model3
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1);
+    this.gradientApplyforLinks()
+    this.gradientApplyforNode()
     this.linkCurvinessGenerateOne();
     this.isActivity_dropdwn=false;
   }
@@ -1283,6 +1255,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {
     this.model1=this.fullgraph_model
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1);
+    this.gradientApplyforLinks()
+    this.gradientApplyforNode()
     this.linkCurvinessGenerate();
   }
   endpointsDropDown(){
@@ -1524,4 +1498,146 @@ this.linkdataArray=[]
         return days + " Days"
     }
   }
+  gradientApplyforNode(){
+    var modelArray=[]
+    modelArray=this.model1.slice(1,-1)
+    const max = modelArray.reduce(function(prev, current) {
+      return (prev.count > current.count) ? prev : current
+  })
+  // console.log("12",max.count/8);
+  var maxCountDivided=max.count/8
+      for(var k1=0;k1<this.model1.length;k1++){
+        if(this.model1[k1].count<=maxCountDivided){
+          this.model1[k1].color='rgba(161, 93, 219, 0.87)'
+          }else if(this.model1[k1].count>maxCountDivided && this.model1[k1].count<=maxCountDivided*2){
+            this.model1[k1].color='rgba(131, 73, 219, 0.87)'
+            }else if(this.model1[k1].count>maxCountDivided*2 && this.model1[k1].count<=maxCountDivided*3){
+              this.model1[k1].color='rgba(111, 53, 219, 0.87)'
+              }else if(this.model1[k1].count>maxCountDivided*3 && this.model1[k1].count<=maxCountDivided*4){
+                this.model1[k1].color='rgba(91, 33, 219, 0.87)'
+                }else if(this.model1[k1].count>maxCountDivided*4 && this.model1[k1].count<=maxCountDivided*5){
+                  this.model1[k1].color='rgba(75, 30, 219, 0.87)'
+                  }else if(this.model1[k1].count>maxCountDivided*5 && this.model1[k1].count<=maxCountDivided*6){
+                    this.model1[k1].color='rgba(65, 22, 219, 0.87)'
+                    }else if(this.model1[k1].count>maxCountDivided*6 && this.model1[k1].count<=maxCountDivided*7){
+                      this.model1[k1].color='rgba(55, 15, 219, 0.87)'
+                      }else if(this.model1[k1].count>maxCountDivided*7 && this.model1[k1].count<=max.count){
+                        this.model1[k1].color='rgba(45, 10, 219, 0.87)'
+                        }
+        }
+
+  }
+  gradientApplyforLinks(){
+    var modelArray=[]
+    modelArray=this.model2
+    const max = modelArray.reduce(function(prev, current) {
+      return (prev.text > current.text) ? prev : current
+    })
+  var maxCountDivided=max.text/8
+    for(var k1=0;k1<this.model2.length;k1++){
+      if(this.model2[k1].text<=maxCountDivided){
+        // this.model2[k1].linkColor='rgb(94,92,80)'
+        this.model2[k1].linkColor='rgba(161, 93, 219, 0.87)'
+        }else if(this.model2[k1].text>maxCountDivided && this.model2[k1].text<=maxCountDivided*2){
+          // this.model2[k1].linkColor='rgb(74,72,80)'
+          this.model2[k1].linkColor='rgba(131, 73, 219, 0.87)'
+          }else if(this.model2[k1].text>maxCountDivided*2 && this.model2[k1].text<=maxCountDivided*3){
+            // this.model2[k1].linkColor='rgb(44,62,80)'
+            this.model2[k1].linkColor='rgba(111, 53, 219, 0.87)'
+            }else if(this.model2[k1].text>maxCountDivided*3 && this.model2[k1].text<=maxCountDivided*4){
+              this.model2[k1].linkColor='rgba(91, 33, 219, 0.87)'
+              }else if(this.model2[k1].text>maxCountDivided*4 && this.model2[k1].text<=maxCountDivided*5){
+                this.model2[k1].linkColor='rgba(75, 30, 219, 0.87)'
+                }else if(this.model2[k1].text>maxCountDivided*5 && this.model2[k1].text<=maxCountDivided*6){
+                  this.model2[k1].linkColor='rgba(65, 22, 219, 0.87)'
+                  }else if(this.model2[k1].text>maxCountDivided*6 && this.model2[k1].text<=maxCountDivided*7){
+                    this.model2[k1].linkColor='rgba(55, 15, 219, 0.87)'
+                    }else if(this.model2[k1].text>maxCountDivided*7 && this.model2[k1].text<=max.text){
+                      this.model2[k1].linkColor='rgba(45, 10, 219, 0.87)'
+                     }
+     }
+  
+  }
+  gradientApplyforLinksOne(){   //gradient apply for links on  performance metrics selection in spinner
+    var modelArray=[]
+    modelArray=this.model2;
+    const max = modelArray.reduce(function(prev, current) {
+      return (prev.days > current.days) ? prev : current
+  })
+  var maxCountDivided=max.days/8
+  for(var k1=0;k1<this.model2.length;k1++){
+    if(this.model2[k1].days<=maxCountDivided){
+    // this.model2[k1].linkColor='rgb(94,92,80)'
+    this.model2[k1].linkColor='rgb(161, 93, 219, 0.87)'
+    }else if(this.model2[k1].days>maxCountDivided && this.model2[k1].days<=maxCountDivided*2){
+      // this.model2[k1].linkColor='rgb(74,72,80)'
+      this.model2[k1].linkColor='rgb(131, 73, 219, 0.87)'
+      }else if(this.model2[k1].days>maxCountDivided*2 && this.model2[k1].days<=maxCountDivided*3){
+        // this.model2[k1].linkColor='rgb(44,62,80)'
+        this.model2[k1].linkColor='rgb(111, 53, 219, 0.87)'
+        }else if(this.model2[k1].days>maxCountDivided*3 && this.model2[k1].days<=maxCountDivided*4){
+          this.model2[k1].linkColor='rgb(91, 33, 219, 0.87)'
+          }else if(this.model2[k1].days>maxCountDivided*4 && this.model2[k1].days<=maxCountDivided*5){
+            this.model2[k1].linkColor='rgb(75, 30, 219, 0.87)'
+            }else if(this.model2[k1].days>maxCountDivided*5 && this.model2[k1].days<=maxCountDivided*6){
+              this.model2[k1].linkColor='rgb(65, 22, 219, 0.87)'
+            }else if(this.model2[k1].days>maxCountDivided*6 && this.model2[k1].days<=maxCountDivided*7){
+              this.model2[k1].linkColor='rgb(55, 15, 219, 0.87)'
+            }else if(this.model2[k1].days>maxCountDivided*7 && this.model2[k1].days<=max.days){
+              this.model2[k1].linkColor='rgb(45, 10, 219, 0.87)'
+              }
+    }
+  }
+  
+timeConversionDays(millisec) { 
+  var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(4);
+      return days
+}
+gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metrics selection in spinner
+  var modelArray=[]
+  modelArray=this.model1.slice(1,-1)
+  const max = modelArray.reduce(function(prev, current) {
+    return (prev.count > current.count) ? prev : current
+})
+  var maxCountDivided=max.days/8
+      for(var k1=0;k1<this.model1.length;k1++){
+        if(this.model1[k1].days<=maxCountDivided){
+        this.model1[k1].color='rgba(161, 93, 219, 0.87)'
+        }else if(this.model1[k1].days>maxCountDivided && this.model1[k1].days<=maxCountDivided*2){
+          this.model1[k1].color='rgba(131, 73, 219, 0.87)'
+          }else if(this.model1[k1].days>maxCountDivided*2 && this.model1[k1].days<=maxCountDivided*3){
+            this.model1[k1].color='rgba(111, 53, 219, 0.87)'
+            }else if(this.model1[k1].days>maxCountDivided*3 && this.model1[k1].days<=maxCountDivided*4){
+              this.model1[k1].color='rgba(91, 33, 219, 0.87)'
+              }else if(this.model1[k1].days>maxCountDivided*4 && this.model1[k1].days<=maxCountDivided*5){
+                this.model1[k1].color='rgba(75, 30, 219, 0.87)'
+                }else if(this.model1[k1].days>maxCountDivided*5 && this.model1[k1].days<=maxCountDivided*6){
+                  this.model1[k1].color='rgba(65, 22, 219, 0.87)'
+                  }else if(this.model1[k1].days>maxCountDivided*6 && this.model1[k1].days<=maxCountDivided*7){
+                    this.model1[k1].color='rgba(55, 15, 219, 0.87)'
+                    }else if(this.model1[k1].days>maxCountDivided*7 && this.model1[k1].days<=max.days){
+                      this.model1[k1].color='rgba(45, 10, 219, 0.87)'
+                      }
+      }
+
+}
+filterOverlay(){
+  for(var i=1;i<this.model1.length-1;i++){
+    this.dataValues.push(this.model1[i])
+}
+// console.log(this.dataValues);
+
+  this.isFilterComponent=true;
+  var modal = document.getElementById('myModal');
+  modal.style.display="block";
+  var toolTipDIV = document.getElementById('toolTipDIV');
+    toolTipDIV.style.display = "none";
+  }
+
+  readOverlayValye(value){
+    if(value==true){
+      this.closePopup();
+    }
+  }
+  
 }

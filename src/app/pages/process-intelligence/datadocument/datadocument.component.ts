@@ -188,11 +188,7 @@ export class DatadocumentComponent implements OnInit {
       let isDateCheck: boolean = false;
       if (this.headerName.indexOf('Timestamp') == -1 || this.headerName.indexOf('Time') == -1 || this.headerName.indexOf('Date') == -1) {
         //reg_expression = new RegExp(/^\d+$/);
-<<<<<<< HEAD
         reg_expression = new RegExp(/[-~]*$/); //    /^[-\w\s]+$/
-=======
-        reg_expression = new RegExp(/[-~]*$/);
->>>>>>> develop
       } //alphanum check else
       // isDateCheck = hdr_ar_index == 3 || hdr_ar_index == 4;
       // if (hdr_ar_index == 2 || hdr_ar_index == 5 || hdr_ar_index == 6) {
