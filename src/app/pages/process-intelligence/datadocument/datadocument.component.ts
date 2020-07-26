@@ -205,7 +205,7 @@ export class DatadocumentComponent implements OnInit {
         if ((reg_expression && reg_expression.test(each_cell)) || isDateCheck) {
           if (isDateCheck) {
             try {
-              formatDate(each_cell, 'dd/MM/yyyy HH:mm:ss', 'en-US');
+              // formatDate(each_cell, 'dd/MM/yyyy HH:mm:ss', 'en-US');
               this.invalidCells['row' + x].splice(this.invalidCells['row' + x].indexOf('cell' + index), 1);
               if (this.validCells['row' + x].indexOf('cell' + index) == -1)
                 this.validCells['row' + x].push('cell' + index);
