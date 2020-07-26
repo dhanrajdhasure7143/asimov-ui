@@ -43,10 +43,8 @@ export class BpmnDiagramListComponent implements OnInit {
     this.isLoading= true;
     this.dt.changeParentModule({ "route": "/pages/approvalWorkflow/home", "title": "Approval Workflow" });
     this.dt.changeChildModule(undefined);
-     this.bpmnlist();
-     this.dt.changeHints(this.hints.bpsApprovalHomeHints);
-
-    
+    this.bpmnlist();
+    this.dt.changeHints(this.hints.bpsApprovalHomeHints);
   }
   getColor(status) { 
     switch (status) {
@@ -69,7 +67,8 @@ export class BpmnDiagramListComponent implements OnInit {
     let approval_msg = this.selected_processInfo["reviewComments"];
     this.index=i;
     this.approval_msg=approval_msg;
-    if(!this.bpmnModeler){
+    // if(!this.bpmnModeler){
+    if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() == ""){
       this.bpmnModeler = new BpmnJS({
         container: '.diagram_container'+i,
         keyboard: {
@@ -85,8 +84,8 @@ export class BpmnDiagramListComponent implements OnInit {
         });
       }
     })
-    let canvas = this.bpmnModeler.get('canvas');
-    canvas.zoom('fit-viewport');
+    // let canvas = this.bpmnModeler.get('canvas');
+    // canvas.zoom('fit-viewport');
   }
   openDiagram(){
     let binaryXMLContent = this.selected_processInfo["bpmnXmlNotation"];
@@ -100,10 +99,10 @@ export class BpmnDiagramListComponent implements OnInit {
   }
   checkStatus(diagram){
     let app_status = diagram.bpmnProcessStatus;
-    if(app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected'){
+    let check_exp = app_status && app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected';
+    if(check_exp)
       this.enablePanels(diagram.id)
-    }
-    return app_status && (app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected');
+    return check_exp;
   }
   loopTrackBy(index, term) {
     return index;
@@ -145,7 +144,7 @@ this.selectedrow =i;
    
   approveDiagram(data) {
     let disabled_items = localStorage.getItem("pending_bpmnId")
-    let saved_id = disabled_items ? disabled_items+ ","+data.id: data.id;
+    let saved_id = disabled_items && disabled_items !="null" && disabled_items != "" ? disabled_items+ ","+data.id: data.id;
     localStorage.setItem("pending_bpmnId", saved_id)
     this.disable_panels();
     this.approver_info={
@@ -187,36 +186,35 @@ this.selectedrow =i;
   disable_panels(){
     let panels = localStorage.getItem("pending_bpmnId");
     let panel_array = [];
-    if(panels)
-    panel_array = panels.split(",");
-    this.griddata.forEach(each_bpmn => {
-      each_bpmn.bpmnProcessInfo.forEach(each_child_bpmn => {
-        let ind = panel_array.indexOf(each_child_bpmn.id)
-        if(ind > -1){
-          each_child_bpmn.isDisabled = true;
-        } 
-        // else {
-        //   each_bpmn.isDisabled = false;
-        // }
-      })
-    });
+    if(panels && panels != "null" && panels != "")
+      panel_array = panels.split(",");
+    if(panel_array.length > 0){
+      this.griddata.forEach(each_bpmn => {
+        each_bpmn.bpmnProcessInfo.forEach(each_child_bpmn => {
+          if(panel_array.indexOf(each_child_bpmn.id.toString()) > -1){
+            each_child_bpmn.isDisabled = true;
+          } 
+          // else {
+          //   each_bpmn.isDisabled = false;
+          // }
+        })
+      });
+    }
   }
 
   enablePanels(bpmnID){
     let panels = localStorage.getItem("pending_bpmnId");
     let panel_array = [];
-    if(panels)
-    if(panels.indexOf(",") != -1){
+    if(panels && panels != "null" && panels != "")
       panel_array = panels.split(",");
+      let search_ind = panel_array.indexOf(bpmnID);
+    if(panel_array.length != 0 && search_ind != -1)
       panel_array.splice(panel_array.indexOf(bpmnID), 1);
-      localStorage.setItem('pending_bpmnId', panel_array.join())
-    } else {
-      localStorage.setItem('pending_bpmnId', null);
-    }
+    localStorage.setItem('pending_bpmnId', panel_array.join())
   }
 
    denyDiagram(data, parentInfo) {
-     let reqObj = {
+     let reqObj = { 
       "bpmnApprovalId": parentInfo.bpmnApprovalId,
       "bpmnProcessInfo": {
           "createdTimestamp": data.createdTimestamp,

@@ -272,7 +272,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.approverName = this.selected_approver;
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-    bpmnModel.bpmnTempId=2;
+    // bpmnModel.bpmnTempId=2;
     bpmnModel.category = sel_List['category'];
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.tenantId=999;
@@ -315,6 +315,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
+    bpmnModel.id = sel_List['id'];
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {

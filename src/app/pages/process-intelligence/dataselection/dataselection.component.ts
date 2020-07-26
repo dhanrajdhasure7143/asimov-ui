@@ -93,7 +93,7 @@ export class DataselectionComponent implements OnInit {
   }
 
   getDataTypeChange(a,b){
-    
+
   }
 
   slideUp(){

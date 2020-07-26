@@ -378,7 +378,7 @@ export class UploadProcessModelComponent implements OnInit {
   //  bpmnModel.bpmnModelId=  ['approved', 'rejected'].indexOf(sel_List['bpmnProcessStatus'].toLowerCase())== -1 ?sel_List[]:sel_List['bpmnModelId'];
    bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
    bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-   bpmnModel.bpmnTempId=2;
+  //  bpmnModel.bpmnTempId=2;
    bpmnModel.category = sel_List['category'];
    bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
    bpmnModel.tenantId=999;
@@ -421,6 +421,7 @@ export class UploadProcessModelComponent implements OnInit {
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
+    bpmnModel.id = sel_List['id'];
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
     this.initBpmnModeler();
