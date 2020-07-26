@@ -99,8 +99,7 @@ export class BpsHomeComponent implements OnInit {
       keyboard: {
         bindTo: window
       }
-    });
-    this.bpmnModeler.clear();
+    }); 
     if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED")
       this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
@@ -120,8 +119,8 @@ export class BpsHomeComponent implements OnInit {
           }
         })
       }
-    let canvas = this.bpmnModeler.get('canvas');
-    canvas.zoom('fit-viewport');
+    // let canvas = this.bpmnModeler.get('canvas');
+    // canvas.zoom('fit-viewport');
   }
 
   loopTrackBy(index, term){

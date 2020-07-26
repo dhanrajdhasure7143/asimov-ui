@@ -90,34 +90,4 @@ export class XesdocumentComponent implements OnInit {
     })
 
   }
-
-
-  getDateFormat(d) {
-
-    //     var formatFound = this.getFormat(d); //returns "YYYY-MM-DDTHH:MM:SS"
-    //     console.log(formatFound);
-    // if(formatFound !==null){
-    //    //do stuff
-    //    console.log(formatFound);
-    // }
-    return d;
-
-  }
-
-  getFormat(d) {
-    var dateFormats = {
-      "iso_int": "YYYY-MM-DD",
-      "short_date": "DD/MM/YYYY",
-      "iso_date_time": "YYYY-MM-DDTHH:MM:SS",
-      "iso_date_time_utc": "YYYY-MM-DDTHH:MM:SSZ",
-      "iso_date_time_utc1": "YYYY-MM-DDThh:mm:"
-      //define other well known formats if you want
-    }
-    for (var prop in dateFormats) {
-      if (moment(d, dateFormats[prop], true).isValid()) {
-        return dateFormats[prop];
-      }
-    }
-    return null;
-  }
 }
