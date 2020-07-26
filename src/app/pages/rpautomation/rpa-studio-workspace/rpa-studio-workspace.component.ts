@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import { data } from 'jquery';
 import { colorSets } from '@swimlane/ngx-charts/release/utils';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
+import { element } from 'protractor';
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
@@ -55,6 +56,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   @ViewChild('downloadLink',{static: false}) downloadLink: ElementRef;
   public finaldataobjects:any=[]
   @Input("bot") public finalbot:any;
+  dropVerCoordinates: any;
   constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService, private http:HttpClient, private child_rpa_studio:RpaStudioComponent) {
     
    }
@@ -437,6 +439,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       if(element.type == "multipart"){
         element.onUpload = this.onUpload.bind(this)
       }
+      if(element.type == "dropdown"){
+        element.onChange = this.onChange.bind(this)
+      }
     });
     this.formVales = data
     this.alldataforms.push(this.formVales)
@@ -451,19 +456,49 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   }
 
-  onUpload(e){
-    console.log(e)
-    this.fileData = e.target.value
-     return e.target.files[0].name
-  }
+  onUpload(event){
 
-  onFormSubmit(event){  
+    console.log(event)
+    this.fileData = event.target.value.substring(12)
+    // if (event.target.files && event.target.files[0]) {
+    //   var reader = new FileReader();
+  
+    //   reader.onload = (event: ProgressEvent) => {
+    //     this.fileData = (<FileReader>event.target).result;
+    //   }
+  
+    //   reader.readAsDataURL(event.target.files[0]);
+    // }
+    // this.fileData = files.target.value
+    //  return e.target.files[0].name
+  }
+  onChange(e){
+    console.log(e)
+    this.fields.map(ele => {
+      if(ele.dependency == e){
+        ele.visibility = true
+        ele.required = true
+      }
+      if(ele.dependency != e && ele.dependency != ''){
+        ele.visibility = false
+        ele.required = false
+      }
+      return ele
+    })
+  }
+  onFormSubmit(event){ 
+    console.log("hii"+ event);
     this.fieldValues = event
-    this.fieldValues['file'] = this.fileData
+    if(this.fileData != undefined){
+      this.fieldValues['file'] = this.fileData
+      }
+    
+    
     this.hiddenPopUp=false;
     let objAttr:any;
     let obj:any=[];
-    this.formVales.forEach((ele,i) => { 
+    this.formVales.forEach((ele,i) => {
+      if(ele.visibility == true){
       let objKeys = Object.keys(this.fieldValues);
       objAttr = {
         "metaAttrId": ele.id,
@@ -471,7 +506,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         "attrValue": this.fieldValues[objKeys[i]]
       }
       obj.push(objAttr);
-        
+    } 
   })
   let cutedata={
     

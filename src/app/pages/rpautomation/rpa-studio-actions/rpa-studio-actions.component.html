@@ -139,7 +139,7 @@
           <li *ngFor="let version of versionsList; let i = index">
             <div class="checkbox" (click)="switchversion(version.vId)" >
               <div class="environments">
-                <label [for]="version+i">V.{{version.vId}}</label>
+                <label [for]="version+i" (click)="versionChange(version.vId)">V.{{version.vId}}</label>
                 <hr>
               </div>
             </div>

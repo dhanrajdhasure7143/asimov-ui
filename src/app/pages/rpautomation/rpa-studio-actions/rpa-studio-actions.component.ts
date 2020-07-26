@@ -108,7 +108,8 @@ export class RpaStudioActionsComponent implements OnInit {
 
     cronFlavor: "standard"
   }
-  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent) { 
+  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
+    private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent) { 
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
       'endTime' : [this.endTime, Validators.required],
@@ -214,9 +215,6 @@ export class RpaStudioActionsComponent implements OnInit {
 
       })
     }
-
-
-  
   saveBotFunAct() {
     this.finalenv=[];
     this.environment.forEach(data=>{
@@ -726,5 +724,3 @@ viewlogclose(){
 
   
 }
-
-

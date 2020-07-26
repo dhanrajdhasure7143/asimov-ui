@@ -56,15 +56,16 @@
   <a #downloadLink></a>
 </div>
 
-  <div *ngIf="hiddenPopUp" class="pop-up conainer">
-    <div class="card">
-      <div class="card-header">
-        {{formHeader}}
-        <span class="class-css" (click)="closeFun()" >X</span>
-      </div>
-      <div class="container card-body">
-        <app-dynamic-forms [fields]="getFields()" (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
-      </div>
+<div *ngIf="hiddenPopUp" class="pop-up">
+  <div class="rpa-modal-content">
+    <div class="rpa-modal-header" style="padding: 8px; font-weight:600">
+      {{formHeader}}
+      <span class="rpa-modal-close" style="margin-top: -8px;" (click)="closeFun()" >X</span>
     </div>
+    <div class="rpa-modal-body">
+      <div class="container">
+      <app-dynamic-forms [fields]="getFields()" (onSubmit)="onFormSubmit($event)"></app-dynamic-forms></div>
     </div>
+  </div>
+  </div>
     
