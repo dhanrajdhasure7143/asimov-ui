@@ -16,6 +16,7 @@ import { data } from 'jquery';
 import { colorSets } from '@swimlane/ngx-charts/release/utils';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
 import { element } from 'protractor';
+import { ThrowStmt } from '@angular/compiler';
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
@@ -408,6 +409,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }*/
      //console.log(node)
      let task=this.finaldataobjects.find(data =>data.nodeId.split("__")[1]==node.id );
+     
      if(task==undefined)
      {
        this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
@@ -434,8 +436,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
          task.attributes.forEach(element => {
                finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
            });
-           
+
            this.response(finalattributes)
+           this.formHeader=task.taskName;
        });
      }
      else if(this.selectedTask.id != task.tMetaId)
