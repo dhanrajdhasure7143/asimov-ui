@@ -60,7 +60,9 @@ export class DataselectionComponent implements OnInit {
                 private dt:DataTransferService, 
                 private hints:PiHints, 
                 private global:GlobalScript,
-                private rest:RestApiService) { }
+                private rest:RestApiService) {
+                
+                 }
 
   ngOnInit() {
     this.resetColMap();
@@ -82,6 +84,7 @@ export class DataselectionComponent implements OnInit {
     this.cathead4=this.headertypeArray[3];
     this.cathead5=this.headertypeArray[4];
     this.cathead6=this.headertypeArray[5];
+    console.log(this.cathead6);
     this.cathead7=this.headertypeArray[6];
     this.cathead8=this.headertypeArray[7];
     this.cathead9=this.headertypeArray[8];
@@ -277,7 +280,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         this.headerArray.push(obj)
         this.headerName = 'caseID';
         this.selected=v;
-       // this.step_id = this.step_id + 1;
+      // this.step_id = this.step_id + 1;
         // console.log(this.selected)
         // this.global.notify(this.headerName, "success");
         for(var x = 0;x < this.fileData.length;x++){
@@ -366,5 +369,15 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     this.selected=''
     this.isgenerate=false;
   }
+
+  getCaseName(name, stp){
+   
+      if(name.indexOf('Timestamp') != -1 || name.indexOf('Time') != -1){
+        return 'Timestamp';
+    } else {
+      return name;
+    }
+  }
+
 
 }
