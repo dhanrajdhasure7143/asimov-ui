@@ -202,9 +202,33 @@ export class RpaStudioComponent implements OnInit {
   {
     let botid=this.loadbot.get("bot").value
     console.log(botid)
+    this.getloadbotdata(botid);
+    
+  }
+
+  predefined(event)
+  {
+
+    //console.log(event)
+    console.log("data")
+    console.log(this.insertbot.get("predefinedBot").value)
+  
+    /*if(this.insertbot.get("predefinedBot").value=="true")
+    {
+      this.insertbot.get("predefinedBot").setValue("false")
+    }
+    else
+    {
+      this.insertbot.get("predefinedBot").setValue("true")
+    }*/
+  }
+
+
+  getloadbotdata(botid)
+  {
     let botdata:any;
     this.rest.getbotdata(botid).subscribe(data=>{
-      botdata=data;
+       botdata=data;
       if(this.tabsArray.find(data=>data.botName==botdata.botName)==undefined)
       {
         this.tabsArray.push(botdata);
@@ -227,23 +251,8 @@ export class RpaStudioComponent implements OnInit {
       document.getElementById("load-bot").style.display="none";
     })
   }
-
-  predefined(event)
-  {
-
-    //console.log(event)
-    console.log("data")
-    console.log(this.insertbot.get("predefinedBot").value)
   
-    /*if(this.insertbot.get("predefinedBot").value=="true")
-    {
-      this.insertbot.get("predefinedBot").setValue("false")
-    }
-    else
-    {
-      this.insertbot.get("predefinedBot").setValue("true")
-    }*/
-  }
+
   
 } 
 

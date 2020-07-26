@@ -84,8 +84,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
 
   ngAfterViewInit() {
-/*
-    this.jsPlumbInstance = jsPlumb.getInstance();
+
+ this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 90 }],
@@ -93,12 +93,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         ["Arrow", { width: 12, length: 12, location: 0.5 }]
       ]
     });
-*/
+
     if(this.finalbot.botId!= undefined)
     {
       console.log(this.finalbot.sequences)
-      //  this.loadnodes()
-        this.addconnections()
+
+        this.addconnections(this.finalbot.sequences)
     }
 
   }
@@ -118,8 +118,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         selectedNodeTask:element.taskName,
         path:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).path,
         tasks:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
-        x:element.x,
-        y:element.y,
+        x:parseInt((element.x).split("px")[0])+100+"px",
+        y:parseInt((element.y).split("px")[0])+100+"px",
       }
       console.log(node)
       this.nodes.push(node);
@@ -129,40 +129,32 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       
     });
   }
-  public addconnections()
+  public addconnections(sequences)
   {
-    //this.jsPlumbInstance.reset();
-    //jsPlumb.reset();
-    //this.jsPlumbInstance = jsPlumb.getInstance();
-    this.finalbot.sequences.forEach(element => {
+    
+    setTimeout(() => {
+    sequences.forEach(element => {
       
       this.jsPlumbInstance.connect(
         {
-          endpoint: ['Dot', {
-            radius: 2,
+          endpoint: ['Dot', { 
+            radius: 3,
             cssClass:"myEndpoint", 
             width:8, 
             height:8,
-          }],
+          }],    
+          
           source:element.sourceTaskId, 
           target:element.targetTaskId,
-          anchor:"Continuous",
-          connectorStyle: { stroke: '#404040',strokeWidth: 2 },
-          maxConnections: -1,
-          cssClass: "path",
-          Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
-          connectorClass: "path",
-          overlays: [
-            ["Arrow", { width: 12, length: 12, location: 1 }]
-          ],
-          isTarget: true,
-     
-        }
-
-      )
+          anchors:["Right", "Left" ],
+          detachable:true,
+          overlays:[ ["Arrow", { width: 12, length: 12, location: 1 }]],
+        })
+      
 
       
     });
+  });
     console.log(data);
   
   }
@@ -198,6 +190,40 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     setTimeout(() => {
       this.populateNodes(nodeWithCoordinates);
     }, 240);
+
+
+    if(this.nodes.length==1)
+    {
+      let node={
+        id:this.idGenerator(),
+        name:"start",
+        selectedNodeTask:"",
+        path:"/assets/images/RPA/Start.png",
+        x:"2px", 
+        y:"9px",
+      }
+      console.log(node)
+      this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+        }, 240);
+ 
+      
+        let stopnode={
+          id:this.idGenerator(),
+          name:"stop",
+          selectedNodeTask:"",
+          path:"/assets/images/RPA/Stop.png",
+          x:"941px",
+          y:"9px",
+        }
+        console.log(stopnode)
+        this.nodes.push(stopnode);
+          setTimeout(() => {
+            this.populateNodes(stopnode);
+          }, 240);
+      
+    }
   }
 
   idGenerator() {
@@ -238,6 +264,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         width:8, 
         height:8,
       }],
+      
     paintStyle:{stroke:"#0062cf", fill:"#0062cf",strokeWidth:2  },
       isSource: true,
       connectorStyle: { stroke: '#404040',strokeWidth: 1.5 },
