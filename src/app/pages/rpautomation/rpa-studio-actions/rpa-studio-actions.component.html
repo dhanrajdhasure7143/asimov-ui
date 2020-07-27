@@ -39,7 +39,7 @@
           <li *ngFor="let bots of predefinedbotsData; let i = index">
             <div class="checkbox">
               <div class="environments">
-                <button (click)="loadpredefinedbot()">{{bots.botName}}</button>
+                <button (click)="loadpredefinedbot(bots.botId)">{{bots.botName}}</button>
                 <hr>
               </div>
             </div>
@@ -120,12 +120,30 @@
               </div>
             </div>
           </li>
+          <li>
+            <div class="checkbox">
+              <div class="environments">
+                <a style="color:black"  [routerLink]="[ '/pages/rpautomation/environments']">Create Environments</a>
+                <hr>
+              </div>
+            </div>
+          </li>
         </ul>
+         
         <ul *ngIf="environment.length <= 0" class="dropdown-menu ">
           <li>
             <div class="checkbox">
               <div class="environments">
                 <label [for]="'list'+i">No Records Found</label>
+                <hr>
+              </div>
+            </div>
+          </li>
+
+          <li>
+            <div class="checkbox">
+              <div class="environments">
+                <a  [routerLink]="[ '/pages/rpautomation/environments']">Create Environments</a>
                 <hr>
               </div>
             </div>
@@ -139,7 +157,7 @@
           <li *ngFor="let version of versionsList; let i = index">
             <div class="checkbox" (click)="switchversion(version.vId)" >
               <div class="environments">
-                <label [for]="version+i" (click)="versionChange(version.vId)">V.{{version.vId}}</label>
+                <label [for]="version+i" (click)="switchversion(version.vId)">V.{{version.vId}}</label>
                 <hr>
               </div>
             </div>
@@ -168,7 +186,7 @@
       <div class="btn_title">Delete</div>
       </button>
       <button  type="button"
-      class="rpa-btn_style" id="delete"  [disabled]="savebotrespose==undefined" title="Delete Bot" aria-hidden="true" (click)="viewlogdata()" placement="bottom">
+      class="rpa-btn_style" title="Logs" id="delete"  [disabled]="savebotrespose==undefined" title="Delete Bot" aria-hidden="true" (click)="viewlogdata()" placement="bottom">
       <img class="imageI1" src="/assets/images/RPA/ViewLog.svg">
       <div class="btn_title">Logs</div>
       </button>

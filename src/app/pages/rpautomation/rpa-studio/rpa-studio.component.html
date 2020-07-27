@@ -1,10 +1,10 @@
 <div class="header_addon pull-right"   >
-  <button  type="button" style="height:20px;padding-right:30px"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()">
+  <button  type="button"  *ngIf="tabsArray.length > 0" style="height:20px;padding-right:30px"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate()">
     <img src="..\\assets\\images\\RPA\\rpa-env-add-btn.svg" >
     <br>
     Create
   </button>
-  <button  type="button" style="height:20px;padding-right:30px" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
+  <button  type="button" *ngIf="tabsArray.length > 0" style="height:20px;padding-right:30px" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
     <img src="..\\assets\\images\\RPA\\rpa-load.svg" >
     <br>
     Load
@@ -14,7 +14,7 @@
 
 <!-- tabs -->
 <div class="container-fluid"  *ngIf="tabsArray.length < 1">
-<!--<app-rpa-home></app-rpa-home>-->
+<app-rpa-home></app-rpa-home>
 </div>
 <div *ngIf="tabsArray.length > 0" class="container">
 <br><br><br>
@@ -42,7 +42,7 @@
 <div class="rpa-nav">
 
   <div class="rpa-nav-btn">
-    <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" >
+  <!--  <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" >
       <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpa-nav-btn-img">
         <br>
       Environments
@@ -54,7 +54,7 @@
 
      <br> 
   Workspace
-  </button>
+  </button>-->
   </div>
 
 </div>
