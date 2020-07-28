@@ -20,10 +20,13 @@
               <mat-option *ngFor="let each_approver of approver_list" [value]="each_approver.firstName+' '+each_approver.lastName">
                 {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
             </mat-select>
+           
         </mat-form-field>
     </div>
-    <div class="col-md-2"></div>
+    <div class="col-md-2"> 
+    </div>
 </div>
+<button mat-raised-button (click)="onclickShortcut()">add</button>
 <div class="container-fluid">
         <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>
         <div>

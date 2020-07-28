@@ -155,7 +155,7 @@ export class RpaStudioActionsComponent implements OnInit {
     
   }
 
-  loadpredefinedbot(){}
+  // loadpredefinedbot(){}
   versionChange(ver){}
 
 

@@ -3,7 +3,7 @@ import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { NgxSpinnerService } from "ngx-spinner"; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
-
+import {MatDialog} from '@angular/material';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
@@ -40,7 +40,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   updated_date_time;
 
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
-    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints) {}
+    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog) {}
 
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
@@ -392,5 +392,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.global.notify(message, "error");
     }
   }
+  onclickShortcut(){
+     this.dialog.open(KeyboardShortcut);
+
+  }
   
 }
+export class KeyboardShortcut{}
