@@ -6,8 +6,8 @@ import { FormGroup } from'@angular/forms';
 selector:'file',
 template:`
     <div [formGroup]="form" style = "margin-top: -12px; padding: 16px 0px 4px 0px;">
-      <div  *ngIf="!field.value" class="drop-container dropzone" dropZone (hovered)="toggleHover($event)"
-        (dropped)="field.onUpload($event)" [class.hovering]="isHovering">
+      <div  *ngIf="!field.value" class="drop-container dropzone" dropZone 
+        (dropped)="field.onUpload($event)" >
             <input style="border: 2px dashed lightgray;padding: 3px 0px;width:210px" type="file" multiple="" [formControlName]="field.name" (change)="field.onUpload($event)"> 
       </div>
       <div *ngIf="field.value">

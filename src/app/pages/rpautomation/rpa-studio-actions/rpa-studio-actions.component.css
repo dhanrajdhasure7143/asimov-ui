@@ -176,3 +176,8 @@ margin: 0px !important;
   max-height: 400px;
   overflow: auto;
 }
+
+
+.environments > a:hover{
+  color:black !important;
+}

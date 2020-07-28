@@ -17,7 +17,6 @@
 }
 
 .rpa-home{
-    margin-top:150px;
     display:flex;
     width:100%;
     
@@ -60,4 +59,10 @@
 .rpa-home-process{
     flex:1;   
     padding-left:10px;
+}
+
+.bots-container{
+    
+  max-height: 300px;
+  overflow: auto;
 }

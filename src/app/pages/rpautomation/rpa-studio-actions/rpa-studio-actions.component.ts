@@ -724,6 +724,37 @@ viewlogclose(){
   document.getElementById(this.viewlogid).style.display="none";
 }
 
+loadpredefinedbot(botId)
+{
+  //console.log(this.savebotrespose.botId);
+  let responsedata:any=[]
+  this.rest.getpredefinedotdata(botId).subscribe(data=>{
+    responsedata=data;
+    let i=200;
+    responsedata.tasks.forEach(element=>{
+              this.childBotWorkspace.finaldataobjects.push(element)
+              let nodename=  element.nodeId.split("__")[0];
+              let nodeid=element.nodeId.split("__")[1];
+              i=i+100;
+              let node={
+                id:nodeid,
+                name:nodename,
+                selectedNodeTask:element.taskName,
+                path:this.rpa_studio.templateNodes.find(data=>data.name==nodename).path,
+                tasks:this.rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
+                x:i+'px',
+                y:"10px",
+              }
+              
+              console.log(node)
+              this.childBotWorkspace.nodes.push(node);
+                setTimeout(() => {
+                  this.childBotWorkspace.populateNodes(node);
+                }, 240);
+                })
 
+            this.childBotWorkspace.addconnections(responsedata.sequences);
+  })
+}
   
 }

@@ -4,6 +4,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../services/rest-api.service';
+import {RpaStudioComponent} from '../rpa-studio/rpa-studio.component';
 @Component({
   selector: 'app-rpa-home',
   templateUrl: './rpa-home.component.html',
@@ -17,7 +18,7 @@ export class RpaHomeComponent implements OnInit {
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   
-  constructor(private rest:RestApiService)
+  constructor(private rest:RestApiService, private rpa_studio:RpaStudioComponent)
   { }
   ngOnInit() {
     this.getallbots();
@@ -33,7 +34,7 @@ export class RpaHomeComponent implements OnInit {
   getallbots()
   {
     let response:any=[];
-    this.rest.getbotlist(1,1).subscribe(botlist =>
+    this.rest.getAllActiveBots().subscribe(botlist =>
     {
       response=botlist;
       this.dataSource= new MatTableDataSource(response);
@@ -47,7 +48,7 @@ export class RpaHomeComponent implements OnInit {
   onCreate(){}
 
 
-  opencreate()
+  createoverlay()
   {
     document.getElementById("create-bot").style.display ="block";
   }
@@ -64,6 +65,12 @@ export class RpaHomeComponent implements OnInit {
     
     document.getElementById("load-bot").style.display ="none";
 
+  }
+
+
+  loadbotdata(botId)
+  {
+    this.rpa_studio.getloadbotdata(botId);
   }
 
 }

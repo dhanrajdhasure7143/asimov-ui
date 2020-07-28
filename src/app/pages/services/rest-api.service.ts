@@ -276,6 +276,11 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.post("/rpa-service/agent/deploy-agent",envs)
 
   }
+  
+  getpredefinedotdata(botId)
+  {
+    return this.http.get("/rpa-service/load-predefined-bot?botId="+botId)
+  }
 
 }
 
