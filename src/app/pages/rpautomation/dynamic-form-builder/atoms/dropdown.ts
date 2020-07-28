@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
     template: `
       <div [formGroup]="form">
         <select class="form-control" [value]="field.value" [id]="field.name" (change)="field.onChange($event.target.value)" [formControlName]="field.name">
-        <option [selected]='true' value="" >--select {{field.name}}--</option>  
+        <option  value="" >--select {{field.name}}--</option>  
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         </select>
       </div> 

@@ -155,8 +155,6 @@ export class RpaStudioActionsComponent implements OnInit {
     
   }
 
-  loadpredefinedbot(){}
-  versionChange(ver){}
 
 
   reset()
@@ -649,6 +647,7 @@ getEnvironmentlist() {
     this.logresponse=[];
     this.rest.getviewlogdata(this.savebotrespose.botId,this.savebotrespose.version).subscribe(data =>{
         this.logresponse=data;
+        console.log(this.logresponse)
         if(this.logresponse.length>0)
         this.logresponse.forEach(data=>{
         response=data;
@@ -726,34 +725,56 @@ viewlogclose(){
 
 loadpredefinedbot(botId)
 {
-  //console.log(this.savebotrespose.botId);
   let responsedata:any=[]
   this.rest.getpredefinedotdata(botId).subscribe(data=>{
     responsedata=data;
-    let i=200;
-    responsedata.tasks.forEach(element=>{
-              this.childBotWorkspace.finaldataobjects.push(element)
-              let nodename=  element.nodeId.split("__")[0];
-              let nodeid=element.nodeId.split("__")[1];
-              i=i+100;
-              let node={
-                id:nodeid,
-                name:nodename,
-                selectedNodeTask:element.taskName,
-                path:this.rpa_studio.templateNodes.find(data=>data.name==nodename).path,
-                tasks:this.rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
-                x:i+'px',
-                y:"10px",
-              }
-              
-              console.log(node)
-              this.childBotWorkspace.nodes.push(node);
-                setTimeout(() => {
-                  this.childBotWorkspace.populateNodes(node);
-                }, 240);
-                })
+    let j=200;
+    responsedata.tasks.forEach(element=>
+    {
+      this.childBotWorkspace.finaldataobjects.push(element)
+      let nodename=  element.nodeId.split("__")[0];
+      let nodeid=element.nodeId.split("__")[1];
+      console.log(nodeid);
+      j=j+100;
+      let node={
+        id:this.childBotWorkspace.idGenerator(),
+        name:nodename,
+        selectedNodeTask:element.taskName,
+        path:this.rpa_studio.templateNodes.find(data=>data.name==nodename).path,
+        tasks:this.rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
+        x:j+'px',
+        y:"10px",
+    }
+             
+           
+    for(var i=0; i<responsedata.sequences.length; i++)
+    {
+      if(responsedata.sequences[i].sourceTaskId!=undefined )
+      {
+        if(responsedata.sequences[i].sourceTaskId==nodeid)
+        {
+          responsedata.sequences[i].sourceTaskId=node.id;
+        }
+      }
+      if(responsedata.sequences[i].targetTaskId!=undefined )
+      {
 
-            this.childBotWorkspace.addconnections(responsedata.sequences);
+        if( responsedata.sequences[i].targetTaskId==nodeid)
+        {
+          responsedata.sequences[i].targetTaskId=node.id;
+        }
+      }
+    }
+    element.nodeId=nodename+"__"+node.id;
+    this.childBotWorkspace.nodes.push(node);
+    this.childBotWorkspace.finaldataobjects.push(element);
+    setTimeout(() => {
+      this.childBotWorkspace.populateNodes(node);
+    }, 240);
+
+            
+    })
+    this.childBotWorkspace.addconnections(responsedata.sequences);
   })
 }
   
