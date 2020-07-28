@@ -1,6 +1,7 @@
 <div class="row header_addon">
-  <div class="col-md-6">
-    <button class="btn" (click)="reSize=true" *ngIf="isShowConformance">Show Conformance</button>
+  <div class="col-md-4"></div>
+  <div class="col-md-2">
+    <button class="btn btn-primary eiap-btn" (click)="reSize=true" *ngIf="isShowConformance">Show Conformance</button>
     <button class="btn" (click)="getBpmnDifferences()" *ngIf="reSize && isConfNavigation" >Show Differences</button>
   </div>
   <div class="col-md-1">
@@ -16,7 +17,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="col-md-2" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
+  <div class="col-md-2" >
     <mat-form-field id="approversList">
       <mat-label>Approver List</mat-label>
       <mat-select [(ngModel)]="selected_approver">
@@ -26,7 +27,7 @@
     </mat-form-field>
   </div>
 </div>
-  <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>        
+  <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>        
   <as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
   <as-split-area [size]="isShowConformance?(reSize?50:100):0"><!-- [hidden]="!reSize"-->
     <div *ngIf="isShowConformance" class="bps_overlay">

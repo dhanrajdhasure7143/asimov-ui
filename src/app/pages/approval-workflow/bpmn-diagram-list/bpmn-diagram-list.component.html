@@ -10,7 +10,7 @@
     </div>
   </div>
 </div>
-<div class="container-fluid bpmn_list header_addon">
+<div class="container-fluid bpmn_list">
   <div class="row col-md-12 approve_bpmn_list_header">
     <div class="col-md-2 list_header" (click)="sort('processIntelligenceId',0)"><b>Process ID<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
     <div class="col-md-2 list_header" (click)="sort('bpmnProcessName',1)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>

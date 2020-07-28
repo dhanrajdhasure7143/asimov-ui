@@ -144,8 +144,11 @@ div[class^='diagram_container'] .djs-container svg{
 
 /* button styles */
 .header_addon{
-  position: relative;
-  top: -55px;
+  /* position: relative;
+  top: -55px; */
+  position: absolute;
+  top: 105px;
+  width: 100%;
 }
 .btn{
   margin-right: 5px;
