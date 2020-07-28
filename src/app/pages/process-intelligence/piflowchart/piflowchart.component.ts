@@ -83,8 +83,8 @@ export class PiflowchartComponent implements OnInit {
         $(go.Diagram, "myDiagramDiv", // must name or refer to the DIV HTML element
             {
               initialContentAlignment: go.Spot.TopCenter,
-                // initialAutoScale: go.Diagram.UniformToFill,
-                initialAutoScale: go.Diagram.Uniform,
+                initialAutoScale: go.Diagram.UniformToFill,
+                // initialAutoScale: go.Diagram.Uniform,
                 hasHorizontalScrollbar: true,
                 hasVerticalScrollbar: true,
                 // have mouse wheel events zoom in and out instead of scroll up and down
@@ -757,7 +757,7 @@ generateImages (width:any, height:any) {      //download process graph as PDF
     this.ispdf.emit(this.isdownloadpdf);
   }
   downloadJpegGraph(){    //download process graph as JPEG
-    var blob = this.myDiagram.makeImageData({ background: "white", returnType: "blob", callback: this.jpeGCallback });
+    var blob = this.myDiagram.makeImageData({size: new go.Size(2000, 2000), scale: 0,background: "white", type: "image/jpeg",returnType: "blob", callback: this.jpeGCallback });
     this.isdownloadJpeg=false;
     this.isjpeg.emit(this.isdownloadJpeg);
     this.isdownloadPng=false;
@@ -765,7 +765,7 @@ generateImages (width:any, height:any) {      //download process graph as PDF
   }
   jpeGCallback(blob) {
     var url = window.URL.createObjectURL(blob);
-    var filename = "Graph.jpeg";
+    var filename = "diagram.jpeg";
     var a = document.createElement("a")
     // a.style = "display: none";
     a.href = url;
@@ -782,13 +782,13 @@ generateImages (width:any, height:any) {      //download process graph as PDF
     });
   }
   downloadPngGraph(){   //download process graph as PNG
-    var blob = this.myDiagram.makeImageData({ background: "white", returnType: "blob", callback: this.pngCallback });
+    var blob = this.myDiagram.makeImageData({size: new go.Size(2000, 2000), scale: 0, background: "white",type: "image/png", returnType: "blob", callback: this.pngCallback });
     this.isdownloadPng=false;
     this.ispng.emit(this.isdownloadPng);
   }
   pngCallback(blob) {
     var url = window.URL.createObjectURL(blob);
-    var filename = "Graph.png";
+    var filename = "diagram.png";
     var a = document.createElement("a")
     // a.style = "display: none";
     a.href = url;

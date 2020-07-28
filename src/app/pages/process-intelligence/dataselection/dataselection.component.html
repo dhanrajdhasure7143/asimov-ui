@@ -135,10 +135,10 @@
                         <div *ngIf='selected==val' [ngClass]="selected==val?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==val" class='reset_btn' (click)='resetcaseId()'><i class='fa fa-times'></i></button> </div>
                     </td>
                   </tr>
-                <tr *ngFor="let row of fileData| paginate: { itemsPerPage: 50, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
+                <tr *ngFor="let row of fileData| paginate: { itemsPerPage: 100, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
                   <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val, row)"
                     [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1"> 
-                    {{row[j] || ' '}}
+                    {{getDateFormat(row[j],headerData[j]) || ' '}}
                   </td>
                 </tr>
                

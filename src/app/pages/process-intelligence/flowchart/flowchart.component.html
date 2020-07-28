@@ -152,7 +152,7 @@
                          <!-- <div class="col-sm-6  dropdown">
                              <button title="Download" data-toggle="dropdown" class="action_btn dropdown-toggle"><img class="action-btn" src="..\assets\images\PI\download_icon.svg"></button> -->
                      <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
-                         
+
                          <p class="" (click)="downloadjpeg()"><i class="far fa-file-image"></i><span>JPEG</span></p>
                          <p class="" (click)="downloadpng()"><i class="far fa-file-image"></i><span>PNG</span></p>   
                          <p class="" (click)="downloadPdf()"><i class="far fa-file-pdf"></i><span>PDF</span></p> 
@@ -182,8 +182,8 @@
                                  </div>
                          </div>
          </div>
-         <div class="col-sm-2 ">
-                 <button class="btn btn-primary btn-thin eiap-btn pull-right" (click)="openNav()"> &#9776; Variant List</button>
+         <div class="col-sm-2 " *ngIf="isvariantListOpen">
+                 <button class="btn btn-primary btn-thin eiap-btn pull-right" (click)="openVariantListNav()"> &#9776; Variant List</button>
              </div>
      <!-- </div> -->
  </div>
@@ -230,11 +230,11 @@
      <div class='col-md-1'>
          <div class="path_slider1 pull-right">
              <div>
-             <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider (userChange)="onchangeActivity($event)" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
+             <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider (userChange)="onchangeActivity($event)" [disabled]="issliderDisabled" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
              </div>
              <p class="slider_label Activities_slider">Activities</p>
              <div>
-             <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(value)]="value" [(ngModel)]="pathvalue" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
+             <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider [(value)]="value" [(ngModel)]="pathvalue" [disabled]="issliderDisabled" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
              </div>
              <p class="slider_label Paths_slider">Paths</p>
          </div>

@@ -55,6 +55,9 @@ export class DataselectionComponent implements OnInit {
   // processName:any;
   p=1;
   // processName:any;
+  isDateformat:any;
+  count=0;
+  dateformat:any;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
@@ -77,14 +80,14 @@ export class DataselectionComponent implements OnInit {
         this.headertypeArray.push(value)
       } 
     }
-     console.log(this.headertypeArray);
+    //  console.log(this.headertypeArray);
     this.cathead1=this.headertypeArray[0]
     this.cathead2=this.headertypeArray[1];
     this.cathead3=this.headertypeArray[2];
     this.cathead4=this.headertypeArray[3];
     this.cathead5=this.headertypeArray[4];
     this.cathead6=this.headertypeArray[5];
-    console.log(this.cathead6);
+    // console.log(this.cathead6);
     this.cathead7=this.headertypeArray[6];
     this.cathead8=this.headertypeArray[7];
     this.cathead9=this.headertypeArray[8];
@@ -97,7 +100,7 @@ export class DataselectionComponent implements OnInit {
       var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
-        // console.log('fileData',this.headerData);
+        // console.log('fileData',this.fileData);
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
     //   }
@@ -225,7 +228,9 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         //const piid={"piId":411}
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       })
-    }else{const xlsxConnectorBody={
+    }else{
+      console.log("isDateformat",this.isDateformat);
+      const xlsxConnectorBody={
       "name": "xls-"+this.processId,
       "config": {
         "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
@@ -243,7 +248,8 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
         "transforms.convert_startTime_unix.field": "startTime",
         "transforms.convert_startTime_unix.target.type": "unix",
-        "transforms.convert_startTime_unix.format": "dd.MM.yy HH:mm",
+        "transforms.convert_startTime_unix.format": this.isDateformat,
+        // "transforms.convert_startTime_unix.format": "dd.MM.yyyy HH:mm",
         "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
         // "transforms.ReplaceField.whitelist": "caseID,activity,startTime,endTime,resource",
         "transforms.ReplaceField.whitelist":renamesObjOne.join(),
@@ -259,7 +265,8 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
         "transforms.convert_endTime_unix.field": "endTime",
         "transforms.convert_endTime_unix.target.type": "unix",
-        "transforms.convert_endTime_unix.format": "dd.MM.yy HH:mm",
+        // "transforms.convert_endTime_unix.format":"dd.MM.yyyy HH:mm",
+        "transforms.convert_endTime_unix.format":this.isDateformat,
         "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
         "transforms.convert_endTime_string.field": "endTime",
         "transforms.convert_endTime_string.target.type": "string",
@@ -430,6 +437,230 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       return name;
     }
   }
+  getDateFormat(value,headername){
+    // console.log(value,headername);
+    if(headername.indexOf('Time')!=-1 ||headername.indexOf('Timestamp')!=-1){
+      this.findDatePattern(value);
+      return value
+    }else{
+      
+      // this.findDatePattern(value);
+      return value;
+    }
+  }
 
+  findDatePattern(dateInput){
+    // console.log(dateInput);
+    
+    var splitDate;
+    // var dateformat;
+    var yearformat;
+    var timeOne;
+    var OnlyDate=dateInput.split(' ',1)
+    
+    // var dateInput = ["04-04-2020 04:31:10.000 PM","12-12-2222 04:31:10.000 PM","11-22-2222 04:31:10.000 PM"];
+    // var dateInput = "12.02.2011 04:31:10 AM";
+    // var dateInput = "02/02/20 04:31:10 PM";
+    if(OnlyDate[0].includes('-')){
+      splitDate=dateInput.split('-')
+          if(splitDate[0].length==4){
+            var splitDate1=splitDate[2].split(' ',1)
+            // console.log("splitDate",splitDate);
+            // console.log("splitDate1",splitDate1);
+              yearformat="yyyy";
+                if(splitDate[1]==12 && splitDate1[0]==12){
+                      // this.dateformat=' ';
+                }else if(splitDate[1]<12 && splitDate1[0]<12){
+                  // this.dateformat='';
+                }else if(splitDate[1]>12 && splitDate1[0]<12){
+                      this.dateformat='dd-MM';
+                }else if(splitDate[1]<12 && splitDate1[0]>12){
+                      this.dateformat='MM-dd';
+                }else if(splitDate[1]==12 && splitDate1[0]>12){
+                      this.dateformat='MM-dd';
+                }else if(splitDate[1]>12 && splitDate1[0]==12){
+                      this.dateformat='dd-MM';
+                }
+              var fullDateFormat=yearformat+'-'+this.dateformat      
+            }else{
+                if(splitDate[0]==12 && splitDate[1]==12){
+                      // this.dateformat=' ';
+                }else if(splitDate[0]<12 && splitDate[1]<12){
+                      // this.dateformat=' ';
+                }else if(splitDate[0]>12 && splitDate[1]<12){
+                      this.dateformat='dd-MM'
+                }else if(splitDate[0]<12 && splitDate[1]>12){
+                      this.dateformat='MM-dd'
+                }else if(splitDate[0]==12 && splitDate[1]>12){
+                      this.dateformat='MM-dd'
+                }else if(splitDate[0]>12 && splitDate[1]==12){
+                      this.dateformat='dd-MM';
+                }
+                var splitYear=splitDate[2].split(' ',1)
+                  
+                  
+                    if(splitYear[0].length==4){
+                      yearformat='yyyy'
+                    }else{
+                      yearformat='yy'
+                    }
+                var fullDateFormat=this.dateformat+'-'+yearformat
+                }
+    }else if(OnlyDate[0].includes('.')){
+      // splitDate=dateInput.split('.')
+      splitDate=dateInput.split('.')
+      if(splitDate[0].length==4){
+        var splitDate1=splitDate[2].split(' ',1)
+        // console.log("splitDate",splitDate);
+        // console.log("splitDate1",splitDate1);
+          yearformat="yyyy";
+            if(splitDate[1]==12 && splitDate1[0]==12){
+                  // this.dateformat=' ';
+            }else if(splitDate[1]<12 && splitDate1[0]<12){
+                  // this.dateformat=' ';
+            }else if(splitDate[1]>12 && splitDate1[0]<12){
+                  this.dateformat='dd.MM';
+            }else if(splitDate[1]<12 && splitDate1[0]>12){
+                  this.dateformat='MM.dd';
+            }else if(splitDate[1]==12 && splitDate1[0]>12){
+                  this.dateformat='MM.dd';
+            }else if(splitDate[1]>12 && splitDate1[0]==12){
+                  this.dateformat='dd.MM';
+            }
+          var fullDateFormat=yearformat+'.'+this.dateformat      
+        }else{
+            if(splitDate[0]==12 && splitDate[1]==12){
+                  // this.dateformat=' ';
+            }else if(splitDate[0]<12 && splitDate[1]<12){
+                  // this.dateformat=' ';
+            }else if(splitDate[0]>12 && splitDate[1]<12){
+                  this.dateformat='dd.MM'
+            }else if(splitDate[0]<12 && splitDate[1]>12){
+                  this.dateformat='MM.dd'
+            }else if(splitDate[0]==12 && splitDate[1]>12){
+                  this.dateformat='MM.dd'
+            }else if(splitDate[0]>12 && splitDate[1]==12){
+                  this.dateformat='dd.MM';
+            }
+            var splitYear=splitDate[2].split(' ',1)
+                if(splitYear[0].length==4){
+                  yearformat='yyyy'
+                }else{
+                  yearformat='yy'
+                }
+            var fullDateFormat=this.dateformat+'.'+yearformat
+            }
+    }else if(OnlyDate[0].includes('/')){
+      // splitDate=dateInput.split('/')
+      splitDate=dateInput.split('/')
+      if(splitDate[0].length==4){
+      var splitDate1=splitDate[2].split(' ',1)
+            // console.log("splitDate",splitDate);
+            // console.log("splitDate1",splitDate1);
+              yearformat="yyyy";
+                if(splitDate[1]==12 && splitDate1[0]==12){
+                      // dateformat='MM/dd';
+                }else if(splitDate[1]<12 && splitDate1[0]<12){
+                      // dateformat='MM/dd';
+                }else if(splitDate[1]>12 && splitDate1[0]<12){
+                      this.dateformat='dd/MM';
+                }else if(splitDate[1]<12 && splitDate1[0]>12){
+                      this.dateformat='MM/dd';
+                }else if(splitDate[1]==12 && splitDate1[0]>12){
+                      this.dateformat='MM/dd';
+                }else if(splitDate[1]>12 && splitDate1[0]==12){
+                      this.dateformat='dd/MM';
+                }
+
+                // if(dateformat!=' '){
+                //   var dateformat1=dateformat
+                // }
+                
+                // console.log("dateformat",dateformat);
+              // var fullDateFormat=yearformat+'/'+dateformat      
+              var fullDateFormat=yearformat+'/'+this.dateformat      
+            }else{
+                if(splitDate[0]==12 && splitDate[1]==12){
+                      // this.dateformat=' ';
+                }else if(splitDate[0]<12 && splitDate[1]<12){
+                      // this.dateformat=' ';
+                }else if(splitDate[0]>12 && splitDate[1]<12){
+                      this.dateformat='dd/MM'
+                }else if(splitDate[0]<12 && splitDate[1]>12){
+                      this.dateformat='MM/dd'
+                }else if(splitDate[0]==12 && splitDate[1]>12){
+                      this.dateformat='MM/dd'
+                }else if(splitDate[0]>12 && splitDate[1]==12){
+                      this.dateformat='dd/MM';
+                }
+                var splitYear=splitDate[2].split(' ',1)
+                    if(splitYear[0].length==4){
+                      yearformat='yyyy'
+                    }else{
+                      yearformat='yyyy'
+                    }
+                var fullDateFormat=this.dateformat+'/'+yearformat
+                  }
+    } 
+
+    // console.log("splitDate",splitDate);
+    // for time format
+    var timedivide=splitDate[2].split(' ')
+    var timedivide1=timedivide[1].split(':')
+    var time;
+    // console.log("timedivide1",timedivide1);
+    if(timedivide.includes('AM')){
+        
+        if(timedivide1.length==2){
+              time="hh:mm AM";
+        }else if(timedivide1.length==3){
+          if(timedivide1[2].includes('.')){
+            time="hh:mm:ss.SSS AM";
+          }else{
+            time="hh:mm:ss AM";
+          }
+        }
+    }else if(timedivide.includes('PM')){
+      if(timedivide1.length==2){
+            time="hh:mm PM";
+      }else if(timedivide1.length==3){
+        if(timedivide1[2].includes('.')){
+          time="hh:mm:ss.SSS PM";
+        }else{
+          time="hh:mm:ss PM";
+        }
+      }
+  }else{
+    this.count++
+      if(timedivide1.length==2){
+          timeOne="HH:mm";
+      }else if(timedivide1.length==3){
+          if(timedivide1[2].includes('.')){
+            timeOne="HH:mm:ss.SSS";
+          }else{
+            timeOne="HH:mm:ss";
+          }
+      }
+    }
+    // console.log("this.count",this.count)
+    if(this.count>=1){
+      var timeFormat =timeOne;
+    }else{
+      timeFormat =time;
+    }
+
+    var inputDateformat=fullDateFormat+' '+timeFormat
+    // console.log(OnlyDate[0]);
+    
+    if(OnlyDate[0].includes('/')){
+      this.isDateformat="yyyy/dd/MM HH:mm:ss.SSS"
+    }else{
+      this.isDateformat="MM.dd.yy HH:mm"
+    }
+      // this.isDateformat=inputDateformat
+      
+    
+    // console.log("inputDateformat",inputDateformat);
+  }
 
 }

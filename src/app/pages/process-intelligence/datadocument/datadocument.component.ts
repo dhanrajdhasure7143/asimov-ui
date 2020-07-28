@@ -204,8 +204,19 @@ export class DatadocumentComponent implements OnInit {
         let each_cell = this.fileData[x][index];
         if ((reg_expression && reg_expression.test(each_cell)) || isDateCheck) {
           if (isDateCheck) {
-            try {
-              // formatDate(each_cell, 'dd/MM/yyyy HH:mm:ss', 'en-US');
+            try {let mydate = ''
+                if(each_cell){
+                    var splitDate = each_cell.split(' ');
+                  if(splitDate[0].indexOf('.') != -1 ){
+                  var aa = splitDate[0].split('.');
+                  mydate = aa[1]+'.'+aa[0]+'.'+aa[2]+" "+splitDate[1]
+                  } else {
+                  mydate = each_cell;
+                  }
+                }
+                // console.log(each_cell);
+                
+              formatDate(mydate, 'dd/MM/yyyy HH:mm:ss', 'en-US');
               this.invalidCells['row' + x].splice(this.invalidCells['row' + x].indexOf('cell' + index), 1);
               if (this.validCells['row' + x].indexOf('cell' + index) == -1)
                 this.validCells['row' + x].push('cell' + index);

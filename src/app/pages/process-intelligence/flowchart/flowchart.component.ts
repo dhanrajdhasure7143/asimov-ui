@@ -47,10 +47,10 @@ export class FlowchartComponent implements OnInit {
   public dataValues: any=[];
   public varaint_data: any=[];
   public rangevalue: any;
-  pathvalue: number = 0;
+  pathvalue: number = 100;
   public isplay: boolean = false;
   isselected: number;
-  activityValue: number = 0;
+  activityValue: number = 100;
   public checkboxValue: boolean = false;
   public selectedCaseArry: any[];
   public isfrequency: boolean = false;
@@ -73,7 +73,7 @@ export class FlowchartComponent implements OnInit {
     ceil: 1,
     // translate: (value: number): string => `${value}%`,
     translate: (value: number): string => `${value*100}`,
-    hideLimitLabels: false,
+    hideLimitLabels: true,
     hidePointerLabels: false,
     vertical: true,
   }
@@ -116,6 +116,8 @@ export class FlowchartComponent implements OnInit {
   timeRangeArray:any=[];
   isFilterComponent:boolean=false;
   overLayHide:boolean=false;
+  isvariantListOpen:boolean=true;
+  issliderDisabled:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -259,6 +261,8 @@ export class FlowchartComponent implements OnInit {
             'error'
           );
           this.spinner.hide();
+          this.model1=[];
+          this.model2=[];
         } else{
          let fullgraphOne=this.fullgraph.data;
         //let fullgraphOne=this.gResponse.data;
@@ -337,8 +341,8 @@ export class FlowchartComponent implements OnInit {
   // }
  
   caseIdSelect(selectedData, index) {
-    this.activityValue=0;
-    this.pathvalue=0;
+    this.activityValue=100;
+    this.pathvalue=100;
     this.activity_value=[];
     this.isNodata=true;
     this.isplay = false;
@@ -394,6 +398,7 @@ export class FlowchartComponent implements OnInit {
 
     this.caselength = this.selectedCaseArry.length;
     if(this.selectedCaseArry.length == 0){
+      this.issliderDisabled=false;
         let fullgraphOne=this.fullgraph.data;
             this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
                 this.nodeAlignment();
@@ -406,6 +411,7 @@ export class FlowchartComponent implements OnInit {
 
     }else if (this.selectedCaseArry.length == 1) {
       this.isvariantSelectedOne=true;
+      this.issliderDisabled=true;
       // const element = this.pgModel.flowchartData[casevalue];
       // this.model1 = element.nodeDataArraycase;
       // this.model2 = element.linkarraycase;
@@ -424,6 +430,7 @@ export class FlowchartComponent implements OnInit {
         this.linkCurvinessGenerate();
       }
     }else{
+      this.issliderDisabled=true;
       this.isvariantSelectedOne=false;
       const variantComboBody={
         "data_type":"variant_combo",
@@ -431,13 +438,12 @@ export class FlowchartComponent implements OnInit {
         "cases" : this.selectedCaseArry
     }
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
-    this.model1=this.variantCombo.data[0].nodeDataArraycase
-    this.nodeAlignment();
-    this.model2 = this.flowchartData(this.model1);
-    this.gradientApplyforLinks()
-    this.gradientApplyforNode()
-    this.linkCurvinessGenerate();
-    
+      this.model1=this.variantCombo.data[0].nodeDataArraycase
+      this.nodeAlignment();
+      this.model2 = this.flowchartData(this.model1);
+      this.gradientApplyforLinks()
+      this.gradientApplyforNode()
+      this.linkCurvinessGenerate();
     })
     }
 //     else {
@@ -667,13 +673,15 @@ export class FlowchartComponent implements OnInit {
   }
   selectAllVariants() {
     this.activity_value=[];
-    this.activityValue=0;
-    this.pathvalue=0;
+    this.activityValue=100;
+    this.pathvalue=100;
     this.isNodata=true;
     this.isplay = false;
     // console.log("checkboxValue",this.checkboxValue);
 
     if (this.checkboxValue == true) {
+      this.issliderDisabled=false;
+      this.isvariantSelectedOne=false;
       for (var i = 0; i < this.varaint_data.data.length; i++) {
         this.varaint_data.data[i].selected = "active"
         // this.model1=this.pgModel.allSelectData.nodeDataArraycase
@@ -1000,13 +1008,15 @@ flowchartDataOne(dataArray,index) {
   }
   return this.linkdataArray;
 }
-openNav(){ //variant list open
+openVariantListNav(){ //variant list open
   document.getElementById("mySidenav").style.width = "310px";
   document.getElementById("main").style.marginRight = "310px";
+  this.isvariantListOpen=false;
   }
 closeNav() { // Variant list Close
   document.getElementById("mySidenav").style.width = "0px";
   document.getElementById("main").style.marginRight= "0px";
+  this.isvariantListOpen=true;
   }
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
     this.model2 = this.flowchartData(this.model1)
@@ -1200,8 +1210,8 @@ this.model2=[]
 // console.log("activity_value1",this.activity_value);
 // return;
     // this.activitySelect.close();
-    this.activityValue=0;
-    this.pathvalue=0;
+    // this.activityValue=0;
+    // this.pathvalue=0;
     this.isNodata=true;
     // console.log(activity);
     var model3=[]
@@ -1250,8 +1260,8 @@ this.model2=[]
   //   }
   // }
   resetActivity(){
-    this.activityValue=0;
-    this.pathvalue=0;
+    this.activityValue=100;
+    this.pathvalue=100;
     this.model1=this.fullgraph_model
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1);
