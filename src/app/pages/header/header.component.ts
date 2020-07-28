@@ -31,6 +31,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
   loopTrackBy(index, term){
     return index;
   }
+  slideUp(){
+    var modal = document.getElementById('header_overlay');
+    modal.style.display="block";
+  }
+  slideDown(){
+    var modal = document.getElementById('header_overlay');
+    modal.style.display="none";
+  }
 
   ngOnDestroy(){
     this.parent_subscription.unsubscribe();
@@ -39,5 +47,22 @@ export class HeaderComponent implements OnInit, OnDestroy {
   logout(){
     localStorage.clear();
     this.router.navigate(["/"])
+  }
+
+
+
+
+ openCity(evt, cityName) {
+    let i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
   }
 }

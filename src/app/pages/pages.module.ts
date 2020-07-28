@@ -14,6 +14,7 @@ import { PagesHints } from './model/pages.model';
 import { LoaderService } from '../services/loader/loader.service';
 import { LoaderInterceptor } from '../helpers/loader-interceptor.service';
 import { MyLoaderComponent } from './my-loader/my-loader.component';
+import { HeaderDropdownOverlayComponent } from './header-dropdown-overlay/header-dropdown-overlay.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { MyLoaderComponent } from './my-loader/my-loader.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    MyLoaderComponent
+    MyLoaderComponent,
+    HeaderDropdownOverlayComponent
   ],
   imports: [
     CommonModule,

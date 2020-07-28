@@ -40,8 +40,10 @@
                     <div class="dropdown">
                       <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
                       <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
-                        <a href="http://eiapclouddev.epsoftinc.in/#/activation"><i class="far fa-user"></i> My Account</a>
-                        <a href="#about"><i class="fas fa-cog"></i>Settings</a>
+                        <a (click)='slideUp()'><i class="far fa-user"></i> My Account</a>
+                        <a href="#"><i class="fas fa-cog"></i>User Management</a>
+                        <a href="#"><i class="fas fa-cog"></i>Configure Alerts</a>
+                        <a href="#"><i class="fas fa-cog"></i>Invite User</a>
                         <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a>
                       </div>
                     </div>
@@ -54,4 +56,43 @@
       </nav>
     </div>
   </section>
-</div>                       
+</div> 
+<div id="header_overlay" class="hd_overlay">
+  <div class="modal-content">
+    
+      <div class="tab">
+          <div class="container">
+          <button class="tablinks" (click)="openCity(event, 'my_account')" id="defaultOpen">My Account</button>
+          <button class="tablinks" (click)="openCity(event, 'subscription')">Subscriptions</button>
+          <button class="tablinks" (click)="openCity(event, 'payment_history')">Payment History</button>
+          <button class="tablinks" (click)="openCity(event, 'payment_mode')">Payment Mode</button>
+
+        </div>
+        <span class="close" (click)="slideDown();">&times;</span>
+      </div>
+        <div class="container">
+            <div id="my_account" class="tabcontent">
+                <h3>London</h3>
+                <p>London is the capital city of England.</p>
+              </div>
+              
+              <div id="subscription" class="tabcontent">
+                <h3>Paris</h3>
+                <p>Paris is the capital of France.</p> 
+              </div>
+              
+              <div id="payment_history" class="tabcontent">
+                <h3>Tokyo</h3>
+                <p>Tokyo is the capital of Japan.</p>
+              </div>
+              <div id="payment_mode" class="tabcontent">
+                  <h3>Tokyo</h3>
+                  <p>Tokyo is the capital of Japan.</p>
+                </div>
+        </div>
+        
+          
+      </div>
+     
+
+</div>                    
