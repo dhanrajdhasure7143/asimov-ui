@@ -73,6 +73,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       ]
     });
     this.dt.changeHints(this.hints.rpaWorkspaceHints );
+    this.selectedTask={
+      id:"", 
+      name:"",
+    }
     if(this.finalbot.botId!= undefined)
     {
       this.finaldataobjects=this.finalbot.tasks;
@@ -130,6 +134,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       
     });
   }
+
+
+
   public addconnections(sequences)
   {
     
@@ -160,9 +167,15 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   
   }
 
+
+
+
   public removeItem(item: any, list: any[]): void {
     list.splice(list.indexOf(item), 1);
   }
+
+
+
 
   onDrop(event: DndDropEvent,e:any) {
     this.dragelement = document.querySelector('.drag-area');
@@ -192,7 +205,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.populateNodes(nodeWithCoordinates);
     }, 240);
 
-
     if(this.nodes.length==1)
     {
       let node={
@@ -216,7 +228,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           selectedNodeTask:"",
           path:"/assets/images/RPA/Stop.png",
           x:"941px",
-          y:"9px",
+          y:"396px",
         }
         console.log(stopnode)
         this.nodes.push(stopnode);
@@ -356,6 +368,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   }
 
+
+
   onRightClick(n: any,e: { target: { id: string; } },i: string | number) {
     this.selectedNode = n
     console.log(e);
@@ -400,14 +414,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   formNodeFunc(node)
   {
-   /* console.log(node)
-    if(this.selectedTask.id)
-    {
-      this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
-       this.response(data)
-      })
-    }*/
-     //console.log(node)
+ 
      let task=this.finaldataobjects.find(data =>data.nodeId.split("__")[1]==node.id );
      
      if(task==undefined)
@@ -416,7 +423,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
          this.response(data)
        })
      }
-     else if(this.selectedTask==undefined)
+     else if(this.selectedTask.id=="" || task.tMetaId!=this.selectedTask.id)
      {
        let finalattributes:any=[];
        this.rest.attribute(task.tMetaId).subscribe((data)=>{ 
@@ -424,7 +431,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
          task.attributes.forEach(element => {
                finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
            });
-           
+           this.selectedNode=node;
+           this.selectedTask.id=task.tMetaId;
+           this.selectedTask.name=task.taskName;
+           this.formHeader=this.selectedNode.name+"-"+this.selectedTask.name;
            this.response(finalattributes)
        });
      }
@@ -436,12 +446,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
          task.attributes.forEach(element => {
                finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
            });
-
+           
            this.response(finalattributes)
            this.formHeader=task.taskName;
        });
      }
-     else if(this.selectedTask.id != task.tMetaId)
+     else if(this.selectedTask.id != task.tMetaId && task.id!=undefined)
      {
        this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
          this.response(data)
@@ -556,7 +566,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     "y":this.selectedNode.y,
     "attributes":obj,
   }
-  this.finaldataobjects.push(cutedata);
+  console.log(this.finaldataobjects.findIndex(sweetdata=>sweetdata.nodeId==cutedata.nodeId))
+  let index=this.finaldataobjects.findIndex(sweetdata=>sweetdata.nodeId==cutedata.nodeId)
+  if(index!=undefined && index >=0)
+  {
+    this.finaldataobjects[index]=cutedata;
+  }else
+  {
+    this.finaldataobjects.push(cutedata);
+  
+  }
   console.log(this.finaldataobjects)
   this.notifier.notify( "info", "Data Saved Successfully" );
   }
