@@ -24,9 +24,12 @@
         </mat-form-field>
     </div>
     <div class="col-md-2"> 
+<!-- <button class="keyboard_style" (click)="displayShortcut()" ><img src="..\assets\keyboardshortcut.svg"></button> -->
+<!-- <button class="keyboard_style" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard (1).png"></button> -->
+
     </div>
 </div>
-<button mat-raised-button (click)="onclickShortcut()">add</button>
+<button class="keyboard_style" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard (1).png"></button>
 <div class="container-fluid">
         <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>
         <div>
@@ -42,7 +45,69 @@
         <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
             <p style="color: white">Auto Saving... </p>  
         </ngx-spinner>
-    </div>
+    </div>  
     <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
     <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
     </div></div>
+    <ng-template #keyboardShortcut>
+         <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+         <table>
+                <tr >
+                    <th><label for="" class="keyboard_label_style">Undo</label></th>
+                    <th><label for=""class="keyboard_label_style">Ctrl + Z </label></th>
+                </tr>
+                <tr>
+                    <td><label for=""class="keyboard_label_style">Redo</label></td>
+                    <td><label for=""class="keyboard_label_style">Ctrl + <span>&#8679;</span> + Z</label></td>
+                </tr>
+                <tr>
+                    <td> <label for=""class="keyboard_label_style">Select All</label>
+                      </td>
+                      <td><label for=""class="keyboard_label_style">Ctrl + A </label></td>
+                </tr>
+                <tr>
+                    <td><label for=""class="keyboard_label_style">Scrolling(Vertical)</label></td>
+                    <td><label for=""class="keyboard_label_style">Ctrl + Scrolling</label></td>
+                </tr>
+                <tr>
+                    <td> <label for=""class="keyboard_label_style">Scrolling(Horizontal)</label>
+                    </td>
+                    <td><label for=""class="keyboard_label_style">Ctrl + <span>&#8679;</span> + Scrolling  </label></td>
+                </tr>
+                <tr>
+                    <td><label for=""class="keyboard_label_style">Direct Editing</label>
+                     
+                    </td>
+                    <td><label for=""class="keyboard_label_style">E</label></td>
+                </tr>
+                <tr>
+                    <td><label for=""class="keyboard_label_style">Hand Tool</label>
+                      
+                        </td>
+                        <td><label for="" class="keyboard_label_style">H</label></td>  
+                      </tr>
+                      <tr>
+                          <td> <label for="" class="keyboard_label_style">Lasso Tool</label>
+                           
+                            </td>
+                            <td><label for="" class="keyboard_label_style">L</label></td>
+                      </tr>
+                      <tr>
+                          <td><label for="" class="keyboard_label_style">Space Tool</label>
+                           
+                            </td>
+                            <td><label for="" class="keyboard_label_style">S</label></td>
+
+                      </tr>
+
+
+            
+        
+
+            </table>
+                                              
+                                             
+           
+    
+   
+    </ng-template>

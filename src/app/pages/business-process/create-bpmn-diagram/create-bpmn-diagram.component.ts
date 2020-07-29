@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { NgxSpinnerService } from "ngx-spinner"; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -38,7 +38,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
   updated_date_time;
-
+  @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog) {}
 
@@ -392,10 +392,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.global.notify(message, "error");
     }
   }
-  onclickShortcut(){
-     this.dialog.open(KeyboardShortcut);
+  displayShortcut(){
+     this.dialog.open(this.keyboardShortcut);
 
   }
   
 }
-export class KeyboardShortcut{}
+

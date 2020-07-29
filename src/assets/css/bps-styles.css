@@ -575,3 +575,17 @@ background-color: #3ea307 !important;
 .box_area{
   margin-top: 20px;
 }
+.keyboard_style{
+  margin-left: 1344px;
+}
+.keyboard_label_style{
+  font-size: 17px; 
+  font-weight: 100;
+}
+.keyboard_header_shortcuts{
+  font-size: 25px;
+    font-weight: 100;
+    margin-top: 10px;
+    margin-bottom: 20px;
+
+}

@@ -1,9 +1,10 @@
-import { Component, OnInit ,AfterViewInit, Input, HostListener} from '@angular/core';
+import { Component, OnInit ,ViewChild,TemplateRef} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner"; 
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
+import {MatDialog} from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -60,9 +61,9 @@ export class UploadProcessModelComponent implements OnInit {
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
   updated_date_time;
-
+  @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
-      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,) { }
+      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog) { }
  
    ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
@@ -570,4 +571,10 @@ export class UploadProcessModelComponent implements OnInit {
       this.global.notify(message, "error");
     }
   }
+  displayShortcut(){
+    this.dialog.open(this.keyboardShortcut);
+
+ }
+ 
+  
 }
