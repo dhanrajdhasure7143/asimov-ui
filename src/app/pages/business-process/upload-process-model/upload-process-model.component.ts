@@ -61,6 +61,7 @@ export class UploadProcessModelComponent implements OnInit {
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
   updated_date_time;
+  keyboardLabels=[];
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog) { }
@@ -78,6 +79,17 @@ export class UploadProcessModelComponent implements OnInit {
     });
     this.getUserBpmnList(null);
     this.getApproverList();
+    this.keyboardLabels=[
+      {"labelName":"Undo","labelValue":"Ctrl + Z"},
+      {"labelName":"Redo","labelValue":"Ctrl + &#8679; + Z"},
+      {"labelName":"Select All","labelValue":"Ctrl + A"},
+      {"labelName":"Scroling(Vertical)","labelValue":"Ctrl + Scrolling"},
+      {"labelName":"Scrolling(Horizontal)","labelValue":"Ctrl + <span>&#8679;</span> + Scrolling "},
+      {"labelName":"Direct Editing ","labelValue":"Direct Editing"},
+      {"labelName":"Hand Tool","labelValue":"E"},
+      {"labelName":"Lasso Tool","labelValue":"H"},
+      {"labelName":"Space Tool","labelValue":"S"}
+    ]
    }
 
    async getUserBpmnList(isFromConf){

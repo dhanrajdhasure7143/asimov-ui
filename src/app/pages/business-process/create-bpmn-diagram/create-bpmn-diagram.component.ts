@@ -38,6 +38,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
   updated_date_time;
+  keyboardLabels=[];
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog) {}
@@ -49,6 +50,17 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.selected_modelId = params['bpsId'];
       this.selected_version = params['ver'];
+     this.keyboardLabels=[
+       {"labelName":"Undo","labelValue":"Ctrl + Z"},
+       {"labelName":"Redo","labelValue":"Ctrl + &#8679; + Z"},
+       {"labelName":"Select All","labelValue":"Ctrl + A"},
+       {"labelName":"Scroling(Vertical)","labelValue":"Ctrl + Scrolling"},
+       {"labelName":"Scrolling(Horizontal)","labelValue":"Ctrl + <span>&#8679;</span> + Scrolling "},
+       {"labelName":"Direct Editing ","labelValue":"Direct Editing"},
+       {"labelName":"Hand Tool","labelValue":"E"},
+       {"labelName":"Lasso Tool","labelValue":"H"},
+       {"labelName":"Space Tool","labelValue":"S"}
+     ]
     });
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getUserBpmnList();
@@ -272,7 +284,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.approverName = this.selected_approver;
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-    // bpmnModel.bpmnTempId=2;
     bpmnModel.category = sel_List['category'];
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.tenantId=999;

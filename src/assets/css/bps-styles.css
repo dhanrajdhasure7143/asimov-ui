@@ -575,10 +575,18 @@ background-color: #3ea307 !important;
 .box_area{
   margin-top: 20px;
 }
-.keyboard_style{
+.keyboard_style_upload{
       
       position: absolute;
       right: 20px;
+      z-index: 2;
+      top: 45px;
+}
+.keyboard_style_create{
+  position: absolute;
+  right: 20px;
+  z-index: 2;
+
 }
 .keyboard_label_style{
   font-size: 17px; 

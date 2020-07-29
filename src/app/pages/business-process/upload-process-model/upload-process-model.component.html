@@ -25,7 +25,7 @@
       </mat-select>
     </mat-form-field>
   </div>
-<div><button class="keyboard_style" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard (1).png"></button>
+<div><button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
 </div>
 
 </div>
@@ -65,62 +65,9 @@
   <ng-template #keyboardShortcut>
       <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
       <table>
-             <tr >
-                 <th><label for="" class="keyboard_label_style">Undo</label></th>
-                 <th><label for=""class="keyboard_label_style">Ctrl + Z </label></th>
-             </tr>
-             <tr>
-                 <td><label for=""class="keyboard_label_style">Redo</label></td>
-                 <td><label for=""class="keyboard_label_style">Ctrl + <span>&#8679;</span> + Z</label></td>
-             </tr>
-             <tr>
-                 <td> <label for=""class="keyboard_label_style">Select All</label>
-                   </td>
-                   <td><label for=""class="keyboard_label_style">Ctrl + A </label></td>
-             </tr>
-             <tr>
-                 <td><label for=""class="keyboard_label_style">Scrolling(Vertical)</label></td>
-                 <td><label for=""class="keyboard_label_style">Ctrl + Scrolling</label></td>
-             </tr>
-             <tr>
-                 <td> <label for=""class="keyboard_label_style">Scrolling(Horizontal)</label>
-                 </td>
-                 <td><label for=""class="keyboard_label_style">Ctrl + <span>&#8679;</span> + Scrolling  </label></td>
-             </tr>
-             <tr>
-                 <td><label for=""class="keyboard_label_style">Direct Editing</label>
-                  
-                 </td>
-                 <td><label for=""class="keyboard_label_style">E</label></td>
-             </tr>
-             <tr>
-                 <td><label for=""class="keyboard_label_style">Hand Tool</label>
-                   
-                     </td>
-                     <td><label for="" class="keyboard_label_style">H</label></td>  
-                   </tr>
-                   <tr>
-                       <td> <label for="" class="keyboard_label_style">Lasso Tool</label>
-                        
-                         </td>
-                         <td><label for="" class="keyboard_label_style">L</label></td>
-                   </tr>
-                   <tr>
-                       <td><label for="" class="keyboard_label_style">Space Tool</label>
-                        
-                         </td>
-                         <td><label for="" class="keyboard_label_style">S</label></td>
-
-                   </tr>
-
-
-         
-     
-
-         </table>
-                                           
-                                          
-        
- 
-
+             <tr *ngFor="let keyboardLabels of keyboardLabels" >
+                 <th><label for="" class="keyboard_label_style">{{keyboardLabels.labelName}}</label></th>
+                  <th><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></th>
+             </tr> 
+         </table>   
  </ng-template>
