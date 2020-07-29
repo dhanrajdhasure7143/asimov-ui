@@ -576,7 +576,9 @@ background-color: #3ea307 !important;
   margin-top: 20px;
 }
 .keyboard_style{
-  margin-left: 1344px;
+      
+      position: absolute;
+      right: 20px;
 }
 .keyboard_label_style{
   font-size: 17px; 
