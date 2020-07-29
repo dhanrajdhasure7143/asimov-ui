@@ -45,16 +45,17 @@ export class RpaHomeComponent implements OnInit {
     })
   }
 
-  onCreate(){}
-
 
   createoverlay()
   {
-    document.getElementById("create-bot").style.display ="block";
+   
+    this.rpa_studio.onCreate();
+    //document.getElementById("create-bot").style.display ="block";
   }
 
   openload()
   {
+    
     document.getElementById("load-bot").style.display ="block";
   }
 

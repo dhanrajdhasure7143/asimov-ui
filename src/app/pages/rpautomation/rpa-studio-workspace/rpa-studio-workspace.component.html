@@ -60,12 +60,13 @@
   <div class="rpa-modal-content">
     <div class="rpa-modal-header" style="padding: 8px; font-weight:600">
       {{formHeader}}
-      <span class="rpa-modal-close" style="margin-top: -8px;" (click)="closeFun()" >X</span>
+      <span class="rpa-modal-close" style="margin-top: -8px;" (click)="closeFun()" >&times;</span>
     </div>
-    <div class="rpa-modal-body">
+    <div class="rpa-modal-body"><br>
       <div class="container">
       <app-dynamic-forms [fields]="getFields()" (onSubmit)="onFormSubmit($event)"></app-dynamic-forms></div>
     </div>
+    <br>
   </div>
   </div>
     
