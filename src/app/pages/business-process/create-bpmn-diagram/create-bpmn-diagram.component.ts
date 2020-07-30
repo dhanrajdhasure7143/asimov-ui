@@ -10,11 +10,13 @@ import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
+import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 
 @Component({
   selector: 'app-create-bpmn-diagram',
   templateUrl: './create-bpmn-diagram.component.html',
-  styleUrls: ['./create-bpmn-diagram.component.css']
+  styleUrls: ['./create-bpmn-diagram.component.css'],
+  providers:[BpmnShortcut]
 })
 export class CreateBpmnDiagramComponent implements OnInit {
   bpmnModeler:any;
@@ -41,7 +43,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   keyboardLabels=[];
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
-    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog) {}
+    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
 
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
@@ -50,18 +52,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.selected_modelId = params['bpsId'];
       this.selected_version = params['ver'];
-     this.keyboardLabels=[
-       {"labelName":"Undo","labelValue":"Ctrl + Z"},
-       {"labelName":"Redo","labelValue":"Ctrl + &#8679; + Z"},
-       {"labelName":"Select All","labelValue":"Ctrl + A"},
-       {"labelName":"Scroling(Vertical)","labelValue":"Ctrl + Scrolling"},
-       {"labelName":"Scrolling(Horizontal)","labelValue":"Ctrl + <span>&#8679;</span> + Scrolling "},
-       {"labelName":"Direct Editing ","labelValue":"Direct Editing"},
-       {"labelName":"Hand Tool","labelValue":"E"},
-       {"labelName":"Lasso Tool","labelValue":"H"},
-       {"labelName":"Space Tool","labelValue":"S"}
-     ]
     });
+    this.keyboardLabels=this.shortcut.keyboardLabels;
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getUserBpmnList();
     this.getApproverList();

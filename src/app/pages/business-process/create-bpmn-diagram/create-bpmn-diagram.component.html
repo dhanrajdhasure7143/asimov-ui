@@ -52,8 +52,8 @@
          <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
          <table>
                 <tr *ngFor="let keyboardLabels of keyboardLabels" >
-                    <th><label for="" class="keyboard_label_style">{{keyboardLabels.labelName}}</label></th>
-                     <th><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></th>
+                    <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+                     <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
                 </tr> 
             </table>   
     </ng-template>

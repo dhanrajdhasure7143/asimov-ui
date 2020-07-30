@@ -11,12 +11,14 @@ import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
+import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import { BpsHints } from '../model/bpmn-module-hints';
 
 @Component({
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
-  styleUrls: ['./upload-process-model.component.css']
+  styleUrls: ['./upload-process-model.component.css'],
+  providers:[BpmnShortcut]
 })
 export class UploadProcessModelComponent implements OnInit {
   isShowConformance:boolean = false;
@@ -64,7 +66,7 @@ export class UploadProcessModelComponent implements OnInit {
   keyboardLabels=[];
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
-      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog) { }
+      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
  
    ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
@@ -77,19 +79,9 @@ export class UploadProcessModelComponent implements OnInit {
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.isRouterNotation = this.selected_notation >= 0;
     });
+    this.keyboardLabels=this.shortcut.keyboardLabels;
     this.getUserBpmnList(null);
     this.getApproverList();
-    this.keyboardLabels=[
-      {"labelName":"Undo","labelValue":"Ctrl + Z"},
-      {"labelName":"Redo","labelValue":"Ctrl + &#8679; + Z"},
-      {"labelName":"Select All","labelValue":"Ctrl + A"},
-      {"labelName":"Scroling(Vertical)","labelValue":"Ctrl + Scrolling"},
-      {"labelName":"Scrolling(Horizontal)","labelValue":"Ctrl + <span>&#8679;</span> + Scrolling "},
-      {"labelName":"Direct Editing ","labelValue":"Direct Editing"},
-      {"labelName":"Hand Tool","labelValue":"E"},
-      {"labelName":"Lasso Tool","labelValue":"H"},
-      {"labelName":"Space Tool","labelValue":"S"}
-    ]
    }
 
    async getUserBpmnList(isFromConf){
