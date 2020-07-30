@@ -28,11 +28,26 @@ export class BpsHomeComponent implements OnInit {
   xpandStatus=false;
   autosavedDiagramList = [];
   autosavedDiagramVersion = [];
+  public userRole:any = [];
+  public isButtonVisible = false;
+
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints ) { }
 
   ngOnInit(){
+    this.userRole = localStorage.getItem("userRole")
+    
+    if(this.userRole.includes('SuperAdmin')){
+      this.isButtonVisible = true;
+    }else if(this.userRole.includes('Admin')){
+      this.isButtonVisible = true;
+    }else if(this.userRole.includes('Process Architect')){
+      this.isButtonVisible = true;
+    }else{
+      this.isButtonVisible = false;
+    }
+
     this.isLoading = true;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/home","title":"BPMN Upload"});
