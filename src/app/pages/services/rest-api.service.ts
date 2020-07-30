@@ -9,6 +9,12 @@ import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 //     'Authorization': 'Bearer '+localStorage.getItem("accessToken")
 //   }),
 // };
+const httpOptions = {
+  headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+        })
+};
+
 
 @Injectable({
   providedIn: 'root'
@@ -281,6 +287,10 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   {
     return this.http.get("/rpa-service/load-predefined-bot?botId="+botId)
   }
+  getUserRole(appID):Observable<any>{
+    return this.http.get<any>('/authorizationservice/api/v1/user/role/applications/'+appID,httpOptions)
+  }
+  
 
 }
 
