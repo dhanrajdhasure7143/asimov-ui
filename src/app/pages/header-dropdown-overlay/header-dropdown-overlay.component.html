@@ -1,9 +1,262 @@
-<!-- <div id="myModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="close" (click)="processCategoryForm.reset();slideDown();">&times;</span>
-            <h4>{{headerTitle}}</h4>
-        </div>
-        </div>
-        </div>
-        -->
+<div id="header_overlay" class="hd_overlay">
+        <div class="modal-content">
+            <div class="tab">
+                <div class="container">
+                <button class="tablinks"  (click)="openCity($event, 'my_account')" id="defaultOpen">My Account</button>
+                <button class="tablinks" (click)="openCity($event, 'subscription')">Subscriptions</button>
+                <button class="tablinks" (click)="openCity($event, 'payment_history')">Payment History</button>
+                <button class="tablinks" (click)="openCity($event, 'payment_mode')">Payment Mode</button>
+                <span class="search_span"><input class="search_btn" type="text" placeholder="Search">&nbsp;<i class="fa fa-search"></i></span>
+                </div>
+                
+                
+                <span class="close" (click)="slideDown();">&times;</span>
+            </div>
+              <div class="container overlay_container">
+                <div id="my_account" class="tabcontent">
+                <form (ngSubmit)="save()" >
+      
+               
+                <div class="row">
+                  <div class="col-md-3">
+                    <div class="">
+                      <label for="email" class="label_cell">Email</label><br>
+                      <input type="email" name="email" class="form-control input_cell" required>
+                    </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="">
+                        <label for="first_name" class="label_cell">First Name</label><br>
+                        <input type="text" name="first_name" class="form-control input_cell" required>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="">
+                          <label for="last_name" class="label_cell">Last Name</label><br>
+                          <input type="text" name="last_name" class="form-control input_cell" required>
+                        </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="">
+                          <label for="job_title" class="label_cell">Job Title</label><br>
+                          <input type="text" name="job_title" class="form-control input_cell" required>
+                      </div>
+                  </div>
+                </div>
+      
+                <div class="row next_row">
+                    <div class="col-md-3">
+                        <div class="">
+                          <label for="company" class="label_cell">Company</label><br>
+                          <input type="text" name="company" class="form-control input_cell" required>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                         <div class="">
+                            <label for="country" class="label_cell">Country</label><br>
+                            <select type="text" name="country" class="form-control input_cell" required></select>
+                          </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="">
+                              <label for="state" class="label_cell">State</label><br>
+                              <select type="text" name="state" class="form-control input_cell" required></select>
+                            </div>
+                      </div>
+                      <div class="col-md-3">
+                          <div class="">
+                              <label for="city" class="label_cell">City</label><br>
+                              <select type="text" name="city" class="form-control input_cell" required></select>
+                          </div>
+                      </div>
+                </div>
+      
+                <div class="row next_row">
+                  <div class="col-md-3">
+                      <div class="">
+                          <label for="zip_code" class="label_cell">Zip Code</label><br>
+                          <input type="number" name="zip_code" class="form-control input_cell" required>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="">
+                          <label for="phone" class="label_cell">Phone</label><br>
+                          <input type="text" name="phone" class="form-control phonenumber"
+                                 ng2TelInput
+                                (hasError)="hasError($event)"
+                                (ng2TelOutput)="getNumber($event)"
+                                (intlTelInputObject)="telInputObject($event)"
+                               />
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      
+                  </div>
+                  <div class="col-md-3">
+                      <div class="">
+                          <button type="submit" class="btn btn-primary save_btn">Save</button>
+                      </div>
+                  </div>
+                </div>
+                
+              </form>
+              </div>
+           
+              <div id="subscription" class="tabcontent">
+                 <table>
+                   <tr>
+                     <th class="table_heading">Subscription Id</th>
+                     <th class="table_heading">Product</th>
+                     <th class="table_heading">Plan</th>
+                     <th class="table_heading">Amount</th>
+                     <th class="table_heading">Status</th>
+                     <th class="table_heading">Action</th>
+                   </tr>
+                   <tr *ngFor="let details of table_details">
+                    <td class="table_cell">{{details.sub_id}}</td>
+                    <td class="table_cell">{{details.prod}}</td>
+                    <td class="table_cell">{{details.plan}}</td>
+                    <td class="table_cell">{{details.amount}}</td>
+                    <td class="table_cell">{{details.status}}</td>
+                    <td class="table_cell">
+                         <button class="left" id="download" (click)="overview()"><img src="..\assets\icons\bpmn_Overview.svg"></button>
+                            <!-- <i class="fa fa-times-circle-o"></i>  -->
+                            
+                    </td>
+                   </tr>
+                 </table>
+              </div>
+              
+              <div id="payment_history" class="tabcontent">
+                  <table>
+                      <tr>
+                        <th class="table_heading">Invoice Number</th>
+                        <th class="table_heading">Subscription Id</th>
+                        <th class="table_heading">Amount</th>
+                        <th class="table_heading">Due Date</th>
+                        <th class="table_heading">Status</th>
+                        <th class="table_heading">Action</th>
+                      </tr>
+                      <tr *ngFor="let details of table_details">
+                       <td class="table_cell">{{details.sub_id}}</td>
+                       <td class="table_cell">{{details.prod}}</td>
+                       <td class="table_cell">{{details.plan}}</td>
+                       <td class="table_cell">{{details.amount}}</td>
+                       <td class="table_cell">{{details.status}}</td>
+                       <td class="table_cell">
+                           <button class="download_btn" id="download" (click)="downloadBpmn()"><img  class="download_icon"  src="..\assets\downloadimage.svg"></button>
+                        </td>
+                      </tr>
+                    </table>
+              </div>
+              <div id="payment_mode" class="tabcontent">
+                  <button class="btn btn-primary btn_mode">Add New card</button>
+                  <table>
+                    <tr>
+                      <th class="table_heading">Card Type</th>
+                      <th class="table_heading">Card Number</th>
+                      <th class="table_heading">Expiration Date</th>
+                      <th class="table_heading">Created Date</th>
+                      <th class="table_heading">Action</th>
+                    </tr>
+                    <tr *ngFor="let details of table_details">
+                      <td class="table_cell">{{details.prod}}</td>
+                      <td class="table_cell">{{details.sub_id}}<span class="default_btn">Default</span></td>
+                      <td class="table_cell">{{details.prod}}</td>
+                      <td class="table_cell">{{details.prod}}</td>
+                      <td class="table_cell"></td>
+                    </tr>
+      
+                  </table>
+                </div>
+              </div>
+              
+                
+            </div>
+           
+      
+
+
+
+            <!-- <div class="modal-content"> -->
+                    <!-- <div class="tab">
+                        <div class="container">
+                        <button class="tablinks"  (click)="openCity(event, 'my_account')">Roles</button>
+                        <button class="tablinks" (click)="openCity(event, 'subscription')">Users</button>
+                      </div>
+                      <span class="close" (click)="slideDown();">&times;</span>
+                    </div> -->
+                      <!-- <div class="container"> -->
+                    
+                   
+                      <!-- <div id="subscription" class="tabcontent">
+                         <table>
+                           <tr>
+                             <th class="table_heading">Subscription Id</th>
+                             <th class="table_heading">Product</th>
+                             <th class="table_heading">Plan</th>
+                             <th class="table_heading">Amount</th>
+                             <th class="table_heading">Status</th>
+                             <th class="table_heading">Action</th>
+                           </tr>
+                           <tr *ngFor="let details of table_details">
+                            <td class="table_cell">{{details.sub_id}}</td>
+                            <td class="table_cell">{{details.prod}}</td>
+                            <td class="table_cell">{{details.plan}}</td>
+                            <td class="table_cell">{{details.amount}}</td>
+                            <td class="table_cell">{{details.status}}</td>
+                            <td class="table_cell">{{details.action}}</td>
+                           </tr>
+                         </table>
+                      </div> -->
+                      
+                      <!-- <div id="payment_history" class="tabcontent">
+                          <table>
+                              <tr>
+                                <th class="table_heading">Invoice Number</th>
+                                <th class="table_heading">Subscription Id</th>
+                                <th class="table_heading">Amount</th>
+                                <th class="table_heading">Due Date</th>
+                                <th class="table_heading">Status</th>
+                                <th class="table_heading">Action</th>
+                              </tr>
+                              <tr *ngFor="let details of table_details">
+                               <td class="table_cell">{{details.sub_id}}</td>
+                               <td class="table_cell">{{details.prod}}</td>
+                               <td class="table_cell">{{details.plan}}</td>
+                               <td class="table_cell">{{details.amount}}</td>
+                               <td class="table_cell">{{details.status}}</td>
+                               <td class="table_cell">{{details.action}}</td>
+                              </tr>
+                            </table>
+                      </div> -->
+
+                      <!-- <div id="payment_mode" class="tabcontent">
+                          <button class="btn btn-primary btn_mode">Add New card</button>
+                          <table>
+                            <tr>
+                              <th class="table_heading">Card Type</th>
+                              <th class="table_heading">Card Number</th>
+                              <th class="table_heading">Expiration Date</th>
+                              <th class="table_heading">Created Date</th>
+                              <th class="table_heading">Action</th>
+                            </tr>
+                            <tr *ngFor="let details of table_details">
+                              <td class="table_cell">{{details.prod}}</td>
+                              <td class="table_cell">{{details.sub_id}}</td>
+                              <td class="table_cell">{{details.prod}}</td>
+                              <td class="table_cell">{{details.prod}}</td>
+                              <td class="table_cell">{{details.action}}</td>
+                            </tr>
+              
+                          </table>
+                        </div> -->
+
+                      <!-- </div> -->
+                      
+                        
+
+                    <!-- </div> -->
+
+
+      </div>                    

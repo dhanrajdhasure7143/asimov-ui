@@ -15,7 +15,7 @@ import { LoaderService } from '../services/loader/loader.service';
 import { LoaderInterceptor } from '../helpers/loader-interceptor.service';
 import { MyLoaderComponent } from './my-loader/my-loader.component';
 import { HeaderDropdownOverlayComponent } from './header-dropdown-overlay/header-dropdown-overlay.component';
-
+import {Ng2TelInputModule} from 'ng2-tel-input';
 @NgModule({
   declarations: [
     PagesComponent,
@@ -31,6 +31,7 @@ import { HeaderDropdownOverlayComponent } from './header-dropdown-overlay/header
     FormsModule,
     ReactiveFormsModule,
     PagesRoutingModule,
+    Ng2TelInputModule,
     SharedModule
   ],
   providers: [SharebpmndiagramService, PagesHints,

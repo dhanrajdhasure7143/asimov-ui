@@ -15,6 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   parent_subscription;
   child_subscription;
 
+  
   constructor(private router:Router, private dataTransfer:DataTransferService) { }
 
   ngOnInit() {
@@ -31,15 +32,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
   loopTrackBy(index, term){
     return index;
   }
-  slideUp(){
+  slideUp(e){
+    if(e=="my_acc"){
+      //this.dataTransfer.setOverlayData("my_acc");
+    }
     var modal = document.getElementById('header_overlay');
     modal.style.display="block";
   }
-  slideDown(){
-    var modal = document.getElementById('header_overlay');
-    modal.style.display="none";
-  }
-
+  // slideDown(){
+  //   var modal = document.getElementById('header_overlay');
+  //   modal.style.display="none";
+  // }
   ngOnDestroy(){
     this.parent_subscription.unsubscribe();
     this.child_subscription.unsubscribe();
@@ -52,17 +55,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 
 
- openCity(evt, cityName) {
-    let i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tabcontent");
-    for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(cityName).style.display = "block";
-    evt.currentTarget.className += " active";
-  }
+ 
 }

@@ -15,7 +15,7 @@
     line-height: 1.4 !important;
 }
 .drop_down a{
-    padding: 10px 6px !important;
+    padding: 10px 4px !important;
     color: #287ad6 !important;
     font-size: 14px;
     float: left;
@@ -28,105 +28,12 @@
     padding:3px !important;
     border: 1px solid #287ad6;
 }
+.header_icon{
+    padding-right: 7px !important;
+}
+.hd_icon{
+    padding-right: 5px;
+}
 
 
 
-
-
-
-
-/* The Modal (background) */
-.hd_overlay {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1000; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-    -webkit-animation-name: fadeIn; /* Fade in the background */
-    -webkit-animation-duration: 0.4s;
-    animation-name: fadeIn;
-    animation-duration: 0.4s
-    }
-    
-    /* Modal Content */
-    .modal-content {
-    position: fixed;
-    bottom: 0;
-    background-color: #fefefe;
-    width: 100%;
-    -webkit-animation-name: slideIn;
-    -webkit-animation-duration: 0.4s;
-    animation-name: slideIn;
-    animation-duration: 0.4s
-    }
-    
-    /* The Close Button */
-    .close {
-    color: #000;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    }
-    
-    .close:hover,
-    .close:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-    }
-    
-    .modal-header {
-    padding: 2px 16px;
-    background-color: #e5e5e5;
-    color: #000;
-    }
-    .modal-header .close {
-    margin-top: 5px;
-   }
-    
-    .modal-body {padding: 2px 16px;}
-    /* Style the tab */
-.tab {
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
-  }
-  
-  /* Style the buttons inside the tab */
-  .tab button {
-    background-color: inherit;
-    float: left;
-    border: none;
-    color: #287ad6;
-    font-weight: 550;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-  }
-  
-  /* Change background color of buttons on hover */
-  .tab button:hover {
-    background-color: #ddd;
-  }
-  
-  /* Create an active/current tablink class */
-  .tab button.active {
-    background-color: #ccc;
-    color:black !important;
-  }
-  
-  /* Style the tab content */
-  .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border-top: none;
-  }
-
-   
