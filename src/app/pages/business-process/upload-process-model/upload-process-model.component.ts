@@ -1,22 +1,25 @@
-import { Component, OnInit ,AfterViewInit, Input, HostListener} from '@angular/core';
+import { Component, OnInit ,ViewChild,TemplateRef} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner"; 
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
+import {MatDialog} from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
+import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { UUID } from 'angular2-uuid';
 
 @Component({
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
-  styleUrls: ['./upload-process-model.component.css']
+  styleUrls: ['./upload-process-model.component.css'],
+  providers:[BpmnShortcut]
 })
 export class UploadProcessModelComponent implements OnInit {
   isShowConformance:boolean = false;
@@ -60,9 +63,10 @@ export class UploadProcessModelComponent implements OnInit {
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
   updated_date_time;
-
+  keyboardLabels=[];
+  @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
-      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,) { }
+      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
  
    ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
@@ -74,6 +78,7 @@ export class UploadProcessModelComponent implements OnInit {
       this.selected_version = params['ver'];
       this.isShowConformance = params['isShowConformance'] == 'true';
     });
+    this.keyboardLabels=this.shortcut.keyboardLabels;
     if(!this.isShowConformance)
       this.getUserBpmnList(null);
     this.getApproverList();
@@ -566,4 +571,10 @@ export class UploadProcessModelComponent implements OnInit {
       this.global.notify(message, "error");
     }
   }
+  displayShortcut(){
+    this.dialog.open(this.keyboardShortcut);
+
+ }
+ 
+  
 }
