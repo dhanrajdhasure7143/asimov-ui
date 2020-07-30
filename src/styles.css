@@ -89,6 +89,9 @@ body, html {
   padding: 10px;
   border: 1px dotted #ccc;
 }
+.no-split-pane .as-split-gutter{
+  display : none !important;
+}
 /* notifications to right */
 notifier-notification{
     position: absolute;

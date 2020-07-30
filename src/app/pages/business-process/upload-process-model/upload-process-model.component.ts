@@ -95,10 +95,10 @@ export class UploadProcessModelComponent implements OnInit {
       this.saved_bpmn_list = res.filter(each_bpmn => {
         return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
       }); 
-      this.getSelectedNotation(); 
+      if(isFromConf) this.isUploaded = true;
+      else this.getSelectedNotation(); 
       this.notationListOldValue = this.selected_notation;
       this.isLoading = false;
-      if(isFromConf) this.isUploaded = true;
       this.getSelectedApprover();
       this.getAutoSavedDiagrams();
     });
@@ -120,8 +120,10 @@ export class UploadProcessModelComponent implements OnInit {
 
    getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
-    let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
-    this.router.navigate([],{ relativeTo:this.route, queryParams:params });
+    if(!this.isUploaded){
+      let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
+      this.router.navigate([],{ relativeTo:this.route, queryParams:params });
+    }
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1)
       this.selected_approver = current_bpmn_info["approverName"];
@@ -162,6 +164,13 @@ export class UploadProcessModelComponent implements OnInit {
           _self.last_updated_time = now;
         }
       })
+      // this[modeler_obj].on('shape.added', (e)=> {
+      //   let modeling = this[modeler_obj].get('modeling');
+      //   modeling.setColor(e.element, {
+      //     stroke: 'green',
+      //     fill: 'lightgreen'
+      //   });
+      // })
       if(this.isShowConformance && !this.reSize){ 
         this.rest.getBPMNFileContent("assets/resources/pizza-collaboration.bpmn").subscribe(res => {
           this[modeler_obj].importXML(res, function(err){
@@ -454,8 +463,9 @@ export class UploadProcessModelComponent implements OnInit {
             })
             let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version}
             _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
-            _self.getUserBpmnList(null);
           }
+          if(_self.isUploaded) _self.getUserBpmnList(true);
+          else _self.getUserBpmnList(null);
           _self.isLoading = false;
           Swal.fire(
             'Saved!',
@@ -517,40 +527,8 @@ export class UploadProcessModelComponent implements OnInit {
     }
   }
 
-  highlightDifferences(differences){
-    let removed_keys = Object.keys(differences._removed);
-    let removed_elements_arr = [];
-    removed_keys.forEach(each_key => {
-      let each_process = differences._removed[each_key].processRef;
-      if(each_process)
-      removed_elements_arr = removed_elements_arr.concat(each_process.flowElements)
-    })
-    let added_keys = Object.keys(differences._added);
-    let added_elements_arr:any[] = [];
-    added_keys.forEach(each_key => {
-      let each_process = differences._added[each_key];
-      if(each_process)
-      added_elements_arr.push(each_process)
-    })
-    // if(added_elements_arr.length != 0){
-    //   let modeling = this.confBpmnModeler.get('modeling');
-    //   modeling.setColor(added_elements_arr, {
-    //     stroke: 'green',
-    //     fill: 'lightgreen'
-    //   });
-    // }
-    this.bpmnModeler.on('shape.added', (e)=> {
-      let modeling = this.bpmnModeler.get('modeling');
-      modeling.setColor(e.element, {
-        stroke: 'green',
-        fill: 'lightgreen'
-      });
-    })
-  }
-
   getBpmnDifferences(){
-    let bpmnDiffs = diff(this.bpmnModeler.getDefinitions(), this.confBpmnModeler.getDefinitions());
-    this.highlightDifferences(bpmnDiffs);
+    let bpmnDiffs = diff( this.confBpmnModeler.getDefinitions(), this.bpmnModeler.getDefinitions());
     this.bpmnservice.updateDifferences(bpmnDiffs);
     this.slideUpDifferences();
   }
