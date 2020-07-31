@@ -271,7 +271,7 @@ export class FlowchartComponent implements OnInit {
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1)
-        console.log("this.model2",this.model2);
+        // console.log("this.model2",this.model2);
         this.gradientApplyforLinks()
         this.gradientApplyforNode()
         console.log(this.model2);
@@ -1019,8 +1019,10 @@ closeNav() { // Variant list Close
   this.isvariantListOpen=true;
   }
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
+    this.model1 = this.fullgraph_model
+    this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1)
-    // this.gradientApplyforNode()
+    this.gradientApplyforNode();
     this.gradientApplyforLinks();
     this.linkCurvinessGenerate();
   this.spinMetrics0="";
@@ -1184,9 +1186,9 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   //     }
   //   }
   // }
-  activityDropDown(){
-    this.isActivity_dropdwn = !this.isActivity_dropdwn;
-  }
+  // activityDropDown(){
+  //   this.isActivity_dropdwn = !this.isActivity_dropdwn;
+  // }
   readselectedNodeEmied(SelectedActivities){
     // console.log(SelectedActivities);
     this.filterByActivity(SelectedActivities)
@@ -1259,20 +1261,25 @@ this.model2=[]
 
   //   }
   // }
-  resetActivity(){
-    this.activityValue=100;
-    this.pathvalue=100;
-    this.model1=this.fullgraph_model
-    this.nodeAlignment();
-    this.model2 = this.flowchartData(this.model1);
-    this.gradientApplyforLinks()
-    this.gradientApplyforNode()
-    this.linkCurvinessGenerate();
+  // resetActivity(){
+  //   this.activityValue=100;
+  //   this.pathvalue=100;
+  //   this.model1=this.fullgraph_model
+  //   this.nodeAlignment();
+  //   this.model2 = this.flowchartData(this.model1);
+  //   this.gradientApplyforLinks()
+  //   this.gradientApplyforNode()
+  //   this.linkCurvinessGenerate();
+  // }
+  // endpointsDropDown(){
+  //   this.isEndpoint_dropdwn=!this.isEndpoint_dropdwn
+  // }
+  readselectedEndpoint(selectedEndpoint){
+    // console.log(selectedEndpoint.length);
+    
+    this.filterByEndpoints(selectedEndpoint)
   }
-  endpointsDropDown(){
-    this.isEndpoint_dropdwn=!this.isEndpoint_dropdwn
-  }
-  filterByEndpoints(){
+  filterByEndpoints(selectedEndpoint){
     this.model1=[];
     this.model2=[];
     var endpointModel=[];
@@ -1281,18 +1288,17 @@ this.model2=[]
     endpointModel=this.fullgraph_model
 // console.log('endpointModel',endpointModel[0]);
 this.linkdataArray=[]
- if(this.startPoint==true&&this.endPoint==false){
+ if(selectedEndpoint.length==1 && selectedEndpoint[0]=="Start"){
       for(var i=1; i<endpointModel.length-1;i++){
         if (endpointModel[i].tool.includes('Start Frequency')) {
           var obj = {};
-          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(endpointModel[i].toolCount[3]!=0){
-          obj['from'] = -1;
-          obj['to'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
-          endpointModelOne.push(endpointModel[i])
-          obj['text'] = endpointModel[i].toolCount[3];
-          obj["extraNode"] = 'true';
-          obj["curviness"] =60*i;
+            obj['from'] = -1;
+            obj['to'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
+              endpointModelOne.push(endpointModel[i])
+            obj['text'] = endpointModel[i].toolCount[3];
+            obj["extraNode"] = 'true';
+            obj["curviness"] =60*i;
           this.linkdataArray.push(obj);
           }
         }
@@ -1304,7 +1310,7 @@ this.linkdataArray=[]
       // this.model1.push(endpointModel[endpointModel.length-1])
       this.nodeAlignment();
       this.model2=this.linkdataArray
-    }else if(this.startPoint==false&&this.endPoint==true){
+    }else if(selectedEndpoint.length==1 && selectedEndpoint[0]=="End"){
       for(var i=1; i<endpointModel.length-1;i++){
         if (endpointModel[i].tool.includes('End Frequency')) {
           var obj = {};
@@ -1327,7 +1333,7 @@ this.linkdataArray=[]
       this.model1.push(endpointModel[endpointModel.length-1])
       this.nodeAlignment();
       this.model2=this.linkdataArray
-    }else if(this.startPoint==true&&this.endPoint==true){
+    }else if(selectedEndpoint.length==2){
       for(var i=1; i<endpointModel.length-1;i++){
         if (endpointModel[i].tool.includes('Start Frequency')) {
           var obj = {};
@@ -1382,11 +1388,11 @@ this.linkdataArray=[]
     this.endPoint=false;
     this.isEndpoint_dropdwn=false;
   }
-  resetfilter(){
-    this.resetActivity();
-    this.startPoint=false;
-    this.endPoint=false;
-  }
+  // resetfilter(){
+  //   this.resetActivity();
+  //   this.startPoint=false;
+  //   this.endPoint=false;
+  // }
 
   timeStampFilterOverlay(){
     var modal = document.getElementById('myModal');
@@ -1545,6 +1551,7 @@ this.linkdataArray=[]
     })
   var maxCountDivided=max.text/8
     for(var k1=0;k1<this.model2.length;k1++){
+      // if(this.model2[k1].from!=-1||this.model2[k1].to!=-2){
       if(this.model2[k1].text<=maxCountDivided){
         // this.model2[k1].linkColor='rgb(94,92,80)'
         this.model2[k1].linkColor='rgba(161, 93, 219, 0.87)'
@@ -1566,6 +1573,7 @@ this.linkdataArray=[]
                       this.model2[k1].linkColor='rgba(45, 10, 219, 0.87)'
                      }
      }
+    // }
   
   }
   gradientApplyforLinksOne(){   //gradient apply for links on  performance metrics selection in spinner
@@ -1644,7 +1652,7 @@ filterOverlay(){
     toolTipDIV.style.display = "none";
   }
 
-  readOverlayValye(value){
+  readOverlayValue(value){
     if(value==true){
       this.closePopup();
     }

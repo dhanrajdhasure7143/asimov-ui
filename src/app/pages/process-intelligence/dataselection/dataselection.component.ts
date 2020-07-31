@@ -652,11 +652,13 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     var inputDateformat=fullDateFormat+' '+timeFormat
     // console.log(OnlyDate[0]);
     
-    if(OnlyDate[0].includes('/')){
-      this.isDateformat="yyyy/dd/MM HH:mm:ss.SSS"
-    }else{
-      this.isDateformat="MM.dd.yy HH:mm"
-    }
+    // if(OnlyDate[0].includes('/')){
+      // this.isDateformat="yyyy/dd/MM HH:mm:ss.SSS"
+    // }else{
+      // this.isDateformat="dd.MM.yy HH:mm"
+    // }
+    // this.isDateformat="dd.MM.yy HH:mm"
+    this.isDateformat="yyyy/MM/dd HH:mm:ss"
       // this.isDateformat=inputDateformat
       
     

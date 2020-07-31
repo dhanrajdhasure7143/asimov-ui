@@ -103,7 +103,7 @@ export class PiflowchartComponent implements OnInit {
         // node.port.fill="#0162cb";
         // node.port.stroke='#0162cb';
         var pt = diagram.lastInput.viewPoint;
-      toolTipDIV.style.left =(pt.x + 130) + "px";
+      toolTipDIV.style.left =(pt.x + 30) + "px";
       toolTipDIV.style.top = (pt.y +  150) + "px";
 
       //   var pt = obj.location;
