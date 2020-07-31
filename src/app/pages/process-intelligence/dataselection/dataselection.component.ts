@@ -248,6 +248,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
         "transforms.convert_startTime_unix.field": "startTime",
         "transforms.convert_startTime_unix.target.type": "unix",
+        "parseDateFormat": this.isDateformat,
         "transforms.convert_startTime_unix.format": this.isDateformat,
         // "transforms.convert_startTime_unix.format": "dd.MM.yyyy HH:mm",
         "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
@@ -273,6 +274,8 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
       }
     }
+    
+    
         this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
               this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
         })
@@ -652,12 +655,13 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     var inputDateformat=fullDateFormat+' '+timeFormat
     // console.log(OnlyDate[0]);
     
-    if(OnlyDate[0].includes('/')){
-      this.isDateformat="yyyy/dd/MM HH:mm:ss.SSS"
-    }else{
-      this.isDateformat="MM.dd.yy HH:mm"
-    }
-      // this.isDateformat=inputDateformat
+    // if(OnlyDate[0].includes('/')){
+    //   //this.isDateformat="yyyy/dd/MM HH:mm:ss.SSS"
+    //   this.isDateformat="yyyy/MM/dd HH:mm:ss.SSS"
+    // }else{
+    //   this.isDateformat="dd.MM.yy HH:mm"
+    // }
+       this.isDateformat=inputDateformat
       
     
     // console.log("inputDateformat",inputDateformat);
