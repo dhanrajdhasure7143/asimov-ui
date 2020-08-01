@@ -25,6 +25,9 @@
       </mat-select>
     </mat-form-field>
   </div>
+<div><button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
+</div>
+
 </div>
   <span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>        
   <as-split class="ex-percent" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
@@ -59,3 +62,12 @@
 <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
   <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
   </div></div>
+  <ng-template #keyboardShortcut>
+      <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+      <table>
+             <tr *ngFor="let keyboardLabels of keyboardLabels" >
+                 <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+                  <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
+             </tr> 
+         </table>   
+ </ng-template>

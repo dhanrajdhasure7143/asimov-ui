@@ -1,113 +1,113 @@
 <div class="row">
-    <div class="col-md-6 row bot-data" >
+  <div class="col-md-6 row bot-data" >
 
-        <div class="rpa-home">
-            <div class="rpa-home-block">
-                <button  type="button" (click)="createoverlay()"  aria-hidden="true" placement="bottom">
-                    <img src="../../../../assets/images/RPA/create.svg" style="height:80px;">
-                    <br><br>
-                    <h6 class="rpa-home-btn-title">Create</h6>
-                  </button>
-            </div>
-
-            <div class="rpa-home-block">
-              <button  type="button" (click)="openload()"  aria-hidden="true" placement="bottom">
-                 
-                  <img src="../../../../assets/images/RPA/Load.svg" style="height:80px;" >
+      <div class="rpa-home">
+          <div class="rpa-home-block">
+              <button  type="button" (click)="createoverlay()"  aria-hidden="true" placement="bottom">
+                  <img src="../../../../assets/images/RPA/create.svg" style="height:80px;">
                   <br><br>
-                  <h6 class="rpa-home-btn-title">Load</h6>
-              </button>
-            </div>
-            <div class="rpa-home-block">
-            <button  type="button"  aria-hidden="true" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
-              <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;" >
-              <br><br>
-              <h6 class="rpa-home-btn-title">Environments</h6>
+                  <h6 class="rpa-home-btn-title">Create</h6>
+                </button>
+          </div>
+
+          <div class="rpa-home-block">
+            <button  type="button" (click)="openload()"  aria-hidden="true" placement="bottom">
+               
+                <img src="../../../../assets/images/RPA/Load.svg" style="height:80px;" >
+                <br><br>
+                <h6 class="rpa-home-btn-title">Load</h6>
             </button>
-            </div>
-        </div>
+          </div>
+          <div class="rpa-home-block">
+          <button  type="button"  aria-hidden="true" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
+            <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;" >
+            <br><br>
+            <h6 class="rpa-home-btn-title">Environments</h6>
+          </button>
+          </div>
+      </div>
+      
+  </div>
+  <div class="col-md-6">
+  
+  
+  <div class="mat-elevation-z8 rpa-home-bots">
+    <div class="rpa-home-header">
+      <br>
+      <h4 class="box-heading  rpa-home-heading">My Workspace</h4>
+
+    <span class="box-heading rpa-home-category">
+
+      <mat-form-field >
+        <mat-label>Category</mat-label>
+        <mat-select>
+          <mat-option value="1">Option</mat-option>
+          <mat-option value="2">Option</mat-option>
+          <mat-option value="3">Option</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </span>
+
+
+
+    <span class="box-heading rpa-home-process">
+    
+      <mat-form-field>
+        <mat-label>Procress</mat-label>
+        <mat-select>
+          <mat-option value="opt">Option</mat-option>
+        </mat-select>
+      </mat-form-field>
+ 
+    </span>
+    
+    </div>  
+    <div class="bots-container">
+    <table mat-table [dataSource]="dataSource" matSort class=" table">
+
+          <!-- Position Column -->
+          <!--<ng-container matColumnDef="botId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Id </th>
+            <td mat-cell *matCellDef="let element" (click)="loadbot(element.botId)"> {{element.botId}} </td>
+          </ng-container>
+        -->
+          <!-- Name Column -->
+          <ng-container matColumnDef="botName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
+            <td mat-cell *matCellDef="let element">  <span *ngIf="element.botName!=null" (click)=loadbotdata(element.botId)>{{element.botName}}</span> <span *ngIf="element.botName==''">-</span> </td>
+          </ng-container>
+        
+          <ng-container matColumnDef="botType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type</th>
+            <td mat-cell *matCellDef="let element">
+               <span *ngIf="element.botType==1">Attended</span> 
+               <span *ngIf="element.botType==2">Unattended</span> 
+               <span *ngIf="element.botType==null">---</span> 
+            </td>
+          </ng-container>
+          <!-- Weight Column -->
+          <ng-container matColumnDef="department">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Category</th>
+            <td mat-cell *matCellDef="let element">
+               <span *ngIf="element.department==1">Development</span> 
+               <span *ngIf="element.department==2">Hr</span> 
+               <span *ngIf="element.department==3">QA</span> 
+               <span *ngIf="element.department==null">---</span> 
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="botStatus">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Status </th>
+            <td mat-cell *matCellDef="let element">   <span *ngIf="element.botStatus!=null">{{element.botName}}</span> <span *ngIf="element.botStatus==null">---</span> </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+     
+      </div>
+      <mat-paginator  #paginator [pageSize]="10"  [showFirstLastButtons]="true" ></mat-paginator>
         
     </div>
-    <div class="col-md-6">
-    
-    
-    <div class="mat-elevation-z8 rpa-home-bots">
-      <div class="rpa-home-header">
-        <br>
-        <h4 class="box-heading  rpa-home-heading">My Workspace</h4>
-
-      <span class="box-heading rpa-home-category">
-
-        <mat-form-field >
-          <mat-label>Category</mat-label>
-          <mat-select>
-            <mat-option value="1">Option</mat-option>
-            <mat-option value="2">Option</mat-option>
-            <mat-option value="3">Option</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </span>
-
-
-
-      <span class="box-heading rpa-home-process">
-      
-        <mat-form-field>
-          <mat-label>Procress</mat-label>
-          <mat-select>
-            <mat-option value="opt">Option</mat-option>
-          </mat-select>
-        </mat-form-field>
-   
-      </span>
-      
-      </div>  
-      <div class="bots-container">
-      <table mat-table [dataSource]="dataSource" matSort class=" table">
-
-            <!-- Position Column -->
-            <!--<ng-container matColumnDef="botId">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Id </th>
-              <td mat-cell *matCellDef="let element" (click)="loadbot(element.botId)"> {{element.botId}} </td>
-            </ng-container>
-          -->
-            <!-- Name Column -->
-            <ng-container matColumnDef="botName">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-              <td mat-cell *matCellDef="let element">  <span *ngIf="element.botName!=null" (click)=loadbotdata(element.botId)>{{element.botName}}</span> <span *ngIf="element.botName==''">-</span> </td>
-            </ng-container>
-          
-            <ng-container matColumnDef="botType">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type</th>
-              <td mat-cell *matCellDef="let element">
-                 <span *ngIf="element.botType==1">Attended</span> 
-                 <span *ngIf="element.botType==2">Unattended</span> 
-                 <span *ngIf="element.botType==null">---</span> 
-              </td>
-            </ng-container>
-            <!-- Weight Column -->
-            <ng-container matColumnDef="department">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Category</th>
-              <td mat-cell *matCellDef="let element">
-                 <span *ngIf="element.department==1">Development</span> 
-                 <span *ngIf="element.department==2">Hr</span> 
-                 <span *ngIf="element.department==3">QA</span> 
-                 <span *ngIf="element.department==null">---</span> 
-              </td>
-            </ng-container>
-            
-            <ng-container matColumnDef="botStatus">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Status </th>
-              <td mat-cell *matCellDef="let element">   <span *ngIf="element.botStatus!=null">{{element.botName}}</span> <span *ngIf="element.botStatus==null">---</span> </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-       
-        </div>
-        <mat-paginator  #paginator [pageSize]="10"  [showFirstLastButtons]="true" ></mat-paginator>
-          
-      </div>
-    
+  
 </div>
