@@ -81,7 +81,7 @@ export class BpmnDiagramListComponent implements OnInit {
       if(err){
         this.notifier.show({
           type: "error",
-          message: "Could not import Bpmn diagram!"
+          message: "Could not import Bpmn notation!"
         });
       }
     })
@@ -123,7 +123,7 @@ this.selectedrow =i;
         let fileName = _self.griddata[_self.index].bpmnProcessInfo['bpmnProcessName'];
         if(fileName.trim().length == 0 ) fileName = "newDiagram";
         link.download = fileName+".bpmn";
-        link.innerHTML = "Click here to download the diagram file";
+        link.innerHTML = "Click here to download the notation";
         link.click();
       });
     }
@@ -171,7 +171,7 @@ this.selectedrow =i;
     }; 
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{ 
-        let message = "Diagram submitted for approval"; //this has to change after approval API
+        let message = "Notation submitted for approval"; //this has to change after approval API
         this.bpmnlist();
         this.global.notify(message,'success'); 
       },
@@ -244,7 +244,7 @@ this.selectedrow =i;
     }
     this.rest_Api.denyDiagram(reqObj).subscribe(
       data => {
-        let message =  "Diagram has been rejected.";
+        let message =  "Notation has been rejected.";
         this.bpmnlist();
         this.global.notify(message,'success');
       },

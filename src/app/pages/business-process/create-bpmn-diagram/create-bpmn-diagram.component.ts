@@ -172,7 +172,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     if(this.isDiagramChanged){
       Swal.fire({
         title: 'Are you sure?',
-        text: 'Your current changes will be lost on changing diagram.',
+        text: 'Your current changes will be lost on changing notation.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Save and Continue',
@@ -267,7 +267,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         let fileName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
         if(fileName.trim().length == 0 ) fileName = "newDiagram";
         link.download = fileName+".bpmn";
-        link.innerHTML = "Click here to download the diagram file";
+        link.innerHTML = "Click here to download the notation";
         link.click();
       });
     }
@@ -376,7 +376,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
           if(err.error.message == "2002")
           Swal.fire(
             'Oops!',
-            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress diagram',
+            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation',
             'warning'
           )
           else
