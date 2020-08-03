@@ -318,16 +318,6 @@ export class UploadComponent implements OnInit {
     let selected_process_id = selectedpiIdData.piId
     this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: selected_process_id } });
 
-    // this.rest.getfullGraph(selectedpiIdData.piId).subscribe(data=>{this.fullgraph=data
-    //   // console.log("fullgraph",this.fullgraph.data.allSelectData);
-    //   let fullgraph=JSON.parse(this.fullgraph.data)
-    //   console.log("fullgraph",fullgraph);
-
-    //   this.model1 = fullgraph.allSelectData.nodeDataArraycase
-    //   this.model2 = this.flowchartData(this.model1)
-    // this.flowGraph()
-    // })
-
   }
   getcategoryName(categoryName) {
     return categoryName.charAt(0).toUpperCase() + categoryName.slice(1);

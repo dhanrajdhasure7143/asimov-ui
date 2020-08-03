@@ -1,21 +1,3 @@
-
-        <!-- <div  class="filter_heading">                -->
-        <!-- <div class="container filter_headinglabels">
-            <div class="row">
-                <div class="col-md-2">
-                    <p>Filter Setting</p>
-                </div>
-                <div class="col-md-8">
-                    <p>Filter Value</p>
-                </div>
-                <div class="col-md-2">
-                    <p >Overal Report</p>
-                    <button type="button" class="close cross_close" aria-label="Close" (click)="slideDown()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div> -->
         
         <div class="container">
                 <div class="row">
@@ -26,17 +8,6 @@
                                 <option [value]="chart_filter[each]" *ngFor="let each of chart_filter_options;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{chart_filter[each]}}</option>
                             </select>
                         </div>
-                        <!-- <div>
-                        <p class="percent_filter">Percentage :</p>
-                        <div class="filter_slider custom_filter_slider"><ng5-slider [(ngModel)]="filterValue" [options]="filterOptions" ></ng5-slider></div>
-                        </div> -->
-                        <!-- <div>
-                            <p class="type_filter">Type :</p>
-                            <div class="radio">
-                                <input type="radio" name="check" value="selected"> Selected<br>
-                                <input type="radio" name="check" value="Unselected"> Unselected<br>
-                            </div>
-                        </div> -->
                     </div>
                     <div class="col-md-8" *ngIf="isActivity">
                         <div class="col-sm-12">
@@ -75,11 +46,12 @@
                             <div class="col-sm-12">
                             <p class="dataType_filter">End Points :</p>
                             </div>
-                            <div class="col-sm-12 dataValues">
-                                        <div id="data" class="data_values activity_name" (click)="selectData()">Start</div>
-                                        <div id="data" class="data_values activity_name" (click)="selectData()">End</div>
-                                      
+                            <div class="col-sm-12">
+                                <div *ngFor="let enpoint of endPointsArray;let i=index">
+                                    <div id="data" class="data_values activity_name" (click)="selectedEndPoint(enpoint,i)" [ngStyle]="{'background-color':enpoint.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }">{{enpoint.name}}</div>
+                                        <!-- <div id="data" class="data_values activity_name" (click)="selectData()">End</div> -->
                                 </div>
+                            </div>
                     </div>
         
                     <div class="col-md-2">
@@ -119,12 +91,11 @@
                             </tbody>
                         </table>
                         </div>
-                    <button class="btn btn-primary eiap-btn" (click)="applyFilter()" [disabled]="isApplyFilter" >Apply Filter</button>
+                    <button *ngIf="isActivity" class="btn btn-primary eiap-btn" (click)="applyFilter()">Apply Filter</button>
+                    <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" (click)="applyEndpointFilter()">Apply Filter</button>
         
                     </div>
                 </div>
             </div>
-        
-        <!-- </div> -->
 
 

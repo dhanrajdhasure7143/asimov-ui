@@ -47,47 +47,6 @@
                  </div>
                  </div>
                  
-                 <!-- <div class="sidenavOne">
-                         <div class="varaint_headingOne">
-                             <h5 class="varaint_heading">Explore by Variant</h5>
-                             <div class="checkbox ">
-                                 <label class="select_box"><input id="check_box"  type="checkbox" #check_box='ngModel'   [(ngModel)]="checkboxValue" (change)="seleceAllVariants()"><span class="select_boxlabel">Select All</span> </label>
-                             </div>
-                         </div>
-                         
-                         <div class="col-md-12 form-group select_drpdwnone">
-                             <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
-                                 <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
-                             </select>
-                         </div>
-                         <div class="col-sm-12 row case_heading">
-                             <div class="col-sm-7">Case Details</div> <div class="col-sm-5">Time Taken</div>
-                         </div>
-                         <div class="col-sm-12 details_box">
-                             <div class="show_details" [ngClass]="data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
-                                     <div class="row cases" (click)="caseIdSelect(data,i)">
-                                         <span class="col-md-2 dot">{{data.casepercent}}%</span>
-                                                 <span class="col-md-5 details_one">{{data.name|titlecase}}</span>
-                                                 <span class="col-md-4 details_time pull-right">{{data.days}} Days</span>
-                                                 <span class=" col-md-8 details_two">{{data.detail}}</span>
-                                         </div>
-                             <div class="details_hide">
-                                     <div  class="details_hideOne" (click)="caseIdSelect(data,i)">
-                                         <span class="hide_detailsone"> {{data.varaintDetails}}</span> <span class="pull-right">{{data.casesCovred}}</span>
-                                     </div>
-                                     <hr>
-                                     <div class="varaint_bottom">
-                                             <button *ngIf="isvaraintPlay" class="play_button" (click)="playAnimation()"><i class="fa fa-play"></i><span class="hide_plybtn">Play</span></button>
-                                             <div class="checkbox varaint_export">
-                                                     <label ><input type="checkbox" class="selectbox" value=""><span class="select_boxlabel">Select this varaint to export BPMN</span> </label>
-                                             </div>
-                                     </div>
-                                 </div>   
-                             </div>
-                         </div>
-                     <div>
-                 </div>
-         </div> -->
  
      </div>
  
@@ -103,47 +62,13 @@
                      </div>
          </div>
          <div class='col-sm-3 row'>
-             <!-- <div class="col-sm-6 activity_selection border_bottom" (click)="activityDropDown()">Activity Selection<span class="caret"></span></div> -->
-             
-             <!-- <div class="activity_selection1 col-sm-8" [hidden]="!isActivity_dropdwn">
-                     <form action="" #activityFilter="ngForm">
-                    <div class="col-sm-12"><button class='reset_btn' type='reset' (click)="resetActivity()">reset</button></div>
-
-                           <hr>
-                           <div class="activity_filter3">
-                             <div class="activity_filter1" *ngFor="let eachNode of activity_list;let j=index;trackBy:loopTrackBy">
-                             <input type="checkbox" id="activity_node" name="activity_filter" [value]="eachNode.name" required> <span>{{eachNode.name}}</span><br>
-                             </div>
-                         </div>
-                             <hr>
-                         <div class="col-sm-6"><button class="btn btn-warning cancel_btn" (click)="cancel()">Cancel</button></div>
-                         <div class="col-sm-4"><button class="btn apply_btn" (click)="filterByActivity()" [disabled]="activityFilter.invalid">Apply</button></div>
-                     </form>
-                     </div> -->
                  
                      <div class="col-sm-6">
-                     <!-- <div class="activity_selection border_bottom" (click)="endpointsDropDown()"> End Points <span class="caret"></span></div>
-                     <div class="col-sm-12 activity_selection2" *ngIf="isEndpoint_dropdwn">
-                         <div class="col-sm-12"><button class='reset_btnOne' type='button' (click)="resetfilter()">reset</button></div>
-                         <hr>
-                             <input id="test" type="checkbox" [(ngModel)]="startPoint"> <span>Start</span><br>
-                             <input id="test" type="checkbox" [(ngModel)]="endPoint"> <span>End</span> <br>
-                             <hr>
-                             <div class="col-sm-6 cancel_btn1"><button class="btn cancel_btn" (click)="cancelByEndpoints()">Cancel</button></div>
-                             <div class="col-sm-6 apply_btn1"><button class="btn apply_btn" (click)="filterByEndpoints()">Apply</button></div>
-                         </div> -->
+                     
                          <!-- <button class="btn" (click)="timeStampFilterOverlay()">Timestamp Filtter</button> -->
                      </div>
                      
                  
-                     <!-- <div>
-                 <button class='btn' (click)='zoomIn()'>Zoom In</button>
-                 <button class='btn' (click)='zoomOut()'>Zoom Out</button>
-                 <button class='btn' (click)='zoomReset()'>Reset Zoom</button>
-             </div> -->
-                         <!-- <p class="zoom_label"> ZOOM<span class="zoom_value"> {{rangevalue}}</span> 
-                             <span class="varient-totalcount" *ngIf="isDefaultData">UPLOADED CASES:195 WITH 1216 ACTIVITIES</span>
-                         </p>       -->
          </div>
          <!-- <div> -->
                  <div class="col-md-2 row">
@@ -163,14 +88,6 @@
                              <button (click)="playAnimation()" class="action-btn" title="Play" *ngIf="!isplay"><i class="fa fa-play"></i></button>
                              <button (click)="playAnimation()" class="action-btn" title="Stop" *ngIf="isplay"><i class="fa fa-stop"></i></button>
                          </div>
-                                 <!-- <div class="col-sm-6">
-                                 <p class="download_label">Download</p>
-                                 </div>
-                                 <div class='col-sm-6'>
-                                 <p class="play_label" *ngIf="!isplay">Play</p>
-                                 <p class="play_label" *ngIf="isplay">Stop</p>
-                                 </div> -->
-                 <!-- </div> -->
          </div>
          <div class="col-sm-3">
                  <div class='row'>
@@ -239,15 +156,6 @@
              <p class="slider_label Paths_slider">Paths</p>
          </div>
      </div>
-     <!-- <div class='col-md-12 row'>
-         <div class='col-sm-8'></div>
-             <div class="col-sm-2">
-                     <button class="kpi_btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button>
-                 </div>
-                 <div class="col-sm-2">
-                     <button class="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
-                 </div>
-         </div> -->
  
      </div>  <!-- Id main -->
      </div>
@@ -265,7 +173,7 @@
  <div id="toolTipDIV" class="custom_tooltip">
          <div class="node_tooltip"></div>
          <div>
-             <p id="receive"><span id="nodename"></span></p>
+             <p id="" class="node-names"><span id="nodename"></span></p>
              <hr>
              <button type='button' class='filter_btn'  (click)="filterOverlay()"><img src="..\assets\images\PI\filter_icon.svg"></button>
          </div>
@@ -281,18 +189,6 @@
                      <p id="toolTipTextone"></p>
                  </div>
              </div>
-             <!-- <div [hidden]='!isfrequency' class='tooltip_body'>
-                     <p id="toolTipParagraphone"></p>
-                     <p id="toolTipTextone"></p>
-             </div> -->
-             <!-- <div>
-                 <button  id="performance_btn" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" (click)="performance()"><img src="..\assets\images\PI\performance-clock.svg"></button>
-                 <button  id="frequency_btn" [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" (click)="frequency()"><img src="..\assets\images\PI\activity.svg"></button>
-             </div>
-             <div>
-                 <p [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" id="frequency_label"><span class="isenablebtn">Frequency</span> </p>
-                 <p [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
-         </div> -->
      </div>
  
      <div id="linkToolTipDIV" class="custom_tooltip">
@@ -313,18 +209,6 @@
                      <p id="linktoolTipTextone"></p>
                  </div>
              </div>
-                 <!-- <div [hidden]='!isfrequency' class=''>
-                     <p id="linktoolTipParagraphone"></p>
-                     <p id="linktoolTipTextone"></p>
-                 </div> -->
-             <!-- <div>
-                 <button *ngIf="startLinkvalue"  id="performance_btn" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" (click)="performance()"><img src="..\assets\images\PI\performance-clock.svg"></button>
-                 <button  id="frequency_btn" [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" (click)="frequency()"><img src="..\assets\images\PI\activity.svg"></button>
-             </div> -->
-             <!-- <div>
-                 <p [ngClass]="isfrequency != true? 'butnActive' :'butnDeactive'" id="frequency_label"><span class="isenablebtn">Frequency</span> </p>
-                 <p *ngIf="startLinkvalue" [ngClass]="isfrequency == true? 'butnActive' :'butnDeactive'" id="performance_label"><span class="isenablebtn">Performance</span> </p>
-         </div> -->
      </div>
  
  
@@ -337,7 +221,7 @@
            </div>
          <div class="modal-body">
              <div *ngIf="isFilterComponent">
-             <app-filter [dataValues]='dataValues' (selectedNodes)="readselectedNodeEmied($event)" (applyFilterValue)="readOverlayValye($event)"></app-filter>
+             <app-filter [dataValues]='dataValues' (selectedNodes)="readselectedNodeEmied($event)" (selectedEndpoints)="readselectedEndpoint($event)" (applyFilterValue)="readOverlayValue($event)"></app-filter>
              </div>
          </div>
        </div>
