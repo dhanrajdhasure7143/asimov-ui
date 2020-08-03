@@ -446,166 +446,6 @@ export class FlowchartComponent implements OnInit {
       this.linkCurvinessGenerate();
     })
     }
-//     else {
-//       var modelDataArray = []
-//       for (var i = 0; i < this.selectedCaseArry.length; i++) {
-
-//         if (this.keyExists(this.selectedCaseArry[i], this.varaint_GraphDataArray) == true) {
-//           var modalData = this.varaint_GraphData.data[this.selectedCaseArry[i]]
-//           modelDataArray.push(modalData)
-
-
-
-//           // this.model1=result
-//           // this.model1=this.model1.nodeDataArraycase
-//           // this.model2=this.flowchartData(this.model1)
-//         }
-
-//       }
-
-//       // var combine_obj={};
-//       // for(var key in modelDataArray[0].nodeDataArraycase) combine_obj[key]=modelDataArray[0].nodeDataArraycase[key];
-//       // for(var key in modelDataArray[1].nodeDataArraycase) combine_obj[key]=modelDataArray[1].nodeDataArraycase[key];
-//       // // var diffirence= modelDataArray[0].nodeDataArraycase.filter(x=>!modelDataArray[1].nodeDataArraycase.includes(x));
-//       // // var compare= this.compareJSON(modelDataArray[0],modelDataArray[1])
-
-//       var outArr = [];
-//       var m = this
-
-//       modelDataArray[0].nodeDataArraycase.forEach(function (value, i) {
-//         modelDataArray[1].nodeDataArraycase.forEach(function (value1, j) {
-//           if (value.name === value1.name) {
-//             if (value.hasOwnProperty('linkArray') && value1.hasOwnProperty('linkArray')) {
-//               if (value.linkArray.length != 0 && value1.linkArray.length != 0) {
-//                 value.linkArray.forEach(e1 => {
-//                   value1.linkArray.forEach(e2 => {
-//                     if (e1 != e2) {
-  
-//                       value.linkArray.push(e2);
-  
-//                       value.linkArray = m.removeDuplicates(value.linkArray);
-//                     }
-//                   });
-//                 });
-//               } else {
-//                 if (value.linkArray.length == 0) {
-//                   value1.linkArray.forEach(e2 => {
-//                     value.linkArray.push(e2);
-//                   });
-//                 } else {
-//                   value.linkArray.forEach(e1 => {
-//                     value.linkArray.push(e1);
-//                   });
-//                 }
-  
-//               }
-  
-//             }
-//             if (value.hasOwnProperty('toolCount') && value1.hasOwnProperty('toolCount')){
-//             var sum = value.toolCount.map(function (num, idx) {
-//               return num + value1.toolCount[idx];
-//             });
-//             value.toolCount=sum
-//           }
-//           // value.toolCount=sum
-//             outArr.push(value);
-//           }
-//         });
-//       });
-
-//       if(this.selectedCaseArry.length > 2){
-// var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[2]]
-
-//         this.multynodeArray(outArr,modalData)
-//       }
-//     // this.nestedArray=outArr;
-
-//       // if(this.selectedCaseArry.length >2){
-        
-//       // for(var i=2; i < this.selectedCaseArry.length; i++){
-//       //   // var k=2;
-//       //   // while(this.selectedCaseArry.length ){
-
-//       //     console.log('nestedArray',this.nestedArray,this.selectedCaseArry[i]);
-        
-//       //   if (this.keyExists(this.selectedCaseArry[i], this.pgModel.flowchartData) == true) {
-//       //     var modalData = this.pgModel.flowchartData[0][this.selectedCaseArry[i]]
-//       //     // console.log('modalData',modalData);
-          
-//       //   this.multynodeArray(this.nestedArray,modalData)
-        
-//       //     // k+1;
-//       //   }
-
-//       //   }
-
-//       // }
-
-//     // }
-    
-
-//           this.model1=outArr
-//           this.model2=this.flowchartData(this.model1)
-
-//       this.isDefaultData = false;
-//     }
-  }
-
-  multynodeArray(outArray,modeaValue){
-    var outArr=[];
-    var m=this
-    // console.log('outArraym',outArray);
-    // console.log('modeaValuem',modeaValue);
-    
-    outArray.forEach(function (value, i) {
-      // console.log(value);
-      modeaValue.nodeDataArraycase.forEach(function (value1, j) {
-        //console.log(value1)
-        if (value.name === value1.name) {
-          if (value.hasOwnProperty('linkArray') && value1.hasOwnProperty('linkArray')) {
-            // console.log(value.linkArray.length);
-            if (value.linkArray.length != 0 && value1.linkArray.length != 0) {
-              value.linkArray.forEach(e1 => {
-                // console.log(e1 + "::::");
-                value1.linkArray.forEach(e2 => {
-                  if (e1 != e2) {
-
-                    value.linkArray.push(e2);
-                    // console.log(value);
-
-                    value.linkArray = m.removeDuplicates(value.linkArray);
-                  }
-                });
-              });
-            } else {
-              if (value.linkArray.length == 0) {
-                value1.linkArray.forEach(e2 => {
-                  value.linkArray.push(e2);
-                  // console.log(value);
-                });
-              } else {
-                value.linkArray.forEach(e1 => {
-                  value.linkArray.push(e1);
-                  // console.log(value);
-                });
-              }
-
-            }
-
-          }
-          if (value.hasOwnProperty('toolCount') && value1.hasOwnProperty('toolCount')){
-          var sum = value.toolCount.map(function (num, idx) {
-            return num + value1.toolCount[idx];
-          });
-          value.toolCount=sum
-        }
-        // value.toolCount=sum
-          outArr.push(value);
-          // console.log('outarraynested',outArr);
-        }
-      });
-    });
-    // this.nestedArray=outArr;
   }
   removeDuplicates(array) {
     return array.filter((a, b) => array.indexOf(a) === b)
@@ -922,7 +762,6 @@ selectedMetric(selectedValue){
   }
   // this.gradientApplyforNode();
   this.linkCurvinessGenerate();
-  console.log("model1",index ,this.model1);
 }
 
 flowchartDataOne(dataArray,index) {
@@ -1025,7 +864,7 @@ closeNav() { // Variant list Close
     this.gradientApplyforNode();
     this.gradientApplyforLinks();
     this.linkCurvinessGenerate();
-  this.spinMetrics0="";
+    this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
   // console.log('spinMetrics0',this.spinMetrics0);
   }
@@ -1166,56 +1005,22 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.gradientApplyforLinks()
     this.gradientApplyforNode();
     this.linkCurvinessGenerate();
-  // return sliderGraphArray;
       }
     }
 
-  // nodesAlignment(){             
-  //   var loction=''
-  //   for(var i=0;i<this.model1.length;i++){
-  //     if(this.model1[i].key==-1||this.model1[i].key==-2){
-  //       let loc1=440
-  //     let loc2=-150+i*80
-  //     loction=loc1+' '+loc2;
-  //     this.model1[i].loc=loction
-  //     }else{
-  //     let loc1=455
-  //     let loc2=-150+i*80
-  //     loction=loc1+' '+loc2;
-  //     this.model1[i].loc=loction
-  //     }
-  //   }
-  // }
-  // activityDropDown(){
-  //   this.isActivity_dropdwn = !this.isActivity_dropdwn;
-  // }
   readselectedNodeEmied(SelectedActivities){
-    // console.log(SelectedActivities);
-    this.filterByActivity(SelectedActivities)
+    if(SelectedActivities.length==0){
+      this.resetspinnermetrics()
+    }else{
+      this.filterByActivity(SelectedActivities)
+
+    }
   }
   filterByActivity(SelectedActivities){
-//     var checkboxes = document.getElementsByName("activity_filter");
-//   var CheckedBoxes = [];
-  // this.activity_value = [];
-//   for (var i=0; i<checkboxes.length; i++) {
-//       CheckedBoxes.push(checkboxes[i]);
-//   }
-// // CheckedBoxes.map(e => e.value);
-//   for (var j=0; j<CheckedBoxes.length; j++) {
-//     if (CheckedBoxes[j].checked==true) {
-//       this.activity_value.push(CheckedBoxes[j].value);
-//     }
-//     }
 this.activity_value=SelectedActivities;
 this.model1=[]
 this.model2=[]
-// console.log("activity_value1",this.activity_value);
-// return;
-    // this.activitySelect.close();
-    // this.activityValue=0;
-    // this.pathvalue=0;
     this.isNodata=true;
-    // console.log(activity);
     var model3=[]
 
     model3[0]=this.fullgraph_model[0]
@@ -1224,11 +1029,9 @@ this.model2=[]
         
         if(this.activity_value[i]==this.fullgraph_model[j].name){
           model3.push(this.fullgraph_model[j])
-          // console.log("model3",model3);
         }
       }
     }
-    // console.log("this.model1.length",this.fullgraph_model.length);
     model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
     this.model1=model3
     this.nodeAlignment();
@@ -1249,34 +1052,8 @@ this.model2=[]
       }
     }
   }
-  // nodeAlignmentOne(){
-  //   let loction=''
-  //   for(var i=0;i<this.model1.length;i++){
-  //     var test=Math.floor(100 + Math.random() * 900);
-
-  //     let loc1=test
-  //     let loc2=test
-  //     loction=loc1+' '+loc2;
-  //     this.model1[i].loc=loction
-
-  //   }
-  // }
-  // resetActivity(){
-  //   this.activityValue=100;
-  //   this.pathvalue=100;
-  //   this.model1=this.fullgraph_model
-  //   this.nodeAlignment();
-  //   this.model2 = this.flowchartData(this.model1);
-  //   this.gradientApplyforLinks()
-  //   this.gradientApplyforNode()
-  //   this.linkCurvinessGenerate();
-  // }
-  // endpointsDropDown(){
-  //   this.isEndpoint_dropdwn=!this.isEndpoint_dropdwn
-  // }
+ 
   readselectedEndpoint(selectedEndpoint){
-    // console.log(selectedEndpoint.length);
-    
     this.filterByEndpoints(selectedEndpoint)
   }
   filterByEndpoints(selectedEndpoint){
@@ -1284,9 +1061,7 @@ this.model2=[]
     this.model2=[];
     var endpointModel=[];
     var endpointModelOne=[];
-    // endpointModel=this.flowchartData(this.model1)
     endpointModel=this.fullgraph_model
-// console.log('endpointModel',endpointModel[0]);
 this.linkdataArray=[]
  if(selectedEndpoint.length==1 && selectedEndpoint[0]=="Start"){
       for(var i=1; i<endpointModel.length-1;i++){
@@ -1350,9 +1125,7 @@ this.linkdataArray=[]
         }
         if (endpointModel[i].tool.includes('End Frequency')) {
           var obj = {};
-          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(endpointModel[i].toolCount[4]!=0){
-            // console.log(endpointModel[i].name);
             obj['from'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
             obj['to'] = -2;
           endpointModelOne.push(endpointModel[i])
@@ -1388,12 +1161,6 @@ this.linkdataArray=[]
     this.endPoint=false;
     this.isEndpoint_dropdwn=false;
   }
-  // resetfilter(){
-  //   this.resetActivity();
-  //   this.startPoint=false;
-  //   this.endPoint=false;
-  // }
-
   timeStampFilterOverlay(){
     var modal = document.getElementById('myModal');
     modal.style.display="block";
@@ -1643,8 +1410,6 @@ filterOverlay(){
   for(var i=1;i<this.model1.length-1;i++){
     this.dataValues.push(this.model1[i])
 }
-// console.log(this.dataValues);
-
   this.isFilterComponent=true;
   var modal = document.getElementById('myModal');
   modal.style.display="block";
