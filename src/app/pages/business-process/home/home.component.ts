@@ -28,7 +28,9 @@ export class BpsHomeComponent implements OnInit {
   xpandStatus=false;
   autosavedDiagramList = [];
   autosavedDiagramVersion = [];
-  pendingStatus='PENDING FOR APPROVAL'
+  pendingStatus='PENDING FOR APPROVAL';
+  userRole;
+  isButtonVisible:boolean = false;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints ) { }
