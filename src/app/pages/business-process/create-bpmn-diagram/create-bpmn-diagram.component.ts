@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import { NgxSpinnerService } from "ngx-spinner"; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
-
+import {MatDialog} from '@angular/material';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
+import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 
 @Component({
   selector: 'app-create-bpmn-diagram',
   templateUrl: './create-bpmn-diagram.component.html',
-  styleUrls: ['./create-bpmn-diagram.component.css']
+  styleUrls: ['./create-bpmn-diagram.component.css'],
+  providers:[BpmnShortcut]
 })
 export class CreateBpmnDiagramComponent implements OnInit {
   bpmnModeler:any;
@@ -38,9 +40,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
   autosavedDiagramVersion = [];
   autosavedDiagramList = [];
   updated_date_time;
-
+  keyboardLabels=[];
+  @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
-    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints) {}
+    private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
 
   ngOnInit(){
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
@@ -50,6 +53,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.selected_modelId = params['bpsId'];
       this.selected_version = params['ver'];
     });
+    this.keyboardLabels=this.shortcut.keyboardLabels;
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getUserBpmnList();
     this.getApproverList();
@@ -149,8 +153,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
     let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation 
-    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
+      this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+    }
     let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml))); 
     this.bpmnModeler.importXML(decrypted_bpmn, function(err){
       _self.oldXml = decrypted_bpmn.trim();
@@ -161,6 +167,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   displayBPMN(){
     let value = this.notationListOldValue;
     let _self = this;
+    this.updated_date_time = null;
     this.filterAutoSavedDiagrams();
     if(this.isDiagramChanged){
       Swal.fire({
@@ -182,8 +189,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
           this.notationListOldValue = this.selected_notation;
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+            this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+          }
           this.bpmnModeler.importXML(selected_xml, function(err){
             _self.oldXml = selected_xml;
             _self.newXml = selected_xml;
@@ -196,8 +205,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.diplayApproveBtn = true;
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-      if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+      if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+        this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+      }
       this.bpmnModeler.importXML(selected_xml, function(err){
         _self.oldXml = selected_xml;
         _self.newXml = selected_xml;
@@ -231,6 +242,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj = data;
+        this.updated_date_time = new Date();
         this.spinner.hide();
       },
       err => {
@@ -272,7 +284,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.approverName = this.selected_approver;
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
-    // bpmnModel.bpmnTempId=2;
     bpmnModel.category = sel_List['category'];
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.tenantId=999;
@@ -392,5 +403,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.global.notify(message, "error");
     }
   }
+  displayShortcut(){
+     this.dialog.open(this.keyboardShortcut);
+
+  }
   
 }
+

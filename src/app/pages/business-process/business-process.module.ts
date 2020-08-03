@@ -6,7 +6,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { NotifierModule } from "angular-notifier";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { AngularSplitModule } from 'angular-split';
-
 import { SharedModule } from '../../shared/shared.module';
 import { BusinessProcessRoutingModule } from './business-process-routing.module';
 import { BusinessProcessComponent } from './business-process.component';
@@ -18,7 +17,7 @@ import { ListOfChangesComponent } from './list-of-changes/list-of-changes.compon
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule} from '@angular/material';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule} from '@angular/material';
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent],
@@ -37,7 +36,7 @@ import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatS
     Ng2SearchPipeModule,
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule, MatTooltipModule
+    MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule
   ],
   providers: [BpsHints]
 })

@@ -1,6 +1,7 @@
 <div class="container-fluid">
-  <div class="right header_addon">
-    <a routerLink="/pages/approvalWorkflow/home">Approval Workflow</a>
+  <div class="header_addon row">
+    <div class="col-md-10"></div>
+    <a class="col-md-2" routerLink="/pages/approvalWorkflow/home">Approval Workflow</a>
   </div>
   <div class="row">
     <div class="col-md-4 offset-1">
@@ -37,7 +38,7 @@
                   <div class="col-md-1 col-half-offset">{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</div>
                   <div class="col-md-2 col-half-offset">{{each_diag.modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</div>
                   <div class="col-md-2 col-half-offset">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
-                  <div class="col-md-1 col-half-offset" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}">{{each_diag.bpmnProcessStatus}}</div>
+                  <div class="col-md-1 col-half-offset"  [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"> <div *ngIf="each_diag.bpmnProcessStatus=='PENDING';else status"><span class="pending_value_properties">{{pendingStatus}}</span></div> <ng-template #status>{{each_diag.bpmnProcessStatus}}</ng-template> </div>                  
                   <div class="col-md-1 col-half-offset">
                     <span class="comment">
                       <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i> 
