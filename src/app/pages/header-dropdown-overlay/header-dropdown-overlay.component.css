@@ -13,12 +13,19 @@ table{
     color:gray;
     font-size: 17px;
 }
+.table_notification_cell{
+    padding:13px 0px;
+    color:gray;
+    font-size: 17px;
+}
 .btn_mode{
     border-radius:19px;
     float: right;
+    background-color: #287ad6;
 }
 .label_cell{
     font-size: 13px;
+    text-align: center !important;
 }
 .input_cell{
     padding:3px !important;
@@ -83,7 +90,13 @@ input:focus, textarea:focus, select:focus{
     font-weight: bold;
     margin-right: 10px;
     }
-    
+    .close_modal{
+        color: #000;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
     .close:hover,
     .close:focus {
     color: #000;
@@ -183,3 +196,33 @@ input:focus, textarea:focus, select:focus{
 /* .iti__selected-flag{
     padding-right: 20px !important;
 } */
+.config_alert_title{
+    color: #495057;
+    text-align: center;
+    font-weight: 550;
+}
+.notification_alert_title{
+    color: #495057;
+    font-weight: 550;
+}
+ .create_alert_btn{
+    border-radius: 18px !important;
+    color: white !important;
+    float: right !important;
+    margin:19px !important;
+    background-color: #287ad6 !important;
+    font-weight: 700;
+} 
+
+.form_invite_user{
+margin: auto;
+width: 30%;
+padding-top: 15px;
+}
+.form_alert_row{
+    width: 30vw;
+    margin: 20px;
+}
+
+
+

@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input,ViewChild,TemplateRef } from '@angular/core';
 import { DataTransferService } from '../services/data-transfer.service';
+import {MatDialog} from '@angular/material';
 
 @Component({
   selector: 'app-header-dropdown-overlay',
@@ -7,6 +8,13 @@ import { DataTransferService } from '../services/data-transfer.service';
   styleUrls: ['./header-dropdown-overlay.component.css']
 })
 export class HeaderDropdownOverlayComponent implements OnInit {
+  @Input() overlay_acc_dt: string;
+  @Input() overlay_user_manage_dt: string;
+  @Input() overlay_config_alert_dt: string;
+  @Input() overlay_invite_user_dt: string;
+  @Input() overlay_notifications_dt:string;
+  @ViewChild('dialog_model',{ static: true }) dialog_model: TemplateRef<any>;
+ 
   table_details=[
     {
       "sub_id":"1",
@@ -24,8 +32,8 @@ export class HeaderDropdownOverlayComponent implements OnInit {
       "status":"Success",
       "action":"icon"
     }];
-    ov_dt;
-  constructor(private dt:DataTransferService) { }
+  
+  constructor(private dt:DataTransferService ,private dialog:MatDialog) { }
 
   ngOnInit() {
     //this.ov_dt=this.dt.overlay_data.value;
@@ -36,7 +44,8 @@ export class HeaderDropdownOverlayComponent implements OnInit {
   telInputObject(obj) {
     obj.setCountry('in');
   }
-
+close(){
+}
   // slideUp(){
   //   var modal = document.getElementById('header_overlay');
   //   modal.style.display="block";
@@ -44,6 +53,10 @@ export class HeaderDropdownOverlayComponent implements OnInit {
   slideDown(){
     var modal = document.getElementById('header_overlay');
      modal.style.display="none";
+ }
+ openAlertModel(){
+ 
+   this.dialog.open(this.dialog_model);
  }
   save(){
     alert("saved")

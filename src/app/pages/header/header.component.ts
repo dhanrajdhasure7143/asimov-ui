@@ -14,7 +14,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   pages:any[];
   parent_subscription;
   child_subscription;
-
+  overlay_acc_model: boolean=false;
+  overlay_user_manage_model: boolean=false;
+  overlay_config_alert_model: boolean=false;
+  overlay_invite_user_model: boolean=false;
+  overlay_notifications_model: boolean=false;
+ 
   
   constructor(private router:Router, private dataTransfer:DataTransferService) { }
 
@@ -32,10 +37,45 @@ export class HeaderComponent implements OnInit, OnDestroy {
   loopTrackBy(index, term){
     return index;
   }
+  
   slideUp(e){
-    if(e=="my_acc"){
-      //this.dataTransfer.setOverlayData("my_acc");
-    }
+     if(e=="my_acc"){
+      this.overlay_user_manage_model = false;
+      this.overlay_config_alert_model = false;
+      this.overlay_invite_user_model = false;
+      this.overlay_acc_model = true;
+      
+       //this.dataTransfer.setOverlayData("my_acc");
+     }
+     else if(e=="user_manage"){
+       this.overlay_acc_model=false;
+       this.overlay_config_alert_model=false;
+       this.overlay_invite_user_model = false;
+       this.overlay_notifications_model=false;
+      this.overlay_user_manage_model = true;
+     }
+     else if(e=="config_alert"){
+      this.overlay_acc_model=false;
+      this.overlay_user_manage_model = false;
+      this.overlay_invite_user_model = false;
+      this.overlay_notifications_model=false;
+       this.overlay_config_alert_model = true;
+     }
+     else if(e=="invite_user"){
+      this.overlay_acc_model=false;
+      this.overlay_user_manage_model = false;
+       this.overlay_config_alert_model = false;
+       this.overlay_notifications_model=false;
+      this.overlay_invite_user_model = true;
+     }
+     else{
+      this.overlay_acc_model=false;
+      this.overlay_user_manage_model = false;
+       this.overlay_config_alert_model = false;
+      this.overlay_invite_user_model = false;
+      this.overlay_notifications_model = true;
+     }
+   
     var modal = document.getElementById('header_overlay');
     modal.style.display="block";
   }

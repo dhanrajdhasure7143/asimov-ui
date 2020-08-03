@@ -35,7 +35,7 @@
                       <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img"> 
                         <label>{{each_page.title}}</label> </a>
                     </li>
-                    <li class="notification-icon"> <img src="assets/images/Group 192.svg"> </li>
+                    <li class="notification-icon" (click)='slideUp("notifications")'> <img src="assets/images/Group 192.svg"> </li>
                     <li class=""> <img src="assets/images/pro1.png"> 
                       <div class="dropdown">
                         <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
@@ -57,4 +57,4 @@
       </div>
     </section>
   </div> 
-  <app-header-dropdown-overlay></app-header-dropdown-overlay>
+  <app-header-dropdown-overlay  [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
