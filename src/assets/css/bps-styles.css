@@ -599,3 +599,6 @@ background-color: #3ea307 !important;
     margin-bottom: 20px;
 
 }
+.pending_value_properties{
+  white-space: pre
+}

@@ -12,6 +12,7 @@ export interface AsimovAppConfig {
     imagePath: string;
     isProduction: boolean;
     accessTokenEndPoint:string;
+    authorizationEndPoint:string;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -20,6 +21,7 @@ export const AppConfig: AsimovAppConfig = {
     bussinessProcessEndPoint: environment.bps_url,//bps_url
     rpaEndPoint: environment.rpa_url,
     accessTokenEndPoint:environment.idm_url,
+    authorizationEndPoint:environment.auth_url,
     loopbackHost: environment.loopback_url,
     imagePath: '', 
     isProduction: true,

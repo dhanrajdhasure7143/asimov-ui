@@ -346,3 +346,8 @@ padding-bottom: 70px;
     font-size:14px;
     
   }
+
+  .mat-paginator > div > div > div.mat-paginator-range-actions > button:disabled{
+
+    background-color:none;    
+  }
