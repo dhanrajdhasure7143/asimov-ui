@@ -28,7 +28,7 @@ export class BpsHomeComponent implements OnInit {
   xpandStatus=false;
   autosavedDiagramList = [];
   autosavedDiagramVersion = [];
-  pendingStatus='PENDING FOR APPROVAL';
+  pendingStatus='PENDING APPROVAL';
   userRole;
   isButtonVisible:boolean = false;
 
