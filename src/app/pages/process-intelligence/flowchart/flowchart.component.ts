@@ -1054,8 +1054,13 @@ this.model2=[]
   }
  
   readselectedEndpoint(selectedEndpoint){
-    this.filterByEndpoints(selectedEndpoint)
-  }
+      if(selectedEndpoint.length==0){
+        this.resetspinnermetrics()
+      }else{
+      this.filterByEndpoints(selectedEndpoint)
+      }
+    }
+
   filterByEndpoints(selectedEndpoint){
     this.model1=[];
     this.model2=[];
