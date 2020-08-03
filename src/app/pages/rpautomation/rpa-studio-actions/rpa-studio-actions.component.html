@@ -226,11 +226,8 @@
       </div>
       <div class="rpa-modal-body">
         <br>
-          <div class="container card-body">
-            <div class="">
-            <ngb-tabset>
-              <ngb-tab title="Configuration">
-                <ng-template style="background: white;" ngbTabContent>
+          <div class="container-fluid card-body">
+            <div class="col-md-6">
             <form style="background: white;" name="form" (ngSubmit)="f.form.valid && onCreateSubmit()" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label for="botName">Timezone</label>
@@ -245,29 +242,30 @@
             here...</cron-editor>
             <!-- date start -->
             <div class="col-md-12 row">
-            <div class="col-md-2 form-group" style="margin-left:0px;margin-top:15px;">
+            <div class="col-md-3 form-group" style="margin-left:0px;margin-top:15px;">
               <div class="input-group">
                 <label for="alertTo">From Date</label>
               </div>
               <div class="input-group ">
-                <input class="form-control pointer"  placeholder="yyyy-mm-dd" 
+                <input class="form-control pointer" autocomplete="off" placeholder="yyyy-mm-dd" 
                 name="d1" #c1="ngModel" [(ngModel)]="startDate"   (click)="d1.toggle()"  
                 [maxDate]="endDate" ngbDatepicker #d1="ngbDatepicker">
               </div>
             </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
                 <form [formGroup]="form">
                 <ngb-timepicker class="time btn-padmrar" [(ngModel)]="startTime" formControlName="startTime"></ngb-timepicker>
               </form>
               <!-- <p>Result : {{form.value | json}}</p> -->
             </div>
-              <div class="col-md-2 form-group" style="margin-left:0px;margin-top:15px;">
+              <div class="col-md-3 form-group" style="margin-left:0px;margin-top:15px;">
                 <div class="input-group">
                 <label for="alertTo">To Date</label>
               </div>
               <div class="input-group">
                 <input 
-                      class="form-control pointer" 
+                      class="form-control pointer"
+                      autocomplete="off" 
                       placeholder="yyyy-mm-dd" 
                       name="d2" 
                       #c2="ngModel" 
@@ -279,7 +277,7 @@
                       #d2="ngbDatepicker">
               </div>
              </div>
-             <div class="col-md-2">
+             <div class="col-md-3">
               <form [formGroup]="form">
               <ngb-timepicker  class="time btn-padmrar" [(ngModel)]="endTime" formControlName="endTime"></ngb-timepicker>
             </form>
@@ -291,44 +289,47 @@
               <h3><b>{{cronExpression}}</b></h3>
             </div> -->
                 </div>
-                <div class="form-group">
-                    <button class="btn btn-primary" (click)="saveCron()">Save</button>
-                </div>
+                 <div class="form-group env-btn" >
+                    <button class="btn btn-primary eiap-btn" (click)="addCron()">Add</button>
+              
+                  </div>
+          
             </form>
-                </ng-template>
-              </ngb-tab>
-              <ngb-tab  title="Schedule List" [disabled]="savebotrespose==undefined">
-                <ng-template style="background: white;" ngbTabContent>
-                  <div class="container" style="background: white;">
+            </div>
+                  <div class="col-md-6" style="background: white;">
                     <div class="row">
-                      <div class="col-md-12">
-                      <table class="table rpa-table table-striped  table-sm row-border hover env-table">
+                      <div class="col-md-12" style="max-height: 350px; overflow: scroll;">
+                      <table class="table rpa-table table-striped  table-sm row-border hover env-table  rpa-custom-scrollbar"  >
                         <thead>
                         <tr>
                           <th>Schedule Interval</th>
-                          <th>Timezone</th>
-                          <th>Last Run Time</th>
-                          <th>Next Run Time</th>
-                          <th>Execution Status</th>
+                          <th>Last Run</th>
+                          <th>Next Run</th>
+                          <th>Status</th>
                         
+                          <th></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let schedule of scheduleLists">
-                          <td>{{schedule.scheduleInterval}}</td>
-                          <td>{{schedule.timeZone}}</td>
-                          <td>{{schedule.lastRunTime}}</td>                       
-                          <td>{{schedule.nextRunTime}}</td>
-                          <td>{{schedule.executionStatus}}</td>
+                          <td>{{convertcron(schedule.scheduleInterval)}}</td>
+                          
+                          <td><span *ngIf="schedule.lastRunTime!=null">{{schedule.lastRunTime}}</span><span *ngIf="schedule.lastRunTime==null">---</span></td>                       
+                          <td><span *ngIf="schedule.nextRunTime!=null">{{schedule.nextRunTime}}</span><span *ngIf="schedule.nextRunTime==null">---</span></td>
+                          <td><span *ngIf="schedule.executionStatus!=null">{{schedule.executionStatus}}</span><span *ngIf="schedule.executionStatus==null">---</span></td>
+                          <td><button (click)="removeSchedule(schedule)"><span class="remove-schedule">x</span></button></td>
                         </tr>
                         </tbody>
                       </table>
+                  
                       </div>
+                      <div class="form-group env-btn" >
+                        <button class="btn btn-primary eiap-btn"  (click)="saveCronexp()">Save</button>
+                  
+                      </div>
+           
                     </div>
                   </div>
-                </ng-template>
-              </ngb-tab>
-            </ngb-tabset>
           </div>
           </div>
           </div>

@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <div class="right header_addon">
-    <a routerLink="/pages/approvalWorkflow/home">Approval Workflow</a>
+    <a routerLink="/pages/approvalWorkflow/home" *ngIf="this.isButtonVisible">Approval Workflow</a>
   </div>
   <div class="row">
     <div class="col-md-4 offset-1">
