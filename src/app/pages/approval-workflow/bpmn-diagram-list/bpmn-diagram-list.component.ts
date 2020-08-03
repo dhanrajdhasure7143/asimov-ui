@@ -37,6 +37,7 @@ export class BpmnDiagramListComponent implements OnInit {
   sortIndex:number=2;
   approval_msg: string="";
   selected_processInfo;
+  pendingStatus="PENDING FOR APPROVAL"
   constructor(private dt: DataTransferService,private hints:ApprovalHomeHints,private bpmnservice:SharebpmndiagramService,private global:GlobalScript, private model: DiagListData, private rest_Api: RestApiService,private router: Router) { }
 
   ngOnInit() {

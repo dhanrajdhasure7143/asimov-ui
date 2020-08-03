@@ -28,6 +28,7 @@ export class BpsHomeComponent implements OnInit {
   xpandStatus=false;
   autosavedDiagramList = [];
   autosavedDiagramVersion = [];
+  pendingStatus='PENDING FOR APPROVAL'
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints ) { }
@@ -48,6 +49,7 @@ export class BpsHomeComponent implements OnInit {
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
     },
+    
     (err) => {
       this.isLoading = false;
     });
