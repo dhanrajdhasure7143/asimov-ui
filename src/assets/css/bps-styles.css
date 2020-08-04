@@ -200,7 +200,7 @@ mat-expansion-panel{
 }
 #bpmn_list_row span{
   display: inline-block;
-  width: 13%;
+  width: 14%;
   text-align: center;
 }
 .workspace-title{
@@ -209,8 +209,14 @@ mat-expansion-panel{
 .workspace-title span{
   display: inline-block;
   cursor: pointer;
-  width: 13%;
+  width: 14%;
   text-align: center;
+}
+.fa-envelope{
+  color : #ffa500;
+}
+.glyphicon-trash{
+  color: red;
 }
 .comment{
   position: relative;

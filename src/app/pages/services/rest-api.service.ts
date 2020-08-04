@@ -53,8 +53,15 @@ export class RestApiService{
     return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj);
   }
 
+  deleteBPMNProcess(data){
+    return this.http.delete('/bpsprocess/remove/bpmn/notation/user', data);
+  }
+
+  sendReminderMailToApprover(data){
+    return this.http.post('/bpsprocess/', data);
+  }
+
   getBPMNFileContent(filePath){
-    // return this.http.post(filePath, this.xmlheaderOptions);
     return this.http.get(filePath, {headers: {observe: 'response'}, responseType: 'text'});
   }
 
