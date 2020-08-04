@@ -1,74 +1,74 @@
 <div class="row header_addon">
-  <div class="col-md-4"></div>
-  <div class="col-md-2">
-    <button class="btn btn-primary eiap-btn" (click)="reSize=true" *ngIf="isShowConformance && !reSize">Show Conformance</button>
-    <button class="btn btn-primary eiap-btn" (click)="getBpmnDifferences()" *ngIf="reSize && isConfNavigation" >Show Differences</button>
+    <div class="col-md-4"></div>
+    <div class="col-md-2">
+      <button class="btn btn-primary eiap-btn" (click)="reSize=true" *ngIf="isShowConformance && !reSize">Show Conformance</button>
+      <button class="btn btn-primary eiap-btn" (click)="getBpmnDifferences()" *ngIf="reSize && isConfNavigation" >Show Differences</button>
+    </div>
+    <div class="col-md-1">
+      <div *ngIf="rejectedOrApproved" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
+        {{rejectedOrApproved}}</div>
+    </div>
+    <div class="col-md-2" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
+      <mat-form-field id="bpmnNotationList">
+        <mat-label>BPMN Notation</mat-label>
+        <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()">
+          <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex"><!--[selected]="each_bpmn.bpmnModelId == selected_modelId"-->
+            {{each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="col-md-2" >
+      <mat-form-field id="approversList">
+        <mat-label>Approver List</mat-label>
+        <mat-select [(ngModel)]="selected_approver">
+          <mat-option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
+            {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  <div><button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
   </div>
-  <div class="col-md-1">
-    <div *ngIf="rejectedOrApproved" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
-      {{rejectedOrApproved}}</div>
+  
   </div>
-  <div class="col-md-2" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
-    <mat-form-field id="bpmnNotationList">
-      <mat-label>BPMN Notation</mat-label>
-      <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()">
-        <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex"><!--[selected]="each_bpmn.bpmnModelId == selected_modelId"-->
-          {{each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-  <div class="col-md-2" >
-    <mat-form-field id="approversList">
-      <mat-label>Approver List</mat-label>
-      <mat-select [(ngModel)]="selected_approver">
-        <mat-option *ngFor="let each_approver of approver_list" [value]="each_approver.firstName+' '+each_approver.lastName">
-          {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
-      </mat-select>
-    </mat-form-field>
-  </div>
-<div><button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
-</div>
-
-</div>
   <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>        
   <as-split class="ex-percent" [class.no-split-pane]="!isShowConformance || (isShowConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent"><!-- (dragEnd)="dragEnd($event)" -->
-  <as-split-area [size]="isShowConformance?(reSize?50:100):0"><!-- [hidden]="!reSize"-->
-    <div *ngIf="isShowConformance" class="bps_overlay">
-      <div class="canvas2 readOnly"  id="canvas2"></div>
-    </div>
-    <div class="canvas2" *ngIf="!isShowConformance"  id="canvas2"></div>
-  </as-split-area>
-  <as-split-area [size]="isShowConformance?(reSize?50:0):100">
-    <app-upload-create-drop-bpmn *ngIf="isShowConformance && !isUploaded" (update)="getUserBpmnList(true)"></app-upload-create-drop-bpmn> 
-    <div class="canvas1"  id="canvas1" *ngIf="(isShowConformance && reSize && isConfNavigation)||(!isShowConformance)"></div>
-  </as-split-area>
-</as-split>
-<div class="row btn_row"> 
-  <button id="download" class="left" (click)="downloadBpmn()"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
-  <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
-  <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'"  *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
-      <!-- <ngx-dropzone class="upload_again_btn" (change)="uploadAgainBpmn($event)" [multiple]=false [accept]="'.bpmn'"  *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)"> -->
-    <ngx-dropzone-label>
-        <button class="btn btn-primary eiap-btn">Upload Again</button>
-    </ngx-dropzone-label>
-  </ngx-dropzone>
-  <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">Save Process</button>
-  <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="automate" (click)="automate()">Automate</button> <!-- [disabled]="isShowConformance && !isConfNavigation" -->
-</div>
-<app-list-of-changes></app-list-of-changes>  
-<ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
-  <p style="color: white">Auto Saving... </p>  
-</ngx-spinner>
-<!-- <process-category-overlay headerTitle="BPMN Details" (proceed)="uploadAgainBpmn($event)"></process-category-overlay> -->
-<div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
-  <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
-  </div></div>
-  <ng-template #keyboardShortcut>
-      <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
-      <table>
-             <tr *ngFor="let keyboardLabels of keyboardLabels" >
-                 <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
-                  <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
-             </tr> 
-         </table>   
- </ng-template>
+    <as-split-area [size]="isShowConformance?(reSize?50:100):0"><!-- [hidden]="!reSize"-->
+      <div *ngIf="isShowConformance" class="bps_overlay">
+        <div class="canvas2 readOnly"  id="canvas2"></div>
+      </div>
+      <div class="canvas2" *ngIf="!isShowConformance"  id="canvas2"></div>
+    </as-split-area>
+    <as-split-area [size]="isShowConformance?(reSize?50:0):100">
+      <app-upload-create-drop-bpmn *ngIf="isShowConformance && !isUploaded" (update)="getUserBpmnList(true)"></app-upload-create-drop-bpmn> 
+      <div class="canvas1"  id="canvas1" *ngIf="(isShowConformance && reSize && isConfNavigation)||(!isShowConformance)"></div>
+    </as-split-area>
+  </as-split>
+  <div class="row btn_row"> 
+    <button id="download" class="left" (click)="downloadBpmn()"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+    <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
+    <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'"  *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">
+        <!-- <ngx-dropzone class="upload_again_btn" (change)="uploadAgainBpmn($event)" [multiple]=false [accept]="'.bpmn'"  *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)"> -->
+      <ngx-dropzone-label>
+          <button class="btn btn-primary eiap-btn">Upload Again</button>
+      </ngx-dropzone-label>
+    </ngx-dropzone>
+    <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)" *ngIf="!isShowConformance||(isShowConformance && reSize && isConfNavigation)">Save Process</button>
+    <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="automate" (click)="automate()">Automate</button> <!-- [disabled]="isShowConformance && !isConfNavigation" -->
+  </div>
+  <app-list-of-changes></app-list-of-changes>  
+  <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+    <p style="color: white">Auto Saving... </p>  
+  </ngx-spinner>
+  <!-- <process-category-overlay headerTitle="BPMN Details" (proceed)="uploadAgainBpmn($event)"></process-category-overlay> -->
+  <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
+    <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
+    </div></div>
+    <ng-template #keyboardShortcut>
+        <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+        <table>
+               <tr *ngFor="let keyboardLabels of keyboardLabels" >
+                   <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+                    <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
+               </tr> 
+           </table>   
+   </ng-template>
