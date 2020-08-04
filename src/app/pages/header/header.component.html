@@ -8,22 +8,10 @@
                 <div class="col-md-2">
                   <div class="abrand_div" routerLink="/pages/home">
                       <img src="assets/images/logo_img.png">
-                    <!-- <h3 id="brand">GiB-2.0 <sup><i class="fa fa-registered" aria-hidden="true"></i></sup></h3>
-                    <small id="sm">State of Automation</small> -->
                   </div>
                 </div>
                 <div class="col-md-10 header_nav">
                   <ul class="nav navbar-nav  navbar-right ">
-                <!-- <div class="col-md-3">
-                  <div class="abrand_div" routerLink="/pages/home">
-                    <div id="brand">EP<b>Soft</b><sup><i class="fa fa-registered" aria-hidden="true"></i></sup></div>
-                    <small id="sm">Intelligent Automation Platform</small> -->
-                  <!-- <div class="abrand_div" routerLink="/pages/home">
-                    <img src="assets/images/logo_img.png">
-                  </div> -->
-                <!-- </div>
-                <div class="col-md-9">
-                  <ul class="nav navbar-nav  navbar-right user_list"> -->
                     <li class="breadcrumb_li"> <div class="breadcrumb">
                         <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
                         <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
@@ -40,10 +28,10 @@
                       <div class="dropdown">
                         <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
                         <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
-                          <a (click)='slideUp("my_acc")'><i class="far fa-user hd_icon"></i> My Account</a>
-                          <a (click)='slideUp("user_manage")'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
-                          <a (click)='slideUp("config_alert")'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
-                          <a (click)='slideUp("invite_user")'><img  class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
+                          <a (click)='slideUp(0)'><i class="far fa-user hd_icon"></i> My Account</a>
+                          <a (click)='slideUp(1)'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
+                          <a (click)='slideUp(2)'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
+                          <a (click)='slideUp(3)'><img  class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
                           <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a>
                         </div>
                       </div>
@@ -57,4 +45,5 @@
       </div>
     </section>
   </div> 
-  <app-header-dropdown-overlay  [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
+  <!-- <bot-infopanel dropdown #dropdown="bs-dropdown" [componentIndex]="compIndex"></bot-infopanel> -->
+  <app-header-dropdown-overlay [componentIndex]="compIndex"></app-header-dropdown-overlay>

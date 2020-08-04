@@ -1,4 +1,17 @@
-        <div id="header_overlay" class="hd_overlay">
+<div id="header_overlay" class="hd_overlay">
+  <div class="modal-content" >
+    <div class="btn-group">
+      <ul id="dropdown-triggers-manual"><!--  *dropdownMenu class="dropdown-menu side_drp" role="menu"
+        aria-labelledby="button-triggers-manual" -->
+          <ng-template [cdkPortalOutlet]="dynamicComponent"></ng-template>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- 
+      
+      <div id="header_overlay" class="hd_overlay">
                 <div class="modal-content" *ngIf="overlay_acc_dt" >
                     <div class="tab">
                         <div class="container">
@@ -8,8 +21,6 @@
                         <button class="tablinks" (click)="openCity($event, 'payment_mode')">Payment Mode</button>
                         <span class="search_span"><input class="search_btn" type="text" placeholder="Search">&nbsp;<i class="fa fa-search"></i></span>
                         </div>
-                        
-                        
                         <span class="close" (click)="slideDown();">&times;</span>
                     </div>
                       <div class="container overlay_container">
@@ -120,7 +131,6 @@
                             <td class="table_cell">{{details.status}}</td>
                             <td class="table_cell">
                                  <button class="left" id="download" (click)="overview()"><img src="..\assets\icons\bpmn_Overview.svg"></button>
-                                    <!-- <i class="fa fa-times-circle-o"></i>  -->
                                     
                             </td>
                            </tr>
@@ -398,4 +408,4 @@
                                 </div>
                             </form>
                
-            </ng-template>
+            </ng-template> -->

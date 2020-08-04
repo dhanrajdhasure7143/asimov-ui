@@ -1,0 +1,88 @@
+// profile
+.profile {
+  height: 100%;
+  padding: 40px 25px;
+  }
+  
+  .row.profile_img {
+  margin-bottom: 15px;
+  align-items: center;
+  }
+  
+  img.img_pro {
+  width: 64px;
+  height: 64px;
+  border: 1px solid #B1B1B1;
+  border-radius: 50%;
+  padding: 2px;
+  object-fit: fill;
+  }
+  
+  label.name_pro {
+  display: block;
+  text-align: center;
+  text-transform: capitalize;
+  font-size: 28px;
+  margin: 0px;
+  line-height: 36px;
+  }
+  
+  label.design_pro {
+  display: block;
+  text-align: center;
+  margin: 0px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #7990A8;
+  }
+  
+  .edit_button {
+  text-align: center;
+  margin-top: 36px;
+  }
+  
+  hr.profile_hr {
+  border-color: #EEEEEE;
+  margin: 14px 0px;
+  }
+  
+  .profile_info_head, .profile_info_body {
+  margin: 0px;
+  font-size: 18px;
+  }
+  
+  .profile_info_body.email{
+  color:#0F98FF;
+  }
+  
+  .profile_info_main {
+  margin: 20px 0px;
+  
+  }
+  
+  // end of profile
+  
+ // .sidenav .acc_main {
+ // display: none;
+ // }
+  
+ // .profile_info .col-sm-12, .profile_info .col-12 {
+ // padding: 0px;
+ // }
+  
+ .profile_info_main div {
+  display: block;
+  margin: 0px;
+ }
+  
+ .row.profile_info {
+  margin: 0px;
+ }
+ .bttn{
+  height: 32px;
+  padding-top:5px;
+  font-size: 15px;
+  background-color:#006dd5 !important; 
+  color:white;
+  
+ }

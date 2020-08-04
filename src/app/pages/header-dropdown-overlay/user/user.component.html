@@ -1,0 +1,157 @@
+<div class="profile">
+  <div class="row profile_img">
+  <div class="col-12 text-center">
+    <img src="assets/userimage.png" alt="Profile Image" class="img_pro" />
+  </div>
+  </div>
+  
+  <div class="row profile_name">
+    <div class="col-12">
+      <label class="name_pro">{{name}}</label>
+  
+    </div>
+  </div>
+      <div class="col-12 edit_button">
+        <button class="btn btn-full btn-submit" [routerLink]="['/home/editprofile']">Edit Profile</button>
+      </div>
+      <hr class="profile_hr">
+          <div class="row profile_info">
+  <div class="profile_info_main">
+  <div class="row">
+    <div class=""><label class="profile_info_head">{{role | titlecase}}</label></div>
+  <!-- <div class=""><label class="profile_info_body">Adminstrator</label></div> -->
+  </div>
+  </div>
+  <!-- <div class="profile_info_main"> -->
+  <!-- <div class="row"> -->
+  <!-- <div class=""><label class="profile_info_head">{{email}}</label></div> -->
+  <!-- <div class=""><label class="profile_info_body email">maii_id@epsoftinc.com</label></div> -->
+  <!-- </div> -->
+  <!-- </div> -->
+  <!-- <div class="profile_info_main"> -->
+  <!-- <div class="row"> -->
+  <!-- <div class=""><label class="profile_info_head">{{phone}}</label></div> -->
+  <!-- <div class=""><label class="profile_info_body">9876543210</label></div> -->
+  <!-- </div> -->
+  <!-- </div> -->
+  
+  </div>
+  <div class="acc_log_main">
+    <hr class="profile_hr">
+    <div class="account_sub">
+      <ul class="account_sub_ul">
+        <li><a href="" [routerLink]="['/home/userdetails']">My Account</a></li>
+        <li (click)="toggle()" class="nav-item dropdown">
+          <div mdbWavesEffect class=" dropdown-toggle" mdbWavesEffect>Subscription</div><span class="caret"></span></li>
+            <div class="subheader">
+            <span *ngIf="show">
+              <!-- <a class="dropdown-item waves-light" mdbWavesEffect href="/home/" onclick="javascript:event.target.port=3000">Dash Board</a> -->
+              <a class="dropdown-item waves-light" mdbWavesEffect (click)="openTarget('/home')">Dash Board</a>
+              <a class="dropdown-item waves-light" mdbWavesEffect href="#">Plans</a>
+              
+            </span>
+          
+        </div>
+        <li><a href="" [routerLink]="['/home/roles-and-permissions']">Roles And Permissions</a></li>
+  
+
+        <li><a href="" [routerLink]="['/activation/alerts']">Configure alerts</a></li>
+
+        
+    <div  [hidden] = "!admin">
+      <li (click)="toggle()" class="nav-item dropdown">
+      <div mdbWavesEffect class=" dropdown-toggle" mdbWavesEffect>User Management</div><span class="caret"></span></li>
+        <div class="subheader">
+        <span *ngIf="show">
+          <a class="dropdown-item waves-light" mdbWavesEffect href="" [routerLink]="['/activation/usermanagement']">Users</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Departments</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect href="#">Roles</a>
+        </span>
+      </div>
+    </div>
+  
+        <li><a href="">Billing</a></li>
+   </ul>
+   </div>
+    <div [hidden] = "!admin">
+      <hr class="profile_hr">
+        <div class="account_sub">
+      <ul class="account_sub_ul">
+      <li (click)="invitetoggle()">
+      <div>Invite User</div>
+      </li>
+  </ul>
+    <div class="input-group mb-3" *ngIf="hide" >
+      <input type="email" class="form-control" placeholder="Enter User Email" [(ngModel)]="iemail">
+      <div class="input-group-append">
+        <button type = "button" data-target="#myButton" data-toggle="modal"class="btn btn-outline-secondary bttn"(click)="invit(template)">Invite</button>
+      </div>
+    </div>
+  </div>
+  </div>
+  <!-- <div class="form-group col-sm-6">
+  <label for="lastName">Last Name</label>
+  <input type="text" name="lastName" id="lastName"[(ngModel)]="iemail" class="form-control">
+  <button (click)="invit()"> click</button>
+  </div> -->
+  
+  
+  <!-- <div class=" col-md-8 form-group" *ngIf="show" >
+  <input type="text" class="form-control" id="name" ngModel maxlength="30" placeholder="Enter Department Name:"ngModel name="other_department_name" required>
+  
+  <button type="button" class="btn btn-back float-right" >Send</button>
+  
+  </div> -->
+  
+  
+      <hr class="profile_hr">
+        <div class="account_sub">
+          <ul class="account_sub_ul">
+            <li (click)="logout($event)">
+            <div >Sign out</div>
+            </li>
+          </ul>
+        </div>
+    </div>
+  </div>
+
+    <ng-template #template>
+      <div  id = "myButton">
+      <div class="modal-header">
+        <h4 class="modal-title pull-left">Invite User</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="userId">User Id</label>
+    
+          <input name="userId" #userId="ngModel" class="form-control" type="text" [(ngModel)]="selectedModel.userId" disabled />
+          
+        </div>
+        <div class="form-group">
+          <label for="appName">Application</label>
+           <select class="form-control" name="appName" #appName = "ngModel" (change) = "change($event.target.value)" [(ngModel)]="selectedModel.appName" required>
+           <!-- <option  undefined disabled selected>Please Select role </option>  -->
+           <option [value]="undefined" disabled hidden>Select Applications</option>
+            <option *ngFor="let app of dbValue">{{app.name}}</option>
+            <!-- <option >Ezflow</option> -->
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="roleName">Role Name</label>
+           <select class="form-control" name="roleName" [(ngModel)]="selectedModel.roleName" (change) = "changeRole($event.target.value)" placeholder="Select Role Name" required>
+           <!-- <option  undefined disabled selected>Please Select role </option>  -->
+           <option [value]="undefined" disabled hidden>Select Roles</option>
+           <option *ngFor="let role of rolesList">{{role}}</option>
+          </select>
+        </div>
+        <!-- <button type="submit" (click)="onclickInvite()">Invite</button> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary"  data-dismiss="modal" aria-label="Close" (click)="close()">Cancel</button>
+        <button type="button" [disabled] ="this.submitButton" class="btn btn-primary" (click)="onclickInvite()">Invite</button>
+      </div>
+    </div>
+    </ng-template>

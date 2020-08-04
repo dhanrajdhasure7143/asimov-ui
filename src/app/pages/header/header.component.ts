@@ -15,13 +15,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   pages:any[];
   parent_subscription;
   child_subscription;
-  overlay_acc_model: boolean=false;
-  overlay_user_manage_model: boolean=false;
-  overlay_config_alert_model: boolean=false;
-  overlay_invite_user_model: boolean=false;
-  overlay_notifications_model: boolean=false;
   public userRole:any = [];
   error: string;
+  compIndex = 0;
 
   constructor(private router:Router, private dataTransfer:DataTransferService, private rpa:RestApiService) { }
 
@@ -103,63 +99,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.error = "Please complete your registration process";
       
     })
-    // this.pages = [
-    //   {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-    //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-    //   {"img":"assets/images/robothand.svg", "title":"RPA", "link":"/pages/rpautomation/home"},
-    //   {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
-    // ];
   }
 
   loopTrackBy(index, term){
     return index;
   }
   
-  slideUp(e){
-     if(e=="my_acc"){
-      this.overlay_user_manage_model = false;
-      this.overlay_config_alert_model = false;
-      this.overlay_invite_user_model = false;
-      this.overlay_acc_model = true;
-      
-       //this.dataTransfer.setOverlayData("my_acc");
-     }
-     else if(e=="user_manage"){
-       this.overlay_acc_model=false;
-       this.overlay_config_alert_model=false;
-       this.overlay_invite_user_model = false;
-       this.overlay_notifications_model=false;
-      this.overlay_user_manage_model = true;
-     }
-     else if(e=="config_alert"){
-      this.overlay_acc_model=false;
-      this.overlay_user_manage_model = false;
-      this.overlay_invite_user_model = false;
-      this.overlay_notifications_model=false;
-       this.overlay_config_alert_model = true;
-     }
-     else if(e=="invite_user"){
-      this.overlay_acc_model=false;
-      this.overlay_user_manage_model = false;
-       this.overlay_config_alert_model = false;
-       this.overlay_notifications_model=false;
-      this.overlay_invite_user_model = true;
-     }
-     else{
-      this.overlay_acc_model=false;
-      this.overlay_user_manage_model = false;
-       this.overlay_config_alert_model = false;
-      this.overlay_invite_user_model = false;
-      this.overlay_notifications_model = true;
-     }
-   
+  slideUp(ind){
+    this.compIndex = ind;
     var modal = document.getElementById('header_overlay');
     modal.style.display="block";
   }
-  // slideDown(){
-  //   var modal = document.getElementById('header_overlay');
-  //   modal.style.display="none";
-  // }
+
   ngOnDestroy(){
     this.parent_subscription.unsubscribe();
     this.child_subscription.unsubscribe();
@@ -168,9 +119,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.clear();
     this.router.navigate(["/"])
   }
-
-
-
-
  
 }
