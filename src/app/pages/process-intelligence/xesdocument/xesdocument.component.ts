@@ -66,6 +66,7 @@ export class XesdocumentComponent implements OnInit {
         "file": "/var/kafka/" + this.isUploadFileName,
         // "topic": "topqconnector-xesTesting107",
         "topic": "topqconnector-xes-" + this.processId,
+        // "topic": "tytyconnector-xes-" + this.processId,
         "key.converter": "io.confluent.connect.avro.AvroConverter",
         "key.converter.schema.registry.url": "http://10.11.0.101:8081",
         "value.converter": "io.confluent.connect.avro.AvroConverter",

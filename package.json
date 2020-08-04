@@ -38,6 +38,7 @@
     "bpmn-js": "^6.3.0",
     "bpmn-js-differ": "^2.0.2",
     "chart.js": "^2.9.3",
+    "cronstrue": "^1.96.0",
     "d3": "^5.15.0",
     "datatables.net": "^1.10.21",
     "datatables.net-dt": "^1.10.21",

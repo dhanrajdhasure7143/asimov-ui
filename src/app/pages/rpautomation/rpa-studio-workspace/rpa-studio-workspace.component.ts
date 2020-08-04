@@ -209,7 +209,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     {
       let node={
         id:this.idGenerator(),
-        name:"start",
+        name:"START",
         selectedNodeTask:"",
         path:"/assets/images/RPA/Start.png",
         x:"2px", 
@@ -224,7 +224,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       
         let stopnode={
           id:this.idGenerator(),
-          name:"stop",
+          name:"STOP",
           selectedNodeTask:"",
           path:"/assets/images/RPA/Stop.png",
           x:"941px",
@@ -308,8 +308,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       connectorOverlays: [
       ]
     };
-
+    if(nodeData.name!="STOP")
     this.jsPlumbInstance.addEndpoint(nodeData.id, rightEndPointOptions);
+    if(nodeData.name!="START")
     this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
 
   }
@@ -526,8 +527,11 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       return ele
     })
   }
+
+
+
+
   onFormSubmit(event){ 
-    console.log("hii"+ event);
     this.fieldValues = event
     if(this.fieldValues['file1']){
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)

@@ -153,8 +153,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
     let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation 
-    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
+      this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+    }
     let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml))); 
     this.bpmnModeler.importXML(decrypted_bpmn, function(err){
       _self.oldXml = decrypted_bpmn.trim();
@@ -165,11 +167,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
   displayBPMN(){
     let value = this.notationListOldValue;
     let _self = this;
+    this.updated_date_time = null;
     this.filterAutoSavedDiagrams();
     if(this.isDiagramChanged){
       Swal.fire({
         title: 'Are you sure?',
-        text: 'Your current changes will be lost on changing diagram.',
+        text: 'Your current changes will be lost on changing notation.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Save and Continue',
@@ -186,8 +189,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
           this.notationListOldValue = this.selected_notation;
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+            this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+          }
           this.bpmnModeler.importXML(selected_xml, function(err){
             _self.oldXml = selected_xml;
             _self.newXml = selected_xml;
@@ -200,8 +205,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.diplayApproveBtn = true;
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-      if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+      if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+        this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+      }
       this.bpmnModeler.importXML(selected_xml, function(err){
         _self.oldXml = selected_xml;
         _self.newXml = selected_xml;
@@ -235,6 +242,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj = data;
+        this.updated_date_time = new Date();
         this.spinner.hide();
       },
       err => {
@@ -259,7 +267,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         let fileName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
         if(fileName.trim().length == 0 ) fileName = "newDiagram";
         link.download = fileName+".bpmn";
-        link.innerHTML = "Click here to download the diagram file";
+        link.innerHTML = "Click here to download the notation";
         link.click();
       });
     }
@@ -368,7 +376,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
           if(err.error.message == "2002")
           Swal.fire(
             'Oops!',
-            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress diagram',
+            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation',
             'warning'
           )
           else
