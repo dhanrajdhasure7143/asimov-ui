@@ -43,9 +43,6 @@ export class DatadocumentComponent implements OnInit {
   cathead13: any;
   dTypeArray = [];
   p=1;
-
-  // constructor(private router: Router, private dt: DataTransferService, private hints: PiHints, private global: GlobalScript) { }
-  // searchTerm:string;
   modalRef: BsModalRef;
 
   constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript,private modalService: BsModalService)    { }
@@ -55,7 +52,6 @@ export class DatadocumentComponent implements OnInit {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/datadocument", "title": "Data Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
-    // this.dt.current_piData.subscribe(resOne => {
       
     //   if (resOne) {
         var restwo=localStorage.getItem('fileData')
@@ -135,7 +131,6 @@ export class DatadocumentComponent implements OnInit {
   generatepg() {
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
-    // this.router.navigate(['/pages/processIntelligence/flowChart']);
   }
   caseIdSelection() {
     var headerstype=[];
@@ -146,17 +141,8 @@ export class DatadocumentComponent implements OnInit {
       obj[this.headerData[i]]=headerstype[i]
       headerstypeArray.push(obj)
     }
-  //  obj[this.headerData[0]]=this.cathead1
-    // headerstype.push(obj)
-
     localStorage.setItem('headertypeObj',JSON.stringify(headerstypeArray))
     this.router.navigate(['/pages/processIntelligence/selection']);
-
-
-  // generatepg(){
-  //   // this.router.navigate(['/pages/processIntelligence/flowChart']);
-  //   document.getElementById("foot").classList.remove("slide-down");
-  // document.getElementById("foot").classList.add("slide-up");
   }
   sort(property) {
     this.isDesc = !this.isDesc; //change the direction 
@@ -214,7 +200,6 @@ export class DatadocumentComponent implements OnInit {
                   mydate = each_cell;
                   }
                 }
-                // console.log(each_cell);
                 
               formatDate(mydate, 'dd/MM/yyyy HH:mm:ss', 'en-US');
               this.invalidCells['row' + x].splice(this.invalidCells['row' + x].indexOf('cell' + index), 1);
@@ -248,11 +233,6 @@ export class DatadocumentComponent implements OnInit {
         } else {
           this.step_id = this.step_id + 1;
         }
-
-        // if (this.step_id == 5) {
-        //   this.isValidPiData = true;
-        // }
-         // this.step_id = this.step_id + 1;
         
         this.headerData[index] = this.headerName;
        // this.headerName = this.headerData[hdr_ar_index + 1];
@@ -262,7 +242,6 @@ export class DatadocumentComponent implements OnInit {
   }
 
   resetColMap() {
-    // this.headerName = this.header_names_array[0];
     this.step_id = 1;
     this.validCells = [];
     this.invalidCells = [];

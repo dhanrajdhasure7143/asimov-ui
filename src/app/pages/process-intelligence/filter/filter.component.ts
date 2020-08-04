@@ -71,7 +71,6 @@ selectData(selectedData, index){
     };
     this.dataValuesNames[index]= select;
   }
-  // console.log(this.dataValuesNames);
   
   var activityArray=[]
   for (var i = 0; i < this.dataValuesNames.length; i++){
@@ -130,14 +129,12 @@ channgeFilter(){
     } 
   }
   applyEndpointFilter(){
-    // console.log(this.endPointsArray);
     var selectedEndPoints=[]
     this.endPointsArray.forEach(element => {
       if(element.selected==="active"){
         selectedEndPoints.push(element.name)
         }
       })
-    // console.log("selectedEndPoints",selectedEndPoints)
     this.selectedEndpoints.emit(selectedEndPoints);
     this.applyFilterValue.emit(true)
   }

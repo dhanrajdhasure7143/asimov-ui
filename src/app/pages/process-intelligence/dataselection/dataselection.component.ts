@@ -31,10 +31,6 @@ export class DataselectionComponent implements OnInit {
   headerId:any;
   headerArray:any[]=[];
   name:any;
-  // categoriesList:any=[];
-  // public categoryName:any;
-  // public othercategory:any;
-  // isotherCategory:boolean=false;
   isgenerate:boolean=false;
   isUploadFileName: any;
   cathead1: any;
@@ -52,9 +48,7 @@ export class DataselectionComponent implements OnInit {
   cathead13: any;
   headertypeArray:any=[];
   processId:any;
-  // processName:any;
   p=1;
-  // processName:any;
   isDateformat:any;
   count=0;
   dateformat:any;
@@ -74,38 +68,29 @@ export class DataselectionComponent implements OnInit {
     this.dt.changeHints(this.hints.dataDocumentHints);
 
     var headertype=JSON.parse(localStorage.getItem('headertypeObj'))
-    // console.log('storage',headertype)
     for(var i=0;i<headertype.length;i++){
       for (let [key, value] of Object.entries(headertype[i])) {
         this.headertypeArray.push(value)
       } 
     }
-    //  console.log(this.headertypeArray);
     this.cathead1=this.headertypeArray[0]
     this.cathead2=this.headertypeArray[1];
     this.cathead3=this.headertypeArray[2];
     this.cathead4=this.headertypeArray[3];
     this.cathead5=this.headertypeArray[4];
     this.cathead6=this.headertypeArray[5];
-    // console.log(this.cathead6);
     this.cathead7=this.headertypeArray[6];
     this.cathead8=this.headertypeArray[7];
     this.cathead9=this.headertypeArray[8];
     this.cathead10=this.headertypeArray[9];
     this.cathead11=this.headertypeArray[10];
     this.cathead12=this.headertypeArray[11];
-    // this.dt.current_piData.subscribe(res => {
-    //   if(res){
       var restwo=localStorage.getItem('fileData')
       var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
-        // console.log('fileData',this.fileData);
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
-    //   }
-    // });
-
     
 
   }
@@ -117,16 +102,10 @@ export class DataselectionComponent implements OnInit {
   slideUp(){
     var modal = document.getElementById('myModal');
     modal.style.display="block";
-    // this.router.navigate(['/pages/processIntelligence/flowChart']);
     }
     generateGraph(e){
-//             const test=[{"Order ID": "caseId"},
-//     {"Start Timestamp": "Start Timestamp"},
-//   {"End Timestamp": "End Timestamp"},
-// {activity:"activity"},
-// {resource:"resource"},]
-this.processId = Math.floor(100000 + Math.random() * 900000);
-  var renamesObj=[];
+    this.processId = Math.floor(100000 + Math.random() * 900000);
+    var renamesObj=[];
     for(var i=0; i<this.headerArray.length; i++){
       for (let [key, value] of Object.entries(this.headerArray[i])) {
         var obj={}
@@ -147,11 +126,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         obj[key]=lowercase.toString().split(' ').join('')
         
         renamesObj.push(obj) ;
-    
-        
-
       }
-      // console.log("renamesObj",renamesObj);
   }
   let renamestring='';
   for(var k=0;k<renamesObj.length;k++){
@@ -163,7 +138,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     }
   }
   renamestring=renamestring.slice(0,-1)
-      // console.log('keys',renamestring);
 
   var renamesObjOne=[]
   for(var j=0;j<renamesObj.length;j++){
@@ -173,11 +147,9 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       }
     }  
   }
-  // console.log("renamesObjOne",renamesObjOne);
       var date=new Date()
       var tenantId="abc456789"
   this.rest.fileName.subscribe(res => {
-    // console.log(res);
     this.isUploadFileName = res;
   });
   if(this.isUploadFileName.includes("csv")){
@@ -222,10 +194,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       }   }
      
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
-        // var piId=connectorBody.config["transforms.InsertField.static.value"]
-        // localStorage.setItem('piId',this.processId)
-        // const piid={"piId":this.processId}
-        //const piid={"piId":411}
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       })
     }else{
@@ -440,16 +408,10 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     var yearformat;
     var timeOne;
     var OnlyDate=dateInput.split(' ',1)
-    
-    // var dateInput = ["04-04-2020 04:31:10.000 PM","12-12-2222 04:31:10.000 PM","11-22-2222 04:31:10.000 PM"];
-    // var dateInput = "12.02.2011 04:31:10 AM";
-    // var dateInput = "02/02/20 04:31:10 PM";
     if(OnlyDate[0].includes('-')){
       splitDate=dateInput.split('-')
           if(splitDate[0].length==4){
             var splitDate1=splitDate[2].split(' ',1)
-            // console.log("splitDate",splitDate);
-            // console.log("splitDate1",splitDate1);
               yearformat="yyyy";
                 if(splitDate[1]==12 && splitDate1[0]==12){
                       // this.dateformat=' ';
@@ -490,12 +452,9 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
                 var fullDateFormat=this.dateformat+'-'+yearformat
                 }
     }else if(OnlyDate[0].includes('.')){
-      // splitDate=dateInput.split('.')
       splitDate=dateInput.split('.')
       if(splitDate[0].length==4){
         var splitDate1=splitDate[2].split(' ',1)
-        // console.log("splitDate",splitDate);
-        // console.log("splitDate1",splitDate1);
           yearformat="yyyy";
             if(splitDate[1]==12 && splitDate1[0]==12){
                   // this.dateformat=' ';
@@ -534,7 +493,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
             var fullDateFormat=this.dateformat+'.'+yearformat
             }
     }else if(OnlyDate[0].includes('/')){
-      // splitDate=dateInput.split('/')
       splitDate=dateInput.split('/')
       if(splitDate[0].length==4){
       var splitDate1=splitDate[2].split(' ',1)

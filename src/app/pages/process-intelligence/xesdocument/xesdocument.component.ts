@@ -54,7 +54,6 @@ export class XesdocumentComponent implements OnInit {
   generateGraph(e) {   //Process Graph Generate
     this.processId = Math.floor(100000 + Math.random() * 900000);
     this.rest.fileName.subscribe(res => {
-      // console.log(res);
       this.isUploadFileName = res;
     });
     const connectorBody = {
@@ -84,7 +83,6 @@ export class XesdocumentComponent implements OnInit {
         "transforms.InsertField.static.value": this.processId + "-p" + this.processId
       }
     }
-
     this.rest.saveConnectorConfig(connectorBody, e.categoryName, this.processId, e.processName).subscribe(res => {
       this.router.navigate(['/pages/processIntelligence/flowChart'], { queryParams: { piId: this.processId } });
 

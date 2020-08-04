@@ -112,29 +112,12 @@
     ::ng-deep #myDiagramDiv canvas {
     outline: none;
     }
-    #bar_content{
-      width:50%;
-      margin-top: -10px;
-      margin-left: 10%;
-  }
   
   .tracking_detsils1{
     border:1px solid #f4f4f4;
     border-radius: 10px;
-    /* height: 460px; */
-    /* padding-left:0px; */
     padding-right: 0px;
     background-color: white;
-  }
-  .varaint_heading{
-    font-size: 11px;
-    font-weight: bold;
-    float: left;
-    padding-left: 5px;
-    padding-right: 5px;
-  }
-  .varaint_headingOne{
-    margin-top: -15px;
   }
   .tooltiptext1 p{
     color: black;
@@ -178,7 +161,6 @@
     top: 150px;
     right: 0;
     padding-left:0px;
-    /* background-color:#777575; */
     transition: 0.5s;
     padding-top: 10px;
   }
@@ -188,7 +170,6 @@
   }
 
   .sidenav .closebtn {
-    /* position: absolute; */
     top: 0;
     right: 0px;
     font-size: 36px;
@@ -198,19 +179,13 @@
   
   #main {
     transition: margin-right .5s;
-    /* padding: 16px; */
   }
-  
-  /* @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 50px;}
-  } */
   .reset_btn{
     margin-left: 70%;
     border: none !important;
     background: none;
     height: 20px;
     color: #0162cf;
-    /* color: #ffffff; */
     padding: 0px;
   }
   #linkname{
@@ -220,7 +195,6 @@
   .variant_border{
     border-top: 1px solid lightgray;
     border-bottom: 1px solid lightgray;
-    /* box-shadow: 0 3px 8px -6px rgba(0,0,0,.50); */
     margin-left: 0px;
     cursor: pointer;
   }
@@ -251,17 +225,7 @@
     padding-left: 0px;
   }
   .variant_play{
-    /* display: none; */
     z-index: 10;
-  }
-  /* .variant_border:hover .variant_play{
-    display:block !important;
-  } */
-  /* .activevaraint .variant_play{
-    display:block !important;   
-  } */
-  .variant_playOne{
-    display:block !important;   
   }
   .tooltip_header{
     font-size: 14px;
@@ -291,37 +255,6 @@
     padding-left: 6px;
     font-size: 13px;
   }
-  .activity_selection{
-    /* border: 1px solid lightgray;
-    border-radius: 10px; */
-    /* padding:5px; */
-    padding-bottom: 8px !important;
-  }
-  .activity_selection1{
-    position: absolute;
-    z-index: 4;
-    padding: 10px;
-    margin-top: 38px;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  }
-  /* .activity_selection1::after {
-    content: "";
-    position: absolute;
-    bottom: 100%;
-    left: 10%;
-    margin-left: -5px;
-    border-width: 8px;
-    border-style: solid;
-    border-color: transparent transparent gray transparent ;
-    } */
-    .activity_selection span{
-      margin-left: 22px;
-    }
   .nodata_slider{
     position: absolute;
     z-index: 100;
@@ -330,71 +263,14 @@
     color: #adaaaa;
     margin-left: 40%;
   }
-
-  .activity_selection{
-    padding:5px;
+  .reset_btnOne{
+    margin-left: 60%;
+    border: none !important;
+    background: none;
+    height: 20px;
+    color: #0162cf;
+    padding: 0px;
   }
-  .activity_selection2{
-    position: absolute;
-    z-index: 4;
-    /* width: 118px; */
-    padding: 10px;
-    margin-top: 2px;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ccc;
-    border: 1px solid rgba(0,0,0,.15);
-    border-radius: 4px;
-    box-shadow: 0 6px 12px rgba(0,0,0,.175);
-  }
-    .reset_btnOne{
-      margin-left: 60%;
-      border: none !important;
-      background: none;
-      height: 20px;
-      color: #0162cf;
-      padding: 0px;
-    }
-.activity_selection2 hr{
-  margin-bottom: 2px;
-  width: 120% !important;
-  margin-left: -9px !important;
-}
-.activity_selection1 hr{
-  margin-bottom: 5px;
-  width: 110% !important;
-  margin-left: -9px !important;
-}
-.apply_btn , .cancel_btn{
-  color: #fff;
-  background-color: #0162cf !important;
-  height: 20px;
-  padding: 0px !important;
-  width: 65px;
-  font-size: 12px;
-  border: none;
-}
-.activity_filter1 span,.activity_selection2 span{
-  margin-left: 5px;
-}
-.activity_filter3{
-  overflow: scroll;
-  max-height: 150px;
-}
-.apply_btn{
-  background-color: #0162cf !important;
-}
-.cancel_btn{
-  background-color: gray !important;
-}
-.cancel_btn1 button{
-  margin-left: -16px;
-}
-.apply_btn1 button{
-  margin-left: -12px;
-}
-
-
 
 .modal {
   display: none; /* Hidden by default */
