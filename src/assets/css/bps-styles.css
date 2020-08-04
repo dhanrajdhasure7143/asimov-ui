@@ -1,7 +1,7 @@
 /* create bpmn diagram component styles - Starts*/
 .update_info{
   position: absolute;
-  right: 60px;
+  right: 100px;
   color: #0062cf;
 }
 .drop__div{
@@ -612,4 +612,7 @@ background-color: #3ea307 !important;
 }
 .pending_value_properties{
   white-space: pre
+}
+.approval_workflow_properties{
+padding-top: 11px;
 }
