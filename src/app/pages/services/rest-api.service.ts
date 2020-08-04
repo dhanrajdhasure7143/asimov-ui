@@ -40,24 +40,28 @@ export class RestApiService{
   }
   bpmnlist(user){
     //GET /bpsprocess/approver/info/{roleName} 
-return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
-}
+    return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
+  }
+  approve_producemessage(bpmnProcessInfo){
+    return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
+  }
+  approve_savedb(bpmndata){
+    return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata);
+  }
+  denyDiagram(msg_obj){
+    // POST /bpsprocess/save/bpms/notation/approval/workflow
+    return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj);
+  }
 
-approve_producemessage(bpmnProcessInfo){
-  return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
-}
-approve_savedb(bpmndata){
-  return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata);
-}
-denyDiagram(msg_obj){
-// POST /bpsprocess/save/bpms/notation/approval/workflow
+  deleteBPMNProcess(data){
+    return this.http.delete('/bpsprocess/remove/bpmn/notation/user', data);
+  }
 
-return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj);
-}
-
+  sendReminderMailToApprover(data){
+    return this.http.get('/bpsprocess/reminder/email', {responseType: "text", params: data});
+  }
 
   getBPMNFileContent(filePath){
-    // return this.http.post(filePath, this.xmlheaderOptions);
     return this.http.get(filePath, {headers: {observe: 'response'}, responseType: 'text'});
   }
 
