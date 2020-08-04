@@ -54,14 +54,11 @@ export class RestApiService{
   }
 
   deleteBPMNProcess(data){
-    let params = new HttpParams();
-    params.set('bpmnModelId', data.bpmnModelId);
-    params.set('version', data.version);
-    return this.http.delete('/bpsprocess/remove/bpmn/notation/user', {params: params});
+    return this.http.post('/bpsprocess/remove/bpmn/notation/user', data, {responseType: "text" });
   }
 
   sendReminderMailToApprover(data){
-    return this.http.get('/bpsprocess/reminder/email', {responseType: "text", params: data});
+    return this.http.post('/bpsprocess/reminder/email', data, {responseType: "text" });
   }
 
   getBPMNFileContent(filePath){
