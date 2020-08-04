@@ -156,7 +156,7 @@ export class BpsHomeComponent implements OnInit {
     });
   }
 
-  sendReminderMail(bpmNotation, e){
+  sendReminderMail(e, bpmNotation){
     e.stopPropagation();
     Swal.fire({
       title: 'Reminder mail',
