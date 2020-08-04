@@ -166,13 +166,13 @@ export class UploadProcessModelComponent implements OnInit {
           _self.last_updated_time = now;
         }
       })
-      // this[modeler_obj].on('shape.added', (e)=> {
-      //   let modeling = this[modeler_obj].get('modeling');
-      //   modeling.setColor(e.element, {
-      //     stroke: 'green',
-      //     fill: 'lightgreen'
-      //   });
-      // })
+      this[modeler_obj].on('shape.added', (e)=> {
+        let modeling = this[modeler_obj].get('modeling');
+        modeling.setColor(e.element, {
+          stroke: 'green',
+          fill: 'lightgreen'
+        });
+      })
       if(this.isShowConformance && !this.reSize){ 
         this.rest.getBPMNFileContent("assets/resources/pizza-collaboration.bpmn").subscribe(res => {
           this[modeler_obj].importXML(res, function(err){
