@@ -28,7 +28,7 @@ export class BpsHomeComponent implements OnInit {
   xpandStatus=false;
   autosavedDiagramList = [];
   autosavedDiagramVersion = [];
-  pendingStatus='PENDING FOR APPROVAL';
+  pendingStatus='PENDING APPROVAL';
   userRole;
   isButtonVisible:boolean = false;
 
@@ -124,7 +124,7 @@ export class BpsHomeComponent implements OnInit {
         this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
           this.bpmnModeler.importXML(res, function(err){
             if(err){
-              console.error('could not import BPMN 2.0 diagram', err);
+              console.error('could not import BPMN 2.0 notation', err);
             }
           })
         });

@@ -53,6 +53,7 @@ export class UploadProcessModelComponent implements OnInit {
   isLoading:boolean = false;
   rejectedOrApproved;
   isDiagramChanged:boolean = false;
+  isApprovedNotation:boolean = false;
   notationListOldValue = 0;
   notationListNewValue = undefined;
   oldXml;
@@ -120,6 +121,7 @@ export class UploadProcessModelComponent implements OnInit {
 
    getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
+    this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
     if(!this.isUploaded){
       let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
       this.router.navigate([],{ relativeTo:this.route, queryParams:params });
@@ -175,7 +177,7 @@ export class UploadProcessModelComponent implements OnInit {
         this.rest.getBPMNFileContent("assets/resources/pizza-collaboration.bpmn").subscribe(res => {
           this[modeler_obj].importXML(res, function(err){
             if(err){
-              return console.error('could not import BPMN 2.0 diagram', err);
+              return console.error('could not import BPMN 2.0 notation', err);
             }
           })
           this[modeler_obj].get('canvas').zoom('fit-viewport');
@@ -190,13 +192,13 @@ export class UploadProcessModelComponent implements OnInit {
           this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
             this[modeler_obj].importXML(res, function(err){
               if(err)
-                console.error('could not import BPMN 2.0 diagram', err);
+                console.error('could not import BPMN 2.0 notation', err);
             });
           });
         }else{
           this[modeler_obj].importXML(selected_xml, function(err){
             if(err)
-              console.error('could not import BPMN 2.0 diagram', err)
+              console.error('could not import BPMN 2.0 notation', err)
           })
         }
       }
@@ -211,7 +213,7 @@ export class UploadProcessModelComponent implements OnInit {
   if(this.isDiagramChanged){
     Swal.fire({
       title: 'Are you sure?',
-      text: 'Your current changes will be lost on changing diagram.',
+      text: 'Your current changes will be lost on changing notation.',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Save and Continue',
@@ -228,6 +230,7 @@ export class UploadProcessModelComponent implements OnInit {
         this.notationListOldValue = this.selected_notation;
         let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
         let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+        this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
           this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
@@ -255,6 +258,7 @@ export class UploadProcessModelComponent implements OnInit {
     this.diplayApproveBtn = true;
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
     let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+    this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
       this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
@@ -311,7 +315,7 @@ export class UploadProcessModelComponent implements OnInit {
   }
 
    automate(){
-    let selected_process_id = this.saved_bpmn_list[this.selected_notation].bpmnModelId;
+    let selected_process_id = this.saved_bpmn_list[this.selected_notation].processIntelligenceId;
     this.router.navigate(["/pages/rpautomation/workspace"], { queryParams: { processid: selected_process_id }});
   }
 
@@ -328,7 +332,7 @@ export class UploadProcessModelComponent implements OnInit {
         let fileName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
         if(fileName.trim().length == 0 ) fileName = "newDiagram";
         link.download = fileName+".bpmn";
-        link.innerHTML = "Click here to download the diagram file";
+        link.innerHTML = "Click here to download the notation";
         link.click();
       });
     }
@@ -487,7 +491,7 @@ export class UploadProcessModelComponent implements OnInit {
           if(err.error.message == "2002")
           Swal.fire(
             'Oops!',
-            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress diagram',
+            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation',
             'warning'
           )
           else
@@ -509,7 +513,7 @@ export class UploadProcessModelComponent implements OnInit {
       this.initBpmnModeler();
       this.bpmnModeler.importXML(decrypted_data, function(err){
         if(err){
-          return console.error('could not import BPMN 2.0 diagram', err);
+          return console.error('could not import BPMN 2.0 notation', err);
         }
         _self.confBpmnXml = decrypted_data;
         _self.bpmnservice.uploadConfirmanceBpmnXMLDef( _self.bpmnModeler._definitions);
