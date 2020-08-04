@@ -127,7 +127,7 @@ margin-right: -85px;
 }
 /*List-of-changes component - Ends*/
 /* home component styles - Starts*/
-.first_col{
+/* .first_col{
   text-align: center;
 }
 .col-half-offset, .col-half-offsett{
@@ -136,7 +136,7 @@ margin-right: -85px;
 }
 .col-half-offset:nth-child(4) {
   margin-left: 3.1666%;
-}
+} */
 #bpmn_list .row{
   font-size: 11px;
 }
@@ -198,8 +198,19 @@ mat-expansion-panel{
   color: #5b5b5b;
   margin: 20px 0;
 }
+#bpmn_list_row span{
+  display: inline-block;
+  width: 13%;
+  text-align: center;
+}
 .workspace-title{
   padding-right: 100px !important;
+}
+.workspace-title span{
+  display: inline-block;
+  cursor: pointer;
+  width: 13%;
+  text-align: center;
 }
 .comment{
   position: relative;

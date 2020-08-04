@@ -40,21 +40,18 @@ export class RestApiService{
   }
   bpmnlist(user){
     //GET /bpsprocess/approver/info/{roleName} 
-return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
-}
-
-approve_producemessage(bpmnProcessInfo){
-  return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
-}
-approve_savedb(bpmndata){
-  return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata);
-}
-denyDiagram(msg_obj){
-// POST /bpsprocess/save/bpms/notation/approval/workflow
-
-return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj);
-}
-
+    return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
+  }
+  approve_producemessage(bpmnProcessInfo){
+    return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
+  }
+  approve_savedb(bpmndata){
+    return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata);
+  }
+  denyDiagram(msg_obj){
+    // POST /bpsprocess/save/bpms/notation/approval/workflow
+    return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj);
+  }
 
   getBPMNFileContent(filePath){
     // return this.http.post(filePath, this.xmlheaderOptions);
