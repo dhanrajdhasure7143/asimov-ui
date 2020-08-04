@@ -1,116 +1,104 @@
 <div id="header_overlay" class="hd_overlay">
-  <div class="modal-content" >
-    <div class="btn-group">
-      <ul id="dropdown-triggers-manual"><!--  *dropdownMenu class="dropdown-menu side_drp" role="menu"
-        aria-labelledby="button-triggers-manual" -->
-          <ng-template [cdkPortalOutlet]="dynamicComponent"></ng-template>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<!-- 
-      
-      <div id="header_overlay" class="hd_overlay">
-                <div class="modal-content" *ngIf="overlay_acc_dt" >
-                    <div class="tab">
-                        <div class="container">
-                        <button class="tablinks"  (click)="openCity($event, 'my_account')" id="defaultOpen">My Account</button>
-                        <button class="tablinks" (click)="openCity($event, 'subscription')">Subscriptions</button>
-                        <button class="tablinks" (click)="openCity($event, 'payment_history')">Payment History</button>
-                        <button class="tablinks" (click)="openCity($event, 'payment_mode')">Payment Mode</button>
-                        <span class="search_span"><input class="search_btn" type="text" placeholder="Search">&nbsp;<i class="fa fa-search"></i></span>
-                        </div>
-                        <span class="close" (click)="slideDown();">&times;</span>
+  <div class="modal-content" *ngIf="overlay_acc_dt" >
+    <span class="search_span"><input class="search_btn" type="text" placeholder="Search">&nbsp;<i class="fa fa-search"></i></span>
+    <span class="close" (click)="slideDown();">&times;</span>
+    <mat-tab-group>
+      <mat-tab label="My Account">
+        <form (ngSubmit)="save()" >
+          <div class="row">
+            <div class="col-md-3">
+              <div class="">
+                <label for="email" class="label_cell">Email</label><br>
+                <input type="email" name="email" class="form-control input_cell" required>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="">
+                  <label for="first_name" class="label_cell">First Name</label><br>
+                  <input type="text" name="first_name" class="form-control input_cell" required>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="">
+                    <label for="last_name" class="label_cell">Last Name</label><br>
+                    <input type="text" name="last_name" class="form-control input_cell" required>
+                  </div>
+            </div>
+            <div class="col-md-3">
+                <div class="">
+                    <label for="job_title" class="label_cell">Job Title</label><br>
+                    <input type="text" name="job_title" class="form-control input_cell" required>
+                </div>
+            </div>
+          </div>
+          <div class="row next_row">
+              <div class="col-md-3">
+                  <div class="">
+                    <label for="company" class="label_cell">Company</label><br>
+                    <input type="text" name="company" class="form-control input_cell" required>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="">
+                      <label for="country" class="label_cell">Country</label><br>
+                      <select type="text" name="country" class="form-control input_cell" required></select>
                     </div>
-                      <div class="container overlay_container">
+                </div>
+                <div class="col-md-3">
+                    <div class="">
+                        <label for="state" class="label_cell">State</label><br>
+                        <select type="text" name="state" class="form-control input_cell" required></select>
+                      </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="">
+                        <label for="city" class="label_cell">City</label><br>
+                        <select type="text" name="city" class="form-control input_cell" required></select>
+                    </div>
+                </div>
+          </div>
+          <div class="row next_row">
+            <div class="col-md-3">
+                <div class="">
+                    <label for="zip_code" class="label_cell">Zip Code</label><br>
+                    <input type="number" name="zip_code" class="form-control input_cell" required>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="">
+                    <label for="phone" class="label_cell">Phone</label><br>
+                    <input type="text" name="phone" class="form-control phonenumber"
+                          ng2TelInput
+                          (hasError)="hasError($event)"
+                          (ng2TelOutput)="getNumber($event)"
+                          (intlTelInputObject)="telInputObject($event)"
+                        />
+                </div>
+            </div>
+            <div class="col-md-3">
+                
+            </div>
+            <div class="col-md-3">
+                <div class="">
+                    <button type="submit" class="btn btn-primary save_btn">Save</button>
+                </div>
+            </div>
+          </div>
+        </form>
+      </mat-tab>
+      <mat-tab label="Subscriptions">
+
+      </mat-tab>
+      <mat-tab label="Payment History">
+
+      </mat-tab>
+      <mat-tab label="Payment Mode">
+
+      </mat-tab>
+    </mat-tab-group>
+                    
+                    <div class="container overlay_container">
                         <div id="my_account" class="tabcontent">
-                        <form (ngSubmit)="save()" >
-              
-                       
-                        <div class="row">
-                          <div class="col-md-3">
-                            <div class="">
-                              <label for="email" class="label_cell">Email</label><br>
-                              <input type="email" name="email" class="form-control input_cell" required>
-                            </div>
-                          </div>
-                          <div class="col-md-3">
-                             <div class="">
-                                <label for="first_name" class="label_cell">First Name</label><br>
-                                <input type="text" name="first_name" class="form-control input_cell" required>
-                              </div>
-                          </div>
-                          <div class="col-md-3">
-                              <div class="">
-                                  <label for="last_name" class="label_cell">Last Name</label><br>
-                                  <input type="text" name="last_name" class="form-control input_cell" required>
-                                </div>
-                          </div>
-                          <div class="col-md-3">
-                              <div class="">
-                                  <label for="job_title" class="label_cell">Job Title</label><br>
-                                  <input type="text" name="job_title" class="form-control input_cell" required>
-                              </div>
-                          </div>
-                        </div>
-              
-                        <div class="row next_row">
-                            <div class="col-md-3">
-                                <div class="">
-                                  <label for="company" class="label_cell">Company</label><br>
-                                  <input type="text" name="company" class="form-control input_cell" required>
-                                </div>
-                              </div>
-                              <div class="col-md-3">
-                                 <div class="">
-                                    <label for="country" class="label_cell">Country</label><br>
-                                    <select type="text" name="country" class="form-control input_cell" required></select>
-                                  </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <div class="">
-                                      <label for="state" class="label_cell">State</label><br>
-                                      <select type="text" name="state" class="form-control input_cell" required></select>
-                                    </div>
-                              </div>
-                              <div class="col-md-3">
-                                  <div class="">
-                                      <label for="city" class="label_cell">City</label><br>
-                                      <select type="text" name="city" class="form-control input_cell" required></select>
-                                  </div>
-                              </div>
-                        </div>
-              
-                        <div class="row next_row">
-                          <div class="col-md-3">
-                              <div class="">
-                                  <label for="zip_code" class="label_cell">Zip Code</label><br>
-                                  <input type="number" name="zip_code" class="form-control input_cell" required>
-                              </div>
-                          </div>
-                          <div class="col-md-3">
-                              <div class="">
-                                  <label for="phone" class="label_cell">Phone</label><br>
-                                  <input type="text" name="phone" class="form-control phonenumber"
-                                         ng2TelInput
-                                        (hasError)="hasError($event)"
-                                        (ng2TelOutput)="getNumber($event)"
-                                        (intlTelInputObject)="telInputObject($event)"
-                                       />
-                              </div>
-                          </div>
-                          <div class="col-md-3">
-                              
-                          </div>
-                          <div class="col-md-3">
-                              <div class="">
-                                  <button type="submit" class="btn btn-primary save_btn">Save</button>
-                              </div>
-                          </div>
-                        </div>
-                        
-                      </form>
                       </div>
                    
                       <div id="subscription" class="tabcontent">
@@ -131,6 +119,7 @@
                             <td class="table_cell">{{details.status}}</td>
                             <td class="table_cell">
                                  <button class="left" id="download" (click)="overview()"><img src="..\assets\icons\bpmn_Overview.svg"></button>
+                                    <!-- <i class="fa fa-times-circle-o"></i>  -->
                                     
                             </td>
                            </tr>
@@ -191,8 +180,8 @@
                     <div class="modal-content" *ngIf="overlay_user_manage_dt">
                              <div class="tab">
                                 <div class="container">
-                                <button class="tablinks"  (click)="openCity(event, 'my_account')">Roles</button>
-                                <button class="tablinks" (click)="openCity(event, 'subscription')">Users</button>
+                                <button class="tablinks"  (click)="openTab(event, 'my_account')">Roles</button>
+                                <button class="tablinks" (click)="openTab(event, 'subscription')">Users</button>
                               </div>
                               <span class="close" (click)="slideDown();">&times;</span>
                             </div> 
@@ -408,4 +397,4 @@
                                 </div>
                             </form>
                
-            </ng-template> -->
+            </ng-template>

@@ -28,10 +28,10 @@
                       <div class="dropdown">
                         <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
                         <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
-                          <a (click)='slideUp(0)'><i class="far fa-user hd_icon"></i> My Account</a>
-                          <a (click)='slideUp(1)'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
-                          <a (click)='slideUp(2)'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
-                          <a (click)='slideUp(3)'><img  class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
+                          <a (click)='slideUp("my_acc")'><i class="far fa-user hd_icon"></i> My Account</a>
+                          <a (click)='slideUp("user_manage")'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
+                          <a (click)='slideUp("config_alert")'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
+                          <a (click)='slideUp("invite_user")'><img  class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
                           <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a>
                         </div>
                       </div>
@@ -45,5 +45,4 @@
       </div>
     </section>
   </div> 
-  <!-- <bot-infopanel dropdown #dropdown="bs-dropdown" [componentIndex]="compIndex"></bot-infopanel> -->
-  <app-header-dropdown-overlay [componentIndex]="compIndex"></app-header-dropdown-overlay>
+  <app-header-dropdown-overlay  [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>

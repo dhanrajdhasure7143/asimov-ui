@@ -79,7 +79,8 @@ input:focus, textarea:focus, select:focus{
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;
-    animation-duration: 0.4s
+    animation-duration: 0.4s;
+    border-radius: 0;
     }
     
     /* The Close Button */
