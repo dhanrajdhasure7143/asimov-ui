@@ -26,6 +26,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   isLoading:boolean = false;
   diplayApproveBtn:boolean = false;
   isDiagramChanged:boolean = false;
+  isApprovedNotation:boolean = false;
   last_updated_time = new Date().getTime();
   saved_bpmn_list:any[] = [];
   approver_list:any[] = [];
@@ -189,6 +190,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
           this.notationListOldValue = this.selected_notation;
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+          this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
             this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
@@ -205,6 +207,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.diplayApproveBtn = true;
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+      this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
@@ -251,7 +254,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   automate(){
-    let selected_process_id = this.saved_bpmn_list[this.selected_notation].bpmnModelId;
+    let selected_process_id = this.saved_bpmn_list[this.selected_notation].processIntelligenceId;
     this.router.navigate(["/pages/rpautomation/workspace"], { queryParams: { processid: selected_process_id }});
   }
  
