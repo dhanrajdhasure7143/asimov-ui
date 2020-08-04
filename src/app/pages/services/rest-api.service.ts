@@ -58,7 +58,7 @@ export class RestApiService{
   }
 
   sendReminderMailToApprover(data){
-    return this.http.post('/bpsprocess/', data);
+    return this.http.get('/bpsprocess/reminder/email', {responseType: "text", params: data});
   }
 
   getBPMNFileContent(filePath){

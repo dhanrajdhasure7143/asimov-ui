@@ -160,7 +160,7 @@ export class BpsHomeComponent implements OnInit {
     e.stopPropagation();
     Swal.fire({
       title: 'Reminder mail',
-      text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' reminder mail to ',
+      text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' reminder mail to '+bpmNotation.approverName,
       icon: 'info',
       showCancelButton: true,
       confirmButtonText: 'Send',
