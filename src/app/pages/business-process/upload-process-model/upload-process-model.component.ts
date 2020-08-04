@@ -127,11 +127,19 @@ export class UploadProcessModelComponent implements OnInit {
       this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     }
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
-    if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1)
-      this.selected_approver = current_bpmn_info["approverName"];
+    if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
+      //this.selected_approver = current_bpmn_info["approverName"];
+      for(var s=0; s<this.approver_list.length; s++){
+          let each = this.approver_list[s];
+          if(each.firstName+" "+each.lastName == current_bpmn_info["approverName"])
+          this.selected_approver = s;
+          break;
+        }
+    }
     else
-      this.selected_approver = "";
+      this.selected_approver = null;
    }
+
    getAutoSavedDiagrams(){
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
       if(Array.isArray(res))
@@ -377,7 +385,7 @@ export class UploadProcessModelComponent implements OnInit {
 
   submitDiagramForApproval(){
     let bpmnModel:BpmnModel = new BpmnModel();
-    if(!this.selected_approver){
+    if(this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
@@ -385,7 +393,9 @@ export class UploadProcessModelComponent implements OnInit {
    let _self = this;
    let sel_List = this.saved_bpmn_list[this.selected_notation];
    let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-   bpmnModel.approverName = this.selected_approver;
+   let sel_appr = this.approver_list[this.selected_approver];
+   bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
+   bpmnModel.approverEmail = sel_appr.userId;
    if(this.isShowConformance){
     bpmnModel.bpmnModelId = UUID.UUID();
     bpmnModel.bpmnProcessName = 'process Intelligence';
