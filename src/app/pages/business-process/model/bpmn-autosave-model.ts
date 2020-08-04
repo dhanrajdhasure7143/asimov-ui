@@ -15,7 +15,6 @@ export class BpmnModel{
     //emailTo:string = "saivijaya.malladi@epsoftinc.com"; // email of logged user
     userEmail:string="";
     approverEmail:string="";
-    
     category:string;
     bpmnXmlNotation:string;
     bpmnProcessStatus:string;

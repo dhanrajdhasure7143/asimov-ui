@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 
@@ -54,11 +54,11 @@ export class RestApiService{
   }
 
   deleteBPMNProcess(data){
-    return this.http.delete('/bpsprocess/remove/bpmn/notation/user', data);
+    return this.http.post('/bpsprocess/remove/bpmn/notation/user', data, {responseType: "text" });
   }
 
   sendReminderMailToApprover(data){
-    return this.http.get('/bpsprocess/reminder/email', {responseType: "text", params: data});
+    return this.http.post('/bpsprocess/reminder/email', data, {responseType: "text" });
   }
 
   getBPMNFileContent(filePath){
