@@ -194,8 +194,7 @@ export class DataselectionComponent implements OnInit {
         "transforms.InsertField.static.field": "piIdName",
         "transforms.InsertField.static.value": this.processId+"-p"+this.processId
       }   }
-     console.log(connectorBody);
-     return;
+
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       })
@@ -245,9 +244,6 @@ export class DataselectionComponent implements OnInit {
         "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
       }
     }
-    console.log(xlsxConnectorBody);
-    return;
-    
         this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
               this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
         })
