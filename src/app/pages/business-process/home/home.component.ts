@@ -65,7 +65,6 @@ export class BpsHomeComponent implements OnInit {
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
     },
-    
     (err) => {
       this.isLoading = false;
     });
@@ -198,6 +197,8 @@ export class BpsHomeComponent implements OnInit {
           "version": bpmNotation.version
         }
         this.rest.deleteBPMNProcess(data).subscribe(res => {
+          this.isLoading = true;
+          this.getBPMNList();
           this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
         }, err => {
           console.log(err)
