@@ -49,7 +49,9 @@ export class RpaStudioActionsComponent implements OnInit {
   logbyrunid:MatTableDataSource<any>; 
   
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
-  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  //@ViewChild(MatSort,{static:false}) sort: MatSort;
+  @ViewChild('sorter1',{static:false}) sorter1: MatSort;
+  @ViewChild('sorter2',{static:false}) sorter2: MatSort;
 
   @Input('tabsArrayLength') public tabsArrayLength: number;
   @Input('botState') public botState: any;
@@ -667,6 +669,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
 
    viewlogdata(){
+     this.childBotWorkspace.addsquences();
     let response: any;
     let log:any=[];
     this.logresponse=[];
@@ -706,7 +709,7 @@ export class RpaStudioActionsComponent implements OnInit {
       console.log(this.Viewloglist);
 
       this.Viewloglist.paginator=this.paginator;
-      this.Viewloglist.sort=this.sort;
+      this.Viewloglist.sort=this.sorter1;
       
       document.getElementById(this.viewlogid).style.display="block";
     
@@ -735,7 +738,7 @@ export class RpaStudioActionsComponent implements OnInit {
       this.logbyrunid = new MatTableDataSource(resplogbyrun);
       console.log(this.logbyrunid);
       this.logbyrunid.paginator=this.paginator;
-      this.logbyrunid.sort=this.sort;
+      this.logbyrunid.sort=this.sorter2;
     })
 }
 

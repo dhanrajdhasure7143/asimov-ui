@@ -31,8 +31,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule} from '@angular/material';
-
+import {MatInputModule, MatIconModule, MatFormFieldModule} from '@angular/material';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent, RpaHomeComponent],
   imports: [
@@ -41,6 +42,7 @@ import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatS
     NgxPasswordToggleModule,
     DndModule,
     MatTableModule,
+    MatTabsModule,
     FilterPipeModule,
     DataTablesModule,
     NgbModule,
@@ -59,7 +61,7 @@ import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatS
     MatPaginatorModule,
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule
+    MatSelectModule
   ],
   providers: [RpaHints,RpaDragHints,RpaEnvHints,RpaWorkspace]
 })

@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
 
@@ -40,24 +40,28 @@ export class RestApiService{
   }
   bpmnlist(user){
     //GET /bpsprocess/approver/info/{roleName} 
-return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
-}
+    return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
+  }
+  approve_producemessage(bpmnProcessInfo){
+    return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
+  }
+  approve_savedb(bpmndata){
+    return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata);
+  }
+  denyDiagram(msg_obj){
+    // POST /bpsprocess/save/bpms/notation/approval/workflow
+    return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj);
+  }
 
-approve_producemessage(bpmnProcessInfo){
-  return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
-}
-approve_savedb(bpmndata){
-  return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',bpmndata);
-}
-denyDiagram(msg_obj){
-// POST /bpsprocess/save/bpms/notation/approval/workflow
+  deleteBPMNProcess(data){
+    return this.http.post('/bpsprocess/remove/bpmn/notation/user', data, {responseType: "text" });
+  }
 
-return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',msg_obj);
-}
-
+  sendReminderMailToApprover(data){
+    return this.http.post('/bpsprocess/reminder/email', data, {responseType: "text" });
+  }
 
   getBPMNFileContent(filePath){
-    // return this.http.post(filePath, this.xmlheaderOptions);
     return this.http.get(filePath, {headers: {observe: 'response'}, responseType: 'text'});
   }
 
@@ -158,7 +162,7 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
 
   getbotlist(botType, botDepartment)
   {
-    return this.http.get("/rpa-service/get-all-bots/"+0+"/"+botDepartment+"/"+botType)
+    return this.http.get("/rpa-service/get-all-bots/"+botDepartment+"/"+botType);
   }
 
 
@@ -216,6 +220,14 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/rpa-service/get-bot/"+botId+"/"+vid)
   }
 
+
+  getautomatedtasks()
+  {
+    return this.http.get("/rpa-service/automation-tasks")
+  }
+
+
+
   // PI module rest api's
 
   fileupload(file){
@@ -265,10 +277,16 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
     return this.http.get("/rpa-service/get-all-bots")
   }
 
+
+  getprocessnames()
+  {
+    return this.http.get("/rpa-service/process-name");
+  }
+
   checkbotname(botname)
   {
     let data="";
-    return this.http.post("/rpa-service/check-bot/0?botName="+botname,data)
+    return this.http.post("/rpa-service/check-bot?botName="+botname,data)
   }
   getDeleteBot(botId)
   {

@@ -6,6 +6,8 @@ import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 import { BpsHints } from '../model/bpmn-module-hints';
+import Swal from 'sweetalert2';
+import { GlobalScript } from 'src/app/shared/global-script';
 
 @Component({
   selector: 'app-bpshome',
@@ -28,12 +30,12 @@ export class BpsHomeComponent implements OnInit {
   xpandStatus=false;
   autosavedDiagramList = [];
   autosavedDiagramVersion = [];
-  public userRole:any = [];
-  public isButtonVisible = false;
-
+  pendingStatus='PENDING APPROVAL';
+  userRole;
+  isButtonVisible:boolean = false;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
-     private rest:RestApiService, private hints:BpsHints ) { }
+     private rest:RestApiService, private hints:BpsHints, private global:GlobalScript ) { }
 
   ngOnInit(){
     this.userRole = localStorage.getItem("userRole")
@@ -63,6 +65,7 @@ export class BpsHomeComponent implements OnInit {
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
     },
+    
     (err) => {
       this.isLoading = false;
     });
@@ -123,7 +126,7 @@ export class BpsHomeComponent implements OnInit {
         this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
           this.bpmnModeler.importXML(res, function(err){
             if(err){
-              console.error('could not import BPMN 2.0 diagram', err);
+              console.error('could not import BPMN 2.0 notation', err);
             }
           })
         });
@@ -152,6 +155,56 @@ export class BpsHomeComponent implements OnInit {
        return (a[colKey] < b[colKey]) ? 1 : -1;
     });
   }
-  
+
+  sendReminderMail(e, bpmNotation){
+    e.stopPropagation();
+    Swal.fire({
+      title: 'Reminder mail',
+      text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' reminder mail to '+bpmNotation.approverName,
+      icon: 'info',
+      showCancelButton: true,
+      confirmButtonText: 'Send',
+      cancelButtonText: 'Cancel'
+    }).then((res) => {
+      if(res.isConfirmed){
+        let data = {
+          "bpmnModelId":bpmNotation.bpmnModelId,
+          "version": bpmNotation.version
+        }
+        this.rest.sendReminderMailToApprover(data).subscribe(res => {
+          this.global.notify('Sent reminder successfully','success')
+        }, err => {
+          console.log(err)
+          this.global.notify('Oops! Something went wrong','error')
+        })
+      }
+    })
+  }
+
+  deleteProcess(e, bpmNotation){
+    e.stopPropagation();
+    let status = bpmNotation.bpmnProcessStatus == "PENDING"?"PENDING APPROVAL":bpmNotation.bpmnProcessStatus;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' in '+status+' status will be deleted',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    }).then((res) => {
+      if(res.isConfirmed){
+        let data = {
+          "bpmnModelId":bpmNotation.bpmnModelId,
+          "version": bpmNotation.version
+        }
+        this.rest.deleteBPMNProcess(data).subscribe(res => {
+          this.global.notify(bpmNotation.bpmnProcessName+' V1.'+bpmNotation.version+' deleted','success')
+        }, err => {
+          console.log(err)
+          this.global.notify('Oops! Something went wrong','error')
+        })
+      }
+    })
+  }  
  
 }

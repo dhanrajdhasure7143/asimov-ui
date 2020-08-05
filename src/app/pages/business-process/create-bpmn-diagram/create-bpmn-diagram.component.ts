@@ -26,6 +26,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   isLoading:boolean = false;
   diplayApproveBtn:boolean = false;
   isDiagramChanged:boolean = false;
+  isApprovedNotation:boolean = false;
   last_updated_time = new Date().getTime();
   saved_bpmn_list:any[] = [];
   approver_list:any[] = [];
@@ -55,8 +56,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
-    this.getUserBpmnList();
     this.getApproverList();
+    this.getUserBpmnList();
   }
  
   // ngOnDestroy(){
@@ -112,10 +113,17 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
-    if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1)
-      this.selected_approver = current_bpmn_info["approverName"];
+    if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
+      //this.selected_approver = current_bpmn_info["approverName"];
+      for(var s=0; s<this.approver_list.length; s++){
+          let each = this.approver_list[s];
+          if(each.firstName+" "+each.lastName == current_bpmn_info["approverName"])
+          this.selected_approver = s;
+          break;
+        }
+    }
     else
-      this.selected_approver = "";
+      this.selected_approver = null;
    }
 
    getAutoSavedDiagrams(){
@@ -153,8 +161,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
     let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation 
-    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
+      this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+    }
     let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml))); 
     this.bpmnModeler.importXML(decrypted_bpmn, function(err){
       _self.oldXml = decrypted_bpmn.trim();
@@ -165,11 +175,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
   displayBPMN(){
     let value = this.notationListOldValue;
     let _self = this;
+    this.updated_date_time = null;
     this.filterAutoSavedDiagrams();
     if(this.isDiagramChanged){
       Swal.fire({
         title: 'Are you sure?',
-        text: 'Your current changes will be lost on changing diagram.',
+        text: 'Your current changes will be lost on changing notation.',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonText: 'Save and Continue',
@@ -186,8 +197,11 @@ export class CreateBpmnDiagramComponent implements OnInit {
           this.notationListOldValue = this.selected_notation;
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+          this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+            this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+          }
           this.bpmnModeler.importXML(selected_xml, function(err){
             _self.oldXml = selected_xml;
             _self.newXml = selected_xml;
@@ -200,8 +214,11 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.diplayApproveBtn = true;
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-      if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
+      this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+      if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+        this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+      }
       this.bpmnModeler.importXML(selected_xml, function(err){
         _self.oldXml = selected_xml;
         _self.newXml = selected_xml;
@@ -235,6 +252,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj = data;
+        this.updated_date_time = new Date();
         this.spinner.hide();
       },
       err => {
@@ -243,7 +261,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   automate(){
-    let selected_process_id = this.saved_bpmn_list[this.selected_notation].bpmnModelId;
+    let selected_process_id = this.saved_bpmn_list[this.selected_notation].processIntelligenceId;
     this.router.navigate(["/pages/rpautomation/workspace"], { queryParams: { processid: selected_process_id }});
   }
  
@@ -259,13 +277,13 @@ export class CreateBpmnDiagramComponent implements OnInit {
         let fileName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
         if(fileName.trim().length == 0 ) fileName = "newDiagram";
         link.download = fileName+".bpmn";
-        link.innerHTML = "Click here to download the diagram file";
+        link.innerHTML = "Click here to download the notation";
         link.click();
       });
     }
   }
   submitDiagramForApproval(){
-    if(!this.selected_approver){
+    if(this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
@@ -273,7 +291,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.isLoading = true;
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
-    bpmnModel.approverName = this.selected_approver;
+    let sel_appr = this.approver_list[this.selected_approver];
+    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
+    bpmnModel.approverEmail = sel_appr.userId;
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
@@ -368,7 +388,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
           if(err.error.message == "2002")
           Swal.fire(
             'Oops!',
-            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress diagram',
+            'An Inprogress process already exists for the selected process. \nPlease do the changes in existing inprogress notation',
             'warning'
           )
           else

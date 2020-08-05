@@ -820,10 +820,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   
 
 
-  squences()
+  addsquences()
   {
     this.jsPlumbInstance.getAllConnections().forEach(element => {
-    
+      console.log(element);
+      console.log(element.getId())
+      console.log(element.getId())
     });
   }
 

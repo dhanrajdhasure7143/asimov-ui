@@ -319,3 +319,18 @@
       padding:0px;
       z-index:1;
     }
+.rpa-pull-right{
+  float:left;
+}
+
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.section {
+  overflow: scroll;
+  min-height: 65px;
+  max-height: 443px;
+  white-space: nowrap;
+}

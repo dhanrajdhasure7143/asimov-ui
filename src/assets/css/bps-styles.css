@@ -1,7 +1,7 @@
 /* create bpmn diagram component styles - Starts*/
 .update_info{
   position: absolute;
-  right: 60px;
+  right: 100px;
   color: #0062cf;
 }
 .drop__div{
@@ -127,7 +127,7 @@ margin-right: -85px;
 }
 /*List-of-changes component - Ends*/
 /* home component styles - Starts*/
-.first_col{
+/* .first_col{
   text-align: center;
 }
 .col-half-offset, .col-half-offsett{
@@ -136,7 +136,7 @@ margin-right: -85px;
 }
 .col-half-offset:nth-child(4) {
   margin-left: 3.1666%;
-}
+} */
 #bpmn_list .row{
   font-size: 11px;
 }
@@ -177,7 +177,7 @@ div[class^='diagram_container']{
   z-index: -10;
 }
 .bps_overlay{
-  height: 400px;
+  /* height: 400px; */
   z-index: 30;
   cursor: pointer;
   opacity: 0.9;
@@ -198,8 +198,25 @@ mat-expansion-panel{
   color: #5b5b5b;
   margin: 20px 0;
 }
+#bpmn_list_row span{
+  display: inline-block;
+  width: 14%;
+  text-align: center;
+}
 .workspace-title{
   padding-right: 100px !important;
+}
+.workspace-title span{
+  display: inline-block;
+  cursor: pointer;
+  width: 14%;
+  text-align: center;
+}
+.fa-envelope{
+  color : #ffa500;
+}
+.glyphicon-trash{
+  color: red;
 }
 .comment{
   position: relative;
@@ -598,4 +615,10 @@ background-color: #3ea307 !important;
     margin-top: 10px;
     margin-bottom: 20px;
 
+}
+.pending_value_properties{
+  white-space: pre
+}
+.approval_workflow_properties{
+padding-top: 11px;
 }
