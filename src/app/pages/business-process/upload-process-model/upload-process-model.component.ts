@@ -174,13 +174,13 @@ export class UploadProcessModelComponent implements OnInit {
           _self.last_updated_time = now;
         }
       })
-      this[modeler_obj].on('shape.added', (e)=> {
-        let modeling = this[modeler_obj].get('modeling');
-        modeling.setColor(e.element, {
-          stroke: 'green',
-          fill: 'lightgreen'
-        });
-      })
+      // this[modeler_obj].on('shape.added', (e)=> {
+      //   let modeling = this[modeler_obj].get('modeling');
+      //   modeling.setColor(e.element, {
+      //     stroke: 'green',
+      //     fill: 'lightgreen'
+      //   });
+      // })
       if(this.isShowConformance && !this.reSize){ 
         this.rest.getBPMNFileContent("assets/resources/pizza-collaboration.bpmn").subscribe(res => {
           this[modeler_obj].importXML(res, function(err){
@@ -358,7 +358,6 @@ export class UploadProcessModelComponent implements OnInit {
         _self.newXml = fileString.trim();
         _self.isLoading = false;
       });
-      // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
     }
     myReader.readAsText(e.addedFiles[0]);
   }
@@ -541,31 +540,67 @@ export class UploadProcessModelComponent implements OnInit {
     }
   }
 
+  getElementsToColor(modeler, input, type){
+    let strokeClr = "";
+    let fillClr = "";
+    let elementsToColor = [];
+    let modeling = this[modeler].get('modeling');
+    let eleRegistry = this[modeler].get('elementRegistry');
+    let type_arr = Object.keys(input);
+    switch(type){
+      case "add": strokeClr = "green";
+                  fillClr = "lightgreen";
+                  break;
+      case "remove": strokeClr = "red";
+                  fillClr = "pink";
+                  break;
+      case "change": strokeClr = "orange";
+                  fillClr = "yellow";
+                  break;
+      case "layout": strokeClr = "blue";
+                  fillClr = "lightblue";
+                  break;
+    }
+    type_arr.forEach(each_add => {
+      let each_ = input[each_add];
+      let flowEles = each_.flowElements;
+      if(flowEles){
+        flowEles.forEach(each_el => {
+          let el = eleRegistry.get(each_el.id);
+          if(el) elementsToColor.push(el)
+        })
+      }else{
+        let el = eleRegistry.get(each_.id);
+        if(el) elementsToColor.push(el)
+      }
+    })
+    if(elementsToColor.length != 0){
+      modeling.setColor(elementsToColor, {
+        stroke: strokeClr,
+        fill: fillClr
+      });
+    }
+  }
+
   getBpmnDifferences(){
     let bpmnDiffs = diff( this.confBpmnModeler.getDefinitions(), this.bpmnModeler.getDefinitions());
+    let revBpmnDiffs = diff( this.bpmnModeler.getDefinitions(), this.confBpmnModeler.getDefinitions());
     this.bpmnservice.updateDifferences(bpmnDiffs);
-    // let modeling = this.bpmnModeler.get('modeling');
-    // let elementsToColor = [];
-    // modeling.setColor(elementsToColor, {
-    //   stroke: 'green',
-    //   fill: 'lightgreen'
-    // });
-    let confModeling = this.confBpmnModeler.get('modeling');
-    let confElementsToColor = [];
-    confModeling.setColor(confElementsToColor, {
-      stroke: 'green',
-      fill: 'lightgreen'
-    });
+
+    this.getElementsToColor('bpmnModeler', bpmnDiffs._added, 'add');
+    this.getElementsToColor('bpmnModeler', bpmnDiffs._changed, 'change');
+    this.getElementsToColor('bpmnModeler', bpmnDiffs._layoutChanged, 'layout');
+
+    this.getElementsToColor('confBpmnModeler', bpmnDiffs._removed, 'remove');
+    this.getElementsToColor('confBpmnModeler', revBpmnDiffs._changed, 'change');
+    this.getElementsToColor('confBpmnModeler', revBpmnDiffs._layoutChanged, 'layout');
+    
     this.slideUpDifferences();
   }
 
   slideUp(e){
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
-      // var modal = document.getElementById('myModal');
-      // modal.style.display="block";
-     // this.uploadedFile = e.addedFiles[0];
       this.uploadAgainBpmn(e);
-
     }else{
       this.uploadedFile = null;
       this.isLoading = false;
@@ -577,7 +612,6 @@ export class UploadProcessModelComponent implements OnInit {
   }
   displayShortcut(){
     this.dialog.open(this.keyboardShortcut);
-
  }
  
   
