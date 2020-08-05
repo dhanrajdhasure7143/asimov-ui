@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
@@ -6,6 +6,7 @@ import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from '../../../shared/global-script';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'app-dataselection',
@@ -57,7 +58,8 @@ export class DataselectionComponent implements OnInit {
                 private dt:DataTransferService, 
                 private hints:PiHints, 
                 private global:GlobalScript,
-                private rest:RestApiService) {
+                private rest:RestApiService,
+                @Inject(APP_CONFIG) private config) {
                 
                  }
 
@@ -162,7 +164,7 @@ export class DataselectionComponent implements OnInit {
         "input.file.pattern": this.isUploadFileName,
         "error.path": "/var/kafka",
         //  "topic": "tytyconnector-spooldir-"+this.processId,
-         "topic": "topqconnector-spooldir-"+this.processId,
+         "topic": this.config.piConnector+"connector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",
@@ -192,7 +194,8 @@ export class DataselectionComponent implements OnInit {
         "transforms.InsertField.static.field": "piIdName",
         "transforms.InsertField.static.value": this.processId+"-p"+this.processId
       }   }
-     
+     console.log(connectorBody);
+     return;
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       })
@@ -203,7 +206,7 @@ export class DataselectionComponent implements OnInit {
         "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
         "tasks.max": "1",
         "file": "/var/kafka/"+this.isUploadFileName,
-        "topic": "topqconnector-xls-"+this.processId,
+        "topic": this.config.piConnector+"connector-xls-"+this.processId,
         // "topic": "tytyconnector-xls-"+this.processId,
         "key.converter": "io.confluent.connect.avro.AvroConverter",
         "key.converter.schema.registry.url": "http://10.11.0.101:8081",
@@ -242,7 +245,8 @@ export class DataselectionComponent implements OnInit {
         "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
       }
     }
-    
+    console.log(xlsxConnectorBody);
+    return;
     
         this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
               this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
@@ -381,7 +385,7 @@ export class DataselectionComponent implements OnInit {
     this.isgenerate=false;
   }
 
-  getCaseName(name, stp){
+  getCaseName(name){
    
       if(name.indexOf('Timestamp') != -1 || name.indexOf('Time') != -1){
         return 'Timestamp';

@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { RestApiService } from '../../services/rest-api.service';
 import * as moment from 'moment';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'app-xesdocument',
@@ -23,7 +24,8 @@ export class XesdocumentComponent implements OnInit {
   constructor(private router: Router,
     private dt: DataTransferService,
     private hints: PiHints,
-    private rest: RestApiService) { }
+    private rest: RestApiService,
+    @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -64,7 +66,7 @@ export class XesdocumentComponent implements OnInit {
         // "file": "/var/kafka/HospitalBilling.xes",
         "file": "/var/kafka/" + this.isUploadFileName,
         // "topic": "topqconnector-xesTesting107",
-        "topic": "topqconnector-xes-" + this.processId,
+        "topic": this.config.piConnector+"connector-xes-" + this.processId,
         // "topic": "tytyconnector-xes-" + this.processId,
         "key.converter": "io.confluent.connect.avro.AvroConverter",
         "key.converter.schema.registry.url": "http://10.11.0.101:8081",
