@@ -530,6 +530,18 @@ export class UploadProcessModelComponent implements OnInit {
   getBpmnDifferences(){
     let bpmnDiffs = diff( this.confBpmnModeler.getDefinitions(), this.bpmnModeler.getDefinitions());
     this.bpmnservice.updateDifferences(bpmnDiffs);
+    // let modeling = this.bpmnModeler.get('modeling');
+    // let elementsToColor = [];
+    // modeling.setColor(elementsToColor, {
+    //   stroke: 'green',
+    //   fill: 'lightgreen'
+    // });
+    let confModeling = this.confBpmnModeler.get('modeling');
+    let confElementsToColor = [];
+    confModeling.setColor(confElementsToColor, {
+      stroke: 'green',
+      fill: 'lightgreen'
+    });
     this.slideUpDifferences();
   }
 
