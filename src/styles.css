@@ -149,7 +149,7 @@ div[class^='diagram_container'] .djs-container svg{
 .header_addon{
   /* position: relative;
   top: -55px; */
-  position: absolute;
+  position: absolute !important;
   top: 105px;
   width: 100%;
 }

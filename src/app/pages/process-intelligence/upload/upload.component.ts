@@ -52,11 +52,7 @@ export class UploadComponent implements OnInit {
     private rest: RestApiService,
     private global: GlobalScript,
     private hints: PiHints,
-    private ngxXml2jsonService: NgxXml2jsonService) {
-    //       window.location.hash="/pages/processIntelligence/upload";
-    // window.location.hash="/pages/processIntelligence/upload";//again because google chrome don't insert first hash into history
-    // window.onhashchange=function(){window.location.hash="/pages/processIntelligence/upload";}
-  }
+    private ngxXml2jsonService: NgxXml2jsonService) {  }
 
   ngOnInit() {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -78,9 +74,7 @@ export class UploadComponent implements OnInit {
       fd.append('permissionStatus', 'yes'),
       this.rest.fileupload(fd).subscribe(res => {
       this.filedetails = res
-        // console.log('res',this.filedetails.data);
         let fileName = this.filedetails.data.split(':');
-        // localStorage.setItem("fileName",fileName[1])
         this.rest.fileName.next(fileName[1]);
         this.onSelect(event, id)
       }, err => {
@@ -141,7 +135,6 @@ export class UploadComponent implements OnInit {
     const reader: FileReader = new FileReader();
 
     reader.onload = (e: any) => {
-      // console.log('this.data',e);
       const bstr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
       const wsname: string = wb.SheetNames[0];
@@ -152,7 +145,6 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
-      // console.log(excelfile);
       localStorage.removeItem("fileData")
       localStorage.setItem("fileData", JSON.stringify(excelfile))
       this.router.navigate(['/pages/processIntelligence/datadocument']);
@@ -172,7 +164,6 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(csvRecordsArray);
       let excelfile = [];
       excelfile = csvRecordsArray;
-      // console.log(excelfile);
       localStorage.removeItem("fileData")
       localStorage.setItem("fileData", JSON.stringify(excelfile))
       this.router.navigate(['/pages/processIntelligence/datadocument']);
@@ -264,7 +255,6 @@ export class UploadComponent implements OnInit {
       return Array.isArray(v);
   }
   testConnection() {
-    // console.log("userName",this.dbDetails);
     this.isSave = false;
   }
 
@@ -317,16 +307,6 @@ export class UploadComponent implements OnInit {
     this.isgraph = true;
     let selected_process_id = selectedpiIdData.piId
     this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: selected_process_id } });
-
-    // this.rest.getfullGraph(selectedpiIdData.piId).subscribe(data=>{this.fullgraph=data
-    //   // console.log("fullgraph",this.fullgraph.data.allSelectData);
-    //   let fullgraph=JSON.parse(this.fullgraph.data)
-    //   console.log("fullgraph",fullgraph);
-
-    //   this.model1 = fullgraph.allSelectData.nodeDataArraycase
-    //   this.model2 = this.flowchartData(this.model1)
-    // this.flowGraph()
-    // })
 
   }
   getcategoryName(categoryName) {

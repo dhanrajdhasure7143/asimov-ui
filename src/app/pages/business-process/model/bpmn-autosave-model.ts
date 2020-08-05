@@ -12,7 +12,9 @@ export class BpmnModel{
     tenantId:number;
     processIntelligenceId:number;
     id:number;
-    emailTo:string = "saivijaya.malladi@epsoftinc.com"; // email of logged user
+    //emailTo:string = "saivijaya.malladi@epsoftinc.com"; // email of logged user
+    userEmail:string="";
+    approverEmail:string="";
     category:string;
     bpmnXmlNotation:string;
     bpmnProcessStatus:string;

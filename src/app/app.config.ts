@@ -13,6 +13,9 @@ export interface AsimovAppConfig {
     isProduction: boolean;
     accessTokenEndPoint:string;
     authorizationEndPoint:string;
+    aiotalMyAccountRedirectionURL: string;
+    logoutRedirectionURL: string;
+    piConnector:string;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -25,4 +28,7 @@ export const AppConfig: AsimovAppConfig = {
     loopbackHost: environment.loopback_url,
     imagePath: '', 
     isProduction: true,
+    aiotalMyAccountRedirectionURL: environment.myaccount_url,
+    logoutRedirectionURL: environment.logout_url,
+    piConnector:environment.connector_topic
 };
