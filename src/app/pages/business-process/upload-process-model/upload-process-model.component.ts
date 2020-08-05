@@ -539,7 +539,7 @@ export class UploadProcessModelComponent implements OnInit {
     let elementsToColor = [];
     let modeling = this[modeler].get('modeling');
     let eleRegistry = this[modeler].get('elementRegistry');
-    let type_arr = Object.keys(input);
+    let type_arr = input? Object.keys(input):[];
     switch(type){
       case "add": strokeClr = "green";
                   fillClr = "lightgreen";
@@ -553,20 +553,26 @@ export class UploadProcessModelComponent implements OnInit {
       case "layout": strokeClr = "blue";
                   fillClr = "lightblue";
                   break;
+      default:  strokeClr = "black";
+                fillClr = "white";
     }
-    type_arr.forEach(each_add => {
-      let each_ = input[each_add];
-      let flowEles = each_.flowElements;
-      if(flowEles){
-        flowEles.forEach(each_el => {
-          let el = eleRegistry.get(each_el.id);
+    if(type == "all"){
+      elementsToColor = eleRegistry.getAll();
+    }else{
+      type_arr.forEach(each_add => {
+        let each_ = input[each_add];
+        let flowEles = each_.flowElements;
+        if(flowEles){
+          flowEles.forEach(each_el => {
+            let el = eleRegistry.get(each_el.id);
+            if(el) elementsToColor.push(el)
+          })
+        }else{
+          let el = eleRegistry.get(each_.id);
           if(el) elementsToColor.push(el)
-        })
-      }else{
-        let el = eleRegistry.get(each_.id);
-        if(el) elementsToColor.push(el)
-      }
-    })
+        }
+      })
+    }
     if(elementsToColor.length != 0){
       modeling.setColor(elementsToColor, {
         stroke: strokeClr,
@@ -589,6 +595,12 @@ export class UploadProcessModelComponent implements OnInit {
     this.getElementsToColor('confBpmnModeler', revBpmnDiffs._layoutChanged, 'layout');
     
     this.slideUpDifferences();
+  }
+
+  clearDifferences(){
+    this.getElementsToColor('bpmnModeler', null, 'all');
+    this.getElementsToColor('confBpmnModeler', null, 'all');
+    this.autoSaveBpmnDiagram();
   }
 
   slideUp(e){
