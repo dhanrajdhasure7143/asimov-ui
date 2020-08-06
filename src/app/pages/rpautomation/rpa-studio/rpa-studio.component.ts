@@ -11,7 +11,7 @@ import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuCont
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { RpaHints } from '../model/rpa-module-hints';
 import Swal from 'sweetalert2';
-
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-rpa-studio',
@@ -62,7 +62,7 @@ export class RpaStudioComponent implements OnInit {
   public checkbotname:Boolean;
   @ViewChild('section', {static: false}) section: ElementRef<any>;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
-    private hints:RpaHints, private formBuilder:FormBuilder) { 
+    private hints:RpaHints, private formBuilder:FormBuilder,public spinner: NgxSpinnerService) { 
     this.show = 8;
     
     this.insertbot=this.formBuilder.group({
@@ -207,8 +207,16 @@ export class RpaStudioComponent implements OnInit {
     let botDepartment=this.loadbot.get("botDepartment").value
     if(botType!="" && botDepartment !="")
     {
+      let response:any;
+      this.spinner.show();
       this.rest.getbotlist(botType,botDepartment).subscribe(data=>{
+         response=data
+        if(response.errorMessage==undefined){
         this.botlist=data;
+        this.spinner.hide();
+        }else{
+          this.spinner.hide();
+        }
       })
     }
   }
@@ -242,6 +250,7 @@ export class RpaStudioComponent implements OnInit {
   getloadbotdata(botid)
   {
     let botdata:any;
+    this.spinner.show()
     this.rest.getbotdata(botid).subscribe(data=>{
        botdata=data;
       if(this.tabsArray.find(data=>data.botName==botdata.botName)==undefined)

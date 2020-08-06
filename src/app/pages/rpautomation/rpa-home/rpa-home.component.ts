@@ -41,7 +41,7 @@ export class RpaHomeComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.rpa_studio.spinner.show()
     this.userRole = localStorage.getItem("userRole")
     
     if(this.userRole.includes('SuperAdmin')){
@@ -108,7 +108,7 @@ export class RpaHomeComponent implements OnInit {
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;  
-
+      this.rpa_studio.spinner.hide()
     })
 
    
