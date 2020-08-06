@@ -65,6 +65,7 @@ export class BpsHomeComponent implements OnInit {
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
     },
+    
     (err) => {
       this.isLoading = false;
     });

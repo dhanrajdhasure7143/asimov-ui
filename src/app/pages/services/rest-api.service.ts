@@ -162,7 +162,7 @@ export class RestApiService{
 
   getbotlist(botType, botDepartment)
   {
-    return this.http.get("/rpa-service/get-all-bots/"+0+"/"+botDepartment+"/"+botType)
+    return this.http.get("/rpa-service/get-all-bots/"+botDepartment+"/"+botType);
   }
 
 
@@ -220,6 +220,14 @@ export class RestApiService{
     return this.http.get("/rpa-service/get-bot/"+botId+"/"+vid)
   }
 
+
+  getautomatedtasks()
+  {
+    return this.http.get("/rpa-service/automation-tasks")
+  }
+
+
+
   // PI module rest api's
 
   fileupload(file){
@@ -269,10 +277,16 @@ export class RestApiService{
     return this.http.get("/rpa-service/get-all-bots")
   }
 
+
+  getprocessnames()
+  {
+    return this.http.get("/rpa-service/process-name");
+  }
+
   checkbotname(botname)
   {
     let data="";
-    return this.http.post("/rpa-service/check-bot/0?botName="+botname,data)
+    return this.http.post("/rpa-service/check-bot?botName="+botname,data)
   }
   getDeleteBot(botId)
   {
