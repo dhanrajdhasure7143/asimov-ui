@@ -1,3 +1,5 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif'/></ngx-spinner>
+
 <div class="header_addon" style="padding-right:40px">
 
 
@@ -202,8 +204,8 @@
         <div class="row">
 
           <div class="col-md-6">
-            <label for="botDepartment" (change)="loadbotdata()">Category*</label>
-            <select  class="form-control" formControlName="botDepartment" name="botDepartment" >
+            <label for="botDepartment" >Category*</label>
+            <select  class="form-control" (change)="loadbotdata()" formControlName="botDepartment" name="botDepartment" >
               <option  value="" selected>--Select Category--</option>
               <option  value=1>Development</option>
               <option  value=2>HR</option>
@@ -217,7 +219,6 @@
 
           <div class="col-md-6">
             <label for="botType">Bot Type*</label>
-
             <select  class="form-control" formControlName="botType" name="botType" (change)="loadbotdata()" >
               <option value="" selected>--Select Bot Type--</option>
               <option  value=1>Attended</option>

@@ -232,6 +232,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
 
   saveBotFunAct() {
+    this.rpa_studio.spinner.show();
     this.finalenv=[];
     this.environment.forEach(data=>{
         if(data.checked==true)
@@ -244,6 +245,7 @@ export class RpaStudioActionsComponent implements OnInit {
       
       this.childBotWorkspace.saveBotFun(this.botState,this.finalenv).subscribe(data=>{
         this.savebotrespose=data;
+        this.rpa_studio.spinner.hide();
         if(this.savebotrespose.botId!=undefined)
         {
           Swal.fire({
@@ -280,6 +282,7 @@ export class RpaStudioActionsComponent implements OnInit {
       this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv).subscribe(data=>{
         this.childBotWorkspace.successCallBack(data);
         this.savebotrespose=data;
+        this.rpa_studio.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -641,6 +644,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
    switchversion(vid)
    {
+     this.rpa_studio.spinner.show();
     let response:any;
    /* Swal.fire({
       title: 'Are you sure?',
@@ -657,6 +661,7 @@ export class RpaStudioActionsComponent implements OnInit {
             response=data;
             let index=this.rpa_studio.tabsArray.findIndex(data=>data.botName==response.botName);
             this.rpa_studio.tabsArray[index]=response;
+            this.rpa_studio.spinner.hide();
           })
         /*}
     })*/
@@ -753,6 +758,7 @@ viewlogclose(){
 
 loadpredefinedbot(botId)
 {
+  this.rpa_studio.spinner.show();
   let responsedata:any=[]
   this.rest.getpredefinedotdata(botId).subscribe(data=>{
     responsedata=data;
@@ -803,6 +809,7 @@ loadpredefinedbot(botId)
             
     })
     this.childBotWorkspace.addconnections(responsedata.sequences);
+    this.rpa_studio.spinner.hide();
   })
 }
 

@@ -105,7 +105,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
         this.addconnections(this.finalbot.sequences)
     }
-
+    this.child_rpa_studio.spinner.hide()
   }
 
 
