@@ -52,7 +52,7 @@
             <span class="box-heading rpa-home-category">
 
               <mat-form-field class="rpa-mat-form-field-category">
-                <mat-label>Category</mat-label>
+                <mat-label>Bot Type</mat-label>
                   <mat-select>
                     <mat-option value="1">Option</mat-option>
                     <mat-option value="2">Option</mat-option>
@@ -75,7 +75,7 @@
                 
                 <ng-container matColumnDef="botName">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-                  <td mat-cell *matCellDef="let element">  <span *ngIf="element.botName!=null" (click)=loadbotdata(element.botId)>{{element.botName}}</span> <span *ngIf="element.botName==''">-</span> </td>
+                  <td mat-cell *matCellDef="let element">  <button *ngIf="element.botName!=null" (click)=loadbotdata(element.botId)>{{element.botName}}</button> <span *ngIf="element.botName==''">-</span> </td>
                 </ng-container>
           
                 <ng-container matColumnDef="botType">
@@ -143,7 +143,7 @@
                 </ng-container>
             
                 <ng-container matColumnDef="Assign">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Assign Task</th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Assign Bot</th>
                   <td mat-cell *matCellDef="let element">
 
                     <select class="form-control">
