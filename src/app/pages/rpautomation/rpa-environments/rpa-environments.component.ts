@@ -11,6 +11,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
 import {RpaEnvHints} from "../model/rpa-environments-module-hints";
 import {Router} from "@angular/router";
+
 @Component({
   selector: 'app-environments',
   templateUrl:'./rpa-environments.component.html',
@@ -80,6 +81,10 @@ import {Router} from "@angular/router";
     
   }
   ngOnInit() {
+    
+    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
+    this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Environments"});
+
     this.createpopup=document.getElementById('create')
     this.updatepopup=document.getElementById('update-popup');
     this.dt.changeHints(this.hints.rpaenvhints);
