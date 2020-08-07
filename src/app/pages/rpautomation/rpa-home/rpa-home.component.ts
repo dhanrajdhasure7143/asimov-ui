@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { ThrowStmt } from '@angular/compiler';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class RpaHomeComponent implements OnInit {
   @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
  
-  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient)
+  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient,
+    private dt:DataTransferService)
   { }
 
 
@@ -56,6 +58,8 @@ export class RpaHomeComponent implements OnInit {
 
     let processid=undefined;
   
+    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
+    this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Home"});
   
     this.getallbots();
     this.getautomatedtasks();
