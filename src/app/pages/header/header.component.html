@@ -28,11 +28,17 @@
                       <div class="dropdown">
                         <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
                         <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
-                          <a (click)='slideUp("my_acc")'><i class="far fa-user hd_icon"></i> My Account</a>
+                          <!-- <a (click)='slideUp("my_acc")'><i class="far fa-user hd_icon"></i> My Account</a>
                           <a (click)='slideUp("user_manage")'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
                           <a (click)='slideUp("config_alert")'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
                           <a (click)='slideUp("invite_user")'><img  class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
+                          <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a> -->
+                          <a (click)='myAccount()'><i class="far fa-user hd_icon"></i> My Account</a>
+                          <a (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
+                          <a (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
+                          <a (click)='inviteUser()'><img  class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
                           <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a>
+                        
                         </div>
                       </div>
                     </li>

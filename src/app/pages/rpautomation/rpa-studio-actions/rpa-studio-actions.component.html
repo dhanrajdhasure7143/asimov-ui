@@ -121,7 +121,7 @@
             </div>
           </li>
           <li>
-            <div class="checkbox">
+            <div class="checkbox" *ngIf="this.isButtonVisible">
               <div class="environments">
                 <a style="color:black"  [routerLink]="[ '/pages/rpautomation/environments']">Create Environments</a>
                 <hr>
@@ -141,7 +141,7 @@
           </li>
 
           <li>
-            <div class="checkbox">
+            <div class="checkbox" *ngIf="this.isButtonVisible">
               <div class="environments">
                 <a  [routerLink]="[ '/pages/rpautomation/environments']">Create Environments</a>
                 <hr>

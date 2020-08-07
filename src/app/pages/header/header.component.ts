@@ -102,7 +102,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
         
       ];
    
-     }else{
+     }else if(this.userRole.includes('User')){
+      this.pages = [
+        {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
+        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
+        {"img":"assets/images/robothand.svg", "title":"RPA", "link":"/pages/rpautomation/home"},
+        {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
+        
+      ];
+   
+     }
+     else{
 
      }
     },error => {
@@ -139,9 +149,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.parent_subscription.unsubscribe();
     this.child_subscription.unsubscribe();
   }
+  myAccount(){
+    var input = btoa("myAccount")
+    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+  }
+  userManagement(){
+    var input = btoa("userManagement")
+    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+  }
+  configAlerts(){
+    var input = btoa("alertsConfig")
+    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+  }
+  inviteUser(){
+    var input = btoa("invite")
+    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+  }
   logout(){
     localStorage.clear();
-   window.location.href=this.config.logoutRedirectionURL;
+    var input = btoa("Signout")
+    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
   }
  
 }

@@ -59,6 +59,7 @@ export class RpaStudioComponent implements OnInit {
   exectionValue: any;
   tabsArray: any[] = [];
   tabActiveId: string;
+  userRole;
   public checkbotname:Boolean;
   @ViewChild('section', {static: false}) section: ElementRef<any>;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
@@ -83,6 +84,8 @@ export class RpaStudioComponent implements OnInit {
 
   ngOnInit() 
   {
+
+
     console.log(this.insertbot.get("predefinedBot").value)
     if(localStorage.getItem("enablecreate"))
     {
@@ -102,16 +105,29 @@ export class RpaStudioComponent implements OnInit {
     this.rest.toolSet().subscribe(data => {
       console.log(data);
       data1 = data
-      
-      data1.General.forEach(element => {
-        let temp:any = {
-          name : element.name,
-          path : 'data:' + 'image/png' + ';base64,' + element.icon,
-          tasks: element.taskList
-        };
-        this.templateNodes.push(temp)
-        })
+      this.userRole = localStorage.getItem("userRole")
+      if(this.userRole.includes('User')){
+        data1.General.forEach(element => {
+          let temp:any = {
+            name : element.name,
+            path : 'data:' + 'image/png' + ';base64,' + element.icon,
+            tasks: element.taskList
+          };
+          if(temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'){
+          this.templateNodes.push(temp)
+          }
+          })
         
+      }else{
+        data1.General.forEach(element => {
+          let temp:any = {
+            name : element.name,
+            path : 'data:' + 'image/png' + ';base64,' + element.icon,
+            tasks: element.taskList
+          };
+          this.templateNodes.push(temp)
+          })
+       
       data1.Advanced.forEach(element => {
         let temp:any = {
           name : element.name,
@@ -120,6 +136,15 @@ export class RpaStudioComponent implements OnInit {
         };
         this.templateNodes.push(temp)
         })
+      }
+    
+        
+          
+
+        
+      
+
+      
     })
   }
 
