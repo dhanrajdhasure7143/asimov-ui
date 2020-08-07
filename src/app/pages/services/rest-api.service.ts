@@ -78,7 +78,7 @@ export class RestApiService{
     return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)
   }
   getBPMNTempNotations(){
-    return this.http.get("/bpsprocess/temp/bpmn/all/user?bpmnModelModifiedBy=gopi");
+    return this.http.get("/bpsprocess/temp/bpmn/all/user");
   }
   autoSaveBPMNFileContent(bpmnModel){
     return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel)

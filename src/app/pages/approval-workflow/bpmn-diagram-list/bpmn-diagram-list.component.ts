@@ -152,8 +152,6 @@ this.selectedrow =i;
       "approverName": this.user,
       "bpmnJsonNotation": data.bpmnJsonNotation,
       "bpmnModelId": data.bpmnModelId,
-      "bpmnNotationAutomationTask": data.bpmnNotationAutomationTask,
-      "bpmnNotationHumanTask": data.bpmnNotationHumanTask,
       "bpmnProcessApproved": data.bpmnProcessApproved,
       "bpmnProcessName": data.bpmnProcessName, 
       "bpmnProcessStatus": "APPROVED",
@@ -234,8 +232,6 @@ this.selectedrow =i;
           "approverName": data.approverName,
           "bpmnJsonNotation":data.bpmnJsonNotation,
           "processIntelligenceId": data.processIntelligenceId,
-          "bpmnNotationHumanTask":data.bpmnNotationHumanTask,
-          "bpmnNotationAutomationTask":data.bpmnNotationAutomationTask,
           "category": data.category
       },
       "approvalStatus": "REJECTED",

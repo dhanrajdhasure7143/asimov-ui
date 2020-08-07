@@ -295,7 +295,7 @@ export class UploadProcessModelComponent implements OnInit {
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
         if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"])
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-        bpmnModel["bpmnModelModifiedBy"] = "gopi";//logged user
+        bpmnModel["bpmnModelModifiedBy"] = "venkata.simhadri";//logged user
         bpmnModel["bpmnModelModifiedTime"] = new Date();
         _self.autoSaveDiagram(bpmnModel);  
       }
@@ -407,8 +407,6 @@ export class UploadProcessModelComponent implements OnInit {
     let final_notation = btoa(unescape(encodeURIComponent(xml)));
      bpmnModel.bpmnXmlNotation = final_notation;
      bpmnModel.bpmnJsonNotation = final_notation;
-     bpmnModel.bpmnNotationAutomationTask = final_notation;
-     bpmnModel.bpmnNotationHumanTask = final_notation;
      _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
       data=>{
         _self.isDiagramChanged = false;

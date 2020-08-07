@@ -30,12 +30,12 @@ export const environment = {
   //  pi_node_url: "http://pinodedev.epsoftinc.in:3000",
   //  auth_url: "http://authqa.epsoftinc.in",
 
-  // Aiotal redirection urls 
+  // // Aiotal redirection urls 
   // myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
-  // logout_url: 'http://eiapcloudqa.epsoftinc.in'
+  // logout_url: 'http://eiapcloudqa.epsoftinc.in',
 
-  // PI Connectors
-  //connector_topic: 'tyty'
+  // // PI Connectors
+  // connector_topic: 'tyty'
 };
 
 /*
