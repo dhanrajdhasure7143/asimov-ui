@@ -376,16 +376,19 @@ export class UploadProcessModelComponent implements OnInit {
 
   submitDiagramForApproval(){
     let bpmnModel:BpmnModel = new BpmnModel();
-    if(this.selected_approver <= -1){
+    if(!this.selected_approver || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
     this.isLoading = true;
-   let _self = this;
-   let sel_List = this.saved_bpmn_list[this.selected_notation];
-   let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-   let sel_appr = this.approver_list[this.selected_approver];
-   bpmnModel.approverEmail = sel_appr.userId;
+    let _self = this;
+    let sel_List = this.saved_bpmn_list[this.selected_notation];
+    let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
+    let sel_appr = this.approver_list[this.selected_approver];
+    bpmnModel.approverEmail = sel_appr.userId;
+    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
+    bpmnModel.userName = sel_List["userName"];
+    bpmnModel.tenantId = sel_List["tenantId"];
    if(this.isShowConformance){
     bpmnModel.bpmnModelId = UUID.UUID();
     bpmnModel.bpmnProcessName = 'process Intelligence';

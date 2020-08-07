@@ -116,11 +116,11 @@ export class CreateBpmnDiagramComponent implements OnInit {
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
       //this.selected_approver = current_bpmn_info["approverName"];
       for(var s=0; s<this.approver_list.length; s++){
-          let each = this.approver_list[s];
-          if(each.firstName+" "+each.lastName == current_bpmn_info["approverName"])
+        let each = this.approver_list[s];
+        if(each.firstName+" "+each.lastName == current_bpmn_info["approverName"])
           this.selected_approver = s;
-          break;
-        }
+        break;
+      }
     }
     else
       this.selected_approver = null;
@@ -282,7 +282,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }
   }
   submitDiagramForApproval(){
-    if(this.selected_approver <= -1){
+    if(!this.selected_approver || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
@@ -292,6 +292,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     let sel_appr = this.approver_list[this.selected_approver];
     bpmnModel.approverEmail = sel_appr.userId;
+    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
+    bpmnModel.userName = sel_List["userName"];
+    bpmnModel.tenantId = sel_List["tenantId"];
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
