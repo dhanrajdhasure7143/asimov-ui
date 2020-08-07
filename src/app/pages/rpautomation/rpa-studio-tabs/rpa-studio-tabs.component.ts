@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, ViewEncapsulation, Output, EventEmitter, ViewChild } from '@angular/core';
+import { DataTransferService } from '../../services/data-transfer.service';
 
 @Component({
   selector: 'app-rpa-studio-tabs',
@@ -11,9 +12,11 @@ export class RpaStudioTabsComponent implements OnInit {
   @Input('tabsArray') public tabsArray: any[];
   @Input('tabActiveId') public tabActiveId: string;
   @Output() closeTabEvent = new EventEmitter<void>();
-  constructor() { }
+  constructor(private dt:DataTransferService) { }
 
   ngOnInit() {
+    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
+    this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Designer"});
   }
   closeTab(bot) {
     this.closeTabEvent.emit(bot);
