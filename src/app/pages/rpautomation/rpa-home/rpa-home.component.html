@@ -18,8 +18,8 @@
                 <h6 class="rpa-home-btn-title">Load</h6>
             </button>
           </div>
-          <div class="rpa-home-block">
-          <button  type="button"  aria-hidden="true"id="environment-Home" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
+          <div class="rpa-home-block" *ngIf="this.isButtonVisible">
+          <button  type="button"  aria-hidden="true" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
             <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;" >
             <br><br>
             <h6 class="rpa-home-btn-title">Environments</h6>
