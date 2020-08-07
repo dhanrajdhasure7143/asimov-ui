@@ -3,7 +3,7 @@
   <div class="col-md-6 row bot-data" >
       <div class="rpa-home">
           <div class="rpa-home-block">
-              <button  type="button" (click)="createoverlay()"  aria-hidden="true" placement="bottom">
+              <button  type="button" (click)="createoverlay()" id="createbot-Home" aria-hidden="true" placement="bottom">
                   <img src="../../../../assets/images/RPA/create.svg" style="height:80px;">
                   <br><br>
                   <h6 class="rpa-home-btn-title">Create</h6>
@@ -11,7 +11,7 @@
           </div>
 
           <div class="rpa-home-block">
-            <button  type="button" (click)="openload()"  aria-hidden="true" placement="bottom">
+            <button  type="button" (click)="openload()"  id="loadbot-Home"aria-hidden="true" placement="bottom">
                
                 <img src="../../../../assets/images/RPA/Load.svg" style="height:80px;" >
                 <br><br>
@@ -19,7 +19,7 @@
             </button>
           </div>
           <div class="rpa-home-block">
-          <button  type="button"  aria-hidden="true" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
+          <button  type="button"  aria-hidden="true"id="environment-Home" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
             <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;" >
             <br><br>
             <h6 class="rpa-home-btn-title">Environments</h6>
@@ -70,7 +70,7 @@
             </span>
     
           </div>  
-          <div class="bots-container">
+          <div class="bots-container"id="botdetails-Home">
               <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
                 
                 <ng-container matColumnDef="botName">
@@ -126,7 +126,7 @@
             </span>
     
           </div>  
-          <div class="bots-container">
+          <div class="bots-container"id="automatedtasks-Home">
               <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table">
                 
                 <ng-container matColumnDef="processName">

@@ -274,7 +274,7 @@ export class RestApiService{
   
   getAllActiveBots()
   {
-    return this.http.get("/rpa-service/get-all-bots")
+    return this.http.get("/rpa-service/get-bots")
   }
 
 

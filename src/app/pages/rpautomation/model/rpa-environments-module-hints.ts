@@ -3,7 +3,8 @@ export class RpaEnvHints{
         { selector:'#listofenv', description:'List of Environment(s)',showNext:true  },
         { selector:'#addenvbtn', description:'Create an Environment',showNext:true },        
         { selector:'#updateenvbtn', description:'Update an Environment',showNext:true },
-        { selector:'#deleteenvbtn', description:'Delete Environment(s)' },
+        { selector:'#deleteenvbtn', description:'Delete Environment(s)',showNext:true },
+        { selector:'#deployenvbtn', description:'Deploy Environment(s)' },
      
     ]
 }
