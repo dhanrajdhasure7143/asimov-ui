@@ -40,7 +40,7 @@ export class RestApiService{
   }
   bpmnlist(user){
     //GET /bpsprocess/approver/info/{roleName} 
-    return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
+    return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser');
   }
   approve_producemessage(bpmnProcessInfo){
     return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
@@ -69,7 +69,7 @@ export class RestApiService{
     return this.http.get("/bpsprocess/approver/info/"+role)
   }
   getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/gopi"); 
+    return this.http.get("/bpsprocess/fetchByUser"); 
   }
   saveBPMNprocessinfofromtemp(bpmnModel){
     return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel)
