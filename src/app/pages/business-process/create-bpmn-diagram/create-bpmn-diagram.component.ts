@@ -295,6 +295,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
     bpmnModel.userName = sel_List["userName"];
     bpmnModel.tenantId = sel_List["tenantId"];
+    bpmnModel.userEmail = sel_List['userEmail'];
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];

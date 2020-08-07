@@ -389,6 +389,7 @@ export class UploadProcessModelComponent implements OnInit {
     bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
     bpmnModel.userName = sel_List["userName"];
     bpmnModel.tenantId = sel_List["tenantId"];
+    bpmnModel.userEmail = sel_List['userEmail'];
    if(this.isShowConformance){
     bpmnModel.bpmnModelId = UUID.UUID();
     bpmnModel.bpmnProcessName = 'process Intelligence';
