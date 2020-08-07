@@ -240,7 +240,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
         if(_self.autosavedDiagramVersion[0]&& _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"])
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-        bpmnModel["bpmnModelModifiedBy"] = "venkata.simhadri";//logged user
         bpmnModel["bpmnModelModifiedTime"] = new Date();
         _self.autoSaveDiagram(bpmnModel);  
       }
@@ -292,13 +291,11 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     let sel_appr = this.approver_list[this.selected_approver];
-    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
-    // bpmnModel.approverEmail = sel_appr.userId;
+    bpmnModel.approverEmail = sel_appr.userId;
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
-    bpmnModel.tenantId=5555;
     bpmnModel.id = sel_List["id"];
     bpmnModel.bpmnProcessStatus="PENDING";
     bpmnModel.bpmnProcessApproved = 0;
@@ -346,6 +343,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }else{
       bpmnModel.id = sel_List['id'];
     }
+    bpmnModel.userName = sel_List['userName'];
+    bpmnModel.tenantId = sel_List['tenantId'];
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
