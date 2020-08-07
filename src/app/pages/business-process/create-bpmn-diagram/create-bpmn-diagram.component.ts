@@ -118,9 +118,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
         let each = this.approver_list[s];
         if(each.userId){
           let userId = each.userId.split("@")[0];
-          if(userId == current_bpmn_info["approverName"])
+          if(userId == current_bpmn_info["approverName"]){
             this.selected_approver = s;
-          break;
+            break;
+          }
         }
       }
     }
