@@ -34,12 +34,11 @@ export class RestApiService{
   public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient) { }
   getAccessToken(){
-    let data = {"userId":"venkata.simhadri@epsoftinc.com",
+    let data = {"userId":"gopi.palla@epsoftinc.com",
                 "password":"Welcome@123"};
     return this.http.post('/api/login/beta/accessToken',data);
   }
-  bpmnlist(user){
-    //GET /bpsprocess/approver/info/{roleName} 
+  bpmnlist(){
     return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser');
   }
   approve_producemessage(bpmnProcessInfo){

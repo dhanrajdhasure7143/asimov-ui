@@ -114,12 +114,14 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
-      //this.selected_approver = current_bpmn_info["approverName"];
       for(var s=0; s<this.approver_list.length; s++){
         let each = this.approver_list[s];
-        if(each.firstName+" "+each.lastName == current_bpmn_info["approverName"])
-          this.selected_approver = s;
-        break;
+        if(each.userId){
+          let userId = each.userId.split("@")[0];
+          if(userId == current_bpmn_info["approverName"])
+            this.selected_approver = s;
+          break;
+        }
       }
     }
     else
@@ -282,7 +284,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }
   }
   submitDiagramForApproval(){
-    if(!this.selected_approver || this.selected_approver <= -1){
+    if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
@@ -292,7 +294,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     let sel_appr = this.approver_list[this.selected_approver];
     bpmnModel.approverEmail = sel_appr.userId;
-    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
+    bpmnModel.approverName = sel_appr.userId.split("@")[0];
     bpmnModel.userName = sel_List["userName"];
     bpmnModel.tenantId = sel_List["tenantId"];
     bpmnModel.userEmail = sel_List['userEmail'];

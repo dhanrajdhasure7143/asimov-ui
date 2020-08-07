@@ -108,6 +108,17 @@ export class BpsHomeComponent implements OnInit {
       return each_asDiag.bpmnModelId == modelId;
     })
    }
+
+   formatApproverName(apprName){
+    let appr_arr = apprName.split('.');
+    let fName = appr_arr[0];
+    let lName = appr_arr[1];
+    if(fName)
+      fName = fName.charAt(0).toUpperCase()+fName.substr(1);
+    if(lName)
+      lName = lName.charAt(0).toUpperCase()+lName.substr(1);
+    return fName&&lName?fName+" "+lName:fName?fName:lName?lName:'-';
+   }
   getDiagram(eachBPMN,i){
     let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
     this.index=i;
