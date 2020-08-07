@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Router } from "@angular/router";
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +25,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   error: string;
   compIndex = 0;
 
-  constructor(private router:Router, private dataTransfer:DataTransferService, private rpa:RestApiService) { }
+  constructor(
+    private router:Router, 
+    private dataTransfer:DataTransferService, 
+    private rpa:RestApiService,
+    @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
     this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
@@ -136,7 +141,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
   logout(){
     localStorage.clear();
-    this.router.navigate(["/"])
+   window.location.href=this.config.logoutRedirectionURL;
   }
  
 }

@@ -351,3 +351,20 @@ padding-bottom: 70px;
 
     background-color:none;    
   }
+
+
+  app-rpa-home .mat-tab-label-active{
+    background-color:white !important;
+  }
+
+  app-rpa-home .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #0062cf !important;
+}
+
+app-rpa-home .mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
+  background-color: white !important;
+}
+
+mat-paginator button:disabled{
+  background-color:white !important;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb } from 'jsplumb';
@@ -11,7 +11,7 @@ import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuCont
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { RpaHints } from '../model/rpa-module-hints';
 import Swal from 'sweetalert2';
-
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-rpa-studio',
@@ -60,8 +60,9 @@ export class RpaStudioComponent implements OnInit {
   tabsArray: any[] = [];
   tabActiveId: string;
   public checkbotname:Boolean;
+  @ViewChild('section', {static: false}) section: ElementRef<any>;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
-    private hints:RpaHints, private formBuilder:FormBuilder) { 
+    private hints:RpaHints, private formBuilder:FormBuilder,public spinner: NgxSpinnerService) { 
     this.show = 8;
     
     this.insertbot=this.formBuilder.group({
@@ -137,6 +138,15 @@ export class RpaStudioComponent implements OnInit {
     })
   }
 
+
+  public scrolltop(){
+    this.section.nativeElement.scrollTo({ top: (this.section.nativeElement.scrollTop - 40), behavior: 'smooth' });
+  }
+ 
+  public scrollbottom() {
+    this.section.nativeElement.scrollTo({ top: (this.section.nativeElement.scrollTop + 40), behavior: 'smooth' });
+  }
+
   increaseShow() {
     this.show += 5; 
   }
@@ -179,8 +189,13 @@ export class RpaStudioComponent implements OnInit {
     document.getElementById("load-bot").style.display="none";
   }
 
+
   onLoad()
   {
+    this.loadbot.reset();
+    this.loadbot.get("bot").setValue("");
+    this.loadbot.get("botType").setValue("");
+    this.loadbot.get("botDepartment").setValue("");
     document.getElementById("load-bot").style.display="block";
   }
 
@@ -192,8 +207,16 @@ export class RpaStudioComponent implements OnInit {
     let botDepartment=this.loadbot.get("botDepartment").value
     if(botType!="" && botDepartment !="")
     {
+      let response:any;
+      this.spinner.show();
       this.rest.getbotlist(botType,botDepartment).subscribe(data=>{
+         response=data
+        if(response.errorMessage==undefined){
         this.botlist=data;
+        this.spinner.hide();
+        }else{
+          this.spinner.hide();
+        }
       })
     }
   }
@@ -227,6 +250,7 @@ export class RpaStudioComponent implements OnInit {
   getloadbotdata(botid)
   {
     let botdata:any;
+    this.spinner.show()
     this.rest.getbotdata(botid).subscribe(data=>{
        botdata=data;
       if(this.tabsArray.find(data=>data.botName==botdata.botName)==undefined)

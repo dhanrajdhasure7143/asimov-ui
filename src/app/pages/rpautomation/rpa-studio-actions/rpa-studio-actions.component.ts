@@ -49,7 +49,9 @@ export class RpaStudioActionsComponent implements OnInit {
   logbyrunid:MatTableDataSource<any>; 
   
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
-  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  //@ViewChild(MatSort,{static:false}) sort: MatSort;
+  @ViewChild('sorter1',{static:false}) sorter1: MatSort;
+  @ViewChild('sorter2',{static:false}) sorter2: MatSort;
 
   @Input('tabsArrayLength') public tabsArrayLength: number;
   @Input('botState') public botState: any;
@@ -230,6 +232,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
 
   saveBotFunAct() {
+    this.rpa_studio.spinner.show();
     this.finalenv=[];
     this.environment.forEach(data=>{
         if(data.checked==true)
@@ -242,6 +245,7 @@ export class RpaStudioActionsComponent implements OnInit {
       
       this.childBotWorkspace.saveBotFun(this.botState,this.finalenv).subscribe(data=>{
         this.savebotrespose=data;
+        this.rpa_studio.spinner.hide();
         if(this.savebotrespose.botId!=undefined)
         {
           Swal.fire({
@@ -278,6 +282,7 @@ export class RpaStudioActionsComponent implements OnInit {
       this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv).subscribe(data=>{
         this.childBotWorkspace.successCallBack(data);
         this.savebotrespose=data;
+        this.rpa_studio.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -639,6 +644,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
    switchversion(vid)
    {
+     this.rpa_studio.spinner.show();
     let response:any;
    /* Swal.fire({
       title: 'Are you sure?',
@@ -655,6 +661,7 @@ export class RpaStudioActionsComponent implements OnInit {
             response=data;
             let index=this.rpa_studio.tabsArray.findIndex(data=>data.botName==response.botName);
             this.rpa_studio.tabsArray[index]=response;
+            this.rpa_studio.spinner.hide();
           })
         /*}
     })*/
@@ -667,6 +674,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
 
    viewlogdata(){
+     this.childBotWorkspace.addsquences();
     let response: any;
     let log:any=[];
     this.logresponse=[];
@@ -706,7 +714,7 @@ export class RpaStudioActionsComponent implements OnInit {
       console.log(this.Viewloglist);
 
       this.Viewloglist.paginator=this.paginator;
-      this.Viewloglist.sort=this.sort;
+      this.Viewloglist.sort=this.sorter1;
       
       document.getElementById(this.viewlogid).style.display="block";
     
@@ -735,7 +743,7 @@ export class RpaStudioActionsComponent implements OnInit {
       this.logbyrunid = new MatTableDataSource(resplogbyrun);
       console.log(this.logbyrunid);
       this.logbyrunid.paginator=this.paginator;
-      this.logbyrunid.sort=this.sort;
+      this.logbyrunid.sort=this.sorter2;
     })
 }
 
@@ -750,6 +758,7 @@ viewlogclose(){
 
 loadpredefinedbot(botId)
 {
+  this.rpa_studio.spinner.show();
   let responsedata:any=[]
   this.rest.getpredefinedotdata(botId).subscribe(data=>{
     responsedata=data;
@@ -800,6 +809,7 @@ loadpredefinedbot(botId)
             
     })
     this.childBotWorkspace.addconnections(responsedata.sequences);
+    this.rpa_studio.spinner.hide();
   })
 }
 
