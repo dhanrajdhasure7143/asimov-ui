@@ -368,3 +368,16 @@ app-rpa-home .mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
 mat-paginator button:disabled{
   background-color:white !important;
 }
+
+/*RPA Environments header styles */
+.rpaenv_header_addon {
+  position: absolute !important;
+  top: 107px;
+  text-align: right;
+  width: 100%;
+}
+.rpaenv-nav-btn-img {
+  height: 36px;
+  width: 36px;
+  margin-right: 5px;
+}
