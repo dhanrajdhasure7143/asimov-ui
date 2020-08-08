@@ -11,6 +11,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
 import {RpaEnvHints} from "../model/rpa-environments-module-hints";
 import {Router} from "@angular/router";
+import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 
 @Component({
   selector: 'app-environments',
@@ -99,6 +100,9 @@ import {Router} from "@angular/router";
       responsive:true,
       retrieve:true,
       scrollY: "true",
+      language: {
+        searchPlaceholder: 'Search',
+      }
       };
 
     this.getallData();

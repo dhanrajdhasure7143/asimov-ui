@@ -1,4 +1,13 @@
-
+<div class="rpaenv_header_addon" style="padding-right:40px">
+  
+    <!-- <div class="rpa-env-nav"> -->
+        <button type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="['/pages/rpautomation/home']">
+    <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpaenv-nav-btn-img">
+      <b>Bot Studio</b>
+    </button>
+    <!-- </div> -->
+ 
+</div>
 
 <div class="container-fluid mx-3">
   <div class="env-data-tool"> 
@@ -34,7 +43,7 @@
       <button  id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Edit Environment"  (click)="updatedata()">
     
         <img  style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
-        <div>Update</div>
+        <div>Edit</div>
         
       </button>
     
@@ -50,7 +59,7 @@
         
         <img  style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
         
-        <div>Update</div>
+        <div>Edit</div>
       
       </button>
 
@@ -60,7 +69,7 @@
       <div *ngIf="deleteflag==true" class="env-btn">
       
         
-        <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn"  (click)="deploybotenvironment()" title="Deploy Bot Environment" >
+        <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn"  (click)="deploybotenvironment()" title="Deploy Bot Agent" >
   
           <img  style="height:20px" src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
           <div>Deploy</div>
@@ -72,7 +81,7 @@
       
 
 
-        <button data-toggle="tooltip" id="deployenvbtn" data-placement="top" [disabled]="!(deleteflag==true)"  title="Deploy Bot Environment" disabled> 
+        <button data-toggle="tooltip" id="deployenvbtn" data-placement="top" [disabled]="!(deleteflag==true)"  title="Deploy Bot Agent" disabled> 
           <img  style="height:20px" src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
           <div>Deploy</div>
         </button>
@@ -124,10 +133,13 @@
           <td *ngIf="environment.createdTimeStamp==''">-</td>
           <td *ngIf="environment.createdTimeStamp!=''">{{environment.username}}</td>
           <td>
-            <div  *ngIf="environment.activeStatus == 7" >Active</div>
-            <div  *ngIf="environment.activeStatus == 0" >Inactive</div>
+            <div *ngIf="environment.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</div>
+            <div *ngIf="environment.activeStatus == 8"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</div>
           </td>
-          <td>Yes</td>
+          <td>
+            <div *ngIf="environment.deployStatus == true"><span style="color:darkgreen">Deployed</span></div>
+                    <div *ngIf="environment.deployStatus == false"><span style="color:red">Not Deployed</span></div>
+          </td>
         </tr>
        </tbody>
        <tfoot>
@@ -146,7 +158,7 @@
     
     </div>
   
-<div class="container">
+<!-- <div class="container">
   <div class="rpa-env-nav">
       <button type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="['/pages/rpautomation/home']">
   <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpa-nav-btn-img">
@@ -154,7 +166,7 @@
     <b>Bot Studio</b>
   </button>
   </div>
-</div>
+</div> -->
 
 
 <div id="create" class="rpa-modal">
