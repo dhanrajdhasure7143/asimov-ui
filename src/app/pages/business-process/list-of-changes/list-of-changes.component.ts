@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { GlobalScript } from 'src/app/shared/global-script';
 
@@ -8,6 +8,8 @@ import { GlobalScript } from 'src/app/shared/global-script';
   styleUrls: ['./list-of-changes.component.css']
 })
 export class ListOfChangesComponent implements OnInit {
+
+  @Output() closeDiff = new EventEmitter<any>();
 
   changes:any;
   added_Count;
@@ -28,6 +30,7 @@ export class ListOfChangesComponent implements OnInit {
       ele.classList.add("slide-down");
       ele.classList.remove("slide-up");
     }
+    this.closeDiff.emit();
   }
   jsonLength(json){
     let value = 0;

@@ -4,7 +4,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { element } from 'protractor';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
-
+import cronstrue from 'cronstrue';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { RpaStudioTabsComponent } from '../rpa-studio-tabs/rpa-studio-tabs.component'
 import Swal from 'sweetalert2';
@@ -49,7 +49,9 @@ export class RpaStudioActionsComponent implements OnInit {
   logbyrunid:MatTableDataSource<any>; 
   
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
-  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  //@ViewChild(MatSort,{static:false}) sort: MatSort;
+  @ViewChild('sorter1',{static:false}) sorter1: MatSort;
+  @ViewChild('sorter2',{static:false}) sorter2: MatSort;
 
   @Input('tabsArrayLength') public tabsArrayLength: number;
   @Input('botState') public botState: any;
@@ -79,10 +81,11 @@ export class RpaStudioActionsComponent implements OnInit {
   public startDate: Date;
   selectTime;
   public endDate: Date;
-  public cronExpression = '0/1 * 1/1 * ?';
+  public cronExpression = '0/1 * 1/1 * *';
   public isCronDisabled = false;
   public selectedTimeZone :any;
   public viewlogid:any;
+  public she:any;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
   i="";
   public cronOptions: CronOptions = {
@@ -108,7 +111,10 @@ export class RpaStudioActionsComponent implements OnInit {
 
     cronFlavor: "standard"
   }
-  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent) { 
+  userRole: string;
+  isButtonVisible: boolean;
+  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
+    private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent) { 
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
       'endTime' : [this.endTime, Validators.required],
@@ -116,6 +122,17 @@ export class RpaStudioActionsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.userRole = localStorage.getItem("userRole")
+    
+    if(this.userRole.includes('SuperAdmin')){
+      this.isButtonVisible = true;
+    }else if(this.userRole.includes('Admin')){
+      this.isButtonVisible = true;
+    }else if(this.userRole.includes('RPA Admin')){
+      this.isButtonVisible = true;
+    }else{
+      this.isButtonVisible = false;
+    }
     this.startbot=false;
     this.pausebot=false;
     this.resumebot=false;
@@ -123,15 +140,19 @@ export class RpaStudioActionsComponent implements OnInit {
     this.botstatistics();
     this.getEnvironmentlist();
     this.getpredefinedbotlist();
-    this.schedulepopid="schedule-"+this.botState.botName;
-    
+
+    this.schedulepopid="schedule-"+this.botState.botName;  
     this.viewlogid="viewlog-"+this.botState.botName;
     if(this.botState.botId!=undefined)
     {
       this.savebotrespose=this.botState;
+      console.log(this.botState.botId)
+      this.getschecdules();
+      this.childBotWorkspace.saveCron(this.she);
       this.botState.envIds.forEach(envdata=>{
           this.environment.find(data=>data.environmentId==envdata).checked=true;
       })
+      
     }
 
   }
@@ -154,6 +175,9 @@ export class RpaStudioActionsComponent implements OnInit {
     
   }
 
+  //loadpredefinedbot(){}
+  versionChange(ver){}
+
 
   reset()
   {
@@ -171,6 +195,9 @@ export class RpaStudioActionsComponent implements OnInit {
     } 
   })
   }
+
+
+
   delete()
   {
         Swal.fire({
@@ -216,8 +243,9 @@ export class RpaStudioActionsComponent implements OnInit {
     }
 
 
-  
+
   saveBotFunAct() {
+    this.rpa_studio.spinner.show();
     this.finalenv=[];
     this.environment.forEach(data=>{
         if(data.checked==true)
@@ -230,6 +258,7 @@ export class RpaStudioActionsComponent implements OnInit {
       
       this.childBotWorkspace.saveBotFun(this.botState,this.finalenv).subscribe(data=>{
         this.savebotrespose=data;
+        this.rpa_studio.spinner.hide();
         if(this.savebotrespose.botId!=undefined)
         {
           Swal.fire({
@@ -239,6 +268,7 @@ export class RpaStudioActionsComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
+          this.getschecdules();
           this.startbot=true;
           this.pausebot=false;
           this.resumebot=false;
@@ -260,9 +290,12 @@ export class RpaStudioActionsComponent implements OnInit {
     }
     else
     {
+      
+      this.childBotWorkspace.saveCron(this.she);
       this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv).subscribe(data=>{
         this.childBotWorkspace.successCallBack(data);
         this.savebotrespose=data;
+        this.rpa_studio.spinner.hide();
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -270,6 +303,7 @@ export class RpaStudioActionsComponent implements OnInit {
           showConfirmButton: false,
           timer: 2000
         })
+        this.getschecdules();
       });
     }
   }
@@ -396,88 +430,10 @@ export class RpaStudioActionsComponent implements OnInit {
         })
     }
   }
-/*
-  listenvironments() {
-    const selectedEnvironments: any = [];
-    this.environment = [];
-    console.log(this.listEnvironmentData.length > 0);
-    const stored: string = localStorage.getItem('data');
-    if (stored) {
-      // split comma-separated string into array of environment names
-      selectedEnvironments.push(...stored.split(','));
-    }
-    if (this.listEnvironmentData) {
-      this.optionList = true;
-      let value: any = []
-      this.listEnvironmentData.forEach(element => {
-        let temp: any = {
-          environmentName: element.environmentName,
-          environmentId: element.environmentId
-        };
-        this.environment.push(temp)
-      })
-    }
-    else {
-      this.optionList = false
-      this.environment = [{
-        name: "No Options"
-      }]
-    }
-  }
-*/
-  /*getCheckboxValues(event, data) {
-    let selectedEnvironments;
-    let index = this.environment.findIndex(x => x.listEnvironmentData == data);
-    if (event) 
-    {
 
-      if (localStorage.getItem('cheked') === null) 
-      {
-        selectedEnvironments = [];
-      } 
-      else 
-      {
-        selectedEnvironments = JSON.parse(localStorage.getItem('environmentId'));
-      }
-      selectedEnvironments.push(this.environment)
-      localStorage.setItem('environmentId', JSON.stringify(selectedEnvironments));
-      localStorage.CBState = JSON.stringify(selectedEnvironments);
-    }
-    else 
-    {
-      this.environment.splice(index, 1);
-      localStorage.removeItem('environmentId');
-    }
-  }*/
-  
-  /*getEnvironmentlist() {
+
+  getEnvironmentlist() {
     this.rest.listEnvironments().subscribe(data => {
-      data["checked"]=false;
-      this.listEnvironmentData = data;
-      let value: any = [];
-      let subValue: any = []
-      let showlist: any = [];
-      showlist.forEach(el => {
-        subValue.push(el.environmentName);
-        this.environmentValue.push(el.environmentName);
-        console.log(subValue)
-        subValue.forEach(ele => {
-          value.push(ele)
-          console.log(value);
-        })
-      });
-      value.forEach(element => {
-        let temp: any = {
-          environmentName: element.environmentName,
-          checked: element.environmentId
-        };
-        this.dropdownList.push(temp)
-      })
-    })
-  }
-*/
-getEnvironmentlist() {
-  this.rest.listEnvironments().subscribe(data => {
     this.listEnvironmentData=data;
     this.listEnvironmentData.forEach(env=>{
       env["checked"]=false;
@@ -538,39 +494,110 @@ getEnvironmentlist() {
       document.getElementById(this.schedulepopid).style.display="block";
       this.hiddenSchedlerPopUp = true
       let data:any
-      this.rest.scheduleList(this.savebotrespose.botId).subscribe((data)=> this.scheduleResponse(data))
     }
   
     scheduleResponse(data){
       console.log(data);
-      this.scheduleLists = data
+      this.scheduleLists = data;
+      let schedules:any =[];
+      if(this.she==undefined)
+      {
+        this.scheduleLists.forEach(savedschedule=>{
+          this.selectedTimeZone=savedschedule.timeZone;
+          let savecond={
+          "scheduleInterval" :savedschedule.scheduleInterval,
+          "startDate":savedschedule.startDate,
+          "endDate":savedschedule.endDate,
+          "intervalId":savedschedule.intervalId,
+          }
+          schedules.push(savecond)
+          })
+        this.she={
+          "TimeZone":this.scheduleLists[0].timeZone,
+          "numberofRepetitions":1,
+          "scheduleIntervals" :schedules, 
+        }
+        console.log()
+       
+      }
+    }
+
+
+    getschecdules()
+    {
+      this.rest.scheduleList(this.savebotrespose.botId).subscribe((data)=> this.scheduleResponse(data))
     }
     
     
 
-    saveCron(){
-    let sche :any;
-    sche = {
-    "TimeZone":this.selectedTimeZone,
-    "numberofRepetitions":1,
-    "scheduleIntervals" : [{
-    "scheduleInterval" :this.cronExpression,
-    "startDate":`${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
-    "endDate"  :`${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
-            }]
-          }
-    this.childBotWorkspace.saveCron(sche)
+    addCron(){      
+    let scheduleddata={
+      "scheduleInterval" :this.cronExpression,
+      "startDate":`${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
+      "endDate"  :`${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
+      "intervalId": this.childBotWorkspace.idGenerator(),
+    }
+    let sche2= 
+    {
+      "scheduleInterval" :this.cronExpression,
+      "lastRunTime":"---",
+      "nextRunTime":"---", 
+      "executionStatus":"---",    
+      "intervalId": scheduleddata.intervalId,
+    }
+    if(this.she == undefined)
+    {
+
+      let arraydata=[];
+      arraydata.push(scheduleddata);
+      this.she = {
+        "TimeZone":this.selectedTimeZone,
+        "numberofRepetitions":1,
+        "scheduleIntervals" : arraydata,
+      }
+    }
+    else
+    {
+      this.she.TimeZone=this.selectedTimeZone,
+      this.she.scheduleIntervals.push(scheduleddata);
+      console.log(this.she)
+    }
+
+    this.scheduleLists.push(sche2)
     this.hiddenSchedlerPopUp = false;
-    Swal.fire({
-    position:'top-end',
-    icon:'success',
-    title:'Scheduler Data saved successfull',
-    showConfirmButton:false,
-    timer:2000
-          })
-    // this.activeModal.close({"cronExpression":this.cronExpression,"timeZone":this.selectedTimeZone});
-    document.getElementById(this.schedulepopid).style.display="none";
-        }
+    }
+
+    saveCronexp()
+    {
+      console.log(this.she)
+      if(this.she!=undefined)
+      {
+        let filteredschedules:any=[]
+        this.she.scheduleIntervals.forEach(data=>{
+          let schedulefilter={
+            "scheduleInterval" :data.scheduleInterval,
+            "startDate":data.startDate,
+            "endDate"  :data.endDate,
+            
+          }
+          filteredschedules.push(schedulefilter)
+        })
+        this.she.scheduleIntervals=filteredschedules;
+        console.log(this.she);
+        
+      }
+      this.childBotWorkspace.saveCron(this.she);
+      document.getElementById(this.schedulepopid).style.display="none";
+      Swal.fire({
+        position:'top-end',
+        icon:'success',
+        title:'Scheduler Data saved successfull',
+        showConfirmButton:false,
+        timer:2000
+        })
+    }
+
+
     
     
     
@@ -611,9 +638,26 @@ getEnvironmentlist() {
     });
    }
 
+   removeSchedule(scheduleRecord)
+   { 
+      if(this.she!=undefined)
+      { 
+        console.log(this.she)
+        let index=this.she.scheduleIntervals.findIndex(schedule=>schedule.intervalId==scheduleRecord.intervalId);
+        this.she.scheduleIntervals.splice(index,1);
+        let index2=this.scheduleLists.findIndex(scheduleitem=>scheduleitem.intervalId==scheduleRecord.intervalId);
+        this.scheduleLists.splice(index2,1);
+        if(this.she.scheduleIntervals.length==0)
+        {
+          this.she=undefined;
+        }
+      }
+
+   }
 
    switchversion(vid)
    {
+     this.rpa_studio.spinner.show();
     let response:any;
    /* Swal.fire({
       title: 'Are you sure?',
@@ -630,7 +674,7 @@ getEnvironmentlist() {
             response=data;
             let index=this.rpa_studio.tabsArray.findIndex(data=>data.botName==response.botName);
             this.rpa_studio.tabsArray[index]=response;
-            console.log(response);
+            this.rpa_studio.spinner.hide();
           })
         /*}
     })*/
@@ -643,11 +687,13 @@ getEnvironmentlist() {
 
 
    viewlogdata(){
+     this.childBotWorkspace.addsquences();
     let response: any;
     let log:any=[];
     this.logresponse=[];
     this.rest.getviewlogdata(this.savebotrespose.botId,this.savebotrespose.version).subscribe(data =>{
         this.logresponse=data;
+        console.log(this.logresponse)
         if(this.logresponse.length>0)
         this.logresponse.forEach(data=>{
         response=data;
@@ -681,7 +727,7 @@ getEnvironmentlist() {
       console.log(this.Viewloglist);
 
       this.Viewloglist.paginator=this.paginator;
-      this.Viewloglist.sort=this.sort;
+      this.Viewloglist.sort=this.sorter1;
       
       document.getElementById(this.viewlogid).style.display="block";
     
@@ -710,7 +756,7 @@ getEnvironmentlist() {
       this.logbyrunid = new MatTableDataSource(resplogbyrun);
       console.log(this.logbyrunid);
       this.logbyrunid.paginator=this.paginator;
-      this.logbyrunid.sort=this.sort;
+      this.logbyrunid.sort=this.sorter2;
     })
 }
 
@@ -723,8 +769,68 @@ viewlogclose(){
   document.getElementById(this.viewlogid).style.display="none";
 }
 
+loadpredefinedbot(botId)
+{
+  this.rpa_studio.spinner.show();
+  let responsedata:any=[]
+  this.rest.getpredefinedotdata(botId).subscribe(data=>{
+    responsedata=data;
+    let j=200;
+    responsedata.tasks.forEach(element=>
+    {
+      this.childBotWorkspace.finaldataobjects.push(element)
+      let nodename=  element.nodeId.split("__")[0];
+      let nodeid=element.nodeId.split("__")[1];
+      console.log(nodeid);
+      j=j+100;
+      let node={
+        id:this.childBotWorkspace.idGenerator(),
+        name:nodename,
+        selectedNodeTask:element.taskName,
+        path:this.rpa_studio.templateNodes.find(data=>data.name==nodename).path,
+        tasks:this.rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
+        x:j+'px',
+        y:"10px",
+    }
+             
+           
+    for(var i=0; i<responsedata.sequences.length; i++)
+    {
+      if(responsedata.sequences[i].sourceTaskId!=undefined )
+      {
+        if(responsedata.sequences[i].sourceTaskId==nodeid)
+        {
+          responsedata.sequences[i].sourceTaskId=node.id;
+        }
+      }
+      if(responsedata.sequences[i].targetTaskId!=undefined )
+      {
 
-  
+        if( responsedata.sequences[i].targetTaskId==nodeid)
+        {
+          responsedata.sequences[i].targetTaskId=node.id;
+        }
+      }
+    }
+    element.nodeId=nodename+"__"+node.id;
+    this.childBotWorkspace.nodes.push(node);
+    this.childBotWorkspace.finaldataobjects.push(element);
+    setTimeout(() => {
+      this.childBotWorkspace.populateNodes(node);
+    }, 240);
+
+            
+    })
+    this.childBotWorkspace.addconnections(responsedata.sequences);
+    this.rpa_studio.spinner.hide();
+  })
 }
 
 
+
+convertcron(cronexp)
+{
+  return cronstrue.toString(cronexp);
+}
+  
+}

@@ -35,11 +35,14 @@ export class DatadocumentComponent implements OnInit {
   cathead5: any;
   cathead6: any;
   cathead7: any;
+  cathead8: any;
+  cathead9: any;
+  cathead10: any;
+  cathead11: any;
+  cathead12: any;
+  cathead13: any;
   dTypeArray = [];
   p=1;
-
-  // constructor(private router: Router, private dt: DataTransferService, private hints: PiHints, private global: GlobalScript) { }
-  // searchTerm:string;
   modalRef: BsModalRef;
 
   constructor(private router:Router, private dt:DataTransferService, private hints:PiHints, private global:GlobalScript,private modalService: BsModalService)    { }
@@ -49,7 +52,6 @@ export class DatadocumentComponent implements OnInit {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/datadocument", "title": "Data Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
-    // this.dt.current_piData.subscribe(resOne => {
       
     //   if (resOne) {
         var restwo=localStorage.getItem('fileData')
@@ -68,28 +70,57 @@ export class DatadocumentComponent implements OnInit {
           switch (f) {
             case 0:
               {
-                this.getDataType(0, this.fileData[0][0], this.headerData[0]);
+                this.getDataType(this.headerData[0], this.fileData[0][0], 0);
               }
             case 1:
               {
-                this.getDataType(1, this.fileData[0][1], this.headerData[1]);
+                this.getDataType(this.headerData[1], this.fileData[0][1], 1);
               }
               case 2:
                   {
-                    this.getDataType(2, this.fileData[0][2], this.headerData[2]);
+                    this.getDataType(this.headerData[2], this.fileData[0][2], 2);
                   }
                 case 3:
                   {
-                    this.getDataType(3, this.fileData[0][3], this.headerData[3]);
+                    this.getDataType(this.headerData[3], this.fileData[0][3], 3);
                   }
                   case 4:
                       {
-                        this.getDataType(4, this.fileData[0][4], this.headerData[4]);
+                        this.getDataType(this.headerData[4], this.fileData[0][4], 4);
                       }
                     case 5:
                       {
-                        this.getDataType(5, this.fileData[0][5], this.headerData[5]);
+                        this.getDataType(this.headerData[5], this.fileData[0][5], 5);
                       }
+                       case 6:
+                        {
+                          this.getDataType(this.headerData[6], this.fileData[0][6], 6);
+                        }
+                        case 7:
+                          {
+                            this.getDataType(this.headerData[7], this.fileData[0][7], 7);
+                          }
+                          case 8:
+                            {
+                              this.getDataType(this.headerData[8], this.fileData[0][8], 8);
+                            }
+                            case 9:
+                              {
+                                this.getDataType(this.headerData[9], this.fileData[0][9], 9);
+                              }
+                              case 10:
+                                {
+                                  this.getDataType(this.headerData[10], this.fileData[0][10], 10);
+                                }
+                                case 11:
+                                  {
+                                    this.getDataType(this.headerData[11], this.fileData[0][11], 11);
+                                  }
+                                  case 12:
+                                    {
+                                      this.getDataType(this.headerData[12], this.fileData[0][12], 12);
+                                    }
+                     
                      
           }
         }
@@ -100,28 +131,18 @@ export class DatadocumentComponent implements OnInit {
   generatepg() {
     var modal = document.getElementById('myModal');
     modal.style.display = "block";
-    // this.router.navigate(['/pages/processIntelligence/flowChart']);
   }
   caseIdSelection() {
     var headerstype=[];
     var headerstypeArray=[]
-    headerstype.push(this.cathead1,this.cathead2,this.cathead3,this.cathead4,this.cathead5, this.cathead6)
+    headerstype.push(this.cathead1,this.cathead2,this.cathead3,this.cathead4,this.cathead5, this.cathead6,this.cathead7,this.cathead8,this.cathead9,this.cathead10,this.cathead11,this.cathead12, this.cathead13)
     for(var i=0;i<this.headerData.length;i++){
       var obj={};
       obj[this.headerData[i]]=headerstype[i]
       headerstypeArray.push(obj)
     }
-  //  obj[this.headerData[0]]=this.cathead1
-    // headerstype.push(obj)
-
     localStorage.setItem('headertypeObj',JSON.stringify(headerstypeArray))
     this.router.navigate(['/pages/processIntelligence/selection']);
-
-
-  // generatepg(){
-  //   // this.router.navigate(['/pages/processIntelligence/flowChart']);
-  //   document.getElementById("foot").classList.remove("slide-down");
-  // document.getElementById("foot").classList.add("slide-up");
   }
   sort(property) {
     this.isDesc = !this.isDesc; //change the direction 
@@ -151,15 +172,15 @@ export class DatadocumentComponent implements OnInit {
      //let hdr_ar_index = this.headerData.indexOf(this.headerName);
       let reg_expression;
       let isDateCheck: boolean = false;
-      if (this.headerName.indexOf('Timestamp') == -1 || this.headerName.indexOf('Time') == -1) {
+      if (this.headerName.indexOf('Timestamp') == -1 || this.headerName.indexOf('Time') == -1 || this.headerName.indexOf('Date') == -1) {
         //reg_expression = new RegExp(/^\d+$/);
-        reg_expression = new RegExp(/[-~]*$/);
+        reg_expression = new RegExp(/[-~]*$/); //    /^[-\w\s]+$/
       } //alphanum check else
       // isDateCheck = hdr_ar_index == 3 || hdr_ar_index == 4;
       // if (hdr_ar_index == 2 || hdr_ar_index == 5 || hdr_ar_index == 6) {
       //   reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i ); //string check   /^[a-z\s ,]{0,255}$/i
       // }
-      isDateCheck = this.headerName.indexOf('Timestamp') != -1 || this.headerName.indexOf('Time') != -1
+      isDateCheck = this.headerName.indexOf('Timestamp') != -1 || this.headerName.indexOf('Time') != -1 || this.headerName.indexOf('Date') != -1
       let isInvalid: boolean = false;
       for (var x = 0; x < this.fileData.length; x++) {
         if (!this.validCells['row' + x])
@@ -169,8 +190,18 @@ export class DatadocumentComponent implements OnInit {
         let each_cell = this.fileData[x][index];
         if ((reg_expression && reg_expression.test(each_cell)) || isDateCheck) {
           if (isDateCheck) {
-            try {
-              formatDate(each_cell, 'dd/MM/yyyy HH:mm:ss', 'en-US');
+            try {let mydate = ''
+                if(each_cell){
+                    var splitDate = each_cell.split(' ');
+                  if(splitDate[0].indexOf('.') != -1 ){
+                  var aa = splitDate[0].split('.');
+                  mydate = aa[1]+'.'+aa[0]+'.'+aa[2]+" "+splitDate[1]
+                  } else {
+                  mydate = each_cell;
+                  }
+                }
+                
+              formatDate(mydate, 'dd/MM/yyyy HH:mm:ss', 'en-US');
               this.invalidCells['row' + x].splice(this.invalidCells['row' + x].indexOf('cell' + index), 1);
               if (this.validCells['row' + x].indexOf('cell' + index) == -1)
                 this.validCells['row' + x].push('cell' + index);
@@ -196,16 +227,12 @@ export class DatadocumentComponent implements OnInit {
       }
     
       if (!isInvalid) {
-        // if (this.step_id == this.headerData.length-1) {
-        //   this.isValidPiData = true;
-        // } else {
-        //   this.step_id = this.step_id + 1;
-        // }
-
-        if (this.step_id == 5) {
-          this.isValidPiData = true;
-        }
+        this.isValidPiData = true;
+       if (this.step_id == this.headerData.length) {
+         
+        } else {
           this.step_id = this.step_id + 1;
+        }
         
         this.headerData[index] = this.headerName;
        // this.headerName = this.headerData[hdr_ar_index + 1];
@@ -215,7 +242,6 @@ export class DatadocumentComponent implements OnInit {
   }
 
   resetColMap() {
-    // this.headerName = this.header_names_array[0];
     this.step_id = 1;
     this.validCells = [];
     this.invalidCells = [];
@@ -240,106 +266,192 @@ export class DatadocumentComponent implements OnInit {
   }
 
   getDataType(index, fData, headValue) {
-    if(headValue.indexOf('Timestamp') != -1 || headValue.indexOf('Time') != -1){
-      if (headValue == 'S.No' ) {
+    if(index){
+    if(index.indexOf('Timestamp') != -1 || index.indexOf('Time') != -1 || index.indexOf('Date') != -1){
+      if (headValue == 0 ) {
         if (this.isDate(fData) == true) {
-          this.cathead1 = "Date/Time";
+          this.cathead1 = "Date/Time"; 
         } else {
           this.cathead1 = "String";
         }
       } 
-      if (headValue == 'Case ID' || headValue == 'Order Number' || headValue == 'caseID' || headValue == 'ID') {
+      if (headValue == 1) {
         if (this.isDate(fData) == true) {
           this.cathead2 = "Date/Time";
         } else {
           this.cathead2 = "String";
         }
       }
-      if (headValue == 'Actvity' || headValue == 'Operation' || headValue == 'Activity') {
+      if (headValue == 2) {
         if (this.isDate(fData) == true) {
           this.cathead3 = "Date/Time";
         } else {
           this.cathead3 = "String";
         }
       }
-      if (headValue == 'Start Timestamp' || headValue == 'Start Time') {
+      if (headValue == 3) {
         if (this.isDate(fData) == true) {
           this.cathead4 = "Date/Time";
         } else {
           this.cathead4 = "String";
         }
       }
-      if (headValue == 'End Timestamp' || headValue == 'End Time' || headValue == 'Complete Timestamp') {
+      if (headValue == 4) {
         if (this.isDate(fData) == true) {
           this.cathead5 = "Date/Time";
         } else {
           this.cathead5 = "String";
         }
       }
-      if (headValue == 'Resource' || headValue == 'Agent') {
+      if (headValue == 5) {
         if (this.isDate(fData) == true) {
           this.cathead6 = "Date/Time";
         } else {
           this.cathead6 = "String";
         }
       }
-      if (headValue == 'Role') {
+      if (headValue == 6) {
         if (this.isDate(fData) == true) {
           this.cathead7 = "Date/Time";
         } else {
           this.cathead7 = "String";
         }
       }
+      if (headValue == 7) {
+        if (this.isDate(fData) == true) {
+          this.cathead8 = "Date/Time";
+        } else {
+          this.cathead8 = "String";
+        }
+      }
+      if (headValue == 8) {
+        if (this.isDate(fData) == true) {
+          this.cathead9 = "Date/Time";
+        } else {
+          this.cathead9 = "String";
+        }
+      }
+      if (headValue == 9) {
+        if (this.isDate(fData) == true) {
+          this.cathead10 = "Date/Time";
+        } else {
+          this.cathead10 = "String";
+        }
+      }
+      if (headValue == 10) {
+        if (this.isDate(fData) == true) {
+          this.cathead11 = "Date/Time";
+        } else {
+          this.cathead11 = "String";
+        }
+      }
+      if (headValue == 11) {
+        if (this.isDate(fData) == true) {
+          this.cathead12 = "Date/Time";
+        } else {
+          this.cathead12 = "String";
+        }
+      }
+      if (headValue == 12) {
+        if (this.isDate(fData) == true) {
+          this.cathead13 = "Date/Time";
+        } else {
+          this.cathead13 = "String";
+        }
+      }
     } else {
-      if (headValue == 'S.No' ) {
+      if (headValue == 0 ) {
         if (this.isNumeric(fData) == true) {
           this.cathead1 = "Integer";
         } else {
           this.cathead1 = "String";
         }
       } 
-      if (headValue == 'Case ID' || headValue == 'Order Number' || headValue == 'caseID' || headValue == 'ID') {
+      if (headValue == 1) {
         if (this.isNumeric(fData) == true) {
           this.cathead2 = "Integer";
         } else {
           this.cathead2 = "String";
         }
       }
-      if (headValue == 'Actvity' || headValue == 'Operation' || headValue == 'Activity') {
+      if (headValue == 2) {
         if (this.isNumeric(fData) == true) {
           this.cathead3 = "Integer";
         } else {
           this.cathead3 = "String";
         }
       }
-      if (headValue == 'Start Timestamp' || headValue == 'Start Time') {
+      if (headValue == 3) {
         if (this.isNumeric(fData) == true) {
           this.cathead4 = "Integer";
         } else {
           this.cathead4 = "String";
         }
       }
-      if (headValue == 'End Timestamp' || headValue == 'End Time' || headValue == 'Complete Time') {
+      if (headValue == 4) {
         if (this.isNumeric(fData) == true) {
           this.cathead5 = "Integer";
         } else {
           this.cathead5 = "String";
         }
       }
-      if (headValue == 'Resource' || headValue == 'Agent') {
+      if (headValue == 5) {
         if (this.isNumeric(fData) == true) {
           this.cathead6 = "Integer";
         } else {
           this.cathead6 = "String";
         }
       }
-      if (headValue == 'Role') {
+      if (headValue == 6) {
         if (this.isNumeric(fData) == true) {
           this.cathead7 = "Integer";
         } else {
           this.cathead7 = "String";
         }
       }
+      if (headValue == 7) {
+        if (this.isNumeric(fData) == true) {
+          this.cathead8 = "Date/Time";
+        } else {
+          this.cathead8 = "String";
+        }
+      }
+      if (headValue == 8) {
+        if (this.isNumeric(fData) == true) {
+          this.cathead9 = "Date/Time";
+        } else {
+          this.cathead9 = "String";
+        }
+      }
+      if (headValue == 9) {
+        if (this.isNumeric(fData) == true) {
+          this.cathead10 = "Date/Time";
+        } else {
+          this.cathead10 = "String";
+        }
+      }
+      if (headValue == 10) {
+        if (this.isNumeric(fData) == true) {
+          this.cathead11 = "Date/Time";
+        } else {
+          this.cathead11 = "String";
+        }
+      }
+      if (headValue == 11) {
+        if (this.isNumeric(fData) == true) {
+          this.cathead12 = "Date/Time";
+        } else {
+          this.cathead12 = "String";
+        }
+      }
+      if (headValue == 12) {
+        if (this.isNumeric(fData) == true) {
+          this.cathead13 = "Date/Time";
+        } else {
+          this.cathead13 = "String";
+        }
+      }
+     }
     }
     
   }

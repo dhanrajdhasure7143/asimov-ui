@@ -36,43 +36,11 @@
                         </div>
                         </div>
                 </div>
-                <div class="col-md-6">
-                        <!-- <div>
-                                <h4>My Work space</h4>
-                        </div>
-                                <div class="col-md-12 row text-bold">
-                                  <div class="col-md-3">Process ID</div>
-                                  <div class="col-md-3">Date</div>
-                                  <div class="col-md-3">Process Name</div>
-                                  <div class="col-md-2">Status</div>
-                                </div>
-                                <div class="col-md-12 work_space">
-                                  <mat-accordion >
-                                    <mat-expansion-panel *ngFor='let process_list of process_graph_list.data;trackBy:loopTrackBy;let i=index' (afterExpand)="onGraphSelection(process_list)">
-                                      <mat-expansion-panel-header>
-                                        <mat-panel-title>
-                                          <div class="row">
-                                            <div class="col-md-3 text-center">{{process_list.piId}}</div>
-                                            <div class="col-md-4 text-center">{{process_list.createdTime | date:'dd/MM/yy hh:mm a' }}</div>
-                                            <div class="col-md-3 text-center">{{process_list.piName|titlecase}}</div>
-                                            <div class="col-md-2 text-center">{{process_list.status}}</div>
-                                          </div>
-                                        </mat-panel-title>
-                                      </mat-expansion-panel-header>
-                                      <div [class]="'diagram_container'">
-                                              <div class="sample">
-                                                        <div id="myDiagramDiv" style=" height: 375px; background: white;"></div>
-                                                    </div>
-                                      </div>
-                                    </mat-expansion-panel>
-                                  </mat-accordion>
-                                </div> -->
+                <div class="col-md-6 workspace-table">
                                 <div class='col-sm-4'>
                                 <h4>My Workspace</h4>
                                 </div>
                                 <form action="">
-                                <!-- <div class="col-sm- row"> -->
-                                        <!-- <div class="col-sm-"></div> -->
                                         <div class="col-sm-7" *ngIf="isSearch">
                                                 <div class="col-sm-9 pull-right cat1">
                                                 <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
@@ -96,11 +64,6 @@
                                                 <div *ngIf="!isSearch" class="search-cat col-sm-12"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></div>
                                         </div>
                                         
-                                        <!-- <div class='col-sm-4 inner-addon right-addon'>
-                                        <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
-                                        <input type="text" placeholder="Search" name="searchGraph" [(ngModel)]="searchgraph">
-                                        </div> -->
-                                <!-- </div> -->
                                 </form>
                                 <div class="col-sm-12 graph_table">
                                 <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
@@ -118,8 +81,8 @@
                                                 <tr class='pList' *ngFor='let process_list of process_graph_list|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
                                                 <td class="th-sm">{{process_list.piId}}</td>
                                                 <td class="">{{process_list.createdTime | date:'MM/dd/yyyy HH:mm:ss': 'UTC' }}</td>
-                                                <td>{{process_list.piName|titlecase}}</td>
-                                                <td>{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
+                                                <td class="pi-Name-wrap">{{process_list.piName|titlecase}}</td>
+                                                <td class="pi-Name-wrap">{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
                                                 <td>{{process_list.status}}</td>
                                                 <td class="process_view" (click)="onGraphSelection(process_list)" title="View Process Graph"><i class='fa fa-eye'></i></td>
                                                 </tr>
@@ -212,8 +175,6 @@
                                 </div>
                                 
                                 </div>
-                                <!-- <div class="form-group col-sm-3">
-                                </div> -->
                         </div>
                 </form>
         

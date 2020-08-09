@@ -1,6 +1,10 @@
 <div class="container-fluid">
-  <div class="right header_addon">
-    <a routerLink="/pages/approvalWorkflow/home">Approval Workflow</a>
+  <!-- <div class="right header_addon">
+    <a routerLink="/pages/approvalWorkflow/home" *ngIf="this.isButtonVisible">Approval Workflow</a>
+  </div> -->
+  <div class="header_addon row approval_workflow_properties">
+    <div class="col-md-10"></div>
+    <a class="col-md-2" routerLink="/pages/approvalWorkflow/home" >Approval Workflow</a>
   </div>
   <div class="row">
     <div class="col-md-4 offset-1">
@@ -20,29 +24,35 @@
       </div>
     
       <div class="row col-md-12 text-bold workspace-title">
-        <div class="col-md-2 first_col" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
-        <div class="col-md-1 col-half-offsett"  (click)="sort('version',1)"><b>Version<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>
-        <div class="col-md-2 col-half-offsett"  (click)="sort('modifiedTimestamp',2)"><b>Last Modified<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></div>
-        <div class="col-md-2 col-half-offsett"  (click)="sort('approverName',3)"><b>Approver<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></div>
-        <div class="col-md-1 col-half-offsett"  (click)="sort('bpmnProcessStatus',4)"><b>Status<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></div>
-        <div class="col-md-1 col-half-offsett"  (click)="sort('reviewComments',5)"><b>Message<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></b></div>
+        <span mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></span>
+        <span  (click)="sort('version',1)"><b>Version<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></span>
+        <span  (click)="sort('modifiedTimestamp',2)"><b>Last Modified<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></span>
+        <span  (click)="sort('approverName',3)"><b>Approver<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></span>
+        <span  (click)="sort('bpmnProcessStatus',4)"><b>Status<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></span>
+        <span  (click)="sort('reviewComments',5)"><b>Message<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></b></span>
+        <span><b>Actions</b></span>
       </div>
       <div class="row col-md-12"  id="bpmn_list">
         <mat-accordion>
           <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
-                <div class="row col-md-12">
-                  <div class="col-md-2 first_col">{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</div>
-                  <div class="col-md-1 col-half-offset">{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</div>
-                  <div class="col-md-2 col-half-offset">{{each_diag.modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</div>
-                  <div class="col-md-2 col-half-offset">{{each_diag.approverName ? each_diag.approverName: '-'}}</div>
-                  <div class="col-md-1 col-half-offset" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}">{{each_diag.bpmnProcessStatus}}</div>
-                  <div class="col-md-1 col-half-offset">
+                <div class="row col-md-12" id="bpmn_list_row">
+                  <span>{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</span>
+                  <span>{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</span>
+                  <span>{{each_diag.modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</span>
+                  <span>{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</span>
+                  <span  [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"> <p [class.pending_value_properties]= "each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</p> </span>                  
+                  <span>
                     <span class="comment">
                       <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i> 
                     </span>
-                  </div>
+                  </span>
+                  <span>
+                    <i (click)="sendReminderMail($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='PENDING'" title = "Click to send reminder mail to Approver" class="fa fa-envelope"></i>
+                    <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" title ="Delete BPMNotation" class="glyphicon glyphicon-trash"></i>
+                    <i *ngIf="each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED'">-</i>
+                  </span>
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>

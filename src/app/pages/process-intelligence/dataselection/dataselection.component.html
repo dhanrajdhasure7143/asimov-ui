@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="row" *ngIf="headerName" class="columnSelection">
-      <div class="col-md-4"><b>Select Column - Step {{step_id}}/5:"{{headerName}}"</b></div>
+      <div class="col-md-4"><b>Select Column - Step {{step_id}}/{{headerData.length-1}}:"{{getCaseName(headerName)}}"</b></div>
       <div class="col-md-4" *ngIf="headerName == 'caseID' && step_id == 1"><small>(Click on the column that contains your Case IDs. The Case ID usually is a numeric value that is unique and identifies each case in your process.)</small></div>
       <div class="col-md-4" *ngIf="headerName == 'Activity' && step_id == 2"><small>(Click on the column that contains your activities. Activities are the actions that take place in your process. For example, if your process is Purchasing then ”Create Purchase Order” is an activity in that process.)</small></div>
       <div class="col-md-4" *ngIf="headerName.indexOf('Timestamp') != -1 || headerName.indexOf('Time') != -1"><small>(Click on the columns that contains the timestamp for each activity. Timestamps usually look something like “2016-02-01 14:24:30” although the exact format of the timestamp may differ.)</small></div>
@@ -38,59 +38,110 @@
                 <tr>
                     <th *ngFor="let headValue of headerData;trackBy:loopTrackBy;let i=index" class="tableHeader" (click)= "sort(i,headValue)">
                     {{headValue}}</th>
+                    
                 </tr>
                 <tr>
-                    <th *ngFor="let headValue of headerData;let i1=index;" class="tableHeader">
-                        <div *ngIf='selected==headValue' [ngClass]="selected==headValue?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==headValue" class='reset_btn' (click)='resetcaseId()'><i class='fa fa-times'></i></button> </div>
-                        <select name="cathead1" [disabled]='true' [(ngModel)]="cathead1"  class="form-control"  *ngIf="headValue == 'S.No'">
+                    <th class="tableHeader" *ngIf="headerData[0]">
+                        <select name="cathead1" [disabled]='true' [(ngModel)]="cathead1"  class="form-control"  >
                           <option>String</option>
                           <option>Integer</option>
                           <option>Date/Time</option>
-                          </select> 
-                        <select [disabled]='true' name="cathead2" [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead1)" *ngIf="headValue == 'Case ID' || headValue == 'Order Number' || headValue == 'caseID' || headValue == 'ID'">
+                          </select>
+                      </th>
+                      <th class="tableHeader" *ngIf="headerData[1]">
+                        <select [disabled]='true' name="cathead2" [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[1], cathead1)" >
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                        </select>
+                      </th>
+                      <th class="tableHeader" *ngIf="headerData[2]">
+                      <select name="cathead3" [disabled]='true' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[2], cathead2)" >
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
-                      <select name="cathead3" [disabled]='true' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead2)" *ngIf="headValue == 'Actvity' || headValue == 'Operation'|| headValue == 'Activity'">
+                    </th>
+                    <th class="tableHeader" *ngIf="headerData[3]">
+                      <select name="cathead4" [disabled]='true' [(ngModel)]="cathead4" class="form-control" (change)="getDataTypeChange(headerData[3], cathead3)" >
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
-                      <select name="cathead4" [disabled]='true' [(ngModel)]="cathead4" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead3)" *ngIf="headValue == 'Start Timestamp' || headValue == 'Start Time'">
+                    </th>
+                    <th class="tableHeader" *ngIf="headerData[4]">
+                      <select name="cathead5" [disabled]='true' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[4], cathead4)" >
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
-                      <select name="cathead5" [disabled]='true' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead4)" *ngIf="headValue == 'End Timestamp' || headValue == 'End Time' || headValue == 'Complete Timestamp'">
+                    </th>
+                    <th class="tableHeader" *ngIf="headerData[5]">
+                      <select name="cathead6" [disabled]='true' [(ngModel)]="cathead6" class="form-control" (change)="getDataTypeChange(headerData[5], cathead5)" >
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
-                      <select name="cathead6" [disabled]='true' [(ngModel)]="cathead6" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead5)" *ngIf="headValue == 'Resource' || headValue == 'Agent'">
+                    </th>
+                    <th class="tableHeader" *ngIf="headerData[6]">
+                      <select name="cathead7" [disabled]='true' [(ngModel)]="cathead7" class="form-control" (change)="getDataTypeChange(headerData[6], cathead6)" >
                       <option>String</option>
                       <option>Integer</option>
                       <option>Date/Time</option>
                       </select>
-                      <select name="cathead7" [disabled]='true' [(ngModel)]="cathead7" class="form-control" (change)="getDataTypeChange(headerData[i1], cathead6)" *ngIf="headValue == 'Role'">
-                      <option>String</option>
-                      <option>Integer</option>
-                      <option>Date/Time</option>
-                      </select>
+                      </th>
+                      <th class="tableHeader" *ngIf="headerData[7]">
+                        <select name="cathead8" [disabled]='true' [(ngModel)]="cathead8" class="form-control" (change)="getDataTypeChange(headerData[7], cathead7)" >
+                        <option>String</option>
+                        <option>Integer</option>
+                        <option>Date/Time</option>
+                        </select>
                         </th>
-
-                    
-                    
-                    </tr>
+                        <th class="tableHeader" *ngIf="headerData[8]">
+                          <select name="cathead9" [disabled]='true' [(ngModel)]="cathead9" class="form-control" (change)="getDataTypeChange(headerData[8], cathead8)" >
+                          <option>String</option>
+                          <option>Integer</option>
+                          <option>Date/Time</option>
+                          </select>
+                          </th>
+                          <th class="tableHeader" *ngIf="headerData[9]">
+                            <select name="cathead10" [disabled]='true' [(ngModel)]="cathead10" class="form-control" (change)="getDataTypeChange(headerData[9], cathead9)" >
+                            <option>String</option>
+                            <option>Integer</option>
+                            <option>Date/Time</option>
+                            </select>
+                            </th>
+                            <th class="tableHeader" *ngIf="headerData[10]">
+                              <select name="cathead11" [disabled]='true' [(ngModel)]="cathead11" class="form-control" (change)="getDataTypeChange(headerData[10], cathead10)" >
+                              <option>String</option>
+                              <option>Integer</option>
+                              <option>Date/Time</option>
+                              </select>
+                              </th>
+                              <th class="tableHeader" *ngIf="headerData[11]">
+                                <select name="cathead12" [disabled]='true' [(ngModel)]="cathead12" class="form-control" (change)="getDataTypeChange(headerData[11], cathead11)" >
+                                <option>String</option>
+                                <option>Integer</option>
+                                <option>Date/Time</option>
+                                </select>
+                                </th>
+                               
+                      
+                  </tr>
             </thead>
             <tbody #container>
-                    
-                <tr *ngFor="let row of fileData| paginate: { itemsPerPage: 50, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
+                <tr>
+                    <td *ngFor="let val of headerData;trackBy:loopTrackBy;">
+                        <div *ngIf='selected==val' [ngClass]="selected==val?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==val" class='reset_btn' (click)='resetcaseId()'><i class='fa fa-times'></i></button> </div>
+                    </td>
+                  </tr>
+                <tr *ngFor="let row of fileData| paginate: { itemsPerPage: 100, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
                   <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val, row)"
                     [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1"> 
-                    {{row[j] || ' '}}
+                    {{getDateFormat(row[j],headerData[j]) || ' '}}
                   </td>
                 </tr>
+               
             </tbody>
         </table>
       </form>

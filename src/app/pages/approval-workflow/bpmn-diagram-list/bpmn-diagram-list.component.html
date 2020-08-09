@@ -10,7 +10,7 @@
     </div>
   </div>
 </div>
-<div class="container-fluid bpmn_list header_addon">
+<div class="container-fluid bpmn_list">
   <div class="row col-md-12 approve_bpmn_list_header">
     <div class="col-md-2 list_header" (click)="sort('processIntelligenceId',0)"><b>Process ID<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
     <div class="col-md-2 list_header" (click)="sort('bpmnProcessName',1)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>
@@ -21,7 +21,6 @@
   </div><br/>
   <div class="row col-md-12"  id="bpmn_list">
   <mat-accordion>
-
     <mat-expansion-panel  #matExpansionPanel *ngFor="let each_diag of griddata | filter: searchTerm | paginate: { itemsPerPage: 14, currentPage: p };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
     [(expanded)]="each_diag.xpandStatus"
     (click)="clicked(i)"
@@ -34,9 +33,9 @@
             <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].processIntelligenceId ? each_diag.bpmnProcessInfo[0].processIntelligenceId : '-' }}</div>
             <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].bpmnProcessName ? each_diag.bpmnProcessInfo[0].bpmnProcessName : '-'}}</div>
             <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</div>
-            <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].userName  ? (each_diag.bpmnProcessInfo[0].userName | titlecase) : '-'}}</div>
+            <div class="col-md-2 text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].userName  ? formatApproverName(each_diag.bpmnProcessInfo[0].userName) : '-'}}</div>
             <div class="col-md-2 text-cell">{{each_diag.role ? each_diag.role : '-'}}</div>
-            <div class="col-md-2  text-cell-last" *ngIf="each_diag.bpmnProcessInfo" [ngStyle]="{'color':getColor(each_diag.bpmnProcessInfo[0].bpmnProcessStatus)}">{{each_diag.bpmnProcessInfo[0].bpmnProcessStatus ? each_diag.bpmnProcessInfo[0].bpmnProcessStatus : '-'}}</div>
+            <div class="col-md-2  text-cell-last" *ngIf="each_diag.bpmnProcessInfo" [ngStyle]="{'color':getColor(each_diag.bpmnProcessInfo[0].bpmnProcessStatus)}"><div *ngIf="each_diag.bpmnProcessInfo[0].bpmnProcessStatus=='PENDING';else status"><span class="pending_value_properties">{{pendingStatus}}</span></div> <ng-template #status>{{each_diag.bpmnProcessInfo[0].bpmnProcessStatus}}</ng-template></div>
           </div>
         </mat-panel-title>
       </mat-expansion-panel-header>
@@ -58,13 +57,13 @@
             <tbody>
               <tr *ngFor="let each_past_process of each_diag.bpmnProcessInfo | orderBy: 'modifiedTimestamp': true; let j=index;">
                 <td>{{each_past_process.modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</td>
-                <td>{{each_past_process.userName}}</td>
+                <td>{{formatApproverName(each_past_process.userName)}}</td>
                 <td>{{"V 1."+each_past_process.version}}</td>
-                <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}">{{each_past_process.bpmnProcessStatus}}</td>
+                <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}"><div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span>{{pendingStatus}}</span></div> <ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template></td>
                 <td><input type="text" [value]="each_past_process.reviewComments" name="reviewComments{{j}}" [(ngModel)]="each_past_process.reviewComments"  [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled" placeholder="Enter your Message"  required/></td><!-- [(ngModel)]="approval_msg" -->
                 <td>
-                  <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled">Approve</button><!-- approval_msg.length==0 ||  -->
-                  <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_past_process, each_diag)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled">Deny</button><!-- approval_msg.length==0 || -->
+                  <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">Approve</button><!-- approval_msg.length==0 ||  -->
+                  <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_past_process, each_diag)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">Deny</button><!-- approval_msg.length==0 || -->
                   <i class="fa fa-eye" (click)="expandPanel(i, each_past_process)"></i>
                 </td>
               </tr>

@@ -15,12 +15,25 @@
     line-height: 1.4 !important;
 }
 .drop_down a{
-    padding: 10px 10px !important;
-    color: black !important;
+    padding: 10px 4px !important;
+    color: #287ad6 !important;
     font-size: 14px;
+    float: left;
 }
 .drop_down a:hover{
-    color: #0162cb !important;
+    color: #287ad6 !important;
     font-weight: bold !important;
 }
+.dropdown-menu{
+    padding:3px !important;
+    border: 1px solid #287ad6;
+}
+.header_icon{
+    padding-right: 7px !important;
+}
+.hd_icon{
+    padding-right: 5px;
+}
+
+
 

@@ -15,6 +15,8 @@ import Swal from 'sweetalert2';
 import { data } from 'jquery';
 import { colorSets } from '@swimlane/ngx-charts/release/utils';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
+import { element } from 'protractor';
+import { ThrowStmt } from '@angular/compiler';
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
@@ -55,6 +57,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   @ViewChild('downloadLink',{static: false}) downloadLink: ElementRef;
   public finaldataobjects:any=[]
   @Input("bot") public finalbot:any;
+  dropVerCoordinates: any;
   constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService, private http:HttpClient, private child_rpa_studio:RpaStudioComponent) {
     
    }
@@ -70,6 +73,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       ]
     });
     this.dt.changeHints(this.hints.rpaWorkspaceHints );
+    this.selectedTask={
+      id:"", 
+      name:"",
+    }
     if(this.finalbot.botId!= undefined)
     {
       this.finaldataobjects=this.finalbot.tasks;
@@ -82,8 +89,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
 
   ngAfterViewInit() {
-/*
-    this.jsPlumbInstance = jsPlumb.getInstance();
+
+ this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 90 }],
@@ -91,14 +98,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         ["Arrow", { width: 12, length: 12, location: 0.5 }]
       ]
     });
-*/
+
     if(this.finalbot.botId!= undefined)
     {
       console.log(this.finalbot.sequences)
-      //  this.loadnodes()
-        this.addconnections()
-    }
 
+        this.addconnections(this.finalbot.sequences)
+    }
+    this.child_rpa_studio.spinner.hide()
   }
 
 
@@ -116,8 +123,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         selectedNodeTask:element.taskName,
         path:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).path,
         tasks:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
-        x:element.x,
-        y:element.y,
+        x:parseInt((element.x).split("px")[0])+100+"px",
+        y:parseInt((element.y).split("px")[0])+100+"px",
       }
       console.log(node)
       this.nodes.push(node);
@@ -127,47 +134,48 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       
     });
   }
-  public addconnections()
+
+
+
+  public addconnections(sequences)
   {
-    //this.jsPlumbInstance.reset();
-    //jsPlumb.reset();
-    //this.jsPlumbInstance = jsPlumb.getInstance();
-    this.finalbot.sequences.forEach(element => {
+    
+    setTimeout(() => {
+    sequences.forEach(element => {
       
       this.jsPlumbInstance.connect(
         {
-          endpoint: ['Dot', {
-            radius: 2,
+          endpoint: ['Dot', { 
+            radius: 3,
             cssClass:"myEndpoint", 
             width:8, 
             height:8,
-          }],
+          }],    
+          
           source:element.sourceTaskId, 
           target:element.targetTaskId,
-          anchor:"Continuous",
-          connectorStyle: { stroke: '#404040',strokeWidth: 2 },
-          maxConnections: -1,
-          cssClass: "path",
-          Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
-          connectorClass: "path",
-          overlays: [
-            ["Arrow", { width: 12, length: 12, location: 1 }]
-          ],
-          isTarget: true,
-     
-        }
-
-      )
+          anchors:["Right", "Left" ],
+          detachable:true,
+          overlays:[ ["Arrow", { width: 12, length: 12, location: 1 }]],
+        })
+      
 
       
     });
+  });
     console.log(data);
   
   }
 
+
+
+
   public removeItem(item: any, list: any[]): void {
     list.splice(list.indexOf(item), 1);
   }
+
+
+
 
   onDrop(event: DndDropEvent,e:any) {
     this.dragelement = document.querySelector('.drag-area');
@@ -196,6 +204,39 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     setTimeout(() => {
       this.populateNodes(nodeWithCoordinates);
     }, 240);
+
+    if(this.nodes.length==1)
+    {
+      let node={
+        id:this.idGenerator(),
+        name:"START",
+        selectedNodeTask:"",
+        path:"/assets/images/RPA/Start.png",
+        x:"2px", 
+        y:"9px",
+      }
+      console.log(node)
+      this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+        }, 240);
+ 
+      
+        let stopnode={
+          id:this.idGenerator(),
+          name:"STOP",
+          selectedNodeTask:"",
+          path:"/assets/images/RPA/Stop.png",
+          x:"941px",
+          y:"396px",
+        }
+        console.log(stopnode)
+        this.nodes.push(stopnode);
+          setTimeout(() => {
+            this.populateNodes(stopnode);
+          }, 240);
+      
+    }
   }
 
   idGenerator() {
@@ -236,6 +277,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         width:8, 
         height:8,
       }],
+      
     paintStyle:{stroke:"#0062cf", fill:"#0062cf",strokeWidth:2  },
       isSource: true,
       connectorStyle: { stroke: '#404040',strokeWidth: 1.5 },
@@ -266,8 +308,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       connectorOverlays: [
       ]
     };
-
+    if(nodeData.name!="STOP")
     this.jsPlumbInstance.addEndpoint(nodeData.id, rightEndPointOptions);
+    if(nodeData.name!="START")
     this.jsPlumbInstance.addEndpoint(nodeData.id, leftEndPointOptions);
 
   }
@@ -326,6 +369,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   }
 
+
+
   onRightClick(n: any,e: { target: { id: string; } },i: string | number) {
     this.selectedNode = n
     console.log(e);
@@ -370,22 +415,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   formNodeFunc(node)
   {
-   /* console.log(node)
-    if(this.selectedTask.id)
-    {
-      this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
-       this.response(data)
-      })
-    }*/
-     //console.log(node)
+ 
      let task=this.finaldataobjects.find(data =>data.nodeId.split("__")[1]==node.id );
+     
      if(task==undefined)
      {
        this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
          this.response(data)
        })
      }
-     else if(this.selectedTask==undefined)
+     else if(this.selectedTask.id=="" || task.tMetaId!=this.selectedTask.id)
      {
        let finalattributes:any=[];
        this.rest.attribute(task.tMetaId).subscribe((data)=>{ 
@@ -393,7 +432,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
          task.attributes.forEach(element => {
                finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
            });
-           
+           this.selectedNode=node;
+           this.selectedTask.id=task.tMetaId;
+           this.selectedTask.name=task.taskName;
+           this.formHeader=this.selectedNode.name+"-"+this.selectedTask.name;
            this.response(finalattributes)
        });
      }
@@ -407,9 +449,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
            });
            
            this.response(finalattributes)
+           this.formHeader=task.taskName;
        });
      }
-     else if(this.selectedTask.id != task.tMetaId)
+     else if(this.selectedTask.id != task.tMetaId && task.id!=undefined)
      {
        this.rest.attribute(this.selectedTask.id).subscribe((data)=>{
          this.response(data)
@@ -437,6 +480,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       if(element.type == "multipart"){
         element.onUpload = this.onUpload.bind(this)
       }
+      if(element.type == "dropdown"){
+        element.onChange = this.onChange.bind(this)
+      }
     });
     this.formVales = data
     this.alldataforms.push(this.formVales)
@@ -451,19 +497,58 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   }
 
-  onUpload(e){
+  onUpload(event){
+
+    console.log(event)
+    this.fileData = event.target.value.substring(12)
+    // if (event.target.files && event.target.files[0]) {
+    //   var reader = new FileReader();
+  
+    //   reader.onload = (event: ProgressEvent) => {
+    //     this.fileData = (<FileReader>event.target).result;
+    //   }
+  
+    //   reader.readAsDataURL(event.target.files[0]);
+    // }
+    // this.fileData = files.target.value
+    //  return e.target.files[0].name
+  }
+  onChange(e){
     console.log(e)
-    this.fileData = e.target.value
-     return e.target.files[0].name
+    this.fields.map(ele => {
+      if(ele.dependency == e){
+        ele.visibility = true
+        ele.required = true
+      }
+      if(ele.dependency != e && ele.dependency != ''){
+        ele.visibility = false
+        ele.required = false
+      }
+      return ele
+    })
   }
 
-  onFormSubmit(event){  
+
+
+
+  onFormSubmit(event){ 
     this.fieldValues = event
-    this.fieldValues['file'] = this.fileData
+    if(this.fieldValues['file1']){
+      this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
+    }
+    if(this.fieldValues['file2']){
+      this.fieldValues['file2'] = this.fieldValues['file2'].substring(12)
+    }
+    if(this.fileData != undefined){
+      this.fieldValues['file'] = this.fileData
+      }
+    
+    
     this.hiddenPopUp=false;
     let objAttr:any;
     let obj:any=[];
-    this.formVales.forEach((ele,i) => { 
+    this.formVales.forEach((ele,i) => {
+      if(ele.visibility == true){
       let objKeys = Object.keys(this.fieldValues);
       objAttr = {
         "metaAttrId": ele.id,
@@ -471,7 +556,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         "attrValue": this.fieldValues[objKeys[i]]
       }
       obj.push(objAttr);
-        
+    } 
   })
   let cutedata={
     
@@ -485,7 +570,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     "y":this.selectedNode.y,
     "attributes":obj,
   }
-  this.finaldataobjects.push(cutedata);
+  console.log(this.finaldataobjects.findIndex(sweetdata=>sweetdata.nodeId==cutedata.nodeId))
+  let index=this.finaldataobjects.findIndex(sweetdata=>sweetdata.nodeId==cutedata.nodeId)
+  if(index!=undefined && index >=0)
+  {
+    this.finaldataobjects[index]=cutedata;
+  }else
+  {
+    this.finaldataobjects.push(cutedata);
+  
+  }
   console.log(this.finaldataobjects)
   this.notifier.notify( "info", "Data Saved Successfully" );
   }
@@ -726,10 +820,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   
 
 
-  squences()
+  addsquences()
   {
     this.jsPlumbInstance.getAllConnections().forEach(element => {
-    
+      console.log(element);
+      console.log(element.getId())
+      console.log(element.getId())
     });
   }
 

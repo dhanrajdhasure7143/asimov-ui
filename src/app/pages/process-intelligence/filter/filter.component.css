@@ -1,0 +1,72 @@
+::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-bar {
+    height: 3px;
+    width: 105%;
+    background: gray;
+  }
+  
+  ::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-pointer{
+    height:0px !important;
+    width: 0px !important;
+    top: -16.5px !important;
+  }
+  
+  ::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-pointer:after {
+    height: 12px !important;
+    width: 12px !important;
+    left:0px;
+    border-radius: 55% !important;
+    border: 1px solid gray !important;
+  }
+  ::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-pointer:hover:after {
+    height: 12px !important;
+    width: 12px !important;
+    border-radius: 55% !important;
+    border: 1px solid gray !important;
+  }
+  ::ng-deep .custom_filter_slider .ng5-slider-active:after {
+    background:white !important;
+  }
+  ::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-model-value{
+    color:gray;
+    font-size: 11px;
+    font-weight: bold;
+    left:130px !important;
+    top:-6px;
+  }
+.dataValues{
+    margin-top: 10px;
+    overflow: scroll;
+    height: 210px;   
+}
+::-webkit-scrollbar{
+    width:10px !important;
+    height: 0px !important;
+}
+.data_values{
+    background: #f4f4f4;
+    font-size: 13px;
+    font-weight: 600;
+    cursor:pointer;
+    padding: 15px;
+    margin-top: 5px;
+    box-shadow: 0px 3px 13px -6px rgba(0,0,0,.50);
+}
+.data_values:hover{
+    box-shadow: 0px 10px 10px -3px rgba(0,0,0,.50);
+    font-weight: 900;
+}
+.inner-addon i{
+    position: absolute;
+    padding-left: 88%;
+    pointer-events: none;
+    width: 50px;
+    margin-top: 10px
+}
+.right-addon input{ 
+    padding-right: 20px !important;
+    width: 120%; 
+}
+.selectall-btn{
+  border-bottom: 1px solid gray;
+  border-radius: 0;
+}

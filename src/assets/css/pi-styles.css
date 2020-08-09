@@ -80,12 +80,6 @@ float: left !important;
     transition: 0.5s;
 }
 
-.filter_heading{
-    background-color: #f4f4f4;
-    height:35px;
-    width: 100%
-}
-
 .filter_headinglabels{
     font-size: 14px;
     font-weight: bold;
@@ -111,39 +105,6 @@ float: left !important;
     margin-left: 10px;
 }
 
-.dataType{
-    margin-top: 10px;
-}
-
-.searchFilter{
-    margin-left: 78%;
-}
-
-.search{
-    color: gray !important;
-    font-size: 13px;
-    border: none ;
-    background: white;
-    text-align: center;
-    outline: none;
-}
-
-.selectAll,.deselectAll{
-    width: 100px !important;
-    color: gray !important;
-    font-size: 13px;
-    border: none ;
-    background: white;
-    text-align: center;
-    outline: none;
-}
-
-.selectAll:hover,.deselectAll:hover , .search:hover{
-    padding-bottom: 0px;
-    font-weight: 600;
-    border-bottom: 2px solid lightgray !important;
-    }
-
 .type_filter, .percent_filter{
     font-size: 13px;
     font-weight: bold;
@@ -167,72 +128,16 @@ float: left !important;
     margin-top: -20px;
 }
 
-::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-bar {
-    height: 3px;
-    width: 105%;
-    background: gray;
-  }
-  
-  ::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-pointer{
-    height:0px !important;
-    width: 0px !important;
-    top: -16.5px !important;
-  }
-  
-  ::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-pointer:after {
-    height: 12px !important;
-    width: 12px !important;
-    left:0px;
-    border-radius: 55% !important;
-    border: 1px solid gray !important;
-  }
-  
-  ::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-pointer:hover:after {
-    height: 12px !important;
-    width: 12px !important;
-    border-radius: 55% !important;
-    border: 1px solid gray !important;
-  }
-  
-  ::ng-deep .custom_filter_slider .ng5-slider-active:after {
-    background:white !important;
-  }
-  
-  ::ng-deep .custom_filter_slider .ng5-slider .ng5-slider-model-value{
-    color:gray;
-    font-size: 11px;
-    font-weight: bold;
-    left:130px !important;
-    top:-6px;
-  }
 .radio{
     margin-left: 30px;
     font-size: 13px;
 }
-
 .data_values{
     background: #f4f4f4;
     font-size: 13px;
-    font-weight: 400;
-    width: 99%;
-    padding:10px;
+    font-weight: 600;
     cursor:pointer;
-}
-
-.dataValues{
-    overflow: scroll;
-    height: 210px;
-    padding: 5px;
-}
-
-/* ::-webkit-scrollbar{
-    width:0px !important;
-    height: 0px !important;
-} */
-
-.searchInput{
-    margin-left: 70%;
-    margin-right: 10px;
+    padding: 10px;
 }
 
 .reports{
@@ -278,9 +183,6 @@ font-size: 11px;
 color: black;
 padding-bottom: 10px;
 }
-/* .case-details{
-padding-left: 22px;
-} */
 .details_one{
   font-size: 13px;
   padding-left: 5px;
@@ -318,10 +220,6 @@ border-color: white !important
 .hide_detailsone{
 padding-left: 5px;
 }
-/* .select_drpdwnone{
-  margin-left: 5px;
-  margin-right: 5px;
-} */
 .select_drpdwn{
   /* background:none !important; */
   /* font-size: 13px; */
@@ -366,8 +264,6 @@ background-color: #f4f4f4;
 padding: 5px !important;
 }
 .details_box{
-  /* overflow: scroll; */
-  /* height: 340px; */
   padding: 5px;
 }
 .play_button{
@@ -375,7 +271,6 @@ padding: 5px !important;
   font-size: 14px;
   color: green;
   margin-bottom: 4px;
-
 }
 .selectbox{
   margin-top: 0px;
@@ -421,22 +316,18 @@ height: 20px;
 .Activities_slider{
   margin-left:-8px;
 }
-
-
 .vertical_slider{
   height: 110px !important;
   margin-top: 60px;
 }
 
 .zoom_label{
-  /* margin-left: 28% !important; */
   padding-top: 4px;
   font-size: 12px;
   font-weight: bold;
   color: gray;
 }
 .zoom_value{
-/* margin-left: 170px; */
 float: right;
 z-index: 1000;
 font-size: 13px;
@@ -519,7 +410,8 @@ border-color: transparent transparent gray transparent ;
   display: none;
   padding: 5px;
   border-radius: 10px;
-  width: auto;
+  width: 200px;
+  /* width: auto; */
   margin-right: 20px;
   max-height: 430px;
   align-self: auto !important;
@@ -564,12 +456,6 @@ border-color: transparent transparent gray transparent ;
   margin-right: 30px;
   padding-left: 8px;
   }
-#receive{
-  font-size: 11px;
-  font-weight: bold;
-  margin-left: 5px;
-}
-
 .filter_btn{
   float:right;
   margin-top: -30px;
@@ -578,14 +464,12 @@ border-color: transparent transparent gray transparent ;
   background: none !important;
   outline: none !important;
 }
-.slide-up
-{
+.slide-up{
 bottom: 0px !important;
 transition: 1s;
 }
 
-.slide-down
-{
+.slide-down{
 bottom: -300px !important;
 transition: 0.5s;
 }

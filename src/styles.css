@@ -89,6 +89,9 @@ body, html {
   padding: 10px;
   border: 1px dotted #ccc;
 }
+.no-split-pane .as-split-gutter{
+  display : none !important;
+}
 /* notifications to right */
 notifier-notification{
     position: absolute;
@@ -144,8 +147,11 @@ div[class^='diagram_container'] .djs-container svg{
 
 /* button styles */
 .header_addon{
-  position: relative;
-  top: -55px;
+  /* position: relative;
+  top: -55px; */
+  position: absolute !important;
+  top: 105px;
+  width: 100%;
 }
 .btn{
   margin-right: 5px;

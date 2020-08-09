@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 @Component({
   selector: 'app-dynamic-forms',
   template:`
-    <form (ngSubmit)="onSubmitFo()" [formGroup]="form" class="form-horizontal">
+    <form (ngSubmit)="onSub()" [formGroup]="form" class="form-horizontal">
       <div *ngFor="let field of fields; let i =index ">
           <form-builder [field]="field" [form]="form"></form-builder>
       </div>
@@ -23,12 +23,15 @@ export class DynamicFormsComponent implements OnInit {
   @Input() fields: any[] = [];
   form: FormGroup;
   constructor() { }
-
+  onSub(){
+    console.log(this.form.value)
+    this.onSubmit.emit(this.form.value)
+  }
   ngOnInit() {
     let fieldsCtrls = {};
     for (let f of this.fields) {
       if (f.type != 'checkbox') {
-        fieldsCtrls[f.name] = new FormControl(f.value || '', Validators.required)
+        fieldsCtrls[f.name] = new FormControl(f.value || '', f.required && f.dependency == ''  ? Validators.required : [])
       } else {
         let opts = {};
         for (let opt of f.options) {
@@ -39,7 +42,5 @@ export class DynamicFormsComponent implements OnInit {
     }
     this.form = new FormGroup(fieldsCtrls);
   }
-  onSubmitFo(){
-    this.onSubmit.emit(this.form.value)
-  }
+ 
 }

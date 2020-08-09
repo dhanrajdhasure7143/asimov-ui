@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
@@ -6,6 +6,7 @@ import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from '../../../shared/global-script';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
+import { APP_CONFIG } from 'src/app/app.config';
 
 @Component({
   selector: 'app-dataselection',
@@ -31,10 +32,6 @@ export class DataselectionComponent implements OnInit {
   headerId:any;
   headerArray:any[]=[];
   name:any;
-  // categoriesList:any=[];
-  // public categoryName:any;
-  // public othercategory:any;
-  // isotherCategory:boolean=false;
   isgenerate:boolean=false;
   isUploadFileName: any;
   cathead1: any;
@@ -44,17 +41,27 @@ export class DataselectionComponent implements OnInit {
   cathead5: any;
   cathead6: any;
   cathead7: any;
+  cathead8: any;
+  cathead9: any;
+  cathead10: any;
+  cathead11: any;
+  cathead12: any;
+  cathead13: any;
   headertypeArray:any=[];
   processId:any;
-  // processName:any;
   p=1;
-  // processName:any;
+  isDateformat:any;
+  count=0;
+  dateformat:any;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
                 private hints:PiHints, 
                 private global:GlobalScript,
-                private rest:RestApiService) { }
+                private rest:RestApiService,
+                @Inject(APP_CONFIG) private config) {
+                
+                 }
 
   ngOnInit() {
     this.resetColMap();
@@ -63,52 +70,44 @@ export class DataselectionComponent implements OnInit {
     this.dt.changeHints(this.hints.dataDocumentHints);
 
     var headertype=JSON.parse(localStorage.getItem('headertypeObj'))
-    // console.log('storage',headertype)
     for(var i=0;i<headertype.length;i++){
       for (let [key, value] of Object.entries(headertype[i])) {
         this.headertypeArray.push(value)
       } 
     }
-    // console.log(this.headertypeArray);
     this.cathead1=this.headertypeArray[0]
     this.cathead2=this.headertypeArray[1];
     this.cathead3=this.headertypeArray[2];
     this.cathead4=this.headertypeArray[3];
     this.cathead5=this.headertypeArray[4];
     this.cathead6=this.headertypeArray[5];
-    // this.dt.current_piData.subscribe(res => {
-    //   if(res){
+    this.cathead7=this.headertypeArray[6];
+    this.cathead8=this.headertypeArray[7];
+    this.cathead9=this.headertypeArray[8];
+    this.cathead10=this.headertypeArray[9];
+    this.cathead11=this.headertypeArray[10];
+    this.cathead12=this.headertypeArray[11];
       var restwo=localStorage.getItem('fileData')
       var res=JSON.parse(restwo)
         this.fileData = res;
         this.headerData = res[0];
-        // console.log('fileData',this.headerData);
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
-    //   }
-    // });
-
     
 
   }
 
   getDataTypeChange(a,b){
-    
+
   }
 
   slideUp(){
     var modal = document.getElementById('myModal');
     modal.style.display="block";
-    // this.router.navigate(['/pages/processIntelligence/flowChart']);
     }
     generateGraph(e){
-//             const test=[{"Order ID": "caseId"},
-//     {"Start Timestamp": "Start Timestamp"},
-//   {"End Timestamp": "End Timestamp"},
-// {activity:"activity"},
-// {resource:"resource"},]
-this.processId = Math.floor(100000 + Math.random() * 900000);
-  var renamesObj=[];
+    this.processId = Math.floor(100000 + Math.random() * 900000);
+    var renamesObj=[];
     for(var i=0; i<this.headerArray.length; i++){
       for (let [key, value] of Object.entries(this.headerArray[i])) {
         var obj={}
@@ -129,11 +128,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         obj[key]=lowercase.toString().split(' ').join('')
         
         renamesObj.push(obj) ;
-    
-        
-
       }
-      // console.log("renamesObj",renamesObj);
   }
   let renamestring='';
   for(var k=0;k<renamesObj.length;k++){
@@ -145,7 +140,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     }
   }
   renamestring=renamestring.slice(0,-1)
-      // console.log('keys',renamestring);
 
   var renamesObjOne=[]
   for(var j=0;j<renamesObj.length;j++){
@@ -155,13 +149,12 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
       }
     }  
   }
-  // console.log("renamesObjOne",renamesObjOne);
       var date=new Date()
       var tenantId="abc456789"
   this.rest.fileName.subscribe(res => {
-    // console.log(res);
     this.isUploadFileName = res;
   });
+  if(this.isUploadFileName.includes("csv")){
     const connectorBody={
       //"name": "CsvSchemaSpool-"+tenantId+date.toISOString().split(':').join(''),
        "name": "CsvSchemaSpool-"+this.processId,
@@ -171,7 +164,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "input.file.pattern": this.isUploadFileName,
         "error.path": "/var/kafka",
         //  "topic": "tytyconnector-spooldir-"+this.processId,
-         "topic": "topqconnector-spooldir-"+this.processId,
+         "topic": this.config.piConnector+"connector-spooldir-"+this.processId,
         //"topic": "connector-spooldir-"+tenantId+date.toISOString().split(':').join(''),
         "finished.path": "/var/kafka/data",
         "halt.on.error": "false",
@@ -201,17 +194,64 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         "transforms.InsertField.static.field": "piIdName",
         "transforms.InsertField.static.value": this.processId+"-p"+this.processId
       }   }
-     
+
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
-        // var piId=connectorBody.config["transforms.InsertField.static.value"]
-        // localStorage.setItem('piId',this.processId)
-        // const piid={"piId":this.processId}
-        //const piid={"piId":411}
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
-        
       })
+    }else{
+      const xlsxConnectorBody={
+      "name": "xls-"+this.processId,
+      "config": {
+        "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
+        "tasks.max": "1",
+        "file": "/var/kafka/"+this.isUploadFileName,
+        "topic": this.config.piConnector+"connector-xls-"+this.processId,
+        // "topic": "tytyconnector-xls-"+this.processId,
+        "key.converter": "io.confluent.connect.avro.AvroConverter",
+        "key.converter.schema.registry.url": "http://10.11.0.101:8081",
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter.schema.registry.url": "http://10.11.0.101:8081",
+        "transforms": "RenameField,ReplaceField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string,InsertField,ValueToKey",
+        "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+        // "transforms.RenameField.renames": "Start Time:startTime,End Time:endTime,Operation:activity,Agent:resource,caseID:caseID",
+        "transforms.RenameField.renames": renamestring,
+        "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_startTime_unix.field": "startTime",
+        "transforms.convert_startTime_unix.target.type": "unix",
+        "parseDateFormat": this.isDateformat,
+        "transforms.convert_startTime_unix.format": this.isDateformat,
+        // "transforms.convert_startTime_unix.format": "dd.MM.yyyy HH:mm",
+        "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+        // "transforms.ReplaceField.whitelist": "caseID,activity,startTime,endTime,resource",
+        "transforms.ReplaceField.whitelist":renamesObjOne.join(),
+        "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_startTime_string.field": "startTime",
+        "transforms.convert_startTime_string.target.type": "string",
+        "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
+        "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+        "transforms.ValueToKey.fields": "caseID",
+        "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+        "transforms.InsertField.static.field": "piIdName",
+        "transforms.InsertField.static.value":this.processId+"-p"+this.processId,
+        "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_endTime_unix.field": "endTime",
+        "transforms.convert_endTime_unix.target.type": "unix",
+        // "transforms.convert_endTime_unix.format":"dd.MM.yyyy HH:mm",
+        "transforms.convert_endTime_unix.format":this.isDateformat,
+        "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_endTime_string.field": "endTime",
+        "transforms.convert_endTime_string.target.type": "string",
+        "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
+      }
+    }
+        this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+              this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
+        })
 
     }
+
+    }
+
   sort(ind,property) {
     this.isDesc = !this.isDesc; //change the direction    
     let direction = this.isDesc ? 1 : -1;
@@ -246,7 +286,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
           }
         return;
       }else{
-    // console.log('log',tr_index, index,e, v);
     this.id.push(v.trim())
     // console.log('id',this.id);
     if(this.id.length == 0){
@@ -255,7 +294,7 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     else if(this.id.length == 1){
       Swal.fire({
         title: 'Confirmation?',
-        text: "Are you sure want to use this as CASE ID!",
+        text: "Are you sure want to use this as caseID!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -266,13 +305,9 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
         if (result.value) {
           this.name=v.trim();
         obj[this.name]='caseID';
-        // console.log(obj);
         this.headerArray.push(obj)
         this.headerName = 'caseID';
         this.selected=v;
-       // this.step_id = this.step_id + 1;
-        // console.log(this.selected)
-        // this.global.notify(this.headerName, "success");
         for(var x = 0;x < this.fileData.length;x++){
             if(!this.validCells['row'+x])
               this.validCells['row'+x]=[];
@@ -299,18 +334,9 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     else{
       this.headerName = v.trim();
       this.selected=v;
-      this.step_id = this.step_id + 1;
-      // if(v=='Start Timestamp'){
-      //   v='Start Time'
-      // }
-      // if(v=='End Timestamp'){
-      //   v='End Time'
-      // }
-      
+      this.step_id = this.step_id + 1;      
         this.name=v
-        // console.log(v +":::::::::::"+this.name)
         obj[this.name]=v;
-        // console.log(obj);
       this.headerArray.push(obj)
       for(var x = 0;x < this.fileData.length;x++){
         if(!this.validCells['row'+x])
@@ -318,21 +344,18 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
           this.validCells['row'+x].push('cell'+index);
         }
     }
-    // console.log('headerArray',this.headerArray);
-    if(this.headerArray.length == 5){
+
+    if(this.step_id == this.headerData.length-1){
       this.isgenerate=true;
     }
     else{
       this.isgenerate=false;
     }
-  }
-  // console.log("id",this.id);
- 
+  } 
   
     }
 
   resetColMap(){
-    // this.headerName = this.header_names_array[0];
     this.step_id = 1;
     this.validCells = [];
     this.invalidCells = [];
@@ -348,8 +371,6 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     })
   }  
   resetcaseId(){
-    // var tagDiv=document.getElementsByClassName[0]('select_tag');
-    // tagDiv.style.display='none';
     this.step_id = 1;
     this.validCells = [];
     this.invalidCells = [];
@@ -358,6 +379,209 @@ this.processId = Math.floor(100000 + Math.random() * 900000);
     this.headerName='caseID'
     this.selected=''
     this.isgenerate=false;
+  }
+
+  getCaseName(name){
+   
+      if(name.indexOf('Timestamp') != -1 || name.indexOf('Time') != -1){
+        return 'Timestamp';
+    } else {
+      return name;
+    }
+  }
+  getDateFormat(value,headername){
+    if(headername.indexOf('Time')!=-1 ||headername.indexOf('Timestamp')!=-1){
+      this.findDatePattern(value);
+      return value
+    }else{
+      
+      // this.findDatePattern(value);
+      return value;
+    }
+  }
+
+  findDatePattern(dateInput){
+    // console.log(dateInput);
+    
+    var splitDate;
+    // var dateformat;
+    var yearformat;
+    var timeOne;
+    var OnlyDate=dateInput.split(' ',1)
+    if(OnlyDate[0].includes('-')){
+      splitDate=dateInput.split('-')
+          if(splitDate[0].length==4){
+            var splitDate1=splitDate[2].split(' ',1)
+              yearformat="yyyy";
+                if(splitDate[1]==12 && splitDate1[0]==12){
+                      // this.dateformat=' ';
+                }else if(splitDate[1]<12 && splitDate1[0]<12){
+                  // this.dateformat='';
+                }else if(splitDate[1]>12 && splitDate1[0]<12){
+                      this.dateformat='dd-MM';
+                }else if(splitDate[1]<12 && splitDate1[0]>12){
+                      this.dateformat='MM-dd';
+                }else if(splitDate[1]==12 && splitDate1[0]>12){
+                      this.dateformat='MM-dd';
+                }else if(splitDate[1]>12 && splitDate1[0]==12){
+                      this.dateformat='dd-MM';
+                }
+              var fullDateFormat=yearformat+'-'+this.dateformat      
+            }else{
+                if(splitDate[0]==12 && splitDate[1]==12){
+                      // this.dateformat=' ';
+                }else if(splitDate[0]<12 && splitDate[1]<12){
+                      // this.dateformat=' ';
+                }else if(splitDate[0]>12 && splitDate[1]<12){
+                      this.dateformat='dd-MM'
+                }else if(splitDate[0]<12 && splitDate[1]>12){
+                      this.dateformat='MM-dd'
+                }else if(splitDate[0]==12 && splitDate[1]>12){
+                      this.dateformat='MM-dd'
+                }else if(splitDate[0]>12 && splitDate[1]==12){
+                      this.dateformat='dd-MM';
+                }
+                var splitYear=splitDate[2].split(' ',1)
+                  
+                  
+                    if(splitYear[0].length==4){
+                      yearformat='yyyy'
+                    }else{
+                      yearformat='yy'
+                    }
+                var fullDateFormat=this.dateformat+'-'+yearformat
+                }
+    }else if(OnlyDate[0].includes('.')){
+      splitDate=dateInput.split('.')
+      if(splitDate[0].length==4){
+        var splitDate1=splitDate[2].split(' ',1)
+          yearformat="yyyy";
+            if(splitDate[1]==12 && splitDate1[0]==12){
+                  // this.dateformat=' ';
+            }else if(splitDate[1]<12 && splitDate1[0]<12){
+                  // this.dateformat=' ';
+            }else if(splitDate[1]>12 && splitDate1[0]<12){
+                  this.dateformat='dd.MM';
+            }else if(splitDate[1]<12 && splitDate1[0]>12){
+                  this.dateformat='MM.dd';
+            }else if(splitDate[1]==12 && splitDate1[0]>12){
+                  this.dateformat='MM.dd';
+            }else if(splitDate[1]>12 && splitDate1[0]==12){
+                  this.dateformat='dd.MM';
+            }
+          var fullDateFormat=yearformat+'.'+this.dateformat      
+        }else{
+            if(splitDate[0]==12 && splitDate[1]==12){
+                  // this.dateformat=' ';
+            }else if(splitDate[0]<12 && splitDate[1]<12){
+                  // this.dateformat=' ';
+            }else if(splitDate[0]>12 && splitDate[1]<12){
+                  this.dateformat='dd.MM'
+            }else if(splitDate[0]<12 && splitDate[1]>12){
+                  this.dateformat='MM.dd'
+            }else if(splitDate[0]==12 && splitDate[1]>12){
+                  this.dateformat='MM.dd'
+            }else if(splitDate[0]>12 && splitDate[1]==12){
+                  this.dateformat='dd.MM';
+            }
+            var splitYear=splitDate[2].split(' ',1)
+                if(splitYear[0].length==4){
+                  yearformat='yyyy'
+                }else{
+                  yearformat='yy'
+                }
+            var fullDateFormat=this.dateformat+'.'+yearformat
+            }
+    }else if(OnlyDate[0].includes('/')){
+      splitDate=dateInput.split('/')
+      if(splitDate[0].length==4){
+      var splitDate1=splitDate[2].split(' ',1)
+
+              yearformat="yyyy";
+                if(splitDate[1]==12 && splitDate1[0]==12){
+                      // dateformat='MM/dd';
+                }else if(splitDate[1]<12 && splitDate1[0]<12){
+                      // dateformat='MM/dd';
+                }else if(splitDate[1]>12 && splitDate1[0]<12){
+                      this.dateformat='dd/MM';
+                }else if(splitDate[1]<12 && splitDate1[0]>12){
+                      this.dateformat='MM/dd';
+                }else if(splitDate[1]==12 && splitDate1[0]>12){
+                      this.dateformat='MM/dd';
+                }else if(splitDate[1]>12 && splitDate1[0]==12){
+                      this.dateformat='dd/MM';
+                }
+    
+              var fullDateFormat=yearformat+'/'+this.dateformat      
+            }else{
+                if(splitDate[0]==12 && splitDate[1]==12){
+                      // this.dateformat=' ';
+                }else if(splitDate[0]<12 && splitDate[1]<12){
+                      // this.dateformat=' ';
+                }else if(splitDate[0]>12 && splitDate[1]<12){
+                      this.dateformat='dd/MM'
+                }else if(splitDate[0]<12 && splitDate[1]>12){
+                      this.dateformat='MM/dd'
+                }else if(splitDate[0]==12 && splitDate[1]>12){
+                      this.dateformat='MM/dd'
+                }else if(splitDate[0]>12 && splitDate[1]==12){
+                      this.dateformat='dd/MM';
+                }
+                var splitYear=splitDate[2].split(' ',1)
+                    if(splitYear[0].length==4){
+                      yearformat='yyyy'
+                    }else{
+                      yearformat='yyyy'
+                    }
+                var fullDateFormat=this.dateformat+'/'+yearformat
+                  }
+    } 
+
+    // for time format
+    var timedivide=splitDate[2].split(' ')
+    var timedivide1=timedivide[1].split(':')
+    var time;
+    if(timedivide.includes('AM')){
+        
+        if(timedivide1.length==2){
+              time="hh:mm AM";
+        }else if(timedivide1.length==3){
+          if(timedivide1[2].includes('.')){
+            time="hh:mm:ss.SSS AM";
+          }else{
+            time="hh:mm:ss AM";
+          }
+        }
+    }else if(timedivide.includes('PM')){
+      if(timedivide1.length==2){
+            time="hh:mm PM";
+      }else if(timedivide1.length==3){
+        if(timedivide1[2].includes('.')){
+          time="hh:mm:ss.SSS PM";
+        }else{
+          time="hh:mm:ss PM";
+        }
+      }
+  }else{
+    this.count++
+      if(timedivide1.length==2){
+          timeOne="HH:mm";
+      }else if(timedivide1.length==3){
+          if(timedivide1[2].includes('.')){
+            timeOne="HH:mm:ss.SSS";
+          }else{
+            timeOne="HH:mm:ss";
+          }
+      }
+    }
+    if(this.count>=1){
+      var timeFormat =timeOne;
+    }else{
+      timeFormat =time;
+    }
+
+    var inputDateformat=fullDateFormat+' '+timeFormat
+       this.isDateformat=inputDateformat
   }
 
 }

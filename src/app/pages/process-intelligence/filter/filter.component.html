@@ -1,62 +1,57 @@
-
-<div id="foot">
-        <div  class="filter_heading">               
-        <div class="container filter_headinglabels">
-            <div class="row">
-                <div class="col-md-2">
-                    <p>Filter Setting</p>
-                </div>
-                <div class="col-md-8">
-                    <p>Filter Value</p>
-                </div>
-                <div class="col-md-2">
-                    <p >Overal Report</p>
-                    <button type="button" class="close cross_close" aria-label="Close" (click)="slideDown()">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
         
         <div class="container">
                 <div class="row">
                     <div class="col-md-2">
                         <p class="filter_typesOne">Filter By</p>
                         <div class="form-group">
-                            <select class="form-control filterSelection" name="status">
-                                <option [value]="each" *ngFor="let each of chart_filter_options;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{chart_filter[each]}}</option>
+                            <select class="form-control filterSelection" name="filterBy" (change)="channgeFilter()" [(ngModel)]="filterby">
+                                <option [value]="chart_filter[each]" *ngFor="let each of chart_filter_options;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{chart_filter[each]}}</option>
                             </select>
                         </div>
-                        <div>
-                        <p class="percent_filter">Percentage :</p>
-                        <div class="filter_slider custom_filter_slider"><ng5-slider [(ngModel)]="filterValue" [options]="filterOptions" ></ng5-slider></div>
+                    </div>
+                    <div class="col-md-8" *ngIf="isActivity">
+                        <div class="col-sm-12">
+                        <p class="dataType_filter">Data Values :</p>
                         </div>
-                        <div>
-                            <p class="type_filter">Type :</p>
-                            <div class="radio">
-                                <input type="radio" name="check" value="selected"> Selected<br>
-                                <input type="radio" name="check" value="Unselected"> Unselected<br>
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-7">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-3">
+                                    <button class="btn" (click)="selectAllDataValue()">Select All</button>
+                                    <!-- <button class="btn eiap-btn btn-primary" *ngIf="isSelect" (click)="deselectAllDataValue()">Deselect All</button>          -->
+                            </div>
+                            <div class="col-sm-4">
+                                    <!-- <button class="btn eiap-btn btn-primary" (click)="selectAllDataValue()" *ngIf="!isSelect">Select All</button> -->
+                                    <button class="btn" (click)="deselectAllDataValue()" [disabled]="isApplyFilter">Deselect All</button>         
+                            </div>
+                            <div class="col-sm-4">
+                           <!-- <button *ngIf="!isSearch" class="btn" (click)="this.isSearch= !this.isSearch" >Search</button>  -->
+                            <div class='inner-addon right-addon' *ngIf="isSearch">
+                                    <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
+                                    <input class="form-control border_bottom" placeholder="Search" type="text" name="search" [(ngModel)]="search_activity">
+                                </div>
+                                <!-- <div class='search-Input inner-addon right-addon'>
+                                        <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
+                                        <input class="form-control border_bottom" placeholder="Search" type="text" name="search">
+                                    </div> -->
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="dataType">
-                        <p class="dataType_filter">Data Values :</p>
-                        <p class="searchFilter">
-                            <button class="selectAll" (click)="selectAllDataValue()" [hidden]="isSelect">Select All</button>
-                            <button class="deselectAll" [hidden]="!isSelect" (click)="deselectAllDataValue()">Deselect All</button> 
-                            <button class="search" (click)="this.isSearch= !this.isSearch">Search</button> 
-                        </p>
-                        </div>
-                        <div class="searchInput" *ngIf="isSearch">
-                            <input class="form-control" placeholder="Search Values" type="text" name="search" [(ngModel)]="queryString" autocomplete="off">
-                        </div>
-        
-                        <div class="dataValues">
-                            <div *ngFor = "let data of dataValues| FilterPipe: queryString; let i = index;trackBy:loopTrackBy" >
-                                <p id="data" class="data_values" (click)="SelectData(data, i)" [ngStyle]="{'background-color':data.selected === 'active' ? 'gray' : '#fff' }" >{{data.name}}</p>
+                        <div class="col-sm-12 dataValues">
+                            <div *ngFor = "let data of dataValuesNames|filter:search_activity; let i = index;trackBy:loopTrackBy" >
+                                <div id="data" class="data_values activity_name" (click)="selectData(data, i)" [ngStyle]="{'background-color':data.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }" >{{data.name}}</div>
                               </div>
                         </div>
+                    </div>
+                    <div class="col-md-8" *ngIf="isEndpoint">
+                            <div class="col-sm-12">
+                            <p class="dataType_filter">End Points :</p>
+                            </div>
+                            <div class="col-sm-12">
+                                <div *ngFor="let enpoint of endPointsArray;let i=index">
+                                    <div id="data" class="data_values activity_name" (click)="selectedEndPoint(enpoint,i)" [ngStyle]="{'background-color':enpoint.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }">{{enpoint.name}}</div>
+                                        <!-- <div id="data" class="data_values activity_name" (click)="selectData()">End</div> -->
+                                </div>
+                            </div>
                     </div>
         
                     <div class="col-md-2">
@@ -66,42 +61,41 @@
                                 <tr>
                                     <td>cases</td>
                                     <td>:</td>
-                                    <td>{{reports[0].cases}}</td>
+                                    <!-- <td>{{reports[0].cases}}</td> -->
                                 </tr>
                                 <tr>
                                     <td>Activities</td>
                                     <td>:</td>
-                                    <td>{{reports[0].activities}}</td>
+                                    <!-- <td>{{reports[0].activities}}</td> -->
                                 </tr>
                                 <tr>
                                     <td>Roles</td>
                                     <td>:</td>
-                                    <td>{{reports[0].roles}}</td>
+                                    <!-- <td>{{reports[0].roles}}</td> -->
                                 </tr>
                                 <tr>
                                     <td>Resources</td>
                                     <td>:</td>
-                                    <td>{{reports[0].resources}}</td>
+                                    <!-- <td>{{reports[0].resources}}</td> -->
                                 </tr>
                                 <tr>
                                     <td>Started</td>
                                     <td>:</td>
-                                    <td>{{reports[0].started}}</td>
+                                    <!-- <td>{{reports[0].started}}</td> -->
                                 </tr>
                                 <tr>
                                     <td>Ended</td>
                                     <td>:</td>
-                                    <td>{{reports[0].ended}}</td>
+                                    <!-- <td>{{reports[0].ended}}</td> -->
                                 </tr>
                             </tbody>
                         </table>
                         </div>
-                    <button class="apply_button" (click)="applyFilter()">Apply Filter</button>
+                    <button *ngIf="isActivity" class="btn btn-primary eiap-btn" (click)="applyFilter()">Apply Filter</button>
+                    <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" (click)="applyEndpointFilter()">Apply Filter</button>
         
                     </div>
                 </div>
             </div>
-        
-        </div>
-        </div>
+
 

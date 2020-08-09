@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb } from 'jsplumb';
@@ -11,7 +11,7 @@ import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuCont
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { RpaHints } from '../model/rpa-module-hints';
 import Swal from 'sweetalert2';
-
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-rpa-studio',
@@ -59,9 +59,11 @@ export class RpaStudioComponent implements OnInit {
   exectionValue: any;
   tabsArray: any[] = [];
   tabActiveId: string;
+  userRole;
   public checkbotname:Boolean;
+  @ViewChild('section', {static: false}) section: ElementRef<any>;
   constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
-    private hints:RpaHints, private formBuilder:FormBuilder) { 
+    private hints:RpaHints, private formBuilder:FormBuilder,public spinner: NgxSpinnerService) { 
     this.show = 8;
     
     this.insertbot=this.formBuilder.group({
@@ -82,6 +84,8 @@ export class RpaStudioComponent implements OnInit {
 
   ngOnInit() 
   {
+
+
     console.log(this.insertbot.get("predefinedBot").value)
     if(localStorage.getItem("enablecreate"))
     {
@@ -101,16 +105,29 @@ export class RpaStudioComponent implements OnInit {
     this.rest.toolSet().subscribe(data => {
       console.log(data);
       data1 = data
-      
-      data1.General.forEach(element => {
-        let temp:any = {
-          name : element.name,
-          path : 'data:' + 'image/png' + ';base64,' + element.icon,
-          tasks: element.taskList
-        };
-        this.templateNodes.push(temp)
-        })
+      this.userRole = localStorage.getItem("userRole")
+      if(this.userRole.includes('User')){
+        data1.General.forEach(element => {
+          let temp:any = {
+            name : element.name,
+            path : 'data:' + 'image/png' + ';base64,' + element.icon,
+            tasks: element.taskList
+          };
+          if(temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'){
+          this.templateNodes.push(temp)
+          }
+          })
         
+      }else{
+        data1.General.forEach(element => {
+          let temp:any = {
+            name : element.name,
+            path : 'data:' + 'image/png' + ';base64,' + element.icon,
+            tasks: element.taskList
+          };
+          this.templateNodes.push(temp)
+          })
+       
       data1.Advanced.forEach(element => {
         let temp:any = {
           name : element.name,
@@ -119,6 +136,15 @@ export class RpaStudioComponent implements OnInit {
         };
         this.templateNodes.push(temp)
         })
+      }
+    
+        
+          
+
+        
+      
+
+      
     })
   }
 
@@ -135,6 +161,15 @@ export class RpaStudioComponent implements OnInit {
       this.checkbotname=true;
     }
     })
+  }
+
+
+  public scrolltop(){
+    this.section.nativeElement.scrollTo({ top: (this.section.nativeElement.scrollTop - 40), behavior: 'smooth' });
+  }
+ 
+  public scrollbottom() {
+    this.section.nativeElement.scrollTo({ top: (this.section.nativeElement.scrollTop + 40), behavior: 'smooth' });
   }
 
   increaseShow() {
@@ -179,8 +214,13 @@ export class RpaStudioComponent implements OnInit {
     document.getElementById("load-bot").style.display="none";
   }
 
+
   onLoad()
   {
+    this.loadbot.reset();
+    this.loadbot.get("bot").setValue("");
+    this.loadbot.get("botType").setValue("");
+    this.loadbot.get("botDepartment").setValue("");
     document.getElementById("load-bot").style.display="block";
   }
 
@@ -192,8 +232,16 @@ export class RpaStudioComponent implements OnInit {
     let botDepartment=this.loadbot.get("botDepartment").value
     if(botType!="" && botDepartment !="")
     {
+      let response:any;
+      this.spinner.show();
       this.rest.getbotlist(botType,botDepartment).subscribe(data=>{
+         response=data
+        if(response.errorMessage==undefined){
         this.botlist=data;
+        this.spinner.hide();
+        }else{
+          this.spinner.hide();
+        }
       })
     }
   }
@@ -202,9 +250,34 @@ export class RpaStudioComponent implements OnInit {
   {
     let botid=this.loadbot.get("bot").value
     console.log(botid)
+    this.getloadbotdata(botid);
+    
+  }
+
+  predefined(event)
+  {
+
+    //console.log(event)
+    console.log("data")
+    console.log(this.insertbot.get("predefinedBot").value)
+  
+    /*if(this.insertbot.get("predefinedBot").value=="true")
+    {
+      this.insertbot.get("predefinedBot").setValue("false")
+    }
+    else
+    {
+      this.insertbot.get("predefinedBot").setValue("true")
+    }*/
+  }
+
+
+  getloadbotdata(botid)
+  {
     let botdata:any;
+    this.spinner.show()
     this.rest.getbotdata(botid).subscribe(data=>{
-      botdata=data;
+       botdata=data;
       if(this.tabsArray.find(data=>data.botName==botdata.botName)==undefined)
       {
         this.tabsArray.push(botdata);
@@ -227,23 +300,8 @@ export class RpaStudioComponent implements OnInit {
       document.getElementById("load-bot").style.display="none";
     })
   }
-
-  predefined(event)
-  {
-
-    //console.log(event)
-    console.log("data")
-    console.log(this.insertbot.get("predefinedBot").value)
   
-    /*if(this.insertbot.get("predefinedBot").value=="true")
-    {
-      this.insertbot.get("predefinedBot").setValue("false")
-    }
-    else
-    {
-      this.insertbot.get("predefinedBot").setValue("true")
-    }*/
-  }
+
   
 } 
 
