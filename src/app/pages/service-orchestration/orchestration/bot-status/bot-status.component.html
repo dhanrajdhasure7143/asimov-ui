@@ -122,7 +122,7 @@
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator  #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50, 100]" [showFirstLastButtons]="true" ></mat-paginator>
+    <mat-paginator  #paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50, 100]" [showFirstLastButtons]="true" ></mat-paginator>
 
    </div>
   </div>
@@ -207,6 +207,8 @@ size=300
 [thick]="gaugeThickness" 
 [append]="gaugeAppendText">
 </ngx-gauge> -->
-</div>
+<div [hidden]="!chart" style="padding: 10%;">
+  <canvas id="canvas" width="350" height="350"></canvas>
+</div></div>
 </div>
 </div>
