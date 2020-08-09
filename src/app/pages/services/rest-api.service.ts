@@ -271,11 +271,14 @@ return this.http.post<any[]>('/bpsprocess/save/bpms/notation/approval/workflow',
   }
 
 
-  deployenvironment(envs)
-  {
+  deployenvironment(envs){
     return this.http.post("/rpa-service/agent/deploy-agent",envs)
-
   }
-
+  botPerformance(){
+  return this.http.get("/rpa-service/management/bot-performance")
+  }
+  botUsage(){
+    return this.http.get("/rpa-service/management/bot-usage")
+    }
 }
 
