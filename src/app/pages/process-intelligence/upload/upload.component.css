@@ -1,6 +1,6 @@
 
 /* The Modal (background) */
-.modal {
+.modal1 {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1000; /* Sit on top */
@@ -185,4 +185,13 @@ input[type="text"]{
   }
   .pi-Name-wrap{
       word-wrap: break-word !important;
+  }
+  #upload_db{
+      cursor: pointer !important;
+  }
+  .increment_input{
+      height: 118px;
+  }
+  .connection_btn{
+      margin-top: 10px;
   }
