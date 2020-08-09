@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  
+
   pi_url: 'http://pidev.epsoftinc.in',
   bps_url: 'http://bpsdev.epsoftinc.in',
   rpa_url: 'http://rpadev.epsoftinc.in',
@@ -15,7 +15,7 @@ export const environment = {
 
  // Aiotal redirection urls 
   myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
-  logout_url: 'http://eiapclouddev.epsoftinc.in', 
+  logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation', 
 
 // PI Connectors
   connector_topic: 'topq'

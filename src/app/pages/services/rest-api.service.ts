@@ -34,13 +34,12 @@ export class RestApiService{
   public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient) { }
   getAccessToken(){
-    let data = {"userId":"venkata.simhadri@epsoftinc.com",
+    let data = {"userId":"gopi.palla@epsoftinc.com",
                 "password":"Welcome@123"};
     return this.http.post('/api/login/beta/accessToken',data);
   }
-  bpmnlist(user){
-    //GET /bpsprocess/approver/info/{roleName} 
-    return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser/'+user);
+  bpmnlist(){
+    return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser');
   }
   approve_producemessage(bpmnProcessInfo){
     return this.http.post<any[]>('/bpsprocess/produceMessage',bpmnProcessInfo);
@@ -69,7 +68,7 @@ export class RestApiService{
     return this.http.get("/bpsprocess/approver/info/"+role)
   }
   getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser/gopi"); 
+    return this.http.get("/bpsprocess/fetchByUser"); 
   }
   saveBPMNprocessinfofromtemp(bpmnModel){
     return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel)
@@ -78,7 +77,7 @@ export class RestApiService{
     return this.http.post("/bpsprocess/submit/bpms/notation/approve", bpmnModel)
   }
   getBPMNTempNotations(){
-    return this.http.get("/bpsprocess/temp/bpmn/all/user?bpmnModelModifiedBy=gopi");
+    return this.http.get("/bpsprocess/temp/bpmn/all/user");
   }
   autoSaveBPMNFileContent(bpmnModel){
     return this.http.post("/bpsprocess/temp/bpms/notation", bpmnModel)
@@ -162,7 +161,7 @@ export class RestApiService{
 
   getbotlist(botType, botDepartment)
   {
-    return this.http.get("/rpa-service/get-all-bots/"+0+"/"+botDepartment+"/"+botType)
+    return this.http.get("/rpa-service/get-all-bots/"+botDepartment+"/"+botType);
   }
 
 
@@ -220,6 +219,14 @@ export class RestApiService{
     return this.http.get("/rpa-service/get-bot/"+botId+"/"+vid)
   }
 
+
+  getautomatedtasks()
+  {
+    return this.http.get("/rpa-service/automation-tasks")
+  }
+
+
+
   // PI module rest api's
 
   fileupload(file){
@@ -266,13 +273,19 @@ export class RestApiService{
   
   getAllActiveBots()
   {
-    return this.http.get("/rpa-service/get-all-bots")
+    return this.http.get("/rpa-service/get-bots")
+  }
+
+
+  getprocessnames()
+  {
+    return this.http.get("/rpa-service/process-name");
   }
 
   checkbotname(botname)
   {
     let data="";
-    return this.http.post("/rpa-service/check-bot/0?botName="+botname,data)
+    return this.http.post("/rpa-service/check-bot?botName="+botname,data)
   }
   getDeleteBot(botId)
   {

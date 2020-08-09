@@ -351,3 +351,33 @@ padding-bottom: 70px;
 
     background-color:none;    
   }
+
+
+  app-rpa-home .mat-tab-label-active{
+    background-color:white !important;
+  }
+
+  app-rpa-home .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #0062cf !important;
+}
+
+app-rpa-home .mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
+  background-color: white !important;
+}
+
+mat-paginator button:disabled{
+  background-color:white !important;
+}
+
+/*RPA Environments header styles */
+.rpaenv_header_addon {
+  position: absolute !important;
+  top: 107px;
+  text-align: right;
+  width: 100%;
+}
+.rpaenv-nav-btn-img {
+  height: 36px;
+  width: 36px;
+  margin-right: 5px;
+}

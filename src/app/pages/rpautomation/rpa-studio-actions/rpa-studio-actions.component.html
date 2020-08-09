@@ -121,7 +121,7 @@
             </div>
           </li>
           <li>
-            <div class="checkbox">
+            <div class="checkbox" *ngIf="this.isButtonVisible">
               <div class="environments">
                 <a style="color:black"  [routerLink]="[ '/pages/rpautomation/environments']">Create Environments</a>
                 <hr>
@@ -141,7 +141,7 @@
           </li>
 
           <li>
-            <div class="checkbox">
+            <div class="checkbox" *ngIf="this.isButtonVisible">
               <div class="environments">
                 <a  [routerLink]="[ '/pages/rpautomation/environments']">Create Environments</a>
                 <hr>
@@ -195,25 +195,36 @@
   <div>
     <app-rpa-studio-workspace  [bot]="botState"></app-rpa-studio-workspace>
   </div>
-    <div class="status" id="botStatus"> 
+  <div class="status" id="botStatus">
       <div class="row" style="text-align: center;">Bots</div>
       <div class="row rob-status">
-        <h4>{{botStatisticsData["New"]}}</h4>
-        <p>NEW</p>
+          <h4>
+              <span *ngIf="botStatisticsData.New != null">{{botStatisticsData.New}}</span>
+              <span *ngIf="botStatisticsData.New == null">-</span></h4>
+          <p>NEW</p>
       </div>
       <div class="row rob-status">
-        <h4>{{botStatisticsData["Success"]}}</h4>
-        <p>ACTIVE</p>
+          <h4>
+              <span *ngIf="botStatisticsData.Success != null">{{botStatisticsData.Success}}</span>
+              <span *ngIf="botStatisticsData.Success == null">-</span>
+          </h4>
+          <p>ACTIVE</p>
       </div>
       <div class="row rob-status">
-        <h4>{{botStatisticsData["Failure"]}}</h4>
-        <p>ERRORS</p>
+          <h4>
+              <span *ngIf="botStatisticsData.Failure != null">{{botStatisticsData.Failure}}</span>
+              <span *ngIf="botStatisticsData.Failure == null">-</span>
+          </h4>
+          <p>ERRORS</p>
       </div>
       <div class="row rob-status">
-        <h4>{{botStatisticsData["Running"]}}</h4>
-        <p>RUNNING</p>
+          <h4>
+              <span *ngIf="botStatisticsData.Running != null">{{botStatisticsData.Running}}</span>
+              <span *ngIf="botStatisticsData.Running == null">-</span>
+          </h4>
+          <p>RUNNING</p>
       </div>
-    </div>
+  </div>
 
 
           <!-- forms -->

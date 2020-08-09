@@ -13,7 +13,11 @@ export class RpaDragHints{
         /*{ selector:'#edit', description:'Edit Bot',showNext:true },*/
         { selector:'#deployBot', description:'Agent Deployment for selected Environment(s)',showNext:true  },
         { selector:'#startbot', description:'Start Bot',showNext:true },
-        { selector:'#stopbot', description:'Stop Bot' },
+        { selector:'#stopbot', description:'Stop Bot',showNext:true },
         /*{ selector:'#reset', description:'Reset',showNext:true },*/
+        { selector:'#edit', description:'Edit Bot',showNext:true },
+        { selector:'#reset', description:'Reset Bot',showNext:true },
+        { selector:'#delete', description:'Delete Bot',showNext:true },
+        { selector:'#Logs', description:'Logs Bot' },
       ]
 }

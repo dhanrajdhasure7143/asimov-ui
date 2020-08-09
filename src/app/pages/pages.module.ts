@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { MatTabsModule } from '@angular/material';
 
 import { SharedModule } from '../shared/shared.module';
 import { PagesRoutingModule } from './pages-routing.module';
@@ -14,6 +15,8 @@ import { PagesHints } from './model/pages.model';
 import { LoaderService } from '../services/loader/loader.service';
 import { LoaderInterceptor } from '../helpers/loader-interceptor.service';
 import { MyLoaderComponent } from './my-loader/my-loader.component';
+import { HeaderDropdownOverlayComponent } from './header-dropdown-overlay/header-dropdown-overlay.component';
+import {Ng2TelInputModule} from 'ng2-tel-input';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,8 @@ import { MyLoaderComponent } from './my-loader/my-loader.component';
     HomeComponent,
     HeaderComponent,
     FooterComponent,
-    MyLoaderComponent
+    MyLoaderComponent,
+    HeaderDropdownOverlayComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +33,9 @@ import { MyLoaderComponent } from './my-loader/my-loader.component';
     FormsModule,
     ReactiveFormsModule,
     PagesRoutingModule,
-    SharedModule
+    Ng2TelInputModule,
+    SharedModule,
+    MatTabsModule
   ],
   providers: [SharebpmndiagramService, PagesHints,
   //  LoaderService,

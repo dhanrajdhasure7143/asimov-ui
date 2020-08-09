@@ -114,13 +114,16 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
-      //this.selected_approver = current_bpmn_info["approverName"];
       for(var s=0; s<this.approver_list.length; s++){
-          let each = this.approver_list[s];
-          if(each.firstName+" "+each.lastName == current_bpmn_info["approverName"])
-          this.selected_approver = s;
-          break;
+        let each = this.approver_list[s];
+        if(each.userId){
+          let userId = each.userId.split("@")[0];
+          if(userId == current_bpmn_info["approverName"]){
+            this.selected_approver = s;
+            break;
+          }
         }
+      }
     }
     else
       this.selected_approver = null;
@@ -240,7 +243,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
         if(_self.autosavedDiagramVersion[0]&& _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"])
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-        bpmnModel["bpmnModelModifiedBy"] = "gopi";//logged user
         bpmnModel["bpmnModelModifiedTime"] = new Date();
         _self.autoSaveDiagram(bpmnModel);  
       }
@@ -283,7 +285,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }
   }
   submitDiagramForApproval(){
-    if(this.selected_approver <= -1){
+    if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
@@ -292,21 +294,21 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     let sel_appr = this.approver_list[this.selected_approver];
-    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
     bpmnModel.approverEmail = sel_appr.userId;
+    bpmnModel.approverName = sel_appr.userId.split("@")[0];
+    bpmnModel.userName = sel_List["userName"];
+    bpmnModel.tenantId = sel_List["tenantId"];
+    bpmnModel.userEmail = sel_List['userEmail'];
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
-    bpmnModel.tenantId=999;
     bpmnModel.id = sel_List["id"];
     bpmnModel.bpmnProcessStatus="PENDING";
     bpmnModel.bpmnProcessApproved = 0;
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnJsonNotation = final_notation;
-      bpmnModel.bpmnNotationAutomationTask = final_notation;
-      bpmnModel.bpmnNotationHumanTask = final_notation;
       bpmnModel.bpmnXmlNotation = final_notation;
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
@@ -348,6 +350,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }else{
       bpmnModel.id = sel_List['id'];
     }
+    bpmnModel.userName = sel_List['userName'];
+    bpmnModel.tenantId = sel_List['tenantId'];
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {

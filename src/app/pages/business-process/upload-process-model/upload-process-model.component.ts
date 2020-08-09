@@ -128,12 +128,15 @@ export class UploadProcessModelComponent implements OnInit {
     }
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
-      //this.selected_approver = current_bpmn_info["approverName"];
       for(var s=0; s<this.approver_list.length; s++){
           let each = this.approver_list[s];
-          if(each.firstName+" "+each.lastName == current_bpmn_info["approverName"])
-          this.selected_approver = s;
-          break;
+          if(each.userId){
+            let userId = each.userId.split("@")[0];
+            if(userId == current_bpmn_info["approverName"]){
+              this.selected_approver = s;
+              break;
+            }
+          }
         }
     }
     else
@@ -173,13 +176,6 @@ export class UploadProcessModelComponent implements OnInit {
           _self.autoSaveBpmnDiagram();
           _self.last_updated_time = now;
         }
-      })
-      this[modeler_obj].on('shape.added', (e)=> {
-        let modeling = this[modeler_obj].get('modeling');
-        modeling.setColor(e.element, {
-          stroke: 'green',
-          fill: 'lightgreen'
-        });
       })
       if(this.isShowConformance && !this.reSize){ 
         this.rest.getBPMNFileContent("assets/resources/pizza-collaboration.bpmn").subscribe(res => {
@@ -302,7 +298,6 @@ export class UploadProcessModelComponent implements OnInit {
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
         if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"])
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-        bpmnModel["bpmnModelModifiedBy"] = "gopi";//logged user
         bpmnModel["bpmnModelModifiedTime"] = new Date();
         _self.autoSaveDiagram(bpmnModel);  
       }
@@ -358,7 +353,6 @@ export class UploadProcessModelComponent implements OnInit {
         _self.newXml = fileString.trim();
         _self.isLoading = false;
       });
-      // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}})
     }
     myReader.readAsText(e.addedFiles[0]);
   }
@@ -385,17 +379,20 @@ export class UploadProcessModelComponent implements OnInit {
 
   submitDiagramForApproval(){
     let bpmnModel:BpmnModel = new BpmnModel();
-    if(this.selected_approver <= -1){
+    if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
     this.isLoading = true;
-   let _self = this;
-   let sel_List = this.saved_bpmn_list[this.selected_notation];
-   let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-   let sel_appr = this.approver_list[this.selected_approver];
-   bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
-   bpmnModel.approverEmail = sel_appr.userId;
+    let _self = this;
+    let sel_List = this.saved_bpmn_list[this.selected_notation];
+    let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
+    let sel_appr = this.approver_list[this.selected_approver];
+    bpmnModel.approverEmail = sel_appr.userId;
+    bpmnModel.approverName = sel_appr.userId.split("@")[0];
+    bpmnModel.userName = sel_List["userName"];
+    bpmnModel.tenantId = sel_List["tenantId"];
+    bpmnModel.userEmail = sel_List['userEmail'];
    if(this.isShowConformance){
     bpmnModel.bpmnModelId = UUID.UUID();
     bpmnModel.bpmnProcessName = 'process Intelligence';
@@ -408,15 +405,12 @@ export class UploadProcessModelComponent implements OnInit {
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.id = sel_List["id"];
    }
-   bpmnModel.tenantId=999;
    bpmnModel.bpmnProcessStatus="PENDING";
    bpmnModel.bpmnProcessApproved = 0;
    this[modeler_obj].saveXML({ format: true }, function(err, xml) {
     let final_notation = btoa(unescape(encodeURIComponent(xml)));
      bpmnModel.bpmnXmlNotation = final_notation;
      bpmnModel.bpmnJsonNotation = final_notation;
-     bpmnModel.bpmnNotationAutomationTask = final_notation;
-     bpmnModel.bpmnNotationHumanTask = final_notation;
      _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
       data=>{
         _self.isDiagramChanged = false;
@@ -459,6 +453,8 @@ export class UploadProcessModelComponent implements OnInit {
     }else{
       bpmnModel.id = sel_List['id'];
     }
+    bpmnModel.userName = sel_List['userName'];
+    bpmnModel.tenantId = sel_List['tenantId'];
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
     this.initBpmnModeler();
@@ -541,19 +537,79 @@ export class UploadProcessModelComponent implements OnInit {
     }
   }
 
+  getElementsToColor(modeler, input, type){
+    let strokeClr = "";
+    let fillClr = "";
+    let elementsToColor = [];
+    let modeling = this[modeler].get('modeling');
+    let eleRegistry = this[modeler].get('elementRegistry');
+    let type_arr = input? Object.keys(input):[];
+    switch(type){
+      case "add": strokeClr = "green";
+                  fillClr = "lightgreen";
+                  break;
+      case "remove": strokeClr = "red";
+                  fillClr = "pink";
+                  break;
+      case "change": strokeClr = "orange";
+                  fillClr = "yellow";
+                  break;
+      case "layout": strokeClr = "blue";
+                  fillClr = "lightblue";
+                  break;
+      default:  strokeClr = "black";
+                fillClr = "white";
+    }
+    if(type == "all"){
+      elementsToColor = eleRegistry.getAll();
+    }else{
+      type_arr.forEach(each_add => {
+        let each_ = input[each_add];
+        let flowEles = each_.flowElements;
+        if(flowEles){
+          flowEles.forEach(each_el => {
+            let el = eleRegistry.get(each_el.id);
+            if(el) elementsToColor.push(el)
+          })
+        }else{
+          let el = eleRegistry.get(each_.id);
+          if(el) elementsToColor.push(el)
+        }
+      })
+    }
+    if(elementsToColor.length != 0){
+      modeling.setColor(elementsToColor, {
+        stroke: strokeClr,
+        fill: fillClr
+      });
+    }
+  }
+
   getBpmnDifferences(){
     let bpmnDiffs = diff( this.confBpmnModeler.getDefinitions(), this.bpmnModeler.getDefinitions());
+    let revBpmnDiffs = diff( this.bpmnModeler.getDefinitions(), this.confBpmnModeler.getDefinitions());
     this.bpmnservice.updateDifferences(bpmnDiffs);
+
+    this.getElementsToColor('bpmnModeler', bpmnDiffs._added, 'add');
+    this.getElementsToColor('bpmnModeler', bpmnDiffs._changed, 'change');
+    this.getElementsToColor('bpmnModeler', bpmnDiffs._layoutChanged, 'layout');
+
+    this.getElementsToColor('confBpmnModeler', bpmnDiffs._removed, 'remove');
+    this.getElementsToColor('confBpmnModeler', revBpmnDiffs._changed, 'change');
+    this.getElementsToColor('confBpmnModeler', revBpmnDiffs._layoutChanged, 'layout');
+    
     this.slideUpDifferences();
+  }
+
+  clearDifferences(){
+    this.getElementsToColor('bpmnModeler', null, 'all');
+    this.getElementsToColor('confBpmnModeler', null, 'all');
+    this.autoSaveBpmnDiagram();
   }
 
   slideUp(e){
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
-      // var modal = document.getElementById('myModal');
-      // modal.style.display="block";
-     // this.uploadedFile = e.addedFiles[0];
       this.uploadAgainBpmn(e);
-
     }else{
       this.uploadedFile = null;
       this.isLoading = false;
@@ -565,7 +621,6 @@ export class UploadProcessModelComponent implements OnInit {
   }
   displayShortcut(){
     this.dialog.open(this.keyboardShortcut);
-
  }
  
   

@@ -17,20 +17,16 @@ import { GlobalScript } from 'src/app/shared/global-script';
 export class BpmnDiagramListComponent implements OnInit {
   @ViewChild('matExpansionPanel', { static: false }) _matExpansionPanel:any
   approve_bpmn_list = this.model.diagList;
-  user: any = 'Sowmya Peddeti';
   message: any[] = [];
   griddata: any;
   approver_info: any;
   p:number = 1;
-  //role: any = 'BPMN_Process_Modeler';
   expanded: any=true;
   bpmnModeler: any;
   xpandStatus=false;
   index: any;
   searchTerm;
   isLoading:boolean = true;
-  //approvalstatus: any='REJECTED';
-  rejectedby: any='Sowmya Peddeti';
   remarks: any='ignore';
   selectedrow: any;
   orderAsc:boolean = true;
@@ -98,6 +94,17 @@ export class BpmnDiagramListComponent implements OnInit {
       this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion }});
     }
   }
+
+  formatApproverName(apprName){
+    let appr_arr = apprName.split('.');
+    let fName = appr_arr[0];
+    let lName = appr_arr[1];
+    if(fName)
+      fName = fName.charAt(0).toUpperCase()+fName.substr(1);
+    if(lName)
+      lName = lName.charAt(0).toUpperCase()+lName.substr(1);
+    return fName&&lName?fName+" "+lName:fName?fName:lName?lName:'-';
+   }
   checkStatus(diagram){
     let app_status = diagram.bpmnProcessStatus;
     let check_exp = app_status && app_status.toLowerCase()=='approved' || app_status.toLowerCase()=='rejected';
@@ -129,7 +136,7 @@ this.selectedrow =i;
     }
   }
    bpmnlist() {
-     this.rest_Api.bpmnlist(this.user).subscribe(data => {
+     this.rest_Api.bpmnlist().subscribe(data => {
       this.isLoading = false;
       this.griddata = data;
       this.griddata.map(item => {item.xpandStatus = false;return item;}) 
@@ -149,18 +156,17 @@ this.selectedrow =i;
     localStorage.setItem("pending_bpmnId", saved_id)
     this.disable_panels();
     this.approver_info={
-      "approverName": this.user,
+      "approverName": data.approverName,
       "bpmnJsonNotation": data.bpmnJsonNotation,
       "bpmnModelId": data.bpmnModelId,
-      "bpmnNotationAutomationTask": data.bpmnNotationAutomationTask,
-      "bpmnNotationHumanTask": data.bpmnNotationHumanTask,
       "bpmnProcessApproved": data.bpmnProcessApproved,
       "bpmnProcessName": data.bpmnProcessName, 
       "bpmnProcessStatus": "APPROVED",
       "bpmnXmlNotation": data.bpmnXmlNotation,
       "category": data.category, 
       "createdTimestamp": data.createdTimestamp,
-      "emailTo": data.emailTo,
+      "approverEmail": data.approverEmail,
+      "userEmail": data.userEmail,
       "id": data.id,
       "modifiedTimestamp": new Date(),
       "processIntelligenceId": data.processIntelligenceId, 
@@ -216,25 +222,24 @@ this.selectedrow =i;
      let reqObj = { 
       "bpmnApprovalId": parentInfo.bpmnApprovalId,
       "bpmnProcessInfo": {
-          "createdTimestamp": data.createdTimestamp,
-          "modifiedTimestamp": new Date(),
-          "version": data.version,
-          "emailTo": data.emailTo,
-          "id": data.id,
-          "bpmnModelId": data.bpmnModelId,
-          "bpmnProcessName": data.bpmnProcessName,
-          "tenantId": data.tenantId,
-          "reviewComments": data.reviewComments,
-          "bpmnProcessStatus": "REJECTED",
-          "bpmnProcessApproved": data.bpmnProcessApproved,
-          "userName": data.userName,
-          "bpmnXmlNotation":data.bpmnXmlNotation,
-          "approverName": data.approverName,
-          "bpmnJsonNotation":data.bpmnJsonNotation,
-          "processIntelligenceId": data.processIntelligenceId,
-          "bpmnNotationHumanTask":data.bpmnNotationHumanTask,
-          "bpmnNotationAutomationTask":data.bpmnNotationAutomationTask,
-          "category": data.category
+        "createdTimestamp": data.createdTimestamp,
+        "modifiedTimestamp": new Date(),
+        "version": data.version,
+        "approverEmail": data.approverEmail,
+        "userEmail": data.userEmail,
+        "id": data.id,
+        "bpmnModelId": data.bpmnModelId,
+        "bpmnProcessName": data.bpmnProcessName,
+        "tenantId": data.tenantId,
+        "reviewComments": data.reviewComments,
+        "bpmnProcessStatus": "REJECTED",
+        "bpmnProcessApproved": data.bpmnProcessApproved,
+        "userName": data.userName,
+        "bpmnXmlNotation":data.bpmnXmlNotation,
+        "approverName": data.approverName,
+        "bpmnJsonNotation":data.bpmnJsonNotation,
+        "processIntelligenceId": data.processIntelligenceId,
+        "category": data.category
       },
       "approvalStatus": "REJECTED",
       "rejectedBy": data.approverName, 

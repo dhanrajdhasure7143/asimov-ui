@@ -8,13 +8,12 @@ export class BpmnModel{
     bpmnNotationAutomationTask:string;
     bpmnNotationHumanTask:string;
     bpmnProcessApproved:number;
-    userName:string = "gopi"; // localStorage.getItem("userName")
-    tenantId:number;
+    userName:string; 
+    tenantId:string;
     processIntelligenceId:number;
     id:number;
-    //emailTo:string = "saivijaya.malladi@epsoftinc.com"; // email of logged user
-    userEmail:string="";
-    approverEmail:string="";
+    userEmail:string;
+    approverEmail:string;
     category:string;
     bpmnXmlNotation:string;
     bpmnProcessStatus:string;
