@@ -6,24 +6,22 @@ import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
-import * as $ from 'jquery';
 import { NotifierService } from 'angular-notifier';
 import { RpaDragHints } from '../model/rpa-workspace-module-hints';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { data } from 'jquery';
-import { colorSets } from '@swimlane/ngx-charts/release/utils';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
-import { element } from 'protractor';
-import { ThrowStmt } from '@angular/compiler';
+
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
   templateUrl: './rpa-studio-workspace.component.html',
   styleUrls: ['./rpa-studio-workspace.component.css']
 })
-export class RpaStudioWorkspaceComponent implements AfterViewInit {
+export class RpaStudioWorkspaceComponent implements AfterViewInit 
+{
   jsPlumbInstance;
   public stud:any = [];
   public optionsVisible : boolean = true;
@@ -58,7 +56,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   public finaldataobjects:any=[]
   @Input("bot") public finalbot:any;
   dropVerCoordinates: any;
-  constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService, private http:HttpClient, private child_rpa_studio:RpaStudioComponent) {
+  constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService, private http:HttpClient, private child_rpa_studio:RpaStudioComponent, ) {
     
    }
 
@@ -114,6 +112,42 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   public loadnodes()
   {
     this.finaldataobjects.forEach(element => {
+      if(element.inSeqId=="START_"+this.finalbot.botName)
+      {
+        let node={
+          id:"START_"+this.finalbot.botName,
+          name:"START",
+          selectedNodeTask:"",
+          path:"/assets/images/RPA/Start.png",
+          x:"2px", 
+          y:"9px",
+        }
+        console.log(node)
+        this.nodes.push(node);
+          setTimeout(() => {
+            this.populateNodes(node);
+          }, 240);
+   
+      }
+      if(element.outSeqId=="STOP_"+this.finalbot.botName)
+      {
+        
+        let stopnode={
+          id:"STOP_"+this.finalbot.botName,
+          name:"STOP",
+          selectedNodeTask:"",
+          path:"/assets/images/RPA/Stop.png",
+          x:"941px",
+          y:"396px",
+        }
+        console.log(stopnode)
+        this.nodes.push(stopnode);
+          setTimeout(() => {
+            this.populateNodes(stopnode);
+          }, 240);
+   
+      }
+      
 
       let nodename=  element.nodeId.split("__")[0];
       let nodeid=element.nodeId.split("__")[1];
@@ -208,7 +242,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     if(this.nodes.length==1)
     {
       let node={
-        id:this.idGenerator(),
+        id:"START_"+this.finalbot.botName,
         name:"START",
         selectedNodeTask:"",
         path:"/assets/images/RPA/Start.png",
@@ -223,7 +257,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
  
       
         let stopnode={
-          id:this.idGenerator(),
+          id:"STOP_"+this.finalbot.botName,
           name:"STOP",
           selectedNodeTask:"",
           path:"/assets/images/RPA/Stop.png",
@@ -586,25 +620,23 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   saveBotFun(botProperties,env)
   {
-    console.log(botProperties.predefinedBot)
-    console.log(this.formVales);
+    this.addsquences();
     this.saveBotdata = {
-    "botName": botProperties.botName,
-    "botType" : botProperties.botType,
-    "description":botProperties.botDescription,
-    "department":botProperties.botDepartment,
-    "botMainSchedulerEntity":this.scheduler,
-    "envIds":env,
-    "isPredefined":botProperties.predefinedBot,
-    "tasks": this.finaldataobjects,
-    "createdBy": "admin",
-    "lastSubmittedBy": "admin",
-    "scheduler" : this.scheduler,
-    "sequences": this.getsequences(),
-  }
-    console.log(this.saveBotdata)
+        "botName": botProperties.botName,
+        "botType" : botProperties.botType,
+        "description":botProperties.botDescription,
+        "department":botProperties.botDepartment,
+        "botMainSchedulerEntity":this.scheduler,
+        "envIds":env,
+        "isPredefined":botProperties.predefinedBot,
+        "tasks": this.finaldataobjects,
+        "createdBy": "admin",
+        "lastSubmittedBy": "admin",
+        "scheduler" : this.scheduler,
+        "sequences": this.getsequences(),
+      }
     return this.rest.saveBot(this.saveBotdata)
-   // return this.("/rpa-service/save-bot",this.saveBotdata);
+   
   }
 
 
@@ -613,13 +645,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     let connections:any=[];
     let nodeconn:any;
     this.jsPlumbInstance.getAllConnections().forEach(data => {
-      nodeconn={
-        sequenceName:data.getId(),
-        sourceTaskId:data.sourceId,
-        targetTaskId:data.targetId,
-      }
-      connections.push(nodeconn)
+      
+        nodeconn={
+            sequenceName:data.getId(),
+            sourceTaskId:data.sourceId,
+            targetTaskId:data.targetId,
+          }
+          connections.push(nodeconn)
+      
     })
+    
     return connections;
   }
 
@@ -637,7 +672,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   
   updateBotFun(botProperties,env)
   {
-
+    this.addsquences();
     console.log(this.formVales);
     console.log(botProperties.predefinedBot)
     console.log(this.formVales);
@@ -822,11 +857,20 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
   addsquences()
   {
-    this.jsPlumbInstance.getAllConnections().forEach(element => {
-      console.log(element);
-      console.log(element.getId())
-      console.log(element.getId())
+    this.jsPlumbInstance.getAllConnections().forEach(dataobject => {
+      let source=dataobject.sourceId;
+      let target=dataobject.targetId;
+     if(this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==target) != undefined)
+      {
+        this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==target).inSeqId=source;
+      }
+      if(this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==source) != undefined)
+      {
+        this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==source).outSeqId=target;  
+      }
     });
+    console.log(this.finaldataobjects);
   }
+
 
 }

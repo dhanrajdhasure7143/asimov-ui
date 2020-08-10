@@ -4,23 +4,23 @@
           <h1 class ="title-font">Automate the Tasks</h1>
           <h4 class="subtitle">Select below options to configure the Bots</h4><br/>
       <div class="rpa-home">
-          <div class="rpa-home-block">
-              <button  type="button" (click)="createoverlay()" id="createbot-Home" aria-hidden="true" placement="bottom">
+          <div class="rpa-home-block" id="createbot-Home">
+              <button  type="button" (click)="createoverlay()"  aria-hidden="true" placement="bottom">
                   <img src="../../../../assets/images/RPA/create.svg" style="height:80px;">
                   <br><br>
                   <h6 class="rpa-home-btn-title">Create</h6>
                 </button>
           </div>
 
-          <div class="rpa-home-block">
-            <button  type="button" (click)="openload()"  id="loadbot-Home"aria-hidden="true" placement="bottom">
+          <div class="rpa-home-block" id="loadbot-Home">
+            <button  type="button" (click)="openload()"  aria-hidden="true" placement="bottom">
                
                 <img src="../../../../assets/images/RPA/Load.svg" style="height:80px;" >
                 <br><br>
                 <h6 class="rpa-home-btn-title">Load</h6>
             </button>
           </div>
-          <div class="rpa-home-block" *ngIf="this.isButtonVisible">
+          <div class="rpa-home-block" id="environment-Home" *ngIf="this.isButtonVisible">
           <button  type="button"  aria-hidden="true" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
             <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;" >
             <br><br>
@@ -31,13 +31,14 @@
       
   </div>
   <div class="col-md-6"> 
-    <div class="mat-elevation-z8 rpa-home-bots">
+    <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home">
+      <h3 class="box-heading  rpa-home-heading">My Workspace</h3>
       <mat-tab-group mat-align-tabs="start"  [selectedIndex]="selectedTab">
         <mat-tab label="Bot Details">
           <div class="rpa-home-header">
-            <br>
-            <h4 class="box-heading  rpa-home-heading">My Workspace</h4>
-
+            
+            <!--<h4 class="box-heading  rpa-home-heading">My Workspace</h4>-->
+            <!--
             <span class="box-heading rpa-home-category">
 
               <mat-form-field class="rpa-mat-form-field-category">
@@ -62,7 +63,7 @@
                   </mat-select>
               </mat-form-field>
             </span>
-
+            -->
             <span class="box-heading rpa-home-process"> 
               <mat-form-field class="rpa-mat-form-field-search">
                 <mat-label>Search</mat-label>
@@ -72,7 +73,7 @@
             </span>
     
           </div>  
-          <div class="bots-container"id="botdetails-Home">
+          <div class="bots-container">
               <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
                 
                 <ng-container matColumnDef="botName">
@@ -115,12 +116,12 @@
         </mat-tab>
         <mat-tab label="Automated Tasks">
           <div class="rpa-home-header">
-            <h4 class="box-heading  rpa-home-heading">My Workspace</h4>
+           <!-- <h4 class="box-heading  rpa-home-heading">My Workspace</h4>-->
 
             
 
-            <span class="box-heading rpa-home-process" style="width:300px">    
-                  <select class="form-control" [value]="selectedvalue" (change)="applyFilter($event.target.value)" >
+            <span class="box-heading rpa-home-process" >    
+                  <select class="form-control" style="width:150px;float:right" [value]="selectedvalue" (change)="applyFilter($event.target.value)" >
                     <option value="">Select Process</option>
                     <option *ngFor="let process of process_names" [value]="process.processName">{{process.processName}}</option>
                       
@@ -145,18 +146,35 @@
                 </ng-container>
             
                 <ng-container matColumnDef="Assign">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Assign Bot</th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned Bot</th>
                   <td mat-cell *matCellDef="let element">
 
-                    <select class="form-control">
-                      <option value="">Select Bot</option>
-                      <option *ngFor="let bot of bot_list" value="1">{{bot.botName}}</option>
-                    </select>
-
+                   <span> 
+                     <select class="form-control" [value]="element.botId" [id]="element.taskId+'__select'">
+                        <option value="0">Select Bot</option>
+                        <option *ngFor="let bot of bot_list" [value]="bot.botId" [selected]="element.botId==bot.botId">{{bot.botName}}</option>
+                      </select>
+                    </span>
                   </td>
                 </ng-container>
             
-
+                <ng-container matColumnDef="Operations">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+                  <td mat-cell *matCellDef="let element">
+     
+                  <span>
+                      <button (click)="createtaskbotoverlay(element.taskId)" title="Create and Assign Bot"><img style="width:15px" src="../../../../assets/images/RPA/rpa-env-add-btn.svg"></button>
+                  </span>
+                  
+                  <span>
+                    <button (click)="assignbot(element.taskId)" title="Assign Bot"><img style="width:15px" src="../../../../assets/images/iconfinder_check_2561355.svg"></button>
+                  </span>
+                
+                 <span>
+                    <button (click)="assignreset()" title="Create and Assign Bot"><i  class="fas fa-sync-alt"></i></button>
+                  </span>  
+                </td>
+                </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
                 <tr class ="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
               </table>

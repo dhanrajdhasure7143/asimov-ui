@@ -29,19 +29,19 @@ export class BotStatusComponent implements OnInit {
     "indexDetails" : [
       {
         "id" :1.1,
-        "Messages" : "on-Board completed",
+        "Messages" : "Onboard Completed",
         "Time" : "11:30AM",
         "Date" : "22/11/2020"
       },
       {
         "id" :1.2,
-        "Messages" : "Group created",
+        "Messages" : "Group Created",
         "Time" : "11:30AM",
         "Date" : "22/11/2020"
       },
       {
         "id" :1.2,
-        "Messages" : "Assigned Deals",
+        "Messages" : "Assigned Bots",
         "Time" : "11:30AM",
         "Date" : "22/11/2020"
       }
@@ -353,15 +353,15 @@ getprocessStatus()
     console.log(data)
     if(this.processStatus.ONHOLD==undefined)
     {
-      this.processStatus.ONHOLD="NA";
+      this.processStatus.ONHOLD="-";
     }
     if(this.processStatus.INPROGRESS==undefined)
     {
-      this.processStatus.INPROGRESS="NA";
+      this.processStatus.INPROGRESS="-";
     }
     if(this.processStatus.REJECTED==undefined)
     {
-      this.processStatus.REJECTED="NA";
+      this.processStatus.REJECTED="-";
     }
   })
 }
