@@ -319,7 +319,7 @@ export class UploadProcessModelComponent implements OnInit {
 
    automate(){
     let selected_process_id = this.saved_bpmn_list[this.selected_notation].processIntelligenceId;
-    this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_process_id }});
+    this.router.navigate(["/pages/rpautomation/workspace"], { queryParams: { processid: selected_process_id }});
   }
 
   downloadBpmn(){
@@ -442,17 +442,10 @@ export class UploadProcessModelComponent implements OnInit {
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
     let status = sel_List["bpmnProcessStatus"];
-    if(status == "APPROVED" || status == "REJECTED"){
-      let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
-      for(var i = 0; i<all_bpmns.length; i++){
-        let each = all_bpmns[i];
-        if(each.bpmnProcessStatus == "INPROGRESS")
-          bpmnModel.id = each.id;
-          break;
-      }
-    }else{
+    if(sel_List['id'])
       bpmnModel.id = sel_List['id'];
-    }
+    else
+      delete(bpmnModel.id);
     bpmnModel.userName = sel_List['userName'];
     bpmnModel.tenantId = sel_List['tenantId'];
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
