@@ -110,8 +110,8 @@
 
             <select  class="form-control" formControlName="botType" name="botType" >
               <option value="" selected>--Select Bot Type--</option>
-              <option  value=1>Attended</option>
-              <option  value=0>Unattended</option>
+              <option  value=0>Attended</option>
+              <option  value=1>Unattended</option>
             </select>
             <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched" style="color: red" >
               Bot Type Required*
