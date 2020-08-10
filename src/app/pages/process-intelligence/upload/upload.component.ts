@@ -198,7 +198,6 @@ export class UploadComponent implements OnInit {
       let xesData = [];
 
       var e = resultTable;
-
       for (var i = 0; i < e.length; i++) {
         var dType = [{
           'attributes': []
@@ -206,7 +205,16 @@ export class UploadComponent implements OnInit {
         if (me.checkIsArray(e[i].event) == true) {
           e[i].event.forEach(d => {
             let tmp_arr = [];
-            tmp_arr.push(e[i].string['@attributes']['value']);
+            if (me.checkIsArray(e[i].string) == true) {
+            e[i].string.forEach(t => {
+              if (t['@attributes']['key'] == 'concept:name') {
+                   tmp_arr.push(t['@attributes']['value']);
+                 }
+            });
+            } else {
+               tmp_arr.push(e[i].string['@attributes']['value']);
+            }
+           
             d.string.forEach(ss => {
               if (ss['@attributes']['key'] == 'concept:name') {
                 tmp_arr.push(ss['@attributes']['value']);
@@ -224,7 +232,16 @@ export class UploadComponent implements OnInit {
           let string = [];
           let date = []
           let tmp_arr = []
-          tmp_arr.push(e[i].string['@attributes']['value']);
+          if (me.checkIsArray(e[i].string) == true) {
+            e[i].string.forEach(t => {
+              if (t['@attributes']['key'] == 'concept:name') {
+                   tmp_arr.push(t['@attributes']['value']);
+                 }
+            });
+            } else {
+               tmp_arr.push(e[i].string['@attributes']['value']);
+            }
+          //tmp_arr.push(e[i].string['@attributes']['value']);
           for (let key in e[i].event) {
             if (e[i].event.hasOwnProperty(key)) {
               if (key == 'string') {
