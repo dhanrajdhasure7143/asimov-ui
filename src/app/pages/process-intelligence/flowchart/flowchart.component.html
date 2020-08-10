@@ -179,7 +179,7 @@
            </div>
          <div class="modal-body">
              <div *ngIf="isFilterComponent">
-             <app-filter [dataValues]='dataValues' (selectedNodes)="readselectedNodeEmied($event)" (selectedEndpoints)="readselectedEndpoint($event)" (applyFilterValue)="readOverlayValue($event)"></app-filter>
+             <app-filter [dataValues]='dataValues' [startArray]="startArray" [endArray]="endArray" (selectedNodes)="readselectedNodes($event)" (selectedEndpoints)="readselectedEndpoint($event)" (applyFilterValue)="readOverlayValue($event)"></app-filter>
              </div>
          </div>
        </div>

@@ -295,11 +295,15 @@ export class RestApiService{
   }
 
 
-  deployenvironment(envs)
-  {
+  deployenvironment(envs){
     return this.http.post("/rpa-service/agent/deploy-agent",envs)
-
   }
+  botPerformance(){
+  return this.http.get("/rpa-service/management/bot-performance")
+  }
+  botUsage(){
+    return this.http.get("/rpa-service/management/bot-usage")
+    }
   
   getpredefinedotdata(botId)
   {
@@ -341,6 +345,10 @@ export class RestApiService{
     return this.http.post("/rpa-service/assign-bot",data);
   }
 
+  getJDBCConnectorConfig(body){
+    // return this.http.put('http://10.11.0.101:8083/connector-plugins/JdbcSourceConnector/config/validate', body)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/validateConfig', body)
+    }
   
 
 }
