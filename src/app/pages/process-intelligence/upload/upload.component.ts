@@ -405,7 +405,7 @@ testDbConnection(){
       // "connection.url": "jdbc:postgresql://10.11.0.104:5432/asimov_aiotal",
       "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
       "db.timezone": "UTC",
-      "incrementing.column.name": "id",
+      //"incrementing.column.name": "id",
       "validate.non.null": "true",
       // "mode": "incrementing",
       "mode": this.dbDetails.mode,
@@ -446,20 +446,25 @@ testDbConnection(){
       }
       if(this.dbDetails.mode=="incrementing"){
         modekey="incrementing.column.name"
-        connectorBody[modekey]="id"
+        connectorBody[modekey]=this.dbDetails.increment
       }else if(this.dbDetails.mode=="timestamp"){
         modekey="timestamp.column.name"
-        connectorBody[modekey]="id"
+        connectorBody[modekey]=this.dbDetails.timestamp
       }else{
         modekey1="incrementing.column.name"
-        connectorBody[modekey1]="id"
+        connectorBody[modekey1]=this.dbDetails.increment
         modekey="timestamp.column.name"
-        connectorBody[modekey]="id"
+        connectorBody[modekey]=this.dbDetails.timestamp
       }
+    
     this.rest.getJDBCConnectorConfig(connectorBody).subscribe(res => {this.connectionResp=res
       
       if(this.connectionResp.data.length==0){
         this.isDisabled = false;
+        this.notifier.show({
+          type: 'success',
+          message: "Connected Successfully."
+      });
       }else{
         console.log(this.connectionResp.data[0].errors);
           this.notifier.show({
@@ -493,7 +498,7 @@ generateGraph(e){
     // "connection.url": "jdbc:postgresql://10.11.0.104:5432/asimov_aiotal",
     "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
     "db.timezone": "UTC",
-    "incrementing.column.name": "id",
+    //"incrementing.column.name": "id",
     "validate.non.null": "true",
     // "mode": "incrementing",
     "mode": this.dbDetails.mode,
@@ -534,15 +539,15 @@ generateGraph(e){
     }
     if(this.dbDetails.mode=="incrementing"){
       modekey="incrementing.column.name"
-      connectorBody.config[modekey]="id"
+      connectorBody.config[modekey]=this.dbDetails.increment
     }else if(this.dbDetails.mode=="timestamp"){
       modekey="timestamp.column.name"
-      connectorBody.config[modekey]="id"
+      connectorBody.config[modekey]=this.dbDetails.timestamp
     }else{
       modekey1="incrementing.column.name"
-      connectorBody.config[modekey1]="id"
+      connectorBody.config[modekey1]=this.dbDetails.increment
       modekey="timestamp.column.name"
-      connectorBody.config[modekey]="id"
+      connectorBody.config[modekey]=this.dbDetails.timestamp
     }
   this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
     this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
