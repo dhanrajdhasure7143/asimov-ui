@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
+import { NotifierService } from 'angular-notifier';
 
 declare var target: any;
 @Component({
@@ -25,7 +26,7 @@ export class UploadComponent implements OnInit {
   db_mime: string;
   data;
   public dbDetails: any = {};
-  public isSave: boolean = true;
+  public isDisabled: boolean = true;
   selectedFile: File = null;
   filedetails: any;
   process_List: any;
@@ -47,12 +48,21 @@ export class UploadComponent implements OnInit {
   @ViewChild(DataTableDirective, { static: true })
   dtElement: DataTableDirective;
   dateFormats:any;
+  processId: number;
+  isOtherPort:boolean=false;
+  otherPortNumber:any;
+  portNumber:any;
+  isIncrement: boolean=false;
+  isTimestammp: boolean=false;
+  connectionResp:any;
+
   constructor(private router: Router,
     private dt: DataTransferService,
     private rest: RestApiService,
     private global: GlobalScript,
     private hints: PiHints,
-    private ngxXml2jsonService: NgxXml2jsonService) {  }
+    private ngxXml2jsonService: NgxXml2jsonService,
+    private notifier:NotifierService) {  }
 
   ngOnInit() {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -254,16 +264,14 @@ export class UploadComponent implements OnInit {
     if (Array.isArray)
       return Array.isArray(v);
   }
-  testConnection() {
-    this.isSave = false;
-  }
 
   onDbSelect() {
-    var modal = document.getElementById('myModal');
+    this.dbDetails={};
+    var modal = document.getElementById('myModal1');
     modal.style.display = "block";
   }
   closePopup() {
-    var modal = document.getElementById('myModal');
+    var modal = document.getElementById('myModal1');
     modal.style.display = "none";
   }
   downloadCSV() {
@@ -359,8 +367,192 @@ export class UploadComponent implements OnInit {
     var searcgraph = document.getElementById("myTableId_filter")
     searcgraph.style.display = "block";
   }
+  changeType(){
+    this.dbDetails.hostName="10.11.0.104"
+    this.dbDetails.portNumber="5432"
+    this.dbDetails.dbName="asimov_aiotal"
+    this.dbDetails.tableName="public.accounts_payable"
+  }
+  onChangeMode(value){
+    if(value=="incrementing"){
+      this.isIncrement=true;
+      this.isTimestammp=false;
+    }else if(value=="timestamp"){
+      this.isTimestammp=true;
+      this.isIncrement=false;
+    }else{
+      this.isTimestammp=true;
+      this.isIncrement=true;
+    }
+  }
 
+testDbConnection(){
+  this.processId = Math.floor(100000 + Math.random() * 900000);
+    // this.portNumber=this.dbDetails.portNumber
+    let modekey
+    let modekey1
+    let connectorBody:any= {}
+    connectorBody={
+      // "name": "dbconnector-113",
+      "name": "dbconnector-"+this.dbDetails.connectionName+"-"+this.processId,
+      // "config": {
+      "batch.max.rows": "1000",
+      "catalog.pattern": "public",
+      "connection.attempts": "10",
+      "connection.backoff.ms": "10000",
+      "connection.user": this.dbDetails.userName,
+      "connection.password": this.dbDetails.password,
+      // "connection.url": "jdbc:postgresql://10.11.0.104:5432/asimov_aiotal",
+      "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
+      "db.timezone": "UTC",
+      //"incrementing.column.name": "id",
+      "validate.non.null": "true",
+      // "mode": "incrementing",
+      "mode": this.dbDetails.mode,
+      "numeric.mapping": "best_fit",
+      "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+      "poll.interval.ms": 3600000,
+      "topic.prefix": "topqconnector-"+this.processId,
+      "quote.sql.identifiers": "ALWAYS",
+      // "table.whitelist": "public.accounts_payable",
+      "table.whitelist": this.dbDetails.tableName,
+      "table.poll.interval.ms": "60000",
+      "table.types": "TABLE",
+      "key.converter": "io.confluent.connect.avro.AvroConverter",
+      "key.converter.schema.registry.url": "http://10.11.0.101:8081",
+      "value.converter": "io.confluent.connect.avro.AvroConverter",
+      "value.converter.schema.registry.url": "http://10.11.0.101:8081",
+      "transforms": "RenameField,ReplaceField,convert_endTime_string,convert_startTime_string,createKey,extractInt,InsertField",
+      "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+      "transforms.RenameField.renames": "start_time:startTime,end_time:endTime,operation:activity,agent:resource,caseid:caseID",
+      "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+      "transforms.ReplaceField.whitelist": "caseID,startTime,endTime,activity,resource",
+      "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+      "transforms.convert_startTime_string.field": "startTime",
+      "transforms.convert_startTime_string.target.type": "string",
+      "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
+      "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+      "transforms.convert_endTime_string.field": "endTime",
+      "transforms.convert_endTime_string.target.type": "string",
+      "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss",
+      "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+      "transforms.createKey.fields": "caseID",
+      "transforms.extractInt.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+      "transforms.extractInt.field": "caseID",
+      "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+      "transforms.InsertField.static.field": "piIdName",
+      "transforms.InsertField.static.value": this.processId+"-p"+this.processId
+        // }
+      }
+      if(this.dbDetails.mode=="incrementing"){
+        modekey="incrementing.column.name"
+        connectorBody[modekey]=this.dbDetails.increment
+      }else if(this.dbDetails.mode=="timestamp"){
+        modekey="timestamp.column.name"
+        connectorBody[modekey]=this.dbDetails.timestamp
+      }else{
+        modekey1="incrementing.column.name"
+        connectorBody[modekey1]=this.dbDetails.increment
+        modekey="timestamp.column.name"
+        connectorBody[modekey]=this.dbDetails.timestamp
+      }
+    
+    this.rest.getJDBCConnectorConfig(connectorBody).subscribe(res => {this.connectionResp=res
+      
+      if(this.connectionResp.data.length==0){
+        this.isDisabled = false;
+        this.notifier.show({
+          type: 'success',
+          message: "Connected Successfully."
+      });
+      }else{
+        console.log(this.connectionResp.data[0].errors);
+          this.notifier.show({
+              type: 'error',
+              message: "Error"+this.connectionResp.data[0].errors
+          });
+      }
+           
+      })
+}
+slideUp(){
+  this.closePopup();
+  var modal = document.getElementById('myModal');
+  modal.style.display="block";
+  }
 
+generateGraph(e){
+  let modekey
+  let modekey1
+  let connectorBody:any= {}
+  connectorBody={
+    // "name": "dbconnector-113",
+    "name": "dbconnector-"+this.dbDetails.connectionName+"-"+this.processId,
+    "config": {
+    "batch.max.rows": "1000",
+    "catalog.pattern": "public",
+    "connection.attempts": "10",
+    "connection.backoff.ms": "10000",
+    "connection.user": this.dbDetails.userName,
+    "connection.password": this.dbDetails.password,
+    // "connection.url": "jdbc:postgresql://10.11.0.104:5432/asimov_aiotal",
+    "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
+    "db.timezone": "UTC",
+    //"incrementing.column.name": "id",
+    "validate.non.null": "true",
+    // "mode": "incrementing",
+    "mode": this.dbDetails.mode,
+    "numeric.mapping": "best_fit",
+    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+    "poll.interval.ms": 3600000,
+    "topic.prefix": "topqconnector-"+this.processId,
+    "quote.sql.identifiers": "ALWAYS",
+    // "table.whitelist": "public.accounts_payable",
+    "table.whitelist": this.dbDetails.tableName,
+    "table.poll.interval.ms": "60000",
+    "table.types": "TABLE",
+    "key.converter": "io.confluent.connect.avro.AvroConverter",
+    "key.converter.schema.registry.url": "http://10.11.0.101:8081",
+    "value.converter": "io.confluent.connect.avro.AvroConverter",
+    "value.converter.schema.registry.url": "http://10.11.0.101:8081",
+    "transforms": "RenameField,ReplaceField,convert_endTime_string,convert_startTime_string,createKey,extractInt,InsertField",
+    "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.RenameField.renames": "start_time:startTime,end_time:endTime,operation:activity,agent:resource,caseid:caseID",
+    "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+    "transforms.ReplaceField.whitelist": "caseID,startTime,endTime,activity,resource",
+    "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.convert_startTime_string.field": "startTime",
+    "transforms.convert_startTime_string.target.type": "string",
+    "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
+    "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+    "transforms.convert_endTime_string.field": "endTime",
+    "transforms.convert_endTime_string.target.type": "string",
+    "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss",
+    "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+    "transforms.createKey.fields": "caseID",
+    "transforms.extractInt.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+    "transforms.extractInt.field": "caseID",
+    "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+    "transforms.InsertField.static.field": "piIdName",
+    "transforms.InsertField.static.value": this.processId+"-p"+this.processId
+    }
+    }
+    if(this.dbDetails.mode=="incrementing"){
+      modekey="incrementing.column.name"
+      connectorBody.config[modekey]=this.dbDetails.increment
+    }else if(this.dbDetails.mode=="timestamp"){
+      modekey="timestamp.column.name"
+      connectorBody.config[modekey]=this.dbDetails.timestamp
+    }else{
+      modekey1="incrementing.column.name"
+      connectorBody.config[modekey1]=this.dbDetails.increment
+      modekey="timestamp.column.name"
+      connectorBody.config[modekey]=this.dbDetails.timestamp
+    }
+  this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+    this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
+})
+}
 }
 
 

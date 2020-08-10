@@ -46,10 +46,14 @@
                             <div class="col-sm-12">
                             <p class="dataType_filter">End Points :</p>
                             </div>
-                            <div class="col-sm-12">
-                                <div *ngFor="let enpoint of endPointsArray;let i=index">
-                                    <div id="data" class="data_values activity_name" (click)="selectedEndPoint(enpoint,i)" [ngStyle]="{'background-color':enpoint.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }">{{enpoint.name}}</div>
-                                        <!-- <div id="data" class="data_values activity_name" (click)="selectData()">End</div> -->
+                            <div class="col-sm-12 dataValues">
+                                <div class="data_values activity_name" (click)="onStartPoint()">Start</div>
+                                <div *ngFor="let each of startPointArray;let i=index" [hidden]="!isStartPoint">
+                                    <div id="data" class="data_values activity_name" (click)="selectedStartPoint(each,i)" [ngStyle]="{'background-color':each.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }">{{each.name}}</div>
+                                </div>
+                                <div class="data_values activity_name" (click)="onEndPoint()">End</div>
+                                <div *ngFor="let eachvalue of endPointArray;let i=index" [hidden]="!isEndPoint">
+                                    <div id="data" class="data_values activity_name" (click)="selectedEndPoint(eachvalue,i)" [ngStyle]="{'background-color':eachvalue.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }">{{eachvalue.name}}</div>
                                 </div>
                             </div>
                     </div>

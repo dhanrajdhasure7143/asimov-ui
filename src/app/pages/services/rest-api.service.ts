@@ -311,6 +311,11 @@ export class RestApiService{
   getUserRole(appID):Observable<any>{
     return this.http.get<any>('/authorizationservice/api/v1/user/role/applications/'+appID,httpOptions)
   }
+
+  getJDBCConnectorConfig(body){
+    // return this.http.put('http://10.11.0.101:8083/connector-plugins/JdbcSourceConnector/config/validate', body)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/validateConfig', body)
+    }
   
 
 }

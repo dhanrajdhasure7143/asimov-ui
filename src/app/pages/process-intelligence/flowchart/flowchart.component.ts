@@ -115,6 +115,11 @@ export class FlowchartComponent implements OnInit {
   overLayHide:boolean=false;
   isvariantListOpen:boolean=true;
   issliderDisabled:boolean=false;
+  startArray: any=[];
+  endArray: any=[];
+  filterModelArray: any[]=[];
+  filterModel2Array: any=[];
+  linkmodel2: any[]=[];
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -232,7 +237,12 @@ export class FlowchartComponent implements OnInit {
         
         this.linkCurvinessGenerate();
         this.spinner.hide();
+        this.linkmodel2 = this.model2
+
     }
+
+    console.log("model1",this.model1);
+    console.log("model2",this.model2);
         });
         const variantGraphbody= { 
           "data_type":"variant_graph", 
@@ -317,7 +327,7 @@ export class FlowchartComponent implements OnInit {
     this.caselength = this.selectedCaseArry.length;
     if(this.selectedCaseArry.length == 0){
       this.issliderDisabled=false;
-      this.options = Object.assign({}, this.options, {disabled: false});
+      // this.options = Object.assign({}, this.options, {disabled: false});
         let fullgraphOne=this.fullgraph.data;
             this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
                 this.nodeAlignment();
@@ -332,7 +342,7 @@ export class FlowchartComponent implements OnInit {
       this.isvariantSelectedOne=true;
       this.issliderDisabled=true;
       this.isDefaultData = false;
-      this.options = Object.assign({}, this.options, {disabled: true});
+      // this.options = Object.assign({}, this.options, {disabled: true});
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
         var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]]        
         this.model1 = modalData.nodeDataArraycase
@@ -344,7 +354,7 @@ export class FlowchartComponent implements OnInit {
       }
     }else{
       this.issliderDisabled=true;
-      this.options = Object.assign({}, this.options, {disabled: true});
+      // this.options = Object.assign({}, this.options, {disabled: true});
       this.isvariantSelectedOne=false;
       const variantComboBody={
         "data_type":"variant_combo",
@@ -359,6 +369,15 @@ export class FlowchartComponent implements OnInit {
       this.gradientApplyforNode()
       this.linkCurvinessGenerate();
     })
+    }
+    console.log(this.varaint_data.data.length);
+    
+    if(this.selectedCaseArry.length ==this.varaint_data.data.length){
+      this.checkboxValue = true
+      this.options = Object.assign({}, this.options, {disabled: false});
+    }else{
+      this.checkboxValue = false
+      this.options = Object.assign({}, this.options, {disabled: true});
     }
   }
   removeDuplicates(array) {
@@ -426,9 +445,9 @@ export class FlowchartComponent implements OnInit {
     this.pathvalue=1;
     this.isNodata=true;
     this.isplay = false;
+    this.options = Object.assign({}, this.options, {disabled: false});
     if (this.checkboxValue == true) {
       this.issliderDisabled=false;
-      this.options = Object.assign({}, this.options, {disabled: false});
       this.isvariantSelectedOne=false;
       for (var i = 0; i < this.varaint_data.data.length; i++) {
         this.varaint_data.data[i].selected = "active"
@@ -451,7 +470,9 @@ export class FlowchartComponent implements OnInit {
   flowchartData(dataArray) {
     this.linkData = [];
     this.linkdataArray = [];
+    this.startArray=[];
     this.nodeArray = dataArray;
+    this.endArray=[];
     //  var linkToolArray=[];
     for (var i = 1; i < this.nodeArray.length-1; i++) {
       var datalink = this.nodeArray[i].linkArray;
@@ -481,9 +502,9 @@ export class FlowchartComponent implements OnInit {
           obj['from'] = -1;
           obj['to'] = this.getFromKey(this.nodeArray[i].name);
           obj['text'] = this.nodeArray[i].toolCount[3];
-          
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
+          this.startArray.push(this.nodeArray[i].name)
           }
         }
         if (this.nodeArray[i].tool.includes('End Frequency')) {
@@ -496,9 +517,12 @@ export class FlowchartComponent implements OnInit {
 
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
+          this.endArray.push(this.nodeArray[i].name)
           }
         }
     }
+    console.log("teat",this.endArray,this.startArray);
+    
     return this.linkdataArray;
   }
 
@@ -802,7 +826,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       }
     }
 
-  readselectedNodeEmied(SelectedActivities){
+  readselectedNodes(SelectedActivities){
     if(SelectedActivities.length==0){
       this.resetspinnermetrics()
     }else{
@@ -844,110 +868,52 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       }
     }
   }
+  // readselectedStartpoint(selectedStartpoints){
+  //   console.log("selectedStartpoints",selectedStartpoints);
+  //   this.model1=[];
+  //   this.model2=[];
+  //   this.filterModelArray=[];
+  //   this.filterModel2Array=[];
+  //   this.filterModelArray[0]=this.fullgraph_model[0]
+  //   selectedStartpoints.forEach(element => {
+  //     let key=this.getFromKey(element)
+  //     this.fullgraph_model.forEach(e=>{
+  //       if(e.name===element){
+  //         this.filterModelArray.push(e)
+  //       }
+  //     })
+  //     this.linkmodel2.forEach(elem=>{
+  //       if(key==elem.to){
+  //         this.filterModel2Array.push(elem) 
+  //       }
+  //     })
+  //   });   
+  // }
  
-  readselectedEndpoint(selectedEndpoint){
-      if(selectedEndpoint.length==0){
-        this.resetspinnermetrics()
-      }else{
-      this.filterByEndpoints(selectedEndpoint)
-      }
-    }
+  // readselectedEndpoint(selectedEndpoint){
+  //   console.log("selectedEndpoint",selectedEndpoint);
+  //   selectedEndpoint.forEach(element => {
+  //     let key=this.getFromKey(element)
+  //     this.fullgraph_model.forEach(e=>{
+  //       if(e.name===element){
+  //         this.filterModelArray.push(e)
+  //       }
+  //     })
+  //     this.linkmodel2.forEach(elem=>{
+  //       if(key==elem.from){
+  //         this.filterModel2Array.push(elem) 
+  //       }
+  //     })
+  //   });
+  //   this.filterModelArray.push(this.fullgraph_model[this.fullgraph_model.length-1])
+  //   this.model1=this.filterModelArray;
+  //   // this.nodeAlignment();
+  //   this.model2=this.filterModel2Array
+  //   // this.linkCurvinessGenerate();
+  //   console.log("this.model1=",this.model1);
+  //   console.log("this.model2=",this.model2);
+  //   }
 
-  filterByEndpoints(selectedEndpoint){ // filter process graph based on selected endpoint
-    this.model1=[];
-    this.model2=[];
-    var endpointModel=[];
-    var endpointModelOne=[];
-    endpointModel=this.fullgraph_model
-this.linkdataArray=[]
- if(selectedEndpoint.length==1 && selectedEndpoint[0]=="Start"){
-      for(var i=1; i<endpointModel.length-1;i++){
-        if (endpointModel[i].tool.includes('Start Frequency')) {
-          var obj = {};
-          if(endpointModel[i].toolCount[3]!=0){
-            obj['from'] = -1;
-            obj['to'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
-              endpointModelOne.push(endpointModel[i])
-            obj['text'] = endpointModel[i].toolCount[3];
-            obj["extraNode"] = 'true';
-            obj["curviness"] =60*i;
-          this.linkdataArray.push(obj);
-          }
-        }
-      }
-      this.model1[0]=endpointModel[0]
-      for(var j=0;j<endpointModelOne.length;j++){
-        this.model1.push(endpointModelOne[j])
-      }
-      // this.model1.push(endpointModel[endpointModel.length-1])
-      this.nodeAlignment();
-      this.model2=this.linkdataArray
-    }else if(selectedEndpoint.length==1 && selectedEndpoint[0]=="End"){
-      for(var i=1; i<endpointModel.length-1;i++){
-        if (endpointModel[i].tool.includes('End Frequency')) {
-          var obj = {};
-          // this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
-          if(endpointModel[i].toolCount[4]!=0){
-            obj['from'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
-            obj['to'] = -2;
-          endpointModelOne.push(endpointModel[i])
-          obj['text'] = endpointModel[i].toolCount[4];
-          obj["extraNode"] = 'true';
-          obj["curviness"] =60*i;
-          this.linkdataArray.push(obj);
-          }
-        }
-      }
-      for(var j=0;j<endpointModelOne.length;j++){
-        this.model1.push(endpointModelOne[j])
-      }
-      this.model1.push(endpointModel[endpointModel.length-1])
-      this.nodeAlignment();
-      this.model2=this.linkdataArray
-    }else if(selectedEndpoint.length==2){
-      for(var i=1; i<endpointModel.length-1;i++){
-        if (endpointModel[i].tool.includes('Start Frequency')) {
-          var obj = {};
-          if(endpointModel[i].toolCount[3]!=0){
-          obj['from'] = -1;
-          obj['to'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
-          endpointModelOne.push(endpointModel[i])
-          obj['text'] = endpointModel[i].toolCount[3];
-          obj["extraNode"] = 'true';
-          obj["curviness"] =60*i;
-          this.linkdataArray.push(obj);
-          }
-        }
-        if (endpointModel[i].tool.includes('End Frequency')) {
-          var obj = {};
-          if(endpointModel[i].toolCount[4]!=0){
-            obj['from'] = this.getFromKeyOne(endpointModel,endpointModel[i].name);
-            obj['to'] = -2;
-          endpointModelOne.push(endpointModel[i])
- 
-          obj['text'] = endpointModel[i].toolCount[4];
-          obj["extraNode"] = 'true';
-          obj["curviness"] =60*i;
-          this.linkdataArray.push(obj);
-          }
-        }
-      }
-      this.model1[0]=endpointModel[0]
-      for(var j=0;j<endpointModelOne.length;j++){
-        this.model1.push(endpointModelOne[j])
-      }
-      this.model1.push(endpointModel[endpointModel.length-1])
-      this.nodeAlignment()
-      this.model2=this.linkdataArray;
-    }
-  }
-  getFromKeyOne(endpointModel,name) {
-    for (var i = 0; i < endpointModel.length; i++) {
-      if (name == endpointModel[i].name) {
-        return endpointModel[i].key;
-      }
-    }
-  }
   cancel(){
     this.isActivity_dropdwn=false;
   }
@@ -1188,5 +1154,33 @@ filterOverlay(){    //Filter overlay open on filter icon click
     if(value==true){
       this.closePopup();
     }
+  }
+  readselectedEndpoint(selectedEndPoints){
+    // console.log(selectedEndPoints);
+    this.filterByEndpoint(selectedEndPoints)
+    
+  }
+  filterByEndpoint(SelectedActivities){   // filter process graph based on selected Activity (Node)
+    let endpoint_value=SelectedActivities;
+    this.model1=[]
+    this.model2=[]
+    this.isNodata=true;
+    let model3=[]
+    model3[0]=this.fullgraph_model[0]
+    for(var i=0;i<endpoint_value.length;i++){
+      for(var j=0;j<this.fullgraph_model.length;j++){
+        if(endpoint_value[i]==this.fullgraph_model[j].name){
+          model3.push(this.fullgraph_model[j])
+        }
+      }
+    }
+    model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
+    this.model1=model3
+    this.nodeAlignment();
+    this.model2 = this.flowchartData(this.model1);
+    this.gradientApplyforLinks()
+    this.gradientApplyforNode()
+    this.linkCurvinessGenerateOne();
+    this.isActivity_dropdwn=false;
   }
 }
