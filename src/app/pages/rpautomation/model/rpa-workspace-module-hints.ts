@@ -18,6 +18,6 @@ export class RpaDragHints{
         { selector:'#edit', description:'Edit Bot',showNext:true },
         { selector:'#reset', description:'Reset Bot',showNext:true },
         { selector:'#delete', description:'Delete Bot',showNext:true },
-        { selector:'#Logs', description:'Logs Bot' },
+        { selector:'#Logs', description:'Bot Logs' },
       ]
 }

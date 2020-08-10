@@ -39,7 +39,7 @@
 
 
 .rpa-home-bots{
-    padding:20px
+    padding:5px
 }
 
 
@@ -93,7 +93,10 @@ width: 87%;
 }
  
 .rpa-mat-form-field-search {
-width: 82%;
+width: 20%;
+float:right;
 }
 
-
+tr.mat-header-row {
+ height: 10px !important;
+}

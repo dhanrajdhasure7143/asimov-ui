@@ -3,7 +3,7 @@
   <!-- 1 -->
   <div class="col-md-3" style="padding: 10px;">
     <div style="border: 1px solid #f2f3ff;">
-      <h5 style="background-color: #f2f9ff;padding: 2%;">Bots</h5>
+      <h5 style="background-color: #f2f9ff;padding: 2%;">Bot Statistics </h5>
     <!-- <p style="background-color: white; ">Some text..</p></div> -->
      <div style="background-color: white;padding: 0% 10% 3% 10%; ">
       <div class="row">
@@ -12,19 +12,19 @@
             <h3 style="color: #61af4e; font-family: fantasy;">
               <span *ngIf="BotStatus.New != null">{{BotStatus.New}}</span>
               <span *ngIf="BotStatus.New == null">-</span></h3>
-            <h6>NEW</h6>
+            <h6>New</h6>
         </div>
         <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
             <h3 style="color: #ed9040; font-family: fantasy;">
               <span *ngIf="BotStatus.Pause != null">{{BotStatus.Pause}}</span>
               <span *ngIf="BotStatus.Pause == null">-</span></h3>
-            <h6>PAUSE</h6>
+            <h6>Pause</h6>
         </div>
         <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
             <h3 style="color: #888888; font-family: fantasy;">
               <span *ngIf="BotStatus.Stop != null">{{BotStatus.Stop}}</span>
               <span *ngIf="BotStatus.Stop == null">-</span></h3>
-            <h6>STOP</h6>
+            <h6>Stop</h6>
         </div>
         <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
           <h3 style="color: #888888; font-family: fantasy;">
@@ -39,20 +39,20 @@
         <h3 style="color: #ff5555; font-family: fantasy;">
           <span *ngIf="BotStatus.Running != null">{{BotStatus.Running}}</span>
           <span *ngIf="BotStatus.Running == null">-</span></h3>
-        <h6>RUNNING</h6>
+        <h6>Running</h6>
     </div>
   
     <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
       <h3 style="color: #b98282; font-family: fantasy;">
         <span *ngIf="BotStatus.Success != null">{{BotStatus.Success}}</span>
         <span *ngIf="BotStatus.Success == null">-</span></h3>
-      <h6>SUCCESS</h6>
+      <h6>Success</h6>
     </div> 
     <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
         <h3 style="color: #b98282; font-family: fantasy;">
           <span *ngIf="BotStatus.Failure != null">{{BotStatus.Failure}}</span>
           <span *ngIf="BotStatus.Failure == null">-</span></h3>
-        <h6>FAILURE</h6>
+        <h6>Failure</h6>
     </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
       <!-- Name Column -->
       <ng-container matColumnDef="botName">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.botName}}
+        <td mat-cell *matCellDef="let element"> 
             <span *ngIf="element.botName != null">{{element.botName}}</span>
             <span *ngIf="element.botName == null">-</span> </td>
       </ng-container>
@@ -151,7 +151,7 @@
 <div class="row col-md-12">
 <div class="col-md-3" style="padding: 10px;">
   <div style="border: 1px solid #f2f3ff;">
-<h5 style="background-color: #f2f9ff;padding: 2%;">Process Status</h5>
+<h5 style="background-color: #f2f9ff;padding: 2%;">Process Statistics</h5>
 <!-- <p style="background-color: white; ">Some text..</p></div> -->
 <div style="background-color: white;padding: 0% 10% 3% 10%; ">
   <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">

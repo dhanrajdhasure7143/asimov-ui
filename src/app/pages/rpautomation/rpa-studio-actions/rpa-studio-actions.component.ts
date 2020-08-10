@@ -1,19 +1,17 @@
 import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
 import { RpaStudioWorkspaceComponent } from '../rpa-studio-workspace/rpa-studio-workspace.component';
 import { RestApiService } from '../../services/rest-api.service';
-import { element } from 'protractor';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import cronstrue from 'cronstrue';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import {  HttpClient } from '@angular/common/http';
 import { RpaStudioTabsComponent } from '../rpa-studio-tabs/rpa-studio-tabs.component'
 import Swal from 'sweetalert2';
-import { environment } from 'src/environments/environment';
 import { RpaStudioComponent } from '../rpa-studio/rpa-studio.component';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-rpa-studio-actions',
   templateUrl: './rpa-studio-actions.component.html',
@@ -114,7 +112,9 @@ export class RpaStudioActionsComponent implements OnInit {
   userRole: string;
   isButtonVisible: boolean;
   constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
-    private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent) { 
+    private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent,
+    private notifier: NotifierService
+    ) { 
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
       'endTime' : [this.endTime, Validators.required],
@@ -259,6 +259,7 @@ export class RpaStudioActionsComponent implements OnInit {
       this.childBotWorkspace.saveBotFun(this.botState,this.finalenv).subscribe(data=>{
         this.savebotrespose=data;
         this.rpa_studio.spinner.hide();
+        
         if(this.savebotrespose.botId!=undefined)
         {
           Swal.fire({
@@ -268,11 +269,17 @@ export class RpaStudioActionsComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
+          
           this.getschecdules();
           this.startbot=true;
           this.pausebot=false;
           this.resumebot=false;
           this.childBotWorkspace.disable=true;
+          let bottask:any=this.botState;
+          if(bottask.taskId!=0)
+          {
+            this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
+          }
         }
         else
         {
@@ -832,5 +839,145 @@ convertcron(cronexp)
 {
   return cronstrue.toString(cronexp);
 }
+
+
+startSchedule(schedule)
+{ 
+  let startschedule={
+    "botId":this.savebotrespose.botId,
+    "scheduleInterval":schedule.scheduleInterval,
+    "intervalId":schedule.intervalId,
+  }
+  let responsemessage:any
+  this.rest.start_schedule(startschedule).subscribe(response=>{
+    responsemessage=response
+ 
+    if(responsemessage.errorMessage==undefined)
+    {
+      //console.log(responsemessage)
+      this.notifier.notify("info","Bot initiated Successfully");
+    
+      //this.notifier.notify("info",responsemessage);
+    
+    }else
+    {
+      Swal.fire({
+        position:'top-end',
+        icon:'warning',
+        title:responsemessage.errorMessage,
+        showConfirmButton:false,
+        timer:2000
+        })
+    }
+    this.getschecdules();
+  });
+  
+}
+
+
+stopSchedule(schedule)
+{   
+  
+  let stopschedule={
+  "botId":this.savebotrespose.botId,
+  "scheduleInterval":schedule.scheduleInterval,
+  "intervalId":schedule.intervalId,
+}
+let responsemessage:any
+this.rest.stop_schedule(stopschedule).subscribe(response=>{
+  responsemessage=response
+
+  if(responsemessage.errorMessage==undefined)
+  {
+    this.notifier.notify("info",responsemessage.status);
+    
+  }else
+  {
+    Swal.fire({
+      position:'top-end',
+      icon:'warning',
+      title:responsemessage.errorMessage,
+      showConfirmButton:false,
+      timer:2000
+      })
+  }
+  this.getschecdules();
+});
+
+}
+
+pauseSchedule(schedule)
+{ 
+  let pauseschedule={
+    "botId":this.savebotrespose.botId,
+    "scheduleInterval":schedule.scheduleInterval,
+    "intervalId":schedule.intervalId,
+  }
+  let responsemessage:any
+  this.rest.pause_schedule(pauseschedule).subscribe(response=>{
+    responsemessage=response
+ 
+    if(responsemessage.errorMessage==undefined)
+    {
+        this.notifier.notify("info",responsemessage.status);
+    }else
+    {
+      Swal.fire({
+        position:'top-end',
+        icon:'warning',
+        title:responsemessage.errorMessage,
+        showConfirmButton:false,
+        timer:2000
+        })
+    }
+    this.getschecdules();
+
+
+  });
+  
+
+}
+
+
+
+
+resumeSchedule(schedule)
+{ 
+  let resumeschedule={
+    "botId":this.savebotrespose.botId,
+    "scheduleInterval":schedule.scheduleInterval,
+    "intervalId":schedule.intervalId,
+  }
+  let responsemessage:any
+  this.rest.resume_schedule(resumeschedule).subscribe(response=>{
+    responsemessage=response
+ 
+    if(responsemessage.errorMessage == undefined)
+    {
+      this.notifier.notify("info",responsemessage.status);
+    }else
+    {
+      Swal.fire({
+        position:'top-end',
+        icon:'warning',
+        title:responsemessage.errorMessage,
+        showConfirmButton:false,
+        timer:2000
+        })
+    }
+    this.getschecdules();
+  });
+}
+
+  rpa_assignbot(botId,taskId)
+  {
+    this.rest.assign_bot_and_task(botId,taskId).subscribe(data=>{
+      let response:any=data;
+      if(response.status!=undefined)
+      {
+        this.notifier.notify("info",response.status);
+      } 
+    });
+  }
   
 }

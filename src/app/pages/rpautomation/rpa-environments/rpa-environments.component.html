@@ -9,7 +9,7 @@
  
 </div>
 
-<div class="container-fluid mx-3">
+<div class="container mx-3">
   <div class="env-data-tool"> 
   <div class="env-btn">
       <button   value="Create" title="Create Environment" id="addenvbtn" (click)="create()" >
@@ -97,7 +97,9 @@
     <table datatable [dtTrigger]="dtTrigger" id="listofenv" [dtOptions]="dtOptions" class="table rpa-table table-striped  table-sm row-border hover env-table" >
       <thead>
         <tr>
-          <th  class="rpa-checkbox-th checkboxes"><input type="checkbox" [checked]="isAllCheckBoxChecked()" id="checkall" (change)="checkAllCheckBox($event)"></th>
+          <th  class="rpa-checkbox-th checkboxes">
+            <input type="checkbox" [checked]="isAllCheckBoxChecked()" id="checkall" (change)="checkAllCheckBox($event)">
+          </th>
           <th>Environment Name</th>
           <th>Environment Type</th>
           <th>Agent Path</th>
@@ -112,7 +114,7 @@
           
         </tr>
       </thead>
-      <tbody >
+      <tbody>
         <tr  *ngFor="let environment of environments;let i=index; let odd = odd;" [ngClass]="odd ? 'odd_col' : 'even_col'">
         <td class="rpa-checkbox" ><input type="checkbox" class="checkupdateordelete" value="{{environment.id}}" [(ngModel)]="environments[i].checked" (change)="checkEnableDisableBtn()"></td>
           <td *ngIf="environment.environmentName==''">-</td>
@@ -137,8 +139,8 @@
             <div *ngIf="environment.activeStatus == 8"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</div>
           </td>
           <td>
-            <div *ngIf="environment.deployStatus == true"><span style="color:darkgreen">Deployed</span></div>
-                    <div *ngIf="environment.deployStatus == false"><span style="color:red">Not Deployed</span></div>
+            <div *ngIf="environment.deployStatus == true"><span style="color:darkgreen">Yes</span></div>
+                    <div *ngIf="environment.deployStatus == false"><span style="color:red">No</span></div>
           </td>
         </tr>
        </tbody>

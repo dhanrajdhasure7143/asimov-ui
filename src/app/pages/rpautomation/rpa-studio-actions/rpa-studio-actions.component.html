@@ -224,6 +224,13 @@
           </h4>
           <p>RUNNING</p>
       </div>
+      <div class="row rob-status">
+        <h4>
+            <span *ngIf="botStatisticsData.Scheduled != null">{{botStatisticsData.Scheduled}}</span>
+            <span *ngIf="botStatisticsData.Scheduled == null">-</span>
+        </h4>
+        <p>SCHEDULED</p>
+    </div>
   </div>
 
 
@@ -300,8 +307,9 @@
               <h3><b>{{cronExpression}}</b></h3>
             </div> -->
                 </div>
-                 <div class="form-group env-btn" >
-                    <button class="btn btn-primary eiap-btn" (click)="addCron()">Add</button>
+                <br>
+                 <div class="form-group " >
+                    <button class="btn btn-primary eiap-btn" style="float: right;" (click)="addCron()">Add</button>
               
                   </div>
           
@@ -328,14 +336,22 @@
                           <td><span *ngIf="schedule.lastRunTime!=null">{{schedule.lastRunTime}}</span><span *ngIf="schedule.lastRunTime==null">---</span></td>                       
                           <td><span *ngIf="schedule.nextRunTime!=null">{{schedule.nextRunTime}}</span><span *ngIf="schedule.nextRunTime==null">---</span></td>
                           <td><span *ngIf="schedule.executionStatus!=null">{{schedule.executionStatus}}</span><span *ngIf="schedule.executionStatus==null">---</span></td>
-                          <td><button (click)="removeSchedule(schedule)"><span class="remove-schedule">x</span></button></td>
+                          <td>
+                            <span *ngIf="schedule.botActionStatus!=undefined"><button title="Start" (click)="startSchedule(schedule)"><span class="button-schedule"><i style="color:white;font-size:10px;" class="fas fa-play"></i></span></button></span>
+                            <span *ngIf="schedule.botActionStatus!=undefined"><button title="Pause" (click)="pauseSchedule(schedule)"><span class="button-schedule"><i style="color:white;font-size:10px;" class="fas fa-pause"></i></span></button></span>
+                            <span *ngIf="schedule.botActionStatus!=undefined"><button title="Resume" (click)="resumeSchedule(schedule)"><span class="button-schedule"><i style="color:white;font-size:10px;" class="fas fa-step-forward"></i></span></button></span>
+                            <span *ngIf="schedule.botActionStatus!=undefined"><button title="Stop" (click)="stopSchedule(schedule)"><span class="button-schedule"><i style="color:white;font-size:10px;" class="fas fa-power-off"></i></span></button></span>
+                            <span><button (click)="removeSchedule(schedule)"><span class="remove-schedule"><i style="color:white;font-size:12px;" class="fas fa-times"></i></span></button></span>
+                            
+                          </td>
                         </tr>
                         </tbody>
                       </table>
                   
                       </div>
-                      <div class="form-group env-btn" >
-                        <button class="btn btn-primary eiap-btn"  (click)="saveCronexp()">Save</button>
+                      <br>
+                      <div class="form-group" >
+                        <button class="btn btn-primary eiap-btn" style="float: right;"  (click)="saveCronexp()">Save</button>
                   
                       </div>
            
@@ -520,3 +536,5 @@
             </div>
         </div>
     
+
+
