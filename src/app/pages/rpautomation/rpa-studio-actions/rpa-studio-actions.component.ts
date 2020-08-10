@@ -855,7 +855,7 @@ startSchedule(schedule)
     if(responsemessage.errorMessage==undefined)
     {
       //console.log(responsemessage)
-      this.notifier.notify("info","Bot initiated Successfully");
+      this.notifier.notify("info","Schedule initiated Successfully");
     
       //this.notifier.notify("info",responsemessage);
     
