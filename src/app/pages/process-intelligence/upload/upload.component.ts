@@ -411,7 +411,7 @@ testDbConnection(){
     let connectorBody:any= {}
     connectorBody={
       // "name": "dbconnector-113",
-      "name": "dbconnector-"+this.dbDetails.connectionName+"-"+this.processId,
+      "name": "dbconnector-"+this.processId,
       // "config": {
       "batch.max.rows": "1000",
       "catalog.pattern": "public",
@@ -504,7 +504,7 @@ generateGraph(e){
   let connectorBody:any= {}
   connectorBody={
     // "name": "dbconnector-113",
-    "name": "dbconnector-"+this.dbDetails.connectionName+"-"+this.processId,
+    "name": "dbconnector-"+this.processId,
     "config": {
     "batch.max.rows": "1000",
     "catalog.pattern": "public",
