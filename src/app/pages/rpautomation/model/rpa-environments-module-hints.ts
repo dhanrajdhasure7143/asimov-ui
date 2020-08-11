@@ -4,7 +4,7 @@ export class RpaEnvHints{
         { selector:'#addenvbtn', description:'Create an Environment',showNext:true },        
         { selector:'#updateenvbtn', description:'Update an Environment',showNext:true },
         { selector:'#deleteenvbtn', description:'Delete Environment(s)',showNext:true },
-        { selector:'#deployenvbtn', description:'Deploy Environment(s)' },
+        { selector:'#deployenvbtn', description:'Deploy Agent(s)' },
      
     ]
 }

@@ -264,7 +264,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   automate(){
     let selected_process_id = this.saved_bpmn_list[this.selected_notation].processIntelligenceId;
-    this.router.navigate(["/pages/rpautomation/workspace"], { queryParams: { processid: selected_process_id }});
+    this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_process_id }});
   }
  
   downloadBpmn(){
@@ -341,15 +341,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
-    if(status == "APPROVED" || status == "REJECTED"){
-      let all_bpmns = _self.saved_bpmn_list.filter(each => { return each.bpmnModelId == sel_List["bpmnModelId"]})
-      all_bpmns.forEach(each => {
-        if(status == "INPROGRESS")
-          bpmnModel.id = each.id;
-      })
-    }else{
+    if(sel_List['id'])
       bpmnModel.id = sel_List['id'];
-    }
+    else
+      delete(bpmnModel.id);
     bpmnModel.userName = sel_List['userName'];
     bpmnModel.tenantId = sel_List['tenantId'];
     bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
