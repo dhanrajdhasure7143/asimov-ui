@@ -319,7 +319,7 @@ export class UploadProcessModelComponent implements OnInit {
 
    automate(){
     let selected_process_id = this.saved_bpmn_list[this.selected_notation].processIntelligenceId;
-    this.router.navigate(["/pages/rpautomation/workspace"], { queryParams: { processid: selected_process_id }});
+    this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_process_id }});
   }
 
   downloadBpmn(){
