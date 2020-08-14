@@ -78,6 +78,14 @@ export class UploadComponent implements OnInit {
     this.dtTrigger.unsubscribe();
   }
   onUpload(event, id) {
+    // console.log("event",event.addedFiles.length);
+    if(event.addedFiles.length==0){
+      Swal.fire({
+        title: 'Error',
+        text: 'Please upload file with proper extension!',
+        icon: 'error',
+      })
+    } else{
     this.selectedFile = <File>event.addedFiles[0];
     const fd = new FormData();
     fd.append('file', this.selectedFile),
@@ -94,6 +102,7 @@ export class UploadComponent implements OnInit {
           icon: 'error',
         })
       });
+    }
   }
 
   getUID(id, name) {
@@ -155,9 +164,18 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
-      localStorage.removeItem("fileData")
-      localStorage.setItem("fileData", JSON.stringify(excelfile))
-      this.router.navigate(['/pages/processIntelligence/datadocument']);
+      console.log("excelfile",excelfile,excelfile[1]);
+      if(excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)){
+        Swal.fire({
+          title: 'Error',
+          text: 'No data found in file!',
+          icon: 'error',
+        })
+      }else{
+        localStorage.removeItem("fileData")
+        localStorage.setItem("fileData", JSON.stringify(excelfile))
+        this.router.navigate(['/pages/processIntelligence/datadocument']);
+      }
     };
     reader.readAsBinaryString(target[0]);
   }
@@ -174,9 +192,17 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(csvRecordsArray);
       let excelfile = [];
       excelfile = csvRecordsArray;
-      localStorage.removeItem("fileData")
-      localStorage.setItem("fileData", JSON.stringify(excelfile))
-      this.router.navigate(['/pages/processIntelligence/datadocument']);
+      if(excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)){
+        Swal.fire({
+          title: 'Error',
+          text: 'No data found in uploaded file!',
+          icon: 'error',
+        })
+      }else{
+        localStorage.removeItem("fileData")
+        localStorage.setItem("fileData", JSON.stringify(excelfile))
+        this.router.navigate(['/pages/processIntelligence/datadocument']);
+      }
     };
     reader.onerror = function () {
       _self.global.notify("Oops! Something went wrong", "error");
@@ -250,7 +276,6 @@ export class UploadComponent implements OnInit {
               if (key == 'date') {
                 date.push(e[i].event[key])
               }
-
             }
           }
    
@@ -272,7 +297,17 @@ export class UploadComponent implements OnInit {
         }
       }
       _self.dt.changePiData(xesData)
-      _self.router.navigateByUrl('/pages/processIntelligence/xesdocument');
+      // console.log("xesData",xesData);
+      
+      if(xesData[0].length==0 && xesData[1].length==0){
+        Swal.fire({
+          title: 'Error',
+          text: 'No data found in file!',
+          icon: 'error',
+        })
+      }else{
+        _self.router.navigateByUrl('/pages/processIntelligence/xesdocument');
+      }
     }
     fileReader.readAsText(file);
   }
