@@ -49,10 +49,10 @@
     
     <div *ngIf="updateflag==true" class="env-btn">
     
-      <button  id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Edit Environment"  (click)="updatedata()">
+      <button  id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Environment"  (click)="updatedata()">
     
         <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
-        <div>Edit</div>
+        <div>Modify</div>
         
       </button>
     
@@ -63,12 +63,12 @@
     <div *ngIf="updateflag==false" class="env-btn">
       
       
-      <button data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Edit Environment" disabled>
+      <button data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Modify Environment" disabled>
         
         
         <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
         
-        <div>Edit</div>
+        <div>Modify</div>
       
       </button>
 
@@ -142,7 +142,7 @@
           <td *ngIf="environment.portNumber==''">-</td>
           <td *ngIf="environment.portNumber!=''">{{environment.portNumber}}</td>
           <td *ngIf="environment.createdTimeStamp==''">-</td>
-          <td *ngIf="environment.createdTimeStamp!=''">{{environment.username}}</td>
+          <td *ngIf="environment.createdTimeStamp!=''">{{environment.createdTimeStamp}}</td>
           <td>
             <div *ngIf="environment.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</div>
             <div *ngIf="environment.activeStatus == 8"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</div>
@@ -255,7 +255,7 @@
             <div class="row">
                 <div class="col-md-3 formelement">
                     <label for="environmentName">Environment Name*</label>
-                    <input type="text" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Environment Name">
+                    <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Environment Name">
                     <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
 
 ('environmentName').touched" style="color:red">Environment Name Required*</span>
@@ -279,13 +279,13 @@ placeholder="Enter Environment Type" >-->
                 </div>
                 <div class="col-md-3 formelement">
                     <label for="agentPath">Agent Path*</label>
-                    <input type="text" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
+                    <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
                     <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" style="color:red">Agent Path Required*</span>
 
                 </div>
                 <div class="col-md-3 formelement">
                     <label for="hostAddress"> IP Address/Host*</label>
-                    <input type="text" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+                    <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
                     <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get
 
 ('hostAddress').touched" style="color:red">IP Address/Host Required*</span>
@@ -294,14 +294,14 @@ placeholder="Enter Environment Type" >-->
             <div class="row">
                 <div class="col-md-3 formelement">
                     <label for="userName">Username*</label>
-                    <input type="text" class="form-control" formControlName="username" value="" placeholder="Enter Username">
+                    <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
                     <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" style="color:red">Username Required*</span>
 
                 </div>
 
                 <div class="col-md-3 formelement">
                     <label for="password">Password*</label>
-                    <input type="password" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                    <input type="password" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                     <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" style="color:red">Password Required*</span>
                 </div>
 
@@ -316,7 +316,7 @@ placeholder="Enter Environment Type" >-->
 
                 <div class="col-md-3 formelement">
                     <label for="portNumber">Port Number*</label>
-                    <input type="text" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port Number">
+                    <input type="number" maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port Number">
                     <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
 
 ('portNumber').touched" style="color:red">Port Number Required*</span>
@@ -331,8 +331,17 @@ placeholder="Enter Environment Type" >-->
                     <span *ngIf="insertForm.get('comments').invalid && insertForm.get('comments').touched" style="color:red">Comments Required*</span>
 
                 </div>
+
+                <div class="col-md-3 formelement">
+                  <label for="comments">Comments</label>
+                  <br/>
+                  <input type="checkbox" formControlName="comments" value="" >
+                  <span *ngIf="insertForm.get('comments').invalid && insertForm.get('comments').touched" style="color:red">Comments Required*</span>
+
+              </div>
             </div>
 
+           
             <br>
             <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
             <input type="reset" class="btn btn-primary" value="Reset">
@@ -349,7 +358,7 @@ placeholder="Enter Environment Type" >-->
   <div class="rpa-modal-content">
       <div class="rpa-modal-header">
           <span class="rpa-modal-close" (click)="close()">&times;</span>
-          <h4>Update Environment</h4>
+          <h4>Modify Environment</h4>
       </div>
       <div class="rpa-modal-body">
         
@@ -358,8 +367,8 @@ placeholder="Enter Environment Type" >-->
             <div class="row">
                 <div class="col-md-3 formelement">
                     <label for="environmentName">Environment Name*</label>
-                    <input type="text" class="form-control data" formControlName=" environmentName" value="{{updateenvdata.environmentName}}" [(ngModel)]="updateenvdata.environmentName" placeholder="Enter Environment Name">
-                    <span *ngIf="updateForm.get(' environmentName').invalid && updateForm.get(' environmentName').touched" style="color:red">Environment Name Required*</span>
+                    <input type="text" maxlength="50" class="form-control data" formControlName="update_environmentName" value="{{updateenvdata.environmentName}}" [(ngModel)]="updateenvdata.environmentName" placeholder="Enter Environment Name">
+                    <span *ngIf="updateForm.get('update_environmentName').invalid && updateForm.get('update_environmentName').touched" style="color:red">Environment Name Required*</span>
 
                 </div>
                 <div class="col-md-3 formelement ">
@@ -387,8 +396,8 @@ placeholder="Enter Environment Type" >-->
 
                 <div class="col-md-3 formelement">
 
-                    <label for=" agentPath">Agent Path*</label>
-                    <input type="text" class="form-control" formControlName=" agentPath" value="{{updateenvdata.agentPath}}" [(ngModel)]="updateenvdata.agentPath" placeholder="Enter
+                    <label for="update_agentPath">Agent Path*</label>
+                    <input type="text" maxlength="50" class="form-control" formControlName="update_agentPath" value="{{updateenvdata.agentPath}}" [(ngModel)]="updateenvdata.agentPath" placeholder="Enter
 
 Agent Path">
                     <span *ngIf="updateForm.get(' agentPath').invalid && updateForm.get
@@ -398,8 +407,8 @@ Agent Path">
                 </div>
                 <div class="col-md-3 formelement">
 
-                    <label for=" hostAddress">IP Address/Host*</label>
-                    <input type="text" class="form-control" formControlName=" hostAddress" value="{{updateenvdata.hostAddress}}" [(ngModel)]="updateenvdata.hostAddress" placeholder="Enter
+                    <label for="update_hostAddress">IP Address/Host*</label>
+                    <input type="text" maxlength="50" class="form-control" formControlName="update_hostAddress" value="{{updateenvdata.hostAddress}}" [(ngModel)]="updateenvdata.hostAddress" placeholder="Enter
 
 IP Address/Host">
                     <span *ngIf="updateForm.get(' hostAddress').invalid && updateForm.get
@@ -409,8 +418,8 @@ IP Address/Host">
             </div>
             <div class="row">
                 <div class="col-md-3 formelement">
-                    <label for=" userName">Username*</label>
-                    <input type="text" class="form-control" formControlName=" username" value="{{updateenvdata.username}}" [(ngModel)]="updateenvdata.username" placeholder="Enter
+                    <label for="update_userName">Username*</label>
+                    <input type="text" maxlength="50" class="form-control" formControlName="update_username" value="{{updateenvdata.username}}" [(ngModel)]="updateenvdata.username" placeholder="Enter
 
 Username">
                     <span *ngIf="updateForm.get(' username').invalid && updateForm.get
@@ -420,8 +429,8 @@ Username">
                 </div>
 
                 <div class="col-md-3 formelement">
-                    <label for=" password">Password*</label>
-                    <input type="password" class="form-control" formControlName=" password" value="{{updateenvdata.password}}" [(ngModel)]="updateenvdata.password" placeholder="Enter
+                    <label for="update_password">Password*</label>
+                    <input type="password" maxlength="50" class="form-control" formControlName="update_password" value="{{updateenvdata.password}}" [(ngModel)]="updateenvdata.password" placeholder="Enter
 
 Password"  passwordToggle >
                     <span *ngIf="updateForm.get(' password').invalid && updateForm.get
@@ -439,8 +448,8 @@ Password"  passwordToggle >
                 </div>
 
                 <div class="col-md-3 formelement">
-                    <label for=" portNumber">Port Number*</label>
-                    <input type="text" class="form-control" formControlName=" portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
+                    <label for="update_portNumber">Port Number*</label>
+                    <input type="number" maxlength="6" class="form-control" formControlName="update_portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
 
 Port Number">
                     <span *ngIf="updateForm.get(' portNumber').invalid && updateForm.get
@@ -463,7 +472,7 @@ Comments">
 
                 </div>
             </div>
-            <input type="button" class="btn btn-primary" value="Update" (click)="updateEnvironment()">
+            <input type="button" class="btn btn-primary" value="Modify" (click)="updateEnvironment()">
         </form>
      </div>
   </div>
