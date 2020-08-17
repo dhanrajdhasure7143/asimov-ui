@@ -11,7 +11,9 @@ import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
 import {RpaEnvHints} from "../model/rpa-environments-module-hints";
 import {Router} from "@angular/router";
-import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-environments',
@@ -19,11 +21,13 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements OnDestroy, OnInit{
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","username","password","connectionType","portNumber","createdTimeStamp","activeStatus","deployStatus"];
+    dataSource1:MatTableDataSource<any>;
     @ViewChild('closebutton', {static: false}) closebutton  
     @ViewChild(DataTableDirective,{static: false}) dtElement: DataTableDirective;
     @Output()
     title:EventEmitter<string> = new EventEmitter<string>();
-    public environments : environmentobservable [];
+    public environments:any=[];
     public createpopup=document.getElementById('create');
     public button:string;
     public updatepopup=document.getElementById('update-popup');
@@ -66,15 +70,15 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
     })
 
     this.updateForm=this.formBuilder.group({
-      update_environmentName: ["", Validators.required],
-      update_environmentType: ["", Validators.required],
-      update_agentPath: ["", Validators.required],
-      update_hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
-      update_username: ["", Validators.required],
-      update_password: ["", Validators.required],
-      update_connectionType: ["",Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
-      update_portNumber: ["",  Validators.compose([Validators.required, Validators.pattern("[0-9]*")])],
-      update_comments: [""]
+       environmentName: ["", Validators.required],
+       environmentType: ["", Validators.required],
+       agentPath: ["", Validators.required],
+       hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
+       username: ["", Validators.required],
+       password: ["", Validators.required],
+       connectionType: ["",Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
+       portNumber: ["",  Validators.compose([Validators.required, Validators.pattern("[0-9]*")])],
+       comments: [""]
     
     })
     this.updateflag=false;
@@ -110,15 +114,23 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
     this.updatepopup.style.display='none';
   }
 
-  savedata(){}
  async getallData()
   {
-
+    this.environments=[];
     await this.api.listEnvironments().subscribe(
     data => {
-        this.environments = data as environmentobservable [];	
-        this.chanref.detectChanges();
-        this.dtTrigger.next();
+         let response:any= data;	
+        for(let i=0;i<response.length;i++)
+        {
+          let checks={
+            checked:false,
+            }
+          this.environments.push(Object.assign({}, response[i], checks));
+        }
+        console.log(this.environments)
+        this.dataSource1= new MatTableDataSource(this.environments);
+        //this.chanref.detectChanges();
+       // this.dtTrigger.next();
       },
       (err: HttpErrorResponse) => {
       }
@@ -132,7 +144,7 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 	}
 
   isAllCheckBoxChecked() {
-		return this.environments.every(p => p.checked);
+		return this.environments.every(p => p.checked==true);
   }
   
   create()
@@ -158,8 +170,7 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
           showConfirmButton: false,
           timer: 2000
         })
-        this.rerender();
-        this.insertForm.reset();
+        this.getallData()
         this.createpopup.style.display='none'; 
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
@@ -187,7 +198,7 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
           timer: 2000
         })
       this.chanref.detectChanges();
-      this.rerender();
+      this.getallData()
       this.updatepopup.style.display='none';
       });
       
@@ -251,7 +262,9 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
               timer: 2000
     
             })
- 
+            //this.chanref.detectChanges();
+            this.removeallchecks();
+            this.getallData();
             //this.chanref.detectChanges();
           })
           
@@ -259,7 +272,7 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
       })
       
     }
-    this.rerender();
+    
           
     
   }
@@ -310,23 +323,7 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
     this.checktodelete();
   }
 
-  rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      this.environmentservice.getfulldata().subscribe(
-        data => 
-        {
-          this.environments = data as environmentobservable [];	
-          this.chanref.detectChanges();
-          this.dtTrigger.next();
-          this.environments.forEach(x => ! x.checked)
-          this.checkEnableDisableBtn()
-        });
 
-      });
-      
-  }
 
 
   deploybotenvironment()
@@ -347,8 +344,23 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
       })
     }
   }
+  
+  applyFilter(filterValue: string) {
+    
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource1.filter = filterValue;
+  }
 
 
+  removeallchecks()
+  {
+    for(let i=0;i<this.environments.length;i++)
+    {
+      this.environments[i].checked= false;
+    }
+    console.log(this.environments);
+  }
 
 }
 

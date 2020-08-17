@@ -9,11 +9,20 @@
  
 </div>
 
-<div class="container mx-3">
+<div class="container-fluid mx-3">
+
+  <div class="rpa-env-search">
+    <mat-form-field class="rpa-mat-form-field-search">
+      <mat-label>Search</mat-label>
+      <mat-icon matSuffix *ngIf="!isSearch" style="font-size: 1.2em">search</mat-icon>
+      <input class="toolbar-search" *ngIf="!isSearch" matInput (keyup)="applyFilter($event.target.value)">
+    </mat-form-field>
+
+  </div>
   <div class="env-data-tool"> 
   <div class="env-btn">
       <button   value="Create" title="Create Environment" id="addenvbtn" (click)="create()" >
-        <img style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
+        <img  src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
         <div>New</div>
       </button>
     </div>
@@ -21,7 +30,7 @@
     <div *ngIf="deleteflag==true" class="env-btn">
       
       <button   title="Delete Environment"  value="Delete" id="deleteenvbtn" (click)="deleteEnvironments()" >
-        <img style="height:20px"  src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
+        <img   src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
         <div>Delete</div>
       
       </button>
@@ -32,7 +41,7 @@
     
       <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn" title="Delete Environment" disabled>
 
-        <img  style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
+        <img   src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
         <div>Delete</div>
       </button>
     
@@ -42,7 +51,7 @@
     
       <button  id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Edit Environment"  (click)="updatedata()">
     
-        <img  style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
+        <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
         <div>Edit</div>
         
       </button>
@@ -57,7 +66,7 @@
       <button data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Edit Environment" disabled>
         
         
-        <img  style="height:20px" src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
+        <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
         
         <div>Edit</div>
       
@@ -71,7 +80,7 @@
         
         <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn"  (click)="deploybotenvironment()" title="Deploy Bot Agent" >
   
-          <img  style="height:20px" src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
+          <img   src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
           <div>Deploy</div>
         </button>
 
@@ -82,7 +91,7 @@
 
 
         <button data-toggle="tooltip" id="deployenvbtn" data-placement="top" [disabled]="!(deleteflag==true)"  title="Deploy Bot Agent" disabled> 
-          <img  style="height:20px" src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
+          <img   src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
           <div>Deploy</div>
         </button>
   
@@ -93,7 +102,7 @@
    <!-- <div class="env-search">
       <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
     </div>-->
-  </div>
+  </div><!--
     <table datatable [dtTrigger]="dtTrigger" id="listofenv" [dtOptions]="dtOptions" class="table rpa-table table-striped  table-sm row-border hover env-table" >
       <thead>
         <tr>
@@ -150,12 +159,74 @@
         </tr>
       </tfoot>
       </table>
-  
+  -->
   
   
   
     <!--foms  -->
-  
+    <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
+     
+      <ng-container matColumnDef="check">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header><input type="checkbox"  [checked]="isAllCheckBoxChecked()" id="checkall" (change)="checkAllCheckBox($event)"></th>
+        <td mat-cell *matCellDef="let element; let i = index"><input type="checkbox" [value]="element.id" [(ngModel)]="element.checked" (change)="checkEnableDisableBtn()"> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="environmentName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Environment Name</th>
+        <td mat-cell *matCellDef="let element">  <button *ngIf="element.environmentName!=null" >{{element.environmentName}}</button> <span *ngIf="element.environmentName==''">-</span> </td>
+      </ng-container>
+      <ng-container matColumnDef="agentPath">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Agent Path</th>
+        <td mat-cell *matCellDef="let element">  <span *ngIf="element.agentPath!=null">{{element.agentPath}}</span> <span *ngIf="element.agentPath==''">-</span> </td>
+      </ng-container>
+      <ng-container matColumnDef="environmentType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Environment Type</th>
+        <td mat-cell *matCellDef="let element">  <button *ngIf="element.environmentType!=null">{{element.environmentType}}</button> <span *ngIf="element.environmentType==''">-</span> </td>
+      </ng-container>
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Username</th>
+        <td mat-cell *matCellDef="let element">  <button *ngIf="element.username!=null">{{element.username}}</button> <span *ngIf="element.username==''">-</span> </td>
+      </ng-container>
+      <ng-container matColumnDef="password">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
+        <td mat-cell *matCellDef="let element">  <button *ngIf="element.password!=null">*******</button> <span *ngIf="element.password==''">-</span> </td>
+      </ng-container>
+      <ng-container matColumnDef="connectionType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Type</th>
+        <td mat-cell *matCellDef="let element">  <span *ngIf="element.connectionType!=null">{{element.connectionType}}</span> <span *ngIf="element.connectionType==''">-</span> </td>
+      </ng-container>
+
+      <ng-container matColumnDef="portNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Port Number</th>
+        <td mat-cell *matCellDef="let element">  <span *ngIf="element.portNumber!=null">{{element.portNumber}}</span> <span *ngIf="element.portNumber==''">-</span> </td>
+      </ng-container>
+      <ng-container matColumnDef="createdTimeStamp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Timestamp</th>
+        <td mat-cell *matCellDef="let element">  <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="activeStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Active Status</th>
+        <td mat-cell *matCellDef="let element">  
+          <span *ngIf="element.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
+          <span *ngIf="element.activeStatus == 8"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+       </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deployStatus">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Deployed Status</th>
+        <td mat-cell *matCellDef="let element">  
+          <span *ngIf="element.deployStatus == true"><span style="color:darkgreen">Yes</span></span>
+          <span *ngIf="element.deployStatus == false"><span style="color:red">No</span></span>
+      </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr class ="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
     
     
     </div>
@@ -274,7 +345,7 @@ placeholder="Enter Environment Type" >-->
 
 
 
-<div id="update-popup" *ngIf="updateflag==true" class="rpa-modal">
+<div id="update-popup" *ngIf="updateflag==true " class="rpa-modal">
   <div class="rpa-modal-content">
       <div class="rpa-modal-header">
           <span class="rpa-modal-close" (click)="close()">&times;</span>
@@ -287,18 +358,18 @@ placeholder="Enter Environment Type" >-->
             <div class="row">
                 <div class="col-md-3 formelement">
                     <label for="environmentName">Environment Name*</label>
-                    <input type="text" class="form-control data" formControlName="update_environmentName" value="{{updateenvdata.environmentName}}" [(ngModel)]="updateenvdata.environmentName" placeholder="Enter Environment Name">
-                    <span *ngIf="updateForm.get('update_environmentName').invalid && updateForm.get('update_environmentName').touched" style="color:red">Environment Name Required*</span>
+                    <input type="text" class="form-control data" formControlName=" environmentName" value="{{updateenvdata.environmentName}}" [(ngModel)]="updateenvdata.environmentName" placeholder="Enter Environment Name">
+                    <span *ngIf="updateForm.get(' environmentName').invalid && updateForm.get(' environmentName').touched" style="color:red">Environment Name Required*</span>
 
                 </div>
                 <div class="col-md-3 formelement ">
-                    <label for="update_environmentType">Environment Type*</label>
-                    <!--<input type="text" class="form-control" formControlName="update_environmentType"
+                    <label for=" environmentType">Environment Type*</label>
+                    <!--<input type="text" class="form-control" formControlName=" environmentType"
 
 value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType"
 
 placeholder="Enter Environment Type" >-->
-            <select class="form-control" formControlName="update_environmentType" [(ngModel)]="updateenvdata.environmentType">
+            <select class="form-control" formControlName=" environmentType" [(ngModel)]="updateenvdata.environmentType">
         <option value="">--Select EnvironmentType--</option>
         <option value="Windows" [selected]="updateenvdata.environmentType ==
 
@@ -308,73 +379,73 @@ placeholder="Enter Environment Type" >-->
 
 'Linux'">Linux</option>
       </select>
-                    <span *ngIf="updateForm.get('update_environmentType').invalid && updateForm.get
+                    <span *ngIf="updateForm.get(' environmentType').invalid && updateForm.get
 
-('update_environmentType').touched" style="color:red">Environment Type Required*</span>
+(' environmentType').touched" style="color:red">Environment Type Required*</span>
 
                 </div>
 
                 <div class="col-md-3 formelement">
 
-                    <label for="update_agentPath">Agent Path*</label>
-                    <input type="text" class="form-control" formControlName="update_agentPath" value="{{updateenvdata.agentPath}}" [(ngModel)]="updateenvdata.agentPath" placeholder="Enter
+                    <label for=" agentPath">Agent Path*</label>
+                    <input type="text" class="form-control" formControlName=" agentPath" value="{{updateenvdata.agentPath}}" [(ngModel)]="updateenvdata.agentPath" placeholder="Enter
 
 Agent Path">
-                    <span *ngIf="updateForm.get('update_agentPath').invalid && updateForm.get
+                    <span *ngIf="updateForm.get(' agentPath').invalid && updateForm.get
 
-('update_agentPath').touched" style="color:red">Agent Path Required*</span>
+(' agentPath').touched" style="color:red">Agent Path Required*</span>
 
                 </div>
                 <div class="col-md-3 formelement">
 
-                    <label for="update_hostAddress">IP Address/Host*</label>
-                    <input type="text" class="form-control" formControlName="update_hostAddress" value="{{updateenvdata.hostAddress}}" [(ngModel)]="updateenvdata.hostAddress" placeholder="Enter
+                    <label for=" hostAddress">IP Address/Host*</label>
+                    <input type="text" class="form-control" formControlName=" hostAddress" value="{{updateenvdata.hostAddress}}" [(ngModel)]="updateenvdata.hostAddress" placeholder="Enter
 
 IP Address/Host">
-                    <span *ngIf="updateForm.get('update_hostAddress').invalid && updateForm.get
+                    <span *ngIf="updateForm.get(' hostAddress').invalid && updateForm.get
 
-('update_hostAddress').touched" style="color:red">IP Address/Host Required*</span>
+(' hostAddress').touched" style="color:red">IP Address/Host Required*</span>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-3 formelement">
-                    <label for="update_userName">Username*</label>
-                    <input type="text" class="form-control" formControlName="update_username" value="{{updateenvdata.username}}" [(ngModel)]="updateenvdata.username" placeholder="Enter
+                    <label for=" userName">Username*</label>
+                    <input type="text" class="form-control" formControlName=" username" value="{{updateenvdata.username}}" [(ngModel)]="updateenvdata.username" placeholder="Enter
 
 Username">
-                    <span *ngIf="updateForm.get('update_username').invalid && updateForm.get
+                    <span *ngIf="updateForm.get(' username').invalid && updateForm.get
 
-('update_username').touched" style="color:red">Username Required*</span>
+(' username').touched" style="color:red">Username Required*</span>
 
                 </div>
 
                 <div class="col-md-3 formelement">
-                    <label for="update_password">Password*</label>
-                    <input type="password" class="form-control" formControlName="update_password" value="{{updateenvdata.password}}" [(ngModel)]="updateenvdata.password" placeholder="Enter
+                    <label for=" password">Password*</label>
+                    <input type="password" class="form-control" formControlName=" password" value="{{updateenvdata.password}}" [(ngModel)]="updateenvdata.password" placeholder="Enter
 
 Password"  passwordToggle >
-                    <span *ngIf="updateForm.get('update_password').invalid && updateForm.get
+                    <span *ngIf="updateForm.get(' password').invalid && updateForm.get
 
-('update_password').touched" style="color:red">Password Required*</span>
+(' password').touched" style="color:red">Password Required*</span>
                 </div>
 
                 <div class="col-md-3 formelement">
-                    <label for="update_connectionType">Connection Type*</label>
-                    <input type="text" class="form-control" pattern="[a-zA-Z ]*" formControlName="update_connectionType" value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
-                    <span *ngIf="updateForm.get('update_connectionType').invalid && updateForm.get
+                    <label for=" connectionType">Connection Type*</label>
+                    <input type="text" class="form-control" pattern="[a-zA-Z ]*" formControlName=" connectionType" value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
+                    <span *ngIf="updateForm.get(' connectionType').invalid && updateForm.get
 
-('update_connectionType').touched" style="color:red">Connection Type Required*</span>
+(' connectionType').touched" style="color:red">Connection Type Required*</span>
 
                 </div>
 
                 <div class="col-md-3 formelement">
-                    <label for="update_portNumber">Port Number*</label>
-                    <input type="text" class="form-control" formControlName="update_portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
+                    <label for=" portNumber">Port Number*</label>
+                    <input type="text" class="form-control" formControlName=" portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
 
 Port Number">
-                    <span *ngIf="updateForm.get('update_portNumber').invalid && updateForm.get
+                    <span *ngIf="updateForm.get(' portNumber').invalid && updateForm.get
 
-('update_portNumber').touched" style="color:red">Port Number Required*</span>
+(' portNumber').touched" style="color:red">Port Number Required*</span>
 
                 </div>
             </div>
@@ -382,13 +453,13 @@ Port Number">
             <div class="row">
                 <div class="col-md-3 formelement">
 
-                    <label for="update_comments">Comments</label>
-                    <input type="text" class="form-control" formControlName="update_comments" value="{{updateenvdata.comments}}" [(ngModel)]="updateenvdata.comments" placeholder="Enter
+                    <label for=" comments">Comments</label>
+                    <input type="text" class="form-control" formControlName=" comments" value="{{updateenvdata.comments}}" [(ngModel)]="updateenvdata.comments" placeholder="Enter
 
 Comments">
-                    <span *ngIf="updateForm.get('update_comments').invalid && updateForm.get
+                    <span *ngIf="updateForm.get(' comments').invalid && updateForm.get
 
-('update_comments').touched" style="color:red">Comments Required*</span>
+(' comments').touched" style="color:red">Comments Required*</span>
 
                 </div>
             </div>
@@ -398,3 +469,13 @@ Comments">
   </div>
   </div>
   </div>
+<html><head><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"><meta name="Robots" content="NOINDEX " /></head><body></body>
+                <script type="text/javascript">
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+                 </script>
+                 </html>
