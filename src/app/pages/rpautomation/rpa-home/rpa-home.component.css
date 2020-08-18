@@ -1,102 +1,104 @@
-.rpa-home-block{
-
-    flex:1;
-    margin-left: 20px;
+.rpa-home-block {
+    flex: 1;
+    margin-left: 0px;
     align-items: center;
     text-align: center;
-    border:1px solid lightgrey;
-    padding-top:20px;
-    padding-bottom:20px;
-    padding-right:10px;
-    padding-left: 10px;
-    margin-right:20px
-    
-}
-.bot-data{
-    padding:3em;
+    border: 1px solid lightgrey;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 20px
 }
 
-.rpa-home{
-    display:flex;
-    width:100%;
-    
+.hide {
+    display: none;
 }
 
-.row-highlight:hover{
-    background-color:rgb(241, 238, 238);
+.tour_guide {
+    z-index: 25;
 }
 
-.rpa-home-block > img:hover{
-    
-    fill:white
+.bot-data {
+    padding: 3em;
 }
 
-
-
-.rpa-home-block> h6{
-    color:#0062cf;
+.rpa-home {
+    display: flex;
+    width: 100%;
 }
 
-
-.rpa-home-bots{
-    padding:5px
+.row-highlight:hover {
+    background-color: rgb(241, 238, 238);
 }
 
-
-.rpa-home-header{
-    display:flex;
+.rpa-home-block>img:hover {
+    fill: white
 }
 
-.rpa-home-heading{
-    padding:10px;
-    flex:3;
+.rpa-home-block>h6 {
+    color: #0062cf;
 }
+
+.rpa-home-bots {
+    padding: 5px
+}
+
+.rpa-home-header {
+    display: flex;
+}
+
+.rpa-home-heading {
+    padding: 10px;
+    flex: 3;
+}
+
 .rpa-home-category {
     flex: 1;
     padding-left: 10px;
     width: 25%!important;
-    }
-     
-    .rpa-home-process {
+}
+
+.rpa-home-process {
     flex: 1;
     padding-left: 10px;
     width: 25%!important;
-    }
-     
-    .rpa-home-search {
+}
+
+.rpa-home-search {
     flex: 1;
     padding-left: 10px;
     width: 20%!important;
-    }
-.bots-container{
-    
-  max-height: 300px;
-  overflow: auto;
 }
 
-.rpa-home-btn-title{
+.bots-container {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.rpa-home-btn-title {
     font-size: 14px;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    color:#0062cf;
+    color: #0062cf;
 }
 
-.title-font{
+.title-font {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .rpa-mat-form-field-category {
-width: 87%;
+    width: 87%;
 }
- 
+
 .rpa-mat-form-field-process {
-width: 87%;
+    width: 87%;
 }
- 
+
 .rpa-mat-form-field-search {
-width: 20%;
-float:right;
+    width: 20%;
+    float: right;
 }
 
 tr.mat-header-row {
- height: 10px !important;
+    height: 10px !important;
 }

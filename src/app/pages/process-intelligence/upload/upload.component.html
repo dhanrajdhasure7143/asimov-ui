@@ -190,7 +190,7 @@
                                                         <option [value]="undefined" disabled hidden>Select Mode</option>
                                                         <option value="incrementing">Incrementing</option>
                                                         <option value="timestamp">Timestamp</option>
-                                                        <option value="incrementingwithTmestamp">Incrementing with Timestamp</option>
+                                                        <option value="timestamp+incrementing">Incrementing with Timestamp</option>
                                                 </select> 
                                                 <span *ngIf="((increase.invalid && database.submitted) || (increase.errors && increase.touched) )" 
                                                 class='fa fa-info-circle errspan'> Mode is required </span>
