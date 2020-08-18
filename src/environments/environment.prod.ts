@@ -14,7 +14,12 @@ export const environment = {
    logout_url: 'http://eiapclouddev.epsoftinc.in', 
    
  // PI Connectors
-   connector_topic: 'topq'
+   connector_topic: 'topq',
+  //DB Connector
+    dbConnectorHost: "10.11.0.113",
+    dbName: 'asimov_aiotal'
+
+  
 
 
   //  pi_url: 'http://piqa.epsoftinc.in',
@@ -30,5 +35,8 @@ export const environment = {
     // logout_url: 'http://eiapcloudqa.epsoftinc.in'
 
   // PI Connectors
-    //connector_topic: 'tyty'
+    //connector_topic: 'tyty',
+  //DB Connector
+    //dbConnectorHost: "10.11.0.104",
+    //dbName: 'eiap_qa'
 };

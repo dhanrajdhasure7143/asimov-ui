@@ -20,7 +20,7 @@ import Swal from 'sweetalert2';
 })
 export class RpaHomeComponent implements OnInit {
 
-  displayedColumns: string[] = ["botName","botType","department","botStatus"];
+  displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
   
   displayedColumns2: string[] = ["processName","taskName","Assign","Operations"];
   dataSource1:MatTableDataSource<any>;
