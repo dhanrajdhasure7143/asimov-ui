@@ -1,3 +1,5 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif'/></ngx-spinner>
+
 <div class="rpaenv_header_addon" style="padding-right:40px">
   
     <!-- <div class="rpa-env-nav"> -->
@@ -142,7 +144,7 @@
           <td *ngIf="environment.portNumber==''">-</td>
           <td *ngIf="environment.portNumber!=''">{{environment.portNumber}}</td>
           <td *ngIf="environment.createdTimeStamp==''">-</td>
-          <td *ngIf="environment.createdTimeStamp!=''">{{environment.createdTimeStamp}}</td>
+          <td *ngIf="environment.createdTimeStamp!=''">{{environment.username}}</td>
           <td>
             <div *ngIf="environment.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</div>
             <div *ngIf="environment.activeStatus == 8"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</div>
@@ -307,7 +309,7 @@ placeholder="Enter Environment Type" >-->
 
                 <div class="col-md-3 formelement">
                     <label for="connectionType">Connection Type*</label>
-                    <input type="text" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type">
+                    <input type="text" maxlength="50" disabled class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type">
                     <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
 
 ('connectionType').touched" style="color:red">Connection Type Required*</span>
@@ -316,7 +318,7 @@ placeholder="Enter Environment Type" >-->
 
                 <div class="col-md-3 formelement">
                     <label for="portNumber">Port Number*</label>
-                    <input type="number" maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port Number">
+                    <input type="number" disabled maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port Number">
                     <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
 
 ('portNumber').touched" style="color:red">Port Number Required*</span>
@@ -331,17 +333,9 @@ placeholder="Enter Environment Type" >-->
                     <span *ngIf="insertForm.get('comments').invalid && insertForm.get('comments').touched" style="color:red">Comments Required*</span>
 
                 </div>
-
-                <div class="col-md-3 formelement">
-                  <label for="comments">Comments</label>
-                  <br/>
-                  <input type="checkbox" formControlName="comments" value="" >
-                  <span *ngIf="insertForm.get('comments').invalid && insertForm.get('comments').touched" style="color:red">Comments Required*</span>
-
-              </div>
+                
             </div>
 
-           
             <br>
             <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
             <input type="reset" class="btn btn-primary" value="Reset">
@@ -367,8 +361,8 @@ placeholder="Enter Environment Type" >-->
             <div class="row">
                 <div class="col-md-3 formelement">
                     <label for="environmentName">Environment Name*</label>
-                    <input type="text" maxlength="50" class="form-control data" formControlName="update_environmentName" value="{{updateenvdata.environmentName}}" [(ngModel)]="updateenvdata.environmentName" placeholder="Enter Environment Name">
-                    <span *ngIf="updateForm.get('update_environmentName').invalid && updateForm.get('update_environmentName').touched" style="color:red">Environment Name Required*</span>
+                    <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" value="{{updateenvdata.environmentName}}" [(ngModel)]="updateenvdata.environmentName" placeholder="Enter Environment Name">
+                    <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" style="color:red">Environment Name Required*</span>
 
                 </div>
                 <div class="col-md-3 formelement ">
@@ -396,8 +390,8 @@ placeholder="Enter Environment Type" >-->
 
                 <div class="col-md-3 formelement">
 
-                    <label for="update_agentPath">Agent Path*</label>
-                    <input type="text" maxlength="50" class="form-control" formControlName="update_agentPath" value="{{updateenvdata.agentPath}}" [(ngModel)]="updateenvdata.agentPath" placeholder="Enter
+                    <label for="agentPath">Agent Path*</label>
+                    <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="{{updateenvdata.agentPath}}" [(ngModel)]="updateenvdata.agentPath" placeholder="Enter
 
 Agent Path">
                     <span *ngIf="updateForm.get(' agentPath').invalid && updateForm.get
@@ -407,8 +401,8 @@ Agent Path">
                 </div>
                 <div class="col-md-3 formelement">
 
-                    <label for="update_hostAddress">IP Address/Host*</label>
-                    <input type="text" maxlength="50" class="form-control" formControlName="update_hostAddress" value="{{updateenvdata.hostAddress}}" [(ngModel)]="updateenvdata.hostAddress" placeholder="Enter
+                    <label for="hostAddress">IP Address/Host*</label>
+                    <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="{{updateenvdata.hostAddress}}" [(ngModel)]="updateenvdata.hostAddress" placeholder="Enter
 
 IP Address/Host">
                     <span *ngIf="updateForm.get(' hostAddress').invalid && updateForm.get
@@ -418,8 +412,8 @@ IP Address/Host">
             </div>
             <div class="row">
                 <div class="col-md-3 formelement">
-                    <label for="update_userName">Username*</label>
-                    <input type="text" maxlength="50" class="form-control" formControlName="update_username" value="{{updateenvdata.username}}" [(ngModel)]="updateenvdata.username" placeholder="Enter
+                    <label for="userName">Username*</label>
+                    <input type="text" maxlength="50" class="form-control" formControlName="username" value="{{updateenvdata.username}}" [(ngModel)]="updateenvdata.username" placeholder="Enter
 
 Username">
                     <span *ngIf="updateForm.get(' username').invalid && updateForm.get
@@ -429,8 +423,8 @@ Username">
                 </div>
 
                 <div class="col-md-3 formelement">
-                    <label for="update_password">Password*</label>
-                    <input type="password" maxlength="50" class="form-control" formControlName="update_password" value="{{updateenvdata.password}}" [(ngModel)]="updateenvdata.password" placeholder="Enter
+                    <label for="password">Password*</label>
+                    <input type="password" maxlength="50" class="form-control" formControlName="password" value="{{updateenvdata.password}}" [(ngModel)]="updateenvdata.password" placeholder="Enter
 
 Password"  passwordToggle >
                     <span *ngIf="updateForm.get(' password').invalid && updateForm.get
@@ -440,7 +434,7 @@ Password"  passwordToggle >
 
                 <div class="col-md-3 formelement">
                     <label for=" connectionType">Connection Type*</label>
-                    <input type="text" class="form-control" pattern="[a-zA-Z ]*" formControlName=" connectionType" value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
+                    <input type="text" disabled maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName=" connectionType" value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
                     <span *ngIf="updateForm.get(' connectionType').invalid && updateForm.get
 
 (' connectionType').touched" style="color:red">Connection Type Required*</span>
@@ -448,8 +442,8 @@ Password"  passwordToggle >
                 </div>
 
                 <div class="col-md-3 formelement">
-                    <label for="update_portNumber">Port Number*</label>
-                    <input type="number" maxlength="6" class="form-control" formControlName="update_portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
+                    <label for="portNumber">Port Number*</label>
+                    <input type="number" disabled maxlength="6" class="form-control" formControlName="portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
 
 Port Number">
                     <span *ngIf="updateForm.get(' portNumber').invalid && updateForm.get
@@ -463,11 +457,8 @@ Port Number">
                 <div class="col-md-3 formelement">
 
                     <label for=" comments">Comments</label>
-                    <input type="text" class="form-control" formControlName=" comments" value="{{updateenvdata.comments}}" [(ngModel)]="updateenvdata.comments" placeholder="Enter
-
-Comments">
+                    <input type="text" class="form-control" formControlName=" comments" value="{{updateenvdata.comments}}" [(ngModel)]="updateenvdata.comments" placeholder="Enter Comments">
                     <span *ngIf="updateForm.get(' comments').invalid && updateForm.get
-
 (' comments').touched" style="color:red">Comments Required*</span>
 
                 </div>

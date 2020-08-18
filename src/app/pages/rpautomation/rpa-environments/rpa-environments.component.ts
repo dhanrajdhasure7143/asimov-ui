@@ -14,6 +14,7 @@ import {Router} from "@angular/router";
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-environments',
@@ -52,7 +53,8 @@ import {MatPaginator} from '@angular/material/paginator';
     private environmentservice:EnvironmentsService, 
     private chanref:ChangeDetectorRef, 
     private dt:DataTransferService,
-    private hints:RpaEnvHints
+    private hints:RpaEnvHints,
+    private spinner: NgxSpinnerService
     ) { 
     const ipPattern = 
     "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
@@ -86,7 +88,7 @@ import {MatPaginator} from '@angular/material/paginator';
     
   }
   ngOnInit() {
-    
+    this.spinner.show();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Environments"});
 
@@ -131,6 +133,7 @@ import {MatPaginator} from '@angular/material/paginator';
         this.dataSource1= new MatTableDataSource(this.environments);
         //this.chanref.detectChanges();
        // this.dtTrigger.next();
+       this.spinner.hide();
       },
       (err: HttpErrorResponse) => {
       }
@@ -237,11 +240,9 @@ import {MatPaginator} from '@angular/material/paginator';
 
   async deleteEnvironments(){
 
-		const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+		const selectedEnvironments = this.environments.filter(product => product.checked==true).map(p => p.environmentId);
     if(selectedEnvironments.length!=0)
     {
-      
-    
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
