@@ -21,7 +21,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   templateUrl:'./rpa-environments.component.html',
   styleUrls: ['./rpa-environments.component.css']
 })
-  export class RpaenvironmentsComponent implements OnDestroy, OnInit{
+  export class RpaenvironmentsComponent implements  OnInit{
     displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","username","password","connectionType","portNumber","createdTimeStamp","activeStatus","deployStatus"];
     dataSource1:MatTableDataSource<any>;
     @ViewChild('closebutton', {static: false}) closebutton  
@@ -43,6 +43,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     private updateid:number;
     public term:string;
     public submitted:Boolean;
+    public checkflag:Boolean;
     isDtInitialized:boolean = false;
     dtTrigger: Subject<any> =new Subject();
     dtOptions: DataTables.Settings = {};
@@ -95,22 +96,6 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.createpopup=document.getElementById('create')
     this.updatepopup=document.getElementById('update-popup');
     this.dt.changeHints(this.hints.rpaenvhints);
-    //console.log(this.hints.rpaenvhints)
-    this.title.emit("Environments")
-    this.dtOptions = {
-      pagingType: 'simple',
-      pageLength: 10,
-      scrollX: true,
-      dom:'<f<t>lp>',
-      columnDefs:[ { orderable: false, targets: [0]}],
-      responsive:true,
-      retrieve:true,
-      scrollY: "true",
-      language: {
-        searchPlaceholder: 'Search',
-      }
-      };
-
     this.getallData();
     this.createpopup.style.display='none';
     this.updatepopup.style.display='none';
@@ -131,23 +116,26 @@ import { NgxSpinnerService } from "ngx-spinner";
         }
         console.log(this.environments)
         this.dataSource1= new MatTableDataSource(this.environments);
-        //this.chanref.detectChanges();
-       // this.dtTrigger.next();
-       this.spinner.hide();
-      },
-      (err: HttpErrorResponse) => {
-      }
-    );
+        this.spinner.hide();
+      });
   }
 
 
   checkAllCheckBox(ev) {
     this.environments.forEach(x => x.checked = ev.target.checked)
-    this.checkEnableDisableBtn()
+    this.checktoupdate();
+    this.checktodelete();
+
 	}
 
   isAllCheckBoxChecked() {
-		return this.environments.every(p => p.checked==true);
+    this.environments.forEach(data=>{
+      if(data.checked==false)
+      {
+        return false;
+      }
+    })
+    return true;
   }
   
   create()
@@ -173,8 +161,13 @@ import { NgxSpinnerService } from "ngx-spinner";
           showConfirmButton: false,
           timer: 2000
         })
-        this.getallData()
+
+        
+        this.getallData();
+        this.checktoupdate();
+        this.checktodelete();
         this.createpopup.style.display='none'; 
+        this.insertForm.reset();
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
         this.submitted=false;
@@ -200,8 +193,10 @@ import { NgxSpinnerService } from "ngx-spinner";
           showConfirmButton: false,
           timer: 2000
         })
-      this.chanref.detectChanges();
-      this.getallData()
+      this.removeallchecks();
+      this.getallData();
+      this.checktoupdate();
+      this.checktodelete();
       this.updatepopup.style.display='none';
       });
       
@@ -227,7 +222,6 @@ import { NgxSpinnerService } from "ngx-spinner";
         break;
       }
     }
-    //this.createpopup.style.display='none';
     
   }
 
@@ -263,10 +257,10 @@ import { NgxSpinnerService } from "ngx-spinner";
               timer: 2000
     
             })
-            //this.chanref.detectChanges();
             this.removeallchecks();
-            this.getallData();
-            //this.chanref.detectChanges();
+            this.getallData(); 
+            this.checktoupdate();
+            this.checktodelete();       
           })
           
         }
@@ -279,17 +273,14 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
  
 
-  ngAfterViewInit(): void {
-    this.dtTrigger.next();
-  }
 
   checktoupdate()
   {
-    const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+    const selectedEnvironments = this.environments.filter(product => product.checked==true);
     if(selectedEnvironments.length==1)
     {
       this.updateflag=true;
-      this.updateid=selectedEnvironments[0];
+      this.updateid=selectedEnvironments[0].environmentId;
     }else
     {
       this.updateflag=false;
@@ -311,15 +302,20 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
 
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
 
 
 
-  checkEnableDisableBtn()
+  checkEnableDisableBtn(id, event)
   {
+    console.log(event.target.checked);
+    this.environments.find(data=>data.environmentId==id).checked=event.target.checked;
+    if(this.environments.filter(data=>data.checked==true).length==this.environments.length)
+    {
+      this.checkflag=true;
+    }else
+    {
+      this.checkflag=false;  
+    }
     this.checktoupdate();
     this.checktodelete();
   }
@@ -359,6 +355,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     for(let i=0;i<this.environments.length;i++)
     {
       this.environments[i].checked= false;
+      console.log(this.environments[i]);
     }
     console.log(this.environments);
   }

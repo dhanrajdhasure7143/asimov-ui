@@ -13,7 +13,7 @@ import { HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { data } from 'jquery';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
-
+import * as $ from 'jquery';
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
@@ -22,6 +22,7 @@ import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
 })
 export class RpaStudioWorkspaceComponent implements AfterViewInit 
 {
+  
   jsPlumbInstance;
   public stud:any = [];
   public optionsVisible : boolean = true;
@@ -56,6 +57,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   public finaldataobjects:any=[]
   @Input("bot") public finalbot:any;
   dropVerCoordinates: any;
+  dragareaid:any;
   constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService, private http:HttpClient, private child_rpa_studio:RpaStudioComponent, ) {
     
    }
@@ -82,6 +84,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       this.loadnodes();
       
     }
+    this.dragareaid="dragarea__"+this.finalbot.botName;
    }
 
 
@@ -102,8 +105,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       console.log(this.finalbot.sequences)
 
         this.addconnections(this.finalbot.sequences)
+        this.child_rpa_studio.spinner.hide()
+        this.dragelement = document.querySelector('#'+this.dragareaid);
+        this.dagvalue = this.dragelement.getBoundingClientRect().width / this.dragelement.offsetWidth;
+    
     }
-    this.child_rpa_studio.spinner.hide()
+
   }
 
 
@@ -157,8 +164,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         selectedNodeTask:element.taskName,
         path:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).path,
         tasks:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
-        x:parseInt((element.x).split("px")[0])+100+"px",
-        y:parseInt((element.y).split("px")[0])+100+"px",
+        x:element.x,
+        y:element.y,
       }
       console.log(node)
       this.nodes.push(node);
@@ -212,7 +219,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
 
 
   onDrop(event: DndDropEvent,e:any) {
-    this.dragelement = document.querySelector('.drag-area');
+    this.dragelement = document.querySelector("#"+this.dragareaid);
     this.dagvalue = this.dragelement.getBoundingClientRect().width / this.dragelement.offsetWidth;
     e.event.toElement.oncontextmenu = new Function("return false;");
 
@@ -621,6 +628,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   saveBotFun(botProperties,env)
   {
     this.addsquences();
+  
     this.saveBotdata = {
         "botName": botProperties.botName,
         "botType" : botProperties.botType,
@@ -635,7 +643,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         "scheduler" : this.scheduler,
         "sequences": this.getsequences(),
       }
-    return this.rest.saveBot(this.saveBotdata)
+      this.get_coordinates();
+      return this.rest.saveBot(this.saveBotdata)
    
   }
 
@@ -692,7 +701,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
           "scheduler" : this.scheduler,
           "sequences": this.getsequences(),
       }
-    console.log(this.saveBotdata)
+      
+    this.get_coordinates();  
     return this.rest.updateBot(this.saveBotdata)
   }
 
@@ -742,7 +752,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
 
 
   reset(e){
-      this.indexofArr = 6;
+      this.indexofArr = 5;
       this.dagvalue = this.zoomArr[this.indexofArr];
       this.dragelement.style['transform'] = `scale(${this.dagvalue})`
   }
@@ -870,6 +880,42 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       }
     });
     console.log(this.finaldataobjects);
+  }
+
+
+
+
+  get_coordinates()
+  { 
+    console.log(this.finaldataobjects.length);
+    this.nodes.forEach(data=>{
+      //console.log($("#"+data.id).position());
+      var p = $("#"+data.id).first();
+      var position = p.position();      
+      for(let i=0;i<this.finaldataobjects.length;i++)
+      {
+        let nodeid=this.finaldataobjects[i].nodeId.split("__");
+        if(nodeid[1]==data.id)
+        {
+          console.log(position.left)
+          
+          console.log(position.top)
+          this.finaldataobjects[i].x=position.left+"px";
+          this.finaldataobjects[i].y=position.top+"px";
+          console.log(this.finaldataobjects[i]); 
+        }
+      }
+      /*
+      if(this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==data.id) != undefined)
+      {
+        this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==data.id).x=position.left + "px";
+        this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==data.id).y=position.top + "px";
+  
+      }
+   */
+      //console.log( "left: " + position.left + ", top: " + position.top );
+    })
+
   }
 
 
