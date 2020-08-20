@@ -205,6 +205,10 @@
       <ng-container matColumnDef="createdTimeStamp">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Timestamp</th>
         <td mat-cell *matCellDef="let element">  <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
+      </ng-container> 
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+        <td mat-cell *matCellDef="let element">  <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> <span *ngIf="element.createdBy==''">-</span> <span *ngIf="element.createdBy==null">-</span></td>
       </ng-container>
 
 
@@ -213,6 +217,7 @@
         <td mat-cell *matCellDef="let element">  
           <span *ngIf="element.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
           <span *ngIf="element.activeStatus == 8"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+          <span *ngIf="element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Undefined</span>
        </td>
       </ng-container>
 
@@ -324,21 +329,15 @@ placeholder="Enter Environment Type" >-->
 ('portNumber').touched" style="color:red">Port Number Required*</span>
 
                 </div>
-
+                <div  class="col-md-3 formelement">
+                    <mat-slide-toggle color ="primary" formControlName="activeStatus" >Environment Active Status</mat-slide-toggle>
+                  </div>
             </div>
-            <div class="row">
-                <div class="col-md-3 formelement">
-                    <label for="comments">Comments</label>
-                    <input type="text" class="form-control" formControlName="comments" value="" placeholder="Enter Comments">
-                    <span *ngIf="insertForm.get('comments').invalid && insertForm.get('comments').touched" style="color:red">Comments Required*</span>
-
-                </div>
-                
-            </div>
-
+            
             <br>
             <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
-            <input type="reset" class="btn btn-primary" value="Reset">
+            <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
+            <input type="button" class="btn btn-primary" value="Reset"(click)="resetEnvForm()">
         </form>
 
       </div>
@@ -372,17 +371,15 @@ placeholder="Enter Environment Type" >-->
 value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType"
 
 placeholder="Enter Environment Type" >-->
-            <select class="form-control" formControlName=" environmentType" [value]="updateenvdata.environmentType">
+            <select class="form-control" formControlName="environmentType" value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType" >
               <option value="">--Select EnvironmentType--</option>
               <option value="Windows">Windows</option>
               <option value="Mac" >Mac</option>
               <option value="Linux" >Linux</option>
             </select>
                     <span *ngIf="updateForm.get('environmentType').invalid && updateForm.get
-
 ('environmentType').touched" style="color:red">Environment Type Required*</span>
-
-                </div>
+              </div>
 
                 <div class="col-md-3 formelement">
 
@@ -430,7 +427,7 @@ Password"  passwordToggle >
 
                 <div class="col-md-3 formelement">
                     <label for=" connectionType">Connection Type*</label>
-                    <input type="text"  maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName=" connectionType" value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
+                    <input type="text"  maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType" value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
                     <span *ngIf="updateForm.get('connectionType').invalid && updateForm.get
 
 ('connectionType').touched" style="color:red">Connection Type Required*</span>
@@ -447,19 +444,13 @@ Port Number">
 ('portNumber').touched" style="color:red">Port Number Required*</span>
 
                 </div>
+                <div  class="col-md-3 formelement">
+                    <mat-slide-toggle color ="primary" formControlName="activeStatus">Environment Active Status</mat-slide-toggle>
+                  </div>
             </div>
           
-            <div class="row">
-                <div class="col-md-3 formelement">
-
-                    <label for=" comments">Comments</label>
-                    <input type="text" class="form-control" formControlName=" comments" value="{{updateenvdata.comments}}" [(ngModel)]="updateenvdata.comments" placeholder="Enter Comments">
-                    <span *ngIf="updateForm.get('comments').invalid && updateForm.get
-('comments').touched" style="color:red">Comments Required*</span>
-
-                </div>
-            </div>
             <input type="button" class="btn btn-primary" value="Modify" (click)="updateEnvironment()">
+            <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')">
         </form>
      </div>
   </div>

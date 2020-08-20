@@ -34,7 +34,7 @@ export class RestApiService{
   public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient) { }
   getAccessToken(){
-    let data = {"userId":"deepak.pilla@epsoftinc.com",
+    let data = {"userId":"jitendra.kothamasu@epsoftinc.com",
                 "password":"Welcome@123"};
     return this.http.post('/api/login/beta/accessToken',data);
   }
@@ -173,6 +173,11 @@ export class RestApiService{
   scheduleList(botid){
     let data=""
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+botid,data)
+  }
+
+  testenvironment(data:any):Observable<any>
+  {
+    return this.http.post<any>("/rpa-service/agent/test-connection",data);
   }
 
   addenvironment(data:any):Observable<any>

@@ -22,7 +22,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements  OnInit{
-    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","username","password","connectionType","portNumber","createdTimeStamp","activeStatus","deployStatus"];
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","username","password","connectionType","portNumber","createdTimeStamp","createdBy","activeStatus","deployStatus"];
     dataSource1:MatTableDataSource<any>;
     @ViewChild('closebutton', {static: false}) closebutton  
     @ViewChild(DataTableDirective,{static: false}) dtElement: DataTableDirective;
@@ -68,20 +68,20 @@ import { NgxSpinnerService } from "ngx-spinner";
       password:["", Validators.required],
       connectionType:["SSH", Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
       portNumber:["22", Validators.required],
-      comments:[""],
+      activeStatus:[true],
       
     })
 
     this.updateForm=this.formBuilder.group({
-       environmentName: ["", Validators.required],
-       environmentType: ["", Validators.required],
-       agentPath: ["", Validators.required],
-       hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
-       username: ["", Validators.required],
-       password: ["", Validators.required],
-       connectionType: ["",Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
-       portNumber: ["",  Validators.compose([Validators.required, Validators.pattern("[0-9]*")])],
-       comments: [""]
+      environmentName: ["", Validators.required],
+      environmentType: ["", Validators.required],
+      agentPath: ["", Validators.required],
+      hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
+      username: ["", Validators.required],
+      password: ["", Validators.required],
+      connectionType: ["",Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
+      portNumber: ["",  Validators.compose([Validators.required, Validators.pattern("[0-9]*")])],
+      activeStatus: [""]
     
     })
     this.updateflag=false;
@@ -144,12 +144,72 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.updatepopup.style.display='none';
   
   }
+  resetEnvForm(){
+    this.insertForm.reset();
+    
+    this.insertForm.get("portNumber").setValue("22");
+    this.insertForm.get("connectionType").setValue("SSH");
+    this.insertForm.get("environmentType").setValue("");
+    this.insertForm.get("activeStatus").setValue(true);
+  }
 
+  async testConnection(data){
+    let formdata:any;
+    if(data=="insert"){
+      formdata=this.insertForm;
+    }else{
+      formdata=this.updateForm;
+    }
+   if(formdata.valid)
+   {
+    if(formdata.value.activeStatus==true)
+    {
+      formdata.value.activeStatus=7
+    }else{
+      formdata.value.activeStatus=8
+    }
+     await this.api.testenvironment(formdata.value).subscribe( res =>
+      {
+        if(res.errorCode==undefined){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: res.status,
+          showConfirmButton: false,
+          timer: 2000
+        })
+        }else{
+          Swal.fire({
+            position: 'top-end',
+            icon: 'question',
+            title: 'Connection Failed',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+    });
+  }
+  else
+  {
+     alert("Invalid Form")
+  }
+
+  }
   
   async saveEnvironment()
   {
    if(this.insertForm.valid)
    {
+     console.log(this.insertForm.value.activeStatus)
+     if(this.insertForm.value.activeStatus==true)
+      {
+        this.insertForm.value.activeStatus=7
+      }else{
+        this.insertForm.value.activeStatus=8
+      }
+      console.log(this.insertForm.value.activeStatus)
+
+      this.insertForm.value.createdBy="admin";
      this.submitted=true;
      let environment=this.insertForm.value;
      await this.api.addenvironment(environment).subscribe( res =>
@@ -183,8 +243,17 @@ import { NgxSpinnerService } from "ngx-spinner";
   async updateEnvironment()
   {
     console.log(this.updateForm.value);
+    console.log(this.updateForm.value.activeStatus);
     if(this.updateForm.valid)
     {
+      if(this.updateForm.value.activeStatus==true)
+      {
+        this.updateForm.value.activeStatus=7
+      }else{
+        this.updateForm.value.activeStatus=8
+      }
+      console.log(this.updateForm.value.activeStatus);
+
       await this.api.updateenvironment(this.updateenvdata).subscribe( res => {
         Swal.fire({
           position: 'top-end',
@@ -227,13 +296,14 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   close()
   { 
+    this.resetEnvForm();
     document.getElementById('create').style.display='none';
     document.getElementById('update-popup').style.display='none';
   }
 
 
   async deleteEnvironments(){
-
+    
 		const selectedEnvironments = this.environments.filter(product => product.checked==true).map(p => p.environmentId);
     if(selectedEnvironments.length!=0)
     {
@@ -337,7 +407,10 @@ import { NgxSpinnerService } from "ngx-spinner";
           showConfirmButton: false,
           timer: 2000
         })
-            
+        this.removeallchecks();
+        this.getallData(); 
+        this.checktoupdate();
+        this.checktodelete();     
       })
     }
   }
