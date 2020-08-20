@@ -430,11 +430,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
           name : element.name,
           id : element.taskId
         };
-        if(temp.name !== 'Reply Mail' && temp.name !== 'Delete Rows' && temp.name !=='Update Rows' && temp.name !=='Download' && temp.name !=='Rename') {
           this.stud.push(temp)
-        }
-        
-      })
+        })
 
       }
     
