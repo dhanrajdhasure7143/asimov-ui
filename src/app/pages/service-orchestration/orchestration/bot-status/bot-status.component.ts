@@ -124,6 +124,35 @@ export class BotStatusComponent implements OnInit {
 
     this.api.botPerformance().subscribe(data => { this.performData = data;
       console.log(this.performData);
+      this.performData = []
+    //   this.performData = [{
+    //     'botName' : 'ifugj',
+    //     'coordinates' : [
+    //       {'timeDuration' : 1},
+    //       {'timeDuration' : 3},
+    //       {'timeDuration' : 4},
+    //       {'timeDuration' : 9}
+    //     ]
+    //   },
+    //   {
+    //     'botName' : 'ksdjn',
+    //     'coordinates' : [
+    //       {'timeDuration' : 4},
+    //       {'timeDuration' : 2},
+    //       {'timeDuration' : 1},
+    //       {'timeDuration' : 8}
+    //     ]
+    //   },
+    //   {
+    //     'botName' : 'zdmc',
+    //     'coordinates' : [
+    //       {'timeDuration' : 9},
+    //       {'timeDuration' : 6},
+    //       {'timeDuration' : 4},
+    //       {'timeDuration' : 3}
+    //     ]
+    //   },
+    // ]
       finalObjectData = []
       botData = [];
       this.performData.forEach((element, ind) => {
@@ -135,7 +164,7 @@ export class BotStatusComponent implements OnInit {
         botData = {
           label: element.botName,
           data: botTime,
-          backgroundColor: ['#4BB7FF',],
+          backgroundColor: '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6,'0'),
           borderColor:'#f2f2f2',
           borderWidth: 1,
         }

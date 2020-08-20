@@ -85,7 +85,6 @@ export class RpaStudioComponent implements OnInit {
   ngOnInit() 
   {
 
-
     console.log(this.insertbot.get("predefinedBot").value)
     if(localStorage.getItem("enablecreate"))
     {
@@ -182,7 +181,7 @@ export class RpaStudioComponent implements OnInit {
 
   onCreateSubmit() {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
-    
+    this.userFilter.name = [];
     document.getElementById("create-bot").style.display ="none";
     this.hiddenCreateBotPopUp = false
     let temp : any={};
