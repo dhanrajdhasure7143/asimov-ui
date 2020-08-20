@@ -209,3 +209,13 @@ margin: 0px !important;
   width:8px;
   fill:white;
 }
+
+.she-btn:disabled
+{
+  background-color:white ! important;
+}
+.she-btn:disabled .button-schedule
+{
+   background-color: grey ! important;
+   color:white ! important;
+}
