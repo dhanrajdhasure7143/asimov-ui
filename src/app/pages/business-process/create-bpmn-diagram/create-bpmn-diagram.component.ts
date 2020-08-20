@@ -241,6 +241,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         _self.spinner.show();
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
+        bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
         if(_self.autosavedDiagramVersion[0]&& _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"])
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
         bpmnModel["bpmnModelModifiedTime"] = new Date();
