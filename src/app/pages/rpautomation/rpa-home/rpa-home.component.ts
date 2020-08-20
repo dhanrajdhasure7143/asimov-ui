@@ -8,9 +8,10 @@ import {RpaStudioComponent} from '../rpa-studio/rpa-studio.component';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
-import { ThrowStmt } from '@angular/compiler';
-import { DataTransferService } from '../../services/data-transfer.service';
-
+import { DataTransferService } from "../../services/data-transfer.service";
+import { Rpa_Home_Hints } from "../model/rpa-home-module-hints"
+import * as $ from 'jquery';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-rpa-home',
@@ -19,9 +20,9 @@ import { DataTransferService } from '../../services/data-transfer.service';
 })
 export class RpaHomeComponent implements OnInit {
 
-  displayedColumns: string[] = ["botName","botType","department","botStatus"];
+  displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
   
-  displayedColumns2: string[] = ["processName","taskName","Assign"];
+  displayedColumns2: string[] = ["processName","taskName","Assign","Operations"];
   dataSource1:MatTableDataSource<any>;
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;  
@@ -36,14 +37,12 @@ export class RpaHomeComponent implements OnInit {
   @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
  
-  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient,
-    private dt:DataTransferService)
+  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Home_Hints,)
   { }
 
 
 
   ngOnInit() {
-    this.rpa_studio.spinner.show()
     this.userRole = localStorage.getItem("userRole")
     
     if(this.userRole.includes('SuperAdmin')){
@@ -56,27 +55,27 @@ export class RpaHomeComponent implements OnInit {
       this.isButtonVisible = false;
     }
 
-    let processid=undefined;
+    let processId=undefined;
   
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Home"});
+    
+    this.dt.changeHints(this.datahints.rpahomehints );
   
     this.getallbots();
-    this.getautomatedtasks();
     this.route.queryParams.subscribe(params => {
-      processid=params;
-      console.log(processid);
-      if(this.isEmpty(processid))
+      processId=params;
+      console.log(processId);
+      if(this.isEmpty(processId))
       {
+        this.getautomatedtasks(0);
         
-        this.getprocessnames(undefined);
         this.selectedTab=0;
         console.log(this.process_names)
       }
       else
       {
-        
-        this.getprocessnames(processid);
+        this.getautomatedtasks(processId.processid);
         this.selectedTab=1;
         console.log(this.process_names)
       }
@@ -102,6 +101,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let response:any=[];
     
+    this.rpa_studio.spinner.show()
     //http://192.168.0.7:8080/rpa-service/get-all-bots
     
     this.rest.getAllActiveBots().subscribe(botlist =>
@@ -111,7 +111,8 @@ export class RpaHomeComponent implements OnInit {
       this.dataSource1= new MatTableDataSource(response);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;  
+      this.dataSource1.paginator=this.paginator1;
+      if(this.selectedTab==0)  
       this.rpa_studio.spinner.hide()
     })
 
@@ -119,33 +120,43 @@ export class RpaHomeComponent implements OnInit {
   }
 
 
-  getautomatedtasks()
+  getautomatedtasks(process)
   {
-
     let response:any=[];
-   
     
-    this.rest.getautomatedtasks().subscribe(automatedtasks=>{
+    this.rpa_studio.spinner.show();
+    this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
-      console.log(response);
-      this.dataSource2= new MatTableDataSource(response);
+      console.log(response.automationTasks);
+      this.dataSource2= new MatTableDataSource(response.automationTasks);
       this.dataSource2.sort=this.sort2;
-      this.dataSource2.paginator=this.paginator2;  
+      this.dataSource2.paginator=this.paginator2; 
+      if(process==0)
+      {
+        
+        this.getprocessnames(undefined);
+      }else
+      {
+        
+        this.getprocessnames(process);
+      }
+      if(this.selectedTab==1)
+      this.rpa_studio.spinner.hide() 
     })
   }
 
 
 
-  getprocessnames(processid)
+  getprocessnames(processId)
   {
-    console.log(processid);
+    console.log(processId);
     this.rest.getprocessnames().subscribe(processnames=>{
       this.process_names=processnames;
       let processnamebyid;
-      if(processid != undefined)
+      if(processId != undefined)
       {
         console.log(this.process_names)
-        processnamebyid=this.process_names.find(data=>processid.processId==data.processId);
+        processnamebyid=this.process_names.find(data=>processId==data.processId);
         this.selectedvalue=processnamebyid.processName;
         this.applyFilter(this.selectedvalue);
         console.log(this.selectedvalue);
@@ -178,7 +189,7 @@ export class RpaHomeComponent implements OnInit {
   createoverlay()
   {
    
-    this.rpa_studio.onCreate();
+    this.rpa_studio.onCreate(0);
     //document.getElementById("create-bot").style.display ="block";
   }
 
@@ -196,6 +207,37 @@ export class RpaHomeComponent implements OnInit {
     document.getElementById("load-bot").style.display ="none";
 
   }
+
+  assignbot(id)
+  { 
+    let botId=$("#"+id+"__select").val();
+    if(botId!=0)
+    this.rest.assign_bot_and_task(botId,id).subscribe(data=>{
+      let response:any=data;
+      if(response.status!=undefined)
+      {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title:response.status,
+          showConfirmButton: false,
+          timer: 2000
+        })
+      }
+    })
+
+
+
+  }
+
+
+  createtaskbotoverlay(taskId)
+  {
+    this.rpa_studio.onCreate(taskId);
+    //document.getElementById("create-bot").style.display ="block";
+  }
+
+  
 
 
   loadbotdata(botId)

@@ -94,7 +94,7 @@
         </div>
 </div>
 
-     <div id="myModal" class="modal">
+     <div id="myModal1" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
         <div class="modal-header">
@@ -107,11 +107,19 @@
                                 <div class="form-group col-sm-3">
                                         <div>
                                         <label for="type">Type</label>
-                                        <select class="form-control" name="type" id="type" #type="ngModel" [(ngModel)]="dbDetails.dbType" required>
+                                        <select class="form-control" name="type" id="type" #type="ngModel" (change)="changeType()" [(ngModel)]="dbDetails.dbType" required>
                                                 <option [value]="undefined" disabled hidden>Select Type</option>
-                                                <option value="Oracle">Oracle</option>
-                                                <option value="RCBMS">RCBMS</option>
-                                                <option value="MYSQL">MYSQL</option>
+                                                <!-- <option value="oracle">Oracle</option>
+                                                <option value="RDBMS">RDBMS</option>
+                                                <option value="MYSQL">MYSQL</option> -->
+                                                <option value="postgresql">Postgres SQL</option>
+                                                <!-- <option value="MariaDB">MariaDB</option>
+                                                <option value="IBMDB2">IBM DB2</option>
+                                                <option value="AmazonRDS">AmazonRDS</option>
+                                                <option value="MongoDB">MongoDB</option>
+                                                <option value="Radis">Radis</option>
+                                                <option value="MicrosoftAccess">Microsoft Access</option>
+                                                <option value="MicrosoftSQLServer">Microsoft SQL Server</option> -->
                                         </select>
                                         <span *ngIf="((type.invalid && database.submitted) || (type.errors && type.touched) )" 
                                                 class='fa fa-info-circle errspan'> Type is required </span>
@@ -130,17 +138,25 @@
                                         </div>
                                 </div>
                                 <div class="form-group col-sm-3">
-                                        <div>
+                                        <!-- <div>
                                         <label for="portnumber">Port Number</label>
-                                        <select class="form-control" name="portnumber" id="portnumber" #portnumber='ngModel' [(ngModel)]="dbDetails.portNumber" required>
+                                        <select class="form-control" name="portnumber" id="portnumber" (change)="onChangePort($event.target.value)" #portnumber='ngModel' [(ngModel)]="dbDetails.portNumber" required>
                                                 <option [value]="undefined" disabled hidden>Select Port Number</option>
                                                 <option value="8080">8080</option>
-                                                <option value="8080">9090</option>
-                                                <option value="8080">0101</option>
+                                                <option value="9090">9090</option>
+                                                <option value="2222">2222</option>
+                                                <option value="4200">4200</option>
+                                                <option value="other">Other</option>
                                         </select>
                                         <span *ngIf="((portnumber.invalid && database.submitted) || (portnumber.errors && portnumber.touched) )" 
                                                 class='fa fa-info-circle errspan'> Port Number is required </span>
-                                        </div>
+                                        </div> -->
+                                                <div>
+                                                        <label for="otherPort">Port Number</label>
+                                                        <input type="text" name="otherPort" #otherPort='ngModel' [(ngModel)]="dbDetails.portNumber" class="form-control" placeholder="Enter Port Number" required/>
+                                                        <span *ngIf="((otherPort.invalid && database.submitted) || (otherPort.errors && otherPort.touched) )" 
+                                                        class='fa fa-info-circle errspan'>Port Number is required </span>
+                                                </div>
                                         <div>
                                         <label for="dbname">DB Name</label>
                                         <input type="text" name="dbname" #dbname='ngModel' [(ngModel)]="dbDetails.dbName" class="form-control" placeholder="Enter DB Name" required/>
@@ -168,10 +184,51 @@
                                         <span *ngIf="((password.invalid && database.submitted) || (password.errors && password.touched) )" 
                                                 class='fa fa-info-circle errspan'> Password is required </span>
                                         </div>
+                                        <div>
+                                                <label for="increase">Mode</label>
+                                                <select name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
+                                                        <option [value]="undefined" disabled hidden>Select Mode</option>
+                                                        <option value="incrementing">Incrementing</option>
+                                                        <option value="timestamp">Timestamp</option>
+                                                        <option value="timestamp+incrementing">Incrementing with Timestamp</option>
+                                                </select> 
+                                                <span *ngIf="((increase.invalid && database.submitted) || (increase.errors && increase.touched) )" 
+                                                class='fa fa-info-circle errspan'> Mode is required </span>
+                                        </div>
+                                                <!-- <div *ngIf="isIncrement">
+                                                 <label for="increment">Increment Column name</label>
+                                                 <input type="text" name="increment" class="form-control" #increment [(ngModel)]='dbDetails.increment' placeholder="Enter increment column name" required/>
+                                                 <span *ngIf="((increment.invalid && database.submitted) || (increment.errors && increment.touched) )" 
+                                                        class='fa fa-info-circle errspan'> Increment column name is required </span>
+                                                </div> -->
+                                                <!-- <div *ngIf="isTimestammp">
+                                                 <label for="timestamp">Timestamp Column Name</label>
+                                                 <input type="text" name="timestamp" #timestamp class="form-control" [(ngModel)]='dbDetails.timestamp' placeholder="Enter Timestamp column name" required/>
+                                                 <span *ngIf="((timestamp.invalid && database.submitted) || (timestamp.errors && timestamp.touched) )" 
+                                                        class='fa fa-info-circle errspan'> Timestamp column name is required </span>
+                                                </div> -->
                                 </div>
-                                <div class='col-sm-12 row connection-buttons'>
-                                        <button class='btn btn-primary eiap-btn' [disabled]='database.invalid' (click)="testConnection()">Test Connection</button>
-                                        <button class='btn btn-primary eiap-btn' [disabled]='isSave'>Connect/Save</button>
+                                <div class='col-sm-6'>
+                                        <div class="increment_input"></div>
+                                                <div *ngIf="isIncrement" >
+                                                 <label for="increment">Increment Column name</label>
+                                                 <input type="text" name="increment" class="form-control" #increment [(ngModel)]='dbDetails.increment' placeholder="Enter increment column name" required/>
+                                                 <span *ngIf="((increment.invalid && database.submitted) || (increment.errors && increment.touched) )" 
+                                                        class='fa fa-info-circle errspan'> Increment column name is required </span>
+                                                </div>
+                                                <div *ngIf="isTimestammp">
+                                                 <label for="timestamp">Timestamp Column Name</label>
+                                                 <input type="text" name="timestamp" #timestamp class="form-control" [(ngModel)]='dbDetails.timestamp' placeholder="Enter Timestamp column name" required/>
+                                                 <span *ngIf="((timestamp.invalid && database.submitted) || (timestamp.errors && timestamp.touched) )" 
+                                                        class='fa fa-info-circle errspan'> Timestamp column name is required </span>
+                                                </div>
+                                </div>
+                                <div class='col-sm-12 row'>
+                                        <div class="pull-right connection_btn">
+                                        <button class='btn btn-primary eiap-btn' [disabled]='database.invalid' (click)="testDbConnection()">Test Connection</button>
+                                        <button class='btn btn-primary eiap-btn' [disabled]='isDisabled' (click)="slideUp()">Generate Process Graph</button>
+                                        <!-- <button class='btn btn-primary eiap-btn' (click)="slideUp()">Generate Process Graph</button> -->
+                                        </div>
                                 </div>
                                 
                                 </div>
@@ -183,3 +240,5 @@
         </div>               
    
 </div>
+
+<process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)"></process-category-overlay>

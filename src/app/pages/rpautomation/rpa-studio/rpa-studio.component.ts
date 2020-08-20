@@ -9,7 +9,7 @@ import { ContextMenuComponent } from 'ngx-contextmenu';
 import { RestApiService } from '../../services/rest-api.service';
 import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuContent.component';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-import { RpaHints } from '../model/rpa-module-hints';
+
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from "ngx-spinner";
 
@@ -62,8 +62,7 @@ export class RpaStudioComponent implements OnInit {
   userRole;
   public checkbotname:Boolean;
   @ViewChild('section', {static: false}) section: ElementRef<any>;
-  constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService,
-    private hints:RpaHints, private formBuilder:FormBuilder,public spinner: NgxSpinnerService) { 
+  constructor(public activatedRoute: ActivatedRoute, private router: Router, private dt:DataTransferService,private rest:RestApiService, private formBuilder:FormBuilder,public spinner: NgxSpinnerService) { 
     this.show = 8;
     
     this.insertbot=this.formBuilder.group({
@@ -71,6 +70,7 @@ export class RpaStudioComponent implements OnInit {
       botDepartment:["", Validators.required],
       botDescription:[""],
       botType:["", Validators.required],
+      taskId:[""],
       predefinedBot:["false"]
   });
   this.loadbot=this.formBuilder.group({
@@ -100,7 +100,6 @@ export class RpaStudioComponent implements OnInit {
     let data1:any = [];
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
-    this.dt.changeHints(this.hints.rpaHomeHints);
     this.rest.toolSet().subscribe(data => {
       console.log(data);
       data1 = data
@@ -196,10 +195,11 @@ export class RpaStudioComponent implements OnInit {
     
   }
 
-  onCreate(){
+  onCreate(taskId){
     this.insertbot.reset();
     this.insertbot.get("botDepartment").setValue("");
     this.insertbot.get("botType").setValue("");
+    this.insertbot.get("taskId").setValue(taskId);
     document.getElementById('create-bot').style.display='block';
   }
 

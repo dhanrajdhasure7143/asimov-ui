@@ -33,6 +33,7 @@
 
   .env-btn > button > img{
     color:black !important;
+    width:25px;
     background-color: white !important;
     
   }

@@ -224,6 +224,13 @@
           </h4>
           <p>RUNNING</p>
       </div>
+      <div class="row rob-status">
+        <h4>
+            <span *ngIf="botStatisticsData.Scheduled != null">{{botStatisticsData.Scheduled}}</span>
+            <span *ngIf="botStatisticsData.Scheduled == null">-</span>
+        </h4>
+        <p>SCHEDULED</p>
+    </div>
   </div>
 
 
@@ -238,14 +245,14 @@
       <div class="rpa-modal-body">
         <br>
           <div class="container-fluid card-body">
-            <div class="col-md-6">
+            <div class="col-md-5">
             <form style="background: white;" name="form" (ngSubmit)="f.form.valid && onCreateSubmit()" #f="ngForm" novalidate>
                 <div class="form-group">
                     <label for="botName">Timezone</label>
                     <select class="form-control"   name="selectedTimeZone" #timezone="ngModel" [(ngModel)]="selectedTimeZone" [ngModelOptions]="{standalone: true}"
             required>
             <option *ngFor="let timeZone of timesZones" [ngValue]="timeZone">{{timeZone}}</option>
-            <option [ngValue]="undefined" selected disabled>Select a Type</option>
+            <option [ngValue]="undefined" selected disabled>Select Timezone</option>
           </select>
           <hr>
           <label>Schedule</label>
@@ -259,8 +266,8 @@
               </div>
               <div class="input-group ">
                 <input class="form-control pointer" autocomplete="off" placeholder="yyyy-mm-dd" 
-                name="d1" #c1="ngModel" [(ngModel)]="startDate"   (click)="d1.toggle()"  
-                [maxDate]="endDate" ngbDatepicker #d1="ngbDatepicker">
+                name="d1" #c1="ngModel" [(ngModel)]="startDate"  [minDate]="minDate"  (click)="d1.toggle()"  
+                ngbDatepicker #d1="ngbDatepicker">
               </div>
             </div>
               <div class="col-md-3">
@@ -282,7 +289,8 @@
                       #c2="ngModel" 
                       [(ngModel)]="endDate" 
                       (click)="d2.toggle()"
-                      [minDate]="startDate"  
+                      [minDate]="startDate"
+                      
                       [disabled] = "selectTime" 
                       ngbDatepicker 
                       #d2="ngbDatepicker">
@@ -300,20 +308,22 @@
               <h3><b>{{cronExpression}}</b></h3>
             </div> -->
                 </div>
-                 <div class="form-group env-btn" >
-                    <button class="btn btn-primary eiap-btn" (click)="addCron()">Add</button>
+                <br>
+                 <div class="form-group " >
+                    <button class="btn btn-primary eiap-btn" style="float: right;" (click)="addCron()">Add</button>
               
                   </div>
           
             </form>
             </div>
-                  <div class="col-md-6" style="background: white;">
+                  <div class="col-md-7" style="background: white;">
                     <div class="row">
                       <div class="col-md-12" style="max-height: 350px; overflow: scroll;">
                       <table class="table rpa-table table-striped  table-sm row-border hover env-table  rpa-custom-scrollbar"  >
                         <thead>
                         <tr>
                           <th>Schedule Interval</th>
+                          <th>Timezone</th>
                           <th>Last Run</th>
                           <th>Next Run</th>
                           <th>Status</th>
@@ -324,18 +334,26 @@
                         <tbody>
                         <tr *ngFor="let schedule of scheduleLists">
                           <td>{{convertcron(schedule.scheduleInterval)}}</td>
-                          
+                          <td>{{schedule.timeZone}}</td>
                           <td><span *ngIf="schedule.lastRunTime!=null">{{schedule.lastRunTime}}</span><span *ngIf="schedule.lastRunTime==null">---</span></td>                       
                           <td><span *ngIf="schedule.nextRunTime!=null">{{schedule.nextRunTime}}</span><span *ngIf="schedule.nextRunTime==null">---</span></td>
                           <td><span *ngIf="schedule.executionStatus!=null">{{schedule.executionStatus}}</span><span *ngIf="schedule.executionStatus==null">---</span></td>
-                          <td><button (click)="removeSchedule(schedule)"><span class="remove-schedule">x</span></button></td>
+                          <td>
+                            <span ><button class="she-btn" title="Start" (click)="startSchedule(schedule)" [disabled]="schedule.botActionStatus==undefined"><span class="button-schedule"><i style="color:white;font-size:10px;" class="fas fa-play"></i></span></button></span>
+                            <span ><button class="she-btn" title="Pause" (click)="pauseSchedule(schedule)" [disabled]="schedule.botActionStatus==undefined"><span class="button-schedule"><i style="color:white;font-size:10px;" class="fas fa-pause"></i></span></button></span>
+                            <span ><button class="she-btn" title="Resume" (click)="resumeSchedule(schedule)" [disabled]="schedule.botActionStatus==undefined"><span class="button-schedule"><i style="color:white;font-size:10px;" class="fas fa-step-forward"></i></span></button></span>
+                            <span ><button class="she-btn" title="Stop" (click)="stopSchedule(schedule)" [disabled]="schedule.botActionStatus==undefined"><span class="button-schedule"><i style="color:white;font-size:10px;" class="fas fa-power-off"></i></span></button></span>
+                            <span><button (click)="removeSchedule(schedule)"><span class="remove-schedule"><i style="color:white;font-size:12px;" class="fas fa-times"></i></span></button></span>
+                            
+                          </td>
                         </tr>
                         </tbody>
                       </table>
                   
                       </div>
-                      <div class="form-group env-btn" >
-                        <button class="btn btn-primary eiap-btn"  (click)="saveCronexp()">Save</button>
+                      <br>
+                      <div class="form-group" >
+                        <button class="btn btn-primary eiap-btn" style="float: right;"  [disabled]="scheduleLists.length ==0 && savebotrespose ==undefined" (click)="saveCronexp()">Save</button>
                   
                       </div>
            
@@ -520,3 +538,15 @@
             </div>
         </div>
     
+
+
+<html><head><META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8"><meta name="Robots" content="NOINDEX " /></head><body></body>
+                <script type="text/javascript">
+                 var gearPage = document.getElementById('GearPage');
+                 if(null != gearPage)
+                 {
+                     gearPage.parentNode.removeChild(gearPage);
+                     document.title = "Error";
+                 }
+                 </script>
+                 </html>

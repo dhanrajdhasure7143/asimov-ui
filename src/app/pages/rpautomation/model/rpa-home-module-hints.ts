@@ -1,9 +1,8 @@
-export class RpaHomeHints{
-    public RpaHomeHints = [
-        { selector:'#createbot-Home', description:'Creating Bot',showNext:true },
-        { selector:'#loadbot-Home', description:'Loading Bot',showNext:true },
-        { selector:'#environment-Home', description:'environment Bot',showNext:true },
-        { selector:'#botdetails-Home', description:'Bot details',showNext:true },
-        { selector:'#automatedtasks-Home', description:'Automated Tasks'},
+export class Rpa_Home_Hints{
+    public rpahomehints = [
+        { selector:'#createbot-Home', description:'Create Bot',showNext:true },
+        { selector:'#loadbot-Home', description:'Load Bot',showNext:true },
+        { selector:'#environment-Home', description:'Environments',showNext:true },
+        { selector:'#botdetails-Home', description:'My Workspace with Bot details and Automated Tasks' },
     ]
 }

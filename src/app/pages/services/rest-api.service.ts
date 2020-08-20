@@ -34,8 +34,11 @@ export class RestApiService{
   public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient) { }
   getAccessToken(){
-    let data = {"userId":"gopi.palla@epsoftinc.com",
+ 
+    let data = {"userId":"jitendra.kothamasu@epsoftinc.com",
                 "password":"Welcome@123"};
+
+  
     return this.http.post('/api/login/beta/accessToken',data);
   }
   bpmnlist(){
@@ -175,6 +178,11 @@ export class RestApiService{
     return this.http.post('/rpa-service/getschedulesintervals-bot/'+botid,data)
   }
 
+  testenvironment(data:any):Observable<any>
+  {
+    return this.http.post<any>("/rpa-service/agent/test-connection",data);
+  }
+
   addenvironment(data:any):Observable<any>
   {
     return this.http.post<any>("/rpa-service/agent/save-environment",data);
@@ -220,9 +228,10 @@ export class RestApiService{
   }
 
 
-  getautomatedtasks()
+  getautomatedtasks(process)
   {
-    return this.http.get("/rpa-service/automation-tasks")
+    let id=process;
+    return this.http.get("/rpa-service/load-process-info/"+id);
   }
 
 
@@ -311,6 +320,43 @@ export class RestApiService{
   getUserRole(appID):Observable<any>{
     return this.http.get<any>('/authorizationservice/api/v1/user/role/applications/'+appID,httpOptions)
   }
+
+
+
+  start_schedule(data)
+  {
+    return this.http.post("/rpa-service/specifiedscheduled-startbot", data);
+  }
+  
+  stop_schedule(data)
+  {
+    return this.http.post("/rpa-service/specifiedscheduled-stopbot", data);
+  }
+  
+  pause_schedule(data)
+  {
+    return this.http.post("/rpa-service/specifiedscheduled-pausebot", data);
+  }
+
+  
+  resume_schedule(data)
+  {
+    return this.http.post("/rpa-service/specifiedscheduled-resumebot", data);
+  }
+
+  assign_bot_and_task(botid,taskid)
+  {
+    let data={
+      "botId":botid,
+      "taskId":taskid,
+    };
+    return this.http.post("/rpa-service/assign-bot",data);
+  }
+
+  getJDBCConnectorConfig(body){
+    // return this.http.put('http://10.11.0.101:8083/connector-plugins/JdbcSourceConnector/config/validate', body)
+    return this.http.post('/processintelligence/v1/connectorconfiguration/validateConfig', body)
+    }
   
 
 }

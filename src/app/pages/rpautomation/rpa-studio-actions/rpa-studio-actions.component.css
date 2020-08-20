@@ -30,7 +30,7 @@
 }
 .rob-status{
   border: 1px solid lightgray;
-  width: 50px;
+  width: 60px;
   text-align: center;
 }
 .rob-status p{
@@ -43,7 +43,7 @@
   filter: brightness(0.1) !important;
 }
 .imageI1{
-width: 12px;
+width: 16px;
 filter: brightness(0.1) !important;
 }
 .start-icon{
@@ -185,11 +185,37 @@ margin: 0px !important;
 .remove-schedule{
   color: white !important;
   background-color: rgb(248, 70, 70);
-  padding-top: 2px;
-  padding-bottom: 4px;
-  padding-right: 6px;
-  padding-left: 6px;
+  padding-top: 4px;
+  padding-bottom: 5px;
+  padding-right: 8px;
+  padding-left: 8px;
   border-radius: 100px;
   /* font-weight: bold; */
-  font-size: 10px;
+  font-size: 14px;
+}
+
+.button-schedule{
+  color: white !important;
+  background-color: blue;
+  padding-top: 4px;
+  padding-bottom: 5px;
+  padding-right: 8px;
+  padding-left: 8px;
+  border-radius: 100px;
+}
+
+
+.button-schedule >img{
+  width:8px;
+  fill:white;
+}
+
+.she-btn:disabled
+{
+  background-color:white ! important;
+}
+.she-btn:disabled .button-schedule
+{
+   background-color: grey ! important;
+   color:white ! important;
 }
