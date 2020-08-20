@@ -44,6 +44,8 @@ import { NgxSpinnerService } from "ngx-spinner";
     public term:string;
     public submitted:Boolean;
     public checkflag:Boolean;
+    public toggle:Boolean;
+    
     isDtInitialized:boolean = false;
     dtTrigger: Subject<any> =new Subject();
     dtOptions: DataTables.Settings = {};
@@ -154,6 +156,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
 
   async testConnection(data){
+    this.spinner.show();
     let formdata:any;
     if(data=="insert"){
       formdata=this.insertForm;
@@ -170,11 +173,12 @@ import { NgxSpinnerService } from "ngx-spinner";
     }
      await this.api.testenvironment(formdata.value).subscribe( res =>
       {
+        this.spinner.hide();
         if(res.errorCode==undefined){
         Swal.fire({
           position: 'top-end',
           icon: 'success',
-          title: res.status,
+          title: "Successfully Connected",
           showConfirmButton: false,
           timer: 2000
         })
@@ -198,6 +202,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   
   async saveEnvironment()
   {
+    this.spinner.show();
    if(this.insertForm.valid)
    {
      console.log(this.insertForm.value.activeStatus)
@@ -221,8 +226,6 @@ import { NgxSpinnerService } from "ngx-spinner";
           showConfirmButton: false,
           timer: 2000
         })
-
-        
         this.getallData();
         this.checktoupdate();
         this.checktodelete();
@@ -231,6 +234,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
         this.submitted=false;
+        this.spinner.hide();
     });
   }
   else
@@ -242,6 +246,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   async updateEnvironment()
   {
+    this.spinner.show();
     console.log(this.updateForm.value);
     if(this.updateForm.valid)
     {
@@ -251,7 +256,6 @@ import { NgxSpinnerService } from "ngx-spinner";
       }else{
         this.updateenvdata.activeStatus=8
       }
-
       await this.api.updateenvironment(this.updateenvdata).subscribe( res => {
         Swal.fire({
           position: 'top-end',
@@ -265,8 +269,8 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.checktoupdate();
       this.checktodelete();
       this.updatepopup.style.display='none';
+      this.spinner.hide();
       });
-      
     }
     else
     {
@@ -278,18 +282,22 @@ import { NgxSpinnerService } from "ngx-spinner";
   {
     document.getElementById("update-popup").style.display="block"
     this.createpopup.style.display='none';
-
+    
     let data:environmentobservable;
     for(data of this.environments)
     {
       if(data.environmentId==this.updateid)
       {
+        if(data.activeStatus==7){
+          this.toggle=true;
+        }else{
+          this.toggle=false;
+        }
         this.updateenvdata=data;
         console.log(this.updateenvdata);
         break;
       }
     }
-    
   }
 
   close()
@@ -301,7 +309,6 @@ import { NgxSpinnerService } from "ngx-spinner";
 
 
   async deleteEnvironments(){
-    
 		const selectedEnvironments = this.environments.filter(product => product.checked==true).map(p => p.environmentId);
     if(selectedEnvironments.length!=0)
     {
@@ -322,22 +329,16 @@ import { NgxSpinnerService } from "ngx-spinner";
               icon: 'success',
               title: res.status,
               showConfirmButton: false,
-              timer: 2000
-    
+              timer: 2000    
             })
             this.removeallchecks();
             this.getallData(); 
             this.checktoupdate();
-            this.checktodelete();       
+            this.checktodelete();
           })
-          
         }
-      })
-      
+      }) 
     }
-    
-          
-    
   }
  
 
@@ -394,6 +395,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   deploybotenvironment()
   {
     const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+    this.spinner.show();
     if(selectedEnvironments.length!=0)
     {
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
@@ -408,7 +410,8 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.removeallchecks();
         this.getallData(); 
         this.checktoupdate();
-        this.checktodelete();     
+        this.checktodelete();  
+        this.spinner.hide();   
       })
     }
   }
