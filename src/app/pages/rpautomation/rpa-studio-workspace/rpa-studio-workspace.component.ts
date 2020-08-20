@@ -419,10 +419,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         let value:any = []
         n.tasks.forEach(element => {
         let temp:any = {
+      
           name : element.name,
           id : element.taskId
         };
-        this.stud.push(temp)
+        if(temp.name !== 'Reply Mail' && temp.name !== 'Delete Rows' && temp.name !=='Update Rows' && temp.name !=='Download' && temp.name !=='Rename') {
+          this.stud.push(temp)
+        }
+        
       })
 
       }
