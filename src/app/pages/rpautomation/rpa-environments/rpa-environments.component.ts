@@ -243,16 +243,14 @@ import { NgxSpinnerService } from "ngx-spinner";
   async updateEnvironment()
   {
     console.log(this.updateForm.value);
-    console.log(this.updateForm.value.activeStatus);
     if(this.updateForm.valid)
     {
       if(this.updateForm.value.activeStatus==true)
       {
-        this.updateForm.value.activeStatus=7
+        this.updateenvdata.activeStatus=7
       }else{
-        this.updateForm.value.activeStatus=8
+        this.updateenvdata.activeStatus=8
       }
-      console.log(this.updateForm.value.activeStatus);
 
       await this.api.updateenvironment(this.updateenvdata).subscribe( res => {
         Swal.fire({
