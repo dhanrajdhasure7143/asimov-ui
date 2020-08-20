@@ -1,0 +1,22 @@
+
+<!-- <button (click)="exportSVG('pdf')">Download PDF</button>
+<button (click)="exportSVG('png')">Download PNG</button>
+<button (click)="exportSVG('jpeg')">Download JPEG</button>
+<button (click)="onPlayProcees()">
+  <span *ngIf="!isPlayAnimation">Play</span>
+  <span *ngIf="isPlayAnimation">Pause</span>
+</button> -->
+
+<div id="exportSVGtoPDF" #exportSVGtoPDF>
+    <svg id="render"  #render>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+      markerWidth="5" markerHeight="5"
+      orient="auto">
+    <path d="M 0 0 L 10 5 L 0 10 z" />
+  </marker>
+    </svg>
+  </div>
+  <div id="download">
+      <a #downloadLink></a>
+    </div>
+ 

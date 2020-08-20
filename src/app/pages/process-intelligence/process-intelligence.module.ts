@@ -25,6 +25,7 @@ import {MatOptionModule, MatSelectModule} from '@angular/material';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { XesdocumentComponent } from './xesdocument/xesdocument.component';
+import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { XesdocumentComponent } from './xesdocument/xesdocument.component';
     SearchPipe,
     DataselectionComponent,
     PibpmnfilterComponent,
-    XesdocumentComponent
+    XesdocumentComponent,
+    D3flowchartComponent
   ],
   imports: [
     CommonModule,
