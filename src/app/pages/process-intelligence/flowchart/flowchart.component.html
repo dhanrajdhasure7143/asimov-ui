@@ -114,11 +114,11 @@
                  </div>
              </div>
              <!-- <div [hidden]="isHide"> -->
-                <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadJpeg]="isdownloadJpeg" [isdownloadPng]="isdownloadPng" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"(isjpeg)="jpegValueEmitted($event)"(ispng)="pngValueEmitted($event)"></app-piflowchart>
+                <!-- <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadJpeg]="isdownloadJpeg" [isdownloadPng]="isdownloadPng" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"(isjpeg)="jpegValueEmitted($event)"(ispng)="pngValueEmitted($event)"></app-piflowchart> -->
 
              <!-- </div> -->
              <!-- <div [hidden]="!isHide"> -->
-                <!-- <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (ispng)="pngValueEmitted($event)"></app-d3flowchart> -->
+                <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (ispng)="pngValueEmitted($event)"></app-d3flowchart>
 
              <!-- </div> -->
 

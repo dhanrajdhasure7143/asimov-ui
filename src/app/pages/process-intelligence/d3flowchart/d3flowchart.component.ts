@@ -108,7 +108,7 @@ export class D3flowchartComponent {
     
         var nodeName=this.model1[j].name
         states[nodeName]={
-          description: "<p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model1[j].toolCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model1[j].toolCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model1[j].toolCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model1[j].toolCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model1[j].toolCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceCount1+"</div></li><li><div>Median Duration</div><div>"+performanceCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceCount3+"</div></li><li><div>Max Duration </div><div>"+performanceCount4+"</div></li><li><div>Min Duration </div><div>"+performanceCount5+"Min</div></li></ul>",
+          description: "<p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model1[j].toolCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model1[j].toolCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model1[j].toolCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model1[j].toolCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model1[j].toolCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceCount1+"</div></li><li><div>Median Duration</div><div>"+performanceCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceCount3+"</div></li><li><div>Max Duration </div><div>"+performanceCount4+"</div></li><li><div>Min Duration </div><div>"+performanceCount5+"</div></li></ul>",
         metrics: this.model1[j].count
         }
       }
@@ -137,7 +137,7 @@ export class D3flowchartComponent {
       if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
 
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 5px; stroke-dasharray: 5, 5;",
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
         arrowheadStyle: "fill: #333", curve: d3.curveBasis})
       }else{
         var performanceLinkCount1=this.timeConversion(this.model2[i].toolDataCount[5])
@@ -147,7 +147,7 @@ export class D3flowchartComponent {
         var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
       
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"Min</div></li></ul>";
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 4px; transform: translate(23px,1px); fill: none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px; transform: translate(23px,1px); fill: none;", 
         arrowheadStyle: "fill: #333", curve: d3.curveBasis})
       }
       
@@ -164,7 +164,10 @@ g.nodes().forEach(function(v) {
  
   if(node.label == 'Start' || node.label == 'End'){
     node.shape = "circle";
-    
+    node.paddingBottom=10
+    node.paddingLeft=5
+    node.paddingTop=5
+    node.paddingRight=10
   }
   
  else{

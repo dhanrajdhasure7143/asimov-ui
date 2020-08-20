@@ -355,7 +355,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     text {
         font-size: 14px;
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
-        color:red !important;
         transform: translate(3px, 0px);
         height: auto;
         width: auto;
@@ -368,13 +367,13 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     .edgePath path {
     stroke: #333;
     fill: none;
-    stroke-width: 1.5px;
+    stroke-width: 0.3px;
    
     }
-    svg {
+    /* svg {
       height: 1400;
       width: 1100;
-    }
+    } */
 
  
  div#tooltip_template span ul, .tipsy-inner ul {
@@ -473,7 +472,7 @@ div#tooltip_template.tooltip-panel p:first-child {
   
 }
 .label{
-  color: rgb(230, 14, 14) !important;
+  color: black !important;
   font-size: 14px !important;
 }
 .edgePath path.path {
