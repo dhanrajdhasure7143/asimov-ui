@@ -5,7 +5,7 @@
     <div #content id="content">
       <div [id]="dragareaid" class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)" oncontextmenu="return false;" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
         <ng-container *ngFor="let node of nodes; let i = index">
-          <div id="{{node.id}}"  class="dndDropzone" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i)"
+          <div id="{{node.id}}"  class="dndDropzone" (mouseover)="openoutputmenu(node)"  (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i)"
           [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
             <span *ngIf="node.name!='START' && node.name !='STOP'" class="node-delete" (click)="deletenode(node)">x</span>
             <div class="connector-name" *ngIf="node.selectedNodeTask==''">{{node.name}} </div>
@@ -20,7 +20,21 @@
                   </div>
                 </div>
               </nav>
-            </div>  
+            </div>
+            <div [id]="'output_'+node.id" style="display:none" class="node_tooltip">
+              <nav  id="context-menu" class="context-menu contextmenu">
+                <div class="context-menu1">
+                  <div class="context-menu__item" >
+                    <a class="context-menu__link"  (click)="outputbox(node)"
+                     data-action="View">Open Output Box
+                    </a>
+                  </div>
+                </div>
+              </nav>
+            </div>
+            
+
+
           </div>
         </ng-container>
       </div>
@@ -69,4 +83,80 @@
     <br>
   </div>
   </div>
-    
+
+
+  <div [id]="outputboxid" class="rpa-modal">
+    <div class="rpa-modal-content">
+        <div class="rpa-modal-header">
+            <span class="rpa-modal-close" (click)="closeoutputbox()">&times;</span>
+            <h4>Output Box</h4>
+        </div>
+        <div class="rpa-modal-body">
+          
+          <div class="container-fluid">
+            <div class="row" >
+              <div class="col-md-4">
+              </div>
+              
+              <div class="col-md-4" *ngIf="outputboxresult==undefined">
+                <br><br>
+                <select class="form-control" [(ngModel)]="SelectedOutputType">
+                  <option value="">--Select View Type--</option>
+                  <option value="Table">Table</option>  
+                  <option value="Text">Text</option>
+                </select><br>
+                <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
+                
+                <br><br>
+              </div>
+              <div class="col-md-4">
+
+              </div>
+              
+            </div>
+            <div class="row" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined" >
+              <div class="col-md-3"></div>
+              <div class="col-md-6" style="height:300px; overflow-x:auto">
+                <table class="table" >
+                  <thead>
+                    <th>Key</th>
+                    <th>Value</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let result of outputboxresult">
+                      <td>{{result.Key}}</td><td>{{result.Value}}</td>
+                    </tr>
+                    <tr *ngIf="outputboxresult.length==0" colspan=2>
+                      <td style='text-align: center'>No Records Found</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <br>
+                <button class="btn btn-primary eiap-btn"  style="float: right"  (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+            <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined" >
+              <div class="col-md-3"></div>  
+              <div class="col-md-6" >
+             
+              <br>
+              <pre style="height:300px; overflow-x:auto">
+                {{outputboxresult | json }}
+              </pre>  
+              <br>
+              <button class="btn btn-primary eiap-btn"  style="float: right"  (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+              <br>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+  </div>
+
+
+
+
+ 

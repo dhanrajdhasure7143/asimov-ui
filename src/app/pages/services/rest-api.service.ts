@@ -34,8 +34,7 @@ export class RestApiService{
   public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient) { }
   getAccessToken(){
- 
-    let data = {"userId":"jitendra.kothamasu@epsoftinc.com",
+    let data = {"userId":"edukondalu.chokkapu@epsoftinc.com",
                 "password":"Welcome@123"};
 
   
@@ -358,6 +357,11 @@ export class RestApiService{
     return this.http.post('/processintelligence/v1/connectorconfiguration/validateConfig', body)
     }
   
+
+    getoutputbox(data)
+    {
+      return this.http.post('/rpa-service/outputBox',data);
+    }
 
 }
 
