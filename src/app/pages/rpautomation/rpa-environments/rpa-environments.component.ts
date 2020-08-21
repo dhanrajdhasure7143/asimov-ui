@@ -31,10 +31,10 @@ import { NgxSpinnerService } from "ngx-spinner";
     public environments:any=[];
     public createpopup=document.getElementById('create');
     public button:string;
-    public updatepopup=document.getElementById('update-popup');
+    //public updatepopup=document.getElementById('env_updatepopup');
     public delete_elements:number[];
     public masterSelected:Boolean;
-    public updateenvdata:environmentobservable;
+    public updateenvdata:any;
     public environmentName:FormControl;
     public insertForm:FormGroup;
     public updateForm:FormGroup;
@@ -45,7 +45,8 @@ import { NgxSpinnerService } from "ngx-spinner";
     public submitted:Boolean;
     public checkflag:Boolean;
     public toggle:Boolean;
-    
+    public passwordtype1:Boolean;
+    public passwordtype2:Boolean;
     isDtInitialized:boolean = false;
     dtTrigger: Subject<any> =new Subject();
     dtOptions: DataTables.Settings = {};
@@ -62,27 +63,27 @@ import { NgxSpinnerService } from "ngx-spinner";
     const ipPattern = 
     "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
       this.insertForm=this.formBuilder.group({
-      environmentName:["", Validators.required],
-      environmentType:["", Validators.required],
-      agentPath:["", Validators.required],
-      hostAddress:["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
-      username:["", Validators.required],
-      password:["", Validators.required],
-      connectionType:["SSH", Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
-      portNumber:["22", Validators.required],
-      activeStatus:[true],
-      
+        environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        connectionType: [{value:"SSH", disabled: true},Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+        portNumber: [{value:"22", disabled: true},  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+        activeStatus: [true]
+       
     })
 
     this.updateForm=this.formBuilder.group({
-      environmentName: ["", Validators.required],
-      environmentType: ["", Validators.required],
-      agentPath: ["", Validators.required],
-      hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
-      username: ["", Validators.required],
-      password: ["", Validators.required],
-      connectionType: ["",Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
-      portNumber: ["",  Validators.compose([Validators.required, Validators.pattern("[0-9]*")])],
+      environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+      username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+      connectionType: [{value:"SSH", disabled: true},Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+      portNumber: [{value:"22", disabled: true},  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
       activeStatus: [""]
     
     })
@@ -96,11 +97,14 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Environments"});
 
     this.createpopup=document.getElementById('create')
-    this.updatepopup=document.getElementById('update-popup');
+    //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
     this.getallData();
     this.createpopup.style.display='none';
-    this.updatepopup.style.display='none';
+    document.getElementById("update-popup").style.display='none';
+    this.passwordtype1=false;
+    this.passwordtype2=false;
+
   }
 
  async getallData()
@@ -143,7 +147,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   create()
   {
     this.createpopup.style.display='block';
-    this.updatepopup.style.display='none';
+    document.getElementById("update-popup").style.display='none';
   
   }
   resetEnvForm(){
@@ -268,7 +272,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.getallData();
       this.checktoupdate();
       this.checktodelete();
-      this.updatepopup.style.display='none';
+      document.getElementById("update-popup").style.display='none';
       this.spinner.hide();
       });
     }
@@ -280,9 +284,9 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   updatedata()
   {
-    document.getElementById("update-popup").style.display="block"
     this.createpopup.style.display='none';
     
+    document.getElementById('update-popup').style.display='block';
     let data:environmentobservable;
     for(data of this.environments)
     {
@@ -322,7 +326,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.value) {
-    
+          this.spinner.show();
           this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
             Swal.fire({
               position: 'top-end',
@@ -331,8 +335,10 @@ import { NgxSpinnerService } from "ngx-spinner";
               showConfirmButton: false,
               timer: 2000    
             })
+            
             this.removeallchecks();
             this.getallData(); 
+            this.spinner.hide();
             this.checktoupdate();
             this.checktodelete();
           })
@@ -431,7 +437,8 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.environments[i].checked= false;
       console.log(this.environments[i]);
     }
-    console.log(this.environments);
+    this.checkflag=false;
+    //console.log(this.environments);
   }
 
 }

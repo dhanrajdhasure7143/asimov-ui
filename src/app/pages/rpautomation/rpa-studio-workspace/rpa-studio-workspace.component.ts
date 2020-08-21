@@ -58,6 +58,11 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   @Input("bot") public finalbot:any;
   dropVerCoordinates: any;
   dragareaid:any;
+  outputboxid:any;
+  SelectedOutputType:any;
+  outputnode:any;
+  outputboxresult:any;
+  outputboxresulttext:any;
   constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService, private http:HttpClient, private child_rpa_studio:RpaStudioComponent, ) {
     
    }
@@ -85,6 +90,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       
     }
     this.dragareaid="dragarea__"+this.finalbot.botName;
+    this.outputboxid="outputbox__"+this.finalbot.botName;
+    this.SelectedOutputType="";
    }
 
 
@@ -671,6 +678,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   closemenu()
   {
       this.optionsVisible=false;
+      this.nodes.forEach(node=>{
+        if(document.getElementById("output_"+node.id)!=undefined)
+        {
+          document.getElementById("output_"+node.id).style.display="none";
+        }
+      })
   }
 
   resetdata()
@@ -920,4 +933,70 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   }
 
 
+
+  openoutputmenu(node)
+  {
+    if(node.selectedNodeTask!="")
+    {
+      if(node.selectedNodeTask=="Output Box")
+      {
+        if(this.finalbot.botId!=undefined)
+        {
+          document.getElementById("output_"+node.id).style.display="block";
+          this.outputnode=node;
+        }
+      }  
+    }
+  }
+
+
+
+ 
+
+  outputbox(node)
+  {
+    console.log(node);
+    document.getElementById(this.outputboxid).style.display="block";
+    document.getElementById("output_"+node.id).style.display="none"
+  }
+
+  closeoutputbox()
+  {
+    document.getElementById(this.outputboxid).style.display="none";
+    this.outputboxresult=undefined;
+    this.SelectedOutputType="";
+  }
+
+  getoutput()
+  {
+    if(this.SelectedOutputType!="")
+    {
+      if(this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==this.outputnode.id) != undefined)
+      {
+        let task:any=this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==this.outputnode.id);
+        console.log(task)
+        let postdata:any={
+          "botId":this.finalbot.botId,
+          "version":this.finalbot.version,
+          "viewType":this.SelectedOutputType,
+          "inputRefName":task.attributes[0].attrValue,
+        }
+        this.rest.getoutputbox(postdata).subscribe(outdata =>{
+          this.outputboxresult=outdata;
+          this.outputboxresulttext=JSON.stringify(outdata, null, 4);   
+        })
+      }
+      
+
+    }
+  }
+
+
+  outputlayoutback()
+  {
+    this.outputboxresult=undefined;
+    this.SelectedOutputType="";
+  }
+
+    
 }
