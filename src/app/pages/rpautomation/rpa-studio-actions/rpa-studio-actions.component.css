@@ -43,7 +43,7 @@
   filter: brightness(0.1) !important;
 }
 .imageI1{
-width: 12px;
+width: 16px;
 filter: brightness(0.1) !important;
 }
 .start-icon{
@@ -208,4 +208,14 @@ margin: 0px !important;
 .button-schedule >img{
   width:8px;
   fill:white;
+}
+
+.she-btn:disabled
+{
+  background-color:white ! important;
+}
+.she-btn:disabled .button-schedule
+{
+   background-color: grey ! important;
+   color:white ! important;
 }

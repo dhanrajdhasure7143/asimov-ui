@@ -103,7 +103,6 @@
   }
 
   .dndDropzone {
-    z-index: 24;
     cursor: pointer;
     box-shadow: none;
     -o-box-shadow: none;

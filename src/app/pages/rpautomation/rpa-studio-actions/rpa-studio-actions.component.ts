@@ -12,6 +12,8 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NotifierService } from 'angular-notifier';
+import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
   selector: 'app-rpa-studio-actions',
   templateUrl: './rpa-studio-actions.component.html',
@@ -76,14 +78,15 @@ export class RpaStudioActionsComponent implements OnInit {
   endTime = {hour: 23, minute: 59};
   scheduleLists: any[] = [];
   form: FormGroup;
-  public startDate: Date;
+  public startDate: NgbDateStruct;
+  public endDate: NgbDateStruct;
   selectTime;
-  public endDate: Date;
   public cronExpression = '0/1 * 1/1 * *';
   public isCronDisabled = false;
   public selectedTimeZone :any;
   public viewlogid:any;
   public she:any;
+  public minDate:NgbDateStruct;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
   i="";
   public cronOptions: CronOptions = {
@@ -113,7 +116,7 @@ export class RpaStudioActionsComponent implements OnInit {
   isButtonVisible: boolean;
   constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
     private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent,
-    private notifier: NotifierService
+    private notifier: NotifierService, private calender:NgbCalendar,
     ) { 
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
@@ -498,6 +501,12 @@ export class RpaStudioActionsComponent implements OnInit {
    
   
   schedulerPopUp(){
+    let date:any=this.calender.getToday(); 
+    console.log(date["year"])
+    this.startDate=this.calender.getToday()
+    this.minDate=this.calender.getToday();
+      //this.startDate=this.calender.getToday();
+      //console.log(this.startDate)
       document.getElementById(this.schedulepopid).style.display="block";
       this.hiddenSchedlerPopUp = true
       let data:any
@@ -510,8 +519,10 @@ export class RpaStudioActionsComponent implements OnInit {
       if(this.she==undefined)
       {
         this.scheduleLists.forEach(savedschedule=>{
-          this.selectedTimeZone=savedschedule.timeZone;
+         
           let savecond={
+            
+          "timeZone":savedschedule.timeZone,
           "scheduleInterval" :savedschedule.scheduleInterval,
           "startDate":savedschedule.startDate,
           "endDate":savedschedule.endDate,
@@ -520,8 +531,8 @@ export class RpaStudioActionsComponent implements OnInit {
           schedules.push(savecond)
           })
         this.she={
-          "TimeZone":this.scheduleLists[0].timeZone,
-          "numberofRepetitions":1,
+          //"TimeZone":this.scheduleLists[0].timeZone,
+          //"numberofRepetitions":1,
           "scheduleIntervals" :schedules, 
         }
         console.log()
@@ -539,6 +550,8 @@ export class RpaStudioActionsComponent implements OnInit {
 
     addCron(){      
     let scheduleddata={
+      
+      "timeZone":this.selectedTimeZone,
       "scheduleInterval" :this.cronExpression,
       "startDate":`${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
       "endDate"  :`${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
@@ -546,6 +559,7 @@ export class RpaStudioActionsComponent implements OnInit {
     }
     let sche2= 
     {
+      "timeZone":this.selectedTimeZone,
       "scheduleInterval" :this.cronExpression,
       "lastRunTime":"---",
       "nextRunTime":"---", 
@@ -558,20 +572,20 @@ export class RpaStudioActionsComponent implements OnInit {
       let arraydata=[];
       arraydata.push(scheduleddata);
       this.she = {
-        "TimeZone":this.selectedTimeZone,
-        "numberofRepetitions":1,
+        //"numberofRepetitions":1,
         "scheduleIntervals" : arraydata,
       }
     }
     else
     {
-      this.she.TimeZone=this.selectedTimeZone,
+
       this.she.scheduleIntervals.push(scheduleddata);
       console.log(this.she)
     }
-
+    console.log(this.she)
     this.scheduleLists.push(sche2)
     this.hiddenSchedlerPopUp = false;
+    this.resetscheduler();
     }
 
     saveCronexp()
@@ -585,7 +599,7 @@ export class RpaStudioActionsComponent implements OnInit {
             "scheduleInterval" :data.scheduleInterval,
             "startDate":data.startDate,
             "endDate"  :data.endDate,
-            
+            "timeZone":data.timeZone,
           }
           filteredschedules.push(schedulefilter)
         })
@@ -978,6 +992,17 @@ resumeSchedule(schedule)
         this.notifier.notify("info",response.status);
       } 
     });
+  }
+
+
+
+
+  resetscheduler()
+  {
+    this.startDate=this.calender.getToday();
+    this.selectedTimeZone=undefined;
+    this.cronExpression = '0/1 * 1/1 * *';
+    this.endDate=undefined;
   }
   
 }
