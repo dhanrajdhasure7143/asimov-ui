@@ -11,25 +11,30 @@ import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
 import {RpaEnvHints} from "../model/rpa-environments-module-hints";
 import {Router} from "@angular/router";
-import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-environments',
   templateUrl:'./rpa-environments.component.html',
   styleUrls: ['./rpa-environments.component.css']
 })
-  export class RpaenvironmentsComponent implements OnDestroy, OnInit{
+  export class RpaenvironmentsComponent implements  OnInit{
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","username","password","connectionType","portNumber","createdTimeStamp","createdBy","activeStatus","deployStatus"];
+    dataSource1:MatTableDataSource<any>;
     @ViewChild('closebutton', {static: false}) closebutton  
     @ViewChild(DataTableDirective,{static: false}) dtElement: DataTableDirective;
     @Output()
     title:EventEmitter<string> = new EventEmitter<string>();
-    public environments : environmentobservable [];
+    public environments:any=[];
     public createpopup=document.getElementById('create');
     public button:string;
-    public updatepopup=document.getElementById('update-popup');
+    //public updatepopup=document.getElementById('env_updatepopup');
     public delete_elements:number[];
     public masterSelected:Boolean;
-    public updateenvdata:environmentobservable;
+    public updateenvdata:any;
     public environmentName:FormControl;
     public insertForm:FormGroup;
     public updateForm:FormGroup;
@@ -38,6 +43,10 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
     private updateid:number;
     public term:string;
     public submitted:Boolean;
+    public checkflag:Boolean;
+    public toggle:Boolean;
+    public passwordtype1:Boolean;
+    public passwordtype2:Boolean;
     isDtInitialized:boolean = false;
     dtTrigger: Subject<any> =new Subject();
     dtOptions: DataTables.Settings = {};
@@ -48,33 +57,34 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
     private environmentservice:EnvironmentsService, 
     private chanref:ChangeDetectorRef, 
     private dt:DataTransferService,
-    private hints:RpaEnvHints
+    private hints:RpaEnvHints,
+    private spinner: NgxSpinnerService
     ) { 
     const ipPattern = 
     "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
       this.insertForm=this.formBuilder.group({
-      environmentName:["", Validators.required],
-      environmentType:["", Validators.required],
-      agentPath:["", Validators.required],
-      hostAddress:["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
-      username:["", Validators.required],
-      password:["", Validators.required],
-      connectionType:["SSH", Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
-      portNumber:["22", Validators.required],
-      comments:[""],
-      
+        environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        connectionType: [{value:"SSH", disabled: true},Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+        portNumber: [{value:"22", disabled: true},  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+        activeStatus: [true]
+       
     })
 
     this.updateForm=this.formBuilder.group({
-      update_environmentName: ["", Validators.required],
-      update_environmentType: ["", Validators.required],
-      update_agentPath: ["", Validators.required],
-      update_hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern)])],
-      update_username: ["", Validators.required],
-      update_password: ["", Validators.required],
-      update_connectionType: ["",Validators.compose([Validators.required, Validators.pattern("[A-Za-z]*")])],
-      update_portNumber: ["",  Validators.compose([Validators.required, Validators.pattern("[0-9]*")])],
-      update_comments: [""]
+      environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+      username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+      connectionType: [{value:"SSH", disabled: true},Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+      portNumber: [{value:"22", disabled: true},  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+      activeStatus: [""]
     
     })
     this.updateflag=false;
@@ -82,71 +92,133 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
     
   }
   ngOnInit() {
-    
+    this.spinner.show();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Environments"});
 
     this.createpopup=document.getElementById('create')
-    this.updatepopup=document.getElementById('update-popup');
+    //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
-    //console.log(this.hints.rpaenvhints)
-    this.title.emit("Environments")
-    this.dtOptions = {
-      pagingType: 'simple',
-      pageLength: 10,
-      scrollX: true,
-      dom:'<f<t>lp>',
-      columnDefs:[ { orderable: false, targets: [0]}],
-      responsive:true,
-      retrieve:true,
-      scrollY: "true",
-      language: {
-        searchPlaceholder: 'Search',
-      }
-      };
-
     this.getallData();
     this.createpopup.style.display='none';
-    this.updatepopup.style.display='none';
+    document.getElementById("update-popup").style.display='none';
+    this.passwordtype1=false;
+    this.passwordtype2=false;
+
   }
 
-  savedata(){}
  async getallData()
   {
-
+    this.environments=[];
     await this.api.listEnvironments().subscribe(
     data => {
-        this.environments = data as environmentobservable [];	
-        this.chanref.detectChanges();
-        this.dtTrigger.next();
-      },
-      (err: HttpErrorResponse) => {
-      }
-    );
+         let response:any= data;	
+        for(let i=0;i<response.length;i++)
+        {
+          let checks={
+            checked:false,
+            }
+          this.environments.push(Object.assign({}, response[i], checks));
+        }
+        console.log(this.environments)
+        this.dataSource1= new MatTableDataSource(this.environments);
+        this.spinner.hide();
+      });
   }
 
 
   checkAllCheckBox(ev) {
     this.environments.forEach(x => x.checked = ev.target.checked)
-    this.checkEnableDisableBtn()
+    this.checktoupdate();
+    this.checktodelete();
+
 	}
 
   isAllCheckBoxChecked() {
-		return this.environments.every(p => p.checked);
+    this.environments.forEach(data=>{
+      if(data.checked==false)
+      {
+        return false;
+      }
+    })
+    return true;
   }
   
   create()
   {
     this.createpopup.style.display='block';
-    this.updatepopup.style.display='none';
+    document.getElementById("update-popup").style.display='none';
   
   }
+  resetEnvForm(){
+    this.insertForm.reset();
+    
+    this.insertForm.get("portNumber").setValue("22");
+    this.insertForm.get("connectionType").setValue("SSH");
+    this.insertForm.get("environmentType").setValue("");
+    this.insertForm.get("activeStatus").setValue(true);
+  }
 
+  async testConnection(data){
+    this.spinner.show();
+    let formdata:any;
+    if(data=="insert"){
+      formdata=this.insertForm;
+    }else{
+      formdata=this.updateForm;
+    }
+   if(formdata.valid)
+   {
+    if(formdata.value.activeStatus==true)
+    {
+      formdata.value.activeStatus=7
+    }else{
+      formdata.value.activeStatus=8
+    }
+     await this.api.testenvironment(formdata.value).subscribe( res =>
+      {
+        this.spinner.hide();
+        if(res.errorCode==undefined){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: "Successfully Connected",
+          showConfirmButton: false,
+          timer: 2000
+        })
+        }else{
+          Swal.fire({
+            position: 'top-end',
+            icon: 'question',
+            title: 'Connection Failed',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+    });
+  }
+  else
+  {
+     alert("Invalid Form")
+  }
+
+  }
   
   async saveEnvironment()
   {
+    this.spinner.show();
    if(this.insertForm.valid)
    {
+     console.log(this.insertForm.value.activeStatus)
+     if(this.insertForm.value.activeStatus==true)
+      {
+        this.insertForm.value.activeStatus=7
+      }else{
+        this.insertForm.value.activeStatus=8
+      }
+      console.log(this.insertForm.value.activeStatus)
+
+      this.insertForm.value.createdBy="admin";
      this.submitted=true;
      let environment=this.insertForm.value;
      await this.api.addenvironment(environment).subscribe( res =>
@@ -158,12 +230,15 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
           showConfirmButton: false,
           timer: 2000
         })
-        this.rerender();
-        this.insertForm.reset();
+        this.getallData();
+        this.checktoupdate();
+        this.checktodelete();
         this.createpopup.style.display='none'; 
+        this.insertForm.reset();
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
         this.submitted=false;
+        this.spinner.hide();
     });
   }
   else
@@ -175,9 +250,16 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 
   async updateEnvironment()
   {
+    this.spinner.show();
     console.log(this.updateForm.value);
     if(this.updateForm.valid)
     {
+      if(this.updateForm.value.activeStatus==true)
+      {
+        this.updateenvdata.activeStatus=7
+      }else{
+        this.updateenvdata.activeStatus=8
+      }
       await this.api.updateenvironment(this.updateenvdata).subscribe( res => {
         Swal.fire({
           position: 'top-end',
@@ -186,11 +268,13 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
           showConfirmButton: false,
           timer: 2000
         })
-      this.chanref.detectChanges();
-      this.rerender();
-      this.updatepopup.style.display='none';
+      this.removeallchecks();
+      this.getallData();
+      this.checktoupdate();
+      this.checktodelete();
+      document.getElementById("update-popup").style.display='none';
+      this.spinner.hide();
       });
-      
     }
     else
     {
@@ -200,37 +284,38 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
 
   updatedata()
   {
-    document.getElementById("update-popup").style.display="block"
     this.createpopup.style.display='none';
-
+    
+    document.getElementById('update-popup').style.display='block';
     let data:environmentobservable;
     for(data of this.environments)
     {
       if(data.environmentId==this.updateid)
       {
+        if(data.activeStatus==7){
+          this.toggle=true;
+        }else{
+          this.toggle=false;
+        }
         this.updateenvdata=data;
         console.log(this.updateenvdata);
         break;
       }
     }
-    //this.createpopup.style.display='none';
-    
   }
 
   close()
   { 
+    this.resetEnvForm();
     document.getElementById('create').style.display='none';
     document.getElementById('update-popup').style.display='none';
   }
 
 
   async deleteEnvironments(){
-
-		const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+		const selectedEnvironments = this.environments.filter(product => product.checked==true).map(p => p.environmentId);
     if(selectedEnvironments.length!=0)
     {
-      
-    
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -241,41 +326,36 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
         confirmButtonText: 'Yes, delete it!'
       }).then((result) => {
         if (result.value) {
-    
+          this.spinner.show();
           this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
             Swal.fire({
               position: 'top-end',
               icon: 'success',
               title: res.status,
               showConfirmButton: false,
-              timer: 2000
-    
+              timer: 2000    
             })
- 
-            //this.chanref.detectChanges();
+            
+            this.removeallchecks();
+            this.getallData(); 
+            this.spinner.hide();
+            this.checktoupdate();
+            this.checktodelete();
           })
-          
         }
-      })
-      
+      }) 
     }
-    this.rerender();
-          
-    
   }
  
 
-  ngAfterViewInit(): void {
-    this.dtTrigger.next();
-  }
 
   checktoupdate()
   {
-    const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+    const selectedEnvironments = this.environments.filter(product => product.checked==true);
     if(selectedEnvironments.length==1)
     {
       this.updateflag=true;
-      this.updateid=selectedEnvironments[0];
+      this.updateid=selectedEnvironments[0].environmentId;
     }else
     {
       this.updateflag=false;
@@ -297,41 +377,31 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
   }
 
 
-  ngOnDestroy(): void {
-    // Do not forget to unsubscribe the event
-    this.dtTrigger.unsubscribe();
-  }
 
 
 
-  checkEnableDisableBtn()
+  checkEnableDisableBtn(id, event)
   {
+    console.log(event.target.checked);
+    this.environments.find(data=>data.environmentId==id).checked=event.target.checked;
+    if(this.environments.filter(data=>data.checked==true).length==this.environments.length)
+    {
+      this.checkflag=true;
+    }else
+    {
+      this.checkflag=false;  
+    }
     this.checktoupdate();
     this.checktodelete();
   }
 
-  rerender(): void {
-    this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-      // Destroy the table first
-      dtInstance.destroy();
-      this.environmentservice.getfulldata().subscribe(
-        data => 
-        {
-          this.environments = data as environmentobservable [];	
-          this.chanref.detectChanges();
-          this.dtTrigger.next();
-          this.environments.forEach(x => ! x.checked)
-          this.checkEnableDisableBtn()
-        });
 
-      });
-      
-  }
 
 
   deploybotenvironment()
   {
     const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
+    this.spinner.show();
     if(selectedEnvironments.length!=0)
     {
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
@@ -343,12 +413,33 @@ import { SearchPipe } from 'src/app/shared/pipes/search.pipe';
           showConfirmButton: false,
           timer: 2000
         })
-            
+        this.removeallchecks();
+        this.getallData(); 
+        this.checktoupdate();
+        this.checktodelete();  
+        this.spinner.hide();   
       })
     }
   }
+  
+  applyFilter(filterValue: string) {
+    
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource1.filter = filterValue;
+  }
 
 
+  removeallchecks()
+  {
+    for(let i=0;i<this.environments.length;i++)
+    {
+      this.environments[i].checked= false;
+      console.log(this.environments[i]);
+    }
+    this.checkflag=false;
+    //console.log(this.environments);
+  }
 
 }
 

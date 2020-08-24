@@ -33,6 +33,7 @@
 
   .env-btn > button > img{
     color:black !important;
+    width:25px;
     background-color: white !important;
     
   }
@@ -61,4 +62,10 @@
   
 
 
-
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+  }
