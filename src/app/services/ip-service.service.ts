@@ -10,7 +10,6 @@ export class IpServiceService {
   constructor(private http:HttpClient) { }  
   getIPAddress(): Promise<Object>
   {  
-    console.log('test..');
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('origin', 'local');
     headers = headers.append('Access-Control-Allow-Origin', '*');
