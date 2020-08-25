@@ -15,11 +15,15 @@ export class BackendURLInterceptor implements HttpInterceptor {
     var token=localStorage.getItem('accessToken');
    // var encryptToken=at(token.accessToken)
     //var encryptrefreshToken=btoa(token.refreshToken);
+
+       let ipAddress = '192.168.0.1';
+        if(localStorage.getItem('ipAddress'))
+           ipAddress = localStorage.getItem('ipAddress');
     
         req = req.clone({
             url : this.getRequestUrl(req),
             body: req.body,
-            headers:  new HttpHeaders({'Authorization': 'Bearer '+token})
+            headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress})
         });
         return next.handle(req);
     }

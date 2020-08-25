@@ -2,6 +2,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { BpmnModel } from '../business-process/model/bpmn-autosave-model';
+import { IpServiceService } from '../../services/ip-service.service';
 
 // const httpOptions = {
 //   headers: new HttpHeaders({
@@ -32,7 +33,10 @@ export class RestApiService{
     responseType: 'text'
   }
   public fileName = new BehaviorSubject<any>('file');
-  constructor(private http:HttpClient) { }
+  constructor(private http:HttpClient, private ip:IpServiceService) { this.getIP(); }
+
+  public ipAddress:string; 
+
   getAccessToken(){
     let data = {"userId":"nagaraju.joneboina@epsoftinc.com",
                 "password":"Welcome@123"};
@@ -40,6 +44,17 @@ export class RestApiService{
   
     return this.http.post('/api/login/beta/accessToken',data);
   }
+  getIP()
+     {
+        if(localStorage.getItem('ipAddress')==null){
+        this.ip.getIPAddress().then(res => { 
+
+        var obj = JSON.parse(JSON.stringify(res));
+        this.ipAddress = obj.ip;
+        localStorage.setItem('ipAddress', this.ipAddress);
+        });
+       }
+     }
   bpmnlist(){
     return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser');
   }
