@@ -618,7 +618,7 @@ getDBTables(){
   }
   this.rest.getDBTableList(reqObj)
     .subscribe(res => {
-      console.log(res)
+     // console.log(res)
       var tData: any = res;
       if(tData.data.length != 0){
         this.tableList = tData.data;

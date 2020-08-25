@@ -123,7 +123,11 @@ export class FlowchartComponent implements OnInit {
   linkArraymodel:any=[];
   resetFilter:boolean=false;
   filtermodel3:any=[];
-  fullgraph_model1:any=[]
+  fullgraph_model1:any=[];
+  isFullGraphBPMN:boolean = false;
+  isSingleTraceBPMN:boolean = false;
+  isMultiTraceBPMN:boolean = false;
+  isSliderBPMN:boolean = false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -242,7 +246,11 @@ export class FlowchartComponent implements OnInit {
         
         this.linkCurvinessGenerate();
         this.spinner.hide();
-        this.linkmodel2 = this.model2
+        this.linkmodel2 = this.model2;
+        this.isFullGraphBPMN = true;
+        this.isSingleTraceBPMN = false;
+        this.isMultiTraceBPMN = false;
+        this.isSliderBPMN = false;
 
     }
 
@@ -343,6 +351,16 @@ export class FlowchartComponent implements OnInit {
                 // variant_playOne
                 this.isvariantSelectedOne=false;
 
+
+      /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = true;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
+
+
     }else if (this.selectedCaseArry.length == 1) {
       this.isvariantSelectedOne=true;
       this.issliderDisabled=true;
@@ -357,6 +375,14 @@ export class FlowchartComponent implements OnInit {
         this.gradientApplyforNode();
         this.linkCurvinessGenerate();
       }
+
+           /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = true;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
     }else{
       this.issliderDisabled=true;
       // this.options = Object.assign({}, this.options, {disabled: true});
@@ -374,6 +400,14 @@ export class FlowchartComponent implements OnInit {
       this.gradientApplyforNode()
       this.linkCurvinessGenerate();
     })
+
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = true;
+      this.isSliderBPMN = false;
     }
     // console.log(this.varaint_data.data.length);
     
@@ -465,6 +499,14 @@ export class FlowchartComponent implements OnInit {
         this.linkCurvinessGenerate();
         this.isDefaultData = false;
       }
+
+           /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = true;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
     } else {
       for (var i = 0; i < this.varaint_data.data.length; i++) {
         this.varaint_data.data[i].selected = "inactive";
@@ -552,9 +594,10 @@ export class FlowchartComponent implements OnInit {
   }
 
 generateBpmn(){
-  this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
-  this.bpmnservice.setNewDiagName('pizza-collaboration');
-  this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}})
+console.log(this.isFullGraphBPMN+">>>>"+this.isSingleTraceBPMN+">>>>>"+this.isMultiTraceBPMN+">>>>>"+this.isSliderBPMN);
+  // this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
+  // this.bpmnservice.setNewDiagName('pizza-collaboration');
+  // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}})
 }
   
 loopTrackBy(index, term){
@@ -720,6 +763,14 @@ closeNav() { // Variant list Close
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
     console.log("rest",this.model1);
+
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = true;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
     
   }
   caseParcent(parcent){       // case persent value in variant list
@@ -807,6 +858,14 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.gradientApplyforLinks()
     this.gradientApplyforNode()
     this.linkCurvinessGenerate();
+
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = true;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
   }else{
   var sliderGraphArray = [];
     graphData.data.allSelectData.nodeDataArraycase.filter(function (item) {
@@ -831,6 +890,13 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.gradientApplyforLinks()
     this.gradientApplyforNode();
     this.linkCurvinessGenerate();
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = true;
       }
     }
 
@@ -1102,7 +1168,9 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
       }
 
 }
-filterOverlay(){    //Filter overlay open on filter icon click
+filterOverlay(){  
+  this.dataValues = [];
+    //Filter overlay open on filter icon click
   for(var i=1;i<this.model1.length-1;i++){
     this.dataValues.push(this.model1[i])
     }

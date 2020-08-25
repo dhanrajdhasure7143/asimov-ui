@@ -66,15 +66,17 @@ export class FilterComponent implements OnInit {
       this.endPointArray.push(obj)
     }
     
+    
+    this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
+  }
+  ngOnChanges(){    
+    this.dataValuesNames = [];
     for(var i=0;i<this.dataValues.length;i++){
       var obj={};
       obj["name"]=this.dataValues[i].name;
       obj["selected"]="inactive";
       this.dataValuesNames.push(obj)
     }
-    this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
-  }
-  ngOnChanges(){    
     if(this.resetFilter==true){
       this.startPointArray.forEach(e=>{
         e.selected="inactive"
