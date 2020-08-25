@@ -34,7 +34,7 @@ export class RestApiService{
   public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient) { }
   getAccessToken(){
-    let data = {"userId":"edukondalu.chokkapu@epsoftinc.com",
+    let data = {"userId":"nagaraju.joneboina@epsoftinc.com",
                 "password":"Welcome@123"};
 
   
@@ -267,6 +267,10 @@ export class RestApiService{
 
   getVariantGraphCombo(body){
     return this.http.post("/ReddisCopy/getGraphData",body)
+  }
+
+  getDBTableList(body){
+    return this.http.post('/processintelligence/v1/processgraph/pi/tenant/db/list/tables', body)
   }
 
   getProcessStatistics()
