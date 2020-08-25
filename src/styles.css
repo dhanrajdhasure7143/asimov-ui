@@ -349,7 +349,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
  .node rect, .node circle{
     stroke: #333;
     /* fill: #02497D; */
-    width: 200px;
+    /* width: 200px; */
     }
 
     text {

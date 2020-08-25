@@ -618,15 +618,21 @@ selectedMetric(selectedValue){    //metrics selection in spinner
         index=9;
     break;
   }
-  for(var i=1;i<this.model1.length-1;i++){
+  var modelArray3=[]
+  modelArray3=this.model1
+  for(var i=1;i<modelArray3.length-1;i++){
     if(index==5||index==6||index==7||index==8||index==9){
-      this.model1[i].count=this.timeConversion(this.model1[i].toolCount[index])
+      modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[index])
+      // this.model1=modelArray3
       // this.model1[i].days=this.timeConversionDays(this.model1[i].toolCount[index])
     }else{
-      this.model1[i].count=this.model1[i].toolCount[index]
-      this.model1=this.model1
+      modelArray3[i].count=modelArray3[i].toolCount[index]
     }
   }
+  
+  this.model1=modelArray3
+  console.log(this.model1);
+
   // if(index==2){
   //   for(var i=1;i<this.model1.length-1;i++){
   //       this.model1[i].days=this.model1[i].toolCount[index]
@@ -652,6 +658,8 @@ flowchartDataOne(dataArray,index) {
   //  var linkToolArray=[];
   for (var i = 1; i < this.nodeArray.length-1; i++) {
     var datalink = this.nodeArray[i].linkArray;
+    console.log("dayalink",datalink);
+    
     var link=[]
     var linktool=[]
     var label = this.nodeArray[i].name;
@@ -686,8 +694,11 @@ flowchartDataOne(dataArray,index) {
           obj['to'] = this.nodeArray[i].name;
           if(index==0||index==1){
           obj['text'] = this.nodeArray[i].toolCount[3];
+          }else{
+            obj['text'] = null;
           }
           obj["extraNode"] = 'true';
+          obj["toolDataCount"]=this.nodeArray[i].toolCount;
           // obj['days'] = 0;
           this.linkdataArray.push(obj);
         }
@@ -705,6 +716,7 @@ flowchartDataOne(dataArray,index) {
           if(index==0||index==1){
           obj['text'] = this.nodeArray[i].toolCount[4]
           }
+          obj["toolDataCount"]=this.nodeArray[i].toolCount;
           obj["extraNode"] = 'true';
           // obj['days'] = 0;
         this.linkdataArray.push(obj);

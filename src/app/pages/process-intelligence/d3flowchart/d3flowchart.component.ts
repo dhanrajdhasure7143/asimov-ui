@@ -75,8 +75,8 @@ export class D3flowchartComponent {
 
 
     ngOnChanges(){
-        console.log(this.model1);
-        console.log(this.model2);
+        // console.log(this.model1);
+        // console.log(this.model2);
         
         this. processGraph();
             this.onPlayProcees();
@@ -147,8 +147,14 @@ export class D3flowchartComponent {
         var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
       
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"Min</div></li></ul>";
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px; transform: translate(23px,1px); fill: none;", 
+       if(this.model2[i].text==2){
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px; fill: none;", 
         arrowheadStyle: "fill: #333", curve: d3.curveBasis})
+       }else{
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke-width: 4.5px; fill: none;", 
+        arrowheadStyle: "fill: #333", curve: d3.curveBasis})
+       }
+        
       }
       
     }
@@ -160,7 +166,7 @@ let nodesArray= [];
 g.nodes().forEach(function(v) {
   
   var node = g.node(v);
-  console.log(node);
+  // console.log(node);
  
   if(node.label == 'Start' || node.label == 'End'){
     node.shape = "circle";
@@ -172,7 +178,7 @@ g.nodes().forEach(function(v) {
   
  else{
   nodesArray.push(node)
-  console.log(node.label)
+  // console.log(node.label)
  }
  
   node.rx = node.ry = 5;
@@ -181,46 +187,47 @@ g.nodes().forEach(function(v) {
 const max = nodesArray.reduce(function(prev, current) {
   return (prev.metrics > current.metrics) ? prev : current
 })
+console.log(max);
+  var maxDivided = max.metrics/5;
 
-let maxDivided = max.metrics/5;
-console.log(max.metrics);
+// console.log(max.metrics);
 for(var i =0;i<nodesArray.length;i++){
 
 
   if (nodesArray[i].metrics <= maxDivided) {
-    console.log("1111111111111",maxDivided <= nodesArray[i].metrics);
+    // console.log("1111111111111",maxDivided <= nodesArray[i].metrics);
     var eachLine = nodesArray[i].label.split('\n')[0];
     console.log(nodesArray[i].metrics);
         g.node(eachLine).style = "fill: #b7aace";
   }
   else if (nodesArray[i].metrics > maxDivided && nodesArray[i].metrics <= Number(maxDivided*2)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-    console.log(nodesArray[i].metrics);
-    console.log("22222222222");
+    // console.log(nodesArray[i].metrics);
+    // console.log("22222222222");
         g.node(eachLine).style = "fill: #ADB9D1";
    
     
   } else if (nodesArray[i].metrics > Number(maxDivided*2) && nodesArray[i].metrics <= Number(maxDivided*3)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-    console.log(nodesArray[i].metrics);
-    console.log("333333333");
+    // console.log(nodesArray[i].metrics);
+    // console.log("333333333");
         g.node(eachLine).style = "fill: #5b21db" ;
     
     
   } else if (nodesArray[i].metrics > Number(maxDivided*3) && nodesArray[i].metrics <= Number(maxDivided*4)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-    console.log(nodesArray[i].metrics);    
+    // console.log(nodesArray[i].metrics);    
     g.node(eachLine).style = "fill: #4b1edb";
        
   }
   else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics <= Number(maxDivided*5)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-    console.log(nodesArray[i].metrics);   
+    // console.log(nodesArray[i].metrics);   
     g.node(eachLine).style = "fill: #024C7F";
     
   } else if(nodesArray[i].metrics == max.metrics && nodesArray[i].metrics > max.metrics){
     var eachLine = nodesArray[i].label.split('\n')[0];
-    console.log(nodesArray[i].metrics);   
+    // console.log(nodesArray[i].metrics);   
     g.node(eachLine).style = "fill: #2d0adb";
   }
 
@@ -287,9 +294,9 @@ var render = new dagreD3.render();
 
 
 var wrap = function(text, width) {
-   console.log(text);
+  //  console.log(text);
   text.each(function (a) {
-    console.log((a));
+    // console.log((a));
     
       var text = d3.select(this),
           words = text.text().split(/\s+/).reverse(),
@@ -369,9 +376,47 @@ inner.selectAll('g.node')
 // console.log(inner.selectAll('g.edgePath'));
 // inner.selectAll('g.edgePath')
 // console.log(inner.selectAll('g.edgePath'));
+
+// svg.selectAll("link")
+  // inner.selectAll('g.edgePath path')
+  svg.append("linearGradient")				
+  .attr("id", "linear-gradient")
+  .attr("gradientUnits", "userSpaceOnUse")
+  .selectAll("stop")
+  .data([							
+    {offset: "10%", color: "white"},		
+    {offset: "90%", color: "red"}])					
+  .enter()
+  .append("stop")
+  .attr("offset", function(d) { return d.offset; })	
+  .attr("stop-color", function(d){return d.color;});
+
+
+
+var myColor = d3.scaleLinear().domain([1,10]).range(["white", "blue"])
+  var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+  console.log("g.edgePath",inner.selectAll('g.edgePath path')._groups[0][0].attributes[3]);
+  
+inner.selectAll('g.edgePath path.path')
+      .attr('fill', 'none')
+      .data(data)
+      // .enter()
+      // .attr("cx", function(d,i){return 30 + i*60}).attr("cy", 50)
+      // .data([							
+      //   {offset: "10%", color: "white"},		
+      //   {offset: "90%", color: "red"}])					
+      // .enter()
+      // .append("stop")
+      // .style("offset","30%" )
+      // .attr("offset", function(d) { return d.offset; })
+      .style("stroke",function(d){return myColor(d) })
+      // .style("stroke","url(#linear-gradient)")
+
+      // .attr("stop-color", function(d){return myColor(d) });
+
 inner.selectAll('g.edgePath')
 .on('mouseover', function(d){
-  console.log('edgepath', d)
+  // console.log('edgepath', d)
   inner.selectAll('g.edgePath').append('title').text(d.v+" - "+d.w+'\n'+
 
 "Frequency"+'\n'+
@@ -392,8 +437,8 @@ svg.attr('height', g.graph().height * initialScale + 53);
     
     exportSVG(fileType){
       html2canvas(this.exportSVGtoPDF.nativeElement, { useCORS: true, foreignObjectRendering: true, allowTaint: true }).then(canvas => {
-        console.log('canvas.height',canvas.height)
-        console.log('canvas.height',canvas.width)
+        // console.log('canvas.height',canvas.height)
+        // console.log('canvas.height',canvas.width)
        
         var margin = 10;
         var imgWidth = 210 - 2*margin; 
