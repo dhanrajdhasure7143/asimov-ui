@@ -123,6 +123,14 @@ export class FlowchartComponent implements OnInit {
   filterModelArray: any[]=[];
   filterModel2Array: any=[];
   linkmodel2: any[]=[];
+  linkArraymodel:any=[];
+  resetFilter:boolean=false;
+  filtermodel3:any=[];
+  fullgraph_model1:any=[];
+  isFullGraphBPMN:boolean = false;
+  isSingleTraceBPMN:boolean = false;
+  isMultiTraceBPMN:boolean = false;
+  isSliderBPMN:boolean = false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -232,6 +240,7 @@ export class FlowchartComponent implements OnInit {
          let fullgraphOne=this.fullgraph.data;
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
+          this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1)
@@ -240,7 +249,11 @@ export class FlowchartComponent implements OnInit {
         
         this.linkCurvinessGenerate();
         this.spinner.hide();
-        this.linkmodel2 = this.model2
+        this.linkmodel2 = this.model2;
+        this.isFullGraphBPMN = true;
+        this.isSingleTraceBPMN = false;
+        this.isMultiTraceBPMN = false;
+        this.isSliderBPMN = false;
 
     }
 
@@ -341,6 +354,16 @@ export class FlowchartComponent implements OnInit {
                 // variant_playOne
                 this.isvariantSelectedOne=false;
 
+
+      /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = true;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
+
+
     }else if (this.selectedCaseArry.length == 1) {
       this.isvariantSelectedOne=true;
       this.issliderDisabled=true;
@@ -355,6 +378,14 @@ export class FlowchartComponent implements OnInit {
         this.gradientApplyforNode();
         this.linkCurvinessGenerate();
       }
+
+           /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = true;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
     }else{
       this.issliderDisabled=true;
       // this.options = Object.assign({}, this.options, {disabled: true});
@@ -372,8 +403,16 @@ export class FlowchartComponent implements OnInit {
       this.gradientApplyforNode()
       this.linkCurvinessGenerate();
     })
+
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = true;
+      this.isSliderBPMN = false;
     }
-    console.log(this.varaint_data.data.length);
+    // console.log(this.varaint_data.data.length);
     
     if(this.selectedCaseArry.length ==this.varaint_data.data.length){
       this.checkboxValue = true
@@ -463,6 +502,14 @@ export class FlowchartComponent implements OnInit {
         this.linkCurvinessGenerate();
         this.isDefaultData = false;
       }
+
+           /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = true;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
     } else {
       for (var i = 0; i < this.varaint_data.data.length; i++) {
         this.varaint_data.data[i].selected = "inactive";
@@ -524,7 +571,7 @@ export class FlowchartComponent implements OnInit {
           }
         }
     }
-    console.log("teat",this.endArray,this.startArray);
+    // console.log("teat",this.endArray,this.startArray);
     
     return this.linkdataArray;
   }
@@ -707,6 +754,7 @@ closeNav() { // Variant list Close
   this.isvariantListOpen=true;
   }
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
+    this.resetFilter=true;
     this.model1 = this.fullgraph_model
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1)
@@ -715,6 +763,16 @@ closeNav() { // Variant list Close
     this.linkCurvinessGenerate();
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
+    console.log("rest",this.model1);
+
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = true;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
+    
   }
   caseParcent(parcent){       // case persent value in variant list
   
@@ -801,6 +859,14 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.gradientApplyforLinks()
     this.gradientApplyforNode()
     this.linkCurvinessGenerate();
+
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = true;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = false;
   }else{
   var sliderGraphArray = [];
     graphData.data.allSelectData.nodeDataArraycase.filter(function (item) {
@@ -825,6 +891,13 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.gradientApplyforLinks()
     this.gradientApplyforNode();
     this.linkCurvinessGenerate();
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = false;
+      this.isSliderBPMN = true;
       }
     }
 
@@ -870,51 +943,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       }
     }
   }
-  // readselectedStartpoint(selectedStartpoints){
-  //   console.log("selectedStartpoints",selectedStartpoints);
-  //   this.model1=[];
-  //   this.model2=[];
-  //   this.filterModelArray=[];
-  //   this.filterModel2Array=[];
-  //   this.filterModelArray[0]=this.fullgraph_model[0]
-  //   selectedStartpoints.forEach(element => {
-  //     let key=this.getFromKey(element)
-  //     this.fullgraph_model.forEach(e=>{
-  //       if(e.name===element){
-  //         this.filterModelArray.push(e)
-  //       }
-  //     })
-  //     this.linkmodel2.forEach(elem=>{
-  //       if(key==elem.to){
-  //         this.filterModel2Array.push(elem) 
-  //       }
-  //     })
-  //   });   
-  // }
- 
-  // readselectedEndpoint(selectedEndpoint){
-  //   console.log("selectedEndpoint",selectedEndpoint);
-  //   selectedEndpoint.forEach(element => {
-  //     let key=this.getFromKey(element)
-  //     this.fullgraph_model.forEach(e=>{
-  //       if(e.name===element){
-  //         this.filterModelArray.push(e)
-  //       }
-  //     })
-  //     this.linkmodel2.forEach(elem=>{
-  //       if(key==elem.from){
-  //         this.filterModel2Array.push(elem) 
-  //       }
-  //     })
-  //   });
-  //   this.filterModelArray.push(this.fullgraph_model[this.fullgraph_model.length-1])
-  //   this.model1=this.filterModelArray;
-  //   // this.nodeAlignment();
-  //   this.model2=this.filterModel2Array
-  //   // this.linkCurvinessGenerate();
-  //   console.log("this.model1=",this.model1);
-  //   console.log("this.model2=",this.model2);
-  //   }
 
   cancel(){
     this.isActivity_dropdwn=false;
@@ -1141,7 +1169,9 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
       }
 
 }
-filterOverlay(){    //Filter overlay open on filter icon click
+filterOverlay(){  
+  this.dataValues = [];
+    //Filter overlay open on filter icon click
   for(var i=1;i<this.model1.length-1;i++){
     this.dataValues.push(this.model1[i])
     }
@@ -1157,32 +1187,82 @@ filterOverlay(){    //Filter overlay open on filter icon click
       this.closePopup();
     }
   }
-  readselectedEndpoint(selectedEndPoints){
-    // console.log(selectedEndPoints);
-    this.filterByEndpoint(selectedEndPoints)
-    
-  }
-  filterByEndpoint(SelectedActivities){   // filter process graph based on selected Activity (Node)
-    let endpoint_value=SelectedActivities;
-    this.model1=[]
-    this.model2=[]
-    this.isNodata=true;
-    let model3=[]
-    model3[0]=this.fullgraph_model[0]
-    for(var i=0;i<endpoint_value.length;i++){
-      for(var j=0;j<this.fullgraph_model.length;j++){
-        if(endpoint_value[i]==this.fullgraph_model[j].name){
-          model3.push(this.fullgraph_model[j])
-        }
+  readselectedStartpoints(startPointValue){
+    // console.log(startPointValue);
+    let nodeModel1=this.fullgraph_model;
+    let filterModel1=[];
+    let index;
+    filterModel1.push(nodeModel1[0]);
+    for(var i1=1;i1<nodeModel1.length-1;i1++){
+      if(nodeModel1[i1].name==startPointValue[0]){
+        filterModel1.push(nodeModel1[i1]);
+        index=i1
       }
     }
-    model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
-    this.model1=model3
-    this.nodeAlignment();
-    this.model2 = this.flowchartData(this.model1);
-    this.gradientApplyforLinks()
-    this.gradientApplyforNode()
-    this.linkCurvinessGenerateOne();
-    this.isActivity_dropdwn=false;
+    for(var i2=1;i2<nodeModel1.length-1;i2++){
+      if(i2!=index){
+        filterModel1.push(nodeModel1[i2]);
+      }
+    }
+    filterModel1.push(nodeModel1[nodeModel1.length-1]);
+    // this.model1=filterModel1
+    // console.log("this",filterModel1);
+    // this.filtermodel3=filterModel1
+    let modelArray2=this.linkmodel2
+    let filter_modelArray2:any=[]
+    if(startPointValue.length==0){
+      modelArray2.forEach(element => {
+        if(element.from==-1){
+          filter_modelArray2.push(element)
+        }
+        if(element.from!=-1&&element.to!=-2){
+          filter_modelArray2.push(element)
+        }
+      });
+    }else{
+      modelArray2.forEach(element => {
+        for(var i=0;i<startPointValue.length;i++){
+          if(element.from==-1 && element.to==this.getFromKeyOne(startPointValue[i])){
+            filter_modelArray2.push(element)
+          }
+        }
+        if(element.from!=-1&&element.to!=-2){
+          filter_modelArray2.push(element)
+        }
+      });
+      }
+    this.linkArraymodel=filter_modelArray2
+  }
+
+
+  readselectedEndpoint(selectedEndPoints){
+    let modelArray2=this.linkmodel2
+    if(selectedEndPoints.length==0){
+      modelArray2.forEach(element => {
+        if(element.to==-2){
+          this.linkArraymodel.push(element)
+        }
+      });
+    }else{  
+    modelArray2.forEach(element => {
+      for(var j=0;j<selectedEndPoints.length;j++){
+        if(element.from==this.getFromKeyOne(selectedEndPoints[j])&& element.to==-2){
+          this.linkArraymodel.push(element)
+        }
+      }
+    });
+  }
+    this.model2=this.linkArraymodel
+      this.gradientApplyforLinks()
+      this.gradientApplyforNode()
+      this.linkCurvinessGenerate(); 
+  }
+
+  getFromKeyOne(name) {
+    for (var i = 0; i < this.nodeArray.length; i++) {
+      if (name == this.nodeArray[i].name) {
+        return this.nodeArray[i].key;
+      }
+    }
   }
 }

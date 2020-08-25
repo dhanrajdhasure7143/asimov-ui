@@ -312,9 +312,17 @@ export class UploadProcessModelComponent implements OnInit {
         _self.spinner.show();
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
-        if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"])
+        bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
+        if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
+          bpmnModel["modifiedTimestamp"] = new Date();
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-        bpmnModel["bpmnModelModifiedTime"] = new Date();
+          bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
+        }
+        else{
+          bpmnModel["modifiedTimestamp"] = new Date();
+          bpmnModel["createdTimestamp"] = new Date();
+        }
+        
         _self.autoSaveDiagram(bpmnModel);  
       }
     });
@@ -436,7 +444,6 @@ export class UploadProcessModelComponent implements OnInit {
           'Your changes has been saved and submitted for approval successfully.',
           'success'
         );
-        _self.router.navigateByUrl("/pages/approvalWorkflow/home");
       },err => {
         _self.isLoading = false;
         Swal.fire(

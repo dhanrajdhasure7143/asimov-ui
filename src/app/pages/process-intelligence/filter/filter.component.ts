@@ -18,6 +18,7 @@ export class FilterComponent implements OnInit {
   @Input() startArray:any=[];
   @Input() endArray:any=[];
   @Input() public fetchData;
+  @Input() public resetFilter:boolean;
   @Output() selectedNodes=new EventEmitter<any[]>();
   @Output() applyFilterValue=new EventEmitter<boolean>();
   @Output() selectedStartpoints=new EventEmitter<any[]>();
@@ -52,7 +53,6 @@ export class FilterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("this,this.",this.startArray,this.endArray);
     for(var i=0;i<this.startArray.length;i++){
       var obj={};
       obj["name"]=this.startArray[i];
@@ -66,13 +66,27 @@ export class FilterComponent implements OnInit {
       this.endPointArray.push(obj)
     }
     
+    
+    this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
+  }
+  ngOnChanges(){    
+    this.dataValuesNames = [];
     for(var i=0;i<this.dataValues.length;i++){
       var obj={};
       obj["name"]=this.dataValues[i].name;
       obj["selected"]="inactive";
       this.dataValuesNames.push(obj)
     }
-    this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
+    if(this.resetFilter==true){
+      this.startPointArray.forEach(e=>{
+        e.selected="inactive"
+      })
+      this.endPointArray.forEach(elem=>{
+        elem.selected="inactive"
+      })
+      this.isStartPoint=false;
+      this.isEndPoint=false;
+    }
   }
 
 loopTrackBy(index, term){
@@ -140,7 +154,6 @@ channgeFilter(){
     this.isActivity=false;
     this.isEndpoint=true;
   }
-  
 }
 selectedStartPoint(data,index){
   if(data.selected=="inactive"){
@@ -161,7 +174,6 @@ selectedStartPoint(data,index){
     var selectedstartPoints=[]
     var selectedEndPoints1=[]
     var selectedstartPoints1=[]
-    let endPointsArray:any=[]
     this.startPointArray.forEach(element => {
       selectedstartPoints1.push(element.name)
         if(element.selected==="active"){
@@ -174,25 +186,8 @@ selectedStartPoint(data,index){
           selectedEndPoints.push(element.name)
         }
       })
-
-      if(selectedstartPoints.length==0){
-        endPointsArray=selectedstartPoints1
-      }else{
-        endPointsArray=selectedstartPoints
-      }
-      if(selectedEndPoints.length==0){
-        selectedEndPoints1.forEach(e=>{
-          endPointsArray.push(e)
-        })
-      }else{
-        selectedEndPoints.forEach(e=>{
-          endPointsArray.push(e)
-        })
-      }
-      // console.log(endPointsArray);
-      
-        this.selectedEndpoints.emit(endPointsArray);
-      
+      this.selectedStartpoints.emit(selectedstartPoints);
+      this.selectedEndpoints.emit(selectedEndPoints);
       this.applyFilterValue.emit(true)
   }
   onStartPoint(){
