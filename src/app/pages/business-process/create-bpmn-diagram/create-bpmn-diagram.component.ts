@@ -315,7 +315,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnProcessApproved = 0;
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
-      bpmnModel.bpmnJsonNotation = final_notation;
+      // bpmnModel.bpmnJsonNotation = final_notation;
       bpmnModel.bpmnXmlNotation = final_notation;
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{

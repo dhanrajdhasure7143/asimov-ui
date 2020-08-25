@@ -157,7 +157,7 @@ this.selectedrow =i;
     this.disable_panels();
     this.approver_info={
       "approverName": data.approverName,
-      "bpmnJsonNotation": data.bpmnJsonNotation,
+      // "bpmnJsonNotation": data.bpmnJsonNotation,
       "bpmnModelId": data.bpmnModelId,
       "bpmnProcessApproved": data.bpmnProcessApproved,
       "bpmnProcessName": data.bpmnProcessName, 
@@ -237,7 +237,7 @@ this.selectedrow =i;
         "userName": data.userName,
         "bpmnXmlNotation":data.bpmnXmlNotation,
         "approverName": data.approverName,
-        "bpmnJsonNotation":data.bpmnJsonNotation,
+        // "bpmnJsonNotation":data.bpmnJsonNotation,
         "processIntelligenceId": data.processIntelligenceId,
         "category": data.category
       },

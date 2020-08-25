@@ -1,3 +1,6 @@
+
+
+
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -594,11 +597,9 @@ export class FlowchartComponent implements OnInit {
   }
 
 generateBpmn(){
-console.log(this.isFullGraphBPMN+">>>>"+this.isSingleTraceBPMN+">>>>>"+this.isMultiTraceBPMN+">>>>>"+this.isSliderBPMN);
-  // this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
-  // this.bpmnservice.setNewDiagName('pizza-collaboration');
-  // this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true}})
-}
+  this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
+  this.bpmnservice.setNewDiagName('pizza-collaboration');
+  this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:201020}})} //this.graphIds
   
 loopTrackBy(index, term){
   return index;

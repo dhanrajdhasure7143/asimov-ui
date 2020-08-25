@@ -1,3 +1,6 @@
+
+
+
 import { Component, OnInit ,ViewChild,TemplateRef} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
@@ -65,6 +68,8 @@ export class UploadProcessModelComponent implements OnInit {
   autosavedDiagramList = [];
   updated_date_time;
   keyboardLabels=[];
+  pid:any;
+  pivalues:any
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
@@ -78,16 +83,25 @@ export class UploadProcessModelComponent implements OnInit {
       this.selected_modelId = params['bpsId'];
       this.selected_version = params['ver'];
       this.isShowConformance = params['isShowConformance'] == 'true';
+      this.pid=params['pid'];
+
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
     if(!this.isShowConformance)
       this.getUserBpmnList(null);
+ else
+    this.fetchBpmnNotationFromPI();
     this.getApproverList();
    }
 
    ngAfterViewInit(){
     if(this.isShowConformance)
       this.initiateDiagram();
+   }
+   fetchBpmnNotationFromPI(){
+     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{this.pivalues=res
+      console.log(this.pivalues)
+})
    }
 
    async getUserBpmnList(isFromConf){
@@ -167,6 +181,7 @@ export class UploadProcessModelComponent implements OnInit {
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
         keyboard: {
           bindTo: window
+
         }
       });
       this[modeler_obj].on('element.changed', function(){
@@ -178,8 +193,9 @@ export class UploadProcessModelComponent implements OnInit {
         }
       })
       if(this.isShowConformance && !this.reSize){ 
-        this.rest.getBPMNFileContent("assets/resources/pizza-collaboration.bpmn").subscribe(res => {
-          this[modeler_obj].importXML(res, function(err){
+        this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res => {
+        
+          this[modeler_obj].importXML(atob(unescape(encodeURIComponent(res['data']))), function(err){
             if(err){
               return console.error('could not import BPMN 2.0 notation', err);
             }
@@ -418,7 +434,7 @@ export class UploadProcessModelComponent implements OnInit {
    this[modeler_obj].saveXML({ format: true }, function(err, xml) {
     let final_notation = btoa(unescape(encodeURIComponent(xml)));
      bpmnModel.bpmnXmlNotation = final_notation;
-     bpmnModel.bpmnJsonNotation = final_notation;
+    //  bpmnModel.bpmnJsonNotation = final_notation;
      _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
       data=>{
         _self.isDiagramChanged = false;
