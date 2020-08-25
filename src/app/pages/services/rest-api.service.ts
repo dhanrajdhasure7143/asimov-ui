@@ -1,3 +1,6 @@
+
+
+
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -231,6 +234,9 @@ export class RestApiService{
   {
     let id=process;
     return this.http.get("/rpa-service/load-process-info/"+id);
+  }
+  fetchBpmnNotationFromPI(pid){
+    return this.http.get("/bpsprocess/pi/generated/bpmn/"+pid+"/user")
   }
 
 
