@@ -17,7 +17,7 @@
         <div class="col-md-3 ">
           <mat-form-field>
             <mat-label>Search Workspace</mat-label>
-            <input class="toolbar-search" type="text" matInput [(ngModel)]="searchTerm">
+            <input class="toolbar-search" type="text" matInput [(ngModel)]="term">
             <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
           </mat-form-field>
         </div>
@@ -34,7 +34,7 @@
       </div>
       <div class="row col-md-12"  id="bpmn_list">
         <mat-accordion>
-          <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: searchTerm | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
+          <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: term | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12" id="bpmn_list_row">

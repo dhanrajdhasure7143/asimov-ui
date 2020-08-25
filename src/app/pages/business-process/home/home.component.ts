@@ -20,7 +20,7 @@ export class BpsHomeComponent implements OnInit {
   saved_diagrams:any[] = [];
   bkp_saved_diagrams:any[] = [];
   p: number = 1;
-  searchTerm = "";
+  term = "";
   isLoading:boolean = false;
   sortedData:any;
   data;

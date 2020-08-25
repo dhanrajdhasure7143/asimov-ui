@@ -319,7 +319,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
             'Your changes has been saved and submitted for approval successfully.',
             'success'
           );
-       _self.router.navigateByUrl("/pages/approvalWorkflow/home");
         },err => {
           _self.isLoading = false;
           Swal.fire(
