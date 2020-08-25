@@ -434,7 +434,7 @@ export class UploadProcessModelComponent implements OnInit {
    this[modeler_obj].saveXML({ format: true }, function(err, xml) {
     let final_notation = btoa(unescape(encodeURIComponent(xml)));
      bpmnModel.bpmnXmlNotation = final_notation;
-     bpmnModel.bpmnJsonNotation = final_notation;
+    //  bpmnModel.bpmnJsonNotation = final_notation;
      _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
       data=>{
         _self.isDiagramChanged = false;
