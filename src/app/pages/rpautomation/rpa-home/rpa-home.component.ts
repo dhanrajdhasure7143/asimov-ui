@@ -19,8 +19,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./rpa-home.component.css']
 })
 export class RpaHomeComponent implements OnInit {
-
-  displayedColumns: string[] = ["botName","botType","department","botStatus"];
+  filterSelectObj = [];
+  filterValues = {};
+  displayedColumns: string[] = ["botName","version","botType","department","botStatus"];
   
   displayedColumns2: string[] = ["processName","taskName","Assign","Operations"];
   dataSource1:MatTableDataSource<any>;
@@ -38,7 +39,24 @@ export class RpaHomeComponent implements OnInit {
   @ViewChild("sort2",{static:false}) sort2: MatSort;
  
   constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Home_Hints,)
-  { }
+  { 
+     // Object to create Filter for
+     this.filterSelectObj = [
+      {
+        name: 'Bot Name',
+        columnProp: 'botName',
+        options: []
+      }, {
+        name: 'Type',
+        columnProp: 'botType',
+        options: []
+      }, {
+        name: 'Category',
+        columnProp: 'department',
+        options: []
+      }
+    ]
+  }
 
 
 
@@ -56,7 +74,7 @@ export class RpaHomeComponent implements OnInit {
     }
 
     let processId=undefined;
-  
+    //this.dataSource1.filterPredicate = this.createFilter();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Home"});
     
@@ -87,11 +105,8 @@ export class RpaHomeComponent implements OnInit {
 
 
  }
-  
- 
- 
- 
 
+ 
   ngAfterViewInit() {
    
   }
@@ -112,13 +127,106 @@ export class RpaHomeComponent implements OnInit {
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
+      
+      this.filterSelectObj.filter((o) => {
+        response.forEach(x => 
+          {
+         if(x.botType == 0)
+         {
+           x.botType="Attended"
+         }
+         if(x.botType == 1)
+         {
+          x.botType="Unattended"
+         }
+        });
+
+        response.forEach(x =>
+          {
+            if(x.department == 1)
+            {
+              x.department = "Development";
+            }
+            if(x.department == 2)
+            {
+              x.department = "Hr";
+            }
+            if(x.department == 3)
+            {
+              x.department = "QA";
+            }
+          })
+        o.options = this.getFilterObject(response, o.columnProp);
+      });
       if(this.selectedTab==0)  
       this.rpa_studio.spinner.hide()
-    })
-
-   
+    })   
   }
 
+  
+ getFilterObject(fullObj, key) {
+    const uniqChk = [];
+    fullObj.filter((obj) => {
+      if (!uniqChk.includes(obj[key])) {
+        uniqChk.push(obj[key]);
+      }
+      return obj;
+    });
+    return uniqChk;
+  }
+
+   // Called on Filter change
+   filterChange(filter, event) {
+    //let filterValues = {}
+    console.log(filter.columnProp);
+    this.filterValues[filter.columnProp] = event.target.value.trim().toLowerCase()
+    console.log(this.filterValues);
+    this.dataSource1.filterPredicate = this.createFilter();
+    this.dataSource1.filter = JSON.stringify(this.filterValues)
+  }
+
+  // Custom filter method fot Angular Material Datatable
+  createFilter() {
+    let filterFunction = function (data: any, filter: string): boolean {
+      let searchTerms = JSON.parse(filter);
+      let isFilterSet = false;
+      for (const col in searchTerms) {
+        if (searchTerms[col].toString() !== '') {
+          isFilterSet = true;
+        } else {
+          delete searchTerms[col];
+        }
+      }
+
+      console.log(searchTerms);
+
+      let nameSearch = () => {
+        let found = false;
+        if (isFilterSet) {
+          for (const col in searchTerms) {
+            searchTerms[col].trim().toLowerCase().split(' ').forEach(word => {
+              if (data[col].toString().toLowerCase().indexOf(word) != -1 && isFilterSet) {
+                found = true
+              }
+            });
+          }
+          return found
+        } else {
+          return true;
+        }
+      }
+      return nameSearch()
+    }
+    return filterFunction
+  }
+
+  resetFilters() {
+    this.filterValues = {}
+    this.filterSelectObj.forEach((value, key) => {
+      value.modelValue = undefined;
+    })
+    this.dataSource1.filter = "";
+  }
 
   getautomatedtasks(process)
   {
@@ -184,6 +292,7 @@ export class RpaHomeComponent implements OnInit {
     console.log(filterValue);
     this.dataSource1.filter = filterValue;
   }
+  
 
 
   createoverlay()
@@ -193,11 +302,11 @@ export class RpaHomeComponent implements OnInit {
     //document.getElementById("create-bot").style.display ="block";
   }
 
-  openload()
+  /*openload()
   {
     
     document.getElementById("load-bot").style.display ="block";
-  }
+  }*/
 
 
   close()

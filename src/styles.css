@@ -11,6 +11,10 @@ body, html {
 }
 .breadcrumb{
     background-color: white !important;
+    padding: 4px 22px;
+    margin-bottom: 1px;
+    list-style: none;
+    border-radius: 4px;
 }
 .navbar-fixed-top{
   z-index: 1000 !important;
@@ -479,4 +483,17 @@ div#tooltip_template.tooltip-panel p:first-child {
   stroke: #4c4c4c;
   fill: none;
   stroke-width: 1.5px;
+}
+.module-heading .breadcrumb {
+  background-color: transparent !important;
+  padding: 3px 10px;
+  margin-bottom: 0px;
+  color: #2676cf;
+}
+.breadcrumb>li+li:before {
+  display: none;
+}
+.module-heading .breadcrumb a {
+  color: #2676cf;
+  padding: 0px 10px;
 }

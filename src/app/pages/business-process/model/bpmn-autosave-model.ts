@@ -4,7 +4,7 @@ export class BpmnModel{
     modifiedTimestamp:Date = new Date();
     bpmnTempId:number;
     approverName:string = "";
-    bpmnJsonNotation:string;
+    // bpmnJsonNotation:string;
     bpmnNotationAutomationTask:string;
     bpmnNotationHumanTask:string;
     bpmnProcessApproved:number;

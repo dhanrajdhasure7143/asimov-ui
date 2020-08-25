@@ -132,7 +132,8 @@
                                         </div>
                                         <div>
                                         <label for="hostname">Host Name / IP</label>
-                                        <input type="text" name="hostname" #hostname="ngModel" [(ngModel)]="dbDetails.hostName" class="form-control" placeholder="Enter Host Name" required/>
+                                        <input type="text" name="hostname" #hostname="ngModel" [(ngModel)]="dbDetails.hostName" class="form-control" placeholder="Enter Host Name" required (change)="getDBTables()" 
+                                        [readonly]="!dbDetails.dbType || !dbDetails.portNumber || !dbDetails.dbName || !dbDetails.userName || !dbDetails.password"/>
                                         <span *ngIf="((hostname.invalid && database.submitted) || (hostname.errors && hostname.touched) )" 
                                                 class='fa fa-info-circle errspan'> Host Name/IPis required </span>
                                         </div>
@@ -165,7 +166,12 @@
                                         </div>
                                         <div>
                                         <label for="tablename">Table Name</label>
-                                        <input type="text" name="tablename" #tablename='ngModel' [(ngModel)]='dbDetails.tableName' class="form-control" placeholder="Enter Table Name" required/>
+                                        <select [disabled]="!dbDetails.hostName" class="form-control" name="tablename" id="tablename" #tablename='ngModel' [(ngModel)]="dbDetails.tableName" required>
+                                                <option [value]="undefined" disabled hidden>Select Table Name</option>
+                                                <option *ngFor="let tName of tableList" value="{{tName}}">{{tName}}</option>
+                                               
+                                        </select>
+                                        <!-- <input type="text" name="tablename" #tablename='ngModel' [(ngModel)]='dbDetails.tableName' class="form-control" placeholder="Enter Table Name" required/> -->
                                         <span *ngIf="((tablename.invalid && database.submitted) || (tablename.errors && tablename.touched) )" 
                                                 class='fa fa-info-circle errspan'> Table Name is required </span>
                                         </div>
@@ -186,11 +192,11 @@
                                         </div>
                                         <div>
                                                 <label for="increase">Mode</label>
-                                                <select name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
+                                                <select [disabled]="!dbDetails.tableName" name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
                                                         <option [value]="undefined" disabled hidden>Select Mode</option>
                                                         <option value="incrementing">Incrementing</option>
                                                         <option value="timestamp">Timestamp</option>
-                                                        <option value="incrementingwithTmestamp">Incrementing with Timestamp</option>
+                                                        <option value="timestamp+incrementing">Incrementing with Timestamp</option>
                                                 </select> 
                                                 <span *ngIf="((increase.invalid && database.submitted) || (increase.errors && increase.touched) )" 
                                                 class='fa fa-info-circle errspan'> Mode is required </span>

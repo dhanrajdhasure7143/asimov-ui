@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import * as XLSX from 'xlsx';
 import { NgxXml2jsonService } from 'ngx-xml2json';
@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
+import { APP_CONFIG } from 'src/app/app.config';
 
 declare var target: any;
 @Component({
@@ -55,6 +56,7 @@ export class UploadComponent implements OnInit {
   isIncrement: boolean=false;
   isTimestammp: boolean=false;
   connectionResp:any;
+  tableList:any = [];
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -62,7 +64,8 @@ export class UploadComponent implements OnInit {
     private global: GlobalScript,
     private hints: PiHints,
     private ngxXml2jsonService: NgxXml2jsonService,
-    private notifier:NotifierService) {  }
+    private notifier:NotifierService,
+    @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -420,10 +423,10 @@ export class UploadComponent implements OnInit {
     searcgraph.style.display = "block";
   }
   changeType(){
-    this.dbDetails.hostName="10.11.0.104"
+    //this.dbDetails.hostName=this.config.dbHostName //10.11.0.104-QA
     this.dbDetails.portNumber="5432"
-    this.dbDetails.dbName="asimov_aiotal"
-    this.dbDetails.tableName="public.accounts_payable"
+    this.dbDetails.dbName=this.config.dbName // eiap_qa - QA
+   // this.dbDetails.tableName="public.accounts_payable"
   }
   onChangeMode(value){
     if(value=="incrementing"){
@@ -464,7 +467,7 @@ testDbConnection(){
       "numeric.mapping": "best_fit",
       "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
       "poll.interval.ms": 3600000,
-      "topic.prefix": "topqconnector-"+this.processId,
+      "topic.prefix": this.config.piConnector+"connector-"+this.processId,
       "quote.sql.identifiers": "ALWAYS",
       // "table.whitelist": "public.accounts_payable",
       "table.whitelist": this.dbDetails.tableName,
@@ -508,7 +511,8 @@ testDbConnection(){
         modekey="timestamp.column.name"
         connectorBody[modekey]=this.dbDetails.timestamp
       }
-    
+
+   
     this.rest.getJDBCConnectorConfig(connectorBody).subscribe(res => {this.connectionResp=res
       
       if(this.connectionResp.data.length==0){
@@ -557,7 +561,7 @@ generateGraph(e){
     "numeric.mapping": "best_fit",
     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
     "poll.interval.ms": 3600000,
-    "topic.prefix": "topqconnector-"+this.processId,
+    "topic.prefix": this.config.piConnector+"connector-"+this.processId,
     "quote.sql.identifiers": "ALWAYS",
     // "table.whitelist": "public.accounts_payable",
     "table.whitelist": this.dbDetails.tableName,
@@ -604,6 +608,30 @@ generateGraph(e){
   this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
     this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
 })
+}
+getDBTables(){
+ var reqObj =  {
+    "dbType": this.dbDetails.dbType,
+    "password": this.dbDetails.password,
+    "url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
+    "userName": this.dbDetails.userName
+  }
+  this.rest.getDBTableList(reqObj)
+    .subscribe(res => {
+     // console.log(res)
+      var tData: any = res;
+      if(tData.data.length != 0){
+        this.tableList = tData.data;
+      }
+    },
+    (err=>{
+      this.tableList = [];
+    
+      this.notifier.show({
+        type: 'error',
+        message: err.error.message
+    });
+    }))
 }
 }
 
