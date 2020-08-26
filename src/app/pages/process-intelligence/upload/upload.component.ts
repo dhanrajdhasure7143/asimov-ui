@@ -167,11 +167,11 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
-      console.log("excelfile",excelfile,excelfile[1]);
-      if(excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)){
+      // console.log("excelfile",excelfile,excelfile[1]);
+      if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
         Swal.fire({
           title: 'Error',
-          text: 'No data found in file!',
+          text: 'No data found in uploaded file!',
           icon: 'error',
         })
       }else{
@@ -195,7 +195,7 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(csvRecordsArray);
       let excelfile = [];
       excelfile = csvRecordsArray;
-      if(excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)){
+      if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
         Swal.fire({
           title: 'Error',
           text: 'No data found in uploaded file!',
@@ -302,10 +302,10 @@ export class UploadComponent implements OnInit {
       _self.dt.changePiData(xesData)
       // console.log("xesData",xesData);
       
-      if(xesData[0].length==0 && xesData[1].length==0){
+      if(xesData.length<=2||(xesData[0].length==0 && xesData[1].length==0)){
         Swal.fire({
           title: 'Error',
-          text: 'No data found in file!',
+          text: 'No data found in uploaded file!',
           icon: 'error',
         })
       }else{
@@ -610,6 +610,7 @@ generateGraph(e){
 })
 }
 getDBTables(){
+  this.dbDetails.tableName=null;
  var reqObj =  {
     "dbType": this.dbDetails.dbType,
     "password": this.dbDetails.password,
@@ -632,7 +633,15 @@ getDBTables(){
         message: err.error.message
     });
     }))
+    this.onChangeTable()
 }
+  onChangeTable(){
+    this.dbDetails.mode=undefined;
+    this.dbDetails.increment=undefined;
+    this.dbDetails.timestamp=undefined;
+    this.isTimestammp=false;
+    this.isIncrement=false;
+  }
 }
 
 
