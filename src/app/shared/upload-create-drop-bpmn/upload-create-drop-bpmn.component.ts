@@ -88,10 +88,12 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   }
 
   initialSave(diagramModel:BpmnModel, target:string){
+    let message;
     diagramModel.createdTimestamp = new Date();
     diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
-      let isBPSHome = this.router.url == "/pages/businessProcess/home";
+      if(res['errorCode']!="2005"){
+        let isBPSHome = this.router.url == "/pages/businessProcess/home";
       if(!isBPSHome){
         this.bpmnservice.changeConfNav(true);
         this.update.emit(true);
@@ -100,9 +102,15 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       }else{
         if(target == "create"){
             this.router.navigateByUrl('/pages/businessProcess/createDiagram');
-        }else if(target == "upload"){
+        }
+      }
+         if(target == "upload"){
             this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: false}});
         }
+      }
+      else{
+        message = "ProcessName already exists ";
+      this.global.notify(message,"error");
       }
     });
   }
