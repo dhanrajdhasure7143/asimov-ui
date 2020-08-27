@@ -41,7 +41,7 @@ export class RestApiService{
   public ipAddress:string; 
 
   getAccessToken(){
-    let data = {"userId":"nagaraju.joneboina@epsoftinc.com",
+    let data = {"userId":"venkata.simhadri@epsoftinc.com",
                 "password":"Welcome@123"};
 
   
@@ -305,11 +305,16 @@ export class RestApiService{
   }
 
   getMultiTraceBPMN(body){
-    return this.http.get('/processintelligence/v1/bpmn/MultipleTraces?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumberList ='+body.traceNumberList)
+    var tracNo = '';
+    for(var i=0;i<body.traceNumberList.length;i++){
+      tracNo+='&traceNumberList='+body.traceNumberList[i]
+    }
+
+    return this.http.get('/processintelligence/v1/bpmn/MultipleTraces?pi_id='+body.pid+'&pi_name='+body.pname+tracNo)
   }
 
   getSliderTraceBPMN(body){
-    return this.http.get('/processintelligence/v1/bpmn/SliderTraces?pi_id='+body.pid+'&pi_name='+body.pname+'&activitySlider ='+body.activitySlider+'&pathSlider='+body.pathSlider)
+    return this.http.get('/processintelligence/v1/bpmn/SliderTraces?activitySlider='+body.activitySlider+'&pathSlider='+body.pathSlider+'&pi_id='+body.pid+'&pi_name='+body.pname)
   }
 
   // PI To BPMN API's END

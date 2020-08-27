@@ -132,6 +132,7 @@ export class FlowchartComponent implements OnInit {
   isMultiTraceBPMN:boolean = false;
   isSliderBPMN:boolean = false;
   selectedTraceNumbers:any = [];
+  loaderImgSrc:string;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -162,7 +163,7 @@ export class FlowchartComponent implements OnInit {
   
 
   ngOnInit() {
-    this.spinner.show();
+   
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/flowChart", "title": "Process Graph" });
     this.dt.changeHints(this.hints.processGraphHints);
@@ -177,7 +178,10 @@ export class FlowchartComponent implements OnInit {
           this.wpiIdNumber = parseInt(params['wpiId']);
           piId=this.wpiIdNumber;
           this.graphIds = piId;
+          this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
+          this.spinner.show();
           setTimeout(() => {
+           
             this.onchangegraphId(piId);
             }, 500);
         }
@@ -185,7 +189,10 @@ export class FlowchartComponent implements OnInit {
         this.piIdNumber = parseInt(params['piId']);
         piId=this.piIdNumber;
         this.graphIds = piId;
+        this.loaderImgSrc = "/assets/images/PI/loader_vr_1.gif"; 
+        this.spinner.show();
         setTimeout(() => {
+        
           this.onchangegraphId(piId);
         }, 6*60*1000);
       }
@@ -200,6 +207,7 @@ export class FlowchartComponent implements OnInit {
   }
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isNodata=true;
+    
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
       if (token) {
@@ -602,50 +610,64 @@ export class FlowchartComponent implements OnInit {
   }
 
   generateBpmn() {
-    console.log(this.isFullGraphBPMN + ">>>>>>" + this.isSingleTraceBPMN + ">>>>>>>>" + this.isMultiTraceBPMN + ">>>>>>>" + this.isSliderBPMN);
+    let categoryName = this.getPCategoryFromPID(this.graphIds)
     if (this.isFullGraphBPMN == true) {
-      console.log("in full graph bpmn");
       var reqObj = {
         pid: this.graphIds,
         pname: this.getPNameFromPID(this.graphIds)
       }
       this.rest.getFullGraphBPMN(reqObj)
-        .subscribe(res => {
-          console.log(res)
-          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds}})
-
+        .subscribe((res:any) => {          
+          if(res.data != null){
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName}})
+          } else{
+            Swal.fire(
+              'Oops!',
+              'Failed to BPMN Notation, Please try again later.',
+              'error'
+            );
+          }
         })
 
     } else if (this.isSingleTraceBPMN == true) {
-      console.log("single trace" + this.selectedTraceNumbers);
       var reqObj1 = {
         pid: this.graphIds,
         pname: this.getPNameFromPID(this.graphIds),
         traceNumber: this.selectedTraceNumbers[0]
       }
       this.rest.getSingleTraceBPMN(reqObj1)
-        .subscribe(res => {
-          console.log(res)
-          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds}})
-
+        .subscribe((res:any) => {
+          if(res.data != null){
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName}})
+            } else{
+              Swal.fire(
+                'Oops!',
+                'Failed to BPMN Notation, Please try again later.',
+                'error'
+              );
+            }
         })
 
     } else if (this.isMultiTraceBPMN == true) {
-      console.log("multi trace");
       var reqObj2 = {
         pid: this.graphIds,
         pname: this.getPNameFromPID(this.graphIds),
         traceNumberList: this.selectedTraceNumbers
       }
       this.rest.getMultiTraceBPMN(reqObj2)
-        .subscribe(res => {
-          console.log(res)
-          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds}})
-
+        .subscribe((res:any) => {
+          if(res.data != null){
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName}})
+            } else{
+              Swal.fire(
+                'Oops!',
+                'Failed to BPMN Notation, Please try again later.',
+                'error'
+              );
+            }
         })
 
     } else if (this.isSliderBPMN == true) {
-      console.log("slider bpmn");
       var reqObj3 = {
         pid: this.graphIds,
         pname: this.getPNameFromPID(this.graphIds),
@@ -653,10 +675,16 @@ export class FlowchartComponent implements OnInit {
         pathSlider: this.pathvalue
       }
       this.rest.getSliderTraceBPMN(reqObj3)
-        .subscribe(res => {
-          console.log(res)
-          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds}})
-
+        .subscribe((res:any) => {
+          if(res.data != null){
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName}})
+            } else{
+              Swal.fire(
+                'Oops!',
+                'Failed to BPMN Notation, Please try again later.',
+                'error'
+              );
+            }
         })
     }
     // this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
@@ -672,6 +700,16 @@ getPNameFromPID(pnumber){
     }
   });
   return piname;
+}
+
+getPCategoryFromPID(pnumber){
+  var piCategory = '';
+  this.process_graph_list.data.forEach(pData => {
+    if(pData.piId == pnumber){
+      piCategory = pData.categoryName
+    }
+  });
+  return piCategory;
 }
 
 
