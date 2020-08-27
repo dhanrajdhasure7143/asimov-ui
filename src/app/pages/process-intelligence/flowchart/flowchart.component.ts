@@ -131,6 +131,7 @@ export class FlowchartComponent implements OnInit {
   isSingleTraceBPMN:boolean = false;
   isMultiTraceBPMN:boolean = false;
   isSliderBPMN:boolean = false;
+  selectedTraceNumbers:any = [];
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -314,6 +315,7 @@ export class FlowchartComponent implements OnInit {
         days: selectedData.days,
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
+        trace_number:selectedData.trace_number,
         selected: "active"
       };
       this.isvaraintPlay=true;
@@ -327,6 +329,7 @@ export class FlowchartComponent implements OnInit {
         days: selectedData.days,
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
+        trace_number:selectedData.trace_number,
         selected: "inactive"
       };
       this.isvaraintPlay=false;
@@ -334,10 +337,12 @@ export class FlowchartComponent implements OnInit {
     }
 
     this.selectedCaseArry = [];
+    this.selectedTraceNumbers = [];
     for (var i = 0; i < this.varaint_data.data.length; i++) {
       if (this.varaint_data.data[i].selected == "active") {
         var casevalue = this.varaint_data.data[i].case
         this.selectedCaseArry.push(casevalue);
+        this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
       }
     };
     this.caselength = this.selectedCaseArry.length;
@@ -596,11 +601,80 @@ export class FlowchartComponent implements OnInit {
     this.isedgespinner= !this.isedgespinner;
   }
 
-generateBpmn(){
-  this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
-  this.bpmnservice.setNewDiagName('pizza-collaboration');
-  this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:201020}})} //this.graphIds
+  generateBpmn() {
+    console.log(this.isFullGraphBPMN + ">>>>>>" + this.isSingleTraceBPMN + ">>>>>>>>" + this.isMultiTraceBPMN + ">>>>>>>" + this.isSliderBPMN);
+    if (this.isFullGraphBPMN == true) {
+      console.log("in full graph bpmn");
+      var reqObj = {
+        pid: this.graphIds,
+        pname: this.getPNameFromPID(this.graphIds)
+      }
+      this.rest.getFullGraphBPMN(reqObj)
+        .subscribe(res => {
+          console.log(res)
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds}})
+
+        })
+
+    } else if (this.isSingleTraceBPMN == true) {
+      console.log("single trace" + this.selectedTraceNumbers);
+      var reqObj1 = {
+        pid: this.graphIds,
+        pname: this.getPNameFromPID(this.graphIds),
+        traceNumber: this.selectedTraceNumbers[0]
+      }
+      this.rest.getSingleTraceBPMN(reqObj1)
+        .subscribe(res => {
+          console.log(res)
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds}})
+
+        })
+
+    } else if (this.isMultiTraceBPMN == true) {
+      console.log("multi trace");
+      var reqObj2 = {
+        pid: this.graphIds,
+        pname: this.getPNameFromPID(this.graphIds),
+        traceNumberList: this.selectedTraceNumbers
+      }
+      this.rest.getMultiTraceBPMN(reqObj2)
+        .subscribe(res => {
+          console.log(res)
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds}})
+
+        })
+
+    } else if (this.isSliderBPMN == true) {
+      console.log("slider bpmn");
+      var reqObj3 = {
+        pid: this.graphIds,
+        pname: this.getPNameFromPID(this.graphIds),
+        activitySlider: this.activityValue,
+        pathSlider: this.pathvalue
+      }
+      this.rest.getSliderTraceBPMN(reqObj3)
+        .subscribe(res => {
+          console.log(res)
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds}})
+
+        })
+    }
+    // this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
+    // this.bpmnservice.setNewDiagName('pizza-collaboration');
+  } 
   
+
+getPNameFromPID(pnumber){
+  var piname = '';
+  this.process_graph_list.data.forEach(pData => {
+    if(pData.piId == pnumber){
+      piname = pData.piName
+    }
+  });
+  return piname;
+}
+
+
 loopTrackBy(index, term){
   return index;
 }

@@ -294,6 +294,27 @@ export class RestApiService{
     return this.http.post('/processintelligence/v1/processgraph/pi/tenant/db/list/tables', body)
   }
 
+// PI To BPMN API's START
+
+  getFullGraphBPMN(body){
+    return this.http.get('/processintelligence/v1/bpmn/FullGraph?pi_id='+body.pid+'&pi_name='+body.pname)
+  }
+
+  getSingleTraceBPMN(body){
+    return this.http.get('/processintelligence/v1/bpmn/SingleTrace?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumber='+body.traceNumber)
+  }
+
+  getMultiTraceBPMN(body){
+    return this.http.get('/processintelligence/v1/bpmn/MultipleTraces?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumberList ='+body.traceNumberList)
+  }
+
+  getSliderTraceBPMN(body){
+    return this.http.get('/processintelligence/v1/bpmn/SliderTraces?pi_id='+body.pid+'&pi_name='+body.pname+'&activitySlider ='+body.activitySlider+'&pathSlider='+body.pathSlider)
+  }
+
+  // PI To BPMN API's END
+
+
   getProcessStatistics()
   { 
     return this.http.get("/rpa-service/process-statistics")
