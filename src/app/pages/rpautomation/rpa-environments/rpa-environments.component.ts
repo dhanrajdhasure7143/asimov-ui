@@ -24,6 +24,9 @@ import { NgxSpinnerService } from "ngx-spinner";
   export class RpaenvironmentsComponent implements  OnInit{
     displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","username","password","connectionType","portNumber","createdTimeStamp","createdBy","activeStatus","deployStatus"];
     dataSource1:MatTableDataSource<any>;
+    public isDataSource: boolean;  
+    @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+    @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild('closebutton', {static: false}) closebutton  
     @ViewChild(DataTableDirective,{static: false}) dtElement: DataTableDirective;
     @Output()
@@ -69,8 +72,8 @@ import { NgxSpinnerService } from "ngx-spinner";
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-        connectionType: [{value:"SSH", disabled: true},Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-        portNumber: [{value:"22", disabled: true},  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+        connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
         activeStatus: [true]
        
     })
@@ -82,8 +85,8 @@ import { NgxSpinnerService } from "ngx-spinner";
       hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-      connectionType: [{value:"SSH", disabled: true},Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-      portNumber: [{value:"22", disabled: true},  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+      connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+      portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
       activeStatus: [""]
     
     })
@@ -122,6 +125,9 @@ import { NgxSpinnerService } from "ngx-spinner";
         }
         console.log(this.environments)
         this.dataSource1= new MatTableDataSource(this.environments);
+        this.isDataSource = true;
+        this.dataSource1.sort=this.sort1;
+        this.dataSource1.paginator=this.paginator1;
         this.spinner.hide();
       });
   }

@@ -76,7 +76,7 @@ export class RpaHomeComponent implements OnInit {
     let processId=undefined;
     //this.dataSource1.filterPredicate = this.createFilter();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
-    this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Home"});
+    this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
     
     this.dt.changeHints(this.datahints.rpahomehints );
   
