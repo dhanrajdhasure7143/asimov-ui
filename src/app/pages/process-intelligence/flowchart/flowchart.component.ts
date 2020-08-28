@@ -192,7 +192,6 @@ export class FlowchartComponent implements OnInit {
         this.loaderImgSrc = "/assets/images/PI/loader_vr_1.gif"; 
         this.spinner.show();
         setTimeout(() => {
-        
           this.onchangegraphId(piId);
         }, 6*60*1000);
       }
@@ -623,11 +622,18 @@ export class FlowchartComponent implements OnInit {
           } else{
             Swal.fire(
               'Oops!',
-              'Failed to BPMN Notation, Please try again later.',
+              'Failed to generate BPM Notation, Please try again later.',
               'error'
             );
           }
-        })
+        },
+        (err =>{
+          Swal.fire(
+            '',
+            'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
+            'info'
+          );
+        }))
 
     } else if (this.isSingleTraceBPMN == true) {
       var reqObj1 = {
@@ -642,11 +648,18 @@ export class FlowchartComponent implements OnInit {
             } else{
               Swal.fire(
                 'Oops!',
-                'Failed to BPMN Notation, Please try again later.',
+                'Failed to generate BPM Notation, Please try again later.',
                 'error'
               );
             }
-        })
+        },
+        (err =>{
+          Swal.fire(
+            '',
+            'Internal server error, Please try again later.',
+            'error'
+          );
+        }))
 
     } else if (this.isMultiTraceBPMN == true) {
       var reqObj2 = {
@@ -661,11 +674,18 @@ export class FlowchartComponent implements OnInit {
             } else{
               Swal.fire(
                 'Oops!',
-                'Failed to BPMN Notation, Please try again later.',
+                'Failed to generate BPM Notation, Please try again later.',
                 'error'
               );
             }
-        })
+        },
+        (err =>{
+          Swal.fire(
+            '',
+            'Internal server error, Please try again later.',
+            'error'
+          );
+        }))
 
     } else if (this.isSliderBPMN == true) {
       var reqObj3 = {
@@ -681,14 +701,19 @@ export class FlowchartComponent implements OnInit {
             } else{
               Swal.fire(
                 'Oops!',
-                'Failed to BPMN Notation, Please try again later.',
+                'Failed to generate BPM Notation, Please try again later.',
                 'error'
               );
             }
-        })
+        },
+        (err =>{
+          Swal.fire(
+            '',
+            'Internal server error, Please try again later.',
+            'error'
+          );
+        }))
     }
-    // this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
-    // this.bpmnservice.setNewDiagName('pizza-collaboration');
   } 
   
 
