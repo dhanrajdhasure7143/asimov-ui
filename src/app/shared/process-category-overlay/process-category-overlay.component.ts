@@ -10,6 +10,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
 
   @Input() headerTitle:string = "Process Category Details";
   @Input() buttonName:string = "Proceed";
+  @Input() data:string;
   @Output() proceed = new EventEmitter<any>();
 
   processName = "";
@@ -24,6 +25,11 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   constructor( private rest:RestApiService) { }
 
   ngOnInit() {
+    if(this.data){
+      let data_arr = this.data.split("@");
+      this.processName = data_arr[0];
+      this.categoryName = data_arr[1];
+    }
     this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
   }
 
@@ -52,11 +58,14 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       "processName": this.processName,
       "categoryName": this.categoryName =='other'?this.othercategory:this.categoryName
     }
-    this.slideDown();
+    this.slideDown(null);
     this.proceed.emit(data);
   }
 
-  slideDown(){
+  slideDown(form){
+    if(!this.data && form){
+      form.reset();
+    }
     this.isotherCategory = false;
     var modal = document.getElementById('myModal');
     modal.style.display="none";

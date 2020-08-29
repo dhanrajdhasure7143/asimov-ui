@@ -1,7 +1,7 @@
 <div id="myModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <span class="close" (click)="processCategoryForm.reset();slideDown();">&times;</span>
+            <span class="close" (click)="slideDown(processCategoryForm);">&times;</span>
             <h4>{{headerTitle}}</h4>
         </div>
         <div class="modal-body">
@@ -9,7 +9,7 @@
                 <div class="container m-contanier">
                     <mat-form-field class="row col-md-12">
                         <mat-label>Select Category</mat-label>
-                        <mat-select  name="category" (selectionChange)="onchangeCategories(categoryName)" #category="ngModel" [(ngModel)]="categoryName" required panelClass="overlayMatSelect">
+                        <mat-select  name="category" (selectionChange)="onchangeCategories(categoryName)" #category="ngModel" [(ngModel)]="categoryName" required panelClass="overlayMatSelect" [disabled]="data" >
                             <mat-option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
                                 {{categories.categoryName}}</mat-option>
                             <mat-option value="other">Other</mat-option>
@@ -27,12 +27,12 @@
                     <br/>
                     <mat-form-field class="row col-md-12">
                         <mat-label>Enter Process Name</mat-label>
-                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="[a-zA-Z0-9 _-]+" required>
+                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="[a-zA-Z0-9 _-]+" required  [disabled]="data">
                     </mat-form-field>
                     <span class="error_msg" [class.show]="process_name.dirty && process_name.invalid">Alphanumerics with _- are allowed</span>
                     <br/>
                     <div class="center">
-                        <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="!processCategoryForm.valid">{{buttonName}}</button>
+                        <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="!data && !processCategoryForm.valid">{{buttonName}}</button>
                     </div>
                 </div>
                 <!-- <div class="container m-contanier" *ngIf="isRpa=='true'">

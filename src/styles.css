@@ -112,6 +112,9 @@ ngx-dropzone{
 .djs-container svg{
   margin-left: 85px;
 }
+.bps_overlay .djs-container svg{
+  margin-left: 5px;
+}
 div[class^='diagram_container'] .djs-palette{
   display: none;
 }
@@ -153,6 +156,9 @@ div[class^='diagram_container'] .djs-container svg{
 /* pagination styles */
 
 /* button styles */
+.header_btn{
+  margin-right: 20px;
+}
 .header_addon{
   /* position: relative;
   top: -55px; */
