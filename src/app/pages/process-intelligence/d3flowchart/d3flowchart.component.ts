@@ -19,46 +19,13 @@ export class D3flowchartComponent {
     @Input()  public isdownloadpdf:boolean;
     @Input()  public isdownloadPng:boolean;
     @Input()  public isdownloadJpeg:boolean;
+    @Input()  public isdownloadsvg:boolean;
+    @Input()  public processGraphName:any;
+    @Input()  public performanceValue:boolean;
     @Output() ispdf=new EventEmitter<boolean>()
     @Output() isjpeg=new EventEmitter<boolean>()
     @Output() ispng=new EventEmitter<boolean>()
-
-  
-//     model2=[{from:"Start",  to:"Enter in SAP",text: 51,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[51, 50, 2, 0, 0, 2780760000, 63780000, 54524705, 89700000, 3180000]},
-//   {from:"Vendor Creates Invoice", to:"Due Date Passed",text: 145,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Vendor Creates Invoice", to:"Scan Invoice",text:193,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[194, 193, 2, 0, 0, 70398420000, 20070000, 362878453, 5962500000, 180000]},
-//   {from:"Start",to:"Vendor Creates Invoice",text:194,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[2, 2, 1, 0, 0, 620640000, 310320000, 310320000, 310320000, 310320000]},
-//   {from:"Scan Invoice", to:"Enter in SAP",text: 51,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[20, 20, 1, 0, 0, 5959020000, 73560000, 297951000, 3262920000, 2520000]},
-//   {from:"Scan Invoice",  to:"Change Baseline Date",text: 2,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[176, 175, 2, 0, 0, 34604100000, 48780000, 196614204, 6687300000, 240000]},
-//   {from:"Enter in SAP", to:"Clear Invoice",text: 20,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[106, 105, 2, 0, 0, 7692360000, 3660000, 72569433, 1628820000, 360000]},
-//   {from:"Enter in SAP",  to:"Book Invoice",text:176,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Book Invoice", to:"Clear Invoice",text:2,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Book Invoice",to:"Change Baseline Date",text: 106,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Book Invoice",  to:"Cancel Invoice Receipt",text: 53,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Book Invoice", to:"Vendor Creates Invoice",text: 15,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Book Invoice", to:"End",text: 2,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Clear Invoice", to:"Vendor Creates Invoice",text: 20,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Clear Invoice", to:"Due Date Passed",text: 1,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Clear Invoice", to:"End",text: 130,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Due Date Passed", to:"Scan Invoice",text: 51,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Due Date Passed", to:"Book Invoice",text: 55,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Due Date Passed", to:"End",text: 110,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Change Baseline Date",to:"Clear Invoice",text: 2,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   {from:"Cancel Invoice Receipt", to:"End",text: 21,toolData: ["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency", "End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],toolDataCount:[145, 145, 1, 0, 0, 6418980000, 40560000, 44268827, 88140000, 840000]},
-//   ]
-  
-//   model1= [
-//     {"key": -1, "category": "Start", "count": 80 },
-//     {"key":0,"name":"Vendor Creates Invoice","count":80,"tool":["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency","End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],"toolCount":[196,195,2,193,0,372120000,2040000,1898571,3360000,360000]},
-//     {"key":1,"name":"Scan Invoice","count":80,"tool":["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency","End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],"toolCount":[196,195,2,0,0,192060000,420000,979897,7500000,60000]},
-//     {"key":2,"name":"Enter in SAP","count":80,"tool":["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency","End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],"toolCount":[196,195,2,2,0,147960000,420000,754897,2700000,60000]},
-//     {"key":3,"name":"Book Invoice","count":80,"tool":["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency","End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],"toolCount":[196,195,2,0,20,386100000,840000,1969897,21420000,120000]},
-//     {"key":4,"name":"Clear Invoice","count":80,"tool":["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency","End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],"toolCount":[181,180,2,0,50,688740000,1140000,3805193,21120000,0]},
-//     {"key":5,"name":"Due Date Passed","count":80,"tool":["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency","End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],"toolCount":[181,180,2,0,110,263100000,1020000,1453591,20220000,240000]},
-//     {"key":6,"name":"Change Baseline Date","count":80,"tool":["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency","End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],"toolCount":[55,55,1,0,0,211380000,1440000,3843272,17820000,60000]},
-//     {"key":7,"name":"Cancel Invoice Receipt","count":80,"tool":["Absolute Frequency","Case Frequency","Max Repititons","Start Frequency","End Frequency","Total Duration","Median Duration","Mean Duration","Max Duration","Min Duration"],"toolCount":[15,15,1,0,15,36060000,960000,2404000,15900000,300000]}, 
-//     { "key": -2, "category": "End", "count": 80 }] 
-      
+    @Output() issvg=new EventEmitter<boolean>()
   
     constructor(){
   
@@ -87,18 +54,72 @@ export class D3flowchartComponent {
             }else if(this.isdownloadJpeg==true){
                 this.exportSVG('jpeg')
             }
+            else if(this.isdownloadsvg==true){
+              this.exportSVG('svg')
+          }
     }
 
     processGraph(){
         // Create a new directed graph
     var g = new dagreD3.graphlib.Graph().setGraph({});
+    
+const w = 1100;
+const h = 1600;
+const padding = 20;
+
+d3.select("svg").remove()
+// const svg = d3.select("svg")
+let svg = d3.select("#exportSVGtoPDF").append("svg")
+  .attr("xmlns", "http://www.w3.org/2000/svg")
+  .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
+  .attr("width", w)
+  .attr("height", h)
+  // .attr("overflow", 'auto')
+  // .attr("viewBox", '0 0 800 800')
+  .attr("preserveAspectRatio", 'none')
+  .attr('id','render')
+  
+   var  inner = svg.append("g");
+
+   var defs = svg.append("defs");
+
+var gradient = defs.append("linearGradient")
+   .attr("id", "svgGradient")
+   .attr("x1", "10%")
+   .attr("x2", "60%")
+   .attr("y1", "0%")
+   .attr("y2", "100%");
+
+gradient.append("stop")
+  //  .attr('class', 'start')
+  .attr('class', 'stop-left')
+  //               .attr('offset', '0')
+   .attr("offset", "3%")
+   .attr("stop-color", "#bdbcb5")
+   .attr("stop-opacity", 1);
+
+gradient.append("stop")
+   .attr('class', 'end')
+  // .attr('class', 'stop-right')
+  //               .attr('offset', '1')
+   .attr("offset", "100%")
+   .attr("stop-color", "blue")
+   .attr("stop-opacity", 1);
+
+    
+
+   
     // console.log(g);
     var states:any={}
     for(var j=0;j<this.model1.length;j++){
-      if(this.model1[j].key==-1||this.model1[j].key==-2){
+      if(this.model1[j].key==-1){
         var nodeName=this.model1[j].category
         states[nodeName]={
-          description: "represents no connection state at all.",style: "fill: #f77"}
+          description: "Process start",style: "fill: #f77"}
+      }else if(this.model1[j].key==-2){
+        var nodeName=this.model1[j].category
+          states[nodeName]={
+            description: "Process end",style: "fill: #f77"}
       }else{
         var performanceCount1=this.timeConversion(this.model1[j].toolCount[5])
         var performanceCount2=this.timeConversion(this.model1[j].toolCount[6])
@@ -113,6 +134,7 @@ export class D3flowchartComponent {
         }
       }
     }
+    
     // Automatically label each of the nodes
     
     Object.keys(states).forEach(function(state) {
@@ -123,22 +145,118 @@ export class D3flowchartComponent {
         
       }
       
-      value.label = state+metricValue;
-    //   console.log(state);
-      value.rx = value.ry = 10;
-      value.lableStyle = "font-zie: 4em";
-      g.setNode(state, value);
+    //   value.label = state+metricValue;
+    // //   console.log(state);
+    //   value.rx = value.ry = 10;
+    //   value.lableStyle = "font-zie: 4em";
+    //   g.setNode(state, value);
      
-    });
+    // });
+    if(state == 'Start' || state == 'End'){
+      value.label = state;
+      value.x = 5;
+    }else{
+    
+    value.label = state+metricValue;
+    //value.label = state;
+    // console.log(state);
+    }
+    value.rx = value.ry = 10;
+    value.lableStyle = "font-zie: 4em";
+    g.setNode(state, value);
+   
+  });
     
     // Set up the edges
-    
+var count=0
+var count1
+    // console.log("this.model2",this.model2);
+    for(var i2=0;i2<this.model2.length;i2++){
+      if(this.model2[i2].days){
+        count1=count++
+      }
+    }
+
+    if(count1>=1){
+      const maxCount = this.model2.reduce(function(prev, current) {
+        return (prev.days > current.days) ? prev : current
+      }) 
+      let maxLinkCount=maxCount.days/5;
+      // console.log(maxLinkCount);
+      
+      for(var i=0; i<this.model2.length;i++){
+        if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
+          var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
+              if(this.performanceValue==true){
+                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'></span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
+                arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+              }else{
+                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
+                arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+              }
+         
+        }else{
+          var performanceLinkCount1=this.timeConversion(this.model2[i].toolDataCount[5])
+          var performanceLinkCount2=this.timeConversion(this.model2[i].toolDataCount[6])
+          var performanceLinkCount3=this.timeConversion(this.model2[i].toolDataCount[7])
+          var performanceLinkCount4=this.timeConversion(this.model2[i].toolDataCount[8])
+          var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
+        
+          var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"Min</div></li></ul>";
+        
+        if(this.model2[i].days <= maxLinkCount){
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 2px; fill: none;", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+         }else if(this.model2[i].days > maxLinkCount && this.model2[i].days <= maxLinkCount*2){
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px; fill: none;", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+         }else if(this.model2[i].days > maxLinkCount*2 && this.model2[i].days <= maxLinkCount*3){
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 5.5px; fill: none;", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+         }else if(this.model2[i].days > maxLinkCount*3 && this.model2[i].days <= maxLinkCount*4){
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6px; fill: none;", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+         }else if(this.model2[i].days > maxLinkCount*4 && this.model2[i].days < maxLinkCount*5){
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6px; fill: none;", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+         }else if(this.model2[i].days == maxCount.days){
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#7ebad6;stroke-width: 6.5px; fill: none;", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+         }else{
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6.5px; fill: none;", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+         }
+          
+        }
+        
+      }
+    }else{
+      
+      var linkCountArr=[]
+    for(var i1=0;i1<this.model2.length;i1++){
+      if(this.model2[i1].from ==="Start" || this.model2[i1].to ==="End"){  
+
+      }else{
+        linkCountArr.push(this.model2[i1].text)
+      }
+    }
+    const maxCount = linkCountArr.reduce(function(prev, current) {
+      return (prev > current) ? prev : current
+    })
+
+    let maxLinkCount=maxCount/5;
+    // console.log("maxLinkCount",maxLinkCount);
     for(var i=0; i<this.model2.length;i++){
       if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
-
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis})
+        if(this.performanceValue==true){
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'></span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+        }else{
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+        }
+        
       }else{
         var performanceLinkCount1=this.timeConversion(this.model2[i].toolDataCount[5])
         var performanceLinkCount2=this.timeConversion(this.model2[i].toolDataCount[6])
@@ -147,28 +265,50 @@ export class D3flowchartComponent {
         var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
       
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"Min</div></li></ul>";
-       if(this.model2[i].text==2){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px; fill: none;", 
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis})
+      if(this.model2[i].text <= maxLinkCount){
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 2px;fill: none;", 
+        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+       }else if(this.model2[i].text > maxLinkCount && this.model2[i].text <= maxLinkCount*2){
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px;fill: none;", 
+        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+       }else if(this.model2[i].text > maxLinkCount*2 && this.model2[i].text <= maxLinkCount*3){
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 5.5px; fill: none;", 
+        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+       }else if(this.model2[i].text > maxLinkCount*3 && this.model2[i].text <= maxLinkCount*4){
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6px; fill: none;", 
+        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+       }else if(this.model2[i].text > maxLinkCount*4 && this.model2[i].text < maxLinkCount*5){
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6.5px; fill: none;", 
+        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+       }else if(this.model2[i].text == maxCount){
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#6362D8;stroke-width: 6.5px;fill: none;", 
+        arrowheadStyle: "fill: #333",curve: d3.curveBasis,arrowhead:'vee'})
        }else{
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke-width: 4.5px; fill: none;", 
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6.5px; fill: none;", 
+        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
        }
         
       }
       
     }
+
+  }
     
     
     
     // Set some general styles
 let nodesArray= [];
+// console.log(g.nodes());
+
 g.nodes().forEach(function(v) {
   
   var node = g.node(v);
   // console.log(node);
+//  console.log("node",node);
  
   if(node.label == 'Start' || node.label == 'End'){
+    // console.log("test");
+    
     node.shape = "circle";
     node.paddingBottom=10
     node.paddingLeft=5
@@ -177,27 +317,99 @@ g.nodes().forEach(function(v) {
   }
   
  else{
+  //  console.log("test1");
+   
   nodesArray.push(node)
   // console.log(node.label)
  }
  
   node.rx = node.ry = 5;
-  node.x = node.y = 100;
+  // node.x = node.y = 100;
 });
+
 const max = nodesArray.reduce(function(prev, current) {
   return (prev.metrics > current.metrics) ? prev : current
 })
-console.log(max);
+// console.log(max);
+  if(String(max.metrics).includes("Days")||String(max.metrics).includes("Sec")||String(max.metrics).includes("Min")||String(max.metrics).includes("Hrs")){
+    var timeMetricArray=[]
+    // console.log(this.model1);
+    for(var i =0;i<nodesArray.length;i++){
+      // console.log(nodesArray[i]);
+      timeMetricArray.push(nodesArray[i].metrics)
+      if(nodesArray[i].metrics.includes("Days")){
+        nodesArray[i]["days"]=nodesArray[i].metrics.split(' ')[0]
+      }else if(nodesArray[i].metrics.includes("Min")){
+        var min=nodesArray[i].metrics.split(' ')[0];
+        nodesArray[i]["days"]=min/(60*24)
+      }else if(nodesArray[i].metrics.includes("Hrs")){
+        var hrs=nodesArray[i].metrics.split(' ')[0];
+        nodesArray[i]["days"]=hrs/24
+      } else if(nodesArray[i].metrics.includes("Sec")){
+        var sec=nodesArray[i].metrics.split(' ')[0];
+        nodesArray[i]["days"]=sec/(60*60*24)
+      }
+    }
+    // console.log(nodesArray);
+        var timeMetricArray1=[]
+    for(var j=0;j<timeMetricArray.length;j++){
+      if(timeMetricArray[j].includes("Days")){
+          timeMetricArray1.push(Number(timeMetricArray[j].split(' ')[0]))
+      }else if(timeMetricArray[j].includes("Sec")){
+        var secs=timeMetricArray[j].split(' ')[0];
+          timeMetricArray1.push(secs/(60*60*24))
+      }else if(timeMetricArray[j].includes("Min")){
+        var min=timeMetricArray[j].split(' ')[0];
+          timeMetricArray1.push(min/(60*24))
+      }else if(timeMetricArray[j].includes("Hrs")){
+        var hrs=timeMetricArray[j].split(' ')[0];
+          timeMetricArray1.push(hrs/24)
+      }
+    }
+    // console.log("timeMetricArray1",timeMetricArray1);
+    const max1 = timeMetricArray1.reduce(function(prev, current) {
+      return (prev > current) ? prev : current
+    })
+    // console.log(max1);
+    const maxDivided = max1/5;
+
+    for(var i =0;i<nodesArray.length;i++){
+      // console.log(nodesArray[i].days);
+      
+      if (Number(nodesArray[i].days) <= maxDivided) {
+        var eachLine = nodesArray[i].label.split('\n')[0];
+            g.node(eachLine).style = "fill: #b7aace";
+      }
+      else if (Number(nodesArray[i].days) > maxDivided && Number(nodesArray[i].days) <= Number(maxDivided*2)) {
+        var eachLine = nodesArray[i].label.split('\n')[0];
+            g.node(eachLine).style = "fill: #ADB9D1";
+      } else if (Number(nodesArray[i].days) > Number(maxDivided*2) && Number(nodesArray[i].days) <= Number(maxDivided*3)) {
+        var eachLine = nodesArray[i].label.split('\n')[0];
+            g.node(eachLine).style = "fill: #5b21db" ;
+      } else if (Number(nodesArray[i].days) > Number(maxDivided*3) && Number(nodesArray[i].days) <= Number(maxDivided*4)) {
+        var eachLine = nodesArray[i].label.split('\n')[0];
+        g.node(eachLine).style = "fill: #4b1edb";
+           
+      }
+      else if (Number(nodesArray[i].days) > Number(maxDivided*4) && Number(nodesArray[i].days) <= Number(maxDivided*5)) {
+        var eachLine = nodesArray[i].label.split('\n')[0];
+        g.node(eachLine).style = "fill: #024C7F";
+        
+      } else if(Number(nodesArray[i].days) == max1 && Number(nodesArray[i].days) > max1){
+        var eachLine = nodesArray[i].label.split('\n')[0];
+        g.node(eachLine).style = "fill: #2d0adb";
+      }
+    
+    }
+  }else{ 
   var maxDivided = max.metrics/5;
 
 // console.log(max.metrics);
 for(var i =0;i<nodesArray.length;i++){
-
-
   if (nodesArray[i].metrics <= maxDivided) {
     // console.log("1111111111111",maxDivided <= nodesArray[i].metrics);
     var eachLine = nodesArray[i].label.split('\n')[0];
-    console.log(nodesArray[i].metrics);
+    // console.log(nodesArray[i]);
         g.node(eachLine).style = "fill: #b7aace";
   }
   else if (nodesArray[i].metrics > maxDivided && nodesArray[i].metrics <= Number(maxDivided*2)) {
@@ -205,15 +417,11 @@ for(var i =0;i<nodesArray.length;i++){
     // console.log(nodesArray[i].metrics);
     // console.log("22222222222");
         g.node(eachLine).style = "fill: #ADB9D1";
-   
-    
   } else if (nodesArray[i].metrics > Number(maxDivided*2) && nodesArray[i].metrics <= Number(maxDivided*3)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
     // console.log(nodesArray[i].metrics);
     // console.log("333333333");
         g.node(eachLine).style = "fill: #5b21db" ;
-    
-    
   } else if (nodesArray[i].metrics > Number(maxDivided*3) && nodesArray[i].metrics <= Number(maxDivided*4)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
     // console.log(nodesArray[i].metrics);    
@@ -231,22 +439,23 @@ for(var i =0;i<nodesArray.length;i++){
     g.node(eachLine).style = "fill: #2d0adb";
   }
 
-
 }
+  }
 // Add some custom colors based on state
 g.node('Start').style = "fill: #5AD315; ";
 g.node('End').style = "fill: #A93226";
 
 
-const w = 1100;
-const h = 1600; 
-const padding = 20;
-d3.select("svg").remove()
+// const w = 1100;
+// const h = 1600; 
+// const padding = 20;
+// d3.select("svg").remove()
 // const svg = d3.select("svg")
-const svg = d3.select("#exportSVGtoPDF").append("svg")
-
-  .attr("width", w)
-  .attr("height", h);
+// svg = d3.select("#exportSVGtoPDF").append("svg")
+//   .attr("xmlns", "http://www.w3.org/2000/svg")
+//   .attr("xmlns:xlink", "http://www.w3.org/1999/xlink")
+//   .attr("width", w)
+//   .attr("height", h);
   
    var  inner = svg.append("g");
   
@@ -319,6 +528,8 @@ var wrap = function(text, width) {
               line.pop();
               tspan.text(line.join(" "));
               line = [word];
+              console.log(line);
+              
               tspan = text.append("tspan")
                           .attr("x", 6)
                           .attr("y", y)
@@ -373,48 +584,9 @@ inner.selectAll('g.node')
 })
 .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
-// console.log(inner.selectAll('g.edgePath'));
-// inner.selectAll('g.edgePath')
-// console.log(inner.selectAll('g.edgePath'));
-
-// svg.selectAll("link")
-  // inner.selectAll('g.edgePath path')
-  svg.append("linearGradient")				
-  .attr("id", "linear-gradient")
-  .attr("gradientUnits", "userSpaceOnUse")
-  .selectAll("stop")
-  .data([							
-    {offset: "10%", color: "white"},		
-    {offset: "90%", color: "red"}])					
-  .enter()
-  .append("stop")
-  .attr("offset", function(d) { return d.offset; })	
-  .attr("stop-color", function(d){return d.color;});
-
-
-
-var myColor = d3.scaleLinear().domain([1,10]).range(["white", "blue"])
-  var data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
-  console.log("g.edgePath",inner.selectAll('g.edgePath path')._groups[0][0].attributes[3]);
-  
-inner.selectAll('g.edgePath path.path')
-      .attr('fill', 'none')
-      .data(data)
-      // .enter()
-      // .attr("cx", function(d,i){return 30 + i*60}).attr("cy", 50)
-      // .data([							
-      //   {offset: "10%", color: "white"},		
-      //   {offset: "90%", color: "red"}])					
-      // .enter()
-      // .append("stop")
-      // .style("offset","30%" )
-      // .attr("offset", function(d) { return d.offset; })
-      .style("stroke",function(d){return myColor(d) })
-      // .style("stroke","url(#linear-gradient)")
-
-      // .attr("stop-color", function(d){return myColor(d) });
-
 inner.selectAll('g.edgePath')
+.attr('fill', 'none')
+.attr("stroke","black")
 .on('mouseover', function(d){
   // console.log('edgepath', d)
   inner.selectAll('g.edgePath').append('title').text(d.v+" - "+d.w+'\n'+
@@ -427,8 +599,9 @@ inner.selectAll('g.edgePath')
 "End Frequency      0")
 })
 
+
 // Center the graph
-var initialScale = 0.90;
+var initialScale = 0.75;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 
 svg.attr('height', g.graph().height * initialScale + 53);
@@ -436,6 +609,89 @@ svg.attr('height', g.graph().height * initialScale + 53);
     
     
     exportSVG(fileType){
+      if(fileType == 'svg'){
+        //get svg element.
+  // var svg = document.getElementById("render");
+  
+  // //get svg source.
+  // var serializer = new XMLSerializer();
+  // var source = serializer.serializeToString(svg);
+  
+  // //add name spaces.
+  // if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+  //     source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+  // }
+  // // if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+  // //     source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+  // // }
+  
+  // //add xml declaration
+  // source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+  // console.log(source);
+  
+  // //convert svg source to URI data scheme.
+  // var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+  
+  
+  
+  
+  
+  
+  // var svgHtml = document.getElementById("render"),
+  //     svgData = new XMLSerializer().serializeToString(svgHtml),
+  //     svgBlob = new Blob([svgData], {type:"image/svg+xml;charset=utf-8"}),
+  //     bounding = svgHtml.getBoundingClientRect(),
+  //     width = bounding.width * 2,
+  //     height = bounding.height * 2,
+  //     canvas = document.createElement("canvas"),
+  //     context = canvas.getContext("2d"),
+  //     exportFileName = 'd3-graph-image.png';
+  
+  // //Set the canvas width and height before loading the new Image
+  // canvas.width = width;
+  // canvas.height = height;
+  
+  // var image = new Image();
+  // image.onload = function() {
+  //     //Clear the context
+  //     context.clearRect(0, 0, width, height);
+  //     context.drawImage(image, 0, 0, width, height);
+  
+  //     //Create blob and save if with FileSaver.js
+  //     canvas.toBlob(function(blob) {
+  //         saveAs(blob, exportFileName);
+  //     });     
+  // };
+  // var svgUrl = URL.createObjectURL(svgBlob);
+  // image.src = svgUrl;
+  
+        var svgEl=document.getElementById('render');
+        // console.log("svgEl",svgEl);
+        
+      //  svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        // var svgData = svgEl.outerHTML;
+        var serializer = new XMLSerializer();
+   var source = serializer.serializeToString(svgEl);
+  
+  // //add name spaces.
+  if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
+   if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+       source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+   }
+        var preface = '<?xml version="1.0" standalone="no"?>\r\n';
+        var svgBlob = new Blob([preface, source], {type:"image/svg+xml;charset=utf-8"});
+        var svgUrl = URL.createObjectURL(svgBlob);
+        var downloadLink = document.createElement("a");
+        downloadLink.href = svgUrl;
+        downloadLink.download = this.processGraphName;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+        this.isdownloadsvg=false;
+        this.issvg.emit(this.isdownloadsvg)
+      }else{
       html2canvas(this.exportSVGtoPDF.nativeElement, { useCORS: true, foreignObjectRendering: true, allowTaint: true }).then(canvas => {
         // console.log('canvas.height',canvas.height)
         // console.log('canvas.height',canvas.width)
@@ -448,7 +704,9 @@ svg.attr('height', g.graph().height * initialScale + 53);
      
         if(fileType == 'png' || fileType == 'jpeg'){
           this.downloadLink.nativeElement.href = canvas.toDataURL('image/'+fileType);
-          this.downloadLink.nativeElement.download = 'marble-diagram.'+fileType;
+          // console.log(this.processGraphName);
+          
+          this.downloadLink.nativeElement.download = this.processGraphName;
           this.downloadLink.nativeElement.click();
 
           this.isdownloadJpeg=false;
@@ -462,12 +720,12 @@ svg.attr('height', g.graph().height * initialScale + 53);
           var doc = new jsPDF('l','pt',[1020, 768]);
           doc.setFontSize(18)
           doc.addImage(contentDataURL, 'PNG',10, 10, 1020, 500);
-          doc.save('postres.pdf');
+          doc.save(this.processGraphName+'.pdf');
           this.isdownloadpdf=false;
             this.ispdf.emit(this.isdownloadpdf)
         }   
       });
-      
+    } 
     }
   
     
