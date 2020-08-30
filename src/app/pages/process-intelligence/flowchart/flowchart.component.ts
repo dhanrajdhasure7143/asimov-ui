@@ -264,10 +264,9 @@ export class FlowchartComponent implements OnInit {
         this.isSliderBPMN = false;
 
     }
-
-    console.log("model1",this.model1);
-    console.log("model2",this.model2);
-        });
+        },(err =>{
+          this.spinner.hide();
+        }));
         const variantGraphbody= { 
           "data_type":"variant_graph", 
            "pid":selectedpiId
@@ -1046,28 +1045,48 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
   }
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
+    this.spinner.show();
     this.activity_value=SelectedActivities;
     this.model1=[]
     this.model2=[]
     this.isNodata=true;
-    var model3=[]
-    model3[0]=this.fullgraph_model[0]
-    for(var i=0;i<this.activity_value.length;i++){
-      for(var j=0;j<this.fullgraph_model.length;j++){
+    var reqObj = {
+      "data_type":"activity_filter",
+      "pid":this.graphIds,
+      "cases" : this.selectedCaseArry,
+      "activities":SelectedActivities  
+  }
+    this.rest.getVariantActivityFilter(reqObj)
+      .subscribe(data => {
+        let activityFilterGraph:any = data;
+        this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
+        this.nodeAlignment();       
+        this.model2 = this.flowchartData(this.model1);
+        this.gradientApplyforLinks();
+        this.gradientApplyforNode();
+        this.linkCurvinessGenerate();
+        this.spinner.hide();
+      },(err =>{
+        this.spinner.hide();
+      }));
+    // var model3=[]
+    // model3[0]=this.fullgraph_model[0]
+    // for(var i=0;i<this.activity_value.length;i++){
+    //   for(var j=0;j<this.fullgraph_model.length;j++){
         
-        if(this.activity_value[i]==this.fullgraph_model[j].name){
-          model3.push(this.fullgraph_model[j])
-        }
-      }
-    }
-    model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
-    this.model1=model3
-    this.nodeAlignment();
-    this.model2 = this.flowchartData(this.model1);
-    this.gradientApplyforLinks()
-    this.gradientApplyforNode()
-    this.linkCurvinessGenerateOne();
-    this.isActivity_dropdwn=false;
+    //     if(this.activity_value[i]==this.fullgraph_model[j].name){
+    //       model3.push(this.fullgraph_model[j])
+    //     }
+    //   }
+    // }
+    // model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
+    // this.model1=model3
+    // this.nodeAlignment();
+    // this.model2 = this.flowchartData(this.model1);
+    // this.gradientApplyforLinks()
+    // this.gradientApplyforNode()
+    // this.linkCurvinessGenerateOne();
+    // this.isActivity_dropdwn=false;
   }
   linkCurvinessGenerateOne(){
     for(var j=0;j<this.model2.length;j++){

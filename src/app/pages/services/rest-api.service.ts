@@ -290,6 +290,10 @@ export class RestApiService{
     return this.http.post("/ReddisCopy/getGraphData",body)
   }
 
+  getVariantActivityFilter(activityFilterbody){
+    return this.http.post("/ReddisCopy/getGraphData",activityFilterbody)
+  }
+
   getDBTableList(body){
     return this.http.post('/processintelligence/v1/processgraph/pi/tenant/db/list/tables', body)
   }
