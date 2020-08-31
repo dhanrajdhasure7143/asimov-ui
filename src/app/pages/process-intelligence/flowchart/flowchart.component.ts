@@ -193,7 +193,7 @@ export class FlowchartComponent implements OnInit {
         this.spinner.show();
         setTimeout(() => {
           this.onchangegraphId(piId);
-        }, 6*60*1000);
+        }, 3*60*1000);
       }
     }); 
   }
