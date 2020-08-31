@@ -64,7 +64,9 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     if(this.data){
       let dataarr = this.data.split("@");
       this.bpmnModel.bpmnModelId= dataarr[2];
-      // this.bpmnModel.processIntelligenceId = dataarr[3];
+      this.bpmnModel.processIntelligenceId = dataarr[3];
+      this.bpmnModel.notationFromPI = true;
+      this.bpmnModel.hasConformance = true;
     }
     this.bpmnservice.setSelectedBPMNModelId(this.randomId);
     this.bpmnModel.category=e.categoryName;

@@ -52,13 +52,14 @@ export class UploadProcessModelComponent implements OnInit {
   saved_bpmn_list:any[] = [];
   full_saved_bpmn_list:any[] = [];
   approver_list:any[] = [];
-  selected_notation = 0;
+  selected_notation;
   selected_approver;
   diplayApproveBtn:boolean = false;
   isLoading:boolean = false;
   rejectedOrApproved;
   isDiagramChanged:boolean = false;
   isApprovedNotation:boolean = false;
+  hasConformance:boolean = false;
   disableShowConformance:boolean = false;
   notationListOldValue = 0;
   notationListNewValue = undefined;
@@ -97,15 +98,16 @@ export class UploadProcessModelComponent implements OnInit {
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
     if(!this.isShowConformance){
+      this.selected_notation = 0;
       this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
       this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
       this.isConfBpmnModeler = false;
       this.getUserBpmnList(null);
     }else{
-      this.getUserBpmnList(true);
+      // this.fetchBpmnNotationFromPI();
+      this.getUserBpmnList(null);
       this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
       this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
-      this.fetchBpmnNotationFromPI();
     }
     this.getApproverList();
    }
@@ -113,7 +115,6 @@ export class UploadProcessModelComponent implements OnInit {
    ngAfterViewInit(){
     if(this.isShowConformance)
       this.getAutoSavedDiagrams()
-      // this.initiateDiagram();
    }
    fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
@@ -125,9 +126,17 @@ export class UploadProcessModelComponent implements OnInit {
     this.isLoading = true;
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.full_saved_bpmn_list = res;
-      this.saved_bpmn_list = res.filter(each_bpmn => {
-        return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
-      }); 
+      if(this.isShowConformance){
+        this.saved_bpmn_list = res.filter(each_bpmn => {
+          return each_bpmn.processIntelligenceId && each_bpmn.processIntelligenceId.toString() == this.pid.toString();
+        }); 
+        // if(!this.reSize || !this.hasConformance)
+        //   this.selected_notation = null;
+      }else{
+        this.saved_bpmn_list = res.filter(each_bpmn => {
+          return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
+        }); 
+      }
       if(isFromConf) this.isUploaded = true;
       else this.getSelectedNotation(); 
       this.notationListOldValue = this.selected_notation;
@@ -153,13 +162,16 @@ export class UploadProcessModelComponent implements OnInit {
 
    getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
-    this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
-    if(!this.isUploaded){
+    if(current_bpmn_info){
+      this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+      this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
+    }
+    if(!this.isShowConformance){
       let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
       this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     }
-    this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
-    if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
+    let status_arr = this.isShowConformance?['APPROVED','REJECTED', 'PENDING']:['APPROVED','REJECTED']
+    if(status_arr.indexOf(this.rejectedOrApproved) != -1 && current_bpmn_info){
       for(var s=0; s<this.approver_list.length; s++){
           let each = this.approver_list[s];
           if(each.userId){
@@ -188,9 +200,9 @@ export class UploadProcessModelComponent implements OnInit {
     let sel_not = this.saved_bpmn_list[this.selected_notation]
      this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
        if(this.isShowConformance){
-         if(this.isUploaded)
-          return each_asDiag.processIntelligenceId && each_asDiag.processIntelligenceId.toString() == this.pid.toString() && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
-         else
+        //  if(this.isUploaded)
+        //   return each_asDiag.processIntelligenceId && each_asDiag.processIntelligenceId.toString() == this.pid.toString() && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
+        //  else
           return each_asDiag.processIntelligenceId && each_asDiag.processIntelligenceId.toString() == this.pid.toString();
        }else{
          return sel_not["bpmnProcessStatus"] != "APPROVED" && sel_not["bpmnProcessStatus"] != "REJECTED" && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
@@ -202,8 +214,8 @@ export class UploadProcessModelComponent implements OnInit {
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].get('canvas').zoom('fit-viewport');
     let msg = "";
-    if(this.bpmnModeler)
-      msg = (this.isConfBpmnModeler?"Right":"Left")+" side notation";
+    if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
+      msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
     else
       msg = "Notation"
     this.global.notify(msg+" is fit to view port", "success")
@@ -212,6 +224,7 @@ export class UploadProcessModelComponent implements OnInit {
   initiateDiagram(){
     let _self=this;
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
+    // if(modeler_obj == "bpmnModeler" && (!document.getElementById("canvas1") || document.getElementById("canvas1").innerHTML.trim() == "")) this.initBpmnModeler();
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
@@ -233,9 +246,10 @@ export class UploadProcessModelComponent implements OnInit {
           _self.last_updated_time = now;
         }
       })
-      if(this.isShowConformance && !this.reSize){ 
-        this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res => {
-          let selected_xml = res['data'];
+      if(this.isShowConformance && !this.reSize){
+        this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
+          this.pivalues=res;
+          let selected_xml = this.pivalues['data'];
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
             this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
@@ -245,7 +259,7 @@ export class UploadProcessModelComponent implements OnInit {
               return console.error('could not import BPMN 2.0 notation', err);
             }
           })
-        });
+       }) 
       }else{
         let selected_xml = atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation)));
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
@@ -269,11 +283,12 @@ export class UploadProcessModelComponent implements OnInit {
     }
   }
 
-  displayBPMN(){
+displayBPMN(){
   let value = this.notationListOldValue;
   let _self = this;
   this.updated_date_time = null;
   this.filterAutoSavedDiagrams();
+  this.reSize = false;
   if(this.isDiagramChanged){
     Swal.fire({
       title: 'Are you sure?',
@@ -285,6 +300,7 @@ export class UploadProcessModelComponent implements OnInit {
     }).then((res) => {
       if(res.value){
         _self.isDiagramChanged = false;
+        _self.disableShowConformance = false;
         _self.notationListNewValue = _self.selected_notation;
         _self.selected_notation = value;
         _self.saveprocess(_self.notationListNewValue);
@@ -295,56 +311,86 @@ export class UploadProcessModelComponent implements OnInit {
         let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
         let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
         this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+        this.hasConformance = current_bpmn_info["hasConformance"];
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
           this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
         }
-        // this.confBpmnModeler.importXML(selected_xml, function(err){
-          if(selected_xml == "undefined"){
-            this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
-              let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
-              this.bpmnModeler.importXML(encrypted_bpmn, function(err){
+        setTimeout(()=> {
+          if(this.hasConformance) this.initBpmnModeler();
+          if(this.bpmnModeler){
+            if(selected_xml && selected_xml != "undefined"){
+              this.bpmnModeler.importXML(selected_xml, function(err){
                 _self.oldXml = selected_xml;
                 _self.newXml = selected_xml;
               });
-            });
-          }else{
-            this.bpmnModeler.importXML(selected_xml, function(err){
-              _self.oldXml = selected_xml;
-              _self.newXml = selected_xml;
-            });
+            }else{
+              this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+                let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
+                this.bpmnModeler.importXML(encrypted_bpmn, function(err){
+                  _self.oldXml = selected_xml;
+                  _self.newXml = selected_xml;
+                });
+              });
+            }
           }
+        },0)
+        if(this.isShowConformance && current_bpmn_info["processIntelligenceId"] && current_bpmn_info["processIntelligenceId"] == this.pid ){
+          this.isConfBpmnModeler = !this.hasConformance;
+          let bpmn_not = this.hasConformance ? current_bpmn_info["bpmnConfProcessMeta"] : this.pivalues["data"];
+          this.confBpmnModeler.importXML(btoa(unescape(encodeURIComponent(bpmn_not))));
+        }
+        _self.isLoading = false;
       }
     })
   }else{
     this.isLoading = true;
     this.isDiagramChanged = false;
+    this.disableShowConformance = false;
     this.diplayApproveBtn = true;
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
     let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
     this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+    this.hasConformance = current_bpmn_info["hasConformance"];
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
       this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
     }
-      if(selected_xml == "undefined"){
-        this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
-          this.bpmnModeler.importXML(res, function(err){
+    setTimeout(()=> {
+      if(this.hasConformance) this.initBpmnModeler();
+      if(this.bpmnModeler){
+        if(selected_xml == "undefined"){
+          this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+            this.bpmnModeler.importXML(res, function(err){
+              _self.oldXml = selected_xml;
+              _self.newXml = selected_xml;
+            });
+          });
+        }else{
+          this.bpmnModeler.importXML(selected_xml, function(err){
             _self.oldXml = selected_xml;
             _self.newXml = selected_xml;
-            _self.isLoading = false;
           });
-        });
-      }else{
-        this.bpmnModeler.importXML(selected_xml, function(err){
-          _self.oldXml = selected_xml;
-          _self.newXml = selected_xml;
-          _self.isLoading = false;
-        });
+        }
       }
+    },0);
+    if(this.isShowConformance && current_bpmn_info["processIntelligenceId"] && current_bpmn_info["processIntelligenceId"] == this.pid ){
+      this.isConfBpmnModeler = !this.hasConformance;
+      let bpmn_not = this.pivalues["data"];
+      if(this.hasConformance){
+        bpmn_not = current_bpmn_info["bpmnConfProcessMeta"];
+      }else{
+        if(this.rejectedOrApproved !="INPROGRESS")
+          bpmn_not = current_bpmn_info["bpmnXmlNotation"];
+        else
+          bpmn_not = this.pivalues["data"];
+      }
+      this.confBpmnModeler.importXML(btoa(unescape(encodeURIComponent(bpmn_not))));
     }
-    this.getSelectedApprover();
+    _self.isLoading = false;
   }
+  this.getSelectedApprover();
+}
 
   autoSaveBpmnDiagram(){
     let _self = this;
@@ -383,23 +429,17 @@ export class UploadProcessModelComponent implements OnInit {
 
   showConformance(){
     this.isLoading = true;
-    this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
-      this.saved_bpmn_list = res.filter(each_bpmn => {
-        return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
-      }); 
-      let saved_bps = this.saved_bpmn_list.filter(each_diag => {
-        return each_diag.processIntelligenceId && each_diag.processIntelligenceId.toString() == this.pid.toString() && each_diag.bpmnProcessName == this.processName;
-      })
-      this.isUploaded = saved_bps.length != 0;
-      this.reSize=true;
-      if(this.isUploaded){
-        this.bpmnservice.changeConfNav(true);
-        this.notationListOldValue = this.selected_notation;
-        this.getSelectedApprover();
-        this.getAutoSavedDiagrams();
-      }
-      this.isLoading = false;
-    })
+    this.selected_notation = 0;
+    this.notationListOldValue = 0;
+    this.isUploaded = this.saved_bpmn_list.length != 0;
+    this.reSize=true;
+    if(this.isUploaded){
+      this.bpmnservice.changeConfNav(true);
+      this.notationListOldValue = this.selected_notation;
+      this.getSelectedApprover();
+      this.getAutoSavedDiagrams();
+    }
+    this.isLoading = false;
   }
 
   autoSaveDiagram(model){
@@ -456,7 +496,7 @@ export class UploadProcessModelComponent implements OnInit {
   }
 
   initBpmnModeler(){
-    if(!this.bpmnModeler){
+    if(!this.bpmnModeler || document.getElementById("canvas1").innerHTML.trim() == ""){
       this.bpmnModeler = new BpmnJS({
         container: '#canvas1',
         keyboard: {
@@ -478,7 +518,7 @@ export class UploadProcessModelComponent implements OnInit {
   submitDiagramForApproval(){
     let yesProceed = true;
     if(this.isShowConformance && this.isUploaded && this.bpmnModeler){
-      yesProceed = confirm('You are about to save and submit '+(this.isConfBpmnModeler?'"TO BE"':'"AS IS"')+' notation for approval')
+      yesProceed = confirm('You are about to save and submit '+(this.isConfBpmnModeler?'"AS IS"':'"TO BE"')+' notation for approval')
     }
     if(!yesProceed) return;
     let bpmnModel:BpmnModel = new BpmnModel();
@@ -499,6 +539,7 @@ export class UploadProcessModelComponent implements OnInit {
       bpmnModel.userEmail = sel_List['userEmail'];
     }
   if(this.isShowConformance){
+    bpmnModel.notationFromPI = true;
     bpmnModel.bpmnProcessName = this.processName;
     bpmnModel.category = this.category;
     bpmnModel.processIntelligenceId = this.pid;
@@ -523,7 +564,6 @@ export class UploadProcessModelComponent implements OnInit {
   this[modeler_obj].saveXML({ format: true }, function(err, xml) {
     let final_notation = btoa(unescape(encodeURIComponent(xml)));
     bpmnModel.bpmnXmlNotation = final_notation;
-    //  bpmnModel.bpmnJsonNotation = final_notation;
     _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
       data=>{
         _self.isLoading = false;
@@ -555,7 +595,7 @@ export class UploadProcessModelComponent implements OnInit {
   saveprocess(newVal){
     let yesProceed = true;
     if(this.isShowConformance && this.isUploaded){
-      yesProceed = confirm('You are about to save '+(this.isConfBpmnModeler?'"TO BE"':'"AS IS"')+' notation')
+      yesProceed = confirm('You are about to save '+(this.isConfBpmnModeler?'"AS IS"':'"TO BE"')+' notation')
     }
     if(!yesProceed) return;
     this.isDiagramChanged = false;
@@ -563,25 +603,51 @@ export class UploadProcessModelComponent implements OnInit {
     let bpmnModel:BpmnModel = new BpmnModel();
     let _self = this;
     let sel_List = this.saved_bpmn_list[this.selected_notation];
-    let status = sel_List["bpmnProcessStatus"];
-    bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
-    bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
-    bpmnModel.category = sel_List['category'];
-    if(sel_List['id'])
-      bpmnModel.id = sel_List['id'];
-    else
-      delete(bpmnModel.id);
-    bpmnModel.userName = sel_List['userName'];
-    bpmnModel.tenantId = sel_List['tenantId'];
-    bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
-    bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
-    if(this.isShowConformance)
-      bpmnModel["processIntelligenceId"] = parseInt(this.pid);
-    this.initBpmnModeler();
-    this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
+    let status = "";
+    if(sel_List){
+      status = sel_List["bpmnProcessStatus"];
+      bpmnModel.userName = sel_List["userName"];
+      bpmnModel.tenantId = sel_List["tenantId"];
+    }
+    if(this.isShowConformance){
+      status = "INPROGRESS";
+      bpmnModel.bpmnProcessName = this.processName;
+      bpmnModel.category = this.category;
+      bpmnModel.processIntelligenceId = parseInt(this.pid);
+      let match = this.full_saved_bpmn_list.filter(each_diag => {
+        return each_diag.bpmnProcessName == this.processName && each_diag.processIntelligenceId && each_diag.processIntelligenceId == this.pid
+      })
+      if(match[0]){
+        bpmnModel.bpmnModelId = match[0]['bpmnModelId'];
+        bpmnModel.id = match[0]["id"];
+      }else{
+        bpmnModel.bpmnModelId = this.randomNumber;
+      }
+      bpmnModel.createdTimestamp = this.pivalues["createdTime"];
+      bpmnModel.bpmnProcessStatus = "INPROGRESS";
+      bpmnModel.notationFromPI = true;
+    }else{
+      bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
+      bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
+      bpmnModel.category = sel_List['category'];
+      if(sel_List['id'])
+        bpmnModel.id = sel_List['id'];
+      else
+        delete(bpmnModel.id);
+      bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
+      bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
+    }
+    // this.initBpmnModeler();
+    let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
+    this[modeler_obj].saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
       bpmnModel.bpmnXmlNotation = final_notation;
-      // _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = final_notation;
+      if(_self.isShowConformance && !_self.isConfBpmnModeler){
+        bpmnModel.hasConformance = true;
+        _self.confBpmnModeler.saveXML({ format: true }, function(err, xml2) {
+          bpmnModel.bpmnConfProcessMeta = btoa(unescape(encodeURIComponent(xml2)));;
+        })
+      }
       _self.rest.saveBPMNprocessinfofromtemp(bpmnModel).subscribe(
         data=>{
           if( !_self.isShowConformance && (status == "APPROVED" || status == "REJECTED")){
@@ -708,6 +774,34 @@ export class UploadProcessModelComponent implements OnInit {
   getBpmnDifferences(){
     let bpmnDiffs = diff( this.confBpmnModeler.getDefinitions(), this.bpmnModeler.getDefinitions());
     let revBpmnDiffs = diff( this.bpmnModeler.getDefinitions(), this.confBpmnModeler.getDefinitions());
+    let rev_added = revBpmnDiffs._added;
+    if(rev_added){
+      let rev_a_keys = Object.keys(rev_added);
+      rev_a_keys.forEach(each_rev_key => {
+        bpmnDiffs._removed[each_rev_key] = rev_added[each_rev_key];
+      })
+    }
+    let rev_removed = revBpmnDiffs._removed;
+    if(rev_removed){
+      let rev_r_keys = Object.keys(rev_removed);
+      rev_r_keys.forEach(each_rev_key => {
+        bpmnDiffs._added[each_rev_key] = rev_removed[each_rev_key];
+      })
+    }
+    let rev_layout = revBpmnDiffs._layoutChanged;
+    if(rev_layout){
+      let rev_l_keys = Object.keys(rev_layout);
+      rev_l_keys.forEach(each_rev_key => {
+        bpmnDiffs._layoutChanged[each_rev_key] = rev_layout[each_rev_key];
+      })
+    }
+    let rev_changed = revBpmnDiffs._changed;
+    if(rev_changed){
+      let rev_c_keys = Object.keys(rev_changed);
+      rev_c_keys.forEach(each_rev_key => {
+        bpmnDiffs._changed[each_rev_key] = rev_changed[each_rev_key];
+      })
+    }
     this.bpmnservice.updateDifferences(bpmnDiffs);
 
     this.getElementsToColor('bpmnModeler', bpmnDiffs._added, 'add');

@@ -98,8 +98,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    
      }else if(this.userRole.includes('Process Architect')){
       this.pages = [
-        {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-        
+        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"}
       ];
    
      }else if(this.userRole.includes('User')){

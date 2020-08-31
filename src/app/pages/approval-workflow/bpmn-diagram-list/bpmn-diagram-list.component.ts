@@ -96,14 +96,18 @@ export class BpmnDiagramListComponent implements OnInit {
   }
 
   formatApproverName(apprName){
-    let appr_arr = apprName.split('.');
-    let fName = appr_arr[0];
-    let lName = appr_arr[1];
-    if(fName)
-      fName = fName.charAt(0).toUpperCase()+fName.substr(1);
-    if(lName)
-      lName = lName.charAt(0).toUpperCase()+lName.substr(1);
-    return fName&&lName?fName+" "+lName:fName?fName:lName?lName:'-';
+    if(apprName){
+      let appr_arr = apprName.split('.');
+      let fName = appr_arr[0];
+      let lName = appr_arr[1];
+      if(fName)
+        fName = fName.charAt(0).toUpperCase()+fName.substr(1);
+      if(lName)
+        lName = lName.charAt(0).toUpperCase()+lName.substr(1);
+      return fName&&lName?fName+" "+lName:fName?fName:lName?lName:'-';
+    }else{
+      return '-';
+    }
    }
   checkStatus(diagram){
     let app_status = diagram.bpmnProcessStatus;

@@ -40,23 +40,27 @@ export class ListOfChangesComponent implements OnInit {
     return value;
   }
   getArray(json){
+    let elarr = [];
     if(json){
       let process_name = Object.keys(json);
-      if(process_name.length != 0)
-        return json[process_name[0]]["flowElements"]
-      else
-        return [];
-    }else{
-      return [];
+      if(process_name.length != 0){
+        process_name.forEach(each_pr => {
+          if(json[each_pr]["flowElements"])
+            elarr.push(json[each_pr]["flowElements"]);
+          else
+            elarr.push(json[each_pr]);
+        })
+      }
     }
+    return elarr;
   }
 
   getProcessType(type){
-    return type.replace('bpmn:','');
+    return type?type.replace('bpmn:',''):'-';
   }
 
   hasChanges(changes){
-    this.isHavingChange = this.getArray(changes._removed) + this.getArray(changes._added) + this.getArray(changes._changed) + this.getArray(changes._layoutChanged) != 0;
+    this.isHavingChange = this.getArray(changes._removed).length + this.getArray(changes._added).length + this.getArray(changes._changed).length + this.getArray(changes._layoutChanged).length != 0;
     return this.isHavingChange;
   }
   
