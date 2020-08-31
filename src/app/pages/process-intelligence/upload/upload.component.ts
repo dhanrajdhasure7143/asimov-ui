@@ -14,6 +14,7 @@ import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { APP_CONFIG } from 'src/app/app.config';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var target: any;
 @Component({
@@ -65,6 +66,7 @@ export class UploadComponent implements OnInit {
     private hints: PiHints,
     private ngxXml2jsonService: NgxXml2jsonService,
     private notifier:NotifierService,
+    private spinner:NgxSpinnerService,
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
@@ -89,6 +91,7 @@ export class UploadComponent implements OnInit {
         icon: 'error',
       })
     } else{
+      this.spinner.show();
     this.selectedFile = <File>event.addedFiles[0];
     const fd = new FormData();
     fd.append('file', this.selectedFile),
@@ -98,12 +101,14 @@ export class UploadComponent implements OnInit {
         let fileName = this.filedetails.data.split(':');
         this.rest.fileName.next(fileName[1]);
         this.onSelect(event, id)
+        this.spinner.hide();
       }, err => {
         Swal.fire({
           title: 'Error',
           text: 'Please try again!',
           icon: 'error',
         })
+        this.spinner.hide();
       });
     }
   }
@@ -345,6 +350,7 @@ export class UploadComponent implements OnInit {
   }
 
   getAlluserProcessPiIds() {
+    this.spinner.show();
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 6,
@@ -361,6 +367,7 @@ export class UploadComponent implements OnInit {
       });
       this.process_graph_list = this.process_List.data
       this.dtTrigger.next();
+      this.spinner.hide();
     })
   }
   loopTrackBy(index, term) {
