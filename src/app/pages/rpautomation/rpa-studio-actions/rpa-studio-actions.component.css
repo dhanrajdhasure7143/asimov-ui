@@ -219,3 +219,7 @@ margin: 0px !important;
    background-color: grey ! important;
    color:white ! important;
 }
+
+cron-time-picker div.ng-star-inserted  {
+  line-height: 4 !important;
+}

@@ -317,7 +317,7 @@ placeholder="Enter Environment Type" >-->
 
                         <div class="col-md-3 formelement">
                             <label for="connectionType">Connection Type*</label>
-                            <input type="text" maxlength="50" disabled class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type">
+                            <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type">
                             <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
 
 ('connectionType').touched" style="color:red">Connection Type Required*</span>
@@ -326,7 +326,7 @@ placeholder="Enter Environment Type" >-->
 
                         <div class="col-md-3 formelement">
                             <label for="portNumber">Port Number*</label>
-                            <input type="number" disabled maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port Number">
+                            <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port Number">
 
                             <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
 
@@ -436,7 +436,7 @@ Password">
 
                         <div class="col-md-3 formelement">
                             <label for=" connectionType">Connection Type*</label>
-                            <input type="text" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType" disabled value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
+                            <input type="text" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
                             <span *ngIf="updateForm.get('connectionType').invalid && updateForm.get
 
 ('connectionType').touched" style="color:red">Connection Type Required*</span>
@@ -445,7 +445,7 @@ Password">
 
                         <div class="col-md-3 formelement">
                             <label for="portNumber">Port Number*</label>
-                            <input type="number" disabled class="form-control" formControlName="portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
+                            <input type="number"  class="form-control" formControlName="portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
 
 Port Number">
                             <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
