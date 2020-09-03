@@ -362,6 +362,11 @@ export class DataselectionComponent implements OnInit {
             }
         }else if (result.dismiss === Swal.DismissReason.cancel){
           this.id=[];
+          // this.step_id = 1;
+          this.validCells = [];
+          this.invalidCells = [];
+          this.headerArray=[];
+
         }
       })
 

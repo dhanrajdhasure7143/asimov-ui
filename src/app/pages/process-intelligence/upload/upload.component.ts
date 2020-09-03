@@ -58,6 +58,8 @@ export class UploadComponent implements OnInit {
   isTimestammp: boolean=false;
   connectionResp:any;
   tableList:any = [];
+  isTableEnable:boolean=false;
+  isbtnEnable:boolean=false
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -616,8 +618,23 @@ generateGraph(e){
     this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
 })
 }
-getDBTables(){
-  this.dbDetails.tableName=null;
+getDBTables(value){
+  // let zeroTo255 = "(\\d{1,2}|(0|1)\\"
+  // + "d{2}|2[0-4]\\d|25[0-5])";
+  
+  //  // Regex for a digit from 0 to 255 and
+  // // followed by a dot, repeat 4 times.
+  // // this is the regex to validate an IP address.
+  // let regex  = zeroTo255 + "\\."+ zeroTo255 + "\\."+ zeroTo255 + "\\."+ zeroTo255;
+
+  // let ipReg =new RegExp(regex)
+  
+  // if(ipReg.test(value)==true){
+    this.spinner.show()
+
+    // console.log("true");
+
+  // this.dbDetails.tableName=null;
  var reqObj =  {
     "dbType": this.dbDetails.dbType,
     "password": this.dbDetails.password,
@@ -627,27 +644,52 @@ getDBTables(){
   this.rest.getDBTableList(reqObj)
     .subscribe(res => {
      // console.log(res)
+     this.isbtnEnable=true;
       var tData: any = res;
       if(tData.data.length != 0){
         this.tableList = tData.data;
       }
+      this.isTableEnable=true;
+      this.spinner.hide()
     },
     (err=>{
+      this.isTableEnable=false;
       this.tableList = [];
-    
+  
       this.notifier.show({
         type: 'error',
         message: err.error.message
     });
+    this.spinner.hide();
     }))
-    this.onChangeTable()
+  // }
+    // this.onChangeTable()
 }
   onChangeTable(){
-    this.dbDetails.mode=undefined;
-    this.dbDetails.increment=undefined;
-    this.dbDetails.timestamp=undefined;
-    this.isTimestammp=false;
+    if(this.dbDetails.mode){
+      this.dbDetails.mode='';
+    }
+    if(this.dbDetails.increment){
+      this.dbDetails.increment='';
+      this.isTimestammp=false;
     this.isIncrement=false;
+    }
+    if(this.dbDetails.timestamp){
+      this.dbDetails.timestamp=undefined;
+      this.isTimestammp=false;
+      this.isIncrement=false;
+    }
+    
+    
+  }
+  onKeyUpPassword(){
+    
+    if(this.dbDetails.hostName){
+      this.dbDetails.hostName=''
+    }else{
+
+    }
+
   }
 }
 
