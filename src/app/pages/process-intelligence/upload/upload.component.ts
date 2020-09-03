@@ -59,7 +59,6 @@ export class UploadComponent implements OnInit {
   connectionResp:any;
   tableList:any = [];
   isTableEnable:boolean=false;
-  isbtnEnable:boolean=false
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -328,9 +327,12 @@ export class UploadComponent implements OnInit {
   }
 
   onDbSelect() {
-    this.dbDetails={};
+    this.isTableEnable=false;
+    this.isTimestammp=false;
+    this.isIncrement=false;
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
+    this.dbDetails={};
   }
   closePopup() {
     var modal = document.getElementById('myModal1');
@@ -644,12 +646,11 @@ getDBTables(value){
   this.rest.getDBTableList(reqObj)
     .subscribe(res => {
      // console.log(res)
-     this.isbtnEnable=true;
+     this.isTableEnable=true;
       var tData: any = res;
       if(tData.data.length != 0){
         this.tableList = tData.data;
       }
-      this.isTableEnable=true;
       this.spinner.hide()
     },
     (err=>{
@@ -667,7 +668,7 @@ getDBTables(value){
 }
   onChangeTable(){
     if(this.dbDetails.mode){
-      this.dbDetails.mode='';
+      this.dbDetails.mode=null
     }
     if(this.dbDetails.increment){
       this.dbDetails.increment='';
