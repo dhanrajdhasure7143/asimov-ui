@@ -72,6 +72,7 @@
     "particlesjs": "^2.2.3",
     "roboto-fontface": "^0.10.0",
     "rxjs": "~6.4.0",
+    "save-svg-as-png": "^1.4.17",
     "sweetalert2": "^9.14.4",
     "tslib": "^1.10.0",
     "xlsx": "^0.15.6",

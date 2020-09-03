@@ -1,7 +1,11 @@
-#exportSVGtoPDF{
-    /* overflow: scroll !important; */
-    /* height: 100%;
-    width: 100%; */
-}
 
+/* #exportSVGtoPDF{
+    width: 100%;
+    height: 100%;
+} */
  
+.zoom_btns{
+    position: absolute;
+    z-index: 1;
+    margin-left: 80%;
+}

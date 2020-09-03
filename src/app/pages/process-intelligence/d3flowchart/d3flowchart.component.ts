@@ -4,6 +4,8 @@ import * as d3 from 'd3';
 declare var $: any;
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
+import * as svg from 'save-svg-as-png';
+import { nonWhiteSpace } from 'html2canvas/dist/types/css/syntax/parser';
 
 @Component({
   selector: 'app-d3flowchart',
@@ -76,11 +78,28 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
   .attr("height", h)
   // .attr("overflow", 'auto')
   // .attr("viewBox", '0 0 800 800')
-  .attr("preserveAspectRatio", 'none')
+  // .attr("preserveAspectRatio", 'none')
   .attr('id','render')
-  
-   var  inner = svg.append("g");
+  // .attr("class","target")
 
+  d3.select("svg").append("marker")
+  .attr("id","arrow")
+  .attr("viewBox","0 0 10 10")
+  .attr("refX","9")
+  .attr("refY","5")
+  .attr("markerWidth","5")
+  .attr("markerHeight","5")
+  .attr("orient","auto")
+  .attr("fill","black")
+
+  d3.select("marker").append("path")
+  // .attr("d","M 0 0 L 10 5 L 0 10 z")
+  .attr("d", "M 0 0 L 10 5 L 0 10 L 4 5 z")
+    .style("stroke-width", 1)
+    .style("stroke-dasharray", "1,0");
+    
+    
+   var  inner = svg.append("g");
    var defs = svg.append("defs");
 
 var gradient = defs.append("linearGradient")
@@ -106,9 +125,6 @@ gradient.append("stop")
    .attr("stop-color", "blue")
    .attr("stop-opacity", 1);
 
-    
-
-   
     // console.log(g);
     var states:any={}
     for(var j=0;j<this.model1.length;j++){
@@ -188,11 +204,11 @@ var count1
         if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
           var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
               if(this.performanceValue==true){
-                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'></span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
-                arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'></span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
+                arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
               }else{
-                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
-                arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
+                arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
               }
          
         }else{
@@ -205,26 +221,26 @@ var count1
           var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"Min</div></li></ul>";
         
         if(this.model2[i].days <= maxLinkCount){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 2px; fill: none;", 
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#736907; stroke-width: 2px; fill: none;marker-end:url(#arrow);", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount && this.model2[i].days <= maxLinkCount*2){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px; fill: none;", 
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#885c5d; stroke-width: 3px; fill: none;marker-end:url(#arrow);", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*2 && this.model2[i].days <= maxLinkCount*3){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 5.5px; fill: none;", 
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#924a4d;stroke-width: 5px; fill: none;marker-end:url(#arrow);", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*3 && this.model2[i].days <= maxLinkCount*4){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6px; fill: none;", 
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#993736;stroke-width: 5.5px; fill: none;marker-end:url(#arrow);", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*4 && this.model2[i].days < maxLinkCount*5){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6px; fill: none;", 
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#a01010;stroke-width: 6px; fill: none;marker-end:url(#arrow);", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days == maxCount.days){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#7ebad6;stroke-width: 6.5px; fill: none;", 
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#b1080f;stroke-width: 13px; fill: none;marker-end:url(#arrow);", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else{
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6.5px; fill: none;", 
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#b1080f;stroke-width: 13px; fill: none;marker-end:url(#arrow);", 
+          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }
           
         }
@@ -250,11 +266,11 @@ var count1
       if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
         if(this.performanceValue==true){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'></span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'></span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
+           curve: d3.curveBasis,arrowhead: "normal"})
         }else{
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;",
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
+           curve: d3.curveBasis,arrowhead: "normal"})
         }
         
       }else{
@@ -266,26 +282,26 @@ var count1
       
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"Min</div></li></ul>";
       if(this.model2[i].text <= maxLinkCount){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 2px;fill: none;", 
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px;marker-end:url(#arrow);", 
+         curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount && this.model2[i].text <= maxLinkCount*2){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px;fill: none;", 
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 4.4px;marker-end:url(#arrow);", 
+         curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*2 && this.model2[i].text <= maxLinkCount*3){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 5.5px; fill: none;", 
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #333;stroke-width: 5.5px; marker-end:url(#arrow);", 
+         curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*3 && this.model2[i].text <= maxLinkCount*4){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6px; fill: none;", 
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#6362D8;stroke-width: 6.5px; marker-end:url(#arrow);", 
+         curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*4 && this.model2[i].text < maxLinkCount*5){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6.5px; fill: none;", 
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#6362D8;stroke-width: 7.5px; marker-end:url(#arrow);", 
+         curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text == maxCount){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#6362D8;stroke-width: 6.5px;fill: none;", 
-        arrowheadStyle: "fill: #333",curve: d3.curveBasis,arrowhead:'vee'})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#6362D8;stroke-width: 10px;marker-end:url(#arrow);", 
+        arrowhead: "normal",curve: d3.curveBasis})
        }else{
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:url(#svgGradient);stroke-width: 6.5px; fill: none;", 
-        arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead:'vee'})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #333;stroke-width: 10px; marker-end:url(#arrow);", 
+         curve: d3.curveBasis,arrowhead: "normal"})
        }
         
       }
@@ -373,35 +389,38 @@ const max = nodesArray.reduce(function(prev, current) {
     // console.log(max1);
     const maxDivided = max1/5;
 
-    for(var i =0;i<nodesArray.length;i++){
+    for(var i =0;i<nodesArray.length;i++){  // for performance metrics
       // console.log(nodesArray[i].days);
       
       if (Number(nodesArray[i].days) <= maxDivided) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #b7aace";
+            g.node(eachLine).style = "fill: #E6D6A3";
       }
       else if (Number(nodesArray[i].days) > maxDivided && Number(nodesArray[i].days) <= Number(maxDivided*2)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #ADB9D1";
+            g.node(eachLine).style = "fill: #F1CC58";
       } else if (Number(nodesArray[i].days) > Number(maxDivided*2) && Number(nodesArray[i].days) <= Number(maxDivided*3)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #5b21db" ;
+            g.node(eachLine).style = "fill: #E8AA11" ;
       } else if (Number(nodesArray[i].days) > Number(maxDivided*3) && Number(nodesArray[i].days) <= Number(maxDivided*4)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #4b1edb";
+        g.node(eachLine).style = "fill: #E89011";
            
       }
-      else if (Number(nodesArray[i].days) > Number(maxDivided*4) && Number(nodesArray[i].days) <= Number(maxDivided*5)) {
+      else if (Number(nodesArray[i].days) > Number(maxDivided*4) && Number(nodesArray[i].days) < Number(maxDivided*5)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #024C7F";
+        g.node(eachLine).style = "fill: #E87611";
         
-      } else if(Number(nodesArray[i].days) == max1 && Number(nodesArray[i].days) > max1){
+      } else if(Number(nodesArray[i].days) == max1){
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #2d0adb";
+        g.node(eachLine).style = "fill: #550704";
+      }else{
+        var eachLine = nodesArray[i].label.split('\n')[0];
+        g.node(eachLine).style = "fill: #550704";
       }
     
     }
-  }else{ 
+  }else{        // for frequency metrics
   var maxDivided = max.metrics/5;
 
 // console.log(max.metrics);
@@ -428,12 +447,17 @@ for(var i =0;i<nodesArray.length;i++){
     g.node(eachLine).style = "fill: #4b1edb";
        
   }
-  else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics <= Number(maxDivided*5)) {
+  else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics < Number(maxDivided*5)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
     // console.log(nodesArray[i].metrics);   
     g.node(eachLine).style = "fill: #024C7F";
     
-  } else if(nodesArray[i].metrics == max.metrics && nodesArray[i].metrics > max.metrics){
+  } else if(nodesArray[i].metrics == max.metrics){
+    var eachLine = nodesArray[i].label.split('\n')[0];
+    // console.log(nodesArray[i].metrics);   
+    g.node(eachLine).style = "fill: #2d0adb";
+  }
+  else{
     var eachLine = nodesArray[i].label.split('\n')[0];
     // console.log(nodesArray[i].metrics);   
     g.node(eachLine).style = "fill: #2d0adb";
@@ -457,7 +481,7 @@ g.node('End').style = "fill: #A93226";
 //   .attr("width", w)
 //   .attr("height", h);
   
-   var  inner = svg.append("g");
+  //  var  inner = svg.append("g");
   
 // Set up zoom support
 var zoom = d3.zoom().on("zoom", function() {
@@ -499,8 +523,6 @@ var render = new dagreD3.render();
 //   dagreD3.util.applyStyle(path, edge[type+" Style"]);
   
  //};
-
-
 
 var wrap = function(text, width) {
   //  console.log(text);
@@ -566,7 +588,43 @@ var tooltip = d3.select("body")
 	.style("z-index", "10")
 	.style("visibility", "hidden")
   .text("Simple Tooltip...");
-render(inner, g);
+  render(inner, g);
+
+
+inner.selectAll('g.node').on('mouseover', function(d){
+  let selectedNode = d3.select(this)
+  this.hoverNodeName = '';
+  let nodeValue = selectedNode['_groups'][0]
+  this.hoverNodeName = nodeValue[0]['childNodes'][0].nodeName;
+ this.nodeTextPreviousStyle = this.style;
+ d3.select(this).select('g.label')
+
+  if(this.hoverNodeName == 'rect'){
+    this.style = 'font-size: 1.2rem; font-weight: 600; color: blue;text-align: center, padding: 5px;cursor:pointer;'
+    this.rectNodeData  = {
+      'x': nodeValue[0]['childNodes'][0]['attributes'][2]['value'] ,
+      'y': nodeValue[0]['childNodes'][0]['attributes'][3]['value'],
+      'width':  nodeValue[0]['childNodes'][0]['attributes'][4]['value'] ,
+      'height' : nodeValue[0]['childNodes'][0]['attributes'][5]['value'] ,
+    };     
+    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][4]['value'] = this.rectNodeData.width *1.4;
+    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height *1.2;
+    d3.select('g.node text tspan')['style']= 'font-size: 30px';
+    d3.select(this).select("g text")
+      .style('font-size','20')
+  }
+})
+.on('mouseout', function(this){
+  if(this.hoverNodeName == 'rect'){
+  d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][4]['value'] = this.rectNodeData.width;
+    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height;
+    this.style = this.nodeTextPreviousStyle;
+    d3.select(this).select("g text")
+  .style('font-size','14')
+  }
+})
+
+
 inner.selectAll("g.node")
   .attr("title", function(v) { return styleTooltip(v, g.node(v).description) })
   .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true }); });
@@ -600,15 +658,63 @@ inner.selectAll('g.edgePath')
 })
 
 
+  // For Edge color change on mouse enter
+inner.selectAll('g.edgePath path').on('mouseover', function(this){
+  this.selectedEdgeCssValue = '';
+  let selectedEdge = d3.select(this)
+  console.log(d3.select(this)['_groups']);
+  
+  let edgeValue = selectedEdge['_groups'][0];
+  let hoverEdgeCssValue = edgeValue[0]['style']['cssText']
+  this.selectedEdgeCssValue = hoverEdgeCssValue;
+  this['style']='stroke-width: 8px;fill: none;stroke: #333;marker-end: url(#arrow);';
+  }).on('mouseout', function(this){
+  this['style']= this.selectedEdgeCssValue;
+})
+
+d3.selectAll("g .node")
+.style("fill","#fff")
+// .attr("text-anchor","right")
+// .attr("x","60")
+// .attr("y","75")
+
+d3.selectAll("g text")
+.style('font-size','14')
+
 // Center the graph
-var initialScale = 0.75;
+var initialScale = 0.72;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 
-svg.attr('height', g.graph().height * initialScale + 53);
+svg.attr('height', g.graph().height * initialScale + 53)
+
+var zoom1 = 1;
+    
+$('.zoom').click( function(){
+  zoom1 += 0.1;
+  
+  svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  svg.attr('height', g.graph().height * zoom1 + 53)
+
+  // $('.target').css('zoom', zoom1);
+});
+$('.zoom-init').click( function(){
+  zoom1 = 0.71;
+  svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  svg.attr('height', g.graph().height * zoom1 + 53)
+  // $('.target').css('zoom', zoom1);
+});
+$('.zoom-out').click( function(){
+  zoom1 -= 0.1;
+  svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  svg.attr('height', g.graph().height * zoom1 + 53)
+  // $('.target').css('zoom', zoom1);
+});
+// svg.attr('width', g.graph().width * initialScale + 13);
     }
     
     
     exportSVG(fileType){
+      
       if(fileType == 'svg'){
         //get svg element.
   // var svg = document.getElementById("render");
@@ -692,16 +798,35 @@ svg.attr('height', g.graph().height * initialScale + 53);
         this.isdownloadsvg=false;
         this.issvg.emit(this.isdownloadsvg)
       }else{
-      html2canvas(this.exportSVGtoPDF.nativeElement, { useCORS: true, foreignObjectRendering: true, allowTaint: true }).then(canvas => {
-        // console.log('canvas.height',canvas.height)
-        // console.log('canvas.height',canvas.width)
-       
-        var margin = 10;
-        var imgWidth = 210 - 2*margin; 
-        var pageHeight = 295;  
-        var imgHeight = canvas.height * imgWidth / canvas.width;
-        var position = 10;
+        // html2canvas(this.exportSVGtoPDF.nativeElement, {scrollY: -window.scrollY}).then(function(canvas) {
+          // var img = canvas.toDataURL();
+          // window.open(img);
+      // });
+      html2canvas(this.exportSVGtoPDF.nativeElement, { 
+        // useCORS: true,
+        // foreignObjectRendering: true,
+          allowTaint: true,
+          scrollY: -window.scrollY,
+          useCORS: true,
+          logging:true,
+        //   onrendered: function(canvas) {
+
+        //     // restore the old offscreen position
+        //    this.exportSVGtoPDF.style.position = 'absolute';
+        //    this.exportSVGtoPDF.style.top = 0;
+        //    this.exportSVGtoPDF.style.left = "-9999px"
      
+        //  }
+        }).then(canvas => {
+      //   // console.log('canvas.height',canvas.height)
+      //   // console.log('canvas.height',canvas.width)
+       
+      //   var margin = 10;
+      //   var imgWidth = 210 - 2*margin; 
+      //   var pageHeight = 295;  
+      //   var imgHeight = canvas.height * imgWidth / canvas.width;
+      //   var position = 10;
+        // console.log('canvas', canvas.toDataURL('image/'+fileType))
         if(fileType == 'png' || fileType == 'jpeg'){
           this.downloadLink.nativeElement.href = canvas.toDataURL('image/'+fileType);
           // console.log(this.processGraphName);

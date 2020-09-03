@@ -357,7 +357,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     }
 
     text {
-        font-size: 14px;
+        /* font-size: 14px; */
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
         transform: translate(5px, 0px);
         height: auto;
