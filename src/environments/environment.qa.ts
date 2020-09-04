@@ -9,7 +9,8 @@ export const environment = {
   rpa_url: 'http://rpaqa.epsoftinc.in',
   loopback_url: 'http://10.11.0.107:3000',
   idm_url:'http://idmqa.epsoftinc.in',
-  pi_node_url: "http://pinodedev.epsoftinc.in:3000"
+  pi_node_url: "http://pinodedev.epsoftinc.in:3000",
+  platform_url:'http://apqa.epsoftinc.in',
 };
 
 /*

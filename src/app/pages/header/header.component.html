@@ -24,7 +24,10 @@
                                             <label>{{each_page.title}}</label> </a>
                                     </li>
                                     <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'> <img src="assets/images/Group 192.svg"> </li>
-                                    <li class=""> <img src="assets/images/pro1.png">
+                                    <li class=""> 
+                                        <!-- <img src="assets/images/pro1.png"> -->
+                                        <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                                        <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
                                         <div class="dropdown">
                                             <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
                                             <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
@@ -52,3 +55,4 @@
     </section>
 </div>
 <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner>

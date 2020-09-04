@@ -18,6 +18,7 @@ export interface AsimovAppConfig {
     piConnector:string;
     dbHostName:string;
     dbName:string;
+    platformEndPoint:string;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -34,5 +35,6 @@ export const AppConfig: AsimovAppConfig = {
     logoutRedirectionURL: environment.logout_url,
     piConnector:environment.connector_topic,
     dbHostName:environment.dbConnectorHost,
-    dbName:environment.dbName
+    dbName:environment.dbName,
+    platformEndPoint:environment.platform_url
 };

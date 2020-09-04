@@ -17,6 +17,7 @@ import { LoaderInterceptor } from '../helpers/loader-interceptor.service';
 import { MyLoaderComponent } from './my-loader/my-loader.component';
 import { HeaderDropdownOverlayComponent } from './header-dropdown-overlay/header-dropdown-overlay.component';
 import {Ng2TelInputModule} from 'ng2-tel-input';
+import { NgxSpinnerModule } from "ngx-spinner";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {Ng2TelInputModule} from 'ng2-tel-input';
     PagesRoutingModule,
     Ng2TelInputModule,
     SharedModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxSpinnerModule
   ],
   providers: [SharebpmndiagramService, PagesHints,
   //  LoaderService,

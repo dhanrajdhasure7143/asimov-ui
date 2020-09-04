@@ -418,5 +418,8 @@ export class RestApiService{
       return this.http.post('/rpa-service/outputBox',data);
     }
 
+    getUserDetails(username){
+      return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
+    }
 }
 
