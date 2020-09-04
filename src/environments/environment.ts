@@ -12,7 +12,8 @@ export const environment = {
   idm_url:'http://idmdev.epsoftinc.in',
   auth_url: "http://authdev.epsoftinc.in",
   pi_node_url: "http://10.11.0.112:3000",
-
+  platform_url:'http://apdev.epsoftinc.in',
+  
  // Aiotal redirection urls 
   myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
   logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation', 

@@ -47,6 +47,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.accessTokenEndPoint + req.url;
         else if(req.url.indexOf('authorizationservice') > -1)
             url = this.config.authorizationEndPoint + req.url;
+        else if(req.url.indexOf('api') > -1)
+            url = this.config.platformEndPoint + req.url;
         return url;
     }
 }
