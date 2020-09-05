@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { data } from 'jquery';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
 import * as $ from 'jquery';
+
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
