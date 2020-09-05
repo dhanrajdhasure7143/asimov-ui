@@ -727,13 +727,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         "botMainSchedulerEntity":this.scheduler,
         "envIds":env,
         "isPredefined":botProperties.predefinedBot,
-        "tasks": this.finaldataobjects,
+        "tasks": this.final_tasks,
         "createdBy": "admin",
         "lastSubmittedBy": "admin",
         "scheduler" : this.scheduler,
         "sequences": this.getsequences(),
       }
-      this.get_coordinates();
       return this.rest.saveBot(this.saveBotdata)
    
   }
@@ -1093,34 +1092,47 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   {
     let object=this.finaldataobjects.find(object=>object.inSeqId==start);
     this.add_order(object)
+    
   }
 
 
   add_order(object)
   {
     let end="STOP_"+this.finalbot.botName;
-    this.final_tasks.push(object);
-    while(1)
-    {
-      if(object.outSeqId==end)
+      this.final_tasks.push(object);
+      if(object.outSeqId==end) 
       {
+        
+        console.log(end)
+        console.log(object.outSeqId)
         return;
       }
       else
       {
         object=this.finaldataobjects.find(object2=>object2.nodeId.split("__")[1]==object.outSeqId);
+        console.log(object)
         if(object.taskName=="If condition")
         {
+          this.final_tasks.push(object);
           JSON.parse(object.outSeqId).forEach(report=>{
-            let node=this.finaldataobjects.find(process=>process.nodeId.split("__")[1]==report)
-            this.add_order(node);
+            if(report==end)
+            {
+              return; 
+            }            
+            else
+            {
+              let node=this.finaldataobjects.find(process=>process.nodeId.split("__")[1]==report)
+              this.add_order(node);
+            }
           })
           return;
+        }else
+        {
+          this.add_order(object); 
+
         }
-        
-      }
-    }
-   
+      }      
+    return;
   }
   
   
