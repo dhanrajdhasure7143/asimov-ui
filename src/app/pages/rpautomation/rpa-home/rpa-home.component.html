@@ -36,7 +36,7 @@
                 <h3 class="box-heading  rpa-home-heading">My Workspace</h3>
                 <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab">
                     <mat-tab label="Bot Details">
-                        <div class="row rpa-home-header" style="padding-left:15px;">
+                        <div class="row rpa-home-header" style="padding-left:576px;">
 
                             <!--<h4 class="box-heading  rpa-home-heading">My Workspace</h4>-->
 
@@ -70,7 +70,22 @@
                 <mat-icon matSuffix *ngIf="!isSearch" style="font-size: 1.2em"></mat-icon>
             </mat-form-field>
             </span>-->
-                            <mat-form-field *ngFor="let filter of filterSelectObj" style="margin-left: 15px;margin-top:10px;">
+            <mat-form-field class="filter" floatLabel="never" style="margin-top:10px">
+                <mat-label>Bot Name</mat-label>
+                <input matInput autocomplete="off" id="botNameFilter" [formControl]="botNameFilter">
+              </mat-form-field>
+
+              <!--<mat-form-field class="filter" floatLabel="never" style="margin-top:10px">
+                <mat-label>Bot Type</mat-label>
+                <input matInput autocomplete="off" id="botTypeFilter" [formControl]="botTypeFilter">
+              </mat-form-field>-->
+              &nbsp;&nbsp;&nbsp;
+              <mat-form-field class="filter" floatLabel="never" style="margin-top:10px">
+                <mat-label>Category</mat-label>
+                <input matInput autocomplete="off" id="departmentFilter" [formControl]="departmentFilter">
+              </mat-form-field>
+
+                            <!--<mat-form-field *ngFor="let filter of filterSelectObj" style="margin-left: 15px;margin-top:10px;">
                                 <mat-label>Select {{filter.name}}</mat-label>
                                 <select matNativeControl name="{{filter.columnProp}}" [(ngModel)]="filter.modelValue" (change)="filterChange(filter,$event)">
                   <option value="">-- Select {{filter.name}} --</option>
@@ -79,7 +94,7 @@
                 </select>
                             </mat-form-field>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <button mat-flat-button class="rpa-home-reset-btn" title="Reset Filter" (click)="resetFilters()">Reset</button>
+                            <button mat-flat-button class="rpa-home-reset-btn" title="Reset Filter" (click)="resetFilters()">Reset</button>-->
 
                         </div>
                         <div class="bots-container">
@@ -94,12 +109,12 @@
                                 <ng-container matColumnDef="version">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Version </th>
                                     <td mat-cell *matCellDef="let element">
-                                        <button *ngIf="element.version!=null">{{element.version}}</button>
+                                        <button *ngIf="element.version!=null">V{{element.version}}</button>
                                         <span *ngIf="element.version==''">-</span> </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="botType">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type</th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
                                     <td mat-cell *matCellDef="let element">
                                         <span *ngIf="element.botType!=null">{{element.botType}}</span>
                                         <span *ngIf="element.botType==null">---</span>
@@ -107,7 +122,7 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="department">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Category</th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
                                     <td mat-cell *matCellDef="let element">
                                         <span *ngIf="element.department!=null">{{element.department}}</span>
                                         <span *ngIf="element.department==null">---</span>
@@ -117,10 +132,14 @@
 
 
                                 <ng-container matColumnDef="botStatus">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Status </th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
                                     <td mat-cell *matCellDef="let element"> <span *ngIf="element.botStatus!=null">{{element.botStatus}}</span> <span *ngIf="element.botStatus==null">---</span> </td>
                                 </ng-container>
-
+                                <ng-container matColumnDef="description">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
+                                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.description!=null" class="descriptiontext" (click)="changeclassstyle()">{{element.description}}</span>
+                                         <span *ngIf="element.botStatus==null">---</span> </td>
+                                </ng-container>
                                 <!--<ng-container matColumnDef="description">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
                                 <td mat-cell *matCellDef="let element">
@@ -142,7 +161,9 @@
                                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource1!=null}"></tr>
                                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource1!=null && dataSource1.data.length==0)}"></tr>
                             </table>
-
+                            <div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
+                                No Record Found
+                               </div>
                         </div>
                         <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
                     </mat-tab>
@@ -203,7 +224,7 @@
                   </span>
 
                                         <span>
-                    <button (click)="assignreset()" title="Create and Assign Bot"><i  class="fas fa-sync-alt"></i></button>
+                    <button (click)="assignreset(element.taskId)" title="Create and Assign Bot"><i  class="fas fa-sync-alt"></i></button>
                   </span>
                                     </td>
                                 </ng-container>
