@@ -12,6 +12,7 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { Rpa_Home_Hints } from "../model/rpa-home-module-hints"
 import * as $ from 'jquery';
 import Swal from 'sweetalert2';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-rpa-home',
@@ -19,9 +20,18 @@ import Swal from 'sweetalert2';
   styleUrls: ['./rpa-home.component.css']
 })
 export class RpaHomeComponent implements OnInit {
+  isTableHasData = true;
   filterSelectObj = [];
-  filterValues = {};
-  displayedColumns: string[] = ["botName","version","botType","department","botStatus"];
+  filterValues = { };
+  filterValues1 = {
+    botName:'',
+    botType:'',
+    department:''
+  };
+  botNameFilter = new FormControl('');
+  botTypeFilter = new FormControl('');
+  departmentFilter = new FormControl('');
+  displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
   
   displayedColumns2: string[] = ["processName","taskName","Assign","Operations"];
   dataSource1:MatTableDataSource<any>;
@@ -41,7 +51,7 @@ export class RpaHomeComponent implements OnInit {
   constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Home_Hints,)
   { 
      // Object to create Filter for
-     this.filterSelectObj = [
+    /* this.filterSelectObj = [
       {
         name: 'Bot Name',
         columnProp: 'botName',
@@ -55,7 +65,7 @@ export class RpaHomeComponent implements OnInit {
         columnProp: 'department',
         options: []
       }
-    ]
+    ]*/
   }
 
 
@@ -122,13 +132,78 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
       response=botlist;
+      response.forEach(data=>{
+        let object:any=data;
+        if(data.botType==0)
+        {
+          object.botType='Attended'
+        }
+        else if(data.botType==1)
+        {
+          object.botType='Unattended';
+        }
+        this.bot_list.push(object)  
+      })
+      response.forEach(data=>{
+        let object:any=data;
+        if(data.department==1)
+        {
+          object.department='Development'
+        }
+        else if(data.department==2)
+        {
+          object.department='HR';
+        }
+        else if(data.department==3)
+        {
+          object.department='QA';
+        }
+        this.bot_list.push(object)  
+      })
       this.bot_list=botlist;
       this.dataSource1= new MatTableDataSource(response);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
-      
-      this.filterSelectObj.filter((o) => {
+      this.dataSource1.data = response;
+      this.dataSource1.filterPredicate = this.createFilter1();
+      this.botNameFilter.valueChanges
+      .subscribe(
+        botName => {
+          this.filterValues1.botName = botName;
+          this.dataSource1.filter = JSON.stringify(this.filterValues1);
+          if(this.dataSource1.filteredData.length > 0){
+            this.isTableHasData = true;
+          } else {
+            this.isTableHasData = false;
+          }
+        }
+      )
+      /*this.botTypeFilter.valueChanges
+      .subscribe(
+        botType => {
+          this.filterValues1.botType = botType;
+          this.dataSource1.filter = JSON.stringify(this.filterValues1);
+          if(this.dataSource1.filteredData.length > 0){
+            this.isTableHasData = true;
+          } else {
+            this.isTableHasData = false;
+          }
+        }
+      )*/
+      this.departmentFilter.valueChanges
+      .subscribe(
+        department => {
+          this.filterValues1.department = department;
+          this.dataSource1.filter = JSON.stringify(this.filterValues1);
+          if(this.dataSource1.filteredData.length > 0){
+            this.isTableHasData = true;
+          } else {
+            this.isTableHasData = false;
+          }
+        }
+      )
+      /*this.filterSelectObj.filter((o) => {
         response.forEach(x => 
           {
          if(x.botType == 0)
@@ -157,14 +232,24 @@ export class RpaHomeComponent implements OnInit {
             }
           })
         o.options = this.getFilterObject(response, o.columnProp);
-      });
+      });*/
       if(this.selectedTab==0)  
       this.rpa_studio.spinner.hide()
     })   
   }
 
+  createFilter1(): (data: any, filter: string) => boolean {
+    let filterFunction = function(data, filter): boolean {
+      let searchTerms = JSON.parse(filter);
+      return data.botName.toLowerCase().indexOf(searchTerms.botName) !== -1      
+      && data.botType.toString().toLowerCase().indexOf(searchTerms.botType) !== -1
+      && data.department.toString().toLowerCase().indexOf(searchTerms.department) !== -1;
+    }
+    return filterFunction;
+  }
+
   
- getFilterObject(fullObj, key) {
+ /*getFilterObject(fullObj, key) {
     const uniqChk = [];
     fullObj.filter((obj) => {
       if (!uniqChk.includes(obj[key])) {
@@ -226,7 +311,7 @@ export class RpaHomeComponent implements OnInit {
       value.modelValue = undefined;
     })
     this.dataSource1.filter = "";
-  }
+  }*/
 
   getautomatedtasks(process)
   {

@@ -19,7 +19,7 @@
       <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
       <button  type="button" id="stopbot" title="Stop Bot"
       class="rpa-btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot()">
-      <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
+      <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
       <div class="btn_title">Stop</div>
       </button>
       </div>
@@ -28,7 +28,7 @@
       <div *ngIf="pausebot==true || resumebot==true">
         <button  type="button"
         class="  rpa-btn_style"  title="Stop Bot" aria-hidden="true" placement="bottom" (click)="stopBot()">
-        <img class="imageI1" src="/assets/images/RPA/stop_icon.svg">
+        <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
         <div class="btn_title">Stop</div>
         </button>
       </div>
@@ -331,6 +331,10 @@
                           <th></th>
                         </tr>
                         </thead>
+                        <tr id="noRecordTR" [ngClass]="{'hide':!(scheduleLists!=null && scheduleLists.length==0)}"> 
+                          
+                          <td colspan="6" class="norecordfound">No Record Found</td>                   
+                      </tr>
                         <tbody>
                         <tr *ngFor="let schedule of scheduleLists">
                           <td>{{convertcron(schedule.scheduleInterval)}}</td>
