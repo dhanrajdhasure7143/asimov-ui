@@ -121,6 +121,14 @@ export class RpaHomeComponent implements OnInit {
    
   }
 
+  assignreset(id)
+  { 
+    let botId=$("#"+id+"__select").val();
+    if(botId!=0)
+      {
+        $("#"+id+"__select").prop('selectedIndex',0);
+      }
+  }
 
   getallbots()
   {
