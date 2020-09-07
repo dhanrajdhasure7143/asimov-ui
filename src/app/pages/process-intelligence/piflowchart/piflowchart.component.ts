@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter  } from '@angular/core';
 import * as go from 'gojs';
 import * as jsPDF from 'jspdf'
+import { textAlign } from 'html2canvas/dist/types/css/property-descriptors/text-align';
 // import {ZoomSlider} from '../../../zoomSlider';
 // import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -207,6 +208,14 @@ export class PiflowchartComponent implements OnInit {
                     name: "NodeTEXT",
                     alignment: go.Spot.TopCenter,
                     position: new go.Point(0, -30),
+                    overflow: go.TextBlock.OverflowEllipsis,
+                    maxLines: 1,
+                    //margin: 2,
+                    width: 150,
+                    textAlign:"center" 
+                    // //wrap: go.TextBlock.WrapFit,
+                    // width:100,
+                    // overflow: go.TextBlock.OverflowEllipsis,
                 },
                 new go.Binding("text","name").makeTwoWay()),),
 

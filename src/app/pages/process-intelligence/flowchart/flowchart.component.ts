@@ -193,7 +193,7 @@ export class FlowchartComponent implements OnInit {
         this.spinner.show();
         setTimeout(() => {
           this.onchangegraphId(piId);
-        }, 3*60*1000);
+        }, 6*60*1000);
       }
     }); 
   }
@@ -910,6 +910,28 @@ closeNav() { // Variant list Close
       this.isSliderBPMN = false;
     
   }
+
+  resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
+    this.resetFilter=true;
+    this.model1 = this.variantCombo.data[0].nodeDataArraycase
+    this.nodeAlignment();
+    this.model2 = this.flowchartData(this.model1)
+    this.gradientApplyforNode();
+    this.gradientApplyforLinks();
+    this.linkCurvinessGenerate();
+    this.spinMetrics0="";
+    this.spinMetrics0="absoluteFrequency";
+    console.log("rest",this.model1);
+
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = true;
+      this.isSliderBPMN = false;
+    
+  }
   caseParcent(parcent){       // case persent value in variant list
   
     if(String(parcent).indexOf('.') != -1){
@@ -1039,7 +1061,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
 
   readselectedNodes(SelectedActivities){
     if(SelectedActivities.length==0){
-      this.resetspinnermetrics()
+      this.resetActivityFiltermetrics();
+     
     }else{
       this.filterByActivity(SelectedActivities)
     }
@@ -1327,9 +1350,10 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
 }
 filterOverlay(){  
   this.dataValues = [];
+  let vv = this.variantCombo.data[0].nodeDataArraycase
     //Filter overlay open on filter icon click
-  for(var i=1;i<this.model1.length-1;i++){
-    this.dataValues.push(this.model1[i])
+  for(var i=1;i<vv.length-1;i++){
+    this.dataValues.push(vv[i])
     }
   this.isFilterComponent=true;
   var modal = document.getElementById('myModal');
