@@ -132,7 +132,7 @@
                                         </div>
                                         <div>
                                         <label for="hostname">Host Name / IP</label>
-                                        <input type="text" name="hostname" #hostname="ngModel" [(ngModel)]="dbDetails.hostName" class="form-control" placeholder="Enter Host Name" required (change)="getDBTables()" 
+                                        <input type="text" name="hostname" #hostname="ngModel" [(ngModel)]="dbDetails.hostName" class="form-control" placeholder="Enter Host Name" required 
                                         [readonly]="!dbDetails.dbType || !dbDetails.portNumber || !dbDetails.dbName || !dbDetails.userName || !dbDetails.password"/>
                                         <span *ngIf="((hostname.invalid && database.submitted) || (hostname.errors && hostname.touched) )" 
                                                 class='fa fa-info-circle errspan'> Host Name/IPis required </span>
@@ -164,7 +164,11 @@
                                         <span *ngIf="((dbname.invalid && database.submitted) || (dbname.errors && dbname.touched) )" 
                                                 class='fa fa-info-circle errspan'> DB Name is required </span>
                                         </div>
-                                        <div>
+
+                                        <div class="featchTbale-btn" *ngIf="!isTableEnable">
+                                                <button class="btn eiap-btn btn-primary" [disabled]="!dbDetails.hostName" (click)="getDBTables()">Featch tables</button>
+                                        </div>
+                                        <div [hidden]="!isTableEnable">
                                         <label for="tablename">Table Name</label>
                                         <select [disabled]="!dbDetails.hostName" class="form-control" name="tablename" id="tablename" #tablename='ngModel' [(ngModel)]="dbDetails.tableName" (change)="onChangeTable()" required>
                                                 <option [value]="undefined" disabled hidden>Select Table Name</option>
@@ -173,7 +177,7 @@
                                                
                                         </select>
                                         <!-- <input type="text" name="tablename" #tablename='ngModel' [(ngModel)]='dbDetails.tableName' class="form-control" placeholder="Enter Table Name" required/> -->
-                                        <span *ngIf="((tablename.invalid && database.submitted) || (tablename.errors && tablename.touched) )" 
+                                        <span *ngIf="tablename.errors && tablename.touched" 
                                                 class='fa fa-info-circle errspan'> Table Name is required </span>
                                         </div>
                                 </div>
@@ -187,14 +191,15 @@
                                         </div>
                                         <div>
                                         <label for="password">Password</label>
-                                        <input type="password" name="password" #password='ngModel' [(ngModel)]='dbDetails.password' class="form-control" placeholder="Enter Password" required/>
+                                        <input type="password" name="password" #password='ngModel' [(ngModel)]='dbDetails.password' (keyup)="onKeyUpPassword()" class="form-control" placeholder="Enter Password" required/>
                                         <span *ngIf="((password.invalid && database.submitted) || (password.errors && password.touched) )" 
                                                 class='fa fa-info-circle errspan'> Password is required </span>
                                         </div>
-                                        <div>
+                                        <div *ngIf="isTableEnable">
                                                 <label for="increase">Mode</label>
                                                 <select [disabled]="!dbDetails.tableName" name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
                                                         <option [value]="undefined" disabled hidden>Select Mode</option>
+                                                        <option [value]="null" disabled hidden>Select Mode</option>
                                                         <option value="incrementing">Incrementing</option>
                                                         <option value="timestamp">Timestamp</option>
                                                         <option value="timestamp+incrementing">Incrementing with Timestamp</option>

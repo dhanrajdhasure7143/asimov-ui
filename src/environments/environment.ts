@@ -19,7 +19,7 @@ export const environment = {
   logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation', 
 
 // PI Connectors
-  connector_topic: 'nodeq',
+  connector_topic: 'topq',
 
 //DB Connector
   dbConnectorHost: "10.11.0.113",
