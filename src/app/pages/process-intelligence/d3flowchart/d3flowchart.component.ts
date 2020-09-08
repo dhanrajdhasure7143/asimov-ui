@@ -204,10 +204,10 @@ var count1
         if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
           var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
               if(this.performanceValue==true){
-                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'></span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
+                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: '', labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
                 arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
               }else{
-                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
+                g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text, labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
                 arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
               }
          
@@ -218,28 +218,28 @@ var count1
           var performanceLinkCount4=this.timeConversion(this.model2[i].toolDataCount[8])
           var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
         
-          var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"Min</div></li></ul>";
+          var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
         
         if(this.model2[i].days <= maxLinkCount){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#736907; stroke-width: 2px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#736907; stroke-width: 3px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount && this.model2[i].days <= maxLinkCount*2){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#885c5d; stroke-width: 3px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#885c5d; stroke-width: 4.4px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*2 && this.model2[i].days <= maxLinkCount*3){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#924a4d;stroke-width: 5px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#924a4d;stroke-width: 5.5px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*3 && this.model2[i].days <= maxLinkCount*4){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#993736;stroke-width: 5.5px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#993736;stroke-width: 6px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*4 && this.model2[i].days < maxLinkCount*5){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#a01010;stroke-width: 6px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#a01010;stroke-width: 6.5px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days == maxCount.days){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#b1080f;stroke-width: 13px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#b1080f;stroke-width: 8px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else{
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#b1080f;stroke-width: 13px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#b1080f;stroke-width: 8px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }
           
@@ -266,10 +266,10 @@ var count1
       if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
         if(this.performanceValue==true){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'></span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: '', labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
            curve: d3.curveBasis,arrowhead: "normal"})
         }else{
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()'  onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>", labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text, labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);",
            curve: d3.curveBasis,arrowhead: "normal"})
         }
         
@@ -280,27 +280,27 @@ var count1
         var performanceLinkCount4=this.timeConversion(this.model2[i].toolDataCount[8])
         var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
       
-        var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"Min</div></li></ul>";
+        var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
       if(this.model2[i].text <= maxLinkCount){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 3px;marker-end:url(#arrow);", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke: #121112; stroke-width: 3px;marker-end:url(#arrow);", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount && this.model2[i].text <= maxLinkCount*2){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #121112; stroke-width: 4.4px;marker-end:url(#arrow);", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke: #121112; stroke-width: 4.4px;marker-end:url(#arrow);", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*2 && this.model2[i].text <= maxLinkCount*3){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #333;stroke-width: 5.5px; marker-end:url(#arrow);", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke: #333;stroke-width: 5.5px; marker-end:url(#arrow);", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*3 && this.model2[i].text <= maxLinkCount*4){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#6362D8;stroke-width: 6.5px; marker-end:url(#arrow);", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#6362D8;stroke-width: 6px; marker-end:url(#arrow);", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*4 && this.model2[i].text < maxLinkCount*5){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#6362D8;stroke-width: 7.5px; marker-end:url(#arrow);", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#6362D8;stroke-width: 6.5px; marker-end:url(#arrow);", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text == maxCount){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke:#6362D8;stroke-width: 10px;marker-end:url(#arrow);", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#6362D8;stroke-width: 8px;marker-end:url(#arrow);", 
         arrowhead: "normal",curve: d3.curveBasis})
        }else{
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: "<span onmouseover='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"visible\"); })()' onmouseout='(function(){ return $(\"#tooltip_template\").css(\"visibility\", \"hidden\"); })()' onmousemove='(function(){ $(\"#tooltip_template\").html(\"<span>"+linkTooltip+"</span>\").css(\"top\", (event.pageY-10)+\"px\").css(\"left\",(event.pageX+10)+\"px\"); })()'>"+this.model2[i].text+"</span>",  labelType: "html", style: "stroke: #333;stroke-width: 10px; marker-end:url(#arrow);", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke: #333;stroke-width: 8px; marker-end:url(#arrow);", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }
         
@@ -569,7 +569,6 @@ var wrap = function(text, width) {
 // Simple function to style the tooltip for the given node.
 var styleTooltip = function(name, description) {
   return "<p class='name'>" + name + "</p>" + description;
-
 };
 
 var tooltip = d3.select("body")
@@ -636,39 +635,79 @@ inner.selectAll('g.node')
     .text(function(d) {return d.name })
     .call(wrap, 30)
 
-.on("mousemove", function(){ 
- tooltip.text(this.dataset.description)   
- 
+.on("mousemove", function(){
+ tooltip.text(this.dataset.description) 
 })
 .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
-inner.selectAll('g.edgePath')
-.attr('fill', 'none')
-.attr("stroke","black")
-.on('mouseover', function(d){
-  // console.log('edgepath', d)
-  inner.selectAll('g.edgePath').append('title').text(d.v+" - "+d.w+'\n'+
 
-"Frequency"+'\n'+
-"Absolute Frequency 196"+'\n'+
-"Case Frequency     195"+'\n'+
-"Max Repititions    2"+'\n'+
-"Start Frequency    193"+'\n'+
-"End Frequency      0")
-})
+
+//edge tooltip
+var me=this
+var styleTooltip1 = function(name) {  
+  for( var i=0;i<me.model2.length;i++){
+    if(me.model2[i].from==name.v&&me.model2[i].to==name.w){
+      if(name.v=="Start"||name.w=="End"||name.v=="End"||name.w=="Start"){
+      var linkTooltip1 = "<p>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul>";
+      }else{
+        var performanceLinkCount1=me.timeConversion(me.model2[i].toolDataCount[5])
+        var performanceLinkCount2=me.timeConversion(me.model2[i].toolDataCount[6])
+        var performanceLinkCount3=me.timeConversion(me.model2[i].toolDataCount[7])
+        var performanceLinkCount4=me.timeConversion(me.model2[i].toolDataCount[8])
+        var performanceLinkCount5=me.timeConversion(me.model2[i].toolDataCount[9])
+        var linkTooltip1 = "<p>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
+        }
+      }
+}
+  return linkTooltip1;
+};
+inner.selectAll('g.edgePath path.path')
+.attr("title", function(v) { 
+  if(me.performanceValue==true&&v.v=="Start"||me.performanceValue==true&&v.w=="End"){
+
+ }else{
+  return styleTooltip1(v)
+ }
+ })
+  .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true}); });
+  // console.log(d3.mouse(this));
+  inner.selectAll('g.edgePath')
+      .enter().append("text")
+      .attr("class", "path")
+      .attr("x", function (d) { return d.parent.px; })
+      .attr("y", function (d) { return d.parent.py; })
+      // .text(function(d) {return d.name })
+      .call(wrap, 30)
+      .on("mousemove", function(){
+        tooltip.text() })
+       .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
+
+// inner.selectAll('g.edgePath')
+// .attr('fill', 'none')
+// .attr("stroke","black")
+// .on('mouseover', function(d){
+//   inner.selectAll('g.edgePath').append('title').text(d.v+" - "+d.w+'\n'+
+
+// "Frequency"+'\n'+
+// "Absolute Frequency 196"+'\n'+
+// "Case Frequency     195"+'\n'+
+// "Max Repititions    2"+'\n'+
+// "Start Frequency    193"+'\n'+
+// "End Frequency      0")
+// })
 
 
   // For Edge color change on mouse enter
 inner.selectAll('g.edgePath path').on('mouseover', function(this){
   this.selectedEdgeCssValue = '';
   let selectedEdge = d3.select(this)
-  console.log(d3.select(this)['_groups']);
-  
   let edgeValue = selectedEdge['_groups'][0];
   let hoverEdgeCssValue = edgeValue[0]['style']['cssText']
+  // console.log(edgeValue[0]['style']['cssText'];
+  let strokeValue=edgeValue[0]['style']['cssText'].split(';')[1]
   this.selectedEdgeCssValue = hoverEdgeCssValue;
-  this['style']='stroke-width: 8px;fill: none;stroke: #333;marker-end: url(#arrow);';
-  }).on('mouseout', function(this){
+  this['style']="fill: none;stroke: red;marker-end: url(#arrow);"+strokeValue;
+  }).on('mouseout', function(this){    
   this['style']= this.selectedEdgeCssValue;
 })
 

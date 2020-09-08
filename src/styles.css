@@ -493,7 +493,7 @@ div#tooltip_template.tooltip-panel p:first-child {
   color: #2676cf;
 }
 foreignObject{
-  width: 65px !important;
+  width: 80px !important;
   padding-right: 60px !important;
 }
 .breadcrumb>li+li:before {
