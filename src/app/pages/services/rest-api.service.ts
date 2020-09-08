@@ -41,7 +41,7 @@ export class RestApiService{
   public ipAddress:string; 
 
   getAccessToken(){
-    let data = {"userId":"nagaraju.joneboina@epsoftinc.com",
+    let data = {"userId":"venkata.simhadri@epsoftinc.com",
                 "password":"Welcome@123"};
 
   
@@ -290,9 +290,39 @@ export class RestApiService{
     return this.http.post("/ReddisCopy/getGraphData",body)
   }
 
+  getVariantActivityFilter(activityFilterbody){
+    return this.http.post("/ReddisCopy/getGraphData",activityFilterbody)
+  }
+
   getDBTableList(body){
     return this.http.post('/processintelligence/v1/processgraph/pi/tenant/db/list/tables', body)
   }
+
+// PI To BPMN API's START
+
+  getFullGraphBPMN(body){
+    return this.http.get('/processintelligence/v1/bpmn/FullGraph?pi_id='+body.pid+'&pi_name='+body.pname)
+  }
+
+  getSingleTraceBPMN(body){
+    return this.http.get('/processintelligence/v1/bpmn/SingleTrace?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumber='+body.traceNumber)
+  }
+
+  getMultiTraceBPMN(body){
+    var tracNo = '';
+    for(var i=0;i<body.traceNumberList.length;i++){
+      tracNo+='&traceNumberList='+body.traceNumberList[i]
+    }
+
+    return this.http.get('/processintelligence/v1/bpmn/MultipleTraces?pi_id='+body.pid+'&pi_name='+body.pname+tracNo)
+  }
+
+  getSliderTraceBPMN(body){
+    return this.http.get('/processintelligence/v1/bpmn/SliderTraces?activitySlider='+body.activitySlider+'&pathSlider='+body.pathSlider+'&pi_id='+body.pid+'&pi_name='+body.pname)
+  }
+
+  // PI To BPMN API's END
+
 
   getProcessStatistics()
   { 
@@ -388,5 +418,8 @@ export class RestApiService{
       return this.http.post('/rpa-service/outputBox',data);
     }
 
+    getUserDetails(username){
+      return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
+    }
 }
 

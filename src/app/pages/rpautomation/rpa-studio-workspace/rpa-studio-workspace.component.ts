@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, ViewChild, ElementRef,Input } from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
-import { jsPlumb } from 'jsplumb';
+import { jsPlumb, jsPlumbInstance } from 'jsplumb';
 import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import jsPDF from 'jspdf';
@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
 import { data } from 'jquery';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
 import * as $ from 'jquery';
+
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
   selector: 'app-rpa-studio-workspace',
@@ -32,7 +33,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   selectedNode: any= [];
   changePx: { x: number; y: number; };
   public selectedTask:any;
-  // forms
+  public loadflag:Boolean=true;
   fileData:any;
   public hiddenPopUp:boolean = false;
   public hiddenCreateBotPopUp:boolean = false;
@@ -63,6 +64,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   outputnode:any;
   outputboxresult:any;
   outputboxresulttext:any;
+  final_tasks:any=[];
   constructor(private rest:RestApiService,private notifier: NotifierService, private hints:RpaDragHints,  private dt:DataTransferService, private http:HttpClient, private child_rpa_studio:RpaStudioComponent, ) {
     
    }
@@ -74,7 +76,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 90 }],
       overlays: [
-        ["Arrow", { width: 12, length: 12, location: 0.5 }]
+        ["Arrow", { width: 12, length: 12, location: 0.5 }],
+        [ "Label",{label:"FOO"}]
       ]
     });
     this.dt.changeHints(this.hints.rpaWorkspaceHints );
@@ -103,10 +106,64 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
     this.jsPlumbInstance.importDefaults({
       Connector: ["Flowchart", { curviness: 90 }],
       overlays: [
-        ["Arrow", { width: 12, length: 12, location: 0.5 }]
+        ["Arrow", { width: 12, length: 12, location: 0.5 }],
+        ["Arrow", { width: 12, length: 12, location: 1 }],[ "Label",{label:"FOO"}],
       ]
     });
 
+
+
+    this.jsPlumbInstance.bind('connection', info => {
+      // alert(info.sourceId);
+      var connection = info.connection;
+
+      let node_object=this.finaldataobjects.find(object2=>object2.nodeId.split("__")[1]==info.sourceId);
+      
+        if(node_object!=undefined)
+        {
+
+          var source_length=this.jsPlumbInstance.getAllConnections().filter(data=>data.sourceId==connection.sourceId).length;
+          if(node_object.taskName=="If condition" && source_length < 3 && this.loadflag)
+          {
+              Swal.fire({
+                  title: 'Select True/False case',
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  cancelButtonText: 'Fasle',
+                  confirmButtonText: 'True'
+                }).then((result) => {
+                  if(result.value) 
+                  {
+                    let connected_node:any=this.nodes.find(develop=>develop.id==connection.targetId);
+                    let connected_node_id:any=connected_node.name+"__"+connected_node.id;
+                    let source_node_id=node_object.nodeId;
+                    if(this.finaldataobjects.find(tasks=>tasks.nodeId==source_node_id)!=undefined)
+                    {
+                      this.finaldataobjects.find(tasks=>tasks.nodeId==source_node_id).attributes.find(attrs=>attrs.metaAttrValue=="if").attrValue=connected_node_id;
+                    }
+                  }
+                  else
+                  {
+                    let connected_node:any=this.nodes.find(develop=>develop.id==connection.targetId);
+                    let connected_node_id:any=connected_node.name+"__"+connected_node.id;
+                    if(this.finaldataobjects.find(tasks=>tasks.nodeId==node_object.nodeId)!=undefined)
+                    {
+                      this.finaldataobjects.find(tasks=>tasks.nodeId==node_object.nodeId).attributes.find(attrs=>attrs.metaAttrValue=="else").attrValue=connected_node_id;
+                    }
+             
+                  }
+              });
+          }
+        } 
+    });
+   
+   
+    this.jsPlumbInstance.bind("click", function(info) {
+      var connection = info.connection;
+      this.jsPlumbInstance.detach(info);
+    });
     if(this.finalbot.botId!= undefined)
     {
       console.log(this.finalbot.sequences)
@@ -189,6 +246,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   {
     
     setTimeout(() => {
+    this.loadflag=false;
     sequences.forEach(element => {
       
       this.jsPlumbInstance.connect(
@@ -202,14 +260,27 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
           
           source:element.sourceTaskId, 
           target:element.targetTaskId,
+
           anchors:["Right", "Left" ],
           detachable:true,
-          overlays:[ ["Arrow", { width: 12, length: 12, location: 1 }]],
+          connectorHoverStyle:{ lineWidth:3 },
+          overlays:[ ["Arrow", { width: 12, length: 12, location: 1 }],
+          [ "Label",
+          {
+            label:"<button class='close-conn' (click)='data_conn()'>x</button>",
+            location:0.25,
+            id:"label__"+element.sourceTaskId, 
+            cssClass:"label_color",
+            labelStyle :{
+              fill:"white",
+            }
+        }]],
         })
       
 
       
     });
+    this.loadflag=true;
   });
     console.log(data);
   
@@ -335,6 +406,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       Connector: ["Flowchart", { curviness: 90 ,cornerRadius:5}],
       connectorClass: "path",
       connectorOverlays: [['Arrow', {width: 10, length: 10, location: 1 }]],
+      overlays:[
+        [ "Label", { 
+            location:0.2, 
+            events:{
+                click:function() {
+                  console.log("data********************connectors");
+                }
+            }  
+        }]
+    ]
 
     };
 
@@ -636,7 +717,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   saveBotFun(botProperties,env)
   {
     this.addsquences();
-  
+    this.get_coordinates(); 
+    this.arrange_task_order("START_"+this.finalbot.botName);
     this.saveBotdata = {
         "botName": botProperties.botName,
         "botType" : botProperties.botType,
@@ -645,13 +727,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         "botMainSchedulerEntity":this.scheduler,
         "envIds":env,
         "isPredefined":botProperties.predefinedBot,
-        "tasks": this.finaldataobjects,
+        "tasks": this.final_tasks,
         "createdBy": "admin",
         "lastSubmittedBy": "admin",
         "scheduler" : this.scheduler,
         "sequences": this.getsequences(),
       }
-      this.get_coordinates();
       return this.rest.saveBot(this.saveBotdata)
    
   }
@@ -671,7 +752,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
           connections.push(nodeconn)
       
     })
-    
     return connections;
   }
 
@@ -699,6 +779,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
     console.log(this.formVales);
     console.log(botProperties.predefinedBot)
     console.log(this.formVales);
+    this.get_coordinates(); 
+    this.arrange_task_order("START_"+this.finalbot.botName);
     this.saveBotdata = {
           "version":botProperties.version, 
           "botId":botProperties.botId,      
@@ -709,21 +791,21 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
           "botMainSchedulerEntity":this.scheduler,
           "envIds":env,
           "isPredefined":botProperties.predefinedBot,
-          "tasks": this.finaldataobjects,
+          "tasks": this.final_tasks,
           "createdBy": "admin",
           "lastSubmittedBy": "admin",
           "scheduler" : this.scheduler,
-          "sequences": this.getsequences(),
+          "sequences": this.getsequences()
       }
-      
-    this.get_coordinates();  
-    return this.rest.updateBot(this.saveBotdata)
+       
+      return this.rest.updateBot(this.saveBotdata)
   }
 
 
-  saveCron(sche){
-  this.scheduler = sche
-    }
+  saveCron(sche)
+  {
+    this.scheduler = sche
+  }
   
   
 
@@ -760,7 +842,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       let type ="info";
       let message = "Bot is executed Successfully"
       this.notifier.notify( type, message );
-    console.log(data);
     }
   }
 
@@ -778,6 +859,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       this.dragelement.style['transform'] = `scale(${this.dagvalue})`
     }
   }
+
+
   zoomout(e){
     if(this.indexofArr >0){
       this.indexofArr -= 1;
@@ -785,6 +868,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
      this.dragelement.style['transform'] = `scale(${this.dagvalue})`
      }
   }
+
+
+
+
   closeFun(){
     this.hiddenPopUp = false;
     this.hiddenCreateBotPopUp = false
@@ -857,21 +944,25 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   modifyEnableDisable()
   {
       this.disable = !this.disable;
-      if (this.disable) {
-      Swal.fire({
-      position:'top-end',
-      icon:"warning",
-      title:"Designer Disabled Now",
-      showConfirmButton:false,
-      timer:2000})
-          }
-      else {
-      Swal.fire({
-      position:'top-end',
-      icon:'success',
-      title:'Designer Enabled Now',
-      showConfirmButton:false,
-      timer:2000})
+      if (this.disable) 
+      {
+        Swal.fire({
+          position:'top-end',
+          icon:"warning",
+          title:"Designer Disabled Now",
+          showConfirmButton:false,
+          timer:2000
+        })
+      }
+      else 
+      {
+        Swal.fire({
+          position:'top-end',
+          icon:'success',
+          title:'Designer Enabled Now',
+          showConfirmButton:false,
+          timer:2000
+        })
       }
     }
   
@@ -884,16 +975,31 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
     this.jsPlumbInstance.getAllConnections().forEach(dataobject => {
       let source=dataobject.sourceId;
       let target=dataobject.targetId;
-     if(this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==target) != undefined)
-      {
-        this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==target).inSeqId=source;
-      }
-      if(this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==source) != undefined)
-      {
-        this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==source).outSeqId=target;  
-      }
+        this.finaldataobjects.forEach(tasknode=>{
+          if(tasknode.taskName=="If condition")
+          {
+            let out:any=[];
+            let connections:any=this.jsPlumbInstance.getAllConnections().filter(data=>data.sourceId==tasknode.nodeId.split("__")[1]);
+            connections.forEach(process=>{
+              out.push(process.targetId);
+            })
+            this.finaldataobjects.find(checkdata=>checkdata.nodeId==tasknode.nodeId).outSeqId=JSON.stringify(out);
+            let inseq:any=this.jsPlumbInstance.getAllConnections().find(data=>data.targetId==tasknode.nodeId.split("__")[1])
+            this.finaldataobjects.find(checkdata=>checkdata.nodeId==tasknode.nodeId).inSeqId=inseq.targetId;
+          }
+          else
+          {
+              if(tasknode.nodeId.split("__")[1]==target)
+              {
+              this.finaldataobjects.find(data=>data.nodeId==tasknode.nodeId).inSeqId=source;
+              }
+              if(tasknode.nodeId.split("__")[1]==source)
+              {
+              this.finaldataobjects.find(data=>data.nodeId==tasknode.nodeId).outSeqId=target;
+              }
+          }
+        })
     });
-    console.log(this.finaldataobjects);
   }
 
 
@@ -901,9 +1007,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
 
   get_coordinates()
   { 
-    console.log(this.finaldataobjects.length);
     this.nodes.forEach(data=>{
-      //console.log($("#"+data.id).position());
       var p = $("#"+data.id).first();
       var position = p.position();      
       for(let i=0;i<this.finaldataobjects.length;i++)
@@ -911,25 +1015,11 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         let nodeid=this.finaldataobjects[i].nodeId.split("__");
         if(nodeid[1]==data.id)
         {
-          console.log(position.left)
-          
-          console.log(position.top)
           this.finaldataobjects[i].x=position.left+"px";
           this.finaldataobjects[i].y=position.top+"px";
-          console.log(this.finaldataobjects[i]); 
         }
       }
-      /*
-      if(this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==data.id) != undefined)
-      {
-        this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==data.id).x=position.left + "px";
-        this.finaldataobjects.find(object=>object.nodeId.split("__")[1]==data.id).y=position.top + "px";
-  
-      }
-   */
-      //console.log( "left: " + position.left + ", top: " + position.top );
     })
-
   }
 
 
@@ -998,5 +1088,53 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
     this.SelectedOutputType="";
   }
 
+  arrange_task_order(start)
+  {
+    let object=this.finaldataobjects.find(object=>object.inSeqId==start);
+    this.add_order(object)
     
+  }
+
+
+  add_order(object)
+  {
+    let end="STOP_"+this.finalbot.botName;
+      this.final_tasks.push(object);
+      if(object.outSeqId==end) 
+      {
+        
+        console.log(end)
+        console.log(object.outSeqId)
+        return;
+      }
+      else
+      {
+        object=this.finaldataobjects.find(object2=>object2.nodeId.split("__")[1]==object.outSeqId);
+        console.log(object)
+        if(object.taskName=="If condition")
+        {
+          this.final_tasks.push(object);
+          JSON.parse(object.outSeqId).forEach(report=>{
+            if(report==end)
+            {
+              return; 
+            }            
+            else
+            {
+              let node=this.finaldataobjects.find(process=>process.nodeId.split("__")[1]==report)
+              this.add_order(node);
+            }
+          })
+          return;
+        }else
+        {
+          this.add_order(object); 
+
+        }
+      }      
+    return;
+  }
+  
+  
+
 }

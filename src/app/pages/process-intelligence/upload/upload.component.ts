@@ -14,6 +14,7 @@ import { DataTableDirective } from 'angular-datatables';
 import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { APP_CONFIG } from 'src/app/app.config';
+import { NgxSpinnerService } from "ngx-spinner";
 
 declare var target: any;
 @Component({
@@ -57,6 +58,7 @@ export class UploadComponent implements OnInit {
   isTimestammp: boolean=false;
   connectionResp:any;
   tableList:any = [];
+  isTableEnable:boolean=false;
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -65,6 +67,7 @@ export class UploadComponent implements OnInit {
     private hints: PiHints,
     private ngxXml2jsonService: NgxXml2jsonService,
     private notifier:NotifierService,
+    private spinner:NgxSpinnerService,
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
@@ -89,6 +92,7 @@ export class UploadComponent implements OnInit {
         icon: 'error',
       })
     } else{
+      this.spinner.show();
     this.selectedFile = <File>event.addedFiles[0];
     const fd = new FormData();
     fd.append('file', this.selectedFile),
@@ -98,12 +102,14 @@ export class UploadComponent implements OnInit {
         let fileName = this.filedetails.data.split(':');
         this.rest.fileName.next(fileName[1]);
         this.onSelect(event, id)
+        this.spinner.hide();
       }, err => {
         Swal.fire({
           title: 'Error',
           text: 'Please try again!',
           icon: 'error',
         })
+        this.spinner.hide();
       });
     }
   }
@@ -167,6 +173,7 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
+      // console.log("excelfile",excelfile,excelfile[1]);
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
         Swal.fire({
           title: 'Error',
@@ -320,9 +327,12 @@ export class UploadComponent implements OnInit {
   }
 
   onDbSelect() {
-    this.dbDetails={};
+    this.isTableEnable=false;
+    this.isTimestammp=false;
+    this.isIncrement=false;
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
+    this.dbDetails={};
   }
   closePopup() {
     var modal = document.getElementById('myModal1');
@@ -344,6 +354,7 @@ export class UploadComponent implements OnInit {
   }
 
   getAlluserProcessPiIds() {
+    this.spinner.show();
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 6,
@@ -360,6 +371,7 @@ export class UploadComponent implements OnInit {
       });
       this.process_graph_list = this.process_List.data
       this.dtTrigger.next();
+      this.spinner.hide();
     })
   }
   loopTrackBy(index, term) {
@@ -608,7 +620,23 @@ generateGraph(e){
     this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
 })
 }
-getDBTables(){
+getDBTables(value){
+  // let zeroTo255 = "(\\d{1,2}|(0|1)\\"
+  // + "d{2}|2[0-4]\\d|25[0-5])";
+  
+  //  // Regex for a digit from 0 to 255 and
+  // // followed by a dot, repeat 4 times.
+  // // this is the regex to validate an IP address.
+  // let regex  = zeroTo255 + "\\."+ zeroTo255 + "\\."+ zeroTo255 + "\\."+ zeroTo255;
+
+  // let ipReg =new RegExp(regex)
+  
+  // if(ipReg.test(value)==true){
+    this.spinner.show()
+
+    // console.log("true");
+
+  // this.dbDetails.tableName=null;
  var reqObj =  {
     "dbType": this.dbDetails.dbType,
     "password": this.dbDetails.password,
@@ -618,21 +646,52 @@ getDBTables(){
   this.rest.getDBTableList(reqObj)
     .subscribe(res => {
      // console.log(res)
+     this.isTableEnable=true;
       var tData: any = res;
       if(tData.data.length != 0){
         this.tableList = tData.data;
       }
+      this.spinner.hide()
     },
     (err=>{
+      this.isTableEnable=false;
       this.tableList = [];
-    
+  
       this.notifier.show({
         type: 'error',
         message: err.error.message
     });
+    this.spinner.hide();
     }))
+  // }
+    // this.onChangeTable()
 }
+  onChangeTable(){
+    if(this.dbDetails.mode){
+      this.dbDetails.mode=null
+    }
+    if(this.dbDetails.increment){
+      this.dbDetails.increment='';
+      this.isTimestammp=false;
+    this.isIncrement=false;
+    }
+    if(this.dbDetails.timestamp){
+      this.dbDetails.timestamp=undefined;
+      this.isTimestammp=false;
+      this.isIncrement=false;
+    }
+    
+    
+  }
+  onKeyUpPassword(){
+    
+    if(this.dbDetails.hostName){
+      this.dbDetails.hostName=''
+    }else{
 
+    }
+
+  }
 }
 
 

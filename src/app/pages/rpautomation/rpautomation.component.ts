@@ -9,10 +9,11 @@ import { DataTransferService } from "../services/data-transfer.service";
 export class RpautomationComponent implements OnInit {
 
   constructor(private router: Router, private dt:DataTransferService) { }
-
+    public child_link:any;
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
-    this.dt.changeChildModule("");
+    this.dt.current_child_module.subscribe(res => this.child_link = res);
+
   }
 
 }

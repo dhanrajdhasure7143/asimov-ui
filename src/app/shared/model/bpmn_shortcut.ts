@@ -3,11 +3,12 @@ export class BpmnShortcut{
         {"labelName":"Undo","labelValue":"Ctrl + Z"},
         {"labelName":"Redo","labelValue":"Ctrl + &#8679; + Z"},
         {"labelName":"Select All","labelValue":"Ctrl + A"},
-        {"labelName":"Scroling(Vertical)","labelValue":"Ctrl + Scrolling"},
-        {"labelName":"Scrolling(Horizontal)","labelValue":"Ctrl + <span>&#8679;</span> + Scrolling "},
-        {"labelName":"Direct Editing ","labelValue":"Direct Editing"},
-        {"labelName":"Hand Tool","labelValue":"E"},
-        {"labelName":"Lasso Tool","labelValue":"H"},
+        {"labelName":"Scroling(Vertical)","labelValue":"Mouse Scroll"},
+        {"labelName":"Scrolling(Horizontal)","labelValue":"Two finger touchpad scroll "},
+        {"labelName":"Zoom","labelValue":"Pinch zoom"},
+        {"labelName":"Direct Editing ","labelValue":"E"},
+        {"labelName":"Hand Tool","labelValue":"H"},
+        {"labelName":"Lasso Tool","labelValue":"L"},
         {"labelName":"Space Tool","labelValue":"S"}
       ]
 }

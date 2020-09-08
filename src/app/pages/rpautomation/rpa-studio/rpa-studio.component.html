@@ -26,7 +26,7 @@
 <div class="col-md-12 row">
 <div class="col-md-2 side-slide">
   <div class="paddclass" id="search">
-    <input class="mainLoginInput" style="border: 1px solid gainsboro;" type="text" [(ngModel)]="userFilter.name" name="node" placeholder="Search"
+    <input class="mainLoginInput" style="border: 1px solid gainsboro;" type="text" (input)="inputValidator($event)" [(ngModel)]="userFilter.name" name="node" placeholder="Search"
       class="form-control" autocomplete="off">
   </div>
 

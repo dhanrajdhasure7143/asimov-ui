@@ -133,6 +133,8 @@ export class FlowchartComponent implements OnInit {
   isSliderBPMN:boolean = false;
   performanceValue: boolean;
   processGraphName:any;
+  selectedTraceNumbers:any = [];
+  loaderImgSrc:string;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -163,7 +165,7 @@ export class FlowchartComponent implements OnInit {
   
 
   ngOnInit() {
-    this.spinner.show();
+   
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/flowChart", "title": "Process Graph" });
     this.dt.changeHints(this.hints.processGraphHints);
@@ -178,7 +180,10 @@ export class FlowchartComponent implements OnInit {
           piId=this.wpiIdNumber;
           this.graphIds = piId;
           
+          this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
+          this.spinner.show();
           setTimeout(() => {
+           
             this.onchangegraphId(piId);
             }, 500);
         }
@@ -186,6 +191,8 @@ export class FlowchartComponent implements OnInit {
         this.piIdNumber = parseInt(params['piId']);
         piId=this.piIdNumber;
         this.graphIds = piId;
+        this.loaderImgSrc = "/assets/images/PI/loader_vr_1.gif"; 
+        this.spinner.show();
         setTimeout(() => {
           this.onchangegraphId(piId);
         }, 6*60*1000);
@@ -211,6 +218,7 @@ export class FlowchartComponent implements OnInit {
   }
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isNodata=true;
+    
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
       if (token) {
@@ -268,10 +276,9 @@ export class FlowchartComponent implements OnInit {
         this.isSliderBPMN = false;
 
     }
-
-    console.log("model1",this.model1);
-    console.log("model2",this.model2);
-        });
+        },(err =>{
+          this.spinner.hide();
+        }));
         const variantGraphbody= { 
           "data_type":"variant_graph", 
            "pid":selectedpiId
@@ -335,6 +342,7 @@ export class FlowchartComponent implements OnInit {
         days: selectedData.days,
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
+        trace_number:selectedData.trace_number,
         selected: "active"
       };
       this.isvaraintPlay=true;
@@ -348,6 +356,7 @@ export class FlowchartComponent implements OnInit {
         days: selectedData.days,
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
+        trace_number:selectedData.trace_number,
         selected: "inactive"
       };
       this.isvaraintPlay=false;
@@ -355,10 +364,12 @@ export class FlowchartComponent implements OnInit {
     }
 
     this.selectedCaseArry = [];
+    this.selectedTraceNumbers = [];
     for (var i = 0; i < this.varaint_data.data.length; i++) {
       if (this.varaint_data.data[i].selected == "active") {
         var casevalue = this.varaint_data.data[i].case
         this.selectedCaseArry.push(casevalue);
+        this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
       }
     };
     this.caselength = this.selectedCaseArry.length;
@@ -625,11 +636,136 @@ export class FlowchartComponent implements OnInit {
     this.isedgespinner= !this.isedgespinner;
   }
 
-generateBpmn(){
-  this.bpmnservice.uploadBpmn("pizza-collaboration.bpmn");  
-  this.bpmnservice.setNewDiagName('pizza-collaboration');
-  this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:201020}})} //this.graphIds
+  generateBpmn() {
+    let categoryName = this.getPCategoryFromPID(this.graphIds)
+    if (this.isFullGraphBPMN == true) {
+      var reqObj = {
+        pid: this.graphIds,
+        pname: this.getPNameFromPID(this.graphIds)
+      }
+      this.rest.getFullGraphBPMN(reqObj)
+        .subscribe((res:any) => {          
+          if(res.data != null){
+          this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj.pname}})
+          } else{
+            Swal.fire(
+              'Oops!',
+              'Failed to generate BPM Notation, Please try again later.',
+              'error'
+            );
+          }
+        },
+        (err =>{
+          Swal.fire(
+            '',
+            'Meaningful BPM notation cannot be derived from the 100% graph as this may result in duplication of activities, Please try generating BPM notation with the combination of cases under variants ',
+            'info'
+          );
+        }))
+
+    } else if (this.isSingleTraceBPMN == true) {
+      var reqObj1 = {
+        pid: this.graphIds,
+        pname: this.getPNameFromPID(this.graphIds),
+        traceNumber: this.selectedTraceNumbers[0]
+      }
+      this.rest.getSingleTraceBPMN(reqObj1)
+        .subscribe((res:any) => {
+          if(res.data != null){
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj1.pname}})
+            } else{
+              Swal.fire(
+                'Oops!',
+                'Failed to generate BPM Notation, Please try again later.',
+                'error'
+              );
+            }
+        },
+        (err =>{
+          Swal.fire(
+            '',
+            'Internal server error, Please try again later.',
+            'error'
+          );
+        }))
+
+    } else if (this.isMultiTraceBPMN == true) {
+      var reqObj2 = {
+        pid: this.graphIds,
+        pname: this.getPNameFromPID(this.graphIds),
+        traceNumberList: this.selectedTraceNumbers
+      }
+      this.rest.getMultiTraceBPMN(reqObj2)
+        .subscribe((res:any) => {
+          if(res.data != null){
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj2.pname}})
+            } else{
+              Swal.fire(
+                'Oops!',
+                'Failed to generate BPM Notation, Please try again later.',
+                'error'
+              );
+            }
+        },
+        (err =>{
+          Swal.fire(
+            '',
+            'Internal server error, Please try again later.',
+            'error'
+          );
+        }))
+
+    } else if (this.isSliderBPMN == true) {
+      var reqObj3 = {
+        pid: this.graphIds,
+        pname: this.getPNameFromPID(this.graphIds),
+        activitySlider: this.activityValue,
+        pathSlider: this.pathvalue
+      }
+      this.rest.getSliderTraceBPMN(reqObj3)
+        .subscribe((res:any) => {
+          if(res.data != null){
+            this.router.navigate(['/pages/businessProcess/uploadProcessModel'],{queryParams: {isShowConformance: true,pid:this.graphIds,category:categoryName, processName:reqObj3.pname}})
+            } else{
+              Swal.fire(
+                'Oops!',
+                'Failed to generate BPM Notation, Please try again later.',
+                'error'
+              );
+            }
+        },
+        (err =>{
+          Swal.fire(
+            '',
+            'Internal server error, Please try again later.',
+            'error'
+          );
+        }))
+    }
+  } 
   
+
+getPNameFromPID(pnumber){
+  var piname = '';
+  this.process_graph_list.data.forEach(pData => {
+    if(pData.piId == pnumber){
+      piname = pData.piName
+    }
+  });
+  return piname;
+}
+
+getPCategoryFromPID(pnumber){
+  var piCategory = '';
+  this.process_graph_list.data.forEach(pData => {
+    if(pData.piId == pnumber){
+      piCategory = pData.categoryName
+    }
+  });
+  return piCategory;
+}
+
+
 loopTrackBy(index, term){
   return index;
 }
@@ -826,6 +962,28 @@ closeNav() { // Variant list Close
       this.isSliderBPMN = false;
       this.performanceValue=false
   }
+
+  resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
+    this.resetFilter=true;
+    this.model1 = this.variantCombo.data[0].nodeDataArraycase
+    this.nodeAlignment();
+    this.model2 = this.flowchartData(this.model1)
+    this.gradientApplyforNode();
+    this.gradientApplyforLinks();
+    this.linkCurvinessGenerate();
+    this.spinMetrics0="";
+    this.spinMetrics0="absoluteFrequency";
+    console.log("rest",this.model1);
+
+         /**
+       * BPMN Boolean Variables
+       */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = true;
+      this.isSliderBPMN = false;
+    
+  }
   caseParcent(parcent){       // case persent value in variant list
   
     if(String(parcent).indexOf('.') != -1){
@@ -956,34 +1114,55 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
 
   readselectedNodes(SelectedActivities){
     if(SelectedActivities.length==0){
-      this.resetspinnermetrics()
+      this.resetActivityFiltermetrics();
+     
     }else{
       this.filterByActivity(SelectedActivities)
     }
   }
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
+    this.spinner.show();
     this.activity_value=SelectedActivities;
     this.model1=[]
     this.model2=[]
     this.isNodata=true;
-    var model3=[]
-    model3[0]=this.fullgraph_model[0]
-    for(var i=0;i<this.activity_value.length;i++){
-      for(var j=0;j<this.fullgraph_model.length;j++){
+    var reqObj = {
+      "data_type":"activity_filter",
+      "pid":this.graphIds,
+      "cases" : this.selectedCaseArry,
+      "activities":SelectedActivities  
+  }
+    this.rest.getVariantActivityFilter(reqObj)
+      .subscribe(data => {
+        let activityFilterGraph:any = data;
+        this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
+        this.nodeAlignment();       
+        this.model2 = this.flowchartData(this.model1);
+        this.gradientApplyforLinks();
+        this.gradientApplyforNode();
+        this.linkCurvinessGenerate();
+        this.spinner.hide();
+      },(err =>{
+        this.spinner.hide();
+      }));
+    // var model3=[]
+    // model3[0]=this.fullgraph_model[0]
+    // for(var i=0;i<this.activity_value.length;i++){
+    //   for(var j=0;j<this.fullgraph_model.length;j++){
         
-        if(this.activity_value[i]==this.fullgraph_model[j].name){
-          model3.push(this.fullgraph_model[j])
-        }
-      }
-    }
-    model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
-    this.model1=model3
-    this.nodeAlignment();
-    this.model2 = this.flowchartData(this.model1);
-    this.gradientApplyforLinks()
-    this.gradientApplyforNode()
-    this.linkCurvinessGenerateOne();
-    this.isActivity_dropdwn=false;
+    //     if(this.activity_value[i]==this.fullgraph_model[j].name){
+    //       model3.push(this.fullgraph_model[j])
+    //     }
+    //   }
+    // }
+    // model3.push(this.fullgraph_model[this.fullgraph_model.length-1])
+    // this.model1=model3
+    // this.nodeAlignment();
+    // this.model2 = this.flowchartData(this.model1);
+    // this.gradientApplyforLinks()
+    // this.gradientApplyforNode()
+    // this.linkCurvinessGenerateOne();
+    // this.isActivity_dropdwn=false;
   }
   linkCurvinessGenerateOne(){
     for(var j=0;j<this.model2.length;j++){
@@ -1224,9 +1403,10 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
 }
 filterOverlay(){  
   this.dataValues = [];
+  let vv = this.variantCombo.data[0].nodeDataArraycase
     //Filter overlay open on filter icon click
-  for(var i=1;i<this.model1.length-1;i++){
-    this.dataValues.push(this.model1[i])
+  for(var i=1;i<vv.length-1;i++){
+    this.dataValues.push(vv[i])
     }
   this.isFilterComponent=true;
   var modal = document.getElementById('myModal');

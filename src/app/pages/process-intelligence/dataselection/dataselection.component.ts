@@ -241,7 +241,7 @@ export class DataselectionComponent implements OnInit {
       "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
       }
       }
-
+      
       this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
             this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
       })
@@ -362,6 +362,11 @@ export class DataselectionComponent implements OnInit {
             }
         }else if (result.dismiss === Swal.DismissReason.cancel){
           this.id=[];
+          // this.step_id = 1;
+          this.validCells = [];
+          this.invalidCells = [];
+          this.headerArray=[];
+
         }
       })
 

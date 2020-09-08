@@ -315,6 +315,14 @@ margin-right: -85px;
 .bjs-container{
   zoom: 0.8;
 }
+.canvasOpt{
+  display: inline-block;
+  margin-left: 15px;
+}
+/* .canvasOpt:focus{
+  background-color: #0062cf;
+  color: white;
+} */
 /* #canvas .bjs-container{
   top: -100px;
 } */

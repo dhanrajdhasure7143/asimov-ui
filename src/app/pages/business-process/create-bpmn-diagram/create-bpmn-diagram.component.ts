@@ -242,13 +242,11 @@ export class CreateBpmnDiagramComponent implements OnInit {
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
         bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
+        bpmnModel["modifiedTimestamp"] = new Date();
         if(_self.autosavedDiagramVersion[0]&& _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
-          bpmnModel["modifiedTimestamp"] = new Date();
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
           bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
-        }
-        else{
-          bpmnModel["modifiedTimestamp"] = new Date();
+        }else{
           bpmnModel["createdTimestamp"] = new Date();
         }
         _self.autoSaveDiagram(bpmnModel);
@@ -270,8 +268,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   automate(){
-    let selected_process_id = this.saved_bpmn_list[this.selected_notation].processIntelligenceId;
-    this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_process_id }});
+    let selected_id = this.saved_bpmn_list[this.selected_notation].id;
+    this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
   }
  
   downloadBpmn(){

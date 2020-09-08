@@ -8,6 +8,7 @@ export const environment = {
   pi_node_url: "http://pinodedev.epsoftinc.in:3000",
   idm_url:'http://idmdev.epsoftinc.in',
   auth_url: "http://authdev.epsoftinc.in",
+  platform_url:'http://apdev.epsoftinc.in',
 
    // Aiotal redirection urls 
    myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",

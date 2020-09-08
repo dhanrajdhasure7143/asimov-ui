@@ -15,6 +15,16 @@
   padding: 0px 10px;
 }
 
+.hide {
+  display: none;
+}
+
+.norecordfound{
+  padding-top:8px;
+  font-style: italic;
+   text-align:center
+}
+
 .rob-s p{
   font-size: 12px;
   color: black;
@@ -218,4 +228,8 @@ margin: 0px !important;
 {
    background-color: grey ! important;
    color:white ! important;
+}
+
+cron-time-picker div.ng-star-inserted  {
+  line-height: 4 !important;
 }

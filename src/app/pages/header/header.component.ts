@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
+import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
   selector: 'app-header',
@@ -24,11 +25,19 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public userRole:any = [];
   error: string;
   compIndex = 0;
+  lastname: string;
+  firstname: string;
+  firstletter: string;
+  retrievedImage: any;
+  base64Data: any;
+  retrieveResonse: any;
+  public profilePicture:boolean=false;
 
   constructor(
     private router:Router, 
     private dataTransfer:DataTransferService, 
     private rpa:RestApiService,
+    private spinner:NgxSpinnerService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
@@ -98,8 +107,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    
      }else if(this.userRole.includes('Process Architect')){
       this.pages = [
-        {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-        
+        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"}
       ];
    
      }else if(this.userRole.includes('User')){
@@ -119,6 +127,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.error = "Please complete your registration process";
       
     })
+    this.spinner.show();
+    setTimeout(() => {
+      this.getImage();
+        },1000);
+        setTimeout(() => {
+          this.spinner.hide();
+        }, 900);
   }
 
   loopTrackBy(index, term){
@@ -171,4 +186,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
     window.location.href=this.config.logoutRedirectionURL+'?input='+input;
   }
  
+  profileName(){
+    this.firstname=localStorage.getItem('firstName');
+      this.lastname=localStorage.getItem('lastName');
+      var firstnameFirstLetter=this.firstname.charAt(0)
+      var lastnameFirstLetter=this.lastname.charAt(0)
+      this.firstletter=firstnameFirstLetter+lastnameFirstLetter
+      
+  }
+
+  getImage() {
+    console.log("inside image")
+      const userid=localStorage.getItem('ProfileuserId');
+          this.rpa.getUserDetails(userid).subscribe(res => {
+                this.retrieveResonse = res;
+                if(this.retrieveResonse.image==null||this.retrieveResonse.image==""){
+                 this.profileName();
+                  this.profilePicture=false;
+                }
+                else{
+                  this.profilePicture=true;
+                }
+                this.base64Data= this.retrieveResonse.image;
+               // console.log("image",this.base64Data);
+               // localStorage.setItem('image', this.base64Data);
+                this.retrievedImage = 'data:image/jpeg;base64,' + this.base64Data;
+               // console.log(this.retrievedImage);
+              }
+            );
+        }
 }

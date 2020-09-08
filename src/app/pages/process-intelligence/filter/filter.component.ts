@@ -5,7 +5,7 @@ enum Filter{
   'Activity',
   // 'Cases',
   // 'Variants',
-  'End Points',
+  //'End Points',
 }
 @Component({
   selector: 'app-filter',
@@ -139,7 +139,7 @@ deselectAllDataValue(){
 applyFilter(){
   this.seletedActivity=[];
   for (var i = 0; i < this.dataValuesNames.length; i++){
-    if(this.dataValuesNames[i].selected === "active")
+    if(this.dataValuesNames[i].selected === "inactive")
       this.seletedActivity.push(this.dataValues[i].name)
     };
       this.selectedNodes.emit(this.seletedActivity)

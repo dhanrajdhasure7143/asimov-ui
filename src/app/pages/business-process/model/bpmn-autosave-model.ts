@@ -4,7 +4,6 @@ export class BpmnModel{
     modifiedTimestamp:Date = new Date();
     bpmnTempId:number;
     approverName:string = "";
-    // bpmnJsonNotation:string;
     bpmnNotationAutomationTask:string;
     bpmnNotationHumanTask:string;
     bpmnProcessApproved:number;
@@ -19,4 +18,7 @@ export class BpmnModel{
     bpmnProcessStatus:string;
     bpmnProcessName:string;
     reviewComments:string = "";
+    notationFromPI:boolean = false;
+    hasConformance:boolean = false;
+    bpmnConfProcessMeta:string = "";
 }
