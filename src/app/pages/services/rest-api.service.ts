@@ -250,6 +250,12 @@ export class RestApiService{
     let id=process;
     return this.http.get("/rpa-service/load-process-info/"+id);
   }
+
+  startprocess(processid)
+  {
+    return this.http.post("/rpa-service/start-process/"+processid,"");
+  }
+
   fetchBpmnNotationFromPI(pid){
     return this.http.get("/bpsprocess/pi/generated/bpmn/"+pid+"/user")
   }
