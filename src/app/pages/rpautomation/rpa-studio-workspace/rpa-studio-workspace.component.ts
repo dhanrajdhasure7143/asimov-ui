@@ -189,6 +189,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
           id:"START_"+this.finalbot.botName,
           name:"START",
           selectedNodeTask:"",
+          selectedNodeId:"",
           path:"/assets/images/RPA/Start.png",
           x:"2px", 
           y:"9px",
@@ -207,6 +208,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
           id:"STOP_"+this.finalbot.botName,
           name:"STOP",
           selectedNodeTask:"",
+          selectedNodeId:"",
           path:"/assets/images/RPA/Stop.png",
           x:"941px",
           y:"396px",
@@ -226,6 +228,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         id:nodeid,
         name:nodename,
         selectedNodeTask:element.taskName,
+        
+        selectedNodeId:element.tMetaId,
         path:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).path,
         tasks:this.child_rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
         x:element.x,
@@ -317,6 +321,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
     console.log(node)
     node.id = this.idGenerator();
     node.selectedNodeTask="";
+    node.selectedNodeId="";
     const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
     console.log(nodeWithCoordinates);
     this.nodes.push(nodeWithCoordinates);
@@ -330,6 +335,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         id:"START_"+this.finalbot.botName,
         name:"START",
         selectedNodeTask:"",
+        selectedNodeId:"", 
         path:"/assets/images/RPA/Start.png",
         x:"2px", 
         y:"9px",
@@ -345,6 +351,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
           id:"STOP_"+this.finalbot.botName,
           name:"STOP",
           selectedNodeTask:"",
+          selectedNodeId:"", 
           path:"/assets/images/RPA/Stop.png",
           x:"941px",
           y:"396px",
@@ -461,7 +468,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   callFunction(menu,tempnode){
     this.optionsVisible = false;
     this.hiddenPopUp = false;
-     this.nodes.find(data=>data.id==tempnode.id).selectedNodeTask=menu.name
+    this.nodes.find(data=>data.id==tempnode.id).selectedNodeTask=menu.name
+    this.nodes.find(data=>data.id==tempnode.id).selectedNodeId=menu.id
     this.formHeader= this.selectedNode.name+" - "+menu.name;
     
       let type ="info";
@@ -469,7 +477,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       this.notifier.notify( type, message );
     //this.selectedNode.push(menu.id)
       this.selectedTask=menu; 
-      console.log(menu);
     
   }
 
@@ -543,7 +550,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
     this.unsubcribe();
   }
 
-  formNodeFunc(node)
+ /* formNodeFunc(node)
   {
  
      let task=this.finaldataobjects.find(data =>data.nodeId.split("__")[1]==node.id );
@@ -589,6 +596,41 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
        })
      }
   
+  }*/
+  formNodeFunc(node)
+  {
+    if(node.selectedNodeTask!="")
+    {
+      let taskdata=this.finaldataobjects.find(data=>data.nodeId==node.name+"__"+node.id);
+      if(taskdata!=undefined)
+      {
+        if(taskdata.taskName==node.selectedNodeTask)
+        {
+          let finalattributes:any=[];
+          this.rest.attribute(node.selectedNodeId).subscribe((data)=>{ 
+            finalattributes=data  
+            taskdata.attributes.forEach(element => {
+                  finalattributes.find(data=>data.id==element.metaAttrId).value=element.attrValue;
+              });
+              this.response(finalattributes)
+              this.formHeader=node.name+"-"+taskdata.taskName;
+          });
+        }
+        else
+        {
+          this.rest.attribute(node.selectedNodeId).subscribe((data)=>{
+            this.response(data)
+          })
+        }
+      }
+      else
+      {
+        this.rest.attribute(node.selectedNodeId).subscribe((data)=>{
+          this.response(data)
+        })
+ 
+      }
+    }  
   }
 
 
