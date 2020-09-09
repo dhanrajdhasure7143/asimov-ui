@@ -467,6 +467,7 @@ export class RpaHomeComponent implements OnInit {
   {
     $("#"+taskid+"__select").val((this.responsedata.find(data=>data.taskId==taskid).botId));
   }
+  
 
   startprocess()
   {
