@@ -33,7 +33,7 @@ export class RpaHomeComponent implements OnInit {
   departmentFilter = new FormControl('');
   displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
   
-  displayedColumns2: string[] = ["processName","taskName","Assign","Operations"];
+  displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   dataSource1:MatTableDataSource<any>;
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;  
