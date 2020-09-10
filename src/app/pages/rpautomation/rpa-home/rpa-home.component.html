@@ -159,11 +159,11 @@
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource1!=null}"></tr>
-                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource1!=null && dataSource1.data.length==0)}"></tr>
+                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource1!=null && dataSource1.data.length==0) && isTableHasData}"></tr>
                             </table>
-                            <div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
+                            <!--<div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
                                 No Record Found
-                               </div>
+                               </div>-->
                         </div>
                         <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
                     </mat-tab>
