@@ -1115,7 +1115,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
         }
         this.rest.getoutputbox(postdata).subscribe(outdata =>{
           this.outputboxresult=outdata;
-          this.outputboxresulttext=JSON.stringify(outdata, null, 4);   
+          if(this.SelectedOutputType=="Text")
+          {
+            let data:any=outdata
+            this.outputboxresulttext=data[0].Value.replace(/\n/g, "<br />"); 
+            //this.outputboxresulttext=this.outputboxresulttext.replace("\n","<br>")
+          }
         })
       }
       

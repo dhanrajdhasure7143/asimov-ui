@@ -41,10 +41,11 @@ export class RestApiService{
   public ipAddress:string; 
 
   getAccessToken(){
-    let data = {"userId":"venkata.simhadri@epsoftinc.com",
+    let data = {"userId":"jitendra.kothamasu@epsoftinc.com",
                 "password":"Welcome@123"};
 
   
+                
     return this.http.post('/api/login/beta/accessToken',data);
   }
   getIP()
