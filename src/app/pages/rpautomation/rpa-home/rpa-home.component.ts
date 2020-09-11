@@ -360,7 +360,7 @@ export class RpaHomeComponent implements OnInit {
       {
         console.log(this.process_names)
         processnamebyid=this.process_names.find(data=>processId==data.processId);
-        this.selectedvalue=processnamebyid.processName;
+        this.selectedvalue=processnamebyid.processId;
         this.applyFilter(this.selectedvalue);
         console.log(this.selectedvalue);
       }
@@ -477,18 +477,29 @@ export class RpaHomeComponent implements OnInit {
     this.rpa_studio.spinner.show();
     this.rest.startprocess(this.selectedvalue).subscribe(data=>{
       let response:any=data;
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title:response.status,
+        showConfirmButton: false,
+        timer: 2000
+      })
+      this.rpa_studio.spinner.hide();
       
-    this.rpa_studio.spinner.hide();
-      if(response.status!=undefined)
-      {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title:response.status,
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }
+      let timer= setInterval(() => { 
+          this.rest.getautomatedtasks(0).subscribe(response=>{
+            let responsedata:any=response;
+            responsedata.forEach(statusdata=>{
+              $("#"+statusdata.taskId+"__status").html(statusdata.status)
+              
+              $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
+              
+              $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
+            
+            })
+            
+          })
+        }, 5000);
     })
   }
   }
