@@ -53,8 +53,8 @@ export class HomeComponent implements OnInit {
     this.dt.changeParentModule(undefined);
     this.dt.changeChildModule(undefined);
     this.rpa.getUserRole(2).subscribe(res=>{
-      this.userRole=res.message;
-     
+    this.userRole=res.message;
+    
       localStorage.setItem('userRole',this.userRole);
      if(this.userRole.includes('SuperAdmin')){
       this.dataArr = [
@@ -109,8 +109,7 @@ export class HomeComponent implements OnInit {
       ];
      }else if(this.userRole.includes('Process Architect')){
       this.dataArr = [
-        {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
-        
+        {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"approvalWorkflow/home"},
       ];
      }else if(this.userRole.includes('User')){
       this.dataArr = [

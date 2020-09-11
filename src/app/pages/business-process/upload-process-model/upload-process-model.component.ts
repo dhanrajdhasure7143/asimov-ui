@@ -78,6 +78,7 @@ export class UploadProcessModelComponent implements OnInit {
   category:string;
   randomNumber;
   pidId;
+  isfromApprover: any;
 
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
@@ -95,18 +96,25 @@ export class UploadProcessModelComponent implements OnInit {
       this.processName = params['processName'];
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.pid=params['pid'];
+      this.isfromApprover=params['isfromApprover'] == 'true';
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
     if(!this.isShowConformance){
       this.selected_notation = 0;
-      this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
-      this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
+      if(this.isfromApprover){
+        this.dt.changeParentModule({"route":"/pages/home", "title":"Business Process Studio"});
+        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
+        }
+      else{
+        this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
+        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
+        }
       this.isConfBpmnModeler = false;
       this.getUserBpmnList(null);
     }else{
-      this.getUserBpmnList(null);
-      this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
-      this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
+        this.getUserBpmnList(null);
+        this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
+        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
     }
     this.getApproverList();
    }
