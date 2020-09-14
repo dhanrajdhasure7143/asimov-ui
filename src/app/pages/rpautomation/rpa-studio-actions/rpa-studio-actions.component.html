@@ -322,7 +322,7 @@
                       <table class="table rpa-table table-striped  table-sm row-border hover env-table  rpa-custom-scrollbar"  >
                         <thead>
                         <tr>
-                          <th>Schedule Interval</th>
+                          <th style="width:190px !important;">Schedule Interval</th>
                           <th>Timezone</th>
                           <th>Last Run</th>
                           <th>Next Run</th>
@@ -337,7 +337,7 @@
                       </tr>
                         <tbody>
                         <tr *ngFor="let schedule of scheduleLists">
-                          <td>{{convertcron(schedule.scheduleInterval)}}</td>
+                          <td style="width:190px !important;">{{convertcron(schedule.scheduleInterval)}}</td>
                           <td>{{schedule.timeZone}}</td>
                           <td><span *ngIf="schedule.lastRunTime!=null">{{schedule.lastRunTime}}</span><span *ngIf="schedule.lastRunTime==null">---</span></td>                       
                           <td><span *ngIf="schedule.nextRunTime!=null">{{schedule.nextRunTime}}</span><span *ngIf="schedule.nextRunTime==null">---</span></td>
