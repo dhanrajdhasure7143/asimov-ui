@@ -188,6 +188,13 @@ export class DatadocumentComponent implements OnInit {
         if (!this.invalidCells['row' + x])
           this.invalidCells['row' + x] = [];
         let each_cell = this.fileData[x][index];
+        if(each_cell == ''){
+          isInvalid = true;
+          if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
+            this.invalidCells['row' + x].push('cell' + index);
+          this.global.notify("Empty data at header " + this.headerName + " cell No- " + (x + 1), "error");
+          break;
+        }
         if ((reg_expression && reg_expression.test(each_cell)) || isDateCheck) {
           if (isDateCheck) {
             try {let mydate = ''
