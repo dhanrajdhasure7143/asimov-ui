@@ -1,8 +1,14 @@
+
+
+
+
 <div class="row">
 
-    <div class="col-md-4 row ">
-        <h1 class="title-font">Automate the Tasks</h1>
-        <h4 class="subtitle">Select below options to configure the Bots</h4><br/>
+    <div class="col-md-3 row ">
+
+        <h2 class="title-font">Automate the Tasks</h2>
+        <h5 class="subtitle">Select below options to configure the Bots</h5><br/>
+
         <div class="rpa-home">
             <div class="rpa-home-block" id="createbot-Home">
                 <button type="button" (click)="createoverlay()" aria-hidden="true" placement="bottom">
@@ -20,7 +26,8 @@
                 <h6 class="rpa-home-btn-title">Load</h6>
             </button>
           </div>-->
-            <div class="rpa-home-block" id="environment-Home" *ngIf="this.isButtonVisible">
+          <br>
+            <div class="rpa-home-block py-5" id="environment-Home" *ngIf="this.isButtonVisible">
                 <button type="button" aria-hidden="true" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
             <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;" >
             <br><br>
@@ -30,8 +37,8 @@
         </div>
 
     </div>
-    <div class="col-md-8">
-        <div style="padding:10px">
+    <div class="col-md-9">
+        <div>
             <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home">
                 <h3 class="box-heading  rpa-home-heading">My Workspace</h3>
                 <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab">
@@ -159,11 +166,11 @@
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource1!=null}"></tr>
-                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource1!=null && dataSource1.data.length==0)}"></tr>
+                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource1!=null && dataSource1.data.length==0) && isTableHasData}"></tr>
                             </table>
-                            <div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
+                            <!--<div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
                                 No Record Found
-                               </div>
+                               </div>-->
                         </div>
                         <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
                     </mat-tab>
@@ -173,13 +180,22 @@
 
 
 
-                            <span class="box-heading rpa-home-process">    
-                  <select class="form-control" style="width:150px;float:right" [value]="selectedvalue" (change)="applyFilter($event.target.value)" >
+                    <div class="box-heading rpa-home-process">  
+                                
+                <span  >
+                    <button [disabled]="selectedvalue==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-play"></i></button>
+                </span>  &nbsp;&nbsp;
+                <span>  
+                    <select class="form-control" style="width:250px;float:right" [value]="selectedvalue" (change)="applyFilter($event.target.value)" >
                     <option value="" [selected]="true">Select Process</option>
-                    <option *ngFor="let process of process_names" [value]="process.processName">{{process.processName}}</option>
+                    <option *ngFor="let process of process_names" [value]="process.processId">{{process.processName}}</option>
                       
                   </select>
-            </span>
+                </span>
+                  
+            </div>
+            
+          
 
                         </div>
                         <div class="bots-container" id="automatedtasks-Home">
@@ -203,11 +219,35 @@
                                     <td mat-cell *matCellDef="let element">
 
                                         <span> 
-                     <select class="form-control" [value]="element.botId" [id]="element.taskId+'__select'">
-                        <option value="0">Select Bot</option>
-                        <option *ngFor="let bot of bot_list" [value]="bot.botId" [selected]="element.botId==bot.botId">{{bot.botName}}</option>
+                     <select class="form-control"  [value]="element.botId" [id]="element.taskId+'__select'">
+                        <option value="0" >Select Bot</option>
+                        <option *ngFor="let bot of bot_list" [value]="bot.botId"  >{{bot.botName}}</option>
                       </select>
                     </span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="status">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">{{element.status}}</span>
+                                        <span *ngIf="element.status=='null'">---</span>
+                                    </td>
+                                </ng-container>
+
+                                 <ng-container matColumnDef="successTask">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Success</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <span *ngIf="element.successTask!='null'"  [id]="element.taskId+'__success'">{{element.successTask}}</span>
+                                        <span *ngIf="element.successTask=='null'">---</span>
+                                    </td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="failureTask">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Failure</th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <span *ngIf="element.failureTask!='null'" [id]="element.taskId+'__failed'">{{element.failureTask}}</span>
+                                        <span *ngIf="element.failureTask=='null'">---</span>
                                     </td>
                                 </ng-container>
 
@@ -215,17 +255,19 @@
                                     <th mat-header-cell *matHeaderCellDef></th>
                                     <td mat-cell *matCellDef="let element">
 
-                                        <span>
-                      <button (click)="createtaskbotoverlay(element.taskId)" title="Create and Assign Bot"><img style="width:15px" src="../../../../assets/images/RPA/rpa-env-add-btn.svg"></button>
-                  </span>
+                    <span>
+                        <button (click)="createtaskbotoverlay(element.taskId)" title="Create and Assign Bot">
+                          <img style="width:15px" src="../../../../assets/images/RPA/rpa-env-add-btn.svg">
+                        </button>
+                    </span>
 
-                                        <span>
-                    <button (click)="assignbot(element.taskId)" title="Assign Bot"><img style="width:15px" src="../../../../assets/images/iconfinder_check_2561355.svg"></button>
-                  </span>
+                    <span>
+                        <button (click)="assignbot(element.taskId)" title="Assign Bot"><img style="width:15px" src="../../../../assets/images/iconfinder_check_2561355.svg"></button>
+                    </span>
 
-                                        <span>
-                    <button (click)="assignreset(element.taskId)" title="Create and Assign Bot"><i  class="fas fa-sync-alt"></i></button>
-                  </span>
+                    <span>
+                        <button (click)="resetbot(element.taskId)" title="Create and Assign Bot"><i  class="fas fa-sync-alt"></i></button>
+                    </span>
                                     </td>
                                 </ng-container>
                                 <ng-container matColumnDef="noData">

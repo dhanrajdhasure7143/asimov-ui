@@ -33,7 +33,7 @@ export class RpaHomeComponent implements OnInit {
   departmentFilter = new FormControl('');
   displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
   
-  displayedColumns2: string[] = ["processName","taskName","Assign","Operations"];
+  displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   dataSource1:MatTableDataSource<any>;
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;  
@@ -43,6 +43,7 @@ export class RpaHomeComponent implements OnInit {
   public process_names:any=[];
   public selectedvalue:any;
   public selectedTab:number;
+  public responsedata;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -328,6 +329,7 @@ export class RpaHomeComponent implements OnInit {
     this.rpa_studio.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
+      this.responsedata=response.automationTasks;
       console.log(response.automationTasks);
       this.dataSource2= new MatTableDataSource(response.automationTasks);
       this.dataSource2.sort=this.sort2;
@@ -358,7 +360,7 @@ export class RpaHomeComponent implements OnInit {
       {
         console.log(this.process_names)
         processnamebyid=this.process_names.find(data=>processId==data.processId);
-        this.selectedvalue=processnamebyid.processName;
+        this.selectedvalue=processnamebyid.processId;
         this.applyFilter(this.selectedvalue);
         console.log(this.selectedvalue);
       }
@@ -370,9 +372,12 @@ export class RpaHomeComponent implements OnInit {
   }
 
 
-  applyFilter(filterValue: string) {
+  applyFilter(filterValue:any) {
+    console.log(filterValue)
     
-    filterValue = filterValue.trim(); // Remove whitespace
+    let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
+    this.selectedvalue=filterValue;
+    filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     console.log(filterValue);
     this.dataSource2.filter = filterValue;
@@ -455,5 +460,68 @@ export class RpaHomeComponent implements OnInit {
     }
     return true;
   }
+
+
+
+  resetbot(taskid:any)
+  {
+    $("#"+taskid+"__select").val((this.responsedata.find(data=>data.taskId==taskid).botId));
+  }
+  
+
+  startprocess()
+  {
+    
+    if(this.selectedvalue!=undefined)
+    {
+    this.rpa_studio.spinner.show();
+    this.rest.startprocess(this.selectedvalue).subscribe(data=>{
+      let response:any=data;
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title:response.status,
+        showConfirmButton: false,
+        timer: 2000
+      })
+      this.rpa_studio.spinner.hide();
+      
+      let timer= setInterval(() => { 
+          this.rest.getautomatedtasks(0).subscribe(response=>{
+            let responsedata:any=response;
+            responsedata.forEach(statusdata=>{
+              $("#"+statusdata.taskId+"__status").html(statusdata.status)
+              
+              $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
+              
+              $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
+            
+            })
+            
+          })
+        }, 5000);
+    })
+  }
+  }
+
+
+  resettasks()
+  {
+    
+    this.rpa_studio.spinner.show();
+    this.rest.getautomatedtasks(0).subscribe(response=>{
+      let data:any=response;
+      this.dataSource2= new MatTableDataSource(data.automationTasks);
+      this.dataSource2.sort=this.sort2;
+      this.dataSource2.paginator=this.paginator2; 
+      if(this.selectedvalue==undefined)
+      {
+        this.applyFilter(this.selectedvalue)
+      }
+      
+      this.rpa_studio.spinner.hide();
+    });
+  }
+
 
 }
