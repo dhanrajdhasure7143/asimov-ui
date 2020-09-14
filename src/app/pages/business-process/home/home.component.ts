@@ -91,6 +91,7 @@ export class BpsHomeComponent implements OnInit {
         this.autosavedDiagramList = res; 
     });
    }
+
    getColor(status) { 
     switch (status) {
       case 'PENDING':
@@ -191,6 +192,13 @@ export class BpsHomeComponent implements OnInit {
       }
     })
   }
+  fitNotationView(){
+
+    let canvas = this.bpmnModeler.get('canvas');
+    canvas.zoom('fit-viewport');
+    
+  }
+  
 
   deleteProcess(e, bpmNotation){
     e.stopPropagation();

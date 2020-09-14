@@ -441,6 +441,11 @@ margin-right: -85px;
     border-radius: 25px;
     border-color: #8080804a;
 }
+.fit_button{
+  z-index: 200;
+  position: absolute;
+  right: 25px;
+}
 .create-logo{
   margin-top: 20px;
     margin-left: 101px;
