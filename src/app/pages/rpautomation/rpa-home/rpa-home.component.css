@@ -57,6 +57,7 @@
 .rpa-home-bots {
     padding: 5px;
     z-index: -1;
+    padding-right:15px;
 }
 
 .rpa-home-header {
