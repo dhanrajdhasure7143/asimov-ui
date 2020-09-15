@@ -500,6 +500,9 @@ export class RpaHomeComponent implements OnInit {
             
           })
         }, 5000);
+    },(err)=>{
+      console.log(err)
+      this.rpa_studio.spinner.hide();
     })
   }
   }

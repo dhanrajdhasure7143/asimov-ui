@@ -495,7 +495,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
     if (result.value) {
       this.nodes.splice(this.nodes.indexOf(node),1)
       this.jsPlumbInstance.remove(node.id)
-
+      this.finaldataobjects.splice(this.finaldataobjects.indexOf(task=>task.nodeId==(node.name+"__"+node.id)),1)
       //this.nodes = this.nodes.filter((node): boolean => nodeId !== node.id);
       //this.jsPlumbInstance.removeAllEndpoints(nodeId);
     } 
@@ -601,6 +601,11 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
   {
     if(node.selectedNodeTask!="")
     {
+      this.selectedTask={
+        name:node.selectedNodeTask,
+        id:node.selectedNodeId
+      }
+      this.selectedNode=node;
       let taskdata=this.finaldataobjects.find(data=>data.nodeId==node.name+"__"+node.id);
       if(taskdata!=undefined)
       {
@@ -1137,9 +1142,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
 
   arrange_task_order(start)
   {
+    this.final_tasks=[];
     let object=this.finaldataobjects.find(object=>object.inSeqId==start);
     this.add_order(object)
-    
   }
 
 
