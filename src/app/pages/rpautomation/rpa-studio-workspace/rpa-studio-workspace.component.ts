@@ -362,6 +362,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
             this.populateNodes(stopnode);
           }, 240);
       
+          
     }
   }
 
