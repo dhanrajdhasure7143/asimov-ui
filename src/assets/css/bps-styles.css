@@ -97,20 +97,21 @@ mat-tab-body{
   overflow: scroll;
 }
 .changeTable{
-  width: 50%;
+  width: 100% !important;
   margin: 5px auto;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
 }
 .changeTable tr{
-  border-bottom: 1px solid #eee;
+
   border-collapse: collapse;
 }
 .changeTable tr td, .changeTable tr th{
   padding: 5px 5px 5px 20px;
 }
 #foot, #bpmn_differences {
-border-top: 1px solid #999999;
+border-top: none !important;
 position: fixed;
-width: 100%;
+width: 50% !important;
 z-index: 1000;
 height: 300px;
 display: flex;
@@ -118,6 +119,7 @@ right: 0;
 left: 0;
 bottom:-300px;
 background: white;
+
 }
 .cross_close{
 margin-left: 90px;
@@ -279,26 +281,23 @@ mat-tab-body{
 }
 .changeTable{
   width: 50%;
-  margin: 5px auto;
+  margin: 0px auto;
+  background-color: #F8F8F8;
 }
 .changeTable tr{
-  border-bottom: 1px solid #eee;
+  
   border-collapse: collapse;
 }
 .changeTable tr td, .changeTable tr th{
   padding: 5px 5px 5px 20px;
 }
-#foot, #bpmn_differences {
-border-top: 1px solid #999999;
-position: fixed;
-width: 100%;
-z-index: 1000;
-height: 300px;
-display: flex;
-right: 0;
-left: 0;
-bottom:-300px;
-background: white;
+
+.hr_line{
+  border-bottom: 1px solid grey;
+}
+.hr_line th{
+  padding-bottom: 10px;
+  padding-top: 24px;
 }
 .cross_close{
 margin-left: 90px;
