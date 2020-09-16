@@ -82,16 +82,6 @@ export class RpaStudioComponent implements OnInit {
   
   }
 
-  public inputValidator(event: any) {
-    //console.log(event.target.value);
-    const pattern = /^[a-zA-Z]*$/;   
-    //let inputChar = String.fromCharCode(event.charCode)
-    if (!pattern.test(event.target.value)) {
-      event.target.value = event.target.value.replace(/[^a-zA-Z]/g, "");
-      // invalid character, prevent input
-
-    }
-  }
 
   ngOnInit() 
   {

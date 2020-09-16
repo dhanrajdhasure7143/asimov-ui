@@ -135,6 +135,7 @@ export class FlowchartComponent implements OnInit {
   processGraphName:any;
   selectedTraceNumbers:any = [];
   loaderImgSrc:string;
+  graphgenetaionInterval: any;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -193,9 +194,12 @@ export class FlowchartComponent implements OnInit {
         this.graphIds = piId;
         this.loaderImgSrc = "/assets/images/PI/loader_vr_1.gif"; 
         this.spinner.show();
-        setTimeout(() => {
-          this.onchangegraphId(piId);
-        }, 6*60*1000);
+        //setTimeout(() => {
+           this.graphgenetaionInterval = setInterval(() => {
+             this.onchangegenerategraphId(piId);
+           }, 40*1000);
+         // this.onchangegraphId(piId);
+        //}, 1.5*60*1000);
       }
     });
     this.getAlluserProcessPiIds();
@@ -299,6 +303,86 @@ export class FlowchartComponent implements OnInit {
             }
           })
         }, 6000);
+  }
+
+  onchangegenerategraphId(selectedpiId){  // change process  graps in dropdown
+    //this.spinner.show();
+    this.isNodata=true;
+    this.route.queryParams.subscribe(params => {
+      let token = params['wpiId'];
+      if (token) {
+          let url=this.router.url.split('?')
+          this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
+      }else{
+        let url=this.router.url.split('?')
+        this.location.replaceState(url[0]+'?piId='+selectedpiId);
+
+      }
+  });
+
+    let piId=selectedpiId
+    const variantListbody= { 
+      "data_type":"varients_list", 
+       "pid":selectedpiId
+       } 
+    this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
+      for(var i=0; i<this.varaint_data.data.length; i++){
+          this.varaint_data.data[i].selected= "inactive";
+      }
+      this.onchangeVaraint("0");
+      })
+      const fullGraphbody= { 
+        "data_type":"full_graph", 
+         "pid":selectedpiId
+         }
+      this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
+        if(this.fullgraph.hasOwnProperty('display_msg')){
+          // Swal.fire(
+          //   'Oops!',
+          //   'It is Not You it is Us, Please try again after some time',
+          //   'error'
+          // );
+          this.spinner.show();
+          this.model1=[];
+          this.model2=[];
+        } else{
+          if(this.graphgenetaionInterval){
+            clearInterval(this.graphgenetaionInterval);
+          }
+         let fullgraphOne=this.fullgraph.data;
+          this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
+          this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
+          this.fullgraph_model1=this.fullgraph_model
+        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.nodeAlignment();       
+        this.model2 = this.flowchartData(this.model1)
+        this.gradientApplyforLinks()
+        this.gradientApplyforNode()
+        
+        this.linkCurvinessGenerate();
+        this.spinner.hide();
+        this.linkmodel2 = this.model2;
+        this.isFullGraphBPMN = true;
+        this.isSingleTraceBPMN = false;
+        this.isMultiTraceBPMN = false;
+        this.isSliderBPMN = false;
+
+    }
+        },(err =>{
+          this.spinner.hide();
+        }));
+        const variantGraphbody= { 
+          "data_type":"variant_graph", 
+           "pid":selectedpiId
+             }
+        this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
+        })
+        const sliderGraphbody= { 
+          "data_type":"slider_graph", 
+           "pid":selectedpiId
+               }
+        this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
+        })
   }
 
   onchangeVaraint(datavariant) {      // Variant List sorting 
@@ -1496,6 +1580,12 @@ filterOverlay(){
       if (name == this.nodeArray[i].name) {
         return this.nodeArray[i].key;
       }
+    }
+  }
+
+  ngOnDestroy(){
+    if(this.graphgenetaionInterval){
+      clearInterval(this.graphgenetaionInterval);
     }
   }
 }

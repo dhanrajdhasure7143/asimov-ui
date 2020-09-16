@@ -12,7 +12,6 @@ import { FormGroup } from '@angular/forms';
              {{opt.label}}</label>
           </div>
         </div>
-
       </div> 
     `
 })
