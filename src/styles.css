@@ -464,11 +464,12 @@ div#tooltip_template.tooltip-panel p:first-child {
   stroke-dasharray: 10, 4;
   animation: flow 1s linear infinite;
   -webkit-animation: flow 1s linear infinite;
+  stroke-dashoffset: 20,0;
 }
 
 @keyframes flow {
   from {
-    stroke-dashoffset: 14;
+    stroke-dashoffset: 20;
   }
 
   to {
@@ -478,7 +479,7 @@ div#tooltip_template.tooltip-panel p:first-child {
 
 @-webkit-keyframes flow {
   from {
-    stroke-dashoffset: 14;
+    stroke-dashoffset: 20;
   }
 
   to {
@@ -511,4 +512,50 @@ foreignObject{
 .module-heading .breadcrumb a {
   color: #2676cf;
   padding: 0px 10px;
+}
+
+
+
+
+
+.inactive path{ stroke: #c1c1c1 !important }
+.inactive marker path { stroke: #c1c1c1; fill: #c1c1c1; }
+
+.density-low path{ stroke: green !important; }
+.density-medium path{ stroke: orange !important; }
+.density-high path{ stroke: red !important; }
+
+.density-low marker path { fill: green ; }
+.density-medium marker path{ fill: orange; }
+.density-high marker path{ fill: red; }
+
+/* .weight-normal > path.path{ stroke-width: 1px; }
+.weight-medium > path.path{ stroke-width: 4px; }
+.weight-high > path.path{ stroke-width: 8px; } */
+
+.animation-slow{ animation: arc-animation 100s linear infinite; }
+.animation-medium{ animation: arc-animation 50s linear infinite; }
+
+.animation-fast{ animation: arc-animation 10s linear infinite; }
+.animation-fast1{ animation: arc-animation 20s linear infinite; }
+.animation-fast2{ animation: arc-animation 45s linear infinite; }
+.animation-fast3{ animation: arc-animation 65s linear infinite; }
+.animation-fast4{ animation: arc-animation 85s linear infinite; }
+.animation-fast5{ animation: arc-animation 150s linear infinite; }
+
+.animation{
+  stroke-dasharray: 5px 10px;
+  stroke-linecap: round;
+  stroke-dashoffset: 1500;
+}
+.animat1{
+  fill: red;
+  stroke:yellow;
+  stroke-width: 20px;
+}
+
+@keyframes arc-animation {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
