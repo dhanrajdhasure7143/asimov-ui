@@ -20,20 +20,15 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./rpa-home.component.css']
 })
 export class RpaHomeComponent implements OnInit {
-  isTableHasData = true;
-  filterSelectObj = [];
-  filterValues = { };
-  filterValues1 = {
-    botName:'',
-    botType:'',
-    department:''
-  };
+  public isTableHasData = true;
+  public respdata1=false;
+  displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
+  displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
+  departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
   botTypeFilter = new FormControl('');
   departmentFilter = new FormControl('');
-  displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
-  
-  displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
+  filteredValues: MyFilter = { department: [], botName: ''};
   dataSource1:MatTableDataSource<any>;
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;  
@@ -51,22 +46,7 @@ export class RpaHomeComponent implements OnInit {
  
   constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Home_Hints,)
   { 
-     // Object to create Filter for
-    /* this.filterSelectObj = [
-      {
-        name: 'Bot Name',
-        columnProp: 'botName',
-        options: []
-      }, {
-        name: 'Type',
-        columnProp: 'botType',
-        options: []
-      }, {
-        name: 'Category',
-        columnProp: 'department',
-        options: []
-      }
-    ]*/
+    
   }
 
 
@@ -170,157 +150,64 @@ export class RpaHomeComponent implements OnInit {
         this.bot_list.push(object)  
       })
       this.bot_list=botlist;
+      if(this.bot_list.length >0)
+      {
+        this.respdata1 = false;
+        console.log(this.respdata1)
+      }else
+      {
+        this.respdata1 = true;
+        console.log(this.respdata1);
+      }
       this.dataSource1= new MatTableDataSource(response);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
       this.dataSource1.data = response;
-      this.dataSource1.filterPredicate = this.createFilter1();
-      this.botNameFilter.valueChanges
-      .subscribe(
-        botName => {
-          this.filterValues1.botName = botName;
-          this.dataSource1.filter = JSON.stringify(this.filterValues1);
-          if(this.dataSource1.filteredData.length > 0){
-            this.isTableHasData = true;
-          } else {
-            this.isTableHasData = false;
-          }
+      this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
+        this.filteredValues['department'] = departmentFilterValue;
+        this.dataSource1.filter = JSON.stringify(this.filteredValues);
+        if(this.dataSource1.filteredData.length > 0){
+          this.isTableHasData = true;
+        } else {
+          this.isTableHasData = false;
         }
-      )
-      /*this.botTypeFilter.valueChanges
-      .subscribe(
-        botType => {
-          this.filterValues1.botType = botType;
-          this.dataSource1.filter = JSON.stringify(this.filterValues1);
-          if(this.dataSource1.filteredData.length > 0){
-            this.isTableHasData = true;
-          } else {
-            this.isTableHasData = false;
-          }
-        }
-      )*/
-      this.departmentFilter.valueChanges
-      .subscribe(
-        department => {
-          this.filterValues1.department = department;
-          this.dataSource1.filter = JSON.stringify(this.filterValues1);
-          if(this.dataSource1.filteredData.length > 0){
-            this.isTableHasData = true;
-          } else {
-            this.isTableHasData = false;
-          }
-        }
-      )
-      /*this.filterSelectObj.filter((o) => {
-        response.forEach(x => 
-          {
-         if(x.botType == 0)
-         {
-           x.botType="Attended"
-         }
-         if(x.botType == 1)
-         {
-          x.botType="Unattended"
-         }
         });
-
-        response.forEach(x =>
-          {
-            if(x.department == 1)
-            {
-              x.department = "Development";
-            }
-            if(x.department == 2)
-            {
-              x.department = "Hr";
-            }
-            if(x.department == 3)
-            {
-              x.department = "QA";
-            }
-          })
-        o.options = this.getFilterObject(response, o.columnProp);
-      });*/
+    
+        this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
+          this.filteredValues['botName'] = botNameFilterValue;
+          this.dataSource1.filter = JSON.stringify(this.filteredValues);
+          if(this.dataSource1.filteredData.length > 0){
+            this.isTableHasData = true;
+          } else {
+            this.isTableHasData = false;
+          }
+        });
+    
+      this.dataSource1.filterPredicate = this.customFilterPredicate();
       if(this.selectedTab==0)  
       this.rpa_studio.spinner.hide()
     })   
   }
 
-  createFilter1(): (data: any, filter: string) => boolean {
-    let filterFunction = function(data, filter): boolean {
-      let searchTerms = JSON.parse(filter);
-      return data.botName.toLowerCase().indexOf(searchTerms.botName) !== -1      
-      && data.botType.toString().toLowerCase().indexOf(searchTerms.botType) !== -1
-      && data.department.toString().toLowerCase().indexOf(searchTerms.department) !== -1;
-    }
-    return filterFunction;
-  }
-
-  
- /*getFilterObject(fullObj, key) {
-    const uniqChk = [];
-    fullObj.filter((obj) => {
-      if (!uniqChk.includes(obj[key])) {
-        uniqChk.push(obj[key]);
-      }
-      return obj;
-    });
-    return uniqChk;
-  }
-
-   // Called on Filter change
-   filterChange(filter, event) {
-    //let filterValues = {}
-    console.log(filter.columnProp);
-    this.filterValues[filter.columnProp] = event.target.value.trim().toLowerCase()
-    console.log(this.filterValues);
-    this.dataSource1.filterPredicate = this.createFilter();
-    this.dataSource1.filter = JSON.stringify(this.filterValues)
-  }
-
-  // Custom filter method fot Angular Material Datatable
-  createFilter() {
-    let filterFunction = function (data: any, filter: string): boolean {
-      let searchTerms = JSON.parse(filter);
-      let isFilterSet = false;
-      for (const col in searchTerms) {
-        if (searchTerms[col].toString() !== '') {
-          isFilterSet = true;
-        } else {
-          delete searchTerms[col];
-        }
-      }
-
-      console.log(searchTerms);
-
-      let nameSearch = () => {
-        let found = false;
-        if (isFilterSet) {
-          for (const col in searchTerms) {
-            searchTerms[col].trim().toLowerCase().split(' ').forEach(word => {
-              if (data[col].toString().toLowerCase().indexOf(word) != -1 && isFilterSet) {
-                found = true
-              }
-            });
+  customFilterPredicate() {
+    return (data: dataSource1, filter: string): boolean => {
+      let searchString = JSON.parse(filter) as MyFilter;
+      let isdepartmentAvailable = false;
+      
+      if (searchString.department.length) {
+        
+        for (const d of searchString.department) {
+          if (data.department.toString().trim().indexOf(d) !== -1)  {
+            isdepartmentAvailable = true;
           }
-          return found
-        } else {
-          return true;
         }
+      } else {
+        isdepartmentAvailable = true;
       }
-      return nameSearch()
+      return isdepartmentAvailable && data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
     }
-    return filterFunction
   }
-
-  resetFilters() {
-    this.filterValues = {}
-    this.filterSelectObj.forEach((value, key) => {
-      value.modelValue = undefined;
-    })
-    this.dataSource1.filter = "";
-  }*/
 
   getautomatedtasks(process)
   {
@@ -527,4 +414,13 @@ export class RpaHomeComponent implements OnInit {
   }
 
 
+}
+export interface dataSource1 {
+  department: string;
+  botName: string;
+}
+
+export interface MyFilter {
+  department: string[],
+  botName: string,
 }
