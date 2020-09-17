@@ -362,6 +362,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
             this.populateNodes(stopnode);
           }, 240);
       
+          
     }
   }
 
@@ -609,7 +610,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit
       let taskdata=this.finaldataobjects.find(data=>data.nodeId==node.name+"__"+node.id);
       if(taskdata!=undefined)
       {
-        if(taskdata.taskName==node.selectedNodeTask)
+        if(taskdata.tMetaId==node.selectedNodeId)
         {
           let finalattributes:any=[];
           this.rest.attribute(node.selectedNodeId).subscribe((data)=>{ 
