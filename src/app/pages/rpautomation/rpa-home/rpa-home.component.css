@@ -127,3 +127,7 @@ td{
 th{
     white-space:nowrap;
 }
+
+.run-process{
+padding:20px;
+}

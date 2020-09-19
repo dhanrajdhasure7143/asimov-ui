@@ -39,6 +39,8 @@ export class RpaHomeComponent implements OnInit {
   public selectedvalue:any;
   public selectedTab:number;
   public responsedata;
+  public selectedEnvironment:any='';
+  public environments:any=[];
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -70,7 +72,7 @@ export class RpaHomeComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
     
     this.dt.changeHints(this.datahints.rpahomehints );
-  
+    this.getenvironments();
     this.getallbots();
     this.route.queryParams.subscribe(params => {
       processId=params;
@@ -365,7 +367,7 @@ export class RpaHomeComponent implements OnInit {
     if(this.selectedvalue!=undefined)
     {
     this.rpa_studio.spinner.show();
-    this.rest.startprocess(this.selectedvalue).subscribe(data=>{
+    this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
       let response:any=data;
       Swal.fire({
         position: 'top-end',
@@ -373,8 +375,9 @@ export class RpaHomeComponent implements OnInit {
         title:response.status,
         showConfirmButton: false,
         timer: 2000
-      })
+      });
       this.rpa_studio.spinner.hide();
+      this.update_task_status();
     },(err)=>{
       console.log(err)
       this.rpa_studio.spinner.hide();
@@ -431,19 +434,27 @@ export class RpaHomeComponent implements OnInit {
           {
             data="---";
           }
-          console.log(data);
           $("#"+statusdata.taskId+"__status").html(data);
           
           $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
           
           $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
-        
+          if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress").length>0)
+          {
+            clearInterval(timer);
+          }
         })
         
       })
     }, 5000);
   }
 
+  getenvironments()
+  { 
+    this.rest.listEnvironments().subscribe(response=>{
+      this.environments=response;
+    })
+  }
 
 }
 export interface dataSource1 {
