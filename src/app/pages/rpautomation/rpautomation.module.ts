@@ -35,7 +35,7 @@ import {MatInputModule, MatIconModule, MatFormFieldModule} from '@angular/materi
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { Rpa_Home_Hints } from "./model/rpa-home-module-hints"
+import { Rpa_Home_Hints } from "./model/rpa-home-module-hints";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 @NgModule({
   declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent, RpaHomeComponent],
@@ -66,7 +66,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
     MatInputModule, MatIconModule, MatFormFieldModule,
     MatSelectModule,
     NgxSpinnerModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
   ],
   providers: [RpaHints,RpaDragHints,RpaEnvHints,RpaWorkspace, Rpa_Home_Hints]
 })

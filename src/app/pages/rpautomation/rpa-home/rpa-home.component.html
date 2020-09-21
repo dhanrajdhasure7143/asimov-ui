@@ -135,15 +135,24 @@
 
                     <div class="box-heading rpa-home-process">  
                                 
-                <span style="padding-left: 10px;">
-                    <button [disabled]="selectedvalue==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-play"></i></button>
+                <span class="run-process">
+                    <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-play"></i></button>
                 </span>  
-                <span style="padding-left: 10px;">  
+                <span  class="run-process">  
                     <select class="form-control" style="width:250px;float:right" [value]="selectedvalue" (change)="applyFilter($event.target.value)" >
                     <option value="" [selected]="true">Select Process</option>
                     <option *ngFor="let process of process_names" [value]="process.processId">{{process.processName}}</option>
                       
                   </select>
+                </span>
+                <span  class="run-process">
+                    <select class="form-control" style="width:250px;float:right"  [(ngModel)]="selectedEnvironment">
+                        <option value="" selected=true>Select Environment</option>
+                        <option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}</option>
+
+                    </select>
+
+
                 </span>
                   
             </div>
@@ -172,11 +181,11 @@
                                     <td mat-cell *matCellDef="let element">
 
                                         <span> 
-                     <select class="form-control" style="width:200px;"  [value]="element.botId" [id]="element.taskId+'__select'">
-                        <option value="0" >Select Bot</option>
-                        <option *ngFor="let bot of bot_list" [value]="bot.botId"  >{{bot.botName}}</option>
-                      </select>
-                    </span>
+                                <select class="form-control" style="width:200px;"  [value]="element.botId" [id]="element.taskId+'__select'">
+                                    <option value="0" >Select Bot</option>
+                                    <option *ngFor="let bot of bot_list" [value]="bot.botId"  >{{bot.botName}}</option>
+                                </select>
+                        </span>
                                     </td>
                                 </ng-container>
 

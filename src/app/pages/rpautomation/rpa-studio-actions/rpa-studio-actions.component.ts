@@ -258,8 +258,20 @@ export class RpaStudioActionsComponent implements OnInit {
     })
     if(this.savebotrespose==undefined)
     {
-      
-      this.childBotWorkspace.saveBotFun(this.botState,this.finalenv).subscribe(data=>{
+      let checkbotres=this.childBotWorkspace.saveBotFun(this.botState,this.finalenv);
+      if(checkbotres==false)
+      {
+        
+        this.rpa_studio.spinner.hide();
+        Swal.fire({
+          icon: 'warning',
+          title: "Please check connections",
+          showConfirmButton: true,
+        })
+      }
+      else
+      {
+        checkbotres.subscribe(data=>{
         this.savebotrespose=data;
         this.rpa_studio.spinner.hide();
         
@@ -290,31 +302,46 @@ export class RpaStudioActionsComponent implements OnInit {
           this.childBotWorkspace.disable=false;
           Swal.fire({
             position: 'top-end',
-            icon: 'success',
+            icon: 'warning',
             title: "Bot failed to Save",
             showConfirmButton: false,
             timer: 2000
           })
         }  
       });
+      }
     }
     else
     {
       
       this.childBotWorkspace.saveCron(this.she);
-      this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv).subscribe(data=>{
-        this.childBotWorkspace.successCallBack(data);
-        this.savebotrespose=data;
+       let checkbot:any=this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
+       if(checkbot==false)
+       {
         this.rpa_studio.spinner.hide();
         Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: "Bot Updated Sucessfully",
-          showConfirmButton: false,
-          timer: 2000
+          icon: 'warning',
+          title: "Please check connections",
+          showConfirmButton: true,
         })
-        this.getschecdules();
-      });
+
+       }else
+       {
+          checkbot.subscribe(data=>{
+          this.childBotWorkspace.successCallBack(data);
+          this.savebotrespose=data;
+          this.rpa_studio.spinner.hide();
+          Swal.fire({
+            position: 'top-end',
+            icon: 'success',
+            title: "Bot Updated Sucessfully",
+            showConfirmButton: false,
+            timer: 2000
+          })
+          this.getschecdules();
+        
+        });
+      }
     }
   }
  
@@ -605,7 +632,6 @@ export class RpaStudioActionsComponent implements OnInit {
         })
         this.she.scheduleIntervals=filteredschedules;
         console.log(this.she);
-        
       }
       this.childBotWorkspace.saveCron(this.she);
       document.getElementById(this.schedulepopid).style.display="none";
