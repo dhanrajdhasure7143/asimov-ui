@@ -136,8 +136,6 @@ export class HomeComponent implements OnInit {
   }
 
   navigateToModule(){
-    console.log("sdnfsfnsd", this.dataArr[this.selectedIndex]);
-    
     this.router.navigateByUrl('/pages/'+this.dataArr[this.selectedIndex].link);
   }
 

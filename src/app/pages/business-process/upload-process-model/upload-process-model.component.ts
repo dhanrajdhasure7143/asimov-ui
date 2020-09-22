@@ -102,8 +102,8 @@ export class UploadProcessModelComponent implements OnInit {
     if(!this.isShowConformance){
       this.selected_notation = 0;
       if(this.isfromApprover){
-        this.dt.changeParentModule({"route":"/pages/home", "title":"Business Process Studio"});
-        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
+        this.dt.changeParentModule({"route":"/pages/approvalWorkflow/home", "title":"Approval Workflow"});
+        this.dt.changeChildModule({"route":"", "title":"Notation Preview"});
         }
       else{
         this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
