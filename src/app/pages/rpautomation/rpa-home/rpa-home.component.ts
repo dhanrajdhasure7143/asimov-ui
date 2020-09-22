@@ -441,6 +441,8 @@ export class RpaHomeComponent implements OnInit {
           $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
           if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress").length>0)
           {
+          }else
+          {
             clearInterval(timer);
           }
         })
