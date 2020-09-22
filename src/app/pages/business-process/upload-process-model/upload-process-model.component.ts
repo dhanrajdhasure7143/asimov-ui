@@ -123,12 +123,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
     }
     this.getApproverList();
-    
-     var user= JSON.parse(localStorage.getItem('reloadData'))
-     
-     this.updated_date_time=user
-    
-     
    }
    
 
@@ -473,14 +467,10 @@ displayBPMN(){
         this.autosaveObj=data
         this.updated_date_time = new Date();
         this.spinner.hide();
-    localStorage.setItem('reloadData',JSON.stringify(this.updated_date_time))
-
       },
       err => {
         this.spinner.hide();
     })
-    // localStorage.setItem('reloadData',JSON.stringify(this.updated_date_time))
-
   }
 
    automate(){
