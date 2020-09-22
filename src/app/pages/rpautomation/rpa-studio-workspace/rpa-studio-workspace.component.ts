@@ -453,7 +453,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         this.jsPlumbInstance.remove(node.id)
         let nodeId=node.name + "__" + node.id;
         let task=this.finaldataobjects.find(task => task.nodeId == nodeId);
-        this.finaldataobjects.splice(this.finaldataobjects.indexOf(task),1)
+        if(task!=undefined)
+        {
+          this.finaldataobjects.splice(this.finaldataobjects.indexOf(task),1)  
+        }
       }
     });
   }
