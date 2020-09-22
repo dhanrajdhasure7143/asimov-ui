@@ -1,8 +1,8 @@
 
 
 
-import { Component, OnInit ,ViewChild,TemplateRef, ElementRef} from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Component, OnInit ,ViewChild,TemplateRef, ElementRef,OnDestroy,HostListener } from '@angular/core';
+import { Router, ActivatedRoute, Params,NavigationStart } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner"; 
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
@@ -17,14 +17,18 @@ import { GlobalScript } from 'src/app/shared/global-script';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { UUID } from 'angular2-uuid';
+import { Subscription } from 'rxjs';
+import { JsonpInterceptor } from '@angular/common/http';
 
+
+export let browserReload = false;
 @Component({
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
   styleUrls: ['./upload-process-model.component.css'],
   providers:[BpmnShortcut]
 })
-export class UploadProcessModelComponent implements OnInit {
+export class UploadProcessModelComponent implements OnInit,OnDestroy {
   isShowConformance:boolean = false;
    hideUploadContainer:boolean=false;
    hideCreateContainer:boolean=false;
@@ -78,11 +82,21 @@ export class UploadProcessModelComponent implements OnInit {
   category:string;
   randomNumber;
   pidId;
+  subscription: Subscription;
+  reload_array:any[]=[]
+
+   
 
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
-      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
+      private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) {
+      //   this.subscription = router.events.subscribe((event) => {
+      //     if (event instanceof NavigationStart) {
+      //       browserReload = !router.navigated;    
+      //     }
+      // });
+       }
  
    ngOnInit() {
     this.randomNumber = UUID.UUID();
@@ -109,12 +123,22 @@ export class UploadProcessModelComponent implements OnInit {
       this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
     }
     this.getApproverList();
+    
+     var user= JSON.parse(localStorage.getItem('reloadData'))
+     
+     this.updated_date_time=user
+    
+     
    }
+   
 
    ngAfterViewInit(){
     if(this.isShowConformance)
       this.getAutoSavedDiagrams()
    }
+   ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
    fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
        this.pivalues=res;
@@ -162,6 +186,7 @@ export class UploadProcessModelComponent implements OnInit {
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
+      
     }
     if(!this.isShowConformance){
       let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
@@ -192,6 +217,8 @@ export class UploadProcessModelComponent implements OnInit {
       if(!this.bpmnModeler)
         this.initiateDiagram();
     });
+
+    
    }
    filterAutoSavedDiagrams(){
     let sel_not = this.saved_bpmn_list[this.selected_notation]
@@ -208,8 +235,10 @@ export class UploadProcessModelComponent implements OnInit {
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].get('canvas').zoom('fit-viewport');
     let msg = "";
-    if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
+    if(this.isConfBpmnModeler){
+     if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
       msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
+    }
     else
       msg = "Notation"
     this.global.notify(msg+" is fit to view port", "success")
@@ -444,10 +473,14 @@ displayBPMN(){
         this.autosaveObj=data
         this.updated_date_time = new Date();
         this.spinner.hide();
+    localStorage.setItem('reloadData',JSON.stringify(this.updated_date_time))
+
       },
       err => {
         this.spinner.hide();
     })
+    // localStorage.setItem('reloadData',JSON.stringify(this.updated_date_time))
+
   }
 
    automate(){

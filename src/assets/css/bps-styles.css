@@ -314,6 +314,7 @@ margin-right: -85px;
 }
 .bjs-container{
   zoom: 0.8;
+  margin-top: 40px;
 }
 .canvasOpt{
   display: inline-block;
@@ -634,4 +635,8 @@ background-color: #3ea307 !important;
 }
 .approval_workflow_properties{
 padding-top: 11px;
+}
+.approver_fit_btn{
+  height: 46px;
+  right: 0px;
 }

@@ -19,16 +19,14 @@
                 <mat-select [(ngModel)]="selected_approver">
                   <mat-option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
                     {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
-                </mat-select>
-               
-            </mat-form-field>
+                </mat-select>      
+            </mat-form-field>            
         </div>
-        <div class="col-md-2"> 
-    
-    
-        </div>
+        <div><button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
+            <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button>
+          </div>
     </div>
-    <button class="keyboard_style_create" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
+
     <div class="container-fluid">
             <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>
             <div>

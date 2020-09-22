@@ -73,6 +73,7 @@
         <div class="col-md-5 bps_overlay">
           <span class="info">
             {{selected_processInfo && selected_processInfo['bpmnProcessStatus'] == 'PENDING'?'Cannot be edited till it is reviewed':'Click to open'}}</span>
+            <span><button title="Fit to the view port" class="right header_btn fit_button approver_fit_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button></span>
           <div id="diag_hover" [class]="'diagram_container'+i" (click)="openDiagram()"></div>
           <div class="row">
             <div class="col-md-6">
