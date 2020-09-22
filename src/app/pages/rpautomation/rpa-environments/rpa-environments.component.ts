@@ -32,6 +32,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     @Output()
     title:EventEmitter<string> = new EventEmitter<string>();
     public environments:any=[];
+    public checkeddisabled:boolean =false;
     public createpopup=document.getElementById('create');
     public button:string;
     //public updatepopup=document.getElementById('env_updatepopup');
@@ -116,6 +117,14 @@ import { NgxSpinnerService } from "ngx-spinner";
     await this.api.listEnvironments().subscribe(
     data => {
          let response:any= data;	
+         if(response.length>0)
+         { 
+           this.checkeddisabled = false;
+         }
+         else
+         {
+           this.checkeddisabled = true;
+         }
         for(let i=0;i<response.length;i++)
         {
           let checks={
