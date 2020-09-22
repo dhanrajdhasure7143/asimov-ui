@@ -11,13 +11,13 @@
   <div class="col-md-2">
     <mat-form-field id="bpmnNotationList">
       <mat-label>BPMN Notation</mat-label>
-      <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()">
+      <mat-select [disabled]="isfromApprover" [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()">
         <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex"><!--[selected]="each_bpmn.bpmnModelId == selected_modelId"-->
           {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div class="col-md-2" >
+  <div class="col-md-2" *ngIf="!isfromApprover">
     <mat-form-field id="approversList">
       <mat-label>Approver List</mat-label>
       <mat-select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'">
@@ -44,22 +44,24 @@
   <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100">
     <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
     <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn> 
-    <div class="canvas1"  id="canvas1" *ngIf="hasConformance || isUploaded||!isShowConformance"></div>
+    <div  [class.bps_overlay]="isfromApprover" >
+      <div class="canvas1"  [class.readOnly]="isfromApprover"  id="canvas1" *ngIf="hasConformance || isUploaded||!isShowConformance" ></div>
+    </div>
   </as-split-area>
 </as-split>
 <div class="row btn_row"> 
   <button id="download" class="left" (click)="downloadBpmn(true)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
-  <button class="right btn btn-primary eiap-btn" id="approvalSubmit" *ngIf="rejectedOrApproved!='PENDING'" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
+  <button class="right btn btn-primary eiap-btn"  id="approvalSubmit" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
   <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn'"  *ngIf="!isShowConformance||(isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'">
     <ngx-dropzone-label>
-        <button class="btn btn-primary eiap-btn">Upload Again</button>
+        <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button>
     </ngx-dropzone-label>
   </ngx-dropzone>
-  <button class="right btn btn-primary eiap-btn" id="save" *ngIf="rejectedOrApproved!='PENDING'" (click)="saveprocess(null)">Save Process</button>
+  <button class="right btn btn-primary eiap-btn"  [disabled]="isfromApprover" id="save" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="saveprocess(null)">Save Process</button>
   <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="automate" (click)="automate()">Automate</button> <!-- [disabled]="isShowConformance && !isConfNavigation" -->
   <button id="download" class="right" *ngIf="isShowConformance && reSize && hasConformance" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
 </div>
-<app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>  
+<app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes> 
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
   <p style="color: white">Auto Saving... </p>  
 </ngx-spinner>

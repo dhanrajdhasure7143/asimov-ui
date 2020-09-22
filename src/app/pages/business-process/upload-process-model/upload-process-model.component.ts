@@ -78,8 +78,7 @@ export class UploadProcessModelComponent implements OnInit {
   category:string;
   randomNumber;
   pidId;
-  isfromApprover: any;
-
+  isfromApprover: any=false;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
@@ -172,7 +171,10 @@ export class UploadProcessModelComponent implements OnInit {
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     }
     if(!this.isShowConformance){
-      let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
+      let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]};
+      if(this.isfromApprover){
+         params['isfromApprover']= this.isfromApprover;
+      }
       this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     }
     let status_arr = this.isShowConformance?['APPROVED','REJECTED', 'PENDING']:['APPROVED','REJECTED']
