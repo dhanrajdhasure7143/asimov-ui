@@ -357,3 +357,8 @@ margin-left: 1130px;
   background-color:blue;
   color:white
 }
+.dropdown-item
+{
+  white-space: nowrap !important;
+  cursor: pointer !important;
+}
