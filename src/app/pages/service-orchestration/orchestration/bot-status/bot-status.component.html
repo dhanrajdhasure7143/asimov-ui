@@ -1,7 +1,7 @@
 <div class="row col-md-12">
 
   <!-- 1 -->
-  <div class="col-md-3" style="padding: 10px;">
+  <div class="col-md-2" style="padding: 10px;">
     <div style="border: 1px solid #f2f3ff;">
       <h5 style="background-color: #f2f9ff;padding: 2%;">Bot Statistics </h5>
     <!-- <p style="background-color: white; ">Some text..</p></div> -->
@@ -62,7 +62,7 @@
   </div>
 
   <!-- 2 -->
-  <div class="col-md-6" style="padding: 10px;">
+  <div class="col-md-7" style="padding: 10px;">
       <div style="border: 1px solid #f2f3ff;">
     <h5 style="background-color: #f2f9ff;padding: 1%;">Active Bots Details</h5>
     <table mat-table [dataSource]="dataSource" matSort class=" table w-100">
@@ -107,7 +107,9 @@
       <ng-container matColumnDef="createdTS">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Timestamp</th>
         <td mat-cell *matCellDef="let element"> 
-            <span *ngIf="element.createdTS != null">{{element.createdTS}}</span>
+            <span *ngIf="element.createdTS != null">
+              {{element.createdTS | date}} {{element.createdTS.split("T")[1].split(".")[0]}}
+            </span>
             <span *ngIf="element.createdTS == null">-</span>
         </td>
       </ng-container>
@@ -116,13 +118,13 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
         <td mat-cell *matCellDef="let element"> 
           <span *ngIf="element.description!=null">{{element.description}}</span>
-          <span *ngIf="element.description==''">-</span></td>
+          <span *ngIf="element.description==null">-</span></td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
-    <mat-paginator  #paginator [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50, 100]" [showFirstLastButtons]="true" ></mat-paginator>
+    <mat-paginator  #paginator [pageSize]="4" [pageSizeOptions]="[3, 5, 10, 25, 50, 100]" [showFirstLastButtons]="true" ></mat-paginator>
 
    </div>
   </div>
@@ -149,7 +151,7 @@
 </div>
 </div>
 <div class="row col-md-12">
-<div class="col-md-3" style="padding: 10px;">
+<div class="col-md-2" style="padding: 10px;">
   <div style="border: 1px solid #f2f3ff;">
 <h5 style="background-color: #f2f9ff;padding: 2%;">Process Statistics</h5>
 <!-- <p style="background-color: white; ">Some text..</p></div> -->
@@ -191,7 +193,7 @@
 </div>
 </div>
 <!-- 2 -->
-<div class="col-md-6" style="padding: 10px;">
+<div class="col-md-7" style="padding: 10px;">
   <div style="border: 1px solid #f2f3ff;">
 <h5 style="background-color: #f2f9ff;padding: 1%;">Active Bots Performance</h5>
 <canvas id="myChart" style="height: 280px !important"></canvas>
