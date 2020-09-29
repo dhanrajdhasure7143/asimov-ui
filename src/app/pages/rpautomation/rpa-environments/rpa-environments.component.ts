@@ -141,6 +141,26 @@ import { NgxSpinnerService } from "ngx-spinner";
       });
   }
 
+  EnvType1(){
+    console.log(this.insertForm.value.environmentType)
+    if(this.insertForm.value.environmentType == "Windows"){
+      //this.updateForm.value.portNumber="44";
+      this.insertForm.get("portNumber").setValue("44");
+    }else if(this.insertForm.value.environmentType == "Linux"){
+      this.insertForm.get("portNumber").setValue("22");
+    }
+  }
+
+  EnvType(){
+    console.log(this.updateForm.value.environmentType)
+    if(this.updateForm.value.environmentType == "Windows"){
+      //this.updateForm.value.portNumber="44";
+      this.updateForm.get("portNumber").setValue("44");
+    }else if(this.updateForm.value.environmentType == "Linux"){
+      this.updateForm.get("portNumber").setValue("22");
+    }
+  }
+
 
   checkAllCheckBox(ev) {
     this.environments.forEach(x => x.checked = ev.target.checked)

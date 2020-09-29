@@ -273,7 +273,7 @@
                             <!--<input type="text" class="form-control" formControlName="environmentType" value=""
 
 placeholder="Enter Environment Type" >-->
-                            <select class="form-control" formControlName="environmentType">
+                            <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
           <option value="" [selected]="true">--Select Environment Type--</option>
           <option value="Windows">Windows</option>
           <option value="Mac">Mac</option>
@@ -377,7 +377,7 @@ placeholder="Enter Environment Type" >-->
 value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType"
 
 placeholder="Enter Environment Type" >-->
-                            <select class="form-control" formControlName="environmentType" value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType">
+                            <select class="form-control" (change)="EnvType()" formControlName="environmentType" value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType">
               <option value="">--Select Environment Type--</option>
               <option value="Windows">Windows</option>
               <option value="Mac" >Mac</option>
