@@ -35,7 +35,7 @@
 }
 .status{
   position: absolute;
-  right:-190px;
+  right: -190px;
   top: 20px;
   
 }
@@ -55,6 +55,7 @@
 }
 .imageI1{
 width: 16px;
+
 filter: brightness(0.1) !important;
 }
 .start-icon{
