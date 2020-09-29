@@ -4,7 +4,7 @@ import { Options, PointerType} from 'ng5-slider';
 enum Filter{
   'Activity',
   // 'Cases',
-  // 'Variants',
+   'Variants',
   //'End Points',
 }
 @Component({
@@ -17,12 +17,14 @@ export class FilterComponent implements OnInit {
   @Input() dataValues:any=[];
   @Input() startArray:any=[];
   @Input() endArray:any=[];
+  @Input() variantData:any = {};
   @Input() public fetchData;
   @Input() public resetFilter:boolean;
   @Output() selectedNodes=new EventEmitter<any[]>();
   @Output() applyFilterValue=new EventEmitter<boolean>();
   @Output() selectedStartpoints=new EventEmitter<any[]>();
   @Output() selectedEndpoints=new EventEmitter<any[]>();
+  @Output() selectedVariantOutput = new EventEmitter<any[]>();
   chart_filter_options;
   public chart_filter = Filter;
   search_activity:any;
@@ -43,12 +45,16 @@ export class FilterComponent implements OnInit {
   filterby:any="Activity";
   isActivity:boolean=true;
   isEndpoint:boolean=false;
+  isVariantFilter:boolean = false;
   dataValuesNames:any=[]
   endPointsArray: any=[];
+  variantListarray:any =[]
   isStartPoint:boolean=false;
   isEndPoint: boolean=false;
-  startPointArray=[]
-  endPointArray=[]
+  startPointArray=[];
+  endPointArray=[];
+  seletedVariant:any = [];
+  isDeselectAll = false;
 
   constructor() { }
 
@@ -64,6 +70,17 @@ export class FilterComponent implements OnInit {
       obj["name"]=this.endArray[i];
       obj["selected"]="inactive";
       this.endPointArray.push(obj)
+    }
+
+    for(var i=0;i<this.variantData.data.length;i++){
+      var obj={};
+      obj["name"]=this.variantData.data[i].name;
+      obj["casepercent"]=this.variantData.data[i].casepercent;
+      obj["detail"]=this.variantData.data[i].detail;
+      obj["days"]=this.variantData.data[i].days;
+      obj["case_value"]=this.variantData.data[i].case_value;
+      obj["selected"]="inactive";
+      this.variantListarray.push(obj)
     }
     
     
@@ -118,6 +135,7 @@ selectData(selectedData, index){
     }else{
       this.isApplyFilter=true;
     }
+    this.isDeselectAll = false;
 }
 
 selectAllDataValue(){
@@ -126,31 +144,64 @@ selectAllDataValue(){
     };
     this.isApplyFilter=false;
     this.isSelect=true;
+    this.isDeselectAll = false;
 }
+
+selectAllVariantList(){
+  for (var i = 0; i < this.variantListarray.length; i++){
+    this.variantListarray[i].selected= "active"
+  };
+  this.isApplyFilter=false;
+  this.isSelect=true;
+}
+
+deselectAllVariantList(){
+  for (var i = 0; i < this.variantListarray.length; i++){
+    this.variantListarray[i].selected= "inactive"
+  };
+ 
+  this.isApplyFilter=true;
+    this.isSelect=false;
+}
+
 
 deselectAllDataValue(){
   for (var i = 0; i < this.dataValuesNames.length; i++){
     this.dataValuesNames[i].selected= "inactive"
     };
+    this.isDeselectAll = true;
     this.isApplyFilter=true;
     this.isSelect=false;
 }
 
 applyFilter(){
+  console.log(this.isDeselectAll);
+  
   this.seletedActivity=[];
+  if(this.isDeselectAll == true){
+    this.seletedActivity = [];
+    this.selectedNodes.emit(this.seletedActivity)
+    this.applyFilterValue.emit(true);
+  } else {
   for (var i = 0; i < this.dataValuesNames.length; i++){
     if(this.dataValuesNames[i].selected === "inactive")
       this.seletedActivity.push(this.dataValues[i].name)
     };
       this.selectedNodes.emit(this.seletedActivity)
-      this.applyFilterValue.emit(true)
+      this.applyFilterValue.emit(true);
+  }
 }
 channgeFilter(){
   this.endPointsArray=[{name:"Start",selected:"inactive"},{name:"End",selected:"inactive"}]
   if(this.filterby=="Activity"){
     this.isActivity=true;
     this.isEndpoint=false;
-  }else{
+    this.isVariantFilter = false;
+  } else if(this.filterby=="Variants"){
+    this.isVariantFilter = true;
+    this.isActivity=false;
+  }
+  else{
     this.isActivity=false;
     this.isEndpoint=true;
   }
@@ -160,6 +211,13 @@ selectedStartPoint(data,index){
     this.startPointArray[index].selected= "active"
   }else{
     this.startPointArray[index].selected= "inactive"
+  } 
+}
+selectedVariant(data,index){
+  if(data.selected=="inactive"){
+    this.variantListarray[index].selected= "active"
+  }else{
+    this.variantListarray[index].selected= "inactive"
   } 
 }
   selectedEndPoint(data,index){
@@ -197,4 +255,41 @@ selectedStartPoint(data,index){
     this.isEndPoint=!this.isEndPoint;
   }
 
-}
+  caseParcent(parcent){       // case persent value in variant list
+    if(String(parcent).indexOf('.') != -1){
+    let perc=parcent.toString().split('.')
+  // return parcent.toString().slice(0,5);
+  return perc[0]+'.'+perc[1].slice(0,2);
+    }else{
+      return parcent;
+    }
+  }
+
+  timeConversion(millisec) {
+    var seconds:any = (millisec / 1000).toFixed(1);
+    var minutes:any = (millisec / (1000 * 60)).toFixed(1);
+    var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
+    var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+    if (seconds < 60) {
+        return seconds + " Sec";
+    } else if (minutes < 60) {
+        return minutes + " Min";
+    } else if (hours < 24) {
+        return hours + " Hrs";
+    } else {
+        return days + " Days"
+    }
+  }
+
+  applyVariantFilter(){
+    this.seletedVariant=[];
+    for (var i = 0; i < this.variantListarray.length; i++){
+      if(this.variantListarray[i].selected === "active"){
+        this.seletedVariant.push(this.variantListarray[i].name)
+      }
+      };
+        this.selectedVariantOutput.emit(this.seletedVariant)
+        this.applyFilterValue.emit(true)
+  }
+
+} 
