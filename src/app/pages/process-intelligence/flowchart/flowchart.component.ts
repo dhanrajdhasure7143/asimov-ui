@@ -78,6 +78,7 @@ export class FlowchartComponent implements OnInit {
     hidePointerLabels: false,
     vertical: true,
   }
+  filterPerformData:any =[]; 
   process_graph_list:any=[];
   process_graph_options;
   variant_list_options;
@@ -232,6 +233,7 @@ export class FlowchartComponent implements OnInit {
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
+      localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
       })
       const fullGraphbody= { 
@@ -254,6 +256,7 @@ export class FlowchartComponent implements OnInit {
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.filterPerformData = this.fullgraph_model;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1)
         this.gradientApplyforLinks()
@@ -334,6 +337,7 @@ export class FlowchartComponent implements OnInit {
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.filterPerformData = this.fullgraph_model;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1)
         this.gradientApplyforLinks()
@@ -491,7 +495,8 @@ export class FlowchartComponent implements OnInit {
         "cases" : this.selectedCaseArry
           }
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
-      this.model1=this.variantCombo.data[0].nodeDataArraycase
+      this.model1=this.variantCombo.data[0].nodeDataArraycase;
+      this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
       this.nodeAlignment();
       this.model2 = this.flowchartData(this.model1);
       this.gradientApplyforLinks()
@@ -975,7 +980,8 @@ closeNav() { // Variant list Close
   }
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
     this.resetFilter=true;
-    this.model1 = this.fullgraph_model
+    this.model1 = this.fullgraph_model;
+    this.filterPerformData = this.fullgraph_model;
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1)
     this.gradientApplyforNode();
@@ -997,7 +1003,7 @@ closeNav() { // Variant list Close
 
   resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
     this.resetFilter=true;
-    this.model1 = this.variantCombo.data[0].nodeDataArraycase
+    this.model1 = this.filterPerformData;
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1)
     this.gradientApplyforNode();
@@ -1095,7 +1101,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   this.activity_value=[];
   if(activity_slider==1&&path_slider==1){
     this.isNodata=true;
-    this.model1=this.fullgraph_model
+    this.model1=this.fullgraph_model;
+    this.filterPerformData = this.fullgraph_model;
     this.nodeAlignment()
     this.model2 = this.flowchartData(this.model1);
     this.gradientApplyforLinks()
@@ -1144,6 +1151,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
 
   readselectedNodes(SelectedActivities){
+ 
     if(SelectedActivities.length==0){
       this.resetActivityFiltermetrics();
      
@@ -1434,7 +1442,7 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
 }
 filterOverlay(){  
   this.dataValues = [];
-  let vv = this.variantCombo.data[0].nodeDataArraycase
+  let vv = this.filterPerformData;
     //Filter overlay open on filter icon click
   for(var i=1;i<vv.length-1;i++){
     this.dataValues.push(vv[i])
@@ -1454,6 +1462,7 @@ filterOverlay(){
   readselectedStartpoints(startPointValue){
     // console.log(startPointValue);
     let nodeModel1=this.fullgraph_model;
+    this.filterPerformData = this.fullgraph_model;
     let filterModel1=[];
     let index;
     filterModel1.push(nodeModel1[0]);
@@ -1528,6 +1537,81 @@ filterOverlay(){
         return this.nodeArray[i].key;
       }
     }
+  }
+
+  getselectedVariantList(e) {
+    let filtered_Variants = [];
+    let decryptedVariants: any = {};
+    if (e.length == 0) {
+      var varint = localStorage.getItem("variants");
+      if (varint != null) {
+        decryptedVariants = JSON.parse(atob(varint));
+      }
+      decryptedVariants.data.forEach(original_variant => {
+        filtered_Variants.push(original_variant);
+      });
+      this.varaint_data.data = filtered_Variants;
+      for (var i = 0; i < this.varaint_data.data.length; i++) {
+        this.varaint_data.data[i].selected = "inactive";
+      }
+      this.resetspinnermetrics();
+    } else {
+      const variantComboBody = {
+        "data_type": "variant_combo",
+        "pid": this.graphIds,
+        "cases": e
+      }
+
+      var varint = localStorage.getItem("variants");
+      if (varint != null) {
+        decryptedVariants = JSON.parse(atob(varint));
+      }
+      e.forEach(selected_variant => {
+        decryptedVariants.data.forEach(original_variant => {
+          if (selected_variant == original_variant.case) {
+              filtered_Variants.push(original_variant);
+          }
+        });
+      });
+      this.varaint_data.data = filtered_Variants;
+     let totalVariantSum = this.getVariantCasePercentage(this.varaint_data.data);
+      for (var i = 0; i < this.varaint_data.data.length; i++) {
+      this.varaint_data.data[i].casepercent = ((this.varaint_data.data[i].case_value/totalVariantSum)*100).toFixed(2);
+      if(decryptedVariants.data.length == filtered_Variants.length){
+        this.varaint_data.data[i].selected = "inactive";
+      } else { 
+      this.varaint_data.data[i].selected = "active";
+      }
+      }
+      this.rest.getVariantGraphCombo(variantComboBody).subscribe(res => {
+      this.variantCombo = res
+        this.model1 = this.variantCombo.data[0].nodeDataArraycase;
+        this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
+        this.nodeAlignment();
+        this.model2 = this.flowchartData(this.model1);
+        this.gradientApplyforLinks()
+        this.gradientApplyforNode()
+        this.linkCurvinessGenerate();
+      })
+
+      /**
+    * BPMN Boolean Variables
+    */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = true;
+      this.isSliderBPMN = false;
+    }
+  }
+
+  getVariantCasePercentage(varia_list){
+    var calculatePercent = 0;
+    var variant_percent = 0;
+    for(var i=0;i<varia_list.length;i++){
+      calculatePercent += varia_list[i].case_value;
+    }
+
+    return calculatePercent;
   }
 
   ngOnDestroy(){
