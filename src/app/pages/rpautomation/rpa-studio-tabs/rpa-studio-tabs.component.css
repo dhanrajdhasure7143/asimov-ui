@@ -16,6 +16,29 @@
     -ms-flex-pack: start!important;
     justify-content: flex-start!important;
 } */
+
+:host >>> ul.nav.nav-tabs.justify-content-start{
+    width: 1030px;
+    white-space: nowrap;
+    display: flex;
+    overflow-y: hidden;
+    margin-top: -5px;
+    overflow-x: scroll; 
+}
+
+:host >>> ul.nav.nav-tabs.justify-content-start::-webkit-scrollbar {
+    width: 10px;
+    height:4px
+}
+
+:host >>> ul.nav.nav-tabs.justify-content-start::-webkit-scrollbar-track {
+    display:none; 
+  }
+
+:host >>> ul.nav.nav-tabs.justify-content-start::-webkit-scrollbar-thumb {
+    background:lightgray; 
+  }
+
 .nav-tabs {
     border-bottom: 4px solid #dee2e6;
     justify-content: flex-start;

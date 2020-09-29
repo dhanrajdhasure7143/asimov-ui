@@ -5,14 +5,13 @@ import { jsPlumb, jsPlumbInstance } from 'jsplumb';
 import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
 import { NotifierService } from 'angular-notifier';
 import { RpaDragHints } from '../model/rpa-workspace-module-hints';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient } from '@angular/common/http';
 import Swal from 'sweetalert2';
-import { data } from 'jquery';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
+import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
 
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
@@ -65,6 +64,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   outputboxresult: any;
   outputboxresulttext: any;
   final_tasks: any = [];
+  Image:any;
   constructor(private rest: RestApiService, private notifier: NotifierService, private hints: RpaDragHints, private dt: DataTransferService, private http: HttpClient, private child_rpa_studio: RpaStudioComponent,) {
 
   }
@@ -453,7 +453,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         this.jsPlumbInstance.remove(node.id)
         let nodeId=node.name + "__" + node.id;
         let task=this.finaldataobjects.find(task => task.nodeId == nodeId);
-        this.finaldataobjects.splice(this.finaldataobjects.indexOf(task),1)
+        if(task!=undefined)
+        {
+          this.finaldataobjects.splice(this.finaldataobjects.indexOf(task),1)  
+        }
       }
     });
   }
@@ -888,68 +891,54 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.fields = []
   }
 
-  downloadPng() {
-    html2canvas(this.screen.nativeElement, {
-      width: 1200,
-      height: 600,
-      scrollX: 400,
-      scrollY: 200,
-      foreignObjectRendering: true
-    }).then(canvas => {
-      this.canvas.nativeElement.src = canvas.toDataURL();
-      this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
-      this.downloadLink.nativeElement.download = 'bot_image.png';
-      this.downloadLink.nativeElement.click();
-    });
+  downloadPng() 
+  {
+    var element=document.getElementById(this.dragareaid)
+    domtoimage.toPng(element)
+      .then(function (dataUrl) {
+        var link = document.createElement('a');
+        link.download = 'bot_image.png';
+        link.href = dataUrl;
+        link.click();
+      })
+      .catch(function (error) {
+          console.error('oops, something went wrong!', error);
+      });
   }
 
   downloadJpeg() {
-
-    html2canvas(this.screen.nativeElement, {
-
-      width: 1000,
-      height: 480,
-      scrollX: 350,
-      scrollY: 140,
-      foreignObjectRendering: true
-    }).then(canvas => {
-      this.canvas.nativeElement.src = canvas.toDataURL();
-      this.downloadLink.nativeElement.href = canvas.toDataURL('image/jpeg');
-      this.downloadLink.nativeElement.download = 'bot_image.jpeg';
-      this.downloadLink.nativeElement.click();
+    
+    var element=document.getElementById(this.dragareaid)
+    domtoimage.toPng(element,{ quality: 0.95,background: "white"})
+    .then(function (dataUrl) {
+      var link = document.createElement('a');
+      link.download = 'bot_image.jpeg';
+      link.href = dataUrl;
+      link.click();
+    })
+    .catch(function (error) {
+        console.error('oops, something went wrong!', error);
     });
   }
 
   downloadPdf() {
 
-    const div = document.getElementById('screen');
-    const options = {
-      background: 'white',
-      scale: 1,
-      width: 1200,
-      height: 600,
-      scrollX: 400,
-      scrollY: 200,
-      foreignObjectRendering: true
-    };
-
-    html2canvas(div, options).then((canvas) => {
-
-      var img = canvas.toDataURL("image/PNG");
+    var element=document.getElementById(this.dragareaid)
+    domtoimage.toPng(element)
+      .then(function (dataUrl) {
+      let img=dataUrl;  
       var doc = new jsPDF('l', 'mm', 'a4', 1);
-
-      // Add image Canvas to PDF
       const bufferX = 5;
       const bufferY = 5;
       const imgProps = (<any>doc).getImageProperties(img);
       const pdfWidth = doc.internal.pageSize.getWidth() - 2 * bufferX;
       const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
       doc.addImage(img, 'PNG', bufferX, bufferY, pdfWidth, pdfHeight, undefined, 'FAST');
-
-      return doc;
-    }).then((doc) => {
       doc.save('bot_image.pdf');
-    });
+      })
+      .catch(function (error) {
+          console.error('oops, something went wrong!', error);
+      });
   }
 
   modifyEnableDisable() {
@@ -1071,7 +1060,13 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           if (this.SelectedOutputType == "Text") {
             let data: any = outdata
             this.outputboxresulttext = data[0].Value.replace(/\n/g, "<br />");
+            
             //this.outputboxresulttext=this.outputboxresulttext.replace("\n","<br>")
+          }
+          if(this.SelectedOutputType=="Image")
+          { 
+            let data=this.outputboxresult[0].Value.split(':');
+            this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
           }
         })
       }
