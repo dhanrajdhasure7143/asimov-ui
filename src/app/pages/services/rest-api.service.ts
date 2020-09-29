@@ -41,7 +41,7 @@ export class RestApiService{
   public ipAddress:string; 
 
   getAccessToken(){
-    let data = {"userId":"jitendra.kothamasu@epsoftinc.com",
+    let data = {"userId":"saivijaya.malladi@epsoftinc.com",
                 "password":"Welcome@123"};
 
   

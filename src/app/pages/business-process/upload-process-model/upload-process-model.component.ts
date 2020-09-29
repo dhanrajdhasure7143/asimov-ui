@@ -83,7 +83,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   randomNumber;
   pidId;
   subscription: Subscription;
-  reload_array:any[]=[]
+  reload_array:any[]=[];
+  reload_autosave_date_time:any
 
    
 
@@ -280,7 +281,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         let selected_xml = atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation)));
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-          this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+          this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+          // this.updated_date_time=this.reload_autosave_date_time
         }
         if(selected_xml == "undefined"){
           this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
@@ -466,6 +468,7 @@ displayBPMN(){
         this.getAutoSavedDiagrams();
         this.autosaveObj=data
         this.updated_date_time = new Date();
+        this.reload_autosave_date_time=this.updated_date_time
         this.spinner.hide();
       },
       err => {

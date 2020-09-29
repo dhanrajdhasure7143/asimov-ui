@@ -193,9 +193,10 @@ export class BpsHomeComponent implements OnInit {
     })
   }
   fitNotationView(){
-
-    let canvas = this.bpmnModeler.get('canvas');
+   let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
+    let msg="Notation";
+    this.global.notify(msg+" is fit to view port", "success")
     
   }
   
