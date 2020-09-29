@@ -312,6 +312,7 @@ export class FlowchartComponent implements OnInit {
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
+      localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
       })
       const fullGraphbody= { 
