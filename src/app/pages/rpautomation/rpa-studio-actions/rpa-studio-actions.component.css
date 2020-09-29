@@ -35,16 +35,17 @@
 }
 .status{
   position: absolute;
-  right:-172px;
+  right:-190px;
   top: 20px;
+  
 }
 .rob-status{
   border: 1px solid lightgray;
-  width: 60px;
+  width: 80px;
   text-align: center;
 }
 .rob-status p{
-  font-size: 9px;
+  font-size: 8px;
   color: black;
   margin: 0;
 }
