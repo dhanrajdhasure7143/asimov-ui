@@ -136,6 +136,9 @@ div[class^='diagram_container'] .djs-container svg{
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
 }
+.left-content div{
+  padding-left:7px !important
+}
 .spinoverlay{
   position: fixed;
   top: 0;
@@ -503,8 +506,8 @@ div#tooltip_template.tooltip-panel p:first-child {
   color: #2676cf;
 }
 foreignObject{
-  width: 80px !important;
-  padding-right: 60px !important;
+  width: 100px !important;
+  padding-right: 90px !important;
 }
 .breadcrumb>li+li:before {
   display: none;

@@ -2,7 +2,6 @@
 // version 1.0.0a
 // (c) 2008-2010 jason frame [jason@onehackoranother.com]
 // released under the MIT license
-
 (function($) {
     
     function maybeCall(thing, ctx) {
@@ -52,8 +51,11 @@
                     case 's':
                         tp = {top: pos.top - actualHeight - this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
                         break;
+                    // case 'e':
+                    //     tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
+                    //     break;
                     case 'e':
-                        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
+                        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: this.options.mouse.x};
                         break;
                     case 'w':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
@@ -89,7 +91,7 @@
                             if (t.options.delayOut === 0) {
                                 t.hide();
                             } else {
-                                setTimeout(function() { 
+                                setTimeout(function() {
                                     if (t.hoverState == 'out') t.hide(); }, t.options.delayOut);
                             }
                         }
@@ -186,7 +188,9 @@
             return tipsy;
         }
         
-        function enter() {
+        function enter(e) {
+            options.mouse.x = e.clientX || e.pageX; 
+            options.mouse.y = e.clientY || e.pageY;
             var tipsy = get(this);
             tipsy.hoverState = 'in';
             if (options.delayIn === 0) {
@@ -229,14 +233,15 @@
         delayOut: 0,
         fade: false,
         fallback: '',
-        gravity: 'n',
+        gravity: 'e',
         html: false,
         live: false,
         offset: 0,
         opacity: 0.8,
         title: 'title',
         trigger: 'hover',
-        hoverlock: false
+        // hoverlock: false
+        mouse : {x: 0, y: 0},
     };
     
     // Overwrite this method to provide options on a per-element basis.

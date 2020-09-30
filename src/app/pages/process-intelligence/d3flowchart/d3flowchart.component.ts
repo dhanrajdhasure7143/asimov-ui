@@ -50,8 +50,6 @@ export class D3flowchartComponent {
 
 
     ngOnChanges(){
-        // console.log(this.model1);
-        // console.log(this.model2);
         // if(this.isplay==true){
         //   this.class1="animation animation-fast density-medium weight-medium";
         //   this.class2="animation animation-fast1 density-medium weight-medium"
@@ -84,10 +82,16 @@ export class D3flowchartComponent {
 
     processGraph(){
         // Create a new directed graph
-    var g = new dagreD3.graphlib.Graph().setGraph({});
+    var g = new dagreD3.graphlib.Graph().setGraph({ ranksep: 120});
+
+    // nodesep: 30,
+    //   ranksep: 150,
+    //   rankdir: "TB",
+    //   marginx: 0,
+    //   marginy: 20
     var me=this
     
-const w = 1100;
+const w = 1150;
 const h = 1600;
 const padding = 20;
 
@@ -107,20 +111,63 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
   d3.select("svg").append("marker")
   .attr("id","arrow")
   .attr("viewBox","0 0 10 10")
-  .attr("refX","9")
+  .attr("refX","8")
   .attr("refY","5")
-  .attr("markerWidth","5")
+  .attr("markerWidth","3.5")
   .attr("markerHeight","5")
   .attr("orient","auto")
   .attr("fill","black")
 
   d3.select("marker").append("path")
-  // .attr("d","M 0 0 L 10 5 L 0 10 z")
-  .attr("d", "M 0 0 L 10 5 L 0 10 L 4 5 z")
+    .attr("d","M 0 0 L 10 5 L 0 10 z")
+    // .attr("d", "M 0 0 L 10 5 L 0 10 L 4 5 z")
     .style("stroke-width", 1)
-    .style("stroke-dasharray", "1,0");
-    
-    
+    // .style("stroke-dasharray", "1,0");
+
+    d3.select("svg").append("marker")
+    .attr("id","arrow1")
+    .attr("class","marker1")
+    .attr("viewBox","0 0 10 10")
+    .attr("refX","8")
+    .attr("refY","5")
+    .attr("markerWidth","4")
+    .attr("markerHeight","5")
+    .attr("orient","auto")
+    .attr("fill","#757272")
+    .append("path")
+    .attr("d","M 0 0 L 10 5 L 0 10 z")
+    // .attr("d", "M 0 0 L 10 5 L 0 10 L 4 5 z")
+    .style("stroke-width", 1)
+    // .style("stroke-dasharray", "1,0");
+  
+      d3.select("svg").append("marker")
+      .attr("id","arrow2")
+      .attr("class","marker2")
+      .attr("viewBox","0 0 10 10")
+      .attr("refX","8")
+      .attr("refY","5")
+      .attr("markerWidth","4")
+      .attr("markerHeight","5")
+      .attr("orient","auto")
+      .attr("fill","#8a8787")
+      .append("path")
+      .attr("d","M 0 0 L 10 5 L 0 10 z")
+      .style("stroke-width", 1)
+
+        d3.select("svg").append("marker")
+        .attr("id","arrow3")
+        .attr("class","marker3")
+        .attr("viewBox","0 0 10 10")
+        .attr("refX","8")
+        .attr("refY","5")
+        .attr("markerWidth","5")
+        .attr("markerHeight","5")
+        .attr("orient","auto")
+        .attr("fill","#a8a5a5")
+        .append("path")
+        .attr("d","M 0 0 L 10 5 L 0 10 z")
+        .style("stroke-width", 1)
+      
    var  inner = svg.append("g");
    var defs = svg.append("defs");
 
@@ -129,22 +176,23 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
    .attr("x1", "10%")
    .attr("x2", "60%")
    .attr("y1", "0%")
-   .attr("y2", "100%");
+   .attr("y2", "100%")
+  // .attr("x1", "50%")
+  //  .attr("x2", "70%")
+  //  .attr("y1", "-16%")
+  //  .attr("y2", "20%")
+  //  .attr("gradientTransform","rotate(90)");
    
-   gradient.append("stop")
-   //  .attr('class', 'start')
-   .attr('class', 'stop-left')
-   //               .attr('offset', '0')
+  gradient.append("stop")
+    .attr('class', 'stop-left')
     .attr("offset", "3%")
     .attr("stop-color", "#bdbcb5")
     .attr("stop-opacity", 1);
  
  gradient.append("stop")
     .attr('class', 'end')
-   // .attr('class', 'stop-right')
-   //               .attr('offset', '1')
-    .attr("offset", "100%")
-    .attr("stop-color", "1E1E1E")
+    .attr("offset", "90%")
+    .attr("stop-color", "#1E1E1E")
     .attr("stop-opacity", 1);
 
 
@@ -186,7 +234,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
     
         var nodeName=this.model1[j].name
         states[nodeName]={
-          description: "<p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model1[j].toolCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model1[j].toolCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model1[j].toolCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model1[j].toolCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model1[j].toolCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceCount1+"</div></li><li><div>Median Duration</div><div>"+performanceCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceCount3+"</div></li><li><div>Max Duration </div><div>"+performanceCount4+"</div></li><li><div>Min Duration </div><div>"+performanceCount5+"</div></li></ul>",
+          description: "<p>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+this.model1[j].toolCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model1[j].toolCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model1[j].toolCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model1[j].toolCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model1[j].toolCount[4]+"</div></li></ul><p>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceCount1+"</div></li><li><div>Median Duration</div><div>"+performanceCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceCount3+"</div></li><li><div>Max Duration </div><div>"+performanceCount4+"</div></li><li><div>Min Duration </div><div>"+performanceCount5+"</div></li></ul>",
         metrics: this.model1[j].count
         }
       }
@@ -238,10 +286,9 @@ var count1
     if(count1>=1){
       const maxCount = this.model2.reduce(function(prev, current) {
         return (prev.days > current.days) ? prev : current
-      }) 
+      })
       let maxLinkCount=maxCount.days/5;
-      // console.log(maxLinkCount);
-      
+      // console.log(maxLinkCount);      
       for(var i=0; i<this.model2.length;i++){
         if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
           var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
@@ -251,47 +298,61 @@ var count1
               }else{
                 g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text, labelType: "html", style: "stroke: #333; stroke-width: 3px; stroke-dasharray: 5, 5;marker-end:url(#arrow);fill:none;",
                 arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
-              }
-         
+              } 
         }else{
           var performanceLinkCount1=this.timeConversion(this.model2[i].toolDataCount[5])
           var performanceLinkCount2=this.timeConversion(this.model2[i].toolDataCount[6])
           var performanceLinkCount3=this.timeConversion(this.model2[i].toolDataCount[7])
           var performanceLinkCount4=this.timeConversion(this.model2[i].toolDataCount[8])
           var performanceLinkCount5=this.timeConversion(this.model2[i].toolDataCount[9])
-        
+    
           var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
+        // console.log(this.model2[i].text);
+        if(this.model2[i].text.includes('Days')){
+          // console.log('Days');
+          let v1=this.model2[i].text.split(' ')[0];
+          let v2=Number(v1)/7;
+          let v3
+          if(String(v2).indexOf('.') != -1){
+            let value=v2.toString().split('.')[0]+'.'+v2.toString().split('.')[1].slice(0,2)
+              v3=value+" Weeks"
+            }else{
+              v3=v2+" Weeks"
+            }
+          console.log(v3);
+          this.model2[i].text=v3
+        }
         
         if(this.model2[i].days <= maxLinkCount){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#736907; stroke-width: 3px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#a8a5a5; stroke-width: 3px; fill: none;marker-end:url(#arrow3);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount && this.model2[i].days <= maxLinkCount*2){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#885c5d; stroke-width: 4.4px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#8a8787; stroke-width: 4.4px; fill: none;marker-end:url(#arrow2);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*2 && this.model2[i].days <= maxLinkCount*3){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#924a4d;stroke-width: 5.5px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#757272;stroke-width: 5.5px; fill: none;marker-end:url(#arrow1);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*3 && this.model2[i].days <= maxLinkCount*4){
           g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#993736;stroke-width: 6px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days > maxLinkCount*4 && this.model2[i].days < maxLinkCount*5){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#a01010;stroke-width: 6.5px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#a01010;stroke-width: 8px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }else if(this.model2[i].days == maxCount.days){
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#b1080f;stroke-width: 8px; fill: none;marker-end:url(#arrow);", 
-          arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
-         }else{
-          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#b1080f;stroke-width: 8px; fill: none;marker-end:url(#arrow);", 
+          g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#b1080f;stroke-width: 10px; fill: none;marker-end:url(#arrow);", 
           arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
          }
-          
+        //  else{
+        //   g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", style: "stroke:#b1080f;stroke-width: 8px; fill: none;marker-end:url(#arrow);", 
+        //   arrowheadStyle: "fill: #333", curve: d3.curveBasis,arrowhead: "normal"})
+        //  }   
         }
-        
       }
     }else{
-      
       var linkCountArr=[]
+      var linkCountArr1=[]
     for(var i1=0;i1<this.model2.length;i1++){
+      linkCountArr1.push(this.model2[i1].text)
       if(this.model2[i1].from ==="Start" || this.model2[i1].to ==="End"){  
 
       }else{
@@ -301,10 +362,11 @@ var count1
     let maxCount = linkCountArr.reduce(function(prev, current) {
       return (prev > current) ? prev : current
     })
-    me.maxLabelValue=maxCount
-
+    let maxCount2 = linkCountArr1.reduce(function(prev, current) {
+      return (prev > current) ? prev : current
+    })
+    me.maxLabelValue=maxCount2
     let maxLinkCount=maxCount/5;
-    // console.log("maxLinkCount",maxLinkCount);
     for(var i=0; i<this.model2.length;i++){
       if(this.model2[i].from=="Start"||this.model2[i].to=="End"){
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul>";
@@ -325,22 +387,22 @@ var count1
       
         var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
       if(this.model2[i].text <= maxLinkCount){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class: this.class6, style: "stroke: #121112; stroke-width: 3px;marker-end:url(#arrow);fill:none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class: this.class6, style: "stroke: #a8a5a5; stroke-width: 3px;marker-end:url(#arrow3);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount && this.model2[i].text <= maxLinkCount*2){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class: this.class5, style: "stroke: #121112;stroke-width: 4.4px;marker-end:url(#arrow);fill:none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class: this.class5, style: "stroke: #8a8787;stroke-width: 4.4px;marker-end:url(#arrow2);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*2 && this.model2[i].text <= maxLinkCount*3){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class: this.class4 , style:"stroke: #333;stroke-width: 5.5px; marker-end:url(#arrow);fill:none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class: this.class4 , style:"stroke:#757272;stroke-width: 5.5px; marker-end:url(#arrow1);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*3 && this.model2[i].text <= maxLinkCount*4){
         g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", class: this.class3,style:"stroke:url(#svgGradient);stroke-width: 6px; marker-end:url(#arrow);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*4 && this.model2[i].text < maxLinkCount*5){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis', class:this.class2,style:"stroke:url(#svgGradient);stroke-width: 6.5px; marker-end:url(#arrow);fill:none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis', class:this.class2,style:"stroke:url(#svgGradient);stroke-width: 8px; marker-end:url(#arrow);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text == maxCount){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis',class:this.class1, style:"stroke:url(#svgGradient);stroke-width: 8px;marker-end:url(#arrow);fill:none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis',class:this.class1, style:"stroke:#1E1E1E;stroke-width: 10px;marker-end:url(#arrow);fill:none;", 
         arrowhead: "normal",curve: d3.curveBasis})
        } 
       } 
@@ -349,8 +411,6 @@ var count1
 
     // Set some general styles
 let nodesArray= [];
-// console.log(g.nodes());
-
 g.nodes().forEach(function(v) {
   var node = g.node(v);
   if(node.label == 'Start' || node.label == 'End'){
@@ -362,7 +422,6 @@ g.nodes().forEach(function(v) {
     node.paddingRight=10
   }
  else{
-  //  console.log("node",node)
   //  node.paddingLeft=5
    node.width=200
   nodesArray.push(node)
@@ -412,33 +471,55 @@ const max = nodesArray.reduce(function(prev, current) {
     const maxDivided = max1/5;
 
     for(var i =0;i<nodesArray.length;i++){  // for performance metrics
+      // console.log(nodesArray[i].label); 
+
       
       if (Number(nodesArray[i].days) <= maxDivided) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #FFF0D9";
+            g.node(eachLine).style = "fill: #f7cb86";
       }
       else if (Number(nodesArray[i].days) > maxDivided && Number(nodesArray[i].days) <= Number(maxDivided*2)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #FDCC87";
+            g.node(eachLine).style = "fill: #ffbc5e";
       } else if (Number(nodesArray[i].days) > Number(maxDivided*2) && Number(nodesArray[i].days) <= Number(maxDivided*3)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-            g.node(eachLine).style = "fill: #FE8C58" ;
+            g.node(eachLine).style = "fill: #fc8047" ;
       } else if (Number(nodesArray[i].days) > Number(maxDivided*3) && Number(nodesArray[i].days) <= Number(maxDivided*4)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
         g.node(eachLine).style = "fill: #E24A33";   
       }
-      else if (Number(nodesArray[i].days) > Number(maxDivided*4) && Number(nodesArray[i].days) < Number(maxDivided*5)) {
+      else if (Number(nodesArray[i].days) > Number(maxDivided*4) && Number(nodesArray[i].days) <= Number(maxDivided*5)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #B40001";
-        
-      } else if(Number(nodesArray[i].days) == max1){
-        var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #9A0000";
-      }else{
-        var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #9A0000";
-      }
+        g.node(eachLine).style = "fill: #B40001"; 
+      } 
+      
+      // else if(Number(nodesArray[i].days) == max1){
+      //   var eachLine = nodesArray[i].label.split('\n')[0];
+      //   g.node(eachLine).style = "fill: #9A0000";
+      // }
+      // else{
+      //   var eachLine = nodesArray[i].label.split('\n')[0];
+      //   g.node(eachLine).style = "fill: #9A0000";
+      // }
     
+    }
+    for(var i1 =0;i1<nodesArray.length;i1++){
+      if(String(nodesArray[i1].label).includes('Days')){
+        let metricValue=nodesArray[i1].label.split('\n')[1].split(' ')[0]
+        // console.log("days",metricValue);
+        if(Number(metricValue)>=7){
+          let metricValueWeek=Number(metricValue)/7;
+          let metricinWeeks
+          if(String(metricValueWeek).indexOf('.') != -1){
+          let value=metricValueWeek.toString().split('.')[0]+'.'+metricValueWeek.toString().split('.')[1].slice(0,2)
+            metricinWeeks=value+" Weeks"
+          }else{
+            metricinWeeks=metricValueWeek+" Weeks"
+          }
+          // console.log(metricinWeeks);
+          nodesArray[i1].label=nodesArray[i1].label.split('\n')[0]+'\n'+metricinWeeks
+        }
+      }
     }
   }else{        // for frequency metrics
   var maxDivided = max.metrics/5;
@@ -457,18 +538,18 @@ for(var i =0;i<nodesArray.length;i++){
   } else if (nodesArray[i].metrics > Number(maxDivided*3) && nodesArray[i].metrics <= Number(maxDivided*4)) {
     var eachLine = nodesArray[i].label.split('\n')[0];  
     g.node(eachLine).style = "fill: #4b1edb";    
-  }
-  else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics < Number(maxDivided*5)) {
+  }else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics <= Number(maxDivided*5)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
     g.node(eachLine).style = "fill: #024C7F"; 
-  } else if(nodesArray[i].metrics == max.metrics){
-    var eachLine = nodesArray[i].label.split('\n')[0];  
-    g.node(eachLine).style = "fill: #2d0adb";
-  }
-  else{
-    var eachLine = nodesArray[i].label.split('\n')[0];
-    g.node(eachLine).style = "fill: #2d0adb";
-  }
+  } 
+  // else if(nodesArray[i].metrics == max.metrics){
+  //   var eachLine = nodesArray[i].label.split('\n')[0];  
+  //   g.node(eachLine).style = "fill: #2d0adb";
+  // }
+  // else{
+  //   var eachLine = nodesArray[i].label.split('\n')[0];
+  //   g.node(eachLine).style = "fill: #2d0adb";
+  // }
 
 }
   }
@@ -597,7 +678,7 @@ var tooltip = d3.select("body")
 inner.selectAll('g.node').on('mouseover', function(d){
   
   let selectedNode = d3.select(this)
-  console.log(selectedNode);
+  // console.log(selectedNode);
 
   this.hoverNodeName = '';
   let nodeValue = selectedNode['_groups'][0]
@@ -619,7 +700,7 @@ inner.selectAll('g.node').on('mouseover', function(d){
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][3]['value'] = -30;
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][4]['value'] = this.rectNodeData.width *1;
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height *1.3;
-    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][7]['value'] = this.rectNodeData.stroke+";stroke:red;stroke-width:6";
+    // d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][7]['value'] = this.rectNodeData.stroke+";stroke:red;stroke-width:6";
     d3.select('g.node text tspan')['style']= 'font-size: 30px';
     // console.log(nodeValue[0]['childNodes'][0]['attributes'][7]['value']);
     d3.select(this).select("g text")
@@ -633,7 +714,7 @@ inner.selectAll('g.node').on('mouseover', function(d){
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][3]['value'] = -25;
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][4]['value'] = this.rectNodeData.width;
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height;
-    d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][7]['value'] = this.rectNodeData.stroke;
+    // d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][7]['value'] = this.rectNodeData.stroke;
     
     this.style = this.nodeTextPreviousStyle;
     d3.select(this).select("g text")
@@ -672,14 +753,14 @@ var styleTooltip1 = function(name) {
   for( var i=0;i<me.model2.length;i++){
     if(me.model2[i].from==name.v&&me.model2[i].to==name.w){
       if(name.v=="Start"||name.w=="End"||name.v=="End"||name.w=="Start"){
-      var linkTooltip1 = "<p>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul>";
+      var linkTooltip1 = "<p>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul>";
       }else{
         var performanceLinkCount1=me.timeConversion(me.model2[i].toolDataCount[5])
         var performanceLinkCount2=me.timeConversion(me.model2[i].toolDataCount[6])
         var performanceLinkCount3=me.timeConversion(me.model2[i].toolDataCount[7])
         var performanceLinkCount4=me.timeConversion(me.model2[i].toolDataCount[8])
         var performanceLinkCount5=me.timeConversion(me.model2[i].toolDataCount[9])
-        var linkTooltip1 = "<p>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
+        var linkTooltip1 = "<p>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
         }
       }
 }
@@ -693,7 +774,10 @@ inner.selectAll('g.edgePath path.path')
   return styleTooltip1(v)
  }
  })
-  .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true}); });
+  .each(function(v) { $(this).tipsy({ gravity: "e", opacity: 1, html: true}); });
+  
+  // $('.element').tipsy({follow: 'x'});
+  // $('.element').tipsy({follow: 'y'});
   // console.log(d3.mouse(this));
   // inner.selectAll('g.edgePath')
   //     .enter().append("text")
@@ -732,16 +816,18 @@ inner.selectAll('g.edgePath path').on('mouseover', function(this){
   let strokeValue=edgeValue[0]['style']['cssText'].split(';')[1]
   // console.log(edgeValue[0]['style']['cssText'].split(';'));
   
+  
   this.selectedEdgeCssValue = hoverEdgeCssValue;
-  // console.log("selectedEdgeCssValue",this.selectedEdgeCssValue);
+  let strokeWidthValue=strokeValue.split(':')[1].replace('px', '')
+  let strokeWidthValue1=Number(strokeWidthValue)+3+'px'
 
-  this['style']="fill: none;stroke: red;marker-end: url(#arrow);"+strokeValue;
+  // this['style']="fill: none;stroke:red ;marker-end: url(#arrow);"+strokeValue;
+  this['style']=hoverEdgeCssValue.split(';')[0]+';'+hoverEdgeCssValue.split(';')[2]+';'+hoverEdgeCssValue.split(';')[3]+";stroke-width:"+strokeWidthValue1+";fill:none";
   }).on('mouseout', function(this){    
   this['style']= this.selectedEdgeCssValue;
 })
 
-console.log(d3.selectAll("g.edgePath path"));
-
+// console.log(d3.selectAll("g.edgePath path"));
 
 d3.selectAll("g .node")
 .style("fill","#fff")
@@ -771,7 +857,6 @@ d3.selectAll("g.edgeLabel g.label")
   d3.selectAll("g.circl g.label").attr("transform","translate(0,5)")
 
   if(me.isplay==true){
-    console.log("performance");
     
     d3.selectAll("g.edgePath")
       .append("circle")
@@ -804,51 +889,67 @@ d3.selectAll("g.edgeLabel g.label")
   for(var k2=0;k2<labelList.length;k2++){
     var labelValue=labelList[k2]['textContent']
       if(labelList[k2]['textContent']==me.maxLabelValue){
-        circleList[k2]['attributes'][1]['value']='yellow'
+        // circleList[k2]['attributes'][1]['value']='yellow'
         circleList[k2]['childNodes'][0]['attributes'][0]['value']='0.5s';
       }else{
-        circleList[k2]['attributes'][1]['value']='red'
+        // circleList[k2]['attributes'][1]['value']='red'
       }    
   }
 }else{
   d3.selectAll("g.edgePath circle").remove()
 }
 
+
+
 // Center the graph
 var initialScale = 0.72;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
-
-
 svg.attr('height', g.graph().height * initialScale + 53)
 
 var zoom1 = 1;
     
-$('.zoom').click( function(){
+$('.zoom').click( function(){ //Zoom In
   zoom1 += 0.1;
+svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(zoom1));
   
-  svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
   svg.attr('height', g.graph().height * zoom1 + 53)
 
   // $('.target').css('zoom', zoom1);
 });
-$('.zoom-init').click( function(){
-  zoom1 = 0.71;
-  svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
-  svg.attr('height', g.graph().height * zoom1 + 53)
+$('.zoom-init').click( function(){ //zoom reset
+  // zoom1 = 0.71;
+  // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  // svg.attr('height', g.graph().height * zoom1 + 53)
+  var initialScale = 0.72;
+svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
+svg.attr('height', g.graph().height * initialScale + 53)
   // $('.target').css('zoom', zoom1);
 });
-$('.zoom-out').click( function(){
+$('.zoom-out').click( function(){   //zoom Out
   zoom1 -= 0.1;
   svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
   svg.attr('height', g.graph().height * zoom1 + 53)
   // $('.target').css('zoom', zoom1);
 });
 // svg.attr('width', g.graph().width * initialScale + 13);
+
+
+if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||this.isdownloadsvg==true){
+  if(g.graph().width>1583 && g.graph().width<3160){
+    var initialScale1 = 0.35;
+    svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
+    svg.attr('height', g.graph().height * initialScale1 + 53)
+  }else if(g.graph().width>3160){
+    var initialScale1 = 0.25;
+    svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale1) / 2, 53).scale(initialScale1));
+    svg.attr('height', g.graph().height * initialScale1 + 53)
+  }
+}
     }
     
     
-    exportSVG(fileType){
-      
+    exportSVG(fileType){ 
       if(fileType == 'svg'){
         //get svg element.
   // var svg = document.getElementById("render");
@@ -943,6 +1044,8 @@ $('.zoom-out').click( function(){
           scrollY: -window.scrollY,
           useCORS: true,
           logging:true,
+          scale:5
+    // onrendered: myRenderFunction
           // width:1100
         //   onrendered: function(canvas) {
 
@@ -953,8 +1056,9 @@ $('.zoom-out').click( function(){
      
         //  }
         }).then(canvas => {
-      //   // console.log('canvas.height',canvas.height)
-      //   // console.log('canvas.height',canvas.width)
+          // this.setpixelated(canvas.getContext('2d'));
+        // console.log('canvas.height',canvas.height)
+        // console.log('canvas.height',canvas.width)
        
       //   var margin = 10;
       //   var imgWidth = 210 - 2*margin; 
@@ -987,7 +1091,13 @@ $('.zoom-out').click( function(){
       });
     } 
     }
-  
+    // setpixelated(context) {
+    //   context['imageSmoothingEnabled'] = false;
+    //   context['mozImageSmoothingEnabled'] = false; 
+    //   context['oImageSmoothingEnabled'] = false; 
+    //   context['webkitImageSmoothingEnabled'] = false; 
+    //   context['msImageSmoothingEnabled'] = false;
+    //   }
     
     onPlayProcees(){
     //   this.isPlayAnimation = !this.isPlayAnimation;
@@ -1002,7 +1112,23 @@ $('.zoom-out').click( function(){
       var seconds:any = (millisec / 1000).toFixed(1);
       var minutes:any = (millisec / (1000 * 60)).toFixed(1);
       var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
-      var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+      // var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+
+      var days1:any = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+      // console.log(days);
+      if(days1 >= 7){
+        let t=days1/7
+        var days:any
+            if(String(t).indexOf('.') != -1){
+              let week=t.toString().split('.')
+                days=week[0]+'.'+week[1].slice(0,2);
+              }else{
+                days=t;
+              }
+        }else{
+          var days:any=days1
+        }
+
       if (seconds < 60) {
           return seconds + " Sec";
       } else if (minutes < 60) {
@@ -1010,7 +1136,13 @@ $('.zoom-out').click( function(){
       } else if (hours < 24) {
           return hours + " Hrs";
       } else {
+        if(days1 >= 7){
+          return days + " Weeks"
+        }else{
           return days + " Days"
+        }
+        
+          // return days + " Days"
       }
     }
 }
