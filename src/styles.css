@@ -407,7 +407,7 @@ div#tooltip_template span ul div, .tipsy-inner  ul div{
   display: inline;
 }
 div#tooltip_template span ul div:first-child , .tipsy-inner ul div:first-child{
-  width: 70%;
+  width: 60%;
   display: inline-block;
   word-break: break-word;
   padding-right: 1%;
@@ -415,7 +415,7 @@ div#tooltip_template span ul div:first-child , .tipsy-inner ul div:first-child{
 
 div#tooltip_template span ul div:last-child, .tipsy-inner ul div:last-child {
   text-align: right;
-  width: 29%;
+  width: 35%;
   word-break: break-word;
 }
 
@@ -445,7 +445,7 @@ div#tooltip_template.tooltip-panel p:first-child {
 .tipsy-inner {
   text-align: left !important;
   max-width: 320px !important;
-  min-width: 250px !important;
+  min-width: 270px !important;
   scroll-margin-top: 10px !important;
   margin-top: 50px !important;
   background: rgb(250, 250, 250) !important;
