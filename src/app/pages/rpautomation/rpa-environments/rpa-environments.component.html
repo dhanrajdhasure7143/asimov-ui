@@ -167,6 +167,7 @@
 
 
     <!--foms  -->
+    <div style="width:100%;overflow-x: scroll;">
     <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="listofenv">
 
         <ng-container matColumnDef="check">
@@ -235,7 +236,7 @@
         <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-
+</div>
     <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
 </div>
 
