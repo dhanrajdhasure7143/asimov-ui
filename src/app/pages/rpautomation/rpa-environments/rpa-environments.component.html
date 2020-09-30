@@ -273,7 +273,7 @@
                             <!--<input type="text" class="form-control" formControlName="environmentType" value=""
 
 placeholder="Enter Environment Type" >-->
-                            <select class="form-control" formControlName="environmentType">
+                            <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
           <option value="" [selected]="true">--Select Environment Type--</option>
           <option value="Windows">Windows</option>
           <option value="Mac">Mac</option>
@@ -366,7 +366,7 @@ placeholder="Enter Environment Type" >-->
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="environmentName">Environment Name*</label>
-                            <input type="text" class="form-control" formControlName="environmentName" value="{{updateenvdata.environmentName}}" [(ngModel)]="updateenvdata.environmentName" placeholder="Enter Environment Name">
+                            <input type="text" class="form-control" formControlName="environmentName" placeholder="Enter Environment Name">
                             <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" style="color:red">Environment Name Required*</span>
 
                         </div>
@@ -377,7 +377,7 @@ placeholder="Enter Environment Type" >-->
 value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType"
 
 placeholder="Enter Environment Type" >-->
-                            <select class="form-control" formControlName="environmentType" value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType">
+                            <select class="form-control" (change)="EnvType()" formControlName="environmentType">
               <option value="">--Select Environment Type--</option>
               <option value="Windows">Windows</option>
               <option value="Mac" >Mac</option>
@@ -390,7 +390,7 @@ placeholder="Enter Environment Type" >-->
                         <div class="col-md-3 formelement">
 
                             <label for="agentPath">Agent Path*</label>
-                            <input type="text" class="form-control" formControlName="agentPath" value="{{updateenvdata.agentPath}}" [(ngModel)]="updateenvdata.agentPath" placeholder="Enter
+                            <input type="text" class="form-control" formControlName="agentPath" placeholder="Enter
 
 Agent Path">
                             <span *ngIf="updateForm.get('agentPath').invalid && updateForm.get
@@ -401,7 +401,7 @@ Agent Path">
                         <div class="col-md-3 formelement">
 
                             <label for="hostAddress">IP Address/Host*</label>
-                            <input type="text" class="form-control" formControlName="hostAddress" value="{{updateenvdata.hostAddress}}" [(ngModel)]="updateenvdata.hostAddress" placeholder="Enter
+                            <input type="text" class="form-control" formControlName="hostAddress" placeholder="Enter
 
 IP Address/Host">
                             <span *ngIf="updateForm.get('hostAddress').invalid && updateForm.get
@@ -412,7 +412,7 @@ IP Address/Host">
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="userName">Username*</label>
-                            <input type="text" class="form-control" formControlName="username" value="{{updateenvdata.username}}" [(ngModel)]="updateenvdata.username" placeholder="Enter
+                            <input type="text" class="form-control" formControlName="username" placeholder="Enter
 
 Username">
                             <span *ngIf="updateForm.get('username').invalid && updateForm.get
@@ -423,7 +423,7 @@ Username">
 
                         <div class="col-md-3 formelement">
                             <label for="password">Password*</label>
-                            <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" formControlName="password" value="{{updateenvdata.password}}" [(ngModel)]="updateenvdata.password" placeholder="Enter
+                            <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" formControlName="password" placeholder="Enter
 
 Password">
                             <span *ngIf="passwordtype2==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype2 =!passwordtype2"></span>
@@ -436,7 +436,7 @@ Password">
 
                         <div class="col-md-3 formelement">
                             <label for=" connectionType">Connection Type*</label>
-                            <input type="text" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  value="{{updateenvdata.connectionType}}" [(ngModel)]="updateenvdata.connectionType" placeholder="Enter Connection Type">
+                            <input type="text" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type">
                             <span *ngIf="updateForm.get('connectionType').invalid && updateForm.get
 
 ('connectionType').touched" style="color:red">Connection Type Required*</span>
@@ -445,7 +445,7 @@ Password">
 
                         <div class="col-md-3 formelement">
                             <label for="portNumber">Port Number*</label>
-                            <input type="number"  class="form-control" formControlName="portNumber" value="{{updateenvdata.portNumber}}" [(ngModel)]="updateenvdata.portNumber" placeholder="Enter
+                            <input type="number"  class="form-control" formControlName="portNumber" placeholder="Enter
 
 Port Number">
                             <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
