@@ -58,10 +58,6 @@
     width: 12px;
 }
 
-
-  
-
-
 .field-icon {
   float: right;
   margin-left: -25px;
@@ -69,3 +65,24 @@
   position: relative;
   z-index: 2;
   }
+
+  td{
+    white-space:nowrap;
+  }
+  
+  th{
+    white-space:nowrap;
+  }
+
+  ::-webkit-scrollbar-track {
+    display:none;
+}
+
+::-webkit-scrollbar-thumb {
+  background:lightgray;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height:4px
+}
