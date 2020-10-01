@@ -235,3 +235,9 @@ margin: 0px !important;
 cron-time-picker div.ng-star-inserted  {
   line-height: 4 !important;
 }
+
+.dropdown li{
+  white-space:nowrap;
+  padding-left: 5px;
+  padding-right: 5px;
+}

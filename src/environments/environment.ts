@@ -29,8 +29,8 @@ export const environment = {
 
 
  //  * QA ENV URl's
-   
-  /*
+ 
+ /*
     pi_url: 'http://piqa.epsoftinc.in',
     bps_url: 'http://bpsqa.epsoftinc.in',
     rpa_url: 'http://rpaqa.epsoftinc.in',
@@ -40,8 +40,8 @@ export const environment = {
     auth_url: "http://authqa.epsoftinc.in",
 
   // Aiotal redirection urls 
-   myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
-   logout_url: 'http://eiapcloudqa.epsoftinc.in',
+  myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
+  logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
    platform_url:'http://apqa.epsoftinc.in',
 
   // PI Connectors
