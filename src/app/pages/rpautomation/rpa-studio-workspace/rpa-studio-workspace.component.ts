@@ -686,7 +686,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         objAttr = {
           "metaAttrId": ele.id,
           "metaAttrValue": ele.name,
-          "attrValue": this.fieldValues[objKeys[i]]
+          "attrValue": ''
+        }
+        if(ele.type="checkbox" && this.fieldValues[ele.name]=="")
+        {
+          objAttr["attrValue"]="false";
+        }else
+        {
+          objAttr["attrValue"]=this.fieldValues[ele.name];
         }
         obj.push(objAttr);
       }
@@ -1059,8 +1066,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           this.outputboxresult = outdata;
           if (this.SelectedOutputType == "Text") {
             let data: any = outdata
-            this.outputboxresulttext = data[0].Value.replace(/\n/g, "<br />");
-            
+            let textval:String=JSON.stringify(data[0].Value);
+            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
             //this.outputboxresulttext=this.outputboxresulttext.replace("\n","<br>")
           }
           if(this.SelectedOutputType=="Image")
