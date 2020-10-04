@@ -11,7 +11,6 @@ import { BpmnModel } from '../../pages/business-process/model/bpmn-autosave-mode
   templateUrl: './upload-create-drop-bpmn.component.html',
   styleUrls: ['./upload-create-drop-bpmn.component.css']
 })
-
 export class UploadCreateDropBpmnComponent implements OnInit {
   bpmnModeler:any;
   oldXml;
