@@ -21,7 +21,7 @@ export const environment = {
   connector_topic: 'nodeq',
 
 //DB Connector
-  dbConnectorHost: "10.11.0.113",
+  dbConnectorHost: "172.16.0.64",
   dbName: 'asimov_aiotal'
 
 

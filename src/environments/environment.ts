@@ -4,18 +4,19 @@
 
 export const environment = {
   production: false,
-  pi_url: 'http://eiapdemoapi.epsoftinc.com:96/prcintel',
-  bps_url: 'http://eiapdemoapi.epsoftinc.com:96/bpstudio',
-  rpa_url: 'http://eiapdemoapi.epsoftinc.com:96/wfrpa',
+
+  pi_url: 'http://pidev.epsoftinc.in',
+  bps_url: 'http://bpsdev.epsoftinc.in',
+  rpa_url: 'http://rpadev.epsoftinc.in',
   loopback_url: 'http://10.11.0.107:3000',
-  idm_url:'http://eiapdemoapi.epsoftinc.com:96/idm',
-  auth_url: "http://eiapdemoapi.epsoftinc.com:96/authservices",
+  idm_url:'http://idmdev.epsoftinc.in',
+  auth_url: "http://authdev.epsoftinc.in",
   pi_node_url: "http://10.11.0.112:3000",
-  platform_url:'http://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
+  platform_url:'http://apdev.epsoftinc.in',
   
  // Aiotal redirection urls 
-  myaccount_url : "http://eiapclouddemo.epsoftinc.com:86/#/activation",
-  logout_url: 'http://eiapclouddemo.epsoftinc.com:86/#/activation', 
+  myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
+  logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation', 
 
 // PI Connectors
   connector_topic: 'nodeq',
@@ -53,10 +54,11 @@ export const environment = {
 };
 
 /*
- * For easier debugging in qaelopment mode, you can import the following file
+ * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
  *
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+

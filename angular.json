@@ -45,11 +45,11 @@
             ]
           },
           "configurations": {
-            "qa": {
+            "demo": {
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.qa.ts"
+                  "with": "src/environments/environment.demo.ts"
                 }
               ],
               "optimization": true,
@@ -118,8 +118,8 @@
             "production": {
               "browserTarget": "asimov:build:production"
             },
-            "qa":{
-              "browserTarget": "asimov:build:qa"
+            "demo":{
+              "browserTarget": "asimov:build:demo"
             }
           }
         },
