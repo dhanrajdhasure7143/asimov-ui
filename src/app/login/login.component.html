@@ -1,26 +1,29 @@
-<div class="container-fluid">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-6">
-                <img src="assets/images/originalleftimage.png" style="margin-top: 0px; width: 100%;">
-                <h1 class="ure" style="font-size: 49px">Ultimate RPA Engine</h1>
-                <h3 class="ure" style="margin-left:2em;">Single solution for large scale Enterprises</h3>
+                <!-- <div id="particles-js"></div> -->
+            <div class="col-sm-6 login-bg">
+                <img src="assets/images/loginimage.png">
             </div>
             <div class="col-sm-6">
                 <div class="form">
-                    <form id="a">
+                    <form autocomplete="off" id="a" #loginform="ngForm" (ngSubmit)="getAccessToken()">
                         <div class="brand">
-                            <img src="assets/images/ASIMOV.svg">
-                            <sup><img src="assets/images/registered.svg"></sup>
+                            <img src="assets/images/logo_img.png">
+                            <!-- <h1><b>EPSoft</b></h1>
+                            <div><small>Intelligent Automation Platform</small></div> -->
                         </div>
-                        <span class="user_name">
-                            <input type="text" id="us" placeholder="Enter User Name">
-                        </span>
-                        <span class="password">
-                            <input type="password" id="pwd" placeholder="Enter Password">
-                        </span>
-                        <a href="#" class="fp"><h6>Forgot password?</h6></a>
-                        <button class="btn btn-primary" type="submit" id="btn" routerLink="/pages/home">Login</button>
+                        <div class="form-group col-sm-12 inner-addon left-addon">
+                                <img src="assets/images/username_icon.png">
+                                <input type="text" id="us" placeholder="Enter User Name" class="form-control" name='username' #username='ngModel' [(ngModel)]="userName" required>
+                        </div>
+                        <div class="form-group col-sm-12 inner-addon left-addon">
+                                <img src="assets/images/password_icon.png">
+                                <input type="password" id="pwd" placeholder="Enter Password" class="form-control" name="psw" #psw='ngModel' [(ngModel)]="password" required>
+                        </div>
+                        <!-- <a href="#" class="fp"><h6>Forgot password?</h6></a> -->
+                        <div class="col-sm-12">
+                        <button class="btn btn-primary eiap-btn right" type="submit">Login</button>
+                    </div>
                     </form>
                 </div> 
             </div>
@@ -28,5 +31,3 @@
       
     </div>
   
-</div>
-<hr class="new5">

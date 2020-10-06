@@ -7,7 +7,7 @@
 /* App Module - login component styles -Starts*/
 .form{
     position:absolute;
-    left:50%;
+    left:40%;
     transform:translate(-33%,108%);
     border-radius: 10px;
     padding:0px 30px;
@@ -16,7 +16,7 @@
 #a input{
     outline:none;
 }
-input[type="text"], input[type="password"]
+input[type="text"]:not(.mat-input-element), input[type="password"]
 {
   /* width: 138%; */
   border:none;
@@ -44,6 +44,7 @@ span.user_name::before{
 }
 .brand{
     padding-bottom:10px;
+    color: #0061cf;
 }
 
 span.password::before{
@@ -63,9 +64,9 @@ h6{
     color:rgba(11, 108, 236, 0.774);
     font-weight:700;
 }
-.btn{
+/* .btn{
     background-color: #0062cf;
-}
+} */
      .ure{
          color:#0062cf;
          margin-left:1em;
@@ -83,7 +84,7 @@ h6{
   font-size: 12px;
   cursor: pointer;
   margin: 5px;
-  position: absolute;
+  position: fixed;
   bottom: 10px;
   right: 10px;
 }
@@ -103,14 +104,15 @@ li.breadcrumb_li{
   width: 36%;
 }
 div.breadcrumb {
-  font-size: 13px;
+  font-size: 12px;
 }
 div.breadcrumb span{
   user-select: none;
   cursor: pointer;
 }
 div.breadcrumb span:hover{
-  font-weight: bold;
+  /* font-weight: bold; */
+  font-size: 13px;
 }
 div.breadcrumb span:focus, div.breadcrumb span:active{
   outline: none;
@@ -121,8 +123,8 @@ div.breadcrumb span:focus, div.breadcrumb span:active{
 }
 .active a{
   text-decoration: none;;
-  background-color: #0062cf;
-  color:white;
+  /* background-color: #0062cf; */
+  color:#000;
 }
 .active a label{
   color: white;
@@ -136,6 +138,9 @@ sup{
 }
 .fa-registered{
   font-weight: 400;
+  font-size: 12px;
+  position: relative;
+  top: -5px;
 }
 .icon_middle {
   float: right;
@@ -153,9 +158,14 @@ label{
 .abrand_div {
   display: inline-block;
 }
+.abrand_div small{
+  position: relative;
+  top: -12px;
+  color: #0062cf;
+}
 li a:hover, li a:active{
   background-color: #0061cf !important;
-  color:white;
+  color:white !important;
 }
 li a:hover label, li a:active label{
   color:white;
@@ -174,23 +184,22 @@ svg:hover {
 }
 #brand{
   color: #0062cf;
-  font-weight:550;
   font-size:50px;
 } 
-li{
+.header_nav li{
   color: #0062cf;
   list-style-type: none;
   position: relative;
 }
-li a {
+.header_nav li a {
   display: block;
   color: #0062cf;
   text-align: center;
-  padding: 12px;
+  /* padding: 12px; */
   text-decoration: none;
-  height: 90px;
+  /* height: 90px; */
 }
-ul {
+.header_nav ul {
   list-style-type: none;
   display: flex;
   align-items: center;
@@ -210,7 +219,7 @@ i.fas.fa-chevron-down {
 
 .dropdown {
   position: relative;
-  display: inline-block;
+  /* display: inline-block; */
 }
 
 .dropdown-content {
@@ -218,21 +227,19 @@ i.fas.fa-chevron-down {
   position: absolute;
   background-color: inherit;
   min-width: 105px;
-  overflow: auto;
   z-index: 1;
   border:1px solid #0062cf;
-  margin-left: -21px;
+  margin-left: -40px;
   margin-right: 0px;
 }
-
 .dropdown-content a {
   color: #0062cf;
-  padding: 12px 8px;
+  padding: 0px 0px !important;
   text-decoration: none;
-  display: block;
+  /* display: block; */
 }
 
-.dropdown a:hover {background-color: #ddd;}
+.dropdown a:hover {background-color: white !important;}
 
 .show {display: block;} 
 .fa-cog{
@@ -241,12 +248,31 @@ padding-right: 5px;
 .fa-sign-out-alt{
 padding-right: 5px;
 }
+.home_title{
+  margin: 40px 0;
+}
+.user_list li{
+  text-align: center;
+}
+.user_list .dropdown-menu>li>a:hover{
+  color: white;
+}
+.user_list .dropdown-menu>li>a{
+  margin: 0;
+  padding: 5px;
+  height: 30px;
+  color: black !important;
+  text-align: left;
+}
+.user_list .dropdown-menu{
+  border: 1px solid #0062cf;
+}
 /* header component styles - Ends*/
 /* Module title styles - Starts*/
 .module-heading{
   background-color: #f8f8f8;
   padding: 6px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 .module-heading-image{
   width: 36px;
@@ -258,7 +284,40 @@ padding-right: 5px;
 }
 /* Module title styles - Ends*/
 /* Common styles - Starts*/
+.vertical-overflow{
+  overflow-y: auto;
+}
 button:active, button:focus, input:active, input:focus{
   outline: none !important;
 }
+.abrand_div img{
+  width:185px;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1000;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 5px!important;
+  margin: 2px 0 0;
+  font-size: 16px!important;
+  text-align: left;
+  list-style: none;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 4px;
+  box-shadow: 0 8px 12px rgba(0,0,0,.175);
+}
+mat-expansion-panel-header{
+  height: 35px !important;
+  font-size: 13px !important;
+}
+/* Foot overlay Modal Styles - Starts */
+
+/* Foot overlay Modal Styles - Ends */
 /* Common styles - Ends*/

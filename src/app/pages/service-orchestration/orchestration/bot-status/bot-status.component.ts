@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {ViewChild, Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
-
+import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 @Component({
   selector: 'app-bot-status',
@@ -8,7 +11,15 @@ import { Chart } from 'chart.js';
   styleUrls: ['./bot-status.component.css']
 })
 export class BotStatusComponent implements OnInit {
+  chart: any;
+  processStatus:any;
+  BotStatus:any;
+  displayedColumns: string[] = ["botName","botType","categoryName","createdBy" ,"createdTS","description"];
+  dataSource:MatTableDataSource<any>;
+  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static:false}) sort: MatSort;
   gaugeType = "full";
+  activeBots:any=[];
   gaugeValue = 28.3;
   gaugeLabel = "Overall Running";
   gaugeThickness = 20;
@@ -18,19 +29,19 @@ export class BotStatusComponent implements OnInit {
     "indexDetails" : [
       {
         "id" :1.1,
-        "Messages" : "on-Board completed",
+        "Messages" : "Onboard Completed",
         "Time" : "11:30AM",
         "Date" : "22/11/2020"
       },
       {
         "id" :1.2,
-        "Messages" : "Group created",
+        "Messages" : "Group Created",
         "Time" : "11:30AM",
         "Date" : "22/11/2020"
       },
       {
         "id" :1.2,
-        "Messages" : "Assigned Deals",
+        "Messages" : "Assigned Bots",
         "Time" : "11:30AM",
         "Date" : "22/11/2020"
       }
@@ -99,88 +110,169 @@ export class BotStatusComponent implements OnInit {
       }
     ]
   }
-  constructor() { }
+  performData: any;
+  usageData: any;
+  constructor(private api:RestApiService) { }
   ngOnInit() {
-   var getElementById:any = document.getElementById('myChart');
-    var ctx = getElementById.getContext("2d");
-  
-  var gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-  gradientStroke.addColorStop(0, '#dce9fd');
-  gradientStroke.addColorStop(1, '#a3a0fb');
-  
-  var gradientFill = ctx.createLinearGradient(500, 0, 100, 0);
-  // gradientFill.addColorStop(0, "rgb(84, 216, 255,0.6)");
-  // gradientFill.addColorStop(1, "rgb(163, 160, 251,0.6)");
-  var myChart = new Chart(ctx, {
-      type: 'line',
-      data: {
-          labels: ["JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL"],
-          datasets: [{
-              label: "",
-              borderColor: '#dce9fd',
-              pointBorderColor: gradientStroke,
-              pointBackgroundColor: gradientStroke,
-             pointHoverBackgroundColor: gradientStroke,
-              pointHoverBorderColor: gradientStroke,
-              pointBorderWidth: 10,
-              pointHoverRadius: 10,
-              pointHoverBorderWidth: 1,
-              pointRadius: 3,
-              fill: true,
-              backgroundColor: gradientFill,
-              borderWidth: 4,
-              data: [60,24,10,20,10,20,10]
-          },
-          {
-            label: "",
-            borderColor: '#0062cf',
-            pointBorderColor: gradientStroke,
-            pointBackgroundColor: gradientStroke,
-           pointHoverBackgroundColor: gradientStroke,
-            pointHoverBorderColor: gradientStroke,
-            pointBorderWidth: 10,
-            pointHoverRadius: 10,
-            pointHoverBorderWidth: 1,
-            pointRadius: 3,
-            fill: true,
-            backgroundColor: gradientFill,
-            borderWidth: 4,
-            data: [10, 60, 50, 70, 80, 70, 60]
-        }]
-      },
-      options: {
+    let labelData:any [] = []
+    let botData:any
+    let botTime:any [] = []
+    let finalObjectData:any [] = []
+    this.getprocessStatus();
+    this.getBotStatus();
+    this.getAllActiveBots();
+
+    this.api.botPerformance().subscribe(data => { this.performData = data;
+      console.log(this.performData);
+      this.performData = []
+    //   this.performData = [{
+    //     'botName' : 'ifugj',
+    //     'coordinates' : [
+    //       {'timeDuration' : 1},
+    //       {'timeDuration' : 3},
+    //       {'timeDuration' : 4},
+    //       {'timeDuration' : 9}
+    //     ]
+    //   },
+    //   {
+    //     'botName' : 'ksdjn',
+    //     'coordinates' : [
+    //       {'timeDuration' : 4},
+    //       {'timeDuration' : 2},
+    //       {'timeDuration' : 1},
+    //       {'timeDuration' : 8}
+    //     ]
+    //   },
+    //   {
+    //     'botName' : 'zdmc',
+    //     'coordinates' : [
+    //       {'timeDuration' : 9},
+    //       {'timeDuration' : 6},
+    //       {'timeDuration' : 4},
+    //       {'timeDuration' : 3}
+    //     ]
+    //   },
+    // ]
+      finalObjectData = []
+      botData = [];
+      this.performData.forEach((element, ind) => {
+        if(ind < 5){
+        labelData.push(element.botName)
+        element.coordinates.forEach((ele1, index) => {
+        botTime.push(ele1.timeDuration)
+        })
+        botData = {
+          label: element.botName,
+          data: botTime,
+          backgroundColor: '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6,'0'),
+          borderColor:'#f2f2f2',
+          borderWidth: 1,
+        }
+        finalObjectData.push(botData)
+      }
+      });
+
+      console.log(finalObjectData);
+      var getElementById:any = document.getElementById('myChart');
+      var ctx = getElementById.getContext("2d");
+      // var ctx = document.getElementById('chart');
+
+      var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labelData,
+          datasets: finalObjectData
+        },
+        options: {
           legend: {
-              position: "bottom",
-              display:false
+            display: false
           },
           scales: {
-              yAxes: [{
-                  ticks: {
-                      fontColor: "rgba(0,0,0,0.5)",
-                      fontStyle: "bold",
-                      beginAtZero: true,
-                      maxTicksLimit: 5,
-                      padding: 20
-                  },
-                  gridLines: {
-                      drawTicks: false,
-                      display: false
-                  }
-  
-              }],
-              xAxes: [{
-                  gridLines: {
-                      zeroLineColor: "transparent"
-                  },
-                  ticks: {
-                      padding: 20,
-                      fontColor: "rgba(0,0,0,0.5)",
-                      fontStyle: "bold"
-                  }
-              }]
+            xAxes: [{ stacked: true ,
+              ticks: {
+                min: 0,
+                stepSize: 10,
+            },
+            scaleLabel: {
+              display:true,
+              labelString: 'Bot Name'
+            },
+            }],
+            yAxes: [{ stacked: true,
+              ticks: {
+                min: 0,
+                max: 100,
+                stepSize: 10,
+            },
+            scaleLabel: {
+              display:true,
+              labelString: 'Time(ms)'
+            },
+           }]
           }
+        }
+      });
+    })
+
+    this.api.botUsage().subscribe(data => { this.usageData = data;
+      console.log(this.usageData);
+       let datacha = Object.keys(data);
+      if(datacha[0] != 'errorMessage' && datacha[1] != 'errorCode'){
+      this.chart = new Chart('canvas', {
+      type: 'pie',
+      // percentageInnerCutout: 90,
+      data: {
+        labels: Object.keys(this.usageData),
+        datasets: [
+          { 
+            data: Object.values(this.usageData),
+            backgroundColor: ['rgb(255,106,129)','rgba(255, 0, 0, 0.1)','rgb(58,187,216)','rgba(16, 112, 210, 1)'],
+            fill: false,
+            borderColor: '#fff',
+            borderWidth: '1px',
+          },
+        ]
+      },
+      options: {
+        // cutoutPercentage	: 65,
+        legend: {
+          display: true
+        },
+        tooltips:{
+          enabled:true
+        }
       }
-  });
+    });
+  }else{
+    this.chart = new Chart('canvas', {
+      type: 'pie',
+      // percentageInnerCutout: 90,
+      data: {
+        labels:['No Data Found'],
+        datasets: [
+          { 
+            data: [0],
+            backgroundColor: ['rgba(224,237,255)'],
+            fill: false,
+            borderColor: '#fff',
+            borderWidth: '1px',
+          },
+        ]
+        
+      },
+      options: {
+
+        // cutoutPercentage	: 65,
+        legend: {
+          display: true
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+  }
+  })
     }
 new(){
   this.feesDetails = {
@@ -312,7 +404,51 @@ active(){
     ]
   }
 }
+
+getprocessStatus()
+{
+  this.api.getProcessStatistics().subscribe(data=>{
+    this.processStatus=data
+    console.log(data)
+    if(this.processStatus.ONHOLD==undefined)
+    {
+      this.processStatus.ONHOLD="-";
+    }
+    if(this.processStatus.INPROGRESS==undefined)
+    {
+      this.processStatus.INPROGRESS="-";
+    }
+    if(this.processStatus.REJECTED==undefined)
+    {
+      this.processStatus.REJECTED="-";
+    }
+  })
+}
+
 loopTrackBy(index, term){
   return index;
 }
+
+getBotStatus()
+{
+  this.api.getBotStatistics().subscribe(data=>{
+    this.BotStatus=data;
+    console.log(data)
+  
+  })
+}
+  getAllActiveBots()
+  {
+    let response:any;
+    this.api.getAllActiveBots().subscribe(data=>
+    {
+      this.activeBots=data;
+      response=data;
+      console.log(response)
+      this.dataSource= new MatTableDataSource(response);
+      this.dataSource.sort=this.sort;
+      this.dataSource.paginator=this.paginator;
+    })
+  }
+
 }

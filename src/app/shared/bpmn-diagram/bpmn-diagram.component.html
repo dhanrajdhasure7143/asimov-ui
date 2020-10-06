@@ -1,3 +1,3 @@
-<span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss"}}</b></span>
+<span class="update_info" *ngIf="updated_date_time">Last Updated : <b>{{updated_date_time | date:"dd-MM-y HH:mm:ss":'UTC'}}</b></span>
 <span class="err-msg"></span>
 <div [id]="id" [class]="viewMode?'viewOnly diagramCanvas':'diagramCanvas'" (click)="openDiagram()" title="Click to open the diagram"></div>

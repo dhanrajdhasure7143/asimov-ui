@@ -1,0 +1,200 @@
+
+/* The Modal (background) */
+.modal1 {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    -webkit-animation-name: fadeIn; /* Fade in the background */
+    -webkit-animation-duration: 0.4s;
+    animation-name: fadeIn;
+    animation-duration: 0.4s
+    }
+    
+    /* Modal Content */
+    .modal-content {
+    position: fixed;
+    bottom: 0;
+    background-color: #fefefe;
+    width: 100%;
+    -webkit-animation-name: slideIn;
+    -webkit-animation-duration: 0.4s;
+    animation-name: slideIn;
+    animation-duration: 0.4s
+    }
+    
+    /* The Close Button */
+    .close {
+    color: #000;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    }
+    
+    .close:hover,
+    .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+    }
+    
+    .modal-header {
+    padding: 2px 16px;
+    background-color: #e5e5e5;
+    color: #000;
+    }
+    .modal-header .close {
+    margin-top: 5px;
+   }
+    
+    .modal-body {padding: 2px 0px;}
+    
+    
+    /* Add Animation */
+    @-webkit-keyframes slideIn {
+    from {bottom: -300px; opacity: 0} 
+    to {bottom: 0; opacity: 1}
+    }
+    
+    @keyframes slideIn {
+    from {bottom: -300px; opacity: 0}
+    to {bottom: 0; opacity: 1}
+    }
+    
+    @-webkit-keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+    }
+    
+    @keyframes fadeIn {
+    from {opacity: 0} 
+    to {opacity: 1}
+    }
+    
+.databaseForm{
+    margin-top: 15px;
+}
+.databaseForm label{
+    font-size: 12px;
+}
+.databaseForm input,.databaseForm select{
+    border-left: 0px;
+    border-right: 0px;
+    border-top: 0px !important;
+    box-shadow: none;
+    border-radius: 0px;
+    border-bottom: 1px solid rgb(121, 118, 118);
+}
+.errspan{
+    position: relative;
+    z-index: 2;
+    color: #dc3545;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    padding-right: 10px;
+    line-height: 12px;
+}
+.connection-buttons{
+    margin-left: 20%;
+}
+.connection-buttons button{
+    width: 150px;
+    outline-style: none;
+}
+.work_spacetable{
+    height: 300px;
+    overflow:scroll; 
+}
+.pList{
+    box-shadow: 0px 3px 13px -6px rgba(0,0,0,.50) !important;
+}
+.pList:hover{
+    box-shadow: 3px 3px 25px -3px rgba(0,0,0,.50);
+}
+.pilist_table{
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+}
+.process_view{
+    cursor: pointer;
+}
+.process_view:hover{
+    color: #0061cf;
+}
+input[type="text"]{
+  padding:4px !important;
+}
+.inner-addon i{
+    position: absolute;
+    padding-left: 88%;
+    pointer-events: none;
+    width: 50px;
+    margin-top: 10px
+}
+.right-addon input{ 
+    padding-right: 20px !important;
+    width: 140%; 
+}
+.table_header{
+    cursor: pointer;
+}
+
+/* table.tableBodyScroll tbody {
+    display: block;
+    max-height: 400px;
+    overflow-y: scroll;
+  } */
+  
+  table.tableBodyScroll thead, table.tableBodyScroll tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+  }
+  .pilist_table{
+      border: 2px solid #f4f4f4;
+  }
+  .search_btn{
+      font-size: 16px;
+      margin-bottom: 10px;
+      /* margin-left: 30px; */
+      margin-top: 10px;
+  }
+  .search-cat{
+      margin-top: 10px;
+      font-size: 14px;
+      position: absolute;
+      z-index: 1;
+      margin-left:98%;
+  }
+  .cat1{
+      margin-left: 15%;
+  }
+  .graph_table{
+      padding-left: 0px !important;
+      padding-right: 0px !important;
+  }
+  .workspace-table{   
+    margin-left: -8%;
+    width: 58%;
+  }
+  .pi-Name-wrap{
+      word-wrap: break-word !important;
+  }
+  #upload_db{
+      cursor: pointer !important;
+  }
+  .increment_input{
+      height: 118px;
+  }
+  .connection_btn{
+      margin-top: 10px;
+  }
+  .featchTbale-btn{
+      margin-top: 20px;
+  }

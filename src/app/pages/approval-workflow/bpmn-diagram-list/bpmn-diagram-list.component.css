@@ -1,0 +1,8 @@
+
+  mat-expansion-panel.activePanel{
+      background-color: #fcfcfc;
+      border:2px solid #e8e8e8;
+  }
+   /* .mat-expansion-indicator::after, .mat-expansion-panel-header-description {
+      padding-right:10px;
+    } */

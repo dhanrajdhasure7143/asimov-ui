@@ -12,6 +12,7 @@
               "/pwa-manifest.json",
               "/assets/images/favicons/favicon.ico",
               "/assets/js/*.js",
+              "/assests/**",
               "/*.css",
               "/*.js",
               "!/*-es5*.js",

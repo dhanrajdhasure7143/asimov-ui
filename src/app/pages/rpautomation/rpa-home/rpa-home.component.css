@@ -1,0 +1,133 @@
+.rpa-home-block {
+    
+    margin-left: 0px;
+    align-items: center;
+    text-align: center;
+    border: 1px solid lightgrey;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 20px
+}
+
+.descriptiontext{
+    overflow: hidden;
+   text-overflow: ellipsis;
+   display: -webkit-box;
+   width:140px;
+   -webkit-line-clamp: 1; /* number of lines to show */
+   -webkit-box-orient: vertical;
+}
+
+.hide {
+    display: none;
+}
+
+.bot-data {
+    padding: 3em;
+    z-index: -1;
+}
+
+.rpa-home {
+    width: 100%;
+}
+
+.row-highlight:hover {
+    background-color: rgb(241, 238, 238);
+}
+
+.rpa-home-block>img:hover {
+    fill: white
+}
+
+.rpa-home-block>h6 {
+    color: #0062cf;
+}
+
+.rpa-home-reset-btn {
+    margin-top: 26px;
+    margin-left: 5px;
+    background-color: #0062cf;
+    height: 23px;
+    border-radius: 4px;
+    color: white;
+}
+
+.rpa-home-bots {
+    padding: 5px;
+    z-index: -1;
+    padding-right:15px;
+}
+
+.rpa-home-header {
+    display: flex;
+}
+
+.rpa-home-heading {
+    padding: 10px;
+    flex: 3;
+}
+
+.rpa-home-category {
+    flex: 1;
+    padding-left: 10px;
+    width: 25%!important;
+}
+
+.rpa-home-process {
+    flex: 1;
+    padding-left: 10px;
+    
+    padding: 10px;
+    width: 25%!important;
+}
+
+.rpa-home-search {
+    flex: 1;
+    padding-left: 10px;
+    width: 20%!important;
+}
+
+.bots-container {
+    max-height: 300px;
+    overflow: auto;
+}
+
+.rpa-home-btn-title {
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #0062cf;
+}
+
+.title-font {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.rpa-mat-form-field-category {
+    width: 87%;
+}
+
+.rpa-mat-form-field-process {
+    width: 87%;
+}
+
+.rpa-mat-form-field-search {
+    width: 20%;
+    float: right;
+}
+
+tr.mat-header-row {
+    height: 10px !important;
+}
+
+td{
+    white-space:nowrap;
+}
+th{
+    white-space:nowrap;
+}
+
+.run-process{
+padding:20px;
+}

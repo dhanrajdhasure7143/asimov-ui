@@ -5,12 +5,13 @@ import { CreateBpmnDiagramComponent } from './create-bpmn-diagram/create-bpmn-di
 import { BusinessProcessComponent } from './business-process.component';
 import { BpsHomeComponent } from './home/home.component';
 import { UploadProcessModelComponent } from './upload-process-model/upload-process-model.component';
+import { BpsDataSaveGuard } from 'src/app/guards/bps-data-save.guard';
 
 const routes: Routes = [
   {path:'', component:BusinessProcessComponent, children:[
     {path:'home', component:BpsHomeComponent},
-    {path:'createDiagram', component:CreateBpmnDiagramComponent},
-    {path:'uploadProcessModel', component:UploadProcessModelComponent},
+    {path:'createDiagram', component:CreateBpmnDiagramComponent, canDeactivate:[BpsDataSaveGuard]},
+    {path:'uploadProcessModel', component:UploadProcessModelComponent, canDeactivate:[BpsDataSaveGuard]},
     {path:'**', redirectTo:'/home', pathMatch: 'full'}
   ]}
 ];

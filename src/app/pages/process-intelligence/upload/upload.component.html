@@ -1,30 +1,257 @@
 <div class="container">
         <div class="row">
+                <div class='col-md-6'>
+                <div class="row">
                 <h1>Connect Your Data</h1>
                 <h4 class="subtitle">Select below options to get your data</h4>
-                <div class="col-sm-2 upload_zone" id="upload_xl">
-                        <ngx-dropzone (change)="onSelect($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
+                <div class="col-sm-3 upload_zone" id="upload_xl">
+                        <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/Group 279.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
                                         <label>XLSX/CSV</label></h5>
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-2 upload_zone" id="upload_xes">
-                        <ngx-dropzone (change)="onSelect($event,3)" [multiple]=false [accept]="xes_mime" >
+                <div class="col-sm-3 upload_zone" id="upload_xes">
+                        <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false [accept]="xes_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/XES.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
                                         <label>XES</label></h5>
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-2 upload_zone" id="upload_db">
-                        <ngx-dropzone (change)="onSelect($event,4)" [multiple]=false [accept]="db_mime" >
-                                <ngx-dropzone-label><img src ="assets/images/DataBase.svg">
+                <div class="col-sm-3 upload_zone" id="upload_db" (click)="onDbSelect()">
+                        <ngx-dropzone [multiple]=false [accept]="db_mime" [disableClick]=true >
+                                <ngx-dropzone-label>
+                                        <img src ="assets/images/DataBase.svg"> 
                                         <h5 style="color:#006ed5;font-weight: 300">
                                         <label>DB File</label></h5>
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
+                <div class="col-sm-12  download_link" id="download_template">
+                        <a (click)="downloadCSV()">
+                                         <u>Download Sample Template</u>
+                                 </a>
+                        </div>
+                        </div>
+                </div>
+                <div class="col-md-6 workspace-table" id="my_workspace">
+                                <div class='col-sm-4'>
+                                <h4>My Workspace</h4>
+                                </div>
+                                <form action="">
+                                        <div class="col-sm-7" *ngIf="isSearch">
+                                                <div class="col-sm-9 pull-right cat1">
+                                                <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
+                                                        <option value="undefined" hidden disabled>Search by Category</option>
+                                                        <option value="allcategories">All Categories</option>
+                                                        <option [value]="each.categoryName" *ngFor="let each of categoryList.data;let i=index">{{each.categoryName}}</option>
+                                                </select>
+                                                </div>
+                                        </div>
+                                        <div class="col-sm-6" *ngIf="!isSearch">
+                                                        <div class="col-sm-10">
+                                                        <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
+                                                                <option value="undefined" hidden disabled>Search by Category</option>
+                                                                <option value="allcategories">All Categories</option>
+                                                                <option [value]="each.categoryName" *ngFor="let each of categoryList.data;let i=index">{{each.categoryName}}</option>
+                                                        </select>
+                                                        </div>
+                                                        </div>
+                                        <div class="col-sm-1">
+                                                <button class="search_btn pull-right" *ngIf="isSearch" (click)="onsearchSelect()"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></button>
+                                                <div *ngIf="!isSearch" class="search-cat col-sm-12"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></div>
+                                        </div>
+                                        
+                                </form>
+                                <div class="col-sm-12 graph_table">
+                                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
+                                        <thead class="text-center">
+                                        <tr class="text-center">
+                                                <th class="text-center table_header">Process ID</th>
+                                                <th class="text-center table_header">Date</th>
+                                                <th class="text-center table_header">Process Name</th>
+                                                <th class="text-center table_header">Category</th>
+                                                <th class="text-center table_header">Status</th>
+                                                <th class="text-center table_header">Action</th>
+                                        </tr>                                        
+                                        </thead>                                        
+                                        <tbody class='text-center'>                                        
+                                                <tr class='pList' *ngFor='let process_list of process_graph_list|filter:searchgraph;trackBy:loopTrackBy;let i=index'>
+                                                <td class="th-sm">{{process_list.piId}}</td>
+                                                <td class="">{{process_list.createdTime | date:'MM/dd/yyyy HH:mm:ss': 'UTC' }}</td>
+                                                <td class="pi-Name-wrap">{{process_list.piName|titlecase}}</td>
+                                                <td class="pi-Name-wrap">{{process_list.categoryName?getcategoryName(process_list.categoryName):'-'}}</td>
+                                                <td>{{process_list.status}}</td>
+                                                <td class="process_view" (click)="onGraphSelection(process_list)" title="View Process Graph"><i class='fa fa-eye'></i></td>
+                                                </tr>
+                                        </tbody>
+                                       
+                                </table>
+                                </div>
+                            </div>
         </div>
 </div>
+
+     <div id="myModal1" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+        <div class="modal-header">
+        <span class="close" (click)="closePopup();">&times;</span>
+        <h4>Database</h4>
+        </div>
+        <div class="container modal-body databaseForm">
+                <form autocomplete="off" class="col-sm-12" #database="ngForm">
+                        <div class="row">
+                                <div class="form-group col-sm-3">
+                                        <div>
+                                        <label for="type">Type</label>
+                                        <select class="form-control" name="type" id="type" #type="ngModel" (change)="changeType()" [(ngModel)]="dbDetails.dbType" required>
+                                                <option [value]="undefined" disabled hidden>Select Type</option>
+                                                <!-- <option value="oracle">Oracle</option>
+                                                <option value="RDBMS">RDBMS</option>
+                                                <option value="MYSQL">MYSQL</option> -->
+                                                <option value="postgresql">Postgres SQL</option>
+                                                <!-- <option value="MariaDB">MariaDB</option>
+                                                <option value="IBMDB2">IBM DB2</option>
+                                                <option value="AmazonRDS">AmazonRDS</option>
+                                                <option value="MongoDB">MongoDB</option>
+                                                <option value="Radis">Radis</option>
+                                                <option value="MicrosoftAccess">Microsoft Access</option>
+                                                <option value="MicrosoftSQLServer">Microsoft SQL Server</option> -->
+                                        </select>
+                                        <span *ngIf="((type.invalid && database.submitted) || (type.errors && type.touched) )" 
+                                                class='fa fa-info-circle errspan'> Type is required </span>
+                                        </div>
+                                        <div>
+                                        <label for="connection">Connection Name</label>
+                                        <input type="text" name="connection" #connection="ngModel" [(ngModel)]="dbDetails.connectionName" class="form-control" placeholder="Enter Connection Name" required/>
+                                        <span *ngIf="((connection.invalid && database.submitted) || (connection.errors && connection.touched) )" 
+                                                class='fa fa-info-circle errspan'> Connection Name is required </span>
+                                        </div>
+                                        <div>
+                                        <label for="hostname">Host Name / IP</label>
+                                        <input type="text" name="hostname" #hostname="ngModel" [(ngModel)]="dbDetails.hostName" class="form-control" placeholder="Enter Host Name" required 
+                                        [readonly]="!dbDetails.dbType || !dbDetails.portNumber || !dbDetails.dbName || !dbDetails.userName || !dbDetails.password"/>
+                                        <span *ngIf="((hostname.invalid && database.submitted) || (hostname.errors && hostname.touched) )" 
+                                                class='fa fa-info-circle errspan'> Host Name/IPis required </span>
+                                        </div>
+                                </div>
+                                <div class="form-group col-sm-3">
+                                        <!-- <div>
+                                        <label for="portnumber">Port Number</label>
+                                        <select class="form-control" name="portnumber" id="portnumber" (change)="onChangePort($event.target.value)" #portnumber='ngModel' [(ngModel)]="dbDetails.portNumber" required>
+                                                <option [value]="undefined" disabled hidden>Select Port Number</option>
+                                                <option value="8080">8080</option>
+                                                <option value="9090">9090</option>
+                                                <option value="2222">2222</option>
+                                                <option value="4200">4200</option>
+                                                <option value="other">Other</option>
+                                        </select>
+                                        <span *ngIf="((portnumber.invalid && database.submitted) || (portnumber.errors && portnumber.touched) )" 
+                                                class='fa fa-info-circle errspan'> Port Number is required </span>
+                                        </div> -->
+                                                <div>
+                                                        <label for="otherPort">Port Number</label>
+                                                        <input type="text" name="otherPort" #otherPort='ngModel' [(ngModel)]="dbDetails.portNumber" class="form-control" placeholder="Enter Port Number" required/>
+                                                        <span *ngIf="((otherPort.invalid && database.submitted) || (otherPort.errors && otherPort.touched) )" 
+                                                        class='fa fa-info-circle errspan'>Port Number is required </span>
+                                                </div>
+                                        <div>
+                                        <label for="dbname">DB Name</label>
+                                        <input type="text" name="dbname" #dbname='ngModel' [(ngModel)]="dbDetails.dbName" class="form-control" placeholder="Enter DB Name" required/>
+                                        <span *ngIf="((dbname.invalid && database.submitted) || (dbname.errors && dbname.touched) )" 
+                                                class='fa fa-info-circle errspan'> DB Name is required </span>
+                                        </div>
+
+                                        <div class="featchTbale-btn" *ngIf="!isTableEnable">
+                                                <button class="btn eiap-btn btn-primary" [disabled]="!dbDetails.hostName" (click)="getDBTables()">Fetch Tables</button>
+                                        </div>
+                                        <div [hidden]="!isTableEnable">
+                                        <label for="tablename">Table Name</label>
+                                        <select [disabled]="!dbDetails.hostName" class="form-control" name="tablename" id="tablename" #tablename='ngModel' [(ngModel)]="dbDetails.tableName" (change)="onChangeTable()" required>
+                                                <option [value]="undefined" disabled hidden>Select Table Name</option>
+                                                <option [value]="null" disabled hidden>Select Table Name</option>
+                                                <option *ngFor="let tName of tableList" value="{{tName}}">{{tName}}</option>
+                                               
+                                        </select>
+                                        <!-- <input type="text" name="tablename" #tablename='ngModel' [(ngModel)]='dbDetails.tableName' class="form-control" placeholder="Enter Table Name" required/> -->
+                                        <span *ngIf="tablename.errors && tablename.touched" 
+                                                class='fa fa-info-circle errspan'> Table Name is required </span>
+                                        </div>
+                                </div>
+                                <div class='col-md-6'>
+                                <div class="form-group col-sm-6">
+                                        <div>
+                                        <label for="username">User Name</label>
+                                        <input type="text" name="username" #username='ngModel' class="form-control" [(ngModel)]='dbDetails.userName' placeholder="Enter User Name" required/>
+                                        <span *ngIf="((username.invalid && database.submitted) || (username.errors && username.touched) )" 
+                                                class='fa fa-info-circle errspan'> User Name is required </span>
+                                        </div>
+                                        <div>
+                                        <label for="password">Password</label>
+                                        <input type="password" name="password" #password='ngModel' [(ngModel)]='dbDetails.password' (keyup)="onKeyUpPassword()" class="form-control" placeholder="Enter Password" required/>
+                                        <span *ngIf="((password.invalid && database.submitted) || (password.errors && password.touched) )" 
+                                                class='fa fa-info-circle errspan'> Password is required </span>
+                                        </div>
+                                        <div *ngIf="isTableEnable">
+                                                <label for="increase">Mode</label>
+                                                <select [disabled]="!dbDetails.tableName" name="increase"  id="" class="form-control" (change)="onChangeMode($event.target.value)" #increase="ngModel" [(ngModel)]="dbDetails.mode" required>
+                                                        <option [value]="undefined" disabled hidden>Select Mode</option>
+                                                        <option [value]="null" disabled hidden>Select Mode</option>
+                                                        <option value="incrementing">Incrementing</option>
+                                                        <option value="timestamp">Timestamp</option>
+                                                        <option value="timestamp+incrementing">Incrementing with Timestamp</option>
+                                                </select> 
+                                                <span *ngIf="((increase.invalid && database.submitted) || (increase.errors && increase.touched) )" 
+                                                class='fa fa-info-circle errspan'> Mode is required </span>
+                                        </div>
+                                                <!-- <div *ngIf="isIncrement">
+                                                 <label for="increment">Increment Column name</label>
+                                                 <input type="text" name="increment" class="form-control" #increment [(ngModel)]='dbDetails.increment' placeholder="Enter increment column name" required/>
+                                                 <span *ngIf="((increment.invalid && database.submitted) || (increment.errors && increment.touched) )" 
+                                                        class='fa fa-info-circle errspan'> Increment column name is required </span>
+                                                </div> -->
+                                                <!-- <div *ngIf="isTimestammp">
+                                                 <label for="timestamp">Timestamp Column Name</label>
+                                                 <input type="text" name="timestamp" #timestamp class="form-control" [(ngModel)]='dbDetails.timestamp' placeholder="Enter Timestamp column name" required/>
+                                                 <span *ngIf="((timestamp.invalid && database.submitted) || (timestamp.errors && timestamp.touched) )" 
+                                                        class='fa fa-info-circle errspan'> Timestamp column name is required </span>
+                                                </div> -->
+                                </div>
+                                <div class='col-sm-6'>
+                                        <div class="increment_input"></div>
+                                                <div *ngIf="isIncrement" >
+                                                 <label for="increment">Increment Column name</label>
+                                                 <input type="text" name="increment" class="form-control" #increment [(ngModel)]='dbDetails.increment' placeholder="Enter increment column name" required/>
+                                                 <span *ngIf="((increment.invalid && database.submitted) || (increment.errors && increment.touched) )" 
+                                                        class='fa fa-info-circle errspan'> Increment column name is required </span>
+                                                </div>
+                                                <div *ngIf="isTimestammp">
+                                                 <label for="timestamp">Timestamp Column Name</label>
+                                                 <input type="text" name="timestamp" #timestamp class="form-control" [(ngModel)]='dbDetails.timestamp' placeholder="Enter Timestamp column name" required/>
+                                                 <span *ngIf="((timestamp.invalid && database.submitted) || (timestamp.errors && timestamp.touched) )" 
+                                                        class='fa fa-info-circle errspan'> Timestamp column name is required </span>
+                                                </div>
+                                </div>
+                                <div class='col-sm-12 row'>
+                                        <div class="pull-right connection_btn">
+                                        <button class='btn btn-primary eiap-btn' [disabled]='database.invalid' (click)="testDbConnection()">Test Connection</button>
+                                        <button class='btn btn-primary eiap-btn' [disabled]='isDisabled' (click)="slideUp()">Generate Process Graph</button>
+                                        <!-- <button class='btn btn-primary eiap-btn' (click)="slideUp()">Generate Process Graph</button> -->
+                                        </div>
+                                </div>
+                                
+                                </div>
+                        </div>
+                </form>
+        
+        
+        </div>
+        </div>               
+   
+</div>
+
+<process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)"></process-category-overlay>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color: white" ></p></ngx-spinner>

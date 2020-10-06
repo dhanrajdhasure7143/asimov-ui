@@ -5,7 +5,7 @@ import { NgxDropzoneModule } from 'ngx-dropzone';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { NotifierModule } from "angular-notifier";
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-
+import { AngularSplitModule } from 'angular-split';
 import { SharedModule } from '../../shared/shared.module';
 import { BusinessProcessRoutingModule } from './business-process-routing.module';
 import { BusinessProcessComponent } from './business-process.component';
@@ -13,9 +13,15 @@ import { CreateBpmnDiagramComponent } from './create-bpmn-diagram/create-bpmn-di
 import { BpsHomeComponent } from './home/home.component';
 import { UploadProcessModelComponent } from './upload-process-model/upload-process-model.component';
 import { BpsHints } from './model/bpmn-module-hints';
+import { ListOfChangesComponent } from './list-of-changes/list-of-changes.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule} from '@angular/material';
+import{FilterPipe} from './custom_filter.pipe';
 
 @NgModule({
-  declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent],
+  declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent,FilterPipe],
   imports: [
     CommonModule,
     NgxSpinnerModule,
@@ -25,7 +31,13 @@ import { BpsHints } from './model/bpmn-module-hints';
     BusinessProcessRoutingModule,
     SharedModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AngularSplitModule.forRoot(),
+    NgxPaginationModule,
+    Ng2SearchPipeModule,
+    MatProgressSpinnerModule,
+    MatInputModule, MatIconModule, MatFormFieldModule,
+    MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule
   ],
   providers: [BpsHints]
 })

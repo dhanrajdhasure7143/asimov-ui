@@ -173,7 +173,7 @@ export  class ZoomSlider {
     const zoomOutBtn = document.createElement('button');
     zoomOutBtn.id = 'zoomSliderOut';
     zoomOutBtn.className = 'zoomButton';
-    zoomOutBtn.innerHTML = '-';
+    // zoomOutBtn.innerHTML = '-';
     this._sliderDiv.appendChild(zoomOutBtn);
 
     const zoomRangeContainer = document.createElement('div');
@@ -192,7 +192,7 @@ export  class ZoomSlider {
     const zoomInBtn = document.createElement('button');
     zoomInBtn.id = 'zoomSliderIn';
     zoomInBtn.className = 'zoomButton';
-    zoomInBtn.innerHTML = '+';
+    // zoomInBtn.innerHTML = '+';
     this._sliderDiv.appendChild(zoomInBtn);
 
     // Adds the slider as a sibling of the diagram
@@ -257,12 +257,11 @@ export  class ZoomSlider {
 
       // zoomRangeContainer.style.width = rangeWidth + 'px';
       // zoomRangeContainer.style.height = sliderHeight + 'px';
-      zoomRangeContainer.style.marginLeft="570px",
-      zoomRangeContainer.style.marginTop="-407px",
-      zoomRangeContainer.style.zIndex="1000",
+      zoomRangeContainer.style.marginLeft="273px",
+      zoomRangeContainer.style.marginTop="-870px",
+      zoomRangeContainer.style.zIndex="10",
       zoomRangeContainer.style.position="absolute",
       zoomRangeInput.style.color="red",
-
 
       zoomRangeInput.style.width = rangeWidth + 'px';
       zoomRangeInput.style.height = sliderHeight + 'px';
