@@ -6,7 +6,7 @@ enum Filter{
   // 'Cases',
    'Variants',
   //'End Points',
-}
+} 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
@@ -59,19 +59,7 @@ export class FilterComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    for(var i=0;i<this.startArray.length;i++){
-      var obj={};
-      obj["name"]=this.startArray[i];
-      obj["selected"]="inactive";
-      this.startPointArray.push(obj)
-    }
-    for(var i=0;i<this.endArray.length;i++){
-      var obj={};
-      obj["name"]=this.endArray[i];
-      obj["selected"]="inactive";
-      this.endPointArray.push(obj)
-    }
-
+    
     for(var i=0;i<this.variantData.data.length;i++){
       var obj={};
       obj["name"]=this.variantData.data[i].name;
@@ -94,6 +82,21 @@ export class FilterComponent implements OnInit {
       obj["selected"]="inactive";
       this.dataValuesNames.push(obj)
     }
+    this.startPointArray = [];
+    for(var i=0;i<this.startArray.length;i++){
+      var obj={};
+      obj["name"]=this.startArray[i];
+      obj["selected"]="inactive";
+      this.startPointArray.push(obj)
+    }
+    this.endPointArray = [];
+    for(var i=0;i<this.endArray.length;i++){
+      var obj={};
+      obj["name"]=this.endArray[i];
+      obj["selected"]="inactive";
+      this.endPointArray.push(obj)
+    }
+
     if(this.resetFilter==true){
       this.startPointArray.forEach(e=>{
         e.selected="inactive"
@@ -204,6 +207,7 @@ channgeFilter(){
   else{
     this.isActivity=false;
     this.isEndpoint=true;
+    this.isVariantFilter = false;
   }
 }
 selectedStartPoint(data,index){
@@ -219,6 +223,18 @@ selectedVariant(data,index){
   }else{
     this.variantListarray[index].selected= "inactive"
   } 
+  var activityArray=[]
+  for (var i = 0; i < this.variantListarray.length; i++){
+    if(this.variantListarray[i].selected== "active"){
+      activityArray.push(this.variantListarray[i])
+    }
+    };  
+    if(activityArray.length>=1){
+      this.isApplyFilter=false;
+    }else{
+      this.isApplyFilter=true;
+    }
+    this.isDeselectAll = false;
 }
   selectedEndPoint(data,index){
     if(data.selected=="inactive"){

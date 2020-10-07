@@ -1,6 +1,6 @@
 export class PiHints{
     public dataDocumentHints = [
-        { selector:'#process_data', description:'Uploaded file data', showNext:true },
+        { selector:'#uploaded_data', description:'Uploaded file data', showNext:true },
         { selector:'#search_process_data', description:'Search Process Data', showNext:true },
         { selector:'#generateGraph', description:'Proceed to Data Mapping.' },
         { selector:'#process_data1', description:'Case ID, Actvity Resource Mapping'}
