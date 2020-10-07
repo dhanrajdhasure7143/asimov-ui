@@ -118,7 +118,7 @@
 
              <!-- </div> -->
              <!-- <div [hidden]="!isHide"> -->
-                <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispng)="pngValueEmitted($event)" [performanceValue]="performanceValue" [processGraphName]='processGraphName'></app-d3flowchart>
+                <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispng)="pngValueEmitted($event)" [performanceValue]="performanceValue" [processGraphName]='processGraphName'  (isfilterOverlay)="filterOverlay1($event)"></app-d3flowchart>
 
              <!-- </div> -->
 

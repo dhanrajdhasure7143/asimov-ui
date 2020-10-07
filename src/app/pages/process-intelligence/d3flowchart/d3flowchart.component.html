@@ -1,3 +1,8 @@
+<div class="search-node">
+  <span class="" *ngIf="searchNode" (click)="searchNode = null; onSearch();">&times;</span>
+<input class="search-input border_bottom form-control" name="search" placeholder="Search Node" #search="ngModel" [(ngModel)]="searchNode"  (keyup)="onSearch()"  (keyup)="onSearch()" (blur)="onSearch()" />
+<!-- <button class="btn btn-warning" (click)="searchNode = null; onSearch()" *ngIf="searchNode">Clear Search</button> -->
+</div>
 <div class="zoom_btns">
 <a class="btn btn1 zoom btn-primary"><i class="fas fa-search-plus"></i></a>
 <a class="btn btn1 zoom-out btn-primary"><i class="fas fa-search-minus"></i></a>

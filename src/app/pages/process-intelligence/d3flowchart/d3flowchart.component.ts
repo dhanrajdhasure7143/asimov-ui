@@ -5,6 +5,7 @@ declare var $: any;
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import * as svg from 'save-svg-as-png';
+import { cursorTo } from 'readline';
 
 @Component({
   selector: 'app-d3flowchart',
@@ -27,6 +28,7 @@ export class D3flowchartComponent {
     @Output() isjpeg=new EventEmitter<boolean>()
     @Output() ispng=new EventEmitter<boolean>()
     @Output() issvg=new EventEmitter<boolean>();
+    @Output() isfilterOverlay=new EventEmitter<boolean>();
     class1:any;
   class2: any;
   class3: any;
@@ -34,6 +36,7 @@ export class D3flowchartComponent {
   class5: string;
   class6: string;
   maxLabelValue: any;
+  searchNode: any;
   
     constructor(){
   
@@ -234,7 +237,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
     
         var nodeName=this.model1[j].name
         states[nodeName]={
-          description: "<p>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+this.model1[j].toolCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model1[j].toolCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model1[j].toolCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model1[j].toolCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model1[j].toolCount[4]+"</div></li></ul><p>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceCount1+"</div></li><li><div>Median Duration</div><div>"+performanceCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceCount3+"</div></li><li><div>Max Duration </div><div>"+performanceCount4+"</div></li><li><div>Min Duration </div><div>"+performanceCount5+"</div></li></ul>",
+          description: "<p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+this.model1[j].toolCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model1[j].toolCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model1[j].toolCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model1[j].toolCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model1[j].toolCount[4]+"</div></li></ul><p class='metrics-name'>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceCount1+"</div></li><li><div>Median Duration</div><div>"+performanceCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceCount3+"</div></li><li><div>Max Duration </div><div>"+performanceCount4+"</div></li><li><div>Min Duration </div><div>"+performanceCount5+"</div></li></ul>",
         metrics: this.model1[j].count
         }
       }
@@ -653,7 +656,7 @@ var wrap = function(text, width) {
 
 // Simple function to style the tooltip for the given node.
 var styleTooltip = function(name, description) {
-  return "<p class='name'>" + name + "</p>" + description;
+  return "<p class='name node-name'>" + name + '</p><i id="tooltipfilter" class="fa fa-filter filter-icon" (click)="filterOverlay()" aria-hidden="true"></i>' + description;
 };
 
 var tooltip = d3.select("body")
@@ -746,27 +749,26 @@ inner.selectAll('g.node')
 .on("mouseout", function(){return tooltip.style("visibility", "hidden");});
 
 
-
 //edge tooltip
 
 var styleTooltip1 = function(name) {  
   for( var i=0;i<me.model2.length;i++){
     if(me.model2[i].from==name.v&&me.model2[i].to==name.w){
       if(name.v=="Start"||name.w=="End"||name.v=="End"||name.w=="Start"){
-      var linkTooltip1 = "<p>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul>";
+      var linkTooltip1 = "<p class='node-name'>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul>";
       }else{
         var performanceLinkCount1=me.timeConversion(me.model2[i].toolDataCount[5])
         var performanceLinkCount2=me.timeConversion(me.model2[i].toolDataCount[6])
         var performanceLinkCount3=me.timeConversion(me.model2[i].toolDataCount[7])
         var performanceLinkCount4=me.timeConversion(me.model2[i].toolDataCount[8])
         var performanceLinkCount5=me.timeConversion(me.model2[i].toolDataCount[9])
-        var linkTooltip1 = "<p>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
+        var linkTooltip1 = "<p class='node-name'>"+me.model2[i].from+"-"+me.model2[i].to+"</p><p class='metrics-name'>Frequency</p><ul class='left-content'><li><div>Absolute Frequency</div><div>"+me.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+me.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+me.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+me.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+me.model2[i].toolDataCount[4]+"</div></li></ul><p class='metrics-name'>Performance </p><ul class='left-content'><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
         }
       }
 }
   return linkTooltip1;
 };
-inner.selectAll('g.edgePath path.path')
+inner.selectAll('g.edgePath')
 .attr("title", function(v) { 
   if(me.performanceValue==true&&v.v=="Start"||me.performanceValue==true&&v.w=="End"){
 
@@ -774,7 +776,7 @@ inner.selectAll('g.edgePath path.path')
   return styleTooltip1(v)
  }
  })
-  .each(function(v) { $(this).tipsy({ gravity: "e", opacity: 1, html: true}); });
+  .each(function(v) { $(this).tipsy({ gravity: "e",followCursor: true, opacity: 1, html: true}); });
   
   // $('.element').tipsy({follow: 'x'});
   // $('.element').tipsy({follow: 'y'});
@@ -815,7 +817,6 @@ inner.selectAll('g.edgePath path').on('mouseover', function(this){
   // console.log(edgeValue[0]['style']['cssText'];
   let strokeValue=edgeValue[0]['style']['cssText'].split(';')[1]
   // console.log(edgeValue[0]['style']['cssText'].split(';'));
-  
   
   this.selectedEdgeCssValue = hoverEdgeCssValue;
   let strokeWidthValue=strokeValue.split(':')[1].replace('px', '')
@@ -902,7 +903,7 @@ d3.selectAll("g.edgeLabel g.label")
 
 
 // Center the graph
-var initialScale = 0.72;
+var initialScale = 0.62;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 svg.attr('height', g.graph().height * initialScale + 53)
 
@@ -1145,6 +1146,36 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           // return days + " Days"
       }
     }
+
+    onSearch(){
+      const svg = d3.select("svg")
+      var  inner = svg.append("g");
+      inner.selectAll('g.node');
+      var itemName = this.searchNode;
+  
+      if(this.searchNode){
+      var UN_MATCH_NODE = d3.selectAll(".node")
+      .filter(function(d) {
+         return ! d.includes(itemName)
+        });
+        UN_MATCH_NODE.style("opacity","0.1");
+        UN_MATCH_NODE.style("zIndex", '9999')
+        var _MATCHE_NODE = d3.selectAll(".node")
+          .filter(function(d) {
+                  return d.includes(itemName)
+          });
+          // console.log(_MATCHE_NODE['_groups'][0].length);
+          
+          _MATCHE_NODE.style("opacity","1");
+        }else{
+          d3.selectAll(".node").style("opacity","1");
+        }
+      }
+  filterOverlay(){
+    console.log("test");
+    this.isfilterOverlay.emit(true)
+  }
+      
 }
   
   

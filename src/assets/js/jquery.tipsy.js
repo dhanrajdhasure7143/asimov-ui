@@ -20,7 +20,7 @@
             var title = this.getTitle();
             if (title && this.enabled) {
                 var $tip = this.tip();
-                
+                console.log($tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title));
                 $tip.find('.tipsy-inner')[this.options.html ? 'html' : 'text'](title);
                 $tip[0].className = 'tipsy'; // reset classname in case of dynamic gravity
                 $tip.remove().css({top: 0, left: 0, visibility: 'hidden', display: 'block'}).prependTo(document.body);
@@ -51,12 +51,13 @@
                     case 's':
                         tp = {top: pos.top - actualHeight - this.options.offset, left: pos.left + pos.width / 2 - actualWidth / 2};
                         break;
-                    // case 'e':
-                    //     tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left - actualWidth - this.options.offset};
-                    //     break;
                     case 'e':
-                        tp = {top: this.options.mouse.y, left: this.options.mouse.x};
+                        tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: this.options.mouse.x};
                         break;
+                    // case 'e':
+                    //     console.log(this.options.mouse);
+                    //     tp = {top: this.options.mouse.y, left: this.options.mouse.x};
+                    //     break;
                     case 'w':
                         tp = {top: pos.top + pos.height / 2 - actualHeight / 2, left: pos.left + pos.width + this.options.offset};
                         break;
@@ -99,6 +100,11 @@
                 };
                $tip.hover(set_hovered(true), set_hovered(false));
             }
+        // console.log("tool",$('#tooltipfilter'));
+        // $('#tooltipfilter').click(function(){
+        //     alert("test")
+        // })
+
         },
         
         hide: function() {
@@ -124,7 +130,6 @@
         },
         
         getTitle: function() {
-            
             var title, $e = this.$element, o = this.options;
             this.fixTitle();
 
@@ -174,7 +179,6 @@
         }
         
         options = $.extend({}, $.fn.tipsy.defaults, options);
-
         if (options.hoverlock && options.delayOut === 0) {
 	    options.delayOut = 100;
 	}
@@ -222,9 +226,7 @@
                 eventOut = options.trigger == 'hover' ? 'mouseleave' : 'blur';
             this[binder](eventIn, enter)[binder](eventOut, leave);
         }
-        
         return this;
-        
     };
     
     $.fn.tipsy.defaults = {
@@ -240,7 +242,7 @@
         opacity: 0.8,
         title: 'title',
         trigger: 'hover',
-        // hoverlock: false
+        // hoverlock: true,
         mouse : {x: 0, y: 0},
     };
     

@@ -1494,6 +1494,10 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
       }
 
 }
+filterOverlay1(value){
+console.log(value);
+
+}
 filterOverlay(){  
   this.dataValues = [];
   let vv = this.filterPerformData;
