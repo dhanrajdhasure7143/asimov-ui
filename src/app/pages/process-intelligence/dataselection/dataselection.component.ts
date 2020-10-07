@@ -67,7 +67,7 @@ export class DataselectionComponent implements OnInit {
     this.resetColMap();
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
     this.dt.changeChildModule({"route":"/pages/processIntelligence/selection", "title":"Data Selection"});
-    this.dt.changeHints(this.hints.dataDocumentHints);
+    this.dt.changeHints(this.hints.dataSelectionHints);
 
     var headertype=JSON.parse(localStorage.getItem('headertypeObj'))
     for(var i=0;i<headertype.length;i++){

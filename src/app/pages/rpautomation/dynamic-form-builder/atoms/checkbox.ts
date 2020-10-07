@@ -5,6 +5,17 @@ import { FormGroup } from '@angular/forms';
     selector: 'checkbox',
     template: `
       <div [formGroup]="form">
+        <div style="display:flex"  >
+          <div  class="form-check form-check">
+          <label style="color: #615f5f;padding: 0px 10px;" class="form-check-label">
+             <input  [formControlName]="field.name" class="form-check-input" type="checkbox" id="inlineCheckbox1"  [checked]="field.value==true" />
+             {{field.label}}</label>
+          </div>
+        </div>
+      </div> 
+    `
+    /*
+      <div [formGroup]="form">
         <div style="display:flex" [formGroupName]="field.name" >
           <div *ngFor="let opt of field.options" class="form-check form-check">
           <label style="color: #615f5f;padding: 0px 10px;" class="form-check-label">
@@ -12,9 +23,8 @@ import { FormGroup } from '@angular/forms';
              {{opt.label}}</label>
           </div>
         </div>
-
       </div> 
-    `
+    */
 })
 export class CheckBoxComponent {
     @Input() field:any = {};

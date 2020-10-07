@@ -1,15 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { DndDropEvent } from 'ngx-drag-drop';
-import { fromEvent } from 'rxjs';
-import { jsPlumb } from 'jsplumb';
 import { Router,ActivatedRoute } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
-import { element } from 'protractor';
-import { ContextMenuComponent } from 'ngx-contextmenu';
 import { RestApiService } from '../../services/rest-api.service';
-import { ContextMenuContentComponent } from 'ngx-contextmenu/lib/contextMenuContent.component';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
-
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from "ngx-spinner";
 
@@ -82,16 +75,6 @@ export class RpaStudioComponent implements OnInit {
   
   }
 
-  public inputValidator(event: any) {
-    //console.log(event.target.value);
-    const pattern = /^[a-zA-Z]*$/;   
-    //let inputChar = String.fromCharCode(event.charCode)
-    if (!pattern.test(event.target.value)) {
-      event.target.value = event.target.value.replace(/[^a-zA-Z]/g, "");
-      // invalid character, prevent input
-
-    }
-  }
 
   ngOnInit() 
   {

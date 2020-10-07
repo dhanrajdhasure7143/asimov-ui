@@ -58,10 +58,10 @@
   id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
     <img style="filter: none; width: 50px;" src="../../../../assets/downloadimage.svg">
   </button>
-  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <div><a class="dropdown-item" (click)="downloadJpeg()">JPG</a></div>
-    <div><a class="dropdown-item" (click)="downloadPng()">PNG</a></div>
-    <div><a class="dropdown-item" (click)="downloadPdf()">PDF</a></div>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" >
+    <div><a class="dropdown-item" (click)="downloadJpeg()"><i class="fas fa-file-image"> </i>&nbsp;<span>JPEG</span></a></div>
+    <div><a class="dropdown-item" (click)="downloadPng()"><i class="fas fa-file-image"></i>&nbsp;<span>PNG</span></a></div>
+    <div><a class="dropdown-item" (click)="downloadPdf()"><i class="fas fa-file-pdf"></i>&nbsp;<span>PDF</span></a></div>
   </div>
 </div>
 
@@ -104,6 +104,7 @@
                   <option value="">--Select View Type--</option>
                   <option value="Table">Table</option>  
                   <option value="Text">Text</option>
+                  <option value="Image">Image</option>
                 </select><br>
                 <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
                 
@@ -114,9 +115,11 @@
               </div>
               
             </div>
-            <div class="row" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined" >
+             
+            <div class="row py-4" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined" >
               <div class="col-md-3"></div>
               <div class="col-md-6" style="height:300px; overflow-x:auto">
+              
                 <table class="table" >
                   <thead>
                     <th>Key</th>
@@ -141,9 +144,22 @@
               <div class="col-md-6" >
              
               <br>
-              <pre style="height:300px; overflow-x:auto">
-                {{outputboxresult | json }}
-              </pre>  
+              <div style="height:300px; overflow-x:auto">
+                {{outputboxresulttext}}
+              </div>  
+              <br>
+              <button class="btn btn-primary eiap-btn"  style="float: right"  (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+              <br>
+              </div>
+              <div class="col-md-3"></div>
+            </div>
+            <div class="row" *ngIf="SelectedOutputType=='Image' && outputboxresult!=undefined" >
+              <div class="col-md-3"></div>  
+              <div class="col-md-6" >
+                <img [src]="Image" style="filter: none;width:100%;">
+              <br>
+              <div >
+              </div>  
               <br>
               <button class="btn btn-primary eiap-btn"  style="float: right"  (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
               <br>

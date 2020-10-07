@@ -216,7 +216,8 @@ export class BotStatusComponent implements OnInit {
 
     this.api.botUsage().subscribe(data => { this.usageData = data;
       console.log(this.usageData);
- 
+       let datacha = Object.keys(data);
+      if(datacha[0] != 'errorMessage' && datacha[1] != 'errorCode'){
       this.chart = new Chart('canvas', {
       type: 'pie',
       // percentageInnerCutout: 90,
@@ -242,6 +243,35 @@ export class BotStatusComponent implements OnInit {
         }
       }
     });
+  }else{
+    this.chart = new Chart('canvas', {
+      type: 'pie',
+      // percentageInnerCutout: 90,
+      data: {
+        labels:['No Data Found'],
+        datasets: [
+          { 
+            data: [0],
+            backgroundColor: ['rgba(224,237,255)'],
+            fill: false,
+            borderColor: '#fff',
+            borderWidth: '1px',
+          },
+        ]
+        
+      },
+      options: {
+
+        // cutoutPercentage	: 65,
+        legend: {
+          display: true
+        },
+        tooltips:{
+          enabled:true
+        }
+      }
+    });
+  }
   })
     }
 new(){

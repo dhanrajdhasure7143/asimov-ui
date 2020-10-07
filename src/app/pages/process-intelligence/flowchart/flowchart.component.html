@@ -20,13 +20,13 @@
                         <div class='col-sm-5 event2'>Time Taken</div>
                  </div>
                  <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
-                     <div (click)="caseIdSelect(data,i)"  class='col-sm-1 event3'>#{{i+1}}</div>
-                     <div class='col-sm-9 variant_parcent'>
-                         <div (click)="caseIdSelect(data,i)" class='col-sm-12'>{{caseParcent(data.casepercent)}}% of cases</div>
-                         <div (click)="caseIdSelect(data,i)" class='col-sm-12 events1'><p>{{data.detail}}</p></div>
+                     <div (click)="caseIdSelect(data,i)"  class='col-sm-4 event3'>Variant <b>{{i+1}}</b></div>
+                     <div class='col-sm-6 variant_parcent'>
+                         <div (click)="caseIdSelect(data,i)" class='col-sm-12'>Cases Covered <b>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</b></div> <!-- {{caseParcent(data.casepercent)}}% of cases-->
+                         <!-- <div (click)="caseIdSelect(data,i)" class='col-sm-12 events1'><p>{{data.detail}}</p></div> -->
                      
                          <div (click)="caseIdSelect(data,i)" class='col-sm-3'></div>
-                         <div class="col-sm-9" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
+                         <div class="col-sm-10" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
                              <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
                              <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
                          </div>
@@ -60,23 +60,23 @@
                         <p class="" (click)="downloadSvg()"><i class="fas fa-file-image"></i><span>SVG</span></p>
                     </div>
                 </div>
-                <div class='col-sm-6'>
-                    <button (click)="playAnimation()" class="action-btn" title="Play" *ngIf="!isplay"><i class="fa fa-play"></i></button>
+                <div class='col-sm-6' >
+                    <button (click)="playAnimation()" id="play_btn" class="action-btn" title="Play" *ngIf="!isplay"><i class="fa fa-play"></i></button>
                     <button (click)="playAnimation()" class="action-btn" title="Stop" *ngIf="isplay"><i class="fa fa-stop"></i></button>
                 </div>
             </div>
             <div class="col-sm-3">
                  <div class='row'>
                     <div class="col-sm-6">
-                        <button class="btn btn-thin eiap-btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button>
+                        <button class="btn btn-thin eiap-btn" id="kpi_btn"><img src="..\assets\images\PI\viewKPI.svg">View KPI's</button>
                     </div>
                     <div class="col-sm-6">
-                        <button class="btn btn-primary btn-thin eiap-btn" (click)="generateBpmn()">Generate BPMN</button>
+                        <button class="btn btn-primary btn-thin eiap-btn" id="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
                     </div>
                 </div>
             </div>
-         <div class="col-sm-2 " *ngIf="isvariantListOpen">
-                 <button class="btn btn-primary btn-thin eiap-btn pull-right" (click)="openVariantListNav()"> &#9776; Variant List</button>
+         <div class="col-sm-2 " *ngIf="isvariantListOpen" >
+                 <button class="btn btn-primary btn-thin eiap-btn pull-right" id="variant_list" (click)="openVariantListNav()"> &#9776; Variant List</button>
              </div>
  </div>
      <div class="col-md-11">
@@ -179,7 +179,7 @@
            </div>
          <div class="modal-body">
              <div *ngIf="isFilterComponent">
-             <app-filter [dataValues]='dataValues' [resetFilter]="resetFilter" [startArray]="startArray" [endArray]="endArray" (selectedNodes)="readselectedNodes($event)" (selectedEndpoints)="readselectedEndpoint($event)" (selectedStartpoints)="readselectedStartpoints($event)" (applyFilterValue)="readOverlayValue($event)"></app-filter>
+             <app-filter [dataValues]='dataValues' [variantData]="varaint_data" [resetFilter]="resetFilter" [startArray]="startArray" [endArray]="endArray" (selectedNodes)="readselectedNodes($event)" (selectedEndpoints)="readselectedEndpoint($event)" (selectedStartpoints)="readselectedStartpoints($event)" (applyFilterValue)="readOverlayValue($event)" (selectedVariantOutput)="getselectedVariantList($event)"></app-filter>
              </div>
          </div>
        </div>

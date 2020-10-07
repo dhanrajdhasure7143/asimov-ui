@@ -347,7 +347,7 @@ export class UploadComponent implements OnInit {
       showLabels: true,
       showTitle: false,
       useBom: true,
-      headers: ['S.No', 'Order Number', 'Start Timestamp', 'End Timestamp', 'Resource']
+      headers: ['S.No', 'CaseID', 'Activity', 'Start Timestamp', 'End Timestamp', 'Resource']
     };
 
     new ngxCsv(data, 'Sample_Template', options);

@@ -78,6 +78,7 @@ export class FlowchartComponent implements OnInit {
     hidePointerLabels: false,
     vertical: true,
   }
+  filterPerformData:any =[]; 
   process_graph_list:any=[];
   process_graph_options;
   variant_list_options;
@@ -133,6 +134,7 @@ export class FlowchartComponent implements OnInit {
   isSliderBPMN:boolean = false;
   selectedTraceNumbers:any = [];
   loaderImgSrc:string;
+  graphgenetaionInterval: any;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -191,9 +193,12 @@ export class FlowchartComponent implements OnInit {
         this.graphIds = piId;
         this.loaderImgSrc = "/assets/images/PI/loader_vr_1.gif"; 
         this.spinner.show();
-        setTimeout(() => {
-          this.onchangegraphId(piId);
-        }, 6*60*1000);
+        //setTimeout(() => {
+           this.graphgenetaionInterval = setInterval(() => {
+             this.onchangegenerategraphId(piId);
+           }, 40*1000);
+         // this.onchangegraphId(piId);
+        //}, 1.5*60*1000);
       }
     }); 
   }
@@ -228,6 +233,7 @@ export class FlowchartComponent implements OnInit {
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
+      localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
       })
       const fullGraphbody= { 
@@ -250,6 +256,89 @@ export class FlowchartComponent implements OnInit {
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.filterPerformData = this.fullgraph_model;
+        this.nodeAlignment();       
+        this.model2 = this.flowchartData(this.model1)
+        this.gradientApplyforLinks()
+        this.gradientApplyforNode()
+        
+        this.linkCurvinessGenerate();
+        this.spinner.hide();
+        this.linkmodel2 = this.model2;
+        this.isFullGraphBPMN = true;
+        this.isSingleTraceBPMN = false;
+        this.isMultiTraceBPMN = false;
+        this.isSliderBPMN = false;
+
+    }
+        },(err =>{
+          this.spinner.hide();
+        }));
+        const variantGraphbody= { 
+          "data_type":"variant_graph", 
+           "pid":selectedpiId
+             }
+        this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
+        })
+        const sliderGraphbody= { 
+          "data_type":"slider_graph", 
+           "pid":selectedpiId
+               }
+        this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
+        })
+  }
+
+  onchangegenerategraphId(selectedpiId){  // change process  graps in dropdown
+    //this.spinner.show();
+    this.isNodata=true;
+    this.route.queryParams.subscribe(params => {
+      let token = params['wpiId'];
+      if (token) {
+          let url=this.router.url.split('?')
+          this.location.replaceState(url[0]+'?wpiId='+selectedpiId);
+      }else{
+        let url=this.router.url.split('?')
+        this.location.replaceState(url[0]+'?piId='+selectedpiId);
+
+      }
+  });
+
+    let piId=selectedpiId
+    const variantListbody= { 
+      "data_type":"varients_list", 
+       "pid":selectedpiId
+       } 
+    this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
+      for(var i=0; i<this.varaint_data.data.length; i++){
+          this.varaint_data.data[i].selected= "inactive";
+      }
+      localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
+      this.onchangeVaraint("0");
+      })
+      const fullGraphbody= { 
+        "data_type":"full_graph", 
+         "pid":selectedpiId
+         }
+      this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
+        if(this.fullgraph.hasOwnProperty('display_msg')){
+          // Swal.fire(
+          //   'Oops!',
+          //   'It is Not You it is Us, Please try again after some time',
+          //   'error'
+          // );
+          this.spinner.show();
+          this.model1=[];
+          this.model2=[];
+        } else{
+          if(this.graphgenetaionInterval){
+            clearInterval(this.graphgenetaionInterval);
+          }
+         let fullgraphOne=this.fullgraph.data;
+          this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
+          this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
+          this.fullgraph_model1=this.fullgraph_model
+        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.filterPerformData = this.fullgraph_model;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1)
         this.gradientApplyforLinks()
@@ -407,7 +496,8 @@ export class FlowchartComponent implements OnInit {
         "cases" : this.selectedCaseArry
           }
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
-      this.model1=this.variantCombo.data[0].nodeDataArraycase
+      this.model1=this.variantCombo.data[0].nodeDataArraycase;
+      this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
       this.nodeAlignment();
       this.model2 = this.flowchartData(this.model1);
       this.gradientApplyforLinks()
@@ -891,7 +981,8 @@ closeNav() { // Variant list Close
   }
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
     this.resetFilter=true;
-    this.model1 = this.fullgraph_model
+    this.model1 = this.fullgraph_model;
+    this.filterPerformData = this.fullgraph_model;
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1)
     this.gradientApplyforNode();
@@ -913,7 +1004,7 @@ closeNav() { // Variant list Close
 
   resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
     this.resetFilter=true;
-    this.model1 = this.variantCombo.data[0].nodeDataArraycase
+    this.model1 = this.filterPerformData;
     this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1)
     this.gradientApplyforNode();
@@ -1011,7 +1102,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   this.activity_value=[];
   if(activity_slider==1&&path_slider==1){
     this.isNodata=true;
-    this.model1=this.fullgraph_model
+    this.model1=this.fullgraph_model;
+    this.filterPerformData = this.fullgraph_model;
     this.nodeAlignment()
     this.model2 = this.flowchartData(this.model1);
     this.gradientApplyforLinks()
@@ -1060,6 +1152,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
 
   readselectedNodes(SelectedActivities){
+ 
     if(SelectedActivities.length==0){
       this.resetActivityFiltermetrics();
      
@@ -1350,7 +1443,7 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
 }
 filterOverlay(){  
   this.dataValues = [];
-  let vv = this.variantCombo.data[0].nodeDataArraycase
+  let vv = this.filterPerformData;
     //Filter overlay open on filter icon click
   for(var i=1;i<vv.length-1;i++){
     this.dataValues.push(vv[i])
@@ -1370,6 +1463,7 @@ filterOverlay(){
   readselectedStartpoints(startPointValue){
     // console.log(startPointValue);
     let nodeModel1=this.fullgraph_model;
+    this.filterPerformData = this.fullgraph_model;
     let filterModel1=[];
     let index;
     filterModel1.push(nodeModel1[0]);
@@ -1443,6 +1537,87 @@ filterOverlay(){
       if (name == this.nodeArray[i].name) {
         return this.nodeArray[i].key;
       }
+    }
+  }
+
+  getselectedVariantList(e) {
+    let filtered_Variants = [];
+    let decryptedVariants: any = {};
+    if (e.length == 0) {
+      var varint = localStorage.getItem("variants");
+      if (varint != null) {
+        decryptedVariants = JSON.parse(atob(varint));
+      }
+      decryptedVariants.data.forEach(original_variant => {
+        filtered_Variants.push(original_variant);
+      });
+      this.varaint_data.data = filtered_Variants;
+      for (var i = 0; i < this.varaint_data.data.length; i++) {
+        this.varaint_data.data[i].selected = "inactive";
+      }
+      this.resetspinnermetrics();
+    } else {
+      const variantComboBody = {
+        "data_type": "variant_combo",
+        "pid": this.graphIds,
+        "cases": e
+      }
+
+      var varint = localStorage.getItem("variants");
+      if (varint != null) {
+        decryptedVariants = JSON.parse(atob(varint));
+      }
+      e.forEach(selected_variant => {
+        decryptedVariants.data.forEach(original_variant => {
+          if (selected_variant == original_variant.case) {
+              filtered_Variants.push(original_variant);
+          }
+        });
+      });
+      this.varaint_data.data = filtered_Variants;
+     let totalVariantSum = this.getVariantCasePercentage(this.varaint_data.data);
+      for (var i = 0; i < this.varaint_data.data.length; i++) {
+      this.varaint_data.data[i].casepercent = ((this.varaint_data.data[i].case_value/totalVariantSum)*100).toFixed(2);
+      if(decryptedVariants.data.length == filtered_Variants.length){
+        this.varaint_data.data[i].selected = "inactive";
+      } else { 
+      this.varaint_data.data[i].selected = "active";
+      }
+      }
+      this.rest.getVariantGraphCombo(variantComboBody).subscribe(res => {
+      this.variantCombo = res
+        this.model1 = this.variantCombo.data[0].nodeDataArraycase;
+        this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
+        this.nodeAlignment();
+        this.model2 = this.flowchartData(this.model1);
+        this.gradientApplyforLinks()
+        this.gradientApplyforNode()
+        this.linkCurvinessGenerate();
+      })
+
+      /**
+    * BPMN Boolean Variables
+    */
+      this.isFullGraphBPMN = false;
+      this.isSingleTraceBPMN = false;
+      this.isMultiTraceBPMN = true;
+      this.isSliderBPMN = false;
+    }
+  }
+
+  getVariantCasePercentage(varia_list){
+    var calculatePercent = 0;
+    var variant_percent = 0;
+    for(var i=0;i<varia_list.length;i++){
+      calculatePercent += varia_list[i].case_value;
+    }
+
+    return calculatePercent;
+  }
+
+  ngOnDestroy(){
+    if(this.graphgenetaionInterval){
+      clearInterval(this.graphgenetaionInterval);
     }
   }
 }
