@@ -850,7 +850,7 @@ label{
   }
   #canvas, #canvas1, #canvas2{
     height: 72vh;
-    width: 100%;
+    /* width: 100%; */
 }
 .overlay{
   width: 100%;

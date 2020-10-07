@@ -10,11 +10,14 @@
     <div class="breadcrumb">
         <ul class="breadcrumb">
             <li>
-                <a href="#"><img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
-                    <span class="module-heading-title">RPA Studio</span></a>
-                </li>
+                <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
+                <span class="module-heading-title" (click)="removenodes()">RPA Studio</span>
+            </li>
+            &nbsp;
            <i class="fa fa-arrow-right"></i>
-                            <li><a href="#">{{child_link.title}}</a></li>
+           
+           &nbsp;
+                <li>{{child_link.title}}</li>
           
         </ul>
 

@@ -31,13 +31,13 @@
     <div class="">
       <form id="DataDocTableForm">
         <table class="table" id="process_data">
-            <thead #header>
+            <thead #header >
                 <tr>
                     <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader" (click)= "sort(headValue)">
                     {{headValue}}
                     </th>
                 </tr>
-                <tr>
+                <tr >
                   <th class="tableHeader" *ngIf="headerData[0]">
                     <select name="cathead1" [disabled]='false' [(ngModel)]="cathead1"  class="form-control"  >
                       <option>String</option>
@@ -132,7 +132,7 @@
                   
                   </tr>
             </thead>
-            <tbody #container>
+            <tbody #container id="uploaded_data">
                 <tr *ngFor="let row of fileData|filter:searchTerm| paginate: { itemsPerPage: 100, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
                   <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val)"
                     [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1" 
