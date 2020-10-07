@@ -151,3 +151,54 @@
         font-weight: bold !important;
         /* font-size: 14px; */
     }
+
+    /*propeties panel */
+    .propertiesContainer{
+        position: absolute;
+        /* width: 315px; */
+        right: 0;
+        height: 69vh;
+        overflow: hidden scroll;
+        display: inline-flex;
+    }
+    .propertiesTitle{
+        padding: 10px 5px;
+        line-height: 12px;
+        font-size: 12px;
+        background-color: #ccc;
+        cursor: pointer;
+        border: 1px solid #ccc;
+        border-radius: 5px 0 0 5px;
+        height: 200px;
+        width: 25px;
+        position: relative;
+        top: 20vh;
+        overflow: hidden;
+    }
+    .propertiesTitle:hover{
+        background-color: grey;
+        color: white;
+    }
+    .propertiesTitle div{
+        position: relative;
+        top: 120px;
+        white-space: nowrap;
+        height: 5px;
+        transform: rotate(-90deg)
+    }
+    #properties{
+        width: 280px;
+    }
+    .slide-left, .slide-right{
+        max-width: 0;
+        -webkit-transition: max-width 0.5s ease-in-out;
+        -moz-transition: max-width 0.5s ease-in-out;
+        -o-transition: max-width 0.5s ease-in-out;
+        transition: max-width 0.5s ease-in-out;
+    }
+    .slide-right{
+        overflow: hidden;
+    }
+    .slide-left{
+        max-width: 300px;
+    }

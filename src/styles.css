@@ -2,6 +2,7 @@
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 @import "enjoyhint/enjoyhint.css";
 @import "~angular-notifier/styles";
+@import "~bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
@@ -268,6 +269,19 @@ a.nav-link.active {
   stroke: #0062cf;
 }
 
+/*BPMN PROPERTIES PANEL*/
+.bpp-properties-panel{
+  min-height: 69vh;
+  height: auto;
+}
+
+ul.bpp-properties-tabs-links{
+  overflow: auto hidden;
+}
+
+.bpp-properties-header > .label{
+  color: black;
+}
 
 /*RPA-Environments*/
 .env-table>thead>tr>th{

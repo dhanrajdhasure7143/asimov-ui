@@ -90,8 +90,9 @@ export class BpmnDiagramListComponent implements OnInit {
     let bpmnProcessStatus = this.selected_processInfo["bpmnProcessStatus"];
     if(binaryXMLContent && bpmnModelId && bpmnProcessStatus != "PENDING"){
       let bpmnVersion = this.selected_processInfo["version"];
+      let fromApprover=true;
       this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-      this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion }});
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, isfromApprover: fromApprover }});
     }
   }
 

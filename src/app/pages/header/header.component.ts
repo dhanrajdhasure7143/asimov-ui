@@ -46,8 +46,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     
     this.child_subscription = this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
     this.rpa.getUserRole(2).subscribe(res=>{
-      this.userRole=res.message;
-     
+    this.userRole=res.message;
+    
       localStorage.setItem('userRole',this.userRole);
     console.log("user role is",this.userRole)
     if(this.userRole.includes('SuperAdmin')){
@@ -107,7 +107,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
    
      }else if(this.userRole.includes('Process Architect')){
       this.pages = [
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"}
+        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/approvalWorkflow/home"}
       ];
    
      }else if(this.userRole.includes('User')){
