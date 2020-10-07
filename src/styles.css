@@ -33,11 +33,11 @@ body, html {
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgb(241, 238, 238); 
+  background: rgb(241, 238, 238);
   border-radius: 0px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgb(241, 238, 238); 
+  background: rgb(241, 238, 238);
 }
 /* Scroll bar styles :: ends */
 /* Top Nav :: starts */
@@ -64,7 +64,7 @@ body, html {
 .nav-link {
   margin-bottom: 25px !important;
   color: #052a53 !important;
-  border: 3px solid transparent !important; 
+  border: 3px solid transparent !important;
   background-image: url(/assets/images/Group211.svg);
   background-repeat: no-repeat;
   padding-left: 50px;
@@ -168,7 +168,7 @@ div[class^='diagram_container'] .djs-container svg{
   width: 100%;
 }
 .btn{
-  margin-right: 5px;
+  margin-right: 16px;
 }
 .btn-thin{
   height: 25px;
@@ -255,7 +255,7 @@ ul.nav.nav-tabs.justify-content-start li a {
   height: 38px;
     color: #000;
     background: lightgray;
-    
+
 }
 ul.nav.nav-tabs.justify-content-start{
   justify-content: start;
@@ -331,16 +331,16 @@ display:inline-block;
   cursor: pointer;float: right;font-weight: 700;border: 1px solid gray;padding: 1px 6px
 }
 .iconfont{
-font-size:15px; 
+font-size:15px;
 color:white;
 }
-.icon-button{  
- width: 50px; 
-height: 50px; 
-padding: 7px 10px; 
-border-radius: 25px; 
-font-size: 10px; 
-text-align: center; 
+.icon-button{
+ width: 50px;
+height: 50px;
+padding: 7px 10px;
+border-radius: 25px;
+font-size: 10px;
+text-align: center;
 
 }
 
