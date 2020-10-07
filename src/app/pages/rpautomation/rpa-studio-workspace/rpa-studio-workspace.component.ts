@@ -13,7 +13,9 @@ import { HttpClient} from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { data } from 'jquery';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
+
+declare var $:any;
 
 //import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
