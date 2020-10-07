@@ -6,6 +6,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner"; 
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as PropertiesPanelModule from 'bpmn-js-properties-panel';
+import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
+import lintModule from 'bpmn-js-bpmnlint';
+// import * as bpmnlintConfig from '../model/.bpmnlintrc';
+// import { registerBpmnJSPlugin } from 'camunda-modeler-plugin-helpers';
+// import propertiesPanelExtensionModule from 'properties-panel';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
 import {MatDialog} from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
@@ -75,10 +81,12 @@ export class UploadProcessModelComponent implements OnInit {
   pid:any;
   pivalues:any;
   processName:string;
+  fileType:string = "svg";
   category:string;
   randomNumber;
   pidId;
-
+  isfromApprover: any=false;
+  showProps: boolean=false;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
@@ -95,18 +103,25 @@ export class UploadProcessModelComponent implements OnInit {
       this.processName = params['processName'];
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.pid=params['pid'];
+      this.isfromApprover=params['isfromApprover'] == 'true';
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
     if(!this.isShowConformance){
       this.selected_notation = 0;
-      this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
-      this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
+      if(this.isfromApprover){
+        this.dt.changeParentModule({"route":"/pages/approvalWorkflow/home", "title":"Approval Workflow"});
+        this.dt.changeChildModule({"route":"", "title":"Notation Preview"});
+        }
+      else{
+        this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
+        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
+        }
       this.isConfBpmnModeler = false;
       this.getUserBpmnList(null);
     }else{
-      this.getUserBpmnList(null);
-      this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
-      this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
+        this.getUserBpmnList(null);
+        this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
+        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
     }
     this.getApproverList();
    }
@@ -164,7 +179,10 @@ export class UploadProcessModelComponent implements OnInit {
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     }
     if(!this.isShowConformance){
-      let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
+      let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]};
+      if(this.isfromApprover){
+         params['isfromApprover']= this.isfromApprover;
+      }
       this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     }
     let status_arr = this.isShowConformance?['APPROVED','REJECTED', 'PENDING']:['APPROVED','REJECTED']
@@ -215,14 +233,39 @@ export class UploadProcessModelComponent implements OnInit {
     this.global.notify(msg+" is fit to view port", "success")
   }
 
+  togglePosition(){
+    let el = document.getElementById("properties");
+    if(el){
+      el.classList.toggle("slide-left");
+      el.classList.toggle("slide-right");
+    }
+  }
+
   initiateDiagram(){
     let _self=this;
+    var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
+    var lintConf = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({
+        // linting: {
+        //   bpmnlint: lintConf
+        // },
+        additionalModules: [
+          PropertiesPanelModule,
+          PropertiesProviderModule,
+          // propertiesPanelExtensionModule,
+          lintModule
+        ],
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
         keyboard: {
           bindTo: window
+        },
+        propertiesPanel: {
+          parent: '#properties'
+        },
+        moddleExtensions: {
+          camunda: CamundaModdleDescriptor2
         }
       });
 
@@ -455,22 +498,49 @@ displayBPMN(){
     this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
   }
 
+  downloadFile(isConfBpmnModelerDownload, url){
+    var link = document.createElement("a");
+    link.href = url;
+    let fileName = isConfBpmnModelerDownload ? this.processName : this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
+    if(fileName.trim().length == 0 ) fileName = "newDiagram";
+    link.download = fileName+"."+this.fileType;
+    link.innerHTML = "Click here to download the notation";
+    link.click();
+  }
+
   downloadBpmn(isConfBpmnModelerDownload){
     let modeler_obj = isConfBpmnModelerDownload ? "confBpmnModeler":"bpmnModeler";
     if(this[modeler_obj]){
       let _self = this;
-      this[modeler_obj].saveXML({ format: true }, function(err, xml) {
-        var blob = new Blob([xml], { type: "application/xml" });
-        var url = window.URL.createObjectURL(blob);
-        var link = document.createElement("a");
-        link.href = url;
-        let d = new Date();
-        let fileName = _self.processName;
-        if(fileName.trim().length == 0 ) fileName = "newDiagram";
-        link.download = fileName+".bpmn";
-        link.innerHTML = "Click here to download the notation";
-        link.click();
-      });
+      if(this.fileType == "bpmn"){
+        this[modeler_obj].saveXML({ format: true }, function(err, xml) {
+          var blob = new Blob([xml], { type: "application/xml" });
+          var url = window.URL.createObjectURL(blob);
+         _self.downloadFile(isConfBpmnModelerDownload, url);
+        });
+      }else{
+        this[modeler_obj].saveSVG(function(err, svgContent) {
+          var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+          var url = window.URL.createObjectURL(blob);
+          if(_self.fileType == "svg"){
+            _self.downloadFile(isConfBpmnModelerDownload, url);
+          }else{
+            let canvasEl = document.createElement("canvas");
+            let canvasContext = canvasEl.getContext("2d");
+            let img = new Image();
+            img.onload=()=>{
+              canvasContext.drawImage(img,0,0,img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
+              let imgUrl;
+              if(_self.fileType == "png")
+                imgUrl = canvasEl.toDataURL("image/png");
+              else
+                imgUrl = canvasEl.toDataURL("image/jpg");
+              _self.downloadFile(isConfBpmnModelerDownload, imgUrl)
+            }
+            img.src = url;
+          }
+        });
+      }
     }
   }
    

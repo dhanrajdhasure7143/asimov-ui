@@ -10,9 +10,11 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { Rpa_Home_Hints } from "../model/rpa-home-module-hints"
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
+
+declare var $:any;
 
 @Component({
   selector: 'app-rpa-home',
