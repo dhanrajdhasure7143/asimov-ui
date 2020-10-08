@@ -6,11 +6,9 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner"; 
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
-// import * as PropertiesPanelModule from 'bpmn-js-properties-panel';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
-import { CustomPropsProvider } from "../bpmn-props-additional-tabs/IO_Spec/CustomPropsProvider";
-// import * as ElementTemplates from 'bpmn-js-properties-panel/lib/provider/camunda/element-templates/ElementTemplates';
-import { Modeler, OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames, OriginalPaletteProvider} from "../bpmn-props-additional-tabs/bpmn-js";
+import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
+import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
 import { MatDialog } from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
@@ -277,9 +275,9 @@ export class UploadProcessModelComponent implements OnInit {
         additionalModules: [
           PropertiesPanelModule,
           PropertiesProviderModule,
-          // CustomPropsProvider,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-          {[InjectionNames.propertiesProvider]: ['type', CustomPropsProvider]},
+          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+          // {[InjectionNames.propertiesProvider]: ['type', IOSpecificationProvider]},
           // {[InjectionNames.elementTemplates]: ['type', ElementTemplates]},
         ],
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
