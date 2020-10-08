@@ -5,7 +5,7 @@ declare var $: any;
 import html2canvas from 'html2canvas';
 import * as jsPDF from 'jspdf';
 import * as svg from 'save-svg-as-png';
-import { cursorTo } from 'readline';
+// import { cursorTo } from 'readline';
 
 @Component({
   selector: 'app-d3flowchart',
@@ -656,7 +656,7 @@ var wrap = function(text, width) {
 
 // Simple function to style the tooltip for the given node.
 var styleTooltip = function(name, description) {
-  return "<p class='name node-name'>" + name + '</p><i id="tooltipfilter" class="fa fa-filter filter-icon" (click)="filterOverlay()" aria-hidden="true"></i>' + description;
+  return "<p class='name node-name'>" + name + '</p><button class="fa fa-filter filter-icon"></button>' + description;
 };
 
 var tooltip = d3.select("body")
@@ -734,7 +734,13 @@ inner.selectAll("g.node")
       return styleTooltip(v, g.node(v).description) }
     })
     
-  .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true }); });
+  .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true }); 
+});
+  
+//   $('button').click(function(v) {
+//     console.log("test button",v);
+// });
+
 inner.selectAll('g.node')
 .enter().append("text")
     .attr("class", "node")
@@ -776,7 +782,7 @@ inner.selectAll('g.edgePath')
   return styleTooltip1(v)
  }
  })
-  .each(function(v) { $(this).tipsy({ gravity: "e",followCursor: true, opacity: 1, html: true}); });
+  .each(function(v) { $(this).tipsy({ gravity:"e", opacity: 1, html: true}); });
   
   // $('.element').tipsy({follow: 'x'});
   // $('.element').tipsy({follow: 'y'});
