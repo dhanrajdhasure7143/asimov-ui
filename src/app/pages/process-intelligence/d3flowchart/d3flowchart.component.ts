@@ -656,7 +656,7 @@ var wrap = function(text, width) {
 
 // Simple function to style the tooltip for the given node.
 var styleTooltip = function(name, description) {
-  return "<p class='name node-name'>" + name + '</p><button class="fa fa-filter filter-icon"></button>' + description;
+  return "<p class='name node-name'>" + name + '</p><button id="filterBtn" class="fa fa-filter filter-icon"></button>' + description;
 };
 
 var tooltip = d3.select("body")
@@ -736,9 +736,14 @@ inner.selectAll("g.node")
     
   .each(function(v) { $(this).tipsy({ gravity: "w", opacity: 1, html: true }); 
 });
+
+$('#filterBtn').tipsy({​​title: function() {​​
+  console.log("test button");
   
-//   $('button').click(function(v) {
-//     console.log("test button",v);
+   return this.getAttribute('original-title').toUpperCase(); }​​ }​​);
+  
+//   $('#filterBtn').click(function() {
+//     console.log("test button");
 // });
 
 inner.selectAll('g.node')

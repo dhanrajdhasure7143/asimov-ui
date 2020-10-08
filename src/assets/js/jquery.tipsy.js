@@ -99,6 +99,13 @@
                 };
                $tip.hover(set_hovered(true), set_hovered(false));
             }
+
+              $('#filterBtn').click(function() {
+                //   localStorage.setItem("filter",true)
+                    // console.log("test button");
+                    var modal = document.getElementById('filterModal');
+                    modal.style.display="block";
+                });
         },
         
         hide: function() {

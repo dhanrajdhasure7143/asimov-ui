@@ -305,7 +305,10 @@ export class FlowchartComponent implements OnInit {
             this.processGraphName=e.piName;
             }
           })
+        this.filterOverlay()
+
         }, 6000);
+
   }
 
   onchangegenerategraphId(selectedpiId){  // change process  graps in dropdown
@@ -388,6 +391,10 @@ export class FlowchartComponent implements OnInit {
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
         })
+        setTimeout(() => {
+        this.filterOverlay()
+          
+        }, 5000);
   }
 
   onchangeVaraint(datavariant) {      // Variant List sorting 
@@ -657,6 +664,9 @@ export class FlowchartComponent implements OnInit {
       
       for(var j=0; j< datalink.length; j++){
         var obj = {};
+        if ( this.nodeArray.some(e => e.name === datalink[j].linkNode)) {​​
+          /* vendors contains the element we're looking for */
+        
           // obj['from'] = this.getFromKey(label);
           // obj['to'] = this.getFromKey(datalink[j].linkNode);
           obj['from'] = label;
@@ -671,6 +681,7 @@ export class FlowchartComponent implements OnInit {
 
           this.linkdataArray.push(obj);
     }
+  }
         if (this.nodeArray[i].tool.includes('Start Frequency')) {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
@@ -1159,6 +1170,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.isNodata=true;
     this.model1=this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
+    
+
     this.nodeAlignment()
     this.model2 = this.flowchartData(this.model1);
     this.gradientApplyforLinks()
@@ -1207,6 +1220,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
 
   readselectedNodes(SelectedActivities){
+ console.log(SelectedActivities);
  
     if(SelectedActivities.length==0){
       this.resetActivityFiltermetrics();
@@ -1249,6 +1263,9 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1);
+        console.log(this.model1);
+        console.log(this.model2);
+        
         this.gradientApplyforLinks();
         this.gradientApplyforNode();
         this.linkCurvinessGenerate();
@@ -1296,7 +1313,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.isEndpoint_dropdwn=false;
   }
   closePopup(){   // close filter overlay
-      var modal = document.getElementById('myModal');
+      var modal = document.getElementById('filterModal');
       modal.style.display="none";
     }
 
@@ -1514,20 +1531,24 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
 }
 filterOverlay1(value){
 console.log(value);
-
 }
+
 filterOverlay(){  
   this.dataValues = [];
   let vv = this.filterPerformData;
+  console.log(this.filterPerformData);
+  
     //Filter overlay open on filter icon click
   for(var i=1;i<vv.length-1;i++){
     this.dataValues.push(vv[i])
     }
+    
+    localStorage.setItem("datavalues",this.dataValues)
   this.isFilterComponent=true;
-  var modal = document.getElementById('myModal');
-  modal.style.display="block";
-  var toolTipDIV = document.getElementById('toolTipDIV');
-    toolTipDIV.style.display = "none";
+  // var modal = document.getElementById('myModal');
+  // modal.style.display="block";
+  // var toolTipDIV = document.getElementById('toolTipDIV');
+  //   toolTipDIV.style.display = "none";
   }
 
   readOverlayValue(value){  //Filter overlay close on cross button click
@@ -1695,4 +1716,5 @@ filterOverlay(){
       clearInterval(this.graphgenetaionInterval);
     }
   }
+ 
 }

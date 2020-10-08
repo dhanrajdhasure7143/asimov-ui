@@ -23,7 +23,7 @@ import { GlobalScript } from 'src/app/shared/global-script';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { UUID } from 'angular2-uuid';
-
+ declare var require
 @Component({
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
@@ -244,8 +244,8 @@ export class UploadProcessModelComponent implements OnInit {
   initiateDiagram(){
     let _self=this;
     var CamundaModdleDescriptor2
-    // var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
-    // var lintConf = require("../model/.bpmnlintrc");
+    var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
+    var lintConf = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({

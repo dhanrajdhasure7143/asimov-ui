@@ -181,14 +181,14 @@
      </div>
  
  
- <div id="myModal" class="modal">
+ <div id="filterModal" class="modal">
          <div class="modal-content">
            <div class="modal-header">
              <span class="close" (click)="closePopup();">&times;</span>
              <h4>Filter</h4>
            </div>
          <div class="modal-body">
-             <div *ngIf="isFilterComponent">
+             <div >
              <app-filter [dataValues]='dataValues' [variantData]="varaint_data" [resetFilter]="resetFilter" [startArray]="startArray" [endArray]="endArray" (selectedNodes)="readselectedNodes($event)" (selectedEndpoints)="readselectedEndpoint($event)" (selectedStartpoints)="readselectedStartpoints($event)" (applyFilterValue)="readOverlayValue($event)" (selectedVariantOutput)="getselectedVariantList($event)"></app-filter>
              </div>
          </div>
