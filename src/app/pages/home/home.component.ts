@@ -76,7 +76,7 @@ export class HomeComponent implements OnInit {
 
       ];
 
-     }else if(this.userRole.includes('Data Architect') || this.userRole.includes('Process Modeler') || this.userRole.includes('Automation Designer') || this.userRole.includes('Process Architect')){
+     }else if(this.userRole.includes('Data Architect') || this.userRole.includes('Process Modeler') || this.userRole.includes('Automation Designer')){
       this.dataArr = [
         {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
       ];
@@ -95,10 +95,11 @@ export class HomeComponent implements OnInit {
         {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},
 
       ];
-    //  }else if(this.userRole.includes('Process Architect')){
-    //   this.dataArr = [
-    //     {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"approvalWorkflow/home"},
-    //   ];
+
+     }else if(this.userRole.includes('Process Architect')){
+      this.dataArr = [
+        {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"approvalWorkflow/home"},
+      ];
     //  }else if(this.userRole.includes('User')){
     //   this.dataArr = [
     //     {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},

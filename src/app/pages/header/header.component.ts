@@ -43,7 +43,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
 
-
     this.child_subscription = this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
     this.rpa.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
