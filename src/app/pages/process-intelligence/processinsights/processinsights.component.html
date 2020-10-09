@@ -72,14 +72,14 @@
         <div class="col-md-12 input-fields">
             <div class="col-sm-2"></div>
             <div class="col-sm-4 amountinputs">
-                <label for="">Avg Human Cost$</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1">
+                <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1">
                 <i (click)="editInput()"  class="fas fa-pen"></i>
             </div>
             <!-- <div class="col-sm-1"></div> -->
-            <div class="col-sm-4 amountinputs">
+            <!-- <div class="col-sm-4 amountinputs">
                 <label for="">Avg Robot Cost$</label><input type="text" name="robotValue" [disabled]=" !isEditable1" [(ngModel)]="input2">
                 <i (click)="editInput1()" class="fas fa-pen"></i>
-            </div>
+            </div> -->
         </div>
     <!-- </div> -->
     <br>
@@ -90,10 +90,10 @@
             </div>
             <div class="col-sm-4">
                 <div class="col-sm-12 box-content hedline1">
-                    <p>Content 1</p>
+                    <p><strong>Business insights</strong> </p>
                 </div>
                 <div class="col-sm-12 box-content hedline2">
-                    <p>Content 1</p>
+                    <p><strong>Recommdations</strong> </p>
                 </div>
             </div>
         

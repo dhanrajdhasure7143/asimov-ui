@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
  import * as Highcharts from 'highcharts';
 import { RestApiService } from '../../services/rest-api.service';
 import HC_more from 'highcharts/highcharts-more' //module
+import { Router, ActivatedRoute } from '@angular/router';
 HC_more(Highcharts) 
  enum VariantList {
   'Most Common',
@@ -33,10 +34,24 @@ export class ProcessinsightsComponent implements OnInit {
   checkboxValue:boolean=false;
   isEditable:boolean=false;
   isEditable1:boolean=false;
-
-  constructor(private rest:RestApiService) { }
+  variant_Duration_list:any = [];
+  totalMeanDuration:any;
+  totalMedianDuration:any;
+  graphIds:any;
+  constructor(
+      private rest:RestApiService,
+      private route:ActivatedRoute
+      ) { }
 
   ngOnInit() {
+      var piId;
+    this.route.queryParams.subscribe(params => {
+        if(params['wpiId']!=undefined){
+            let wpiIdNumber = parseInt(params['wpiId']);
+            piId=wpiIdNumber;
+            this.graphIds = piId;
+          }
+        });
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     this.variant_list_options = VariantList;
     this.table1=[{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"}]
@@ -46,6 +61,27 @@ export class ProcessinsightsComponent implements OnInit {
     this.addpiechart1();
     this.addpiechart2();
     this.getAllVariantList()
+
+    this.getDurationCall();
+  }
+
+  getDurationCall(){
+      var reqObj = {
+          //pid: this.graphIds,
+          pid:'671229',
+          data_type:'variant_metrics'
+      }
+      this.rest.getPIInsightMeanMedianDuration(reqObj)
+        .subscribe((res:any)=>{
+            console.log(res);
+            this.variant_Duration_list = res.data;
+            this.totalMeanDuration = res.totalMeanDuration;
+            this.totalMedianDuration = res.totalMedianDuration;            
+        },
+        (err=>{
+            console.log("Internal server error, Please try again later.")
+        }))
+        
   }
 
   addcharts(){
