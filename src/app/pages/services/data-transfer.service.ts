@@ -13,6 +13,7 @@ export interface Notification{
 export class DataTransferService {
 
   private parentModule:BehaviorSubject<any> = new BehaviorSubject<any>({});
+
   current_parent_module = this.parentModule.asObservable();
 
   changeParentModule(module:any){
