@@ -30,7 +30,9 @@ export class ProcessinsightsComponent implements OnInit {
   variant_list_options;
   selectedCaseArry:any=[];
   public caselength: number;
-  checkboxValue:boolean=false
+  checkboxValue:boolean=false;
+  isEditable:boolean=false;
+  isEditable1:boolean=false;
 
   constructor(private rest:RestApiService) { }
 
@@ -599,6 +601,13 @@ onchangeVaraint(datavariant) {      // Variant List sorting
         this.varaint_data.data[i].selected = "inactive";
       }
     }
+  }
+
+  editInput(){
+    this.isEditable=!this.isEditable
+  }
+  editInput1(){
+    this.isEditable1=!this.isEditable1
   }
 
 
