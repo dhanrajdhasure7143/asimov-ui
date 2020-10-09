@@ -59,7 +59,7 @@ span.password::before{
     font-variant: normal;
     text-rendering: auto;
     font-weight: 600;
-} 
+}
 h6{
     color:rgba(11, 108, 236, 0.774);
     font-weight:700;
@@ -81,9 +81,9 @@ h6{
 .tour_guide{
   text-align: center;
   color: #0061cf;
-  font-size: 12px;
+  font-size: 11px;
   cursor: pointer;
-  margin: 5px;
+  margin: 5px 12px 5px;
   position: fixed;
   bottom: 10px;
   right: 10px;
@@ -185,7 +185,7 @@ svg:hover {
 #brand{
   color: #0062cf;
   font-size:50px;
-} 
+}
 .header_nav li{
   color: #0062cf;
   list-style-type: none;
@@ -241,7 +241,7 @@ i.fas.fa-chevron-down {
 
 .dropdown a:hover {background-color: white !important;}
 
-.show {display: block;} 
+.show {display: block;}
 .fa-cog{
 padding-right: 5px;
 }

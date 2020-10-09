@@ -5,7 +5,7 @@
         <form id="moduleSelectionForm" #moduleSelectionForm="ngForm" (ngSubmit)="navigateToModule()">
             <div class="row">
                 <div class="col-sm-2 dataCardBox" *ngFor="let eachData of dataArr;let i=index;trackBy:loopTrackBy">
-                    <div [id]="eachData.id" class="dataCard" [ngClass]="selectedIndex == i?'active':''" (click)="selectedIndex = i">
+                    <div [id]="eachData.id" class="dataCard" [ngClass]="selectedIndex == i?'active':''" (click)="selectedIndex = i"  (dblclick)="navigateToModule()">
                         <img [src]="eachData.img"/>
                         <h5 id="subheading">{{eachData.title}}</h5>
                     </div>
