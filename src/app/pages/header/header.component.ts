@@ -58,15 +58,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
          ];
 
 
-    //  }else if(this.userRole.includes('Admin')){
-    //   this.pages = [
-    //     {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-    //     {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-    //     {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-    //     {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
-
-    //   ];
-
      }else if(this.userRole.includes('RPA Admin')){
       this.pages = [
         {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
@@ -86,18 +77,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
       ];
 
-    //  }else if(this.userRole.includes('Process Designer')){
-    //   this.pages = [
-    //     {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-
-    //   ];
-
-    //  }else if(this.userRole.includes('Automation Designer')){
-    //   this.pages = [
-    //     {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-
-    //   ];
-
      }else if(this.userRole.includes('Process Analyst')){
       this.pages = [
         {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
@@ -108,15 +87,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.pages = [
         {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/approvalWorkflow/home"}
       ];
-
-    //  }else if(this.userRole.includes('User')){
-    //   this.pages = [
-    //     {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-    //     {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-    //     {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-    //     {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
-
-    //   ];
 
      }
      else{

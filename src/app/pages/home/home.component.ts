@@ -54,15 +54,6 @@ export class HomeComponent implements OnInit {
          ];
      }
 
-    //  else if(this.userRole.includes('Admin')){
-    //   this.dataArr = [
-    //     {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},
-    //     {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
-    //     {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"},
-    //     {"id":"SOBox", "img":"assets/images/Group 216.1.svg", "title":"Service Orchestration", "link":"serviceOrchestration/home"}
-    //   ];
-
-    //  }
      else if(this.userRole.includes('RPA Admin')){
       this.dataArr = [
         {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"},
@@ -80,16 +71,7 @@ export class HomeComponent implements OnInit {
       this.dataArr = [
         {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
       ];
-    //  }else if(this.userRole.includes('Process Modeler')){
-    //   this.dataArr = [
-    //     {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
 
-    //   ];
-    //  }else if(this.userRole.includes('Automation Designer')){
-    //   this.dataArr = [
-    //     {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
-
-    //   ];
      }else if(this.userRole.includes('Process Analyst')){
       this.dataArr = [
         {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},
@@ -100,13 +82,6 @@ export class HomeComponent implements OnInit {
       this.dataArr = [
         {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"approvalWorkflow/home"},
       ];
-    //  }else if(this.userRole.includes('User')){
-    //   this.dataArr = [
-    //     {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},
-    //     {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
-    //     {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"},
-    //     {"id":"SOBox", "img":"assets/images/Group 216.1.svg", "title":"Service Orchestration", "link":"serviceOrchestration/home"}
-    //   ];
 
      }else{
 
@@ -115,12 +90,7 @@ export class HomeComponent implements OnInit {
       this.error = "Please complete your registration process";
 
     })
-    // this.dataArr = [
-    //   {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},
-    //   {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
-    //   {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"},
-    //   {"id":"SOBox", "img":"assets/images/Group 216.1.svg", "title":"Service Orchestration", "link":"serviceOrchestration/home"}
-    // ];
+
      this.dt.changeHints(this.hints.homeHints);
   }
 
