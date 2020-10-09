@@ -11,7 +11,6 @@ import { BpmnModel } from '../model/bpmn-autosave-model';
 import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
-import { JsonpInterceptor } from '@angular/common/http';
 
 @Component({
   selector: 'app-create-bpmn-diagram',
@@ -59,8 +58,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getApproverList();
     this.getUserBpmnList();
-    var user= JSON.parse(localStorage.getItem('reloadcreateData'))
-      this.updated_date_time=user
   }
  
   // ngOnDestroy(){
@@ -272,7 +269,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
         this.autosaveObj = data;
         this.updated_date_time = new Date();
         this.spinner.hide();
-        localStorage.setItem('reloadcreateData',JSON.stringify(this.updated_date_time))
       },
       err => {
         this.spinner.hide();
