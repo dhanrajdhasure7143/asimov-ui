@@ -16,7 +16,7 @@ import {
     isIoProperty,
     parseIoProperty,
     createIoProperty
-  } from '../process-io-helper';
+  } from './IOSpec.helper';
   
   import {
     getExtensionElements

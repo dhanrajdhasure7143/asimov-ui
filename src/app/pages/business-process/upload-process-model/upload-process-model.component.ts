@@ -3,14 +3,11 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
-import * as PropertiesPanelModule from 'bpmn-js-properties-panel';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
-import lintModule from 'bpmn-js-bpmnlint';
-// import * as bpmnlintConfig from '../model/.bpmnlintrc';
-// import { registerBpmnJSPlugin } from 'camunda-modeler-plugin-helpers';
-// import propertiesPanelExtensionModule from 'properties-panel';
+import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
+import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -21,7 +18,32 @@ import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { UUID } from 'angular2-uuid';
 
-declare var require: any;
+declare var require:any;
+
+const customModdle = {
+  name: "customModdle",
+  uri: "http://example.com/custom-moddle",
+  prefix: "custom",
+  xml: {
+    tagAlias: "lowerCase"
+  },
+  associations: [],
+  types: [
+    {
+      "name": "ExtUserTask",
+      "extends": [
+        "bpmn:UserTask"
+      ],
+      "properties": [
+        {
+          "name": "worklist",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+  ]
+};
 
 @Component({
   selector: 'app-upload-process-model',
@@ -243,18 +265,17 @@ export class UploadProcessModelComponent implements OnInit {
   initiateDiagram(){
     let _self=this;
     var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
-    var lintConf = require("../model/.bpmnlintrc");
+    // CamundaModdleDescriptor2.prefix = "vaidi";
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({
-        // linting: {
-        //   bpmnlint: lintConf
-        // },
         additionalModules: [
           PropertiesPanelModule,
           PropertiesProviderModule,
-          // propertiesPanelExtensionModule,
-          lintModule
+          {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
+          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+          // {[InjectionNames.propertiesProvider]: ['type', IOSpecificationProvider]},
+          // {[InjectionNames.elementTemplates]: ['type', ElementTemplates]},
         ],
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
         keyboard: {
@@ -264,7 +285,7 @@ export class UploadProcessModelComponent implements OnInit {
           parent: '#properties'
         },
         moddleExtensions: {
-          camunda: CamundaModdleDescriptor2
+          camunda: CamundaModdleDescriptor2 //customModdle
         }
       });
 
