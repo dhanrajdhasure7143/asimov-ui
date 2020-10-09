@@ -28,7 +28,6 @@ export class D3flowchartComponent {
     @Output() isjpeg=new EventEmitter<boolean>()
     @Output() ispng=new EventEmitter<boolean>()
     @Output() issvg=new EventEmitter<boolean>();
-    @Output() isfilterOverlay=new EventEmitter<boolean>();
     class1:any;
   class2: any;
   class3: any;
@@ -85,7 +84,7 @@ export class D3flowchartComponent {
 
     processGraph(){
         // Create a new directed graph
-    var g = new dagreD3.graphlib.Graph().setGraph({ ranksep: 120});
+    var g = new dagreD3.graphlib.Graph().setGraph({ ranksep: 100,rankdir: "TB"});
 
     // nodesep: 30,
     //   ranksep: 150,
@@ -1182,10 +1181,6 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           d3.selectAll(".node").style("opacity","1");
         }
       }
-  filterOverlay(){
-    console.log("test");
-    this.isfilterOverlay.emit(true)
-  }
       
 }
   

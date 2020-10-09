@@ -26,6 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
+import { ProcessinsightsComponent } from './processinsights/processinsights.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
     DataselectionComponent,
     PibpmnfilterComponent,
     XesdocumentComponent,
-    D3flowchartComponent
+    D3flowchartComponent,
+    ProcessinsightsComponent
   ],
   imports: [
     CommonModule,

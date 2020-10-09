@@ -307,7 +307,7 @@ export class FlowchartComponent implements OnInit {
           })
         this.filterOverlay()
 
-        }, 6000);
+        }, 7000);
 
   }
 
@@ -394,7 +394,7 @@ export class FlowchartComponent implements OnInit {
         setTimeout(() => {
         this.filterOverlay()
           
-        }, 5000);
+        }, 7000);
   }
 
   onchangeVaraint(datavariant) {      // Variant List sorting 
@@ -1529,9 +1529,6 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
       }
 
 }
-filterOverlay1(value){
-console.log(value);
-}
 
 filterOverlay(){  
   this.dataValues = [];
@@ -1543,7 +1540,7 @@ filterOverlay(){
     this.dataValues.push(vv[i])
     }
     
-    localStorage.setItem("datavalues",this.dataValues)
+    // localStorage.setItem("datavalues",this.dataValues)
   this.isFilterComponent=true;
   // var modal = document.getElementById('myModal');
   // modal.style.display="block";
@@ -1715,6 +1712,10 @@ filterOverlay(){
     if(this.graphgenetaionInterval){
       clearInterval(this.graphgenetaionInterval);
     }
+  }
+
+  viewInsights(){
+    this.router.navigate(["/pages/processIntelligence/insights"])
   }
  
 }
