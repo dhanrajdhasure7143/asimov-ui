@@ -1,8 +1,5 @@
-import {EntryFactory, IPropertiesProvider} from './bpmn-js';
+import { IPropertiesProvider } from './bpmn-js';
 import { is, getBusinessObject } from 'bpmn-js/lib/util/ModelUtil';
-var formHelper = require('bpmn-js-properties-panel/lib/helper/FormHelper');
-var copy = require('clipboard-copy');
-var domify = require('min-dom').domify;
 import Swal from 'sweetalert2';
 
 import * as IOHelper from './IOSpec.helper';
@@ -10,6 +7,9 @@ import processIoProps from './IOSpec.props';
 import processIoEntryProps from './IOSpec.entryprops';
 
 declare var require:any;
+var formHelper = require('bpmn-js-properties-panel/lib/helper/FormHelper');
+var copy = require('clipboard-copy');
+var domify = require('min-dom').domify;
 
 export class PreviewFormProvider implements IPropertiesProvider {
 
@@ -19,7 +19,6 @@ export class PreviewFormProvider implements IPropertiesProvider {
 
   getTabs(element) {
     let self = this;
-    // this.injector.invoke(this.bpmnPropertiesProvider, this);
     let actualTabs = this.bpmnPropertiesProvider.getTabs(element);
     actualTabs.forEach((each_tab)=>{
       if(each_tab.id == "forms" && each_tab.groups.length && each_tab.groups[0].entries.length >0){

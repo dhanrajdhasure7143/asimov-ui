@@ -9,6 +9,7 @@ import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
+import lintModule from 'bpmn-js-bpmnlint';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
 import { MatDialog } from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
@@ -23,31 +24,6 @@ import { UUID } from 'angular2-uuid';
 
 declare var require:any;
 
-const customModdle = {
-  name: "customModdle",
-  uri: "http://example.com/custom-moddle",
-  prefix: "custom",
-  xml: {
-    tagAlias: "lowerCase"
-  },
-  associations: [],
-  types: [
-    {
-      "name": "ExtUserTask",
-      "extends": [
-        "bpmn:UserTask"
-      ],
-      "properties": [
-        {
-          "name": "worklist",
-          "isAttr": true,
-          "type": "String"
-        }
-      ]
-    },
-  ]
-};
-
 @Component({
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
@@ -56,20 +32,20 @@ const customModdle = {
 })
 export class UploadProcessModelComponent implements OnInit {
   isShowConformance:boolean = false;
-   hideUploadContainer:boolean=false;
-   hideCreateContainer:boolean=false;
-   hideOptionsContainer:boolean=true;
-   isUploaded:boolean=false;
-   bpmnModeler;
-   viewer:any;
-   confBpmnModeler;
-   reSize:boolean=false;
-   confBpmnXml;
-   receivedbpmn:any;
-   createDiagram:boolean = false;
-   isConfBpmnModeler:boolean = true;
-   isHiddenDiff:boolean=true;
-   displayChanges:boolean=false;
+  hideUploadContainer:boolean=false;
+  hideCreateContainer:boolean=false;
+  hideOptionsContainer:boolean=true;
+  isUploaded:boolean=false;
+  bpmnModeler;
+  viewer:any;
+  confBpmnModeler;
+  reSize:boolean=false;
+  confBpmnXml;
+  receivedbpmn:any;
+  createDiagram:boolean = false;
+  isConfBpmnModeler:boolean = true;
+  isHiddenDiff:boolean=true;
+  displayChanges:boolean=false;
   res1: string;
   oldxmlstring: string;
   newxmlsttring: string;
@@ -268,17 +244,19 @@ export class UploadProcessModelComponent implements OnInit {
   initiateDiagram(){
     let _self=this;
     var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
-    // CamundaModdleDescriptor2.prefix = "vaidi";
+    var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({
+        linting: {
+          bpmnlint: bpmnlintConfig
+        },
         additionalModules: [
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
           {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
-          // {[InjectionNames.propertiesProvider]: ['type', IOSpecificationProvider]},
-          // {[InjectionNames.elementTemplates]: ['type', ElementTemplates]},
+          lintModule
         ],
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
         keyboard: {
@@ -288,7 +266,7 @@ export class UploadProcessModelComponent implements OnInit {
           parent: '#properties'
         },
         moddleExtensions: {
-          camunda: CamundaModdleDescriptor2 //customModdle
+          camunda: CamundaModdleDescriptor2
         }
       });
 

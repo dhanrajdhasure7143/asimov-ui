@@ -33,6 +33,7 @@
     "angular-notifier": "^6.0.1",
     "angular-split": "^3.0.3",
     "angular2-uuid": "^1.1.1",
+    "babel-preset-es2015": "^6.24.1",
     "bootstrap": "3.4.1",
     "bpmn": "^0.2.2",
     "bpmn-js": "^6.3.0",
