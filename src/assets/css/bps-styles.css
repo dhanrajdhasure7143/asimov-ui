@@ -313,6 +313,7 @@ margin-right: -85px;
 }
 .bjs-container{
   zoom: 0.8;
+  margin-top: 40px;
 }
 .canvasOpt{
   display: inline-block;
@@ -439,6 +440,11 @@ margin-right: -85px;
     height: 205px;
     border-radius: 25px;
     border-color: #8080804a;
+}
+.fit_button{
+  z-index: 200;
+  position: absolute;
+  right: 25px;
 }
 .create-logo{
   margin-top: 20px;
@@ -628,4 +634,8 @@ background-color: #3ea307 !important;
 }
 .approval_workflow_properties{
 padding-top: 11px;
+}
+.approver_fit_btn{
+  height: 46px;
+  right: 0px;
 }

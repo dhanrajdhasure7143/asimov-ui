@@ -100,6 +100,14 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
    }
+   fitNotationView(){
+    let canvas = this.bpmnModeler.get('canvas');
+    canvas.zoom('fit-viewport');
+    let msg = "Notation";
+    if(document.getElementById("canvas") )
+    this.global.notify(msg+" is fit to view port", "success")
+
+   }
 
    getApproverList(){
      this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
@@ -166,7 +174,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation 
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
-      this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+      this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
     }
     let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml))); 
     this.bpmnModeler.importXML(decrypted_bpmn, function(err){
