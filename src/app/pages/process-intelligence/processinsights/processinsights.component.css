@@ -19,3 +19,104 @@ thead{
     background-color: #a8c841 !important;
 
 }
+.amountinputs input{
+    width: 80px !important;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    text-align: center !important;
+    margin-left: 6px;
+    height: 20px !important;
+}
+.input-fields{
+    margin-top: 20px;
+}
+.input-fields label{
+    font-weight: 800px;
+}
+
+.sidenav {
+    width: 0;
+    position: absolute;
+    z-index: 100;
+    top: 150px;
+    right: 0;
+    padding-left:0px;
+    transition: 0.5s;
+    padding-top: 10px;
+  }
+  .variants_slider{
+    max-height: 700px;
+    overflow: scroll;
+  }
+
+  .sidenav .closebtn {
+    top: 0;
+    right: 0px;
+    font-size: 36px;
+    margin-left: 80%;
+    margin-top: 0px;
+  }
+  
+  #main {
+    transition: margin-right .5s;
+  }
+  .activevaraint{
+    color: #0162cf;
+  }
+  .events1 p{
+    font-size: 12px;
+  }
+  .activevaraint {
+    border: 1px solid green !important;
+  }
+  .tracking_detsils1{
+    border:1px solid #f4f4f4;
+    border-radius: 10px;
+    padding-right: 0px;
+    background-color: white;
+  }
+  .variant_border{
+    border-top: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
+    margin-left: 0px;
+    cursor: pointer;
+  }
+  .variant_border:hover{
+    background-color: #f4f4f4;
+    box-shadow: 3px 3px 20px -3px rgba(0,0,0,.50);
+  }
+  .check_box span{
+    margin-left: 5px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .event2{
+    padding-left: 40px;
+    font-weight: 600;
+    font-size: 12px;
+    padding-right: 0px;
+  }
+  .variant2{
+    padding-bottom: 10px; 
+  }
+  .variant_parcent{
+    padding: 0px !important;
+  }
+  .variant_border .event3{
+    padding-top: 10px;
+    text-align: center;
+    padding-left: 0px;
+  }
+  .variant_play{
+    z-index: 10;
+  }
+  .box-content{
+    border: 1px solid black;
+    color: black;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  .hedline1{
+      background-color: red;
+  }

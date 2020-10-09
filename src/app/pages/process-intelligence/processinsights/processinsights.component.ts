@@ -1,5 +1,13 @@
 import { Component, OnInit } from '@angular/core';
  import * as Highcharts from 'highcharts';
+import { RestApiService } from '../../services/rest-api.service';
+
+ enum VariantList {
+  'Most Common',
+  'Least Common',
+  'Fastest Throughput',
+  'Slowest Throughput'
+}
 @Component({
     selector: 'app-processinsights',
     templateUrl: './processinsights.component.html',
@@ -11,18 +19,31 @@ export class ProcessinsightsComponent implements OnInit {
   table1:any=[];
   chart2:any;
   piechart1:any
-  piechart2:any
-  constructor() { }
+  piechart2:any;
+  isvariantListOpen:boolean=true;
+  input1:any=20;
+  input2:any=10;
+  variant_list:any;
+  varaint_data: any;
+  select_varaint:any;
+  variant_list_options;
+  selectedCaseArry:any=[];
+  public caselength: number;
+  checkboxValue:boolean=false
+
+  constructor(private rest:RestApiService) { }
 
   ngOnInit() {
+    this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
+    this.variant_list_options = VariantList;
     this.table1=[{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"}]
     this.addcharts();
     this.addchart2();
     this.verticleBarGraph();
     this.addpiechart1();
     this.addpiechart2();
+    this.getAllVariantList()
   }
-
 
   addcharts(){
     this.chart1={
@@ -218,13 +239,10 @@ export class ProcessinsightsComponent implements OnInit {
       }, {
           name: 'Male',
           color: 'rgba(119, 152, 191, .5)',
-          data: [[174.0, 65.6],]
+          data: [[174.0, 65.6]]
       }]
   }
-              
-
   Highcharts.chart('scatter',this.chart2); 
-  
   
 }
 
@@ -368,8 +386,136 @@ addpiechart2()
 Highcharts.chart('piechart2', this.piechart2);
           
 }
+openVariantListNav(){   //variant list open
+  document.getElementById("mySidenav").style.width = "310px";
+  // document.getElementById("main").style.marginRight = "310px";
+  // this.isvariantListOpen=false;
+  }
 
+closeNav() { // Variant list Close
+  document.getElementById("mySidenav").style.width = "0px";
+  // document.getElementById("main").style.marginRight= "0px";
+  // this.isvariantListOpen=true;
+  }
 
+getAllVariantList(){
+  let variantData=localStorage.getItem("variants")
+  this.varaint_data=JSON.parse(atob(variantData))
+  console.log(this.varaint_data);
+}
+
+caseParcent(parcent){       // case persent value in variant list
+  if(String(parcent).indexOf('.') != -1){
+  let perc=parcent.toString().split('.')
+// return parcent.toString().slice(0,5);
+return perc[0]+'.'+perc[1].slice(0,2);
+  }else{
+    return parcent;
+  }
+}
+timeConversion(millisec) {
+  var seconds:any = (millisec / 1000).toFixed(1);
+  var minutes:any = (millisec / (1000 * 60)).toFixed(1);
+  var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
+  var days = (millisec / (1000 * 60 * 60 * 24)).toFixed(1);
+  if (seconds < 60) {
+      return seconds + " Sec";
+  } else if (minutes < 60) {
+      return minutes + " Min";
+  } else if (hours < 24) {
+      return hours + " Hrs";
+  } else {
+      return days + " Days"
+  }
+}
+onchangeVaraint(datavariant) {      // Variant List sorting 
+  switch (datavariant) {
+    case "0":
+      this.varaint_data.data.sort(function (a, b) {
+        return b.casepercent - a.casepercent;
+      });
+      break;
+    case "1":
+      this.varaint_data.data.sort(function (a, b) {
+        return a.casepercent - b.casepercent;
+      });
+      break;
+    case "2":
+      this.varaint_data.data.sort(function (a, b) {
+        return a.days - b.days;
+      });
+      break;
+    case "3":
+      this.varaint_data.data.sort(function (a, b) {
+        return b.days - a.days;
+      });
+      break;
+  }
+}
+  caseIdSelect(selectedData, index) { // Case selection on Variant list
+
+    if (this.varaint_data.data[index].selected == "inactive") {
+      var select = {
+        case: selectedData.case,
+        casepercent: selectedData.casepercent,
+        name: selectedData.name,
+        detail: selectedData.detail,
+        days: selectedData.days,
+        varaintDetails: selectedData.varaintDetails,
+        casesCovred: selectedData.casesCovred,
+        trace_number:selectedData.trace_number,
+        case_value:selectedData.case_value,
+        selected: "active"
+      };
+      this.varaint_data.data[index] = select;
+    } else {
+      var select = {
+        case: selectedData.case,
+        casepercent: selectedData.casepercent,
+        name: selectedData.name,
+        detail: selectedData.detail,
+        days: selectedData.days,
+        varaintDetails: selectedData.varaintDetails,
+        casesCovred: selectedData.casesCovred,
+        trace_number:selectedData.trace_number,
+        case_value:selectedData.case_value,
+        selected: "inactive"
+      };
+      this.varaint_data.data[index] = select;
+    }
+
+    this.selectedCaseArry = [];
+    // this.selectedTraceNumbers = [];
+    for (var i = 0; i < this.varaint_data.data.length; i++) {
+      if (this.varaint_data.data[i].selected == "active") {
+        var casevalue = this.varaint_data.data[i].case
+        this.selectedCaseArry.push(casevalue);
+        // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
+      }
+    };
+    this.caselength = this.selectedCaseArry.length;
+
+    // console.log(this.varaint_data.data.length);
+    
+    if(this.selectedCaseArry.length ==this.varaint_data.data.length){
+      this.checkboxValue = true
+      // this.options = Object.assign({}, this.options, {disabled: false});
+    }else{
+      this.checkboxValue = false
+      // this.options = Object.assign({}, this.options, {disabled: true});
+    }
+  }
+  selectAllVariants() {   // Select all variant list
+    if (this.checkboxValue == true) {
+      for (var i = 0; i < this.varaint_data.data.length; i++) {
+        this.varaint_data.data[i].selected = "active"
+      }
+    } else {
+      for (var i = 0; i < this.varaint_data.data.length; i++) {
+        this.varaint_data.data[i].selected = "inactive";
+      }
+    }
+  }
 
 
 }

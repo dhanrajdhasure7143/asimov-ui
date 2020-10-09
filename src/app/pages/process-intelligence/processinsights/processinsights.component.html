@@ -1,11 +1,56 @@
 <div class="container">
     <div class="row">
+
+
+        <div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
+            <div class='variants_slider'>
+               <div class="col-sm-12 select_drpdwnone">
+                    <div class="col-sm-12"><button class="closebtn" (click)="closeNav()">&times;</button></div>
+                    <div class="col-sm-12 form-group">
+                        <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='col-sm-12 row variant2'>
+                       <div class="col-sm-7 check_box">
+                           <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()"><span class="">Select all</span>
+                       </div>
+                       <div class='col-sm-5 event2'>Time Taken</div>
+                </div>
+                <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
+                    <div (click)="caseIdSelect(data,i)"  class='col-sm-4 event3'>Variant <b>{{i+1}}</b></div>
+                    <div class='col-sm-6 variant_parcent'>
+                        <div (click)="caseIdSelect(data,i)" class='col-sm-12'>Cases Covered <b>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</b></div>
+                        <div (click)="caseIdSelect(data,i)" class='col-sm-3'></div>
+                    </div>
+                    <div class='col-sm-2' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
+                </div>
+                </div>
+                
+    </div>
+
+
         <div class="col-md-12">
-            <div class="pull-right">
-                <button class="btn btn-primary eiap-btn">Variant List</button>
+            <div class="col-sm-10">
+                <div class="col-sm-12 box-content hedline1">
+                    <p>Content 1</p>
+                </div>
+                <div class="col-sm-12 box-content hedline2">
+                    <p>Content 2</p>
+                </div>
+                <div class="col-sm-12 box-content hedline3">
+                    <p>Content 3</p>
+                </div>
+                <div class="col-sm-12 box-content hedline4">
+                    <p>Content 4</p>
+                </div>
+            </div>
+            <div class="col-sm-2 pull-right">
+                <button class="btn btn-primary eiap-btn" (click)="openVariantListNav()">Variant List</button>
             </div>
         </div>
-        <div class='col-md-12'>
+        <div class='col-md-12 boxes'>
             <div class="col-sm-1 "></div>
             <div class="col-sm-2 divbox"> Avg Time Spent</div>
             <div class="col-sm-1 "></div>
@@ -15,6 +60,16 @@
             <div class="col-sm-2 divbox"> Avg Cost</div>
             <div class="col-sm-1 "></div>
             <div class="col-sm-2 divbox"> Avg Savings</div>
+        </div>
+        <div class="col-md-12 input-fields">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4 amountinputs">
+                <label for="">Avg Human Cost$</label><input type="text" name="humanValue" [(ngModel)]="input1">
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-4 amountinputs">
+                <label for="">Avg Robot Cost$</label><input type="text" name="robotValue" [(ngModel)]="input2">
+            </div>
         </div>
     <!-- </div> -->
     <br>
