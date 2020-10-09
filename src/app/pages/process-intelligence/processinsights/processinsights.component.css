@@ -1,4 +1,21 @@
 .divbox{
     border: 1px solid black;
     height: 50px;
+    text-align: center;
+    font-weight: 700;
+}
+.btm-line{
+    border: 1px solid black;
+}
+.table1-heading{
+    font-weight: 800;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+.table-striped>tbody>tr:nth-of-type(even){
+    background-color: #ebf2d3 !important;
+}
+thead{
+    background-color: #a8c841 !important;
+
 }

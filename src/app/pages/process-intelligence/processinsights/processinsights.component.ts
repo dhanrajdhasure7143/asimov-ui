@@ -7,15 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProcessinsightsComponent implements OnInit {
   chart1:any;
+  verticleGraph:any;
+  table1:any=[];
+  chart2:any;
+  piechart1:any
+  piechart2:any
   constructor() { }
 
   ngOnInit() {
-    this.addcharts()
+    this.table1=[{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"}]
+    this.addcharts();
+    this.addchart2();
+    this.verticleBarGraph();
+    this.addpiechart1();
+    this.addpiechart2();
   }
 
 
-  addcharts()
-  {
+  addcharts(){
     this.chart1={
       chart: {
           type: 'spline',
@@ -26,11 +35,7 @@ export class ProcessinsightsComponent implements OnInit {
       },
       title: {
           text: 'Wind speed during two days',
-          align: 'left'
-      },
-      subtitle: {
-          text: '13th & 14th of February, 2018 at two locations in Vik i Sogn, Norway',
-          align: 'left'
+          align: 'center'
       },
       xAxis: {
           type: 'datetime',
@@ -40,85 +45,16 @@ export class ProcessinsightsComponent implements OnInit {
       },
       yAxis: {
           title: {
-              text: 'Wind speed (m/s)'
+              text: 'Wind speed'
           },
           minorGridLineWidth: 0,
-          gridLineWidth: 0,
+          gridLineWidth: 1,
           alternateGridColor: null,
-          plotBands: [{ // Light air
-              from: 0.3,
-              to: 1.5,
-              color: 'rgba(68, 170, 213, 0.1)',
-              label: {
-                  text: 'Light air',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // Light breeze
-              from: 1.5,
-              to: 3.3,
-              color: 'rgba(0, 0, 0, 0)',
-              label: {
-                  text: 'Light breeze',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // Gentle breeze
-              from: 3.3,
-              to: 5.5,
-              color: 'rgba(68, 170, 213, 0.1)',
-              label: {
-                  text: 'Gentle breeze',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // Moderate breeze
-              from: 5.5,
-              to: 8,
-              color: 'rgba(0, 0, 0, 0)',
-              label: {
-                  text: 'Moderate breeze',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // Fresh breeze
-              from: 8,
-              to: 11,
-              color: 'rgba(68, 170, 213, 0.1)',
-              label: {
-                  text: 'Fresh breeze',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // Strong breeze
-              from: 11,
-              to: 14,
-              color: 'rgba(0, 0, 0, 0)',
-              label: {
-                  text: 'Strong breeze',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }, { // High wind
-              from: 14,
-              to: 15,
-              color: 'rgba(68, 170, 213, 0.1)',
-              label: {
-                  text: 'High wind',
-                  style: {
-                      color: '#606060'
-                  }
-              }
-          }]
+          // left:1,
+          // plotBands: []
       },
       tooltip: {
-          valueSuffix: ' m/s'
+          valueSuffix: 'm/s'
       },
       plotOptions: {
           spline: {
@@ -131,29 +67,17 @@ export class ProcessinsightsComponent implements OnInit {
               marker: {
                   enabled: false
               },
-              pointInterval: 3600000, // one hour
-              pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)
+              // pointInterval: 3600000, // one hour
+              // pointStart: Date.UTC(2018, 1, 13, 0, 0, 0)
           }
       },
       series: [{
           name: 'Hestavollane',
-          data: [
-              3.7, 3.3, 3.9, 5.1, 3.5, 3.8, 4.0, 5.0, 6.1, 3.7, 3.3, 6.4,
-              6.9, 6.0, 6.8, 4.4, 4.0, 3.8, 5.0, 4.9, 9.2, 9.6, 9.5, 6.3,
-              9.5, 10.8, 14.0, 11.5, 10.0, 10.2, 10.3, 9.4, 8.9, 10.6, 10.5, 11.1,
-              10.4, 10.7, 11.3, 10.2, 9.6, 10.2, 11.1, 10.8, 13.0, 12.5, 12.5, 11.3,
-              10.1
-          ]
+          data: [0, 3, 9, 4, 5, 8, 4.0, 10,6.9]
   
       }, {
           name: 'Vik',
-          data: [
-              0.2, 0.1, 0.1, 0.1, 0.3, 0.2, 0.3, 0.1, 0.7, 0.3, 0.2, 0.2,
-              0.3, 0.1, 0.3, 0.4, 0.3, 0.2, 0.3, 0.2, 0.4, 0.0, 0.9, 0.3,
-              0.7, 1.1, 1.8, 1.2, 1.4, 1.2, 0.9, 0.8, 0.9, 0.2, 0.4, 1.2,
-              0.3, 2.3, 1.0, 0.7, 1.0, 0.8, 2.0, 1.2, 1.4, 3.7, 2.1, 2.0,
-              1.5
-          ]
+          data: [0, 3.5, 1, 5, 8, 10, 11,9,11]
       }],
       navigation: {
           menuItemStyle: {
@@ -164,6 +88,287 @@ export class ProcessinsightsComponent implements OnInit {
 
   Highcharts.chart('costprojection',this.chart1);
   }
+
+  verticleBarGraph(){
+    this.verticleGraph={
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Monthly Average Rainfall'
+      },
+      xAxis: {
+          categories: [
+              'Jan',
+              'Feb',
+              'Mar',
+              'Apr',
+              'May',
+              'Jun',
+              'Jul',
+              'Aug',
+              'Sep',
+              'Oct',
+              'Nov',
+              'Dec'
+          ],
+          crosshair: true
+      },
+      yAxis: {
+          min: 0,
+          title: {
+              text:'Rainfall'
+          }
+      },
+      tooltip: {
+          headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+          pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+              '<td style="padding:0"><b>{point.y:.1f} mm</b></td></tr>',
+          footerFormat: '</table>',
+          shared: true,
+          useHTML: true
+      },
+      plotOptions: {
+          column: {
+              pointPadding: 0.2,
+              borderWidth: 0
+          }
+      },
+      series: [{
+          name: 'London',
+          data: [48, 38, 39, 41, 47]
+  
+      }, {
+          name: 'Berlin',
+          data: [42, 33, 34, 39, 52]
+  
+      }]
+  };
+
+  Highcharts.chart('barGraph',this.verticleGraph);
+  }
+
+
+  addchart2()
+  {
+    this.chart2={
+      chart: {
+          type: 'scatter',
+          zoomType: 'xy'
+      },
+      title: {
+          text: 'Height Versus Weight of 507 Individuals by Gender'
+      },
+      subtitle: {
+          text: 'Source: Heinz  2003'
+      },
+      xAxis: {
+          title: {
+              enabled: true,
+              text: 'Height (cm)'
+          },
+          startOnTick: true,
+          endOnTick: true,
+          showLastLabel: true
+      },
+      yAxis: {
+          title: {
+              text: 'Weight (kg)'
+          }
+      },
+      legend: {
+          layout: 'vertical',
+          align: 'left',
+          verticalAlign: 'top',
+          x: 100,
+          y: 70,
+          floating: true,
+          backgroundColor: Highcharts.defaultOptions.chart.backgroundColor,
+          borderWidth: 1
+      },
+      plotOptions: {
+          scatter: {
+              marker: {
+                  radius: 5,
+                  states: {
+                      hover: {
+                          enabled: true,
+                          lineColor: 'rgb(100,100,100)'
+                      }
+                  }
+              },
+              states: {
+                  hover: {
+                      marker: {
+                          enabled: false
+                      }
+                  }
+              },
+              tooltip: {
+                  headerFormat: '<b>{series.name}</b><br>',
+                  pointFormat: '{point.x} cm, {point.y} kg'
+              }
+          }
+      },
+      series: [{
+          name: 'Female',
+          color: 'rgba(223, 83, 83, .5)',
+          data: [[161.2, 51.6], [167.5, 59.0], [159.5, 49.2], [157.0, 63.0], ]
+  
+      }, {
+          name: 'Male',
+          color: 'rgba(119, 152, 191, .5)',
+          data: [[174.0, 65.6],]
+      }]
+  }
+              
+
+  Highcharts.chart('scatter',this.chart2); 
+  
+  
+}
+
+addpiechart1()
+{
+ this.piechart1= {
+  chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+  },
+  title: {
+      text: 'Browser market shares in January, 2018'
+  },
+  tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  },
+  accessibility: {
+      point: {
+          valueSuffix: '%'
+      }
+  },
+  plotOptions: {
+      pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+      }
+  },
+  series: [{
+      name: 'Brands',
+      colorByPoint: true,
+      data: [{
+          name: 'Chrome',
+          y: 61.41,
+          sliced: true,
+          selected: true
+      }, {
+          name: 'Internet Explorer',
+          y: 11.84
+      }, {
+          name: 'Firefox',
+          y: 10.85
+      }, {
+          name: 'Edge',
+          y: 4.67
+      }, {
+          name: 'Safari',
+          y: 4.18
+      }, {
+          name: 'Sogou Explorer',
+          y: 1.64
+      }, {
+          name: 'Opera',
+          y: 1.6
+      }, {
+          name: 'QQ',
+          y: 1.2
+      }, {
+          name: 'Other',
+          y: 2.61
+      }]
+  }]
+}
+Highcharts.chart('piechart1', this.piechart1);
+
+}
+
+
+addpiechart2()
+{
+  this.piechart2={
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: 'Browser market shares in January, 2018'
+    },
+    tooltip: {
+        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+    },
+    accessibility: {
+        point: {
+            valueSuffix: '%'
+        }
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+            }
+        }
+    },
+    series: [{
+        name: 'Brands',
+        colorByPoint: true,
+        data: [{
+            name: 'Chrome',
+            y: 61.41,
+            sliced: true,
+            selected: true
+        }, {
+            name: 'Internet Explorer',
+            y: 11.84
+        }, {
+            name: 'Firefox',
+            y: 10.85
+        }, {
+            name: 'Edge',
+            y: 4.67
+        }, {
+            name: 'Safari',
+            y: 4.18
+        }, {
+            name: 'Sogou Explorer',
+            y: 1.64
+        }, {
+            name: 'Opera',
+            y: 1.6
+        }, {
+            name: 'QQ',
+            y: 1.2
+        }, {
+            name: 'Other',
+            y: 2.61
+        }]
+    }]
+}
+
+
+Highcharts.chart('piechart2', this.piechart2);
+          
+}
+
 
 
 

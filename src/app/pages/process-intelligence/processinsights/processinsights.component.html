@@ -11,13 +11,94 @@
             <div class="col-sm-1 "></div>
             <div class="col-sm-2 divbox"> Avg Savings</div>
         </div>
-    </div>
+    <!-- </div> -->
     <br>
-    <div class="row">
+    <!-- <div class="row"> -->
         <div class="col-md-12 py-4">
-        <div id="costprojection">
-            
+        <div id="costprojection"></div>
+        <br>
+        <div class="col-md-12 btm-line"></div>
+        <br>
+        <div class="col-md-12">
+            <div class="col-sm-6">
+                <div id="scatter">
+                
+                </div>
+    
+            </div>
+            <div class="col-sm-6">
+                <div class="dropdown pull-right">
+                    <button title="Download" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
+                    <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
+                        <p class="" ><span>View In Pie chart</span></p></div>
+                </div>
+                <div id="barGraph"></div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-12 btm-line"></div>
+        <div class="col-md-12">
+            <br>
+            <div class="col-sm-6">
+                <div class="text-center table1-heading">Top 10% Cases (in descending order of duration)</div>
+                <table class="table table-hover table-bordered text-center table-striped">
+                    <thead class="text-center">
+                        <tr>
+                            <th class="text-center">Step</th>
+                            <th class="text-center">Time</th>
+                            <th class="text-center">%Cases</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let values of table1">
+                        <td>{{values.value1}}</td>
+                        <td>{{values.value2}}</td>
+                        <td>{{values.value3}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <div class="text-center table1-heading">Top 10 Automation Opps</div>
+                <table class="table table-hover table-bordered text-center table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Step</th>
+                            <th class="text-center">Value</th>
+                            <th class="text-center">Savings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let values of table1">
+                            <td>{{values.value1}}</td>
+                            <td>{{values.value2}}</td>
+                            <td>{{values.value3}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
     <br>
+    <div class="col-md-12">
+        <div class="col-md-2">
+            <br><br>
+            <select class="form-control">
+                <option value="">Select</option>
+            </select>
+        </div>
+        <div class="col-md-5 py-4">
+            <div id="piechart1">
+                
+            </div>
+        </div>
+        <div class="col-md-5 py-4">
+        
+        <div id="piechart2">
+            
+        </div>
+        </div>
+
+    </div>
+</div>
 </div>
