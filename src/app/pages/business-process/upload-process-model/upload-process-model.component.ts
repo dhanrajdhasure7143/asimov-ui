@@ -1,19 +1,13 @@
-
-
-
 import { Component, OnInit ,ViewChild,TemplateRef, ElementRef} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
-import { NgxSpinnerService } from "ngx-spinner"; 
+import { NgxSpinnerService } from "ngx-spinner";
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
-import * as PropertiesPanelModule from 'bpmn-js-properties-panel';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
-import lintModule from 'bpmn-js-bpmnlint';
-// import * as bpmnlintConfig from '../model/.bpmnlintrc';
-// import { registerBpmnJSPlugin } from 'camunda-modeler-plugin-helpers';
-// import propertiesPanelExtensionModule from 'properties-panel';
+import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
+import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
-import {MatDialog} from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -91,7 +85,7 @@ export class UploadProcessModelComponent implements OnInit {
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
- 
+
    ngOnInit() {
     this.randomNumber = UUID.UUID();
     this.dt.changeHints(this.hints.bpsUploadHints);
@@ -143,14 +137,14 @@ export class UploadProcessModelComponent implements OnInit {
       if(this.isShowConformance){
         this.saved_bpmn_list = res.filter(each_bpmn => {
           return each_bpmn.processIntelligenceId && each_bpmn.processIntelligenceId.toString() == this.pid.toString();
-        }); 
+        });
       }else{
         this.saved_bpmn_list = res.filter(each_bpmn => {
           return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
-        }); 
+        });
       }
       if(isFromConf) this.isUploaded = true;
-      else this.getSelectedNotation(); 
+      else this.getSelectedNotation();
       this.notationListOldValue = this.selected_notation;
       this.isLoading = false;
       this.getSelectedApprover();
@@ -160,7 +154,7 @@ export class UploadProcessModelComponent implements OnInit {
 
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
-      if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString() 
+      if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()
           && each_bpmn.version >= 0 && this.selected_version == each_bpmn.version)
           this.selected_notation = i;
     })
@@ -168,7 +162,7 @@ export class UploadProcessModelComponent implements OnInit {
    async getApproverList(){
      await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
       if(Array.isArray(res))
-        this.approver_list = res; 
+        this.approver_list = res;
     });
    }
 
@@ -206,7 +200,7 @@ export class UploadProcessModelComponent implements OnInit {
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
       if(Array.isArray(res))
         this.autosavedDiagramList = res;
-      this.filterAutoSavedDiagrams(); 
+      this.filterAutoSavedDiagrams();
       if(!this.bpmnModeler)
         this.initiateDiagram();
     });
@@ -245,18 +239,17 @@ export class UploadProcessModelComponent implements OnInit {
     let _self=this;
     var CamundaModdleDescriptor2
     var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
-    var lintConf = require("../model/.bpmnlintrc");
+    // CamundaModdleDescriptor2.prefix = "vaidi";
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({
-        // linting: {
-        //   bpmnlint: lintConf
-        // },
         additionalModules: [
           PropertiesPanelModule,
           PropertiesProviderModule,
-          // propertiesPanelExtensionModule,
-          lintModule
+          {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
+          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+          // {[InjectionNames.propertiesProvider]: ['type', IOSpecificationProvider]},
+          // {[InjectionNames.elementTemplates]: ['type', ElementTemplates]},
         ],
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
         keyboard: {
@@ -266,7 +259,7 @@ export class UploadProcessModelComponent implements OnInit {
           parent: '#properties'
         },
         moddleExtensions: {
-          camunda: CamundaModdleDescriptor2
+          camunda: CamundaModdleDescriptor2 //customModdle
         }
       });
 
@@ -296,7 +289,7 @@ export class UploadProcessModelComponent implements OnInit {
               return console.error('could not import BPMN 2.0 notation', err);
             }
           })
-       }) 
+       })
       }else{
         let selected_xml = atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation)));
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
@@ -461,7 +454,7 @@ displayBPMN(){
       if(_self.oldXml != _self.newXml){
         _self.spinner.show();
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
-        _self.autoSaveDiagram(bpmnModel);  
+        _self.autoSaveDiagram(bpmnModel);
       }
     });
   }
@@ -544,7 +537,7 @@ displayBPMN(){
       }
     }
   }
-   
+
   uploadAgainBpmn(e){
     this.isLoading = true;
     let _self = this;
@@ -770,7 +763,7 @@ displayBPMN(){
     })
    }
 
-   
+
    uploadConfBpmn(confBpmnData){
     let _self = this;
     let decrypted_data = atob(unescape(encodeURIComponent(confBpmnData)));
@@ -788,7 +781,7 @@ displayBPMN(){
       })
     }, 3000);
    }
-   
+
   slideUpDifferences(){
     let ele = document.getElementById("bpmn_differences");
     if(ele){
@@ -885,7 +878,7 @@ displayBPMN(){
     this.getElementsToColor('confBpmnModeler', bpmnDiffs._removed, 'remove');
     this.getElementsToColor('confBpmnModeler', revBpmnDiffs._changed, 'change');
     this.getElementsToColor('confBpmnModeler', revBpmnDiffs._layoutChanged, 'layout');
-    
+
     this.slideUpDifferences();
   }
 
@@ -910,6 +903,6 @@ displayBPMN(){
   displayShortcut(){
     this.dialog.open(this.keyboardShortcut);
  }
- 
-  
+
+
 }
