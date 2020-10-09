@@ -123,7 +123,7 @@
           <li>
             <div class="checkbox" *ngIf="this.isButtonVisible">
               <div class="environments">
-                <a style="color:black"  [routerLink]="[ '/pages/rpautomation/environments']">Create Environments</a>
+                <a style="color:black"  [routerLink]="[ '/pages/rpautomation/environments']"><span><i class="fa fa-plus"></i></span>&nbsp; Create Environments</a>
                 <hr>
               </div>
             </div>
@@ -195,7 +195,7 @@
   <div>
     <app-rpa-studio-workspace  [bot]="botState"></app-rpa-studio-workspace>
   </div>
-  <div class="status" id="botStatus">
+  <div class="status  rpa-custom-scrollbar" id="botStatus">
       <div class="row" style="text-align: center;">Bots</div>
       <div class="row rob-status">
           <h4>
@@ -226,12 +226,29 @@
       </div>
       <div class="row rob-status">
         <h4>
+            <span *ngIf="botStatisticsData.Pause != null">{{botStatisticsData.Pause}}</span>
+            <span *ngIf="botStatisticsData.Pause == null">-</span>
+          </h4>
+        <p>PAUSE</p>
+    </div>
+    <div class="row rob-status">
+      <h4>
+          <span *ngIf="botStatisticsData.Stop != null">{{botStatisticsData.Stop}}</span>
+          <span *ngIf="botStatisticsData.Stop == null">-</span>
+        </h4>
+      <p>STOP</p>
+      </div>
+      <div class="row rob-status">
+        <h4>
             <span *ngIf="botStatisticsData.Scheduled != null">{{botStatisticsData.Scheduled}}</span>
             <span *ngIf="botStatisticsData.Scheduled == null">-</span>
         </h4>
+        
         <p>SCHEDULED</p>
+        
     </div>
-  </div>
+      </div>
+    
 
 
           <!-- forms -->

@@ -22,6 +22,8 @@ export class BpsHomeComponent implements OnInit {
   p: number = 1;
   term = "";
   isLoading:boolean = false;
+  isApproverUser:boolean = false;
+  isAdminUser:boolean = false;
   sortedData:any;
   data;
   orderAsc:boolean = true;
@@ -44,8 +46,10 @@ export class BpsHomeComponent implements OnInit {
       this.isButtonVisible = true;
     }else if(this.userRole.includes('Admin')){
       this.isButtonVisible = true;
+      this.isAdminUser = true;
     }else if(this.userRole.includes('Process Architect')){
       this.isButtonVisible = true;
+      this.isApproverUser = true;
     }else{
       this.isButtonVisible = false;
     }

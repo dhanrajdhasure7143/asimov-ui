@@ -312,6 +312,7 @@ export class FlowchartComponent implements OnInit {
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
+      localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
       })
       const fullGraphbody= { 
@@ -410,6 +411,7 @@ export class FlowchartComponent implements OnInit {
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
         trace_number:selectedData.trace_number,
+        case_value:selectedData.case_value,
         selected: "active"
       };
       this.isvaraintPlay=true;
@@ -424,6 +426,7 @@ export class FlowchartComponent implements OnInit {
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
         trace_number:selectedData.trace_number,
+        case_value:selectedData.case_value,
         selected: "inactive"
       };
       this.isvaraintPlay=false;
@@ -1160,17 +1163,33 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
   }
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
+    console.log(this.selectedCaseArry);
+    
     this.spinner.show();
     this.activity_value=SelectedActivities;
     this.model1=[]
     this.model2=[]
+    var totalarrayList = [];
     this.isNodata=true;
-    var reqObj = {
-      "data_type":"activity_filter",
-      "pid":this.graphIds,
-      "cases" : this.selectedCaseArry,
-      "activities":SelectedActivities  
-  }
+    var reqObj = {};
+    if (this.selectedCaseArry && this.selectedCaseArry.length !=0) {
+      reqObj = {
+        "data_type": "activity_filter",
+        "pid": this.graphIds,
+        "cases": this.selectedCaseArry,
+        "activities": SelectedActivities
+      }
+    } else {
+      for(var i=0; i<this.varaint_data.data.length; i++){
+        totalarrayList.push(this.varaint_data.data[i].case);
+    }
+      reqObj= {
+        "data_type": "activity_filter",
+        "pid": this.graphIds,
+        "cases": totalarrayList,
+        "activities": SelectedActivities
+      }
+    }
     this.rest.getVariantActivityFilter(reqObj)
       .subscribe(data => {
         let activityFilterGraph:any = data;

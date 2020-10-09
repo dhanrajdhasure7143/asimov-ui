@@ -4,7 +4,7 @@
                 <div class="row">
                 <h1>Connect Your Data</h1>
                 <h4 class="subtitle">Select below options to get your data</h4>
-                <div class="col-sm-3 upload_zone" id="">
+                <div class="col-sm-3 upload_zone" id="upload_xl">
                         <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/Group 279.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
@@ -12,7 +12,7 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-3 upload_zone" id="">
+                <div class="col-sm-3 upload_zone" id="upload_xes">
                         <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false [accept]="xes_mime" >
                                 <ngx-dropzone-label><img src ="assets/images/XES.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
@@ -29,14 +29,14 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-12  download_link">
+                <div class="col-sm-12  download_link" id="download_template">
                         <a (click)="downloadCSV()">
                                          <u>Download Sample Template</u>
                                  </a>
                         </div>
                         </div>
                 </div>
-                <div class="col-md-6 workspace-table">
+                <div class="col-md-6 workspace-table" id="my_workspace">
                                 <div class='col-sm-4'>
                                 <h4>My Workspace</h4>
                                 </div>

@@ -291,11 +291,20 @@ import { NgxSpinnerService } from "ngx-spinner";
     {
       if(this.updateForm.value.activeStatus==true)
       {
-        this.updateenvdata.activeStatus=7
+        this.updateForm.value.activeStatus=7
       }else{
-        this.updateenvdata.activeStatus=8
+        this.updateForm.value.activeStatus=8
       }
-      await this.api.updateenvironment(this.updateenvdata).subscribe( res => {
+      console.log(this.updateForm.value.environmentName);
+      console.log(this.updateForm.value);
+      let updatFormValue =  this.updateForm.value;
+      updatFormValue["environmentId"]= this.updateenvdata.environmentId;
+      console.log(this.updateenvdata.createdBy);
+      updatFormValue["createdBy"]= this.updateenvdata.createdBy;
+      updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
+      console.log("Karthik");
+            console.log(updatFormValue);
+      await this.api.updateenvironment(updatFormValue).subscribe( res => {
         Swal.fire({
           position: 'top-end',
           icon: 'success',
@@ -303,6 +312,7 @@ import { NgxSpinnerService } from "ngx-spinner";
           showConfirmButton: false,
           timer: 2000
         })
+        console.log(res);
       this.removeallchecks();
       this.getallData();
       this.checktoupdate();
@@ -334,6 +344,16 @@ import { NgxSpinnerService } from "ngx-spinner";
         }
         this.updateenvdata=data;
         console.log(this.updateenvdata);
+      console.log(this.updateForm.value);
+      console.log(this.updateenvdata.environmentId);
+        this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
+        this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
+        this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
+        this.updateForm.get("hostAddress").setValue(this.updateenvdata["hostAddress"]);
+        this.updateForm.get("username").setValue(this.updateenvdata["username"]);
+        this.updateForm.get("password").setValue(this.updateenvdata["password"]);
+        this.updateForm.get("connectionType").setValue(this.updateenvdata["connectionType"]);
+        this.updateForm.get("portNumber").setValue(this.updateenvdata["portNumber"]);
         break;
       }
     }
