@@ -126,23 +126,27 @@ input:disabled{
     color: black;
     border-radius: 5px;
     margin-bottom: 5px;
+    height: 160px;
   }
   .hedline1{
       background-color: #80a8e8;
+      margin-top: 10px;
   }
   .hedline2{
     background-color: #80e8af;
+    margin-top: 5px;
 }
-.hedline3{
-    background-color:#c780e8;
-}
-.hedline4{
-    background-color: #e8bd80;
-}
+
   .variants_slider{
     max-height: 700px;
     overflow: scroll;
   }
+  .varaint-button{
+      margin-bottom: 5px;
+  }
+  .varaint-button1{
+    margin-right: -150px !important;
+}
   .variant-Btn{
       width: 15px;
       padding: 5px;
