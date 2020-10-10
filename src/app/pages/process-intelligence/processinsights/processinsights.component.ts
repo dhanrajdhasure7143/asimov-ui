@@ -59,6 +59,9 @@ export class ProcessinsightsComponent implements OnInit {
   activityHumanCost:any = [];
   activityBotCost:any = [];
   list_Activites:any = [];
+  actual_activityData:any = [];
+  top10_activityData:any = [];
+  partialVariants:any = [];
   
   constructor(
       private rest:RestApiService,
@@ -112,16 +115,30 @@ export class ProcessinsightsComponent implements OnInit {
         
   }
 
-  calculateSavings(){
-    if(this.totalMedianDuration && this.input1 && this.input2){
-        //assume robo cost per hr is 8$
-        let roboCost = this.totalMedianDuration*60*8/(1000 * 100 * 60 * 60);
-        let totalCost = (this.totalMedianDuration*this.input1)/(1000 * 60 * 60);
-        return '$'+((totalCost - roboCost)*this.input2).toFixed(2);
+  calculateSavings(val){
+    if(val && this.input1 && this.input2){
+        //assume robo cost per hr is 4$
+        let roboCost = val*60*4/(1000 * 100 * 60 * 60);
+        let totalCost = (val*this.input1)/(1000 * 60 * 60);
+        return '$'+((totalCost - roboCost)*this.input2/3).toFixed(2);
     }else{
         return '-';
     }
   }
+
+  getActivityTableData(data){
+    this.actual_activityData = data.data.data;
+    this.actual_activityData.sort(function (a, b) {
+        return b.Median_duration - a.Median_duration;
+    });
+    this.top10_activityData = this.actual_activityData.splice(0,10);
+  }
+
+//   getSlowestThroughPut(){
+//     let actual_data = this.varaint_data.data;
+//     let percent = Math.floor(actual_data.length*20/100);
+//     return actual_data.splice(0,percent-1);
+//   }
   getHumanBotCost(from:string, varinatArray?:any){
     var reqObj:any;
       if(from == 'fullgraph'){
@@ -156,27 +173,27 @@ export class ProcessinsightsComponent implements OnInit {
      vData.dates_data.forEach(e => {
         var aa = e.date.split('.');
         var  mydate = aa[2]+'-'+aa[1]+'-'+aa[0];
-       e.date = mydate;
+        e.date = mydate;
+      });
+      vData.dates_data = vData.dates_data.sort(function compare(a, b) {
+             var dateA:any = new Date(a.date);
+             var dateB:any = new Date(b.date);
+             return dateA - dateB;
+           });
+ 
+           console.log(vData.dates_data);
+           
+         vData.dates_data.forEach(e => {
+         
+         dateArray.push(moment(new Date(e.date)).format('DD/MM/YYYY'));
+         // 
+         var humanCost = Math.round(this.getHours(e.median_value)*this.input1);
+         hCost.push(humanCost);
+         var rDuration = Math.round(this.getHours(e.median_value)*60/100);
+         var rHours = Math.round(rDuration);
+         var rFinalCost = rHours*2;
+         rCost.push(rFinalCost);
      });
-     vData.dates_data = vData.dates_data.sort(function compare(a, b) {
-            var dateA:any = new Date(a.date);
-            var dateB:any = new Date(b.date);
-            return dateA - dateB;
-          });
-
-          console.log(vData.dates_data);
-          
-        vData.dates_data.forEach(e => {
-        
-        dateArray.push(moment(new Date(e.date)).format('DD/MM/YYYY'));
-        // 
-        var humanCost = Math.round(this.getHours(e.median_value)*this.input1);
-        hCost.push(humanCost);
-        var rDuration = Math.round(this.getHours(e.median_value)*60/100);
-        var rHours = Math.round(rDuration);
-        var rFinalCost = rHours*2;
-        rCost.push(rFinalCost);
-    });
     
     //this.caseIDs = this.removeDuplicate(this.caseIDs);
     this.caseIDs = dateArray;
@@ -220,6 +237,7 @@ return uniqueChars.sort();
       this.rest.getPIVariantActivity(reqObj)
         .subscribe((res:any)=>{
             console.log(res);
+            this.getActivityTableData(res);
             var aData = res.data;
             this.activity_Metrics = aData.data;
             aData.data.forEach(e => {
@@ -508,7 +526,7 @@ return uniqueChars.sort();
             useHTML: true,
             headerFormat: '<table>',
             pointFormat: '<tr><th colspan="2"><small>{point.name}</small></th></tr>' +
-                '<tr><th>{point.title}:</th><td>{point.event_duration}</td></tr>' ,
+            '<tr><th>{point.title}:</th><td>{point.event_duration}</td></tr>' ,
                 // '<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>' +
                 // '<tr><th>Obesity (adults):</th><td>{point.z}%</td></tr>',
             footerFormat: '</table>',
@@ -528,7 +546,7 @@ return uniqueChars.sort();
                 },
                 allowDecimals:true,
                
-                    color:this.bubbleColor
+                color:this.bubbleColor
             //fillColor: '#008080'
 
                 
@@ -720,6 +738,7 @@ closeNav() { // Variant list Close
 getAllVariantList(){
   let variantData=localStorage.getItem("variants")
   this.varaint_data=JSON.parse(atob(variantData))
+  this.updatePartialVariantData();
   console.log(this.varaint_data);
 }
 
@@ -770,7 +789,19 @@ onchangeVaraint(datavariant) {      // Variant List sorting
       });
       break;
   }
+  this.updatePartialVariantData();
 }
+
+    updatePartialVariantData(){
+        let vdata = this.varaint_data.data;
+        let cutoff = Math.floor(vdata.length*20/100);
+        let pVData = [];
+        for(var i=0; i<vdata.length; i++){
+            if(cutoff <= i) break;
+            pVData.push(vdata[i])
+        }
+        this.partialVariants = pVData;
+    }
 
     getVariantMedianDuration(selectedVariants){
         if(selectedVariants.length){

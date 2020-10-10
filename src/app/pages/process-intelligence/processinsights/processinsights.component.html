@@ -62,11 +62,11 @@
             <div class="col-sm-1 "></div>
 
             <div class="col-sm-2 divbox"> Total Cost (human / hr)
-                <div>{{totalMedianDuration && input1 && input2 ? ((totalMedianDuration*input1*input2)/(1000 * 60 * 60) | currency) : '-'}}</div>
+                <div>{{totalMedianDuration && input1 && input2 ? ((totalMedianDuration*input1*input2)/(1000 * 60 * 60*3) | currency) : '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
             <div class="col-sm-2 divbox"> Total Savings
-                <div>{{calculateSavings()}}</div>
+                <div>{{calculateSavings(this.totalMedianDuration)}}</div>
             </div>
         </div>
         <div class="col-md-12 input-fields">
@@ -76,10 +76,10 @@
                 <i (click)="editInput()"  class="fas fa-pen"></i>
             </div>
             <!-- <div class="col-sm-1"></div> -->
-            <div class="col-sm-4 amountinputs">
+            <!-- <div class="col-sm-4 amountinputs">
                 <label for="">Process Frequency</label><input type="text" name="frequency" [disabled]=" !isEditable1" [(ngModel)]="input2">
                 <i (click)="editInput1()" class="fas fa-pen"></i>
-            </div>
+            </div> -->
         </div>
     <!-- </div> -->
     <br>
@@ -118,11 +118,11 @@
                 <div class="dropdown pull-right">
                     <button title="Download" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                     <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
-                        <!-- <p class="" ><span>View In Pie chart</span></p> -->
-                        <p *ngIf="flag1==0" class="click" (click)="switch1('pie')" ><span>View In Pei chart</span></p>
-                        <p *ngIf="flag1==1" class="click"(click)="switch1('bar')" ><span>View In Bar chart</span></p>
-                    </div>
-                </div>
+                       <!-- <p class="" ><span>View In Pie chart</span></p> -->
+                       <p *ngIf="flag1==0" class="click" (click)="switch1('pie')" ><span>View In Pei chart</span></p>
+                       <p *ngIf="flag1==1" class="click"(click)="switch1('bar')" ><span>View In Bar chart</span></p>
+                   </div>
+               </div>
                 <div id="barGraph"></div>
             </div>
         </div>
@@ -135,16 +135,16 @@
                 <table class="table table-hover table-bordered text-center table-striped">
                     <thead class="text-center">
                         <tr>
-                            <th class="text-center">Step</th>
+                            <th class="text-center">Variant</th>
                             <th class="text-center">Time</th>
                             <th class="text-center">%Cases</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let values of table1">
-                        <td>{{values.value1}}</td>
-                        <td>{{values.value2}}</td>
-                        <td>{{values.value3}}</td>
+                        <tr *ngFor="let each_variant of partialVariants;let e = index">
+                        <td>Variant&nbsp;{{e+1}}</td>
+                        <td>{{timeConversion(each_variant.days)}}</td>
+                        <td>{{caseParcent(each_variant.casepercent)}}%</td>
                     </tr>
                     </tbody>
                 </table>
@@ -160,10 +160,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let values of table1">
-                            <td>{{values.value1}}</td>
-                            <td>{{values.value2}}</td>
-                            <td>{{values.value3}}</td>
+                        <tr *ngFor="let each_data of top10_activityData">
+                            <td>{{each_data.Activity}}</td>
+                            <td>{{each_data.Median_duration_duration_date}}</td>
+                            <td>{{calculateSavings(each_data.Median_duration)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -182,25 +182,25 @@
             </select>
         </div>
         <div class="col-md-5 py-4">
-            <div class="dropdown pull-right">
-                <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
-                <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
-                    <p *ngIf="!isstackedbarChart" class="click" (click)="switchTostackedBar('stackedbar')"><span>View In Bar chart</span></p>
-                    <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
-                </div>
-            </div>
+                <div class="dropdown pull-right">
+                        <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
+                        <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
+                            <p *ngIf="!isstackedbarChart" class="click" (click)="switchTostackedBar('stackedbar')"><span>View In Bar chart</span></p>
+                            <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
+                        </div>
+                    </div>
             <div id="piechart1">
                 
             </div>
         </div>
         <div class="col-md-5 py-4">
-            <div class="dropdown pull-right">
-                <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
-                <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
-                    <p *ngIf="!isstackedbarChart1" class="click" (click)="switchTostackedBar1('stackedbar')"><span>View In Bar chart</span></p>
-                    <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
-                </div>
-            </div>
+                <div class="dropdown pull-right">
+                        <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
+                        <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
+                            <p *ngIf="!isstackedbarChart1" class="click" (click)="switchTostackedBar1('stackedbar')"><span>View In Bar chart</span></p>
+                            <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
+                        </div>
+                    </div>
         <div id="piechart2">
             
         </div>
