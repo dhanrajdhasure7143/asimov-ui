@@ -108,8 +108,8 @@
             <div class="col-sm-6">
                 <ul class="groupBtn">
                     <li>
-                        <button [class.active]="isEventGraph" (click)="isEventGraph=true">Event</button>
-                        <button [class.active]="!isEventGraph" (click)="isEventGraph=false">Through Put</button>
+                        <button [class.active]="isEventGraph" (click)="getEventBubboleGraph('event')">Events</button>
+                        <button [class.active]="!isEventGraph" (click)="getEventBubboleGraph('throughput')">Duration</button>
                     </li>
                 </ul>
                 <div id="scatter"></div>

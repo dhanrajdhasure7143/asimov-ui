@@ -60,13 +60,15 @@ input:disabled{
   width: 80px;
   cursor: pointer;
   padding: 6px 4px;
-  background-color: #f1f1c1;
+  background-color: #dadacf;
 }
 .groupBtn button:hover{
-  background-color: #cbffcf;
+  background-color: #dadacf;
 }
 .groupBtn button.active{
-  background-color: #61e46b;
+  background-color: #9ea29f;
+  font-weight: bold;
+  font-size: 14px;
 }
 .sidenav {
     width: 0;
