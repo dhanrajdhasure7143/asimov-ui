@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
 import HC_more from 'highcharts/highcharts-more' //module
 import { Router, ActivatedRoute } from '@angular/router';
+import * as moment from 'moment';
 HC_more(Highcharts) 
  enum VariantList {
   'Most Common',
@@ -38,6 +39,11 @@ export class ProcessinsightsComponent implements OnInit {
   totalMeanDuration:any;
   totalMedianDuration:any;
   graphIds:any;
+  caseIDs:any = [];
+  humanCost:any = [];
+  robotCost:any = [];
+  activityData:any = [];
+
   constructor(
       private rest:RestApiService,
       private route:ActivatedRoute
@@ -55,14 +61,16 @@ export class ProcessinsightsComponent implements OnInit {
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     this.variant_list_options = VariantList;
     this.table1=[{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"}]
-    this.addcharts();
-    this.addchart2();
+    //this.addcharts();
+    //this.addchart2();
     this.verticleBarGraph();
     this.addpiechart1();
     this.addpiechart2();
     this.getAllVariantList()
 
     this.getDurationCall();
+    this.getActivityMetrics();
+    this.getHumanBotCost('fullgraph')
   }
 
   getDurationCall(){
@@ -74,14 +82,108 @@ export class ProcessinsightsComponent implements OnInit {
       this.rest.getPIInsightMeanMedianDuration(reqObj)
         .subscribe((res:any)=>{
             console.log(res);
-            this.variant_Duration_list = res.data;
             this.totalMeanDuration = res.totalMeanDuration;
-            this.totalMedianDuration = res.totalMedianDuration;            
+            this.totalMedianDuration = res.totalMedianDuration; 
+                      
         },
         (err=>{
             console.log("Internal server error, Please try again later.")
         }))
         
+  }
+
+  getHumanBotCost(from:string, varinatArray?:any){
+    var reqObj:any;
+      if(from == 'fullgraph'){
+       reqObj = {
+          pid:'610283',
+          flag: false,
+          data_type:"human_bot",
+          //variants:[] //if flag is true
+      }
+    } else {
+         reqObj = {
+            pid:'610283',
+            flag: true,
+            data_type:"human_bot",
+            variants:varinatArray //if flag is true
+        }
+    }
+      this.rest.getPIInsightMeanMedianDuration(reqObj)
+        .subscribe((res:any)=>{
+            this.variant_Duration_list = res.data;
+            console.log(this.variant_Duration_list);
+            this.getHumanvsBotCost(this.variant_Duration_list)
+        })
+
+  }
+
+  getHumanvsBotCost(vData){
+    var hCost= [];
+    var rCost = [];
+    var dateArray = [];
+     vData.dates_data.forEach(e => {
+        var aa = e.date.split('.');
+        var  mydate = aa[0]+'/'+aa[1]+'/'+aa[2];
+        dateArray.push(mydate);
+        var humanCost = Math.round(this.getHours(e.median_value)* 20);
+        hCost.push(humanCost);
+        var rDuration = Math.round(this.getHours(e.median_value)*60/100);
+        var rHours = Math.round(rDuration);
+        var rFinalCost = rHours*10;
+        rCost.push(rFinalCost);
+    });
+    
+    //this.caseIDs = this.removeDuplicate(this.caseIDs);
+    this.caseIDs = dateArray;
+    this.humanCost = hCost;
+    this.robotCost = rCost;
+    
+    this.addcharts()
+  }
+
+  getHours(millisec){
+     var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
+     return hours;
+  }
+
+  removeDuplicate(dataArray){
+    let uniqueChars = [];
+dataArray.forEach((c) => {
+    if (!uniqueChars.includes(c)) {
+        uniqueChars.push(c);
+    }
+});
+console.log
+return uniqueChars.sort();
+  }
+
+  getPointX(cases){
+      console.log(cases);
+      
+    this.variant_Duration_list.data.forEach(e => {
+        if(e.Cases == cases){
+            return this.getHours(e.median_duration);
+        }
+    });
+  }
+
+  getActivityMetrics(){
+      var reqObj = {
+        pid:'920036',
+        data_type:'variant_activity_metrics'
+      }
+      this.rest.getPIVariantActivity(reqObj)
+        .subscribe((res:any)=>{
+            console.log(res);
+            var aData = res.data;
+            aData.data.forEach(e => {
+                this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),'')},);
+            });
+            console.log(this.activityData);
+            this.addchart2();
+
+        })
   }
 
   addcharts(){
@@ -102,12 +204,13 @@ export class ProcessinsightsComponent implements OnInit {
           labels: {
               overflow: 'justify'
           },
-          categories: [
-           10,50,100,150,200,250,300,350,400,450,500]
+          categories:this.caseIDs
+        //   categories: [
+        //    10,50,100,150,200,250,300,350,400,450,500]
       },
       yAxis: {
           title: {
-              text: 'Price',
+              text: '',
               labels: {
                 overflow: 'justify'
             }
@@ -120,7 +223,11 @@ export class ProcessinsightsComponent implements OnInit {
       },
       tooltip: {
           //valueSuffix: '$',
-          valuePrefix: '$'
+          valuePrefix: '$',
+          crosshairs: true,
+        shared: true,
+       // headerFormat: '<b>{series.name}</b><br />',
+        //pointFormat: 'x = {this.getPointX(point.x)}, y = {point.y}'
       },
       plotOptions: {
           spline: {
@@ -139,11 +246,13 @@ export class ProcessinsightsComponent implements OnInit {
       },
       series: [{
           name: 'Human Cost',
-          data: [20, 50, 100, 250, 280, 320, 370, 430,500]
+          //data: [20, 50, 100, 250, 280, 320, 370, 430,500]
+          data:this.humanCost
   
       }, {
           name: 'Bot Cost',
-          data: [10, 70, 180, 250, 290, 300, 390, 460,500]
+          data: this.robotCost
+          //data: [10, 70, 180, 250, 290, 300, 390, 460,500]
       }],
       navigation: {
           menuItemStyle: {
@@ -225,88 +334,88 @@ export class ProcessinsightsComponent implements OnInit {
         },
     
         legend: {
-            enabled: false
+            enabled: true
         },
     
         title: {
-            text: 'Sugar and fat intake per country'
+            text: 'Activity vs Occurances'
         },
     
         subtitle: {
            // text: 'Source: <a href="http://www.euromonitor.com/">Euromonitor</a> and <a href="https://data.oecd.org/">OECD</a>'
         },
     
-        accessibility: {
-            point: {
-              //  valueDescriptionFormat: '{index}. {point.name}, fat: {point.x}g, sugar: {point.y}g, obesity: {point.z}%.'
-            }
-        },
+        // accessibility: {
+        //     point: {
+        //       //  valueDescriptionFormat: '{index}. {point.name}, fat: {point.x}g, sugar: {point.y}g, obesity: {point.z}%.'
+        //     }
+        //},
     
         xAxis: {
-            gridLineWidth: 1,
+           // gridLineWidth: 1,
             title: {
-                text: 'Daily fat intake'
+                text: 'Activity'
             },
-            labels: {
-                format: '{value} gr'
-            },
+            // labels: {
+            //     format: '{value} gr'
+            // },
             plotLines: [{
-                color: 'black',
-                dashStyle: 'dot',
+                //color: 'black',
+                //dashStyle: 'dot',
                 width: 2,
-                value: 65,
+                //value: 65,
                 label: {
                     rotation: 0,
                     y: 15,
                     style: {
                         fontStyle: 'italic'
                     },
-                    text: 'Safe fat intake 65g/day'
+                   // text: 'Safe fat intake 65g/day'
                 },
                 zIndex: 3
             }],
-            accessibility: {
-                rangeDescription: 'Range: 60 to 100 grams.'
-            }
+            // accessibility: {
+            //     rangeDescription: 'Range: 60 to 100 grams.'
+            // }
         },
     
         yAxis: {
             startOnTick: false,
             endOnTick: false,
             title: {
-                text: 'Daily sugar intake'
+                text: 'Occurance'
             },
-            labels: {
-                format: '{value} gr'
-            },
+            // labels: {
+            //     format: '{value}'
+            // },
             maxPadding: 0.2,
             plotLines: [{
                 color: 'black',
-                dashStyle: 'dot',
+               // dashStyle: 'dot',
                 width: 2,
-                value: 50,
+                //value: 50,
                 label: {
                     align: 'right',
                     style: {
                         fontStyle: 'italic'
                     },
-                    text: 'Safe sugar intake 50g/day',
+                    //text: 'Safe sugar intake 50g/day',
                     x: -10
                 },
                 zIndex: 3
             }],
-            accessibility: {
-                rangeDescription: 'Range: 0 to 160 grams.'
-            }
+            // accessibility: {
+            //     rangeDescription: 'Range: 0 to 160 grams.'
+            // }
         },
     
         tooltip: {
             useHTML: true,
             headerFormat: '<table>',
-            pointFormat: '<tr><th colspan="2"><h3>{point.country}</h3></th></tr>' +
-                '<tr><th>Fat intake:</th><td>{point.x}g</td></tr>' +
-                '<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>' +
-                '<tr><th>Obesity (adults):</th><td>{point.z}%</td></tr>',
+            pointFormat: '<tr><th colspan="2"><small>{point.name}</small></th></tr>' +
+                '<tr><th>Events:</th><td>{point.x}</td></tr>' ,
+                // '<tr><th>Sugar intake:</th><td>{point.y}g</td></tr>' +
+                // '<tr><th>Obesity (adults):</th><td>{point.z}%</td></tr>',
             footerFormat: '</table>',
             followPointer: true
         },
@@ -315,48 +424,40 @@ export class ProcessinsightsComponent implements OnInit {
             series: {
                 dataLabels: {
                     enabled: true,
-                    format: '{point.name}'
-                }
+                    format: '<small>{point.fullname}</small>',
+                    color:'#ffffff'
+                    
+                },
+                style:{
+                    fontSize:'14px'
+                },
+               
+                    color:"#212F3C"
+            //fillColor: '#008080'
+
+                
             }
         },
     
         series: [{
-            data: [
-                { x: 95, y: 95, z: 13.8, name: 'BE', country: 'Belgium' },
-                { x: 86.5, y: 102.9, z: 14.7, name: 'DE', country: 'Germany' },
-                { x: 80.8, y: 91.5, z: 15.8, name: 'FI', country: 'Finland' },
-                { x: 80.4, y: 102.5, z: 12, name: 'NL', country: 'Netherlands' },
-                { x: 80.3, y: 86.1, z: 11.8, name: 'SE', country: 'Sweden' },
-                { x: 78.4, y: 70.1, z: 16.6, name: 'ES', country: 'Spain' },
-                { x: 74.2, y: 68.5, z: 14.5, name: 'FR', country: 'France' },
-                { x: 73.5, y: 83.1, z: 10, name: 'NO', country: 'Norway' },
-                { x: 71, y: 93.2, z: 24.7, name: 'UK', country: 'United Kingdom' },
-                { x: 69.2, y: 57.6, z: 10.4, name: 'IT', country: 'Italy' },
-                { x: 68.6, y: 20, z: 16, name: 'RU', country: 'Russia' },
-                { x: 65.5, y: 126.4, z: 35.3, name: 'US', country: 'United States' },
-                { x: 65.4, y: 50.8, z: 28.5, name: 'HU', country: 'Hungary' },
-                { x: 63.4, y: 51.8, z: 15.4, name: 'PT', country: 'Portugal' },
-                { x: 64, y: 82.9, z: 31.3, name: 'NZ', country: 'New Zealand' }
-            ]
-        },
-        {
-            data: [
-                { x: 96, y: 95, z: 13.8, name: 'BE', country: 'Belgium' },
-                { x: 89.5, y: 102.9, z: 14.7, name: 'DE', country: 'Germany' },
-                { x: 80.8, y: 91.5, z: 15.8, name: 'FI', country: 'Finland' },
-                { x: 80.4, y: 102.5, z: 12, name: 'NL', country: 'Netherlands' },
-                { x: 80.3, y: 86.1, z: 11.8, name: 'SE', country: 'Sweden' },
-                { x: 78.4, y: 70.1, z: 16.6, name: 'ES', country: 'Spain' },
-                { x: 74.2, y: 68.5, z: 14.5, name: 'FR', country: 'France' },
-                { x: 73.5, y: 83.1, z: 10, name: 'NO', country: 'Norway' },
-                { x: 71, y: 93.2, z: 24.7, name: 'UK', country: 'United Kingdom' },
-                { x: 69.2, y: 57.6, z: 10.4, name: 'IT', country: 'Italy' },
-                { x: 68.6, y: 20, z: 16, name: 'RU', country: 'Russia' },
-                { x: 65.5, y: 126.4, z: 35.3, name: 'US', country: 'United States' },
-                { x: 65.4, y: 50.8, z: 28.5, name: 'HU', country: 'Hungary' },
-                { x: 63.4, y: 51.8, z: 15.4, name: 'PT', country: 'Portugal' },
-                { x: 64, y: 82.9, z: 31.3, name: 'NZ', country: 'New Zealand' }
-            ]
+            data:this.activityData,
+            // data: [
+            //     { x: 95, y: 95, z: 13.8, name: 'BE', country: 'Belgium' },
+            //     { x: 86.5, y: 102.9, z: 14.7, name: 'DE', country: 'Germany' },
+            //     { x: 80.8, y: 91.5, z: 15.8, name: 'FI', country: 'Finland' },
+            //     { x: 80.4, y: 102.5, z: 12, name: 'NL', country: 'Netherlands' },
+            //     { x: 80.3, y: 86.1, z: 11.8, name: 'SE', country: 'Sweden' },
+            //     { x: 78.4, y: 70.1, z: 16.6, name: 'ES', country: 'Spain' },
+            //     { x: 74.2, y: 68.5, z: 14.5, name: 'FR', country: 'France' },
+            //     { x: 73.5, y: 83.1, z: 10, name: 'NO', country: 'Norway' },
+            //     { x: 71, y: 93.2, z: 24.7, name: 'UK', country: 'United Kingdom' },
+            //     { x: 69.2, y: 57.6, z: 10.4, name: 'IT', country: 'Italy' },
+            //     { x: 68.6, y: 20, z: 16, name: 'RU', country: 'Russia' },
+            //     { x: 65.5, y: 126.4, z: 35.3, name: 'US', country: 'United States' },
+            //     { x: 65.4, y: 50.8, z: 28.5, name: 'HU', country: 'Hungary' },
+            //     { x: 63.4, y: 51.8, z: 15.4, name: 'PT', country: 'Portugal' },
+            //     { x: 64, y: 82.9, z: 31.3, name: 'NZ', country: 'New Zealand' }
+            // ]
         }
     ]
     
@@ -610,8 +711,8 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     // this.selectedTraceNumbers = [];
     for (var i = 0; i < this.varaint_data.data.length; i++) {
       if (this.varaint_data.data[i].selected == "active") {
-        var casevalue = this.varaint_data.data[i].case
-        this.selectedCaseArry.push(casevalue);
+        //var casevalue = this.varaint_data.data[i].case
+        this.selectedCaseArry.push('Variant '+ i);
         // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
       }
     };
@@ -625,6 +726,11 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     }else{
       this.checkboxValue = false
       // this.options = Object.assign({}, this.options, {disabled: true});
+    }
+    if(this.selectedCaseArry.length == 0){
+        this.getHumanBotCost('fullgraph');
+    }else{
+    this.getHumanBotCost('variant', this.selectedCaseArry);
     }
   }
   selectAllVariants() {   // Select all variant list

@@ -334,6 +334,9 @@ export class RestApiService{
   getPIInsightMeanMedianDuration(body){
     return this.http.post("/ReddisCopy/getGraphData", body)
   }
+  getPIVariantActivity(body){
+    return this.http.post("/ReddisCopy/getGraphData", body)
+  }
   //PI Insights END
 
 
