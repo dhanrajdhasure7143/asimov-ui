@@ -53,20 +53,20 @@
         <div class='col-md-12 boxes'>
             <div class="col-sm-1 "></div>
             <div class="col-sm-2 divbox"> Total Time Spent
-                <div>20</div>
+                <div>{{totalMedianDuration ? timeConversion(totalMedianDuration) : '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
             <div class="col-sm-2 divbox"> Total Time Savings
-                <div>80</div>
+                <div>{{totalMedianDuration ? timeConversion(totalMedianDuration*40/100) : '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
 
-            <div class="col-sm-2 divbox"> Total Cost
-                <div>60</div>
+            <div class="col-sm-2 divbox"> Total Cost (human / hr)
+                <div>{{totalMedianDuration && input1 && input2 ? ((totalMedianDuration*input1*input2)/(1000 * 60 * 60) | currency) : '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
             <div class="col-sm-2 divbox"> Total Savings
-                <div>40</div>
+                <div>{{calculateSavings()}}</div>
             </div>
         </div>
         <div class="col-md-12 input-fields">
@@ -76,10 +76,10 @@
                 <i (click)="editInput()"  class="fas fa-pen"></i>
             </div>
             <!-- <div class="col-sm-1"></div> -->
-            <!-- <div class="col-sm-4 amountinputs">
-                <label for="">Avg Robot Cost$</label><input type="text" name="robotValue" [disabled]=" !isEditable1" [(ngModel)]="input2">
+            <div class="col-sm-4 amountinputs">
+                <label for="">Process Frequency</label><input type="text" name="frequency" [disabled]=" !isEditable1" [(ngModel)]="input2">
                 <i (click)="editInput1()" class="fas fa-pen"></i>
-            </div> -->
+            </div>
         </div>
     <!-- </div> -->
     <br>
@@ -91,9 +91,13 @@
             <div class="col-sm-4">
                 <div class="col-sm-12 box-content hedline1">
                     <p><strong>Business insights</strong> </p>
+                    <ul>
+                        <li>26% of the cases are taking longer than 6 days</li>
+                        <li>35% of the cases are taking less than 2 days</li>
+                    </ul>
                 </div>
                 <div class="col-sm-12 box-content hedline2">
-                    <p><strong>Recommdations</strong> </p>
+                    <p><strong>Recommendations</strong> </p>
                 </div>
             </div>
         
@@ -102,6 +106,12 @@
         <br>
         <div class="col-md-12">
             <div class="col-sm-6">
+                <ul class="groupBtn">
+                    <li>
+                        <button [class.active]="isEventGraph" (click)="isEventGraph=true">Event</button>
+                        <button [class.active]="!isEventGraph" (click)="isEventGraph=false">Through Put</button>
+                    </li>
+                </ul>
                 <div id="scatter"></div>
             </div>
             <div class="col-sm-6">

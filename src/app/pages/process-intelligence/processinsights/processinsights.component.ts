@@ -24,8 +24,9 @@ export class ProcessinsightsComponent implements OnInit {
   piechart1:any
   piechart2:any;
   isvariantListOpen:boolean=true;
+  isEventGraph:boolean=true;
   input1:any=20;
-  input2:any=10;
+  input2:any=1;
   variant_list:any;
   varaint_data: any;
   select_varaint:any;
@@ -38,12 +39,13 @@ export class ProcessinsightsComponent implements OnInit {
   variant_Duration_list:any = [];
   totalMeanDuration:any;
   totalMedianDuration:any;
+  bkp_totalMedianDuration:any;
   graphIds:any;
   caseIDs:any = [];
   humanCost:any = [];
   robotCost:any = [];
   activityData:any = [];
-
+  
   constructor(
       private rest:RestApiService,
       private route:ActivatedRoute
@@ -61,8 +63,8 @@ export class ProcessinsightsComponent implements OnInit {
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     this.variant_list_options = VariantList;
     this.table1=[{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"}]
-    //this.addcharts();
-    //this.addchart2();
+    // this.addcharts();
+    // this.addchart2();
     this.verticleBarGraph();
     this.addpiechart1();
     this.addpiechart2();
@@ -82,9 +84,10 @@ export class ProcessinsightsComponent implements OnInit {
       this.rest.getPIInsightMeanMedianDuration(reqObj)
         .subscribe((res:any)=>{
             console.log(res);
+            this.variant_Duration_list = res.data;
             this.totalMeanDuration = res.totalMeanDuration;
-            this.totalMedianDuration = res.totalMedianDuration; 
-                      
+            this.bkp_totalMedianDuration = res["data"]["total"]["median"]
+            this.totalMedianDuration = this.bkp_totalMedianDuration;
         },
         (err=>{
             console.log("Internal server error, Please try again later.")
@@ -92,6 +95,16 @@ export class ProcessinsightsComponent implements OnInit {
         
   }
 
+  calculateSavings(){
+    if(this.totalMedianDuration && this.input1 && this.input2){
+        //assume robo cost per hr is 8$
+        let roboCost = this.totalMedianDuration*60*8/(1000 * 100 * 60 * 60);
+        let totalCost = (this.totalMedianDuration*this.input1)/(1000 * 60 * 60);
+        return '$'+((totalCost - roboCost)*this.input2).toFixed(2);
+    }else{
+        return '-';
+    }
+  }
   getHumanBotCost(from:string, varinatArray?:any){
     var reqObj:any;
       if(from == 'fullgraph'){
@@ -225,9 +238,9 @@ return uniqueChars.sort();
           //valueSuffix: '$',
           valuePrefix: '$',
           crosshairs: true,
-        shared: true,
-       // headerFormat: '<b>{series.name}</b><br />',
-        //pointFormat: 'x = {this.getPointX(point.x)}, y = {point.y}'
+          shared: true,
+         // headerFormat: '<b>{series.name}</b><br />',
+          //pointFormat: 'x = {this.getPointX(point.x)}, y = {point.y}'
       },
       plotOptions: {
           spline: {
@@ -246,13 +259,13 @@ return uniqueChars.sort();
       },
       series: [{
           name: 'Human Cost',
-          //data: [20, 50, 100, 250, 280, 320, 370, 430,500]
-          data:this.humanCost
-  
-      }, {
+        //data: [20, 50, 100, 250, 280, 320, 370, 430,500]
+        data:this.humanCost
+
+     }, {
           name: 'Bot Cost',
           data: this.robotCost
-          //data: [10, 70, 180, 250, 290, 300, 390, 460,500]
+        //data: [10, 70, 180, 250, 290, 300, 390, 460,500]
       }],
       navigation: {
           menuItemStyle: {
@@ -349,10 +362,10 @@ return uniqueChars.sort();
         //     point: {
         //       //  valueDescriptionFormat: '{index}. {point.name}, fat: {point.x}g, sugar: {point.y}g, obesity: {point.z}%.'
         //     }
-        //},
+        // },
     
         xAxis: {
-           // gridLineWidth: 1,
+            // gridLineWidth: 1,
             title: {
                 text: 'Activity'
             },
@@ -360,17 +373,17 @@ return uniqueChars.sort();
             //     format: '{value} gr'
             // },
             plotLines: [{
-                //color: 'black',
-                //dashStyle: 'dot',
+                // color: 'black',
+                // dashStyle: 'dot',
                 width: 2,
-                //value: 65,
+                // value: 65,
                 label: {
                     rotation: 0,
                     y: 15,
                     style: {
                         fontStyle: 'italic'
                     },
-                   // text: 'Safe fat intake 65g/day'
+                    // text: 'Safe fat intake 65g/day'
                 },
                 zIndex: 3
             }],
@@ -386,20 +399,20 @@ return uniqueChars.sort();
                 text: 'Occurance'
             },
             // labels: {
-            //     format: '{value}'
+            //     format: '{value} gr'
             // },
             maxPadding: 0.2,
             plotLines: [{
                 color: 'black',
-               // dashStyle: 'dot',
+                // dashStyle: 'dot',
                 width: 2,
-                //value: 50,
+                // value: 50,
                 label: {
                     align: 'right',
                     style: {
                         fontStyle: 'italic'
                     },
-                    //text: 'Safe sugar intake 50g/day',
+                    // text: 'Safe sugar intake 50g/day',
                     x: -10
                 },
                 zIndex: 3
@@ -675,6 +688,26 @@ onchangeVaraint(datavariant) {      // Variant List sorting
       break;
   }
 }
+
+    getVariantMedianDuration(selectedVariants){
+        if(selectedVariants.length){
+            let full_median_value = 0;
+            this.variant_Duration_list.data.forEach((each)=>{
+                for(var i = 0; i<selectedVariants.length; i++){
+                    let ind = selectedVariants[i]+1;
+                    let variant_name = 'Variant '+ind;
+                    if(each.Variant == variant_name){
+                        full_median_value += each["median_duration"];
+                        break;
+                    }
+                }
+            })
+            this.totalMedianDuration = full_median_value;
+        }else{
+            this.totalMedianDuration = this.bkp_totalMedianDuration;
+        }
+    }
+
   caseIdSelect(selectedData, index) { // Case selection on Variant list
 
     if (this.varaint_data.data[index].selected == "inactive") {
@@ -708,14 +741,17 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     }
 
     this.selectedCaseArry = [];
+    let selectedVariantIds = [];
     // this.selectedTraceNumbers = [];
     for (var i = 0; i < this.varaint_data.data.length; i++) {
       if (this.varaint_data.data[i].selected == "active") {
-        //var casevalue = this.varaint_data.data[i].case
+        // var casevalue = this.varaint_data.data[i].case
         this.selectedCaseArry.push('Variant '+ i);
         // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
-      }
-    };
+        selectedVariantIds.push(i);
+    }
+    };  
+    this.getVariantMedianDuration(selectedVariantIds);
     this.caselength = this.selectedCaseArry.length;
 
     // console.log(this.varaint_data.data.length);
@@ -734,15 +770,18 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     }
   }
   selectAllVariants() {   // Select all variant list
+    let selectedIndices = [];
     if (this.checkboxValue == true) {
       for (var i = 0; i < this.varaint_data.data.length; i++) {
-        this.varaint_data.data[i].selected = "active"
+        selectedIndices.push(i);
+        this.varaint_data.data[i].selected = "active";
       }
     } else {
       for (var i = 0; i < this.varaint_data.data.length; i++) {
         this.varaint_data.data[i].selected = "inactive";
       }
     }
+    this.getVariantMedianDuration(selectedIndices);
   }
 
   editInput(){
