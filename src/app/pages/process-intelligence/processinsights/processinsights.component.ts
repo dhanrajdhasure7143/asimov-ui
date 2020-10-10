@@ -4,6 +4,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import HC_more from 'highcharts/highcharts-more' //module
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import { DataTransferService } from '../../services/data-transfer.service';
 HC_more(Highcharts) 
  enum VariantList {
   'Most Common',
@@ -45,13 +46,23 @@ export class ProcessinsightsComponent implements OnInit {
   humanCost:any = [];
   robotCost:any = [];
   activityData:any = [];
+  flag=0;
+  flag1=0;
+  flag2=0;
+  piechart3:any;
+  isstackedbarChart:boolean=false;
+  isstackedbarChart1:boolean=false;
+  stackedChart: any;
   
   constructor(
       private rest:RestApiService,
-      private route:ActivatedRoute
+      private route:ActivatedRoute,
+      private dt:DataTransferService
       ) { }
 
   ngOnInit() {
+    this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
+    this.dt.changeChildModule({ "route": "/pages/processIntelligence/insights", "title": "Insights" });
       var piId;
     this.route.queryParams.subscribe(params => {
         if(params['wpiId']!=undefined){
@@ -790,6 +801,233 @@ onchangeVaraint(datavariant) {      // Variant List sorting
   editInput1(){
     this.isEditable1=!this.isEditable1
   }
+
+  switch1(data){
+    console.log(data);
+    
+  if(data=="bar"){
+    this.flag1=0
+    this.verticleBarGraph();
+  }else if(data=="pie"){
+    this.flag1=1;
+    this.swithToPeiCart()
+  }
+}
+
+swithToPeiCart(){
+ this.piechart3= {
+  chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+  },
+  title: {
+      text: 'Browser market shares in January, 2018'
+  },
+  tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  },
+  accessibility: {
+      point: {
+          valueSuffix: '%'
+      }
+  },
+  plotOptions: {
+      pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+      }
+  },
+  series: [{
+      name: 'Brands',
+      colorByPoint: true,
+      data: [{
+          name: 'Chrome',
+          y: 61.41,
+          sliced: true,
+          selected: true
+      }, {
+          name: 'Internet Explorer',
+          y: 11.84
+      }, {
+          name: 'Firefox',
+          y: 10.85
+      }, {
+          name: 'Edge',
+          y: 4.67
+      }, {
+          name: 'Safari',
+          y: 4.18
+      }, {
+          name: 'Sogou Explorer',
+          y: 1.64
+      }, {
+          name: 'Opera',
+          y: 1.6
+      }, {
+          name: 'QQ',
+          y: 1.2
+      }, {
+          name: 'Other',
+          y: 2.61
+      }]
+  }]
+}
+Highcharts.chart('barGraph', this.piechart3);
+}
+switchTostackedBar(value){
+  console.log(value);
+  if(value=="stackedbar"){
+    this.isstackedbarChart=true
+    this.scatterBarchart()
+  }else{
+    this.isstackedbarChart=false
+    this.addpiechart1()
+  }
+}
+
+switchTostackedBar1(value){
+  if(value=="stackedbar"){
+    this.isstackedbarChart1=true
+    this.scatterBarchart1()
+  }else{
+    this.isstackedbarChart1=false
+    this.addpiechart2()
+  }
+}
+scatterBarchart(){
+    this.stackedChart={
+      chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Stacked column chart'
+    },
+    xAxis: {
+        categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Total fruit consumption'
+        },
+        stackLabels: {
+            enabled: true,
+            style: {
+                fontWeight: 'bold',
+                color: ( // theme
+                    Highcharts.defaultOptions.title.style &&
+                    Highcharts.defaultOptions.title.style.color
+                ) || 'gray'
+            }
+        }
+    },
+    legend: {
+        align: 'right',
+        x: -30,
+        verticalAlign: 'top',
+        y: 25,
+        floating: true,
+        backgroundColor:
+            Highcharts.defaultOptions.legend.backgroundColor || 'white',
+        borderColor: '#CCC',
+        borderWidth: 1,
+        shadow: false
+    },
+    tooltip: {
+        headerFormat: '<b>{point.x}</b><br/>',
+        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+    },
+    plotOptions: {
+        column: {
+            stacking: 'normal',
+            dataLabels: {
+                enabled: true
+            }
+        }
+    },
+    series: [{
+        name: 'John',
+        data: [5, 3, 4, 7, 2]
+    }, {
+        name: 'Jane',
+        data: [2, 2, 3, 2, 1]
+    }, {
+        name: 'Joe',
+        data: [3, 4, 4, 2, 5]
+    }]
+}
+    Highcharts.chart('piechart1', this.stackedChart);
+}
+scatterBarchart1(){
+  this.stackedChart={
+    chart: {
+      type: 'column'
+  },
+  title: {
+      text: 'Stacked column chart'
+  },
+  xAxis: {
+      categories: ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
+  },
+  yAxis: {
+      min: 0,
+      title: {
+          text: 'Total fruit consumption'
+      },
+      stackLabels: {
+          enabled: true,
+          style: {
+              fontWeight: 'bold',
+              color: ( // theme
+                  Highcharts.defaultOptions.title.style &&
+                  Highcharts.defaultOptions.title.style.color
+              ) || 'gray'
+          }
+      }
+  },
+  legend: {
+      align: 'right',
+      x: -30,
+      verticalAlign: 'top',
+      y: 25,
+      floating: true,
+      backgroundColor:
+          Highcharts.defaultOptions.legend.backgroundColor || 'white',
+      borderColor: '#CCC',
+      borderWidth: 1,
+      shadow: false
+  },
+  tooltip: {
+      headerFormat: '<b>{point.x}</b><br/>',
+      pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+  },
+  plotOptions: {
+      column: {
+          stacking: 'normal',
+          dataLabels: {
+              enabled: true
+          }
+      }
+  },
+  series: [{
+      name: 'John',
+      data: [5, 3, 4, 7, 2]
+  }, {
+      name: 'Jane',
+      data: [2, 2, 3, 2, 1]
+  }, {
+      name: 'Joe',
+      data: [3, 4, 4, 2, 5]
+  }]
+}
+  Highcharts.chart('piechart2', this.stackedChart);
+}
 
 
 }

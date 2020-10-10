@@ -181,3 +181,14 @@ input:disabled{
   .events{
       border: 1px solid rgb(32, 32, 32);
   }
+  .dropdown-menu {
+    right: -60px !important;
+}
+.dropdown-menu p{
+    text-align: center !important;
+    cursor: pointer;
+}
+.dropdown-menu p:hover{
+    font-weight: bold;
+    color: #287ad6;
+}
