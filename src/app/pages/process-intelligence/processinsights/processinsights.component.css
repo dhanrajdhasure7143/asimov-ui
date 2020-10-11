@@ -194,3 +194,10 @@ input:disabled{
     font-weight: bold;
     color: #287ad6;
 }
+.no-padding{
+  padding: 0;
+}
+.link{
+  color: #0162cf;
+  cursor: pointer;
+}

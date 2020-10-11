@@ -61,7 +61,7 @@
             </div>
             <div class="col-sm-1 "></div>
 
-            <div class="col-sm-2 divbox"> Total Cost (human / hr)
+            <div class="col-sm-2 divbox"> Total Human Cost
                 <div>{{totalMedianDuration && input1 && input2 ? ((totalMedianDuration*input1*input2)/(1000 * 60 * 60*3) | currency) : '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
@@ -97,6 +97,12 @@
                 </div>
                 <div class="col-sm-12 box-content hedline2">
                     <p><strong>Recommendations</strong> </p>
+                    <ul *ngIf="top10_activityData && top10_activityData.length">
+                        <li><b>{{top10_activityData[0]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[0]['Median_duration'])}}</b></li>
+                        <li><b>{{top10_activityData[1]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[1]['Median_duration'])}}</b></li>
+                        <li><b>{{top10_activityData[2]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[2]['Median_duration'])}}</b></li>
+                        <div class="pull-right link" (click)="showTop10Rec()">Explore More&nbsp;<i class="fa fa-arrow-right"></i></div>
+                    </ul>
                 </div>
             </div>
         
@@ -127,7 +133,7 @@
         </div>
         <br>
         <div class="col-md-12 btm-line"></div>
-        <div class="col-md-12">
+        <div class="col-md-12"  id="top10Activities">
             <br>
             <div class="col-sm-6">
                 <div class="text-center table1-heading">Top 10% Cases (in descending order of duration)</div>
@@ -149,7 +155,7 @@
                 </table>
             </div>
             <div class="col-sm-6">
-                <div class="text-center table1-heading">Top 10 Automation Opps</div>
+                <div class="text-center table1-heading">Top 10 Automation Opportunities</div>
                 <table class="table table-hover table-bordered text-center table-striped">
                     <thead>
                         <tr>
@@ -171,14 +177,17 @@
     </div>
     <br>
     <div class="col-md-12">
-        <div class="col-md-2">
+        <div class="col-md-2 no-padding">
             <br><br>
-            <select class="form-control">
-                <option value="">Select</option>
-                <option value="">Option 1</option>
-                <option value="">Option 2</option>
-                <option value="">Option 3</option>
-            </select>
+            <ng-multiselect-dropdown
+                [placeholder]="'Select Resources'"
+                [settings]="dropdownSettings"
+                [data]="resourcesList"
+                [(ngModel)]="selectedResources"
+                (onSelect)="onResourceSelect()"
+                (onDeSelect)="onResourceSelect()"
+                >
+                </ng-multiselect-dropdown>
         </div>
         <div class="col-md-5 py-4">
                 <div class="dropdown pull-right">

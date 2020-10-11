@@ -24,6 +24,8 @@ import {DataTablesModule} from 'angular-datatables';
 import {MatOptionModule, MatSelectModule} from '@angular/material';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
 import { ProcessinsightsComponent } from './processinsights/processinsights.component';
@@ -54,6 +56,7 @@ import { ProcessinsightsComponent } from './processinsights/processinsights.comp
     SharedModule,
     MatExpansionModule,
     ModalModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
     Ng2SearchPipeModule,
     NgxSpinnerModule,
     DataTablesModule,

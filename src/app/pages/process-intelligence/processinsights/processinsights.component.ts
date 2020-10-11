@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
  import * as Highcharts from 'highcharts';
 import { RestApiService } from '../../services/rest-api.service';
 import HC_more from 'highcharts/highcharts-more' //module
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { DataTransferService } from '../../services/data-transfer.service';
@@ -64,6 +66,9 @@ export class ProcessinsightsComponent implements OnInit {
   partialVariants:any = [];
   totalCases:any = 0;
   totalVariantList:any = [];
+  resourcesList:any = [];
+  selectedResources:any =[];
+  dropdownSettings:IDropdownSettings = {};
   
   constructor(
       private rest:RestApiService,
@@ -82,14 +87,23 @@ export class ProcessinsightsComponent implements OnInit {
             this.graphIds = piId;
           }
         });
+        this.dropdownSettings = {
+            singleSelection: false,
+            idField: 'item_id',
+            textField: 'item_text',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
+            itemsShowLimit: 1,
+            allowSearchFilter: true
+        };
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
     this.variant_list_options = VariantList;
     this.table1=[{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"},{value1:"value1",value2:"value2",value3:"value3"}]
     // this.addcharts();
     // this.addchart2();
     //this.verticleBarGraph();
-    this.addpiechart1();
-    this.addpiechart2();
+    this.addpiechart1([]);
+    this.addpiechart2([]);
     this.getAllVariantList()
 
     this.getDurationCall();
@@ -135,8 +149,6 @@ export class ProcessinsightsComponent implements OnInit {
         return b.Median_duration - a.Median_duration;
     });
     this.top10_activityData = this.actual_activityData.slice(0,10);
-    console.log(this.top10_activityData);
-    
   }
 
 //   getSlowestThroughPut(){
@@ -165,9 +177,127 @@ export class ProcessinsightsComponent implements OnInit {
         .subscribe((res:any)=>{
             this.insight_human_robot_cost = res.data;
             console.log(this.insight_human_robot_cost);
-            this.getHumanvsBotCost(this.insight_human_robot_cost)
+            this.getHumanvsBotCost(this.insight_human_robot_cost);
+            this.getResources(this.insight_human_robot_cost);
         })
 
+  }
+
+  showTop10Rec(){
+      (<HTMLElement>document.getElementById("top10Activities")).scrollIntoView();
+  }
+
+  getResources(vData){
+      let resources = [];
+      let tmp = [];
+      vData.rwa_data.forEach(each => {
+        if(tmp.indexOf(each.Resource_Name) == -1){
+            resources.push({item_id:resources.length, item_text:each.Resource_Name})
+            tmp.push(each.Resource_Name)
+        }
+      });
+      this.resourcesList = resources;
+  }
+
+  onResourceSelect() {
+      let selected_resources = [];
+      this.selectedResources.forEach(each => {
+        selected_resources.push(each.item_text);
+      })
+    let selected_variants = this.selectedCaseArry;
+    var reqObj:any = {
+        "data_type":"metrics_resources",
+        "pid":610283,
+        "variants":selected_variants,
+        "resources":selected_resources
+    }
+    this.rest.getPIInsightResourceSelection(reqObj)
+        .subscribe((res:any)=>{
+            console.log(res)
+            //dashboard metrics
+            this.totalMedianDuration = res.data.total.median;
+
+            //activity data
+            this.activity_Metrics = res.data.activiees;
+            let adata =[];
+            let activityCost =[];
+            let activityDuration =[];
+            this.isEventGraph = true;
+            if(this.activity_Metrics.length){
+                let tmp = [];
+                let tmp2 = [];
+                this.activity_Metrics.forEach((e,m) => {
+                    let duration = e.Median_duration/(1000*60*60);
+                    let obj = {
+                        name: e.Activity,
+                        y: duration
+                    }
+                    let obj2 = {
+                        name: e.Activity,
+                        y: duration*this.input1
+                    }
+                    if(m==0){
+                        obj["sliced"] = true;
+                        obj["selected"] = true;
+                        obj2["sliced"] = true;
+                        obj2["selected"] = true;
+                    }
+                    tmp.push(obj);
+                    tmp2.push(obj2);
+                    adata.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''), title:'No of Events', event_duration:e.Frequency},);
+                });
+                this.activityData = adata;
+                activityDuration = tmp;
+                activityCost = tmp2;
+                this.addchart2();
+                this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
+                this.getActivityTableData(this.activity_Metrics);
+            }else{
+                activityDuration = [
+                    {
+                        name: 'Chrome',
+                        y: 61.41,
+                        sliced: true,
+                        selected: true
+                    }, {
+                        name: 'Internet Explorer',
+                        y: 11.84
+                    }, {
+                        name: 'Firefox',
+                        y: 10.85
+                    }, {
+                        name: 'Edge',
+                        y: 4.67
+                    }, {
+                        name: 'Safari',
+                        y: 4.18
+                    }, {
+                        name: 'Sogou Explorer',
+                        y: 1.64
+                    }, {
+                        name: 'Opera',
+                        y: 1.6
+                    }, {
+                        name: 'QQ',
+                        y: 1.2
+                    }, {
+                        name: 'Other',
+                        y: 2.61
+                    }
+                ]
+                activityCost = activityDuration;
+                this.totalMedianDuration = this.bkp_totalMedianDuration;
+                this.getActivityMetrics('fullgraph');
+                this.getHumanBotCost('fullgraph');
+            }
+
+            //human vs bot
+            this.getHumanvsBotCost(res.data)
+
+            //Activity - Duration Pie chart
+            this.addpiechart1(activityDuration);
+            this.addpiechart2(activityCost);
+        })
   }
 
   getHumanvsBotCost(vData){
@@ -260,14 +390,11 @@ return uniqueChars.sort();
             aData.data.forEach(e => {
                 this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''), title:'No of Events', event_duration:e.Frequency},);
             });
-            console.log(this.activityData);
             this.bubbleColor = '#212F3C';
             this.addchart2();
             this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
-            this.getActivityTableData(aData.data);
+            this.getActivityTableData(this.activity_Metrics);
             this.isEventGraph = true;
-
-         
         })
         
   }
@@ -315,28 +442,28 @@ return uniqueChars.sort();
   }
 
   getTotalNoOfCases(type){
-      console.log(this.varaint_data);
-      var noofcases=0;
-      this.totalCases = 0;
+    console.log(this.varaint_data);
+    var noofcases=0;
+    this.totalCases = 0;
 
-      if(type == 'fullgraph'){
-      this.varaint_data.data.forEach(e => {
-        noofcases+=e.case_value;
-      });
-      this.totalCases = noofcases;
-      return this.totalCases;
-    } else {
-        noofcases = 0;
-        console.log(this.totalVariantList);
-        
-        this.totalVariantList.forEach(e => {
-            console.log(e);
-            noofcases= noofcases+e.case_value;
-          });
-          this.totalCases = noofcases;
-          return this.totalCases;
-    }
+    if(type == 'fullgraph'){
+    this.varaint_data.data.forEach(e => {
+      noofcases+=e.case_value;
+    });
+    this.totalCases = noofcases;
+    return this.totalCases;
+  } else {
+      noofcases = 0;
+      console.log(this.totalVariantList);
+      
+      this.totalVariantList.forEach(e => {
+          console.log(e);
+          noofcases= noofcases+e.case_value;
+        });
+        this.totalCases = noofcases;
+        return this.totalCases;
   }
+}
 
   addcharts(){
     this.chart1={
@@ -624,7 +751,7 @@ return uniqueChars.sort();
   
 }
 
-addpiechart1()
+addpiechart1(content)
 {
  this.piechart1= {
   chart: {
@@ -637,7 +764,7 @@ addpiechart1()
       text: 'Browser market shares in January, 2018'
   },
   tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      pointFormat: '{series.name}: <b>{point.y:.1f} Hrs</b>'
   },
   accessibility: {
       point: {
@@ -650,43 +777,14 @@ addpiechart1()
           cursor: 'pointer',
           dataLabels: {
               enabled: true,
-              format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+              format: '<b>{point.name}</b>: {point.y:.1f} Hrs'
           }
       }
   },
   series: [{
-      name: 'Brands',
+      name: 'Activity Frequency',
       colorByPoint: true,
-      data: [{
-          name: 'Chrome',
-          y: 61.41,
-          sliced: true,
-          selected: true
-      }, {
-          name: 'Internet Explorer',
-          y: 11.84
-      }, {
-          name: 'Firefox',
-          y: 10.85
-      }, {
-          name: 'Edge',
-          y: 4.67
-      }, {
-          name: 'Safari',
-          y: 4.18
-      }, {
-          name: 'Sogou Explorer',
-          y: 1.64
-      }, {
-          name: 'Opera',
-          y: 1.6
-      }, {
-          name: 'QQ',
-          y: 1.2
-      }, {
-          name: 'Other',
-          y: 2.61
-      }]
+      data: content
   }]
 }
 Highcharts.chart('piechart1', this.piechart1);
@@ -694,7 +792,7 @@ Highcharts.chart('piechart1', this.piechart1);
 }
 
 
-addpiechart2()
+addpiechart2(content)
 {
   this.piechart2={
     chart: {
@@ -707,7 +805,7 @@ addpiechart2()
         text: 'Browser market shares in January, 2018'
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        pointFormat: '{series.name}: <b>${point.y:.1f}</b>'
     },
     accessibility: {
         point: {
@@ -720,43 +818,14 @@ addpiechart2()
             cursor: 'pointer',
             dataLabels: {
                 enabled: true,
-                format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                format: '<b>{point.name}</b>: ${point.y:.1f}'
             }
         }
     },
     series: [{
-        name: 'Brands',
+        name: 'Activity Cost',
         colorByPoint: true,
-        data: [{
-            name: 'Chrome',
-            y: 61.41,
-            sliced: true,
-            selected: true
-        }, {
-            name: 'Internet Explorer',
-            y: 11.84
-        }, {
-            name: 'Firefox',
-            y: 10.85
-        }, {
-            name: 'Edge',
-            y: 4.67
-        }, {
-            name: 'Safari',
-            y: 4.18
-        }, {
-            name: 'Sogou Explorer',
-            y: 1.64
-        }, {
-            name: 'Opera',
-            y: 1.6
-        }, {
-            name: 'QQ',
-            y: 1.2
-        }, {
-            name: 'Other',
-            y: 2.61
-        }]
+        data: content
     }]
 }
 
@@ -835,7 +904,7 @@ onchangeVaraint(datavariant) {      // Variant List sorting
 
     updatePartialVariantData(){
         let vdata = this.varaint_data.data;
-        let cutoff = Math.floor(vdata.length*20/100);
+        let cutoff = Math.floor(vdata.length*10/100);
         let pVData = [];
         for(var i=0; i<vdata.length; i++){
             if(cutoff <= i) break;
@@ -1043,7 +1112,7 @@ switchTostackedBar(value){
     this.scatterBarchart()
   }else{
     this.isstackedbarChart=false
-    this.addpiechart1()
+    this.addpiechart1([])
   }
 }
 
@@ -1053,7 +1122,7 @@ switchTostackedBar1(value){
     this.scatterBarchart1()
   }else{
     this.isstackedbarChart1=false
-    this.addpiechart2()
+    this.addpiechart2([])
   }
 }
 scatterBarchart(){
