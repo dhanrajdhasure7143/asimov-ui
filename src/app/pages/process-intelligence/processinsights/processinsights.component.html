@@ -185,7 +185,9 @@
                 [data]="resourcesList"
                 [(ngModel)]="selectedResources"
                 (onSelect)="onResourceSelect()"
+                (onSelectAll)="onResourceSelect(true)"
                 (onDeSelect)="onResourceSelect()"
+                (onDeSelectAll)="onResourceSelect(false)"
                 >
                 </ng-multiselect-dropdown>
         </div>

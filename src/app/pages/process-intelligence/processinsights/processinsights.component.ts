@@ -102,8 +102,8 @@ export class ProcessinsightsComponent implements OnInit {
     // this.addcharts();
     // this.addchart2();
     //this.verticleBarGraph();
-    this.addpiechart1([]);
-    this.addpiechart2([]);
+    // this.addpiechart1([]);
+    // this.addpiechart2([]);
     this.getAllVariantList()
 
     this.getDurationCall();
@@ -148,7 +148,11 @@ export class ProcessinsightsComponent implements OnInit {
     this.actual_activityData.sort(function (a, b) {
         return b.Median_duration - a.Median_duration;
     });
-    this.top10_activityData = this.actual_activityData.slice(0,10);
+    let tmp = [];
+    this.actual_activityData.forEach(each=> {
+        if(each.Median_duration > 30*60*1000)   tmp.push(each)
+    })
+    this.top10_activityData = tmp.slice(0,10);
   }
 
 //   getSlowestThroughPut(){
@@ -188,116 +192,95 @@ export class ProcessinsightsComponent implements OnInit {
   }
 
   getResources(vData){
-      let resources = [];
-      let tmp = [];
-      vData.rwa_data.forEach(each => {
-        if(tmp.indexOf(each.Resource_Name) == -1){
-            resources.push({item_id:resources.length, item_text:each.Resource_Name})
-            tmp.push(each.Resource_Name)
-        }
-      });
-      this.resourcesList = resources;
+    let resources = [];
+    let tmp = [];
+    let tmp2 = [];
+    vData.rwa_data.forEach(each => {
+    if(tmp.indexOf(each.Resource_Name) == -1){
+        resources.push({item_id:resources.length, item_text:each.Resource_Name})
+        tmp.push(each.Resource_Name)
+    }
+    });
+    this.resourcesList = resources;
+    // this.selectedResources.forEach(each_sel => {
+    //     if(tmp.indexOf(each_sel) != -1) tmp2.push(each_sel)
+    // })
+    // this.selectedResources = tmp2;
   }
 
-  onResourceSelect() {
+  onResourceSelect(isAllSelect?:boolean) {
       let selected_resources = [];
-      this.selectedResources.forEach(each => {
+      let aResources = this.selectedResources;
+      if(isAllSelect == true) aResources = this.resourcesList;
+      if(aResources.length == 0 || isAllSelect == false){
+        this.totalMedianDuration = this.bkp_totalMedianDuration;
+        this.getActivityMetrics('fullgraph');
+        this.getHumanBotCost('fullgraph');
+      }else{
+        aResources.forEach(each => {
         selected_resources.push(each.item_text);
-      })
-    let selected_variants = this.selectedCaseArry;
-    var reqObj:any = {
-        "data_type":"metrics_resources",
-        "pid":610283,
-        "variants":selected_variants,
-        "resources":selected_resources
-    }
-    this.rest.getPIInsightResourceSelection(reqObj)
-        .subscribe((res:any)=>{
-            console.log(res)
-            //dashboard metrics
-            this.totalMedianDuration = res.data.total.median;
-
-            //activity data
-            this.activity_Metrics = res.data.activiees;
-            let adata =[];
-            let activityCost =[];
-            let activityDuration =[];
-            this.isEventGraph = true;
-            if(this.activity_Metrics.length){
-                let tmp = [];
-                let tmp2 = [];
-                this.activity_Metrics.forEach((e,m) => {
-                    let duration = e.Median_duration/(1000*60*60);
-                    let obj = {
-                        name: e.Activity,
-                        y: duration
-                    }
-                    let obj2 = {
-                        name: e.Activity,
-                        y: duration*this.input1
-                    }
-                    if(m==0){
-                        obj["sliced"] = true;
-                        obj["selected"] = true;
-                        obj2["sliced"] = true;
-                        obj2["selected"] = true;
-                    }
-                    tmp.push(obj);
-                    tmp2.push(obj2);
-                    adata.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''), title:'No of Events', event_duration:e.Frequency},);
-                });
-                this.activityData = adata;
-                activityDuration = tmp;
-                activityCost = tmp2;
-                this.addchart2();
-                this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
-                this.getActivityTableData(this.activity_Metrics);
-            }else{
-                activityDuration = [
-                    {
-                        name: 'Chrome',
-                        y: 61.41,
-                        sliced: true,
-                        selected: true
-                    }, {
-                        name: 'Internet Explorer',
-                        y: 11.84
-                    }, {
-                        name: 'Firefox',
-                        y: 10.85
-                    }, {
-                        name: 'Edge',
-                        y: 4.67
-                    }, {
-                        name: 'Safari',
-                        y: 4.18
-                    }, {
-                        name: 'Sogou Explorer',
-                        y: 1.64
-                    }, {
-                        name: 'Opera',
-                        y: 1.6
-                    }, {
-                        name: 'QQ',
-                        y: 1.2
-                    }, {
-                        name: 'Other',
-                        y: 2.61
-                    }
-                ]
-                activityCost = activityDuration;
-                this.totalMedianDuration = this.bkp_totalMedianDuration;
-                this.getActivityMetrics('fullgraph');
-                this.getHumanBotCost('fullgraph');
-            }
-
-            //human vs bot
-            this.getHumanvsBotCost(res.data)
-
-            //Activity - Duration Pie chart
-            this.addpiechart1(activityDuration);
-            this.addpiechart2(activityCost);
         })
+        let selected_variants = this.selectedCaseArry;
+        var reqObj:any = {
+            "data_type":"metrics_resources",
+            "pid":610283,
+            "variants":selected_variants,
+            "resources":selected_resources
+        }
+        this.rest.getPIInsightResourceSelection(reqObj)
+            .subscribe((res:any)=>{
+                console.log(res)
+                //dashboard metrics
+                this.totalMedianDuration = res.data.total.median;
+                //activity data
+                this.activity_Metrics = res.data.activiees;
+                let adata =[];
+                let activityCost =[];
+                let activityDuration =[];
+                this.isEventGraph = true;
+                if(this.activity_Metrics.length){
+                    let tmp = [];
+                    let tmp2 = [];
+                    this.activity_Metrics.forEach((e,m) => {
+                        let duration = e.Median_duration/(1000*60*60);
+                        let obj = {
+                            name: e.Activity,
+                            y: duration
+                        }
+                        let obj2 = {
+                            name: e.Activity,
+                            y: duration*this.input1
+                        }
+                        if(m==0){
+                            obj["sliced"] = true;
+                            obj["selected"] = true;
+                            obj2["sliced"] = true;
+                            obj2["selected"] = true;
+                        }
+                        tmp.push(obj);
+                        tmp2.push(obj2);
+                        adata.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''), title:'No of Events', event_duration:e.Frequency},);
+                    });
+                    this.activityData = adata;
+                    activityDuration = tmp;
+                    activityCost = tmp2;
+                    this.addchart2();
+                    this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
+                    this.getActivityTableData(this.activity_Metrics);
+                }else{
+                    this.totalMedianDuration = this.bkp_totalMedianDuration;
+                    this.getActivityMetrics('fullgraph');
+                    this.getHumanBotCost('fullgraph');
+                }
+    
+                //human vs bot
+                this.getHumanvsBotCost(res.data)
+    
+                //Activity - Duration Pie chart
+                this.addpiechart1(activityDuration);
+                this.addpiechart2(activityCost);
+            })
+      }
   }
 
   getHumanvsBotCost(vData){
@@ -387,7 +370,26 @@ return uniqueChars.sort();
             console.log(JSON.stringify(res));
             var aData = res.data;
             this.activity_Metrics = aData.data;
-            aData.data.forEach(e => {
+            let activityDuration = [];
+            let activityCost = [];
+            aData.data.forEach((e,m) => {
+                let duration = e.Median_duration/(1000*60*60);
+                let obj = {
+                    name: e.Activity,
+                    y: duration
+                }
+                let obj2 = {
+                    name: e.Activity,
+                    y: duration*this.input1
+                }
+                if(m==0){
+                    obj["sliced"] = true;
+                    obj["selected"] = true;
+                    obj2["sliced"] = true;
+                    obj2["selected"] = true;
+                }
+                activityDuration.push(obj);
+                activityCost.push(obj2);
                 this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''), title:'No of Events', event_duration:e.Frequency},);
             });
             this.bubbleColor = '#212F3C';
@@ -395,6 +397,8 @@ return uniqueChars.sort();
             this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
             this.getActivityTableData(this.activity_Metrics);
             this.isEventGraph = true;
+            this.addpiechart1(activityDuration);
+            this.addpiechart2(activityCost);
         })
         
   }
@@ -422,23 +426,19 @@ return uniqueChars.sort();
   }
 
   getEventBubboleGraph(type){
-      this.activityData = [];
-    if(type && type == 'event'){
-        this.activity_Metrics.forEach(e => {
+    this.activityData = [];
+    this.activity_Metrics.forEach((e,m) => {
+        if(type && type == 'event'){
             this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''),title:'No of Events', event_duration:e.Frequency},);
-        });
-        this.bubbleColor = '#212F3C';
-        this.addchart2();
-        this.isEventGraph = true;
-    } else {
-        this.activity_Metrics.forEach(e => {
+            this.bubbleColor = '#212F3C';
+            this.isEventGraph = true;
+        }else{
             this.activityData.push({ x: Math.round(this.getHours(e.Median_duration)), y: Math.round(this.getHours(e.Median_duration)), z: Math.round(this.getHours(e.Median_duration)), name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''),title:'Duration', event_duration:this.timeConversion(e.Median_duration)},);
-        });
-        console.log(this.activityData);
-        this.bubbleColor = '#008080';
+            this.bubbleColor = '#008080';
+            this.isEventGraph = false;
+        }
         this.addchart2();
-        this.isEventGraph = false;
-    }
+    });
   }
 
   getTotalNoOfCases(type){
@@ -969,16 +969,15 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     this.totalVariantList = [];
     // this.selectedTraceNumbers = [];
     for (var i = 0; i < this.varaint_data.data.length; i++) {
-      if (this.varaint_data.data[i].selected == "active") {
-        // var casevalue = this.varaint_data.data[i].case
-        this.totalVariantList.push(this.varaint_data.data[i]);
-        var index_v = i+1;
-        this.selectedCaseArry.push('Variant '+ index_v);
-        // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
-        selectedVariantIds.push(i);
-    }
+        if (this.varaint_data.data[i].selected == "active") {
+            // var casevalue = this.varaint_data.data[i].case
+            this.totalVariantList.push(this.varaint_data.data[i]);
+            var index_v = i+1;
+            this.selectedCaseArry.push('Variant '+ index_v);
+            // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
+            selectedVariantIds.push(i);
+        }
     };  
-    console.log(selectedVariantIds);
     
     this.getVariantMedianDuration(selectedVariantIds);
     this.caselength = this.selectedCaseArry.length;
@@ -992,14 +991,15 @@ onchangeVaraint(datavariant) {      // Variant List sorting
       this.checkboxValue = false
       // this.options = Object.assign({}, this.options, {disabled: true});
     }
+    this.selectedResources = [];
     if(this.selectedCaseArry.length == 0){
         this.getHumanBotCost('fullgraph');
         this.getActivityMetrics('fullgraph');
         this.getTotalNoOfCases('fullgraph');
     }else{
-    this.getHumanBotCost('variant', this.selectedCaseArry);
-    this.getActivityMetrics('variant',this.selectedCaseArry);
-    this.getTotalNoOfCases('variant')
+        this.getHumanBotCost('variant', this.selectedCaseArry);
+        this.getActivityMetrics('variant',this.selectedCaseArry);
+        this.getTotalNoOfCases('variant')
     }
   }
   selectAllVariants() {   // Select all variant list
@@ -1112,7 +1112,7 @@ switchTostackedBar(value){
     this.scatterBarchart()
   }else{
     this.isstackedbarChart=false
-    this.addpiechart1([])
+    // this.addpiechart1([])
   }
 }
 
@@ -1122,7 +1122,7 @@ switchTostackedBar1(value){
     this.scatterBarchart1()
   }else{
     this.isstackedbarChart1=false
-    this.addpiechart2([])
+    // this.addpiechart2([])
   }
 }
 scatterBarchart(){
