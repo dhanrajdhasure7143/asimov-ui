@@ -91,8 +91,8 @@ export class ProcessinsightsComponent implements OnInit {
     this.getAllVariantList()
 
     this.getDurationCall();
-    this.getActivityMetrics();
-    this.getHumanBotCost('fullgraph')
+    this.getActivityMetrics('fullgraph');
+    this.getHumanBotCost('fullgraph');
   }
 
   getDurationCall(){
@@ -127,11 +127,13 @@ export class ProcessinsightsComponent implements OnInit {
   }
 
   getActivityTableData(data){
-    this.actual_activityData = data.data.data;
+    this.actual_activityData = data;
     this.actual_activityData.sort(function (a, b) {
         return b.Median_duration - a.Median_duration;
     });
-    this.top10_activityData = this.actual_activityData.splice(0,10);
+    this.top10_activityData = this.actual_activityData.slice(0,10);
+    console.log(this.top10_activityData);
+    
   }
 
 //   getSlowestThroughPut(){
@@ -191,7 +193,7 @@ export class ProcessinsightsComponent implements OnInit {
          hCost.push(humanCost);
          var rDuration = Math.round(this.getHours(e.median_value)*60/100);
          var rHours = Math.round(rDuration);
-         var rFinalCost = rHours*2;
+         var rFinalCost = rHours*8;
          rCost.push(rFinalCost);
      });
     
@@ -229,15 +231,27 @@ return uniqueChars.sort();
     });
   }
 
-  getActivityMetrics(){
-      var reqObj = {
+  getActivityMetrics(type:any, selected_variants?:any){
+      var reqObj:any;
+      this.activityData=[];
+      if(type == 'fullgraph'){
+       reqObj = {
         pid:'920036',
-        data_type:'variant_activity_metrics'
+        data_type:'variant_activity_metrics',
+        flag:false
       }
+    } else {
+         reqObj = {
+            pid:'920036',
+            data_type:'variant_activity_metrics',
+            flag:true,
+            variants:selected_variants //if flag is true
+          }
+    
+    }
       this.rest.getPIVariantActivity(reqObj)
         .subscribe((res:any)=>{
-            console.log(res);
-            this.getActivityTableData(res);
+            console.log(JSON.stringify(res));
             var aData = res.data;
             this.activity_Metrics = aData.data;
             aData.data.forEach(e => {
@@ -247,9 +261,12 @@ return uniqueChars.sort();
             this.bubbleColor = '#212F3C';
             this.addchart2();
             this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
+            this.getActivityTableData(aData.data);
+            this.isEventGraph = true;
 
+         
         })
-        this.isEventGraph = true;
+        
   }
 
   getActivityWiseHumanvsBotCost(activityMetrics){
@@ -264,14 +281,12 @@ return uniqueChars.sort();
         hCost.push(humanCost);
         var rDuration = Math.round(this.getHours(e.Median_duration)*60/100);
         var rHours = Math.round(rDuration);
-        var rFinalCost = rHours*2;
+        var rFinalCost = rHours*8;
         rCost.push(rFinalCost);
     });
     this.activityHumanCost = hCost;
     this.activityBotCost = rCost;
     this.list_Activites = ac_list;
-    console.log(this.activityHumanCost);
-    console.log(this.activityBotCost);
     this.verticleBarGraph();
     
   }
@@ -282,7 +297,6 @@ return uniqueChars.sort();
         this.activity_Metrics.forEach(e => {
             this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''),title:'No of Events', event_duration:e.Frequency},);
         });
-        console.log(this.activityData);
         this.bubbleColor = '#212F3C';
         this.addchart2();
         this.isEventGraph = true;
@@ -882,8 +896,10 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     }
     if(this.selectedCaseArry.length == 0){
         this.getHumanBotCost('fullgraph');
+        this.getActivityMetrics('fullgraph');
     }else{
     this.getHumanBotCost('variant', this.selectedCaseArry);
+    this.getActivityMetrics('variant',this.selectedCaseArry);
     }
   }
   selectAllVariants() {   // Select all variant list
@@ -900,6 +916,7 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     }
     this.getVariantMedianDuration(selectedIndices);
     this.getHumanBotCost('fullgraph');
+    this.getActivityMetrics('fullgraph');
   }
 
   editInput(){
