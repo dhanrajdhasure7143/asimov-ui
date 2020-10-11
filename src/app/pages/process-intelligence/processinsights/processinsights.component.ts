@@ -62,6 +62,8 @@ export class ProcessinsightsComponent implements OnInit {
   actual_activityData:any = [];
   top10_activityData:any = [];
   partialVariants:any = [];
+  totalCases:any = 0;
+  totalVariantList:any = [];
   
   constructor(
       private rest:RestApiService,
@@ -91,6 +93,7 @@ export class ProcessinsightsComponent implements OnInit {
     this.getAllVariantList()
 
     this.getDurationCall();
+    this.getTotalNoOfCases('fullgraph');
     this.getActivityMetrics('fullgraph');
     this.getHumanBotCost('fullgraph');
   }
@@ -308,6 +311,30 @@ return uniqueChars.sort();
         this.bubbleColor = '#008080';
         this.addchart2();
         this.isEventGraph = false;
+    }
+  }
+
+  getTotalNoOfCases(type){
+      console.log(this.varaint_data);
+      var noofcases=0;
+      this.totalCases = 0;
+
+      if(type == 'fullgraph'){
+      this.varaint_data.data.forEach(e => {
+        noofcases+=e.case_value;
+      });
+      this.totalCases = noofcases;
+      return this.totalCases;
+    } else {
+        noofcases = 0;
+        console.log(this.totalVariantList);
+        
+        this.totalVariantList.forEach(e => {
+            console.log(e);
+            noofcases= noofcases+e.case_value;
+          });
+          this.totalCases = noofcases;
+          return this.totalCases;
     }
   }
 
@@ -870,10 +897,12 @@ onchangeVaraint(datavariant) {      // Variant List sorting
 
     this.selectedCaseArry = [];
     let selectedVariantIds = [];
+    this.totalVariantList = [];
     // this.selectedTraceNumbers = [];
     for (var i = 0; i < this.varaint_data.data.length; i++) {
       if (this.varaint_data.data[i].selected == "active") {
         // var casevalue = this.varaint_data.data[i].case
+        this.totalVariantList.push(this.varaint_data.data[i]);
         var index_v = i+1;
         this.selectedCaseArry.push('Variant '+ index_v);
         // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
@@ -897,9 +926,11 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     if(this.selectedCaseArry.length == 0){
         this.getHumanBotCost('fullgraph');
         this.getActivityMetrics('fullgraph');
+        this.getTotalNoOfCases('fullgraph');
     }else{
     this.getHumanBotCost('variant', this.selectedCaseArry);
     this.getActivityMetrics('variant',this.selectedCaseArry);
+    this.getTotalNoOfCases('variant')
     }
   }
   selectAllVariants() {   // Select all variant list
@@ -917,6 +948,7 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     this.getVariantMedianDuration(selectedIndices);
     this.getHumanBotCost('fullgraph');
     this.getActivityMetrics('fullgraph');
+    this.getTotalNoOfCases('fullgraph');
   }
 
   editInput(){
