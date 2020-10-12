@@ -4,7 +4,7 @@ import { Component,Input, OnInit } from '@angular/core';
 @Component({
 selector:'form-builder',
 template:`
-  <div class="col-md-3 form-group row" [formGroup]="form">
+  <div class="col-md-4 form-group row" [formGroup]="form">
   <div *ngIf ="field.visibility">
   <label style="color:black;padding-right:14px" class="form-control-label" [attr.for]="field.label">
       {{field.label}}
@@ -31,7 +31,7 @@ template:`
     <radio *ngSwitchCase="'radio'" [field]="field" [form]="form"></radio></div>
     <div *ngIf ="field.visibility">
     <file *ngSwitchCase="'multipart'" [field]="field" [form]="form"></file></div>
-      <div style="position:absolute" class="alert alert-danger my-1 p-2 fadeInDown animated" *ngIf="!isValid && isDirty">{{field.label}} is required</div>
+      <div style="position:absolute" class="alert alert-danger my-1 p-2 fadeInDown animated" *ngIf="!isValid && (isDirty || istouched) ">{{field.label}} is required</div>
     </div>
     </div>
   </div>
@@ -46,6 +46,7 @@ export class FormBuilderComponent implements OnInit {
   
   get isValid() { return this.form.controls[this.field.name].valid; }
   get isDirty() { return this.form.controls[this.field.name].dirty; }
+  get istouched() { return this.form.controls[this.field.name].touched; }
  
   constructor() { }
  
