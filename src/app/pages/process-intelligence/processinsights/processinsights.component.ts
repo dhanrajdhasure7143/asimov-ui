@@ -81,8 +81,8 @@ export class ProcessinsightsComponent implements OnInit {
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/insights", "title": "Insights" });
       var piId;
     this.route.queryParams.subscribe(params => {
-        if(params['wpiId']!=undefined){
-            let wpiIdNumber = parseInt(params['wpiId']);
+        if(params['wpid']!=undefined){
+            let wpiIdNumber = parseInt(params['wpid']);
             piId=wpiIdNumber;
             this.graphIds = piId;
           }
@@ -114,13 +114,12 @@ export class ProcessinsightsComponent implements OnInit {
 
   getDurationCall(){
       var reqObj = {
-          //pid: this.graphIds,
-          pid:'671229',
+          pid: this.graphIds,
+         //pid:'671229',
           data_type:'variant_metrics'
       }
       this.rest.getPIInsightMeanMedianDuration(reqObj)
         .subscribe((res:any)=>{
-            console.log(res);
             this.variant_Duration_list = res.data;
             this.totalMeanDuration = res.totalMeanDuration;
             this.bkp_totalMedianDuration = res["data"]["total"]["median"]
@@ -153,6 +152,8 @@ export class ProcessinsightsComponent implements OnInit {
         if(each.Median_duration > 30*60*1000)   tmp.push(each)
     })
     this.top10_activityData = tmp.slice(0,10);
+    console.log(this.top10_activityData);
+    
   }
 
 //   getSlowestThroughPut(){
@@ -164,14 +165,16 @@ export class ProcessinsightsComponent implements OnInit {
     var reqObj:any;
       if(from == 'fullgraph'){
        reqObj = {
-          pid:'610283',
+          //pid:'610283',
+          pid: this.graphIds,
           flag: false,
           data_type:"human_bot",
           //variants:[] //if flag is true
       }
     } else {
          reqObj = {
-            pid:'610283',
+            //pid:'610283',
+            pid: this.graphIds,
             flag: true,
             data_type:"human_bot",
             variants:varinatArray //if flag is true
@@ -223,7 +226,8 @@ export class ProcessinsightsComponent implements OnInit {
         let selected_variants = this.selectedCaseArry;
         var reqObj:any = {
             "data_type":"metrics_resources",
-            "pid":610283,
+            "pid":this.graphIds,
+            //"pid":610283,
             "variants":selected_variants,
             "resources":selected_resources
         }
@@ -242,7 +246,7 @@ export class ProcessinsightsComponent implements OnInit {
                     let tmp = [];
                     let tmp2 = [];
                     this.activity_Metrics.forEach((e,m) => {
-                        let duration = e.Median_duration/(1000*60*60);
+                        let duration = e.Duration_range/(1000*60*60);
                         let obj = {
                             name: e.Activity,
                             y: duration
@@ -352,13 +356,15 @@ return uniqueChars.sort();
       this.activityData=[];
       if(type == 'fullgraph'){
        reqObj = {
-        pid:'920036',
+        //pid:'920036',
+        pid: this.graphIds,
         data_type:'variant_activity_metrics',
         flag:false
       }
     } else {
          reqObj = {
-            pid:'920036',
+           // pid:'920036',
+           pid: this.graphIds,
             data_type:'variant_activity_metrics',
             flag:true,
             variants:selected_variants //if flag is true
@@ -373,7 +379,7 @@ return uniqueChars.sort();
             let activityDuration = [];
             let activityCost = [];
             aData.data.forEach((e,m) => {
-                let duration = e.Median_duration/(1000*60*60);
+                let duration = e.Duration_range/(1000*60*60);
                 let obj = {
                     name: e.Activity,
                     y: duration
@@ -411,9 +417,9 @@ return uniqueChars.sort();
 
     activityMetrics.forEach(e => {
         ac_list.push(e.Activity);
-        var humanCost = Math.round(this.getHours(e.Median_duration)*this.input1);
+        var humanCost = Math.round(this.getHours(e.Duration_range)*this.input1);
         hCost.push(humanCost);
-        var rDuration = Math.round(this.getHours(e.Median_duration)*60/100);
+        var rDuration = Math.round(this.getHours(e.Duration_range)*60/100);
         var rHours = Math.round(rDuration);
         var rFinalCost = rHours*8;
         rCost.push(rFinalCost);
@@ -433,7 +439,8 @@ return uniqueChars.sort();
             this.bubbleColor = '#212F3C';
             this.isEventGraph = true;
         }else{
-            this.activityData.push({ x: Math.round(this.getHours(e.Median_duration)), y: Math.round(this.getHours(e.Median_duration)), z: Math.round(this.getHours(e.Median_duration)), name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''),title:'Duration', event_duration:this.timeConversion(e.Median_duration)},);
+           
+            this.activityData.push({ x: Math.round(this.getHours(e.Duration_range)), y: Math.round(this.getHours(e.Duration_range)), z: Math.round(this.getHours(e.Duration_range)), name: e.Activity, fullname:e.Activity.split(/\s/).reduce((response,word)=> response+=word.slice(0,1),''),title:'Duration', event_duration:this.timeConversion(e.Duration_range)},);
             this.bubbleColor = '#008080';
             this.isEventGraph = false;
         }
@@ -549,11 +556,15 @@ return uniqueChars.sort();
             text: 'Activity Based Human and Bot Cost'
         },
         xAxis: {
-           // type: 'category',
+            type: 'category',
             categories: this.list_Activites,
-            // labels: {
-            //     rotation: -45,
-            // }
+            
+            labels: {
+               // rotation: -45,
+               //skew3d:true
+                staggerLines: 2
+            
+            }
             // type: 'category',
             // labels: {
             //     rotation: -45,
@@ -761,7 +772,7 @@ addpiechart1(content)
       type: 'pie'
   },
   title: {
-      text: 'Browser market shares in January, 2018'
+      text: ''
   },
   tooltip: {
       pointFormat: '{series.name}: <b>{point.y:.1f} Hrs</b>'
@@ -802,7 +813,7 @@ addpiechart2(content)
         type: 'pie'
     },
     title: {
-        text: 'Browser market shares in January, 2018'
+        text: ''
     },
     tooltip: {
         pointFormat: '{series.name}: <b>${point.y:.1f}</b>'
@@ -904,13 +915,19 @@ onchangeVaraint(datavariant) {      // Variant List sorting
 
     updatePartialVariantData(){
         let vdata = this.varaint_data.data;
+
+        console.log(vdata);
+        
         let cutoff = Math.floor(vdata.length*10/100);
+        console.log(cutoff);
+        
         let pVData = [];
         for(var i=0; i<vdata.length; i++){
             if(cutoff <= i) break;
             pVData.push(vdata[i])
         }
         this.partialVariants = pVData;
+        console.log(this.partialVariants);
     }
 
     getVariantMedianDuration(selectedVariants){
@@ -1025,6 +1042,13 @@ onchangeVaraint(datavariant) {      // Variant List sorting
   }
   editInput1(){
     this.isEditable1=!this.isEditable1
+  }
+
+  getAllGraphsPriceCalculation(){
+    console.log(this.input1);
+    this.getTotalNoOfCases('fullgraph');
+    this.getActivityMetrics('fullgraph');
+    this.getHumanBotCost('fullgraph');
   }
 
   switch1(data){

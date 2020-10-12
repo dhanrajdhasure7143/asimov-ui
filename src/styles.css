@@ -596,3 +596,9 @@ foreignObject{
     stroke-dashoffset: 0;
   }
 }
+
+.highcharts-credits {
+  display: none !important;
+  fill: white !important;
+  color: white !important;
+}

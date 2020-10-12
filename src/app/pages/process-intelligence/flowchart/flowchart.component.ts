@@ -1715,7 +1715,7 @@ filterOverlay(){
   }
 
   viewInsights(){
-    this.router.navigate(["/pages/processIntelligence/insights"])
+    this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.graphIds}})
   }
  
 }

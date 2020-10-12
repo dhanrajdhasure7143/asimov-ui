@@ -72,7 +72,7 @@
         <div class="col-md-12 input-fields">
             <div class="col-sm-2"></div>
             <div class="col-sm-4 amountinputs">
-                <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1">
+                <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
                 <i (click)="editInput()"  class="fas fa-pen"></i>
             </div>
             <!-- <div class="col-sm-1"></div> -->
@@ -98,9 +98,9 @@
                 <div class="col-sm-12 box-content hedline2">
                     <p><strong>Recommendations</strong> </p>
                     <ul *ngIf="top10_activityData && top10_activityData.length">
-                        <li><b>{{top10_activityData[0]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[0]['Median_duration'])}}</b></li>
-                        <li><b>{{top10_activityData[1]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[1]['Median_duration'])}}</b></li>
-                        <li><b>{{top10_activityData[2]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[2]['Median_duration'])}}</b></li>
+                        <li><b>{{top10_activityData[0]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[0]['Duration_range'])}}</b></li>
+                        <li><b>{{top10_activityData[1]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[1]['Duration_range'])}}</b></li>
+                        <li><b>{{top10_activityData[2]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[2]['Duration_range'])}}</b></li>
                         <div class="pull-right link" (click)="showTop10Rec()">Explore More&nbsp;<i class="fa fa-arrow-right"></i></div>
                     </ul>
                 </div>
@@ -120,14 +120,13 @@
                 <div id="scatter"></div>
             </div>
             <div class="col-sm-6">
-                <div class="dropdown pull-right">
+                <!-- <div class="dropdown pull-right">
                     <button title="Download" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                     <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
-                       <!-- <p class="" ><span>View In Pie chart</span></p> -->
                        <p *ngIf="flag1==0" class="click" (click)="switch1('pie')" ><span>View In Pei chart</span></p>
                        <p *ngIf="flag1==1" class="click"(click)="switch1('bar')" ><span>View In Bar chart</span></p>
                    </div>
-               </div>
+               </div> -->
                 <div id="barGraph"></div>
             </div>
         </div>
@@ -167,15 +166,15 @@
                     <tbody>
                         <tr *ngFor="let each_data of top10_activityData">
                             <td>{{each_data.Activity}}</td>
-                            <td>{{each_data.Median_duration_duration_date}}</td>
-                            <td>{{calculateSavings(each_data.Median_duration)}}</td>
+                            <td>{{timeConversion(each_data.Duration_range)}}</td>
+                            <td>{{calculateSavings(each_data.Duration_range)}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    <br>
+    <br class="col-md-12 btm-line">
     <div class="col-md-12">
         <div class="col-md-2 no-padding">
             <br><br>
@@ -192,25 +191,25 @@
                 </ng-multiselect-dropdown>
         </div>
         <div class="col-md-5 py-4">
-                <div class="dropdown pull-right">
+                <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                         <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
                             <p *ngIf="!isstackedbarChart" class="click" (click)="switchTostackedBar('stackedbar')"><span>View In Bar chart</span></p>
                             <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
                         </div>
-                    </div>
+                    </div> -->
             <div id="piechart1">
                 
             </div>
         </div>
         <div class="col-md-5 py-4">
-                <div class="dropdown pull-right">
+                <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                         <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
                             <p *ngIf="!isstackedbarChart1" class="click" (click)="switchTostackedBar1('stackedbar')"><span>View In Bar chart</span></p>
                             <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
                         </div>
-                    </div>
+                    </div> -->
         <div id="piechart2">
             
         </div>
