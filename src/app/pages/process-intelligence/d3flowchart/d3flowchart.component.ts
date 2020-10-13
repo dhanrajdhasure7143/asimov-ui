@@ -93,7 +93,7 @@ export class D3flowchartComponent {
     //   marginy: 20
     var me=this
     
-const w = 1150;
+const w = 1300;
 const h = 1600;
 const padding = 20;
 
@@ -280,7 +280,7 @@ var count=0
 var count1
     // console.log("this.model2",this.model2);
     for(var i2=0;i2<this.model2.length;i2++){
-      if(this.model2[i2].days){
+      if(this.model2[i2].days>=0){
         count1=count++
       }
     }
@@ -539,7 +539,7 @@ for(var i =0;i<nodesArray.length;i++){
         g.node(eachLine).style = "fill: #5b21db" ;
   } else if (nodesArray[i].metrics > Number(maxDivided*3) && nodesArray[i].metrics <= Number(maxDivided*4)) {
     var eachLine = nodesArray[i].label.split('\n')[0];  
-    g.node(eachLine).style = "fill: #4b1edb";    
+    g.node(eachLine).style = "fill: #371edb";    
   }else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics <= Number(maxDivided*5)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
     g.node(eachLine).style = "fill: #024C7F"; 
@@ -913,15 +913,15 @@ d3.selectAll("g.edgeLabel g.label")
 
 
 // Center the graph
-var initialScale = 0.62;
+var initialScale = 0.42;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 svg.attr('height', g.graph().height * initialScale + 53)
 
-var zoom1 = 1;
+var zoom1 = 0.4;
     
 $('.zoom').click( function(){ //Zoom In
-  zoom1 += 0.1;
-svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(zoom1));
+  zoom1 =zoom1+ 0.1;
+svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * zoom1) / 2, 53).scale(zoom1));
   
   // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
   svg.attr('height', g.graph().height * zoom1 + 53)
@@ -932,15 +932,19 @@ $('.zoom-init').click( function(){ //zoom reset
   // zoom1 = 0.71;
   // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
   // svg.attr('height', g.graph().height * zoom1 + 53)
-  var initialScale = 0.72;
+  var initialScale = 0.42;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 svg.attr('height', g.graph().height * initialScale + 53)
+zoom1 = 0.4
   // $('.target').css('zoom', zoom1);
 });
 $('.zoom-out').click( function(){   //zoom Out
-  zoom1 -= 0.1;
-  svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  zoom1 =zoom1- 0.05;
+  svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * zoom1) / 2, 53).scale(zoom1));
+  
   svg.attr('height', g.graph().height * zoom1 + 53)
+  // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  // svg.attr('height', g.graph().height * zoom1 + 53)
   // $('.target').css('zoom', zoom1);
 });
 // svg.attr('width', g.graph().width * initialScale + 13);
