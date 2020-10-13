@@ -218,6 +218,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
 
     // console.log(g);
     var states:any={}
+    if(this.model1){
     for(var j=0;j<this.model1.length;j++){
       if(this.model1[j].key==-1){
         var nodeName=this.model1[j].category
@@ -241,6 +242,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
         }
       }
     }
+  }
     
     // Automatically label each of the nodes
     
