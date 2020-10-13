@@ -264,6 +264,7 @@ export class UploadProcessModelComponent implements OnInit {
 
   initiateDiagram(){
     let _self=this;
+    var CamundaModdleDescriptor2
     var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
     // CamundaModdleDescriptor2.prefix = "vaidi";
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
