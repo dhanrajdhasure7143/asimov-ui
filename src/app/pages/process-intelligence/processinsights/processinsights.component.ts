@@ -32,7 +32,7 @@ export class ProcessinsightsComponent implements OnInit {
   input2:any=1;
   variant_list:any;
   varaint_data: any;
-  select_varaint:any;
+  select_varaint:any=3;
   variant_list_options;
   selectedCaseArry:any=[];
   public caselength: number;
@@ -69,6 +69,7 @@ export class ProcessinsightsComponent implements OnInit {
   resourcesList:any = [];
   selectedResources:any =[];
   dropdownSettings:IDropdownSettings = {};
+  finalVariants:any = {};
   
   constructor(
       private rest:RestApiService,
@@ -124,6 +125,7 @@ export class ProcessinsightsComponent implements OnInit {
             this.totalMeanDuration = res.totalMeanDuration;
             this.bkp_totalMedianDuration = res["data"]["total"]["median"]
             this.totalMedianDuration = this.bkp_totalMedianDuration;
+           
         },
         (err=>{
             console.log("Internal server error, Please try again later.")
@@ -134,11 +136,19 @@ export class ProcessinsightsComponent implements OnInit {
   calculateSavings(val){
     if(val && this.input1 && this.input2){
         //assume robo cost per hr is 4$
-        let roboCost = val*60*4/(1000 * 100 * 60 * 60);
-        let totalCost = (val*this.input1)/(1000 * 60 * 60);
-        return '$'+((totalCost - roboCost)*this.input2/3).toFixed(2);
+        //let roboCost = val*60*8/(1000 * 100 * 60 * 60);
+        //let totalCost = (val*this.input1)/(1000 * 60 * 60);
+        let roboCost = Math.round(this.getHours(val)*40/100*8);
+        let totalCost = Math.round(this.getHours(val)*this.input1);
+        return '$'+((totalCost - roboCost));
     }else{
         return '-';
+    }
+  }
+
+  getHumanTotalCost(val){
+    if(val){
+        return '$'+Math.round(Number(val))
     }
   }
 
@@ -149,10 +159,12 @@ export class ProcessinsightsComponent implements OnInit {
     });
     let tmp = [];
     this.actual_activityData.forEach(each=> {
-        if(each.Median_duration > 30*60*1000)   tmp.push(each)
+        if(each.Median_duration > 20*60*1000)   tmp.push(each)
     })
     this.top10_activityData = tmp.slice(0,10);
     console.log(this.top10_activityData);
+    var dd = this.timeConversion(7187760000);
+    console.log(dd);
     
   }
 
@@ -185,7 +197,9 @@ export class ProcessinsightsComponent implements OnInit {
             this.insight_human_robot_cost = res.data;
             console.log(this.insight_human_robot_cost);
             this.getHumanvsBotCost(this.insight_human_robot_cost);
+            if(from == 'fullgraph'){
             this.getResources(this.insight_human_robot_cost);
+            }
         })
 
   }
@@ -212,10 +226,13 @@ export class ProcessinsightsComponent implements OnInit {
   }
 
   onResourceSelect(isAllSelect?:boolean) {
+      console.log("in resource")
       let selected_resources = [];
       let aResources = this.selectedResources;
       if(isAllSelect == true) aResources = this.resourcesList;
       if(aResources.length == 0 || isAllSelect == false){
+          console.log("in shs");
+          
         this.totalMedianDuration = this.bkp_totalMedianDuration;
         this.getActivityMetrics('fullgraph');
         this.getHumanBotCost('fullgraph');
@@ -329,6 +346,10 @@ export class ProcessinsightsComponent implements OnInit {
      var hours:any = (millisec / (1000 * 60 * 60)).toFixed(1);
      return hours;
   }
+  getHours1(millisec){
+    var hours:any = Math.round(millisec / (1000 * 60 * 60));
+    return hours+' hrs';
+ }
 
   removeDuplicate(dataArray){
     let uniqueChars = [];
@@ -337,7 +358,6 @@ dataArray.forEach((c) => {
         uniqueChars.push(c);
     }
 });
-console.log
 return uniqueChars.sort();
   }
 
@@ -630,7 +650,7 @@ return uniqueChars.sort();
         },
     
         title: {
-            text: 'Activity vs Occurances'
+            text: 'Activity vs Occurences'
         },
     
         subtitle: {
@@ -772,7 +792,7 @@ addpiechart1(content)
       type: 'pie'
   },
   title: {
-      text: ''
+      text: 'Total Resource Duration By Activity'
   },
   tooltip: {
       pointFormat: '{series.name}: <b>{point.y:.1f} Hrs</b>'
@@ -813,7 +833,8 @@ addpiechart2(content)
         type: 'pie'
     },
     title: {
-        text: ''
+        text: 'Total Resource Cost By Activity',
+        center:true
     },
     tooltip: {
         pointFormat: '{series.name}: <b>${point.y:.1f}</b>'
@@ -858,9 +879,10 @@ closeNav() { // Variant list Close
 
 getAllVariantList(){
   let variantData=localStorage.getItem("variants")
-  this.varaint_data=JSON.parse(atob(variantData))
+  this.varaint_data=JSON.parse(atob(variantData));
+  this.finalVariants = this.varaint_data;
+  this.onchangeVaraint('0');
   this.updatePartialVariantData();
-  console.log(this.varaint_data);
 }
 
 caseParcent(parcent){       // case persent value in variant list
@@ -888,6 +910,7 @@ timeConversion(millisec) {
   }
 }
 onchangeVaraint(datavariant) {      // Variant List sorting 
+    console.log(datavariant);
   switch (datavariant) {
     case "0":
       this.varaint_data.data.sort(function (a, b) {
@@ -910,16 +933,19 @@ onchangeVaraint(datavariant) {      // Variant List sorting
       });
       break;
   }
-  this.updatePartialVariantData();
+  //this.updatePartialVariantData();
 }
 
     updatePartialVariantData(){
         let vdata = this.varaint_data.data;
-
-        console.log(vdata);
         
-        let cutoff = Math.floor(vdata.length*10/100);
-        console.log(cutoff);
+       vdata.sort(function (a, b) {
+            return b.days - a.days;
+          });
+     
+        
+        let cutoff = Math.floor(vdata.length*20/100);
+     
         
         let pVData = [];
         for(var i=0; i<vdata.length; i++){
@@ -1016,14 +1042,15 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     }else{
         this.getHumanBotCost('variant', this.selectedCaseArry);
         this.getActivityMetrics('variant',this.selectedCaseArry);
-        this.getTotalNoOfCases('variant')
+        this.getTotalNoOfCases('variant');
+        //this.onResourceSelect();
     }
   }
   selectAllVariants() {   // Select all variant list
     let selectedIndices = [];
     if (this.checkboxValue == true) {
       for (var i = 0; i < this.varaint_data.data.length; i++) {
-        selectedIndices.push(i);
+        //selectedIndices.push(i);
         this.varaint_data.data[i].selected = "active";
       }
     } else {

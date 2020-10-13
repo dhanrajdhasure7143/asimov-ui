@@ -6,7 +6,7 @@
                     <div class="col-sm-12"><button class="closebtn" (click)="closeNav()">&times;</button></div>
                     <div class="col-sm-12 form-group">
                         <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
-                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==3">{{variant_list_options[each]}}</option>
                         </select>
                     </div>
                 </div>
@@ -16,7 +16,7 @@
                        </div>
                        <div class='col-sm-5 event2'>Time Taken</div>
                 </div>
-                <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
+                <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.finalVariants.data; let i=index">
                     <div (click)="caseIdSelect(data,i)"  class='col-sm-4 event3'>Variant <b>{{i+1}}</b></div>
                     <div class='col-sm-6 variant_parcent'>
                         <div (click)="caseIdSelect(data,i)" class='col-sm-12'>Cases Covered <b>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</b></div>
@@ -52,20 +52,20 @@
         </div>
         <div class='col-md-12 boxes'>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Total Time Spent
-                <div>{{totalMedianDuration ? timeConversion(totalMedianDuration) : '-'}}</div>
+            <div class="col-sm-2 divbox">Total Time Spent
+                <div>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Total Time Savings
-                <div>{{totalMedianDuration ? timeConversion(totalMedianDuration*40/100) : '-'}}</div>
+            <div class="col-sm-2 divbox"> Potential Time Savings
+                <div>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
 
-            <div class="col-sm-2 divbox"> Total Human Cost
-                <div>{{totalMedianDuration && input1 && input2 ? ((totalMedianDuration*input1*input2)/(1000 * 60 * 60*3) | currency) : '-'}}</div>
+            <div class="col-sm-2 divbox">Total Human Cost
+                <div>{{totalMedianDuration && input1 && input2 ? getHumanTotalCost(((totalMedianDuration*input1*input2)/(1000 * 60 * 60))) : '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Total Savings
+            <div class="col-sm-2 divbox"> Potential Savings
                 <div>{{calculateSavings(this.totalMedianDuration)}}</div>
             </div>
         </div>
@@ -136,7 +136,7 @@
             <br>
             <div class="col-sm-6">
                 <div class="text-center table1-heading">Top 10% Cases (in descending order of duration)</div>
-                <table class="table table-hover table-bordered text-center table-striped">
+                <table class="table table-hover table-bordered text-center table-striped work_spacetable">
                     <thead class="text-center">
                         <tr>
                             <th class="text-center">Variant</th>
@@ -179,7 +179,7 @@
         <div class="col-md-2 no-padding">
             <br><br>
             <ng-multiselect-dropdown
-                [placeholder]="'Select Resources'"
+                [placeholder]="'All'"
                 [settings]="dropdownSettings"
                 [data]="resourcesList"
                 [(ngModel)]="selectedResources"

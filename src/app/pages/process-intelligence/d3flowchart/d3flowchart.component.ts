@@ -93,7 +93,7 @@ export class D3flowchartComponent {
     //   marginy: 20
     var me=this
     
-const w = 1150;
+const w = 1350;
 const h = 1600;
 const padding = 20;
 
@@ -918,11 +918,12 @@ var initialScale = 0.42;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 svg.attr('height', g.graph().height * initialScale + 53)
 
-var zoom1 = 0;
+var zoom1 = 0.3;
     
 $('.zoom').click( function(){ //Zoom In
-  zoom1 += 0.1;
-svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 33).scale(zoom1));
+  zoom1 = zoom1+0.1;
+  var initialScale = 0.42;
+svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(zoom1));
   
   // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
   svg.attr('height', g.graph().height * zoom1 + 53)
@@ -933,7 +934,7 @@ $('.zoom-init').click( function(){ //zoom reset
   // zoom1 = 0.71;
   // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
   // svg.attr('height', g.graph().height * zoom1 + 53)
-  var initialScale = 0.42;
+  var initialScale = 0.62;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 svg.attr('height', g.graph().height * initialScale + 53)
   // $('.target').css('zoom', zoom1);
