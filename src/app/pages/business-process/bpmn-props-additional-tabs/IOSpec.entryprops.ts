@@ -9,7 +9,7 @@ import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
 import {
   getIoPropertyProps,
   parseIoProperty
-} from '../process-io-helper';
+} from './IOSpec.helper';
 
 
 function inputOutputEntries(element, bpmnFactory, options) {
@@ -65,7 +65,7 @@ function inputOutputEntries(element, bpmnFactory, options) {
     getProperty: function(element, node) {
       const bo = getSelected(element, node);
 
-      return getIoProperty(bo, 'name', '').name;
+      return getIoProperty(bo, 'name', '')["name"];
     },
 
     setProperty: function(element, values, node) {
@@ -86,10 +86,10 @@ function inputOutputEntries(element, bpmnFactory, options) {
 
         if (nameValue) {
           if (containsSpace(nameValue)) {
-            validation.name = 'Name must not contain spaces';
+            validation["name"] = 'Name must not contain spaces';
           }
         } else {
-          validation.name = 'Parameter must have a name';
+          validation["name"] = 'Parameter must have a name';
         }
       }
 

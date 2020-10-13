@@ -285,7 +285,7 @@ mat-tab-body{
   background-color: #F8F8F8;
 }
 .changeTable tr{
-  
+
   border-collapse: collapse;
 }
 .changeTable tr td, .changeTable tr th{
@@ -344,7 +344,7 @@ margin-right: -85px;
   margin: 0 !important;
 }
 .upload_again_btn button{
-  margin: 5px -2px 5px 10px;
+  margin: 5px 8px 5px 10px;
   float: right;
 }
 .kpis-and-submit-button-div{
@@ -412,7 +412,7 @@ margin-right: -85px;
   display: inline-block;
 }
 .upload-btn {
-  
+
   color: white;
     background-color: #0162cb;
     padding-left: 30px;
@@ -421,7 +421,7 @@ margin-right: -85px;
     margin-top: 10px;
     border: none;
     margin-left: 132px;
-    
+
 }
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
@@ -517,7 +517,7 @@ transform: scale(0.4);
 /* shared bpmn-diagram component styles - Ends*/
 /* bpmn-diagram-list component styles - Starts*/
 .account_pay_details_table tr{
-border-bottom: 1px solid #ccc;  
+border-bottom: 1px solid #ccc;
 cursor: pointer;
 }
 .account_pay_details_table tr:hover{
@@ -582,7 +582,7 @@ background-color: #3ea307 !important;
   float:right !important;
 }
 .text-cell{
-   text-align: center; 
+   text-align: center;
   padding-left:63px !important;
 }
 .text-cell-last{
@@ -600,7 +600,7 @@ background-color: #3ea307 !important;
   margin-top: 20px;
 }
 .keyboard_style_upload{
-      
+
       position: absolute;
       right: 20px;
       z-index: 2;
@@ -613,7 +613,7 @@ background-color: #3ea307 !important;
 
 }
 .keyboard_label_style{
-  font-size: 17px; 
+  font-size: 17px;
   padding-right: 20px;
 }
 .keyboard_header_shortcuts{
