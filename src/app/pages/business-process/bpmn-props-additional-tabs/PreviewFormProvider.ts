@@ -6,6 +6,8 @@ import * as IOHelper from './IOSpec.helper';
 import processIoProps from './IOSpec.props';
 import processIoEntryProps from './IOSpec.entryprops';
 
+import * as rpaProps from './RPATab.props';
+
 declare var require:any;
 var formHelper = require('bpmn-js-properties-panel/lib/helper/FormHelper');
 var copy = require('clipboard-copy');
@@ -44,60 +46,79 @@ export class PreviewFormProvider implements IPropertiesProvider {
         bo.processRef
       )
     ) {
-      var IOSpecTab = this.createProcessIoTab(element, this.injector);
+      var IOSpecTab = this.createProcessIoTab(element, this.injector, "ioTab");
       actualTabs.splice(1,0,IOSpecTab);
+    }
+
+    if (is(bo, 'bpmn:SendTask')) {
+      var RPATab = this.createProcessIoTab(element, this.injector, "rpaTab");
+      actualTabs = [actualTabs[0], RPATab]
     }
     return actualTabs;
   }
 
   // IO TAB //
-  createProcessIoTab(element, injector){
+  createProcessIoTab(element, injector, tabType){
     let self = this;
-    let processIoGroup = {
-      id: 'process-io-group',
-      label: 'Parameters',
-      entries: []
-    };
-  
-    // create groups showing input and output parameters
-  
-    var {
-      getSelectedParameter
-    } = injector.invoke(processIoProps, null, { group: processIoGroup, element: element });
-
-    var processIoEntryGroup = {
-      id: 'process-io-entry-group',
-      entries: [],
-      enabled: function(element, node) {
-        return getSelectedParameter(element, node);
-      },
-      label: function(element, node) {
-        var property = getSelectedParameter(element, node);
-  
-        return property && self.getIoParameterLabel(property) || '';
-      }
-    };
-  
-    // create single entry edit group
-  
-    injector.invoke(processIoEntryProps, null, {
-      group: processIoEntryGroup,
-      element: element,
-      options: {
+    var customTab;
+    if(tabType == "ioTab"){
+      let processIoGroup = {
+        id: 'process-io-group',
+        label: 'Parameters',
+        entries: []
+      };
+    
+      // create groups showing input and output parameters
+      var {
         getSelectedParameter
-      }
-    });
+      } = injector.invoke(processIoProps, null, { group: processIoGroup, element: element });
   
-    var processIoTab = {
-      id: 'process-io-tab',
-      label: 'I/O Specification',
-      groups: [
-        processIoGroup,
-        processIoEntryGroup
-      ]
-    };
+      var processIoEntryGroup = {
+        id: 'process-io-entry-group',
+        entries: [],
+        enabled: function(element, node) {
+          return getSelectedParameter(element, node);
+        },
+        label: function(element, node) {
+          var property = getSelectedParameter(element, node);
+    
+          return property && self.getIoParameterLabel(property) || '';
+        }
+      };
+    
+      // create single entry edit group
+    
+      injector.invoke(processIoEntryProps, null, {
+        group: processIoEntryGroup,
+        element: element,
+        options: {
+          getSelectedParameter
+        }
+      });
+    
+      customTab = {
+        id: 'process-io-tab',
+        label: 'I/O Specification',
+        groups: [
+          processIoGroup,
+          processIoEntryGroup
+        ]
+      };
+    }else if(tabType == "rpaTab"){
+      customTab = {
+        id: 'rpa-tab',
+        label: 'RPA Task',
+        groups: [
+          {
+            id: 'rpa-group',
+            label: 'Parameters',
+            entries: rpaProps.getRPAEntries()
+          }
+        ]
+      };
+    }
 
-    return processIoTab;
+    return customTab;
   }
 
   getIoParameterLabel(param) {
