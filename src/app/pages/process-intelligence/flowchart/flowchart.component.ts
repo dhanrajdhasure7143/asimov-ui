@@ -1008,7 +1008,10 @@ flowchartDataOne(dataArray,index) {
           }
           obj["extraNode"] = 'true';
           obj["toolDataCount"]=this.nodeArray[i].toolCount;
-          obj['days'] = 0;
+          if(index==5||index==6||index==7||index==8||index==9){
+            obj['days'] = 0;
+            }
+          //obj['days'] = 0;
           this.linkdataArray.push(obj);
         }
         
@@ -1027,7 +1030,10 @@ flowchartDataOne(dataArray,index) {
           }
           obj["toolDataCount"]=this.nodeArray[i].toolCount;
           obj["extraNode"] = 'true';
-          obj['days'] = 0;
+          if(index==5||index==6||index==7||index==8||index==9){
+            obj['days'] = 0;
+            }
+          //obj['days'] = 0;
         this.linkdataArray.push(obj);
         }        
       }
