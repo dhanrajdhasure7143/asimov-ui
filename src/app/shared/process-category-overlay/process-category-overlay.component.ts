@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 
 @Component({
@@ -22,6 +23,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   botType = "";
   botDescription = "";
 
+  @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService) { }
 
   ngOnInit() {
@@ -71,4 +73,10 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     modal.style.display="none";
   }
 
+  @HostListener('document:click', ['$event'])
+  clickedOutside(event){
+    if(event.target.classList.contains('modal')){
+      this.slideDown(this.processForm);
+    }
+  }
 }
