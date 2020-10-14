@@ -116,7 +116,7 @@ export class PreviewFormProvider implements IPropertiesProvider {
           {
             id: 'rpa-group',
             label: 'Parameters',
-            entries: rpaProps.getRPAEntries(self.rest)
+            entries: rpaProps.getRPAEntries(self.translate)
           }
         ]
       };

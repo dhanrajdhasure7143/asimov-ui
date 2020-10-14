@@ -12,7 +12,7 @@ import {
   import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
   import { getExtensionElements } from 'bpmn-js-properties-panel/lib/helper/ExtensionElementsHelper';
 
-    export function getRPAEntries(rest) {
+    export function getRPAEntries(translate) {
         // var processBo = getBusinessObject(element);
         // if (is(processBo, 'bpmn:Participant')) {
         //   processBo = processBo.processRef;
@@ -24,25 +24,20 @@ import {
         // })
                 var botList = entryFactory.comboBox({
                     id: 'rpa-bot',
-                    label: 'RPABots',
+                    label: translate('RPA Bots'),
                     selectOptions: [
-                        { name: 'string', value: 'string' },
-                        { name: 'long', value: 'long' },
-                        { name: 'boolean', value: 'boolean' },
-                        { name: 'date', value: 'date' },
-                        { name: 'enum', value: 'enum' }
+                        { name: 'Vaidehi', value: 'string' }
                     ],
-                    modelProperty: 'RPABots',
+                    modelProperty: 'type',
                     emptyParameter: true,
                     get: function(element, node) {
-                        // var selectedFormField 
-                        // // = getSelectedParameter(element, node);
-                    
+                        // var selectedFormField = getSelectedParameter(element, node);
                         // if (selectedFormField) {
                         //     return { type: selectedFormField.type };
                         // } else {
                         //     return {};
                         // }
+                        return {}
                     },
                     set: function(element, values, node) {
                         // var selectedFormField,
