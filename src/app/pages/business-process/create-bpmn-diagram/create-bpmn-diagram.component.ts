@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
+import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
+import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import { NgxSpinnerService } from "ngx-spinner"; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -11,6 +14,8 @@ import { BpmnModel } from '../model/bpmn-autosave-model';
 import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
+
+declare var require:any;
 
 @Component({
   selector: 'app-create-bpmn-diagram',
@@ -152,13 +157,34 @@ export class CreateBpmnDiagramComponent implements OnInit {
         return sel_not["bpmnProcessStatus"] != "APPROVED" && sel_not["bpmnProcessStatus"] != "REJECTED" && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
       })
    }
+
+   togglePosition(){
+    let el = document.getElementById("properties");
+    if(el){
+      el.classList.toggle("slide-left");
+      el.classList.toggle("slide-right");
+    }
+  }
   // ngAfterViewInit(){
     initiateDiagram(){
     let _self = this;
+    var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     this.bpmnModeler = new BpmnJS({
+      additionalModules: [
+        PropertiesPanelModule,
+        PropertiesProviderModule,
+        {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
+        {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]}
+      ],
       container: '#canvas',
       keyboard: {
         bindTo: window
+      },
+      propertiesPanel: {
+        parent: '#properties'
+      },
+      moddleExtensions: {
+        camunda: CamundaModdleDescriptor
       }
     });
     let canvas = this.bpmnModeler.get('canvas');

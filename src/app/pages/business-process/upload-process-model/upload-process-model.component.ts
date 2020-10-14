@@ -2,7 +2,7 @@ import { Component, OnInit ,ViewChild,TemplateRef, ElementRef, OnDestroy} from '
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner";
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
@@ -250,7 +250,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
 
   initiateDiagram(){
     let _self=this;
-    var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
+    var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     // var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     if(!this[modeler_obj]){
@@ -273,7 +273,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           parent: '#properties'
         },
         moddleExtensions: {
-          camunda: CamundaModdleDescriptor2
+          camunda: CamundaModdleDescriptor
         }
       });
 

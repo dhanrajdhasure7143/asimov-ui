@@ -31,7 +31,13 @@
             <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>
             <div>
                 <span class="err-msg"></span>
-                <div id="canvas"></div>
+                <div class="row">
+                    <div id="canvas" class="col-md-12"></div>
+                    <div class="propertiesContainer">
+                        <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
+                        <div id="properties" class="slide-right"></div>
+                    </div>
+                </div>
             </div>
             <div class="row btn_row"> 
                 <button class="left" id="download" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>

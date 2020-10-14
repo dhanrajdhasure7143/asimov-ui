@@ -7,6 +7,7 @@ import processIoProps from './IOSpec.props';
 import processIoEntryProps from './IOSpec.entryprops';
 
 import * as rpaProps from './RPATab.props';
+import { RestApiService } from '../../services/rest-api.service';
 
 declare var require:any;
 var formHelper = require('bpmn-js-properties-panel/lib/helper/FormHelper');
@@ -17,11 +18,12 @@ export class PreviewFormProvider implements IPropertiesProvider {
 
   static $inject = ['translate', 'bpmnPropertiesProvider', 'injector'];
 
-  constructor(private translate, private bpmnPropertiesProvider, private injector) { }
+  constructor(private translate, private bpmnPropertiesProvider, private injector, private rest:RestApiService) { }
 
   getTabs(element) {
     let self = this;
     let actualTabs = this.bpmnPropertiesProvider.getTabs(element);
+    //add Preview Form button for Forms tab
     actualTabs.forEach((each_tab)=>{
       if(each_tab.id == "forms" && each_tab.groups.length && each_tab.groups[0].entries.length >0){
         let previewBtn = {
@@ -38,6 +40,7 @@ export class PreviewFormProvider implements IPropertiesProvider {
       }
     });
 
+    //add IO Specification tab
     var bo = getBusinessObject(element);
 
     if (
@@ -50,7 +53,8 @@ export class PreviewFormProvider implements IPropertiesProvider {
       actualTabs.splice(1,0,IOSpecTab);
     }
 
-    if (is(bo, 'bpmn:SendTask')) {
+    //add RPA Task tab
+    if (is(bo, 'bpmn:RPATask')) {
       var RPATab = this.createProcessIoTab(element, this.injector, "rpaTab");
       actualTabs = [actualTabs[0], RPATab]
     }
@@ -112,7 +116,7 @@ export class PreviewFormProvider implements IPropertiesProvider {
           {
             id: 'rpa-group',
             label: 'Parameters',
-            entries: rpaProps.getRPAEntries()
+            entries: rpaProps.getRPAEntries(self.rest)
           }
         ]
       };

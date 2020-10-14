@@ -11,54 +11,59 @@ import {
   import extensionElementsEntry from 'bpmn-js-properties-panel/lib/provider/camunda/parts/implementation/ExtensionElements';
   import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
   import { getExtensionElements } from 'bpmn-js-properties-panel/lib/helper/ExtensionElementsHelper';
-  
 
-    export function getRPAEntries() {
+    export function getRPAEntries(rest) {
         // var processBo = getBusinessObject(element);
         // if (is(processBo, 'bpmn:Participant')) {
         //   processBo = processBo.processRef;
         // }
         // Bot List //////////////////////////////
-        return [entryFactory.comboBox({
-            id: 'rpa-bot',
-            label: 'RPABots',
-            selectOptions: [
-                { name: 'string', value: 'string' },
-                { name: 'long', value: 'long' },
-                { name: 'boolean', value: 'boolean' },
-                { name: 'date', value: 'date' },
-                { name: 'enum', value: 'enum' }
-            ],
-            modelProperty: 'string',
-            emptyParameter: true,
-            get: function(element, node) {
-                // var selectedFormField 
-                // // = getSelectedParameter(element, node);
-            
-                // if (selectedFormField) {
-                //     return { type: selectedFormField.type };
-                // } else {
-                //     return {};
-                // }
-            },
-            set: function(element, values, node) {
-                // var selectedFormField,
-                // // = getSelectedParameter(element, node),
-                //     formData = getExtensionElements(getBusinessObject(element), 'camunda:FormData')[0],
-                //     commands = [];
-            
-                // if (selectedFormField.type === 'enum' && values.type !== 'enum') {
-                //     // delete camunda:value objects from formField.values when switching from type enum
-                //     commands.push(cmdHelper.updateBusinessObject(element, selectedFormField, { values: undefined }));
-                // }
-                // if (values.type === 'boolean' && selectedFormField.get('id') === formData.get('businessKey')) {
-                //     commands.push(cmdHelper.updateBusinessObject(element, formData, { 'businessKey': undefined }));
-                // }
-                // commands.push(cmdHelper.updateBusinessObject(element, selectedFormField, values));
-            
-                // return commands;
-            }
-        })];
+        // rest.getAllActiveBots().subscribe(res => {
+        //     let tmp = [];
+        //     console.log(res)
+        // })
+                var botList = entryFactory.comboBox({
+                    id: 'rpa-bot',
+                    label: 'RPABots',
+                    selectOptions: [
+                        { name: 'string', value: 'string' },
+                        { name: 'long', value: 'long' },
+                        { name: 'boolean', value: 'boolean' },
+                        { name: 'date', value: 'date' },
+                        { name: 'enum', value: 'enum' }
+                    ],
+                    modelProperty: 'RPABots',
+                    emptyParameter: true,
+                    get: function(element, node) {
+                        // var selectedFormField 
+                        // // = getSelectedParameter(element, node);
+                    
+                        // if (selectedFormField) {
+                        //     return { type: selectedFormField.type };
+                        // } else {
+                        //     return {};
+                        // }
+                    },
+                    set: function(element, values, node) {
+                        // var selectedFormField,
+                        // // = getSelectedParameter(element, node),
+                        //     formData = getExtensionElements(getBusinessObject(element), 'camunda:FormData')[0],
+                        //     commands = [];
+                    
+                        // if (selectedFormField.type === 'enum' && values.type !== 'enum') {
+                        //     // delete camunda:value objects from formField.values when switching from type enum
+                        //     commands.push(cmdHelper.updateBusinessObject(element, selectedFormField, { values: undefined }));
+                        // }
+                        // if (values.type === 'boolean' && selectedFormField.get('id') === formData.get('businessKey')) {
+                        //     commands.push(cmdHelper.updateBusinessObject(element, formData, { 'businessKey': undefined }));
+                        // }
+                        // commands.push(cmdHelper.updateBusinessObject(element, selectedFormField, values));
+                    
+                        // return commands;
+                    }
+                });
+        
+                return [botList];
     };
 //   }
   
