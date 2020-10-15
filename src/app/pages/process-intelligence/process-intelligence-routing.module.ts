@@ -7,6 +7,8 @@ import { DatadocumentComponent } from './datadocument/datadocument.component';
 import { FlowchartComponent } from './flowchart/flowchart.component';
 import { DataselectionComponent } from './dataselection/dataselection.component';
 import { XesdocumentComponent } from './xesdocument/xesdocument.component';
+import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
+import { ProcessinsightsComponent } from './processinsights/processinsights.component';
 
 
 const routes: Routes = [
@@ -16,6 +18,8 @@ const routes: Routes = [
     {path:'flowChart', component:FlowchartComponent},
     {path:'selection', component:DataselectionComponent},
     {path:'xesdocument', component:XesdocumentComponent},
+    {path:'flowchartd3', component:D3flowchartComponent},
+    {path:'insights', component:ProcessinsightsComponent},
     {path:'**', redirectTo:'/upload', pathMatch: 'full'}
   ]}
 ];
