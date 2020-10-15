@@ -752,7 +752,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
      tasks=this.finaldataobjects.filter(data=>data.tMetaId==64);
       for(let filedata of tasks)
       {
-        //let filepath:any=this.files_data.find(data_file_rpa=>(data_file_rpa.attrId==278 && data_file_rpa.nodeId==(filedata.nodeId.split("__")[1])));   
         let filepath:any=filedata.attributes.find(data_file_rpa=>(data_file_rpa.metaAttrId==278));  
         console.log(filepath);
         if(filepath!=undefined)
