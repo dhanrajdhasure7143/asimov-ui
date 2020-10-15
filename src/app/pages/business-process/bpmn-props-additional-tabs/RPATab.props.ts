@@ -22,44 +22,37 @@ import {
         //     let tmp = [];
         //     console.log(res)
         // })
-                var botList = entryFactory.comboBox({
-                    id: 'rpa-bot',
-                    label: translate('RPA Bots'),
+                var botList = entryFactory.selectBox({
+                    id: 'activity',
+                    label: translate('RPA Activity'),
                     selectOptions: [
-                        { name: 'Vaidehi', value: 'string' }
+                        { name: 'Vaidehi', value: 'Vaidehi' },
+                        { name: 'Kiran', value: 'Kiran' }
                     ],
-                    modelProperty: 'type',
+                    modelProperty: 'activity',
                     emptyParameter: true,
                     get: function(element, node) {
-                        // var selectedFormField = getSelectedParameter(element, node);
-                        // if (selectedFormField) {
-                        //     return { type: selectedFormField.type };
-                        // } else {
-                        //     return {};
-                        // }
-                        return {}
+                        var result = { rpaActivity: '' };
+                        var bo = getBusinessObject(element);
+                        var formDataExtension = getExtensionElements(bo, "rpa:activity");
+                        if (formDataExtension) {
+                            var formData = formDataExtension[0];
+                            var storedValue = formData.get('rpaActivity');
+                            result = { rpaActivity: storedValue };
+                        }
+                        return result;
                     },
                     set: function(element, values, node) {
-                        // var selectedFormField,
-                        // // = getSelectedParameter(element, node),
-                        //     formData = getExtensionElements(getBusinessObject(element), 'camunda:FormData')[0],
-                        //     commands = [];
-                    
-                        // if (selectedFormField.type === 'enum' && values.type !== 'enum') {
-                        //     // delete camunda:value objects from formField.values when switching from type enum
-                        //     commands.push(cmdHelper.updateBusinessObject(element, selectedFormField, { values: undefined }));
-                        // }
-                        // if (values.type === 'boolean' && selectedFormField.get('id') === formData.get('businessKey')) {
-                        //     commands.push(cmdHelper.updateBusinessObject(element, formData, { 'businessKey': undefined }));
-                        // }
-                        // commands.push(cmdHelper.updateBusinessObject(element, selectedFormField, values));
-                    
-                        // return commands;
+                        var bo = getBusinessObject(element);
+                        var rpaFormDataList = getExtensionElements(bo, "rpa:activity");
+                        var rpaFData = rpaFormDataList[0];
+                        return cmdHelper.updateBusinessObject(element, rpaFData, { 'rpaActivity': values.rpaActivity || undefined });
                     }
                 });
         
                 return [botList];
     };
+
 //   }
   
 //   const ids = new Ids([ 16, 36, 1 ]);

@@ -110,7 +110,7 @@ export class PreviewFormProvider implements IPropertiesProvider {
       };
     }else if(tabType == "rpaTab"){
       customTab = {
-        id: 'rpa-tab',
+        id: 'rpa',
         label: 'RPA Task',
         groups: [
           {
