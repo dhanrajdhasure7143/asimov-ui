@@ -95,6 +95,12 @@ export class BpmnDiagramListComponent implements OnInit {
       this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, isfromApprover: fromApprover }});
     }
   }
+  fitNotationView(){
+    let canvas = this.bpmnModeler.get('canvas');
+    canvas.zoom('fit-viewport');
+    let msg="Notation";
+    this.global.notify(msg+" is fit to view port", "success")
+  }
 
   formatApproverName(apprName){
     if(apprName){
