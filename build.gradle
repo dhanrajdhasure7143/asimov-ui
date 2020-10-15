@@ -1,20 +1,36 @@
-// 1
 plugins {
-  id 'java'
-  id "com.moowork.node" version "1.2.0"
+  id "base"
+  id "java"
+  id "com.github.node-gradle.node" version "2.2.4"
+  id "com.bmuschko.docker-remote-api" version "6.6.1"
 }
+import com.bmuschko.gradle.docker.tasks.image.Dockerfile
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
 
-// 2
 node {
-  version = '10.9.0'
-  npmVersion = '6.4.1'
+  version = "10.9.0"
+  npmVersion = "6.4.1"
   download = true
 }
 
-// 3
-jar.dependsOn 'npm_run_build'
-
-// 4
-jar {
-  from 'dist/aiotal' into 'static'
+task cleanAll (type:Delete) {
+  delete "${projectDir}/node_modules"
+  delete "dist"
 }
+
+task dockerized(type: DockerBuildImage) {
+  inputDir = file("./")
+  images.add("nexus.epsoftinc.in/asimov-ui:0.0.1-DM1")
+}
+
+task buildAll {
+  dependsOn "clean"
+  dependsOn "build"
+  dependsOn "dockerized"
+  tasks.findByName("build").mustRunAfter "clean"
+  tasks.findByName("dockerized").mustRunAfter "build"
+}
+
+jar.dependsOn "npm_run_build"
+clean.dependsOn "cleanAll"
+
