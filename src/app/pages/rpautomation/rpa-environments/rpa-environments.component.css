@@ -19,6 +19,16 @@
     padding-top: 20px;
     padding-bottom: 20px; 
   }
+
+  .errspan{
+    position: relative;
+    z-index: 2;
+    color: #dc3545;
+    font-size: 12px;
+    letter-spacing: 0.2px;
+    padding-right: 10px;
+    line-height: 12px;
+    }
   
   .rpa-tablebox{
   padding-top:10px;
