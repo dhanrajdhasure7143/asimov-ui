@@ -6,15 +6,15 @@ import { FormGroup } from'@angular/forms';
 selector:'file',
 template:`
     <div [formGroup]="form" style = "margin-top: -12px; padding: 16px 0px 4px 0px;">
-      <div  *ngIf="!field.value" class="drop-container dropzone" dropZone 
-        (dropped)="field.onUpload($event)" >
-            <input style="border: 2px dashed lightgray;padding: 3px 0px;width:210px" type="file" multiple="" [formControlName]="field.name" (change)="field.onUpload($event)"> 
+      <div  class="drop-container dropzone" dropZone (dropped)="field.onUpload($event,field)" >
+            <input style="border: 2px dashed lightgray;padding: 3px 0px;width:210px" type="file" multiple="" [formControlName]="field.name" (change)="field.onUpload($event,field)"> 
       </div>
-      <div *ngIf="field.value">
+      <div *ngIf="field.value!=''">
+      {{field.value}}
         <!-- <button type="button" class="btn btn-primary">Change</button> -->
-        <div class="card">
-          <img class="card-img-top" [src]="field.value">
-        </div>
+       <!-- <div class="card">
+          <img class="card-img-top" style='filter: none; width:20px;' [src]="field.value">
+        </div>-->
       </div>
     </div> 
   `,
@@ -75,11 +75,11 @@ export class FileComponent {
   getisDirty() { return this.form.controls[this.field.name].dirty; }
 
 constructor() {
- 
   }
  
 ngOnChange(){
 console.log(this.field.value);
+ 
 // this.field.value.
   }
 }
