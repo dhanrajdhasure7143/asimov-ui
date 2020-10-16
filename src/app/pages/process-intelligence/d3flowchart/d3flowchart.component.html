@@ -19,7 +19,7 @@
 
 <!-- <a id="download" href="#" download="graph.png"> Export my D3 visualization to PNG Download</a> -->
 <!-- <button class="eiap-btn btn btn-primary" id='download'>Export my D3 visualization to PNG</button> -->
-
+<div *ngIf="isnoNode" class="nonode">No Nodes found</div>
 <div id="exportSVGtoPDF" #exportSVGtoPDF>
     <svg id="render"  #render>
       <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"

@@ -36,6 +36,7 @@ export class D3flowchartComponent {
   class6: string;
   maxLabelValue: any;
   searchNode: any;
+  isnoNode:boolean=false;
   
     constructor(){
   
@@ -280,7 +281,8 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
     // Set up the edges
 var count=0
 var count1
-    // console.log("this.model2",this.model2);
+    // console.log("this.model1",this.model1);
+    console.log("this.model2",this.model2);
     for(var i2=0;i2<this.model2.length;i2++){
       if(this.model2[i2].days>=0){
         count1=count++
@@ -323,7 +325,6 @@ var count1
             }else{
               v3=v2+" Weeks"
             }
-          console.log(v3);
           this.model2[i].text=v3
         }
         
@@ -1174,17 +1175,46 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
       .filter(function(d) {
          return ! d.includes(itemName)
         });
+        
         UN_MATCH_NODE.style("opacity","0.1");
         UN_MATCH_NODE.style("zIndex", '9999')
+        UN_MATCH_NODE.style("pointer-events", 'none')
+
         var _MATCHE_NODE = d3.selectAll(".node")
           .filter(function(d) {
                   return d.includes(itemName)
           });
+         
+          var itemName1=itemName.slice(0,1).toUpperCase()+itemName.slice(1,40)  // camel case search
+          var _MATCHE_NODE1 = d3.selectAll(".node")
+          .filter(function(d) {
+                  return d.includes(itemName1)
+          });
+
+          var itemName2=itemName.toUpperCase()  // all Uppercase search
+          // console.log(itemName2);
+          
+          var _MATCHE_NODE2 = d3.selectAll(".node")
+          .filter(function(d) {
+                  return d.includes(itemName2)
+          });
           // console.log(_MATCHE_NODE['_groups'][0].length);
+          if(_MATCHE_NODE['_groups'][0].length==0 && _MATCHE_NODE1['_groups'][0].length==0 && _MATCHE_NODE['_groups'][0].length==0){
+            this.isnoNode=true;
+            }else{
+              this.isnoNode=false;
+            }
           
           _MATCHE_NODE.style("opacity","1");
+          _MATCHE_NODE1.style("opacity","1");
+          _MATCHE_NODE2.style("opacity","1");
+          _MATCHE_NODE.style("pointer-events", 'auto')
+          _MATCHE_NODE1.style("pointer-events", 'auto')
+          _MATCHE_NODE2.style("pointer-events", 'auto')
         }else{
           d3.selectAll(".node").style("opacity","1");
+          d3.selectAll(".node").style("pointer-events","auto");
+          this.isnoNode=false;
         }
       }
       

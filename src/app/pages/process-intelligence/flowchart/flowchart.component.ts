@@ -137,6 +137,8 @@ export class FlowchartComponent implements OnInit {
   selectedTraceNumbers:any = [];
   loaderImgSrc:string;
   graphgenetaionInterval: any;
+  isPerformance:boolean=false;
+  selectedPerformancevalue:any
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -500,13 +502,25 @@ export class FlowchartComponent implements OnInit {
       this.isDefaultData = false;
       // this.options = Object.assign({}, this.options, {disabled: true});
       if (this.keyExists(this.selectedCaseArry[0], this.varaint_GraphData.data) == true) {
-        var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]]        
+        var modalData = this.varaint_GraphData.data[0][this.selectedCaseArry[0]] 
         this.model1 = modalData.nodeDataArraycase
-        this.nodeAlignment();
-        this.model2 = this.flowchartData(this.model1)
-        this.gradientApplyforLinks()
-        this.gradientApplyforNode();
-        this.linkCurvinessGenerate();
+
+        if(this.isPerformance==true){
+          var modelArray3=[]
+            modelArray3=this.model1
+                for(var i=1;i<modelArray3.length-1;i++){
+                    modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[index])
+                  }
+                this.model1=modelArray3
+                this.model2 = this.flowchartDataOne(this.model1,this.selectedPerformancevalue)
+                
+            }else{                
+              this.model2 = this.flowchartData(this.model1)
+            }
+        // this.nodeAlignment();
+        // this.gradientApplyforLinks()
+        // this.gradientApplyforNode();
+        // this.linkCurvinessGenerate();
       }
 
            /**
@@ -528,11 +542,21 @@ export class FlowchartComponent implements OnInit {
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
       this.model1=this.variantCombo.data[0].nodeDataArraycase;
       this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
-      this.nodeAlignment();
-      this.model2 = this.flowchartData(this.model1);
-      this.gradientApplyforLinks()
-      this.gradientApplyforNode()
-      this.linkCurvinessGenerate();
+      // this.nodeAlignment();
+      if(this.isPerformance==true){
+        var modelArray3=[]
+          modelArray3=this.model1
+              for(var i=1;i<modelArray3.length-1;i++){
+                  modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[index])
+                }
+              this.model1=modelArray3
+              this.model2 = this.flowchartDataOne(this.model1,this.selectedPerformancevalue)
+          }else{                
+            this.model2 = this.flowchartData(this.model1);
+          }
+      // this.gradientApplyforLinks()
+      // this.gradientApplyforNode()
+      // this.linkCurvinessGenerate();
     })
 
          /**
@@ -545,12 +569,18 @@ export class FlowchartComponent implements OnInit {
     }
     // console.log(this.varaint_data.data.length);
     
-    if(this.selectedCaseArry.length ==this.varaint_data.data.length){
-      this.checkboxValue = true
+    if(this.selectedCaseArry.length ==this.varaint_data.data.length||this.selectedCaseArry.length==0){
+      // this.checkboxValue = true
       this.options = Object.assign({}, this.options, {disabled: false});
     }else{
-      this.checkboxValue = false
+      // this.checkboxValue = false
       this.options = Object.assign({}, this.options, {disabled: true});
+    }
+	
+	  if(this.selectedCaseArry.length ==this.varaint_data.data.length){
+      this.checkboxValue = true
+    }else{
+      this.checkboxValue = false
     }
   }
   removeDuplicates(array) {
@@ -932,13 +962,16 @@ selectedMetric(selectedValue){    //metrics selection in spinner
   for(var i=1;i<modelArray3.length-1;i++){
     if(index==5||index==6||index==7||index==8||index==9){
       modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[index])
+      this.isPerformance=true
       // this.model1=modelArray3
       // this.model1[i].days=this.timeConversionDays(this.model1[i].toolCount[index])
     }else{
+      this.isPerformance=false;
       modelArray3[i].count=modelArray3[i].toolCount[index]
     }
   }
   
+  this.selectedPerformancevalue=index
   this.model1=modelArray3
   // console.log(this.model1);
 
@@ -961,6 +994,8 @@ selectedMetric(selectedValue){    //metrics selection in spinner
 }
 
 flowchartDataOne(dataArray,index) {
+  console.log(dataArray,index);
+  
   this.linkData = [];
   this.linkdataArray = [];
   this.nodeArray = dataArray;
@@ -985,9 +1020,9 @@ flowchartDataOne(dataArray,index) {
         }else{
           obj['text'] = datalink[j].toolCount[index];
           // obj['days'] = datalink[j].toolCount[index];
-          if(datalink[j].toolCount[index]>100){
-            obj['highData']=true
-          }
+          // if(datalink[j].toolCount[index]>100){
+          //   obj['highData']=true
+          // }
         }
         obj['toolData']=datalink[j].tool
          obj['toolDataCount']=datalink[j].toolCount
@@ -1003,12 +1038,16 @@ flowchartDataOne(dataArray,index) {
           obj['to'] = this.nodeArray[i].name;
           if(index==0||index==1){
           obj['text'] = this.nodeArray[i].toolCount[3];
-          }else{
-            obj['text'] = null;
           }
-          obj["extraNode"] = 'true';
+          // else{
+          //   obj['text'] = null;
+          // }
+          // obj["extraNode"] = 'true';
           obj["toolDataCount"]=this.nodeArray[i].toolCount;
+          if(index==5||index==6||index==7||index==8||index==9){
+
           obj['days'] = 0;
+          }
           this.linkdataArray.push(obj);
         }
         
@@ -1026,8 +1065,10 @@ flowchartDataOne(dataArray,index) {
           obj['text'] = this.nodeArray[i].toolCount[4]
           }
           obj["toolDataCount"]=this.nodeArray[i].toolCount;
-          obj["extraNode"] = 'true';
+          // obj["extraNode"] = 'true';
+          if(index==5||index==6||index==7||index==8||index==9){
           obj['days'] = 0;
+          }
         this.linkdataArray.push(obj);
         }        
       }
