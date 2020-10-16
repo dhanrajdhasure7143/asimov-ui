@@ -478,14 +478,15 @@ export class FlowchartComponent implements OnInit {
       // this.options = Object.assign({}, this.options, {disabled: false});
         let fullgraphOne=this.fullgraph.data;
             this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
-                this.nodeAlignment();
+                // this.nodeAlignment();
             this.model2 = this.flowchartData(this.model1);
-            this.gradientApplyforLinks()
-            this.gradientApplyforNode()
-                this.linkCurvinessGenerate();
+            // this.gradientApplyforLinks()
+            // this.gradientApplyforNode()
+                // this.linkCurvinessGenerate();
                 // variant_playOne
                 this.isvariantSelectedOne=false;
-
+                this.spinMetrics0="";
+                this.spinMetrics0="absoluteFrequency";
 
       /**
        * BPMN Boolean Variables
@@ -506,12 +507,14 @@ export class FlowchartComponent implements OnInit {
         this.model1 = modalData.nodeDataArraycase
 
         if(this.isPerformance==true){
+          if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
           var modelArray3=[]
             modelArray3=this.model1
                 for(var i=1;i<modelArray3.length-1;i++){
-                    modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[index])
+                    modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[this.selectedPerformancevalue])
                   }
                 this.model1=modelArray3
+            }
                 this.model2 = this.flowchartDataOne(this.model1,this.selectedPerformancevalue)
                 
             }else{                
@@ -544,12 +547,15 @@ export class FlowchartComponent implements OnInit {
       this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
       // this.nodeAlignment();
       if(this.isPerformance==true){
+        if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
+        
         var modelArray3=[]
           modelArray3=this.model1
               for(var i=1;i<modelArray3.length-1;i++){
-                  modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[index])
+                  modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[this.selectedPerformancevalue])
                 }
               this.model1=modelArray3
+        }
               this.model2 = this.flowchartDataOne(this.model1,this.selectedPerformancevalue)
           }else{                
             this.model2 = this.flowchartData(this.model1);
@@ -970,10 +976,16 @@ selectedMetric(selectedValue){    //metrics selection in spinner
       modelArray3[i].count=modelArray3[i].toolCount[index]
     }
   }
+
+  if(index==1||index==2||index==5||index==6||index==7||index==8||index==9){
+    this.isPerformance=true
+  }else{
+    this.isPerformance=false;
+  }
   
   this.selectedPerformancevalue=index
   this.model1=modelArray3
-  // console.log(this.model1);
+  console.log(index);
 
   // if(index==2){
   //   for(var i=1;i<this.model1.length-1;i++){
@@ -1088,13 +1100,19 @@ closeNav() { // Variant list Close
     this.resetFilter=true;
     this.model1 = this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
-    this.nodeAlignment();
+    // this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1)
-    this.gradientApplyforNode();
-    this.gradientApplyforLinks();
-    this.linkCurvinessGenerate();
+    // this.gradientApplyforNode();
+    // this.gradientApplyforLinks();
+    // this.linkCurvinessGenerate();
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
+    this.activityValue=1;
+    this.pathvalue=1;
+    for (var i = 0; i < this.varaint_data.data.length; i++) {
+      this.varaint_data.data[i].selected = "inactive";
+    }
+    this.isPerformance=false;
     // console.log("rest",this.model1);
 
          /**
@@ -1210,13 +1228,27 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.isNodata=true;
     this.model1=this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
-    
 
-    this.nodeAlignment()
-    this.model2 = this.flowchartData(this.model1);
-    this.gradientApplyforLinks()
-    this.gradientApplyforNode()
-    this.linkCurvinessGenerate();
+    if(this.isPerformance==true){
+      
+        if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
+          var modelArray3=[]
+          modelArray3=this.model1
+          for(var i=1;i<modelArray3.length-1;i++){
+            modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[this.selectedPerformancevalue])
+            }
+            this.model1=modelArray3
+        }
+            
+            this.model2 = this.flowchartDataOne(this.model1,this.selectedPerformancevalue)
+        }else{ 
+        // this.nodeAlignment()
+        this.model2 = this.flowchartData(this.model1);
+        }
+
+    // this.gradientApplyforLinks()
+    // this.gradientApplyforNode()
+    // this.linkCurvinessGenerate();
 
          /**
        * BPMN Boolean Variables
@@ -1244,8 +1276,20 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         }
     modelOne.push(obj1)
     this.model1=modelOne;
-    this.nodeAlignment()
-    this.model2 = this.flowchartData(this.model1);
+    if(this.isPerformance==true){
+      if(this.selectedPerformancevalue==5||this.selectedPerformancevalue==6||this.selectedPerformancevalue==7||this.selectedPerformancevalue==8||this.selectedPerformancevalue==9){
+      var modelArray3=[]
+        modelArray3=this.model1
+            for(var i=1;i<modelArray3.length-1;i++){
+                modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[this.selectedPerformancevalue])
+              }
+            this.model1=modelArray3
+      }
+            this.model2 = this.flowchartDataOne(this.model1,this.selectedPerformancevalue)
+        }else{ 
+          // this.nodeAlignment()
+          this.model2 = this.flowchartData(this.model1);
+        }
     this.gradientApplyforLinks()
     this.gradientApplyforNode();
     this.linkCurvinessGenerate();
