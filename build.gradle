@@ -6,6 +6,8 @@ plugins {
 }
 import com.bmuschko.gradle.docker.tasks.image.Dockerfile
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+import com.bmuschko.gradle.docker.DockerRegistryCredentials
 
 node {
   version = "10.9.0"
@@ -13,14 +15,27 @@ node {
   download = true
 }
 
+ext {
+  dockerImage = "nexus.epsoftinc.in/asimov-ui"
+  dockerTag   = "0.0.1-DM1"
+}
+
 task cleanAll (type:Delete) {
   delete "${projectDir}/node_modules"
   delete "dist"
 }
 
-task dockerized(type: DockerBuildImage) {
+task buildImage(type: DockerBuildImage) {
   inputDir = file("./")
-  images.add("nexus.epsoftinc.in/asimov-ui:0.0.1-DM1")
+  images.add(project.dockerImage + ":" + project.dockerTag)
+}
+
+task pushImage(type: DockerPushImage, dependsOn: buildImage) {
+  images.add(project.dockerImage + ":" + project.dockerTag)
+}
+
+task dockerized {
+  dependsOn "pushImage"
 }
 
 task buildAll {
