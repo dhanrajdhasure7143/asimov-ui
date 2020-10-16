@@ -286,6 +286,27 @@ ul.bpp-properties-tabs-links{
   color: black;
 }
 
+#tabform input[type="checkbox"]{
+  width: 35%;
+  box-shadow: none;
+}
+#tabform input{
+  border: 1px solid #ccc;
+}
+#tabform label{
+  float: left;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.tab button{
+  font-size: 13px;
+  padding: 2px 5px;
+}
+.tab button.active{
+  color: white;
+}
+
 /*RPA-Environments*/
 .env-table>thead>tr>th{
   padding:18px;

@@ -31,7 +31,7 @@ template:`
     <radio *ngSwitchCase="'radio'" [field]="field" [form]="form"></radio></div>
     <div *ngIf ="field.visibility">
     <file *ngSwitchCase="'multipart'" [field]="field" [form]="form"></file></div>
-      <div style="position:absolute" class="alert alert-danger my-1 p-2 fadeInDown animated" *ngIf="!isValid && (isDirty || istouched) ">{{field.label}} is required</div>
+      <div style="position:absolute" class="alert alert-danger my-1 p-2 fadeInDown animated" *ngIf="!isValid && (isDirty || istouched) "><span class="fa fa-info-circle errspan"> {{field.label}} is required</span></div>
     </div>
     </div>
   </div>

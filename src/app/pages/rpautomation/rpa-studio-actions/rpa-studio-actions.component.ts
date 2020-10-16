@@ -287,7 +287,7 @@ export class RpaStudioActionsComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
-          
+          this.childBotWorkspace.uploadfile();
           this.getschecdules();
           this.startbot=true;
           this.pausebot=false;
@@ -334,6 +334,7 @@ export class RpaStudioActionsComponent implements OnInit {
           this.childBotWorkspace.successCallBack(data);
           this.savebotrespose=data;
           this.rpa_studio.spinner.hide();
+          this.childBotWorkspace.uploadfile();
           Swal.fire({
             position: 'top-end',
             icon: 'success',

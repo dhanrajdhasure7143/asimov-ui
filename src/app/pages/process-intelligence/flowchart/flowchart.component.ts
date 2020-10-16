@@ -1045,7 +1045,6 @@ flowchartDataOne(dataArray,index) {
           // obj["extraNode"] = 'true';
           obj["toolDataCount"]=this.nodeArray[i].toolCount;
           if(index==5||index==6||index==7||index==8||index==9){
-
           obj['days'] = 0;
           }
           this.linkdataArray.push(obj);
