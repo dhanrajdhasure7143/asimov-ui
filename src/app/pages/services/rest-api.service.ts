@@ -128,17 +128,17 @@ export class RestApiService{
   return this.http.get('/rpa-service/get-attributes/'+data)
   }
   
-  saveBot(data:any):Observable<any>
+  async saveBot(data:any)
   {
-    return this.http.post('/rpa-service/save-bot',data)
+    return await this.http.post('/rpa-service/save-bot',data)
   }
 
-  updateBot(data:any)
+  async updateBot(data:any)
   {
-    return this.http.post('/rpa-service/update-bot',data)
+    return await this.http.post('/rpa-service/update-bot',data)
   }
 
-  uploadfile(data:any,envids:any[])
+  async uploadfile(data:any,envids:any[])
   {
     let  url="/rpa-service/agent/file-upload-environments";
     let i=0;
@@ -147,6 +147,7 @@ export class RestApiService{
       if(i==0)
       {
         ct="?env="+env;
+        i++;
       }
       else
       {
@@ -155,7 +156,7 @@ export class RestApiService{
       }
       url=url+ct;
     })
-    return this.http.post(url,data,httpfileOptions);
+    return await this.http.post(url,data,httpfileOptions);
   }
   
   getUserPause(botId){
