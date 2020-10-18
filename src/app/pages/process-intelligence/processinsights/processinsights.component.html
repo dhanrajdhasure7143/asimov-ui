@@ -1,3 +1,4 @@
+<div class="backgr">
 <div class="container">
     <div class="row">
         <div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
@@ -45,27 +46,27 @@
                 </div> -->
             <!-- </div> -->
             <div class="col-sm-10"></div>
-            <div class="col-sm-2 pull-right varaint-button1">
+            <div class="col-sm-2 pull-right varaint-button1 varint-open" (click)="openVariantListNav()">Variant List
                 <!-- <div class="variant-Btn" (click)="openVariantListNav()">Variant List</div> -->
-                <button class="btn btn-primary eiap-btn varaint-button" (click)="openVariantListNav()">Variant List</button>
+                <!-- <button class="btn btn-primary eiap-btn varaint-button" (click)="openVariantListNav()">Variant List</button> -->
             </div>
         </div>
         <div class='col-md-12 boxes'>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox">Total Time Spent
+            <div class="col-sm-2 divbox divbox0">Total Time Spent
                 <div>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Potential Time Savings
+            <div class="col-sm-2 divbox divbox1"> Potential Time Savings
                 <div>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
 
-            <div class="col-sm-2 divbox">Total Human Cost
+            <div class="col-sm-2 divbox divbox2">Total Human Cost
                 <div>{{totalMedianDuration && input1 && input2 ? getHumanTotalCost(((totalMedianDuration*input1*input2)/(1000 * 60 * 60))) : '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Potential Savings
+            <div class="col-sm-2 divbox divbox3"> Potential Savings
                 <div>{{calculateSavings(this.totalMedianDuration)}}</div>
             </div>
         </div>
@@ -84,18 +85,18 @@
     <br>
     <!-- <div class="row"> -->
         <div class="col-md-12 py-4">
-            <div class="col-sm-8">
-                <div id="costprojection"></div>
+            <div class="col-sm-8 ">
+                <div id="costprojection" class="lineChart box_shadw"></div>
             </div>
             <div class="col-sm-4">
-                <div class="col-sm-12 box-content hedline1">
+                <div class="col-sm-12 box-content hedline1 box_shadw">
                     <p><strong>Business insights</strong> </p>
                     <ul>
                         <li>26% of the cases are taking longer than 6 days</li>
                         <li>35% of the cases are taking less than 2 days</li>
                     </ul>
                 </div>
-                <div class="col-sm-12 box-content hedline2">
+                <div class="col-sm-12 box-content hedline2 box_shadw">
                     <p><strong>Recommendations</strong> </p>
                     <ul *ngIf="top10_activityData && top10_activityData.length">
                         <li><b>{{top10_activityData[0]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[0]['Duration_range'])}}</b></li>
@@ -110,14 +111,14 @@
         <div class="col-md-12 btm-line"></div>
         <br>
         <div class="col-md-12">
-            <div class="col-sm-6">
+            <div class="col-sm-6 box_shadw1">
                 <ul class="groupBtn">
                     <li>
                         <button [class.active]="isEventGraph" (click)="getEventBubboleGraph('event')">Events</button>
                         <button [class.active]="!isEventGraph" (click)="getEventBubboleGraph('throughput')">Duration</button>
                     </li>
                 </ul>
-                <div id="scatter"></div>
+                <div id="scatter" class=""></div>
             </div>
             <div class="col-sm-6">
                 <!-- <div class="dropdown pull-right">
@@ -127,14 +128,14 @@
                        <p *ngIf="flag1==1" class="click"(click)="switch1('bar')" ><span>View In Bar chart</span></p>
                    </div>
                </div> -->
-                <div id="barGraph"></div>
+                <div id="barGraph" class="box_shadw1"></div>
             </div>
         </div>
         <br>
         <div class="col-md-12 btm-line"></div>
         <div class="col-md-12"  id="top10Activities">
             <br>
-            <div class="col-sm-6">
+            <div class="col-sm-6 box_shadw1 table-box1">
                 <div class="text-center table1-heading">Top 10% Cases (in descending order of duration)</div>
                 <table class="table table-hover table-bordered text-center table-striped work_spacetable">
                     <thead class="text-center">
@@ -154,7 +155,8 @@
                 </table>
             </div>
             <div class="col-sm-6">
-                <div class="text-center table1-heading">Top 10 Automation Opportunities</div>
+                <div class="box_shadw1 table-box">
+                <div class="text-center table1-heading">Top Automation Opportunities</div>
                 <table class="table table-hover table-bordered text-center table-striped">
                     <thead>
                         <tr>
@@ -171,14 +173,39 @@
                         </tr>
                     </tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>
     <br class="col-md-12 btm-line">
     <div class="col-md-12">
+        <div class="col-md-5 py-4 pi-chart">
+                <!-- <div class="dropdown pull-right">
+                        <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
+                        <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
+                            <p *ngIf="!isstackedbarChart" class="click" (click)="switchTostackedBar('stackedbar')"><span>View In Bar chart</span></p>
+                            <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
+                        </div>
+                    </div> -->
+            <div id="piechart1" class="box_shadw">
+                
+            </div>
+        </div>
+        <div class="col-md-5 py-4 pi-chart">
+                <!-- <div class="dropdown pull-right">
+                        <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
+                        <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
+                            <p *ngIf="!isstackedbarChart1" class="click" (click)="switchTostackedBar1('stackedbar')"><span>View In Bar chart</span></p>
+                            <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
+                        </div>
+                    </div> -->
+        <div id="piechart2" class="box_shadw">
+            
+        </div>
+        </div>
         <div class="col-md-2 no-padding">
-            <br><br>
-            <ng-multiselect-dropdown
+            <div class="box_shadw1">
+                <ng-multiselect-dropdown
                 [placeholder]="'All'"
                 [settings]="dropdownSettings"
                 [data]="resourcesList"
@@ -189,32 +216,10 @@
                 (onDeSelectAll)="onResourceSelect(false)"
                 >
                 </ng-multiselect-dropdown>
-        </div>
-        <div class="col-md-5 py-4">
-                <!-- <div class="dropdown pull-right">
-                        <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
-                        <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
-                            <p *ngIf="!isstackedbarChart" class="click" (click)="switchTostackedBar('stackedbar')"><span>View In Bar chart</span></p>
-                            <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
-                        </div>
-                    </div> -->
-            <div id="piechart1">
-                
             </div>
-        </div>
-        <div class="col-md-5 py-4">
-                <!-- <div class="dropdown pull-right">
-                        <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
-                        <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
-                            <p *ngIf="!isstackedbarChart1" class="click" (click)="switchTostackedBar1('stackedbar')"><span>View In Bar chart</span></p>
-                            <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
-                        </div>
-                    </div> -->
-        <div id="piechart2">
-            
-        </div>
         </div>
 
     </div>
+</div>
 </div>
 </div>
