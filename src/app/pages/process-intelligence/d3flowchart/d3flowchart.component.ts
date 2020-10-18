@@ -36,6 +36,7 @@ export class D3flowchartComponent {
   class6: string;
   maxLabelValue: any;
   searchNode: any;
+  isnoNode:boolean=false;
   
     constructor(){
   
@@ -93,7 +94,7 @@ export class D3flowchartComponent {
     //   marginy: 20
     var me=this
     
-const w = 1350;
+const w = 1300;
 const h = 1600;
 const padding = 20;
 
@@ -218,6 +219,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
 
     // console.log(g);
     var states:any={}
+    if(this.model1){
     for(var j=0;j<this.model1.length;j++){
       if(this.model1[j].key==-1){
         var nodeName=this.model1[j].category
@@ -241,6 +243,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
         }
       }
     }
+  }
     
     // Automatically label each of the nodes
     
@@ -278,9 +281,10 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
     // Set up the edges
 var count=0
 var count1
-    // console.log("this.model2",this.model2);
+    // console.log("this.model1",this.model1);
+    console.log("this.model2",this.model2);
     for(var i2=0;i2<this.model2.length;i2++){
-      if(this.model2[i2].days){
+      if(this.model2[i2].days>=0){
         count1=count++
       }
     }
@@ -321,7 +325,6 @@ var count1
             }else{
               v3=v2+" Weeks"
             }
-          console.log(v3);
           this.model2[i].text=v3
         }
         
@@ -536,10 +539,10 @@ for(var i =0;i<nodesArray.length;i++){
         g.node(eachLine).style = "fill: #ADB9D1";
   } else if (nodesArray[i].metrics > Number(maxDivided*2) && nodesArray[i].metrics <= Number(maxDivided*3)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
-        g.node(eachLine).style = "fill: #5b21db" ;
+        g.node(eachLine).style = "fill: #37607d" ;
   } else if (nodesArray[i].metrics > Number(maxDivided*3) && nodesArray[i].metrics <= Number(maxDivided*4)) {
     var eachLine = nodesArray[i].label.split('\n')[0];  
-    g.node(eachLine).style = "fill: #4b1edb";    
+    g.node(eachLine).style = "fill: #0b629e";    
   }else if (nodesArray[i].metrics > Number(maxDivided*4) && nodesArray[i].metrics <= Number(maxDivided*5)) {
     var eachLine = nodesArray[i].label.split('\n')[0];
     g.node(eachLine).style = "fill: #024C7F"; 
@@ -918,12 +921,11 @@ var initialScale = 0.42;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 svg.attr('height', g.graph().height * initialScale + 53)
 
-var zoom1 = 0.3;
+var zoom1 = 0.4;
     
 $('.zoom').click( function(){ //Zoom In
-  zoom1 = zoom1+0.1;
-  var initialScale = 0.42;
-svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(zoom1));
+  zoom1 =zoom1+ 0.1;
+svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * zoom1) / 2, 53).scale(zoom1));
   
   // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
   svg.attr('height', g.graph().height * zoom1 + 53)
@@ -934,15 +936,19 @@ $('.zoom-init').click( function(){ //zoom reset
   // zoom1 = 0.71;
   // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
   // svg.attr('height', g.graph().height * zoom1 + 53)
-  var initialScale = 0.62;
+  var initialScale = 0.42;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
 svg.attr('height', g.graph().height * initialScale + 53)
+zoom1 = 0.4
   // $('.target').css('zoom', zoom1);
 });
 $('.zoom-out').click( function(){   //zoom Out
-  zoom1 -= 0.1;
-  svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  zoom1 =zoom1- 0.05;
+  svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * zoom1) / 2, 53).scale(zoom1));
+  
   svg.attr('height', g.graph().height * zoom1 + 53)
+  // svg.call(zoom.transform, d3.zoomIdentity.translate(146.75359375,53).scale(zoom1));
+  // svg.attr('height', g.graph().height * zoom1 + 53)
   // $('.target').css('zoom', zoom1);
 });
 // svg.attr('width', g.graph().width * initialScale + 13);
@@ -1170,17 +1176,46 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
       .filter(function(d) {
          return ! d.includes(itemName)
         });
+        
         UN_MATCH_NODE.style("opacity","0.1");
         UN_MATCH_NODE.style("zIndex", '9999')
+        UN_MATCH_NODE.style("pointer-events", 'none')
+
         var _MATCHE_NODE = d3.selectAll(".node")
           .filter(function(d) {
                   return d.includes(itemName)
           });
+         
+          var itemName1=itemName.slice(0,1).toUpperCase()+itemName.slice(1,40)  // camel case search
+          var _MATCHE_NODE1 = d3.selectAll(".node")
+          .filter(function(d) {
+                  return d.includes(itemName1)
+          });
+
+          var itemName2=itemName.toUpperCase()  // all Uppercase search
+          // console.log(itemName2);
+          
+          var _MATCHE_NODE2 = d3.selectAll(".node")
+          .filter(function(d) {
+                  return d.includes(itemName2)
+          });
           // console.log(_MATCHE_NODE['_groups'][0].length);
+          if(_MATCHE_NODE['_groups'][0].length==0 && _MATCHE_NODE1['_groups'][0].length==0 && _MATCHE_NODE['_groups'][0].length==0){
+            this.isnoNode=true;
+            }else{
+              this.isnoNode=false;
+            }
           
           _MATCHE_NODE.style("opacity","1");
+          _MATCHE_NODE1.style("opacity","1");
+          _MATCHE_NODE2.style("opacity","1");
+          _MATCHE_NODE.style("pointer-events", 'auto')
+          _MATCHE_NODE1.style("pointer-events", 'auto')
+          _MATCHE_NODE2.style("pointer-events", 'auto')
         }else{
           d3.selectAll(".node").style("opacity","1");
+          d3.selectAll(".node").style("pointer-events","auto");
+          this.isnoNode=false;
         }
       }
       

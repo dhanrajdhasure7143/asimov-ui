@@ -399,21 +399,14 @@
                     <span class="rpa-modal-close" (click)="viewlogclose()">&times;</span>
                     <h4>Logs</h4>
                 </div>
-                <div  *ngIf="logresponse.errorCode!=undefined"  style="text-align:center;">
-                  <br>
-                <h4>No Records Found</h4>
-                  <br>
-                </div>
-                <div  *ngIf="logresponse.length > 0">
-                  <div *ngIf="logflag==false">
                     <div class="container" style="background: white;" class=" table w-100">
                         <div  class="logs-container">
-                            <table mat-table [dataSource]="Viewloglist" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
+                            <table mat-table [dataSource]="Viewloglist" #sort1="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
        
                                 
                                 <!-- Run Id Column -->
                                 <ng-container matColumnDef="run_id">
-                                    <th mat-header-cell *matHeaderCellDef > Run ID </th>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Run ID </th>
                                     <td mat-cell *matCellDef="let element" ><a style="color:blue; text-decoration: underline;"  (click)="ViewlogByrunid(element.run_id)" >{{element.run_id}}</a></td>
                                 </ng-container>
     
@@ -422,7 +415,7 @@
                                     <th mat-header-cell *matHeaderCellDef > Version </th>
                                     <td mat-cell *matCellDef="let element">
                                         <span *ngIf="element.version!=null">{{element.version}}</span>
-                                        <span *ngIf="element.version == undefined">---</span>
+                                        <span *ngIf="element.version == undefined">-</span>
                                     </td>
                                 </ng-container>
 
@@ -431,7 +424,7 @@
                                       <th mat-header-cell *matHeaderCellDef > Start Date </th>
                                       <td mat-cell *matCellDef="let element">
                                           <span *ngIf="element.start_date!=null">{{element.start_date}}</span>
-                                          <span *ngIf="element.start_date == undefined">---</span>
+                                          <span *ngIf="element.start_date == undefined">-</span>
                                       </td>
                                   </ng-container>
       
@@ -441,7 +434,7 @@
                                     <th mat-header-cell *matHeaderCellDef > Start time </th>
                                     <td mat-cell *matCellDef="let element">
                                         <span *ngIf="element.start_time!=null">{{element.start_time}}</span>
-                                        <span *ngIf="element.start_time == undefined">---</span>
+                                        <span *ngIf="element.start_time == undefined">-</span>
                                     </td>
                                 </ng-container>
                                 <!-- End Date Column -->
@@ -450,7 +443,7 @@
                                   <th mat-header-cell *matHeaderCellDef > End Date </th>
                                   <td mat-cell *matCellDef="let element">
                                       <span *ngIf="element.end_date!=null">{{element.end_date}}</span>
-                                      <span *ngIf="element.end_date == undefined">---</span>
+                                      <span *ngIf="element.end_date == undefined">-</span>
                                   </td>
                               </ng-container>
 
@@ -460,48 +453,59 @@
                                   <th mat-header-cell *matHeaderCellDef > End Time </th>
                                   <td mat-cell *matCellDef="let element">
                                       <span *ngIf="element.end_time!=null">{{element.end_time}}</span>
-                                      <span *ngIf="element.end_time == undefined">---</span>
+                                      <span *ngIf="element.end_time == undefined">-</span>
                                   </td>
                                 </ng-container>
           
-    
-                       
-                          
                                 <ng-container matColumnDef="bot_status">
                                   <th mat-header-cell *matHeaderCellDef >Status</th>
                                   <td mat-cell *matCellDef="let element">
                                       <span *ngIf="element.bot_status!=null">{{element.bot_status}}</span>
-                                      <span *ngIf="element.bot_status == undefined">---</span></td>
+                                      <span *ngIf="element.bot_status == undefined">-</span></td>
                                 </ng-container>
       
+                                <ng-container matColumnDef="noData">
+                                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                                      No Records Found
+                                  </td>
+                              </ng-container>
     
                                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                                 <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                            </table>
+                                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
+                              </table>
+                              <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
                          </div>
                     </div>
                 </div>
-                <div *ngIf="logflag == true">
+          </div>
+                <div [id]="viewlogid1" class="rpa-modal">
+                  <div class="rpa-modal-content">
+                      <div class="rpa-modal-header">
+                          <span class="rpa-modal-close" (click)="viewlogclose1()">&times;</span>
+                          <h4>Logs</h4>
+                      </div>
+               
                     <div  class="logs-container">
                       <button (click)="back()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
                         
-                        <table mat-table [dataSource]="logbyrunid" matSort style="width:100%;">
+                        <table mat-table [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
     
                             <!-- Task Name Column -->
                             <ng-container matColumnDef="task_name">
-                                <th mat-header-cell *matHeaderCellDef > Task Name </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="element.task_name != null">{{element.task_name}}</span>
-                                    <span *ngIf="element.task_name == undefined">---</span>
+                                    <span *ngIf="element.task_name == undefined">-</span>
                                 </td>
                             </ng-container>
     
                             <!-- Status Column -->
                             <ng-container matColumnDef="status">
-                                <th mat-header-cell *matHeaderCellDef > Status </th>
+                                <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="element.status != null">{{element.status}}</span>
-                                    <span *ngIf="element.status == undefined">---</span>
+                                    <span *ngIf="element.status == undefined">-</span>
                                 </td>
                             </ng-container>
     
@@ -510,7 +514,7 @@
                                 <th mat-header-cell *matHeaderCellDef > Start Time </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="element.start_time != null">{{element.start_time.slice(11,19)}}</span>
-                                    <span *ngIf="element.start_time == undefined">---</span>
+                                    <span *ngIf="element.start_time == undefined">-</span>
                                 </td>
                             </ng-container>
     
@@ -519,7 +523,7 @@
                                 <th mat-header-cell *matHeaderCellDef > Start Date </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0]}}</span>
-                                    <span *ngIf="element.start_date == undefined">---</span>
+                                    <span *ngIf="element.start_date == undefined">-</span>
                                 </td>
                             </ng-container>
     
@@ -528,7 +532,7 @@
                                 <th mat-header-cell *matHeaderCellDef > End Time </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="element.end_time != null">{{element.end_time.slice(11,19)}}</span>
-                                    <span *ngIf="element.end_time == undefined">---</span>
+                                    <span *ngIf="element.end_time == undefined">-</span>
                                 </td>
                             </ng-container>
     
@@ -537,7 +541,7 @@
                                 <th mat-header-cell *matHeaderCellDef > End Date </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0]}}</span>
-                                    <span *ngIf="element.end_date == undefined">---</span>
+                                    <span *ngIf="element.end_date == undefined">-</span>
                                 </td>
                             </ng-container>
     
@@ -546,18 +550,24 @@
                                 <th mat-header-cell *matHeaderCellDef > Error Info </th>
                                 <td mat-cell *matCellDef="let element">
                                     <span *ngIf="element.error_info!=null && element.error_info != 'NA'">{{element.error_info}}</span>
-                                    <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">---</span></td>
+                                    <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span></td>
                             </ng-container>
 
+                            <ng-container matColumnDef="noData">
+                              <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                                  No Records Found
+                              </td>
+                          </ng-container>
     
                             <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
                             <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+                            <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
                         </table>
+                        <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
                       </div>
                 </div>
             </div>
-            </div>
-        </div>
+           
     
 
 

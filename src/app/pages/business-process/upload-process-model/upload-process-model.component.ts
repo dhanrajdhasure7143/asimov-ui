@@ -1,11 +1,12 @@
-import { Component, OnInit ,ViewChild,TemplateRef, ElementRef} from '@angular/core';
+import { Component, OnInit ,ViewChild,TemplateRef, ElementRef, OnDestroy} from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner";
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
+import lintModule from 'bpmn-js-bpmnlint';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
 import { MatDialog } from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
@@ -17,29 +18,33 @@ import { GlobalScript } from 'src/app/shared/global-script';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { UUID } from 'angular2-uuid';
- declare var require
+import { Subscription } from 'rxjs';
+import { JsonpInterceptor } from '@angular/common/http';
+
+declare var require:any;
+
 @Component({
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
   styleUrls: ['./upload-process-model.component.css'],
   providers:[BpmnShortcut]
 })
-export class UploadProcessModelComponent implements OnInit {
+export class UploadProcessModelComponent implements OnInit,OnDestroy {
   isShowConformance:boolean = false;
-   hideUploadContainer:boolean=false;
-   hideCreateContainer:boolean=false;
-   hideOptionsContainer:boolean=true;
-   isUploaded:boolean=false;
-   bpmnModeler;
-   viewer:any;
-   confBpmnModeler;
-   reSize:boolean=false;
-   confBpmnXml;
-   receivedbpmn:any;
-   createDiagram:boolean = false;
-   isConfBpmnModeler:boolean = true;
-   isHiddenDiff:boolean=true;
-   displayChanges:boolean=false;
+  hideUploadContainer:boolean=false;
+  hideCreateContainer:boolean=false;
+  hideOptionsContainer:boolean=true;
+  isUploaded:boolean=false;
+  bpmnModeler;
+  viewer:any;
+  confBpmnModeler;
+  reSize:boolean=false;
+  confBpmnXml;
+  receivedbpmn:any;
+  createDiagram:boolean = false;
+  isConfBpmnModeler:boolean = true;
+  isHiddenDiff:boolean=true;
+  displayChanges:boolean=false;
   res1: string;
   oldxmlstring: string;
   newxmlsttring: string;
@@ -119,11 +124,15 @@ export class UploadProcessModelComponent implements OnInit {
     }
     this.getApproverList();
    }
+   
 
    ngAfterViewInit(){
     if(this.isShowConformance)
       this.getAutoSavedDiagrams()
    }
+   ngOnDestroy() {
+    // this.subscription.unsubscribe();
+  }
    fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
        this.pivalues=res;
@@ -171,6 +180,7 @@ export class UploadProcessModelComponent implements OnInit {
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
+      
     }
     if(!this.isShowConformance){
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]};
@@ -205,6 +215,7 @@ export class UploadProcessModelComponent implements OnInit {
         this.initiateDiagram();
     });
    }
+
    filterAutoSavedDiagrams(){
     let sel_not = this.saved_bpmn_list[this.selected_notation]
      this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
@@ -220,8 +231,10 @@ export class UploadProcessModelComponent implements OnInit {
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].get('canvas').zoom('fit-viewport');
     let msg = "";
-    if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
+    if(this.isConfBpmnModeler){
+     if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
       msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
+    }
     else
       msg = "Notation"
     this.global.notify(msg+" is fit to view port", "success")
@@ -237,19 +250,20 @@ export class UploadProcessModelComponent implements OnInit {
 
   initiateDiagram(){
     let _self=this;
-    var CamundaModdleDescriptor2
-    var CamundaModdleDescriptor2 = require("camunda-bpmn-moddle/resources/camunda.json");
-    // CamundaModdleDescriptor2.prefix = "vaidi";
+    var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
+    // var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({
+        linting: {
+          // bpmnlint: bpmnlintConfig
+        },
         additionalModules: [
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
           {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
-          // {[InjectionNames.propertiesProvider]: ['type', IOSpecificationProvider]},
-          // {[InjectionNames.elementTemplates]: ['type', ElementTemplates]},
+          lintModule
         ],
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
         keyboard: {
@@ -259,7 +273,7 @@ export class UploadProcessModelComponent implements OnInit {
           parent: '#properties'
         },
         moddleExtensions: {
-          camunda: CamundaModdleDescriptor2 //customModdle
+          camunda: CamundaModdleDescriptor
         }
       });
 
@@ -282,7 +296,7 @@ export class UploadProcessModelComponent implements OnInit {
           let selected_xml = this.pivalues['data'];
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
-            this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+            this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
           }
           this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))), function(err){
             if(err){
@@ -294,7 +308,7 @@ export class UploadProcessModelComponent implements OnInit {
         let selected_xml = atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation)));
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-          this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+          this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         }
         if(selected_xml == "undefined"){
           this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
@@ -344,7 +358,7 @@ displayBPMN(){
         this.hasConformance = current_bpmn_info["hasConformance"];
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-          this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+          this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         }
         setTimeout(()=> {
           if(this.hasConformance) this.initBpmnModeler();
@@ -384,7 +398,7 @@ displayBPMN(){
     this.hasConformance = current_bpmn_info["hasConformance"];
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-      this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+      this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
     }
     setTimeout(()=> {
       if(this.hasConformance) this.initBpmnModeler();

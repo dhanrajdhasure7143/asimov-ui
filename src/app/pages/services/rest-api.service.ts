@@ -20,6 +20,15 @@ const httpOptions = {
 };
 
 
+const  httpfileOptions={
+ 
+  headers: new HttpHeaders({
+  "Content-Type":"multipart/form-data"
+  })
+
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -121,15 +130,36 @@ export class RestApiService{
   attribute(data:any){
   return this.http.get('/rpa-service/get-attributes/'+data)
   }
-    saveBot(data:any):Observable<any>
-    {
-      return this.http.post('/rpa-service/save-bot',data)
-    }
+  
+  saveBot(data:any):Observable<any>
+  {
+    return this.http.post('/rpa-service/save-bot',data)
+  }
 
-    updateBot(data:any)
-    {
-      return this.http.post('/rpa-service/update-bot',data)
-    }
+  updateBot(data:any)
+  {
+    return this.http.post('/rpa-service/update-bot',data)
+  }
+
+  uploadfile(data:any,envids:any[])
+  {
+    let  url="/rpa-service/agent/file-upload-environments";
+    let i=0;
+    envids.forEach(env=>{
+      let ct="";
+      if(i==0)
+      {
+        ct="?env="+env;
+      }
+      else
+      {
+        ct="&env="+env;
+        i++;
+      }
+      url=url+ct;
+    })
+    return this.http.post(url,data,httpfileOptions);
+  }
   
   getUserPause(botId){
     let data:any;
@@ -440,5 +470,7 @@ export class RestApiService{
     getUserDetails(username){
       return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
     }
+
+    
 }
 

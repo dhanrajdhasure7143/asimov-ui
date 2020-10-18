@@ -267,7 +267,7 @@
                             <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Environment Name">
                             <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
 
-('environmentName').touched" style="color:red">Environment Name Required*</span>
+('environmentName').touched" style="color:red" class="fa fa-info-circle errspan"> Environment Name Required*</span>
                         </div>
                         <div class="col-md-3 formelement ">
                             <label for="environmentType">Environment Type*</label>
@@ -283,13 +283,13 @@ placeholder="Enter Environment Type" >-->
         </select>
                             <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
 
-('environmentType').touched" style="color:red">Environment Type Required*</span>
+('environmentType').touched" style="color:red" class="fa fa-info-circle errspan"> Environment Type Required*</span>
 
                         </div>
                         <div class="col-md-3 formelement">
                             <label for="agentPath">Agent Path*</label>
                             <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
-                            <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" style="color:red">Agent Path Required*</span>
+                            <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
 
                         </div>
                         <div class="col-md-3 formelement">
@@ -297,14 +297,14 @@ placeholder="Enter Environment Type" >-->
                             <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
                             <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get
 
-('hostAddress').touched" style="color:red">IP Address/Host Required*</span>
+('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="userName">Username*</label>
                             <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
-                            <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" style="color:red">Username Required*</span>
+                            <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
 
                         </div>
 
@@ -313,7 +313,7 @@ placeholder="Enter Environment Type" >-->
                             <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                             <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
                             <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                            <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" style="color:red">Password Required*</span>
+                            <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
                         </div>
 
                         <div class="col-md-3 formelement">
@@ -321,7 +321,7 @@ placeholder="Enter Environment Type" >-->
                             <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type">
                             <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
 
-('connectionType').touched" style="color:red">Connection Type Required*</span>
+('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
 
                         </div>
 
@@ -331,7 +331,7 @@ placeholder="Enter Environment Type" >-->
 
                             <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
 
-('portNumber').touched" style="color:red">Port Number Required*</span>
+('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Number Required*</span>
 
                         </div>
 
@@ -367,8 +367,8 @@ placeholder="Enter Environment Type" >-->
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="environmentName">Environment Name*</label>
-                            <input type="text" class="form-control" formControlName="environmentName" placeholder="Enter Environment Name">
-                            <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" style="color:red">Environment Name Required*</span>
+                            <input type="text" class="form-control" maxlength="50" formControlName="environmentName" placeholder="Enter Environment Name">
+                            <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" style="color:red" class="fa fa-info-circle errspan"> Environment Name Required*</span>
 
                         </div>
                         <div class="col-md-3 formelement ">
@@ -385,46 +385,46 @@ placeholder="Enter Environment Type" >-->
               <option value="Linux" >Linux</option>
             </select>
                             <span *ngIf="updateForm.get('environmentType').invalid && updateForm.get
-('environmentType').touched" style="color:red">Environment Type Required*</span>
+('environmentType').touched" style="color:red" class="fa fa-info-circle errspan"> Environment Type Required*</span>
                         </div>
 
                         <div class="col-md-3 formelement">
 
                             <label for="agentPath">Agent Path*</label>
-                            <input type="text" class="form-control" formControlName="agentPath" placeholder="Enter
+                            <input type="text" class="form-control" maxlength="50" formControlName="agentPath" placeholder="Enter
 
 Agent Path">
                             <span *ngIf="updateForm.get('agentPath').invalid && updateForm.get
 
-('agentPath').touched" style="color:red">Agent Path Required*</span>
+('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
 
                         </div>
                         <div class="col-md-3 formelement">
 
                             <label for="hostAddress">IP Address/Host*</label>
-                            <input type="text" class="form-control" formControlName="hostAddress" placeholder="Enter
+                            <input type="text" class="form-control" maxlength="50" formControlName="hostAddress" placeholder="Enter
 
 IP Address/Host">
                             <span *ngIf="updateForm.get('hostAddress').invalid && updateForm.get
 
-('hostAddress').touched" style="color:red">IP Address/Host Required*</span>
+('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="userName">Username*</label>
-                            <input type="text" class="form-control" formControlName="username" placeholder="Enter
+                            <input type="text" class="form-control" maxlength="50" formControlName="username" placeholder="Enter
 
 Username">
                             <span *ngIf="updateForm.get('username').invalid && updateForm.get
 
-('username').touched" style="color:red">Username Required*</span>
+('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
 
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for="password">Password*</label>
-                            <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" formControlName="password" placeholder="Enter
+                            <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" maxlength="50" formControlName="password" placeholder="Enter
 
 Password">
                             <span *ngIf="passwordtype2==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype2 =!passwordtype2"></span>
@@ -432,26 +432,26 @@ Password">
 
                             <span *ngIf="updateForm.get('password').invalid && updateForm.get
 
-('password').touched" style="color:red">Password Required*</span>
+('password').touched" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for=" connectionType">Connection Type*</label>
-                            <input type="text" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type">
+                            <input type="text" maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type">
                             <span *ngIf="updateForm.get('connectionType').invalid && updateForm.get
 
-('connectionType').touched" style="color:red">Connection Type Required*</span>
+('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
 
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for="portNumber">Port Number*</label>
-                            <input type="number"  class="form-control" formControlName="portNumber" placeholder="Enter
+                            <input type="number" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter
 
 Port Number">
                             <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
 
-('portNumber').touched" style="color:red">Port Number Required*</span>
+('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Number Required*</span>
 
                         </div>
                     </div>
