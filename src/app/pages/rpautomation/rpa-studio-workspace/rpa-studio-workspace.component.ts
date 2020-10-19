@@ -715,7 +715,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.notifier.notify("info", "Data Saved Successfully");
   }
 
-  saveBotFun(botProperties, env) {
+  async saveBotFun(botProperties, env) {
     this.checkorderflag=true;
     this.addsquences();
     this.get_coordinates();
@@ -741,12 +741,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
     else
     {
-       return this.rest.saveBot(this.saveBotdata)
+       return await this.rest.saveBot(this.saveBotdata)
     }
   }
 
 
-  uploadfile()
+ async uploadfile(envids)
   {
      let tasks:any=[];
      tasks=this.finaldataobjects.filter(data=>data.tMetaId==64);
@@ -758,16 +758,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         {
           console.log(filepath);
           console.log(this.saveBotdata.envIds);
-          let envids=[];
-          this.saveBotdata.envIds.forEach(element => {
-            envids.push(element);
-          });
+          
           let form = new FormData();
           let file = new Blob([filepath.file]);
           form.append("file",filepath.file);
-          this.rest.uploadfile(form,envids).subscribe(res=>{
-           this.notifier.notify("info","File saved to environments");
-            
+           let uploadrest:any=await  this.rest.uploadfile(form,envids);
+          await uploadrest.subscribe(res=> {
+            if(res[0].Path!=undefined)
+            {
+              this.notifier.notify("info","File Uploaded Successfully");
+            }
           })
         }
       }
@@ -804,7 +804,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.finaldataobjects = [];
   }
 
-  updateBotFun(botProperties, env) {
+  async updateBotFun(botProperties, env) {
     this.checkorderflag=true;
     this.addsquences();
     this.get_coordinates();
@@ -831,7 +831,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
     else
     {
-      return this.rest.updateBot(this.saveBotdata)
+      return await this.rest.updateBot(this.saveBotdata)
     }
   }
 

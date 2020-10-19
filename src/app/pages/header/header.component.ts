@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   selectedIndex: number;
   parent_link:any={};
   child_link:any={};
-  pages:any[];
+  pages:any[] = [];
   parent_subscription;
   child_subscription;
   overlay_acc_model: boolean=false;
@@ -58,40 +58,63 @@ export class HeaderComponent implements OnInit, OnDestroy {
          ];
 
 
-     }else if(this.userRole.includes('RPA Admin')){
-      this.pages = [
-        {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-        {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
+     }
+     if(this.userRole.includes('RPA Admin')){
+      if(this.pages.filter(f=>f.title === 'RPA Studio' ).length <= 0){
+        this.pages.push({"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"})
+      }
+      if(this.pages.filter(f=>f.title === 'Service Orchestration' ).length <= 0){
+        this.pages.push({"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"})
+      }
+      // this.pages = [
+      //   {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
+      //   {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
 
-      ];
-
-     }else if(this.userRole.includes('RPA Designer')){
-      this.pages = [
-        {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-
-      ];
-
-     }else if(this.userRole.includes('Data Architect') || this.userRole.includes('Process Designer') || this.userRole.includes('Automation Designer')){
-      this.pages = [
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-
-      ];
-
-     }else if(this.userRole.includes('Process Analyst')){
-      this.pages = [
-        {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-
-      ];
-
-     }else if(this.userRole.includes('Process Architect')){
-      this.pages = [
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/approvalWorkflow/home"}
-      ];
+      // ];
 
      }
-     else{
+     if(this.userRole.includes('RPA Designer')){
+      if(this.pages.filter(f=>f.title === 'RPA Studio' ).length <= 0){
+        this.pages.push({"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"})
+      }
+      // this.pages = [
+      //   {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
+
+      // ];
 
      }
+     if(this.userRole.includes('Data Architect') || this.userRole.includes('Process Designer') || this.userRole.includes('Automation Designer')){
+      if(this.pages.filter(f=>f.title === 'Business Process Studio' ).length <= 0){
+        this.pages.push({"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"})
+      }
+     
+      // this.pages = [
+      //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
+
+      // ];
+
+     }
+     if(this.userRole.includes('Process Analyst')){
+      if(this.pages.filter(f=>f.title === 'Process Intelligence' ).length <= 0){
+        this.pages.push({"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"})
+      }
+
+      // this.pages = [
+      //   {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
+
+      // ];
+
+     }
+     if(this.userRole.includes('Process Architect')){
+      if(this.pages.filter(f=>f.title === 'Business Process Studio' ).length <= 0){
+        this.pages.push({"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"})
+      }
+      // this.pages = [
+      //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/approvalWorkflow/home"}
+      // ];
+
+     }
+     
     },error => {
       this.error = "Please complete your registration process";
 
