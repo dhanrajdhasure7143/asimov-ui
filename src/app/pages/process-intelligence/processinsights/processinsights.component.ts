@@ -123,7 +123,7 @@ export class ProcessinsightsComponent implements OnInit {
         .subscribe((res:any)=>{
             this.variant_Duration_list = res.data;
             this.totalMeanDuration = res.totalMeanDuration;
-            this.bkp_totalMedianDuration = res["data"]["total"]["median"]
+            this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"]/3;
             this.totalMedianDuration = this.bkp_totalMedianDuration;
            
         },
@@ -138,7 +138,7 @@ export class ProcessinsightsComponent implements OnInit {
         //assume robo cost per hr is 4$
         //let roboCost = val*60*8/(1000 * 100 * 60 * 60);
         //let totalCost = (val*this.input1)/(1000 * 60 * 60);
-        let roboCost = Math.round(this.getHours(val)*40/100*8);
+        let roboCost = Math.round(this.getHours(val)*60/100*8);
         let totalCost = Math.round(this.getHours(val)*this.input1);
         return '$'+((totalCost - roboCost));
     }else{
@@ -252,7 +252,7 @@ export class ProcessinsightsComponent implements OnInit {
             .subscribe((res:any)=>{
                 console.log(res)
                 //dashboard metrics
-                this.totalMedianDuration = res.data.total.median;
+                this.totalMedianDuration = res.data.total.totalDuration/3;
                 //activity data
                 this.activity_Metrics = res.data.activiees;
                 let adata =[];
@@ -957,18 +957,23 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     }
 
     getVariantMedianDuration(selectedVariants){
-        if(selectedVariants.length){
+        console.log(selectedVariants)
+        if(selectedVariants.length == 0){
+            this.totalMedianDuration = this.bkp_totalMedianDuration;
+        }
+        else if(selectedVariants.length != this.varaint_data.data.length){
             let full_median_value = 0;
-            this.variant_Duration_list.data.forEach((each)=>{
+            
+           
                 for(var i = 0; i<selectedVariants.length; i++){
-                    let ind = selectedVariants[i]+1;
-                    let variant_name = 'Variant '+ind;
-                    if(each.Variant == variant_name){
-                        full_median_value += each["median_duration"];
-                        break;
+                    console.log(selectedVariants[i]);
+                  
+                        
+                        full_median_value += selectedVariants[i]["days"];
+                        console.log(full_median_value);
+                        console.log(this.getHours1(full_median_value));      
                     }
-                }
-            })
+                
             this.totalMedianDuration = full_median_value;
         }else{
             this.totalMedianDuration = this.bkp_totalMedianDuration;
@@ -1018,10 +1023,12 @@ onchangeVaraint(datavariant) {      // Variant List sorting
             var index_v = i+1;
             this.selectedCaseArry.push('Variant '+ index_v);
             // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
-            selectedVariantIds.push(i);
+            console.log(this.varaint_data.data[i]);
+            
+            selectedVariantIds.push(this.varaint_data.data[i]);
         }
     };  
-    
+    console.log(selectedVariantIds)
     this.getVariantMedianDuration(selectedVariantIds);
     this.caselength = this.selectedCaseArry.length;
 
@@ -1050,12 +1057,14 @@ onchangeVaraint(datavariant) {      // Variant List sorting
     let selectedIndices = [];
     if (this.checkboxValue == true) {
       for (var i = 0; i < this.varaint_data.data.length; i++) {
-        //selectedIndices.push(i);
+          
+        selectedIndices.push(this.varaint_data.data[i]);
         this.varaint_data.data[i].selected = "active";
       }
     } else {
       for (var i = 0; i < this.varaint_data.data.length; i++) {
         this.varaint_data.data[i].selected = "inactive";
+       
       }
     }
     this.getVariantMedianDuration(selectedIndices);

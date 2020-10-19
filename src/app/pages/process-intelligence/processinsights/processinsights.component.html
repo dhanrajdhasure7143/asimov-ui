@@ -63,7 +63,7 @@
             <div class="col-sm-1 "></div>
 
             <div class="col-sm-2 divbox divbox2">Total Human Cost
-                <div>{{totalMedianDuration && input1 && input2 ? getHumanTotalCost(((totalMedianDuration*input1*input2)/(1000 * 60 * 60))) : '-'}}</div>
+                <div>{{totalMedianDuration && input1 && input2 ? getHumanTotalCost(getHours(totalMedianDuration)*this.input1) : '-'}}</div>
             </div>
             <div class="col-sm-1 "></div>
             <div class="col-sm-2 divbox divbox3"> Potential Savings
@@ -145,7 +145,7 @@
                             <th class="text-center">%Cases</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                         <tr *ngFor="let each_variant of partialVariants;let e = index">
                         <td>Variant&nbsp;{{e+1}}</td>
                         <td>{{timeConversion(each_variant.days)}}</td>
@@ -179,6 +179,21 @@
     </div>
     <br class="col-md-12 btm-line">
     <div class="col-md-12">
+            <div class="col-md-2 no-padding">
+                    <div class="box_shadw1">
+                        <ng-multiselect-dropdown
+                        [placeholder]="'All'"
+                        [settings]="dropdownSettings"
+                        [data]="resourcesList"
+                        [(ngModel)]="selectedResources"
+                        (onSelect)="onResourceSelect()"
+                        (onSelectAll)="onResourceSelect(true)"
+                        (onDeSelect)="onResourceSelect()"
+                        (onDeSelectAll)="onResourceSelect(false)"
+                        >
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
         <div class="col-md-5 py-4 pi-chart">
                 <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
@@ -203,21 +218,7 @@
             
         </div>
         </div>
-        <div class="col-md-2 no-padding">
-            <div class="box_shadw1">
-                <ng-multiselect-dropdown
-                [placeholder]="'All'"
-                [settings]="dropdownSettings"
-                [data]="resourcesList"
-                [(ngModel)]="selectedResources"
-                (onSelect)="onResourceSelect()"
-                (onSelectAll)="onResourceSelect(true)"
-                (onDeSelect)="onResourceSelect()"
-                (onDeSelectAll)="onResourceSelect(false)"
-                >
-                </ng-multiselect-dropdown>
-            </div>
-        </div>
+       
 
     </div>
 </div>
