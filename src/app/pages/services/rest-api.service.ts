@@ -17,6 +17,15 @@ const httpOptions = {
 };
 
 
+const  httpfileOptions={
+ 
+  headers: new HttpHeaders({
+  "Content-Type":"multipart/form-data"
+  })
+
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -38,7 +47,7 @@ export class RestApiService{
   public ipAddress:string;
 
   getAccessToken(){
-    let data = {"userId":"raghavendra.basavaraju@epsoftinc.com",
+    let data = {"userId":"venkata.simhadri@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -118,16 +127,38 @@ export class RestApiService{
   attribute(data:any){
   return this.http.get('/rpa-service/get-attributes/'+data)
   }
-    saveBot(data:any):Observable<any>
-    {
-      return this.http.post('/rpa-service/save-bot',data)
-    }
+  
+  async saveBot(data:any)
+  {
+    return await this.http.post('/rpa-service/save-bot',data)
+  }
 
-    updateBot(data:any)
-    {
-      return this.http.post('/rpa-service/update-bot',data)
-    }
+  async updateBot(data:any)
+  {
+    return await this.http.post('/rpa-service/update-bot',data)
+  }
 
+  async uploadfile(data:any,envids:any[])
+  {
+    let  url="/rpa-service/agent/file-upload-environments";
+    let i=0;
+    envids.forEach(env=>{
+      let ct="";
+      if(i==0)
+      {
+        ct="?env="+env;
+        i++;
+      }
+      else
+      {
+        ct="&env="+env;
+        i++;
+      }
+      url=url+ct;
+    })
+    return await this.http.post(url,data,httpfileOptions);
+  }
+  
   getUserPause(botId){
     let data:any;
     return this.http.post('/rpa-service/pause-bot/'+botId,data)
@@ -425,5 +456,7 @@ export class RestApiService{
     getUserDetails(username){
       return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
     }
+
+    
 }
 

@@ -413,43 +413,50 @@ export class RpaHomeComponent implements OnInit {
     let timer= setInterval(() => { 
       this.rest.getautomatedtasks(0).subscribe(response=>{
         let responsedata:any=response;
-        responsedata.automationTasks.forEach(statusdata=>{
-          let data:any;
-          if(statusdata.status=="InProgress")
-          {
-            data="<span class='text-primary'><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
-          }else if(statusdata.status=="Success")
-          {
-            //data="<img src='../../../../assets/images/RPA/processloading.svg' style='height:30px'>";
-          
-            data='<span class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';  
-          }
-          else if(statusdata.status=="Failed")
-          {
-            data='<span class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';  
-          }
-          else if(statusdata.status=="New")
-          {
-            data="<span><img src='/assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
-          }
-          else if(statusdata.status=="")
-          {
-            data="---";
-          }
-          $("#"+statusdata.taskId+"__status").html(data);
-          
-          $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
-          
-          $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
-          if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress").length>0)
-          {
-          }else
-          {
-            clearInterval(timer);
-          }
-        })
-        
+        if(responsedata.automationTasks!=undefined)
+        {
+          responsedata.automationTasks.forEach(statusdata=>{
+            let data:any;
+            if(statusdata.status=="InProgress")
+            {
+              data="<span class='text-primary'><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+            }else if(statusdata.status=="Success")
+            {
+              //data="<img src='../../../../assets/images/RPA/processloading.svg' style='height:30px'>";
+            
+              data='<span class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';  
+            }
+            else if(statusdata.status=="Failed")
+            {
+              data='<span class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';  
+            }
+            else if(statusdata.status=="New")
+            {
+              data="<span><img src='/assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+            }
+            else if(statusdata.status=="")
+            {
+              data="---";
+            }
+            $("#"+statusdata.taskId+"__status").html(data);
+            
+            $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
+            
+            $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
+            if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress").length>0)
+            {
+            }else
+            {
+              clearInterval(timer);
+            }
+          })
+        }else
+        {
+          clearInterval(timer);
+        }
+
       })
+      
     }, 5000);
   }
 

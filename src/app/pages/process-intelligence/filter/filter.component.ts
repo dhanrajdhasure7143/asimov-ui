@@ -70,11 +70,19 @@ export class FilterComponent implements OnInit {
       obj["selected"]="inactive";
       this.variantListarray.push(obj)
     }
-    
+  
     
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
+    
+    
   }
   ngOnChanges(){    
+    this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
+    console.log(this.chart_filter_options);
+
+
+    console.log(this.dataValues);
+    
     this.dataValuesNames = [];
     for(var i=0;i<this.dataValues.length;i++){
       var obj={};

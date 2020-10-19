@@ -48,10 +48,10 @@ export class RpaStudioActionsComponent implements OnInit {
   displayedColumns1: string[] = ['task_name', 'status','start_time','start_date','end_time','end_date','error_info' ];
   logbyrunid:MatTableDataSource<any>; 
   
-  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
-  //@ViewChild(MatSort,{static:false}) sort: MatSort;
-  @ViewChild('sorter1',{static:false}) sorter1: MatSort;
-  @ViewChild('sorter2',{static:false}) sorter2: MatSort;
+  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
+  @ViewChild("sort1",{static:false}) sort1: MatSort;
+  @ViewChild("sort2",{static:false}) sort2: MatSort;
 
   @Input('tabsArrayLength') public tabsArrayLength: number;
   @Input('botState') public botState: any;
@@ -85,6 +85,9 @@ export class RpaStudioActionsComponent implements OnInit {
   public isCronDisabled = false;
   public selectedTimeZone :any;
   public viewlogid:any;
+  public viewlogid1:any;
+  public respdata1:boolean = false;
+  public respdata2:boolean = false;
   public she:any;
   public minDate:NgbDateStruct;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
@@ -247,7 +250,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
 
 
-  saveBotFunAct() {
+  async saveBotFunAct() {
     this.rpa_studio.spinner.show();
     this.finalenv=[];
     this.environment.forEach(data=>{
@@ -258,11 +261,11 @@ export class RpaStudioActionsComponent implements OnInit {
     })
     if(this.savebotrespose==undefined)
     {
-      let checkbotres=this.childBotWorkspace.saveBotFun(this.botState,this.finalenv);
+      let checkbotres=await this.childBotWorkspace.saveBotFun(this.botState,this.finalenv);
       if(checkbotres==false)
       {
         
-        this.rpa_studio.spinner.hide();
+        this.rpa_studio.spinner.hide();  
         Swal.fire({
           icon: 'warning',
           title: "Please check connections",
@@ -274,7 +277,7 @@ export class RpaStudioActionsComponent implements OnInit {
         checkbotres.subscribe(data=>{
         this.savebotrespose=data;
         this.rpa_studio.spinner.hide();
-        
+
         if(this.savebotrespose.botId!=undefined)
         {
           Swal.fire({
@@ -284,7 +287,7 @@ export class RpaStudioActionsComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
-          
+          this.childBotWorkspace.uploadfile(this.finalenv);
           this.getschecdules();
           this.startbot=true;
           this.pausebot=false;
@@ -314,8 +317,8 @@ export class RpaStudioActionsComponent implements OnInit {
     else
     {
       
-      this.childBotWorkspace.saveCron(this.she);
-       let checkbot:any=this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
+       this.childBotWorkspace.saveCron(this.she);  
+       let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
        if(checkbot==false)
        {
         this.rpa_studio.spinner.hide();
@@ -327,7 +330,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
        }else
        {
-          checkbot.subscribe(data=>{
+         await checkbot.subscribe(data=>{
           this.childBotWorkspace.successCallBack(data);
           this.savebotrespose=data;
           this.rpa_studio.spinner.hide();
@@ -339,7 +342,7 @@ export class RpaStudioActionsComponent implements OnInit {
             timer: 2000
           })
           this.getschecdules();
-        
+          this.childBotWorkspace.uploadfile(this.finalenv);
         });
       }
     }
@@ -740,6 +743,15 @@ export class RpaStudioActionsComponent implements OnInit {
     this.logresponse=[];
     this.rest.getviewlogdata(this.savebotrespose.botId,this.savebotrespose.version).subscribe(data =>{
         this.logresponse=data;
+        if(this.logresponse.length >0)
+        {
+          this.respdata1 = false;
+          console.log(this.respdata1)
+        }else
+        {
+          this.respdata1 = true;
+          console.log(this.respdata1);
+        }
         console.log(this.logresponse)
         if(this.logresponse.length>0)
         this.logresponse.forEach(data=>{
@@ -773,8 +785,8 @@ export class RpaStudioActionsComponent implements OnInit {
       this.Viewloglist = new MatTableDataSource(log);
       console.log(this.Viewloglist);
 
-      this.Viewloglist.paginator=this.paginator;
-      this.Viewloglist.sort=this.sorter1;
+      this.Viewloglist.paginator=this.paginator1;
+      this.Viewloglist.sort=this.sort1;
       
       document.getElementById(this.viewlogid).style.display="block";
     
@@ -788,6 +800,15 @@ export class RpaStudioActionsComponent implements OnInit {
     let resplogbyrun:any=[];
     this.rest.getViewlogbyrunid(this.savebotrespose.botId,this.savebotrespose.version,runid).subscribe((data)=>{
       responsedata = data; 
+      if(responsedata.length >0)
+      {
+        this.respdata2 = false;
+        console.log(this.respdata2)
+      }else
+      {
+        this.respdata2 = true;
+        console.log(this.respdata2);
+      }
       console.log(responsedata);
       responsedata.forEach(rlog=>{
         logbyrunidresp=rlog;
@@ -802,19 +823,27 @@ export class RpaStudioActionsComponent implements OnInit {
       this.logflag=true;
       this.logbyrunid = new MatTableDataSource(resplogbyrun);
       console.log(this.logbyrunid);
-      this.logbyrunid.paginator=this.paginator;
-      this.logbyrunid.sort=this.sorter2;
-    })
-}
-
-back(){
-  //document.getElementById("ViewLog").style.display="none";
-  this.logflag=false;
-}
-
-viewlogclose(){
-  document.getElementById(this.viewlogid).style.display="none";
-}
+      this.logbyrunid.paginator=this.paginator2;
+      this.logbyrunid.sort=this.sort2;
+      document.getElementById(this.viewlogid).style.display="none";
+      document.getElementById(this.viewlogid1).style.display="block";
+        })
+    }
+    
+    back(){
+      //document.getElementById("ViewLog").style.display="none";
+      document.getElementById(this.viewlogid1).style.display="none";
+      document.getElementById(this.viewlogid).style.display="block";
+    }
+    
+    viewlogclose(){
+      document.getElementById(this.viewlogid).style.display="none";
+    }
+    
+    viewlogclose1(){
+      document.getElementById(this.viewlogid1).style.display="none";
+      document.getElementById(this.viewlogid).style.display="none";
+    }
 
 loadpredefinedbot(botId)
 {
