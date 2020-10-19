@@ -379,3 +379,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   color: #2676cf;
   padding: 0px 10px;
 }
+
+.myPanelDownClass{
+  margin-top: 23px;
+}
