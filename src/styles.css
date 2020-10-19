@@ -125,9 +125,6 @@ div[class^='diagram_container'] .djs-palette{
 div[class^='diagram_container'] .djs-container svg{
   margin-left: 5px;
 }
-.bjs-powered-by{
-  display:none !important;/* Against the license agreement */
-}
 /*spinner styles*/
 .spincenter {
   position: absolute;

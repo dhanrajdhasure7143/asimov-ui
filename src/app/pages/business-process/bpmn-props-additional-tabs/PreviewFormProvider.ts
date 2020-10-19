@@ -6,8 +6,7 @@ import * as IOHelper from './IOSpec.helper';
 import processIoProps from './IOSpec.props';
 import processIoEntryProps from './IOSpec.entryprops';
 
-import * as rpaProps from './RPATab.props';
-import { RestApiService } from '../../services/rest-api.service';
+import rpaProps from './RPATab.props';
 
 declare var require:any;
 var formHelper = require('bpmn-js-properties-panel/lib/helper/FormHelper');
@@ -16,15 +15,17 @@ var domify = require('min-dom').domify;
 
 export class PreviewFormProvider implements IPropertiesProvider {
 
-  static $inject = ['translate', 'bpmnPropertiesProvider', 'injector'];
+  static $inject = ['translate', 'bpmnPropertiesProvider', 'injector', 'bpmnFactory'];
 
-  constructor(private translate, private bpmnPropertiesProvider, private injector, private rest:RestApiService) { }
+  constructor(private translate, private bpmnPropertiesProvider, private injector, private bpmnFactory) { }
 
   getTabs(element) {
     let self = this;
     let actualTabs = this.bpmnPropertiesProvider.getTabs(element);
+    let variableTabInd = -1;
     //add Preview Form button for Forms tab
-    actualTabs.forEach((each_tab)=>{
+    actualTabs.forEach((each_tab,tId)=>{
+      if(each_tab.id == "process-variables") variableTabInd = tId;
       if(each_tab.id == "forms" && each_tab.groups.length && each_tab.groups[0].entries.length >0){
         let previewBtn = {
           html: "<button id='preview-button' data-action='openPreview'>Preview Form</button>",
@@ -49,6 +50,10 @@ export class PreviewFormProvider implements IPropertiesProvider {
         bo.processRef
       )
     ) {
+      //remove Variables tab
+      actualTabs.splice(variableTabInd,1);
+
+      //Add IOSpec Tab
       var IOSpecTab = this.createProcessIoTab(element, this.injector, "ioTab");
       actualTabs.splice(1,0,IOSpecTab);
     }
@@ -56,7 +61,9 @@ export class PreviewFormProvider implements IPropertiesProvider {
     //add RPA Task tab
     if (is(bo, 'bpmn:RPATask')) {
       var RPATab = this.createProcessIoTab(element, this.injector, "rpaTab");
-      actualTabs = [actualTabs[0], RPATab]
+      //add in case of additional tabs
+      // actualTabs = [actualTabs[0], RPATab]
+      actualTabs.splice(1,0,RPATab)
     }
     return actualTabs;
   }
@@ -109,15 +116,23 @@ export class PreviewFormProvider implements IPropertiesProvider {
         ]
       };
     }else if(tabType == "rpaTab"){
+      let rpaGroup = {
+        id: 'rpa-group',
+        label: 'Parameters',
+        entries: []
+      };
+
+      injector.invoke(rpaProps, null, {
+        group: rpaGroup,
+        // rest: self.rest,
+        element:element
+      })
+
       customTab = {
         id: 'rpa',
         label: 'RPA Task',
         groups: [
-          {
-            id: 'rpa-group',
-            label: 'Parameters',
-            entries: rpaProps.getRPAEntries(self.translate)
-          }
+          rpaGroup
         ]
       };
     }

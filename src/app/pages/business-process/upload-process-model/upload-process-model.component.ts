@@ -23,6 +23,31 @@ import { JsonpInterceptor } from '@angular/common/http';
 
 declare var require:any;
 
+const customModdle = {
+  name: "Rpa",
+  uri: "http://example.com/custom-moddle",
+  prefix: "rpa",
+  xml: {
+    tagAlias: "lowerCase"
+  },
+  associations: [],
+  types: [
+    {
+      "name": "RPA Task",
+      "extends": [
+        "bpmn:RPATask"
+      ],
+      "properties": [
+        {
+          "name": "spell",
+          "isAttr": true,
+          "type": "String"
+        }
+      ]
+    },
+  ]
+};
+
 @Component({
   selector: 'app-upload-process-model',
   templateUrl: './upload-process-model.component.html',
@@ -273,7 +298,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           parent: '#properties'
         },
         moddleExtensions: {
-          camunda: CamundaModdleDescriptor
+          camunda: CamundaModdleDescriptor,
+          rpa: customModdle
         }
       });
 
