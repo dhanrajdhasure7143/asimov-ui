@@ -1,141 +1,151 @@
-import {
-    getBusinessObject,
-    is
-  } from 'bpmn-js/lib/util/ModelUtil';
-  
+import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
+   
   import elementHelper from 'bpmn-js-properties-panel/lib/helper/ElementHelper';
   import cmdHelper from 'bpmn-js-properties-panel/lib/helper/CmdHelper';
   
-  import Ids from 'ids';
-  
-  import extensionElementsEntry from 'bpmn-js-properties-panel/lib/provider/camunda/parts/implementation/ExtensionElements';
   import entryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactory';
   import { getExtensionElements } from 'bpmn-js-properties-panel/lib/helper/ExtensionElementsHelper';
+    import { RestApiService } from '../../services/rest-api.service';
 
-    export function getRPAEntries(translate) {
-        // var processBo = getBusinessObject(element);
-        // if (is(processBo, 'bpmn:Participant')) {
-        //   processBo = processBo.processRef;
-        // }
+    function getRpaData(element) {
+        var bo = getBusinessObject(element);
+        var formData = getExtensionElements(bo, 'bpmn:RPATask');
+        if (typeof formData !== 'undefined') {
+          return formData[0];
+        }
+    };
+
+    function getRPAEntries(element, bpmnFactory) {
+        var processBo = getBusinessObject(element);
+        if (is(processBo, 'bpmn:Participant')) {
+          processBo = processBo.processRef;
+        }
+
         // Bot List //////////////////////////////
         // rest.getAllActiveBots().subscribe(res => {
         //     let tmp = [];
         //     console.log(res)
         // })
-                var botList = entryFactory.selectBox({
+
+        var xhttp = new XMLHttpRequest();
+        var rpaEntry = [];
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(this.responseText);
+                let opts = [];
+                let taskListsArr = [];
+                let res = JSON.parse(this.responseText)
+                res["General"].forEach((each) => {
+                    opts.push({name:each.name, value: each.name});
+                    taskListsArr.push(each.taskList)
+                })
+                res["Advanced"].forEach((each) => {
+                    opts.push({name:each.name, value: each.name});
+                    taskListsArr.push(each.taskList)
+                })
+                rpaEntry = entryFactory.selectBox({
                     id: 'activity',
-                    label: translate('RPA Activity'),
-                    selectOptions: [
-                        { name: 'Vaidehi', value: 'Vaidehi' },
-                        { name: 'Kiran', value: 'Kiran' }
-                    ],
+                    label: 'RPA Activity',
+                    selectOptions: opts,
                     modelProperty: 'activity',
+                    prefix: 'RpAaCtivity',
                     emptyParameter: true,
                     get: function(element, node) {
-                        var result = { rpaActivity: '' };
+                        var result = { activity: '' };
                         var bo = getBusinessObject(element);
-                        var formDataExtension = getExtensionElements(bo, "rpa:activity");
+                        var formDataExtension = getExtensionElements(bo, "bpmn:RPATask");
                         if (formDataExtension) {
-                            var formData = formDataExtension[0];
-                            var storedValue = formData.get('rpaActivity');
-                            result = { rpaActivity: storedValue };
+                            var formData = getRpaData(element);
+                            var storedValue = formData.get('rpaAActivity');
+                            result = { activity: storedValue };
                         }
                         return result;
                     },
                     set: function(element, values, node) {
-                        var bo = getBusinessObject(element);
-                        var rpaFormDataList = getExtensionElements(bo, "rpa:activity");
-                        var rpaFData = rpaFormDataList[0];
-                        return cmdHelper.updateBusinessObject(element, rpaFData, { 'rpaActivity': values.rpaActivity || undefined });
+                        var bo = getBusinessObject(element); var commands = [];
+                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:RPATask");
+                        if (!rpaExtensionElements) {
+                            rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
+                            commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
+                        }
+                        var rpaFData = getRpaData(element);
+        
+                        if(!rpaFData){
+                            rpaFData = elementHelper.createElement('bpmn:RPATask', { rpaAActivity: "" }, rpaExtensionElements, bpmnFactory);
+                            commands.push(cmdHelper.addAndRemoveElementsFromList(
+                                element,
+                                rpaExtensionElements,
+                                'values',
+                                'extensionElements',
+                                [rpaFData],
+                                []
+                              ));
+                        }
+                        var field = elementHelper.createElement('bpmn:RPATask', values.activity , rpaFData, bpmnFactory);
+                        if (typeof rpaFData.rpaAActivity !== 'undefined') {
+                            commands.push(cmdHelper.addElementsTolist(element, rpaFData, 'rpaAActivity', values.activity));
+                        } else {
+                            commands.push(cmdHelper.updateBusinessObject(element, rpaFData, {
+                                rpaAActivity: values.activity
+                            }));
+                        }
+                        return commands;
                     }
                 });
-        
-                return [botList];
+            }
+
+            return {
+                entries: [
+                    rpaEntry
+                ]
+            };
+        };
+        xhttp.open("GET", "http://rpaqa.epsoftinc.in/rpa-service/load-toolset", true);
+        xhttp.setRequestHeader('Authorization', 'Bearer '+localStorage.getItem("accessToken"))
+        xhttp.send();
     };
 
-//   }
-  
-//   const ids = new Ids([ 16, 36, 1 ]);
-  
-//   function getProperties(element) {
-//     const propertiesParent = getBots(element);
-  
-//     return propertiesParent ? propertiesParent.get('values') : [];
-//   }
-  
-//   function getBots(element) {
-//     const bo = getBusinessObject(element);
-//     const properties = getExtensionElements(bo, 'camunda:Properties') || [];
-//     if (properties.length) {
-//       return properties[0];
-//     }
-  
-//     return null;
-//   }
-  
-//   function getIoProperties(element, type) {
-//     const properties = getProperties(element);
-  
-//     // return (
-//     //   properties
-//     //     .filter(property => isIoProperty)
-//     //     .filter(property => parseIoProperty(property).type === type)
-//     // );
-//     return properties;
-//   }
-  
-//   function getBotParameters(element) {
-//     return getIoProperties(element, 'comboBox');
-//   }
-  
-//   function getBotParameter(element, idx) {
-//     return getBotParameters(element)[idx];
-//   }
-  
-//   function createElement(type, parent, factory, properties) {
-//     return elementHelper.createElement(type, properties, parent, factory);
-//   }
-  
-//   function createCamundaProperties(parent, bpmnFactory, properties) {
-//     return createElement('camunda:Properties', parent, bpmnFactory, properties);
-//   }
-  
-  
-  /**
-   * Defines the bot list.
-   */
- 
-  
-    // function getSelectedParameter(element, node) {
-    //   var selectedBot = botSelection.getSelected(element, node);
-  
-    //   if (selectedBot && selectedBot.idx !== -1) {
-    //     return getBotParameter(processBo, selectedBot.idx);
-    //   }
-  
-    //   return null;
-    // };
-  
-  
-    
-  
-  
   /**
    * Defines the bot list
    *
    * @return {Object}
    */
-//   export default function rpaProps(group, element, injector) {
+  export default function rpaProps(group, element, injector) {
   
-//     var {
-//       entries,
-//       getSelectedParameter
-//     } = injector.invoke(botList, null, { element });
+    var {
+      entries
+    } = injector.invoke(getRPAEntries, null, { element });
   
-//     group.entries = group.entries.concat(entries);
+    group.entries = group.entries.concat(entries);
   
-//     return {
-//       getSelectedParameter
-//     };
-  
-//   }
+  }
+
+  class ApiService{
+      toolSet:any = {
+            "General": [
+                {
+                "name": "Email",
+                "icon": "binaryformat base64 encoded",
+                "taskList": [
+                    {
+                        "name": "Login Mail",
+                        "taskId": "1"
+                    },
+                    {
+                        "name": "Send Mail",
+                        "taskId": "2"
+                    },
+                    {
+                        "name": "Read Mail",
+                        "taskId": "3"
+                    },
+                    {
+                        "name": "Reply Mail",
+                        "taskId": "16"
+                    }
+                ]
+            }
+        ]
+    }
+      constructor(private rest:RestApiService){}
+  }
