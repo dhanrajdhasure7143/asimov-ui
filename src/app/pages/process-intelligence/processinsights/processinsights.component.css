@@ -14,10 +14,10 @@
   background:  rgb(151, 168, 224);
 }
 .divbox1{
-  background:  rgb(224, 151, 220);
+  background:  rgb(78 189 208);
 }
 .divbox2{
-  background:  rgb(191, 236, 149);
+  background:  rgb(46 162 119);
 }
 .divbox3{
   background:  rgb(224, 186, 151);
@@ -26,15 +26,15 @@
     border: 1px solid rgb(20, 20, 20);
 }
 .table1-heading{
-    font-weight: 800;
+    /* font-weight: 800; */
     margin-bottom: 10px;
-    font-size: 15px;
+    font-size: 18px;
 }
 .table-striped>tbody>tr:nth-of-type(even){
     background-color: #ebf2d3 !important;
 }
 thead{
-    background-color: #0061cf !important;
+    background-color: #7cb5ec !important;
 
 }
 input:disabled{
@@ -193,7 +193,7 @@ input:disabled{
     position: absolute;
     z-index: 10;
     float: right;
-    left: 100%;
+    left: 110%;
     margin-top: 50px;
     height: 35px;
     cursor: pointer;
@@ -254,11 +254,16 @@ margin-left: -20px;
 }
 .table-box{
   padding: 10px;
+  overflow-y: auto;
+    height: 272px;
 }
 .table-box1{
   padding: 10px;
+  overflow-y: auto;
+    height: 272px;
 }
 .pi-chart{
   margin-bottom: 10px;
   margin-top: 10px;  
 }
+
