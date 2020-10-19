@@ -1,4 +1,4 @@
-import { Component, OnInit,Input,ViewChild,TemplateRef } from '@angular/core';
+import { Component, OnInit,Input,ViewChild,TemplateRef, HostListener } from '@angular/core';
 import { DataTransferService } from '../services/data-transfer.service';
 import {MatDialog} from '@angular/material';
 
@@ -14,7 +14,7 @@ export class HeaderDropdownOverlayComponent implements OnInit {
   @Input() overlay_invite_user_dt: string;
   @Input() overlay_notifications_dt:string;
   @ViewChild('dialog_model',{ static: true }) dialog_model: TemplateRef<any>;
- 
+
   table_details=[
     {
       "sub_id":"1",
@@ -32,12 +32,12 @@ export class HeaderDropdownOverlayComponent implements OnInit {
       "status":"Success",
       "action":"icon"
     }];
-  
+
   constructor(private dt:DataTransferService ,private dialog:MatDialog) { }
 
   ngOnInit() {
-    
-    
+
+
   }
   telInputObject(obj) {
     obj.setCountry('in');
@@ -54,6 +54,12 @@ close(){
   save(){
     alert("saved")
   }
+  @HostListener('document:click', ['$event'])
+  clickedOutside(event){
+    if(event.target.classList.contains('hd_overlay')){
+      this.slideDown();
+    }
+  }
   openTab(evt, tabName) {
     let i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
@@ -63,13 +69,13 @@ close(){
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
-  
+
 
     }
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
     //alert(evt.currentTarget.className)
   }
- 
+
 }
 

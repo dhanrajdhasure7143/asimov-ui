@@ -407,23 +407,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         height: auto;
         width: auto;
         }
- 
+
    .node{
         fill: #fff;
       }
-    
+
     .edgePath path {
     stroke: #4c4c4c;
     fill: none;
     stroke-width: 0.3px;
     /* stroke-width: 1.5px; */
-   
+
     }
     /* svg {
      overflow: scroll !important;
     } */
 
- 
+
  div#tooltip_template span ul, .tipsy-inner ul {
   list-style: none;
   padding: 0px;
@@ -540,7 +540,7 @@ div#tooltip_template.tooltip-panel p:first-child {
   to {
     stroke-dashoffset: 0;
   }
-  
+
 }
 .label{
   color: black !important;
@@ -569,6 +569,9 @@ foreignObject{
   padding: 0px 10px;
 }
 
+.myPanelDownClass{
+  margin-top: 23px;
+}
 
 
 

@@ -7,7 +7,7 @@
         <div class="col-md-2">
             <mat-form-field id="bpmnNotationList">
                 <mat-label>BPMN Notation</mat-label>
-                <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()">
+                <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()" panelClass="myPanelDownClass" disableOptionCentering>
                   <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
                     {{each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
                 </mat-select>
@@ -16,11 +16,11 @@
         <div class="col-md-2">
             <mat-form-field id="approversList">
                 <mat-label>Approver List</mat-label>
-                <mat-select [(ngModel)]="selected_approver">
+                <mat-select [(ngModel)]="selected_approver" panelClass="myPanelDownClass" disableOptionCentering>
                   <mat-option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
                     {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
-                </mat-select>      
-            </mat-form-field>            
+                </mat-select>
+            </mat-form-field>
         </div>
         <div><button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
             <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button>
@@ -39,18 +39,18 @@
                     </div>
                 </div>
             </div>
-            <div class="row btn_row"> 
+            <div class="row btn_row">
                 <button class="left" id="download" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
                 <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
                 <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)">Save Process</button>
                 <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn"  id="automate" (click)="automate()">Automate</button>
             </div>
-            <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
-                <p style="color: white">Auto Saving... </p>  
+            <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+                <p style="color: white">Auto Saving... </p>
             </ngx-spinner>
-        </div>  
+        </div>
         <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
-        <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
+        <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner>
         </div></div>
         <ng-template #keyboardShortcut>
              <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
@@ -58,6 +58,6 @@
                     <tr *ngFor="let keyboardLabels of keyboardLabels" >
                         <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
                          <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
-                    </tr> 
-                </table>   
+                    </tr>
+                </table>
         </ng-template>

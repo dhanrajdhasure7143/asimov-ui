@@ -355,7 +355,7 @@ margin-right: -85px;
   transform: rotate(-90deg)
 }
 #properties{
-  width: 280px;
+  width: 415px;
 }
 .slide-left, .slide-right{
   max-width: 0;
@@ -368,7 +368,7 @@ margin-right: -85px;
   overflow: hidden;
 }
 .slide-left{
-  max-width: 300px;
+  max-width: 700px;
 }
 /* .canvasOpt:focus{
   background-color: #0062cf;
