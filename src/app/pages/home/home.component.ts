@@ -12,7 +12,7 @@ import { RestApiService } from '../services/rest-api.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  dataArr:any[];
+  dataArr:any[] = [];
   public userRole:any = [];
   selectedIndex: number=0;
   error: string;
@@ -54,36 +54,58 @@ export class HomeComponent implements OnInit {
          ];
      }
 
-     else if(this.userRole.includes('RPA Admin')){
-      this.dataArr = [
-        {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"},
-        {"id":"SOBox", "img":"assets/images/Group 216.1.svg", "title":"Service Orchestration", "link":"serviceOrchestration/home"}
+     if(this.userRole.includes('RPA Admin')){
+      
+       if(this.dataArr.filter(f=>f.id === 'RPABox' ).length <= 0){
+         this.dataArr.push({"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"})
+       }
+       if(this.dataArr.filter(f=>f.id === 'SOBox' ).length <= 0){
+        this.dataArr.push({"id":"SOBox", "img":"assets/images/Group 216.1.svg", "title":"Service Orchestration", "link":"serviceOrchestration/home"})
+      }
+      // this.dataArr = [
+      //   {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"},
+      //   {"id":"SOBox", "img":"assets/images/Group 216.1.svg", "title":"Service Orchestration", "link":"serviceOrchestration/home"}
 
-      ];
+      // ];
 
-     }else if(this.userRole.includes('RPA Designer')){
-      this.dataArr = [
-        {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"},
+     }
+     if(this.userRole.includes('RPA Designer')){
+      if(this.dataArr.filter(f=>f.id === 'RPABox' ).length <= 0){
+        this.dataArr.push({"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"})
+      }
+      // this.dataArr = [
+      //   {"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"},
 
-      ];
+      // ];
 
-     }else if(this.userRole.includes('Data Architect') || this.userRole.includes('Process Modeler') || this.userRole.includes('Automation Designer')){
-      this.dataArr = [
-        {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
-      ];
+     }
+     if(this.userRole.includes('Data Architect') || this.userRole.includes('Process Modeler') || this.userRole.includes('Automation Designer')){
+      if(this.dataArr.filter(f=>f.id === 'BPSBox' ).length <= 0){
+        this.dataArr.push( {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"})
+      }
+     
+      // this.dataArr = [
+      //   {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"},
+      // ];
 
-     }else if(this.userRole.includes('Process Analyst')){
-      this.dataArr = [
-        {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},
+     }
+     if(this.userRole.includes('Process Analyst')){
+      if(this.dataArr.filter(f=>f.id === 'PIBox' ).length <= 0){
+        this.dataArr.push( {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"})
+      }
+      // this.dataArr = [
+      //   {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"},
 
-      ];
+      // ];
 
-     }else if(this.userRole.includes('Process Architect')){
-      this.dataArr = [
-        {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"approvalWorkflow/home"},
-      ];
-
-     }else{
+     }
+     if(this.userRole.includes('Process Architect')){
+      if(this.dataArr.filter(f=>f.id === 'BPSBox' ).length <= 0){
+        this.dataArr.push( {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"})
+      }
+      // this.dataArr = [
+      //   {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"approvalWorkflow/home"},
+      // ];
 
      }
     },error => {

@@ -250,7 +250,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
 
 
-  saveBotFunAct() {
+  async saveBotFunAct() {
     this.rpa_studio.spinner.show();
     this.finalenv=[];
     this.environment.forEach(data=>{
@@ -261,11 +261,11 @@ export class RpaStudioActionsComponent implements OnInit {
     })
     if(this.savebotrespose==undefined)
     {
-      let checkbotres=this.childBotWorkspace.saveBotFun(this.botState,this.finalenv);
+      let checkbotres=await this.childBotWorkspace.saveBotFun(this.botState,this.finalenv);
       if(checkbotres==false)
       {
         
-        this.rpa_studio.spinner.hide();
+        this.rpa_studio.spinner.hide();  
         Swal.fire({
           icon: 'warning',
           title: "Please check connections",
@@ -277,7 +277,7 @@ export class RpaStudioActionsComponent implements OnInit {
         checkbotres.subscribe(data=>{
         this.savebotrespose=data;
         this.rpa_studio.spinner.hide();
-        
+
         if(this.savebotrespose.botId!=undefined)
         {
           Swal.fire({
@@ -287,7 +287,7 @@ export class RpaStudioActionsComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
-          
+          this.childBotWorkspace.uploadfile(this.finalenv);
           this.getschecdules();
           this.startbot=true;
           this.pausebot=false;
@@ -317,8 +317,8 @@ export class RpaStudioActionsComponent implements OnInit {
     else
     {
       
-      this.childBotWorkspace.saveCron(this.she);
-       let checkbot:any=this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
+       this.childBotWorkspace.saveCron(this.she);  
+       let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
        if(checkbot==false)
        {
         this.rpa_studio.spinner.hide();
@@ -330,7 +330,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
        }else
        {
-          checkbot.subscribe(data=>{
+         await checkbot.subscribe(data=>{
           this.childBotWorkspace.successCallBack(data);
           this.savebotrespose=data;
           this.rpa_studio.spinner.hide();
@@ -342,7 +342,7 @@ export class RpaStudioActionsComponent implements OnInit {
             timer: 2000
           })
           this.getschecdules();
-        
+          this.childBotWorkspace.uploadfile(this.finalenv);
         });
       }
     }
