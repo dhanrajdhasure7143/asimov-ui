@@ -23,9 +23,11 @@ export class PreviewFormProvider implements IPropertiesProvider {
     let self = this;
     let actualTabs = this.bpmnPropertiesProvider.getTabs(element);
     let variableTabInd = -1;
+    let inputOutputTabInd = -1;
     //add Preview Form button for Forms tab
     actualTabs.forEach((each_tab,tId)=>{
       if(each_tab.id == "process-variables") variableTabInd = tId;
+      if(each_tab.id == "input-output") inputOutputTabInd = tId;
       if(each_tab.id == "forms" && each_tab.groups.length && each_tab.groups[0].entries.length >0){
         let previewBtn = {
           html: "<button id='preview-button' data-action='openPreview'>Preview Form</button>",
@@ -41,6 +43,10 @@ export class PreviewFormProvider implements IPropertiesProvider {
       }
     });
 
+    //Change drop down label String/Expression to text in I/O Tab
+    let inputOutputtab = actualTabs[inputOutputTabInd];
+    console.log(inputOutputtab);
+
     //add IO Specification tab
     var bo = getBusinessObject(element);
 
@@ -54,8 +60,11 @@ export class PreviewFormProvider implements IPropertiesProvider {
       actualTabs.splice(variableTabInd,1);
 
       //Add IOSpec Tab
-      var IOSpecTab = this.createProcessIoTab(element, this.injector, "ioTab");
-      actualTabs.splice(1,0,IOSpecTab);
+      // var IOSpecTab = this.createProcessIoTab(element, this.injector, "ioTab");
+      // actualTabs.splice(1,0,IOSpecTab);
+
+      //Add Input/Output Tab for process
+      console.log(actualTabs)
     }
 
     //add RPA Task tab
