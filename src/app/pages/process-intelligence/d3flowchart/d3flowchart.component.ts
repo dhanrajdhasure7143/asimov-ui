@@ -1199,8 +1199,30 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           .filter(function(d) {
                   return d.includes(itemName2)
           });
+
+          if(itemName.includes(' ')){
+            var item=itemName1.split(' ')
+            var itemName3=item[0]+' '+item[1].slice(0,1).toUpperCase()+item[1].slice(1,40)
+            // console.log(itemName3);
+
+              var _MATCHE_NODE3 = d3.selectAll(".node")
+                      .filter(function(d) {
+                        return d.includes(itemName3)
+                        });
+              _MATCHE_NODE3.style("opacity","1");
+              _MATCHE_NODE3.style("pointer-events", 'auto')
+
+              var itemName4=item[0]+' '+item[1].toUpperCase();
+              var _MATCHE_NODE4 = d3.selectAll(".node")
+                      .filter(function(d) {
+                        return d.includes(itemName4)
+                        });
+              _MATCHE_NODE4.style("opacity","1");
+              _MATCHE_NODE4.style("pointer-events", 'auto')
+          }
+         
           // console.log(_MATCHE_NODE['_groups'][0].length);
-          if(_MATCHE_NODE['_groups'][0].length==0 && _MATCHE_NODE1['_groups'][0].length==0 && _MATCHE_NODE['_groups'][0].length==0){
+          if(_MATCHE_NODE['_groups'][0].length==0 && _MATCHE_NODE1['_groups'][0].length==0 && _MATCHE_NODE2['_groups'][0].length==0 && _MATCHE_NODE3['_groups'][0].length==0 && _MATCHE_NODE4['_groups'][0].length==0){
             this.isnoNode=true;
             }else{
               this.isnoNode=false;

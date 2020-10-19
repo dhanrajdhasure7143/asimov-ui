@@ -128,7 +128,7 @@ export class ProcessinsightsComponent implements OnInit {
            
         },
         (err=>{
-            console.log("Internal server error, Please try again later.")
+            // console.log("Internal server error, Please try again later.")
         }))
         
   }
@@ -162,9 +162,9 @@ export class ProcessinsightsComponent implements OnInit {
         if(each.Median_duration > 20*60*1000)   tmp.push(each)
     })
     this.top10_activityData = tmp.slice(0,10);
-    console.log(this.top10_activityData);
+    // console.log(this.top10_activityData);
     var dd = this.timeConversion(7187760000);
-    console.log(dd);
+    // console.log(dd);
     
   }
 
@@ -195,7 +195,7 @@ export class ProcessinsightsComponent implements OnInit {
       this.rest.getPIInsightMeanMedianDuration(reqObj)
         .subscribe((res:any)=>{
             this.insight_human_robot_cost = res.data;
-            console.log(this.insight_human_robot_cost);
+            // console.log(this.insight_human_robot_cost);
             this.getHumanvsBotCost(this.insight_human_robot_cost);
             if(from == 'fullgraph'){
             this.getResources(this.insight_human_robot_cost);
@@ -226,12 +226,12 @@ export class ProcessinsightsComponent implements OnInit {
   }
 
   onResourceSelect(isAllSelect?:boolean) {
-      console.log("in resource")
+    //   console.log("in resource")
       let selected_resources = [];
       let aResources = this.selectedResources;
       if(isAllSelect == true) aResources = this.resourcesList;
       if(aResources.length == 0 || isAllSelect == false){
-          console.log("in shs");
+        //   console.log("in shs");
           
         this.totalMedianDuration = this.bkp_totalMedianDuration;
         this.getActivityMetrics('fullgraph');
@@ -250,7 +250,7 @@ export class ProcessinsightsComponent implements OnInit {
         }
         this.rest.getPIInsightResourceSelection(reqObj)
             .subscribe((res:any)=>{
-                console.log(res)
+                // console.log(res)
                 //dashboard metrics
                 this.totalMedianDuration = res.data.total.totalDuration/3;
                 //activity data
@@ -320,7 +320,7 @@ export class ProcessinsightsComponent implements OnInit {
              return dateA - dateB;
            });
  
-           console.log(vData.dates_data);
+        //    console.log(vData.dates_data);
            
          vData.dates_data.forEach(e => {
          
@@ -362,7 +362,7 @@ return uniqueChars.sort();
   }
 
   getPointX(cases){
-      console.log(cases);
+    //   console.log(cases);
       
     this.variant_Duration_list.data.forEach(e => {
         if(e.Cases == cases){
@@ -393,7 +393,7 @@ return uniqueChars.sort();
     }
       this.rest.getPIVariantActivity(reqObj)
         .subscribe((res:any)=>{
-            console.log(JSON.stringify(res));
+            // console.log(JSON.stringify(res));
             var aData = res.data;
             this.activity_Metrics = aData.data;
             let activityDuration = [];
@@ -430,7 +430,7 @@ return uniqueChars.sort();
   }
 
   getActivityWiseHumanvsBotCost(activityMetrics){
-    console.log(activityMetrics);
+    // console.log(activityMetrics);
     var hCost= [];
     var rCost = [];
     var ac_list = [];
@@ -469,7 +469,7 @@ return uniqueChars.sort();
   }
 
   getTotalNoOfCases(type){
-    console.log(this.varaint_data);
+    // console.log(this.varaint_data);
     var noofcases=0;
     this.totalCases = 0;
 
@@ -481,10 +481,10 @@ return uniqueChars.sort();
     return this.totalCases;
   } else {
       noofcases = 0;
-      console.log(this.totalVariantList);
+    //   console.log(this.totalVariantList);
       
       this.totalVariantList.forEach(e => {
-          console.log(e);
+        //   console.log(e);
           noofcases= noofcases+e.case_value;
         });
         this.totalCases = noofcases;
@@ -910,7 +910,7 @@ timeConversion(millisec) {
   }
 }
 onchangeVaraint(datavariant) {      // Variant List sorting 
-    console.log(datavariant);
+    // console.log(datavariant);
   switch (datavariant) {
     case "0":
       this.varaint_data.data.sort(function (a, b) {
@@ -953,11 +953,11 @@ onchangeVaraint(datavariant) {      // Variant List sorting
             pVData.push(vdata[i])
         }
         this.partialVariants = pVData;
-        console.log(this.partialVariants);
+        // console.log(this.partialVariants);
     }
 
     getVariantMedianDuration(selectedVariants){
-        console.log(selectedVariants)
+        // console.log(selectedVariants)
         if(selectedVariants.length == 0){
             this.totalMedianDuration = this.bkp_totalMedianDuration;
         }
@@ -966,12 +966,12 @@ onchangeVaraint(datavariant) {      // Variant List sorting
             
            
                 for(var i = 0; i<selectedVariants.length; i++){
-                    console.log(selectedVariants[i]);
+                    // console.log(selectedVariants[i]);
                   
                         
                         full_median_value += selectedVariants[i]["days"];
-                        console.log(full_median_value);
-                        console.log(this.getHours1(full_median_value));      
+                        // console.log(full_median_value);
+                        // console.log(this.getHours1(full_median_value));      
                     }
                 
             this.totalMedianDuration = full_median_value;
@@ -1023,12 +1023,12 @@ onchangeVaraint(datavariant) {      // Variant List sorting
             var index_v = i+1;
             this.selectedCaseArry.push('Variant '+ index_v);
             // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
-            console.log(this.varaint_data.data[i]);
+            // console.log(this.varaint_data.data[i]);
             
             selectedVariantIds.push(this.varaint_data.data[i]);
         }
     };  
-    console.log(selectedVariantIds)
+    // console.log(selectedVariantIds)
     this.getVariantMedianDuration(selectedVariantIds);
     this.caselength = this.selectedCaseArry.length;
 
@@ -1081,14 +1081,14 @@ onchangeVaraint(datavariant) {      // Variant List sorting
   }
 
   getAllGraphsPriceCalculation(){
-    console.log(this.input1);
+    // console.log(this.input1);
     this.getTotalNoOfCases('fullgraph');
     this.getActivityMetrics('fullgraph');
     this.getHumanBotCost('fullgraph');
   }
 
   switch1(data){
-    console.log(data);
+    // console.log(data);
     
   if(data=="bar"){
     this.flag1=0
@@ -1166,7 +1166,7 @@ swithToPeiCart(){
 Highcharts.chart('barGraph', this.piechart3);
 }
 switchTostackedBar(value){
-  console.log(value);
+//   console.log(value);
   if(value=="stackedbar"){
     this.isstackedbarChart=true
     this.scatterBarchart()
