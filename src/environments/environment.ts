@@ -12,6 +12,7 @@ export const environment = {
   auth_url: "http://eiapdemoapi.epsoftinc.com:96/authservices",
   pi_node_url: "http://10.11.0.112:3000",
   platform_url:'http://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
+  schema_registry_url:"http://172.16.0.60:8081",
   
  // Aiotal redirection urls 
   myaccount_url : "http://eiapclouddemo.epsoftinc.com:86/#/activation",
@@ -22,9 +23,10 @@ export const environment = {
 
 //DB Connector
   dbConnectorHost: "172.16.0.64",
-  dbName: 'asimov_aiotal'
+  dbName: "asimov_aiotal",
 
-
+// Data upload path
+  data_path:"/home/applmgr"
 
 
  //  * QA ENV URl's
