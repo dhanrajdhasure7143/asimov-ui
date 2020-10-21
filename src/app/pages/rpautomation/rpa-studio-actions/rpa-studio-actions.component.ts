@@ -782,6 +782,7 @@ export class RpaStudioActionsComponent implements OnInit {
         log.push(response)
       });
       console.log(log);
+      log.sort((a,b) => a.run_id < b.run_id ? -1 : 1);
       this.Viewloglist = new MatTableDataSource(log);
       console.log(this.Viewloglist);
 
