@@ -13,6 +13,7 @@ export const environment = {
   auth_url: "http://authdev.epsoftinc.in",
   pi_node_url: "http://10.11.0.112:3000",
   platform_url:'http://apdev.epsoftinc.in',
+  schema_registry_url:"http://10.11.0.101:8081",
   
  // Aiotal redirection urls 
   myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
@@ -23,8 +24,10 @@ export const environment = {
 
 //DB Connector
   dbConnectorHost: "10.11.0.113",
-  dbName: 'asimov_aiotal'
+  dbName: 'asimov_aiotal',
 
+// Data upload path
+  data_path:"/home/kafka"
 
 
   // //  * QA ENV URl's
