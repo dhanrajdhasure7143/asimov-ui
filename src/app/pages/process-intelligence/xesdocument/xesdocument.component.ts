@@ -64,7 +64,7 @@ export class XesdocumentComponent implements OnInit {
         "connector.class": "com.epsoft.asimov.connector.xes.XesSourceConnector",
         "tasks.max": "1",
         // "file": "/var/kafka/HospitalBilling.xes",
-        "file": this.config.dataPath + this.isUploadFileName,
+        "file": this.config.dataPath + "/" + this.isUploadFileName,
         // "topic": "topqconnector-xesTesting107",
         "topic": this.config.piConnector+"connector-xes-" + this.processId,
         // "topic": "tytyconnector-xes-" + this.processId,

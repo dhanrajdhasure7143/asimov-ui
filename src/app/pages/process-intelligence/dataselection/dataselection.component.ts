@@ -251,7 +251,7 @@ export class DataselectionComponent implements OnInit {
       "config": {
         "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
         "tasks.max": "1",
-        "file": this.config.dataPath + this.isUploadFileName,
+        "file": this.config.dataPath + "/" + this.isUploadFileName,
         "topic": this.config.piConnector+"connector-xls-"+this.processId,
         // "topic": "tytyconnector-xls-"+this.processId,
         "key.converter": "io.confluent.connect.avro.AvroConverter",
