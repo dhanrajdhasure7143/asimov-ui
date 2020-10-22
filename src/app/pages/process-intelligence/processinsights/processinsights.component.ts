@@ -32,7 +32,7 @@ export class ProcessinsightsComponent implements OnInit {
     input2: any = 1;
     variant_list: any;
     varaint_data: any;
-    select_varaint: any = 3;
+    select_varaint: any = 0;
     variant_list_options;
     selectedCaseArry: any = [];
     public caselength: number;
@@ -70,6 +70,7 @@ export class ProcessinsightsComponent implements OnInit {
     selectedResources: any = [];
     dropdownSettings: IDropdownSettings = {};
     finalVariants: any = {};
+    s_variants:any = [];
 
     constructor(
         private rest: RestApiService,
@@ -153,15 +154,16 @@ export class ProcessinsightsComponent implements OnInit {
 
     getActivityTableData(data) {
         this.actual_activityData = data;
+        console.log(data);
         this.actual_activityData.sort(function (a, b) {
             return b.Duration_range - a.Duration_range;
         });
         let tmp = [];
         this.actual_activityData.forEach(each => {
-            if (each.Duration_range > 20 * 60 * 1000) tmp.push(each)
+            if (each.Duration_range > 10 * 60 * 1000) tmp.push(each)
         })
         this.top10_activityData = tmp.slice(0, 5);
-        // console.log(this.top10_activityData);
+         console.log(this.top10_activityData);
         var dd = this.timeConversion(7187760000);
         // console.log(dd);
 
@@ -226,9 +228,13 @@ export class ProcessinsightsComponent implements OnInit {
 
     onResourceSelect(isAllSelect?: boolean) {
         //   console.log("in resource")
+        var r_flag = 'SINGLE';
         let selected_resources = [];
         let aResources = this.selectedResources;
-        if (isAllSelect == true) aResources = this.resourcesList;
+        if (isAllSelect == true){
+            r_flag = 'ALL';
+         aResources = this.resourcesList;
+        } 
         if (aResources.length == 0 || isAllSelect == false) {
             //   console.log("in shs");
 
@@ -239,11 +245,12 @@ export class ProcessinsightsComponent implements OnInit {
             aResources.forEach(each => {
                 selected_resources.push(each.item_text);
             })
-            let selected_variants = this.selectedCaseArry;
+            let selected_variants = this.s_variants;
             var reqObj: any = {
                 "data_type": "metrics_resources",
                 "pid": this.graphIds,
                 //"pid":610283,
+                "resourceFlag": r_flag,
                 "variants": selected_variants,
                 "resources": selected_resources
             }
@@ -877,7 +884,7 @@ export class ProcessinsightsComponent implements OnInit {
         let variantData = localStorage.getItem("variants")
         this.varaint_data = JSON.parse(atob(variantData));
         console.log(this.varaint_data);
-        this.finalVariants = this.varaint_data;
+        this.finalVariants = JSON.parse(atob(localStorage.getItem("variants")))
         this.onchangeVaraint('0');
         this.updatePartialVariantData();
 
@@ -935,7 +942,7 @@ export class ProcessinsightsComponent implements OnInit {
     }
 
     updatePartialVariantData() {
-        let vdata = this.varaint_data.data;
+        let vdata = this.finalVariants.data;
 
         vdata.sort(function (a, b) {
             return b.days - a.days;
@@ -1011,12 +1018,15 @@ export class ProcessinsightsComponent implements OnInit {
         this.selectedCaseArry = [];
         let selectedVariantIds = [];
         this.totalVariantList = [];
+        this.s_variants = [];
         // this.selectedTraceNumbers = [];
         for (var i = 0; i < this.varaint_data.data.length; i++) {
             if (this.varaint_data.data[i].selected == "active") {
                 // var casevalue = this.varaint_data.data[i].case
                 this.totalVariantList.push(this.varaint_data.data[i]);
-                var index_v = i + 1;
+                var index_v = i;
+                var index_v2 = i+1;
+                this.s_variants.push('Variant ' +index_v2);
                 this.selectedCaseArry.push('Variant ' + index_v);
                 // this.selectedTraceNumbers.push(this.varaint_data.data[i].trace_number)
                 // console.log(this.varaint_data.data[i]);
@@ -1043,7 +1053,7 @@ export class ProcessinsightsComponent implements OnInit {
             this.getActivityMetrics('fullgraph');
             this.getTotalNoOfCases('fullgraph');
         } else {
-            this.getHumanBotCost('variant', this.selectedCaseArry);
+            this.getHumanBotCost('variant', this.s_variants);
             this.getActivityMetrics('variant', this.selectedCaseArry);
             this.getTotalNoOfCases('variant');
             //this.onResourceSelect();
