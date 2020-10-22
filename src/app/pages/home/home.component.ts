@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit {
       var firstName=params['firstName']
       var lastName=params['lastName']
       var ProfileuserId=params['ProfileuserId']
+      var tenantName=params['tenantName']
       if(acToken && refToken){
         var accessToken=atob(acToken);
         var refreshToken=atob(refToken);
@@ -33,6 +34,7 @@ export class HomeComponent implements OnInit {
         localStorage.setItem("firstName", firstName);
         localStorage.setItem("lastName", lastName);
         localStorage.setItem("ProfileuserId", ProfileuserId);
+        localStorage.setItem("tenantName", tenantName);
       }
     });
   }

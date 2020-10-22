@@ -279,26 +279,46 @@
         <div class="tab">
             <div style="padding-left:15px;">
                 <!--class="container"-->
-                <h3 class="notification_alert_title">Notifications</h3>
+                <h4 class="notification_alert_title">Notifications</h4>
             </div>
             <span class="close" (click)="slideDown();">&times;</span>
         </div>
         <div class="overlay_container">
             <!--container-->
             <table>
+                <div *ngIf="notificationList.errorMessage==undefined" class="notify">
+                    <thead>
                 <tr>
-                    <th class="table_heading table_notification_cell" style="padding-left:15px;">Notifications</th>
-                    <th class="table_heading">Date</th>
-                    <th class="table_heading">Time</th>
-                    <th class="table_heading">Action</th>
+                    <th style="padding-left:100px; font-size:14px;font-weight: bold;">Notification Message</th>
+                   <th style="padding-left:100px; font-size:14px;font-weight: bold;">Date</th>
+                   <th style=" font-size:14px;font-weight: bold;">Action</th>
                 </tr>
-                <tr *ngFor="let details of table_details">
-                    <td class="table_cell Notify_td" style="padding-left:15px;">{{details.sub_id}}</td>
-                    <td class="table_cell Notify_td">{{details.prod}}</td>
-                    <td class="table_cell Notify_td">{{details.plan}}</td>
-                    <td class="table_cell Notify_td">{{details.action}}</td>
-                </tr>
+            </thead>
+            <tr *ngFor="let details of notificationList | paginate: {id:'notification_page', itemsPerPage: 1, currentPage: c }; let i = index; trackBy:loopTrackBy;">
+            <td class="" class="table_cell Notify_td" style="padding-left:100px;">{{details.notificationAuditId[0].contentType}}</td>
+             <td class="" class="table_cell Notify_td" style="padding-left:100px;">{{details.createdAt | date:'medium'}}</td>
+             <td class=""><span aria-hidden="true" (click)='deletnotification(details.id)' class="cross_delet">&times;</span>
+            <div id="myid" [ngClass]="details.id == dataid?'isdelet':''" class="deletconfm">
+             <div class="container-fluid deletefrm">
+            <h5 class="pull-left">Confirmation</h5>
+            <!-- <button type="button" class="close ">
+              <span aria-hidden="true">&times;</span>
+              </button> -->
+            <p class="pull-left">Are you sure you want to delete notification ?</p>
+          <button class="pull-left confm" aria-label="Close" (click)="deleteNotification(details.id)" style="color: black;">Yes</button>
+          <button class="confm pull-left" (click)="canceldeleteNotification(i)" style="color: black;">No</button>
+          </div>
+             </div>
+          </td>
+        </tr>
+            </div>
             </table>
+            <tbody  *ngIf="notificationList.errorMessage=='No records found' " >
+               <div class="ntfnorecords"><h4 style=" font-size:25px">No records found</h4></div>
+            </tbody>
+           <div *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
+          <pagination-controls id="notification_page" maxSize="8" (pageChange)="c = $event"></pagination-controls>
+         </div>
         </div>
     </div>
 
