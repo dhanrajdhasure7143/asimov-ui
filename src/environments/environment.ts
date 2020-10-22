@@ -28,8 +28,6 @@ export const environment = {
 
 
   //  * QA ENV URl's
-   
-  
   //   pi_url: 'http://piqa.epsoftinc.in',
   //   bps_url: 'http://bpsqa.epsoftinc.in',
   //   rpa_url: 'http://rpaqa.epsoftinc.in',

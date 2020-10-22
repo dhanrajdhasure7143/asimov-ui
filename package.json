@@ -47,6 +47,7 @@
     "camunda-modeler-plugin-helpers": "^3.1.0",
     "chart.js": "^2.9.3",
     "clipboard-copy": "^3.1.0",
+    "cmmn-js": "^0.20.0",
     "cronstrue": "^1.96.0",
     "d3": "^5.15.0",
     "dagre-d3": "^0.6.4",
@@ -87,6 +88,7 @@
     "rxjs": "~6.4.0",
     "save-svg-as-png": "^1.4.17",
     "sweetalert2": "^9.14.4",
+    "tiny-svg": "^2.2.2",
     "tslib": "^1.10.0",
     "xlsx": "^0.15.6",
     "zone.js": "~0.9.1"
