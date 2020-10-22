@@ -20,6 +20,7 @@ import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./rpa-studio-actions.component.css']
 })
 export class RpaStudioActionsComponent implements OnInit {
+  public check_schedule_flag: boolean = false;
   public environment: any = [];
   public predefined: any = [];
   public optionList: boolean = true;
@@ -688,23 +689,6 @@ export class RpaStudioActionsComponent implements OnInit {
     });
    }
 
-   removeSchedule(scheduleRecord)
-   { 
-      if(this.she!=undefined)
-      { 
-        console.log(this.she)
-        let index=this.she.scheduleIntervals.findIndex(schedule=>schedule.intervalId==scheduleRecord.intervalId);
-        this.she.scheduleIntervals.splice(index,1);
-        let index2=this.scheduleLists.findIndex(scheduleitem=>scheduleitem.intervalId==scheduleRecord.intervalId);
-        this.scheduleLists.splice(index2,1);
-        if(this.she.scheduleIntervals.length==0)
-        {
-          this.she=undefined;
-        }
-      }
-
-   }
-
    switchversion(vid)
    {
      this.rpa_studio.spinner.show();
@@ -729,12 +713,6 @@ export class RpaStudioActionsComponent implements OnInit {
         /*}
     })*/
    }
-
-
-
-
-
-
 
    viewlogdata(){
      this.childBotWorkspace.addsquences();
@@ -911,133 +889,6 @@ convertcron(cronexp)
 }
 
 
-startSchedule(schedule)
-{ 
-  let startschedule={
-    "botId":this.savebotrespose.botId,
-    "scheduleInterval":schedule.scheduleInterval,
-    "intervalId":schedule.intervalId,
-  }
-  let responsemessage:any
-  this.rest.start_schedule(startschedule).subscribe(response=>{
-    responsemessage=response
- 
-    if(responsemessage.errorMessage==undefined)
-    {
-      //console.log(responsemessage)
-      this.notifier.notify("info","Schedule initiated Successfully");
-    
-      //this.notifier.notify("info",responsemessage);
-    
-    }else
-    {
-      Swal.fire({
-        position:'top-end',
-        icon:'warning',
-        title:responsemessage.errorMessage,
-        showConfirmButton:false,
-        timer:2000
-        })
-    }
-    this.getschecdules();
-  });
-  
-}
-
-
-stopSchedule(schedule)
-{   
-  
-  let stopschedule={
-  "botId":this.savebotrespose.botId,
-  "scheduleInterval":schedule.scheduleInterval,
-  "intervalId":schedule.intervalId,
-}
-let responsemessage:any
-this.rest.stop_schedule(stopschedule).subscribe(response=>{
-  responsemessage=response
-
-  if(responsemessage.errorMessage==undefined)
-  {
-    this.notifier.notify("info",responsemessage.status);
-    
-  }else
-  {
-    Swal.fire({
-      position:'top-end',
-      icon:'warning',
-      title:responsemessage.errorMessage,
-      showConfirmButton:false,
-      timer:2000
-      })
-  }
-  this.getschecdules();
-});
-
-}
-
-pauseSchedule(schedule)
-{ 
-  let pauseschedule={
-    "botId":this.savebotrespose.botId,
-    "scheduleInterval":schedule.scheduleInterval,
-    "intervalId":schedule.intervalId,
-  }
-  let responsemessage:any
-  this.rest.pause_schedule(pauseschedule).subscribe(response=>{
-    responsemessage=response
- 
-    if(responsemessage.errorMessage==undefined)
-    {
-        this.notifier.notify("info",responsemessage.status);
-    }else
-    {
-      Swal.fire({
-        position:'top-end',
-        icon:'warning',
-        title:responsemessage.errorMessage,
-        showConfirmButton:false,
-        timer:2000
-        })
-    }
-    this.getschecdules();
-
-
-  });
-  
-
-}
-
-
-
-
-resumeSchedule(schedule)
-{ 
-  let resumeschedule={
-    "botId":this.savebotrespose.botId,
-    "scheduleInterval":schedule.scheduleInterval,
-    "intervalId":schedule.intervalId,
-  }
-  let responsemessage:any
-  this.rest.resume_schedule(resumeschedule).subscribe(response=>{
-    responsemessage=response
- 
-    if(responsemessage.errorMessage == undefined)
-    {
-      this.notifier.notify("info",responsemessage.status);
-    }else
-    {
-      Swal.fire({
-        position:'top-end',
-        icon:'warning',
-        title:responsemessage.errorMessage,
-        showConfirmButton:false,
-        timer:2000
-        })
-    }
-    this.getschecdules();
-  });
-}
 
   rpa_assignbot(botId,taskId)
   {
@@ -1060,5 +911,182 @@ resumeSchedule(schedule)
     this.cronExpression = '0/1 * 1/1 * *';
     this.endDate=undefined;
   }
+
+  
+startSchedule()
+{ 
+  let scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p);
+  let i:any;
+
+  for(i=0;i<scheduleRecord.length;i++)
+  {
+  console.log(scheduleRecord[i]);
+  let s = scheduleRecord[i];
+  console.log(s.scheduleInterval);  
+  console.log(s.intervalId);
+  console.log(this.savebotrespose.botId);
+  let startschedule={
+    "botId":this.savebotrespose.botId,
+    "scheduleInterval":s.scheduleInterval,
+    "intervalId":s.intervalId,
+  }
+  let responsemessage:any
+  this.rest.start_schedule(startschedule).subscribe(response=>{
+    responsemessage=response;
+    if(responsemessage.errorMessage==undefined)
+    {
+      this.notifier.notify("info",responsemessage.status);
+      
+    }     
+  });
+}
+  this.removeallchecks();
+}
+
+stopSchedule()
+{  
+  const scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p);
+  let i:any;
+
+  for(i=0;i<scheduleRecord.length;i++)
+  {
+  console.log(scheduleRecord[i]);
+  let s = scheduleRecord[i];
+  console.log(s.scheduleInterval);
+  console.log(s.intervalId);
+  console.log(this.savebotrespose.botId);
+  let stopschedule={
+    "botId":this.savebotrespose.botId,
+    "scheduleInterval":s.scheduleInterval,
+    "intervalId":s.intervalId,
+  }
+  let responsemessage:any
+this.rest.stop_schedule(stopschedule).subscribe(response=>{
+  responsemessage=response
+
+  if(responsemessage.errorMessage==undefined)
+  {
+    this.notifier.notify("info",responsemessage.status);
+    
+  }  
+});
+}
+this.removeallchecks();
+}
+
+pauseSchedule()
+{ const scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p);
+  let i:any;
+
+  for(i=0;i<scheduleRecord.length;i++)
+  {
+  console.log(scheduleRecord[i]);
+  let s = scheduleRecord[i];
+  console.log(s.scheduleInterval);  
+  console.log(s.intervalId);
+  console.log(this.savebotrespose.botId);
+  let pauseschedule={
+    "botId":this.savebotrespose.botId,
+    "scheduleInterval":s.scheduleInterval,
+    "intervalId":s.intervalId,
+  }
+  let responsemessage:any
+  this.rest.pause_schedule(pauseschedule).subscribe(response=>{
+    responsemessage=response
+ 
+    if(responsemessage.errorMessage==undefined)
+    {
+        this.notifier.notify("info",responsemessage.status);
+    }
+  });
+}
+  this.removeallchecks();
+}
+
+resumeSchedule()
+{ 
+  const scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p);
+  let i:any;
+
+  for(i=0;i<scheduleRecord.length;i++)
+  {
+  console.log(scheduleRecord[i]);
+  let s = scheduleRecord[i];
+  console.log(s.scheduleInterval);  
+  console.log(s.intervalId);
+  console.log(this.savebotrespose.botId);
+  let resumeschedule={
+    "botId":this.savebotrespose.botId,
+    "scheduleInterval":s.scheduleInterval,
+    "intervalId":s.intervalId,
+  }
+  let responsemessage:any
+  this.rest.resume_schedule(resumeschedule).subscribe(response=>{
+    responsemessage=response
+     console.log(responsemessage.errorMessage);
+    if(responsemessage.errorMessage == undefined)
+    {
+      this.notifier.notify("info",responsemessage.errorMessage);
+    }
+  });
+}
+this.removeallchecks();
+}
+
+removeallchecks()
+{
+  this.check_schedule_flag = false;
+  for(let i=0;i<this.scheduleLists.length;i++)
+  {
+    this.scheduleLists[i].checked= false;
+    console.log(this.scheduleLists[i]);
+  }
+  console.log(this.check_schedule_flag);
+}
+
+checkAllCheckBox(ev) {
+  this.scheduleLists.forEach(x => x.checked = ev.target.checked)  
+  this.check_schedule_flag = true;
+}
+
+checkEnableDisableBtn(id, event)
+{
+  console.log(id);
+  console.log(event.target.checked);
+  this.scheduleLists.find(data=>data.intervalId==id).checked=event.target.checked;
+  console.log(this.scheduleLists.length)
+  if(this.scheduleLists.filter(data=>data.checked==true).length==this.scheduleLists.length)
+  {
+    this.check_schedule_flag=true;
+  }else
+  {
+    this.check_schedule_flag=false;  
+  }
+}
+
+
+ removeSchedule()
+ { 
+   let i:number;
+  const scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p.intervalId);
+  console.log(scheduleRecord);
+    if(scheduleRecord!=undefined)
+    { 
+      for(i=scheduleRecord.length; i > 0 ; i--){
+      console.log(this.she)
+      let index=this.she.scheduleIntervals.findIndex(schedule=>schedule.intervalId==scheduleRecord);
+      console.log(index)
+      this.she.scheduleIntervals.splice(index,1);
+      let index2=this.scheduleLists.findIndex(scheduleitem=>scheduleitem.intervalId==scheduleRecord);
+      this.scheduleLists.splice(index2,1);
+    }
+      if(this.she.scheduleIntervals.length==0)
+      {
+        this.she=undefined;
+      }
+    }
+    this.removeallchecks();
+ }
+
   
 }

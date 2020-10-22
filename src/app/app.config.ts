@@ -21,6 +21,7 @@ export interface AsimovAppConfig {
     platformEndPoint:string;
     schemaRegistryEndPoint:string;
     dataPath:string;
+    alertsEndPoint:string;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -40,5 +41,6 @@ export const AppConfig: AsimovAppConfig = {
     dbName:environment.dbName,
     platformEndPoint:environment.platform_url,
     schemaRegistryEndPoint:environment.schema_registry_url,
-    dataPath:environment.data_path
+    dataPath:environment.data_path,
+    alertsEndPoint:environment.alerts_url
 };

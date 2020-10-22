@@ -23,7 +23,14 @@
                                         <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img">
                                             <label>{{each_page.title}}</label> </a>
                                     </li>
-                                    <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'> <img src="assets/images/Group 192.svg"> </li>
+                                    <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'> 
+                                        <!-- <img src="assets/images/Group 192.svg"> </li> -->
+                                        <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'> 
+                                           <img src="assets/images/Notification_Bell.svg"> 
+                                            <div *ngIf='notificationscount!=0' class="notification-count" style = "position:absolute; left:66px; top:2px;">
+                                            <span>{{notificationscount}}</span> 
+                                         </div>
+                                       </li>
                                     <li class=""> 
                                         <!-- <img src="assets/images/pro1.png"> -->
                                         <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 

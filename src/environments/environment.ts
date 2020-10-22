@@ -13,7 +13,8 @@ export const environment = {
   pi_node_url: "http://eiapdemoapi.epsoftinc.com:96/pinode",
   platform_url:'http://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
   schema_registry_url:"http://172.16.0.60:8081",
-  
+  alerts_url:'http://eiapdemoapi.epsoftinc.com:96/alerts',
+
  // Aiotal redirection urls 
   myaccount_url : "http://eiapclouddemo.epsoftinc.com:86/#/activation",
   logout_url: 'http://eiapclouddemo.epsoftinc.com:86/#/activation', 
@@ -27,7 +28,6 @@ export const environment = {
 
 // Data upload path
   data_path:"/home/applmgr"
-
 
  //  * QA ENV URl's
  
@@ -62,4 +62,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-

@@ -32,6 +32,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   base64Data: any;
   retrieveResonse: any;
   public profilePicture:boolean=false;
+  tenantId: string;
+ role: string;
+ public notificationList: any[];
+ public dataid: any;
+ notificationscount: any;
+ public stopnotificationsapicall:any
 
   constructor(
     private router:Router,
@@ -122,10 +128,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.spinner.show();
     setTimeout(() => {
       this.getImage();
+      this.getAllNotifications();
         },1000);
         setTimeout(() => {
           this.spinner.hide();
         }, 900);
+
+       
   }
 
   loopTrackBy(index, term){
@@ -173,6 +182,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     window.location.href=this.config.logoutRedirectionURL+'?input='+input;
   }
   logout(){
+    clearTimeout(this.stopnotificationsapicall)
     localStorage.clear();
     var input = btoa("Signout")
     window.location.href=this.config.logoutRedirectionURL+'?input='+input;
@@ -206,4 +216,31 @@ export class HeaderComponent implements OnInit, OnDestroy {
               }
             );
         }
+
+        getCount(){
+        let userId =  localStorage.getItem("ProfileuserId")
+          this.stopnotificationsapicall=setTimeout(() => {
+         if(this.role!=null&&userId!=null){
+          this.getAllNotifications();
+           }
+          }, 10000);
+          }
+       getAllNotifications() {
+       let userId =  localStorage.getItem("ProfileuserId")
+         this.tenantId=localStorage.getItem('tenantName');
+         this.role=localStorage.getItem('userRole')
+        let notificationbody ={
+        "tenantId":this.tenantId
+          }
+        this.rpa.getNotifications(this.role,userId,notificationbody).subscribe(data => {
+        this.notificationList = data
+        this.notificationscount=this.notificationList.length
+         if(this.notificationscount==undefined||this.notificationscount==null)
+         {
+          this.notificationscount=0;
+        }
+         // console.log("count",this.notificationList.length)
+          })
+           this.getCount();
+          }
 }

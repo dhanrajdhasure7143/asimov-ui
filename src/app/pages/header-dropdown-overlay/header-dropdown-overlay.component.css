@@ -11,19 +11,78 @@ table {
 }
 
 .notification_alert_title {
-    color: #495057;
+    color:black;
     font-weight: bold;
-    font-size: 24px;
+    height: 11px;
+    margin-left: 244px;
+    line-height: 6px;
+    font-size: 22px;
 }
-
+.deletefrm{
+    margin-top: 5px;
+}
+.deletconfm h5{
+    font-size: 13px;
+}
+.deletconfm p{
+       font-size: 10px;
+    }
+    .deletconfm .confm{
+       border: none;
+     background: white;
+   width:30px;
+       height: 20px;
+       font-size: 10px;
+       margin-left: 25px;
+       border-radius: 10px;
+    }
+    .cross_delet{
+        /* // font-size: 30px; */
+        color: red;
+        cursor: pointer;
+    }
+    #myid{
+        width:170px;
+        height:120px;
+        border:1px solid gray;
+       display: none;
+       background-color: gray;
+        /* // cursor:none; */
+    }
+    .isdelet{
+        display: block !important;
+        position: relative;
+        color: white !important;
+       z-index: 1000;
+        /* // cursor:none; */
+    }
+    .notify {
+        margin-left: 160px;
+        margin-top: 27px;
+     }
+     .notificationpagination
+     {
+         margin-left: 52%; 
+     }
+     .notificatonmessage
+     {
+         margin-left: 20px;
+     }
+     .ntfnorecords
+     {
+         /* position: absolute; */
+         margin-top: 113px;
+        padding-left: 664px;
+      }
 .table_cell {
-    padding: 13px 0px;
-    color: gray;
+    padding: 13px 0px; 
+    color: black;
     font-size: 17px;
 }
 
 .Notify_td {
-    border-top: 1px solid gray;
+    /* border-top: 1px solid gray; */
+   width: 34%;
 }
 
 .table_notification_cell {
@@ -107,13 +166,14 @@ select:focus {
 .modal-content {
     position: fixed;
     bottom: 0;
-    background-color: #fefefe;
+    background: white;
     width: 100%;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;
     animation-duration: 0.4s;
     border-radius: 0;
+    height: 300px
 }
 
 
