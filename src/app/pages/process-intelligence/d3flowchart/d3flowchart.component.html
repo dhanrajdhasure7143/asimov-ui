@@ -1,0 +1,35 @@
+<div class="search-node">
+  <span class="" *ngIf="searchNode" (click)="searchNode = null; onSearch();">&times;</span>
+<input class="search-input border_bottom form-control" name="search" placeholder="Search Node" #search="ngModel" [(ngModel)]="searchNode"  (keyup)="onSearch()"  (keyup)="onSearch()" (blur)="onSearch()" />
+<!-- <button class="btn btn-warning" (click)="searchNode = null; onSearch()" *ngIf="searchNode">Clear Search</button> -->
+</div>
+<div class="zoom_btns">
+<a class="btn btn1 zoom btn-primary"><i class="fas fa-search-plus"></i></a>
+<a class="btn btn1 zoom-out btn-primary"><i class="fas fa-search-minus"></i></a>
+<a class="btn btn1 zoom-init btn-primary"><i class="fas fa-recycle"></i></a>
+</div>
+<!-- <button (click)="exportSVG('pdf')">Download PDF</button>
+<button (click)="exportSVG('png')">Download PNG</button>
+<button (click)="exportSVG('jpeg')">Download JPEG</button>
+<button (click)="exportSVG('svg')">Download svg</button>
+<button (click)="onPlayProcees()">
+  <span *ngIf="!isPlayAnimation">Play</span>
+  <span *ngIf="isPlayAnimation">Pause</span>
+</button> -->
+
+<!-- <a id="download" href="#" download="graph.png"> Export my D3 visualization to PNG Download</a> -->
+<!-- <button class="eiap-btn btn btn-primary" id='download'>Export my D3 visualization to PNG</button> -->
+
+<div id="exportSVGtoPDF" #exportSVGtoPDF>
+    <svg id="render"  #render>
+      <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+      markerWidth="5" markerHeight="5"
+      orient="auto">
+    <path d="M 0 0 L 10 5 L 0 10 z" />
+  </marker>
+    </svg>
+  </div>
+  <div id="download">
+      <a #downloadLink></a>
+    </div>
+ 

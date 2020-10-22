@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
+import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
+import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import { NgxSpinnerService } from "ngx-spinner"; 
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -11,6 +14,8 @@ import { BpmnModel } from '../model/bpmn-autosave-model';
 import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
+
+declare var require:any;
 
 @Component({
   selector: 'app-create-bpmn-diagram',
@@ -100,6 +105,14 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
    }
+   fitNotationView(){
+    let canvas = this.bpmnModeler.get('canvas');
+    canvas.zoom('fit-viewport');
+    let msg = "Notation";
+    if(document.getElementById("canvas") )
+    this.global.notify(msg+" is fit to view port", "success")
+
+   }
 
    getApproverList(){
      this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
@@ -144,13 +157,34 @@ export class CreateBpmnDiagramComponent implements OnInit {
         return sel_not["bpmnProcessStatus"] != "APPROVED" && sel_not["bpmnProcessStatus"] != "REJECTED" && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
       })
    }
+
+   togglePosition(){
+    let el = document.getElementById("properties");
+    if(el){
+      el.classList.toggle("slide-left");
+      el.classList.toggle("slide-right");
+    }
+  }
   // ngAfterViewInit(){
     initiateDiagram(){
     let _self = this;
+    var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     this.bpmnModeler = new BpmnJS({
+      additionalModules: [
+        PropertiesPanelModule,
+        PropertiesProviderModule,
+        {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
+        {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]}
+      ],
       container: '#canvas',
       keyboard: {
         bindTo: window
+      },
+      propertiesPanel: {
+        parent: '#properties'
+      },
+      moddleExtensions: {
+        camunda: CamundaModdleDescriptor
       }
     });
     let canvas = this.bpmnModeler.get('canvas');
@@ -166,7 +200,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation 
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
-      this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+      this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
     }
     let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml))); 
     this.bpmnModeler.importXML(decrypted_bpmn, function(err){

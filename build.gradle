@@ -16,8 +16,8 @@ node {
 }
 
 ext {
-  dockerImage = "nexus.epsoftinc.in/asimov-ui"
-  dockerTag   = "0.0.1-DM1"
+  dockerImage = "${project.registryUrl}/${imageName}"
+  dockerTag   = "${project.semver}-${project.semverDevSuffix}"
 }
 
 task cleanAll (type:Delete) {
@@ -27,11 +27,11 @@ task cleanAll (type:Delete) {
 
 task buildImage(type: DockerBuildImage) {
   inputDir = file("./")
-  images.add(project.dockerImage + ":" + project.dockerTag)
+  images.add("${project.dockerImage}:${project.dockerTag}")
 }
 
 task pushImage(type: DockerPushImage, dependsOn: buildImage) {
-  images.add(project.dockerImage + ":" + project.dockerTag)
+  images.add("${project.dockerImage}:${project.dockerTag}")
 }
 
 task dockerized {

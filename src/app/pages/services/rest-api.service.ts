@@ -1,6 +1,3 @@
-
-
-
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -16,8 +13,17 @@ import { IpServiceService } from '../../services/ip-service.service';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
-        })
+  })
 };
+
+
+const  httpfileOptions={
+ 
+  headers: new HttpHeaders({
+  "Content-Type":"multipart/form-data"
+  })
+
+}
 
 
 @Injectable({
@@ -38,20 +44,20 @@ export class RestApiService{
   public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient, private ip:IpServiceService) { this.getIP(); }
 
-  public ipAddress:string; 
+  public ipAddress:string;
 
   getAccessToken(){
-    let data = {"userId":"edukondalu.chokkapu@epsoftinc.com",
+    let data = {"userId":"venkata.simhadri@epsoftinc.com",
                 "password":"Welcome@123"};
 
-  
-                
+
+
     return this.http.post('/api/login/beta/accessToken',data);
   }
   getIP()
      {
         if(localStorage.getItem('ipAddress')==null){
-        this.ip.getIPAddress().then(res => { 
+        this.ip.getIPAddress().then(res => {
 
         var obj = JSON.parse(JSON.stringify(res));
         this.ipAddress = obj.ip;
@@ -89,7 +95,7 @@ export class RestApiService{
     return this.http.get("/bpsprocess/approver/info/"+role)
   }
   getUserBpmnsList(){
-    return this.http.get("/bpsprocess/fetchByUser"); 
+    return this.http.get("/bpsprocess/fetchByUser");
   }
   saveBPMNprocessinfofromtemp(bpmnModel){
     return this.http.post("/bpsprocess/save/bpms/notation/from/temp",bpmnModel)
@@ -114,22 +120,44 @@ export class RestApiService{
     return api_method_call != ""?this.http.post('/'+api_method_call, file, {responseType: 'text'}):null;// "target" : "http://10.11.1.189:8080",
   }
 
-  
+
   toolSet(){
     return this.http.get("/rpa-service/load-toolset");
   }
   attribute(data:any){
   return this.http.get('/rpa-service/get-attributes/'+data)
   }
-    saveBot(data:any):Observable<any>
-    {
-      return this.http.post('/rpa-service/save-bot',data)
-    }
+  
+  async saveBot(data:any)
+  {
+    return await this.http.post('/rpa-service/save-bot',data)
+  }
 
-    updateBot(data:any)
-    {
-      return this.http.post('/rpa-service/update-bot',data)
-    }
+  async updateBot(data:any)
+  {
+    return await this.http.post('/rpa-service/update-bot',data)
+  }
+
+  async uploadfile(data:any,envids:any[])
+  {
+    let  url="/rpa-service/agent/file-upload-environments";
+    let i=0;
+    envids.forEach(env=>{
+      let ct="";
+      if(i==0)
+      {
+        ct="?env="+env;
+        i++;
+      }
+      else
+      {
+        ct="&env="+env;
+        i++;
+      }
+      url=url+ct;
+    })
+    return await this.http.post(url,data,httpfileOptions);
+  }
   
   getUserPause(botId){
     let data:any;
@@ -150,7 +178,7 @@ export class RestApiService{
     let url='/rpa-service/start-bot/'+botid;
     return this.http.post(url,data)
   }
-  
+
   stopbot(botid:number,data:any){
     let url='/rpa-service/stop-bot/'+botid;
     return this.http.post(url,data)
@@ -160,7 +188,7 @@ export class RestApiService{
     let data=null;
     return this.http.post('/rpa-service/agent/deploy-bot?botId='+botId,data);
   }
-  
+
   getpredefinedbots(){
     return this.http.get("/rpa-service/getall-predefinedbots")/*jitendra: need to replace URL*/
   }
@@ -223,14 +251,14 @@ export class RestApiService{
     {
       return this.http.get('/rpa-service/load-process-info/'+0);
     }
-    else{ 
-      return this.http.get('/rpa-service/load-process-info/processid='+id);    
+    else{
+      return this.http.get('/rpa-service/load-process-info/processid='+id);
     }
   }
   getAllOrcRpaWorkSpaces()
   {
       return this.http.get('/rpa-service/process-name');
-   
+
   }
   saveConnectorConfig(body,categoryName,processName,piId){
     return this.http.post('/processintelligence/v1/connectorconfiguration/?categoryName='+categoryName+'&piId='+processName+'&piName='+piId,body)
@@ -241,7 +269,7 @@ export class RestApiService{
   }
 
   getbotversiondata(botId,vid)
-  { 
+  {
     return this.http.get("/rpa-service/get-bot/"+botId+"/"+vid)
   }
 
@@ -332,7 +360,7 @@ export class RestApiService{
 
 
   getProcessStatistics()
-  { 
+  {
     return this.http.get("/rpa-service/process-statistics")
   }
 
@@ -340,7 +368,7 @@ export class RestApiService{
   {
     return this.http.get("/rpa-service/bot-statistics")
   }
-  
+
   getAllActiveBots()
   {
     return this.http.get("/rpa-service/get-bots")
@@ -359,7 +387,7 @@ export class RestApiService{
   }
   getDeleteBot(botId)
   {
-    
+
     return this.http.post("/rpa-service/delete-bot?botId="+botId,"")
   }
 
@@ -373,7 +401,7 @@ export class RestApiService{
   botUsage(){
     return this.http.get("/rpa-service/management/bot-usage")
     }
-  
+
   getpredefinedotdata(botId)
   {
     return this.http.get("/rpa-service/load-predefined-bot?botId="+botId)
@@ -388,18 +416,18 @@ export class RestApiService{
   {
     return this.http.post("/rpa-service/specifiedscheduled-startbot", data);
   }
-  
+
   stop_schedule(data)
   {
     return this.http.post("/rpa-service/specifiedscheduled-stopbot", data);
   }
-  
+
   pause_schedule(data)
   {
     return this.http.post("/rpa-service/specifiedscheduled-pausebot", data);
   }
 
-  
+
   resume_schedule(data)
   {
     return this.http.post("/rpa-service/specifiedscheduled-resumebot", data);
@@ -418,7 +446,7 @@ export class RestApiService{
     // return this.http.put('http://10.11.0.101:8083/connector-plugins/JdbcSourceConnector/config/validate', body)
     return this.http.post('/processintelligence/v1/connectorconfiguration/validateConfig', body)
     }
-  
+
 
     getoutputbox(data)
     {
@@ -428,5 +456,7 @@ export class RestApiService{
     getUserDetails(username){
       return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
     }
+
+    
 }
 

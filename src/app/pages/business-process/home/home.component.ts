@@ -22,6 +22,8 @@ export class BpsHomeComponent implements OnInit {
   p: number = 1;
   term = "";
   isLoading:boolean = false;
+  isApproverUser:boolean = false;
+  isAdminUser:boolean = false;
   sortedData:any;
   data;
   orderAsc:boolean = true;
@@ -44,8 +46,10 @@ export class BpsHomeComponent implements OnInit {
       this.isButtonVisible = true;
     }else if(this.userRole.includes('Admin')){
       this.isButtonVisible = true;
+      this.isAdminUser = true;
     }else if(this.userRole.includes('Process Architect')){
       this.isButtonVisible = true;
+      this.isApproverUser = true;
     }else{
       this.isButtonVisible = false;
     }
@@ -91,6 +95,7 @@ export class BpsHomeComponent implements OnInit {
         this.autosavedDiagramList = res; 
     });
    }
+
    getColor(status) { 
     switch (status) {
       case 'PENDING':
@@ -191,6 +196,14 @@ export class BpsHomeComponent implements OnInit {
       }
     })
   }
+  fitNotationView(){
+   let canvas = this.bpmnModeler.get('canvas');
+    canvas.zoom('fit-viewport');
+    let msg="Notation";
+    this.global.notify(msg+" is fit to view port", "success")
+    
+  }
+  
 
   deleteProcess(e, bpmNotation){
     e.stopPropagation();

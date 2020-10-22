@@ -10,9 +10,11 @@ import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { Rpa_Home_Hints } from "../model/rpa-home-module-hints"
-import * as $ from 'jquery';
+// import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
+
+declare var $:any;
 
 @Component({
   selector: 'app-rpa-home',
@@ -124,6 +126,10 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
       response=botlist;
+      if(response.length==0)
+      {
+        this.rpa_studio.spinner.hide();
+      }
       response.forEach(data=>{
         let object:any=data;
         if(data.botType==0)
@@ -162,6 +168,7 @@ export class RpaHomeComponent implements OnInit {
         this.respdata1 = true;
         console.log(this.respdata1);
       }
+      response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       this.dataSource1= new MatTableDataSource(response);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
@@ -175,6 +182,9 @@ export class RpaHomeComponent implements OnInit {
         } else {
           this.isTableHasData = false;
         }
+        },(err)=>{
+          
+          this.rpa_studio.spinner.hide();
         });
     
         this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
@@ -187,9 +197,10 @@ export class RpaHomeComponent implements OnInit {
           }
         });
     
-      this.dataSource1.filterPredicate = this.customFilterPredicate();
-      if(this.selectedTab==0)  
+      this.dataSource1.filterPredicate = this.customFilterPredicate(); 
       this.rpa_studio.spinner.hide()
+    },(err)=>{
+      this.rpa_studio.spinner.hide();
     })   
   }
 
@@ -232,11 +243,12 @@ export class RpaHomeComponent implements OnInit {
       {
         
         this.getprocessnames(process);
-      }
-      if(this.selectedTab==1)
-      this.rpa_studio.spinner.hide() 
+      } 
       this.update_task_status();
-     
+      this.rpa_studio.spinner.hide() 
+    },(err)=>{
+      this.rpa_studio.spinner.hide() 
+      
     })
   }
 
@@ -258,8 +270,12 @@ export class RpaHomeComponent implements OnInit {
       }
       else
       {
+        
+        this.rpa_studio.spinner.hide();
         this.selectedvalue="";
       }
+    },(err)=>{
+      this.rpa_studio.spinner.hide();
     })
   }
 
@@ -411,50 +427,66 @@ export class RpaHomeComponent implements OnInit {
     let timer= setInterval(() => { 
       this.rest.getautomatedtasks(0).subscribe(response=>{
         let responsedata:any=response;
-        responsedata.automationTasks.forEach(statusdata=>{
-          let data:any;
-          if(statusdata.status=="InProgress")
-          {
-            data="<span class='text-primary'><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
-          }else if(statusdata.status=="Success")
-          {
-            //data="<img src='../../../../assets/images/RPA/processloading.svg' style='height:30px'>";
-          
-            data='<span class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';  
-          }
-          else if(statusdata.status=="Failed")
-          {
-            data='<span class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';  
-          }
-          else if(statusdata.status=="New")
-          {
-            data="<span><img src='/assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
-          }
-          else if(statusdata.status=="")
-          {
-            data="---";
-          }
-          $("#"+statusdata.taskId+"__status").html(data);
-          
-          $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
-          
-          $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
-          if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress").length>0)
-          {
-          }else
+        if(responsedata.automationTasks!=undefined)
+        {
+          if(responsedata.automationTasks.length==0)
           {
             clearInterval(timer);
+          }else{
+            responsedata.automationTasks.forEach(statusdata=>{
+              let data:any;
+              if(statusdata.status=="InProgress")
+              {
+                data="<span class='text-primary'><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+              }else if(statusdata.status=="Success")
+              {
+                //data="<img src='../../../../assets/images/RPA/processloading.svg' style='height:30px'>";
+              
+                data='<span class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';  
+              }
+              else if(statusdata.status=="Failed")
+              {
+                data='<span class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';  
+              }
+              else if(statusdata.status=="New")
+              {
+                data="<span><img src='/assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+              }
+              else if(statusdata.status=="")
+              {
+                data="---";
+              }
+              $("#"+statusdata.taskId+"__status").html(data);
+              
+              $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
+              
+              $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
+              if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress").length>0)
+              {
+              }else
+              {
+                clearInterval(timer);
+              }
+            })
           }
-        })
-        
+        }else
+        {
+          clearInterval(timer);
+        }
+
       })
+      
     }, 5000);
   }
 
   getenvironments()
   { 
     this.rest.listEnvironments().subscribe(response=>{
-      this.environments=response;
+      let resp:any=response
+      if(resp.errorCode ! = undefined)
+      {
+        this.environments=response;
+      }
     })
   }
 

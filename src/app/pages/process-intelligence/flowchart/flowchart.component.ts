@@ -132,6 +132,8 @@ export class FlowchartComponent implements OnInit {
   isSingleTraceBPMN:boolean = false;
   isMultiTraceBPMN:boolean = false;
   isSliderBPMN:boolean = false;
+  performanceValue: boolean;
+  processGraphName:any;
   selectedTraceNumbers:any = [];
   loaderImgSrc:string;
   graphgenetaionInterval: any;
@@ -172,7 +174,6 @@ export class FlowchartComponent implements OnInit {
     this.process_graph_options = ProcessGraphList;
     this.variant_list_options = VariantList;
     this.variant_list = Object.keys(VariantList).filter(val => isNaN(VariantList[val]));
-    this.getAlluserProcessPiIds();
     
     var piId;
     this.route.queryParams.subscribe(params => {
@@ -180,6 +181,7 @@ export class FlowchartComponent implements OnInit {
           this.wpiIdNumber = parseInt(params['wpiId']);
           piId=this.wpiIdNumber;
           this.graphIds = piId;
+          
           this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
           this.spinner.show();
           setTimeout(() => {
@@ -200,14 +202,24 @@ export class FlowchartComponent implements OnInit {
          // this.onchangegraphId(piId);
         //}, 1.5*60*1000);
       }
-    }); 
+    });
+    this.getAlluserProcessPiIds();
+
   }
   // ngAfterContentChecked() {
   //   this.rangevalue = ZoomSlider.rangeValue;
   // }
 
   getAlluserProcessPiIds(){ // List of Process graphs
-    this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data})
+    this.rest.getAlluserProcessPiIds().subscribe(data=>{this.process_graph_list=data
+        setTimeout(() => {
+          this.process_graph_list.data.forEach(e => {
+            if(e.piId==this.graphIds){
+              this.processGraphName=e.piName;
+            }
+          })
+        }, 5000);
+    })
   }
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isNodata=true;
@@ -286,6 +298,17 @@ export class FlowchartComponent implements OnInit {
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
         })
+
+        setTimeout(() => {
+          this.process_graph_list.data.forEach(e => {
+          if(e.piId==selectedpiId){
+            this.processGraphName=e.piName;
+            }
+          })
+        this.filterOverlay()
+
+        }, 7000);
+
   }
 
   onchangegenerategraphId(selectedpiId){  // change process  graps in dropdown
@@ -368,6 +391,10 @@ export class FlowchartComponent implements OnInit {
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
         })
+        setTimeout(() => {
+        this.filterOverlay()
+          
+        }, 7000);
   }
 
   onchangeVaraint(datavariant) {      // Variant List sorting 
@@ -396,6 +423,7 @@ export class FlowchartComponent implements OnInit {
   }
 
   caseIdSelect(selectedData, index) { // Case selection on Variant list
+    this.performanceValue=false
     this.activityValue=1;
     this.pathvalue=1;
     this.activity_value=[];
@@ -411,6 +439,7 @@ export class FlowchartComponent implements OnInit {
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
         trace_number:selectedData.trace_number,
+        case_value:selectedData.case_value,
         selected: "active"
       };
       this.isvaraintPlay=true;
@@ -425,6 +454,7 @@ export class FlowchartComponent implements OnInit {
         varaintDetails: selectedData.varaintDetails,
         casesCovred: selectedData.casesCovred,
         trace_number:selectedData.trace_number,
+        case_value:selectedData.case_value,
         selected: "inactive"
       };
       this.isvaraintPlay=false;
@@ -617,6 +647,7 @@ export class FlowchartComponent implements OnInit {
       }
       this.isDefaultData = true;
     }
+    this.performanceValue=false
   }
   flowchartData(dataArray) {
     this.linkData = [];
@@ -633,8 +664,13 @@ export class FlowchartComponent implements OnInit {
       
       for(var j=0; j< datalink.length; j++){
         var obj = {};
-          obj['from'] = this.getFromKey(label);
-          obj['to'] = this.getFromKey(datalink[j].linkNode);
+        if ( this.nodeArray.some(e => e.name === datalink[j].linkNode)) {​​
+          /* vendors contains the element we're looking for */
+        
+          // obj['from'] = this.getFromKey(label);
+          // obj['to'] = this.getFromKey(datalink[j].linkNode);
+          obj['from'] = label;
+          obj['to'] =datalink[j].linkNode
           obj['text'] = datalink[j].toolCount[0];
           // highData
           obj['toolData']=datalink[j].tool
@@ -645,15 +681,19 @@ export class FlowchartComponent implements OnInit {
 
           this.linkdataArray.push(obj);
     }
+  }
         if (this.nodeArray[i].tool.includes('Start Frequency')) {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(this.nodeArray[i].toolCount[3]!=0){
 
-          obj['from'] = -1;
-          obj['to'] = this.getFromKey(this.nodeArray[i].name);
+          // obj['from'] = -1;
+          // obj['to'] = this.getFromKey(this.nodeArray[i].name);
+          obj['from'] = "Start";
+          obj['to'] = this.nodeArray[i].name;
           obj['text'] = this.nodeArray[i].toolCount[3];
           obj["extraNode"] = 'true';
+          obj["toolDataCount"]=this.nodeArray[i].toolCount;
           this.linkdataArray.push(obj);
           this.startArray.push(this.nodeArray[i].name)
           }
@@ -662,10 +702,12 @@ export class FlowchartComponent implements OnInit {
           var obj = {};
           this.nodeArray[i].count = this.nodeArray[i].toolCount[0];
           if(this.nodeArray[i].toolCount[4]!=0){
-          obj['from'] = this.getFromKey(this.nodeArray[i].name);
-          obj['to'] = -2;
+          // obj['from'] = this.getFromKey(this.nodeArray[i].name);
+          // obj['to'] = -2;
+          obj['from'] = this.nodeArray[i].name;
+          obj['to'] = "End";
           obj['text'] = this.nodeArray[i].toolCount[4];
-
+          obj["toolDataCount"]=this.nodeArray[i].toolCount;
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
           this.endArray.push(this.nodeArray[i].name)
@@ -880,31 +922,42 @@ selectedMetric(selectedValue){    //metrics selection in spinner
         index=9;
     break;
   }
-  for(var i=1;i<this.model1.length-1;i++){
+  if(index==2||index==5||index==6||index==7||index==8||index==9){
+    this.performanceValue=true
+  }else{
+    this.performanceValue=false
+  }
+  var modelArray3=[]
+  modelArray3=this.model1
+  for(var i=1;i<modelArray3.length-1;i++){
     if(index==5||index==6||index==7||index==8||index==9){
-      this.model1[i].count=this.timeConversion(this.model1[i].toolCount[index])
-      this.model1[i].days=this.timeConversionDays(this.model1[i].toolCount[index])
+      modelArray3[i].count=this.timeConversion(modelArray3[i].toolCount[index])
+      // this.model1=modelArray3
+      // this.model1[i].days=this.timeConversionDays(this.model1[i].toolCount[index])
     }else{
-      this.model1[i].count=this.model1[i].toolCount[index]
-      this.model1=this.model1
+      modelArray3[i].count=modelArray3[i].toolCount[index]
     }
   }
-  if(index==2){
-    for(var i=1;i<this.model1.length-1;i++){
-        this.model1[i].days=this.model1[i].toolCount[index]
-      }
-  }
+  
+  this.model1=modelArray3
+  // console.log(this.model1);
+
+  // if(index==2){
+  //   for(var i=1;i<this.model1.length-1;i++){
+  //       this.model1[i].days=this.model1[i].toolCount[index]
+  //     }
+  // }
   this.model2 = this.flowchartDataOne(this.model1,index)
-  if(index==2||index==5||index==6||index==7||index==8||index==9){
-    this.gradientApplyforLinksOne();
-    this.gradientApplyforNodeOne();
+  // if(index==2||index==5||index==6||index==7||index==8||index==9){
+  //   this.gradientApplyforLinksOne();
+  //   this.gradientApplyforNodeOne();
     
-  }else{
-    this.gradientApplyforLinks()
-    this.gradientApplyforNode()
-  }
-  // this.gradientApplyforNode();
-  this.linkCurvinessGenerate();
+  // }else{
+  //   this.gradientApplyforLinks()
+  //   this.gradientApplyforNode()
+  // }
+  // // this.gradientApplyforNode();
+  // this.linkCurvinessGenerate();
 }
 
 flowchartDataOne(dataArray,index) {
@@ -914,20 +967,24 @@ flowchartDataOne(dataArray,index) {
   //  var linkToolArray=[];
   for (var i = 1; i < this.nodeArray.length-1; i++) {
     var datalink = this.nodeArray[i].linkArray;
+    // console.log("dayalink",datalink);
+    
     var link=[]
     var linktool=[]
     var label = this.nodeArray[i].name;
     
     for(var j=0; j< datalink.length; j++){
       var obj = {};
-        obj['from'] = this.getFromKey(label);
-        obj['to'] = this.getFromKey(datalink[j].linkNode);
+        // obj['from'] = this.getFromKey(label);
+        // obj['to'] = this.getFromKey(datalink[j].linkNode);
+        obj['from'] = label;
+        obj['to'] = datalink[j].linkNode;
         if(index==5||index==6||index==7||index==8||index==9){
           obj['text'] = this.timeConversion(datalink[j].toolCount[index]);
-          obj['days'] = this.timeConversionDays(datalink[j].toolCount[index]);
+          obj['days'] = Number(this.timeConversionDays(datalink[j].toolCount[index]));
         }else{
           obj['text'] = datalink[j].toolCount[index];
-          obj['days'] = datalink[j].toolCount[index];
+          // obj['days'] = datalink[j].toolCount[index];
           if(datalink[j].toolCount[index]>100){
             obj['highData']=true
           }
@@ -940,13 +997,21 @@ flowchartDataOne(dataArray,index) {
       if (this.nodeArray[i].tool.includes('Start Frequency')) {
         var obj = {};
         if(this.nodeArray[i].toolCount[3]!=0){
-          obj['from'] = -1;
-          obj['to'] = this.getFromKey(this.nodeArray[i].name);
+          // obj['from'] = -1;
+          // obj['to'] = this.getFromKey(this.nodeArray[i].name);
+          obj['from'] = "Start";
+          obj['to'] = this.nodeArray[i].name;
           if(index==0||index==1){
           obj['text'] = this.nodeArray[i].toolCount[3];
+          }else{
+            obj['text'] = null;
           }
           obj["extraNode"] = 'true';
-          obj['days'] = 0;
+          obj["toolDataCount"]=this.nodeArray[i].toolCount;
+          if(index==5||index==6||index==7||index==8||index==9){
+            obj['days'] = 0;
+            }
+          //obj['days'] = 0;
           this.linkdataArray.push(obj);
         }
         
@@ -956,13 +1021,19 @@ flowchartDataOne(dataArray,index) {
         var obj = {};
         
         if(this.nodeArray[i].toolCount[4]!=0){
-          obj['from'] = this.getFromKey(this.nodeArray[i].name);
-          obj['to'] = -2;
+          // obj['from'] = this.getFromKey(this.nodeArray[i].name);
+          // obj['to'] = -2;
+          obj['from'] = this.nodeArray[i].name;
+          obj['to'] = "End";
           if(index==0||index==1){
           obj['text'] = this.nodeArray[i].toolCount[4]
           }
+          obj["toolDataCount"]=this.nodeArray[i].toolCount;
           obj["extraNode"] = 'true';
-          obj['days'] = 0;
+          if(index==5||index==6||index==7||index==8||index==9){
+            obj['days'] = 0;
+            }
+          //obj['days'] = 0;
         this.linkdataArray.push(obj);
         }        
       }
@@ -990,7 +1061,7 @@ closeNav() { // Variant list Close
     this.linkCurvinessGenerate();
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
-    console.log("rest",this.model1);
+    // console.log("rest",this.model1);
 
          /**
        * BPMN Boolean Variables
@@ -999,7 +1070,7 @@ closeNav() { // Variant list Close
       this.isSingleTraceBPMN = false;
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
-    
+      this.performanceValue=false
   }
 
   resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
@@ -1100,10 +1171,13 @@ closeNav() { // Variant list Close
                                 
 sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on activity and path value filter the graph values
   this.activity_value=[];
+  this.performanceValue=false;
   if(activity_slider==1&&path_slider==1){
     this.isNodata=true;
     this.model1=this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
+    
+
     this.nodeAlignment()
     this.model2 = this.flowchartData(this.model1);
     this.gradientApplyforLinks()
@@ -1152,6 +1226,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
 
   readselectedNodes(SelectedActivities){
+ console.log(SelectedActivities);
  
     if(SelectedActivities.length==0){
       this.resetActivityFiltermetrics();
@@ -1161,23 +1236,42 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
   }
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
+    console.log(this.selectedCaseArry);
+    
     this.spinner.show();
     this.activity_value=SelectedActivities;
     this.model1=[]
     this.model2=[]
+    var totalarrayList = [];
     this.isNodata=true;
-    var reqObj = {
-      "data_type":"activity_filter",
-      "pid":this.graphIds,
-      "cases" : this.selectedCaseArry,
-      "activities":SelectedActivities  
-  }
+    var reqObj = {};
+    if (this.selectedCaseArry && this.selectedCaseArry.length !=0) {
+      reqObj = {
+        "data_type": "activity_filter",
+        "pid": this.graphIds,
+        "cases": this.selectedCaseArry,
+        "activities": SelectedActivities
+      }
+    } else {
+      for(var i=0; i<this.varaint_data.data.length; i++){
+        totalarrayList.push(this.varaint_data.data[i].case);
+    }
+      reqObj= {
+        "data_type": "activity_filter",
+        "pid": this.graphIds,
+        "cases": totalarrayList,
+        "activities": SelectedActivities
+      }
+    }
     this.rest.getVariantActivityFilter(reqObj)
       .subscribe(data => {
         let activityFilterGraph:any = data;
         this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1);
+        console.log(this.model1);
+        console.log(this.model2);
+        
         this.gradientApplyforLinks();
         this.gradientApplyforNode();
         this.linkCurvinessGenerate();
@@ -1225,7 +1319,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.isEndpoint_dropdwn=false;
   }
   closePopup(){   // close filter overlay
-      var modal = document.getElementById('myModal');
+      var modal = document.getElementById('filterModal');
       modal.style.display="none";
     }
 
@@ -1441,18 +1535,23 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
       }
 
 }
+
 filterOverlay(){  
   this.dataValues = [];
   let vv = this.filterPerformData;
+  console.log(this.filterPerformData);
+  
     //Filter overlay open on filter icon click
   for(var i=1;i<vv.length-1;i++){
     this.dataValues.push(vv[i])
     }
+    
+    // localStorage.setItem("datavalues",this.dataValues)
   this.isFilterComponent=true;
-  var modal = document.getElementById('myModal');
-  modal.style.display="block";
-  var toolTipDIV = document.getElementById('toolTipDIV');
-    toolTipDIV.style.display = "none";
+  // var modal = document.getElementById('myModal');
+  // modal.style.display="block";
+  // var toolTipDIV = document.getElementById('toolTipDIV');
+  //   toolTipDIV.style.display = "none";
   }
 
   readOverlayValue(value){  //Filter overlay close on cross button click
@@ -1620,4 +1719,9 @@ filterOverlay(){
       clearInterval(this.graphgenetaionInterval);
     }
   }
+
+  viewInsights(){
+    this.router.navigate(["/pages/processIntelligence/insights"])
+  }
+ 
 }
