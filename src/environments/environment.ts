@@ -10,7 +10,7 @@ export const environment = {
   loopback_url: 'http://10.11.0.107:3000',
   idm_url:'http://eiapdemoapi.epsoftinc.com:96/idm',
   auth_url: "http://eiapdemoapi.epsoftinc.com:96/authservices",
-  pi_node_url: "http://10.11.0.112:3000",
+  pi_node_url: "http://eiapdemoapi.epsoftinc.com:96/pinode",
   platform_url:'http://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
   schema_registry_url:"http://172.16.0.60:8081",
   
