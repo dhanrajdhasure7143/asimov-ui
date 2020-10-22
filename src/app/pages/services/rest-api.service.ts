@@ -457,6 +457,12 @@ export class RestApiService{
       return this.http.get('/api/user/details?userId='+username,{responseType:"json"})
     }
 
+    getNotifications(role,userId,notificationbody):Observable<any>{
+     return this.http.post<any>('/notificationservice/api/v1/listNotifications?roles='+role+'&userId='+userId,notificationbody,httpOptions);
+     }
+    deleteNotification(notificationId):Observable<any>{
+      return this.http.delete<any>('/notificationservice/api/v1/deleteNotification?notificationId='+notificationId,{responseType:"json"})
+    }
     
 }
 

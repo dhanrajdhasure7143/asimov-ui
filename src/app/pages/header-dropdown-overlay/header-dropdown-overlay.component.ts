@@ -1,6 +1,8 @@
 import { Component, OnInit,Input,ViewChild,TemplateRef } from '@angular/core';
 import { DataTransferService } from '../services/data-transfer.service';
 import {MatDialog} from '@angular/material';
+import { RestApiService } from '../services/rest-api.service';
+import { NotifierService } from 'angular-notifier';
 
 @Component({
   selector: 'app-header-dropdown-overlay',
@@ -15,29 +17,38 @@ export class HeaderDropdownOverlayComponent implements OnInit {
   @Input() overlay_notifications_dt:string;
   @ViewChild('dialog_model',{ static: true }) dialog_model: TemplateRef<any>;
  
-  table_details=[
-    {
-      "sub_id":"1",
-      "prod":"2.O",
-      "plan":"IAP_tm1",
-      "amount":"100",
-      "status":"Failed",
-      "action":"icon"
-    },
-    {
-      "sub_id":"2",
-      "prod":"2.O",
-      "plan":"IAP_tm2",
-      "amount":"200",
-      "status":"Success",
-      "action":"icon"
-    }];
+  // table_details=[
+  //   {
+  //     "sub_id":"1",
+  //     "prod":"2.O",
+  //     "plan":"IAP_tm1",
+  //     "amount":"100",
+  //     "status":"Failed",
+  //     "action":"icon"
+  //   },
+  //   {
+  //     "sub_id":"2",
+  //     "prod":"2.O",
+  //     "plan":"IAP_tm2",
+  //     "amount":"200",
+  //     "status":"Success",
+  //     "action":"icon"
+  //   }];
   
-  constructor(private dt:DataTransferService ,private dialog:MatDialog) { }
+  tenantId: string;
+  role: string;
+  c=0;
+  public notificationList: any[];
+  public dataid: any;
+  notificationscount: any;
+
+  constructor(private dt:DataTransferService ,private rpa:RestApiService,private notifier: NotifierService,private dialog:MatDialog) { }
 
   ngOnInit() {
-    
-    
+    setTimeout(() => {
+      this.getAllNotifications();
+    }, 900);
+   
   }
   telInputObject(obj) {
     obj.setCountry('in');
@@ -71,5 +82,37 @@ close(){
     //alert(evt.currentTarget.className)
   }
  
+  deletnotification(id) {
+    this.dataid = id
+    }
+    canceldeleteNotification(index) {
+        this.dataid = '';
+      }
+       deleteNotification(data,index){
+        console.log(data)
+        this.rpa.deleteNotification(data).subscribe(resp=>{
+          // console.log(resp)
+       this.getAllNotifications();
+           this.notifier.show({
+          type: "success",
+           message: "Notification deleted successfully!"
+         });
+          },err=>{
+          this.getAllNotifications();
+            });
+          this.getAllNotifications();
+      }
+       getAllNotifications() {
+      let userId =  localStorage.getItem("ProfileuserId")
+         this.tenantId=localStorage.getItem('tenantName');
+         this.role=localStorage.getItem('userRole')
+       let notificationbody ={
+          "tenantId":this.tenantId
+         }
+          this.rpa.getNotifications(this.role,userId,notificationbody).subscribe(data => {
+           this.notificationList = data
+           console.log("count",this.notificationList)
+          })
+        }
 }
 

@@ -11,6 +11,7 @@ export const environment = {
   idm_url:'http://idmqa.epsoftinc.in',
   pi_node_url: "http://pinodedev.epsoftinc.in:3000",
   platform_url:'http://apqa.epsoftinc.in',
+  alerts_url:'http://alertsqa.epsoftinc.in',
 };
 
 /*
