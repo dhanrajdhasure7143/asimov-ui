@@ -47,7 +47,9 @@ export class RestApiService{
   public fileName = new BehaviorSubject<any>('file');
   constructor(private http:HttpClient, private ip:IpServiceService) { this.getIP(); }
 
-  public ipAddress:string; 
+  public ipAddress:string;
+    //nethan.price@guerrillamailblock.com
+  //password -Welcome@123 
 
   getAccessToken(){
     let data = {"userId":"venkata.simhadri@epsoftinc.com",

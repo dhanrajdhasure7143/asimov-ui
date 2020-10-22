@@ -28,7 +28,7 @@ export const environment = {
   dbName: "asimov_aiotal",
 
 // Data upload path
-  data_path:"/home/kafka"
+  data_path:"/var/kafka"
 
 
   // //  * QA ENV URl's

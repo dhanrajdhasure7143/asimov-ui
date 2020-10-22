@@ -72,6 +72,8 @@ export class ProcessinsightsComponent implements OnInit {
     dropdownSettings: IDropdownSettings = {};
     finalVariants: any = {};
     s_variants:any = [];
+    dChart1:any = [];
+    dChart2:any = [];
 
     constructor(
         private rest: RestApiService,
@@ -109,6 +111,7 @@ export class ProcessinsightsComponent implements OnInit {
         //this.verticleBarGraph();
         // this.addpiechart1([]);
         // this.addpiechart2([]);
+        //this.getDonutChart();
         this.getAllVariantList()
         this.getDurationCall();
         this.getTotalNoOfCases('fullgraph');
@@ -273,14 +276,23 @@ export class ProcessinsightsComponent implements OnInit {
                         let tmp2 = [];
                         this.activity_Metrics.forEach((e, m) => {
                             let duration = e.Duration_range / (1000 * 60 * 60);
-                            let obj = {
-                                name: e.Activity,
-                                y: duration
-                            }
-                            let obj2 = {
-                                name: e.Activity,
-                                y: duration * this.input1
-                            }
+                            // let obj = {
+                            //     name: e.Activity,
+                            //     y: duration
+                            // }
+                            // let obj2 = {
+                            //     name: e.Activity,
+                            //     y: duration * this.input1
+                            // }
+
+                            let obj = [
+                                 e.Activity,
+                                 Math.round(duration)
+                            ]
+                            let obj2 = [
+                                 e.Activity,
+                                 Math.round(duration * this.input1)
+                            ]
                             if (m == 0) {
                                 obj["sliced"] = true;
                                 obj["selected"] = true;
@@ -307,8 +319,10 @@ export class ProcessinsightsComponent implements OnInit {
                     this.getHumanvsBotCost(res.data)
 
                     //Activity - Duration Pie chart
-                    this.addpiechart1(activityDuration);
-                    this.addpiechart2(activityCost);
+                    // this.addpiechart1(activityDuration);
+                    // this.addpiechart2(activityCost);
+                    this.getDonutChart1(activityDuration);
+                    this.getDonutChart2(activityCost);
                 })
         }
     }
@@ -409,14 +423,19 @@ export class ProcessinsightsComponent implements OnInit {
                 let activityCost = [];
                 aData.data.forEach((e, m) => {
                     let duration = e.Duration_range / (1000 * 60 * 60);
-                    let obj = {
-                        name: e.Activity,
-                        y: duration
-                    }
-                    let obj2 = {
-                        name: e.Activity,
-                        y: duration * this.input1
-                    }
+                    // let obj = {
+                    //     name: e.Activity,
+                    //     y: duration
+                    // }
+                    let obj = [
+                         e.Activity,
+                         Math.round(duration)
+                    ]
+                    let obj2 = [
+                         e.Activity,
+                         Math.round(duration * this.input1)
+                    ]
+                    
                     if (m == 0) {
                         obj["sliced"] = true;
                         obj["selected"] = true;
@@ -432,8 +451,10 @@ export class ProcessinsightsComponent implements OnInit {
                 this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                 this.getActivityTableData(this.activity_Metrics);
                 this.isEventGraph = true;
-                this.addpiechart1(activityDuration);
-                this.addpiechart2(activityCost);
+                //this.addpiechart1(activityDuration);
+                //this.addpiechart2(activityCost);
+                this.getDonutChart1(activityDuration);
+                this.getDonutChart2(activityCost);
             })
 
     }
@@ -868,7 +889,7 @@ export class ProcessinsightsComponent implements OnInit {
         }
 
 
-        Highcharts.chart('piechart2', this.piechart2);
+        //Highcharts.chart('piechart2', this.piechart2);
 
     }
     openVariantListNav() {   //variant list open
@@ -1321,5 +1342,64 @@ export class ProcessinsightsComponent implements OnInit {
             }]
         }
         Highcharts.chart('piechart2', this.stackedChart);
+    }
+
+
+    getDonutChart2(data){
+        this.dChart2 = {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45
+                }
+            },
+            title: {
+                text: 'Total Resource Cost By Activity'
+            },
+            subtitle: {
+                text: ''
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: 60,
+                    depth: 45
+                }
+            },
+            series: [{
+                name: 'Activity Cost',
+                data: data
+            }]
+        }
+        Highcharts.chart('piechart2', this.dChart2);
+    }
+
+    getDonutChart1(data){
+        this.dChart1 = {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 45
+                }
+            },
+            title: {
+                text: 'Total Resource Duration By Activity'
+            },
+            subtitle: {
+                text: ''
+            },
+            plotOptions: {
+                pie: {
+                    innerSize: 60,
+                    depth: 45
+                }
+            },
+            series: [{
+                name: 'Activity Duration(hrs)',
+                data: data
+            }]
+        }
+        Highcharts.chart('piechart1', this.dChart1);
     }
 }
