@@ -19,6 +19,8 @@ export interface AsimovAppConfig {
     dbHostName:string;
     dbName:string;
     platformEndPoint:string;
+    schemaRegistryEndPoint:string;
+    dataPath:string;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -36,5 +38,7 @@ export const AppConfig: AsimovAppConfig = {
     piConnector:environment.connector_topic,
     dbHostName:environment.dbConnectorHost,
     dbName:environment.dbName,
-    platformEndPoint:environment.platform_url
+    platformEndPoint:environment.platform_url,
+    schemaRegistryEndPoint:environment.schema_registry_url,
+    dataPath:environment.data_path
 };
