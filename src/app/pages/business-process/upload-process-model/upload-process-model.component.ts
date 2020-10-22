@@ -20,6 +20,7 @@ import { BpsHints } from '../model/bpmn-module-hints';
 import { UUID } from 'angular2-uuid';
 import { Subscription } from 'rxjs';
 import { JsonpInterceptor } from '@angular/common/http';
+import * as bpmnlintConfig from '../model/packed-config';
 
 declare var require:any;
 
@@ -276,12 +277,15 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   initiateDiagram(){
     let _self=this;
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
-    // var bpmnlintConfig = require("../model/.bpmnlintrc");
+     //var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
+    
+ 
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({
         linting: {
-          // bpmnlint: bpmnlintConfig
+           bpmnlint: bpmnlintConfig,
+           active: _self.getUrlParam('linting')
         },
         additionalModules: [
           PropertiesPanelModule,
@@ -308,6 +312,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           _self.disableShowConformance = true;
         })
       }
+
+      this[modeler_obj].on('linting.toggle', function(event) {
+
+        var active = event.active;
+      
+        _self.setUrlParam('linting', active);
+      });
       this[modeler_obj].on('element.changed', function(){
         let now = new Date().getTime();
         _self.isDiagramChanged = true;
@@ -351,6 +362,25 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
       }
     }
+  }
+
+   setUrlParam(name, value) {
+ 
+    var url = new URL(window.location.href);
+  
+    if (value) {
+      url.searchParams.set(name, '1');
+    } else {
+      url.searchParams.delete(name);
+    }
+  
+    window.history.replaceState({}, null, url.href);
+  }
+  
+   getUrlParam(name) {
+    var url = new URL(window.location.href);
+  
+    return url.searchParams.has(name);
   }
 
 displayBPMN(){
