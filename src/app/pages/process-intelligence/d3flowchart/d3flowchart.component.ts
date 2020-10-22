@@ -282,12 +282,15 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
 var count=0
 var count1
     // console.log("this.model1",this.model1);
-    console.log("this.model2",this.model2);
+    // console.log("this.model2",this.model2);
+  if (this.model2) {
     for(var i2=0;i2<this.model2.length;i2++){
       if(this.model2[i2].days>=0){
         count1=count++
       }
     }
+  }
+
 
     if(count1>=1){
       const maxCount = this.model2.reduce(function(prev, current) {

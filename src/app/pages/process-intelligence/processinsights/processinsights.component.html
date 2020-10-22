@@ -72,7 +72,7 @@
         </div>
         <div class="col-md-12 input-fields">
             <div class="col-sm-2"></div>
-            <div class="col-sm-4 amountinputs">
+            <div class="col-sm-4 amountinputs" id="humancost">
                 <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
                 <i (click)="editInput()"  class="fas fa-pen"></i>
             </div>
@@ -183,7 +183,7 @@
     <br class="col-md-12 btm-line">
     <div class="col-md-12">
             <div class="col-md-2 no-padding">
-                    <div class="box_shadw1">
+                    <div class="box_shadw1" id="resourcesselect">
                         <ng-multiselect-dropdown
                         [placeholder]="'All'"
                         [settings]="dropdownSettings"

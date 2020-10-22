@@ -15,6 +15,9 @@ import * as moment from 'moment';
 import { NotifierService } from 'angular-notifier';
 import { APP_CONFIG } from 'src/app/app.config';
 import { NgxSpinnerService } from "ngx-spinner";
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 
 declare var target: any;
 @Component({
@@ -59,6 +62,11 @@ export class UploadComponent implements OnInit {
   connectionResp:any;
   tableList:any = [];
   isTableEnable:boolean=false;
+  sortIndex:number=2;
+  dataSource:MatTableDataSource<any>;
+  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
+  @ViewChild(MatSort,{static:false}) sort: MatSort;
+  displayedColumns: string[] = ["piId","createdTime","piName","categoryName" ,"status","action"];
 
   constructor(private router: Router,
     private dt: DataTransferService,
@@ -370,7 +378,10 @@ export class UploadComponent implements OnInit {
         return a > b ? -1 : a < b ? 1 : 0;
       });
       this.process_graph_list = this.process_List.data
-      this.dtTrigger.next();
+      // this.dtTrigger.next();
+      this.dataSource= new MatTableDataSource(this.process_graph_list);
+      this.dataSource.sort=this.sort;
+      this.dataSource.paginator=this.paginator;
       this.spinner.hide();
     })
   }
@@ -405,28 +416,43 @@ export class UploadComponent implements OnInit {
   }
   searchByCategory(category) {
     if (category == "allcategories") {
-      this.dtElement.dtInstance.then((dtInstance) => {
-        this.process_graph_list = this.process_List.data;
-        // Destroy the table first
-        dtInstance.destroy();
-        // Call the dtTrigger to rerender again
-        this.dtTrigger.next();
-      });
-    } else {
-      this.process_graph_list = []
-      this.dtElement.dtInstance.then((dtInstance) => {
-
-        this.process_List.data.forEach(element => {
-          if (element.categoryName == category) {
-            this.process_graph_list.push(element)
-          }
-        });
-        // Destroy the table first
-        dtInstance.destroy();
-        // Call the dtTrigger to rerender again
-        this.dtTrigger.next();
-      })
+      var fulldata='';
+      // this.dataSource=this.dataSource
+      this.dataSource.filter = fulldata;
+    }else{
+      this.dataSource.filter = category
     }
+    // if (category == "allcategories") {
+    //   this.dtElement.dtInstance.then((dtInstance) => {
+    //     this.process_graph_list = this.process_List.data;
+
+    //     // this.dataSource= new MatTableDataSource(this.process_graph_list);
+    //     // this.dataSource.sort=this.sort;
+    //     // this.dataSource.paginator=this.paginator;
+    //     this.dataSource.filter = category
+    //   });
+    //   }
+    // } else {
+      // this.process_graph_list = []
+      // this.dtElement.dtInstance.then((dtInstance) => {
+
+      //   this.process_List.data.forEach(element => {
+      //     if (element.categoryName == category) {
+      //       this.process_graph_list.push(element)
+      //     }
+        // // });
+        // this.dataSource= new MatTableDataSource(this.process_graph_list);
+        // this.dataSource.sort=this.sort;
+        // this.dataSource.paginator=this.paginator;
+        // // Destroy the table first
+        // dtInstance.destroy();
+        // // Call the dtTrigger to rerender again
+        // this.dtTrigger.next();
+        
+        
+        
+      // })
+    // }
   }
   onsearchSelect() {
     this.isSearch = false;
@@ -691,6 +717,15 @@ getDBTables(value){
 
     }
 
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    // console.log(this.dataSource.filter)
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+      // console.log(this.dataSource.paginator.firstPage())
+    }
   }
 }
 

@@ -7,6 +7,7 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { DataTransferService } from '../../services/data-transfer.service';
+import { PiHints } from '../model/process-intelligence-module-hints';
 HC_more(Highcharts)
 enum VariantList {
     'Most Common',
@@ -75,12 +76,14 @@ export class ProcessinsightsComponent implements OnInit {
     constructor(
         private rest: RestApiService,
         private route: ActivatedRoute,
-        private dt: DataTransferService
+        private dt: DataTransferService,
+        private hints: PiHints
     ) { }
 
     ngOnInit() {
         this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
         this.dt.changeChildModule({ "route": "/pages/processIntelligence/insights", "title": "Insights" });
+        this.dt.changeHints(this.hints.insightsHints);
         var piId;
         this.route.queryParams.subscribe(params => {
             if (params['wpid'] != undefined) {
