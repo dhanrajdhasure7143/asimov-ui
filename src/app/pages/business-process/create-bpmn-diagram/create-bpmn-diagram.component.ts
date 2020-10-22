@@ -15,7 +15,7 @@ import { BpmnModel } from '../model/bpmn-autosave-model';
 import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
-
+import * as bpmnlintConfig from '../model/packed-config';
 declare var require:any;
 
 @Component({
@@ -172,6 +172,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let _self = this;
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     this.bpmnModeler = new BpmnJS({
+      linting: {
+        bpmnlint: bpmnlintConfig,
+        active: _self.getUrlParam('linting')
+     },
       additionalModules: [
         PropertiesPanelModule,
         PropertiesProviderModule,
@@ -215,6 +219,25 @@ export class CreateBpmnDiagramComponent implements OnInit {
       _self.oldXml = decrypted_bpmn.trim();
       _self.newXml = decrypted_bpmn.trim();
     });
+  }
+
+  setUrlParam(name, value) {
+ 
+    var url = new URL(window.location.href);
+  
+    if (value) {
+      url.searchParams.set(name, '1');
+    } else {
+      url.searchParams.delete(name);
+    }
+  
+    window.history.replaceState({}, null, url.href);
+  }
+  
+   getUrlParam(name) {
+    var url = new URL(window.location.href);
+  
+    return url.searchParams.has(name);
   }
   
   displayBPMN(){
