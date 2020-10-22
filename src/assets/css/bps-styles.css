@@ -1,7 +1,7 @@
 /* create bpmn diagram component styles - Starts*/
 .update_info{
   position: absolute;
-  right: 100px;
+  right: 300px;
   color: #0062cf;
 }
 .drop__div{
@@ -97,20 +97,21 @@ mat-tab-body{
   overflow: scroll;
 }
 .changeTable{
-  width: 50%;
+  width: 100% !important;
   margin: 5px auto;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
 }
 .changeTable tr{
-  border-bottom: 1px solid #eee;
+
   border-collapse: collapse;
 }
 .changeTable tr td, .changeTable tr th{
   padding: 5px 5px 5px 20px;
 }
 #foot, #bpmn_differences {
-border-top: 1px solid #999999;
+border-top: none !important;
 position: fixed;
-width: 100%;
+width: 50% !important;
 z-index: 1000;
 height: 300px;
 display: flex;
@@ -118,6 +119,7 @@ right: 0;
 left: 0;
 bottom:-300px;
 background: white;
+
 }
 .cross_close{
 margin-left: 90px;
@@ -279,26 +281,23 @@ mat-tab-body{
 }
 .changeTable{
   width: 50%;
-  margin: 5px auto;
+  margin: 0px auto;
+  background-color: #F8F8F8;
 }
 .changeTable tr{
-  border-bottom: 1px solid #eee;
+
   border-collapse: collapse;
 }
 .changeTable tr td, .changeTable tr th{
   padding: 5px 5px 5px 20px;
 }
-#foot, #bpmn_differences {
-border-top: 1px solid #999999;
-position: fixed;
-width: 100%;
-z-index: 1000;
-height: 300px;
-display: flex;
-right: 0;
-left: 0;
-bottom:-300px;
-background: white;
+
+.hr_line{
+  border-bottom: 1px solid grey;
+}
+.hr_line th{
+  padding-bottom: 10px;
+  padding-top: 24px;
 }
 .cross_close{
 margin-left: 90px;
@@ -314,10 +313,62 @@ margin-right: -85px;
 }
 .bjs-container{
   zoom: 0.8;
+  margin-top: 40px;
 }
 .canvasOpt{
   display: inline-block;
   margin-left: 15px;
+}
+
+ /*propeties panel */
+ .propertiesContainer{
+  position: absolute;
+  /* width: 315px; */
+  right: 0;
+  height: 69vh;
+  overflow: hidden scroll;
+  display: inline-flex;
+}
+.propertiesTitle{
+  padding: 10px 5px;
+  line-height: 12px;
+  font-size: 12px;
+  background-color: #ccc;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px 0 0 5px;
+  height: 200px;
+  width: 25px;
+  position: relative;
+  top: 20vh;
+  overflow: hidden;
+}
+.propertiesTitle:hover{
+  background-color: grey;
+  color: white;
+}
+.propertiesTitle div{
+  position: relative;
+  top: 120px;
+  white-space: nowrap;
+  height: 5px;
+  transform: rotate(-90deg)
+}
+#properties{
+  width: 280px;
+}
+.slide-left, .slide-right{
+  max-width: 0;
+  -webkit-transition: max-width 0.01s ease-in-out;
+  -moz-transition: max-width 0.01s ease-in-out;
+  -o-transition: max-width 0.01s ease-in-out;
+  transition: max-width 0.01s ease-in-out;
+}
+.slide-right{
+  overflow: hidden;
+}
+.slide-left{
+  max-width: 300px;
 }
 /* .canvasOpt:focus{
   background-color: #0062cf;
@@ -345,7 +396,7 @@ margin-right: -85px;
   margin: 0 !important;
 }
 .upload_again_btn button{
-  margin: 5px -2px 5px 10px;
+  margin: 5px 8px 5px 10px;
   float: right;
 }
 .kpis-and-submit-button-div{
@@ -413,7 +464,7 @@ margin-right: -85px;
   display: inline-block;
 }
 .upload-btn {
-  
+
   color: white;
     background-color: #0162cb;
     padding-left: 30px;
@@ -422,7 +473,7 @@ margin-right: -85px;
     margin-top: 10px;
     border: none;
     margin-left: 132px;
-    
+
 }
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
@@ -440,6 +491,11 @@ margin-right: -85px;
     height: 205px;
     border-radius: 25px;
     border-color: #8080804a;
+}
+.fit_button{
+  z-index: 200;
+  position: absolute;
+  right: 25px;
 }
 .create-logo{
   margin-top: 20px;
@@ -518,7 +574,7 @@ transform: scale(0.4);
 /* shared bpmn-diagram component styles - Ends*/
 /* bpmn-diagram-list component styles - Starts*/
 .account_pay_details_table tr{
-border-bottom: 1px solid #ccc;  
+border-bottom: 1px solid #ccc;
 cursor: pointer;
 }
 .account_pay_details_table tr:hover{
@@ -583,7 +639,7 @@ background-color: #3ea307 !important;
   float:right !important;
 }
 .text-cell{
-   text-align: center; 
+   text-align: center;
   padding-left:63px !important;
 }
 .text-cell-last{
@@ -601,7 +657,7 @@ background-color: #3ea307 !important;
   margin-top: 20px;
 }
 .keyboard_style_upload{
-      
+
       position: absolute;
       right: 20px;
       z-index: 2;
@@ -614,7 +670,7 @@ background-color: #3ea307 !important;
 
 }
 .keyboard_label_style{
-  font-size: 17px; 
+  font-size: 17px;
   padding-right: 20px;
 }
 .keyboard_header_shortcuts{
@@ -629,4 +685,8 @@ background-color: #3ea307 !important;
 }
 .approval_workflow_properties{
 padding-top: 11px;
+}
+.approver_fit_btn{
+  height: 46px;
+  right: 0px;
 }

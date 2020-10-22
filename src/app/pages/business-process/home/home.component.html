@@ -4,7 +4,7 @@
   </div> -->
   <div class="header_addon row approval_workflow_properties">
     <div class="col-md-10"></div>
-    <a class="col-md-2" routerLink="/pages/approvalWorkflow/home" >Approval Workflow</a>
+    <a class="col-md-2" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" >Approval Workflow</a>
   </div>
   <div class="row">
     <div class="col-md-4 offset-1">
@@ -49,17 +49,18 @@
                     </span>
                   </span>
                   <span>
-                    <i (click)="sendReminderMail($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='PENDING'" title = "Click to send reminder mail to Approver" class="fa fa-envelope"></i>
+                    <i (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" title = "Click to send reminder mail to Approver" class="fa fa-envelope"></i>
                     <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" title ="Delete BPMNotation" class="glyphicon glyphicon-trash"></i>
-                    <i *ngIf="each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED'">-</i>
+                    <i *ngIf="each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser">-</i>
                   </span>
                 </div>
               </mat-panel-title>
             </mat-expansion-panel-header>
             <div class="bps_overlay">
               <span class="info" *ngIf="(each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus != 'PENDING')||(!each_diag.bpmnProcessStatus) ">Click to open</span>
-              <span class="info" *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)"></div>
+             <span><button title="Fit to the view port" class="right header_btn fit_button" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button></span>    
+             <span class="info" *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
+             <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)"></div>
             </div>
           </mat-expansion-panel>
         </mat-accordion>

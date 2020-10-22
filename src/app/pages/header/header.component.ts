@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   selectedIndex: number;
   parent_link:any={};
   child_link:any={};
-  pages:any[];
+  pages:any[] = [];
   parent_subscription;
   child_subscription;
   overlay_acc_model: boolean=false;
@@ -34,98 +34,90 @@ export class HeaderComponent implements OnInit, OnDestroy {
   public profilePicture:boolean=false;
 
   constructor(
-    private router:Router, 
-    private dataTransfer:DataTransferService, 
+    private router:Router,
+    private dataTransfer:DataTransferService,
     private rpa:RestApiService,
     private spinner:NgxSpinnerService,
     @Inject(APP_CONFIG) private config) { }
 
   ngOnInit() {
     this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
-    
-    
+
     this.child_subscription = this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
     this.rpa.getUserRole(2).subscribe(res=>{
-      this.userRole=res.message;
-     
+    this.userRole=res.message;
+
       localStorage.setItem('userRole',this.userRole);
     console.log("user role is",this.userRole)
-    if(this.userRole.includes('SuperAdmin')){
+    if(this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('User')){
       this.pages = [
         {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
         {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
         {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
         {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
          ];
-         
-      
-     }else if(this.userRole.includes('Admin')){
-      this.pages = [
-        {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-        {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-        {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
-        
-      ];
-   
-     }else if(this.userRole.includes('RPA Admin')){
-      this.pages = [
-        {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-        {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
-        
-      ];
-   
-     }else if(this.userRole.includes('RPA Designer')){
-      this.pages = [
-        {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-        
-      ];
-   
-     }else if(this.userRole.includes('Data Architect')){
-      this.pages = [
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-        
-      ];
-   
-     }else if(this.userRole.includes('Process Designer')){
-      this.pages = [
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-        
-      ];
-   
-     }else if(this.userRole.includes('Automation Designer')){
-      this.pages = [
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-        
-      ];
-   
-     }else if(this.userRole.includes('Process Analyst')){
-      this.pages = [
-        {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-        
-      ];
-   
-     }else if(this.userRole.includes('Process Architect')){
-      this.pages = [
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"}
-      ];
-   
-     }else if(this.userRole.includes('User')){
-      this.pages = [
-        {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
-        {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
-        {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
-        {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
-        
-      ];
-   
-     }
-     else{
+
 
      }
+     if(this.userRole.includes('RPA Admin')){
+      if(this.pages.filter(f=>f.title === 'RPA Studio' ).length <= 0){
+        this.pages.push({"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"})
+      }
+      if(this.pages.filter(f=>f.title === 'Service Orchestration' ).length <= 0){
+        this.pages.push({"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"})
+      }
+      // this.pages = [
+      //   {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
+      //   {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
+
+      // ];
+
+     }
+     if(this.userRole.includes('RPA Designer')){
+      if(this.pages.filter(f=>f.title === 'RPA Studio' ).length <= 0){
+        this.pages.push({"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"})
+      }
+      // this.pages = [
+      //   {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
+
+      // ];
+
+     }
+     if(this.userRole.includes('Data Architect') || this.userRole.includes('Process Designer') || this.userRole.includes('Automation Designer')){
+      if(this.pages.filter(f=>f.title === 'Business Process Studio' ).length <= 0){
+        this.pages.push({"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"})
+      }
+     
+      // this.pages = [
+      //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
+
+      // ];
+
+     }
+     if(this.userRole.includes('Process Analyst')){
+      if(this.pages.filter(f=>f.title === 'Process Intelligence' ).length <= 0){
+        this.pages.push({"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"})
+      }
+
+      // this.pages = [
+      //   {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
+
+      // ];
+
+     }
+     if(this.userRole.includes('Process Architect')){
+      if(this.pages.filter(f=>f.title === 'Business Process Studio' ).length <= 0){
+        this.pages.push({"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"})
+      }
+      // this.pages = [
+      //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/approvalWorkflow/home"}
+      // ];
+
+     }
+     
     },error => {
       this.error = "Please complete your registration process";
-      
+
     })
     this.spinner.show();
     setTimeout(() => {
@@ -147,7 +139,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.overlay_acc_model = false;
     this.overlay_notifications_model=false;
   }
-  
+
   slideUp(e){
     this.closeAllModules();
     this.overlay_acc_model = e=="my_acc";
@@ -185,14 +177,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
     var input = btoa("Signout")
     window.location.href=this.config.logoutRedirectionURL+'?input='+input;
   }
- 
+
   profileName(){
     this.firstname=localStorage.getItem('firstName');
       this.lastname=localStorage.getItem('lastName');
       var firstnameFirstLetter=this.firstname.charAt(0)
       var lastnameFirstLetter=this.lastname.charAt(0)
       this.firstletter=firstnameFirstLetter+lastnameFirstLetter
-      
   }
 
   getImage() {

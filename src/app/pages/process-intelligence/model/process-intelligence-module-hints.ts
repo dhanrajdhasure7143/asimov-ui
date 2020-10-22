@@ -1,6 +1,6 @@
 export class PiHints{
     public dataDocumentHints = [
-        { selector:'#process_data', description:'Uploaded file data', showNext:true },
+        { selector:'#uploaded_data', description:'Uploaded file data', showNext:true },
         { selector:'#search_process_data', description:'Search Process Data', showNext:true },
         { selector:'#generateGraph', description:'Proceed to Data Mapping.' },
         { selector:'#process_data1', description:'Case ID, Actvity Resource Mapping'}
@@ -17,7 +17,7 @@ export class PiHints{
         { selector:'#zoom_in', description:'Zoom In', showNext:true },
         { selector:'#zoom_out', description:'Zoom Out', showNext:true },
         { selector:'#zoom_reset', description:'Reset Zoom', showNext:true },
-        { selector:'#variants', description:'Click to filter the metrics', showNext:true },
+        { selector:'#variants', description:'Process view with selected metrics', showNext:true },
         { selector:'.down_btn', description:'Click to download process graph', showNext:true },
         { selector:'#play_btn', description:'Click to play process graph', showNext:true },
         //{ selector:'.zoom_label', description:'Zoom selection for process graph', showNext:true },
