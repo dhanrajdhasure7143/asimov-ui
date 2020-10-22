@@ -14,7 +14,8 @@ export const environment = {
   pi_node_url: "http://10.11.0.112:3000",
   platform_url:'http://apdev.epsoftinc.in',
   schema_registry_url:"http://10.11.0.101:8081",
-  
+  alerts_url:'http://alertsdev.epsoftinc.in',
+
  // Aiotal redirection urls 
   myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
   logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation', 
@@ -24,7 +25,7 @@ export const environment = {
 
 //DB Connector
   dbConnectorHost: "10.11.0.113",
-  dbName: 'asimov_aiotal',
+  dbName: "asimov_aiotal",
 
 // Data upload path
   data_path:"/home/kafka"
@@ -62,4 +63,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-

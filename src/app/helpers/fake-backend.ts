@@ -17,13 +17,14 @@ export class BackendURLInterceptor implements HttpInterceptor {
     //var encryptrefreshToken=btoa(token.refreshToken);
 
        let ipAddress = '192.168.0.1';
+       var timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
         if(localStorage.getItem('ipAddress'))
            ipAddress = localStorage.getItem('ipAddress');
     
         req = req.clone({
             url : this.getRequestUrl(req),
             body: req.body,
-            headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress})
+            headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress,'timezone':timezone})
         });
         return next.handle(req);
     }
@@ -49,6 +50,8 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.authorizationEndPoint + req.url;
         else if(req.url.indexOf('api') > -1)
             url = this.config.platformEndPoint + req.url;
+        if(req.url.indexOf('notificationservice') > -1)
+            url = this.config.alertsEndPoint + req.url;
         return url;
     }
 }
