@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
-import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+//import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
@@ -16,6 +16,7 @@ import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import * as bpmnlintConfig from '../model/packed-config';
+import lintModule from 'bpmn-js-bpmnlint';
 declare var require:any;
 
 @Component({
@@ -180,7 +181,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
         PropertiesPanelModule,
         PropertiesProviderModule,
         {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-        {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]}
+        {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+        lintModule
       ],
       container: '#canvas',
       keyboard: {
