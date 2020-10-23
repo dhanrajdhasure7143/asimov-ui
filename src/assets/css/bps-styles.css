@@ -202,7 +202,7 @@ mat-expansion-panel{
 }
 #bpmn_list_row span{
   display: inline-block;
-  width: 14%;
+  width: 12.5%;
   text-align: center;
 }
 .workspace-title{
@@ -211,7 +211,7 @@ mat-expansion-panel{
 .workspace-title span{
   display: inline-block;
   cursor: pointer;
-  width: 14%;
+  width: 12.5%;
   text-align: center;
 }
 .fa-envelope{

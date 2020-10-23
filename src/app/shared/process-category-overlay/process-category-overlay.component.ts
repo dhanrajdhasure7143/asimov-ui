@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'process-category-overlay',
@@ -22,15 +23,20 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   botName = "";
   botType = "";
   botDescription = "";
+  notationType = "";
+  isBpmnModule: boolean = false;
 
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
-  constructor( private rest:RestApiService) { }
+  constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
     if(this.data){
       let data_arr = this.data.split("@");
       this.processName = data_arr[0];
       this.categoryName = data_arr[1];
+    }
+    if(this.activatedRoute.snapshot['_routerState'].url.includes('businessProcess')){
+      this.isBpmnModule = true;
     }
     this.rest.getCategoriesList().subscribe(res=> this.categoriesList=res );
   }

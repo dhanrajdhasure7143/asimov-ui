@@ -5,7 +5,7 @@
             <h4>{{headerTitle}}</h4>
         </div>
         <div class="modal-body">
-            <form autocomplete="off" #processCategoryForm="ngForm"> 
+            <form autocomplete="off" #processCategoryForm="ngForm">
                 <div class="container m-contanier">
                     <mat-form-field class="row col-md-12">
                         <mat-label>Select Category</mat-label>
@@ -25,6 +25,16 @@
                         <span class="error_msg" [class.show]="other_category.dirty && other_category.invalid">Alphanumerics with _- are allowed</span>
                     </div>
                     <br/>
+                    <div *ngIf='isBpmnModule'>
+                        <mat-form-field class="row col-md-12">
+                            <mat-label>Select Notation</mat-label>
+                            <mat-select name="notation" #notation="ngModel" [(ngModel)]="notationType" required>
+                                <mat-option value="bpmn">BPMN</mat-option>
+                                <mat-option value="cmmn">CMMN</mat-option>
+                                <mat-option value="dmn">DMN</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
                     <mat-form-field class="row col-md-12">
                         <mat-label>Enter Process Name</mat-label>
                         <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="[a-zA-Z0-9 _-]+" required  [disabled]="data">
