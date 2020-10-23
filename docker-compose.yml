@@ -12,7 +12,7 @@ services:
   asimov-ui:
     image: nexus.epsoftinc.in/asimov-ui:${DOCKER_TAG}
     deploy:
-      mode:global
+      mode: global
     networks:
       - eps_net
     ports:
