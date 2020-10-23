@@ -11,7 +11,11 @@ export const environment = {
   loopback_url: 'http://10.11.0.107:3000',
   idm_url:'http://idmdev.epsoftinc.in',
   auth_url: "http://authdev.epsoftinc.in",
-  pi_node_url: "http://10.11.0.112:3000",
+  //for Auto build
+  pi_node_url: "http://pi-node-api:3000",
+  //for local environment
+  //pi_node_url: "http://10.11.0.112:3000",
+  
   platform_url:'http://apdev.epsoftinc.in',
   schema_registry_url:"http://10.11.0.101:8081",
   alerts_url:'http://alertsdev.epsoftinc.in',
@@ -39,7 +43,10 @@ export const environment = {
      rpa_url: 'http://rpaqa.epsoftinc.in',
      loopback_url: 'http://10.11.0.107:3000',
      idm_url:'http://idmqa.epsoftinc.in',
-     pi_node_url: "http://pinodedev.epsoftinc.in:3000",
+      //for Auto build
+        pi_node_url: "http://pi-node-api:3000",
+  //for local environment
+     //pi_node_url: "http://pinodedev.epsoftinc.in:3000",
      auth_url: "http://authqa.epsoftinc.in",
 
      platform_url:'http://apqa.epsoftinc.in',

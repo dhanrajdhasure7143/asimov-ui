@@ -302,7 +302,6 @@ import { NgxSpinnerService } from "ngx-spinner";
       console.log(this.updateenvdata.createdBy);
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-      console.log("Karthik");
             console.log(updatFormValue);
       await this.api.updateenvironment(updatFormValue).subscribe( res => {
         Swal.fire({

@@ -481,5 +481,11 @@ export class RestApiService{
       return this.http.delete<any>('/notificationservice/api/v1/deleteNotification?notificationId='+notificationId,{responseType:"json"})
     }
     
+    getReadNotificaionCount(role,userId,notificationbody):Observable<any>{
+      return this.http.post<any>('/notificationservice/api/v1/NotificationsCount?roles='+role+'&userId='+userId,notificationbody,httpOptions);
+    }
+    getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
+      return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
+    }
 }
 

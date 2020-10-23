@@ -1,0 +1,19 @@
+version: '3.7'
+
+networks:
+  eps_net:
+    external: true
+    name: docker_epsinternal
+  eps_host:
+    external: true
+    name: host
+
+services:
+  asimov-ui:
+    image: nexus.epsoftinc.in/asimov-ui:${DOCKER_TAG}
+    deploy:
+      mode: global
+    networks:
+      - eps_net
+    ports:
+      - '8080:80'
