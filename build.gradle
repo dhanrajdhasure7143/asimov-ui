@@ -12,6 +12,10 @@ node {
   download = true
 }
 
+npmInstall.outputs.upToDateWhen {
+  false
+}
+
 ext {
   dockerImage = "${project.registryUrl}/${imageName}"
   dockerTag   = "${project.semver}-${project.semverDevSuffix}"
