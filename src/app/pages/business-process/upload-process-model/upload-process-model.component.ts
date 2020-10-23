@@ -149,7 +149,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     this.getApproverList();
    }
-   
+
 
    ngAfterViewInit(){
     if(this.isShowConformance)
@@ -205,7 +205,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
-      
+
     }
     if(!this.isShowConformance){
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]};
@@ -560,9 +560,13 @@ displayBPMN(){
             _self.downloadFile(isConfBpmnModelerDownload, url);
           }else{
             let canvasEl = document.createElement("canvas");
-            let canvasContext = canvasEl.getContext("2d");
+            let canvasContext = canvasEl.getContext("2d", {alpha: false});
             let img = new Image();
             img.onload=()=>{
+              canvasEl.width = img.width;
+              canvasEl.height = img.height;
+              canvasContext.fillStyle = "#fff";
+              canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
               canvasContext.drawImage(img,0,0,img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
               let imgUrl;
               if(_self.fileType == "png")
@@ -936,7 +940,7 @@ displayBPMN(){
       this.isLoading = false;
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
-        message = "Please upload proper *.bpmn file";
+        message = "Please upload proper notation";
       this.global.notify(message, "error");
     }
   }
