@@ -5,6 +5,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
+import CustomRenderer from "../bpmn-props-additional-tabs/customRenderer";
+import ReplaceMenuProvider from "../bpmn-props-additional-tabs/ReplaceMenuProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import lintModule from 'bpmn-js-bpmnlint';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
@@ -20,33 +22,9 @@ import { BpsHints } from '../model/bpmn-module-hints';
 import { UUID } from 'angular2-uuid';
 import { Subscription } from 'rxjs';
 import { JsonpInterceptor } from '@angular/common/http';
+import * as bpmnlintConfig from '../model/packed-config';
 
 declare var require:any;
-
-const customModdle = {
-  name: "Rpa",
-  uri: "http://example.com/custom-moddle",
-  prefix: "rpa",
-  xml: {
-    tagAlias: "lowerCase"
-  },
-  associations: [],
-  types: [
-    {
-      "name": "RPA Task",
-      "extends": [
-        "bpmn:RPATask"
-      ],
-      "properties": [
-        {
-          "name": "spell",
-          "isAttr": true,
-          "type": "String"
-        }
-      ]
-    },
-  ]
-};
 
 @Component({
   selector: 'app-upload-process-model',
@@ -130,6 +108,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.isfromApprover=params['isfromApprover'] == 'true';
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
+    this.setRPAData();
     if(!this.isShowConformance){
       this.selected_notation = 0;
       if(this.isfromApprover){
@@ -139,7 +118,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       else{
         this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
         this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
-        }
+      }
       this.isConfBpmnModeler = false;
       this.getUserBpmnList(null);
     }else{
@@ -157,6 +136,34 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
    }
    ngOnDestroy() {
     // this.subscription.unsubscribe();
+  }
+
+  setRPAData(){
+    this.rest.toolSet().subscribe( res => {
+      let rpaActivityOptions: any[] = [];
+      let taskListsArr:any = {};
+      if(res["General"]){
+        res["General"].forEach((each) => {
+            rpaActivityOptions.push({name:each.name, value: each.name});
+            taskListsArr[each.name]= each.taskList;
+        })
+      }
+      if(res["Advanced"]){
+        res["Advanced"].forEach((each) => {
+            rpaActivityOptions.push({name:each.name, value: each.name});
+            taskListsArr[each.name]= each.taskList;
+        });
+      }
+      Object.keys(taskListsArr).forEach((each_key)=>{
+        let tmp = [];
+        taskListsArr[each_key].forEach(tlst => {
+          tmp.push({name:tlst.name, value: tlst.taskId})
+        });
+        taskListsArr[each_key]=tmp;
+      })
+      localStorage.setItem("rpaActivityOptions", JSON.stringify(rpaActivityOptions))
+      localStorage.setItem("rpaActivityTaskListOptions", JSON.stringify(taskListsArr))
+    })
   }
    fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
@@ -257,8 +264,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     this[modeler_obj].get('canvas').zoom('fit-viewport');
     let msg = "";
     if(this.isConfBpmnModeler){
-     if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
-      msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
+      if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
+        msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
+      else
+        msg = "Notation"
     }
     else
       msg = "Notation"
@@ -276,18 +285,23 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   initiateDiagram(){
     let _self=this;
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
-    // var bpmnlintConfig = require("../model/.bpmnlintrc");
+     //var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
+    
+ 
     if(!this[modeler_obj]){
       this[modeler_obj] = new BpmnJS({
         linting: {
-          // bpmnlint: bpmnlintConfig
+           bpmnlint: bpmnlintConfig,
+           active: _self.getUrlParam('linting')
         },
         additionalModules: [
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
           {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+          // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
+          // CustomRenderer,
           lintModule
         ],
         container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
@@ -298,8 +312,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           parent: '#properties'
         },
         moddleExtensions: {
-          camunda: CamundaModdleDescriptor,
-          rpa: customModdle
+          camunda: CamundaModdleDescriptor
         }
       });
 
@@ -308,6 +321,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           _self.disableShowConformance = true;
         })
       }
+
+      this[modeler_obj].on('linting.toggle', function(event) {
+
+        var active = event.active;
+      
+        _self.setUrlParam('linting', active);
+      });
       this[modeler_obj].on('element.changed', function(){
         let now = new Date().getTime();
         _self.isDiagramChanged = true;
@@ -351,6 +371,25 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
       }
     }
+  }
+
+   setUrlParam(name, value) {
+ 
+    var url = new URL(window.location.href);
+  
+    if (value) {
+      url.searchParams.set(name, '1');
+    } else {
+      url.searchParams.delete(name);
+    }
+  
+    window.history.replaceState({}, null, url.href);
+  }
+  
+   getUrlParam(name) {
+    var url = new URL(window.location.href);
+  
+    return url.searchParams.has(name);
   }
 
 displayBPMN(){

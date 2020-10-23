@@ -40,7 +40,15 @@
                 </div>
             </div>
             <div class="row btn_row">
-                <button class="left" id="download" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
+                <span class="pull-left">
+                    <select [(ngModel)]="fileType">
+                      <option value="svg">SVG</option>
+                      <option value="png">PNG</option>
+                      <option value="jpg">JPG</option>
+                      <option value="bpmn">BPMN</option>
+                    </select>
+                    <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+                  </span>
                 <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
                 <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)">Save Process</button>
                 <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn"  id="automate" (click)="automate()">Automate</button>

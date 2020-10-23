@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
+import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
@@ -14,7 +15,7 @@ import { BpmnModel } from '../model/bpmn-autosave-model';
 import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
-
+import * as bpmnlintConfig from '../model/packed-config';
 declare var require:any;
 
 @Component({
@@ -47,6 +48,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   autosavedDiagramList = [];
   updated_date_time;
   keyboardLabels=[];
+  fileType:string = "svg";
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
@@ -170,6 +172,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let _self = this;
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     this.bpmnModeler = new BpmnJS({
+      linting: {
+        bpmnlint: bpmnlintConfig,
+        active: _self.getUrlParam('linting')
+     },
       additionalModules: [
         PropertiesPanelModule,
         PropertiesProviderModule,
@@ -187,6 +193,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
         camunda: CamundaModdleDescriptor
       }
     });
+    // this.bpmnModeler = new CmmnJS({
+    //   container: '#canvas',
+    //   propertiesPanel: {
+    //     parent: '#properties'
+    //   }
+    // })
     let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
     this.bpmnModeler.on('element.changed', function(){
@@ -207,6 +219,25 @@ export class CreateBpmnDiagramComponent implements OnInit {
       _self.oldXml = decrypted_bpmn.trim();
       _self.newXml = decrypted_bpmn.trim();
     });
+  }
+
+  setUrlParam(name, value) {
+ 
+    var url = new URL(window.location.href);
+  
+    if (value) {
+      url.searchParams.set(name, '1');
+    } else {
+      url.searchParams.delete(name);
+    }
+  
+    window.history.replaceState({}, null, url.href);
+  }
+  
+   getUrlParam(name) {
+    var url = new URL(window.location.href);
+  
+    return url.searchParams.has(name);
   }
   
   displayBPMN(){
@@ -305,22 +336,50 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
     this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
   }
+
+  downloadFile(url){
+    var link = document.createElement("a");
+    link.href = url;
+    let fileName = this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
+    if(fileName.trim().length == 0 ) fileName = "newDiagram";
+    link.download = fileName+"."+this.fileType;
+    link.innerHTML = "Click here to download the notation";
+    link.click();
+  }
+
  
   downloadBpmn(){
     if(this.bpmnModeler){
       let _self = this;
-      this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
-        _self.saved_bpmn_list[_self.selected_notation]['bpmnXmlNotation'] = btoa(unescape(encodeURIComponent(xml)));
-        var blob = new Blob([xml], { type: "application/xml" });
-        var url = window.URL.createObjectURL(blob);
-        var link = document.createElement("a");
-        link.href = url;
-        let fileName = _self.saved_bpmn_list[_self.selected_notation]['bpmnProcessName'];
-        if(fileName.trim().length == 0 ) fileName = "newDiagram";
-        link.download = fileName+".bpmn";
-        link.innerHTML = "Click here to download the notation";
-        link.click();
-      });
+      if(this.fileType == "bpmn"){
+        this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
+          var blob = new Blob([xml], { type: "application/xml" });
+          var url = window.URL.createObjectURL(blob);
+         _self.downloadFile(url);
+        });
+      }else{
+        this.bpmnModeler.saveSVG(function(err, svgContent) {
+          var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
+          var url = window.URL.createObjectURL(blob);
+          if(_self.fileType == "svg"){
+            _self.downloadFile(url);
+          }else{
+            let canvasEl = document.createElement("canvas");
+            let canvasContext = canvasEl.getContext("2d");
+            let img = new Image();
+            img.onload=()=>{
+              canvasContext.drawImage(img,0,0,img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
+              let imgUrl;
+              if(_self.fileType == "png")
+                imgUrl = canvasEl.toDataURL("image/png");
+              else
+                imgUrl = canvasEl.toDataURL("image/jpg");
+              _self.downloadFile(imgUrl)
+            }
+            img.src = url;
+          }
+        });
+      }
     }
   }
   submitDiagramForApproval(){

@@ -1,9 +1,11 @@
 @import "~bpmn-js/dist/assets/diagram-js.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
+@import "~cmmn-js/dist/assets/cmmn-font/css/cmmn.css";
 @import "enjoyhint/enjoyhint.css";
 @import "~angular-notifier/styles";
 @import "~bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~bpmn-js-bpmnlint/dist/assets/css/bpmn-js-bpmnlint.css';
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 body, html {
@@ -100,6 +102,11 @@ body, html {
 .as-split-gutter{
   background-color: #94949c !important
 }
+.bpmn-icon-rpa::before{
+  content: url('assets/images/robothand_icon.svg');
+  width: 20px;
+  height: 20px;
+}
 /* notifications to right */
 notifier-notification{
     position: absolute;
@@ -110,9 +117,9 @@ notifier-notification{
 ngx-dropzone{
   border: none !important;
 }
-.djs-container svg{
+/* .djs-container svg{
   margin-left: 85px;
-}
+} */
 .bps_overlay .djs-container svg{
   margin-left: 5px;
 }
