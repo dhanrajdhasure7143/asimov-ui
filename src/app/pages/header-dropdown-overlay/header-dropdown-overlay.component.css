@@ -14,12 +14,25 @@ table {
     color:black;
     font-weight: bold;
     height: 11px;
-    margin-left: 244px;
+    margin-left: 213px;
     line-height: 6px;
     font-size: 22px;
 }
+.notification_cell {
+    width: 43%;
+   padding-left: 100px;
+   padding-bottom: 25px;
+  }
+ .notificatnmsgs{
+    margin-top: 5px;
+ }
+ .isRead
+ {
+    color: grey;
+}
 .deletefrm{
     margin-top: 5px;
+    color: white;
 }
 .deletconfm h5{
     font-size: 13px;
@@ -28,13 +41,14 @@ table {
        font-size: 10px;
     }
     .deletconfm .confm{
-       border: none;
-     background: white;
-   width:30px;
-       height: 20px;
-       font-size: 10px;
-       margin-left: 25px;
-       border-radius: 10px;
+        border: none;
+        background: white;
+      width:30px;
+          height: 20px;
+          font-size: 10px;
+          margin-left: 25px;
+          border-radius: 10px;
+          color: black;
     }
     .cross_delet{
         /* // font-size: 30px; */
@@ -52,13 +66,13 @@ table {
     .isdelet{
         display: block !important;
         position: relative;
-        color: white !important;
+        /* color: white !important; */
        z-index: 1000;
         /* // cursor:none; */
     }
     .notify {
-        margin-left: 160px;
-        margin-top: 27px;
+        margin-left: 149px;
+        margin-top: 3px;
      }
      .notificationpagination
      {
@@ -72,8 +86,36 @@ table {
      {
          /* position: absolute; */
          margin-top: 113px;
-        padding-left: 664px;
+         padding-left: 522px;
       }
+      .table_cell.Notify_td {
+        /* width: 38%; */
+       padding-left: 99px;
+         }
+    .notificationmessage
+    {
+        padding-top: 0px;
+        font-weight: bold;
+        font-size: 15px;
+        color: black;
+        padding-left: 101px;
+    }
+    .notificationdate
+     {
+      padding-top: 0px;
+       font-weight: bold;
+      color: black;
+      font-size: 15px;
+      padding-left: 141px;
+     }
+    .notificationaction
+    {
+       padding-top: 0px;
+       font-weight: bold;
+       color: black;
+       font-size: 15px;
+       padding-left: 1px;
+    }
 .table_cell {
     padding: 13px 0px; 
     color: black;
@@ -292,8 +334,12 @@ select:focus {
     margin-top: 10px !important;
 }
 
-.overlay_container {
+.notificatnmsgs {
     margin-bottom: 82px !important;
+    overflow: auto !important;
+   height: 230px;
+    display: block;
+  margin-left: 129px;
 }
 
 button.tablinks.active {
