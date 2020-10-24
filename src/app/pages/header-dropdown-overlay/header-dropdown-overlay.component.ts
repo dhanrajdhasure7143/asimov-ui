@@ -41,6 +41,8 @@ export class HeaderDropdownOverlayComponent implements OnInit {
   public notificationList: any[];
   public dataid: any;
   notificationscount: any;
+  notificationbody: { tenantId: string; };
+  public notificationreadlist:any;
 
   constructor(private dt:DataTransferService ,private rpa:RestApiService,private notifier: NotifierService,private dialog:MatDialog) { }
 
@@ -113,6 +115,28 @@ close(){
            this.notificationList = data
            console.log("count",this.notificationList)
           })
+        }
+
+        notificationclick(id)
+        {
+          let userId =  localStorage.getItem("ProfileuserId")
+          this.tenantId=localStorage.getItem('tenantName');
+          this.role=localStorage.getItem('userRole')
+         this.notificationbody ={
+            "tenantId":this.tenantId
+         }
+         console.log("notification id",id)
+         if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
+          this.rpa.getReadNotificaionCount(this.role,userId,this.notificationbody).subscribe(data => {
+            this.notificationreadlist = data
+            this.notificationList.find(ntf=>ntf.id==id).status='read'
+          // document.getElementById('ntf_'+id).style.color="grey"
+           //document.getElementById('date_'+id).style.color="grey"
+           //document.getElementById(id).style.cursor="none"
+            console.log(this.notificationreadlist)
+          })
+         
+        }
         }
 }
 

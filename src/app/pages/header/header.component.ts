@@ -225,22 +225,26 @@ export class HeaderComponent implements OnInit, OnDestroy {
            }
           }, 10000);
           }
-       getAllNotifications() {
-       let userId =  localStorage.getItem("ProfileuserId")
-         this.tenantId=localStorage.getItem('tenantName');
-         this.role=localStorage.getItem('userRole')
-        let notificationbody ={
-        "tenantId":this.tenantId
-          }
-        this.rpa.getNotifications(this.role,userId,notificationbody).subscribe(data => {
-        this.notificationList = data
-        this.notificationscount=this.notificationList.length
-         if(this.notificationscount==undefined||this.notificationscount==null)
-         {
-          this.notificationscount=0;
-        }
-         // console.log("count",this.notificationList.length)
-          })
-           this.getCount();
-          }
+          getAllNotifications() {
+            let userId =  localStorage.getItem("ProfileuserId")
+              this.tenantId=localStorage.getItem('tenantName');
+              this.role=localStorage.getItem('userRole')
+             let notificationbody ={
+             "tenantId":this.tenantId
+               }
+               if(this.role=='Admin' ||this.role== 'SuperAdmin')
+               {
+                this.rpa.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
+                  this.notificationList = data
+                  this.notificationscount=this.notificationList
+                  console.log(this.notificationscount)
+                  if(this.notificationscount==undefined||this.notificationscount==null)
+                  {
+                    this.notificationscount=0;
+                  }
+              // console.log("count",this.notificationList.length)
+               })
+                this.getCount();
+               }
+             }
 }
