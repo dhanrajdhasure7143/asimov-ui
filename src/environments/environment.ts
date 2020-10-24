@@ -11,7 +11,7 @@ export const environment = {
   loopback_url: 'http://10.11.0.107:3000',
   idm_url:'http://idmdev.epsoftinc.in',
   auth_url: "http://authdev.epsoftinc.in",
-  pi_node_url: "http://10.11.0.112:3000",
+  pi_node_url: "http://10.11.0.107:3000",
   platform_url:'http://apdev.epsoftinc.in',
   schema_registry_url:"http://10.11.0.101:8081",
   alerts_url:'http://alertsdev.epsoftinc.in',
