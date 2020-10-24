@@ -12,7 +12,7 @@ export const environment = {
   idm_url:'http://idmdev.epsoftinc.in',
   auth_url: "http://authdev.epsoftinc.in",
   //for Auto build
-  pi_node_url: "http://pi-node-api:3000",
+  pi_node_url: "http://10.11.0.107:3000",
   //for local environment
   //pi_node_url: "http://10.11.0.112:3000",
   
@@ -44,7 +44,7 @@ export const environment = {
      loopback_url: 'http://10.11.0.107:3000',
      idm_url:'http://idmqa.epsoftinc.in',
       //for Auto build
-        pi_node_url: "http://pi-node-api:3000",
+        pi_node_url: "http://10.11.0.108:3000",
   //for local environment
      //pi_node_url: "http://pinodedev.epsoftinc.in:3000",
      auth_url: "http://authqa.epsoftinc.in",
