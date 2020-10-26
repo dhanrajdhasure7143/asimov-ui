@@ -78,10 +78,10 @@ export class FilterComponent implements OnInit {
   }
   ngOnChanges(){    
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
-    console.log(this.chart_filter_options);
+    // console.log(this.chart_filter_options);
 
 
-    console.log(this.dataValues);
+    // console.log(this.dataValues);
     
     this.dataValuesNames = [];
     for(var i=0;i<this.dataValues.length;i++){
@@ -186,7 +186,7 @@ deselectAllDataValue(){
 }
 
 applyFilter(){
-  console.log(this.isDeselectAll);
+  // console.log(this.isDeselectAll);
   
   this.seletedActivity=[];
   if(this.isDeselectAll == true){
