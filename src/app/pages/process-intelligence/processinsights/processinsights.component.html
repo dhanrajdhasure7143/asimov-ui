@@ -80,6 +80,21 @@
             <div class="col-sm-4 amountinputs">
                 <label for="">Total Cases</label><input type="text" name="frequency" [disabled]=" !isEditable1" [(ngModel)]="totalCases">
             </div>
+
+            <div class="col-sm-2 dropdown">
+                <button class="eiap-btn btn btn-primary dropdown-toggle" data-toggle="dropdown">Add Working Hours</button>
+                
+                    <div class="dropdown-menu drop_down download_selection hrsDropdwn" aria-labelledby="dropdownMenuButton">
+                       <div class="hrsInput">
+                        <label for="">Hours :</label><input type="text" placeholder="Enter Hours">
+                       </div>
+                       <div class="row btns-grop">
+                        <button class="eiap-btn btn btn-primary">Apply</button>
+                        <button class="btn btn-secondary btn-cancel">Cancel</button>
+                       </div>
+                   </div>
+            </div>
+            
         </div>
     <!-- </div> -->
     <br>
