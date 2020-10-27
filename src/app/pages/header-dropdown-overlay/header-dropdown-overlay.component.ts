@@ -127,7 +127,7 @@ close(){
          }
          console.log("notification id",id)
          if(this.notificationList.find(ntf=>ntf.id==id).status!='read'){
-          this.rpa.getReadNotificaionCount(this.role,userId,this.notificationbody).subscribe(data => {
+          this.rpa.getReadNotificaionCount(this.role,userId,id,this.notificationbody).subscribe(data => {
             this.notificationreadlist = data
             this.notificationList.find(ntf=>ntf.id==id).status='read'
           // document.getElementById('ntf_'+id).style.color="grey"

@@ -232,7 +232,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
              let notificationbody ={
              "tenantId":this.tenantId
                }
-               if(this.role=='Admin' ||this.role== 'SuperAdmin')
+               if(this.role=='Admin' ||this.role== 'User')
                {
                 this.rpa.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
                   this.notificationList = data
