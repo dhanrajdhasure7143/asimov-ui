@@ -315,7 +315,7 @@
                     </tbody>
                   </table>
                   <tbody  *ngIf="notificationList.errorMessage=='No records found' " >
-                    <div class="ntfnorecords"><h4 style="font-weight: bold;font-size: 28px;">No records found</h4></div>
+                    <div class="ntfnorecords"><h4 style="font-size: 28px;">No records found</h4></div>
                   </tbody>
                   <div *ngIf="notificationList.errorMessage!='No records found'" class="notificationpagination">
                     <pagination-controls id="notification_page" maxSize="8" (pageChange)="c = $event"></pagination-controls>
