@@ -18,6 +18,7 @@ export class PiHints{
         { selector:'#zoom_out', description:'Zoom Out', showNext:true },
         { selector:'#zoom_reset', description:'Reset Zoom', showNext:true },
         { selector:'#variants', description:'Process view with selected metrics', showNext:true },
+        { selector:'.search-node', description:'Search nodes', showNext:true },
         { selector:'.down_btn', description:'Click to download process graph', showNext:true },
         { selector:'#play_btn', description:'Click to play process graph', showNext:true },
         //{ selector:'.zoom_label', description:'Zoom selection for process graph', showNext:true },

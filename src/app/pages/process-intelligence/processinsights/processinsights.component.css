@@ -267,3 +267,26 @@ margin-left: -20px;
   margin-top: 10px;  
 }
 
+.hrsInput input{
+  border: 1px solid lightgray !important;
+  border-radius: 5px !important;
+  padding: 3px !important;
+}
+.hrsDropdwn{
+  padding: 20px !important;
+}
+.hrsDropdwn button{
+  padding: 2px !important;
+  min-width: 80px !important;
+}
+.hrsDropdwn .btn-cancel{
+  background-color: lightgray;
+  border-radius: 20px;
+  margin-top: 3px;
+}
+.btns-grop{
+  margin-top: 5px;
+  margin-left: 10px;
+}
+
+
