@@ -64,6 +64,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.route.queryParams.subscribe(params => {
       this.selected_modelId = params['bpsId'];
       this.selected_version = params['ver'];
+      this.selectedNotationType = params['ntype'];
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
@@ -131,7 +132,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
    getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
-    let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]}
+    let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype':current_bpmn_info["ntype"]}
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
@@ -377,9 +378,13 @@ export class CreateBpmnDiagramComponent implements OnInit {
             _self.downloadFile(url);
           }else{
             let canvasEl = document.createElement("canvas");
-            let canvasContext = canvasEl.getContext("2d");
+            let canvasContext = canvasEl.getContext("2d", {alpha: false});
             let img = new Image();
             img.onload=()=>{
+              canvasEl.width = img.width;
+              canvasEl.height = img.height;
+              canvasContext.fillStyle = "#fff";
+              canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
               canvasContext.drawImage(img,0,0,img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
               let imgUrl;
               if(_self.fileType == "png")
@@ -473,7 +478,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
               if(last_version < each.version)
                 last_version = each.version;
             })
-            let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': last_version+1}
+            let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': last_version+1, 'ntype':sel_List["ntype"]}
             _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
             _self.getUserBpmnList();
           }

@@ -60,7 +60,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.randomId = UUID.UUID();
     this.create_editor=false;
     this.bpmnModel.bpmnProcessName=e.processName;
-    this.bpmnModel.ntype=e.notationType;
+    this.bpmnModel.ntype=e.ntype;
     this.bpmnModel.bpmnModelId=this.randomId;
     if(this.data){
       let dataarr = this.data.split("@");

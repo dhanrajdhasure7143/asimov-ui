@@ -87,12 +87,13 @@ export class BpmnDiagramListComponent implements OnInit {
   openDiagram(){
     let binaryXMLContent = this.selected_processInfo["bpmnXmlNotation"];
     let bpmnModelId = this.selected_processInfo["bpmnModelId"];
+    let bpmnType = this.selected_processInfo["ntype"];
     let bpmnProcessStatus = this.selected_processInfo["bpmnProcessStatus"];
     if(binaryXMLContent && bpmnModelId && bpmnProcessStatus != "PENDING"){
       let bpmnVersion = this.selected_processInfo["version"];
       let fromApprover=true;
       this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
-      this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, isfromApprover: fromApprover }});
+      this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, isfromApprover: fromApprover, ntype:bpmnType }});
     }
   }
   fitNotationView(){

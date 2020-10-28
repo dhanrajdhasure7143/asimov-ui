@@ -227,7 +227,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
     }
     if(!this.isShowConformance){
-      let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]};
+      let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype': current_bpmn_info["ntype"]};
       if(this.isfromApprover){
          params['isfromApprover']= this.isfromApprover;
       }
@@ -850,7 +850,7 @@ displayBPMN(){
                 if(inprogress_version < each.version)
                 inprogress_version = each.version;
               })
-              let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version}
+              let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version, 'ntype': sel_List["ntype"]}
               _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
             }
             if(_self.isUploaded) _self.getUserBpmnList(true);
