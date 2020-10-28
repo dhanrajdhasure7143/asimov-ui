@@ -42,7 +42,7 @@
                     <span class="error_msg" [class.show]="process_name.dirty && process_name.invalid">Alphanumerics with _- are allowed</span>
                     <br/>
                     <div class="center">
-                        <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="!data && !processCategoryForm.valid">{{buttonName}}</button>
+                        <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="!data && !processCategoryForm.valid">{{buttonName}}</button>
                     </div>
                 </div>
                 <!-- <div class="container m-contanier" *ngIf="isRpa=='true'">

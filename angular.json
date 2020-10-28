@@ -43,7 +43,7 @@
               "src/assets/js/kinetic.js",
               "node_modules/jquery/dist/jquery.js",
               "node_modules/datatables.net/js/jquery.dataTables.js",
-              "src/assets/js/jquery-1.6.2.min.js",
+              "src/assets/js/jquery-2.2.4.min.js",
               "src/assets/js/jquery.tipsy.js"
             ]
           },

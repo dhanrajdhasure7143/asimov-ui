@@ -11,19 +11,120 @@ table {
 }
 
 .notification_alert_title {
-    color: #495057;
+    color:black;
     font-weight: bold;
-    font-size: 24px;
+    height: 11px;
+    margin-left: 213px;
+    line-height: 6px;
+    font-size: 22px;
 }
-
+.notification_cell {
+    width: 43%;
+   padding-left: 100px;
+   padding-bottom: 25px;
+  }
+ .notificatnmsgs{
+    margin-top: 5px;
+ }
+ .isRead
+ {
+    color: grey;
+}
+.deletefrm{
+    margin-top: 5px;
+    color: white;
+}
+.deletconfm h5{
+    font-size: 13px;
+}
+.deletconfm p{
+       font-size: 10px;
+    }
+    .deletconfm .confm{
+        border: none;
+        background: white;
+      width:30px;
+          height: 20px;
+          font-size: 10px;
+          margin-left: 25px;
+          border-radius: 10px;
+          color: black;
+    }
+    .cross_delet{
+        /* // font-size: 30px; */
+        color: red;
+        cursor: pointer;
+    }
+    #myid{
+        width:170px;
+        height:120px;
+        border:1px solid gray;
+       display: none;
+       background-color: gray;
+        /* // cursor:none; */
+    }
+    .isdelet{
+        display: block !important;
+        position: relative;
+        /* color: white !important; */
+       z-index: 1000;
+        /* // cursor:none; */
+    }
+    .notify {
+        margin-left: 149px;
+        margin-top: 3px;
+     }
+     .notificationpagination
+     {
+         margin-left: 52%; 
+     }
+     .notificatonmessage
+     {
+         margin-left: 20px;
+     }
+     .ntfnorecords
+     {
+         /* position: absolute; */
+         margin-top: 113px;
+         padding-left: 522px;
+      }
+      .table_cell.Notify_td {
+        /* width: 38%; */
+       padding-left: 99px;
+         }
+    .notificationmessage
+    {
+        padding-top: 0px;
+        font-weight: bold;
+        font-size: 15px;
+        color: black;
+        padding-left: 101px;
+    }
+    .notificationdate
+     {
+      padding-top: 0px;
+       font-weight: bold;
+      color: black;
+      font-size: 15px;
+      padding-left: 141px;
+     }
+    .notificationaction
+    {
+       padding-top: 0px;
+       font-weight: bold;
+       color: black;
+       font-size: 15px;
+       padding-left: 1px;
+    }
 .table_cell {
-    padding: 13px 0px;
-    color: gray;
+    padding: 13px 0px; 
+    color: black;
     font-size: 17px;
 }
 
 .Notify_td {
-    border-top: 1px solid gray;
+    /* border-top: 1px solid gray; */
+   width: 34%;
 }
 
 .table_notification_cell {
@@ -107,13 +208,14 @@ select:focus {
 .modal-content {
     position: fixed;
     bottom: 0;
-    background-color: #fefefe;
+    background: white;
     width: 100%;
     -webkit-animation-name: slideIn;
     -webkit-animation-duration: 0.4s;
     animation-name: slideIn;
     animation-duration: 0.4s;
     border-radius: 0;
+    height: 300px
 }
 
 
@@ -232,8 +334,12 @@ select:focus {
     margin-top: 10px !important;
 }
 
-.overlay_container {
+.notificatnmsgs {
     margin-bottom: 82px !important;
+    overflow: auto !important;
+   height: 230px;
+    display: block;
+  margin-left: 129px;
 }
 
 button.tablinks.active {

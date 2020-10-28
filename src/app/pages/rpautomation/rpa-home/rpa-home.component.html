@@ -150,7 +150,7 @@
                 <span  class="run-process">
                     <select class="form-control" style="width:250px;float:right"  [(ngModel)]="selectedEnvironment">
                         <option value="" selected=true>Select Environment</option>
-                        <option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}</option>
+                        <option  *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}</option>
 
                     </select>
 

@@ -95,10 +95,10 @@
 
             <label for="botName">Bot Name*</label>
             <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name"  ngModel maxlength="30" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
-            <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" >
+            <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" class="fa fa-info-circle errspan">
               Bot Name Required*
               </div>
-              <div *ngIf="checkbotname && insertbot.get('botName').touched" style="color: red" >
+              <div *ngIf="checkbotname && insertbot.get('botName').touched" style="color: red" class="fa fa-info-circle errspan">
                 Bot Name is already exists*
               </div>
   
@@ -113,7 +113,7 @@
               <option  value=0>Attended</option>
               <option  value=1>Unattended</option>
             </select>
-            <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched" style="color: red" >
+            <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched" style="color: red" class="fa fa-info-circle errspan">
               Bot Type Required*
               </div>
 
@@ -132,7 +132,7 @@
               <option  value=3>QA</option>
 
             </select>
-            <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" >
+            <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" class="fa fa-info-circle errspan">
               Category Required*
             </div>
 
@@ -141,7 +141,7 @@
           <div class="col-md-6">
             <label for="botDescription">Bot Description</label>
             <textarea type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" ngModel maxlength="500" class="form-control" name="botDescription"  ></textarea>
-            <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" >
+            <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" class="fa fa-info-circle errspan">
               Bot Description Required*
             </div>
           </div>
