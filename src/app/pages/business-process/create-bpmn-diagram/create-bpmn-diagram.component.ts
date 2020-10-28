@@ -307,6 +307,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
         bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
+        bpmnModel["ntype"] = _self.saved_bpmn_list[_self.selected_notation]["ntype"];
         bpmnModel["modifiedTimestamp"] = new Date();
         if(_self.autosavedDiagramVersion[0]&& _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
@@ -400,6 +401,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
+    bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.id = sel_List["id"];
     bpmnModel.bpmnProcessStatus="PENDING";
@@ -438,6 +440,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
+    bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
     if(sel_List['id'])
       bpmnModel.id = sel_List['id'];
     else

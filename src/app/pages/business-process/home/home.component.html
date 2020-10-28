@@ -40,7 +40,7 @@
               <mat-panel-title>
                 <div class="row col-md-12" id="bpmn_list_row">
                   <span>{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</span>
-                  <span>BPMN</span>     <!-- A temporary type has been added to align remaining columns -->
+                  <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
                   <span>{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</span>
                   <span>{{each_diag.modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</span>
                   <span>{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</span>

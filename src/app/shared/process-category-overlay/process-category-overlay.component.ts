@@ -64,7 +64,8 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     let data;
     data = {
       "processName": this.processName,
-      "categoryName": this.categoryName =='other'?this.othercategory:this.categoryName
+      "categoryName": this.categoryName =='other'?this.othercategory:this.categoryName,
+      "notationType": this.notationType
     }
     this.slideDown(null);
     this.proceed.emit(data);
