@@ -6,6 +6,8 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import * as d3 from 'd3';
+import {curveBasis} from 'd3-shape';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 HC_more(Highcharts)
@@ -75,12 +77,59 @@ export class ProcessinsightsComponent implements OnInit {
     dChart1:any = [];
     dChart2:any = [];
 
+    // NGX Charts
+    multi: any = [];
+
+    bubbleData:any =[];
+  view: any[] = [700, 420];
+  view1:any[] = [500, 340]
+
+  // options
+  legend: boolean = false;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Duration';
+  yAxisLabel: string = 'Price';
+  timeline: boolean = true;
+  rotateXAxisTicks:boolean = true;
+  trimXAxisTicks:boolean = true;
+  autoScale: boolean = true;
+  curve:any = curveBasis;
+
+
+//   bubble chart
+legend1: boolean = false;
+legendTitle = "Activity vs Occurences"
+maxRadius: number = 20;
+minRadius: number = 5;
+yScaleMin: number = 0;
+//yScaleMax: number = 1000;
+showXAxis:boolean = true;
+showYAxis:boolean = true;
+xAxisLabel1: string = 'Activity';
+yAxisLabel1: string = 'Occurences';
+  colorScheme = {
+    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
+  colorScheme1 = {
+    domain: ['#212F3C']
+  };
+
+
+
     constructor(
         private rest: RestApiService,
         private route: ActivatedRoute,
         private dt: DataTransferService,
         private hints: PiHints
-    ) { }
+    ) {
+       // Object.assign(this, { multi });
+      // Object.assign(this.bubbleData,  this.bubbleData );
+     }
 
     ngOnInit() {
         this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -285,14 +334,16 @@ export class ProcessinsightsComponent implements OnInit {
                             //     y: duration * this.input1
                             // }
 
-                            let obj = [
-                                 e.Activity,
-                                 Math.round(duration)
-                            ]
-                            let obj2 = [
-                                 e.Activity,
-                                 Math.round(duration * this.input1)
-                            ]
+                            let obj = {
+                                name: e.Activity,
+                                value: Math.round(duration),
+                                label: Math.round(duration)+"hrs"
+                            }
+                            let obj2 = {
+                                name: e.Activity,
+                                value: Math.round(duration * this.input1),
+                                label: "$"+Math.round(duration * this.input1)
+                            }
                             if (m == 0) {
                                 obj["sliced"] = true;
                                 obj["selected"] = true;
@@ -301,12 +352,19 @@ export class ProcessinsightsComponent implements OnInit {
                             }
                             tmp.push(obj);
                             tmp2.push(obj2);
-                            adata.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
+                            adata.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                         });
                         this.activityData = adata;
+                        this.bubbleData = [{name:"", series: this.activityData}];
+                        this.colorScheme1 = {
+                            domain: ['#212F3C']
+                          };
+                        this.yAxisLabel1="Occurences";
                         activityDuration = tmp;
                         activityCost = tmp2;
-                        this.addchart2();
+                        this.dChart1 = activityDuration;
+                        this.dChart2 = activityCost;
+                        //this.addchart2();
                         this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                         this.getActivityTableData(this.activity_Metrics);
                     } else {
@@ -321,8 +379,8 @@ export class ProcessinsightsComponent implements OnInit {
                     //Activity - Duration Pie chart
                     // this.addpiechart1(activityDuration);
                     // this.addpiechart2(activityCost);
-                    this.getDonutChart1(activityDuration);
-                    this.getDonutChart2(activityCost);
+                    //this.getDonutChart1(activityDuration);
+                    //this.getDonutChart2(activityCost);
                 })
         }
     }
@@ -330,6 +388,8 @@ export class ProcessinsightsComponent implements OnInit {
     getHumanvsBotCost(vData) {
         var hCost = [];
         var rCost = [];
+        var d1 = [];
+        var d2 = [];
         var dateArray = [];
         var t_array = []
         vData.dates_data.forEach(e => {
@@ -344,7 +404,7 @@ export class ProcessinsightsComponent implements OnInit {
         });
 
         //    console.log(vData.dates_data);
-
+       
         vData.dates_data.forEach(e => {
 
             dateArray.push(moment(new Date(e.date)).format('DD/MM/YYYY'));
@@ -355,6 +415,8 @@ export class ProcessinsightsComponent implements OnInit {
             var rHours = Math.round(rDuration);
             var rFinalCost = rHours * 8;
             rCost.push(rFinalCost);
+            d1.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:humanCost})
+            d2.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:rFinalCost})
         });
 
         //this.caseIDs = this.removeDuplicate(this.caseIDs);
@@ -362,7 +424,10 @@ export class ProcessinsightsComponent implements OnInit {
         this.humanCost = hCost;
         this.robotCost = rCost;
 
-        this.addcharts()
+        this.multi = [{name:"Human Cost", series: d1},{name:'Robot Cost', series:d2}];
+
+
+    //    this.addcharts()
     }
 
     getHours(millisec) {
@@ -427,14 +492,16 @@ export class ProcessinsightsComponent implements OnInit {
                     //     name: e.Activity,
                     //     y: duration
                     // }
-                    let obj = [
-                         e.Activity,
-                         Math.round(duration)
-                    ]
-                    let obj2 = [
-                         e.Activity,
-                         Math.round(duration * this.input1)
-                    ]
+                    let obj = {
+                         name:e.Activity,
+                         value:Math.round(duration),
+                         label:Math.round(duration)+"hrs"
+                    }
+                    let obj2 = {
+                        name: e.Activity,
+                        value: Math.round(duration * this.input1),
+                        label: "$"+Math.round(duration * this.input1)
+                    }
                     
                     if (m == 0) {
                         obj["sliced"] = true;
@@ -444,19 +511,48 @@ export class ProcessinsightsComponent implements OnInit {
                     }
                     activityDuration.push(obj);
                     activityCost.push(obj2);
-                    this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
+
+                  
+
+                    this.activityData.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
+                    //this.activityData.push({name: e.Activity, x: Number(e.Frequency), y: Number(e.Frequency), r: Number(e.Frequency)});
+                   
                 });
-                this.bubbleColor = '#212F3C';
-                this.addchart2();
+                this.bubbleData = [{name:"", series: this.activityData}];
+                this.colorScheme1 = {
+                    domain: ['#212F3C']
+                  };
+
+                this.dChart1 = activityDuration;
+                this.dChart2 = activityCost;
+                //this.addchart2();
                 this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                 this.getActivityTableData(this.activity_Metrics);
                 this.isEventGraph = true;
                 //this.addpiechart1(activityDuration);
                 //this.addpiechart2(activityCost);
-                this.getDonutChart1(activityDuration);
-                this.getDonutChart2(activityCost);
+                //this.getDonutChart1(activityDuration);
+                //this.getDonutChart2(activityCost);
             })
 
+    }
+
+    pieChartLabel(series: any, name: string): string {
+        console.log(series);
+        console.log(name); 
+        return
+        const item = series.filter(data => data.name === name);
+        if (item.length > 0) {
+            return item[0].label;
+        }
+        return item.label;
+    }
+    pieChartLabel1(series: any, name: string): string {
+        const item = series.dChart2.filter(data => data.name === name);
+        if (item.length > 0) {
+            return item[0].label;
+        }
+        return name;
     }
 
     getActivityWiseHumanvsBotCost(activityMetrics) {
@@ -485,16 +581,27 @@ export class ProcessinsightsComponent implements OnInit {
         this.activityData = [];
         this.activity_Metrics.forEach((e, m) => {
             if (type && type == 'event') {
-                this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
+                this.activityData.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                 this.bubbleColor = '#212F3C';
                 this.isEventGraph = true;
+                this.bubbleData = [{name:"", series: this.activityData}];
+                this.colorScheme1 = {
+                    domain: ['#212F3C']
+                  };
+                  this.yAxisLabel1 = 'Occurences';
             } else {
 
-                this.activityData.push({ x: Math.round(this.getHours(e.Duration_range)), y: Math.round(this.getHours(e.Duration_range)), z: Math.round(this.getHours(e.Duration_range)), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
+                this.activityData.push({ x: e.Activity, y: Math.round(this.getHours(e.Duration_range)), r: Math.round(this.getHours(e.Duration_range)), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
                 this.bubbleColor = '#008080';
                 this.isEventGraph = false;
+                this.bubbleData = [{name:"", series: this.activityData}];
+                this.colorScheme1 = {
+                    domain: ['#008080']
+                  };
+                this.yAxisLabel1 = 'Duration(in hrs)';
             }
-            this.addchart2();
+            console.log(this.bubbleData);
+           // this.addchart2();
         });
     }
 

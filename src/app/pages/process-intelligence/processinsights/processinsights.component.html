@@ -101,7 +101,29 @@
     <!-- <div class="row"> -->
         <div class="col-md-12 py-4">
             <div class="col-sm-8 ">
-                <div id="costprojection" class="lineChart box_shadw"></div>
+                <!-- <div id="costprojection" class="lineChart box_shadw"></div> -->
+                <div class="l_title1"><p>Human Cost vs Robot Cost</p></div>
+                <div id="costprojection" class="lineChart box_shadw">
+                <ngx-charts-line-chart
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [legend]="legend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxis]="xAxis"
+                        [yAxis]="yAxis"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        [timeline]="timeline"
+                        [results]="multi"
+                        [rotateXAxisTicks]="rotateXAxisTicks"
+                        [autoScale]="autoScale"
+                        
+                        [maxXAxisTickLength]="10"
+                        [showRefLabels]="false"
+                        >
+                </ngx-charts-line-chart>
+                </div>
             </div>
             <div class="col-sm-4">
                 <div class="col-sm-12 box-content hedline1 box_shadw">
@@ -136,7 +158,31 @@
                         <button [class.active]="!isEventGraph" (click)="getEventBubboleGraph('throughput')">Duration</button>
                     </li>
                 </ul>
-                <div id="scatter" class=""></div>
+                 <!-- <div id="scatter" class=""></div> <br/> -->
+                 <div class="l_title"><p>Activity Vs Occurences</p></div>
+                 <div id="scatter">
+                <ngx-charts-bubble-chart
+                    [view]="view1"
+                    [scheme]="colorScheme1"
+                    [results]="bubbleData"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="legend1"
+                    [legendTitle] ="legendTitle"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabel1"
+                    [yAxisLabel]="yAxisLabel1"
+                    [xScaleMin]="xScaleMin"
+                    [xScaleMax]="xScaleMax"
+                    [yScaleMin]="yScaleMin"
+                    [maxXAxisTickLength]="8"
+                    [minRadius]="minRadius"
+                    [maxRadius]="maxRadius"
+                    [rotateXAxisTicks]="rotateXAxisTicks"
+                    [legendPosition]="top">
+                </ngx-charts-bubble-chart>
+</div>
             </div>
             <div class="col-sm-6">
                 <!-- <div class="dropdown pull-right">
@@ -220,9 +266,20 @@
                             <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
-            <div id="piechart1" class="box_shadw">
+            <div id="piechart1" class="box_shadw"> 
+                    <ngx-charts-pie-chart
+                    [view]="[400, 300]"
+                    [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C']}"
+                    [results]="dChart1"
+                    [legend]="false"
+                    [labels]="true"
+                    [doughnut]="true"
+                    [legendPosition] = "'bottom'"
+                    [legendTitle]="''"
+                    (labelFormatting)="pieChartLabel(this, dChart1)"> 
+                  </ngx-charts-pie-chart>
                 
-            </div>
+             </div>
         </div>
         <div class="col-md-5 py-4 pi-chart">
                 <!-- <div class="dropdown pull-right">
@@ -233,7 +290,17 @@
                         </div>
                     </div> -->
         <div id="piechart2" class="box_shadw">
-            
+                <ngx-charts-pie-chart
+                [view]="[400, 300]"
+                [scheme]="{domain: ['#5AA454', '#A10A28', '#C7B42C']}"
+                [results]="dChart2"
+                [legend]="false"
+                [labels]="true"
+                [doughnut]="true"
+                [legendPosition] = "'bottom'"
+                [legendTitle]="''"
+                (labelFormatting)="pieChartLabel1(this, dChart2)"> 
+              </ngx-charts-pie-chart>
         </div>
         </div>
        

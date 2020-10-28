@@ -289,4 +289,19 @@ margin-left: -20px;
   margin-left: 10px;
 }
 
-
+.l_title{
+  position: relative;
+  top: 11px;
+  left: 190px;
+  color: #333333;
+  font-size: 18px;
+  fill: #333333;
+}
+.l_title1{
+  position: relative;
+  top: 11px;
+  left: 280px;
+  color: #333333;
+  font-size: 18px;
+  fill: #333333;
+}
