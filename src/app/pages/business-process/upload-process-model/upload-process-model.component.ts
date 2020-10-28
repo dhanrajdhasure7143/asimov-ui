@@ -307,7 +307,26 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
 
 
     if(!this[modeler_obj]){
-      if(this.selectedNotationType == "bpmn"){
+      if(this.selectedNotationType == "cmmn"){
+        this[modeler_obj] = new CmmnJS({
+          additionalModules: [
+            CmmnPropertiesPanelModule,
+            CmmnPropertiesProviderModule
+          ],
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
+          propertiesPanel: {
+            parent: '#properties'
+          },
+          moddleExtensions: {
+            camunda: CmmnCamundaModdleDescriptor
+          }
+        });
+      }else if(this.selectedNotationType == "dmn"){
+        this[modeler_obj] = new DmnJS({
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1'
+        });
+
+      }else{
         this[modeler_obj] = new BpmnJS({
           linting: {
              bpmnlint: bpmnlintConfig,
@@ -333,25 +352,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
             camunda: CamundaModdleDescriptor
           }
         });
-      }else if(this.selectedNotationType == "cmmn"){
-        this[modeler_obj] = new CmmnJS({
-          additionalModules: [
-            CmmnPropertiesPanelModule,
-            CmmnPropertiesProviderModule
-          ],
-          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
-          propertiesPanel: {
-            parent: '#properties'
-          },
-          moddleExtensions: {
-            camunda: CmmnCamundaModdleDescriptor
-          }
-        });
-      }if(this.selectedNotationType == "dmn"){
-        this[modeler_obj] = new DmnJS({
-          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1'
-        });
-
       }
 
       if(this.confBpmnModeler){
