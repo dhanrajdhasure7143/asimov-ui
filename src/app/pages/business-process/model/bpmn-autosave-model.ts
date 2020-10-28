@@ -7,10 +7,11 @@ export class BpmnModel{
     bpmnNotationAutomationTask:string;
     bpmnNotationHumanTask:string;
     bpmnProcessApproved:number;
-    userName:string; 
+    userName:string;
     tenantId:string;
     processIntelligenceId:number;
     id:number;
+    ntype:string;
     userEmail:string;
     approverEmail:string;
     category:string;
@@ -21,4 +22,5 @@ export class BpmnModel{
     notationFromPI:boolean = false;
     hasConformance:boolean = false;
     bpmnConfProcessMeta:string = "";
+    ntype:string = "";
 }

@@ -1,3 +1,7 @@
+.diagram-parent{
+    position: relative;
+}
+
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */

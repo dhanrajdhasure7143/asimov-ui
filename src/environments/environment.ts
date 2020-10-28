@@ -35,31 +35,26 @@ export const environment = {
   data_path:"/var/kafka"
 
 
-  // //  * QA ENV URl's
-   
-  /*
-     pi_url: 'http://piqa.epsoftinc.in',
-     bps_url: 'http://bpsqa.epsoftinc.in',
-     rpa_url: 'http://rpaqa.epsoftinc.in',
-     loopback_url: 'http://10.11.0.107:3000',
-     idm_url:'http://idmqa.epsoftinc.in',
-      //for Auto build
-        pi_node_url: "http://10.11.0.108:3000",
-  //for local environment
-     //pi_node_url: "http://pinodedev.epsoftinc.in:3000",
-     auth_url: "http://authqa.epsoftinc.in",
-
-     platform_url:'http://apqa.epsoftinc.in',
+  //  * QA ENV URl's
+  //   pi_url: 'http://piqa.epsoftinc.in',
+  //   bps_url: 'http://bpsqa.epsoftinc.in',
+  //   rpa_url: 'http://rpaqa.epsoftinc.in',
+  //   loopback_url: 'http://10.11.0.107:3000',
+  //   idm_url:'http://idmqa.epsoftinc.in',
+  //   pi_node_url: "http://pinodedev.epsoftinc.in:3000",
+  //   auth_url: "http://authqa.epsoftinc.in",
+  //   platform_url:'http://apqa.epsoftinc.in',
+    
   // // Aiotal redirection urls 
-    myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
-    logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
+  //  myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
+  //  logout_url: 'http://eiapcloudqa.epsoftinc.in',
 
-   // PI Connectors
-    connector_topic: 'tyty',
+  // // PI Connectors
+  //  connector_topic: 'tyty',
 
   // //DB Connector
-    dbConnectorHost: "10.11.0.104",
-    dbName: 'eiap_qa'*/
+  //  dbConnectorHost: "10.11.0.104",
+  //  dbName: 'eiap_qa'
 };
 
 /*

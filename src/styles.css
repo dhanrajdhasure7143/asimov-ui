@@ -1,9 +1,18 @@
 @import "~bpmn-js/dist/assets/diagram-js.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
+@import "~cmmn-js/dist/assets/cmmn-font/css/cmmn.css";
+@import "~dmn-js/dist/assets/dmn-js-shared.css";
+@import "~dmn-js/dist/assets/dmn-js-drd.css";
+@import "~dmn-js/dist/assets/dmn-js-decision-table.css";
+@import "~dmn-js/dist/assets/dmn-js-decision-table-controls.css";
+@import "~dmn-js/dist/assets/dmn-js-literal-expression.css";
+@import "~dmn-js/dist/assets/dmn-font/css/dmn.css";
 @import "enjoyhint/enjoyhint.css";
 @import "~angular-notifier/styles";
 @import "~bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
+@import "~cmmn-js-properties-panel/dist/assets/cmmn-js-properties-panel.css";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~bpmn-js-bpmnlint/dist/assets/css/bpmn-js-bpmnlint.css';
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 body, html {
@@ -100,6 +109,17 @@ body, html {
 .as-split-gutter{
   background-color: #94949c !important
 }
+.bjs-powered-by{
+  position: absolute;
+  bottom: 50px !important;
+  right: 65px !important;
+  z-index: 100;
+}
+.bpmn-icon-rpa::before{
+  content: url('assets/images/robothand_icon.svg');
+  width: 20px;
+  height: 20px;
+}
 /* notifications to right */
 notifier-notification{
     position: absolute;
@@ -110,9 +130,9 @@ notifier-notification{
 ngx-dropzone{
   border: none !important;
 }
-.djs-container svg{
+/* .djs-container svg{
   margin-left: 85px;
-}
+} */
 .bps_overlay .djs-container svg{
   margin-left: 5px;
 }
@@ -124,9 +144,6 @@ div[class^='diagram_container'] .djs-palette{
 }
 div[class^='diagram_container'] .djs-container svg{
   margin-left: 5px;
-}
-.bjs-powered-by{
-  display:none !important;/* Against the license agreement */
 }
 /*spinner styles*/
 .spincenter {
@@ -271,6 +288,10 @@ a.nav-link.active {
 .mat-progress-spinner circle{
   stroke: #0062cf;
 }
+/*dmn */
+.dmn-js-parent svg{
+  height: 72vh;
+}
 
 /*BPMN PROPERTIES PANEL*/
 .bpp-properties-panel{
@@ -410,23 +431,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         height: auto;
         width: auto;
         }
- 
+
    .node{
         fill: #fff;
       }
-    
+
     .edgePath path {
     stroke: #4c4c4c;
     fill: none;
     stroke-width: 0.3px;
     /* stroke-width: 1.5px; */
-   
+
     }
     /* svg {
      overflow: scroll !important;
     } */
 
- 
+
  div#tooltip_template span ul, .tipsy-inner ul {
   list-style: none;
   padding: 0px;
@@ -546,7 +567,7 @@ div.tipsy.tipsy-e{
   to {
     stroke-dashoffset: 0;
   }
-  
+
 }
 .label{
   color: black !important;
@@ -575,6 +596,9 @@ foreignObject{
   padding: 0px 10px;
 }
 
+.myPanelDownClass{
+  margin-top: 23px;
+}
 
 
 
