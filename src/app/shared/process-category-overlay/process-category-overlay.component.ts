@@ -28,7 +28,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   isBpmnModule: boolean = false;
 
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
-  constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute) { }
+  constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript) { }
 
   ngOnInit() {
     if(this.data){
