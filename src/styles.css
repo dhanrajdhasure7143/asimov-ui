@@ -1,6 +1,6 @@
 @import "~bpmn-js/dist/assets/diagram-js.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
-/* @import "~cmmn-js/dist/assets/cmmn-font/css/cmmn.css"; */
+@import "~cmmn-js/dist/assets/cmmn-font/css/cmmn.css";
 @import "enjoyhint/enjoyhint.css";
 @import "~angular-notifier/styles";
 @import "~bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
@@ -101,6 +101,12 @@ body, html {
 }
 .as-split-gutter{
   background-color: #94949c !important
+}
+.bjs-powered-by{
+  position: absolute;
+  bottom: 50px !important;
+  right: 65px !important;
+  z-index: 100;
 }
 .bpmn-icon-rpa::before{
   content: url('assets/images/robothand_icon.svg');
@@ -623,9 +629,4 @@ foreignObject{
   to {
     stroke-dashoffset: 0;
   }
-}
-
-.bjsl-button {
-  bottom: 40px !important;
- 
 }
