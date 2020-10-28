@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
-import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+//import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
@@ -16,6 +16,8 @@ import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import * as bpmnlintConfig from '../model/packed-config';
+import { DndModule } from 'ngx-drag-drop';
+import lintModule from 'bpmn-js-bpmnlint';
 declare var require:any;
 
 @Component({
@@ -49,6 +51,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
   updated_date_time;
   keyboardLabels=[];
   fileType:string = "svg";
+  selectedNotationType:string;
+  displayNotation;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
@@ -98,6 +102,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.getAutoSavedDiagrams();
     });
    }
+
+   
 
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
@@ -151,6 +157,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
         this.filterAutoSavedDiagrams();
       if(!this.bpmnModeler)
         this.initiateDiagram();
+    },
+    err => {
+      if(!this.bpmnModeler)
+        this.initiateDiagram();
     });
    }
    filterAutoSavedDiagrams(){
@@ -168,7 +178,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }
   }
   // ngAfterViewInit(){
-    initiateDiagram(){
+  initiateDiagram(){
     let _self = this;
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     this.bpmnModeler = new BpmnJS({
@@ -180,7 +190,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
         PropertiesPanelModule,
         PropertiesProviderModule,
         {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-        {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]}
+        {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+        lintModule
       ],
       container: '#canvas',
       keyboard: {

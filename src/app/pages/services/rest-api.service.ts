@@ -47,7 +47,7 @@ export class RestApiService{
   public ipAddress:string;
 
   getAccessToken(){
-    let data = {"userId":"venkata.simhadri@epsoftinc.com",
+    let data = {"userId":"venkata.simhadri@epsoftinc.com",//"nethan.price@guerrillamailblock.com",
                 "password":"Welcome@123"};
 
 
@@ -126,6 +126,10 @@ export class RestApiService{
   }
   attribute(data:any){
   return this.http.get('/rpa-service/get-attributes/'+data)
+  }
+
+  getAllAttributes(){
+    return this.http.get('/rpa-service/fetch-attributes/all-tasks')
   }
   
   async saveBot(data:any)
