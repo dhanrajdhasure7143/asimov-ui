@@ -22,9 +22,10 @@
           </mat-form-field>
         </div>
       </div>
-    
+
       <div class="row col-md-12 text-bold workspace-title">
         <span mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></span>
+        <span><b>Type</b></span>
         <span  (click)="sort('version',1)"><b>Version<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></span>
         <span  (click)="sort('modifiedTimestamp',2)"><b>Last Modified<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></span>
         <span  (click)="sort('approverName',3)"><b>Approver<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></span>
@@ -39,13 +40,14 @@
               <mat-panel-title>
                 <div class="row col-md-12" id="bpmn_list_row">
                   <span>{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</span>
+                  <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
                   <span>{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</span>
                   <span>{{each_diag.modifiedTimestamp | date:'MM/dd/yyyy HH:mm:ss':'UTC'}}</span>
                   <span>{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</span>
-                  <span  [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"> <p [class.pending_value_properties]= "each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</p> </span>                  
+                  <span  [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"> <p [class.pending_value_properties]= "each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</p> </span>
                   <span>
                     <span class="comment">
-                      <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i> 
+                      <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i>
                     </span>
                   </span>
                   <span>
@@ -58,7 +60,7 @@
             </mat-expansion-panel-header>
             <div class="bps_overlay">
               <span class="info" *ngIf="(each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus != 'PENDING')||(!each_diag.bpmnProcessStatus) ">Click to open</span>
-             <span><button title="Fit to the view port" class="right header_btn fit_button" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button></span>    
+             <span><button title="Fit to the view port" class="right header_btn fit_button" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button></span>
              <span class="info" *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
              <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)"></div>
             </div>
@@ -70,5 +72,5 @@
   </div>
 </div>
 <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
-  <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
+  <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner>
   </div></div>

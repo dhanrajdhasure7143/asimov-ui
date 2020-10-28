@@ -4,7 +4,7 @@ import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
-import { NgxSpinnerService } from "ngx-spinner"; 
+import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
 import {MatDialog} from '@angular/material';
@@ -70,7 +70,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.getApproverList();
     this.getUserBpmnList();
   }
- 
+
   // ngOnDestroy(){
   //   // if(this.isDiagramChanged){
   //     Swal.fire({
@@ -93,8 +93,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.saved_bpmn_list = res.filter(each_bpmn => {
         return each_bpmn.bpmnProcessStatus?each_bpmn.bpmnProcessStatus.toLowerCase() != "pending":true;
-      }); 
-      this.getSelectedNotation(); 
+      });
+      this.getSelectedNotation();
       // this.selected_notation = 0;
       this.notationListOldValue = 0;
       this.isLoading = false;
@@ -107,7 +107,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
-      if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString() 
+      if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()
           && each_bpmn.version >= 0 && this.selected_version == each_bpmn.version){
           this.selected_notation = i;
       }
@@ -125,7 +125,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
    getApproverList(){
      this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
       if(Array.isArray(res))
-        this.approver_list = res; 
+        this.approver_list = res;
     });
    }
 
@@ -153,7 +153,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
    getAutoSavedDiagrams(){
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
       if(Array.isArray(res))
-        this.autosavedDiagramList = res; 
+        this.autosavedDiagramList = res;
         this.filterAutoSavedDiagrams();
       if(!this.bpmnModeler)
         this.initiateDiagram();
@@ -220,14 +220,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
         _self.last_updated_time = now;
       }
     })
-    let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation 
-    // let selected_xml = this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation // this.bpmnservice.getBpmnData();  
+    let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
       this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
     }
-    let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml))); 
-    this.displayNotation = decrypted_bpmn
+    let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml)));
     this.bpmnModeler.importXML(decrypted_bpmn, function(err){
       _self.oldXml = decrypted_bpmn.trim();
       _self.newXml = decrypted_bpmn.trim();
@@ -235,24 +233,24 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   setUrlParam(name, value) {
- 
+
     var url = new URL(window.location.href);
-  
+
     if (value) {
       url.searchParams.set(name, '1');
     } else {
       url.searchParams.delete(name);
     }
-  
+
     window.history.replaceState({}, null, url.href);
   }
-  
+
    getUrlParam(name) {
     var url = new URL(window.location.href);
-  
+
     return url.searchParams.has(name);
   }
-  
+
   displayBPMN(){
     let value = this.notationListOldValue;
     let _self = this;
@@ -308,7 +306,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }
     this.getSelectedApprover();
   }
- 
+
   autoSaveBpmnDiagram(){
     let bpmnModel={};
     let _self = this;
@@ -320,6 +318,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         bpmnModel["bpmnProcessMeta"] = btoa(unescape(encodeURIComponent(_self.newXml)));
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
         bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
+        bpmnModel["ntype"] = _self.saved_bpmn_list[_self.selected_notation]["ntype"];
         bpmnModel["modifiedTimestamp"] = new Date();
         if(_self.autosavedDiagramVersion[0]&& _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
@@ -360,7 +359,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     link.click();
   }
 
- 
+
   downloadBpmn(){
     if(this.bpmnModeler){
       let _self = this;
@@ -413,6 +412,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnModelId= sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName=sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
+    bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.id = sel_List["id"];
     bpmnModel.bpmnProcessStatus="PENDING";
@@ -440,7 +440,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
         })
     })
   }
-  
+
   saveprocess(newVal){
     this.isDiagramChanged = false;
     this.isLoading = true;
@@ -451,6 +451,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.category = sel_List['category'];
+    bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
     if(sel_List['id'])
       bpmnModel.id = sel_List['id'];
     else
@@ -520,7 +521,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.isLoading = false;
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
-        message = "Please upload proper *.bpmn file";
+        message = "Please upload proper notation";
       this.global.notify(message, "error");
     }
   }
@@ -528,6 +529,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
      this.dialog.open(this.keyboardShortcut);
 
   }
-  
+
 }
 

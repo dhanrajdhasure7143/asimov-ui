@@ -94,6 +94,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   pidId;
   isfromApprover: any=false;
   showProps: boolean=false;
+  ntype: string;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
@@ -303,8 +304,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     var CmmnCamundaModdleDescriptor = require("camunda-cmmn-moddle/resources/camunda.json");
      //var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-    
- 
+
+
     if(!this[modeler_obj]){
       if(this.selectedNotationType == "bpmn"){
         this[modeler_obj] = new BpmnJS({
@@ -362,7 +363,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this[modeler_obj].on('linting.toggle', function(event) {
 
         var active = event.active;
-      
+
         _self.setUrlParam('linting', active);
       });
       this[modeler_obj].on('element.changed', function(){
@@ -411,21 +412,21 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   }
 
    setUrlParam(name, value) {
- 
+
     var url = new URL(window.location.href);
-  
+
     if (value) {
       url.searchParams.set(name, '1');
     } else {
       url.searchParams.delete(name);
     }
-  
+
     window.history.replaceState({}, null, url.href);
   }
-  
+
    getUrlParam(name) {
     var url = new URL(window.location.href);
-  
+
     return url.searchParams.has(name);
   }
 
@@ -548,6 +549,7 @@ displayBPMN(){
     if(!(this.isShowConformance && !this.reSize)){
       bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
       bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
+      bpmnModel["ntype"] = _self.saved_bpmn_list[_self.selected_notation]["ntype"];
       if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
         bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
         bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
@@ -720,6 +722,7 @@ displayBPMN(){
   if(this.isShowConformance){
     bpmnModel.notationFromPI = true;
     bpmnModel.bpmnProcessName = this.processName;
+    bpmnModel.ntype = this.ntype;
     bpmnModel.category = this.category;
     bpmnModel.processIntelligenceId = this.pid;
     let match = this.full_saved_bpmn_list.filter(each_diag => {
@@ -735,6 +738,7 @@ displayBPMN(){
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
+    bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.id = sel_List["id"];
   }
@@ -792,6 +796,7 @@ displayBPMN(){
       status = "INPROGRESS";
       bpmnModel.bpmnProcessName = this.processName;
       bpmnModel.category = this.category;
+      bpmnModel.ntype = this.ntype;
       bpmnModel.processIntelligenceId = parseInt(this.pid);
       let match = this.full_saved_bpmn_list.filter(each_diag => {
         return each_diag.bpmnProcessName == this.processName && each_diag.processIntelligenceId && each_diag.processIntelligenceId == this.pid
@@ -809,6 +814,7 @@ displayBPMN(){
       bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
       bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
       bpmnModel.category = sel_List['category'];
+      bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
       if(sel_List['id'])
         bpmnModel.id = sel_List['id'];
       else

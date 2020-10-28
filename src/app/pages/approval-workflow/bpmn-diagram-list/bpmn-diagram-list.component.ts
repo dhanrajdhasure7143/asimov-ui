@@ -43,7 +43,7 @@ export class BpmnDiagramListComponent implements OnInit {
     this.bpmnlist();
     this.dt.changeHints(this.hints.bpsApprovalHomeHints);
   }
-  getColor(status) { 
+  getColor(status) {
     switch (status) {
       case 'PENDING':
         return 'orange';
@@ -150,7 +150,7 @@ this.selectedrow =i;
      this.rest_Api.bpmnlist().subscribe(data => {
       this.isLoading = false;
       this.griddata = data;
-      this.griddata.map(item => {item.xpandStatus = false;return item;}) 
+      this.griddata.map(item => {item.xpandStatus = false;return item;})
       this.disable_panels();
      });
    }
@@ -160,7 +160,7 @@ this.selectedrow =i;
        this.griddata[this.index].xpandStatus=false;
    }
 
-   
+
   approveDiagram(data) {
     let disabled_items = localStorage.getItem("pending_bpmnId")
     let saved_id = disabled_items && disabled_items !="null" && disabled_items != "" ? disabled_items+ ","+data.id: data.id;
@@ -171,32 +171,33 @@ this.selectedrow =i;
       // "bpmnJsonNotation": data.bpmnJsonNotation,
       "bpmnModelId": data.bpmnModelId,
       "bpmnProcessApproved": data.bpmnProcessApproved,
-      "bpmnProcessName": data.bpmnProcessName, 
+      "bpmnProcessName": data.bpmnProcessName,
       "bpmnProcessStatus": "APPROVED",
       "bpmnXmlNotation": data.bpmnXmlNotation,
-      "category": data.category, 
+      "category": data.category,
       "createdTimestamp": data.createdTimestamp,
       "approverEmail": data.approverEmail,
       "userEmail": data.userEmail,
       "id": data.id,
       "modifiedTimestamp": new Date(),
-      "processIntelligenceId": data.processIntelligenceId, 
+      "processIntelligenceId": data.processIntelligenceId,
       "reviewComments":data.reviewComments,
       "tenantId": data.tenantId,
       "userName": data.userName,
-      "version": data.version
-    }; 
+      "version": data.version,
+      "ntype": data.ntype
+    };
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
-      data =>{ 
+      data =>{
         let message = "Notation submitted for approval"; //this has to change after approval API
         this.bpmnlist();
-        this.global.notify(message,'success'); 
+        this.global.notify(message,'success');
       },
       err=>{
         let message = "Oops! Something went wrong";
-        this.global.notify(message,'error'); 
+        this.global.notify(message,'error');
     });
-    this.bpmnlist(); 
+    this.bpmnlist();
   }
 
   disable_panels(){
@@ -209,7 +210,7 @@ this.selectedrow =i;
         each_bpmn.bpmnProcessInfo.forEach(each_child_bpmn => {
           if(panel_array.indexOf(each_child_bpmn.id.toString()) > -1){
             each_child_bpmn.isDisabled = true;
-          } 
+          }
           // else {
           //   each_bpmn.isDisabled = false;
           // }
@@ -230,7 +231,7 @@ this.selectedrow =i;
   }
 
    denyDiagram(data, parentInfo) {
-     let reqObj = { 
+     let reqObj = {
       "bpmnApprovalId": parentInfo.bpmnApprovalId,
       "bpmnProcessInfo": {
         "createdTimestamp": data.createdTimestamp,
@@ -248,14 +249,15 @@ this.selectedrow =i;
         "userName": data.userName,
         "bpmnXmlNotation":data.bpmnXmlNotation,
         "approverName": data.approverName,
+        "ntype": data.ntype,
         // "bpmnJsonNotation":data.bpmnJsonNotation,
         "processIntelligenceId": data.processIntelligenceId,
         "category": data.category
       },
       "approvalStatus": "REJECTED",
-      "rejectedBy": data.approverName, 
+      "rejectedBy": data.approverName,
       "approvedBy":  data.approverName,
-      "role": parentInfo.role, 
+      "role": parentInfo.role,
       "remarks":data.reviewComments
     }
     this.rest_Api.denyDiagram(reqObj).subscribe(
