@@ -149,6 +149,9 @@ margin-right: -85px;
 .bps_overlay .djs-palette{
   display: none;
 }
+.djs-palette{
+  zoom: 0.7
+}
 .bps_overlay .info{
   border: 1px solid #cf7800;
   border-radius: 20px;
@@ -312,8 +315,8 @@ margin-right: -85px;
   margin-right: 0;
 }
 .bjs-container{
-  zoom: 0.8;
-  margin-top: 40px;
+  /* zoom: 0.8; */
+  /* margin-top: 40px; */
 }
 .canvasOpt{
   display: inline-block;

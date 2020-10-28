@@ -3,6 +3,10 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
+import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
+import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
+import CmmnPropertiesProviderModule from 'cmmn-js-properties-panel/lib/provider/camunda';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import CustomRenderer from "../bpmn-props-additional-tabs/customRenderer";
@@ -84,6 +88,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   pivalues:any;
   processName:string;
   fileType:string = "svg";
+  selectedNotationType:string;
   category:string;
   randomNumber;
   pidId;
@@ -103,6 +108,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.selected_version = params['ver'];
       this.category = params['category'];
       this.processName = params['processName'];
+      this.selectedNotationType = params['ntype'];
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.pid=params['pid'];
       this.isfromApprover=params['isfromApprover'] == 'true';
@@ -128,7 +134,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     this.getApproverList();
    }
-
+   
 
    ngAfterViewInit(){
     if(this.isShowConformance)
@@ -139,30 +145,35 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   }
 
   setRPAData(){
-    this.rest.toolSet().subscribe( res => {
+    this.rest.getAllAttributes().subscribe( res => {
       let rpaActivityOptions: any[] = [];
-      let taskListsArr:any = {};
+      let taskLists:any = {};
+      let taskAttributes:any = {};
       if(res["General"]){
         res["General"].forEach((each) => {
-            rpaActivityOptions.push({name:each.name, value: each.name});
-            taskListsArr[each.name]= each.taskList;
+          rpaActivityOptions.push({name:each.name, value: each.name});
+          let tmpTasks = [];
+          each.taskList.forEach((each_task) => {
+            tmpTasks.push({name:each_task.name, value: each_task.taskId})
+            taskAttributes[each_task.taskId] = each_task.value;
+          })
+          taskLists[each.name]= tmpTasks;
         })
       }
       if(res["Advanced"]){
         res["Advanced"].forEach((each) => {
-            rpaActivityOptions.push({name:each.name, value: each.name});
-            taskListsArr[each.name]= each.taskList;
+          rpaActivityOptions.push({name:each.name, value: each.name});
+          let tmpTasks = [];
+          each.taskList.forEach((each_task) => {
+            tmpTasks.push({name:each_task.name, value: each_task.taskId})
+            taskAttributes[each_task.taskId] = each_task.value;
+          })
+          taskLists[each.name]= tmpTasks;
         });
       }
-      Object.keys(taskListsArr).forEach((each_key)=>{
-        let tmp = [];
-        taskListsArr[each_key].forEach(tlst => {
-          tmp.push({name:tlst.name, value: tlst.taskId})
-        });
-        taskListsArr[each_key]=tmp;
-      })
       localStorage.setItem("rpaActivityOptions", JSON.stringify(rpaActivityOptions))
-      localStorage.setItem("rpaActivityTaskListOptions", JSON.stringify(taskListsArr))
+      localStorage.setItem("rpaActivityTaskListOptions", JSON.stringify(taskLists))
+      localStorage.setItem("attributes", JSON.stringify(taskAttributes))
     })
   }
    fetchBpmnNotationFromPI(){
@@ -212,7 +223,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
-
+      
     }
     if(!this.isShowConformance){
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]};
@@ -243,6 +254,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(Array.isArray(res))
         this.autosavedDiagramList = res;
       this.filterAutoSavedDiagrams();
+      if(!this.bpmnModeler)
+        this.initiateDiagram();
+    },
+    err => {
       if(!this.bpmnModeler)
         this.initiateDiagram();
     });
@@ -285,36 +300,58 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   initiateDiagram(){
     let _self=this;
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
+    var CmmnCamundaModdleDescriptor = require("camunda-cmmn-moddle/resources/camunda.json");
      //var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     
  
     if(!this[modeler_obj]){
-      this[modeler_obj] = new BpmnJS({
-        linting: {
-           bpmnlint: bpmnlintConfig,
-           active: _self.getUrlParam('linting')
-        },
-        additionalModules: [
-          PropertiesPanelModule,
-          PropertiesProviderModule,
-          {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
-          // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
-          // CustomRenderer,
-          lintModule
-        ],
-        container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
-        keyboard: {
-          bindTo: window
-        },
-        propertiesPanel: {
-          parent: '#properties'
-        },
-        moddleExtensions: {
-          camunda: CamundaModdleDescriptor
-        }
-      });
+      if(this.selectedNotationType == "bpmn"){
+        this[modeler_obj] = new BpmnJS({
+          linting: {
+             bpmnlint: bpmnlintConfig,
+             active: _self.getUrlParam('linting')
+          },
+          additionalModules: [
+            PropertiesPanelModule,
+            PropertiesProviderModule,
+            {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
+            {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+            // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
+            // CustomRenderer,
+            lintModule
+          ],
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
+          keyboard: {
+            bindTo: window
+          },
+          propertiesPanel: {
+            parent: '#properties'
+          },
+          moddleExtensions: {
+            camunda: CamundaModdleDescriptor
+          }
+        });
+      }else if(this.selectedNotationType == "cmmn"){
+        this[modeler_obj] = new CmmnJS({
+          additionalModules: [
+            CmmnPropertiesPanelModule,
+            CmmnPropertiesProviderModule
+          ],
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
+          propertiesPanel: {
+            parent: '#properties'
+          },
+          moddleExtensions: {
+            camunda: CmmnCamundaModdleDescriptor
+          }
+        });
+      }if(this.selectedNotationType == "dmn"){
+        this[modeler_obj] = new DmnJS({
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1'
+        });
+
+      }
 
       if(this.confBpmnModeler){
         this.confBpmnModeler.on('element.changed', function(){

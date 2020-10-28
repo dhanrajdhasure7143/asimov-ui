@@ -16,6 +16,7 @@ import { GlobalScript } from '../../../shared/global-script';
 import { BpsHints } from '../model/bpmn-module-hints';
 import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import * as bpmnlintConfig from '../model/packed-config';
+import { DndModule } from 'ngx-drag-drop';
 import lintModule from 'bpmn-js-bpmnlint';
 declare var require:any;
 
@@ -50,6 +51,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
   updated_date_time;
   keyboardLabels=[];
   fileType:string = "svg";
+  selectedNotationType:string;
+  displayNotation;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
@@ -99,6 +102,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.getAutoSavedDiagrams();
     });
    }
+
+   
 
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
@@ -152,6 +157,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
         this.filterAutoSavedDiagrams();
       if(!this.bpmnModeler)
         this.initiateDiagram();
+    },
+    err => {
+      if(!this.bpmnModeler)
+        this.initiateDiagram();
     });
    }
    filterAutoSavedDiagrams(){
@@ -169,7 +178,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }
   }
   // ngAfterViewInit(){
-    initiateDiagram(){
+  initiateDiagram(){
     let _self = this;
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     this.bpmnModeler = new BpmnJS({
@@ -212,11 +221,13 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
     let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation 
+    // let selected_xml = this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation // this.bpmnservice.getBpmnData();  
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
       this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
     }
     let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml))); 
+    this.displayNotation = decrypted_bpmn
     this.bpmnModeler.importXML(decrypted_bpmn, function(err){
       _self.oldXml = decrypted_bpmn.trim();
       _self.newXml = decrypted_bpmn.trim();

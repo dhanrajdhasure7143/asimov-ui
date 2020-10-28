@@ -1,9 +1,16 @@
 @import "~bpmn-js/dist/assets/diagram-js.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 @import "~cmmn-js/dist/assets/cmmn-font/css/cmmn.css";
+@import "~dmn-js/dist/assets/dmn-js-shared.css";
+@import "~dmn-js/dist/assets/dmn-js-drd.css";
+@import "~dmn-js/dist/assets/dmn-js-decision-table.css";
+@import "~dmn-js/dist/assets/dmn-js-decision-table-controls.css";
+@import "~dmn-js/dist/assets/dmn-js-literal-expression.css";
+@import "~dmn-js/dist/assets/dmn-font/css/dmn.css";
 @import "enjoyhint/enjoyhint.css";
 @import "~angular-notifier/styles";
 @import "~bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
+@import "~cmmn-js-properties-panel/dist/assets/cmmn-js-properties-panel.css";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~bpmn-js-bpmnlint/dist/assets/css/bpmn-js-bpmnlint.css';
 /* @import "assets/css/global.css"; */
@@ -280,6 +287,10 @@ a.nav-link.active {
 }
 .mat-progress-spinner circle{
   stroke: #0062cf;
+}
+/*dmn */
+.dmn-js-parent svg{
+  height: 72vh;
 }
 
 /*BPMN PROPERTIES PANEL*/
