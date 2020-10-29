@@ -7,6 +7,9 @@ import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
 import CmmnPropertiesProviderModule from 'cmmn-js-properties-panel/lib/provider/camunda';
+import DmnPropertiesPanelModule from 'dmn-js-properties-panel';
+import DmnPropertiesProviderModule from 'dmn-js-properties-panel/lib/provider/dmn';
+import DrdAdapterModule from 'dmn-js-properties-panel/lib/adapter/drd';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import CustomRenderer from "../bpmn-props-additional-tabs/customRenderer";
@@ -305,7 +308,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
      //var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
 
-
     if(!this[modeler_obj]){
       if(this.selectedNotationType == "cmmn"){
         this[modeler_obj] = new CmmnJS({
@@ -325,7 +327,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this[modeler_obj] = new DmnJS({
           container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1'
         });
-
       }else{
         this[modeler_obj] = new BpmnJS({
           linting: {
@@ -890,7 +891,7 @@ displayBPMN(){
    }
 
 
-   uploadConfBpmn(confBpmnData){
+  uploadConfBpmn(confBpmnData){
     let _self = this;
     let decrypted_data = atob(unescape(encodeURIComponent(confBpmnData)));
     this.isLoading = true;

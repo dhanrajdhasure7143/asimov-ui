@@ -1,6 +1,12 @@
 import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
-//import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
+import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
+import CmmnPropertiesProviderModule from 'cmmn-js-properties-panel/lib/provider/camunda';
+import DmnPropertiesPanelModule from 'dmn-js-properties-panel';
+import DmnPropertiesProviderModule from 'dmn-js-properties-panel/lib/provider/dmn';
+import DrdAdapterModule from 'dmn-js-properties-panel/lib/adapter/drd';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
@@ -51,7 +57,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   updated_date_time;
   keyboardLabels=[];
   fileType:string = "svg";
-  selectedNotationType:string;
+  selectedNotationType:string; 
   displayNotation;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
@@ -181,47 +187,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
   // ngAfterViewInit(){
   initiateDiagram(){
     let _self = this;
-    var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
-    this.bpmnModeler = new BpmnJS({
-      linting: {
-        bpmnlint: bpmnlintConfig,
-        active: _self.getUrlParam('linting')
-     },
-      additionalModules: [
-        PropertiesPanelModule,
-        PropertiesProviderModule,
-        {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-        {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
-        lintModule
-      ],
-      container: '#canvas',
-      keyboard: {
-        bindTo: window
-      },
-      propertiesPanel: {
-        parent: '#properties'
-      },
-      moddleExtensions: {
-        camunda: CamundaModdleDescriptor
-      }
-    });
-    // this.bpmnModeler = new CmmnJS({
-    //   container: '#canvas',
-    //   propertiesPanel: {
-    //     parent: '#properties'
-    //   }
-    // })
-    let canvas = this.bpmnModeler.get('canvas');
-    canvas.zoom('fit-viewport');
-    this.bpmnModeler.on('element.changed', function(){
-      _self.isDiagramChanged = true;
-      let now = new Date().getTime();
-      if(now - _self.last_updated_time > 10*1000){
-        _self.autoSaveBpmnDiagram();
-        _self.last_updated_time = now;
-      }
-    })
-    let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation
+    this.initModeler();    
+    let selected_xml = this.bpmnservice.getBpmnData();
+    if(!selected_xml)
+      selected_xml = this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
       this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
@@ -277,11 +246,14 @@ export class CreateBpmnDiagramComponent implements OnInit {
           this.notationListOldValue = this.selected_notation;
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+          this.selectedNotationType = current_bpmn_info["ntype"];
+          this.fileType = "svg";
           this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
             this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
           }
+          this.initModeler();
           this.bpmnModeler.importXML(selected_xml, function(err){
             _self.oldXml = selected_xml;
             _self.newXml = selected_xml;
@@ -295,10 +267,13 @@ export class CreateBpmnDiagramComponent implements OnInit {
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+      this.selectedNotationType = current_bpmn_info["ntype"];
+      this.fileType = "svg";
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
       }
+      this.initModeler();
       this.bpmnModeler.importXML(selected_xml, function(err){
         _self.oldXml = selected_xml;
         _self.newXml = selected_xml;
@@ -364,7 +339,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   downloadBpmn(){
     if(this.bpmnModeler){
       let _self = this;
-      if(this.fileType == "bpmn"){
+      if(this.fileType == this.selectedNotationType){
         this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
           var blob = new Blob([xml], { type: "application/xml" });
           var url = window.URL.createObjectURL(blob);
@@ -397,6 +372,85 @@ export class CreateBpmnDiagramComponent implements OnInit {
           }
         });
       }
+    }
+  }
+  initModeler(){
+    let _self = this;
+    if(this.bpmnModeler){
+      document.getElementById("canvas").innerHTML = ""
+      document.getElementById("properties").innerHTML = ""
+    }
+    var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
+    var CmmnCamundaModdleDescriptor = require("camunda-cmmn-moddle/resources/camunda.json");
+    var DmnCamundaModdleDescriptor = require("camunda-dmn-moddle/resources/camunda.json");
+    if(this.selectedNotationType == "cmmn"){
+      this.bpmnModeler = new CmmnJS({
+        additionalModules: [
+          CmmnPropertiesPanelModule,
+          CmmnPropertiesProviderModule
+        ],
+        container: '#canvas',
+        propertiesPanel: {
+          parent: '#properties'
+        },
+        moddleExtensions: {
+          camunda: CmmnCamundaModdleDescriptor
+        }
+      });
+    }else if(this.selectedNotationType == "dmn"){
+      this.bpmnModeler = new DmnJS({
+        drd: {
+          additionalModules: [
+            DmnPropertiesPanelModule,
+            DmnPropertiesProviderModule,
+            DrdAdapterModule
+          ],
+          propertiesPanel: {
+            parent: '#properties'
+          }
+        },
+        container: '#canvas',
+        moddleExtensions: {
+          camunda: DmnCamundaModdleDescriptor
+        }
+      });
+
+    }else{
+      this.bpmnModeler = new BpmnJS({
+        linting: {
+           bpmnlint: bpmnlintConfig,
+           active: _self.getUrlParam('linting')
+        },
+        additionalModules: [
+          PropertiesPanelModule,
+          PropertiesProviderModule,
+          {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
+          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+          // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
+          // CustomRenderer,
+          lintModule
+        ],
+        container: '#canvas',
+        keyboard: {
+          bindTo: window
+        },
+        propertiesPanel: {
+          parent: '#properties'
+        },
+        moddleExtensions: {
+          camunda: CamundaModdleDescriptor
+        }
+      });
+      let canvas = this.bpmnModeler.get('canvas');
+      canvas.zoom('fit-viewport');
+      this.bpmnModeler.on('element.changed', function(){
+        _self.isDiagramChanged = true;
+        let now = new Date().getTime();
+        if(now - _self.last_updated_time > 10*1000){
+          _self.autoSaveBpmnDiagram();
+          _self.last_updated_time = now;
+        }
+      })
     }
   }
   submitDiagramForApproval(){

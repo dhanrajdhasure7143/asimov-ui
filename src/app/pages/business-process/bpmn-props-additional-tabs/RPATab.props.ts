@@ -34,6 +34,20 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
         return selectedRpaTaskListOptions;
     }
 
+    function getRPATaskAttributes(element){
+        let selectedRpaTaskAttributes = [];
+        let rpa_taskList_attrs = localStorage.getItem("attributes");
+        var rpaTaskListAttributes = rpa_taskList_attrs? JSON.parse(rpa_taskList_attrs) :{};
+        var rpaFData = getRpaData(element);
+        if(rpaFData){
+            let taskId = rpaFData.get("rpaATaskList");
+            if(taskId){
+                selectedRpaTaskAttributes = rpaTaskListAttributes[taskId]
+            }
+        }
+        return selectedRpaTaskAttributes;
+    }
+
     function getAttrSelectOptions(optionList){
         let finalOptList = [];
         optionList.forEach( each => {
@@ -174,20 +188,20 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
     }
 
     function getAttributesEntry(element, bpmnFactory) {
-        var attributesList = JSON.parse(localStorage.getItem("attributes"));
+        var attributesList = getRPATaskAttributes(element);
         let fieldsList = [];
         attributesList.forEach((each_attr, i) => {
             let tmp = '';
             let taskey = each_attr['name'];
-            if(each_attr['type'] != "dropdown"){
+            if(["text", "email", "password", "number", "multipart"].indexOf(each_attr['type']) > -1){
                 tmp = entryFactory.validationAwareTextField({
                     id: each_attr['id'],
                     label: each_attr['label'],
                     modelProperty: taskey,
-                    // description: each_attr['placeholder'],
+                    description: each_attr['placeholder'],
                     getProperty: function(element, node) {
                         var result = {};
-                        result[taskey] = each_attr['placeholder'];
+                        result[taskey] = '';
                         var bo = getBusinessObject(element);
                         var formDataExtension = getExtensionElements(bo, "bpmn:RPATask");
                         if (formDataExtension) {
@@ -228,11 +242,13 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         var validation = {};
                         var fieldValue = values[taskey];
                         if(fieldValue){
-                            if(fieldValue.length > each_attr['attributeMax'] || fieldValue.length < each_attr['attributeMin'])
+                            if(each_attr['attributeMax'] == each_attr['attributeMin'] && fieldValue.length != each_attr['attributeMin'])
+                                validation[taskey] = each_attr['label']+' length must be '+each_attr['attributeMin']+' characters'
+                            else if(fieldValue.length > each_attr['attributeMax'] || fieldValue.length < each_attr['attributeMin'])
                                 validation[taskey] = each_attr['label']+' length must lie between '+each_attr['attributeMin']+' - '+each_attr['attributeMax']+' characters';
                         }else{
                             if(each_attr['required'])
-                                validation[taskey] = 'Parameter must have a name';
+                                validation[taskey] = each_attr['label']+' is mandatory';
                         }
                         return validation;
                     },
@@ -240,12 +256,66 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         var rpaFData = getRpaData(element);
                         return !(rpaFData && rpaFData.get("rpaAActivity") && rpaFData.get("rpaATaskList") && each_attr['visibility']);
                     }
-                })
-                
-            }else{
+                })                
+            }else if(each_attr['type'] == "dropdown"){
                 tmp = entryFactory.selectBox({
                     id: each_attr['id'],
                     label: each_attr['label'],
+                    description: each_attr['placeholder'],
+                    modelProperty: each_attr['type']+"_"+each_attr['id'],
+                    selectOptions: getAttrSelectOptions(each_attr['options']),
+                    get: function(element, node) {
+                        var result = {};
+                        result[taskey] = ''
+                        var bo = getBusinessObject(element);
+                        var formDataExtension = getExtensionElements(bo, "bpmn:RPATask");
+                        if (formDataExtension) {
+                            var formData = getRpaData(element);
+                            var storedValue = formData.get(taskey);
+                            result[taskey]= storedValue ;
+                        }
+                        return result;
+                    },
+                    set: function(element, values, node) {
+                        var bo = getBusinessObject(element); var commands = [];
+                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:RPATask");
+                        if (!rpaExtensionElements) {
+                            rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
+                            commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
+                        }
+                        var rpaFData = getRpaData(element);
+                        let dataJson = {};
+                        dataJson[taskey] = "";
+                        if(!rpaFData){
+                            rpaFData = elementHelper.createElement('bpmn:RPATask', dataJson, rpaExtensionElements, bpmnFactory);
+                            commands.push(cmdHelper.addAndRemoveElementsFromList(
+                                element,
+                                rpaExtensionElements,
+                                'values',
+                                'extensionElements',
+                                [rpaFData],
+                                []
+                            ));
+                        }
+                        var field = elementHelper.createElement('bpmn:RPATask', values.taskList , rpaFData, bpmnFactory);
+                        if (typeof rpaFData[taskey] !== 'undefined') {
+                            commands.push(cmdHelper.addElementsTolist(element, rpaFData, taskey, values.taskList));
+                        } else {
+                            dataJson[taskey] = values.taskList;
+                            commands.push(cmdHelper.updateBusinessObject(element, rpaFData, dataJson));
+                        }
+                        return commands;
+                    },
+                    hidden: function(element, node) {
+                        var rpaFData = getRpaData(element);
+                        return !(rpaFData && rpaFData.get("rpaAActivity") && rpaFData.get("rpaATaskList"));
+                    }
+                });
+            }else if(each_attr['type'] == "checkbox"){
+                tmp = entryFactory.checkbox({
+                    id: each_attr['id'],
+                    label: each_attr['label'],
+                    description: each_attr['placeholder'],
                     modelProperty: each_attr['type']+"_"+each_attr['id'],
                     selectOptions: getAttrSelectOptions(each_attr['options']),
                     get: function(element, node) {
@@ -294,6 +364,70 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         return !(rpaFData && rpaFData.get("rpaAActivity") && rpaFData.get("rpaATaskList"));
                     }
                 });
+            }else if(each_attr['type'] == "textarea"){
+                tmp = entryFactory.textBox({
+                    id: each_attr['id'],
+                    label: each_attr['label'],
+                    modelProperty: taskey,
+                    description: each_attr['placeholder'],
+                    getProperty: function(element, node) {
+                        var result = {};
+                        result[taskey] = '';
+                        var bo = getBusinessObject(element);
+                        var formDataExtension = getExtensionElements(bo, "bpmn:RPATask");
+                        if (formDataExtension) {
+                            var formData = getRpaData(element);
+                            var storedValue = formData.get(taskey);
+                            result[taskey] = storedValue;
+                        }
+                        return result[taskey];
+                    },
+                    setProperty: function(element, properties, node) {
+                        var bo = getBusinessObject(element); var commands = [];
+                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:RPATask");
+                        if (!rpaExtensionElements) {
+                            rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
+                            commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
+                        }
+                        var rpaFData = getRpaData(element);
+                        if(!rpaFData){
+                            rpaFData = elementHelper.createElement('bpmn:RPATask', properties, rpaExtensionElements, bpmnFactory);
+                            commands.push(cmdHelper.addAndRemoveElementsFromList(
+                                element,
+                                rpaExtensionElements,
+                                'values',
+                                'extensionElements',
+                                [rpaFData],
+                                []
+                            ));
+                        }
+                        var field = elementHelper.createElement('bpmn:RPATask', properties , rpaFData, bpmnFactory);
+                        if (typeof rpaFData[taskey] !== 'undefined') {
+                            commands.push(cmdHelper.addElementsTolist(element, rpaFData, taskey, properties));
+                        } else {
+                            commands.push(cmdHelper.updateBusinessObject(element, rpaFData, properties ));
+                        }
+                        return commands;
+                    },
+                    validate: function(element, values, node) {
+                        var validation = {};
+                        var fieldValue = values[taskey];
+                        if(fieldValue){
+                            if(each_attr['attributeMax'] == each_attr['attributeMin'] && fieldValue.length != each_attr['attributeMin'])
+                                validation[taskey] = each_attr['label']+' length must be '+each_attr['attributeMin']+' characters'
+                            else if(fieldValue.length > each_attr['attributeMax'] || fieldValue.length < each_attr['attributeMin'])
+                                validation[taskey] = each_attr['label']+' length must lie between '+each_attr['attributeMin']+' - '+each_attr['attributeMax']+' characters';
+                        }else{
+                            if(each_attr['required'])
+                                validation[taskey] = each_attr['label']+' is mandatory';
+                        }
+                        return validation;
+                    },
+                    hidden: function(element, node) {
+                        var rpaFData = getRpaData(element);
+                        return !(rpaFData && rpaFData.get("rpaAActivity") && rpaFData.get("rpaATaskList") && each_attr['visibility']);
+                    }
+                })
             }
             fieldsList.push(tmp)
         })
@@ -311,7 +445,8 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
             entries_.push(getTaskListEntry(element, bpmnFactory))
         if(rpaFData && rpaFData.get("rpaAActivity") && rpaFData.get("rpaATaskList")){
             let attrList = getAttributesEntry(element, bpmnFactory)
-            entries_.push(...attrList)
+            if(attrList.length > 0)
+                entries_.push(...attrList)
         }
         return {
             entries: entries_

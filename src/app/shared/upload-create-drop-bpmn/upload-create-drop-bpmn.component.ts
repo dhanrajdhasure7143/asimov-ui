@@ -88,7 +88,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       myReader.readAsText(this.uploaded_file);
     }else{
       this.bpmnservice.changeConfNav(false);
-      this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+      this.rest.getBPMNFileContent("assets/resources/newDiagram."+e.ntype).subscribe(res => {
         let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
         this.bpmnservice.uploadBpmn(encrypted_bpmn);
         this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;
