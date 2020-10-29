@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class='col-md-8 drop_box' id="upload_bpmn">
-            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn'" >
+            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn, .cmmn, .dmn'" >
                 <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
                     <h3>Upload Process Model</h3>
-                    <h5>Drag and drop files here (.bpmn)</h5>
+                    <h5>Drag and drop files here <br>(.bpmn, .cmmn, .dmn)</h5>
                     <button class="btn btn-primary eiap-btn">Select</button>
                 </ngx-dropzone-label>
             </ngx-dropzone>
