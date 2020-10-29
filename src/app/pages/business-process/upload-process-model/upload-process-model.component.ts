@@ -95,6 +95,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   isfromApprover: any=false;
   showProps: boolean=false;
   ntype: string;
+  validNotationTypes: string;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
@@ -113,6 +114,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.pid=params['pid'];
       this.isfromApprover=params['isfromApprover'] == 'true';
+      this.validNotationTypes = '.bpmn, .cmmn, .dmn';
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
     this.setRPAData();
@@ -135,7 +137,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     this.getApproverList();
    }
-   
+
 
    ngAfterViewInit(){
     if(this.isShowConformance)
@@ -224,7 +226,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
-      
+
     }
     if(!this.isShowConformance){
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype': current_bpmn_info["ntype"]};

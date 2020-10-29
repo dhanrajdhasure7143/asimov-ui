@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-2"></div>
         <div class='col-md-8 drop_box' id="upload_bpmn">
-            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="'.bpmn, .cmmn, .dmn'" >
+            <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
                 <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
                     <h3>Upload Process Model</h3>
                     <h5>Drag and drop files here <br>(.bpmn, .cmmn, .dmn)</h5>

@@ -26,6 +26,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   uploaded_file:File;
   processName:string;
   category:string;
+  validNotationTypes: string;
 
   @Output() update = new EventEmitter<any>();
   @Input() data;
@@ -34,7 +35,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     private global: GlobalScript, private rest:RestApiService) { }
 
   ngOnInit() {
-
+    this.validNotationTypes = '.bpmn, .cmmn, .dmn';
   }
 
   onSelect(e){
