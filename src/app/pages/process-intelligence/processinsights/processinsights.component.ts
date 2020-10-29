@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 HC_more(Highcharts)
+import * as d3 from 'd3';
 enum VariantList {
     'Most Common',
     'Least Common',
@@ -74,6 +75,9 @@ export class ProcessinsightsComponent implements OnInit {
     s_variants:any = [];
     dChart1:any = [];
     dChart2:any = [];
+    isAddHrs:boolean=false;
+    value:any='23:11';
+    time:any
 
     constructor(
         private rest: RestApiService,
@@ -274,6 +278,9 @@ export class ProcessinsightsComponent implements OnInit {
                     if (this.activity_Metrics.length) {
                         let tmp = [];
                         let tmp2 = [];
+                        let obj1 = {}
+                            var pieArray=[]
+                            let obj3 = {}
                         this.activity_Metrics.forEach((e, m) => {
                             let duration = e.Duration_range / (1000 * 60 * 60);
                             // let obj = {
@@ -284,7 +291,12 @@ export class ProcessinsightsComponent implements OnInit {
                             //     name: e.Activity,
                             //     y: duration * this.input1
                             // }
-
+                            
+                                obj1[ e.Activity]=Math.round(duration)
+                                obj3[ e.Activity]= Math.round(duration * this.input1)
+                                    // name: e.Activity,
+                                    // y: duration
+                                pieArray.push(e.Activity)
                             let obj = [
                                  e.Activity,
                                  Math.round(duration)
@@ -299,10 +311,14 @@ export class ProcessinsightsComponent implements OnInit {
                                 obj2["sliced"] = true;
                                 obj2["selected"] = true;
                             }
-                            tmp.push(obj);
-                            tmp2.push(obj2);
+                            // tmp.push(obj);
+
+                            // tmp2.push(obj2);
                             adata.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                         });
+                         tmp.push(obj1);
+
+                            tmp2.push(obj3);
                         this.activityData = adata;
                         activityDuration = tmp;
                         activityCost = tmp2;
@@ -321,8 +337,10 @@ export class ProcessinsightsComponent implements OnInit {
                     //Activity - Duration Pie chart
                     // this.addpiechart1(activityDuration);
                     // this.addpiechart2(activityCost);
-                    this.getDonutChart1(activityDuration);
-                    this.getDonutChart2(activityCost);
+                    // this.getDonutChart1(activityDuration);
+                    // this.getDonutChart2(activityCost);
+                    this.loadPeiChart1(activityDuration,pieArray)
+                    this.loadPeiChart2(activityCost,pieArray)
                 })
         }
     }
@@ -421,12 +439,18 @@ export class ProcessinsightsComponent implements OnInit {
                 this.activity_Metrics = aData.data;
                 let activityDuration = [];
                 let activityCost = [];
+                let obj1 = {}
+                let pieArray=[]
+                let obj3 = {}
                 aData.data.forEach((e, m) => {
                     let duration = e.Duration_range / (1000 * 60 * 60);
-                    // let obj = {
-                    //     name: e.Activity,
-                    //     y: duration
-                    // }
+                    
+                    obj1[ e.Activity]=Math.round(duration)
+                        // name: e.Activity,
+                        // y: duration
+                    pieArray.push(e.Activity)
+                    obj3[ e.Activity]=Math.round(duration * this.input1)
+
                     let obj = [
                          e.Activity,
                          Math.round(duration)
@@ -442,10 +466,15 @@ export class ProcessinsightsComponent implements OnInit {
                         obj2["sliced"] = true;
                         obj2["selected"] = true;
                     }
-                    activityDuration.push(obj);
-                    activityCost.push(obj2);
+                    // activityDuration.push(obj);
+                    
+                    // activityCost.push(obj2);
                     this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                 });
+                activityDuration.push(obj1);
+                activityCost.push(obj3);
+
+                
                 this.bubbleColor = '#212F3C';
                 this.addchart2();
                 this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
@@ -453,8 +482,12 @@ export class ProcessinsightsComponent implements OnInit {
                 this.isEventGraph = true;
                 //this.addpiechart1(activityDuration);
                 //this.addpiechart2(activityCost);
-                this.getDonutChart1(activityDuration);
-                this.getDonutChart2(activityCost);
+                // this.getDonutChart1(activityDuration);
+                // this.getDonutChart2(activityCost);
+                console.log(activityDuration);
+                this.loadPeiChart1(activityDuration,pieArray)
+                this.loadPeiChart2(activityCost,pieArray)
+                
             })
 
     }
@@ -1402,4 +1435,266 @@ export class ProcessinsightsComponent implements OnInit {
         }
         Highcharts.chart('piechart1', this.dChart1);
     }
+
+    loadPeiChart1(data1,colorValues){
+        console.log(data1, colorValues);
+        
+        var width = 450
+        var height = 350
+        var margin = 80
+    
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    var radius = Math.min(width, height) / 2 - margin
+    
+    // append the svg object to the div called 'my_dataviz'
+    d3.select("#piechart1").select('svg').remove()
+    var svg = d3.select("#piechart1")
+      .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+      .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    
+    // Create dummy data
+    var data = data1[0]
+    
+    // set the color scale
+    var color = d3.scaleOrdinal()
+      .domain(colorValues)
+      .range(d3.schemeDark2);
+    
+    // Compute the position of each group on the pie:
+    var pie = d3.pie()
+      .sort(null) // Do not sort group by size
+      .value(function(d) {return d.value; })
+    var data_ready = pie(d3.entries(data))
+    
+    // The arc generator
+    var arc = d3.arc()
+      .innerRadius(radius * 0.5)         // This is the size of the donut hole
+      .outerRadius(radius * 0.8)
+    
+    // Another arc that won't be drawn. Just for labels positioning
+    var outerArc = d3.arc()
+      .innerRadius(radius * 0.9)
+      .outerRadius(radius * 0.9)
+    
+    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+    svg
+      .selectAll('allSlices')
+      .data(data_ready)
+      .enter()
+      .append('path')
+      .attr('d', arc)
+      .attr('fill', function(d){ return(color(d.data.key)) })
+      .attr("stroke", "white")
+      .style("stroke-width", "2px")
+      .style("opacity", 0.7)
+      .on("mouseover", function (d) {
+        console.log(d);
+        
+    d3.select("#pietooltip")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY) + "px")
+        .style("display", "block")
+        .select("#value")
+        .text(d.data.value);
+
+         d3.select("#tooltip_head")
+        .text(d.data.key)
+    })
+    .on("mouseout", function () {
+    // Hide the tooltip
+    d3.select("#pietooltip")
+        .style("display", "none");
+    });
+    
+    // Add the polylines between chart and labels:
+    svg
+      .selectAll('allPolylines')
+      .data(data_ready)
+      .enter()
+      .append('polyline')
+        .attr("stroke", "black")
+        .style("fill", "none")
+        .attr("stroke-width", 1)
+        .attr('points', function(d) {
+          var posA = arc.centroid(d) // line insertion in the slice
+          var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+          var posC = outerArc.centroid(d); // Label position = almost the same as posB
+          var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+          posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+          return [posA, posB, posC]
+        })
+    
+    // Add the polylines between chart and labels:
+    svg
+      .selectAll('allLabels')
+      .data(data_ready)
+      .enter()
+      .append('text')
+        .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+        .attr('transform', function(d) {
+            var pos = outerArc.centroid(d);
+            var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+            pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+            return 'translate(' + pos + ')';
+        })
+        .style('text-anchor', function(d) {
+            var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+            return (midangle < Math.PI ? 'start' : 'end')
+        }).on("mouseover", function (d) {
+            console.log(d3.event);
+            
+        d3.select("#pietooltip")
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY) + "px")
+            .style("display", "block")
+            .select("#value")
+            .text(d.data.value);
+
+             d3.select("#tooltip_head")
+            .text(d.data.key)
+        })
+        .on("mouseout", function () {
+        // Hide the tooltip
+        d3.select("#pietooltip")
+            .style("display", "none");
+        });
+        
+            }
+
+loadPeiChart2(data1,colorValues){
+    console.log(data1);
+    
+    var width = 450
+    var height = 340
+    var margin = 80
+
+// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+var radius = Math.min(width, height) / 2 - margin
+
+// append the svg object to the div called 'my_dataviz'
+d3.select("#piechart2").select('svg').remove()
+var svg = d3.select("#piechart2")
+  .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+// Create dummy data
+var data = data1[0]
+
+// set the color scale
+var color = d3.scaleOrdinal()
+  .domain(colorValues)
+  .range(d3.schemeDark2);
+
+// Compute the position of each group on the pie:
+var pie = d3.pie()
+  .sort(null) // Do not sort group by size
+  .value(function(d) {return d.value; })
+var data_ready = pie(d3.entries(data))
+
+// The arc generator
+var arc = d3.arc()
+  .innerRadius(radius * 0.5)         // This is the size of the donut hole
+  .outerRadius(radius * 0.8)
+
+// Another arc that won't be drawn. Just for labels positioning
+var outerArc = d3.arc()
+  .innerRadius(radius * 0.9)
+  .outerRadius(radius * 0.9)
+
+// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+svg
+  .selectAll('allSlices')
+  .data(data_ready)
+  .enter()
+  .append('path')
+  .attr('d', arc)
+  .attr('fill', function(d){ return(color(d.data.key)) })
+  .attr("stroke", "white")
+  .style("stroke-width", "2px")
+  .style("opacity", 0.7)
+  .on("mouseover", function (d) {
+    console.log(d);  
+    d3.select("#pietooltip1")
+    .style("left", (d3.event.pageX) + "px")
+    .style("top", (d3.event.pageY) + "px")
+    .style("display", "block")
+    .select("#value1")
+    .text(d.data.value);
+
+     d3.select("#tooltip_head1")
+    .text(d.data.key)
+})
+.on("mouseout", function () {
+// Hide the tooltip
+d3.select("#pietooltip1")
+    .style("display", "none");
+});
+
+// Add the polylines between chart and labels:
+svg
+  .selectAll('allPolylines')
+  .data(data_ready)
+  .enter()
+  .append('polyline')
+    .attr("stroke", "black")
+    .style("fill", "none")
+    .attr("stroke-width", 1)
+    .attr('points', function(d) {
+      var posA = arc.centroid(d) // line insertion in the slice
+      var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+      var posC = outerArc.centroid(d); // Label position = almost the same as posB
+      var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+      posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+      return [posA, posB, posC]
+    })
+
+// Add the polylines between chart and labels:
+svg
+  .selectAll('allLabels')
+  .data(data_ready)
+  .enter()
+  .append('text')
+    .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+    .attr('transform', function(d) {
+        var pos = outerArc.centroid(d);
+        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+        pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+        return 'translate(' + pos + ')';
+    })
+    .style('text-anchor', function(d) {
+        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+        return (midangle < Math.PI ? 'start' : 'end')
+    })
+    .on("mouseover", function (d) {
+        console.log(d);  
+        d3.select("#pietooltip1")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY) + "px")
+        .style("display", "block")
+        .select("#value1")
+        .text(d.data.value);
+    
+         d3.select("#tooltip_head1")
+        .text(d.data.key)
+        })
+        .on("mouseout", function () {
+        // Hide the tooltip
+        d3.select("#pietooltip1")
+            .style("display", "none");
+        });
+    }
+    openHersOverLay(){
+        this.isAddHrs=!this.isAddHrs
+    }
+    canceladdHrs(){
+        // this.isAddHrs=false;
+        console.log(this.time)
+    }
+
 }

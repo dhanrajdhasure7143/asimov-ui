@@ -279,14 +279,61 @@ margin-left: -20px;
   padding: 2px !important;
   min-width: 80px !important;
 }
-.hrsDropdwn .btn-cancel{
+.hrs-dropdwn .btn-cancel{
   background-color: lightgray;
   border-radius: 20px;
-  margin-top: 3px;
+  margin-top: 4px;
+  margin-left: 13px;
+  min-width: 120px;
 }
 .btns-grop{
   margin-top: 5px;
   margin-left: 10px;
 }
+.hrs-dropdwn .dropdown-menu {
+width: 500px !important;
+padding: 10px;
+}
+.dropdown-divider{
+  border: 1px solid #aaa;
 
+}
 
+.hrs-dropdwn .row {
+   margin-right: 0px !important; 
+     margin-left: 0px !important;
+  }
+  #dropdownForm2{
+    top: 8px; 
+    left: 0px; 
+    will-change: transform; 
+    position: absolute; 
+    transform: translate(-340px, 39px);
+    position: absolute;
+    /* top: 100%; */
+    /* left: 0; */
+    width:500px ;
+    z-index: 1000;
+    float: left;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  }
+  #dropdownForm2::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 90%;
+    margin-left: -5px;
+    border-width: 8px;
+    border-style: solid;
+    border-color: transparent transparent gray transparent;
+}
