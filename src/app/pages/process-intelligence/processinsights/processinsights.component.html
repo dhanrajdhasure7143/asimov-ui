@@ -276,7 +276,7 @@
                     [doughnut]="true"
                     [legendPosition] = "'bottom'"
                     [legendTitle]="''"
-                    (labelFormatting)="pieChartLabel(this, dChart1)"> 
+                    [labelFormatting]="pieChartLabel.bind(this, dChart1)"> 
                   </ngx-charts-pie-chart>
                 
              </div>
@@ -299,7 +299,7 @@
                 [doughnut]="true"
                 [legendPosition] = "'bottom'"
                 [legendTitle]="''"
-                (labelFormatting)="pieChartLabel1(this, dChart2)"> 
+                [labelFormatting]="pieChartLabel1.bind(this, dChart2)"> 
               </ngx-charts-pie-chart>
         </div>
         </div>

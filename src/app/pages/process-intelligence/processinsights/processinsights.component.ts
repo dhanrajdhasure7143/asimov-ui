@@ -538,17 +538,14 @@ yAxisLabel1: string = 'Occurences';
     }
 
     pieChartLabel(series: any, name: string): string {
-        console.log(series);
-        console.log(name); 
-        return
         const item = series.filter(data => data.name === name);
         if (item.length > 0) {
             return item[0].label;
         }
-        return item.label;
+        return name;
     }
     pieChartLabel1(series: any, name: string): string {
-        const item = series.dChart2.filter(data => data.name === name);
+        const item = series.filter(data => data.name === name);
         if (item.length > 0) {
             return item[0].label;
         }
