@@ -112,7 +112,7 @@
                                       
                                         <ng-container matColumnDef="createdTime">
                                           <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Date</th>
-                                          <td mat-cell *matCellDef="let element">{{element.createdTime | date:'MM/dd/yyyy HH:mm:ss': 'UTC'}}</td>
+                                          <td mat-cell *matCellDef="let element">{{element.convertedTime | date:'medium'}}</td>
                                         </ng-container>
                                         <ng-container matColumnDef="piName">
                                           <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Process Name</th>
