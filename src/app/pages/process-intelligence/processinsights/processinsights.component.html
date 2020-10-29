@@ -1,6 +1,7 @@
 <div class="backgr">
 <div class="container">
     <div class="row">
+
         <div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
             <div class='variants_slider'>
                <div class="col-sm-12 select_drpdwnone">
@@ -81,10 +82,61 @@
                 <label for="">Total Cases</label><input type="text" name="frequency" [disabled]=" !isEditable1" [(ngModel)]="totalCases">
             </div>
 
-            <div class="col-sm-2 dropdown">
-                <button class="eiap-btn btn btn-primary dropdown-toggle" data-toggle="dropdown">Add Working Hours</button>
+            <div class="col-sm-2 dropdown hrs-dropdwn">
                 
-                    <div class="dropdown-menu drop_down download_selection hrsDropdwn" aria-labelledby="dropdownMenuButton">
+                      <div  class="d-inline-block">
+                        <!--ngbDropdown ngbDropdownToggle -->
+                        <button class="btn btn-primary eiap-btn" id="dropdownForm1" (click)="openHersOverLay()">Add Working Hours</button>
+                        <div *ngIf="isAddHrs" aria-labelledby="dropdownForm1" id="dropdownForm2">
+                         
+                          <form class="row">
+                            <div class="form-group col-sm-6">
+                                <label for="exampleDropdownFormEmail1">From Day</label>
+                                <select name="weeks" class="form-control" id="">
+                                    <option value="">Sunday</option>
+                                    <option value="">Monday</option>
+                                    <option value="">Tuesday</option>
+                                    <option value="">Wednessday</option>
+                                    <option value="">Friday</option>
+                                </select>
+                              </div>
+                              <div class="form-group col-sm-6">
+                                <label for="">To Day</label>
+                                <select name="weeks" id=""  class="form-control">
+                                    <option value="">Sunday</option>
+                                    <option value="">Monday</option>
+                                    <option value="">Tuesday</option>
+                                    <option value="">Wednessday</option>
+                                    <option value="">Friday</option>
+                                </select>
+                              </div>
+                            <div class="col-sm-6">
+                                <label for="">From Time</label>
+                                <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24"></ngx-timepicker-field>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="">To Time</label>
+                                <ngx-timepicker-field [controlOnly]="true" name="model" [(ngModel)]="time"  [format]="24"></ngx-timepicker-field>
+                            </div>
+                            <div class="col-sm-12 dropdown-divider"></div>
+                            <div class="col-sm-5"></div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary eiap-btn">Save</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-secondary btn-cancel" (click)="canceladdHrs()">Cancel</button>
+                        </div>
+                      </form>
+                          
+
+                        </div>
+                      </div>
+            
+                  
+                <!-- <button class="eiap-btn btn btn-primary dropdown-toggle" data-toggle="dropdown">Add Working Hours</button>
+                
+                    <div class="dropdown-menu drop_down download_selection hrsDropdwn" >
                        <div class="hrsInput">
                         <label for="">Hours :</label><input type="text" placeholder="Enter Hours">
                        </div>
@@ -92,7 +144,8 @@
                         <button class="eiap-btn btn btn-primary">Apply</button>
                         <button class="btn btn-secondary btn-cancel">Cancel</button>
                        </div>
-                   </div>
+                       <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
+                   </div> -->
             </div>
             
         </div>
@@ -312,4 +365,18 @@
     </div>
 </div>
 </div>
+</div>
+
+
+<div id="pietooltip" class="">
+    <p><strong id="tooltip_head"></strong>
+    </p>
+    <p>Activity Duration(hrs): <strong id="value"></strong></p>
+</div>
+
+
+<div id="pietooltip1" class="">
+    <p><strong id="tooltip_head1"></strong>
+    </p>
+    <p>Activity Cost : <strong id="value1"></strong></p>
 </div>

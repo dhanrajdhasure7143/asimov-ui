@@ -424,7 +424,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     /* width: 200px; */
     }
 
-    text {
+   #exportSVGtoPDF text {
         /* font-size: 14px; */
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
         transform: translate(5px, 0px);
@@ -650,3 +650,43 @@ foreignObject{
   fill: white !important;
   color: white !important;
 }
+
+#piechart1 text,#piechart2 text {
+  font-size: 10px;
+  fill: black !important;
+  stroke-width:  2;
+  font-weight: bold;
+}
+#pietooltip,#pietooltip1 {
+  position: absolute;
+  min-width: 130px;
+  height: auto;
+  /* padding: 10px; */
+  background-color: rgb(224, 222, 222);
+  -webkit-border-radius: 10px;
+  border: 0.5px solid rgb(93, 82, 245);
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.4);
+   /* pointer-events: none; */
+   text-align: center !important;
+}
+#pietooltip,#pietooltip1 {
+  /* opacity: 0; */
+  display: none;
+  text-align: center !important;
+}
+#pietooltip p,#pietooltip1 p {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 10px;
+  line-height: 20px;
+  text-align: center !important;
+}
+
+.ngx-timepicker-control__input {
+  font-size: 16px !important;
+}
+

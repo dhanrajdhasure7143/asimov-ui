@@ -33,7 +33,8 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule} from '@angular/material';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,9 @@ import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatD
     MatSortModule,
     MatTableModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatTooltipModule,MatDialogModule
+    MatTooltipModule,MatDialogModule,
+    NgbModule,
+    NgxMaterialTimepickerModule
   ],
   providers:[PiHints],
 
