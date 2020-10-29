@@ -266,6 +266,7 @@
                             <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
+                    <div class="l_title2"><p>Total Resource Duration By Activity</p></div>
             <div id="piechart1" class="box_shadw"> 
                     <ngx-charts-pie-chart
                     [view]="[400, 300]"
@@ -273,6 +274,7 @@
                     [results]="dChart1"
                     [legend]="false"
                     [labels]="true"
+                    [animations]="false"
                     [doughnut]="true"
                     [legendPosition] = "'bottom'"
                     [legendTitle]="''"
@@ -289,6 +291,7 @@
                             <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
+                    <div class="l_title2"><p>Total Resource Cost By Activity</p></div>
         <div id="piechart2" class="box_shadw">
                 <ngx-charts-pie-chart
                 [view]="[400, 300]"
@@ -296,6 +299,7 @@
                 [results]="dChart2"
                 [legend]="false"
                 [labels]="true"
+                [animations]="false"
                 [doughnut]="true"
                 [legendPosition] = "'bottom'"
                 [legendTitle]="''"

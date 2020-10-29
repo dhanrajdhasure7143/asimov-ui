@@ -305,3 +305,12 @@ margin-left: -20px;
   font-size: 18px;
   fill: #333333;
 }
+
+.l_title2 {
+  position: relative;
+  top: 11px;
+  left: 80px;
+  color: #333333;
+  font-size: 18px;
+  fill: #333333;
+}
