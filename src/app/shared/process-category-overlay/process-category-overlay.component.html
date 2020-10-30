@@ -28,7 +28,7 @@
                     <div *ngIf='isBpmnModule'>
                         <mat-form-field class="row col-md-12">
                             <mat-label>Select Notation Type</mat-label>
-                            <mat-select name="notation" #notation="ngModel" [(ngModel)]="notationType" required>
+                            <mat-select name="notation" #notation="ngModel" [(ngModel)]="notationType" required [disabled]="uploadedFileExtension">
                                 <mat-option value="bpmn">BPMN</mat-option>
                                 <mat-option value="cmmn">CMMN</mat-option>
                                 <mat-option value="dmn">DMN</mat-option>

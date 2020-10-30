@@ -27,6 +27,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   processName:string;
   category:string;
   validNotationTypes: string;
+  uploadedFileName:string;
 
   @Output() update = new EventEmitter<any>();
   @Input() data;
@@ -43,6 +44,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.hideEditor=false;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
       this.uploaded_file = e.addedFiles[0];
+      this.uploadedFileName = this.uploaded_file.name;
     }else{
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
