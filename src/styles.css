@@ -289,10 +289,6 @@ a.nav-link.active {
 .mat-progress-spinner circle{
   stroke: #0062cf;
 }
-/*dmn */
-.dmn-js-parent svg{
-  height: 72vh;
-}
 
 /*BPMN PROPERTIES PANEL*/
 .bpp-properties-panel, .dpp-properties-panel, .cpp-properties-panel{

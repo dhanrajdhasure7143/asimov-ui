@@ -98,6 +98,28 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   isfromApprover: any=false;
   showProps: boolean=false;
   ntype: string;
+  rpaJson = {
+    "name": "RPA",
+    "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
+    "prefix": "rpa",
+    "xml": {
+      "tagAlias": "lowerCase"
+    },
+    "types": [
+      {
+        "name": "Activity",
+        "superClass": [ "Element" ],
+      },
+      {
+        "name": "InputParams",
+        "superClass": [ "Element" ],
+      },
+      {
+        "name": "OutputParams",
+        "superClass": [ "Element" ],
+      }
+    ]
+  }
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
@@ -132,9 +154,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.isConfBpmnModeler = false;
       this.getUserBpmnList(null);
     }else{
-        this.getUserBpmnList(null);
-        this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
-        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
+      this.getUserBpmnList(null);
+      this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
+      this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
     }
     this.getApproverList();
    }
@@ -350,7 +372,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
             parent: '#properties'
           },
           moddleExtensions: {
-            camunda: CamundaModdleDescriptor
+            camunda: CamundaModdleDescriptor,
+            rpa: this.rpaJson
           }
         });
       }

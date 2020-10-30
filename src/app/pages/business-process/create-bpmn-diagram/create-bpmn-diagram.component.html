@@ -26,7 +26,6 @@
             <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button>
           </div>
     </div>
-
     <div class="container-fluid">
             <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>
             <div>
@@ -37,6 +36,7 @@
                         <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
                         <div id="properties" class="slide-right"></div>
                     </div>
+                    <div #dmnTabs id="dmn-tabs" *ngIf="selectedNotationType=='dmn'"></div>
                 </div>
             </div>
             <div class="row btn_row">
