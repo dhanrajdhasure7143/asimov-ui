@@ -232,8 +232,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
              let notificationbody ={
              "tenantId":this.tenantId
                }
-               if(this.role=='Admin' ||this.role== 'User')
-               {
+               
                 this.rpa.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
                   this.notificationList = data
                   this.notificationscount=this.notificationList
@@ -245,6 +244,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
               // console.log("count",this.notificationList.length)
                })
                 this.getCount();
-               }
+               
              }
 }
