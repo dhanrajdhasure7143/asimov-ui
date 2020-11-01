@@ -10,8 +10,8 @@ import * as d3 from 'd3';
 import {curveBasis} from 'd3-shape';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
+import { GlobalScript } from 'src/app/shared/global-script';
 HC_more(Highcharts)
-import * as d3 from 'd3';
 enum VariantList {
     'Most Common',
     'Least Common',
@@ -34,6 +34,11 @@ export class ProcessinsightsComponent implements OnInit {
     isEventGraph: boolean = true;
     input1: any = 20;
     input2: any = 1;
+    robotinput:any = 8;
+    workingHours:any = {
+        formDay:'',
+        toDay: ''
+    };
     variant_list: any;
     varaint_data: any;
     select_varaint: any = 0;
@@ -117,11 +122,42 @@ showYAxis:boolean = true;
 xAxisLabel1: string = 'Activity';
 yAxisLabel1: string = 'Occurences';
   colorScheme = {
-    domain: ['#5AA454', '#E44D25', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+    domain: ['#E44D25', '#5AA454', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
   colorScheme1 = {
     domain: ['#212F3C']
   };
+
+
+//   combo chart
+view2 = [500,400];
+gradient = false;
+showLegend = false;
+legendPosition = 'right';
+showXAxisLabel1 = true;
+xAxisLabel2 = 'Activity';
+showYAxisLabel1 = true;
+yAxisLabel2 = 'Human Cost';
+showGridLines = true;
+innerPadding = '5%';
+barChart: any[] = [];
+lineChartSeries: any[] = []
+lineChartScheme = {
+  name: 'coolthree',
+  selectable: true,
+  group: 'linear',
+  domain: ['#212F3C']
+};
+
+comboBarScheme = {
+  name: 'singleLightBlue',
+  selectable: true,
+  group: 'linear',
+  domain: ['#2d7dd7']
+};
+
+showRightYAxisLabel: boolean = false;
+yAxisLabelRight: string = 'Robot Cost';
 
 
 
@@ -129,7 +165,8 @@ yAxisLabel1: string = 'Occurences';
         private rest: RestApiService,
         private route: ActivatedRoute,
         private dt: DataTransferService,
-        private hints: PiHints
+        private hints: PiHints,
+        private global:GlobalScript
     ) {
        // Object.assign(this, { multi });
       // Object.assign(this.bubbleData,  this.bubbleData );
@@ -172,17 +209,40 @@ yAxisLabel1: string = 'Occurences';
         this.getHumanBotCost('fullgraph');
     }
 
+    addWorkingHours(w_hours){
+        console.log(w_hours)
+        if(!this.workingHours.formDay){
+            this.global.notify("Please select from working day", "error");
+            return;
+        }
+        if(!this.workingHours.toDay){
+            this.global.notify("Please select to working day", "error");
+            return;
+        }
+        if(!this.workingHours.shiftStartTime){
+            this.global.notify("Please select shift start time", "error");
+            return;
+        }
+        if(!this.workingHours.shiftEndTime){
+            this.global.notify("Please select shift end time", "error");
+            return;
+        }
+        console.log(this.workingHours)
+    }
+
     getDurationCall() {
         var reqObj = {
             pid: this.graphIds,
             //pid:'671229',
-            data_type: 'variant_metrics'
+            data_type: 'variant_metrics',
+            "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
         }
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.variant_Duration_list = res.data;
                 this.totalMeanDuration = res.totalMeanDuration;
-                this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"] / 3;
+                //this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"] / 3;
+                this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"];
                 this.totalMedianDuration = this.bkp_totalMedianDuration;
 
             },
@@ -197,7 +257,7 @@ yAxisLabel1: string = 'Occurences';
             //assume robo cost per hr is 4$
             //let roboCost = val*60*8/(1000 * 100 * 60 * 60);
             //let totalCost = (val*this.input1)/(1000 * 60 * 60);
-            let roboCost = Math.round(this.getHours(val) * 60 / 100 * 8);
+            let roboCost = Math.round(this.getHours(val) * 60 / 100 * this.robotinput);
             let totalCost = Math.round(this.getHours(val) * this.input1);
             return '$' + ((totalCost - roboCost));
         } else {
@@ -317,7 +377,8 @@ yAxisLabel1: string = 'Occurences';
                 .subscribe((res: any) => {
                     // console.log(res)
                     //dashboard metrics
-                    this.totalMedianDuration = res.data.total.totalDuration / 3;
+                    //this.totalMedianDuration = res.data.total.totalDuration / 3;
+                    this.totalMedianDuration = res.data.total.totalDuration;
                     //activity data
                     this.activity_Metrics = res.data.activiees;
                     let adata = [];
@@ -344,12 +405,12 @@ yAxisLabel1: string = 'Occurences';
                             let obj = {
                                 name: e.Activity,
                                 value: Math.round(duration),
-                                label: Math.round(duration)+"hrs"
+                                label: e.Activity+" - "+Math.round(duration)+"hrs"
                             }
                             let obj2 = {
                                 name: e.Activity,
                                 value: Math.round(duration * this.input1),
-                                label: "$"+Math.round(duration * this.input1)
+                                label: e.Activity+" - "+ "$"+Math.round(duration * this.input1)
                             }
                             if (m == 0) {
                                 obj["sliced"] = true;
@@ -423,7 +484,7 @@ yAxisLabel1: string = 'Occurences';
             hCost.push(humanCost);
             var rDuration = Math.round(this.getHours(e.median_value) * 60 / 100);
             var rHours = Math.round(rDuration);
-            var rFinalCost = rHours * 8;
+            var rFinalCost = rHours * this.robotinput;
             rCost.push(rFinalCost);
             d1.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:humanCost})
             d2.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:rFinalCost})
@@ -509,7 +570,7 @@ yAxisLabel1: string = 'Occurences';
                          name:e.Activity,
                          value:Math.round(duration),
                          label:Math.round(duration)+"hrs"
-                    }
+                    } 
                     let obj2 = {
                         name: e.Activity,
                         value: Math.round(duration * this.input1),
@@ -574,16 +635,20 @@ yAxisLabel1: string = 'Occurences';
         activityMetrics.forEach(e => {
             ac_list.push(e.Activity);
             var humanCost = Math.round(this.getHours(e.Duration_range) * this.input1);
-            hCost.push(humanCost);
+            //hCost.push(humanCost);
+            hCost.push({name:e.Activity, value:humanCost});
             var rDuration = Math.round(this.getHours(e.Duration_range) * 60 / 100);
             var rHours = Math.round(rDuration);
-            var rFinalCost = rHours * 8;
-            rCost.push(rFinalCost);
+            var rFinalCost = rHours * this.robotinput;
+            //rCost.push(rFinalCost);
+            rCost.push({name:e.Activity, value:rFinalCost});
         });
-        this.activityHumanCost = hCost;
-        this.activityBotCost = rCost;
-        this.list_Activites = ac_list;
-        this.verticleBarGraph();
+        // this.activityHumanCost = hCost;
+        // this.activityBotCost = rCost;
+        // this.list_Activites = ac_list;
+        //this.verticleBarGraph();
+        this.barChart = hCost;
+        this.lineChartSeries = [{name:"Cost",series:rCost}];
 
     }
 
@@ -1777,8 +1842,7 @@ svg
         this.isAddHrs=!this.isAddHrs
     }
     canceladdHrs(){
-        // this.isAddHrs=false;
-        console.log(this.time)
+         this.isAddHrs=!this.isAddHrs;
     }
 
 }

@@ -122,7 +122,7 @@ export class DataselectionComponent implements OnInit {
         if(lowercase=='Operation' || lowercase=='Activity' || lowercase=='Actvity'){
           lowercase='activity'
         }
-        if(lowercase=='Agent' || lowercase=='Resource'){
+        if(lowercase=='Agent' || lowercase=='Resource' || lowercase =='Assigned To'){
           lowercase='resource'
         }
         obj[key]=lowercase.toString().split(' ').join('')

@@ -35,6 +35,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule} from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
+import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/combo-series-vertical.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,9 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     PibpmnfilterComponent,
     XesdocumentComponent,
     D3flowchartComponent,
-    ProcessinsightsComponent
+    ProcessinsightsComponent,
+    ComboChartComponent, 
+    ComboSeriesVerticalComponent
   ],
   imports: [
     CommonModule,
