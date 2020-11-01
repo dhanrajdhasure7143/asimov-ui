@@ -36,8 +36,11 @@ export class ProcessinsightsComponent implements OnInit {
     input2: any = 1;
     robotinput:any = 8;
     workingHours:any = {
-        formDay:'',
-        toDay: ''
+        formDay:'Mon',
+        toDay: 'Fri',
+        shiftStartTime:"00:00",
+        shiftEndTime:"23:59"
+
     };
     variant_list: any;
     varaint_data: any;
@@ -157,7 +160,7 @@ comboBarScheme = {
 };
 
 showRightYAxisLabel: boolean = false;
-yAxisLabelRight: string = 'Robot Cost';
+yAxisLabelRight: string = 'Bot Cost';
 
 
 
@@ -209,8 +212,7 @@ yAxisLabelRight: string = 'Robot Cost';
         this.getHumanBotCost('fullgraph');
     }
 
-    addWorkingHours(w_hours){
-        console.log(w_hours)
+    addWorkingHours(){
         if(!this.workingHours.formDay){
             this.global.notify("Please select from working day", "error");
             return;
@@ -227,22 +229,31 @@ yAxisLabelRight: string = 'Robot Cost';
             this.global.notify("Please select shift end time", "error");
             return;
         }
-        console.log(this.workingHours)
+        this.getTotalNoOfCases('fullgraph');
+        this.getActivityMetrics('fullgraph');
+        this.getHumanBotCost('fullgraph');
+
+    }
+
+    resetWorkingHours(){    
+        this.workingHours.formDay = "Mon";
+        this.workingHours.toDay = "Fri";
+        this.workingHours.shiftStartTime="00:00";
+        this.workingHours.shiftEndTime="23:59"
     }
 
     getDurationCall() {
         var reqObj = {
             pid: this.graphIds,
             //pid:'671229',
-            data_type: 'variant_metrics',
-            "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
+            data_type: 'variant_metrics'
         }
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.variant_Duration_list = res.data;
                 this.totalMeanDuration = res.totalMeanDuration;
-                //this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"] / 3;
                 this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"];
+                //this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"]/3;
                 this.totalMedianDuration = this.bkp_totalMedianDuration;
 
             },
@@ -301,6 +312,7 @@ yAxisLabelRight: string = 'Robot Cost';
                 pid: this.graphIds,
                 flag: false,
                 data_type: "human_bot",
+                "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
                 //variants:[] //if flag is true
             }
         } else {
@@ -405,12 +417,12 @@ yAxisLabelRight: string = 'Robot Cost';
                             let obj = {
                                 name: e.Activity,
                                 value: Math.round(duration),
-                                label: e.Activity+" - "+Math.round(duration)+"hrs"
+                                label: Math.round(duration)+"hrs"
                             }
                             let obj2 = {
                                 name: e.Activity,
                                 value: Math.round(duration * this.input1),
-                                label: e.Activity+" - "+ "$"+Math.round(duration * this.input1)
+                                label: "$"+Math.round(duration * this.input1)
                             }
                             if (m == 0) {
                                 obj["sliced"] = true;
@@ -422,9 +434,9 @@ yAxisLabelRight: string = 'Robot Cost';
                             tmp2.push(obj2);
                             adata.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                         });
-                         tmp.push(obj1);
+                         //tmp.push(obj1);
 
-                            tmp2.push(obj3);
+                         //   tmp2.push(obj3);
                         this.activityData = adata;
                         this.bubbleData = [{name:"", series: this.activityData}];
                         this.colorScheme1 = {
@@ -495,7 +507,7 @@ yAxisLabelRight: string = 'Robot Cost';
         this.humanCost = hCost;
         this.robotCost = rCost;
 
-        this.multi = [{name:"Human Cost", series: d1},{name:'Robot Cost', series:d2}];
+        this.multi = [{name:"Human Cost", series: d1},{name:'Bot Cost', series:d2}];
 
 
     //    this.addcharts()
@@ -538,7 +550,8 @@ yAxisLabelRight: string = 'Robot Cost';
                 //pid:'920036',
                 pid: this.graphIds,
                 data_type: 'variant_activity_metrics',
-                flag: false
+                flag: false,
+                //"workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
         } else {
             reqObj = {
@@ -648,7 +661,7 @@ yAxisLabelRight: string = 'Robot Cost';
         // this.list_Activites = ac_list;
         //this.verticleBarGraph();
         this.barChart = hCost;
-        this.lineChartSeries = [{name:"Cost",series:rCost}];
+        this.lineChartSeries = [{name:"Bot Cost",series:rCost}];
 
     }
 
@@ -681,18 +694,21 @@ yAxisLabelRight: string = 'Robot Cost';
     }
 
     getTotalNoOfCases(type) {
-        // console.log(this.varaint_data);
         var noofcases = 0;
         this.totalCases = 0;
 
         if (type == 'fullgraph') {
             this.varaint_data.data.forEach(e => {
+
                 noofcases += e.case_value;
             });
+            
+            
             this.totalCases = noofcases;
             return this.totalCases;
         } else {
             noofcases = 0;
+            this.totalCases = 0;
             //   console.log(this.totalVariantList);
 
             this.totalVariantList.forEach(e => {
@@ -702,6 +718,11 @@ yAxisLabelRight: string = 'Robot Cost';
             this.totalCases = noofcases;
             return this.totalCases;
         }
+    }
+
+    convertHourstoMiliseconds(hrs){
+        var milliseconds = hrs * 60 * 60 *1000;
+        return this.timeConversion(milliseconds);
     }
 
     addcharts() {
@@ -833,7 +854,7 @@ yAxisLabelRight: string = 'Robot Cost';
                 data: this.activityHumanCost
             }, {
                 type: 'spline',
-                name: 'Robot Cost',
+                name: 'Bot Cost',
                 data: this.activityBotCost,
                 marker: {
                     lineWidth: 2,
@@ -1155,7 +1176,7 @@ yAxisLabelRight: string = 'Robot Cost';
         });
 
 
-        let cutoff = Math.floor(vdata.length * 20 / 100);
+        let cutoff = Math.floor(vdata.length * 40 / 100);
 
 
         let pVData = [];
@@ -1163,7 +1184,7 @@ yAxisLabelRight: string = 'Robot Cost';
             if (cutoff <= i) break;
             pVData.push(vdata[i])
         }
-        this.partialVariants = pVData;
+        this.partialVariants = pVData.slice(0, 10);
         // console.log(this.partialVariants);
     }
 

@@ -39,7 +39,7 @@ export const environment = {
 
 
   //  * QA ENV URl's
-  /*
+  
     pi_url: 'http://piqa.epsoftinc.in',
     bps_url: 'http://bpsqa.epsoftinc.in',
     rpa_url: 'http://rpaqa.epsoftinc.in',
@@ -60,7 +60,7 @@ export const environment = {
 
   //DB Connector
    dbConnectorHost: "10.11.0.104",
-   dbName: 'eiap_qa'*/
+   dbName: 'eiap_qa'
 };
 
 /*
