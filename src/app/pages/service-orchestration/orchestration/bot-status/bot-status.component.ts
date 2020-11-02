@@ -113,6 +113,10 @@ export class BotStatusComponent implements OnInit {
   performData: any;
   usageData: any;
   constructor(private api:RestApiService) { }
+  ngAfterViewInit() {
+    this.dataSource.sort=this.sort;
+    this.dataSource.paginator=this.paginator;
+  }
   ngOnInit() {
     let labelData:any [] = []
     let botData:any
@@ -446,8 +450,6 @@ getBotStatus()
       response=data;
       console.log(response)
       this.dataSource= new MatTableDataSource(response);
-      this.dataSource.sort=this.sort;
-      this.dataSource.paginator=this.paginator;
     })
   }
 
