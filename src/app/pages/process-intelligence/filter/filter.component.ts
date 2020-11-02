@@ -20,6 +20,7 @@ export class FilterComponent implements OnInit {
   @Input() variantData:any = {};
   @Input() public fetchData;
   @Input() public resetFilter:boolean;
+  @Input() public isClearFilter:boolean;
   @Output() selectedNodes=new EventEmitter<any[]>();
   @Output() applyFilterValue=new EventEmitter<boolean>();
   @Output() selectedStartpoints=new EventEmitter<any[]>();
@@ -55,23 +56,35 @@ export class FilterComponent implements OnInit {
   endPointArray=[];
   seletedVariant:any = [];
   isDeselectAll = false;
+  isDeselectActivity:boolean=true;
 
   constructor() { }
 
   ngOnInit() {
     
-    for(var i=0;i<this.variantData.data.length;i++){
-      var obj={};
-      obj["name"]=this.variantData.data[i].name;
-      obj["casepercent"]=this.variantData.data[i].casepercent;
-      obj["detail"]=this.variantData.data[i].detail;
-      obj["days"]=this.variantData.data[i].days;
-      obj["case_value"]=this.variantData.data[i].case_value;
-      obj["selected"]="inactive";
-      this.variantListarray.push(obj)
-    }
+    setTimeout(() => {
+      for(var i=0;i<this.variantData.data.length;i++){
+        var obj={};
+        obj["name"]=this.variantData.data[i].name;
+        obj["casepercent"]=this.variantData.data[i].casepercent;
+        obj["detail"]=this.variantData.data[i].detail;
+        obj["days"]=this.variantData.data[i].days;
+        obj["case_value"]=this.variantData.data[i].case_value;
+        obj["selected"]="inactive";
+        this.variantListarray.push(obj)
+      }
+
+      this.dataValuesNames = [];
+      for(var i=0;i<this.dataValues.length;i++){
+        var obj={};
+        obj["name"]=this.dataValues[i].name;
+        obj["selected"]="inactive";
+        this.dataValuesNames.push(obj)
+      }
+      
+    },  4000);
+
   
-    
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
     
     
@@ -79,17 +92,24 @@ export class FilterComponent implements OnInit {
   ngOnChanges(){    
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
     // console.log(this.chart_filter_options);
-
+    if(this.isClearFilter==true){
+      for (var i = 0; i < this.variantListarray.length; i++){
+        this.variantListarray[i].selected= "inactive"
+      };
+      for (var i = 0; i < this.dataValuesNames.length; i++){
+        this.dataValuesNames[i].selected= "inactive"
+        };
+    }
 
     // console.log(this.dataValues);
     
-    this.dataValuesNames = [];
-    for(var i=0;i<this.dataValues.length;i++){
-      var obj={};
-      obj["name"]=this.dataValues[i].name;
-      obj["selected"]="inactive";
-      this.dataValuesNames.push(obj)
-    }
+    // this.dataValuesNames = [];
+    // for(var i=0;i<this.dataValues.length;i++){
+    //   var obj={};
+    //   obj["name"]=this.dataValues[i].name;
+    //   obj["selected"]="inactive";
+    //   this.dataValuesNames.push(obj)
+    // }
     this.startPointArray = [];
     for(var i=0;i<this.startArray.length;i++){
       var obj={};
@@ -143,8 +163,10 @@ selectData(selectedData, index){
     };  
     if(activityArray.length>=1){
       this.isApplyFilter=false;
+      this.isDeselectActivity=false;
     }else{
       this.isApplyFilter=true;
+      this.isDeselectActivity=true;
     }
     this.isDeselectAll = false;
 }
@@ -156,6 +178,7 @@ selectAllDataValue(){
     this.isApplyFilter=false;
     this.isSelect=true;
     this.isDeselectAll = false;
+    this.isDeselectActivity=false;
 }
 
 selectAllVariantList(){
@@ -183,24 +206,44 @@ deselectAllDataValue(){
     this.isDeselectAll = true;
     this.isApplyFilter=true;
     this.isSelect=false;
+    this.isDeselectActivity=true;
 }
 
 applyFilter(){
   // console.log(this.isDeselectAll);
-  
-  this.seletedActivity=[];
-  if(this.isDeselectAll == true){
-    this.seletedActivity = [];
-    this.selectedNodes.emit(this.seletedActivity)
-    this.applyFilterValue.emit(true);
-  } else {
+  var activityArray1=[]
   for (var i = 0; i < this.dataValuesNames.length; i++){
-    if(this.dataValuesNames[i].selected === "inactive")
-      this.seletedActivity.push(this.dataValues[i].name)
+    if(this.dataValuesNames[i].selected== "active"){
+      activityArray1.push(this.dataValuesNames[i].name)
+    }
     };
-      this.selectedNodes.emit(this.seletedActivity)
-      this.applyFilterValue.emit(true);
-  }
+    this.seletedActivity=[];
+    if(activityArray1.length >= 1){
+      for (var i = 0; i < this.dataValuesNames.length; i++){
+        if(this.dataValuesNames[i].selected === "inactive")
+          this.seletedActivity.push(this.dataValues[i].name)
+        };
+          this.selectedNodes.emit(this.seletedActivity)
+          this.applyFilterValue.emit(true);
+    }else{
+      this.selectedNodes.emit(null)
+          this.applyFilterValue.emit(true);
+    }
+  // this.seletedActivity=[];
+  // if(this.isDeselectAll == true){
+  //   this.seletedActivity = [];
+  //   // this.selectedNodes.emit(this.seletedActivity)
+  //   this.selectedNodes.emit(this.seletedActivity)
+  //   this.applyFilterValue.emit(true);
+  // } else {
+  // for (var i = 0; i < this.dataValuesNames.length; i++){
+  //   if(this.dataValuesNames[i].selected === "inactive")
+  //     this.seletedActivity.push(this.dataValues[i].name)
+  //   };
+  //     this.selectedNodes.emit(this.seletedActivity)
+  //     this.applyFilterValue.emit(true);
+  // }
+  this.applyVariantFilter()
 }
 channgeFilter(){
   this.endPointsArray=[{name:"Start",selected:"inactive"},{name:"End",selected:"inactive"}]
@@ -312,8 +355,19 @@ selectedVariant(data,index){
         this.seletedVariant.push(this.variantListarray[i].name)
       }
       };
+      // if(this.seletedVariant.length >=1){
+      //   this.selectedVariantOutput.emit(this.seletedVariant)
+      //   this.applyFilterValue.emit(true)
+      // }else{
+      //   var seletedVariant1=[]
+      //   for (var i = 0; i < this.variantListarray.length; i++){
+      //       seletedVariant1.push(this.variantListarray[i].name)
+      //   }
+        // this.selectedVariantOutput.emit(seletedVariant1)
         this.selectedVariantOutput.emit(this.seletedVariant)
         this.applyFilterValue.emit(true)
+      // }
+        
   }
 
 } 

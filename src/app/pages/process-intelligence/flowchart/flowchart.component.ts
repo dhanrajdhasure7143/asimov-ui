@@ -139,6 +139,8 @@ export class FlowchartComponent implements OnInit {
   graphgenetaionInterval: any;
   isPerformance:boolean=false;
   selectedPerformancevalue:any
+  filterdNodes:any[];
+  isClearFilter:boolean=false
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -1232,10 +1234,12 @@ closeNav() { // Variant list Close
   }
   
   onchangeActivity(value){ //change activity slider  value
+    this.isClearFilter=true;
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue) 
   }
   onChangePath(value){      //change path slider  value
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue)
+    this.isClearFilter=true;
   }
                                 
 sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on activity and path value filter the graph values
@@ -1332,7 +1336,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   }
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
     console.log(this.selectedCaseArry);
-    
     this.spinner.show();
     this.activity_value=SelectedActivities;
     this.model1=[]
@@ -1750,11 +1753,26 @@ filterOverlay(){
         this.varaint_data.data[i].selected = "inactive";
       }
       this.resetspinnermetrics();
+      var seletedVariant1=[]
+      var reqObj={}
+      for (var i = 0; i < this.varaint_data.data.length; i++){
+              seletedVariant1.push(this.varaint_data.data[i].name)
+          }
+          reqObj= {
+            "data_type": "activity_filter",
+            "pid": this.graphIds,
+            "cases": seletedVariant1,
+            "activities": this.filterdNodes
+            }
+
     } else {
-      const variantComboBody = {
-        "data_type": "variant_combo",
+      console.log('test,',e);
+      
+      reqObj = {
+        "data_type": "activity_filter",
         "pid": this.graphIds,
-        "cases": e
+        "cases": e,
+        "activities": this.filterdNodes
       }
 
       var varint = localStorage.getItem("variants");
@@ -1778,7 +1796,8 @@ filterOverlay(){
       this.varaint_data.data[i].selected = "active";
       }
       }
-      this.rest.getVariantGraphCombo(variantComboBody).subscribe(res => {
+    }
+      this.rest.getVariantGraphCombo(reqObj).subscribe(res => {
       this.variantCombo = res
         this.model1 = this.variantCombo.data[0].nodeDataArraycase;
         this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
@@ -1796,7 +1815,7 @@ filterOverlay(){
       this.isSingleTraceBPMN = false;
       this.isMultiTraceBPMN = true;
       this.isSliderBPMN = false;
-    }
+    
   }
 
   getVariantCasePercentage(varia_list){
@@ -1818,5 +1837,11 @@ filterOverlay(){
   viewInsights(){
     this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.graphIds}})
   }
+  readselectedNodes1(activies){
+    this.filterdNodes=activies
+    this.isClearFilter=false;
+    
+  }
+
  
 }

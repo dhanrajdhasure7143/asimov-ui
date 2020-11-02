@@ -23,7 +23,7 @@
                             </div>
                             <div class="col-sm-4">
                                     <!-- <button class="btn eiap-btn btn-primary" (click)="selectAllDataValue()" *ngIf="!isSelect">Select All</button> -->
-                                    <button class="btn" (click)="deselectAllDataValue()" [disabled]="isApplyFilter">Deselect All</button>         
+                                    <button class="btn" (click)="deselectAllDataValue()" [disabled]="isDeselectActivity">Deselect All</button>         
                             </div>
                             <div class="col-sm-4">
                            <!-- <button *ngIf="!isSearch" class="btn" (click)="this.isSearch= !this.isSearch" >Search</button>  -->
@@ -61,6 +61,9 @@
 
                     <div class="col-md-8" *ngIf="isVariantFilter">
                             <div class="col-sm-12 text-right">
+                                <div class="col-sm-12">
+                                    <p class="dataType_filter">Variants :</p>
+                                    </div>
                                     <div class="col-sm-1"></div>
                                     <div class="col-sm-8">
                                             <button class="btn" (click)="selectAllVariantList()">Select All</button>
@@ -72,9 +75,7 @@
                                             <button class="btn" (click)="deselectAllVariantList()" [disabled]="isApplyFilter">Deselect All</button>         
                                     </div>
                                 </div>
-                        <div class="col-sm-12">
-                        <p class="dataType_filter">Variants :</p>
-                        </div>
+                        
 
                         <div class="col-sm-12 dataValues">
                             <div *ngFor = "let data of variantListarray|filter:search_activity; let i = index;trackBy:loopTrackBy" >
@@ -140,9 +141,9 @@
                             </tbody>
                         </table>
                         </div>
-                    <button *ngIf="isActivity" class="btn btn-primary eiap-btn" (click)="applyFilter()">Apply Filter</button>
-                    <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" (click)="applyEndpointFilter()">Apply Filter</button>
-                    <button *ngIf="isVariantFilter" class="btn btn-primary eiap-btn" (click)="applyVariantFilter()">Apply Filter</button>
+                    <button class="btn btn-primary eiap-btn" (click)="applyFilter()">Apply Filter</button>
+                    <!-- <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" (click)="applyEndpointFilter()">Apply Filter</button> -->
+                    <!-- <button *ngIf="isVariantFilter" class="btn btn-primary eiap-btn" (click)="applyVariantFilter()">Apply Filter</button> -->
         
                     </div>
                 </div>
