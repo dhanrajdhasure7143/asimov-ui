@@ -63,7 +63,7 @@
       <option value="svg">SVG</option>
       <option value="png">PNG</option>
       <option value="jpg">JPG</option>
-      <option value="bpmn">BPMN</option>
+      <option [value]="selectedNotationType">{{selectedNotationType | uppercase }}</option>
     </select>
     <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
   </span>
