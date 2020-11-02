@@ -7,9 +7,9 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
   import { getExtensionElements } from 'bpmn-js-properties-panel/lib/helper/ExtensionElementsHelper';
     import { RestApiService } from '../../services/rest-api.service';
 
-    function getRpaData(element) {
+    function getRpaData(element, tag) {
         var bo = getBusinessObject(element);
-        var formData = getExtensionElements(bo, 'bpmn:RPATask');
+        var formData = getExtensionElements(bo, tag);
         if (typeof formData !== 'undefined') {
           return formData[0];
         }
@@ -23,15 +23,29 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
         if(activityValue){
             selectedRpaTaskListOptions = rpaTaskListOptions[activityValue]
         }else{
-            var rpaFData = getRpaData(element);
+            var rpaFData = getRpaData(element, 'rpa:Activity');
             if(rpaFData){
-                let activity = rpaFData.get("rpaAActivity");
+                let activity = rpaFData.get("activity");
                 if(activity){
                     selectedRpaTaskListOptions = rpaTaskListOptions[activity]
                 }
             }
         }
         return selectedRpaTaskListOptions;
+    }
+
+    function getRPATaskAttributes(element){
+        let selectedRpaTaskAttributes = [];
+        let rpa_taskList_attrs = localStorage.getItem("attributes");
+        var rpaTaskListAttributes = rpa_taskList_attrs? JSON.parse(rpa_taskList_attrs) :{};
+        var rpaFData = getRpaData(element, 'rpa:Activity');
+        if(rpaFData){
+            let taskId = rpaFData.get("taskId");
+            if(taskId){
+                selectedRpaTaskAttributes = rpaTaskListAttributes[taskId]
+            }
+        }
+        return selectedRpaTaskAttributes;
     }
 
     function getAttrSelectOptions(optionList){
@@ -68,24 +82,28 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
             get: function(element, node) {
                 var result = { activity: '' };
                 var bo = getBusinessObject(element);
-                var formDataExtension = getExtensionElements(bo, "bpmn:RPATask");
+                var formDataExtension = getExtensionElements(bo, "bpmn:rpaTask");
+                if(!formDataExtension)
+                    formDataExtension = getExtensionElements(bo, "rpa:Activity")
                 if (formDataExtension) {
-                    var formData = getRpaData(element);
-                    var storedValue = formData.get('rpaAActivity');
+                    var formData = getRpaData(element, "rpa:Activity");
+                    var storedValue = formData.get('activity');
                     result = { activity: storedValue };
                 }
                 return result;
             },
             set: function(element, values, node) {
                 var bo = getBusinessObject(element); var commands = [];
-                var rpaExtensionElements = getExtensionElements(bo, "bpmn:RPATask");
+                var rpaExtensionElements = getExtensionElements(bo, "bpmn:rpaTask");
+                if(!rpaExtensionElements)
+                    rpaExtensionElements = getExtensionElements(bo, "rpa:Activity");
                 if (!rpaExtensionElements) {
                     rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
                     commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
                 }
-                var rpaFData = getRpaData(element);
+                var rpaFData = getRpaData(element, "rpa:Activity");
                 if(!rpaFData){
-                    rpaFData = elementHelper.createElement('bpmn:RPATask', { rpaAActivity: "", rpaATaskList: ""}, rpaExtensionElements, bpmnFactory);
+                    rpaFData = elementHelper.createElement('rpa:Activity', { activity: "", taskId: ""}, rpaExtensionElements, bpmnFactory);
                     commands.push(cmdHelper.addAndRemoveElementsFromList(
                         element,
                         rpaExtensionElements,
@@ -95,14 +113,14 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         []
                         ));
                 }
-                var field = elementHelper.createElement('bpmn:RPATask', values.activity , rpaFData, bpmnFactory);
-                if(rpaFData.get('rpaATaskList') == "") updateTaskList(element, values.activity);
-                if (typeof rpaFData.rpaAActivity !== 'undefined') {
-                    commands.push(cmdHelper.addElementsTolist(element, rpaFData, 'rpaAActivity', values.activity));
+                var field = elementHelper.createElement('rpa:Activity', values.activity , rpaFData, bpmnFactory);
+                if(rpaFData.get('taskId') == "") updateTaskList(element, values.activity);
+                if (typeof rpaFData.activity !== 'undefined') {
+                    commands.push(cmdHelper.addElementsTolist(element, rpaFData, 'activity', values.activity));
                 } else {
                     commands.push(cmdHelper.updateBusinessObject(element, rpaFData, {
-                        rpaAActivity: values.activity,
-                        rpaATaskList: ""
+                        activity: values.activity,
+                        taskId: ""
                     }));
                 }
                 return commands;
@@ -122,30 +140,32 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
             get: function(element, node) {
                 var result = { taskList: '' };
                 var bo = getBusinessObject(element);
-                var formDataExtension = getExtensionElements(bo, "bpmn:RPATask");
+                var formDataExtension = getExtensionElements(bo, "rpa:Activity");
                 if (formDataExtension) {
-                    var formData = getRpaData(element);
-                    var storedValue = formData.get('rpaATaskList');
+                    var formData = getRpaData(element, "rpa:Activity");
+                    var storedValue = formData.get('taskId');
                     result = { taskList: storedValue };
                 }
-                var rpaFData = getRpaData(element);
+                var rpaFData = getRpaData(element, "rpa:Activity");
                 
                 cmdHelper.updateBusinessObject(element, rpaFData, {
-                    rpaATaskList: result.taskList
+                    taskId: result.taskList
                 });
 
                 return result;
             },
             set: function(element, values, node) {
                 var bo = getBusinessObject(element); var commands = [];
-                var rpaExtensionElements = getExtensionElements(bo, "bpmn:RPATask");
+                var rpaExtensionElements = getExtensionElements(bo, "bpmn:rpaTask");
+                if(!rpaExtensionElements)
+                    rpaExtensionElements = getExtensionElements(bo, "rpa:Activity");
                 if (!rpaExtensionElements) {
                     rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
                     commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
                 }
-                var rpaFData = getRpaData(element);
+                var rpaFData = getRpaData(element, "rpa:Activity");
                 if(!rpaFData){
-                    rpaFData = elementHelper.createElement('bpmn:RPATask', { rpaATaskList: "" }, rpaExtensionElements, bpmnFactory);
+                    rpaFData = elementHelper.createElement('rpa:Activity', { taskId: "" }, rpaExtensionElements, bpmnFactory);
                     commands.push(cmdHelper.addAndRemoveElementsFromList(
                         element,
                         rpaExtensionElements,
@@ -155,43 +175,57 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         []
                     ));
                 }
-                var field = elementHelper.createElement('bpmn:RPATask', values.taskList , rpaFData, bpmnFactory);
-                if (typeof rpaFData.rpaATaskList !== 'undefined') {
-                    commands.push(cmdHelper.addElementsTolist(element, rpaFData, 'rpaATaskList', values.taskList));
+                var field = elementHelper.createElement('rpa:Activity', values.taskList , rpaFData, bpmnFactory);
+                if (typeof rpaFData.taskId !== 'undefined') {
+                    commands.push(cmdHelper.addElementsTolist(element, rpaFData, 'taskId', values.taskList));
                 } else {
                     commands.push(cmdHelper.updateBusinessObject(element, rpaFData, {
-                        rpaATaskList: values.taskList
+                        taskId: values.taskList
                     }));
                 }
                 return commands;
             },
             setControlValue: true,
             hidden: function(element, node) {
-                var rpaFData = getRpaData(element);
-                return !(rpaFData && rpaFData.get("rpaAActivity"));
+                var rpaFData = getRpaData(element, "rpa:Activity");
+                return !(rpaFData && rpaFData.get("activity"));
             }
         });
     }
 
+    function getDesc(element, attr){
+        var rpaFData = getRpaData(element, 'rpa:Activity');
+        if(rpaFData){
+            let taskId = rpaFData.get("taskId");
+            if(taskId == "16" && attr['name'] == "loginSession") return "${ Output reference } from Login mail should be input";
+        }
+        return attr['placeholder'];
+    }
+
     function getAttributesEntry(element, bpmnFactory) {
-        var attributesList = JSON.parse(localStorage.getItem("attributes"));
+        var attributesList = getRPATaskAttributes(element);
         let fieldsList = [];
         attributesList.forEach((each_attr, i) => {
             let tmp = '';
             let taskey = each_attr['name'];
-            if(each_attr['type'] != "dropdown"){
+            if(["text", "email", "password", "number", "multipart"].indexOf(each_attr['type']) > -1){
                 tmp = entryFactory.validationAwareTextField({
                     id: each_attr['id'],
                     label: each_attr['label'],
                     modelProperty: taskey,
-                    // description: each_attr['placeholder'],
+                    description: getDesc(element, each_attr),
                     getProperty: function(element, node) {
                         var result = {};
-                        result[taskey] = each_attr['placeholder'];
+                        result[taskey] = '';
                         var bo = getBusinessObject(element);
-                        var formDataExtension = getExtensionElements(bo, "bpmn:RPATask");
+                        var formDataExtension = getExtensionElements(bo, "bpmn:rpaTask");
+                        if(each_attr['id'] == "61")
+                            formDataExtension = getExtensionElements(bo, "rpa:OutputParams");
+                        else if(!formDataExtension)
+                            formDataExtension = getExtensionElements(bo, "rpa:Activity");
                         if (formDataExtension) {
-                            var formData = getRpaData(element);
+                            let ext = each_attr['id'] == "61" ? "rpa:OutputParams": "rpa:Activity"; 
+                            var formData = getRpaData(element, ext);
                             var storedValue = formData.get(taskey);
                             result[taskey] = storedValue;
                         }
@@ -199,14 +233,19 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                     },
                     setProperty: function(element, properties, node) {
                         var bo = getBusinessObject(element); var commands = [];
-                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:RPATask");
+                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:rpaTask");
+                        if(each_attr['id'] == "61")
+                            rpaExtensionElements = getExtensionElements(bo, "rpa:OutputParams");
+                        else if(!rpaExtensionElements)
+                            rpaExtensionElements = getExtensionElements(bo, "rpa:Activity");
+                        let ext = each_attr['id'] == "61" ? "rpa:OutputParams": "rpa:Activity"; 
                         if (!rpaExtensionElements) {
                             rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
                             commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
                         }
-                        var rpaFData = getRpaData(element);
+                        var rpaFData = getRpaData(element, ext);
                         if(!rpaFData){
-                            rpaFData = elementHelper.createElement('bpmn:RPATask', properties, rpaExtensionElements, bpmnFactory);
+                            rpaFData = elementHelper.createElement(ext, properties, rpaExtensionElements, bpmnFactory);
                             commands.push(cmdHelper.addAndRemoveElementsFromList(
                                 element,
                                 rpaExtensionElements,
@@ -216,7 +255,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                                 []
                             ));
                         }
-                        var field = elementHelper.createElement('bpmn:RPATask', properties , rpaFData, bpmnFactory);
+                        var field = elementHelper.createElement(ext, properties , rpaFData, bpmnFactory);
                         if (typeof rpaFData[taskey] !== 'undefined') {
                             commands.push(cmdHelper.addElementsTolist(element, rpaFData, taskey, properties));
                         } else {
@@ -228,48 +267,56 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         var validation = {};
                         var fieldValue = values[taskey];
                         if(fieldValue){
-                            if(fieldValue.length > each_attr['attributeMax'] || fieldValue.length < each_attr['attributeMin'])
+                            if(each_attr['attributeMax'] == each_attr['attributeMin'] && fieldValue.length != each_attr['attributeMin'])
+                                validation[taskey] = each_attr['label']+' length must be '+each_attr['attributeMin']+' characters'
+                            else if(fieldValue.length > each_attr['attributeMax'] || fieldValue.length < each_attr['attributeMin'])
                                 validation[taskey] = each_attr['label']+' length must lie between '+each_attr['attributeMin']+' - '+each_attr['attributeMax']+' characters';
                         }else{
                             if(each_attr['required'])
-                                validation[taskey] = 'Parameter must have a name';
+                                validation[taskey] = each_attr['label']+' is mandatory';
                         }
                         return validation;
                     },
                     hidden: function(element, node) {
-                        var rpaFData = getRpaData(element);
-                        return !(rpaFData && rpaFData.get("rpaAActivity") && rpaFData.get("rpaATaskList") && each_attr['visibility']);
+                        var rpaFData = getRpaData(element, "rpa:Activity");
+                        return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId") && each_attr['visibility']);
                     }
-                })
-                
-            }else{
+                })                
+            }else if(each_attr['type'] == "dropdown"){
                 tmp = entryFactory.selectBox({
                     id: each_attr['id'],
                     label: each_attr['label'],
-                    modelProperty: each_attr['type']+"_"+each_attr['id'],
+                    description: each_attr['placeholder'],
+                    modelProperty: taskey, //each_attr['type']+"_"+each_attr['id'],
                     selectOptions: getAttrSelectOptions(each_attr['options']),
+                    // emptyParameter: true,
                     get: function(element, node) {
                         var result = {};
                         result[taskey] = ''
                         var bo = getBusinessObject(element);
-                        var formDataExtension = getExtensionElements(bo, "bpmn:RPATask");
+                        var formDataExtension = getExtensionElements(bo, "bpmn:rpaTask");
+                        if(!formDataExtension)
+                            formDataExtension = getExtensionElements(bo, "rpa:Activity");
                         if (formDataExtension) {
-                            var formData = getRpaData(element);
+                            var formData = getRpaData(element, "rpa:Activity");
                             var storedValue = formData.get(taskey);
-                            result = { taskey: storedValue };
+                            if(storedValue)
+                                result[taskey]= storedValue ;
                         }
                         return result;
                     },
                     set: function(element, values, node) {
                         var bo = getBusinessObject(element); var commands = [];
-                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:RPATask");
+                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:rpaTask");
+                        if(!rpaExtensionElements)
+                            rpaExtensionElements = getExtensionElements(bo, "rpa:Activity");
                         if (!rpaExtensionElements) {
                             rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
                             commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
                         }
-                        var rpaFData = getRpaData(element);
+                        var rpaFData = getRpaData(element,"rpa:Activity");
                         if(!rpaFData){
-                            rpaFData = elementHelper.createElement('bpmn:RPATask', { taskey: "" }, rpaExtensionElements, bpmnFactory);
+                            rpaFData = elementHelper.createElement('rpa:Activity', values, rpaExtensionElements, bpmnFactory);
                             commands.push(cmdHelper.addAndRemoveElementsFromList(
                                 element,
                                 rpaExtensionElements,
@@ -279,21 +326,154 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                                 []
                             ));
                         }
-                        var field = elementHelper.createElement('bpmn:RPATask', values.taskList , rpaFData, bpmnFactory);
+                        var field = elementHelper.createElement('rpa:Activity', values[taskey] , rpaFData, bpmnFactory);
                         if (typeof rpaFData[taskey] !== 'undefined') {
-                            commands.push(cmdHelper.addElementsTolist(element, rpaFData, taskey, values.taskList));
+                            commands.push(cmdHelper.addElementsTolist(element, rpaFData, taskey, values[taskey]));
                         } else {
-                            commands.push(cmdHelper.updateBusinessObject(element, rpaFData, {
-                                taskey: values.taskList
-                            }));
+                            commands.push(cmdHelper.updateBusinessObject(element, rpaFData, values));
+                        }
+                        return commands;
+                    },
+                    validate: function(element, values, node) {
+                        var validation = {};
+                        var fieldValue = values[taskey];
+                        if(!fieldValue && each_attr['required'])
+                            validation[taskey] = each_attr['label']+' is mandatory';
+                        return validation;
+                    },
+                    hidden: function(element, node) {
+                        var rpaFData = getRpaData(element, "rpa:Activity");
+                        return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId"));
+                    }
+                });
+            }else if(each_attr['type'] == "checkbox"){
+                tmp = entryFactory.checkbox({
+                    id: each_attr['id'],
+                    label: each_attr['label'],
+                    description: each_attr['placeholder'],
+                    modelProperty: taskey,
+                    selectOptions: getAttrSelectOptions(each_attr['options']),
+                    get: function(element) {
+                        var result = {};
+                        result[taskey] = ''
+                        var bo = getBusinessObject(element);
+                        var formDataExtension = getExtensionElements(bo, "bpmn:rpaTask");
+                        if(!formDataExtension)
+                            formDataExtension = getExtensionElements(bo, "rpa:Activity");
+                        if (formDataExtension) {
+                            var formData = getRpaData(element, "rpa:Activity");
+                            var storedValue = formData.get(taskey);
+                            if(storedValue)
+                                result[taskey] = storedValue;
+                        }
+                        return result;
+                    },
+                    set: function(element, values) {
+                        var bo = getBusinessObject(element); var commands = [];
+                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:rpaTask");
+                        if(!rpaExtensionElements)
+                            rpaExtensionElements = getExtensionElements(bo, "rpa:Activity");
+                        if (!rpaExtensionElements) {
+                            rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
+                            commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
+                        }
+                        var rpaFData = getRpaData(element, "rpa:Activity");
+                        values[taskey] = !rpaFData.get(taskey)
+                        if(!rpaFData){
+                            let dataJson = {};
+                            dataJson[taskey] = '';
+                            rpaFData = elementHelper.createElement('rpa:Activity', dataJson, rpaExtensionElements, bpmnFactory);
+                            commands.push(cmdHelper.addAndRemoveElementsFromList(
+                                element,
+                                rpaExtensionElements,
+                                'values',
+                                'extensionElements',
+                                [rpaFData],
+                                []
+                            ));
+                        }
+                        var field = elementHelper.createElement('rpa:Activity', values[taskey] , rpaFData, bpmnFactory);
+                        if (typeof rpaFData[taskey] !== 'undefined') {
+                            commands.push(cmdHelper.addElementsTolist(element, rpaFData, taskey, values[taskey]));
+                        } else {
+                            commands.push(cmdHelper.updateBusinessObject(element, rpaFData, values));
                         }
                         return commands;
                     },
                     hidden: function(element, node) {
-                        var rpaFData = getRpaData(element);
-                        return !(rpaFData && rpaFData.get("rpaAActivity") && rpaFData.get("rpaATaskList"));
+                        var rpaFData = getRpaData(element, "rpa:Activity");
+                        return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId"));
                     }
                 });
+            }else if(each_attr['type'] == "textarea"){
+                tmp = entryFactory.textBox({
+                    id: each_attr['id'],
+                    label: each_attr['label'],
+                    modelProperty: taskey,
+                    description: each_attr['placeholder'],
+                    get: function(element, node) {
+                        var result = {};
+                        result[taskey] = '';
+                        var bo = getBusinessObject(element);
+                        var formDataExtension = getExtensionElements(bo, "bpmn:rpaTask");
+                        if(!formDataExtension)
+                            formDataExtension = getExtensionElements(bo, "rpa:Activity");
+                        if (formDataExtension) {
+                            var formData = getRpaData(element, "rpa:Activity");
+                            var storedValue = formData.get(taskey);
+                            if(storedValue)
+                                result[taskey] = storedValue;
+                        }
+                        return result[taskey];
+                    },
+                    set: function(element, values, node) {
+                        var bo = getBusinessObject(element); var commands = [];
+                        var rpaExtensionElements = getExtensionElements(bo, "bpmn:rpaTask");
+                        if(!rpaExtensionElements)
+                            rpaExtensionElements = getExtensionElements(bo, "rpa:Activity");                        
+                        if (!rpaExtensionElements) {
+                            rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
+                            commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
+                        }
+                        var rpaFData = getRpaData(element, "rpa:Activity");
+                        if(!rpaFData){
+                            rpaFData = elementHelper.createElement('rpa:Activity', values, rpaExtensionElements, bpmnFactory);
+                            commands.push(cmdHelper.addAndRemoveElementsFromList(
+                                element,
+                                rpaExtensionElements,
+                                'values',
+                                'extensionElements',
+                                [rpaFData],
+                                []
+                            ));
+                        }
+                        var field = elementHelper.createElement('rpa:Activity', values[taskey] , rpaFData, bpmnFactory);
+                        if (typeof rpaFData[taskey] !== 'undefined') {
+                            commands.push(cmdHelper.addElementsTolist(element, rpaFData, taskey, values[taskey]));
+                        } else {
+                            commands.push(cmdHelper.updateBusinessObject(element, rpaFData, values ));
+                        }
+                        return commands;
+                    },
+                    validate: function(element, values, node) {
+                        var validation = {};
+                        var fieldValue = values[taskey];
+                        if(fieldValue){
+                            if(each_attr['attributeMax'] == each_attr['attributeMin'] && fieldValue.length != each_attr['attributeMin'])
+                                validation[taskey] = each_attr['label']+' length must be '+each_attr['attributeMin']+' characters'
+                            else if(fieldValue.length > each_attr['attributeMax'] || fieldValue.length < each_attr['attributeMin'])
+                                validation[taskey] = each_attr['label']+' length must lie between '+each_attr['attributeMin']+' - '+each_attr['attributeMax']+' characters';
+                        }else{
+                            if(each_attr['required'])
+                                validation[taskey] = each_attr['label']+' is mandatory';
+                        }
+                        return validation;
+                    },
+                    hidden: function(element, node) {
+                        var rpaFData = getRpaData(element, "rpa:Activity");
+                        return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId") && each_attr['visibility']);
+                    }
+                })
             }
             fieldsList.push(tmp)
         })
@@ -306,12 +486,13 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
           processBo = processBo.processRef;
         }
         var entries_ = [getActivityEntry(element, bpmnFactory)]
-        var rpaFData = getRpaData(element);
-        if(rpaFData && rpaFData.get("rpaAActivity"))
+        var rpaFData = getRpaData(element, "rpa:Activity");
+        if(rpaFData && rpaFData.get("activity"))
             entries_.push(getTaskListEntry(element, bpmnFactory))
-        if(rpaFData && rpaFData.get("rpaAActivity") && rpaFData.get("rpaATaskList")){
+        if(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId")){
             let attrList = getAttributesEntry(element, bpmnFactory)
-            entries_.push(...attrList)
+            if(attrList.length > 0)
+                entries_.push(...attrList)
         }
         return {
             entries: entries_

@@ -1,6 +1,12 @@
-import { Component, OnInit, ViewChild,TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild,TemplateRef, ElementRef } from '@angular/core';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
-//import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
+import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
+import CmmnPropertiesProviderModule from 'cmmn-js-properties-panel/lib/provider/camunda';
+import DmnPropertiesPanelModule from 'dmn-js-properties-panel';
+import DmnPropertiesProviderModule from 'dmn-js-properties-panel/lib/provider/dmn';
+import DrdAdapterModule from 'dmn-js-properties-panel/lib/adapter/drd';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
@@ -53,7 +59,22 @@ export class CreateBpmnDiagramComponent implements OnInit {
   fileType:string = "svg";
   selectedNotationType:string;
   displayNotation;
+  rpaJson = {
+    "name": "RPA",
+    "prefix": "rpa",
+    "xml": {
+      "tagAlias": "lowerCase"
+    },
+    "types": [
+      {
+        "name": "Activity",
+        "superClass": [ "Element" ],
+      }
+    ]
+  }
+
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
+  @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
 
@@ -73,6 +94,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     }else if(this.selectedNotationType == 'dmn'){
       this.keyboardLabels=this.shortcut.keyboardLabels_dmn;
     }
+    this.setRPAData();
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getApproverList();
     this.getUserBpmnList();
@@ -109,9 +131,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.getAutoSavedDiagrams();
     });
    }
-
-
-
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
       if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()
@@ -121,14 +140,49 @@ export class CreateBpmnDiagramComponent implements OnInit {
     })
    }
    fitNotationView(){
-    let canvas = this.bpmnModeler.get('canvas');
+    let canvas;
+    if(this.selectedNotationType == "bpmn" || this.selectedNotationType == "cmmn")
+      canvas = this.bpmnModeler.get('canvas');
+    else if(this.selectedNotationType == "dmn")
+      canvas = this.bpmnModeler.getActiveViewer().get('canvas')
     canvas.zoom('fit-viewport');
     let msg = "Notation";
     if(document.getElementById("canvas") )
     this.global.notify(msg+" is fit to view port", "success")
 
    }
-
+   setRPAData(){
+    this.rest.getAllAttributes().subscribe( res => {
+      let rpaActivityOptions: any[] = [];
+      let taskLists:any = {};
+      let taskAttributes:any = {};
+      if(res["General"]){
+        res["General"].forEach((each) => {
+          rpaActivityOptions.push({name:each.name, value: each.name});
+          let tmpTasks = [];
+          each.taskList.forEach((each_task) => {
+            tmpTasks.push({name:each_task.name, value: each_task.taskId})
+            taskAttributes[each_task.taskId] = each_task.value;
+          })
+          taskLists[each.name]= tmpTasks;
+        })
+      }
+      if(res["Advanced"]){
+        res["Advanced"].forEach((each) => {
+          rpaActivityOptions.push({name:each.name, value: each.name});
+          let tmpTasks = [];
+          each.taskList.forEach((each_task) => {
+            tmpTasks.push({name:each_task.name, value: each_task.taskId})
+            taskAttributes[each_task.taskId] = each_task.value;
+          })
+          taskLists[each.name]= tmpTasks;
+        });
+      }
+      localStorage.setItem("rpaActivityOptions", JSON.stringify(rpaActivityOptions))
+      localStorage.setItem("rpaActivityTaskListOptions", JSON.stringify(taskLists))
+      localStorage.setItem("attributes", JSON.stringify(taskAttributes))
+    })
+  }
    getApproverList(){
      this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
       if(Array.isArray(res))
@@ -187,47 +241,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
   // ngAfterViewInit(){
   initiateDiagram(){
     let _self = this;
-    var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
-    this.bpmnModeler = new BpmnJS({
-      linting: {
-        bpmnlint: bpmnlintConfig,
-        active: _self.getUrlParam('linting')
-     },
-      additionalModules: [
-        PropertiesPanelModule,
-        PropertiesProviderModule,
-        {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-        {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
-        lintModule
-      ],
-      container: '#canvas',
-      keyboard: {
-        bindTo: window
-      },
-      propertiesPanel: {
-        parent: '#properties'
-      },
-      moddleExtensions: {
-        camunda: CamundaModdleDescriptor
-      }
-    });
-    // this.bpmnModeler = new CmmnJS({
-    //   container: '#canvas',
-    //   propertiesPanel: {
-    //     parent: '#properties'
-    //   }
-    // })
-    let canvas = this.bpmnModeler.get('canvas');
-    canvas.zoom('fit-viewport');
-    this.bpmnModeler.on('element.changed', function(){
-      _self.isDiagramChanged = true;
-      let now = new Date().getTime();
-      if(now - _self.last_updated_time > 10*1000){
-        _self.autoSaveBpmnDiagram();
-        _self.last_updated_time = now;
-      }
-    })
-    let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation
+    this.initModeler();
+    let selected_xml = this.bpmnservice.getBpmnData();
+    if(!selected_xml)
+      selected_xml = this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
       this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
@@ -283,11 +300,16 @@ export class CreateBpmnDiagramComponent implements OnInit {
           this.notationListOldValue = this.selected_notation;
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+          this.selectedNotationType = current_bpmn_info["ntype"];
+          this.fileType = "svg";
+          if(this.dmnTabs)
+            this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
           this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
             this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
           }
+          this.initModeler();
           this.bpmnModeler.importXML(selected_xml, function(err){
             _self.oldXml = selected_xml;
             _self.newXml = selected_xml;
@@ -301,10 +323,15 @@ export class CreateBpmnDiagramComponent implements OnInit {
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+      this.selectedNotationType = current_bpmn_info["ntype"];
+      this.fileType = "svg";
+      if(this.dmnTabs)
+        this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
       }
+      this.initModeler();
       this.bpmnModeler.importXML(selected_xml, function(err){
         _self.oldXml = selected_xml;
         _self.newXml = selected_xml;
@@ -370,7 +397,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   downloadBpmn(){
     if(this.bpmnModeler){
       let _self = this;
-      if(this.fileType == "bpmn"){
+      if(this.fileType == this.selectedNotationType){
         this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
           var blob = new Blob([xml], { type: "application/xml" });
           var url = window.URL.createObjectURL(blob);
@@ -404,6 +431,89 @@ export class CreateBpmnDiagramComponent implements OnInit {
         });
       }
     }
+  }
+  initModeler(){
+    let _self = this;
+    if(this.bpmnModeler){
+      document.getElementById("canvas").innerHTML = ""
+      document.getElementById("properties").innerHTML = ""
+    }
+    var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
+    var CmmnCamundaModdleDescriptor = require("camunda-cmmn-moddle/resources/camunda.json");
+    var DmnCamundaModdleDescriptor = require("camunda-dmn-moddle/resources/camunda.json");
+    if(this.selectedNotationType == "cmmn"){
+      this.bpmnModeler = new CmmnJS({
+        additionalModules: [
+          CmmnPropertiesPanelModule,
+          CmmnPropertiesProviderModule
+        ],
+        container: '#canvas',
+        propertiesPanel: {
+          parent: '#properties'
+        },
+        moddleExtensions: {
+          camunda: CmmnCamundaModdleDescriptor
+        }
+      });
+    }else if(this.selectedNotationType == "dmn"){
+      this.bpmnModeler = new DmnJS({
+        drd: {
+          additionalModules: [
+            DmnPropertiesPanelModule,
+            DmnPropertiesProviderModule,
+            DrdAdapterModule
+          ],
+          propertiesPanel: {
+            parent: '#properties'
+          }
+        },
+        container: '#canvas',
+        moddleExtensions: {
+          camunda: DmnCamundaModdleDescriptor
+        }
+      });
+      this.bpmnModeler.on('views.changed', function(event) {
+        if(_self.dmnTabs)
+          _self.dmnTabs.nativeElement.innerHTML = "test";
+      })
+    }else{
+      this.bpmnModeler = new BpmnJS({
+        linting: {
+           bpmnlint: bpmnlintConfig,
+           active: _self.getUrlParam('linting')
+        },
+        additionalModules: [
+          PropertiesPanelModule,
+          PropertiesProviderModule,
+          {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
+          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+          // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
+          // CustomRenderer,
+          lintModule
+        ],
+        container: '#canvas',
+        keyboard: {
+          bindTo: window
+        },
+        propertiesPanel: {
+          parent: '#properties'
+        },
+        moddleExtensions: {
+          camunda: CamundaModdleDescriptor,
+          rpa: this.rpaJson
+        }
+      });
+      let canvas = this.bpmnModeler.get('canvas');
+      canvas.zoom('fit-viewport');
+    }
+    this.bpmnModeler.on('element.changed', function(){
+      _self.isDiagramChanged = true;
+      let now = new Date().getTime();
+      if(now - _self.last_updated_time > 10*1000){
+        _self.autoSaveBpmnDiagram();
+        _self.last_updated_time = now;
+      }
+    })
   }
   submitDiagramForApproval(){
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){

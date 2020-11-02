@@ -7,6 +7,9 @@ import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
 import CmmnPropertiesProviderModule from 'cmmn-js-properties-panel/lib/provider/camunda';
+import DmnPropertiesPanelModule from 'dmn-js-properties-panel';
+import DmnPropertiesProviderModule from 'dmn-js-properties-panel/lib/provider/dmn';
+import DrdAdapterModule from 'dmn-js-properties-panel/lib/adapter/drd';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
 import CustomRenderer from "../bpmn-props-additional-tabs/customRenderer";
@@ -96,6 +99,28 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   showProps: boolean=false;
   ntype: string;
   validNotationTypes: string;
+  rpaJson = {
+    "name": "RPA",
+    "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
+    "prefix": "rpa",
+    "xml": {
+      "tagAlias": "lowerCase"
+    },
+    "types": [
+      {
+        "name": "Activity",
+        "superClass": [ "Element" ],
+      },
+      {
+        "name": "InputParams",
+        "superClass": [ "Element" ],
+      },
+      {
+        "name": "OutputParams",
+        "superClass": [ "Element" ],
+      }
+    ]
+  }
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
@@ -137,9 +162,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.isConfBpmnModeler = false;
       this.getUserBpmnList(null);
     }else{
-        this.getUserBpmnList(null);
-        this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
-        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
+      this.getUserBpmnList(null);
+      this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
+      this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
     }
     this.getApproverList();
    }
@@ -313,7 +338,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
      //var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
 
-
     if(!this[modeler_obj]){
       if(this.selectedNotationType == "cmmn"){
         this[modeler_obj] = new CmmnJS({
@@ -333,7 +357,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this[modeler_obj] = new DmnJS({
           container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1'
         });
-
       }else{
         this[modeler_obj] = new BpmnJS({
           linting: {
@@ -357,7 +380,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
             parent: '#properties'
           },
           moddleExtensions: {
-            camunda: CamundaModdleDescriptor
+            camunda: CamundaModdleDescriptor,
+            rpa: this.rpaJson
           }
         });
       }
@@ -898,7 +922,7 @@ displayBPMN(){
    }
 
 
-   uploadConfBpmn(confBpmnData){
+  uploadConfBpmn(confBpmnData){
     let _self = this;
     let decrypted_data = atob(unescape(encodeURIComponent(confBpmnData)));
     this.isLoading = true;
