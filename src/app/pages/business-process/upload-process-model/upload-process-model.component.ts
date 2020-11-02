@@ -484,21 +484,6 @@ displayBPMN(){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
       }
-    })
-  }else{
-    this.isLoading = true;
-    this.isDiagramChanged = false;
-    this.disableShowConformance = false;
-    this.diplayApproveBtn = true;
-    this.keyboardLabels=this.shortcut[this.selectedNotationType];
-    let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
-    let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-    this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
-    this.hasConformance = current_bpmn_info["hasConformance"];
-    if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
-      selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-      this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
-    }
     this.initModeler();
     setTimeout(()=> {
       if(this.hasConformance) this.initBpmnModeler();
@@ -506,6 +491,12 @@ displayBPMN(){
         if(selected_xml == "undefined"){
           this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
             this.bpmnModeler.importXML(res, function(err){
+	    _self.oldXml = selected_xml;
+                _self.newXml = selected_xml;
+              });
+            });
+          }else{
+            this.bpmnModeler.importXML(selected_xml, function(err){
               _self.oldXml = selected_xml;
               _self.newXml = selected_xml;
             });
