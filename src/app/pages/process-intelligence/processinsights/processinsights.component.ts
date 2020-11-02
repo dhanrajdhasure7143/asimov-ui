@@ -6,8 +6,11 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 import { Router, ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
+import * as d3 from 'd3';
+import {curveBasis} from 'd3-shape';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
+import { GlobalScript } from 'src/app/shared/global-script';
 HC_more(Highcharts)
 enum VariantList {
     'Most Common',
@@ -31,6 +34,14 @@ export class ProcessinsightsComponent implements OnInit {
     isEventGraph: boolean = true;
     input1: any = 20;
     input2: any = 1;
+    robotinput:any = 8;
+    workingHours:any = {
+        formDay:'Mon',
+        toDay: 'Fri',
+        shiftStartTime:"00:00",
+        shiftEndTime:"23:59"
+
+    };
     variant_list: any;
     varaint_data: any;
     select_varaint: any = 0;
@@ -74,13 +85,95 @@ export class ProcessinsightsComponent implements OnInit {
     s_variants:any = [];
     dChart1:any = [];
     dChart2:any = [];
+    isAddHrs:boolean=false;
+    value:any='23:11';
+    time:any
+
+    // NGX Charts
+    multi: any = [];
+
+    bubbleData:any =[];
+  view: any[] = [700, 420];
+  view1:any[] = [500, 340]
+
+  // options
+  legend: boolean = false;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Duration';
+  yAxisLabel: string = 'Price';
+  timeline: boolean = true;
+  rotateXAxisTicks:boolean = true;
+  trimXAxisTicks:boolean = true;
+  autoScale: boolean = true;
+  curve:any = curveBasis;
+
+
+//   bubble chart
+legend1: boolean = false;
+legendTitle = "Activity vs Occurences"
+maxRadius: number = 20;
+minRadius: number = 5;
+yScaleMin: number = 0;
+//yScaleMax: number = 1000;
+showXAxis:boolean = true;
+showYAxis:boolean = true;
+xAxisLabel1: string = 'Activity';
+yAxisLabel1: string = 'Occurences';
+  colorScheme = {
+    domain: ['#E44D25', '#5AA454', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
+  };
+  colorScheme1 = {
+    domain: ['#212F3C']
+  };
+
+
+//   combo chart
+view2 = [500,400];
+gradient = false;
+showLegend = false;
+legendPosition = 'right';
+showXAxisLabel1 = true;
+xAxisLabel2 = 'Activity';
+showYAxisLabel1 = true;
+yAxisLabel2 = 'Human Cost';
+showGridLines = true;
+innerPadding = '5%';
+barChart: any[] = [];
+lineChartSeries: any[] = []
+lineChartScheme = {
+  name: 'coolthree',
+  selectable: true,
+  group: 'linear',
+  domain: ['#212F3C']
+};
+
+comboBarScheme = {
+  name: 'singleLightBlue',
+  selectable: true,
+  group: 'linear',
+  domain: ['#2d7dd7']
+};
+
+showRightYAxisLabel: boolean = false;
+yAxisLabelRight: string = 'Bot Cost';
+
+
 
     constructor(
         private rest: RestApiService,
         private route: ActivatedRoute,
         private dt: DataTransferService,
-        private hints: PiHints
-    ) { }
+        private hints: PiHints,
+        private global:GlobalScript
+    ) {
+       // Object.assign(this, { multi });
+      // Object.assign(this.bubbleData,  this.bubbleData );
+     }
 
     ngOnInit() {
         this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -119,6 +212,36 @@ export class ProcessinsightsComponent implements OnInit {
         this.getHumanBotCost('fullgraph');
     }
 
+    addWorkingHours(){
+        if(!this.workingHours.formDay){
+            this.global.notify("Please select from working day", "error");
+            return;
+        }
+        if(!this.workingHours.toDay){
+            this.global.notify("Please select to working day", "error");
+            return;
+        }
+        if(!this.workingHours.shiftStartTime){
+            this.global.notify("Please select shift start time", "error");
+            return;
+        }
+        if(!this.workingHours.shiftEndTime){
+            this.global.notify("Please select shift end time", "error");
+            return;
+        }
+        this.getTotalNoOfCases('fullgraph');
+        this.getActivityMetrics('fullgraph');
+        this.getHumanBotCost('fullgraph');
+
+    }
+
+    resetWorkingHours(){    
+        this.workingHours.formDay = "Mon";
+        this.workingHours.toDay = "Fri";
+        this.workingHours.shiftStartTime="00:00";
+        this.workingHours.shiftEndTime="23:59"
+    }
+
     getDurationCall() {
         var reqObj = {
             pid: this.graphIds,
@@ -129,7 +252,8 @@ export class ProcessinsightsComponent implements OnInit {
             .subscribe((res: any) => {
                 this.variant_Duration_list = res.data;
                 this.totalMeanDuration = res.totalMeanDuration;
-                this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"] / 3;
+                this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"];
+                //this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"]/3;
                 this.totalMedianDuration = this.bkp_totalMedianDuration;
 
             },
@@ -144,7 +268,7 @@ export class ProcessinsightsComponent implements OnInit {
             //assume robo cost per hr is 4$
             //let roboCost = val*60*8/(1000 * 100 * 60 * 60);
             //let totalCost = (val*this.input1)/(1000 * 60 * 60);
-            let roboCost = Math.round(this.getHours(val) * 60 / 100 * 8);
+            let roboCost = Math.round(this.getHours(val) * 60 / 100 * this.robotinput);
             let totalCost = Math.round(this.getHours(val) * this.input1);
             return '$' + ((totalCost - roboCost));
         } else {
@@ -188,6 +312,7 @@ export class ProcessinsightsComponent implements OnInit {
                 pid: this.graphIds,
                 flag: false,
                 data_type: "human_bot",
+                "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
                 //variants:[] //if flag is true
             }
         } else {
@@ -264,7 +389,8 @@ export class ProcessinsightsComponent implements OnInit {
                 .subscribe((res: any) => {
                     // console.log(res)
                     //dashboard metrics
-                    this.totalMedianDuration = res.data.total.totalDuration / 3;
+                    //this.totalMedianDuration = res.data.total.totalDuration / 3;
+                    this.totalMedianDuration = res.data.total.totalDuration;
                     //activity data
                     this.activity_Metrics = res.data.activiees;
                     let adata = [];
@@ -274,6 +400,9 @@ export class ProcessinsightsComponent implements OnInit {
                     if (this.activity_Metrics.length) {
                         let tmp = [];
                         let tmp2 = [];
+                        let obj1 = {}
+                            var pieArray=[]
+                            let obj3 = {}
                         this.activity_Metrics.forEach((e, m) => {
                             let duration = e.Duration_range / (1000 * 60 * 60);
                             // let obj = {
@@ -285,14 +414,16 @@ export class ProcessinsightsComponent implements OnInit {
                             //     y: duration * this.input1
                             // }
 
-                            let obj = [
-                                 e.Activity,
-                                 Math.round(duration)
-                            ]
-                            let obj2 = [
-                                 e.Activity,
-                                 Math.round(duration * this.input1)
-                            ]
+                            let obj = {
+                                name: e.Activity,
+                                value: Math.round(duration),
+                                label: Math.round(duration)+"hrs"
+                            }
+                            let obj2 = {
+                                name: e.Activity,
+                                value: Math.round(duration * this.input1),
+                                label: "$"+Math.round(duration * this.input1)
+                            }
                             if (m == 0) {
                                 obj["sliced"] = true;
                                 obj["selected"] = true;
@@ -301,12 +432,22 @@ export class ProcessinsightsComponent implements OnInit {
                             }
                             tmp.push(obj);
                             tmp2.push(obj2);
-                            adata.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
+                            adata.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                         });
+                         //tmp.push(obj1);
+
+                         //   tmp2.push(obj3);
                         this.activityData = adata;
+                        this.bubbleData = [{name:"", series: this.activityData}];
+                        this.colorScheme1 = {
+                            domain: ['#212F3C']
+                          };
+                        this.yAxisLabel1="Occurences";
                         activityDuration = tmp;
                         activityCost = tmp2;
-                        this.addchart2();
+                        this.dChart1 = activityDuration;
+                        this.dChart2 = activityCost;
+                        //this.addchart2();
                         this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                         this.getActivityTableData(this.activity_Metrics);
                     } else {
@@ -321,8 +462,8 @@ export class ProcessinsightsComponent implements OnInit {
                     //Activity - Duration Pie chart
                     // this.addpiechart1(activityDuration);
                     // this.addpiechart2(activityCost);
-                    this.getDonutChart1(activityDuration);
-                    this.getDonutChart2(activityCost);
+                    //this.getDonutChart1(activityDuration);
+                    //this.getDonutChart2(activityCost);
                 })
         }
     }
@@ -330,6 +471,8 @@ export class ProcessinsightsComponent implements OnInit {
     getHumanvsBotCost(vData) {
         var hCost = [];
         var rCost = [];
+        var d1 = [];
+        var d2 = [];
         var dateArray = [];
         var t_array = []
         vData.dates_data.forEach(e => {
@@ -344,7 +487,7 @@ export class ProcessinsightsComponent implements OnInit {
         });
 
         //    console.log(vData.dates_data);
-
+       
         vData.dates_data.forEach(e => {
 
             dateArray.push(moment(new Date(e.date)).format('DD/MM/YYYY'));
@@ -353,8 +496,10 @@ export class ProcessinsightsComponent implements OnInit {
             hCost.push(humanCost);
             var rDuration = Math.round(this.getHours(e.median_value) * 60 / 100);
             var rHours = Math.round(rDuration);
-            var rFinalCost = rHours * 8;
+            var rFinalCost = rHours * this.robotinput;
             rCost.push(rFinalCost);
+            d1.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:humanCost})
+            d2.push({name:moment(new Date(e.date)).format('DD/MM/YYYY'), value:rFinalCost})
         });
 
         //this.caseIDs = this.removeDuplicate(this.caseIDs);
@@ -362,7 +507,10 @@ export class ProcessinsightsComponent implements OnInit {
         this.humanCost = hCost;
         this.robotCost = rCost;
 
-        this.addcharts()
+        this.multi = [{name:"Human Cost", series: d1},{name:'Bot Cost', series:d2}];
+
+
+    //    this.addcharts()
     }
 
     getHours(millisec) {
@@ -402,7 +550,8 @@ export class ProcessinsightsComponent implements OnInit {
                 //pid:'920036',
                 pid: this.graphIds,
                 data_type: 'variant_activity_metrics',
-                flag: false
+                flag: false,
+                //"workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
         } else {
             reqObj = {
@@ -421,20 +570,25 @@ export class ProcessinsightsComponent implements OnInit {
                 this.activity_Metrics = aData.data;
                 let activityDuration = [];
                 let activityCost = [];
+                let obj1 = {}
+                let pieArray=[]
+                let obj3 = {}
                 aData.data.forEach((e, m) => {
                     let duration = e.Duration_range / (1000 * 60 * 60);
                     // let obj = {
                     //     name: e.Activity,
                     //     y: duration
                     // }
-                    let obj = [
-                         e.Activity,
-                         Math.round(duration)
-                    ]
-                    let obj2 = [
-                         e.Activity,
-                         Math.round(duration * this.input1)
-                    ]
+                    let obj = {
+                         name:e.Activity,
+                         value:Math.round(duration),
+                         label:Math.round(duration)+"hrs"
+                    } 
+                    let obj2 = {
+                        name: e.Activity,
+                        value: Math.round(duration * this.input1),
+                        label: "$"+Math.round(duration * this.input1)
+                    }
                     
                     if (m == 0) {
                         obj["sliced"] = true;
@@ -444,19 +598,45 @@ export class ProcessinsightsComponent implements OnInit {
                     }
                     activityDuration.push(obj);
                     activityCost.push(obj2);
-                    this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
+
+                  
+
+                    this.activityData.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
+                    //this.activityData.push({name: e.Activity, x: Number(e.Frequency), y: Number(e.Frequency), r: Number(e.Frequency)});
+                   
                 });
-                this.bubbleColor = '#212F3C';
-                this.addchart2();
+                this.bubbleData = [{name:"", series: this.activityData}];
+                this.colorScheme1 = {
+                    domain: ['#212F3C']
+                  };
+
+                this.dChart1 = activityDuration;
+                this.dChart2 = activityCost;
+                //this.addchart2();
                 this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                 this.getActivityTableData(this.activity_Metrics);
                 this.isEventGraph = true;
                 //this.addpiechart1(activityDuration);
                 //this.addpiechart2(activityCost);
-                this.getDonutChart1(activityDuration);
-                this.getDonutChart2(activityCost);
+                //this.getDonutChart1(activityDuration);
+                //this.getDonutChart2(activityCost);
             })
 
+    }
+
+    pieChartLabel(series: any, name: string): string {
+        const item = series.filter(data => data.name === name);
+        if (item.length > 0) {
+            return item[0].label;
+        }
+        return name;
+    }
+    pieChartLabel1(series: any, name: string): string {
+        const item = series.filter(data => data.name === name);
+        if (item.length > 0) {
+            return item[0].label;
+        }
+        return name;
     }
 
     getActivityWiseHumanvsBotCost(activityMetrics) {
@@ -468,16 +648,20 @@ export class ProcessinsightsComponent implements OnInit {
         activityMetrics.forEach(e => {
             ac_list.push(e.Activity);
             var humanCost = Math.round(this.getHours(e.Duration_range) * this.input1);
-            hCost.push(humanCost);
+            //hCost.push(humanCost);
+            hCost.push({name:e.Activity, value:humanCost});
             var rDuration = Math.round(this.getHours(e.Duration_range) * 60 / 100);
             var rHours = Math.round(rDuration);
-            var rFinalCost = rHours * 8;
-            rCost.push(rFinalCost);
+            var rFinalCost = rHours * this.robotinput;
+            //rCost.push(rFinalCost);
+            rCost.push({name:e.Activity, value:rFinalCost});
         });
-        this.activityHumanCost = hCost;
-        this.activityBotCost = rCost;
-        this.list_Activites = ac_list;
-        this.verticleBarGraph();
+        // this.activityHumanCost = hCost;
+        // this.activityBotCost = rCost;
+        // this.list_Activites = ac_list;
+        //this.verticleBarGraph();
+        this.barChart = hCost;
+        this.lineChartSeries = [{name:"Bot Cost",series:rCost}];
 
     }
 
@@ -485,32 +669,46 @@ export class ProcessinsightsComponent implements OnInit {
         this.activityData = [];
         this.activity_Metrics.forEach((e, m) => {
             if (type && type == 'event') {
-                this.activityData.push({ x: e.Frequency, y: e.Frequency, z: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
+                this.activityData.push({ x: e.Activity, y: e.Frequency, r: e.Frequency, name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'No of Events', event_duration: e.Frequency });
                 this.bubbleColor = '#212F3C';
                 this.isEventGraph = true;
+                this.bubbleData = [{name:"", series: this.activityData}];
+                this.colorScheme1 = {
+                    domain: ['#212F3C']
+                  };
+                  this.yAxisLabel1 = 'Occurences';
             } else {
 
-                this.activityData.push({ x: Math.round(this.getHours(e.Duration_range)), y: Math.round(this.getHours(e.Duration_range)), z: Math.round(this.getHours(e.Duration_range)), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
+                this.activityData.push({ x: e.Activity, y: Math.round(this.getHours(e.Duration_range)), r: Math.round(this.getHours(e.Duration_range)), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
                 this.bubbleColor = '#008080';
                 this.isEventGraph = false;
+                this.bubbleData = [{name:"", series: this.activityData}];
+                this.colorScheme1 = {
+                    domain: ['#008080']
+                  };
+                this.yAxisLabel1 = 'Duration(in hrs)';
             }
-            this.addchart2();
+            console.log(this.bubbleData);
+           // this.addchart2();
         });
     }
 
     getTotalNoOfCases(type) {
-        // console.log(this.varaint_data);
         var noofcases = 0;
         this.totalCases = 0;
 
         if (type == 'fullgraph') {
             this.varaint_data.data.forEach(e => {
+
                 noofcases += e.case_value;
             });
+            
+            
             this.totalCases = noofcases;
             return this.totalCases;
         } else {
             noofcases = 0;
+            this.totalCases = 0;
             //   console.log(this.totalVariantList);
 
             this.totalVariantList.forEach(e => {
@@ -520,6 +718,11 @@ export class ProcessinsightsComponent implements OnInit {
             this.totalCases = noofcases;
             return this.totalCases;
         }
+    }
+
+    convertHourstoMiliseconds(hrs){
+        var milliseconds = hrs * 60 * 60 *1000;
+        return this.timeConversion(milliseconds);
     }
 
     addcharts() {
@@ -651,7 +854,7 @@ export class ProcessinsightsComponent implements OnInit {
                 data: this.activityHumanCost
             }, {
                 type: 'spline',
-                name: 'Robot Cost',
+                name: 'Bot Cost',
                 data: this.activityBotCost,
                 marker: {
                     lineWidth: 2,
@@ -973,7 +1176,7 @@ export class ProcessinsightsComponent implements OnInit {
         });
 
 
-        let cutoff = Math.floor(vdata.length * 20 / 100);
+        let cutoff = Math.floor(vdata.length * 40 / 100);
 
 
         let pVData = [];
@@ -981,7 +1184,7 @@ export class ProcessinsightsComponent implements OnInit {
             if (cutoff <= i) break;
             pVData.push(vdata[i])
         }
-        this.partialVariants = pVData;
+        this.partialVariants = pVData.slice(0, 10);
         // console.log(this.partialVariants);
     }
 
@@ -1402,4 +1605,265 @@ export class ProcessinsightsComponent implements OnInit {
         }
         Highcharts.chart('piechart1', this.dChart1);
     }
+
+    loadPeiChart1(data1,colorValues){
+        console.log(data1, colorValues);
+        
+        var width = 450
+        var height = 350
+        var margin = 80
+    
+    // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+    var radius = Math.min(width, height) / 2 - margin
+    
+    // append the svg object to the div called 'my_dataviz'
+    d3.select("#piechart1").select('svg').remove()
+    var svg = d3.select("#piechart1")
+      .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+      .append("g")
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    
+    // Create dummy data
+    var data = data1[0]
+    
+    // set the color scale
+    var color = d3.scaleOrdinal()
+      .domain(colorValues)
+      .range(d3.schemeDark2);
+    
+    // Compute the position of each group on the pie:
+    var pie = d3.pie()
+      .sort(null) // Do not sort group by size
+      .value(function(d) {return d.value; })
+    var data_ready = pie(d3.entries(data))
+    
+    // The arc generator
+    var arc = d3.arc()
+      .innerRadius(radius * 0.5)         // This is the size of the donut hole
+      .outerRadius(radius * 0.8)
+    
+    // Another arc that won't be drawn. Just for labels positioning
+    var outerArc = d3.arc()
+      .innerRadius(radius * 0.9)
+      .outerRadius(radius * 0.9)
+    
+    // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+    svg
+      .selectAll('allSlices')
+      .data(data_ready)
+      .enter()
+      .append('path')
+      .attr('d', arc)
+      .attr('fill', function(d){ return(color(d.data.key)) })
+      .attr("stroke", "white")
+      .style("stroke-width", "2px")
+      .style("opacity", 0.7)
+      .on("mouseover", function (d) {
+        console.log(d);
+        
+    d3.select("#pietooltip")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY) + "px")
+        .style("display", "block")
+        .select("#value")
+        .text(d.data.value);
+
+         d3.select("#tooltip_head")
+        .text(d.data.key)
+    })
+    .on("mouseout", function () {
+    // Hide the tooltip
+    d3.select("#pietooltip")
+        .style("display", "none");
+    });
+    
+    // Add the polylines between chart and labels:
+    svg
+      .selectAll('allPolylines')
+      .data(data_ready)
+      .enter()
+      .append('polyline')
+        .attr("stroke", "black")
+        .style("fill", "none")
+        .attr("stroke-width", 1)
+        .attr('points', function(d) {
+          var posA = arc.centroid(d) // line insertion in the slice
+          var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+          var posC = outerArc.centroid(d); // Label position = almost the same as posB
+          var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+          posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+          return [posA, posB, posC]
+        })
+    
+    // Add the polylines between chart and labels:
+    svg
+      .selectAll('allLabels')
+      .data(data_ready)
+      .enter()
+      .append('text')
+        .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+        .attr('transform', function(d) {
+            var pos = outerArc.centroid(d);
+            var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+            pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+            return 'translate(' + pos + ')';
+        })
+        .style('text-anchor', function(d) {
+            var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+            return (midangle < Math.PI ? 'start' : 'end')
+        }).on("mouseover", function (d) {
+            console.log(d3.event);
+            
+        d3.select("#pietooltip")
+            .style("left", (d3.event.pageX) + "px")
+            .style("top", (d3.event.pageY) + "px")
+            .style("display", "block")
+            .select("#value")
+            .text(d.data.value);
+
+             d3.select("#tooltip_head")
+            .text(d.data.key)
+        })
+        .on("mouseout", function () {
+        // Hide the tooltip
+        d3.select("#pietooltip")
+            .style("display", "none");
+        });
+        
+            }
+
+loadPeiChart2(data1,colorValues){
+    console.log(data1);
+    
+    var width = 450
+    var height = 340
+    var margin = 80
+
+// The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+var radius = Math.min(width, height) / 2 - margin
+
+// append the svg object to the div called 'my_dataviz'
+d3.select("#piechart2").select('svg').remove()
+var svg = d3.select("#piechart2")
+  .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+// Create dummy data
+var data = data1[0]
+
+// set the color scale
+var color = d3.scaleOrdinal()
+  .domain(colorValues)
+  .range(d3.schemeDark2);
+
+// Compute the position of each group on the pie:
+var pie = d3.pie()
+  .sort(null) // Do not sort group by size
+  .value(function(d) {return d.value; })
+var data_ready = pie(d3.entries(data))
+
+// The arc generator
+var arc = d3.arc()
+  .innerRadius(radius * 0.5)         // This is the size of the donut hole
+  .outerRadius(radius * 0.8)
+
+// Another arc that won't be drawn. Just for labels positioning
+var outerArc = d3.arc()
+  .innerRadius(radius * 0.9)
+  .outerRadius(radius * 0.9)
+
+// Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+svg
+  .selectAll('allSlices')
+  .data(data_ready)
+  .enter()
+  .append('path')
+  .attr('d', arc)
+  .attr('fill', function(d){ return(color(d.data.key)) })
+  .attr("stroke", "white")
+  .style("stroke-width", "2px")
+  .style("opacity", 0.7)
+  .on("mouseover", function (d) {
+    console.log(d);  
+    d3.select("#pietooltip1")
+    .style("left", (d3.event.pageX) + "px")
+    .style("top", (d3.event.pageY) + "px")
+    .style("display", "block")
+    .select("#value1")
+    .text(d.data.value);
+
+     d3.select("#tooltip_head1")
+    .text(d.data.key)
+})
+.on("mouseout", function () {
+// Hide the tooltip
+d3.select("#pietooltip1")
+    .style("display", "none");
+});
+
+// Add the polylines between chart and labels:
+svg
+  .selectAll('allPolylines')
+  .data(data_ready)
+  .enter()
+  .append('polyline')
+    .attr("stroke", "black")
+    .style("fill", "none")
+    .attr("stroke-width", 1)
+    .attr('points', function(d) {
+      var posA = arc.centroid(d) // line insertion in the slice
+      var posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+      var posC = outerArc.centroid(d); // Label position = almost the same as posB
+      var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+      posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+      return [posA, posB, posC]
+    })
+
+// Add the polylines between chart and labels:
+svg
+  .selectAll('allLabels')
+  .data(data_ready)
+  .enter()
+  .append('text')
+    .text( function(d) { console.log(d.data.key) ; return d.data.key } )
+    .attr('transform', function(d) {
+        var pos = outerArc.centroid(d);
+        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+        pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+        return 'translate(' + pos + ')';
+    })
+    .style('text-anchor', function(d) {
+        var midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+        return (midangle < Math.PI ? 'start' : 'end')
+    })
+    .on("mouseover", function (d) {
+        console.log(d);  
+        d3.select("#pietooltip1")
+        .style("left", (d3.event.pageX) + "px")
+        .style("top", (d3.event.pageY) + "px")
+        .style("display", "block")
+        .select("#value1")
+        .text(d.data.value);
+    
+         d3.select("#tooltip_head1")
+        .text(d.data.key)
+        })
+        .on("mouseout", function () {
+        // Hide the tooltip
+        d3.select("#pietooltip1")
+            .style("display", "none");
+        });
+    }
+    openHersOverLay(){
+        this.isAddHrs=!this.isAddHrs
+    }
+    canceladdHrs(){
+         this.isAddHrs=!this.isAddHrs;
+    }
+
 }
