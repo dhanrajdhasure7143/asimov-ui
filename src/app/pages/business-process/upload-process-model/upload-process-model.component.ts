@@ -116,7 +116,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.isfromApprover=params['isfromApprover'] == 'true';
       this.validNotationTypes = '.bpmn, .cmmn, .dmn';
     });
-    this.keyboardLabels=this.shortcut.keyboardLabels;
+    if(this.selectedNotationType == 'bpmn'){
+      this.keyboardLabels=this.shortcut.keyboardLabels_bpmn;
+    }else if(this.selectedNotationType == 'cmmn'){
+      this.keyboardLabels=this.shortcut.keyboardLabels_cmmn;
+    }else if(this.selectedNotationType == 'dmn'){
+      this.keyboardLabels=this.shortcut.keyboardLabels_dmn;
+    }
     this.setRPAData();
     if(!this.isShowConformance){
       this.selected_notation = 0;

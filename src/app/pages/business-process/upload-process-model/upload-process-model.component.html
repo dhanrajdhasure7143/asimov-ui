@@ -68,7 +68,7 @@
     <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
   </span>
   <button class="right btn btn-primary eiap-btn"  id="approvalSubmit" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
-  <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="validNotationTypes"  *ngIf="!isShowConformance||(isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'">
+  <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.'+selectedNotationType"  *ngIf="!isShowConformance||(isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'">
     <ngx-dropzone-label>
         <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button>
     </ngx-dropzone-label>

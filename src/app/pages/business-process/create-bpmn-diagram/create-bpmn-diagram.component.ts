@@ -66,7 +66,13 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.selected_version = params['ver'];
       this.selectedNotationType = params['ntype'];
     });
-    this.keyboardLabels=this.shortcut.keyboardLabels;
+    if(this.selectedNotationType == 'bpmn'){
+      this.keyboardLabels=this.shortcut.keyboardLabels_bpmn;
+    }else if(this.selectedNotationType == 'cmmn'){
+      this.keyboardLabels=this.shortcut.keyboardLabels_cmmn;
+    }else if(this.selectedNotationType == 'dmn'){
+      this.keyboardLabels=this.shortcut.keyboardLabels_dmn;
+    }
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getApproverList();
     this.getUserBpmnList();
@@ -104,7 +110,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     });
    }
 
-   
+
 
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
