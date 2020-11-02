@@ -1,4 +1,3 @@
-
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -483,7 +482,7 @@ export class RpaHomeComponent implements OnInit {
   { 
     this.rest.listEnvironments().subscribe(response=>{
       let resp:any=response
-      if(resp.errorCode ! = undefined)
+      if(resp.errorCode == undefined)
       {
         this.environments=response;
       }
