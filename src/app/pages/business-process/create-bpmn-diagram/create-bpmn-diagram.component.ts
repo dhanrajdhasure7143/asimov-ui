@@ -87,13 +87,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.selected_version = params['ver'];
       this.selectedNotationType = params['ntype'];
     });
-    if(this.selectedNotationType == 'bpmn'){
-      this.keyboardLabels=this.shortcut.keyboardLabels_bpmn;
-    }else if(this.selectedNotationType == 'cmmn'){
-      this.keyboardLabels=this.shortcut.keyboardLabels_cmmn;
-    }else if(this.selectedNotationType == 'dmn'){
-      this.keyboardLabels=this.shortcut.keyboardLabels_dmn;
-    }
+    this.keyboardLabels=this.shortcut[this.selectedNotationType];
     this.setRPAData();
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getApproverList();
@@ -302,6 +296,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
           this.selectedNotationType = current_bpmn_info["ntype"];
           this.fileType = "svg";
+          this.keyboardLabels=this.shortcut[this.selectedNotationType];
           if(this.dmnTabs)
             this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
           this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
@@ -325,6 +320,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.selectedNotationType = current_bpmn_info["ntype"];
       this.fileType = "svg";
+      this.keyboardLabels=this.shortcut[this.selectedNotationType];
       if(this.dmnTabs)
         this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){

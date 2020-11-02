@@ -141,13 +141,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.isfromApprover=params['isfromApprover'] == 'true';
       this.validNotationTypes = '.bpmn, .cmmn, .dmn';
     });
-    if(this.selectedNotationType == 'bpmn'){
-      this.keyboardLabels=this.shortcut.keyboardLabels_bpmn;
-    }else if(this.selectedNotationType == 'cmmn'){
-      this.keyboardLabels=this.shortcut.keyboardLabels_cmmn;
-    }else if(this.selectedNotationType == 'dmn'){
-      this.keyboardLabels=this.shortcut.keyboardLabels_dmn;
-    }
+    this.keyboardLabels=this.shortcut[this.selectedNotationType];
+
     this.setRPAData();
     if(!this.isShowConformance){
       this.selected_notation = 0;
@@ -486,6 +481,7 @@ displayBPMN(){
       }else if(res.dismiss === Swal.DismissReason.cancel){
         this.isDiagramChanged = false;
         this.diplayApproveBtn = true;
+        this.keyboardLabels=this.shortcut[this.selectedNotationType];
         this.notationListOldValue = this.selected_notation;
         let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
         let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
@@ -527,6 +523,7 @@ displayBPMN(){
     this.isDiagramChanged = false;
     this.disableShowConformance = false;
     this.diplayApproveBtn = true;
+    this.keyboardLabels=this.shortcut[this.selectedNotationType];
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
     let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
     this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
