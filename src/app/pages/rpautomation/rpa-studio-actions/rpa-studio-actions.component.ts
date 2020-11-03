@@ -1026,7 +1026,7 @@ resumeSchedule()
      console.log(responsemessage.errorMessage);
     if(responsemessage.errorMessage == undefined)
     {
-      this.notifier.notify("info",responsemessage.errorMessage);
+      this.notifier.notify("info",responsemessage.status);
     }
   });
 }

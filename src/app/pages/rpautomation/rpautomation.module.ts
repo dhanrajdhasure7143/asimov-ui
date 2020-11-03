@@ -37,8 +37,10 @@ import {MatSelectModule} from '@angular/material/select';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { Rpa_Home_Hints } from "./model/rpa-home-module-hints";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { RpaConfigurationsComponent } from './rpa-configurations/rpa-configurations.component';
+import { RpaDatabaseConnectionsComponent } from './rpa-database-connections/rpa-database-connections.component';
 @NgModule({
-  declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent, RpaHomeComponent],
+  declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent, RpaHomeComponent, RpaConfigurationsComponent, RpaDatabaseConnectionsComponent],
   imports: [
     CommonModule,
     RpautomationRoutingModule,
