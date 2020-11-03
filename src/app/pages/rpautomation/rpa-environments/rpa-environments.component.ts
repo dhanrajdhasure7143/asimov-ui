@@ -474,7 +474,6 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.dataSource1.filter = filterValue;
   }
 
-
   removeallchecks()
   {
     for(let i=0;i<this.environments.length;i++)
