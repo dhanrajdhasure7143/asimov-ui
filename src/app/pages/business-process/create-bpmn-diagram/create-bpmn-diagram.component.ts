@@ -57,7 +57,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   updated_date_time;
   keyboardLabels=[];
   fileType:string = "svg";
-  selectedNotationType:string; 
+  selectedNotationType:string;
   displayNotation;
   rpaJson = {
     "name": "RPA",
@@ -87,7 +87,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.selected_version = params['ver'];
       this.selectedNotationType = params['ntype'];
     });
-    this.keyboardLabels=this.shortcut.keyboardLabels;
+    this.keyboardLabels=this.shortcut[this.selectedNotationType];
     this.setRPAData();
     // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getApproverList();
@@ -235,7 +235,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   // ngAfterViewInit(){
   initiateDiagram(){
     let _self = this;
-    this.initModeler();    
+    this.initModeler();
     let selected_xml = this.bpmnservice.getBpmnData();
     if(!selected_xml)
       selected_xml = this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation
@@ -296,6 +296,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
           this.selectedNotationType = current_bpmn_info["ntype"];
           this.fileType = "svg";
+          this.keyboardLabels=this.shortcut[this.selectedNotationType];
           if(this.dmnTabs)
             this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
           this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
@@ -319,6 +320,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.selectedNotationType = current_bpmn_info["ntype"];
       this.fileType = "svg";
+      this.keyboardLabels=this.shortcut[this.selectedNotationType];
       if(this.dmnTabs)
         this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
@@ -398,7 +400,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
          _self.downloadFile(url);
         });
       }else{
-        this.bpmnModeler.saveSVG(function(err, svgContent) {
+        let modelExp = this.bpmnModeler;
+        if(this.selectedNotationType == 'dmn') modelExp = this.bpmnModeler._viewers.drd;
+        modelExp.saveSVG(function(err, svgContent) {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           if(_self.fileType == "svg"){
