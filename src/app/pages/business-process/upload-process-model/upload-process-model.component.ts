@@ -329,11 +329,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       el.classList.toggle("slide-right");
     }
   }
- 
+
   initiateDiagram(){
     let _self = this;
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-    this.initModeler(); 
+    this.initModeler();
     if(this.confBpmnModeler){
       this.confBpmnModeler.on('element.changed', function(){
         _self.disableShowConformance = true;
@@ -613,7 +613,9 @@ displayBPMN(){
          _self.downloadFile(isConfBpmnModelerDownload, url);
         });
       }else{
-        this[modeler_obj].saveSVG(function(err, svgContent) {
+        let modelerExp = this[modeler_obj];
+        if(this.selectedNotationType == "dmn") modelerExp = this[modeler_obj]._viewers.drd;
+          modelerExp.saveSVG(function(err, svgContent) {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           if(_self.fileType == "svg"){

@@ -400,7 +400,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
          _self.downloadFile(url);
         });
       }else{
-        this.bpmnModeler.saveSVG(function(err, svgContent) {
+        let modelExp = this.bpmnModeler;
+        if(this.selectedNotationType == 'dmn') modelExp = this.bpmnModeler._viewers.drd;
+        modelExp.saveSVG(function(err, svgContent) {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           if(_self.fileType == "svg"){
