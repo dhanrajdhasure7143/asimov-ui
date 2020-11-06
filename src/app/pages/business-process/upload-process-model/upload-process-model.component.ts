@@ -380,7 +380,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           let selected_xml = this.pivalues['data'];
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
-            this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+           // this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
           }
           this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))), function(err){
             if(err){
@@ -392,7 +392,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         let selected_xml = atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation)));
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-          this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+         // this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         }
         if(selected_xml == "undefined"){
           this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
@@ -461,7 +461,7 @@ displayBPMN(){
         this.hasConformance = current_bpmn_info["hasConformance"];
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-          this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+         // this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         }
         setTimeout(()=> {
           if(this.hasConformance) this.initBpmnModeler();
@@ -501,7 +501,7 @@ displayBPMN(){
     this.hasConformance = current_bpmn_info["hasConformance"];
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-      this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+      //this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
     }
     setTimeout(()=> {
       if(this.hasConformance) this.initBpmnModeler();
@@ -545,16 +545,16 @@ displayBPMN(){
     let _self = this;
     let bpmnModel={};
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-    bpmnModel["modifiedTimestamp"] = new Date();
+   // bpmnModel["modifiedTimestamp"] = new Date();
     if(!(this.isShowConformance && !this.reSize)){
       bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
       bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
       bpmnModel["ntype"] = _self.saved_bpmn_list[_self.selected_notation]["ntype"];
       if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
         bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-        bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
+       // bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
       }else{
-        bpmnModel["createdTimestamp"] = new Date();
+      //  bpmnModel["createdTimestamp"] = new Date();
       }
     }else{
       let autoSaveExists = _self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["processIntelligenceId"].toString() == _self.pid.toString();
@@ -562,7 +562,7 @@ displayBPMN(){
       bpmnModel["bpmnModelId"] = autoSaveExists ? autoSaveVersion["bpmnModelId"]:_self.randomNumber;
       bpmnModel["version"] = autoSaveExists ? autoSaveVersion["version"]:0;
       bpmnModel["processIntelligenceId"] = parseInt(this.pid);
-      bpmnModel["createdTimestamp"] = this.pivalues["createdTime"];
+     // bpmnModel["createdTimestamp"] = this.pivalues["createdTime"];
       if(autoSaveExists)
         bpmnModel["bpmnModelTempId"] = autoSaveVersion["bpmnModelTempId"];
     }
@@ -597,7 +597,7 @@ displayBPMN(){
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj=data
-        this.updated_date_time = new Date();
+       // this.updated_date_time = new Date();
         this.spinner.hide();
       },
       err => {
@@ -807,7 +807,7 @@ displayBPMN(){
       }else{
         bpmnModel.bpmnModelId = this.randomNumber;
       }
-      bpmnModel.createdTimestamp = this.pivalues["createdTime"];
+     // bpmnModel.createdTimestamp = this.pivalues["createdTime"];
       bpmnModel.bpmnProcessStatus = "INPROGRESS";
       bpmnModel.notationFromPI = true;
     }else{
@@ -819,7 +819,7 @@ displayBPMN(){
         bpmnModel.id = sel_List['id'];
       else
         delete(bpmnModel.id);
-      bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
+     // bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
       bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
     }
     // this.initBpmnModeler();
