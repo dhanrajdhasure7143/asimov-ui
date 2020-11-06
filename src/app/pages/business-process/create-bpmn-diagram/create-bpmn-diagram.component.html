@@ -22,7 +22,9 @@
                 </mat-select>
             </mat-form-field>
         </div>
-        <div><button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
+        <div>
+            <span class="fa fa-upload" (click)="displayDeployNotation()"></span>
+            <button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
             <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button>
           </div>
     </div>
@@ -69,3 +71,27 @@
                     </tr>
                 </table>
         </ng-template>
+        <ng-template #deployNotationTmpl>
+            <div><label for="" class="keyboard_header_shortcuts">Deploy Notation</label></div>
+            <form>
+                <mat-form-field class="row col-md-12">
+                    <mat-label>Deployment Name</mat-label>
+                    <input type="text" matInput name="depName" [(ngModel)]="depName" #dep_name="ngModel" required >
+                </mat-form-field>
+                <mat-form-field class="row col-md-12">
+                    <mat-label>Tenant Id</mat-label>
+                    <input type="text" matInput name="tenantId" [(ngModel)]="tenantId" #tenant_id="ngModel" >
+                </mat-form-field>
+                <div><b>Endpoint Configuration</b></div>
+                <mat-form-field class="row col-md-12">
+                    <mat-label>REST Endpoint</mat-label>
+                    <input type="text" matInput name="endPoint" [(ngModel)]="endPoint" #end_point="ngModel" required >
+                    <mat-icon class="info" matTooltip="Should point to a running Camunda Engine REST API endpoint" matSuffix>info</mat-icon>
+                </mat-form-field>
+                <br/><br/>
+                <div class="row col-md-12">
+                    <button class="btn eiap-btn">Cancel</button>
+                    <button class="btn btn-primary eiap-btn" (click)="deployNotation()">Deploy</button>
+                </div>
+            </form>
+       </ng-template>

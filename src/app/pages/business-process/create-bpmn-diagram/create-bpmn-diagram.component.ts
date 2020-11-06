@@ -74,6 +74,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
+  @ViewChild('deployNotationTmpl',{ static: true }) deployNotationTmp: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
@@ -642,7 +643,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
   displayShortcut(){
      this.dialog.open(this.keyboardShortcut);
-
+  }
+  deployNotation(){
+    
+  }
+  displayDeployNotation(){
+    this.dialog.open(this.deployNotationTmp);
   }
 
 }

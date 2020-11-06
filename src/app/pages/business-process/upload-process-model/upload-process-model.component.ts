@@ -157,6 +157,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           this.isConfBpmnModeler = false;
           this.getUserBpmnList(null);
         }else{
+          this.selectedNotationType = "bpmn";
           this.getUserBpmnList(null);
           this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
           this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
@@ -252,7 +253,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
-      
     }
     if(!this.isShowConformance){
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype': current_bpmn_info["ntype"]};
@@ -523,7 +523,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     let bpmnModel={};
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     bpmnModel["modifiedTimestamp"] = new Date();
-    bpmnModel["ntype"] = _self.saved_bpmn_list[_self.selected_notation]["ntype"];
+    bpmnModel["ntype"] = this.isShowConformance ? "bpmn":_self.saved_bpmn_list[_self.selected_notation]["ntype"];
     if(!(this.isShowConformance && !this.reSize)){
       bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
       bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
@@ -587,32 +587,37 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
   }
 
-  downloadFile(isConfBpmnModelerDownload, url){
+  downloadFile(url){
     var link = document.createElement("a");
     link.href = url;
-    let fileName = isConfBpmnModelerDownload ? this.processName : this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
+    let fileName = this.isShowConformance ? this.processName : this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
     if(fileName.trim().length == 0 ) fileName = "newDiagram";
     link.download = fileName+"."+this.fileType;
     link.innerHTML = "Click here to download the notation";
     link.click();
   }
 
-  downloadBpmn(isConfBpmnModelerDownload){
-    let modeler_obj = isConfBpmnModelerDownload ? "confBpmnModeler":"bpmnModeler";
+  downloadBpmn(){
+    let yesProceed = true;
+    if(this.isShowConformance && this.isUploaded && this.bpmnModeler){
+      yesProceed = confirm('You are about to download '+(this.isConfBpmnModeler?'"AS IS"':'"TO BE"')+' notation for approval')
+    }
+    if(!yesProceed) return;
+    let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     if(this[modeler_obj]){
       let _self = this;
       if(this.fileType == this.selectedNotationType){
         this[modeler_obj].saveXML({ format: true }, function(err, xml) {
           var blob = new Blob([xml], { type: "application/xml" });
           var url = window.URL.createObjectURL(blob);
-         _self.downloadFile(isConfBpmnModelerDownload, url);
+         _self.downloadFile(url);
         });
       }else{
         this[modeler_obj].saveSVG(function(err, svgContent) {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           if(_self.fileType == "svg"){
-            _self.downloadFile(isConfBpmnModelerDownload, url);
+            _self.downloadFile(url);
           }else{
             let canvasEl = document.createElement("canvas");
             let canvasContext = canvasEl.getContext("2d", {alpha: false});
@@ -628,7 +633,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
                 imgUrl = canvasEl.toDataURL("image/png");
               else
                 imgUrl = canvasEl.toDataURL("image/jpg");
-              _self.downloadFile(isConfBpmnModelerDownload, imgUrl)
+              _self.downloadFile(imgUrl)
             }
             img.src = url;
           }

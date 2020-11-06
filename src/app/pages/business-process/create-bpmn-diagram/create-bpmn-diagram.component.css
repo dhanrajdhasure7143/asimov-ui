@@ -1,6 +1,9 @@
 .diagram-parent{
     position: relative;
 }
+.info{
+    color: orange;
+}
 
 /* The Modal (background) */
 .modal {
