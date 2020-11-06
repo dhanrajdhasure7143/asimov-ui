@@ -98,6 +98,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   isfromApprover: any=false;
   showProps: boolean=false;
   ntype: string;
+  validNotationTypes: string;
   displayNotation;
   rpaJson = {
     "name": "RPA",
@@ -128,42 +129,45 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
 
-      ngOnInit() {
-        this.randomNumber = UUID.UUID();
-        this.dt.changeHints(this.hints.bpsUploadHints);
-        this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
-        this.route.queryParams.subscribe(params => {
-          this.selected_modelId = params['bpsId'];
-          this.selected_version = params['ver'];
-          this.category = params['category'];
-          this.processName = params['processName'];
-          this.selectedNotationType = params['ntype'];
-          this.isShowConformance = params['isShowConformance'] == 'true';
-          this.pid=params['pid'];
-          this.isfromApprover=params['isfromApprover'] == 'true';
-        });
-        this.keyboardLabels=this.shortcut.keyboardLabels;
-        this.setRPAData();
-        if(!this.isShowConformance){
-          this.selected_notation = 0;
-          if(this.isfromApprover){
-            this.dt.changeParentModule({"route":"/pages/approvalWorkflow/home", "title":"Approval Workflow"});
-            this.dt.changeChildModule({"route":"", "title":"Notation Preview"});
-            }
-          else{
-            this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
-            this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
-          }
-          this.isConfBpmnModeler = false;
-          this.getUserBpmnList(null);
-        }else{
-          this.selectedNotationType = "bpmn";
-          this.getUserBpmnList(null);
-          this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
-          this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
+   ngOnInit() {
+    this.randomNumber = UUID.UUID();
+    this.dt.changeHints(this.hints.bpsUploadHints);
+    this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);
+    this.route.queryParams.subscribe(params => {
+      this.selected_modelId = params['bpsId'];
+      this.selected_version = params['ver'];
+      this.category = params['category'];
+      this.processName = params['processName'];
+      this.selectedNotationType = params['ntype'];
+      this.isShowConformance = params['isShowConformance'] == 'true';
+      this.pid=params['pid'];
+      this.isfromApprover=params['isfromApprover'] == 'true';
+      this.validNotationTypes = '.bpmn, .cmmn, .dmn';
+    });
+    this.keyboardLabels=this.shortcut[this.selectedNotationType];
+
+    this.setRPAData();
+    if(!this.isShowConformance){
+      this.selected_notation = 0;
+      if(this.isfromApprover){
+        this.dt.changeParentModule({"route":"/pages/approvalWorkflow/home", "title":"Approval Workflow"});
+        this.dt.changeChildModule({"route":"", "title":"Notation Preview"});
         }
-        this.getApproverList();
-       }
+      else{
+        this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
+        this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
+      }
+      this.isConfBpmnModeler = false;
+      this.getUserBpmnList(null);
+    }else{
+      this.selectedNotationType = "bpmn";
+      this.getUserBpmnList(null);
+      this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
+      this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Show Conformance"});
+    }
+    this.getApproverList();
+   }
+
 
 
        ngAfterViewInit(){
@@ -325,11 +329,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       el.classList.toggle("slide-right");
     }
   }
- 
+
   initiateDiagram(){
     let _self = this;
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-    this.initModeler(); 
+    this.initModeler();
     if(this.confBpmnModeler){
       this.confBpmnModeler.on('element.changed', function(){
         _self.disableShowConformance = true;
@@ -397,60 +401,61 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     return url.searchParams.has(name);
   }
 
-  displayBPMN(){
-    let value = this.notationListOldValue;
-    let _self = this;
-    this.updated_date_time = null;
-    this.filterAutoSavedDiagrams();
-    this.reSize = false;
-    if(this.isDiagramChanged){
-      Swal.fire({
-        title: 'Are you sure?',
-        text: 'Your current changes will be lost on changing notation.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Save and Continue',
-        cancelButtonText: 'Discard'
-      }).then((res) => {
-        if(res.value){
-          _self.isDiagramChanged = false;
-          _self.disableShowConformance = false;
-          _self.notationListNewValue = _self.selected_notation;
-          _self.selected_notation = value;
-          _self.saveprocess(_self.notationListNewValue);
-        }else if(res.dismiss === Swal.DismissReason.cancel){
-          this.isDiagramChanged = false;
-          this.diplayApproveBtn = true;
-          this.notationListOldValue = this.selected_notation;
-          let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
-          let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
-          this.selectedNotationType = current_bpmn_info["ntype"];
+displayBPMN(){
+  let value = this.notationListOldValue;
+  let _self = this;
+  this.updated_date_time = null;
+  this.filterAutoSavedDiagrams();
+  this.reSize = false;
+  if(this.isDiagramChanged){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'Your current changes will be lost on changing notation.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Save and Continue',
+      cancelButtonText: 'Discard'
+    }).then((res) => {
+      if(res.value){
+        _self.isDiagramChanged = false;
+        _self.disableShowConformance = false;
+        _self.notationListNewValue = _self.selected_notation;
+        _self.selected_notation = value;
+        _self.saveprocess(_self.notationListNewValue);
+      }else if(res.dismiss === Swal.DismissReason.cancel){
+        this.isDiagramChanged = false;
+        this.diplayApproveBtn = true;
+        this.keyboardLabels=this.shortcut[this.selectedNotationType];
+        this.notationListOldValue = this.selected_notation;
+        let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
+        let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
+        this.selectedNotationType = current_bpmn_info["ntype"];
           this.fileType = "svg";
           if(this.dmnTabs)
             this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
-          this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
-          this.hasConformance = current_bpmn_info["hasConformance"];
-          if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
-            selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-            this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
-          }
-          this.initModeler();
-          setTimeout(()=> {
-            if(this.hasConformance) this.initBpmnModeler();
-            if(this.bpmnModeler){
-              if(selected_xml && selected_xml != "undefined"){
-                this.bpmnModeler.importXML(selected_xml, function(err){
+        this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
+        this.hasConformance = current_bpmn_info["hasConformance"];
+        if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
+          selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
+          this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+        }
+        this.initModeler();
+        setTimeout(()=> {
+          if(this.hasConformance) this.initBpmnModeler();
+          if(this.bpmnModeler){
+            if(selected_xml && selected_xml != "undefined"){
+              this.bpmnModeler.importXML(selected_xml, function(err){
+                _self.oldXml = selected_xml;
+                _self.newXml = selected_xml;
+              });
+            }else{
+              this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+                let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
+                this.bpmnModeler.importXML(encrypted_bpmn, function(err){
                   _self.oldXml = selected_xml;
                   _self.newXml = selected_xml;
                 });
-              }else{
-                this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
-                  let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
-                  this.bpmnModeler.importXML(encrypted_bpmn, function(err){
-                    _self.oldXml = selected_xml;
-                    _self.newXml = selected_xml;
-                  });
-                });
+              });
               }
             }
           },0)
@@ -479,14 +484,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
       }
-      this.initModeler();
-      setTimeout(()=> {
-        if(this.hasConformance) this.initBpmnModeler();
-        if(this.bpmnModeler){
-          if(selected_xml == "undefined"){
-            this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
-              this.bpmnModeler.importXML(res, function(err){
-                _self.oldXml = selected_xml;
+    this.initModeler();
+    setTimeout(()=> {
+      if(this.hasConformance) this.initBpmnModeler();
+      if(this.bpmnModeler){
+        if(selected_xml == "undefined"){
+          this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+            this.bpmnModeler.importXML(res, function(err){
+	    _self.oldXml = selected_xml;
                 _self.newXml = selected_xml;
               });
             });
@@ -613,7 +618,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
          _self.downloadFile(url);
         });
       }else{
-        this[modeler_obj].saveSVG(function(err, svgContent) {
+        let modelerExp = this[modeler_obj];
+        if(this.selectedNotationType == "dmn") modelerExp = this[modeler_obj]._viewers.drd;
+          modelerExp.saveSVG(function(err, svgContent) {
           var blob = new Blob([svgContent], { type: "image/svg+xml;charset=utf-8" });
           var url = window.URL.createObjectURL(blob);
           if(_self.fileType == "svg"){
