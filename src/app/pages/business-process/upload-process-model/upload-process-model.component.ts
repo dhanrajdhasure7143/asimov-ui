@@ -3,8 +3,14 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner";
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
+import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
+import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
+import CmmnPropertiesProviderModule from 'cmmn-js-properties-panel/lib/provider/camunda';
 import * as PropertiesProviderModule from 'bpmn-js-properties-panel/lib/provider/camunda';
 import { PreviewFormProvider } from "../bpmn-props-additional-tabs/PreviewFormProvider";
+import CustomRenderer from "../bpmn-props-additional-tabs/customRenderer";
+import ReplaceMenuProvider from "../bpmn-props-additional-tabs/ReplaceMenuProvider";
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import lintModule from 'bpmn-js-bpmnlint';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
@@ -20,6 +26,7 @@ import { BpsHints } from '../model/bpmn-module-hints';
 import { UUID } from 'angular2-uuid';
 import { Subscription } from 'rxjs';
 import { JsonpInterceptor } from '@angular/common/http';
+import * as bpmnlintConfig from '../model/packed-config';
 
 declare var require:any;
 
@@ -81,11 +88,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   pivalues:any;
   processName:string;
   fileType:string = "svg";
+  selectedNotationType:string;
   category:string;
   randomNumber;
   pidId;
   isfromApprover: any=false;
   showProps: boolean=false;
+  ntype: string;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
    constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
@@ -100,11 +109,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.selected_version = params['ver'];
       this.category = params['category'];
       this.processName = params['processName'];
+      this.selectedNotationType = params['ntype'];
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.pid=params['pid'];
       this.isfromApprover=params['isfromApprover'] == 'true';
     });
     this.keyboardLabels=this.shortcut.keyboardLabels;
+    this.setRPAData();
     if(!this.isShowConformance){
       this.selected_notation = 0;
       if(this.isfromApprover){
@@ -114,7 +125,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       else{
         this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
         this.dt.changeChildModule({"route":"/pages/businessProcess/uploadProcessModel", "title":"Studio"});
-        }
+      }
       this.isConfBpmnModeler = false;
       this.getUserBpmnList(null);
     }else{
@@ -132,6 +143,39 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
    }
    ngOnDestroy() {
     // this.subscription.unsubscribe();
+  }
+
+  setRPAData(){
+    this.rest.getAllAttributes().subscribe( res => {
+      let rpaActivityOptions: any[] = [];
+      let taskLists:any = {};
+      let taskAttributes:any = {};
+      if(res["General"]){
+        res["General"].forEach((each) => {
+          rpaActivityOptions.push({name:each.name, value: each.name});
+          let tmpTasks = [];
+          each.taskList.forEach((each_task) => {
+            tmpTasks.push({name:each_task.name, value: each_task.taskId})
+            taskAttributes[each_task.taskId] = each_task.value;
+          })
+          taskLists[each.name]= tmpTasks;
+        })
+      }
+      if(res["Advanced"]){
+        res["Advanced"].forEach((each) => {
+          rpaActivityOptions.push({name:each.name, value: each.name});
+          let tmpTasks = [];
+          each.taskList.forEach((each_task) => {
+            tmpTasks.push({name:each_task.name, value: each_task.taskId})
+            taskAttributes[each_task.taskId] = each_task.value;
+          })
+          taskLists[each.name]= tmpTasks;
+        });
+      }
+      localStorage.setItem("rpaActivityOptions", JSON.stringify(rpaActivityOptions))
+      localStorage.setItem("rpaActivityTaskListOptions", JSON.stringify(taskLists))
+      localStorage.setItem("attributes", JSON.stringify(taskAttributes))
+    })
   }
    fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
@@ -183,7 +227,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
     }
     if(!this.isShowConformance){
-      let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"]};
+      let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype': current_bpmn_info["ntype"]};
       if(this.isfromApprover){
          params['isfromApprover']= this.isfromApprover;
       }
@@ -213,6 +257,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.filterAutoSavedDiagrams();
       if(!this.bpmnModeler)
         this.initiateDiagram();
+    },
+    err => {
+      if(!this.bpmnModeler)
+        this.initiateDiagram();
     });
    }
 
@@ -232,8 +280,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     this[modeler_obj].get('canvas').zoom('fit-viewport');
     let msg = "";
     if(this.isConfBpmnModeler){
-     if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
-      msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
+      if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
+        msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
+      else
+        msg = "Notation"
     }
     else
       msg = "Notation"
@@ -251,37 +301,71 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   initiateDiagram(){
     let _self=this;
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
-    // var bpmnlintConfig = require("../model/.bpmnlintrc");
+    var CmmnCamundaModdleDescriptor = require("camunda-cmmn-moddle/resources/camunda.json");
+     //var bpmnlintConfig = require("../model/.bpmnlintrc");
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
+
+
     if(!this[modeler_obj]){
-      this[modeler_obj] = new BpmnJS({
-        linting: {
-          // bpmnlint: bpmnlintConfig
-        },
-        additionalModules: [
-          PropertiesPanelModule,
-          PropertiesProviderModule,
-          {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
-          {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
-          lintModule
-        ],
-        container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
-        keyboard: {
-          bindTo: window
-        },
-        propertiesPanel: {
-          parent: '#properties'
-        },
-        moddleExtensions: {
-          camunda: CamundaModdleDescriptor
-        }
-      });
+      if(this.selectedNotationType == "cmmn"){
+        this[modeler_obj] = new CmmnJS({
+          additionalModules: [
+            CmmnPropertiesPanelModule,
+            CmmnPropertiesProviderModule
+          ],
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
+          propertiesPanel: {
+            parent: '#properties'
+          },
+          moddleExtensions: {
+            camunda: CmmnCamundaModdleDescriptor
+          }
+        });
+      }else if(this.selectedNotationType == "dmn"){
+        this[modeler_obj] = new DmnJS({
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1'
+        });
+
+      }else{
+        this[modeler_obj] = new BpmnJS({
+          linting: {
+             bpmnlint: bpmnlintConfig,
+             active: _self.getUrlParam('linting')
+          },
+          additionalModules: [
+            PropertiesPanelModule,
+            PropertiesProviderModule,
+            {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
+            {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
+            // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
+            // CustomRenderer,
+            lintModule
+          ],
+          container: this.isShowConformance && !this.reSize ? '#canvas2':'#canvas1',
+          keyboard: {
+            bindTo: window
+          },
+          propertiesPanel: {
+            parent: '#properties'
+          },
+          moddleExtensions: {
+            camunda: CamundaModdleDescriptor
+          }
+        });
+      }
 
       if(this.confBpmnModeler){
         this.confBpmnModeler.on('element.changed', function(){
           _self.disableShowConformance = true;
         })
       }
+
+      this[modeler_obj].on('linting.toggle', function(event) {
+
+        var active = event.active;
+
+        _self.setUrlParam('linting', active);
+      });
       this[modeler_obj].on('element.changed', function(){
         let now = new Date().getTime();
         _self.isDiagramChanged = true;
@@ -296,7 +380,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           let selected_xml = this.pivalues['data'];
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
-            this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+           // this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
           }
           this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))), function(err){
             if(err){
@@ -308,7 +392,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         let selected_xml = atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation)));
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-          this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+         // this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         }
         if(selected_xml == "undefined"){
           this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
@@ -325,6 +409,25 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
       }
     }
+  }
+
+   setUrlParam(name, value) {
+
+    var url = new URL(window.location.href);
+
+    if (value) {
+      url.searchParams.set(name, '1');
+    } else {
+      url.searchParams.delete(name);
+    }
+
+    window.history.replaceState({}, null, url.href);
+  }
+
+   getUrlParam(name) {
+    var url = new URL(window.location.href);
+
+    return url.searchParams.has(name);
   }
 
 displayBPMN(){
@@ -358,7 +461,7 @@ displayBPMN(){
         this.hasConformance = current_bpmn_info["hasConformance"];
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-          this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+         // this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         }
         setTimeout(()=> {
           if(this.hasConformance) this.initBpmnModeler();
@@ -398,7 +501,7 @@ displayBPMN(){
     this.hasConformance = current_bpmn_info["hasConformance"];
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
-      this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+      //this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
     }
     setTimeout(()=> {
       if(this.hasConformance) this.initBpmnModeler();
@@ -442,15 +545,16 @@ displayBPMN(){
     let _self = this;
     let bpmnModel={};
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-    bpmnModel["modifiedTimestamp"] = new Date();
+   // bpmnModel["modifiedTimestamp"] = new Date();
     if(!(this.isShowConformance && !this.reSize)){
       bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
       bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
+      bpmnModel["ntype"] = _self.saved_bpmn_list[_self.selected_notation]["ntype"];
       if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
         bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-        bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
+       // bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
       }else{
-        bpmnModel["createdTimestamp"] = new Date();
+      //  bpmnModel["createdTimestamp"] = new Date();
       }
     }else{
       let autoSaveExists = _self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["processIntelligenceId"].toString() == _self.pid.toString();
@@ -458,7 +562,7 @@ displayBPMN(){
       bpmnModel["bpmnModelId"] = autoSaveExists ? autoSaveVersion["bpmnModelId"]:_self.randomNumber;
       bpmnModel["version"] = autoSaveExists ? autoSaveVersion["version"]:0;
       bpmnModel["processIntelligenceId"] = parseInt(this.pid);
-      bpmnModel["createdTimestamp"] = this.pivalues["createdTime"];
+     // bpmnModel["createdTimestamp"] = this.pivalues["createdTime"];
       if(autoSaveExists)
         bpmnModel["bpmnModelTempId"] = autoSaveVersion["bpmnModelTempId"];
     }
@@ -534,9 +638,13 @@ displayBPMN(){
             _self.downloadFile(isConfBpmnModelerDownload, url);
           }else{
             let canvasEl = document.createElement("canvas");
-            let canvasContext = canvasEl.getContext("2d");
+            let canvasContext = canvasEl.getContext("2d", {alpha: false});
             let img = new Image();
             img.onload=()=>{
+              canvasEl.width = img.width;
+              canvasEl.height = img.height;
+              canvasContext.fillStyle = "#fff";
+              canvasContext.fillRect(0, 0, canvasEl.width, canvasEl.height);
               canvasContext.drawImage(img,0,0,img.width, img.height, 0, 0, canvasEl.width, canvasEl.height);
               let imgUrl;
               if(_self.fileType == "png")
@@ -614,6 +722,7 @@ displayBPMN(){
   if(this.isShowConformance){
     bpmnModel.notationFromPI = true;
     bpmnModel.bpmnProcessName = this.processName;
+    bpmnModel.ntype = this.ntype;
     bpmnModel.category = this.category;
     bpmnModel.processIntelligenceId = this.pid;
     let match = this.full_saved_bpmn_list.filter(each_diag => {
@@ -629,6 +738,7 @@ displayBPMN(){
     bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
     bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
     bpmnModel.category = sel_List['category'];
+    bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
     bpmnModel.processIntelligenceId= sel_List['processIntelligenceId']? sel_List['processIntelligenceId']:Math.floor(100000 + Math.random() * 900000);//?? Will repeat need to replace with proper alternative??
     bpmnModel.id = sel_List["id"];
   }
@@ -686,6 +796,7 @@ displayBPMN(){
       status = "INPROGRESS";
       bpmnModel.bpmnProcessName = this.processName;
       bpmnModel.category = this.category;
+      bpmnModel.ntype = this.ntype;
       bpmnModel.processIntelligenceId = parseInt(this.pid);
       let match = this.full_saved_bpmn_list.filter(each_diag => {
         return each_diag.bpmnProcessName == this.processName && each_diag.processIntelligenceId && each_diag.processIntelligenceId == this.pid
@@ -696,18 +807,19 @@ displayBPMN(){
       }else{
         bpmnModel.bpmnModelId = this.randomNumber;
       }
-      bpmnModel.createdTimestamp = this.pivalues["createdTime"];
+     // bpmnModel.createdTimestamp = this.pivalues["createdTime"];
       bpmnModel.bpmnProcessStatus = "INPROGRESS";
       bpmnModel.notationFromPI = true;
     }else{
       bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
       bpmnModel.bpmnModelId = sel_List['bpmnModelId'];
       bpmnModel.category = sel_List['category'];
+      bpmnModel.ntype = sel_List['ntype'] ? sel_List['ntype'] : '-';
       if(sel_List['id'])
         bpmnModel.id = sel_List['id'];
       else
         delete(bpmnModel.id);
-      bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
+     // bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
       bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
     }
     // this.initBpmnModeler();
@@ -738,7 +850,7 @@ displayBPMN(){
                 if(inprogress_version < each.version)
                 inprogress_version = each.version;
               })
-              let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version}
+              let params:Params = {'bpsId':sel_List["bpmnModelId"], 'ver': inprogress_version, 'ntype': sel_List["ntype"]}
               _self.router.navigate([],{ relativeTo:_self.route, queryParams:params });
             }
             if(_self.isUploaded) _self.getUserBpmnList(true);
@@ -910,7 +1022,7 @@ displayBPMN(){
       this.isLoading = false;
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
-        message = "Please upload proper *.bpmn file";
+        message = "Please upload proper notation";
       this.global.notify(message, "error");
     }
   }

@@ -1,14 +1,426 @@
+<div class="backgr">
 <div class="container">
     <div class="row">
-        <div class='col-md-12'>
+
+        <div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
+            <div class='variants_slider'>
+               <div class="col-sm-12 select_drpdwnone">
+                    <div class="col-sm-12"><button class="closebtn" (click)="closeNav()">&times;</button></div>
+                    <div class="col-sm-12 form-group">
+                        <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class='col-sm-12 row variant2'>
+                       <div class="col-sm-7 check_box">
+                           <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()"><span class="">Select all</span>
+                       </div>
+                       <div class='col-sm-5 event2'>Time Taken</div>
+                </div>
+                <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.varaint_data.data; let i=index">
+                    <div (click)="caseIdSelect(data,i)"  class='col-sm-4 event3'>Variant <b>{{i+1}}</b></div>
+                    <div class='col-sm-6 variant_parcent'>
+                        <div (click)="caseIdSelect(data,i)" class='col-sm-12'>Cases Covered <b>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</b></div>
+                        <div (click)="caseIdSelect(data,i)" class='col-sm-3'></div>
+                    </div>
+                    <div class='col-sm-2' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
+                </div>
+                </div>
+                
+    </div>
+
+
+        <div class="col-md-12">
+            <!-- <div class="col-sm-10"> -->
+                <!-- <div class="col-sm-12 box-content hedline1">
+                    <p>Content 1</p>
+                </div>
+                <div class="col-sm-12 box-content hedline2">
+                    <p>Content 2</p>
+                </div>
+                <div class="col-sm-12 box-content hedline3">
+                    <p class="">Content 3</p>
+                </div>
+                <div class="col-sm-12 box-content hedline4">
+                    <p>Content 4</p>
+                </div> -->
+            <!-- </div> -->
+            <div class="col-sm-10"></div>
+            <div class="col-sm-2 pull-right varaint-button1 varint-open" (click)="openVariantListNav()">Variant List
+                <!-- <div class="variant-Btn" (click)="openVariantListNav()">Variant List</div> -->
+                <!-- <button class="btn btn-primary eiap-btn varaint-button" (click)="openVariantListNav()">Variant List</button> -->
+            </div>
+        </div>
+        <div class='col-md-12 boxes'>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Avg Time Spent</div>
+            <div class="col-sm-2 divbox divbox0">Total Time Spent
+                <div>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}}</div>
+            </div>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Avg Time Savings</div>
+            <div class="col-sm-2 divbox divbox1"> Potential Time Savings
+                <div>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}}</div>
+            </div>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Avg Cost</div>
+
+            <div class="col-sm-2 divbox divbox2">Total Human Cost
+                <div>{{totalMedianDuration && input1 && input2 ? getHumanTotalCost(getHours(totalMedianDuration)*this.input1) : '-'}}</div>
+            </div>
             <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox"> Avg Savings</div>
+            <div class="col-sm-2 divbox divbox3"> Potential Savings
+                <div>{{calculateSavings(this.totalMedianDuration)}}</div>
+            </div>
+        </div>
+        <div class="col-md-12 input-fields">
+            <div class="col-sm-1"></div>
+            <div class="col-sm-3 amountinputs" id="humancost">
+                <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
+                <i (click)="editInput()"  class="fas fa-pen"></i>
+            </div>
+            <!-- <div class="col-sm-1"></div> -->
+            <div class="col-sm-3 amountinputs" id="humancost">
+                <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
+                <i (click)="editInput1()"  class="fas fa-pen"></i>
+            </div>
+            <div class="col-sm-3 amountinputs">
+                <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
+            </div>
+
+            <div class="col-sm-2 dropdown hrs-dropdwn">
+                
+                      <div  class="d-inline-block">
+                        <!--ngbDropdown ngbDropdownToggle -->
+                        <button class="btn btn-primary eiap-btn" id="dropdownForm1" (click)="openHersOverLay()">Time Feed</button>
+                        <div *ngIf="isAddHrs" aria-labelledby="dropdownForm1" id="dropdownForm2">
+                         
+                          <form class="row">
+                            <div class="form-group col-sm-6">
+                                <label for="exampleDropdownFormEmail1">Working From</label>
+                                <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours.formDay">
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="Sun">Sunday</option>
+                                    <option value="Mon">Monday</option>
+                                    <option value="Tue">Tuesday</option>
+                                    <option value="Wed">Wednesday</option>
+                                    <option value="Thu">Thursday</option>
+                                    <option value="Fri">Friday</option>
+                                    <option value="Sat">Saturday</option>
+                                </select>
+                              </div>
+                              <div class="form-group col-sm-6">
+                                <label for="">Working To</label>
+                                <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours.toDay">
+                                    <option value="" selected disabled>Select</option>
+                                    <option value="Sun">Sunday</option>
+                                    <option value="Mon">Monday</option>
+                                    <option value="Tue">Tuesday</option>
+                                    <option value="Wed">Wednesday</option>
+                                    <option value="Thu">Thursday</option>
+                                    <option value="Fri">Friday</option>
+                                    <option value="Sat">Saturday</option>
+                                </select>
+                              </div>
+                              <hr>
+                              <p class="p_warning">*Please select business start time and end time</p>
+                            <div class="col-sm-6">
+                                <label for="">Shift Start Time</label>
+                                <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <label for="">Shift End Time</label>
+                                <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
+                            </div>
+                            <div class="col-sm-12 dropdown-divider"></div>
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-3">
+                                <button type="submit" class="btn btn-warning eiap-btn" (click)="resetWorkingHours()">Reset</button>
+                            </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-primary eiap-btn" (click)="addWorkingHours()">Apply</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button type="submit" class="btn btn-secondary btn-cancel" (click)="canceladdHrs()">Cancel</button>
+                        </div>
+                      </form>
+                          
+
+                        </div>
+                      </div>
+            
+                  
+                <!-- <button class="eiap-btn btn btn-primary dropdown-toggle" data-toggle="dropdown">Add Working Hours</button>
+                
+                    <div class="dropdown-menu drop_down download_selection hrsDropdwn" >
+                       <div class="hrsInput">
+                        <label for="">Hours :</label><input type="text" placeholder="Enter Hours">
+                       </div>
+                       <div class="row btns-grop">
+                        <button class="eiap-btn btn btn-primary">Apply</button>
+                        <button class="btn btn-secondary btn-cancel">Cancel</button>
+                       </div>
+                       <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
+                   </div> -->
+            </div>
+            
+        </div>
+    <!-- </div> -->
+    <br>
+    <!-- <div class="row"> -->
+        <div class="col-md-12 py-4">
+            <div class="col-sm-8 ">
+                <!-- <div id="costprojection" class="lineChart box_shadw"></div> -->
+                <div class="l_title1"><p>Human Cost vs Bot Cost</p></div>
+                <div id="costprojection" class="lineChart box_shadw hvsbot">
+                <ngx-charts-line-chart
+                        [view]="view"
+                        [scheme]="colorScheme"
+                        [legend]="legend"
+                        [showXAxisLabel]="showXAxisLabel"
+                        [showYAxisLabel]="showYAxisLabel"
+                        [xAxis]="xAxis"
+                        [yAxis]="yAxis"
+                        [xAxisLabel]="xAxisLabel"
+                        [yAxisLabel]="yAxisLabel"
+                        [timeline]="timeline"
+                        [results]="multi"
+                        [rotateXAxisTicks]="rotateXAxisTicks"
+                        [autoScale]="autoScale"
+                        
+                        [maxXAxisTickLength]="10"
+                        [showRefLabels]="false"
+                        >
+                </ngx-charts-line-chart>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="col-sm-12 box-content hedline1 box_shadw">
+                    <p><strong>Business insights</strong> </p>
+                    <ul>
+                        <li>26% of the cases are taking longer than 6 days</li>
+                        <li>35% of the cases are taking less than 2 days</li>
+                    </ul>
+                </div>
+                <div class="col-sm-12 box-content hedline2 box_shadw" *ngIf="top10_activityData && top10_activityData.length!=0">
+                    <p><strong>Recommendations</strong> </p>
+                    <ul >
+                            <li *ngFor="let acti of top10_activityData | slice:0:3;let i=index"><b>{{acti.Activity}}</b> automation saves <b>{{calculateSavings(acti.Duration_range)}}</b></li>
+
+
+                        <!-- <li><b>{{top10_activityData[0]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[0]['Duration_range'])}}</b></li>
+                        <li><b>{{top10_activityData[1]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[1]['Duration_range'])}}</b></li>
+                        <li><b>{{top10_activityData[2]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[2]['Duration_range'])}}</b></li> -->
+                        <div class="pull-right link" (click)="showTop10Rec()">Explore More&nbsp;<i class="fa fa-arrow-right"></i></div>
+                    </ul>
+                </div>
+            </div>
+        
+        <br>
+        <div class="col-md-12 btm-line"></div>
+        <br>
+        <div class="col-md-12">
+            <div class="col-sm-6 box_shadw1">
+                <ul class="groupBtn">
+                    <li>
+                        <button [class.active]="isEventGraph" (click)="getEventBubboleGraph('event')">Events</button>
+                        <button [class.active]="!isEventGraph" (click)="getEventBubboleGraph('throughput')">Duration</button>
+                    </li>
+                </ul>
+                 <!-- <div id="scatter" class=""></div> <br/> -->
+                 <div class="l_title"><p>Activity Vs Occurences</p></div>
+                 <div id="scatter">
+                <ngx-charts-bubble-chart
+                    [view]="view1"
+                    [scheme]="colorScheme1"
+                    [results]="bubbleData"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="legend1"
+                    [legendTitle] ="legendTitle"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [xAxisLabel]="xAxisLabel1"
+                    [yAxisLabel]="yAxisLabel1"
+                    [xScaleMin]="xScaleMin"
+                    [xScaleMax]="xScaleMax"
+                    [yScaleMin]="yScaleMin"
+                    [maxXAxisTickLength]="8"
+                    [minRadius]="minRadius"
+                    [maxRadius]="maxRadius"
+                    [rotateXAxisTicks]="rotateXAxisTicks"
+                    [legendPosition]="top">
+                </ngx-charts-bubble-chart>
+</div>
+            </div>
+            <div class="col-sm-6">
+                <!-- <div class="dropdown pull-right">
+                    <button title="Download" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
+                    <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
+                       <p *ngIf="flag1==0" class="click" (click)="switch1('pie')" ><span>View In Pei chart</span></p>
+                       <p *ngIf="flag1==1" class="click"(click)="switch1('bar')" ><span>View In Bar chart</span></p>
+                   </div>
+               </div> -->
+               <div class="l_title "><p>Activity Vs Occurences</p></div>
+                <div id="scatter" >
+
+                <combo-chart-component
+  [view]="view2"
+  [scheme]="comboBarScheme"
+  [colorSchemeLine]="lineChartScheme"
+  [results]="barChart"
+  [animations]="animations"
+  [lineChart]="lineChartSeries"
+  [yAxisTickFormatting]="yLeftTickFormat"
+  [yLeftAxisScaleFactor]="yLeftAxisScale"
+  [yRightAxisTickFormatting]="yRightTickFormat"
+  [gradient]="gradient"
+  [xAxis]="showXAxis"
+  [yAxis]="showYAxis"
+  [legend]="showLegend"
+  [legendTitle]="legendTitle"
+  [legendPosition]="legendPosition"
+  [showGridLines]="showGridLines"
+  [showXAxisLabel]="showXAxisLabel"
+  [showYAxisLabel]="showYAxisLabel"
+  [showRightYAxisLabel]="showYAxisLabel1"
+  [xAxisLabel]="xAxisLabel2"
+  [yAxisLabel]="yAxisLabel2"
+  [yAxisLabelRight]="yAxisLabelRight">
+</combo-chart-component>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="col-md-12 btm-line"></div>
+        <div class="col-md-12"  id="top10Activities">
+            <br>
+            <div class="col-sm-6 box_shadw1 table-box1">
+                <div class="text-center table1-heading">Top 10% Cases (in descending order of duration)</div>
+                <table class="table table-hover table-bordered text-center table-striped work_spacetable">
+                    <thead class="text-center">
+                        <tr>
+                            <th class="text-center">Variant</th>
+                            <th class="text-center">Time</th>
+                            <th class="text-center">%Cases</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr *ngFor="let each_variant of partialVariants;let e = index">
+                        <td>Variant&nbsp;{{e+1}}</td>
+                        <td>{{convertHourstoMiliseconds(each_variant.total_duration)}}</td>
+                        <td>{{caseParcent(each_variant.casepercent)}}%</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm-6">
+                <div class="box_shadw1 table-box">
+                <div class="text-center table1-heading">Top Automation Opportunities</div>
+                <table class="table table-hover table-bordered text-center table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Step</th>
+                            <th class="text-center">Value</th>
+                            <th class="text-center">Savings</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let each_data of top10_activityData">
+                            <td>{{each_data.Activity}}</td>
+                            <td>{{timeConversion(each_data.Duration_range)}}</td>
+                            <td>{{calculateSavings(each_data.Duration_range)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
         </div>
     </div>
+    <br class="col-md-12 btm-line">
+    <div class="col-md-12">
+            <div class="col-md-2 no-padding">
+                    <div class="box_shadw1" id="resourcesselect">
+                        <ng-multiselect-dropdown
+                        [placeholder]="'All'"
+                        [settings]="dropdownSettings"
+                        [data]="resourcesList"
+                        [(ngModel)]="selectedResources"
+                        (onSelect)="onResourceSelect()"
+                        (onSelectAll)="onResourceSelect(true)"
+                        (onDeSelect)="onResourceSelect()"
+                        (onDeSelectAll)="onResourceSelect(false)"
+                        >
+                        </ng-multiselect-dropdown>
+                    </div>
+                </div>
+        <div class="col-md-5 py-4 pi-chart">
+                <!-- <div class="dropdown pull-right">
+                        <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
+                        <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
+                            <p *ngIf="!isstackedbarChart" class="click" (click)="switchTostackedBar('stackedbar')"><span>View In Bar chart</span></p>
+                            <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
+                        </div>
+                    </div> -->
+                    <div class="l_title2"><p>Total Resource Duration By Activity</p></div>
+            <div id="piechart1" class="box_shadw34"> 
+                    <ngx-charts-pie-chart
+                    [view]="[400, 300]"
+                    [scheme]="{domain: ['#1a88ef', '#20ad00', '#e07400', '#5d65fe', '#f9063f', '#d3bb03', '#248f8d', '#940a0a']}"
+                    [results]="dChart1"
+                    [legend]="true"
+                    [labels]="true"
+                    [animations]="false"
+                    [doughnut]="true"
+                    [legendPosition] = "'right'"
+                    [legendTitle]="''"
+                    [arcWidth]="0.50"
+                    [labelFormatting]="pieChartLabel.bind(this, dChart1)"> 
+                  </ngx-charts-pie-chart>
+                
+             </div>
+        </div>
+        <div class="col-md-5 py-4 pi-chart">
+                <!-- <div class="dropdown pull-right">
+                        <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
+                        <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
+                            <p *ngIf="!isstackedbarChart1" class="click" (click)="switchTostackedBar1('stackedbar')"><span>View In Bar chart</span></p>
+                            <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
+                        </div>
+                    </div> -->
+                    <div class="l_title2"><p>Total Resource Cost By Activity</p></div>
+        <div id="piechart2" class="box_shadw34">
+                <ngx-charts-pie-chart
+                [view]="[400, 300]"
+                [scheme]="{domain: ['#1a88ef', '#20ad00', '#e07400', '#5d65fe', '#f9063f', '#d3bb03', '#248f8d', '#940a0a']}"
+                [results]="dChart2"
+                [legend]="true"
+                [labels]="true"
+                [animations]="false"
+                [doughnut]="true"
+                [arcWidth]="0.50"
+                [legendPosition] = "'right'"
+                [legendTitle]="''"
+                [labelFormatting]="pieChartLabel1.bind(this, dChart2)"> 
+              </ngx-charts-pie-chart>
+        </div>
+        </div>
+       
+
+    </div>
+</div>
+</div>
+</div>
+
+
+<div id="pietooltip" class="">
+    <p><strong id="tooltip_head"></strong>
+    </p>
+    <p>Activity Duration(hrs): <strong id="value"></strong></p>
+</div>
+
+
+<div id="pietooltip1" class="">
+    <p><strong id="tooltip_head1"></strong>
+    </p>
+    <p>Activity Cost : <strong id="value1"></strong></p>
 </div>

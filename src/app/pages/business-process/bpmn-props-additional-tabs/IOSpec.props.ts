@@ -113,7 +113,7 @@ import {
           type,
           name: `var_${ids.next()}`,
           dataType: 'String',
-          description: ''
+          description: 'test'
         });
   
         commands.push(cmdHelper.addElementsTolist(element, camundaProperties, 'values', [ newElem ]));

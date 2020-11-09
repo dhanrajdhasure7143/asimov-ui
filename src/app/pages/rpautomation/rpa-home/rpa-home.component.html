@@ -1,7 +1,6 @@
 
 
 
-
 <div class="row">
 
     <div class="col-md-3 row ">
@@ -28,10 +27,10 @@
           </div>-->
           <br>
             <div class="rpa-home-block py-5" id="environment-Home" *ngIf="this.isButtonVisible">
-                <button type="button" aria-hidden="true" [routerLink]="[ '/pages/rpautomation/environments']" placement="bottom">
+                <button type="button" aria-hidden="true" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">
             <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;" >
             <br><br>
-            <h6 class="rpa-home-btn-title">Environments</h6>
+            <h6 class="rpa-home-btn-title">Configuration</h6>
           </button>
             </div>
         </div>
@@ -185,7 +184,7 @@
                                         <span> 
                                 <select class="form-control" style="width:200px;"  [value]="element.botId" [id]="element.taskId+'__select'">
                                     <option value="0" >Select Bot</option>
-                                    <option *ngFor="let bot of bot_list" [value]="bot.botId"  >{{bot.botName}}</option>
+                                    <option *ngFor="let bot of bot_list" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
                                 </select>
                         </span>
                                     </td>

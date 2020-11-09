@@ -1,16 +1,17 @@
 export class BpmnModel{
     bpmnModelId:string;
-    createdTimestamp:Date = new Date();
-    modifiedTimestamp:Date = new Date();
+   // createdTimestamp:Date = new Date();
+   // modifiedTimestamp:Date = new Date();
     bpmnTempId:number;
     approverName:string = "";
     bpmnNotationAutomationTask:string;
     bpmnNotationHumanTask:string;
     bpmnProcessApproved:number;
-    userName:string; 
+    userName:string;
     tenantId:string;
     processIntelligenceId:number;
     id:number;
+    ntype:string;
     userEmail:string;
     approverEmail:string;
     category:string;

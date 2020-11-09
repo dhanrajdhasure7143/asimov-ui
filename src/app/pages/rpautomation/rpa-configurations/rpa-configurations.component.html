@@ -1,0 +1,20 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
+
+<div class="rpaenv_header_addon" style="padding-right:40px">
+
+    <!-- <div class="rpa-env-nav"> -->
+    <button type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="['/pages/rpautomation/home']">
+    <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpaenv-nav-btn-img">
+      <b>Bot Studio</b>
+    </button>
+    <!-- </div> -->
+
+</div>
+<mat-tab-group mat-align-tabs="start">
+    <mat-tab label="Environments">
+        <app-environments></app-environments>
+    </mat-tab>
+    <mat-tab label="Database Connections">
+        <app-rpa-database-connections></app-rpa-database-connections>
+    </mat-tab>
+</mat-tab-group>
