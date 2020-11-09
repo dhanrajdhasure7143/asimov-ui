@@ -1,7 +1,7 @@
 export class BpmnModel{
     bpmnModelId:string;
-    createdTimestamp:Date = new Date();
-    modifiedTimestamp:Date = new Date();
+   // createdTimestamp:Date = new Date();
+   // modifiedTimestamp:Date = new Date();
     bpmnTempId:number;
     approverName:string = "";
     bpmnNotationAutomationTask:string;
