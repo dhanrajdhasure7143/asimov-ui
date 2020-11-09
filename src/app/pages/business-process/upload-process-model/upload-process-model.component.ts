@@ -597,7 +597,7 @@ displayBPMN(){
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj=data
-       // this.updated_date_time = new Date();
+        this.updated_date_time = new Date();
         this.spinner.hide();
       },
       err => {
