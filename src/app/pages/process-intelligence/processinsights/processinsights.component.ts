@@ -37,7 +37,7 @@ export class ProcessinsightsComponent implements OnInit {
     robotinput:any = 8;
     workingHours:any = {
         formDay:'Mon',
-        toDay: 'Fri',
+        toDay: 'Sun',
         shiftStartTime:"00:00",
         shiftEndTime:"23:59"
 
@@ -144,7 +144,8 @@ yAxisLabel2 = 'Human Cost';
 showGridLines = true;
 innerPadding = '5%';
 barChart: any[] = [];
-lineChartSeries: any[] = []
+lineChartSeries: any[] = [];
+
 lineChartScheme = {
   name: 'coolthree',
   selectable: true,
@@ -230,8 +231,11 @@ yAxisLabelRight: string = 'Bot Cost';
             return;
         }
         this.getTotalNoOfCases('fullgraph');
-        this.getActivityMetrics('fullgraph');
-        this.getHumanBotCost('fullgraph');
+        //this.getActivityMetrics('fullgraph');
+        //this.getHumanBotCost('fullgraph');
+        this.onResourceSelect(false);
+        this.getDurationCall();
+        this.canceladdHrs();
 
     }
 
@@ -246,7 +250,8 @@ yAxisLabelRight: string = 'Bot Cost';
         var reqObj = {
             pid: this.graphIds,
             //pid:'671229',
-            data_type: 'variant_metrics'
+            data_type: 'variant_metrics',
+            "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
         }
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
@@ -383,7 +388,8 @@ yAxisLabelRight: string = 'Bot Cost';
                 //"pid":610283,
                 "resourceFlag": r_flag,
                 "variants": selected_variants,
-                "resources": selected_resources
+                "resources": selected_resources,
+                "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
             this.rest.getPIInsightResourceSelection(reqObj)
                 .subscribe((res: any) => {
@@ -517,6 +523,16 @@ yAxisLabelRight: string = 'Bot Cost';
         var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
         return hours;
     }
+
+    getHours2(millisec) {
+        var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
+        var minutes:any = (millisec / (1000 * 60)).toFixed(1);
+        if(minutes < 60){
+        return Math.round(minutes);
+        } else{
+        return Math.round(hours);
+        }
+    }
     getHours1(millisec) {
         var hours: any = Math.round(millisec / (1000 * 60 * 60));
         return hours + ' hrs';
@@ -551,7 +567,7 @@ yAxisLabelRight: string = 'Bot Cost';
                 pid: this.graphIds,
                 data_type: 'variant_activity_metrics',
                 flag: false,
-                //"workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
+                "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
         } else {
             reqObj = {
@@ -649,12 +665,16 @@ yAxisLabelRight: string = 'Bot Cost';
             ac_list.push(e.Activity);
             var humanCost = Math.round(this.getHours(e.Duration_range) * this.input1);
             //hCost.push(humanCost);
+            // var length = 20;
+            // var trimmedString = e.Activity.length > length ? 
+            // e.Activity.substring(0, length - 3) + "..." : 
+            // e.Activity;
             hCost.push({name:e.Activity, value:humanCost});
             var rDuration = Math.round(this.getHours(e.Duration_range) * 60 / 100);
             var rHours = Math.round(rDuration);
             var rFinalCost = rHours * this.robotinput;
             //rCost.push(rFinalCost);
-            rCost.push({name:e.Activity, value:rFinalCost});
+            rCost.push({name:e.e.Activity, value:rFinalCost});
         });
         // this.activityHumanCost = hCost;
         // this.activityBotCost = rCost;
@@ -679,14 +699,14 @@ yAxisLabelRight: string = 'Bot Cost';
                   this.yAxisLabel1 = 'Occurences';
             } else {
 
-                this.activityData.push({ x: e.Activity, y: Math.round(this.getHours(e.Duration_range)), r: Math.round(this.getHours(e.Duration_range)), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
+                this.activityData.push({ x: e.Activity, y: this.getHours2(e.Duration_range), r: this.getHours2(e.Duration_range), name: e.Activity, fullname: e.Activity.split(/\s/).reduce((response, word) => response += word.slice(0, 1), ''), title: 'Duration', event_duration: this.timeConversion(e.Duration_range) });
                 this.bubbleColor = '#008080';
                 this.isEventGraph = false;
                 this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
                     domain: ['#008080']
                   };
-                this.yAxisLabel1 = 'Duration(in hrs)';
+                  this.yAxisLabel1 = 'Duration(Hrs)';
             }
             console.log(this.bubbleData);
            // this.addchart2();
