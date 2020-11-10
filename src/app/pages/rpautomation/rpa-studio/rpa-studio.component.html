@@ -125,13 +125,14 @@
           <div class="col-md-6">
             <label for="botDepartment">Category*</label>
 
-            <select  class="form-control" formControlName="botDepartment" name="botDepartment" >
+            <select  [(ngModel)]="rpaCategory" class="form-control" formControlName="botDepartment" name="botDepartment" >
               <option  value="" selected>--Select Category--</option>
-              <option  value=1>Development</option>
-              <option  value=2>HR</option>
-              <option  value=3>QA</option>
-
+              <option *ngFor ="let category of categaoryList" [value]="category.categoryId">{{category.categoryName}}</option>
+              <option  value='others'>Others</option>
             </select>
+            <div *ngIf ="rpaCategory=='others'">
+              <input type="text" class="form-control" formControlName="newCategoryName" placeholder="Enter new Category Name" [(ngModel)] ="newRpaCategory">
+            </div>
             <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" class="fa fa-info-circle errspan">
               Category Required*
             </div>
