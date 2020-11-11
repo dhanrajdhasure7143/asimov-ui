@@ -208,9 +208,8 @@
             <label for="botDepartment" >Category*</label>
             <select  class="form-control" (change)="loadbotdata()" formControlName="botDepartment" name="botDepartment" >
               <option  value="" selected>--Select Category--</option>
-              <option  value=1>Development</option>
-              <option  value=2>HR</option>
-              <option  value=3>QA</option>
+              <option  value="" selected>--Select Category--</option>
+              <option *ngFor ="let category of categaoryList" [value]="category.categoryId">{{category.categoryName}}</option>
             </select>
             <div *ngIf="loadbot.get('botDepartment').invalid && loadbot.get('botDepartment').touched" style="color: red" >
               Category Required*

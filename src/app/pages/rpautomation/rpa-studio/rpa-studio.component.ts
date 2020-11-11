@@ -210,6 +210,7 @@ export class RpaStudioComponent implements OnInit {
 
   onLoad()
   {
+    this.getCategoryList();
     this.loadbot.reset();
     this.loadbot.get("bot").setValue("");
     this.loadbot.get("botType").setValue("");
