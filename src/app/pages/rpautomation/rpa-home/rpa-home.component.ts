@@ -42,6 +42,7 @@ export class RpaHomeComponent implements OnInit {
   public responsedata;
   public selectedEnvironment:any='';
   public environments:any=[];
+  public categaoriesList:any=[];
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -74,6 +75,7 @@ export class RpaHomeComponent implements OnInit {
     
     this.dt.changeHints(this.datahints.rpahomehints );
     this.getenvironments();
+    this.getCategoryList();
     this.getallbots();
     this.route.queryParams.subscribe(params => {
       processId=params;
@@ -143,7 +145,11 @@ export class RpaHomeComponent implements OnInit {
       })
       response.forEach(data=>{
         let object:any=data;
-        if(data.department==1)
+      if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
+      {
+        object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
+      }
+        /*if(data.department==1)
         {
           object.department='Development'
         }
@@ -154,7 +160,7 @@ export class RpaHomeComponent implements OnInit {
         else if(data.department==3)
         {
           object.department='QA';
-        }
+        }*/
         this.bot_list.push(object)  
       })
       this.bot_list=botlist;
@@ -487,6 +493,14 @@ export class RpaHomeComponent implements OnInit {
         this.environments=response;
       }
     })
+  }
+
+  getCategoryList(){
+    this.rest.getCategoriesList().subscribe(data=>{
+      let catResponse : any;
+      catResponse=data
+      this.categaoriesList=catResponse.data;
+    });
   }
 
 }
