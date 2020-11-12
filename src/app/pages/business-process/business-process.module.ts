@@ -17,8 +17,16 @@ import { ListOfChangesComponent } from './list-of-changes/list-of-changes.compon
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule} from '@angular/material';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule} from '@angular/material';
 import{FilterPipe} from './custom_filter.pipe';
+import { ModalModule } from 'ngx-bootstrap/modal';
+// import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import 'highlightjs-line-numbers.js';
+// import hljs from 'highlight.js/lib/core';
+// import xml from 'highlight.js/lib/languages/xml';
+// hljs.registerLanguage('xml', xml);
+// import hljs from '../../../../node_modules/highlight.js/lib/core';
+// document.defaultView['hljs'] = hljs;
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent,FilterPipe],
@@ -37,8 +45,21 @@ import{FilterPipe} from './custom_filter.pipe';
     Ng2SearchPipeModule,
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule
+    MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule,
+    ModalModule.forRoot()
+    // HighlightModule
   ],
-  providers: [BpsHints]
+  providers: [
+    // {
+    //   provide: HIGHLIGHT_OPTIONS,
+    //   useValue: {
+    //     coreLibraryLoader: () => import('highlight.js/lib/core'),
+    //     lineNumbersLoader: () => import('highlightjs-line-numbers.js'), // Optional, only if you want the line numbers
+    //     languages: {
+    //       xml: () => import('highlight.js/lib/languages/xml')}
+    //   }
+    // },
+    BpsHints
+  ]
 })
 export class BusinessProcessModule { }

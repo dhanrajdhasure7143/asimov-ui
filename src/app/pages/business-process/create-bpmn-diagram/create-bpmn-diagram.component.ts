@@ -24,6 +24,7 @@ import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import * as bpmnlintConfig from '../model/packed-config';
 import { DndModule } from 'ngx-drag-drop';
 import lintModule from 'bpmn-js-bpmnlint';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 declare var require:any;
 
 @Component({
@@ -58,7 +59,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
   keyboardLabels=[];
   fileType:string = "svg";
   selectedNotationType:string;
-  displayNotation;
+  xmlTabContent: string;
+  errXMLcontent: string = '';
+  selectedTabIndex: number = 0;
+  modalRef: BsModalRef;
   rpaJson = {
     "name": "RPA",
     "prefix": "rpa",
@@ -75,7 +79,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
-  constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
+  @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
+  constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,private modalService: BsModalService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
 
   ngOnInit(){
@@ -291,12 +296,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
         }else if(res.dismiss === Swal.DismissReason.cancel){
           this.isDiagramChanged = false;
           this.diplayApproveBtn = true;
+          this.keyboardLabels=this.shortcut[this.selectedNotationType];
           this.notationListOldValue = this.selected_notation;
           let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
           let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
           this.selectedNotationType = current_bpmn_info["ntype"];
           this.fileType = "svg";
-          this.keyboardLabels=this.shortcut[this.selectedNotationType];
           if(this.dmnTabs)
             this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
           this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
@@ -315,12 +320,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.isLoading = true;
       this.isDiagramChanged = false;
       this.diplayApproveBtn = true;
+      this.keyboardLabels=this.shortcut[this.selectedNotationType];
       let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
       let selected_xml = atob(unescape(encodeURIComponent(current_bpmn_info.bpmnXmlNotation)));
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.selectedNotationType = current_bpmn_info["ntype"];
       this.fileType = "svg";
-      this.keyboardLabels=this.shortcut[this.selectedNotationType];
       if(this.dmnTabs)
         this.dmnTabs.nativeElement.innerHTML = "sdfasdfasdf";
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
@@ -335,6 +340,35 @@ export class CreateBpmnDiagramComponent implements OnInit {
       });
     }
     this.getSelectedApprover();
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
+  displayXML(e){
+    let _self = this;
+    _self.isLoading = true;
+    if(e.index == 1){
+      this.bpmnModeler._moddle.toXML(this.bpmnModeler._definitions, { format: true }, function (err, updatedXML) {
+        _self.xmlTabContent = updatedXML;
+        _self.isLoading = false;
+      })
+    }
+    else{
+      this.bpmnModeler.importXML(this.xmlTabContent, function(err){
+        if(err){
+          _self.errXMLcontent = err;
+          _self.openModal(_self.wrongXMLcontent);
+          _self.isLoading = false;
+        }
+        else{
+          _self.oldXml = _self.xmlTabContent;
+          _self.newXml = _self.xmlTabContent;
+          _self.isLoading = false;
+        }
+      });
+    }
   }
 
   autoSaveBpmnDiagram(){
