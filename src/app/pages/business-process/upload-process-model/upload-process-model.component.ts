@@ -713,7 +713,7 @@ displayBPMN(){
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     let sel_appr = this.approver_list[this.selected_approver];
     bpmnModel.approverEmail = sel_appr.userId;
-    bpmnModel.approverName = sel_appr.userId.split("@")[0];
+    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
     if(sel_List){
       bpmnModel.userName = sel_List["userName"];
       bpmnModel.tenantId = sel_List["tenantId"];
