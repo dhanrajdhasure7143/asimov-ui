@@ -674,7 +674,7 @@ yAxisLabelRight: string = 'Bot Cost';
             var rHours = Math.round(rDuration);
             var rFinalCost = rHours * this.robotinput;
             //rCost.push(rFinalCost);
-            rCost.push({name:e.e.Activity, value:rFinalCost});
+            rCost.push({name:e.Activity, value:rFinalCost});
         });
         // this.activityHumanCost = hCost;
         // this.activityBotCost = rCost;

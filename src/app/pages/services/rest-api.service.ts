@@ -52,7 +52,7 @@ export class RestApiService{
   //password -Welcome@123 
 
   getAccessToken(){
-    let data = {"userId":"raghavendra.basavaraju@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
+    let data = {"userId":"saivijaya.malladi@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
   
