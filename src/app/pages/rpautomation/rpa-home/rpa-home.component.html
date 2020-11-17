@@ -125,7 +125,7 @@
                         </div>
                         <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
                     </mat-tab>
-                    <mat-tab *ngIf='false' label="Automated Tasks">
+                    <mat-tab *ngIf="false" label="Automated Tasks">
                         <div class="rpa-home-header">
                             <!-- <h4 class="box-heading  rpa-home-heading">My Workspace</h4>-->
 
@@ -158,7 +158,7 @@
 
 
                         </div>
-                        <div class="bots-container" id="automatedtasks-Home">
+                        <div class="bots-container" *ngIf="" id="automatedtasks-Home">
                             <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table">
 
                                 <ng-container matColumnDef="processName">

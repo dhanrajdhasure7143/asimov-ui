@@ -15,6 +15,10 @@ export class SoDashboardComponent implements OnInit {
     private rest:RestApiService,
     private spinner:NgxSpinnerService,
     ) { }
+
+  categaoriesList:any
+  processnames:any
+  automatedtasks:any
   chart:any
   usageData:any;
   ctx1:any;
@@ -28,6 +32,7 @@ export class SoDashboardComponent implements OnInit {
     this.getprocessstatistics();
     this.getenvironments();
     this.getperformance();
+    this.getCategoryList();
   }
 
   getbotstatistics(){
@@ -126,7 +131,7 @@ export class SoDashboardComponent implements OnInit {
       let Windows=this.Environments.filter(Data=>Data.environmentType=="Windows").length;
 
       let data2={
-        "wiindows":Windows,
+        "Windows":Windows,
         "Mac":Mac,
         "Linux":Linux,
       }
@@ -172,7 +177,7 @@ export class SoDashboardComponent implements OnInit {
     this.rest.getautomatedtasks(0).subscribe((tasks)=>{
       let TaskData:any=tasks;
       let task_array=TaskData.automationTasks
-
+      this.automatedtasks=TaskData.automationTasks;
       let data_array=  task_array.filter( (thing, i, arr) => arr.findIndex(t => t.processId === thing.processId) === i);
       let obj_array:any=[];
       let obj:any={}
@@ -180,6 +185,7 @@ export class SoDashboardComponent implements OnInit {
       this.rest.getprocessnames().subscribe(processnames=>{
         let process_arr:any=[];
         process_arr=processnames;
+        this.processnames=processnames;
         process_arr.forEach(element => {
           obj[element.processName]=task_array.filter(p=>(p.processId==element.processId) && (p.botId!='0')).length;
           obj_array[i++]='green';
@@ -217,6 +223,19 @@ export class SoDashboardComponent implements OnInit {
       })*/
 
       })
+  }
+
+
+
+
+
+  getCategoryList()
+  {
+    this.rest.getCategoriesList().subscribe(data=>{
+      let catResponse : any;
+      catResponse=data
+      this.categaoriesList=catResponse.data;
+    });
   }
 
 }

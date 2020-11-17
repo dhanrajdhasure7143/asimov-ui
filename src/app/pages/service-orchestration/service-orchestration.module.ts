@@ -20,6 +20,8 @@ import { SoAutomatedTasksComponent } from './orchestration/so-automated-tasks/so
 import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
 import { SoDashboardComponent } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
+import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
+
 @NgModule({
   declarations: [OrchestrationComponent,
     BotStatusComponent,
@@ -36,6 +38,7 @@ import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module'
     MatTabsModule,
     CronEditorModule,
     FormsModule,
+    NgbTimepickerModule,
     NgxSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
     MatProgressSpinnerModule, MatSelectModule
