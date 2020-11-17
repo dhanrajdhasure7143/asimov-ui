@@ -55,6 +55,7 @@ export class SoBotManagementComponent implements OnInit {
     public categaoriesList:any=[];
     public she:any;
     public minDate:NgbDateStruct;
+    schedulepopid="shecdule"
     public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
     i="";
     public check_schedule_flag: boolean = false;
@@ -333,6 +334,7 @@ export class SoBotManagementComponent implements OnInit {
 
    getschecdules(botId)
    {
+
     // this.rest.scheduleList(botId).subscribe((data)=> this.scheduleResponse(data))
    }
 

@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-3 text-center">
 
-            <div class="block-1"><span class="text-white">
+            <div *ngIf="categaoriesList !=undefined" class="block-1"><span class="text-white">
               Departments
               <br>
             {{categaoriesList.length}}
@@ -12,7 +12,7 @@
 
         </div>
 
-        <div class=" col-md-3 text-center">
+        <div *ngIf="processnames!=undefined" class=" col-md-3 text-center">
             <div class="block-3"><span class="text-white">
               Processes<br>
               {{processnames.length}}
@@ -21,7 +21,7 @@
 
 
 
-        <div class=" col-md-3 text-center">
+        <div *ngIf="automatedtasks!=undefined" class=" col-md-3 text-center">
             <div class="block-2"><span class="text-white">
             Tasks<br>
             {{automatedtasks.automationTasks.length}}
@@ -48,7 +48,7 @@
                     <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null">{{element.botName}}</button> <span *ngIf="element.botName==''">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="description">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
                     <td mat-cell *matCellDef="let element"> <button *ngIf="element.description!=null">{{element.description}}</button> <span *ngIf="element.botName==''">-</span> </td>
                 </ng-container>
 
@@ -97,8 +97,9 @@
                 <ng-container matColumnDef="Schedule">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Schedule</th>
                     <td mat-cell *matCellDef="let element">
-                        <i class="fa fa-calendar text-primary" aria-hidden="true"></i>
-
+                        <span (click)="getschecdules(element.botId)">
+                        <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>
+                      </span>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Logs">
