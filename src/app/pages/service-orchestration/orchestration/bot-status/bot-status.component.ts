@@ -1,10 +1,11 @@
 import {ViewChild, Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
+import * as Highcharts from 'highcharts';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-
+import { NgxSpinnerService } from "ngx-spinner";
 @Component({
   selector: 'app-bot-status',
   templateUrl: './bot-status.component.html',
@@ -21,6 +22,8 @@ export class BotStatusComponent implements OnInit {
   gaugeType = "full";
   activeBots:any=[];
   gaugeValue = 28.3;
+  botnames:any=[];
+  timestamps:any=[];
   gaugeLabel = "Overall Running";
   gaugeThickness = 20;
   gaugeAppendText = "%";
@@ -112,12 +115,13 @@ export class BotStatusComponent implements OnInit {
   }
   performData: any;
   usageData: any;
-  constructor(private api:RestApiService) { }
+  constructor(private api:RestApiService, private spinner:NgxSpinnerService) { }
   ngAfterViewInit() {
     this.dataSource.sort=this.sort;
     this.dataSource.paginator=this.paginator;
   }
   ngOnInit() {
+    this.spinner.show();
     let labelData:any [] = []
     let botData:any
     let botTime:any [] = []
@@ -125,7 +129,10 @@ export class BotStatusComponent implements OnInit {
     this.getprocessStatus();
     this.getBotStatus();
     this.getAllActiveBots();
-
+    this.getgraph();
+    setTimeout(() => {
+      this.spinner.hide();
+      }, 4000);
     this.api.botPerformance().subscribe(data => { this.performData = data;
       console.log(this.performData);
       this.performData = []
@@ -160,7 +167,11 @@ export class BotStatusComponent implements OnInit {
       finalObjectData = []
       botData = [];
       this.performData.forEach((element, ind) => {
-        if(ind < 5){
+        //console.log("==================")
+        //console.log(ind)
+        //console.log("===================")
+        if(ind < 5)
+        {
         labelData.push(element.botName)
         element.coordinates.forEach((ele1, index) => {
         botTime.push(ele1.timeDuration)
@@ -168,7 +179,7 @@ export class BotStatusComponent implements OnInit {
         botData = {
           label: element.botName,
           data: botTime,
-          backgroundColor: '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6,'0'),
+          backgroundColor: '#00000',//+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6,'0'),
           borderColor:'#f2f2f2',
           borderWidth: 1,
         }
@@ -185,7 +196,9 @@ export class BotStatusComponent implements OnInit {
         type: 'bar',
         data: {
           labels: labelData,
-          datasets: finalObjectData
+          //datasets: finalObjectData
+          datasets: this.performData,
+
         },
         options: {
           legend: {
@@ -228,7 +241,7 @@ export class BotStatusComponent implements OnInit {
       data: {
         labels: Object.keys(this.usageData),
         datasets: [
-          { 
+          {
             data: Object.values(this.usageData),
             backgroundColor: ['rgb(255,106,129)','rgba(255, 0, 0, 0.1)','rgb(58,187,216)','rgba(16, 112, 210, 1)'],
             fill: false,
@@ -254,7 +267,7 @@ export class BotStatusComponent implements OnInit {
       data: {
         labels:['No Data Found'],
         datasets: [
-          { 
+          {
             data: [0],
             backgroundColor: ['rgba(224,237,255)'],
             fill: false,
@@ -262,7 +275,7 @@ export class BotStatusComponent implements OnInit {
             borderWidth: '1px',
           },
         ]
-        
+
       },
       options: {
 
@@ -438,7 +451,7 @@ getBotStatus()
   this.api.getBotStatistics().subscribe(data=>{
     this.BotStatus=data;
     console.log(data)
-  
+
   })
 }
   getAllActiveBots()
@@ -450,7 +463,81 @@ getBotStatus()
       response=data;
       console.log(response)
       this.dataSource= new MatTableDataSource(response);
+
     })
   }
 
+  getgraph()
+  {
+
+    console.log(this.botnames);
+    let data:any= {
+
+      renderTo: 'container1',
+      chart: {
+          type: 'column'
+      },
+      title: {
+          text: 'Bot Performance'
+      },
+      xAxis: {
+          //categories: this.botnames,
+          categories: ["HttpSeviceDemo","Version_Switching","Sanity_Check","Acounts_payable","Product_Review_Analysis"],
+      },
+      yAxis: {
+          min: 0,
+          title: {
+              text: 'Time Duration(ms)'
+          },
+          stackLabels: {
+              enabled: true,
+              style: {
+                  fontWeight: 'bold',
+                  color: ( // theme
+                      Highcharts.defaultOptions.title.style &&
+                      Highcharts.defaultOptions.title.style.color
+                  ) || 'gray'
+              }
+          }
+      },
+      legend: {
+          align: 'right',
+          x: -30,
+          verticalAlign: 'top',
+          y: 25,
+          floating: true,
+          backgroundColor:
+              Highcharts.defaultOptions.legend.backgroundColor || 'white',
+          borderColor: '#CCC',
+          borderWidth: 1,
+          shadow: false
+      },
+      tooltip: {
+          headerFormat: '<b>{point.x}</b><br/>',
+          pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+      },
+      plotOptions: {
+          column: {
+              stacking: 'normal',
+              dataLabels: {
+                  enabled: true
+              }
+          }
+      },
+     series: [{
+          name: 'RunId-3',
+          data: [5, 3, 4, 7, 2]
+        }, {
+          name: 'RunId-2',
+          data: [2, 2, 3, 2, 1]
+        }, {
+          name: 'RunId-1',
+          data: [3, 4, 4, 2, 5]
+        }]
+
+       // series:this.timestamps,
+      }
+
+    Highcharts.chart('container1', data);
+  }
 }
