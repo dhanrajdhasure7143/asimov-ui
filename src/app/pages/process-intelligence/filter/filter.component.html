@@ -9,6 +9,13 @@
                             </select>
                         </div>
                     </div>
+                    
+                    <div class="col-md-8">
+                        <div *ngFor="let pill of appliedFilters" class="pill col-sm-2">{{pill}}
+                            <span (click)="removeTag(pill)">&times;</span>
+                          </div>
+                    </div>
+
                     <div class="col-md-8" *ngIf="isActivity">
                         <div class="col-sm-12">
                         <p class="dataType_filter">Data Values :</p>
@@ -141,8 +148,8 @@
                             </tbody>
                         </table>
                         </div>
-                    <button class="btn btn-primary eiap-btn" (click)="applyFilter()">Apply Filter</button>
-                    <!-- <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" (click)="applyEndpointFilter()">Apply Filter</button> -->
+                    <button *ngIf="!isEndpoint" class="btn btn-primary eiap-btn" (click)="applyFilter()">Apply Filter</button>
+                    <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" [disabled]='endptBt' (click)="applyEndpointFilter()">Apply Filter</button>
                     <!-- <button *ngIf="isVariantFilter" class="btn btn-primary eiap-btn" (click)="applyVariantFilter()">Apply Filter</button> -->
         
                     </div>

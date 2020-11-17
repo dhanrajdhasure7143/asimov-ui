@@ -275,6 +275,18 @@ export class FlowchartComponent implements OnInit {
         this.filterPerformData = this.fullgraph_model;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1)
+        let fullModel2=this.model2
+        this.startArray=[]
+        this.endArray=[]
+        fullModel2.forEach(element => {
+          if(element.from=="Start"){
+            this.startArray.push(element.to)
+          }
+          if(element.to=="End"){
+            this.endArray.push(element.from)
+          }
+        });
+        
         this.gradientApplyforLinks()
         this.gradientApplyforNode()
         
@@ -285,6 +297,7 @@ export class FlowchartComponent implements OnInit {
         this.isSingleTraceBPMN = false;
         this.isMultiTraceBPMN = false;
         this.isSliderBPMN = false;
+        this.filterOverlay()
 
     }
         },(err =>{
@@ -309,7 +322,7 @@ export class FlowchartComponent implements OnInit {
             this.processGraphName=e.piName;
             }
           })
-        this.filterOverlay()
+        // this.filterOverlay()
 
         }, 7000);
 
@@ -368,6 +381,17 @@ export class FlowchartComponent implements OnInit {
         this.filterPerformData = this.fullgraph_model;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1)
+        this.startArray=[]
+        this.endArray=[]
+        let fullModel2=this.model2
+        fullModel2.forEach(element => {
+          if(element.from=="Start"){
+            this.startArray.push(element.to)
+          }
+          if(element.to=="End"){
+            this.endArray.push(element.from)
+          }
+        });
         this.gradientApplyforLinks()
         this.gradientApplyforNode()
         
@@ -378,7 +402,7 @@ export class FlowchartComponent implements OnInit {
         this.isSingleTraceBPMN = false;
         this.isMultiTraceBPMN = false;
         this.isSliderBPMN = false;
-
+        this.filterOverlay()
     }
         },(err =>{
           this.spinner.hide();
@@ -396,7 +420,7 @@ export class FlowchartComponent implements OnInit {
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
         })
         setTimeout(() => {
-        this.filterOverlay()
+        // this.filterOverlay()
           
         }, 7000);
   }
@@ -707,9 +731,7 @@ export class FlowchartComponent implements OnInit {
   flowchartData(dataArray) {
     this.linkData = [];
     this.linkdataArray = [];
-    this.startArray=[];
     this.nodeArray = dataArray;
-    this.endArray=[];
     //  var linkToolArray=[];
     for (var i = 1; i < this.nodeArray.length-1; i++) {
       var datalink = this.nodeArray[i].linkArray;
@@ -750,7 +772,6 @@ export class FlowchartComponent implements OnInit {
           obj["extraNode"] = 'true';
           obj["toolDataCount"]=this.nodeArray[i].toolCount;
           this.linkdataArray.push(obj);
-          this.startArray.push(this.nodeArray[i].name)
           }
         }
         if (this.nodeArray[i].tool.includes('End Frequency')) {
@@ -765,11 +786,10 @@ export class FlowchartComponent implements OnInit {
           obj["toolDataCount"]=this.nodeArray[i].toolCount;
           obj["extraNode"] = 'true';
           this.linkdataArray.push(obj);
-          this.endArray.push(this.nodeArray[i].name)
           }
         }
     }
-    // console.log("teat",this.endArray,this.startArray);
+
     
     return this.linkdataArray;
   }
@@ -1004,7 +1024,6 @@ selectedMetric(selectedValue){    //metrics selection in spinner
   
   this.selectedPerformancevalue=index
   this.model1=modelArray3
-  console.log(index);
 
   // if(index==2){
   //   for(var i=1;i<this.model1.length-1;i++){
@@ -1025,7 +1044,6 @@ selectedMetric(selectedValue){    //metrics selection in spinner
 }
 
 flowchartDataOne(dataArray,index) {
-  console.log(dataArray,index);
   
   this.linkData = [];
   this.linkdataArray = [];
@@ -1117,6 +1135,8 @@ closeNav() { // Variant list Close
   }
   resetspinnermetrics(){        //process graph reset in leftside  spinner metrics
     this.resetFilter=true;
+    this.isClearFilter=true;
+    this.checkboxValue=false;
     this.model1 = this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
     // this.nodeAlignment();
@@ -1154,8 +1174,6 @@ closeNav() { // Variant list Close
     this.linkCurvinessGenerate();
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
-    console.log("rest",this.model1);
-
          /**
        * BPMN Boolean Variables
        */
@@ -1325,7 +1343,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
 
   readselectedNodes(SelectedActivities){
- console.log(SelectedActivities);
  
     if(SelectedActivities.length==0){
       this.resetActivityFiltermetrics();
@@ -1335,7 +1352,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     }
   }
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
-    console.log(this.selectedCaseArry);
     this.spinner.show();
     this.activity_value=SelectedActivities;
     this.model1=[]
@@ -1367,8 +1383,6 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
         this.nodeAlignment();       
         this.model2 = this.flowchartData(this.model1);
-        console.log(this.model1);
-        console.log(this.model2);
         
         this.gradientApplyforLinks();
         this.gradientApplyforNode();
@@ -1637,7 +1651,6 @@ gradientApplyforNodeOne(){      //gradient apply for Nodes on  performance metri
 filterOverlay(){  
   this.dataValues = [];
   let vv = this.filterPerformData;
-  console.log(this.filterPerformData);
   
     //Filter overlay open on filter icon click
   for(var i=1;i<vv.length-1;i++){
@@ -1658,51 +1671,71 @@ filterOverlay(){
     }
   }
   readselectedStartpoints(startPointValue){
-    // console.log(startPointValue);
-    let nodeModel1=this.fullgraph_model;
-    this.filterPerformData = this.fullgraph_model;
-    let filterModel1=[];
-    let index;
-    filterModel1.push(nodeModel1[0]);
-    for(var i1=1;i1<nodeModel1.length-1;i1++){
-      if(nodeModel1[i1].name==startPointValue[0]){
-        filterModel1.push(nodeModel1[i1]);
-        index=i1
-      }
-    }
-    for(var i2=1;i2<nodeModel1.length-1;i2++){
-      if(i2!=index){
-        filterModel1.push(nodeModel1[i2]);
-      }
-    }
-    filterModel1.push(nodeModel1[nodeModel1.length-1]);
-    // this.model1=filterModel1
-    // console.log("this",filterModel1);
-    // this.filtermodel3=filterModel1
-    let modelArray2=this.linkmodel2
-    let filter_modelArray2:any=[]
-    if(startPointValue.length==0){
-      modelArray2.forEach(element => {
-        if(element.from==-1){
-          filter_modelArray2.push(element)
+
+    // let nodeModel1=this.fullgraph_model;
+    // this.filterPerformData = this.fullgraph_model;
+    // let filterModel1=[];
+    // let index;
+    // filterModel1.push(nodeModel1[0]);
+    // for(var i1=1;i1<nodeModel1.length-1;i1++){
+    //   if(nodeModel1[i1].name==startPointValue[0]){
+    //     filterModel1.push(nodeModel1[i1]);
+    //     index=i1
+    //   }
+    // }
+    // for(var i2=1;i2<nodeModel1.length-1;i2++){
+    //   if(i2!=index){
+    //     filterModel1.push(nodeModel1[i2]);
+    //   }
+    // }
+    // filterModel1.push(nodeModel1[nodeModel1.length-1]);
+    // // this.model1=filterModel1
+    // // console.log("this",filterModel1);
+    // // this.filtermodel3=filterModel1
+    // let modelArray2=this.linkmodel2
+    // let filter_modelArray2:any=[]
+    // if(startPointValue.length==0){
+    //   modelArray2.forEach(element => {
+    //     if(element.from==-1){
+    //       filter_modelArray2.push(element)
+    //     }
+    //     if(element.from!=-1&&element.to!=-2){
+    //       filter_modelArray2.push(element)
+    //     }
+    //   });
+    // }else{
+    //   modelArray2.forEach(element => {
+    //     for(var i=0;i<startPointValue.length;i++){
+    //       if(element.from==-1 && element.to==this.getFromKeyOne(startPointValue[i])){
+    //         filter_modelArray2.push(element)
+    //       }
+    //     }
+    //     if(element.from!=-1&&element.to!=-2){
+    //       filter_modelArray2.push(element)
+    //     }
+    //   });
+    //   }
+    // this.linkArraymodel=filter_modelArray2
+    var seletedVariant1=[]
+    for (var i = 0; i < this.varaint_data.data.length; i++){
+            seletedVariant1.push(this.varaint_data.data[i].name)
         }
-        if(element.from!=-1&&element.to!=-2){
-          filter_modelArray2.push(element)
-        }
-      });
-    }else{
-      modelArray2.forEach(element => {
-        for(var i=0;i<startPointValue.length;i++){
-          if(element.from==-1 && element.to==this.getFromKeyOne(startPointValue[i])){
-            filter_modelArray2.push(element)
+        
+        var reqObj={
+          "data_type":"end_filter",
+          "pid":this.graphIds,
+          "cases" :seletedVariant1,
+          "startpoints":startPointValue.startPoint,
+          "Endpoints":startPointValue.endPoint
           }
-        }
-        if(element.from!=-1&&element.to!=-2){
-          filter_modelArray2.push(element)
-        }
-      });
-      }
-    this.linkArraymodel=filter_modelArray2
+
+          this.rest.getVariantGraphCombo(reqObj).subscribe(res => {
+          this.variantCombo = res
+            this.model1 = this.variantCombo.data[0].nodeDataArraycase;
+            this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
+            this.nodeAlignment();
+            this.model2 = this.flowchartData(this.model1);
+      })
   }
 
 
@@ -1752,8 +1785,9 @@ filterOverlay(){
       for (var i = 0; i < this.varaint_data.data.length; i++) {
         this.varaint_data.data[i].selected = "inactive";
       }
-      this.resetspinnermetrics();
-      var seletedVariant1=[]
+      // this.resetspinnermetrics();
+      this.spinMetrics0="absoluteFrequency";
+      var seletedVariant1=[];
       var reqObj={}
       for (var i = 0; i < this.varaint_data.data.length; i++){
               seletedVariant1.push(this.varaint_data.data[i].name)
@@ -1766,8 +1800,6 @@ filterOverlay(){
             }
 
     } else {
-      console.log('test,',e);
-      
       reqObj = {
         "data_type": "activity_filter",
         "pid": this.graphIds,
@@ -1837,7 +1869,8 @@ filterOverlay(){
   viewInsights(){
     this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.graphIds}})
   }
-  readselectedNodes1(activies){
+  readselectedNodes1(activies){    
+    this.filterdNodes=[]
     this.filterdNodes=activies
     this.isClearFilter=false;
     

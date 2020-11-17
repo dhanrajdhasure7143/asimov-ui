@@ -13,7 +13,7 @@ export class PiHints{
 
     public processGraphHints = [
         { selector:'#process_graph_list', description:'Select process graphs list', showNext:true },
-        { selector:'#exportSVGtoPDF', description:'Process Graph', showNext:true },
+        { selector:'#render', description:'Process Graph', showNext:true },
         { selector:'#zoom_in', description:'Zoom In', showNext:true },
         { selector:'#zoom_out', description:'Zoom Out', showNext:true },
         { selector:'#zoom_reset', description:'Reset Zoom', showNext:true },
