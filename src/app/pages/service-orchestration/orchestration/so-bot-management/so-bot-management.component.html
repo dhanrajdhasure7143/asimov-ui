@@ -1,35 +1,5 @@
 <div class="container-fluid">
     <br>
-    <div class="row">
-        <div class="col-md-3 text-center">
-
-            <div *ngIf="categaoriesList !=undefined" class="block-1"><span class="text-white">
-              Departments
-              <br>
-            {{categaoriesList.length}}
-            </span>
-            </div>
-
-        </div>
-
-        <div *ngIf="processnames!=undefined" class=" col-md-3 text-center">
-            <div class="block-3"><span class="text-white">
-              Processes<br>
-              {{processnames.length}}
-            </span></div>
-        </div>
-
-
-
-        <div *ngIf="automatedtasks!=undefined" class=" col-md-3 text-center">
-            <div class="block-2"><span class="text-white">
-            Tasks<br>
-            {{automatedtasks.automationTasks.length}}
-          </span></div>
-        </div>
-
-    </div>
-    <br><br>
     <span style="float:right;width:200px;">
         <span style="padding:10px"><input type="text" placeholder="Search" class=form-control (keyup)="applyFilter2($event.target.value)"></span>
     </span>

@@ -79,8 +79,7 @@ export class RpaHomeComponent implements OnInit {
     this.getallbots();
     if(localStorage.getItem("taskId")!=undefined)
     {
-      alert(localStorage.getItem("taskId"));
-      this.createtaskbotoverlay(localStorage.getItem("taskId"))
+       this.createtaskbotoverlay(localStorage.getItem("taskId"))
       localStorage.removeItem("taskId");
     }
     this.route.queryParams.subscribe(params => {
