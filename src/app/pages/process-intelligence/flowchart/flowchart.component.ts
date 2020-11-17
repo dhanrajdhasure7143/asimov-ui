@@ -1716,6 +1716,13 @@ filterOverlay(){
     //   });
     //   }
     // this.linkArraymodel=filter_modelArray2
+    // endArray
+    // startArray
+    if(startPointValue.startPoint.length==this.startArray.length &&startPointValue.endPoint.length==this.endArray.length){
+      this.model1 = this.fullgraph_model;
+      this.model2 = this.flowchartData(this.model1);
+      
+    }else{
     var seletedVariant1=[]
     for (var i = 0; i < this.varaint_data.data.length; i++){
             seletedVariant1.push(this.varaint_data.data[i].name)
@@ -1736,6 +1743,7 @@ filterOverlay(){
             this.nodeAlignment();
             this.model2 = this.flowchartData(this.model1);
       })
+    }
   }
 
 
