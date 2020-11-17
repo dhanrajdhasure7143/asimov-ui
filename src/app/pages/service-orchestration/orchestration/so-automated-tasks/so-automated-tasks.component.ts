@@ -1,36 +1,24 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {ViewChild, Component, OnInit } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {RestApiService} from '../../services/rest-api.service';
-import {RpaStudioComponent} from '../rpa-studio/rpa-studio.component';
-import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import {RestApiService} from '../../../services/rest-api.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import 'rxjs/add/operator/filter';
-import { DataTransferService } from "../../services/data-transfer.service";
-import { Rpa_Home_Hints } from "../model/rpa-home-module-hints"
-// import * as $ from 'jquery';
 import Swal from 'sweetalert2';
-import { FormControl } from '@angular/forms';
-
 declare var $:any;
 
+import { NgxSpinnerService } from "ngx-spinner";
+
 @Component({
-  selector: 'app-rpa-home',
-  templateUrl: './rpa-home.component.html',
-  styleUrls: ['./rpa-home.component.css']
+  selector: 'app-so-automated-tasks',
+  templateUrl: './so-automated-tasks.component.html',
+  styleUrls: ['./so-automated-tasks.component.css']
 })
-export class RpaHomeComponent implements OnInit {
+export class SoAutomatedTasksComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
-  displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
-  departmentlist :string[] = ['Development','QA','HR'];
-  botNameFilter = new FormControl('');
-  botTypeFilter = new FormControl('');
-  departmentFilter = new FormControl('');
-  filteredValues: MyFilter = { department: [], botName: ''};
-  dataSource1:MatTableDataSource<any>;
+  displayedColumns: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -43,19 +31,22 @@ export class RpaHomeComponent implements OnInit {
   public selectedEnvironment:any='';
   public environments:any=[];
   public categaoriesList:any=[];
-  @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
-  @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
-  @ViewChild("sort1",{static:false}) sort1: MatSort;
-  @ViewChild("sort2",{static:false}) sort2: MatSort;
+  @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
+  @ViewChild("sort10",{static:false}) sort10: MatSort;
 
-  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Home_Hints,)
-  {
-
-  }
+  constructor(
+    private route: ActivatedRoute,
+    private rest:RestApiService,
+    private router: Router,
+    private spinner:NgxSpinnerService,
+   )
+  {}
 
 
 
   ngOnInit() {
+
+    this.spinner.show();
     this.userRole = localStorage.getItem("userRole")
 
     if(this.userRole.includes('SuperAdmin')){
@@ -69,19 +60,9 @@ export class RpaHomeComponent implements OnInit {
     }
 
     let processId=undefined;
-    //this.dataSource1.filterPredicate = this.createFilter();
-    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
-    this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
-
-    this.dt.changeHints(this.datahints.rpahomehints );
     this.getenvironments();
     this.getCategoryList();
     this.getallbots();
-    if(localStorage.getItem("taskId")!=undefined)
-    {
-       this.createtaskbotoverlay(localStorage.getItem("taskId"))
-      localStorage.removeItem("taskId");
-    }
     this.route.queryParams.subscribe(params => {
       processId=params;
       console.log(processId);
@@ -89,16 +70,21 @@ export class RpaHomeComponent implements OnInit {
       {
         this.getautomatedtasks(0);
 
-        this.selectedTab=0;
-        console.log(this.process_names)
+        //this.selectedTab=0;
+        console.log(this.process_names);
       }
       else
       {
         this.getautomatedtasks(processId.processid);
-        this.selectedTab=1;
-        console.log(this.process_names)
+
       }
+
+      this.spinner.show()
+      setTimeout(() => {
+        this.spinner.hide()
+      },4000)
      }
+
 
     );
 
@@ -124,141 +110,37 @@ export class RpaHomeComponent implements OnInit {
 
   getallbots()
   {
-    let response:any=[];
-
-    this.rpa_studio.spinner.show()
-    //http://192.168.0.7:8080/rpa-service/get-all-bots
-
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
-      response=botlist;
-      if(response.length==0)
-      {
-        this.rpa_studio.spinner.hide();
-      }
-      response.forEach(data=>{
-        let object:any=data;
-        if(data.botType==0)
-        {
-          object.botType='Attended'
-        }
-        else if(data.botType==1)
-        {
-          object.botType='Unattended';
-        }
-        this.bot_list.push(object)
-      })
-      response.forEach(data=>{
-        let object:any=data;
-      if(this.categaoriesList.find(resp => resp.categoryId==data.department)!=undefined)
-      {
-        object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
-      }
-        /*if(data.department==1)
-        {
-          object.department='Development'
-        }
-        else if(data.department==2)
-        {
-          object.department='HR';
-        }
-        else if(data.department==3)
-        {
-          object.department='QA';
-        }*/
-        this.bot_list.push(object)
-      })
       this.bot_list=botlist;
-      if(this.bot_list.length >0)
-      {
-        this.respdata1 = false;
-        console.log(this.respdata1)
-      }else
-      {
-        this.respdata1 = true;
-        console.log(this.respdata1);
-      }
-      response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
-      this.dataSource1= new MatTableDataSource(response);
-      this.isDataSource = true;
-      this.dataSource1.sort=this.sort1;
-      this.dataSource1.paginator=this.paginator1;
-      this.dataSource1.data = response;
-      this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
-        this.filteredValues['department'] = departmentFilterValue;
-        this.dataSource1.filter = JSON.stringify(this.filteredValues);
-        if(this.dataSource1.filteredData.length > 0){
-          this.isTableHasData = true;
-        } else {
-          this.isTableHasData = false;
-        }
-        },(err)=>{
-
-          this.rpa_studio.spinner.hide();
-        });
-
-        this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
-          this.filteredValues['botName'] = botNameFilterValue;
-          this.dataSource1.filter = JSON.stringify(this.filteredValues);
-          if(this.dataSource1.filteredData.length > 0){
-            this.isTableHasData = true;
-          } else {
-            this.isTableHasData = false;
-          }
-        });
-
-      this.dataSource1.filterPredicate = this.customFilterPredicate();
-      this.rpa_studio.spinner.hide()
-    },(err)=>{
-      this.rpa_studio.spinner.hide();
-    })
+    });
   }
 
-  customFilterPredicate() {
-    return (data: dataSource1, filter: string): boolean => {
-      let searchString = JSON.parse(filter) as MyFilter;
-      let isdepartmentAvailable = false;
 
-      if (searchString.department.length) {
-
-        for (const d of searchString.department) {
-          if (data.department.toString().trim().indexOf(d) !== -1)  {
-            isdepartmentAvailable = true;
-          }
-        }
-      } else {
-        isdepartmentAvailable = true;
-      }
-      return isdepartmentAvailable && data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-    }
-  }
 
   getautomatedtasks(process)
   {
     let response:any=[];
+   // this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
 
-    this.rpa_studio.spinner.show();
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
       this.responsedata=response.automationTasks;
       console.log(response.automationTasks);
       this.dataSource2= new MatTableDataSource(response.automationTasks);
-      this.dataSource2.sort=this.sort2;
-      this.dataSource2.paginator=this.paginator2;
+      this.dataSource2.sort=this.sort10;
+      this.dataSource2.paginator=this.paginator10;
       if(process==0)
       {
-
         this.getprocessnames(undefined);
+
       }else
       {
-
         this.getprocessnames(process);
       }
       this.update_task_status();
-      this.rpa_studio.spinner.hide()
-    },(err)=>{
-      this.rpa_studio.spinner.hide()
 
+    },(err)=>{
     })
   }
 
@@ -270,29 +152,27 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getprocessnames().subscribe(processnames=>{
       this.process_names=processnames;
       let processnamebyid;
+
       if(processId != undefined)
       {
         console.log(this.process_names)
-        processnamebyid=this.process_names.find(data=>processId==data.processId);
+        processnamebyid=this.process_names.find(data=>data.processId==processId);
         this.selectedvalue=processnamebyid.processId;
         this.applyFilter(this.selectedvalue);
         console.log(this.selectedvalue);
+
       }
       else
       {
-
-        this.rpa_studio.spinner.hide();
         this.selectedvalue="";
       }
     },(err)=>{
-      this.rpa_studio.spinner.hide();
     })
   }
 
 
   applyFilter(filterValue:any) {
     console.log(filterValue)
-
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
@@ -306,15 +186,14 @@ export class RpaHomeComponent implements OnInit {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     console.log(filterValue);
-    this.dataSource1.filter = filterValue;
+    this.dataSource2.filter = filterValue;
   }
 
 
 
   createoverlay()
   {
-
-    this.rpa_studio.onCreate(0);
+    //this.rpa_studio.onCreate(0);
     //document.getElementById("create-bot").style.display ="block";
   }
 
@@ -358,7 +237,9 @@ export class RpaHomeComponent implements OnInit {
 
   createtaskbotoverlay(taskId)
   {
-    this.rpa_studio.onCreate(taskId);
+    //this.rpa_studio.onCreate(taskId);
+    localStorage.setItem("taskId",taskId);
+    this.router.navigate(["/pages/rpautomation/home"]);
     //document.getElementById("create-bot").style.display ="block";
   }
 
@@ -367,7 +248,7 @@ export class RpaHomeComponent implements OnInit {
 
   loadbotdata(botId)
   {
-    this.rpa_studio.getloadbotdata(botId);
+    //this.rpa_studio.getloadbotdata(botId);
   }
 
 
@@ -392,21 +273,30 @@ export class RpaHomeComponent implements OnInit {
 
     if(this.selectedvalue!=undefined)
     {
-    this.rpa_studio.spinner.show();
+    //this.rpa_studio.spinner.show();
     this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
       let response:any=data;
+      if(response.errorMessage==undefined){
       Swal.fire({
-        position: 'top-end',
         icon: 'success',
         title:response.status,
-        showConfirmButton: false,
-        timer: 2000
+        showConfirmButton: true,
       });
-      this.rpa_studio.spinner.hide();
+      this.update_task_status()
+    }else
+    {
+      Swal.fire({
+        icon: 'warning',
+        title:response.errorMessage,
+        showConfirmButton: true,
+      })
+
+    }
+      //this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
       console.log(err)
-      this.rpa_studio.spinner.hide();
+      //this.rpa_studio.spinner.hide();
     })
   }
   }
@@ -415,18 +305,17 @@ export class RpaHomeComponent implements OnInit {
   resettasks()
   {
 
-    this.rpa_studio.spinner.show();
+    //this.rpa_studio.spinner.show();
     this.rest.getautomatedtasks(0).subscribe(response=>{
       let data:any=response;
       this.dataSource2= new MatTableDataSource(data.automationTasks);
-      this.dataSource2.sort=this.sort2;
-      this.dataSource2.paginator=this.paginator2;
+      this.dataSource2.sort=this.sort10;
+      this.dataSource2.paginator=this.paginator10;
       if(this.selectedvalue==undefined)
       {
         this.applyFilter(this.selectedvalue)
       }
 
-      this.rpa_studio.spinner.hide();
     });
   }
 
@@ -447,7 +336,7 @@ export class RpaHomeComponent implements OnInit {
               let data:any;
               if(statusdata.status=="InProgress")
               {
-                data="<span class='text-primary'><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+                data="<span class='text-primary'><img src='../../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }else if(statusdata.status=="Success")
               {
                 //data="<img src='../../../../assets/images/RPA/processloading.svg' style='height:30px'>";
@@ -460,7 +349,7 @@ export class RpaHomeComponent implements OnInit {
               }
               else if(statusdata.status=="New")
               {
-                data="<span><img src='/assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+                data="<span><img src='../../../../../assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }
               else if(statusdata.status=="")
               {
@@ -500,7 +389,8 @@ export class RpaHomeComponent implements OnInit {
     })
   }
 
-  getCategoryList(){
+  getCategoryList()
+  {
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
       catResponse=data
@@ -508,13 +398,7 @@ export class RpaHomeComponent implements OnInit {
     });
   }
 
-}
-export interface dataSource1 {
-  department: string;
-  botName: string;
-}
 
-export interface MyFilter {
-  department: string[],
-  botName: string,
+
+
 }
