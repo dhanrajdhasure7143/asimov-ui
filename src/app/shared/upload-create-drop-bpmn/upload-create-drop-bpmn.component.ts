@@ -99,8 +99,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
 
   initialSave(diagramModel:BpmnModel, target:string){
     let message;
-    diagramModel.createdTimestamp = new Date();
-    diagramModel.modifiedTimestamp = new Date();
+   // diagramModel.createdTimestamp = new Date();
+   // diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
       if(res['errorCode']!="2005"){
         let isBPSHome = this.router.url == "/pages/businessProcess/home";

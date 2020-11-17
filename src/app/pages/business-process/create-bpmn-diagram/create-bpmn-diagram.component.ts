@@ -224,7 +224,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let selected_xml = this.bpmnservice.getBpmnData();// this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
       selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
-      this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+     // this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
     }
     let decrypted_bpmn = atob(unescape(encodeURIComponent(selected_xml)));
     this.bpmnModeler.importXML(decrypted_bpmn, function(err){
@@ -320,12 +320,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
         bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
         bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
         bpmnModel["ntype"] = _self.saved_bpmn_list[_self.selected_notation]["ntype"];
-        bpmnModel["modifiedTimestamp"] = new Date();
+       // bpmnModel["modifiedTimestamp"] = new Date();
         if(_self.autosavedDiagramVersion[0]&& _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
           bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-          bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
+         // bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
         }else{
-          bpmnModel["createdTimestamp"] = new Date();
+         // bpmnModel["createdTimestamp"] = new Date();
         }
         _self.autoSaveDiagram(bpmnModel);
       }
@@ -337,7 +337,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj = data;
-        this.updated_date_time = new Date();
+        //this.updated_date_time = new Date();
         this.spinner.hide();
       },
       err => {
@@ -410,7 +410,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     let sel_appr = this.approver_list[this.selected_approver];
     bpmnModel.approverEmail = sel_appr.userId;
-    bpmnModel.approverName = sel_appr.userId.split("@")[0];
+    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
     bpmnModel.userName = sel_List["userName"];
     bpmnModel.tenantId = sel_List["tenantId"];
     bpmnModel.userEmail = sel_List['userEmail'];
@@ -463,7 +463,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       delete(bpmnModel.id);
     bpmnModel.userName = sel_List['userName'];
     bpmnModel.tenantId = sel_List['tenantId'];
-    bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
+   // bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));

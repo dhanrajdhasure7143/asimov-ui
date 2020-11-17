@@ -4,11 +4,12 @@ import { RpautomationComponent } from './rpautomation.component';
 import { RpaStudioComponent } from './rpa-studio/rpa-studio.component';
 import { RpaenvironmentsComponent } from './rpa-environments/rpa-environments.component';
 import { RpaWorkspaceComponent } from './rpa-workspace/rpa-workspace.component'
+import { RpaConfigurationsComponent} from "./rpa-configurations/rpa-configurations.component"
 
 const routes: Routes = [
     {path:'', component:RpautomationComponent, children:[
       {path:'home', component:RpaStudioComponent},
-      {path:'environments',  component:RpaenvironmentsComponent},
+      {path:'configurations',  component:RpaConfigurationsComponent},
       {path:'workspace',  component:RpaWorkspaceComponent},
       {path:'**', redirectTo:'/home', pathMatch: 'full'}
     ]}

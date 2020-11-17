@@ -1,15 +1,3 @@
-<ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
-
-<div class="rpaenv_header_addon" style="padding-right:40px">
-
-    <!-- <div class="rpa-env-nav"> -->
-    <button type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="['/pages/rpautomation/home']">
-    <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpaenv-nav-btn-img">
-      <b>Bot Studio</b>
-    </button>
-    <!-- </div> -->
-
-</div>
 
 <div class="container-fluid mx-3">
 
@@ -237,7 +225,7 @@
     </table>
 
 </div>
-    <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+    <mat-paginator #paginator1 [pageSize]="4" [showFirstLastButtons]="true"></mat-paginator>
 </div>
 
 <!-- <div class="container">
@@ -251,7 +239,7 @@
 </div> -->
 
 
-<div id="create" class="rpa-modal">
+<div id="createenvironment" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="close()">&times;</span>
