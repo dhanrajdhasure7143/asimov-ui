@@ -1,0 +1,40 @@
+.block-1 {
+    background: rgb(0, 0, 36);
+    background: linear-gradient(90deg, rgba(0, 0, 36, 1) 0%, rgba(22, 9, 121, 1) 78%, rgba(0, 212, 255, 1) 100%);
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 30px;
+}
+
+.block-2 {
+    background: rgb(0, 0, 36);
+    background: linear-gradient(90deg, rgba(0, 0, 36, 1) 0%, rgba(22, 9, 121, 1) 78%, rgba(0, 212, 255, 1) 100%);
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 30px;
+}
+
+.block-3 {
+    background: rgb(0, 0, 36);
+    background: linear-gradient(90deg, rgba(0, 0, 36, 1) 0%, rgba(22, 9, 121, 1) 78%, rgba(0, 212, 255, 1) 100%);
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    padding: 30px;
+}
+
+span li {
+    cursor: pointer;
+}
+
+li {
+    cursor: pointer;
+}
+
+select {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
