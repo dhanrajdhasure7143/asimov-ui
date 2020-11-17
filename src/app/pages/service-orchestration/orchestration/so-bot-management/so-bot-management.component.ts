@@ -37,7 +37,7 @@ export class SoBotManagementComponent implements OnInit {
     public cronExpression = '0/1 * 1/1 * *';
     public isCronDisabled = false;
     viewlogid="check123";
-
+    processnames:any=[]
     viewlogid1="check456";
     logflag:Boolean;
     respdata2:Boolean;
@@ -81,7 +81,9 @@ export class SoBotManagementComponent implements OnInit {
       hideSeconds: false,
 
       cronFlavor: "standard"
+
     }
+    automatedtasks:any=[];
     log_botid:any;
     log_version:any;
     logresponse:any=[];
@@ -110,6 +112,8 @@ export class SoBotManagementComponent implements OnInit {
   ngOnInit() {
     this.getCategoryList();
     this.getallbots();
+    this.getautomatedtasks();
+    this.getprocessnames();
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
       'endTime' : [this.endTime, Validators.required],
@@ -408,6 +412,21 @@ export class SoBotManagementComponent implements OnInit {
     });
   }
 
+
+
+  getautomatedtasks()
+  {
+    this.rest.getautomatedtasks(0).subscribe(tasks=>{
+      this.automatedtasks=tasks;
+    })
+  }
+
+    getprocessnames()
+    {
+      this.rest.getprocessnames().subscribe(processnames=>{
+        this.processnames=processnames;
+      })
+    }
 
 
 }

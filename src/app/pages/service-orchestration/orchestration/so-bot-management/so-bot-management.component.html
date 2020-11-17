@@ -3,15 +3,29 @@
     <div class="row">
         <div class="col-md-3 text-center">
 
-            <div class="block-1"><span class="text-white">40</span></div>
+            <div class="block-1"><span class="text-white">
+              Departments
+              <br>
+            {{categaoriesList.length}}
+            </span>
+            </div>
 
         </div>
-        <div class=" col-md-3 text-center">
-            <div class="block-2"><span class="text-white">40</span></div>
-        </div>
 
         <div class=" col-md-3 text-center">
-            <div class="block-3"><span class="text-white">40</span></div>
+            <div class="block-3"><span class="text-white">
+              Processes<br>
+              {{processnames.length}}
+            </span></div>
+        </div>
+
+
+
+        <div class=" col-md-3 text-center">
+            <div class="block-2"><span class="text-white">
+            Tasks<br>
+            {{automatedtasks.automationTasks.length}}
+          </span></div>
         </div>
 
     </div>
@@ -20,8 +34,8 @@
         <span style="padding:10px"><input type="text" placeholder="Search" class=form-control (keyup)="applyFilter2($event.target.value)"></span>
     </span>
     <span style="float:right;width:200px;">
-      <span style="padding:10px"><select class="form-control" (change)="applyFilter($event.target.value)">
-        <select [value]="undefined" selected=true>Select Category</select>
+      <span style="padding:10px"><select value='' class="form-control" (change)="applyFilter($event.target.value)">
+        <select value="" selected=true>Select Category</select>
         <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}</option>
         </select></span>
     </span>
