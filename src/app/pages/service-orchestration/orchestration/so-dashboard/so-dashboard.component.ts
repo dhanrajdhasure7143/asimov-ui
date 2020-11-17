@@ -24,7 +24,6 @@ export class SoDashboardComponent implements OnInit {
   Environments:any;
   Performance:any;
   ngOnInit() {
-    this.spinner.show()
     this.getbotstatistics();
     this.getprocessstatistics();
     this.getenvironments();
@@ -68,9 +67,6 @@ export class SoDashboardComponent implements OnInit {
               }
           });
         }
-
-
-        this.spinner.hide();
       });
   }
 
@@ -176,14 +172,18 @@ export class SoDashboardComponent implements OnInit {
     this.rest.getautomatedtasks(0).subscribe((tasks)=>{
       let TaskData:any=tasks;
       let task_array=TaskData.automationTasks
+
       let data_array=  task_array.filter( (thing, i, arr) => arr.findIndex(t => t.processId === thing.processId) === i);
       let obj_array:any=[];
       let obj:any={}
       let i=0;
-      data_array.forEach(process=>{
-          obj[process.processName]=task_array.filter(count=>count.processId == process.processId).length;
+      this.rest.getprocessnames().subscribe(processnames=>{
+        let process_arr:any=[];
+        process_arr=processnames;
+        process_arr.forEach(element => {
+          obj[element.processName]=task_array.filter(p=>(p.processId==element.processId) && (p.botId!='0')).length;
           obj_array[i++]='green';
-      })
+        });
         this.chart4 = new Chart('canvas3', {
           type: 'bar',
           data: {
@@ -209,6 +209,12 @@ export class SoDashboardComponent implements OnInit {
             }
           }
         });
+
+      })
+      /*data_array.forEach(process=>{
+          obj[process.processName]=task_array.filter(count=>count.processId == process.processId).length;
+          obj_array[i++]='green';
+      })*/
 
       })
   }

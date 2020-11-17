@@ -152,6 +152,7 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.rest.getprocessnames().subscribe(processnames=>{
       this.process_names=processnames;
       let processnamebyid;
+
       if(processId != undefined)
       {
         console.log(this.process_names)
@@ -172,7 +173,6 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   applyFilter(filterValue:any) {
     console.log(filterValue)
-
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace

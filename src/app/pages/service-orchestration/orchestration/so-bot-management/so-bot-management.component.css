@@ -4,7 +4,7 @@
     color: white;
     font-size: 30px;
     font-weight: bold;
-    padding: 40px;
+    padding: 30px;
 }
 
 .block-2 {
@@ -13,7 +13,7 @@
     color: white;
     font-size: 30px;
     font-weight: bold;
-    padding: 40px;
+    padding: 30px;
 }
 
 .block-3 {
@@ -22,5 +22,19 @@
     color: white;
     font-size: 30px;
     font-weight: bold;
-    padding: 40px;
+    padding: 30px;
+}
+
+span li {
+    cursor: pointer;
+}
+
+li {
+    cursor: pointer;
+}
+
+select {
+    border-top: none;
+    border-right: none;
+    border-left: none;
 }

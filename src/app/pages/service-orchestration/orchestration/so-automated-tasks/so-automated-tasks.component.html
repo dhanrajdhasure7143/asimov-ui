@@ -2,24 +2,48 @@
 
 <br>
 <span class="run-process">
+  <span style="padding:20px">
+  <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i class="fa fa-calendar"></i></button>
+</span>
+</span>
+<span class="run-process">
+  <span style="padding:20px">
+  <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-pause"></i></button>
+</span>
+</span>
+
+
+<span class="run-process">
+  <span style="padding:20px">
   <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-play"></i></button>
 </span>
+</span>
+
+
+
 <span class="run-process">
   <select class="form-control" style="width:250px;float:right" [value]="selectedvalue" (change)="applyFilter($event.target.value)" >
   <option value="" [selected]="true">Select Process</option>
   <option *ngFor="let process of process_names" [value]="process.processId">{{process.processName}}</option>
-
 </select>
 </span>
+
 <span class="run-process">
   <select class="form-control" style="width:250px;float:right"  [(ngModel)]="selectedEnvironment">
       <option value="" selected=true>Select Environment</option>
       <option  *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}</option>
-
   </select>
-
-
 </span>
+
+<span class="run-process">
+  <select class="form-control" style="width:250px;float:right"  [(ngModel)]="selectedEnvironment">
+      <option value="" selected=true>Select Category</option>
+      <option  *ngFor="let cat of categaoriesList" [value]="cat.categoryId" >{{cat.categoryName}}</option>
+  </select>
+</span>
+
+
+
 <div *ngIf="responsedata!=undefined">
     <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table">
 
@@ -107,6 +131,6 @@
         <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
     </table>
-    <mat-paginator #paginator10 [pageSize]="5" [showFirstLastButtons]="true">
-    </mat-paginator>
-    <div>
+</div>
+<mat-paginator #paginator10 [pageSize]="5" [showFirstLastButtons]="true">
+</mat-paginator>

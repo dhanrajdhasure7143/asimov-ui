@@ -22,7 +22,7 @@ export class SoBotManagementComponent implements OnInit {
 
   public isTableHasData = true;
     public respdata1=false;
-    displayedColumns: string[] = ["botName","version","department","botStatus","description", "Action","Schedule","Logs"];
+    displayedColumns: string[] = ["botName", "description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     botNameFilter = new FormControl('');
     botTypeFilter = new FormControl('');
@@ -335,7 +335,6 @@ export class SoBotManagementComponent implements OnInit {
 
 
    executionAct(botid) {
-    let response:any;
 
       Swal.fire({
         icon: 'success',
@@ -344,13 +343,63 @@ export class SoBotManagementComponent implements OnInit {
       })
 
       this.rest.execution(botid).subscribe(res =>{
-        response = res;
       })
     }
 
 
+    pauseBot(botId) {
+        Swal.fire({
+          icon: 'success',
+          title: "Bot Paused Sucessfully !!",
+          showConfirmButton: true,
+        })
+
+        this.rest.getUserPause(botId).subscribe(data => {
+        });
+    }
+
+    resumeBot(botid) {
+        Swal.fire({
+          icon: 'success',
+          title: "Bot Resumed Sucessfully !!",
+          showConfirmButton: true,
+        })
+        this.rest.getUserResume(botid).subscribe(data => {
+        })
+    }
+
+    stopBot(botid) {
+        Swal.fire({
+          icon: 'success',
+          title: "Bot Execution Stopped !!",
+          showConfirmButton: true,
+          })
+
+          this.rest.stopbot(botid,"").subscribe(data=>{
+            console.log(data)
+
+          })
+    }
 
 
+
+    applyFilter(filterValue:any) {
+      console.log(filterValue)
+      let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
+      //this.selectedvalue=filterValue;
+      filterValue = category.categoryName.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+      console.log(filterValue);
+      this.dataSource1.filter = filterValue;
+    }
+
+
+    applyFilter2(filterValue: string) {
+
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+      this.dataSource1.filter = filterValue;
+    }
   getCategoryList(){
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;

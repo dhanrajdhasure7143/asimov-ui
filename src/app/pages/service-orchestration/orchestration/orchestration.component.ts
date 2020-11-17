@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataTransferService } from '../../services/data-transfer.service';
 import {ActivatedRoute} from "@angular/router";
-
+import {NgxSpinnerService} from 'ngx-spinner';
 @Component({
   selector: 'app-orchestration',
   templateUrl: './orchestration.component.html',
@@ -9,7 +9,7 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class OrchestrationComponent implements OnInit {
 
-  constructor(private dt:DataTransferService, private route:ActivatedRoute) { }
+  constructor(private dt:DataTransferService, private route:ActivatedRoute, private spinner:NgxSpinnerService) { }
   public selectedTab=0;
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/serviceOrchestration/home", "title":"Service Orchestration"});
@@ -27,6 +27,10 @@ export class OrchestrationComponent implements OnInit {
 
       }
     });
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    },5000)
   }
 
 
