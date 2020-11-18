@@ -70,3 +70,21 @@
   border-bottom: 1px solid gray;
   border-radius: 0;
 }
+.pill {
+  background: gray;
+  color: #ffff;
+  margin-top: 1px;
+  margin-bottom: 1px;
+  padding: 5px 8px;
+  width: 85px;
+  /* text-align: center; */
+  margin-left: 4px;
+  border-radius: 5px;
+}
+.pill span{
+  cursor: pointer;
+  float: right;
+}
+.pill span:hover{
+  font-weight: bold;
+}
