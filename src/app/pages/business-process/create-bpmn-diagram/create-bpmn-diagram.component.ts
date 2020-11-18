@@ -104,7 +104,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     });
    }
 
-   
+
 
    getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
@@ -347,7 +347,19 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
-    this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
+    this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
+      Swal.fire(
+        'Tasks automated successfully!',
+        '',
+        'success'
+      );
+    })
+    //this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
+  }
+
+  orchestrate(){
+    let selected_id = this.saved_bpmn_list[this.selected_notation].id;
+    this.router.navigate(["/pages/serviceOrchestration/home"], { queryParams: { processid: selected_id }});
   }
 
   downloadFile(url){
@@ -410,7 +422,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let sel_List = this.saved_bpmn_list[this.selected_notation];
     let sel_appr = this.approver_list[this.selected_approver];
     bpmnModel.approverEmail = sel_appr.userId;
-    bpmnModel.approverName = sel_appr.userId.split("@")[0];
+    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
     bpmnModel.userName = sel_List["userName"];
     bpmnModel.tenantId = sel_List["tenantId"];
     bpmnModel.userEmail = sel_List['userEmail'];

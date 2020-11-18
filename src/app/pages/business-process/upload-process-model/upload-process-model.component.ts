@@ -135,7 +135,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     this.getApproverList();
    }
-   
+
 
    ngAfterViewInit(){
     if(this.isShowConformance)
@@ -224,7 +224,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
-      
+
     }
     if(!this.isShowConformance){
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype': current_bpmn_info["ntype"]};
@@ -607,7 +607,19 @@ displayBPMN(){
 
    automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
-    this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
+    this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
+      Swal.fire(
+        'Tasks automated successfully!',
+        '',
+        'success'
+      );
+    })
+    //this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
+  }
+
+  orchestrate(){
+    let selected_id = this.saved_bpmn_list[this.selected_notation].id;
+    this.router.navigate(["/pages/serviceOrchestration/home"], { queryParams: { processid: selected_id }});
   }
 
   downloadFile(isConfBpmnModelerDownload, url){
@@ -713,7 +725,7 @@ displayBPMN(){
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     let sel_appr = this.approver_list[this.selected_approver];
     bpmnModel.approverEmail = sel_appr.userId;
-    bpmnModel.approverName = sel_appr.userId.split("@")[0];
+    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
     if(sel_List){
       bpmnModel.userName = sel_List["userName"];
       bpmnModel.tenantId = sel_List["tenantId"];

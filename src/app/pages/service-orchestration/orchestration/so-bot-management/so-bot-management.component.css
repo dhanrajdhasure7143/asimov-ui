@@ -1,3 +1,11 @@
+span li {
+    cursor: pointer;
+}
+
+li {
+    cursor: pointer;
+}
+
 select {
     border-top: none;
     border-right: none;
