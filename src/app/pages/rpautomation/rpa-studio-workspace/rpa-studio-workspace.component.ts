@@ -525,9 +525,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
             taskdata.attributes.forEach(element => {
               if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
               {
-                let attr_val=JSON.parse(element.attrValue);
-                let attrnames=Object.getOwnPropertyNames(attr_val);
-                finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                if(element.attrValue!='' && element.attrValue!=undefined)
+                {
+                  let attr_val=JSON.parse(element.attrValue);
+                  let attrnames=Object.getOwnPropertyNames(attr_val);
+                  finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                }
               }
               else
               {
@@ -719,8 +722,11 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         }
         else if(ele.type=="restapi")
         {
-          let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
-          objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name]==data[attrnames[0]]));
+         if(this.fieldValues[ele.name]!='' && this.fieldValues[ele.name]!=undefined)
+          {
+            let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
+            objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name]==data[attrnames[0]]));
+          }
         }
         else if(ele.type=="multipart")
         {
