@@ -1,6 +1,6 @@
 
 import { Component,Input, OnInit } from '@angular/core';
- 
+
 @Component({
 selector:'form-builder',
 template:`
@@ -10,8 +10,8 @@ template:`
       {{field.label}}
       <strong class="text-danger" *ngIf="field.required">*</strong>
     </label></div>
-  <div class="col-md-12 row"> 
-    
+  <div class="col-md-12 row">
+
     <div class="col-md-12" [ngSwitch]="field.type">
     <div *ngIf ="field.visibility">
     <textbox *ngSwitchCase="'text'" [field]="field" [form]="form"></textbox></div>
@@ -26,6 +26,8 @@ template:`
     <div *ngIf ="field.visibility">
     <dropdown *ngSwitchCase="'dropdown'" [field]="field" [form]="form"></dropdown></div>
     <div *ngIf ="field.visibility">
+    <dropdown *ngSwitchCase="'restapi'" [field]="field" [form]="form"></dropdown></div>
+    <div *ngIf ="field.visibility">
     <checkbox *ngSwitchCase="'checkbox'" [field]="field" [form]="form"></checkbox></div>
     <div *ngIf ="field.visibility">
     <radio *ngSwitchCase="'radio'" [field]="field" [form]="form"></radio></div>
@@ -39,18 +41,18 @@ template:`
 styleUrls: ['./form-builder.component.css']
 })
 // <file *ngSwitchCase="'file'" [field]="field" [form]="form"></file>
- 
+
 export class FormBuilderComponent implements OnInit {
   @Input() field:any;
   @Input() form:any;
-  
+
   get isValid() { return this.form.controls[this.field.name].valid; }
   get isDirty() { return this.form.controls[this.field.name].dirty; }
   get istouched() { return this.form.controls[this.field.name].touched; }
- 
+
   constructor() { }
- 
+
   ngOnInit() {
   }
- 
+
 }

@@ -43,12 +43,12 @@
 
                             <mat-form-field class="filter" floatLabel="never" style="margin-top:10px">
                                 <mat-label>Bot Name</mat-label>
-                                <input matInput autocomplete="off" id="botNameFilter" [formControl]="botNameFilter">
+                                <input matInput autocomplete="off" id="botNameFilter" (keyup)="applyFilter2($event.target.value)">
                             </mat-form-field> &nbsp;&nbsp;&nbsp;
                             <mat-form-field style="margin-top:10px">
-                                <select matNativeControl [formControl]="departmentFilter">
+                                <select matNativeControl (change)="applyFilter3($event.target.value)">
                                   <option value="" selected>Category</option>
-                              <option [value]="departments" *ngFor="let departments of departmentlist">{{departments}}
+                              <option [value]="department.categoryId" *ngFor="let department of categaoriesList">{{department.categoryName}}
                               </option>
                               </select>
                             </mat-form-field>
