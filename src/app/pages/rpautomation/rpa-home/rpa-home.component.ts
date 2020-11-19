@@ -154,7 +154,7 @@ export class RpaHomeComponent implements OnInit {
       {
         object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
       }
-        /*if(data.department==1)
+        if(data.department==1)
         {
           object.department='Development'
         }
@@ -165,7 +165,7 @@ export class RpaHomeComponent implements OnInit {
         else if(data.department==3)
         {
           object.department='QA';
-        }*/
+        }
         this.bot_list.push(object)
       })
       this.bot_list=botlist;
@@ -183,8 +183,8 @@ export class RpaHomeComponent implements OnInit {
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
-      this.dataSource1.data = response;
-      this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
+      //this.dataSource1.data = response;
+     /* this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
         this.filteredValues['department'] = departmentFilterValue;
         this.dataSource1.filter = JSON.stringify(this.filteredValues);
         if(this.dataSource1.filteredData.length > 0){
@@ -205,15 +205,15 @@ export class RpaHomeComponent implements OnInit {
           } else {
             this.isTableHasData = false;
           }
-        });
+        });*/
 
-      this.dataSource1.filterPredicate = this.customFilterPredicate();
+      //this.dataSource1.filterPredicate = this.customFilterPredicate();
       this.rpa_studio.spinner.hide()
     },(err)=>{
       this.rpa_studio.spinner.hide();
     })
   }
-
+/*
   customFilterPredicate() {
     return (data: dataSource1, filter: string): boolean => {
       let searchString = JSON.parse(filter) as MyFilter;
@@ -231,7 +231,28 @@ export class RpaHomeComponent implements OnInit {
       }
       return isdepartmentAvailable && data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
     }
+  }*/
+
+
+
+  applyFilter3(filterValue:any) {
+    console.log(filterValue)
+    let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
+    //this.selectedvalue=filterValue;
+    filterValue = category.categoryName.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    console.log(filterValue);
+    this.dataSource1.filter = filterValue;
   }
+
+
+  applyFilter2(filterValue: string) {
+
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource1.filter = filterValue;
+  }
+
 
   getautomatedtasks(process)
   {
