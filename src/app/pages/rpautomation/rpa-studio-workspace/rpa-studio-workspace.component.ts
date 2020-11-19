@@ -563,8 +563,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
               console.log(node);
              this.recordandplayid="randp__"+node.id;
              console.log("======================================")
-             console.log(this.recordandplayid);
-             document.getElementById(this.recordandplayid).style.display='block';
+             //console.log(this.recordandplayid);
+             //document.getElementById(this.recordandplayid).style.display='block';
              console.log("======================================")
           }
           else if(attr_response.find(attr=>attr.type=='restapi')!=undefined)
@@ -722,7 +722,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         }
         else if(ele.type=="restapi")
         {
-         if(this.fieldValues[ele.name]!='' && this.fieldValues[ele.name]!=undefined)
+          if(this.fieldValues[ele.name]!='' && this.fieldValues[ele.name]!=undefined)
           {
             let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
             objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name]==data[attrnames[0]]));
@@ -1233,6 +1233,13 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       }
     }
     return;
+  }
+
+
+
+  start_automation()
+  {
+    alert("start recording")
   }
 
 
