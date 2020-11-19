@@ -25,6 +25,8 @@ export class SoDashboardComponent implements OnInit {
   chart2:any;
   chart3:any;
   chart4:any;
+  chart5:any;
+  data_sets:any=[];
   Environments:any;
   Performance:any;
   ngOnInit() {
@@ -33,6 +35,7 @@ export class SoDashboardComponent implements OnInit {
     this.getenvironments();
     this.getperformance();
     this.getCategoryList();
+    this.getprocessruns();
   }
 
   getbotstatistics(){
@@ -237,6 +240,154 @@ export class SoDashboardComponent implements OnInit {
       this.categaoriesList=catResponse.data;
     });
   }
+
+
+  getprocessruns(){
+    this.rest.botPerformance().subscribe(data=>{
+      let check:any=[];
+      check=data;
+      let data_labels:any=[];
+      console.log(check.length)
+      for(let i=(check.length-1);i>((check.length-1)-5);i--)
+      {
+        let bot_obj:any=check[i];
+        console.log(bot_obj);
+        data_labels.push(check[i].botName);
+      }
+      for(let j=0;j<=5;j++)
+      {
+        let Runs:any=[];
+        for(let i=(check.length-1);i>((check.length-1)-5);i--)
+        {
+          let bot_obj2:any=check[i];
+          if(bot_obj2.coordinates[j]==undefined)
+          {
+            Runs.push(0)
+          }else
+          {
+            Runs.push(bot_obj2.coordinates[j].timeDuration)
+          }
+          console.log(Runs);
+        }
+        let data_set:any={
+          label:"R"+(j+1),
+          data:Runs,
+          backgroundColor:'#'+Math.floor(Math.random()*16777215).toString(16),
+        }
+        this.data_sets.push(data_set);
+
+      }
+      setTimeout(()=>{
+      this.chart5 = new Chart('canvas4', {
+        type: 'bar',
+        data: {
+          labels: data_labels,
+          datasets: this.data_sets
+        },
+        options: {
+          responsive: false,
+          legend: {
+             position: 'right' // place legend on the right side of chart
+          },
+          scales: {
+             xAxes: [{
+                stacked: true // this should be set to make the bars stacked
+             }],
+             yAxes: [{
+                stacked: true // this also..
+             }]
+          }
+       }
+      }
+       );
+
+    },2000)
+
+
+  });
+
+  }
+
+
+/*
+  getprocessruntime()
+  {
+    console.log("=======================================================================|===========================")
+    var chart = new Chart('canvas4', {
+      type: 'bar',
+      data: {
+         labels: ['Standing costs', 'Running costs'], // responsible for how many bars are gonna show on the chart
+         // create 12 datasets, since we have 12 items
+         // data[0] = labels[0] (data for first bar - 'Standing costs') | data[1] = labels[1] (data for second bar - 'Running costs')
+         // put 0, if there is no data for the particular bar
+         datasets: [{
+            label: 'Washing and cleaning',
+            data: [0, 8],
+            backgroundColor: '#22aa99'
+         }, {
+            label: 'Traffic tickets',
+            data: [0, 2],
+            backgroundColor: '#994499'
+         }, {
+            label: 'Tolls',
+            data: [0, 1],
+            backgroundColor: '#316395'
+         }, {
+            label: 'Parking',
+            data: [5, 2],
+            backgroundColor: '#b82e2e'
+         }, {
+            label: 'Car tax',
+            data: [0, 1],
+            backgroundColor: '#66aa00'
+         }, {
+            label: 'Repairs and improvements',
+            data: [0, 2],
+            backgroundColor: '#dd4477'
+         }, {
+            label: 'Maintenance',
+            data: [6, 1],
+            backgroundColor: '#0099c6'
+         }, {
+            label: 'Inspection',
+            data: [0, 2],
+            backgroundColor: '#990099'
+         }, {
+            label: 'Loan interest',
+            data: [0, 3],
+            backgroundColor: '#109618'
+         }, {
+            label: 'Depreciation of the vehicle',
+            data: [0, 2],
+            backgroundColor: '#109618'
+         }, {
+            label: 'Fuel',
+            data: [0, 1],
+            backgroundColor: '#dc3912'
+         }, {
+            label: 'Insurance and Breakdown cover',
+            data: [4, 0],
+            backgroundColor: '#3366cc'
+         }]
+      },
+      options: {
+         responsive: false,
+         legend: {
+            position: 'right' // place legend on the right side of chart
+         },
+         scales: {
+            xAxes: [{
+               stacked: true // this should be set to make the bars stacked
+            }],
+            yAxes: [{
+               stacked: true // this also..
+            }]
+         }
+      }
+   });
+
+  }
+*/
 
 }
 

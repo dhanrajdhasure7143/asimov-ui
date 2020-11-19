@@ -172,7 +172,7 @@
 
 
 
-<div [id]="recordandplayid" class="rpa-modal">
+<div class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="closeoutputbox()">&times;</span>
@@ -181,8 +181,12 @@
         <div class="rpa-modal-body">
 
             <div class="container-fluid">
+                <br>
+                <b>Url</b>
+                <input type='url' class="form-control">
+                <br>
+                <button class='btn btn-primary' (click)="start_automation()">Start Recording</button>
             </div>
-
         </div>
     </div>
 </div>
