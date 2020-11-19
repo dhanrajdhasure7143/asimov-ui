@@ -1,9 +1,5 @@
-import { Component,  OnInit,OnDestroy, ChangeDetectorRef, ViewChild, EventEmitter, Output } from '@angular/core';
-import {HttpClient,HttpErrorResponse} from '@angular/common/http';
+import { Component,  OnInit, ChangeDetectorRef, ViewChild, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import 'rxjs/add/operator/map';
-import { Subject } from 'rxjs';
-import { DataTableDirective } from 'angular-datatables';
 import { environmentobservable } from '../model/environmentobservable';
 import { EnvironmentsService } from './rpa-environments.service';
 import Swal from 'sweetalert2';
@@ -27,13 +23,12 @@ import { NgxSpinnerService } from "ngx-spinner";
     public isDataSource: boolean;  
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
-    @ViewChild('closebutton', {static: false}) closebutton  
-    @ViewChild(DataTableDirective,{static: false}) dtElement: DataTableDirective;
+    @ViewChild('closebutton', {static: false}) closebutton 
     @Output()
     title:EventEmitter<string> = new EventEmitter<string>();
     public environments:any=[];
     public checkeddisabled:boolean =false;
-    public createpopup=document.getElementById('create');
+    public createpopup=document.getElementById('createevironment');
     public button:string;
     //public updatepopup=document.getElementById('env_updatepopup');
     public delete_elements:number[];
@@ -52,8 +47,6 @@ import { NgxSpinnerService } from "ngx-spinner";
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
     isDtInitialized:boolean = false;
-    dtTrigger: Subject<any> =new Subject();
-    dtOptions: DataTables.Settings = {};
     
   constructor(private api:RestApiService, 
     private router:Router, 
@@ -97,14 +90,11 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
   ngOnInit() {
     this.spinner.show();
-    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
-    this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Environments"});
-
-    this.createpopup=document.getElementById('create')
     //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
     this.getallData();
-    this.createpopup.style.display='none';
+    
+    document.getElementById("createenvironment").style.display='none';
     document.getElementById("update-popup").style.display='none';
     this.passwordtype1=false;
     this.passwordtype2=false;
@@ -181,7 +171,8 @@ import { NgxSpinnerService } from "ngx-spinner";
   
   create()
   {
-    this.createpopup.style.display='block';
+    
+    document.getElementById("createenvironment").style.display='block';
     document.getElementById("update-popup").style.display='none';
   
   }
@@ -268,7 +259,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.getallData();
         this.checktoupdate();
         this.checktodelete();
-        this.createpopup.style.display='none'; 
+        document.getElementById("createenvironment").style.display='none'; 
         this.insertForm.reset();
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
@@ -328,8 +319,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   updatedata()
   {
-    this.createpopup.style.display='none';
-    
+    document.getElementById("createenvironment").style.display='none';
     document.getElementById('update-popup').style.display='block';
     let data:environmentobservable;
     for(data of this.environments)
@@ -360,9 +350,10 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   close()
   { 
-    this.resetEnvForm();
-    document.getElementById('create').style.display='none';
+    
+    document.getElementById('createenvironment').style.display='none';
     document.getElementById('update-popup').style.display='none';
+    this.resetEnvForm();
   }
 
 
@@ -482,7 +473,6 @@ import { NgxSpinnerService } from "ngx-spinner";
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource1.filter = filterValue;
   }
-
 
   removeallchecks()
   {

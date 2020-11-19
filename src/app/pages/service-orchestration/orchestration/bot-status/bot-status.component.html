@@ -1,216 +1,219 @@
 <div class="row col-md-12">
 
-  <!-- 1 -->
-  <div class="col-md-2" style="padding: 10px;">
-    <div style="border: 1px solid #f2f3ff;">
-      <h5 style="background-color: #f2f9ff;padding: 2%;">Bot Statistics </h5>
-    <!-- <p style="background-color: white; ">Some text..</p></div> -->
-     <div style="background-color: white;padding: 0% 10% 3% 10%; ">
-      <div class="row">
-        <div class="col-sm-6">
-          <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-            <h3 style="color: #61af4e; font-family: fantasy;">
-              <span *ngIf="BotStatus.New != null">{{BotStatus.New}}</span>
-              <span *ngIf="BotStatus.New == null">-</span></h3>
-            <h6>New</h6>
-        </div>
-        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-            <h3 style="color: #ed9040; font-family: fantasy;">
-              <span *ngIf="BotStatus.Pause != null">{{BotStatus.Pause}}</span>
-              <span *ngIf="BotStatus.Pause == null">-</span></h3>
-            <h6>Pause</h6>
-        </div>
-        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-            <h3 style="color: #888888; font-family: fantasy;">
-              <span *ngIf="BotStatus.Stop != null">{{BotStatus.Stop}}</span>
-              <span *ngIf="BotStatus.Stop == null">-</span></h3>
-            <h6>Stop</h6>
-        </div>
-        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-          <h3 style="color: #888888; font-family: fantasy;">
-              <span *ngIf="BotStatus.Scheduled != null">{{BotStatus.Scheduled}}</span>
-              <span *ngIf="BotStatus.Scheduled == null">-</span></h3>
-          <h6>Scheduled</h6>
-      </div>
-        </div>
-        <div class="col-sm-6">
-            
-      <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-        <h3 style="color: #ff5555; font-family: fantasy;">
-          <span *ngIf="BotStatus.Running != null">{{BotStatus.Running}}</span>
-          <span *ngIf="BotStatus.Running == null">-</span></h3>
-        <h6>Running</h6>
-    </div>
-  
-    <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #b98282; font-family: fantasy;">
-        <span *ngIf="BotStatus.Success != null">{{BotStatus.Success}}</span>
-        <span *ngIf="BotStatus.Success == null">-</span></h3>
-      <h6>Success</h6>
-    </div> 
-    <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-        <h3 style="color: #b98282; font-family: fantasy;">
-          <span *ngIf="BotStatus.Failure != null">{{BotStatus.Failure}}</span>
-          <span *ngIf="BotStatus.Failure == null">-</span></h3>
-        <h6>Failure</h6>
-    </div>
-        </div>
-      </div>
-      
-      </div>
-    </div>
-  </div>
+    <!-- 1 -->
+    <div class="col-md-2" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+            <h5 style="background-color: #f2f9ff;padding: 2%;">Bot Statistics </h5>
+            <!-- <p style="background-color: white; ">Some text..</p></div> -->
+            <div style="background-color: white;padding: 0% 10% 3% 10%; ">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                            <h3 style="color: #61af4e; font-family: fantasy;">
+                                <span *ngIf="BotStatus.New != null">{{BotStatus.New}}</span>
+                                <span *ngIf="BotStatus.New == null">-</span></h3>
+                            <h6>New</h6>
+                        </div>
+                        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                            <h3 style="color: #ed9040; font-family: fantasy;">
+                                <span *ngIf="BotStatus.Pause != null">{{BotStatus.Pause}}</span>
+                                <span *ngIf="BotStatus.Pause == null">-</span></h3>
+                            <h6>Pause</h6>
+                        </div>
+                        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                            <h3 style="color: #888888; font-family: fantasy;">
+                                <span *ngIf="BotStatus.Stop != null">{{BotStatus.Stop}}</span>
+                                <span *ngIf="BotStatus.Stop == null">-</span></h3>
+                            <h6>Stop</h6>
+                        </div>
+                        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                            <h3 style="color: #888888; font-family: fantasy;">
+                                <span *ngIf="BotStatus.Scheduled != null">{{BotStatus.Scheduled}}</span>
+                                <span *ngIf="BotStatus.Scheduled == null">-</span></h3>
+                            <h6>Scheduled</h6>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
 
-  <!-- 2 -->
-  <div class="col-md-7" style="padding: 10px;">
-      <div style="border: 1px solid #f2f3ff;">
-    <h5 style="background-color: #f2f9ff;padding: 1%;">Active Bots Details</h5>
-    <table mat-table [dataSource]="dataSource" matSort class=" table w-100">
+                        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                            <h3 style="color: #ff5555; font-family: fantasy;">
+                                <span *ngIf="BotStatus.Running != null">{{BotStatus.Running}}</span>
+                                <span *ngIf="BotStatus.Running == null">-</span></h3>
+                            <h6>Running</h6>
+                        </div>
 
-      <!-- Position Column -->
-      <!--<ng-container matColumnDef="botId">
+                        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                            <h3 style="color: #b98282; font-family: fantasy;">
+                                <span *ngIf="BotStatus.Success != null">{{BotStatus.Success}}</span>
+                                <span *ngIf="BotStatus.Success == null">-</span></h3>
+                            <h6>Success</h6>
+                        </div>
+                        <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                            <h3 style="color: #b98282; font-family: fantasy;">
+                                <span *ngIf="BotStatus.Failure != null">{{BotStatus.Failure}}</span>
+                                <span *ngIf="BotStatus.Failure == null">-</span></h3>
+                            <h6>Failure</h6>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="col-md-7" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+            <h5 style="background-color: #f2f9ff;padding: 1%;">Active Bots Details</h5>
+            <table mat-table [dataSource]="dataSource" matSort class=" table w-100">
+
+                <!-- Position Column -->
+                <!--<ng-container matColumnDef="botId">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Id </th>
         <td mat-cell *matCellDef="let element" (click)="loadbot(element.botId)"> {{element.botId}} </td>
       </ng-container>
     -->
-      <!-- Name Column -->
-      <ng-container matColumnDef="botName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-        <td mat-cell *matCellDef="let element"> 
-            <span *ngIf="element.botName != null">{{element.botName}}</span>
-            <span *ngIf="element.botName == null">-</span> </td>
-      </ng-container>
-    
-      <ng-container matColumnDef="botType">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type</th>
-        <td mat-cell *matCellDef="let element">
-           <span *ngIf="element.botType==0">Attended</span> 
-           <span *ngIf="element.botType==1">Unattended</span> 
-           <span *ngIf="element.botType==null">-</span>
-        </td>
-      </ng-container>
-      <!-- Weight Column -->
-      <ng-container matColumnDef="categoryName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Category</th>
-        <td mat-cell *matCellDef="let element">
-        {{element.categoryName}}
-        </td>
-      </ng-container>
-      
-      <ng-container matColumnDef="createdBy">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created by</th>
-        <td mat-cell *matCellDef="let element">
-            <span *ngIf="element.createdBy != null">{{element.createdBy}}</span>
-            <span *ngIf="element.createdBy == null">-</span> </td>
-      </ng-container>
+                <!-- Name Column -->
+                <ng-container matColumnDef="botName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.botName != null">{{element.botName}}</span>
+                        <span *ngIf="element.botName == null">-</span> </td>
+                </ng-container>
 
-      <ng-container matColumnDef="createdTS">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Timestamp</th>
-        <td mat-cell *matCellDef="let element"> 
-            <span *ngIf="element.createdTS != null">
+                <ng-container matColumnDef="botType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.botType==0">Attended</span>
+                        <span *ngIf="element.botType==1">Unattended</span>
+                        <span *ngIf="element.botType==null">-</span>
+                    </td>
+                </ng-container>
+                <!-- Weight Column -->
+                <ng-container matColumnDef="categoryName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Category</th>
+                    <td mat-cell *matCellDef="let element">
+                        {{element.categoryName}}
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created by</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.createdBy != null">{{element.createdBy}}</span>
+                        <span *ngIf="element.createdBy == null">-</span> </td>
+                </ng-container>
+
+                <ng-container matColumnDef="createdTS">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Timestamp</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.createdTS != null">
               {{element.createdTS | date}} {{element.createdTS.split("T")[1].split(".")[0]}}
             </span>
-            <span *ngIf="element.createdTS == null">-</span>
-        </td>
-      </ng-container>
+                        <span *ngIf="element.createdTS == null">-</span>
+                    </td>
+                </ng-container>
 
-      <ng-container matColumnDef="description">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
-        <td mat-cell *matCellDef="let element"> 
-          <span *ngIf="element.description!=null">{{element.description}}</span>
-          <span *ngIf="element.description==null">-</span></td>
-      </ng-container>
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.description!=null">{{element.description}}</span>
+                        <span *ngIf="element.description==null">-</span></td>
+                </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <mat-paginator  #paginator [pageSize]="4" [pageSizeOptions]="[3, 5, 10, 25, 50, 100]" [showFirstLastButtons]="true" ></mat-paginator>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator #paginator [pageSize]="4" [pageSizeOptions]="[3, 5, 10, 25, 50, 100]" [showFirstLastButtons]="true"></mat-paginator>
 
-   </div>
-  </div>
-  <div class="col-md-3" style="padding: 10px;">
-      <div style="border: 1px solid #f2f3ff;">
-    <h5 style="background-color: #f2f9ff;padding: 2%;">Inbox</h5>
-    <table class="table">
-      <thead>
-          <tr>
-              <th scope="col">Messages</th>
-              <th scope="col">Time</th>
-              <th scope="col">Date</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr *ngFor="let data of indexData.indexDetails; let i = index;trackBy:loopTrackBy">
-              <td scope="col">{{data.Messages}}</td>
-              <td scope="col">{{data.Time}}</td>
-              <td scope="col">{{data.Date}}</td>
-          </tr>
-      </tbody>
-  </table>
-  </div>
-</div>
+        </div>
+    </div>
+    <div class="col-md-3" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+            <h5 style="background-color: #f2f9ff;padding: 2%;">Inbox</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Messages</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of indexData.indexDetails; let i = index;trackBy:loopTrackBy">
+                        <td scope="col">{{data.Messages}}</td>
+                        <td scope="col">{{data.Time}}</td>
+                        <td scope="col">{{data.Date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 <div class="row col-md-12">
-<div class="col-md-2" style="padding: 10px;">
-  <div style="border: 1px solid #f2f3ff;">
-<h5 style="background-color: #f2f9ff;padding: 2%;">Process Statistics</h5>
-<!-- <p style="background-color: white; ">Some text..</p></div> -->
-<div style="background-color: white;padding: 0% 10% 3% 10%; ">
-  <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #61af4e; font-family: fantasy;">
-          <span *ngIf="processStatus.APPROVED != null">{{processStatus.APPROVED}}</span>
-          <span *ngIf="processStatus.APPROVED == null">-</span>
-      </h3>
-      <h6>Approved</h6>
-  </div>
-  <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #ed9040; font-family: fantasy;">
-          <span *ngIf="processStatus.PENDING != null">{{processStatus.PENDING}}</span>
-          <span *ngIf="processStatus.PENDING == null">-</span>
-      </h3>
-      <h6>Pending</h6>
-  </div>
-  <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #888888; font-family: fantasy;">
-          <span *ngIf="processStatus.ONHOLD != null">{{processStatus.ONHOLD}}</span>
-          <span *ngIf="processStatus.ONHOLD == null">-</span></h3>
-      <h6>onHold</h6>
-  </div>
-  <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-      <h3 style="color: #ff5555; font-family: fantasy;">
-          <span *ngIf="processStatus.REJECTED != null">{{processStatus.REJECTED}}</span>
-          <span *ngIf="processStatus.REJECTED == null">-</span></h3>
-      <h6>Rejected</h6>
-  </div>
+    <div class="col-md-2" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+            <h5 style="background-color: #f2f9ff;padding: 2%;">Process Statistics</h5>
+            <!-- <p style="background-color: white; ">Some text..</p></div> -->
+            <div style="background-color: white;padding: 0% 10% 3% 10%; ">
+                <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                    <h3 style="color: #61af4e; font-family: fantasy;">
+                        <span *ngIf="processStatus.APPROVED != null">{{processStatus.APPROVED}}</span>
+                        <span *ngIf="processStatus.APPROVED == null">-</span>
+                    </h3>
+                    <h6>Approved</h6>
+                </div>
+                <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                    <h3 style="color: #ed9040; font-family: fantasy;">
+                        <span *ngIf="processStatus.PENDING != null">{{processStatus.PENDING}}</span>
+                        <span *ngIf="processStatus.PENDING == null">-</span>
+                    </h3>
+                    <h6>Pending</h6>
+                </div>
+                <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                    <h3 style="color: #888888; font-family: fantasy;">
+                        <span *ngIf="processStatus.ONHOLD != null">{{processStatus.ONHOLD}}</span>
+                        <span *ngIf="processStatus.ONHOLD == null">-</span></h3>
+                    <h6>Hold</h6>
+                </div>
+                <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                    <h3 style="color: #ff5555; font-family: fantasy;">
+                        <span *ngIf="processStatus.REJECTED != null">{{processStatus.REJECTED}}</span>
+                        <span *ngIf="processStatus.REJECTED == null">-</span></h3>
+                    <h6>Rejected</h6>
+                </div>
 
-  <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
-    <h3 style="color: #b98282; font-family: fantasy;">
-         <span *ngIf="processStatus.INPROGRESS != null">{{processStatus.INPROGRESS}}</span>
-        <span *ngIf="processStatus.INPROGRESS == null">-</span></h3>
-    <h6>InProgress</h6>
-</div>
-</div>
-</div>
-</div>
-<!-- 2 -->
-<div class="col-md-7" style="padding: 10px;">
-  <div style="border: 1px solid #f2f3ff;">
-<h5 style="background-color: #f2f9ff;padding: 1%;">Active Bots Performance</h5>
-<canvas id="myChart" style="height: 280px !important"></canvas>
-</div>
-</div>
-<div class="col-md-3" style="padding: 10px;">
-  <div style="border: 1px solid #f2f3ff;">
-<h5 style="background-color: #f2f9ff;padding: 2%;">Bot Usage</h5>
-<!-- <ngx-gauge [type]="gaugeType" 
+                <div style="border-bottom: 1px solid #f2f3ff;text-align: center;">
+                    <h3 style="color: #b98282; font-family: fantasy;">
+                        <span *ngIf="processStatus.INPROGRESS != null">{{processStatus.INPROGRESS}}</span>
+                        <span *ngIf="processStatus.INPROGRESS == null">-</span></h3>
+                    <h6>InProgress</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 2 -->
+    <div class="col-md-7" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+            <h5 style="background-color: #f2f9ff;padding: 1%;">Active Bots Performance</h5>
+            <!--<canvas id="myChart" style="height: 280px !important"></canvas>-->
+            <div id="container1" style="height: 280px !important"></div>
+
+        </div>
+    </div>
+    <div class="col-md-3" style="padding: 10px;">
+        <div style="border: 1px solid #f2f3ff;">
+            <h5 style="background-color: #f2f9ff;padding: 2%;">Bot Usage</h5>
+            <!-- <ngx-gauge [type]="gaugeType"
 size=300
-[value]="gaugeValue" 
-[label]="gaugeLabel" 
-[thick]="gaugeThickness" 
+[value]="gaugeValue"
+[label]="gaugeLabel"
+[thick]="gaugeThickness"
 [append]="gaugeAppendText">
 </ngx-gauge> -->
-<div [hidden]="!chart" style="padding: 10%;">
-  <canvas id="canvas" width="350" height="350"></canvas>
-</div></div>
-</div>
+            <div [hidden]="!chart" style="padding: 10%;">
+                <canvas id="canvas" width="350" height="350"></canvas>
+            </div>
+        </div>
+    </div>
 </div>

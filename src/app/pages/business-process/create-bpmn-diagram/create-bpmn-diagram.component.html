@@ -1,63 +1,77 @@
 <div class="row col-md-12 header_addon">
-        <div class="col-md-6"></div>
-        <div class="col-md-1">
-            <div *ngIf="rejectedOrApproved" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
-                {{rejectedOrApproved}}</div>
-        </div>
-        <div class="col-md-2">
-            <mat-form-field id="bpmnNotationList">
-                <mat-label>BPMN Notation</mat-label>
-                <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()">
-                  <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
-                    {{each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-md-2">
-            <mat-form-field id="approversList">
-                <mat-label>Approver List</mat-label>
-                <mat-select [(ngModel)]="selected_approver">
-                  <mat-option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-                    {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
-                </mat-select>      
-            </mat-form-field>            
-        </div>
-        <div><button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button>
-            <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button>
-          </div>
+    <div class="col-md-6"></div>
+    <div class="col-md-1">
+        <div *ngIf="rejectedOrApproved" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
+            {{rejectedOrApproved}}</div>
     </div>
+    <div class="col-md-2">
+        <mat-form-field id="bpmnNotationList">
+            <mat-label>BPMN Notation</mat-label>
+            <mat-select [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()" panelClass="myPanelDownClass" disableOptionCentering>
+                <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
+                    {{each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-md-2">
+        <mat-form-field id="approversList">
+            <mat-label>Approver List</mat-label>
+            <mat-select [(ngModel)]="selected_approver" panelClass="myPanelDownClass" disableOptionCentering>
+                <mat-option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
+                    {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div><button class="keyboard_style_upload" (click)="displayShortcut()"><img src="..\assets\bpmnkeyboard.png"></button>
+        <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button>
+    </div>
+</div>
 
-    <div class="container-fluid">
-            <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>
-            <div>
-                <span class="err-msg"></span>
-                <div class="row">
-                    <div id="canvas" class="col-md-12"></div>
-                    <div class="propertiesContainer">
-                        <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
-                        <div id="properties" class="slide-right"></div>
-                    </div>
+<div class="container-fluid">
+    <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
+    <div>
+        <span class="err-msg"></span>
+        <div class="row">
+            <div id="canvas" class="col-md-12"></div>
+            <div class="propertiesContainer">
+                <div class="propertiesTitle" (click)="togglePosition()">
+                    <div>Properties Panel</div>
                 </div>
+                <div id="properties" class="slide-right"></div>
             </div>
-            <div class="row btn_row"> 
-                <button class="left" id="download" (click)="downloadBpmn()"><img src="..\assets\downloadimage.svg"></button>
-                <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
-                <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)">Save Process</button>
-                <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn"  id="automate" (click)="automate()">Automate</button>
-            </div>
-            <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
-                <p style="color: white">Auto Saving... </p>  
-            </ngx-spinner>
-        </div>  
-        <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
-        <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
-        </div></div>
-        <ng-template #keyboardShortcut>
-             <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
-             <table>
-                    <tr *ngFor="let keyboardLabels of keyboardLabels" >
-                        <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
-                         <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
-                    </tr> 
-                </table>   
-        </ng-template>
+        </div>
+    </div>
+    <div class="row btn_row">
+        <span class="pull-left">
+                    <select [(ngModel)]="fileType">
+                      <option value="svg">SVG</option>
+                      <option value="png">PNG</option>
+                      <option value="jpg">JPG</option>
+                      <option value="bpmn">BPMN</option>
+                    </select>
+                    <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+                  </span>
+        <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
+        <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)">Save Process</button>
+        <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="orchestrate" (click)="orchestrate()">Orchestrate</button>
+    </div>
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
+        <p style="color: white">Auto Saving... </p>
+    </ngx-spinner>
+</div>
+<div class="spinoverlay" *ngIf="isLoading">
+    <div class="spincenter">
+        <mat-progress-spinner diameter=50 mode="indeterminate"></mat-progress-spinner>
+    </div>
+</div>
+<ng-template #keyboardShortcut>
+    <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+    <table>
+        <tr *ngFor="let keyboardLabels of keyboardLabels">
+            <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+            <td>
+                <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
+            </td>
+        </tr>
+    </table>
+</ng-template>

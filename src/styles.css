@@ -1,9 +1,18 @@
 @import "~bpmn-js/dist/assets/diagram-js.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
+@import "~cmmn-js/dist/assets/cmmn-font/css/cmmn.css";
+@import "~dmn-js/dist/assets/dmn-js-shared.css";
+@import "~dmn-js/dist/assets/dmn-js-drd.css";
+@import "~dmn-js/dist/assets/dmn-js-decision-table.css";
+@import "~dmn-js/dist/assets/dmn-js-decision-table-controls.css";
+@import "~dmn-js/dist/assets/dmn-js-literal-expression.css";
+@import "~dmn-js/dist/assets/dmn-font/css/dmn.css";
 @import "enjoyhint/enjoyhint.css";
 @import "~angular-notifier/styles";
 @import "~bpmn-js-properties-panel/dist/assets/bpmn-js-properties-panel.css";
+@import "~cmmn-js-properties-panel/dist/assets/cmmn-js-properties-panel.css";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '~bpmn-js-bpmnlint/dist/assets/css/bpmn-js-bpmnlint.css';
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 body, html {
@@ -100,6 +109,17 @@ body, html {
 .as-split-gutter{
   background-color: #94949c !important
 }
+.bjs-powered-by{
+  position: absolute;
+  bottom: 50px !important;
+  right: 65px !important;
+  z-index: 100;
+}
+.bpmn-icon-rpa::before{
+  content: url('assets/images/robothand_icon.svg');
+  width: 20px;
+  height: 20px;
+}
 /* notifications to right */
 notifier-notification{
     position: absolute;
@@ -110,9 +130,9 @@ notifier-notification{
 ngx-dropzone{
   border: none !important;
 }
-.djs-container svg{
+/* .djs-container svg{
   margin-left: 85px;
-}
+} */
 .bps_overlay .djs-container svg{
   margin-left: 5px;
 }
@@ -124,9 +144,6 @@ div[class^='diagram_container'] .djs-palette{
 }
 div[class^='diagram_container'] .djs-container svg{
   margin-left: 5px;
-}
-.bjs-powered-by{
-  display:none !important;/* Against the license agreement */
 }
 /*spinner styles*/
 .spincenter {
@@ -271,6 +288,10 @@ a.nav-link.active {
 .mat-progress-spinner circle{
   stroke: #0062cf;
 }
+/*dmn */
+.dmn-js-parent svg{
+  height: 72vh;
+}
 
 /*BPMN PROPERTIES PANEL*/
 .bpp-properties-panel{
@@ -403,30 +424,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     /* width: 200px; */
     }
 
-    text {
+   #exportSVGtoPDF text {
         /* font-size: 14px; */
         font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
         transform: translate(5px, 0px);
         height: auto;
         width: auto;
         }
- 
+
    .node{
         fill: #fff;
       }
-    
+
     .edgePath path {
     stroke: #4c4c4c;
     fill: none;
     stroke-width: 0.3px;
     /* stroke-width: 1.5px; */
-   
+
     }
     /* svg {
      overflow: scroll !important;
     } */
 
- 
+
  div#tooltip_template span ul, .tipsy-inner ul {
   list-style: none;
   padding: 0px;
@@ -502,11 +523,14 @@ div#tooltip_template.tooltip-panel p:first-child {
   max-width: 320px !important;
   min-width: 260px !important;
   scroll-margin-top: 10px !important;
-  margin-top: 50px !important;
+  margin-top: -20px !important;
   background: rgb(250, 250, 250) !important;
   color:#0162cb;
   padding:3px !important;
   font-size: 10.5px !important;
+}
+div.tipsy.tipsy-e{
+  position: fixed;
 }
 
 .tipsy-inner ul li {
@@ -543,7 +567,7 @@ div#tooltip_template.tooltip-panel p:first-child {
   to {
     stroke-dashoffset: 0;
   }
-  
+
 }
 .label{
   color: black !important;
@@ -572,6 +596,9 @@ foreignObject{
   padding: 0px 10px;
 }
 
+.myPanelDownClass{
+  margin-top: 23px;
+}
 
 
 
@@ -616,4 +643,53 @@ foreignObject{
   to {
     stroke-dashoffset: 0;
   }
+}
+
+.highcharts-credits {
+  display: none !important;
+  fill: white !important;
+  color: white !important;
+}
+
+#piechart1 text,#piechart2 text {
+  font-size: 10px;
+  fill: black !important;
+  stroke-width:  2;
+  font-weight: bold;
+}
+#pietooltip,#pietooltip1 {
+  position: absolute;
+  min-width: 130px;
+  height: auto;
+  /* padding: 10px; */
+  background-color: rgb(224, 222, 222);
+  -webkit-border-radius: 10px;
+  border: 0.5px solid rgb(93, 82, 245);
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.4);
+  -mox-box-shadow: 4px 4px 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 4px 4px 10px rbga(0, 0, 0, 0.4);
+   /* pointer-events: none; */
+   text-align: center !important;
+}
+#pietooltip,#pietooltip1 {
+  /* opacity: 0; */
+  display: none;
+  text-align: center !important;
+}
+#pietooltip p,#pietooltip1 p {
+  margin: 0;
+  font-family: sans-serif;
+  font-size: 10px;
+  line-height: 20px;
+  text-align: center !important;
+}
+
+.ngx-timepicker-control__input {
+  font-size: 16px !important;
+}
+
+.chart-legend .legend-wrap {
+  width: calc(100% - -45px) !important;
 }

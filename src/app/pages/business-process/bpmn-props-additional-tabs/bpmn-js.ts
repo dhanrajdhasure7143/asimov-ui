@@ -5,13 +5,14 @@ import * as _EntryFactory from 'bpmn-js-properties-panel/lib/factory/EntryFactor
 
 export const InjectionNames = {
   eventBus: 'eventBus',
-  // bpmnFactory: 'bpmnFactory',
+  bpmnFactory: 'bpmnFactory',
   elementRegistry: 'elementRegistry',
   elementTemplates: 'elementTemplates',
   translate: 'translate',
   propertiesProvider: 'propertiesProvider',
   bpmnPropertiesProvider: 'bpmnPropertiesProvider',
-  injector: 'injector'
+  injector: 'injector',
+  replaceMenuProvider: 'replaceMenuProvider'
 };
 
 export const Modeler = _Modeler;

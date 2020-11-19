@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-3 text-center">
+
+            <div *ngIf="categaoriesList !=undefined" class="block-1"><span class="text-white">
+          Departments
+          <br>
+        {{categaoriesList.length}}
+        </span>
+            </div>
+
+        </div>
+
+        <div *ngIf="processnames!=undefined" class=" col-md-3 text-center">
+            <div class="block-3"><span class="text-white">
+          Processes<br>
+          {{processnames.length}}
+        </span></div>
+        </div>
+
+
+
+        <div *ngIf="automatedtasks!=undefined" class=" col-md-3 text-center">
+            <div class="block-2"><span class="text-white">
+              Tasks<br>
+              {{automatedtasks.length}}
+            </span></div>
+        </div>
+        <div class="col-md-1"></div>
+
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+        <div class="col-md-5">
+            <h5>Bot Statistics</h5>
+            <canvas id="canvas" style="height:300px!important ; width:100%"></canvas>
+        </div>
+        <div class="col-md-5">
+
+            <h5>Process Statistics</h5>
+            <canvas id="canvas1" style="height:300px!important ; width:100%"></canvas>
+        </div>
+        <div class="col-md-1"></div>
+
+    </div>
+    <br><br>
+    <div class="row">
+        <div class="col-md-1"></div>
+
+        <div class="col-md-5">
+            <h5>Environments</h5>
+            <canvas id="canvas2" style="width:100% !important"></canvas>
+        </div>
+        <div class="col-md-5">
+            <h5>Bots by process</h5>
+
+            <canvas id="canvas3" style=" width:100% !important"></canvas>
+        </div>
+
+        <div class="col-md-1"></div>
+
+    </div>
+</div>

@@ -36,6 +36,7 @@ export class D3flowchartComponent {
   class6: string;
   maxLabelValue: any;
   searchNode: any;
+  isnoNode:boolean=false;
   
     constructor(){
   
@@ -169,6 +170,20 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
         .append("path")
         .attr("d","M 0 0 L 10 5 L 0 10 z")
         .style("stroke-width", 1)
+
+        d3.select("svg").append("marker")
+        .attr("id","arrow4")
+        .attr("class","marker4")
+        .attr("viewBox","0 0 10 10")
+        .attr("refX","8")
+        .attr("refY","5")
+        .attr("markerWidth","5")
+        .attr("markerHeight","5")
+        .attr("orient","auto")
+        .attr("fill","#736f6f")
+        .append("path")
+        .attr("d","M 0 0 L 10 5 L 0 10 z")
+        .style("stroke-width", 1)
       
    var  inner = svg.append("g");
    var defs = svg.append("defs");
@@ -280,12 +295,16 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
     // Set up the edges
 var count=0
 var count1
+    // console.log("this.model1",this.model1);
     // console.log("this.model2",this.model2);
+  if (this.model2) {
     for(var i2=0;i2<this.model2.length;i2++){
       if(this.model2[i2].days>=0){
         count1=count++
       }
     }
+  }
+
 
     if(count1>=1){
       const maxCount = this.model2.reduce(function(prev, current) {
@@ -323,7 +342,6 @@ var count1
             }else{
               v3=v2+" Weeks"
             }
-          console.log(v3);
           this.model2[i].text=v3
         }
         
@@ -355,6 +373,7 @@ var count1
     }else{
       var linkCountArr=[]
       var linkCountArr1=[]
+      if(this.model2){
     for(var i1=0;i1<this.model2.length;i1++){
       linkCountArr1.push(this.model2[i1].text)
       if(this.model2[i1].from ==="Start" || this.model2[i1].to ==="End"){  
@@ -363,6 +382,7 @@ var count1
         linkCountArr.push(this.model2[i1].text)
       }
     }
+  }
     let maxCount = linkCountArr.reduce(function(prev, current) {
       return (prev > current) ? prev : current
     })
@@ -400,7 +420,7 @@ var count1
         g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class: this.class4 , style:"stroke:#757272;stroke-width: 5.5px; marker-end:url(#arrow1);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*3 && this.model2[i].text <= maxLinkCount*4){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", class: this.class3,style:"stroke:url(#svgGradient);stroke-width: 6px; marker-end:url(#arrow);fill:none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", class: this.class3,style:"stroke:#736f6f;stroke-width: 6px; marker-end:url(#arrow4);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*4 && this.model2[i].text < maxLinkCount*5){
         g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis', class:this.class2,style:"stroke:url(#svgGradient);stroke-width: 8px; marker-end:url(#arrow);fill:none;", 
@@ -476,8 +496,6 @@ const max = nodesArray.reduce(function(prev, current) {
 
     for(var i =0;i<nodesArray.length;i++){  // for performance metrics
       // console.log(nodesArray[i].label); 
-
-      
       if (Number(nodesArray[i].days) <= maxDivided) {
         var eachLine = nodesArray[i].label.split('\n')[0];
             g.node(eachLine).style = "fill: #f7cb86";
@@ -495,7 +513,10 @@ const max = nodesArray.reduce(function(prev, current) {
       else if (Number(nodesArray[i].days) > Number(maxDivided*4) && Number(nodesArray[i].days) <= Number(maxDivided*5)) {
         var eachLine = nodesArray[i].label.split('\n')[0];
         g.node(eachLine).style = "fill: #B40001"; 
-      } 
+      }else{
+        var eachLine = nodesArray[i].label.split('\n')[0];
+        g.node(eachLine).style = "fill: #B40001";
+      }
       
       // else if(Number(nodesArray[i].days) == max1){
       //   var eachLine = nodesArray[i].label.split('\n')[0];
@@ -914,6 +935,7 @@ d3.selectAll("g.edgeLabel g.label")
 
 
 
+ 
 // Center the graph
 var initialScale = 0.42;
 svg.call(zoom.transform, d3.zoomIdentity.translate((svg.attr("width") - g.graph().width * initialScale) / 2, 53).scale(initialScale));
@@ -1167,24 +1189,77 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
       const svg = d3.select("svg")
       var  inner = svg.append("g");
       inner.selectAll('g.node');
-      var itemName = this.searchNode;
+      var item = this.searchNode;
   
       if(this.searchNode){
-      var UN_MATCH_NODE = d3.selectAll(".node")
-      .filter(function(d) {
-         return ! d.includes(itemName)
-        });
-        UN_MATCH_NODE.style("opacity","0.1");
-        UN_MATCH_NODE.style("zIndex", '9999')
-        var _MATCHE_NODE = d3.selectAll(".node")
-          .filter(function(d) {
-                  return d.includes(itemName)
-          });
-          // console.log(_MATCHE_NODE['_groups'][0].length);
+        var itemName=item.toLowerCase();
+        var _MATCHED_NODE_Array=[]
+      // var UN_MATCH_NODE = d3.selectAll(".node")
+      // .filter(function(d) {
+      //    return ! d.includes(itemName)
+      //   });
+        
+      //   UN_MATCH_NODE.style("opacity","0.1");
+      //   UN_MATCH_NODE.style("zIndex", '9999')
+      //   UN_MATCH_NODE.style("pointer-events", 'none')
+      d3.selectAll(".node").style("opacity","0.1");
+            d3.selectAll(".node").style("pointer-events","none");
+
+        var _MATCHE_NODE = d3.selectAll(".node") // all LowerCase search
+                              .filter(function(d) {
+                                  return d.includes(itemName)
+                              });
+         if(_MATCHE_NODE['_groups'][0].length>=1){
+          _MATCHED_NODE_Array.push(_MATCHE_NODE)
+         }
+          var itemName1=itemName.charAt(0).toUpperCase()+itemName.substring(1)  // camel case search
+          var _MATCHE_NODE1 = d3.selectAll(".node")
+                                .filter(function(d) {
+                                    return d.includes(itemName1)
+                                });
+            if(_MATCHE_NODE1['_groups'][0].length>=1){
+              _MATCHED_NODE_Array.push(_MATCHE_NODE1)
+            }
+
+          var itemName2=itemName.toUpperCase()  // all Uppercase search
+              var _MATCHE_NODE2 = d3.selectAll(".node")
+                                  .filter(function(d) {
+                                          return d.includes(itemName2)
+                                    });
+              if(_MATCHE_NODE2['_groups'][0].length>=1){
+                _MATCHED_NODE_Array.push(_MATCHE_NODE2)
+                }
           
-          _MATCHE_NODE.style("opacity","1");
+          if(itemName.includes(' ')){
+            var item=itemName
+            var separateWord = item.toLowerCase().split(' ');
+                for(var i = 0; i < separateWord.length; i++) {
+                    separateWord[i] = separateWord[i].charAt(0).toUpperCase() +
+                    separateWord[i].substring(1);
+                  }
+                var itemName3= separateWord.join(' ');
+                var _MATCHE_NODE3 = d3.selectAll(".node")
+                                      .filter(function(d) {
+                                        return d.includes(itemName3)
+                                        });
+                    if(_MATCHE_NODE3['_groups'][0].length>=1){
+                        _MATCHED_NODE_Array.push(_MATCHE_NODE3)
+                      }
+              }
+
+            if(_MATCHED_NODE_Array.length==0){
+                this.isnoNode=true;
+              }else{
+                this.isnoNode=false;
+                  for(var i=0;i<_MATCHED_NODE_Array.length;i++){
+                    _MATCHED_NODE_Array[i].style("opacity","1");
+                    _MATCHED_NODE_Array[i].style("pointer-events", 'auto');
+                  }
+              }
         }else{
-          d3.selectAll(".node").style("opacity","1");
+            d3.selectAll(".node").style("opacity","1");
+            d3.selectAll(".node").style("pointer-events","auto");
+          this.isnoNode=false;
         }
       }
       

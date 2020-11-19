@@ -30,11 +30,11 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   @Output() update = new EventEmitter<any>();
   @Input() data;
 
-  constructor(private router:Router,private bpmnservice:SharebpmndiagramService, 
+  constructor(private router:Router,private bpmnservice:SharebpmndiagramService,
     private global: GlobalScript, private rest:RestApiService) { }
 
   ngOnInit() {
-  
+
   }
 
   onSelect(e){
@@ -45,7 +45,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     }else{
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
-        message = "Please upload proper *.bpmn file";
+        message = "Please upload proper notation";
       this.global.notify(message,"error");
     }
   }
@@ -60,6 +60,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.randomId = UUID.UUID();
     this.create_editor=false;
     this.bpmnModel.bpmnProcessName=e.processName;
+    this.bpmnModel.ntype=e.ntype;
     this.bpmnModel.bpmnModelId=this.randomId;
     if(this.data){
       let dataarr = this.data.split("@");
@@ -98,8 +99,8 @@ export class UploadCreateDropBpmnComponent implements OnInit {
 
   initialSave(diagramModel:BpmnModel, target:string){
     let message;
-    diagramModel.createdTimestamp = new Date();
-    diagramModel.modifiedTimestamp = new Date();
+   // diagramModel.createdTimestamp = new Date();
+   // diagramModel.modifiedTimestamp = new Date();
     this.rest.saveBPMNprocessinfofromtemp(diagramModel).subscribe(res=>{
       if(res['errorCode']!="2005"){
         let isBPSHome = this.router.url == "/pages/businessProcess/home";
@@ -120,5 +121,5 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       }
     });
   }
- 
+
 }

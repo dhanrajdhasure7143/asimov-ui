@@ -41,7 +41,7 @@
                                 <h4>My Workspace</h4>
                                 </div>
                                 <form action="">
-                                        <div class="col-sm-7" *ngIf="isSearch">
+                                        <!-- <div class="col-sm-7" *ngIf="isSearch">
                                                 <div class="col-sm-9 pull-right cat1">
                                                 <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
                                                         <option value="undefined" hidden disabled>Search by Category</option>
@@ -49,31 +49,44 @@
                                                         <option [value]="each.categoryName" *ngFor="let each of categoryList.data;let i=index">{{each.categoryName}}</option>
                                                 </select>
                                                 </div>
-                                        </div>
-                                        <div class="col-sm-6" *ngIf="!isSearch">
-                                                        <div class="col-sm-10">
-                                                        <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
+                                        </div> -->
+                                        <div class="col-sm-4">
+                                                        <div class="select-cat">
+                                                        <!-- <select class="form-control border_bottom" name="category" id="" (change)="searchByCategory(category)" [(ngModel)]="category">
                                                                 <option value="undefined" hidden disabled>Search by Category</option>
                                                                 <option value="allcategories">All Categories</option>
                                                                 <option [value]="each.categoryName" *ngFor="let each of categoryList.data;let i=index">{{each.categoryName}}</option>
-                                                        </select>
+                                                        </select> -->
+                                                        <mat-form-field class="row col-md-12">
+                                                                <mat-label>Select Category</mat-label>
+                                                                <mat-select  name="category" (selectionChange)="searchByCategory(categoryName)" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect">
+                                                                        <mat-option value="allcategories">All Categories</mat-option>
+                                                                        <mat-option *ngFor="let eachcat of categoryList.data;let i=index;trackBy:loopTrackBy" [value]="eachcat.categoryName">
+                                                                        {{eachcat.categoryName}}</mat-option>
+                                                                </mat-select>
+                                                            </mat-form-field>
                                                         </div>
                                                         </div>
-                                        <div class="col-sm-1">
-                                                <button class="search_btn pull-right" *ngIf="isSearch" (click)="onsearchSelect()"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></button>
-                                                <div *ngIf="!isSearch" class="search-cat col-sm-12"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></div>
+                                        <div class="col-sm-2">
+                                                <mat-form-field>
+                                                        <mat-label>Search Workspace</mat-label>
+                                                        <input (keyup)="applyFilter($event)" class="toolbar-search" type="text" matInput>
+                                                        <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
+                                                      </mat-form-field>
+                                                <!-- <button class="search_btn pull-right" *ngIf="isSearch" (click)="onsearchSelect()"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></button>
+                                                <div *ngIf="!isSearch" class="search-cat col-sm-12"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></div> -->
                                         </div>
                                         
                                 </form>
                                 <div class="col-sm-12 graph_table">
-                                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
+                                <!-- <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table table-hover text-center pilist_table tableBodyScroll" id="myTableId">
                                         <thead class="text-center">
                                         <tr class="text-center">
-                                                <th class="text-center table_header">Process ID</th>
-                                                <th class="text-center table_header">Date</th>
-                                                <th class="text-center table_header">Process Name</th>
-                                                <th class="text-center table_header">Category</th>
-                                                <th class="text-center table_header">Status</th>
+                                                <th class="text-center table_header" (click)="sort('piId',0)"><b>Process ID<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></th>
+                                                <th class="text-center table_header" (click)="sort('createdTime',1)"><b>Date<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></th>
+                                                <th class="text-center table_header process-header" (click)="sort('piName',2)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></th>
+                                                <th class="text-center table_header" (click)="sort('categoryName',3)"><b>Category<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></th>
+                                                <th class="text-center table_header" (click)="sort('status',4)"><b>Status<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></th>
                                                 <th class="text-center table_header">Action</th>
                                         </tr>                                        
                                         </thead>                                        
@@ -88,8 +101,45 @@
                                                 </tr>
                                         </tbody>
                                        
-                                </table>
-                                </div>
+                                </table> -->
+                        
+                                <table mat-table [dataSource]="dataSource" matSort class=" table w-100">
+
+                                        <ng-container matColumnDef="piId">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Process ID </th>
+                                          <td mat-cell *matCellDef="let element"> {{element.piId}} </td>
+                                        </ng-container>
+                                      
+                                        <ng-container matColumnDef="createdTime">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Date</th>
+                                          <td mat-cell *matCellDef="let element">{{element.convertedTime | date:'medium'}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="piName">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Process Name</th>
+                                          <td mat-cell *matCellDef="let element">{{element.piName}}</td>
+                                        </ng-container>
+                                        
+                                        <ng-container matColumnDef="categoryName">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Category</th>
+                                          <td mat-cell *matCellDef="let element">{{element.categoryName?getcategoryName(element.categoryName):'-'}} </td>
+                                        </ng-container>
+                                  
+                                        <ng-container matColumnDef="status">
+                                          <th mat-header-cell *matHeaderCellDef mat-sort-header class="table_header">Status</th>
+                                          <td mat-cell *matCellDef="let element">{{element.status}} </td>
+                                        </ng-container>
+                                  
+                                        <ng-container matColumnDef="action">
+                                          <th mat-header-cell *matHeaderCellDef class="table_header">Action</th>
+                                          <td mat-cell *matCellDef="let element" (click)="onGraphSelection(element)" class="process_view" title="View Process Graph"><i class='fa fa-eye'></i> </td>
+                                        </ng-container>
+                                  
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
+                                      </table>
+                                <mat-paginator  #paginator [pageSize]="6" [showFirstLastButtons]="true" ></mat-paginator>
+
+                        </div>
                             </div>
         </div>
 </div>

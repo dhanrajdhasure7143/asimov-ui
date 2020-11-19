@@ -1,3 +1,6 @@
+
+
+
 import { Injectable, OnInit } from '@angular/core';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
@@ -13,12 +16,12 @@ import { IpServiceService } from '../../services/ip-service.service';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json'
-  })
+        })
 };
 
 
 const  httpfileOptions={
- 
+
   headers: new HttpHeaders({
   "Content-Type":"multipart/form-data"
   })
@@ -45,9 +48,11 @@ export class RestApiService{
   constructor(private http:HttpClient, private ip:IpServiceService) { this.getIP(); }
 
   public ipAddress:string;
+    //nethan.price@guerrillamailblock.com
+  //password -Welcome@123
 
   getAccessToken(){
-    let data = {"userId":"venkata.simhadri@epsoftinc.com",
+    let data = {"userId":"nethan.price@guerrillamailblock.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -127,7 +132,11 @@ export class RestApiService{
   attribute(data:any){
   return this.http.get('/rpa-service/get-attributes/'+data)
   }
-  
+
+  getAllAttributes(){
+    return this.http.get('/rpa-service/fetch-attributes/all-tasks')
+  }
+
   async saveBot(data:any)
   {
     return await this.http.post('/rpa-service/save-bot',data)
@@ -158,7 +167,20 @@ export class RestApiService{
     })
     return await this.http.post(url,data,httpfileOptions);
   }
-  
+
+  listDBConnection(){
+    return this.http.get("/rpa-service/agent/get-connections")
+  }
+  addDBConnection(data:any){
+    return this.http.post('/rpa-service/agent/save-connection',data)
+  }
+  updateDBConnection(data:any){
+    return this.http.put('/rpa-service/agent/update-connection',data)
+  }
+  deleteDBConnection(data:any){
+    return this.http.post('/rpa-service/agent/delete-connection',data)
+  }
+
   getUserPause(botId){
     let data:any;
     return this.http.post('/rpa-service/pause-bot/'+botId,data)
@@ -358,6 +380,18 @@ export class RestApiService{
 
   // PI To BPMN API's END
 
+  //PI Insights START
+  getPIInsightMeanMedianDuration(body){
+    return this.http.post("/ReddisCopy/getGraphData", body)
+  }
+  getPIInsightResourceSelection(body){
+    return this.http.post("/ReddisCopy/getGraphData", body)
+  }
+  getPIVariantActivity(body){
+    return this.http.post("/ReddisCopy/getGraphData", body)
+  }
+  //PI Insights END
+
 
   getProcessStatistics()
   {
@@ -463,6 +497,12 @@ export class RestApiService{
     deleteNotification(notificationId):Observable<any>{
       return this.http.delete<any>('/notificationservice/api/v1/deleteNotification?notificationId='+notificationId,{responseType:"json"})
     }
-    
+
+    getReadNotificaionCount(role,userId,id,notificationbody):Observable<any>{
+      return this.http.post<any>('/notificationservice/api/v1/NotificationsCount?roles='+role+'&userId='+userId+'&id='+id,notificationbody,httpOptions);
+    }
+    getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
+      return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
+    }
 }
 

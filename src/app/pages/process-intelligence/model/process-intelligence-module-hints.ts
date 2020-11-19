@@ -13,11 +13,12 @@ export class PiHints{
 
     public processGraphHints = [
         { selector:'#process_graph_list', description:'Select process graphs list', showNext:true },
-        { selector:'#myDiagramDiv', description:'Process Graph', showNext:true },
+        { selector:'#render', description:'Process Graph', showNext:true },
         { selector:'#zoom_in', description:'Zoom In', showNext:true },
         { selector:'#zoom_out', description:'Zoom Out', showNext:true },
         { selector:'#zoom_reset', description:'Reset Zoom', showNext:true },
         { selector:'#variants', description:'Process view with selected metrics', showNext:true },
+        { selector:'.search-node', description:'Search nodes', showNext:true },
         { selector:'.down_btn', description:'Click to download process graph', showNext:true },
         { selector:'#play_btn', description:'Click to play process graph', showNext:true },
         //{ selector:'.zoom_label', description:'Zoom selection for process graph', showNext:true },
@@ -26,7 +27,7 @@ export class PiHints{
         { selector:'#variant_list', description:'Click here to see the variants', showNext:true },
         //{ selector:'#variant_drpdwn', description:'Select particular variant', showNext:true },
         //{ selector:'.details_box', description:'Case details list', showNext:true  },
-        { selector:'#kpi_btn', description:'Click to view KPI', showNext:true  },
+        { selector:'#kpi_btn', description:'Click to view Insights', showNext:true  },
         { selector:'#generate_btn', description:'Click to generate BPMN' }
       ];
 
@@ -36,5 +37,11 @@ export class PiHints{
         { selector:'#upload_db', description:'Upload DB Event logs', showNext:true },
         { selector:'#my_workspace', description: 'User Workspace', showNext:true},
         { selector:'#download_template', description:'Download Sample Template'}
+      ];
+      public insightsHints = [
+        { selector:'.varint-open', description:'Click here to see the variants', showNext:true },
+        { selector:'#humancost', description:'Click to edit cost', showNext:true },
+        { selector:'.groupBtn', description:'Click to view events and throught', showNext:true },
+        { selector:'#resourcesselect', description:'Select by resource to view duration and activity '}
       ];
 }

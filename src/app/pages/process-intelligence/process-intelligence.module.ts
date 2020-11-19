@@ -24,10 +24,19 @@ import {DataTablesModule} from 'angular-datatables';
 import {MatOptionModule, MatSelectModule} from '@angular/material';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
 import { ProcessinsightsComponent } from './processinsights/processinsights.component';
-
+import {MatTableModule} from '@angular/material/table';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule} from '@angular/material';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
+import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/combo-series-vertical.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +51,9 @@ import { ProcessinsightsComponent } from './processinsights/processinsights.comp
     PibpmnfilterComponent,
     XesdocumentComponent,
     D3flowchartComponent,
-    ProcessinsightsComponent
+    ProcessinsightsComponent,
+    ComboChartComponent, 
+    ComboSeriesVerticalComponent
   ],
   imports: [
     CommonModule,
@@ -54,6 +65,7 @@ import { ProcessinsightsComponent } from './processinsights/processinsights.comp
     SharedModule,
     MatExpansionModule,
     ModalModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot(),
     Ng2SearchPipeModule,
     NgxSpinnerModule,
     DataTablesModule,
@@ -61,9 +73,16 @@ import { ProcessinsightsComponent } from './processinsights/processinsights.comp
     NgxPaginationModule,
     BackButtonDisableModule.forRoot({
       preserveScrollPosition: true
-    })
+    }),
+    MatPaginatorModule,
+    MatSortModule,
+    MatTableModule,
+    MatInputModule, MatIconModule, MatFormFieldModule,
+    MatTooltipModule,MatDialogModule,
+    NgbModule,
+    NgxMaterialTimepickerModule
   ],
-  providers:[PiHints]
+  providers:[PiHints],
 
 })
 export class ProcessIntelligenceModule {
