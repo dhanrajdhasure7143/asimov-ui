@@ -24,7 +24,7 @@ export const environment = {
 
 //DB Connector
   dbConnectorHost: "172.16.0.64",
-  dbName: "asimov_aiotal",
+  dbName: "eiap_demo",
 
 // Data upload path
   data_path:"/home/applmgr"
