@@ -10,7 +10,7 @@ export const environment = {
   loopback_url: 'http://10.11.0.107:3000',
   idm_url:'http://eiapdemoapi.epsoftinc.com:96/idm',
   auth_url: "http://eiapdemoapi.epsoftinc.com:96/authservices",
-  pi_node_url: "http://10.11.0.112:3000",
+  pi_node_url: "http://eiapdemoapi.epsoftinc.com:96/pinode",
   platform_url:'http://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
   
  // Aiotal redirection urls 
@@ -22,7 +22,7 @@ export const environment = {
 
 //DB Connector
   dbConnectorHost: "172.16.0.64",
-  dbName: 'asimov_aiotal'
+  dbName: 'eiap_demo'
 
 
 
