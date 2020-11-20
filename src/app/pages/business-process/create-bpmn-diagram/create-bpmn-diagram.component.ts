@@ -24,6 +24,7 @@ import { BpmnShortcut } from '../../../shared/model/bpmn_shortcut';
 import * as bpmnlintConfig from '../model/packed-config';
 import { DndModule } from 'ngx-drag-drop';
 import lintModule from 'bpmn-js-bpmnlint';
+import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 declare var require:any;
 
 @Component({
@@ -61,6 +62,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   displayNotation;
   rpaJson = {
     "name": "RPA",
+    "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
     "prefix": "rpa",
     "xml": {
       "tagAlias": "lowerCase"
@@ -69,12 +71,19 @@ export class CreateBpmnDiagramComponent implements OnInit {
       {
         "name": "Activity",
         "superClass": [ "Element" ],
+      },
+      {
+        "name": "InputParams",
+        "superClass": [ "Element" ],
+      },
+      {
+        "name": "OutputParams",
+        "superClass": [ "Element" ],
       }
     ]
   }
 
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
-  @ViewChild('deployNotationTmpl',{ static: true }) deployNotationTmp: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
@@ -90,27 +99,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
     });
     this.keyboardLabels=this.shortcut[this.selectedNotationType];
     this.setRPAData();
-    // this.selected_modelId = this.bpmnservice.bpmnId.value;
     this.getApproverList();
     this.getUserBpmnList();
   }
-
-  // ngOnDestroy(){
-  //   // if(this.isDiagramChanged){
-  //     Swal.fire({
-  //       title: 'Are you sure?',
-  //       text: 'Your current changes will be lost on changing diagram.',
-  //       icon: 'warning',
-  //       showCancelButton: true,
-  //       confirmButtonText: 'Save and Continue',
-  //       cancelButtonText: 'Discard'
-  //     }).then((res)=>{
-  //       if(res.value){
-  //         this.saveprocess(null);
-  //       }
-  //     })
-  //   // }
-  // }
 
   getUserBpmnList(){
     this.isLoading = true;
@@ -648,11 +639,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
   displayShortcut(){
      this.dialog.open(this.keyboardShortcut);
   }
-  deployNotation(){
-    
-  }
-  displayDeployNotation(){
-    this.dialog.open(this.deployNotationTmp);
+  openDeployDialog() {
+    this.dialog.open(DeployNotationComponent);
   }
 
 }

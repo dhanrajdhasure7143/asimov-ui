@@ -1,4 +1,3 @@
-
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -57,16 +56,8 @@ export class RpaHomeComponent implements OnInit {
 
   ngOnInit() {
     this.userRole = localStorage.getItem("userRole")
-    
-    if(this.userRole.includes('SuperAdmin')){
-      this.isButtonVisible = true;
-    }else if(this.userRole.includes('Admin')){
-      this.isButtonVisible = true;
-    }else if(this.userRole.includes('RPA Admin')){
-      this.isButtonVisible = true;
-    }else{
-      this.isButtonVisible = false;
-    }
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin');
 
     let processId=undefined;
     //this.dataSource1.filterPredicate = this.createFilter();

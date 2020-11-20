@@ -5,7 +5,6 @@ import { PagesHints } from '../model/pages.model';
 import { RestApiService } from '../services/rest-api.service';
 
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',

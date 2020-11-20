@@ -605,7 +605,7 @@ displayBPMN(){
   downloadBpmn(){
     let yesProceed = true;
     if(this.isShowConformance && this.isUploaded && this.bpmnModeler){
-      yesProceed = confirm('You are about to download '+(this.isConfBpmnModeler?'"AS IS"':'"TO BE"')+' notation for approval')
+      yesProceed = confirm('You are about to download '+(this.isConfBpmnModeler?'"AS IS"':'"TO BE"')+' notation')
     }
     if(!yesProceed) return;
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";

@@ -43,19 +43,13 @@ export class BpsHomeComponent implements OnInit {
 
   ngOnInit(){
     this.userRole = localStorage.getItem("userRole")
-    
+    this.userRole = this.userRole.split(',');
     if(this.userRole.includes('SuperAdmin')){
       this.isButtonVisible = true;
-    }else if(this.userRole.includes('Admin')){
+    }else if(this.userRole.includes('Admin') || this.userRole.includes('Process Architect')){
       this.isButtonVisible = true;
       this.isAdminUser = true;
-    }else if(this.userRole.includes('Process Architect')){
-      this.isButtonVisible = true;
-      this.isApproverUser = true;
-    }else{
-      this.isButtonVisible = false;
     }
-
     this.isLoading = true;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/home","title":"BPMN Upload"});
