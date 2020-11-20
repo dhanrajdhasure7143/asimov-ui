@@ -61,6 +61,8 @@
     "dom-to-image": "^2.6.0",
     "gojs": "^2.1.10",
     "highcharts": "^8.2.0",
+    "highlight.js": "^10.3.2",
+    "highlightjs-line-numbers.js": "^2.8.0",
     "html-2-canvas": "0.0.8",
     "html-to-image": "^0.1.1",
     "html2canvas": "^1.0.0-rc.5",

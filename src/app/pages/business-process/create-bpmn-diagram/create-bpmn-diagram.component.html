@@ -35,28 +35,50 @@
             <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss":'UTC'}}</b></span>
             <div>
                 <span class="err-msg"></span>
-                <div class="row">
-                    <div id="canvas" class="col-md-12"></div>
-                    <div class="propertiesContainer">
-                        <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
-                        <div id="properties" class="slide-right"></div>
-                    </div>
-                    <div #dmnTabs id="dmn-tabs" *ngIf="selectedNotationType=='dmn'"></div>
-                </div>
+                <mat-tab-group headerPosition="below" [(selectedIndex)] = "selectedTabIndex" (selectedTabChange)="displayXML($event)">
+                    <mat-tab label="Notation">
+                        <div class="row">
+                            <div id="canvas" class="col-md-12"></div>
+                            <div class="propertiesContainer">
+                                <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
+                                <div id="properties" class="slide-right"></div>
+                            </div>
+                            <div #dmnTabs id="dmn-tabs" *ngIf="selectedNotationType=='dmn'"></div>
+                        </div>
+                        <ng-template #wrongXMLcontent>
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left xml-error">Error in XML</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{errXMLcontent}}
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="XML">
+                        <div class="text-area">
+                            <textarea [(ngModel)]="xmlTabContent" rows="29" cols="150">
+                                {{xmlTabContent}}
+                            </textarea>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
             <div class="row btn_row">
-                <span class="pull-left">
-                    <select [(ngModel)]="fileType">
-                      <option value="svg">SVG</option>
-                      <option value="png">PNG</option>
-                      <option value="jpg">JPG</option>
-                      <option [value]="selectedNotationType">{{selectedNotationType | uppercase }}</option>
-                    </select>
-                    <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
-                  </span>
                 <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
                 <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)">Save Process</button>
                 <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn"  id="automate" (click)="automate()">Automate</button>
+                <span class="right">
+                    <select [(ngModel)]="fileType">
+                        <option value="svg">SVG</option>
+                        <option value="png">PNG</option>
+                        <option value="jpg">JPG</option>
+                        <option [value]="selectedNotationType">{{selectedNotationType | uppercase }}</option>
+                    </select>
+                    <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+                </span>
             </div>
             <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
                 <p style="color: white">Auto Saving... </p>
