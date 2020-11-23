@@ -123,7 +123,7 @@
                         <div class="col-md-3 formelement">
                             <label for="connectiontName">Connection Name*</label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="connectiontName" #connectiontName value="" placeholder="Enter Connection Name">
-                            <span *ngIf="insertdbForm.get('connectiontName').invalid && insertdbForm.get('connectiontName').touched" style="color:red" class="fa fa-info-circle errspan"> Connectiont Name Required*</span>
+                            <span *ngIf="insertdbForm.get('connectiontName').invalid && insertdbForm.get('connectiontName').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Name Required*</span>
                         </div>
                         <div class="col-md-3 formelement">
                             <label for="dataBaseType">Database Type*</label>
@@ -144,7 +144,12 @@
                             <span *ngIf="insertdbForm.get('portNumber').invalid && insertdbForm.get('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Number Required*</span>
                         </div>
                     </div>
-                    <div class="row">                        
+                    <div class="row">    
+                        <div class="col-md-3 formelement">
+                            <label for="username">Username*</label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
+                            <span *ngIf="insertdbForm.get('username').invalid && insertdbForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>        
+                        </div>                    
                         <div class="col-md-3 formelement">
                             <label for="password">Password*</label>
                             <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
@@ -158,11 +163,7 @@
                             <input type="text" maxlength="50" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema Name">
                             <span *ngIf="insertdbForm.get('schemaName').invalid && insertdbForm.get('schemaName').touched" style="color:red" class="fa fa-info-circle errspan"> Schema Name Required*</span>
                         </div>
-                        <div class="col-md-3 formelement">
-                            <label for="username">Username*</label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
-                            <span *ngIf="insertdbForm.get('username').invalid && insertdbForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>        
-                        </div>
+                        
                     </div>
                     <input type="button" class="btn btn-primary" value="Save" (click)="saveDBConnection()" [disabled]="insertdbForm.invalid || submitted">
                      <input type="button" class="btn btn-primary" value="Reset" (click)="resetDBForm()">
@@ -183,7 +184,7 @@
                         <div class="col-md-3 formelement">
                             <label for="connectiontName">Connection Name*</label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="connectiontName" #connectiontName value="" placeholder="Enter Connection Name">
-                            <span *ngIf="updatedbForm.get('connectiontName').invalid && updatedbForm.get('connectiontName').touched" style="color:red" class="fa fa-info-circle errspan"> Connectiont Name Required*</span>
+                            <span *ngIf="updatedbForm.get('connectiontName').invalid && updatedbForm.get('connectiontName').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Name Required*</span>
                         </div>
                         <div class="col-md-3 formelement">
                             <label for="dataBaseType">Database Type*</label>
@@ -205,7 +206,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        
+                        <div class="col-md-3 formelement">
+                            <label for="username">Username*</label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
+                            <span *ngIf="updatedbForm.get('username').invalid && updatedbForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>        
+                        </div>
                         <div class="col-md-3 formelement">
                             <label for="password">Password*</label>
                             <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
@@ -219,11 +224,7 @@
                             <input type="text" maxlength="50" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema Type">
                             <span *ngIf="updatedbForm.get('schemaName').invalid && updatedbForm.get('schemaName').touched" style="color:red" class="fa fa-info-circle errspan"> Schema Name Required*</span>
                         </div>
-                        <div class="col-md-3 formelement">
-                            <label for="username">Username*</label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
-                            <span *ngIf="updatedbForm.get('username').invalid && updatedbForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>        
-                        </div>
+                        
                     </div>
                     <input type="button" class="btn btn-primary" value="Save" (click)="dbconnectionupdate()" [disabled]="updatedbForm.invalid || submitted">
                      <input type="button" class="btn btn-primary" value="Reset" (click)="resetupdateDBForm()">
