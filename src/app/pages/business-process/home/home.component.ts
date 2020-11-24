@@ -105,6 +105,12 @@ export class BpsHomeComponent implements OnInit {
         return 'orange';
     }
   }
+
+  fitTableView(processName){
+    if(processName && processName.length > 10)
+      return processName.substr(0,15)+'..';
+    return processName;
+  }
    filterAutoSavedDiagrams(modelId){
     this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
       return each_asDiag.bpmnModelId == modelId;

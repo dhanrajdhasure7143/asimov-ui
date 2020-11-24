@@ -13,7 +13,7 @@ import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from
 import { NgxSpinnerService } from "ngx-spinner";
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import Swal from 'sweetalert2';
-import {MatDialog} from '@angular/material';
+import {MatDialog, MatTabGroup} from '@angular/material';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
@@ -62,7 +62,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
   selectedNotationType:string;
   xmlTabContent: string;
   errXMLcontent: string = '';
-  selectedTabIndex: number = 0;
   modalRef: BsModalRef;
   rpaJson = {
     "name": "RPA",
@@ -89,6 +88,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
+  @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
   @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   constructor(private rest:RestApiService, private spinner:NgxSpinnerService, private dt:DataTransferService,private modalService: BsModalService,
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
@@ -342,12 +342,11 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let _self = this;
     _self.isLoading = true;
     if(e.index == 1){
-      this.bpmnModeler._moddle.toXML(this.bpmnModeler._definitions, { format: true }, function (err, updatedXML) {
+      this.bpmnModeler.saveXML({ format: true }, function(err, updatedXML) {
         _self.xmlTabContent = updatedXML;
         _self.isLoading = false;
       })
-    }
-    else{
+    }else{
       this.bpmnModeler.importXML(this.xmlTabContent, function(err){
         if(err){
           _self.errXMLcontent = err;
@@ -470,6 +469,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
   initModeler(){
     let _self = this;
+    this.notationXmlTab.selectedIndex = 0;
     if(this.bpmnModeler){
       document.getElementById("canvas").innerHTML = ""
       document.getElementById("properties").innerHTML = ""

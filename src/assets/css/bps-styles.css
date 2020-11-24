@@ -23,8 +23,8 @@
 .btn_row{
   position: absolute;
   bottom: 10px;
-  width: 88%;
-  left: 98px;
+  width: 75%;
+  right: 80px;
 }
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;

@@ -39,7 +39,7 @@
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12" id="bpmn_list_row">
-                  <span>{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</span>
+                  <span [matTooltip]=each_diag.bpmnProcessName matTooltipClass="eiap_tooltip">{{each_diag.bpmnProcessName ? fitTableView(each_diag.bpmnProcessName): '-'}}</span>
                   <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
                   <span>{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</span>
                   <span>{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</span>
