@@ -5,7 +5,7 @@ enum Filter{
   'Activity',
   // 'Cases',
    'Variants',
-  //'End Points',
+  'End Points',
 } 
 @Component({
   selector: 'app-filter',
@@ -20,6 +20,7 @@ export class FilterComponent implements OnInit {
   @Input() variantData:any = {};
   @Input() public fetchData;
   @Input() public resetFilter:boolean;
+  @Input() public isClearFilter:boolean;
   @Output() selectedNodes=new EventEmitter<any[]>();
   @Output() applyFilterValue=new EventEmitter<boolean>();
   @Output() selectedStartpoints=new EventEmitter<any[]>();
@@ -55,66 +56,88 @@ export class FilterComponent implements OnInit {
   endPointArray=[];
   seletedVariant:any = [];
   isDeselectAll = false;
+  isDeselectActivity:boolean=true;
+  endptBt:boolean=true;
+  selectedEndPointsCount=[];
+  selectedStartPointsCount=[];
+  appliedFilters: any[]=[];
 
   constructor() { }
 
   ngOnInit() {
-    
-    for(var i=0;i<this.variantData.data.length;i++){
-      var obj={};
-      obj["name"]=this.variantData.data[i].name;
-      obj["casepercent"]=this.variantData.data[i].casepercent;
-      obj["detail"]=this.variantData.data[i].detail;
-      obj["days"]=this.variantData.data[i].days;
-      obj["case_value"]=this.variantData.data[i].case_value;
-      obj["selected"]="inactive";
-      this.variantListarray.push(obj)
-    }
+    setTimeout(() => {
+      for(var i=0;i<this.variantData.data.length;i++){
+        var obj={};
+        obj["name"]=this.variantData.data[i].name;
+        obj["casepercent"]=this.variantData.data[i].casepercent;
+        obj["detail"]=this.variantData.data[i].detail;
+        obj["days"]=this.variantData.data[i].days;
+        obj["case_value"]=this.variantData.data[i].case_value;
+        obj["selected"]="inactive";
+        this.variantListarray.push(obj)
+      }
+
+      this.dataValuesNames = [];
+      for(var i=0;i<this.dataValues.length;i++){
+        var obj={};
+        obj["name"]=this.dataValues[i].name;
+        obj["selected"]="inactive";
+        this.dataValuesNames.push(obj)
+      }
+
+      this.startPointArray = [];
+      for(var i=0;i<this.startArray.length;i++){
+        var obj={};
+        obj["name"]=this.startArray[i];
+        obj["selected"]="inactive";
+        this.startPointArray.push(obj)
+      }
+      this.endPointArray = [];
+      for(var i=0;i<this.endArray.length;i++){
+        var obj={};
+        obj["name"]=this.endArray[i];
+        obj["selected"]="inactive";
+        this.endPointArray.push(obj)
+      }
+    },  4000);
   
-    
-    this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
-    
-    
+    this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));   
   }
   ngOnChanges(){    
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
-    // console.log(this.chart_filter_options);
-
-
-    // console.log(this.dataValues);
+    console.log(this.isClearFilter);
     
-    this.dataValuesNames = [];
-    for(var i=0;i<this.dataValues.length;i++){
-      var obj={};
-      obj["name"]=this.dataValues[i].name;
-      obj["selected"]="inactive";
-      this.dataValuesNames.push(obj)
+    if(this.isClearFilter==true){
+      this.endptBt=true;
+      for (var i = 0; i < this.variantListarray.length; i++){
+        this.variantListarray[i].selected= "inactive"
+      };
+      for (var i = 0; i < this.dataValuesNames.length; i++){
+        this.dataValuesNames[i].selected= "inactive"
+        };
+        this.startPointArray.forEach(e=>{
+          e.selected="inactive"
+        })
+        this.endPointArray.forEach(elem=>{
+          elem.selected="inactive"
+        })
+        this.isStartPoint=false;
+        this.isEndPoint=false;
+        this.appliedFilters=[];
+        this.isActivity=true;
+        this.isEndpoint=false;
+        this.isVariantFilter = false;
+        this.filterby="Activity";
     }
-    this.startPointArray = [];
-    for(var i=0;i<this.startArray.length;i++){
-      var obj={};
-      obj["name"]=this.startArray[i];
-      obj["selected"]="inactive";
-      this.startPointArray.push(obj)
-    }
-    this.endPointArray = [];
-    for(var i=0;i<this.endArray.length;i++){
-      var obj={};
-      obj["name"]=this.endArray[i];
-      obj["selected"]="inactive";
-      this.endPointArray.push(obj)
-    }
+    
+    // this.dataValuesNames = [];
+    // for(var i=0;i<this.dataValues.length;i++){
+    //   var obj={};
+    //   obj["name"]=this.dataValues[i].name;
+    //   obj["selected"]="inactive";
+    //   this.dataValuesNames.push(obj)
+    // }
 
-    if(this.resetFilter==true){
-      this.startPointArray.forEach(e=>{
-        e.selected="inactive"
-      })
-      this.endPointArray.forEach(elem=>{
-        elem.selected="inactive"
-      })
-      this.isStartPoint=false;
-      this.isEndPoint=false;
-    }
   }
 
 loopTrackBy(index, term){
@@ -143,8 +166,10 @@ selectData(selectedData, index){
     };  
     if(activityArray.length>=1){
       this.isApplyFilter=false;
+      this.isDeselectActivity=false;
     }else{
       this.isApplyFilter=true;
+      this.isDeselectActivity=true;
     }
     this.isDeselectAll = false;
 }
@@ -156,6 +181,7 @@ selectAllDataValue(){
     this.isApplyFilter=false;
     this.isSelect=true;
     this.isDeselectAll = false;
+    this.isDeselectActivity=false;
 }
 
 selectAllVariantList(){
@@ -183,24 +209,46 @@ deselectAllDataValue(){
     this.isDeselectAll = true;
     this.isApplyFilter=true;
     this.isSelect=false;
+    this.isDeselectActivity=true;
 }
 
 applyFilter(){
-  // console.log(this.isDeselectAll);
-  
-  this.seletedActivity=[];
-  if(this.isDeselectAll == true){
-    this.seletedActivity = [];
-    this.selectedNodes.emit(this.seletedActivity)
-    this.applyFilterValue.emit(true);
-  } else {
+  this.appliedFilters=[];
+  var activityArray1=[];
   for (var i = 0; i < this.dataValuesNames.length; i++){
-    if(this.dataValuesNames[i].selected === "inactive")
-      this.seletedActivity.push(this.dataValues[i].name)
+    if(this.dataValuesNames[i].selected== "active"){
+      activityArray1.push(this.dataValuesNames[i].name)
+    }
     };
-      this.selectedNodes.emit(this.seletedActivity)
-      this.applyFilterValue.emit(true);
-  }
+    this.seletedActivity=[];
+    if(activityArray1.length >= 1){
+      for (var i = 0; i < this.dataValuesNames.length; i++){
+        if(this.dataValuesNames[i].selected === "inactive")
+          this.seletedActivity.push(this.dataValues[i].name)
+        };
+          this.selectedNodes.emit(this.seletedActivity)
+          this.applyFilterValue.emit(true);
+          this.appliedFilters.push("Activity")
+    }else{
+      this.selectedNodes.emit(null)
+          this.applyFilterValue.emit(true);
+    }
+    
+  // this.seletedActivity=[];
+  // if(this.isDeselectAll == true){
+  //   this.seletedActivity = [];
+  //   // this.selectedNodes.emit(this.seletedActivity)
+  //   this.selectedNodes.emit(this.seletedActivity)
+  //   this.applyFilterValue.emit(true);
+  // } else {
+  // for (var i = 0; i < this.dataValuesNames.length; i++){
+  //   if(this.dataValuesNames[i].selected === "inactive")
+  //     this.seletedActivity.push(this.dataValues[i].name)
+  //   };
+  //     this.selectedNodes.emit(this.seletedActivity)
+  //     this.applyFilterValue.emit(true);
+  // }
+  this.applyVariantFilter()
 }
 channgeFilter(){
   this.endPointsArray=[{name:"Start",selected:"inactive"},{name:"End",selected:"inactive"}]
@@ -211,8 +259,8 @@ channgeFilter(){
   } else if(this.filterby=="Variants"){
     this.isVariantFilter = true;
     this.isActivity=false;
-  }
-  else{
+    this.isEndpoint=false;
+  } else{
     this.isActivity=false;
     this.isEndpoint=true;
     this.isVariantFilter = false;
@@ -223,7 +271,19 @@ selectedStartPoint(data,index){
     this.startPointArray[index].selected= "active"
   }else{
     this.startPointArray[index].selected= "inactive"
-  } 
+  }
+
+  this.selectedStartPointsCount=[]
+  this.startPointArray.forEach(element => {
+      if(element.selected==="active"){
+          this.selectedStartPointsCount.push(element.name)
+        }
+      })
+  if(this.selectedStartPointsCount.length >=1 && this.selectedEndPointsCount.length >=1){
+    this.endptBt=false;
+  }else{
+    this.endptBt=true;
+  }
 }
 selectedVariant(data,index){
   if(data.selected=="inactive"){
@@ -249,7 +309,18 @@ selectedVariant(data,index){
       this.endPointArray[index].selected= "active"
     }else{
       this.endPointArray[index].selected= "inactive"
-    } 
+    }
+    this.selectedEndPointsCount=[]
+    this.endPointArray.forEach(element => {
+      if(element.selected==="active"){
+          this.selectedEndPointsCount.push(element.name)
+        }
+      })
+      if(this.selectedStartPointsCount.length >=1 && this.selectedEndPointsCount.length >=1){
+        this.endptBt=false;
+      }else{
+        this.endptBt=true;
+      }
   }
   applyEndpointFilter(){
     var selectedEndPoints=[]
@@ -268,8 +339,15 @@ selectedVariant(data,index){
           selectedEndPoints.push(element.name)
         }
       })
-      this.selectedStartpoints.emit(selectedstartPoints);
-      this.selectedEndpoints.emit(selectedEndPoints);
+      if(this.appliedFilters.indexOf('EndPoint')==-1){
+        this.appliedFilters.push("EndPoint")
+      }
+      console.log(this.appliedFilters);
+      
+      var obj:any={startPoint:selectedstartPoints,endPoint:selectedEndPoints,}
+      this.selectedStartpoints.emit(obj);
+      // this.selectedEndpoints.emit(selectedEndPoints);
+
       this.applyFilterValue.emit(true)
   }
   onStartPoint(){
@@ -309,11 +387,81 @@ selectedVariant(data,index){
     this.seletedVariant=[];
     for (var i = 0; i < this.variantListarray.length; i++){
       if(this.variantListarray[i].selected === "active"){
-        this.seletedVariant.push(this.variantListarray[i].name)
-      }
+          this.seletedVariant.push(this.variantListarray[i].name)
+        }
       };
+
+        if(this.seletedVariant.length >= 1){
+          this.appliedFilters.push("Variant")
+        }
         this.selectedVariantOutput.emit(this.seletedVariant)
-        this.applyFilterValue.emit(true)
+        this.applyFilterValue.emit(true)  
+  }
+
+  removeTag(value){
+
+    for (var i = this.appliedFilters.length - 1; i >= 0; i--) {
+      if (this.appliedFilters[i] === value) {
+        this.appliedFilters.splice(i, 1);
+      }
+     }
+     if(value=="EndPoint"){
+       let selectedstartPoints=[];
+       let selectedEndPoints=[];
+       this.endptBt=true;
+
+      this.startPointArray.forEach(element => {
+          element.selected= "inactive";
+        selectedstartPoints.push(element.name)
+      })
+
+      this.endPointArray.forEach(element => {
+          element.selected= "inactive";
+        selectedEndPoints.push(element.name)
+      })
+
+      var obj:any={startPoint:selectedstartPoints,endPoint:selectedEndPoints,}
+      this.selectedStartpoints.emit(obj);
+
+     }else if(value=="Activity"){
+        this.seletedVariant=[];
+        for (var i = 0; i < this.variantListarray.length; i++){
+          if(this.variantListarray[i].selected === "active"){
+              this.seletedVariant.push(this.variantListarray[i].name)
+            }
+          };
+          for (var i = 0; i < this.dataValuesNames.length; i++){
+              this.dataValuesNames[i].selected = "inactive"
+            };
+        this.selectedNodes.emit(null);
+        this.selectedVariantOutput.emit(this.seletedVariant)
+
+     }else if(value=="Variant"){
+      this.seletedVariant=[];
+          for(var i = 0; i < this.variantListarray.length; i++){
+              this.variantListarray[i].selected = "inactive"
+              // this.seletedVariant.push(this.variantListarray[i].name)
+            };
+        this.seletedActivity=[];
+        let seletedActivity1=[];
+        for (var i = 0; i < this.dataValuesNames.length; i++){
+          if(this.dataValuesNames[i].selected === "active"){
+              seletedActivity1.push(this.dataValues[i].name)
+            }
+          };
+          if(seletedActivity1.length==0){
+              this.selectedNodes.emit(null)
+          }else{
+            for (var i = 0; i < this.dataValuesNames.length; i++){
+              if(this.dataValuesNames[i].selected === "inactive"){
+                  this.seletedActivity.push(this.dataValues[i].name)
+                }
+              };
+              this.selectedNodes.emit(this.seletedActivity)
+          }
+         
+          this.selectedVariantOutput.emit(this.seletedVariant)
+     }
   }
 
 } 

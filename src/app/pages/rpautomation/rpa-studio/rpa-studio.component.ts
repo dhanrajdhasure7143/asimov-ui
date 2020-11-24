@@ -21,6 +21,9 @@ export class RpaStudioComponent implements OnInit {
   public optionsVisible : boolean = true;
   public state:any;
   public botlist:any=[];
+  public rpaCategory:any;
+  public newRpaCategory:any;
+  public categaoryList:any=[];
   result:any = [];
   jsPlumbInstance;
   nodes = [];
@@ -64,7 +67,8 @@ export class RpaStudioComponent implements OnInit {
       botDescription:[""],
       botType:["", Validators.required],
       taskId:[""],
-      predefinedBot:["false"]
+      predefinedBot:["false"],
+      newCategoryName:[""]
   });
   this.loadbot=this.formBuilder.group({
    botType:["",Validators.required],
@@ -158,22 +162,26 @@ export class RpaStudioComponent implements OnInit {
 
   onCreateSubmit() {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
-    this.userFilter.name = [];
+    //this.userFilter.name = [];
     document.getElementById("create-bot").style.display ="none";
-    this.hiddenCreateBotPopUp = false
-    let temp : any={};
     this.model=this.insertbot.value;
-    console.log(this.model);
-    temp = this.model;
-    this.model = {};
-    this.tabsArray.push(temp);  
-    this.tabActiveId = temp.botName
-    console.log(this.tabsArray);
+    if(this.model.botDepartment=="others"){
+      this.saveRpaCategory().subscribe(data=>{
+        let catResponse : any;
+        catResponse=data;
+        this.model.botDepartment=catResponse.data.categoryId;
+        this.tabsArray.push(this.model);
+      });
+    }else{
+      this.tabsArray.push(this.model);
+    } 
+    this.tabActiveId = this.model.botName;
     this.insertbot.reset();
     
   }
 
   onCreate(taskId){
+    this.getCategoryList();
     this.insertbot.reset();
     this.insertbot.get("botDepartment").setValue("");
     this.insertbot.get("botType").setValue("");
@@ -194,6 +202,7 @@ export class RpaStudioComponent implements OnInit {
 
   onLoad()
   {
+    this.getCategoryList();
     this.loadbot.reset();
     this.loadbot.get("bot").setValue("");
     this.loadbot.get("botType").setValue("");
@@ -278,7 +287,18 @@ export class RpaStudioComponent implements OnInit {
     })
   }
   
+saveRpaCategory(){
+  let rpaCategory:any={"categoryName":"","categoryId":0, "createdAt":""};
+   rpaCategory["categoryName"] =this.insertbot.value.newCategoryName;
+ return this.rest.addCategory(rpaCategory);
+}
 
-  
+getCategoryList(){
+  this.rest.getCategoriesList().subscribe(data=>{
+    let catResponse : any;
+    catResponse=data
+    this.categaoryList=catResponse.data;
+  });
+}
 } 
 

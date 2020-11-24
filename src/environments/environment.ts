@@ -9,7 +9,9 @@ export const environment = {
   data_path:"/var/kafka",
 
   //  * DEV ENV URl's
-  pi_url: 'http://localhost:9192',
+
+  pi_url: 'http://pidev.epsoftinc.in',
+
   bps_url: 'http://bpsdev.epsoftinc.in',
   rpa_url: 'http://rpadev.epsoftinc.in',
   loopback_url: 'http://10.11.0.107:3000',

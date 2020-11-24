@@ -52,7 +52,7 @@ export class RestApiService{
   //password -Welcome@123
 
   getAccessToken(){
-    let data = {"userId":"raghavendra.basavaraju@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",nethan.price@guerrillamailblock.com
+    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -166,6 +166,19 @@ export class RestApiService{
       url=url+ct;
     })
     return await this.http.post(url,data,httpfileOptions);
+  }
+
+  listDBConnection(){
+    return this.http.get("/rpa-service/agent/get-connections")
+  }
+  addDBConnection(data:any){
+    return this.http.post('/rpa-service/agent/save-connection',data)
+  }
+  updateDBConnection(data:any){
+    return this.http.put('/rpa-service/agent/update-connection',data)
+  }
+  deleteDBConnection(data:any){
+    return this.http.post('/rpa-service/agent/delete-connection',data)
   }
 
   getUserPause(botId){

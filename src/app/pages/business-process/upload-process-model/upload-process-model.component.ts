@@ -346,6 +346,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
 
       _self.setUrlParam('linting', active);
     });
+    this[modeler_obj].on('element.changed', function(){
+      let now = new Date().getTime();
+      _self.isDiagramChanged = true;
+      if(now - _self.last_updated_time > 10*1000){
+        _self.autoSaveBpmnDiagram();
+        _self.last_updated_time = now;
+      }
+    })
     if(this.isShowConformance && !this.reSize){
       this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
         this.pivalues=res;
@@ -527,16 +535,16 @@ displayBPMN(){
     let _self = this;
     let bpmnModel={};
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-    bpmnModel["modifiedTimestamp"] = new Date();
+    // bpmnModel["modifiedTimestamp"] = new Date();
     bpmnModel["ntype"] = this.isShowConformance ? "bpmn":_self.saved_bpmn_list[_self.selected_notation]["ntype"];
     if(!(this.isShowConformance && !this.reSize)){
       bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
       bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
       if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
         bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-        bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
+       // bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
       }else{
-        bpmnModel["createdTimestamp"] = new Date();
+      //  bpmnModel["createdTimestamp"] = new Date();
       }
     }else{
       let autoSaveExists = _self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["processIntelligenceId"].toString() == _self.pid.toString();
@@ -544,7 +552,7 @@ displayBPMN(){
       bpmnModel["bpmnModelId"] = autoSaveExists ? autoSaveVersion["bpmnModelId"]:_self.randomNumber;
       bpmnModel["version"] = autoSaveExists ? autoSaveVersion["version"]:0;
       bpmnModel["processIntelligenceId"] = parseInt(this.pid);
-      bpmnModel["createdTimestamp"] = this.pivalues["createdTime"];
+     // bpmnModel["createdTimestamp"] = this.pivalues["createdTime"];
       if(autoSaveExists)
         bpmnModel["bpmnModelTempId"] = autoSaveVersion["bpmnModelTempId"];
     }
@@ -589,7 +597,19 @@ displayBPMN(){
 
   automate(){
     let selected_id = this.saved_bpmn_list[this.selected_notation].id;
-    this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
+    this.rest.getautomatedtasks(selected_id).subscribe((automatedtasks)=>{
+      Swal.fire(
+        'Tasks automated successfully!',
+        '',
+        'success'
+      );
+    })
+    //this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
+  }
+
+  orchestrate(){
+    let selected_id = this.saved_bpmn_list[this.selected_notation].id;
+    this.router.navigate(["/pages/serviceOrchestration/home"], { queryParams: { processid: selected_id }});
   }
 
   downloadFile(url){
@@ -788,7 +808,7 @@ displayBPMN(){
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     let sel_appr = this.approver_list[this.selected_approver];
     bpmnModel.approverEmail = sel_appr.userId;
-    bpmnModel.approverName = sel_appr.userId.split("@")[0];
+    bpmnModel.approverName = sel_appr.firstName+" "+sel_appr.lastName;
     if(sel_List){
       bpmnModel.userName = sel_List["userName"];
       bpmnModel.tenantId = sel_List["tenantId"];
@@ -882,7 +902,7 @@ displayBPMN(){
       }else{
         bpmnModel.bpmnModelId = this.randomNumber;
       }
-      bpmnModel.createdTimestamp = this.pivalues["createdTime"];
+     // bpmnModel.createdTimestamp = this.pivalues["createdTime"];
       bpmnModel.bpmnProcessStatus = "INPROGRESS";
       bpmnModel.notationFromPI = true;
     }else{
@@ -894,7 +914,7 @@ displayBPMN(){
         bpmnModel.id = sel_List['id'];
       else
         delete(bpmnModel.id);
-      bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
+     // bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
       bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
     }
     // this.initBpmnModeler();

@@ -1,12 +1,42 @@
+<!--
+<ngb-tabset>
+    <ngb-tab>
+
+    </ngb-tab>
+</ngb-tabset>
+
+<app-bot-status></app-bot-status>
+
 <ngb-tabset class="tabscomp">
     <ngb-tab title="Dashboard">
-      <ng-template ngbTabContent>
-          <app-bot-status></app-bot-status>
-      </ng-template>
+        <app-so-dashboard>
+        </app-so-dashboard>
+
     </ngb-tab>
-    <!--<ngb-tab class="img123" title="Bot-Management">
-      <ng-template ngbTabContent>
-          <app-bot-management></app-bot-management>
-      </ng-template>
-    </ngb-tab>-->
-  </ngb-tabset>
+</ngb-tabset>-->
+
+<ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
+
+
+<!--<app-bot-status></app-bot-status>-->
+
+<mat-tab-group [selectedIndex]="selectedTab">
+    <mat-tab label="Dashboard">
+        <app-so-dashboard>
+        </app-so-dashboard>
+    </mat-tab>
+    <mat-tab label="Orchestrator">
+        <app-so-automated-tasks>
+        </app-so-automated-tasks>
+    </mat-tab>
+    <mat-tab label="Bot Management">
+        <app-so-bot-management></app-so-bot-management>
+    </mat-tab>
+</mat-tab-group>
+<!--
+<mat-tab-group [selectedIndex]="selectedTab" class="secondary-tab-group has-header" [dynamicHeight]="true" mat-stretch-tabs>
+    <mat-tab label="Dashboard">
+        <app-so-dashboard>
+        </app-so-dashboard>
+    </mat-tab>
+  </mat-tab-group>  -->

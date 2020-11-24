@@ -33,7 +33,10 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule} from '@angular/material';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
+import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/combo-series-vertical.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +51,9 @@ import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatD
     PibpmnfilterComponent,
     XesdocumentComponent,
     D3flowchartComponent,
-    ProcessinsightsComponent
+    ProcessinsightsComponent,
+    ComboChartComponent, 
+    ComboSeriesVerticalComponent
   ],
   imports: [
     CommonModule,
@@ -73,7 +78,9 @@ import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatD
     MatSortModule,
     MatTableModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatTooltipModule,MatDialogModule
+    MatTooltipModule,MatDialogModule,
+    NgbModule,
+    NgxMaterialTimepickerModule
   ],
   providers:[PiHints],
 
