@@ -158,22 +158,7 @@
         font-weight: bold !important;
         /* font-size: 14px; */
     }
-    .mat-tab-label {
-        min-width: 90px !important;
-        height: 34px !important;
-        padding: 5px;
-        font-weight: normal !important;
-        font-size: 15px !important;
-    }
-    .mat-tab-label.mat-tab-label-active {
-        width: 35px !important;
-        padding: 5px;
-        color: #fff;
-        font-size: 15px !important;
-    }
+    
     textarea{
-        font-size: 15px;
-        margin: 19px 0px 0px 30px;
         font-family: Verdana, Geneva, Tahoma, sans-serif;
-        letter-spacing: 0.2px;
     }

@@ -35,7 +35,7 @@
     <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
     <div>
         <span class="err-msg"></span>
-        <mat-tab-group headerPosition="below" [(selectedIndex)] = "selectedTabIndex" (selectedTabChange)="displayXML($event)">
+        <mat-tab-group class="canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
             <mat-tab label="Notation">
                 <div class="row">
                     <div id="canvas" class="col-md-12"></div>
@@ -59,7 +59,7 @@
             </mat-tab>
             <mat-tab label="XML">
                 <div class="text-area">
-                    <textarea [(ngModel)]="xmlTabContent" rows="29" cols="150">
+                    <textarea [(ngModel)]="xmlTabContent" rows="22" cols="150">
                         {{xmlTabContent}}
                     </textarea>
                 </div>
