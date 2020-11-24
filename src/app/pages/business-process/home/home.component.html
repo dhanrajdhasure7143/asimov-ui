@@ -39,7 +39,7 @@
             <mat-expansion-panel-header class="dropdown_icon">
               <mat-panel-title>
                 <div class="row col-md-12" id="bpmn_list_row">
-                  <span>{{each_diag.bpmnProcessName ? each_diag.bpmnProcessName: '-'}}</span>
+                  <span [matTooltip]=each_diag.bpmnProcessName matTooltipClass="eiap_tooltip">{{each_diag.bpmnProcessName ? fitTableView(each_diag.bpmnProcessName): '-'}}</span>
                   <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
                   <span>{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</span>
                   <span>{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</span>
@@ -53,7 +53,7 @@
                   <span>
                     <i (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" title = "Click to send reminder mail to Approver" class="fa fa-envelope"></i>
                     <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" title ="Delete BPMNotation" class="glyphicon glyphicon-trash"></i>
-                    <i *ngIf="each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser">-</i>
+                    <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
                   </span>
                 </div>
               </mat-panel-title>

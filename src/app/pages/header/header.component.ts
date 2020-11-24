@@ -5,7 +5,7 @@ import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
 import { NgxSpinnerService } from "ngx-spinner";
 
-@Component({
+@Component({ 
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
@@ -52,9 +52,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.child_subscription = this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
     this.rpa.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
-
-      localStorage.setItem('userRole',this.userRole);
-    console.log("user role is",this.userRole)
+    localStorage.setItem('userRole',this.userRole);
     if(this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('User')){
       this.pages = [
         {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
@@ -62,10 +60,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
         {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
          ];
-
-
-     }
-     if(this.userRole.includes('RPA Admin')){
+    }
+    if(this.userRole.includes('RPA Admin')){
       if(this.pages.filter(f=>f.title === 'RPA Studio' ).length <= 0){
         this.pages.push({"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"})
       }
@@ -77,8 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       //   {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
 
       // ];
-
-     }
+    }
      if(this.userRole.includes('RPA Designer')){
       if(this.pages.filter(f=>f.title === 'RPA Studio' ).length <= 0){
         this.pages.push({"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"})

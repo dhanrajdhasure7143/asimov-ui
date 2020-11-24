@@ -102,37 +102,29 @@ export class RpaStudioComponent implements OnInit {
       console.log(data);
       data1 = data
       this.userRole = localStorage.getItem("userRole")
-      if(this.userRole.includes('User')){
-        data1.General.forEach(element => {
-          let temp:any = {
-            name : element.name,
-            path : 'data:' + 'image/png' + ';base64,' + element.icon,
-            tasks: element.taskList
-          };
-          if(temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'){
-          this.templateNodes.push(temp)
-          }
-          })
-        
-      }else{
-        data1.General.forEach(element => {
-          let temp:any = {
-            name : element.name,
-            path : 'data:' + 'image/png' + ';base64,' + element.icon,
-            tasks: element.taskList
-          };
-          this.templateNodes.push(temp)
-          })
-       
-      data1.Advanced.forEach(element => {
+      this.userRole = this.userRole.split(',');
+      data1.General.forEach(element => {
         let temp:any = {
           name : element.name,
           path : 'data:' + 'image/png' + ';base64,' + element.icon,
           tasks: element.taskList
         };
-        this.templateNodes.push(temp)
+        if((this.userRole.includes('User') && 
+              (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer')) 
+            || !this.userRole.includes('User')){
+          this.templateNodes.push(temp)
+        }
+      })
+      if(!this.userRole.includes('User')){
+        data1.Advanced.forEach(element => {
+          let temp:any = {
+            name : element.name,
+            path : 'data:' + 'image/png' + ';base64,' + element.icon,
+            tasks: element.taskList
+          };
+          this.templateNodes.push(temp)
         })
-      }     
+      }
     })
   }
 

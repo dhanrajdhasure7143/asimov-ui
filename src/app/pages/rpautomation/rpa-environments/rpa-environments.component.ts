@@ -90,14 +90,15 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
   ngOnInit() {
     this.spinner.show();
+    this.passwordtype1=false;
+    this.passwordtype2=false;
     //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
     this.getallData();
     
     document.getElementById("createenvironment").style.display='none';
     document.getElementById("update-popup").style.display='none';
-    this.passwordtype1=false;
-    this.passwordtype2=false;
+    
 
   }
 

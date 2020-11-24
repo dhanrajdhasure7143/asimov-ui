@@ -23,8 +23,8 @@
 .btn_row{
   position: absolute;
   bottom: 10px;
-  width: 88%;
-  left: 98px;
+  width: 75%;
+  right: 80px;
 }
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
@@ -270,7 +270,7 @@ mat-expansion-panel{
   background-color: orange;
 }
 .mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
-  background-color: #f8dafe;
+  background-color: transparent;
   color: black !important;
 }
 .changeCount{
@@ -673,7 +673,7 @@ background-color: #3ea307 !important;
 
 }
 .keyboard_label_style{
-  font-size: 17px;
+  font-size: 15px;
   padding-right: 20px;
 }
 .keyboard_header_shortcuts{

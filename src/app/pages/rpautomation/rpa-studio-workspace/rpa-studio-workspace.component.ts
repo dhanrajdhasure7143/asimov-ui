@@ -8,7 +8,7 @@ import jsPDF from 'jspdf';
 import { NotifierService } from 'angular-notifier';
 import { RpaDragHints } from '../model/rpa-workspace-module-hints';
 import { DataTransferService } from "../../services/data-transfer.service";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
 import domtoimage from 'dom-to-image';
@@ -21,7 +21,7 @@ import * as $ from 'jquery';
   styleUrls: ['./rpa-studio-workspace.component.css']
 })
 export class RpaStudioWorkspaceComponent implements AfterViewInit {
-
+  recordandplayid:any;
   jsPlumbInstance;
   public stud: any = [];
   public optionsVisible: boolean = true;
@@ -67,6 +67,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   Image:any;
   files_data:any=[];
   fileobj:any;
+  options:any=[];
+  restapiresponse:any;
   constructor(private rest: RestApiService, private notifier: NotifierService, private hints: RpaDragHints, private dt: DataTransferService, private http: HttpClient, private child_rpa_studio: RpaStudioComponent,) {
 
   }
@@ -384,7 +386,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
       connectorClass: "path",
       connectorOverlays: [['Arrow', { width: 10, length: 10, location: 1 }]],
-      
+
 
     };
 
@@ -457,13 +459,13 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         let task=this.finaldataobjects.find(task => task.nodeId == nodeId);
         if(task!=undefined)
         {
-          this.finaldataobjects.splice(this.finaldataobjects.indexOf(task),1)  
+          this.finaldataobjects.splice(this.finaldataobjects.indexOf(task),1)
         }
       }
     });
   }
 
-  
+
 
 
 
@@ -521,9 +523,29 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
             taskdata.attributes.forEach(element => {
-              finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+              if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+              {
+                if(element.attrValue!='' && element.attrValue!=undefined)
+                {
+                  let attr_val=JSON.parse(element.attrValue);
+                  let attrnames=Object.getOwnPropertyNames(attr_val);
+                  finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                }
+              }
+              else
+              {
+                finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+              }
+
             });
-            this.response(finalattributes,node)
+            if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
+            {
+              this.addoptions(finalattributes, node);
+            }
+            else
+            {
+              this.response(finalattributes,node);
+            }
           });
         }
         else {
@@ -533,8 +555,27 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         }
       }
       else {
+
         this.rest.attribute(node.selectedNodeId).subscribe((data) => {
-          this.response(data,node)
+          let attr_response:any=data;
+          if(node.selectedNodeTask=="Record & Play")
+          {
+              console.log(node);
+             this.recordandplayid="randp__"+node.id;
+             console.log("======================================")
+             //console.log(this.recordandplayid);
+             //document.getElementById(this.recordandplayid).style.display='block';
+             console.log("======================================")
+          }
+          else if(attr_response.find(attr=>attr.type=='restapi')!=undefined)
+          {
+             this.addoptions(attr_response, node);
+          }
+          else
+          {
+            this.response(attr_response,node);
+          }
+
         })
 
       }
@@ -544,11 +585,35 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         icon: "warning",
         title: "Please select task",
         showConfirmButton: true,
-        
+
       })
     }
   }
 
+  addoptions(attributes,node)
+  {
+      let token={​​​​​
+        headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
+      }​​​​
+      let restapi_attr=attributes.find(attr => attr.type=='restapi');
+      this.http.get(restapi_attr.dependency,token).subscribe(data=>
+      {
+        this.restapiresponse=data
+        let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
+        let options:any=[];
+        this.restapiresponse.forEach(data_obj=>{
+          let key={
+              key:data_obj[attrnames[0]],
+              label:data_obj[attrnames[1]],
+            }
+            options.push(key);
+        })
+        attributes.find(attr => attr.type=='restapi').options=options;
+        this.response(attributes,node);
+      });
+
+
+  }
 
 
 
@@ -569,7 +634,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           element.onUpload = this.onUpload.bind(this)
         }
         if (element.type == "dropdown") {
-          element.onChange = this.onChange.bind(this)
+          ///element.onChange = this.onChange.bind(this)
         }
       });
       this.formVales = data
@@ -591,7 +656,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     let data:any={
       file:event.target.files[0],
       attrId:field.id,
-      nodeId:field.nodeId, 
+      nodeId:field.nodeId,
     }
     this.fileobj=event.target.files[0];
     let attr_data=this.files_data.find(check=>(check.nodeId==field.nodeId && field.id==check.attrId))
@@ -605,7 +670,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
   }
 
-  
+
   onChange(e) {
     console.log(e)
     this.fields.map(ele => {
@@ -655,6 +720,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         {
           objAttr["attrValue"]="false";
         }
+        else if(ele.type=="restapi")
+        {
+          if(this.fieldValues[ele.name]!='' && this.fieldValues[ele.name]!=undefined)
+          {
+            let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
+            objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name]==data[attrnames[0]]));
+          }
+        }
         else if(ele.type=="multipart")
         {
           if(this.fieldValues[ele.name]=="")
@@ -667,11 +740,11 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
               if(attval!=undefined)
               {
                 objAttr["attrValue"]=attval.attrValue;
-              }   
+              }
             }else
             {
               objAttr["attrValue"]=this.fieldValues[ele.name];
-            } 
+            }
           }
           else
           {
@@ -680,7 +753,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
             if(file_res!=undefined)
             {
               objAttr["file"]=file_res.file;
-              objAttr["attrValue"]=file_res.file.name;      
+              objAttr["attrValue"]=file_res.file.name;
             }
           }
         }
@@ -734,7 +807,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       "scheduler": this.scheduler,
       "sequences": this.getsequences(),
     }
-    
+
     if(this.checkorderflag==false)
     {
       return false;
@@ -745,20 +818,19 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
   }
 
-
- async uploadfile(envids)
+  async uploadfile(envids)
   {
      let tasks:any=[];
      tasks=this.finaldataobjects.filter(data=>data.tMetaId==64);
       for(let filedata of tasks)
       {
-        let filepath:any=filedata.attributes.find(data_file_rpa=>(data_file_rpa.metaAttrId==278));  
+        let filepath:any=filedata.attributes.find(data_file_rpa=>(data_file_rpa.metaAttrId==278));
         console.log(filepath);
         if(filepath!=undefined)
         {
           console.log(filepath);
           console.log(this.saveBotdata.envIds);
-          
+
           let form = new FormData();
           let file = new Blob([filepath.file]);
           form.append("file",filepath.file);
@@ -826,7 +898,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       "sequences": this.getsequences()
     }
     if(this.checkorderflag==false)
-    {      
+    {
       return false;
     }
     else
@@ -918,7 +990,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.fields = []
   }
 
-  downloadPng() 
+  downloadPng()
   {
     var element=document.getElementById(this.dragareaid)
     domtoimage.toPng(element)
@@ -934,7 +1006,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
 
   downloadJpeg() {
-    
+
     var element=document.getElementById(this.dragareaid)
     domtoimage.toPng(element,{ quality: 0.95,background: "white"})
     .then(function (dataUrl) {
@@ -953,7 +1025,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     var element=document.getElementById(this.dragareaid)
     domtoimage.toPng(element)
       .then(function (dataUrl) {
-      let img=dataUrl;  
+      let img=dataUrl;
       var doc = new jsPDF('l', 'mm', 'a4', 1);
       const bufferX = 5;
       const bufferY = 5;
@@ -1084,14 +1156,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         }
         this.rest.getoutputbox(postdata).subscribe(outdata => {
           this.outputboxresult = outdata;
-          if (this.SelectedOutputType == "Text") 
+          if (this.SelectedOutputType == "Text")
           {
             let data: any = outdata
             let textval:String=JSON.stringify(data[0].Value);
             this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
           }
           if(this.SelectedOutputType=="Image")
-          { 
+          {
             let data=this.outputboxresult[0].Value.split(':');
             this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
           }
@@ -1116,7 +1188,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
 
   add_order(object) {
-    
+
     let end = "STOP_" + this.finalbot.botName;
     this.final_tasks.push(object);
     console.log(object)
@@ -1125,7 +1197,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.checkorderflag=false;
       return;
     }
-    if (object.outSeqId == end) 
+    if (object.outSeqId == end)
     {
       console.log(end)
       console.log(object.outSeqId)
@@ -1133,7 +1205,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
     else {
       object = this.finaldataobjects.find(object2 => object2.nodeId.split("__")[1] == object.outSeqId);
-      if(object == undefined) 
+      if(object == undefined)
       {
         this.checkorderflag=false;
         return;
@@ -1161,6 +1233,13 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       }
     }
     return;
+  }
+
+
+
+  start_automation()
+  {
+    alert("start recording")
   }
 
 

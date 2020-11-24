@@ -116,7 +116,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
     cronFlavor: "standard"
   }
-  userRole: string;
+  userRole;
   isButtonVisible: boolean;
   constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
     private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent,
@@ -130,16 +130,8 @@ export class RpaStudioActionsComponent implements OnInit {
 
   ngOnInit() {
     this.userRole = localStorage.getItem("userRole")
-    
-    if(this.userRole.includes('SuperAdmin')){
-      this.isButtonVisible = true;
-    }else if(this.userRole.includes('Admin')){
-      this.isButtonVisible = true;
-    }else if(this.userRole.includes('RPA Admin')){
-      this.isButtonVisible = true;
-    }else{
-      this.isButtonVisible = false;
-    }
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin');
     this.startbot=false;
     this.pausebot=false;
     this.resumebot=false;

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, HostListener, ViewChild, SimpleChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +15,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   @Input() buttonName:string = "Proceed";
   @Input() data:string;
   @Output() proceed = new EventEmitter<any>();
+  @Input() uploadedFileName?:string;
 
   processName = "";
   categoryName = "";
@@ -26,10 +27,21 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   botDescription = "";
   notationType = "";
   isBpmnModule: boolean = false;
+  uploadedFileSplit:any=[];
+  uploadedFileExtension:string;
 
   @ViewChild('processCategoryForm', {static: true}) processForm: NgForm;
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript) { }
 
+  ngOnChanges(changes: SimpleChanges) {
+    let change = changes['uploadedFileName'];
+    if(!change.firstChange){
+      this.uploadedFileName = change.currentValue;
+      this.uploadedFileSplit = this.uploadedFileName.split('.');
+      this.uploadedFileExtension = this.uploadedFileSplit[this.uploadedFileSplit.length - 1];
+      this.notationType = this.uploadedFileExtension;
+    }
+  }
   ngOnInit() {
     if(this.data){
       let data_arr = this.data.split("@");
@@ -62,7 +74,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
 
   proceedChanges(form){
     //console.log(this.categoriesList.data['categoryName'].includes(this.othercategory));
-    
+
     // if(this.categoryName =='other'){
     //   if(this.categoriesList.data.includes(this.othercategory) == true){
     //     console.log("exusted");
@@ -71,7 +83,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
     // }
     var found = false;
     if (this.categoryName == 'other') {
-      
+
       for (var i = 0; i < this.categoriesList.data.length; i++) {
         if (this.categoriesList.data[i].categoryName == this.othercategory) {
           found = true;
@@ -81,7 +93,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       }
     }
     console.log("in else", found);
-    
+
     if (found == false) {
       this.saveCategory();
       let data;
@@ -100,6 +112,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       form.reset();
     }
     this.isotherCategory = false;
+    this.uploadedFileExtension = undefined;
     var modal = document.getElementById('myModal');
     modal.style.display="none";
   }
