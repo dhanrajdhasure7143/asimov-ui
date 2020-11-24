@@ -1,6 +1,8 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { DataTransferService } from '../../services/data-transfer.service';
@@ -41,19 +43,13 @@ export class BpsHomeComponent implements OnInit {
 
   ngOnInit(){
     this.userRole = localStorage.getItem("userRole")
-    
+    this.userRole = this.userRole.split(',');
     if(this.userRole.includes('SuperAdmin')){
       this.isButtonVisible = true;
-    }else if(this.userRole.includes('Admin')){
+    }else if(this.userRole.includes('Admin') || this.userRole.includes('Process Architect')){
       this.isButtonVisible = true;
       this.isAdminUser = true;
-    }else if(this.userRole.includes('Process Architect')){
-      this.isButtonVisible = true;
-      this.isApproverUser = true;
-    }else{
-      this.isButtonVisible = false;
     }
-
     this.isLoading = true;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/home","title":"BPMN Upload"});
@@ -129,12 +125,18 @@ export class BpsHomeComponent implements OnInit {
     let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
-    this.bpmnModeler = new BpmnJS({
+    let notationJson = {
       container: '.diagram_container'+i,
       keyboard: {
         bindTo: window
       }
-    }); 
+    }
+    if(eachBPMN.ntype == "bpmn")
+      this.bpmnModeler = new BpmnJS(notationJson);
+    else if(eachBPMN.ntype == "cmmn")
+      this.bpmnModeler = new CmmnJS(notationJson);
+    else if(eachBPMN.ntype == "dmn")
+      this.bpmnModeler = new DmnJS(notationJson); 
     if(eachBPMN.bpmnProcessStatus != "APPROVED" && eachBPMN.bpmnProcessStatus != "REJECTED")
       this.filterAutoSavedDiagrams(eachBPMN.bpmnModelId);
     if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"])
