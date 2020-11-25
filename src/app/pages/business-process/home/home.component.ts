@@ -50,6 +50,7 @@ export class BpsHomeComponent implements OnInit {
       this.isButtonVisible = true;
       this.isAdminUser = true;
     }
+    this.isApproverUser = this.userRole.includes('Process Architect')
     this.isLoading = true;
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/home","title":"BPMN Upload"});
