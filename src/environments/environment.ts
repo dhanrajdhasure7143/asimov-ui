@@ -4,16 +4,16 @@
 
 export const environment = {
   production: false,
-  pi_url: 'http://eiapdemoapi.epsoftinc.com:96/prcintel',
-  bps_url: 'http://eiapdemoapi.epsoftinc.com:96/bpstudio',
-  rpa_url: 'http://eiapdemoapi.epsoftinc.com:96/wfrpa',
+  pi_url: 'https://eiapdemoapi.epsoftinc.com:96/prcintel',
+  bps_url: 'https://eiapdemoapi.epsoftinc.com:96/bpstudio',
+  rpa_url: 'https://eiapdemoapi.epsoftinc.com:96/wfrpa',
   loopback_url: 'http://10.11.0.107:3000',
-  idm_url:'http://eiapdemoapi.epsoftinc.com:96/idm',
-  auth_url: "http://eiapdemoapi.epsoftinc.com:96/authservices",
-  pi_node_url: "http://eiapdemoapi.epsoftinc.com:96/pinode",
-  platform_url:'http://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
+  idm_url:'https://eiapdemoapi.epsoftinc.com:96/idm',
+  auth_url: "https://eiapdemoapi.epsoftinc.com:96/authservices",
+  pi_node_url: "https://eiapdemoapi.epsoftinc.com:96/pinode",
+  platform_url:'https://eiapdemoapi.epsoftinc.com:96/aiotalplatform',
   schema_registry_url:"http://172.16.0.60:8081",
-  alerts_url:'http://eiapdemoapi.epsoftinc.com:96/alerts',
+  alerts_url:'https://eiapdemoapi.epsoftinc.com:96/alerts',
 
  // Aiotal redirection urls 
   myaccount_url : "http://eiapclouddemo.epsoftinc.com:86/#/activation",
