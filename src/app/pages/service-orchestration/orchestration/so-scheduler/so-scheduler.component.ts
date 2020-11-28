@@ -42,8 +42,8 @@ export class SoSchedulerComponent implements OnInit {
   isCronDisabled = false;
   picker1;
   picker2;
-  starttime:any;
-  endtime:any;
+  starttime:any="00:00";
+  endtime:any="23:59";
   schedules:any=[];
   startdate:any= new Date();
   enddate:any;
@@ -99,11 +99,13 @@ export class SoSchedulerComponent implements OnInit {
   {
     if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined)
     {
+      let starttime=this.starttime.split(":")
+      let endtime=this.endtime.split(":")
       let data={
         intervalId:this.generateid,
         scheduleInterval:this.cronExpression,
-        startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+this.starttime.hour+","+this.starttime.minute,
-        endDate:this.enddate.getDate()+","+(this.enddate.getMonth()+1)+","+this.enddate.getFullYear()+","+this.endtime.hour+","+this.endtime.minute,
+        startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
+        endDate:this.enddate.getDate()+","+(this.enddate.getMonth()+1)+","+this.enddate.getFullYear()+","+ endtime[0]+","+ endtime[1],
         timeZone:this.timezone,
         save_status:"unsaved",
         check:false,
