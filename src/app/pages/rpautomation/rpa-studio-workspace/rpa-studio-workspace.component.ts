@@ -69,6 +69,9 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   fileobj:any;
   options:any=[];
   restapiresponse:any;
+  rp_url:string;
+  recordedcode:any;
+  finalcode:any;
   constructor(private rest: RestApiService, private notifier: NotifierService, private hints: RpaDragHints, private dt: DataTransferService, private http: HttpClient, private child_rpa_studio: RpaStudioComponent,) {
 
   }
@@ -538,7 +541,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
               }
 
             });
-            if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
+            if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
+            {
+              this.formVales = finalattributes;
+              this.update_record_n_play(finalattributes, node)
+            }
+            else if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
             {
               this.addoptions(finalattributes, node);
             }
@@ -560,12 +568,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           let attr_response:any=data;
           if(node.selectedNodeTask=="Record & Play")
           {
-              console.log(node);
-             this.recordandplayid="randp__"+node.id;
-             console.log("======================================")
-             //console.log(this.recordandplayid);
-             //document.getElementById(this.recordandplayid).style.display='block';
-             console.log("======================================")
+
+              this.formVales = attr_response;
+              this.recordandplayid="recordandplay_"+this.finalbot.botName+"_"+node.id;
+              document.getElementById('recordandplay').style.display='block';
           }
           else if(attr_response.find(attr=>attr.type=='restapi')!=undefined)
           {
@@ -590,6 +596,18 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
   }
 
+
+
+  update_record_n_play(finalattributes, node)
+  {
+    if(finalattributes.find(attr=>attr.taskId==71).value!=undefined)
+    {
+      $("#record_n_play").val(finalattributes.find(attr=>attr.taskId==71).value);
+      document.getElementById('recordandplay').style.display='block';
+
+    }
+
+  }
   addoptions(attributes,node)
   {
       let token={​​​​​
@@ -687,6 +705,39 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
 
 
+  recording(command)
+  {
+      ///let editorExtensionId="cgmlkfjpbibldanihfidkfbmmkemphpn";
+      let editorExtensionId="efhogiiggfblodigpphpedpbkclgfcje"
+       window["chrome"].runtime.sendMessage(editorExtensionId, {url: this.rp_url,data:command},
+        function(response) {
+          let code:any;
+          code=response;
+          let completecode="describe('My First Test', () => { \n it('Test case', () => { \n";
+          code.code.codeBlocks.forEach(statment=>{
+            completecode=completecode+statment.value+"\n";
+          });
+          completecode=completecode+"}) \n })";
+          $("#record_n_play").val(completecode);
+        });
+  }
+
+  submitcode()
+  {
+    console.log(this.finalcode)
+    let data={
+      "codeSnippet":$("#record_n_play").val()
+    }
+    console.log(data);
+    this.close_record_play();
+    this.onFormSubmit(data);
+  }
+
+
+
+  close_record_play(){
+    document.getElementById('recordandplay').style.display='none';
+  }
 
 
   onFormSubmit(event) {
@@ -741,7 +792,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
               {
                 objAttr["attrValue"]=attval.attrValue;
               }
-            }else
+            }
+            else
             {
               objAttr["attrValue"]=this.fieldValues[ele.name];
             }

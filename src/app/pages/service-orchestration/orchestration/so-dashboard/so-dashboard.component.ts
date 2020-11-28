@@ -85,13 +85,14 @@ export class SoDashboardComponent implements OnInit {
     this.rest.getProcessStatistics().subscribe(data => { this.usageData = data;
             console.log(this.usageData);
             let datacha = Object.keys(data);
+            console.log(datacha);
             if(datacha[0] != 'errorMessage' && datacha[1] != 'errorCode')
             {
               this.chart2 = new Chart('canvas1', {
               type: 'pie',
               // percentageInnerCutout: 90,
               data: {
-                labels: Object.keys(this.usageData),
+                labels: ["In Progress","Pending","Approved","Hold","Rejected"],
                 datasets: [
                   {
                     data: Object.values(this.usageData),
@@ -215,15 +216,20 @@ export class SoDashboardComponent implements OnInit {
             },
             tooltips:{
               enabled:true
-            }
-          }
+            },
+
+          scales: {
+            yAxes: [{
+              ticks: {
+                precision:0,
+              }
+            }]
+          },
+          },
+
         });
 
       })
-      /*data_array.forEach(process=>{
-          obj[process.processName]=task_array.filter(count=>count.processId == process.processId).length;
-          obj_array[i++]='green';
-      })*/
 
       })
   }
@@ -263,11 +269,12 @@ export class SoDashboardComponent implements OnInit {
           if(bot_obj2.coordinates[j]==undefined)
           {
             Runs.push(0)
-          }else
+          }
+          else
           {
             Runs.push(bot_obj2.coordinates[j].timeDuration)
           }
-          console.log(Runs);
+          //console.log(Runs);
         }
         let data_set:any={
           label:"R"+(j+1),
@@ -308,237 +315,6 @@ export class SoDashboardComponent implements OnInit {
 
   }
 
-
-/*
-  getprocessruntime()
-  {
-    console.log("=======================================================================|===========================")
-    var chart = new Chart('canvas4', {
-      type: 'bar',
-      data: {
-         labels: ['Standing costs', 'Running costs'], // responsible for how many bars are gonna show on the chart
-         // create 12 datasets, since we have 12 items
-         // data[0] = labels[0] (data for first bar - 'Standing costs') | data[1] = labels[1] (data for second bar - 'Running costs')
-         // put 0, if there is no data for the particular bar
-         datasets: [{
-            label: 'Washing and cleaning',
-            data: [0, 8],
-            backgroundColor: '#22aa99'
-         }, {
-            label: 'Traffic tickets',
-            data: [0, 2],
-            backgroundColor: '#994499'
-         }, {
-            label: 'Tolls',
-            data: [0, 1],
-            backgroundColor: '#316395'
-         }, {
-            label: 'Parking',
-            data: [5, 2],
-            backgroundColor: '#b82e2e'
-         }, {
-            label: 'Car tax',
-            data: [0, 1],
-            backgroundColor: '#66aa00'
-         }, {
-            label: 'Repairs and improvements',
-            data: [0, 2],
-            backgroundColor: '#dd4477'
-         }, {
-            label: 'Maintenance',
-            data: [6, 1],
-            backgroundColor: '#0099c6'
-         }, {
-            label: 'Inspection',
-            data: [0, 2],
-            backgroundColor: '#990099'
-         }, {
-            label: 'Loan interest',
-            data: [0, 3],
-            backgroundColor: '#109618'
-         }, {
-            label: 'Depreciation of the vehicle',
-            data: [0, 2],
-            backgroundColor: '#109618'
-         }, {
-            label: 'Fuel',
-            data: [0, 1],
-            backgroundColor: '#dc3912'
-         }, {
-            label: 'Insurance and Breakdown cover',
-            data: [4, 0],
-            backgroundColor: '#3366cc'
-         }]
-      },
-      options: {
-         responsive: false,
-         legend: {
-            position: 'right' // place legend on the right side of chart
-         },
-         scales: {
-            xAxes: [{
-               stacked: true // this should be set to make the bars stacked
-            }],
-            yAxes: [{
-               stacked: true // this also..
-            }]
-         }
-      }
-   });
-
-  }
-*/
-
 }
 
-
-
-
-
-/*
-
-  getgraph()
-  {
-
-    let data:any= {
-      chart: {
-          type: 'column'
-      },
-      title: {
-          text: 'Bot Performance'
-      },
-      xAxis: {
-          //categories: this.botnames,
-          categories: ["HttpSeviceDemo","Version_Switching","Sanity_Check","Acounts_payable","Product_Review_Analysis"],
-      },
-      yAxis: {
-          min: 0,
-          title: {
-              text: 'Time Duration(ms)'
-          },
-          stackLabels: {
-              enabled: true,
-              style: {
-                  fontWeight: 'bold',
-                  color: ( // theme
-                      Highcharts.defaultOptions.title.style &&
-                      Highcharts.defaultOptions.title.style.color
-                  ) || 'gray'
-              }
-          }
-      },
-      legend: {
-          align: 'right',
-          x: -30,
-          verticalAlign: 'top',
-          y: 25,
-          floating: true,
-          backgroundColor:
-              Highcharts.defaultOptions.legend.backgroundColor || 'white',
-          borderColor: '#CCC',
-          borderWidth: 1,
-          shadow: false
-      },
-      tooltip: {
-          headerFormat: '<b>{point.x}</b><br/>',
-          pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-      },
-      plotOptions: {
-          column: {
-              stacking: 'normal',
-              dataLabels: {
-                  enabled: true
-              }
-          }
-      },
-     series: [{
-          name: 'RunId-3',
-          data: [5, 3, 4, 7, 2]
-        }, {
-          name: 'RunId-2',
-          data: [2, 2, 3, 2, 1]
-        }, {
-          name: 'RunId-1',
-          data: [3, 4, 4, 2, 5]
-        }]
-
-       // series:this.timestamps,
-      }
-
-    Highcharts.chart('mybotdata', data);
-  }
-
-
-  getgraph2()
-  {
-
-    let data:any= {
-      chart: {
-          type: 'column'
-      },
-      title: {
-          text: 'Bot Performance'
-      },
-      xAxis: {
-          //categories: this.botnames,
-          categories: ["HttpSeviceDemo","Version_Switching","Sanity_Check","Acounts_payable","Product_Review_Analysis"],
-      },
-      yAxis: {
-          min: 0,
-          title: {
-              text: 'Time Duration(ms)'
-          },
-          stackLabels: {
-              enabled: true,
-              style: {
-                  fontWeight: 'bold',
-                  color: ( // theme
-                      Highcharts.defaultOptions.title.style &&
-                      Highcharts.defaultOptions.title.style.color
-                  ) || 'gray'
-              }
-          }
-      },
-      legend: {
-          align: 'right',
-          x: -30,
-          verticalAlign: 'top',
-          y: 25,
-          floating: true,
-          backgroundColor:
-              Highcharts.defaultOptions.legend.backgroundColor || 'white',
-          borderColor: '#CCC',
-          borderWidth: 1,
-          shadow: false
-      },
-      tooltip: {
-          headerFormat: '<b>{point.x}</b><br/>',
-          pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-      },
-      plotOptions: {
-          column: {
-              stacking: 'normal',
-              dataLabels: {
-                  enabled: true
-              }
-          }
-      },
-     series: [{
-          name: 'RunId-3',
-          data: [5, 3, 4, 7, 2]
-        }, {
-          name: 'RunId-2',
-          data: [2, 2, 3, 2, 1]
-        }, {
-          name: 'RunId-1',
-          data: [3, 4, 4, 2, 5]
-        }]
-
-       // series:this.timestamps,
-      }
-
-
-    Highcharts.chart("issue", data);
-  }
-*/
 

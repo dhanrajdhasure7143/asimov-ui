@@ -3,3 +3,8 @@ select {
     border-right: none;
     border-left: none;
 }
+
+#sch .ngb-tp-input-container input[type="text"] {
+    width: 55px !important;
+    /* text-align: center; */
+}
