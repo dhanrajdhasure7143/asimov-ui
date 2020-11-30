@@ -716,6 +716,7 @@ displayBPMN(){
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     var CmmnCamundaModdleDescriptor = require("camunda-cmmn-moddle/resources/camunda.json");
     var DmnCamundaModdleDescriptor = require("camunda-dmn-moddle/resources/camunda.json");
+    this.keyboardLabels=this.shortcut[this.selectedNotationType];
     if(this.selectedNotationType == "cmmn"){
       this[modeler_obj] = new CmmnJS({
         additionalModules: [
