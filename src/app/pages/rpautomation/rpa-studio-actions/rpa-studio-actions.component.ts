@@ -44,9 +44,9 @@ export class RpaStudioActionsComponent implements OnInit {
   public botverid:any;
   public resplogbyrun:any;
   public logresponse:any=[];
-  displayedColumns: string[] = ['run_id','version','start_date','start_time','end_date' ,'end_time', "bot_status"];
+  displayedColumns: string[] = ['run_id','version','start_date','end_date','start_time' ,'end_time', "bot_status"];
   Viewloglist:MatTableDataSource<any>;
-  displayedColumns1: string[] = ['task_name', 'status','start_time','start_date','end_time','end_date','error_info' ];
+  displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','start_time','end_time','error_info' ];
   logbyrunid:MatTableDataSource<any>; 
   
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
