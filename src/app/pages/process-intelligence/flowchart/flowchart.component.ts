@@ -1161,7 +1161,8 @@ closeNav() { // Variant list Close
       this.isSingleTraceBPMN = false;
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
-      this.performanceValue=false
+      this.performanceValue=false;
+      this.options = Object.assign({}, this.options, {disabled: false});
   }
 
   resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
