@@ -12,3 +12,9 @@
 .example-card {
     padding: 40px;
 }
+
+.graph-card {
+    position: relative;
+    width: 100% !important;
+    height: 400px !important;
+}

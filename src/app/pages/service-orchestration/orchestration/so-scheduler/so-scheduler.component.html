@@ -61,28 +61,28 @@
                 <br>
                 <div class="text-right">
                     <span style="padding:5px">
-                        <button [disabled]="!(flags.startflag)" (click)="start_schedule()" >
+                        <button [disabled]="!(flags.startflag)"   mat-mini-fab color="basic"   (click)="start_schedule()" >
                           <i class="fa fa-play"></i>
                         </button>
                       </span>
                     <span style="padding:5px">
-                        <button [disabled]="!(flags.pauseflag)" (click)="pause_schedule()">
+                        <button [disabled]="!(flags.pauseflag)"   mat-mini-fab color="basic"   (click)="pause_schedule()">
                           <i class="fa fa-pause"></i>
                         </button>
                       </span>
                     <span style="padding:5px">
-                        <button  [disabled]="!(flags.resumeflag)" (click)="resume_schedule()">
+                        <button  [disabled]="!(flags.resumeflag)"   mat-mini-fab color="basic"   (click)="resume_schedule()">
                           <i class="fa fa-play-circle"></i>
                         </button>
                       </span>
 
                     <span style="padding:5px">
-                       <button [disabled]="!(flags.stopflag)" (click)="stop_schedule()">
+                       <button [disabled]="!(flags.stopflag)"   mat-mini-fab color="basic"   (click)="stop_schedule()">
                         <i class="fa fa-stop"></i>
                         </button>
                       </span>
                     <span style="padding:5px">
-                      <button [disabled]="!(flags.deleteflag)" (click)="delete_schedule()">
+                      <button [disabled]="!(flags.deleteflag)"   mat-mini-fab color="basic"   (click)="delete_schedule()">
                         <i class="fa fa-trash"></i>
                       </button>
                     </span>
