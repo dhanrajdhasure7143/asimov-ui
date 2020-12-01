@@ -4,6 +4,13 @@
 .success-info{
     color: rgb(67, 160, 67);
 }
+i{
+    font-size: 13px;
+    margin-left: 6px;
+}
+.successful-deploy{
+    display: flex;
+}
 .successful-deploy a:link, a:active, a:visited, a:hover{
     outline: none;
     text-decoration: none;
