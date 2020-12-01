@@ -11,3 +11,7 @@ select {
     border-right: none;
     border-left: none;
 }
+
+.bg-color {
+    background-color: rgb(241, 240, 240);
+}

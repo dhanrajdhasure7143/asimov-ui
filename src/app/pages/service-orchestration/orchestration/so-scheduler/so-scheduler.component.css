@@ -15,14 +15,3 @@ cron-time-picker div.ng-star-inserted {
     padding: 0px;
     margin: 0px;
 }
-
-span button:disabled {
-    background: transparent !important;
-    color: grey !important;
-    font-size: 20px;
-}
-
-span button {
-    color: blue !important;
-    font-size: 20px;
-}

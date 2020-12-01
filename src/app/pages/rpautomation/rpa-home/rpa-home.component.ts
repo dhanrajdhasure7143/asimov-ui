@@ -175,19 +175,29 @@ export class RpaHomeComponent implements OnInit {
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
-      //this.dataSource1.data = response;
-     /* this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
+     this.dataSource1.data = response;
+     this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {   
+      console.log(departmentFilterValue);
+      if(departmentFilterValue != ""){   
+    let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
+    console.log(category);
+      this.filteredValues['department'] = category;
+      }
+      else{
         this.filteredValues['department'] = departmentFilterValue;
-        this.dataSource1.filter = JSON.stringify(this.filteredValues);
-        if(this.dataSource1.filteredData.length > 0){
-          this.isTableHasData = true;
-        } else {
-          this.isTableHasData = false;
-        }
-        },(err)=>{
-
-          this.rpa_studio.spinner.hide();
-        });
+      }
+      console.log(this.filteredValues['department']);
+      this.dataSource1.filter = JSON.stringify(this.filteredValues);
+      if(this.dataSource1.filteredData.length > 0){
+        this.isTableHasData = true;
+      } else {
+        this.isTableHasData = false;
+      }
+      
+      },(err)=>{
+        
+        this.rpa_studio.spinner.hide();
+      });
 
         this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
           this.filteredValues['botName'] = botNameFilterValue;
@@ -197,54 +207,31 @@ export class RpaHomeComponent implements OnInit {
           } else {
             this.isTableHasData = false;
           }
-        });*/
+        });
 
-      //this.dataSource1.filterPredicate = this.customFilterPredicate();
+      this.dataSource1.filterPredicate = this.customFilterPredicate();
       this.rpa_studio.spinner.hide()
     },(err)=>{
       this.rpa_studio.spinner.hide();
     })
   }
-/*
+
   customFilterPredicate() {
-    return (data: dataSource1, filter: string): boolean => {
-      let searchString = JSON.parse(filter) as MyFilter;
-      let isdepartmentAvailable = false;
-
-      if (searchString.department.length) {
-
-        for (const d of searchString.department) {
-          if (data.department.toString().trim().indexOf(d) !== -1)  {
-            isdepartmentAvailable = true;
-          }
-        }
-      } else {
-        isdepartmentAvailable = true;
-      }
-      return isdepartmentAvailable && data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+    const myFilterPredicate = (data: dataSource1, filter: string): boolean => {
+      let searchString = JSON.parse(filter);
+      console.log(searchString);
+      if(searchString.department != ''){
+      return data.department.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
+        data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
     }
-  }*/
-
-
-
-  applyFilter3(filterValue:any) {
-    console.log(filterValue)
-    let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
-    //this.selectedvalue=filterValue;
-    filterValue = category.categoryName.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
-    this.dataSource1.filter = filterValue;
+    else
+    {
+      return true &&
+        data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+    }
   }
-
-
-  applyFilter2(filterValue: string) {
-
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource1.filter = filterValue;
+    return myFilterPredicate;
   }
-
 
   getautomatedtasks(process)
   {
