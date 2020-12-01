@@ -1,0 +1,10 @@
+.info{
+    color: orange;
+}
+.success-info{
+    color: rgb(67, 160, 67);
+}
+.successful-deploy a:link, a:active, a:visited, a:hover{
+    outline: none;
+    text-decoration: none;
+}
