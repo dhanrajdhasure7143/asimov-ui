@@ -701,3 +701,19 @@ padding-top: 11px;
   background-color: #b6d3f5;
   cursor: pointer;
 }
+.deploy-menu{
+  display: none;
+  position: absolute;
+  top: 18px;
+  width: 175px;
+  right: 5px;
+  z-index: 2;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+  font-size: 12px;
+  padding: 2px 5px;
+}
+.start-instance:hover .deploy-menu{
+  display: block;
+}

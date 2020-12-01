@@ -30,6 +30,7 @@ import { UUID } from 'angular2-uuid';
 import { Subscription } from 'rxjs';
 import { JsonpInterceptor } from '@angular/common/http';
 import * as bpmnlintConfig from '../model/packed-config';
+import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 
 declare var require:any;
 
@@ -1125,6 +1126,8 @@ displayBPMN(){
   displayShortcut(){
      this.dialog.open(this.keyboardShortcut);
   }
-
+  openDeployDialog() {
+    this.dialog.open(DeployNotationComponent);
+  }
 
 }
