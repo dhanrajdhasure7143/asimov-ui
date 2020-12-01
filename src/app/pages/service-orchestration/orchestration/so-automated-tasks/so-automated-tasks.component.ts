@@ -69,35 +69,19 @@ export class SoAutomatedTasksComponent implements OnInit {
       if(this.isEmpty(processId))
       {
         this.getautomatedtasks(0);
-
-        //this.selectedTab=0;
-        console.log(this.process_names);
       }
       else
       {
         this.getautomatedtasks(processId.processid);
-
       }
-
       this.spinner.show()
       setTimeout(() => {
         this.spinner.hide()
       },4000)
      }
-
-
     );
-
-
-
-
-
  }
 
-
-  ngAfterViewInit() {
-
-  }
 
   assignreset(id)
   {
@@ -244,14 +228,6 @@ export class SoAutomatedTasksComponent implements OnInit {
   }
 
 
-
-
-  loadbotdata(botId)
-  {
-    //this.rpa_studio.getloadbotdata(botId);
-  }
-
-
   isEmpty(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key))
@@ -259,7 +235,6 @@ export class SoAutomatedTasksComponent implements OnInit {
     }
     return true;
   }
-
 
 
   resetbot(taskid:any)
@@ -339,7 +314,6 @@ export class SoAutomatedTasksComponent implements OnInit {
                 data="<span class='text-primary'><img src='../../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }else if(statusdata.status=="Success")
               {
-                //data="<img src='../../../../assets/images/RPA/processloading.svg' style='height:30px'>";
 
                 data='<span class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
               }
@@ -397,6 +371,17 @@ export class SoAutomatedTasksComponent implements OnInit {
       this.categaoriesList=catResponse.data;
     });
   }
+
+
+
+  openscheduler()
+  {
+
+  }
+
+
+
+
 
 
 
