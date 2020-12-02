@@ -4,6 +4,7 @@ import * as Chart from 'chart.js'
 import { NgxSpinnerService } from "ngx-spinner";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import * as moment from 'moment';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-so-dashboard',
   templateUrl: './so-dashboard.component.html',
@@ -14,7 +15,8 @@ export class SoDashboardComponent implements OnInit {
   constructor(
     private rest:RestApiService,
     private spinner:NgxSpinnerService,
-    private dialog:MatDialog
+    private dialog:MatDialog,
+    private http:HttpClient
     ) {
 
 
@@ -23,7 +25,6 @@ export class SoDashboardComponent implements OnInit {
   categaoriesList:any
   processnames:any
   automatedtasks:any
-  users:any;
   bots_list:any;
   bots:any;
   transactions:any;
@@ -34,6 +35,7 @@ export class SoDashboardComponent implements OnInit {
   data_sets:any=[];
   Environments:any;
   Performance:any;
+  users:any;
 
   view: any[] = [700, 400];
 
@@ -49,74 +51,18 @@ export class SoDashboardComponent implements OnInit {
   showLegend: boolean = true;
   showLabels: boolean = true;
   isDoughnut: boolean = false;
-  /*grouped=[
-    {
-      "name": "Germany",
-      "series": [
-        {
-          "name": "2010",
-          "value": 7300000
-        },
-        {
-          "name": "2011",
-          "value": 8940000
-        }
-      ]
-    },
-
-    {
-      "name": "USA",
-      "series": [
-        {
-          "name": "2010",
-          "value": 7870000
-        },
-        {
-          "name": "2011",
-          "value": 8270000
-        }
-      ]
-    },
-
-    {
-      "name": "France",
-      "series": [
-        {
-          "name": "2010",
-          "value": 5000002
-        },
-        {
-          "name": "2011",
-          "value": 5800000
-        }
-      ]
-    },
-    {
-      "name": "Cance",
-      "series": [
-        {
-          "name": "2010",
-          "value": 5000002
-        },
-        {
-          "name": "2011",
-          "value": 5800000
-        }
-      ]
-    },
-
-  ];*/
+  botvshuman:any=[];
   colorScheme = {
     domain: ['#bf9d76', '#e99450', '#d89f59', '#f2dfa7', '#ff5b4f']
   };
   ngOnInit() {
+    this.getheaders();
     this.getbotstatistics();
     this.getprocessstatistics();
     this.getenvironments()
     this.getCategoryList();
     this.getprocessruns();
-    this.linechart();
-    this.getheaders();
+    this.getbotscount();
   }
   /* TO get Bot statistics*/
   getbotstatistics()
@@ -139,14 +85,27 @@ export class SoDashboardComponent implements OnInit {
 
   getheaders()
   {
-    this.rest.getprocessnames().subscribe(data=>{
-      this.processnames=data;
-    })
     this.rest.getautomatedtasks(0).subscribe(data=>{
       let resp:any=data;
       this.automatedtasks=resp.automationTasks;
+
+        this.rest.getprocessnames().subscribe(data=>{
+          this.processnames=data;
+          this.getbotsvshumans()
+        })
     })
+
+    let token={​​​​​
+      headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
+    }​​​​
+    this.http.get("http://authdev.epsoftinc.in/authorizationservice/api/v1/application/2/usercount",token).subscribe(data=>{
+      this.users=data;
+      console.log(this.users)
+    })
+
   }
+
+
 
   getprocessstatistics(){
     this.rest.getProcessStatistics().subscribe(data => { this.usageData = data;
@@ -155,7 +114,7 @@ export class SoDashboardComponent implements OnInit {
       let dataset:any=[];
       datacha.forEach((data,index)=>{
         dataset.push({
-          "name":data,
+          "name":this.titleCaseWord(data),
           "value":values[index]
           })
       })
@@ -188,9 +147,9 @@ export class SoDashboardComponent implements OnInit {
               data: Object.values(data2),
               label: 'Environments',
               backgroundColor: [
-                "grey",
-              'green',
-              'red',
+                '#5AA454',
+              '#820263',
+              '#A10A28',
 
             ],
               fill: false,
@@ -246,7 +205,7 @@ export class SoDashboardComponent implements OnInit {
       {
         if(performance[i]!=undefined)
         {
-            this.Performance.push({"name":"RunId "+performance[i].runId,"value":performance[i].timeDuration})
+            this.Performance.push({"name":"R-"+performance[i].runId,"value":performance[i].timeDuration})
         }
         else
         {
@@ -257,6 +216,29 @@ export class SoDashboardComponent implements OnInit {
         }
       }
     });
+  }
+
+  getbotsvshumans()
+  {
+    this.botvshuman=[]
+    let tasks_array=this.processnames.reverse();
+      tasks_array.forEach((data,index)=>{
+        let value_data={
+          "name": data.processName,
+          "series":[
+            {
+              "name":"Bots",
+              "value":this.automatedtasks.filter(taskdata=>taskdata.processId==data.processId && taskdata.taskType=="Bot").length,
+            },
+            {
+              "name":"Humans",
+              "value":this.automatedtasks.filter(taskdata=>taskdata.processId==data.processId && taskdata.taskType=="Human").length,
+            }]
+          };
+          if(index<5)
+          this.botvshuman.push(value_data);
+      })
+      console.log(this.botvshuman);
   }
 
 
@@ -292,14 +274,35 @@ export class SoDashboardComponent implements OnInit {
   }
 
 
-  openDialog(filterType) {
+  openDialog(filterType)
+  {
       const dialogRef = this.dialog.open(FilterBy,{
         width: '300px',
         data: {type:filterType}
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log(result);
+        let filterdata:any=[];
+        filterdata=result;
+        let success:any=[];
+        let failed:any=[];
+        let stopped:any=[];
+        let total:any=[];
+        let labels:any=[];
+        if(filterType== "date")
+        {
+          let from:any=filterdata[0];
+          let to:any=filterdata[1];
+          let date_array=this.dateranges(from,to);
+          date_array.forEach(date=>{
+            labels.push(moment(date).format("D-MM-YYYY"));
+            success.push((this.bots_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
+            failed.push((this.bots_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failed')).length))
+            stopped.push((this.bots_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
+            total.push((this.bots_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+          });
+          this.linechart(labels,success,failed,stopped,total)
+        }
       });
   }
 
@@ -315,7 +318,12 @@ export class SoDashboardComponent implements OnInit {
 
 
 
-  linechart()
+  titleCaseWord(word: string) {
+    if (!word) return word;
+    return word[0].toUpperCase() + word.substr(1).toLowerCase();
+  }
+
+  getbotscount()
   {
     this.rest.getAllActiveBots().subscribe(response=>{
       let resp:any=response;
@@ -331,16 +339,20 @@ export class SoDashboardComponent implements OnInit {
       let total:any=[];
       dates.forEach(date=>{
         labels.push(moment(date).format("D-MM-YYYY"));
-        resp.forEach(mircle=>{
-          console.log(moment(mircle.createdAt).format("D-MM-YYYY"));
-        })
         success.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
         failed.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failed')).length))
         stopped.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
         total.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
       });
+      this.linechart(labels,success,failed,stopped,total)
+    });
 
-                  this.chart6 = new Chart('linechart', {
+  }
+
+  linechart(labels,success,failed,stopped,total)
+  {
+
+      this.chart6 = new Chart('linechart', {
                     type: 'line',
                       data: {
                         labels: labels,
@@ -393,8 +405,11 @@ export class SoDashboardComponent implements OnInit {
                           }
                         },
                         scales: {
-                          yAxes: [
-                            {
+                          yAxes: [{
+                            scaleLabel: {
+                                 display: true,
+                                 labelString: 'No of Bots'
+                               },
                               display: true,
                               position: 'left',
                               ticks:{
@@ -409,6 +424,10 @@ export class SoDashboardComponent implements OnInit {
                           }
                         ],
                           xAxes: [{
+                            scaleLabel: {
+                                 display: true,
+                                 labelString: 'Transaction Date'
+                               },
                             ticks: {
                                  autoSkip: false,
                                  maxRotation: 90,
@@ -418,8 +437,10 @@ export class SoDashboardComponent implements OnInit {
                          }
                       }
                   });
-                });
+
   }
+
+
 }
 
 

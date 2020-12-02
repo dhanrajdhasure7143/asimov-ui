@@ -13,7 +13,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatNativeDateModule} from '@angular/material';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatNativeDateModule, MatSlideToggleModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { SoAutomatedTasksComponent } from './orchestration/so-automated-tasks/so-automated-tasks.component';
@@ -50,7 +50,7 @@ import {MatDialogModule} from '@angular/material/dialog';
     FormsModule,
     NgbTimepickerModule,
     NgxSpinnerModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,MatButtonModule,
+    MatInputModule, MatIconModule, MatFormFieldModule,MatButtonModule,MatSlideToggleModule,
     MatProgressSpinnerModule, MatSelectModule,
     MatDatepickerModule,
     MatCardModule,

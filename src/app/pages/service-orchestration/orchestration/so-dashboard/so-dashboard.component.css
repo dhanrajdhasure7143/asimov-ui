@@ -6,7 +6,6 @@
     color: black;
     font-weight: 500;
     font-size: 16px;
-    padding: 5px;
 }
 
 .example-card {
@@ -17,4 +16,11 @@
     position: relative;
     width: 100% !important;
     height: 400px !important;
+}
+
+.icon{
+  font-size:18px;
+  padding:12px;
+  border-radius:50px;
+  background-color:#ccd9ff;
 }
