@@ -2,7 +2,7 @@ import { Component, OnInit ,ViewChild,TemplateRef, ElementRef, OnDestroy} from '
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner";
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
+import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
