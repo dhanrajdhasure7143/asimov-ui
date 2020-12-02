@@ -66,9 +66,11 @@ export class RpaHomeComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
 
     this.dt.changeHints(this.datahints.rpahomehints );
-    this.getenvironments();
     this.getCategoryList();
-    this.getallbots();
+    this.getenvironments();
+    setTimeout(()=> {
+      this.getallbots();
+      }, 550);
     if(localStorage.getItem("taskId")!=undefined)
     {
        this.createtaskbotoverlay(localStorage.getItem("taskId"))
