@@ -16,9 +16,10 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./so-automated-tasks.component.css']
 })
 export class SoAutomatedTasksComponent implements OnInit {
+  public queryparam:any='';
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
+  displayedColumns: string[] = ["processName","taskName","taskType","Assign","status","successTask","failureTask","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -65,13 +66,14 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.getallbots();
     this.route.queryParams.subscribe(params => {
       processId=params;
-      console.log(processId);
       if(this.isEmpty(processId))
       {
+        this.queryparam='';
         this.getautomatedtasks(0);
       }
       else
       {
+        this.queryparam=processId.processid;
         this.getautomatedtasks(processId.processid);
       }
       this.spinner.show()
@@ -372,18 +374,9 @@ export class SoAutomatedTasksComponent implements OnInit {
     });
   }
 
-
-
   openscheduler()
   {
 
   }
-
-
-
-
-
-
-
 
 }

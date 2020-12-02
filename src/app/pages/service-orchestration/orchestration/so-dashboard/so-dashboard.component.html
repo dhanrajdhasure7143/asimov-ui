@@ -17,10 +17,26 @@
 
 
         <div class="row">
+
+
+
+
+                      <div *ngIf="categaoriesList!=undefined" class=" col-md-3 form-inline">
+                          <mat-card class="example-card form-inline" *ngIf="categaoriesList !=undefined">
+                            <div class="count-text form-group">
+                              <span class="icon"><i class="fa  fa-sitemap text-primary" aria-hidden="true"></i></span>
+                                &nbsp;&nbsp;&nbsp;
+                            </div>
+                              <div class="count-text form-group">DEPARTMENTS</div>
+                              <div class="count-text form-group pull-right">{{categaoriesList.length}}</div>
+                          </mat-card>
+                      </div>
+
+<!--
             <div class="col-md-3 text-center">
                 <mat-card class="example-card" *ngIf="categaoriesList !=undefined">
 
-                      <span class="text-primary">
+                      <span class="text-primary icon">
                         <i class="fa fa-sitemap text-primary" aria-hidden="true"></i>
                       </span>
                       &nbsp;&nbsp;&nbsp;
@@ -31,10 +47,11 @@
                      <span class="count-text">{{categaoriesList.length}}</span>
                 </mat-card>
             </div>
-
-            <div class=" col-md-3 text-center">
+-->
+          <!--  <div class=" col-md-3 text-center">
                 <mat-card class="example-card" *ngIf="processnames !=undefined">
-                    <span><i class="fa fa-list-alt text-primary" aria-hidden="true"></i></span>
+                  <span class="text-primary icon">
+                      <i class="fa fa-list-alt text-primary" aria-hidden="true"></i></span>
 
                     &nbsp;&nbsp;&nbsp;
                     <span class="count-text">PROCESSES</span>
@@ -42,29 +59,53 @@
                     <span class="count-text">{{processnames.length}}</span>
                 </mat-card>
 
-            </div>
-
-
-
-            <div *ngIf="automatedtasks!=undefined" class=" col-md-3 text-center">
-                <mat-card class="example-card" *ngIf="automatedtasks !=undefined">
-                    <span><i class="fa fa-tasks text-primary" aria-hidden="true"></i></span>
-
-                    &nbsp;&nbsp;
-                    <span class="count-text">AUTOMATED TASKS</span>
-                    &nbsp;&nbsp;
-                    <span class="count-text">{{automatedtasks.length}}</span>
-                </mat-card>
-            </div>
+            </div>-->
+  <!--
             <div class="col-md-3 text-center">
-                <mat-card class="example-card" *ngIf="categaoriesList !=undefined">
-                    <span><i class="fa fa-users text-primary" aria-hidden="true"></i></span>
-                    &nbsp;&nbsp;&nbsp;
+                <mat-card class="example-card" *ngIf="users !=undefined">
+                  <span class="text-primary icon">
+                      <i class="fa fa-users text-primary" aria-hidden="true"></i></span>
+
                     <span class="count-text text-left">
                       USERS
                     </span>
                       &nbsp;&nbsp;&nbsp;
-                      <span class="count-text">{{categaoriesList.length}}</span>
+                      <span class="count-text">{{users.users_count}}</span>
+                </mat-card>
+            </div>
+
+-->
+
+
+            <div *ngIf="processnames!=undefined" class=" col-md-3 form-inline">
+                <mat-card class="example-card form-inline" *ngIf="processnames !=undefined">
+                  <div class="count-text form-group">
+                    <span class="icon"><i class="fa fa-list-alt text-primary" aria-hidden="true"></i></span>
+                      &nbsp;&nbsp;&nbsp;
+                  </div>
+                    <div class="count-text form-group">PROCESSES</div>
+                    <div class="count-text form-group pull-right">{{processnames.length}}</div>
+                </mat-card>
+            </div>
+
+            <div *ngIf="automatedtasks!=undefined" class=" col-md-3 form-inline">
+                <mat-card class="example-card form-inline" *ngIf="automatedtasks !=undefined">
+                  <div class="count-text form-group">
+                    <span class="icon"><i class="fa fa-tasks text-primary" aria-hidden="true"></i></span>
+                      &nbsp;&nbsp;&nbsp;
+                  </div>
+                    <div class="count-text form-group">TASKS</div>
+                    <div class="count-text form-group pull-right">{{automatedtasks.length}}</div>
+                </mat-card>
+            </div>
+            <div *ngIf="users!=undefined" class=" col-md-3 form-inline">
+                <mat-card class="example-card form-inline" *ngIf="automatedtasks !=undefined">
+                  <div class="count-text form-group">
+                    <span class="icon"><i class="fa fa-users text-primary" aria-hidden="true"></i></span>
+                      &nbsp;&nbsp;&nbsp;
+                  </div>
+                    <div class="count-text form-group">USERS</div>
+                    <div class="count-text form-group pull-right">{{users.users_count}}</div>
                 </mat-card>
             </div>
 
@@ -74,25 +115,20 @@
         <br><br>
         <div class="row">
             <div class="col-md-6 text-center ">
-                <mat-card class="graph-card" *ngIf="botstatistics!=undefined">
+                <mat-card class="graph-card text-center" #botstatistics_graph  *ngIf="botstatistics!=undefined">
                     <h5><b>Bot Statistics</b></h5>
-                    <!-- <canvas id="canvas" style="height:300px!important ; width:100%"></canvas>-->
-                    <ngx-charts-pie-chart [view]="[500,300]" [legendTitle]="'statistics'" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true"  [labels]="true" [doughnut]="false">
+                    <ngx-charts-pie-chart [view]="[botstatistics_graph.offsetWidth, 300]" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true" [doughnut]="false">
                     </ngx-charts-pie-chart>
                 </mat-card>
             </div>
             <div class="col-md-6  text-center">
-                <mat-card class="graph-card" *ngIf="processstatistics!=undefined">
+                <mat-card class="graph-card" #process_statistics *ngIf="processstatistics!=undefined">
                     <h5><b>Process Statistics</b></h5>
-                    <!-- <canvas id="canvas" style="height:300px!important ; width:100%"></canvas>-->
-                    <ngx-charts-pie-chart [view]="[500,300]" [legendTitle]="'statistics'" [scheme]="colorScheme " [results]="processstatistics" [gradient]="gradient " [legend]="showLegend " [labels]="showLabels " [arcWidth]="0.50" [doughnut]="true">
+                    <ngx-charts-pie-chart [view]="[process_statistics.offsetWidth,300]" [legendTitle]="''" [scheme]="colorScheme " [results]="processstatistics" [gradient]="gradient " [legend]="showLegend" legendPosition="below" [labels]="showLabels " [arcWidth]="0.50" [doughnut]="true">
                     </ngx-charts-pie-chart>
                 </mat-card>
-
-                <!--<canvas id="canvas1" style="height:300px!important ; width:100%"></canvas>-->
             </div>
-
-        </div>
+          </div>
         <br><br>
         <div class="row">
 
@@ -111,22 +147,17 @@
                       </mat-form-field>
                     </div>
                   </div>
-                    <!--<canvas id="canvas4" style="height:300px!important ; width:100%"></canvas>-->
-                    <ngx-charts-bar-vertical [barPadding]="50" [view]="[600,300]" [scheme]="colorScheme" [results]="Performance" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="'Runs'" [showYAxisLabel]="'timeseries(ms)'"
-                        [xAxisLabel]="xAxisLabel" [yAxisLabel]="yAxisLabel">
+                    <ngx-charts-bar-vertical [barPadding]="50" [view]="[600,300]" [scheme]="colorScheme" [results]="Performance" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                        [xAxisLabel]="'Runs'" [yAxisLabel]="'Execution Time (ms)'">
                     </ngx-charts-bar-vertical>
                 </mat-card>
             </div>
             <div class="col-md-6  text-center">
                 <mat-card class="graph-card">
                     <h5><b>Bots Vs Human tasks</b></h5>
-
-                    <!--<canvas id="canvas3" style=" width:100% !important"></canvas>-->
-                    <br><br><br><br><br><br>
-                    <div class="text-center"><b>No Data Found</b></div>
-                    <!--<ngx-charts-bar-vertical-2d [view]="[600,300]" [scheme]="colorScheme" [results]="grouped" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="xAxisLabel"
-                        [yAxisLabel]="yAxisLabel">
-                    </ngx-charts-bar-vertical-2d>-->
+                    <ngx-charts-bar-vertical-2d [view]="[600,300]" maxXAxisTickLength=4 [scheme]="colorScheme" [results]="botvshuman" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="'Process'"
+                        [yAxisLabel]="'No of Resources'">
+                    </ngx-charts-bar-vertical-2d>
                 </mat-card>
             </div>
 
@@ -139,7 +170,7 @@
                 <mat-card class="graph-card">
                   <div class="form-inline">
                     <div class="form-group text-center">
-                      <h5><b>Transactions</b></h5>
+                      <h5><b>Bot Transactions</b></h5>
                     </div>
                     <div class="pull-right form-group">
                       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
