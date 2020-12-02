@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild,TemplateRef, ElementRef } from '@angular/core';
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
+import * as BpmnJS from '../../../bpmn-modeler.development.js';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
