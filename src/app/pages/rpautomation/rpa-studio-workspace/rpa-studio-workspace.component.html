@@ -172,20 +172,25 @@
 
 
 
-<div class="rpa-modal">
+<div id="recordandplay" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="closeoutputbox()">&times;</span>
-            <h4>Webautoation-Record and Play</h4>
+            <span class="rpa-modal-close" (click)="close_record_play()">&times;</span>
+            <h4>Web Automation - Record and Play</h4>
         </div>
         <div class="rpa-modal-body">
 
-            <div class="container-fluid">
+            <div class="container" *ngIf="recordedcode==undefined">
                 <br>
                 <b>Url</b>
-                <input type='url' class="form-control">
+                <input type='url' [(ngModel)]="rp_url" class="form-control">
                 <br>
-                <button class='btn btn-primary' (click)="start_automation()">Start Recording</button>
+                <button class='btn btn-primary' [disabled]="rp_url == undefined" (click)="recording('start')">Start Recording</button>
+                <button class='btn btn-primary' (click)="recording('stop')">Stop Recording</button><br><br>
+
+                <textarea id="record_n_play" name='codeSnippet' [(ngModel)]="finalcode" style="width:100%;height:250px;"></textarea>
+                <button class="btn btn-primary" (click)="submitcode()">Save code</button>
+
             </div>
         </div>
     </div>

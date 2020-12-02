@@ -1,35 +1,26 @@
-select {
-    border-top: none;
-    border-right: none;
-    border-left: none;
+.bg-color {
+    background-color: rgb(241, 240, 240);
 }
 
-.block-1 {
-    /*background: rgb(0, 0, 36);*/
-    /*background: linear-gradient(90deg, rgba(0, 0, 36, 1) 0%, rgba(22, 9, 121, 1) 78%, rgba(0, 212, 255, 1) 100%);*/
+.count-text {
     color: black;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 20px;
-    background: linear-gradient(to left, #66ccff 0%, #99ffcc 100%);
+    font-weight: 500;
+    font-size: 16px;
 }
 
-.block-2 {
-    /*background: rgb(0, 0, 36);*/
-    /*background: linear-gradient(90deg, rgba(0, 0, 36, 1) 0%, rgba(22, 9, 121, 1) 78%, rgba(0, 212, 255, 1) 100%);*/
-    color: black;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 20px;
-    background: linear-gradient(to left, #ff99ff 0%, #66ffcc 100%)
+.example-card {
+    padding: 40px;
 }
 
-.block-3 {
-    /*background: rgb(0, 0, 36);*/
-    /*background: linear-gradient(90deg, rgba(0, 0, 36, 1) 0%, rgba(22, 9, 121, 1) 78%, rgba(0, 212, 255, 1) 100%);*/
-    color: black;
-    font-size: 20px;
-    font-weight: bold;
-    padding: 20px;
-    background: linear-gradient(to left, #66ffff 0%, #ff66cc 100%)
+.graph-card {
+    position: relative;
+    width: 100% !important;
+    height: 400px !important;
+}
+
+.icon{
+  font-size:18px;
+  padding:12px;
+  border-radius:50px;
+  background-color:#ccd9ff;
 }

@@ -13,37 +13,53 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
-import {MatInputModule, MatIconModule, MatFormFieldModule} from '@angular/material';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatNativeDateModule, MatSlideToggleModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { SoAutomatedTasksComponent } from './orchestration/so-automated-tasks/so-automated-tasks.component';
 import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
-import { SoDashboardComponent } from './orchestration/so-dashboard/so-dashboard.component';
+import { SoDashboardComponent, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { SoSchedulerComponent } from './orchestration/so-scheduler/so-scheduler.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import {MatCardModule} from '@angular/material/card';
+import {MatMenuModule} from '@angular/material/menu';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {MatButtonModule} from '@angular/material/button';
+import {MatDialogModule} from '@angular/material/dialog';
 @NgModule({
   declarations: [OrchestrationComponent,
     BotStatusComponent,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent],
+    FilterBy,
+    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent],
   imports: [
     CommonModule,
     FormsModule,
     NgbModule,
     ServiceOrchestrationRoutingModule,
     SharedModule,
+    NgxMaterialTimepickerModule,
     MatPaginatorModule,
     MatSortModule,
     MatTableModule,
     MatTabsModule,
     CronEditorModule,
+    MatNativeDateModule,
     FormsModule,
     NgbTimepickerModule,
     NgxSpinnerModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,
-    MatProgressSpinnerModule, MatSelectModule
+    MatInputModule, MatIconModule, MatFormFieldModule,MatButtonModule,MatSlideToggleModule,
+    MatProgressSpinnerModule, MatSelectModule,
+    MatDatepickerModule,
+    MatCardModule,
+    NgxChartsModule,
+    MatMenuModule,
+    MatDialogModule
   ],
-  providers:[]
+  entryComponents: [FilterBy],
+  providers:[MatDatepickerModule],
 })
 export class ServiceOrchestrationModule {
 }
