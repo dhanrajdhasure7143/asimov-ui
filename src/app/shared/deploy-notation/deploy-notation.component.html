@@ -1,4 +1,8 @@
-<!-- <div><label for="" class="keyboard_header_shortcuts">Deploy Notation</label></div>
+<div><label for="" class="keyboard_header_shortcuts">Deploy Notation</label></div>
+<div class="successful-deploy" *ngIf="deploy_success">
+    <mat-icon class="success-info" matSuffix>info</mat-icon><p><i> Notation has been deployed successfully.
+        <a href="#">Click here</a> to verify.</i></p>
+</div>
 <form>
     <mat-form-field class="row col-md-12">
         <mat-label>Deployment Name</mat-label>
@@ -16,11 +20,11 @@
     </mat-form-field>
     <br/><br/>
     <div class="row col-md-12">
-        <button class="btn eiap-btn">Cancel</button>
+        <button class="btn btn-danger eiap-btn">Cancel</button>
         <button class="btn btn-primary eiap-btn" (click)="deployNotation()">Deploy</button>
     </div>
-</form> -->
-
+</form>
+<!--
 <h2 mat-dialog-title>This is a Dialog title</h2>
 
 <mat-dialog-content>
@@ -30,4 +34,4 @@
 
 <mat-dialog-actions>
     <button class="mat-raised-button" (click)="close()">Close</button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->

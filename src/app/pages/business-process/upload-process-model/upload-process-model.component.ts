@@ -30,6 +30,7 @@ import { UUID } from 'angular2-uuid';
 import { Subscription } from 'rxjs';
 import { JsonpInterceptor } from '@angular/common/http';
 import * as bpmnlintConfig from '../model/packed-config';
+import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 
 declare var require:any;
 
@@ -716,6 +717,7 @@ displayBPMN(){
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     var CmmnCamundaModdleDescriptor = require("camunda-cmmn-moddle/resources/camunda.json");
     var DmnCamundaModdleDescriptor = require("camunda-dmn-moddle/resources/camunda.json");
+    this.keyboardLabels=this.shortcut[this.selectedNotationType];
     if(this.selectedNotationType == "cmmn"){
       this[modeler_obj] = new CmmnJS({
         additionalModules: [
@@ -1124,6 +1126,8 @@ displayBPMN(){
   displayShortcut(){
      this.dialog.open(this.keyboardShortcut);
   }
-
+  openDeployDialog() {
+    this.dialog.open(DeployNotationComponent);
+  }
 
 }
