@@ -696,6 +696,7 @@ padding-top: 11px;
 .functionality-icons{
   position: relative;
   top: 21px;
+  display: inline;
 }
 .functionality-icons .fa:hover{
   background-color: #b6d3f5;
