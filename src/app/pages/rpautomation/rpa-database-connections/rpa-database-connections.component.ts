@@ -50,6 +50,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
       this.insertdbForm=this.formBuilder.group({
         connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
@@ -60,6 +61,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.updatedbForm=this.formBuilder.group({
       connectiontName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         dataBaseType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        databasename: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
@@ -124,7 +126,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
    {
     this.insertdbForm.value.createdBy="admin";
     this.submitted=true;
-    this.insertdbForm.value.databasename = this.insertdbForm.value.dataBaseType;
+    //this.insertdbForm.value.databasename = this.insertdbForm.value.dataBaseType;
     let DBConnection = this.insertdbForm.value;
     console.log(DBConnection);
     this.api.addDBConnection(DBConnection).subscribe( res =>{
@@ -165,7 +167,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     console.log(this.updatedbForm.value);
     let dbupdatFormValue =  this.updatedbForm.value;
     console.log(dbupdatFormValue);
-    dbupdatFormValue["databasename"]= this.dbupdatedata.dataBaseType;
+    //dbupdatFormValue["databasename"]= this.dbupdatedata.dataBaseType;
     dbupdatFormValue["connectionId"]= this.dbupdatedata.connectionId;
     dbupdatFormValue["createdBy"]= this.dbupdatedata.createdBy;
     console.log(dbupdatFormValue);
@@ -204,6 +206,7 @@ updatedbdata()
         this.dbupdatedata=data;
         this.updatedbForm.get("connectiontName").setValue(this.dbupdatedata["connectiontName"]);
         this.updatedbForm.get("dataBaseType").setValue(this.dbupdatedata["dataBaseType"]);
+        this.updatedbForm.get("databasename").setValue(this.dbupdatedata["databasename"]);
         this.updatedbForm.get("hostAddress").setValue(this.dbupdatedata["hostAddress"]);
         this.updatedbForm.get("password").setValue(this.dbupdatedata["password"]);
         this.updatedbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);

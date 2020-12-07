@@ -131,7 +131,7 @@
               <option  value='others'>Others</option>
             </select>
             <div *ngIf ="rpaCategory=='others'">
-              <input type="text" class="form-control" formControlName="newCategoryName" placeholder="Enter new Category Name" [(ngModel)] ="newRpaCategory">
+              <input type="text" class="form-control" formControlName="newCategoryName" placeholder="Enter Category Name" [(ngModel)] ="newRpaCategory">
             </div>
             <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" class="fa fa-info-circle errspan">
               Category Required*
