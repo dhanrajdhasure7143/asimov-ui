@@ -23,6 +23,7 @@ import { DeployNotationComponent } from './deploy-notation/deploy-notation.compo
     MatOptionModule, MatSelectModule
   ],
   providers: [],
-  exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent,  SearchPipe, DeployNotationComponent]
+  exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent,  SearchPipe, DeployNotationComponent],
+  entryComponents: [DeployNotationComponent]
 })
 export class SharedModule { }

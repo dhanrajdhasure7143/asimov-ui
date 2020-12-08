@@ -18,18 +18,32 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
 
 
-<!--<app-bot-status></app-bot-status>-->
-
 <mat-tab-group [selectedIndex]="selectedTab">
-    <mat-tab label="Dashboard">
-        <app-so-dashboard>
-        </app-so-dashboard>
+    <mat-tab>
+      <ng-template mat-tab-label>
+          <mat-icon class="text-primary">pie_chart</mat-icon>&nbsp;&nbsp;
+          Dashboard
+      </ng-template>
+      <app-so-dashboard></app-so-dashboard>
     </mat-tab>
     <mat-tab label="Orchestrator">
-        <app-so-automated-tasks>
-        </app-so-automated-tasks>
+
+
+        <ng-template mat-tab-label>
+          <mat-icon class="text-primary">control_camera</mat-icon>
+            &nbsp;&nbsp;
+            Orchestration
+        </ng-template>
+
+        <app-so-automated-tasks></app-so-automated-tasks>
     </mat-tab>
     <mat-tab label="Bot Management">
+
+              <ng-template mat-tab-label>
+                <mat-icon  class="text-primary">android</mat-icon>
+                  &nbsp;&nbsp;
+                  Bot Management
+              </ng-template>
         <app-so-bot-management></app-so-bot-management>
     </mat-tab>
 </mat-tab-group>

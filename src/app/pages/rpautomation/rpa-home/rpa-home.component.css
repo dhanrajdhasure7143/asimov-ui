@@ -11,6 +11,19 @@
     margin-right: 20px
 }
 
+.resetbtn{
+    height:30px;
+    margin-top:0px;
+    margin-left:8px;
+    margin-right:-3px;
+}
+
+tr.mat-footer-row, tr.mat-row {
+    height: auto !important;
+}
+
+
+
 .descriptiontext{
     overflow: hidden;
    text-overflow: ellipsis;
@@ -65,7 +78,7 @@
 }
 
 .rpa-home-heading {
-    padding: 10px;
+    padding: 0px;
     flex: 3;
 }
 
@@ -90,7 +103,6 @@
 }
 
 .bots-container {
-    max-height: 300px;
     overflow: auto;
 }
 

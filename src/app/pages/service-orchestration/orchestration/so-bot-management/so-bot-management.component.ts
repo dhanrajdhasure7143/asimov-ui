@@ -8,9 +8,6 @@ import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import {RestApiService} from '../../../services/rest-api.service';
-import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
-import cronstrue from 'cronstrue';
-import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
 declare var $:any;
 @Component({
@@ -19,10 +16,10 @@ declare var $:any;
   styleUrls: ['./so-bot-management.component.css']
 })
 export class SoBotManagementComponent implements OnInit {
-
-  public isTableHasData = true;
+    public botid:any;
+    public isTableHasData = true;
     public respdata1=false;
-    displayedColumns: string[] = ["botName", "description","version","botStatus", "Action","Schedule","Logs"];
+    displayedColumns: string[] = ["botName","botType", "description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     botNameFilter = new FormControl('');
     botTypeFilter = new FormControl('');
@@ -30,12 +27,6 @@ export class SoBotManagementComponent implements OnInit {
     dataSource1:MatTableDataSource<any>;
     dataSource4:MatTableDataSource<any>;
     dataSource5:MatTableDataSource<any>;
-
-    public startDate: NgbDateStruct;
-    public endDate: NgbDateStruct;
-    selectTime;
-    public cronExpression = '0/1 * 1/1 * *';
-    public isCronDisabled = false;
     viewlogid="check123";
     processnames:any=[]
     viewlogid1="check456";
@@ -53,37 +44,6 @@ export class SoBotManagementComponent implements OnInit {
     public selectedEnvironment:any='';
     public environments:any=[];
     public categaoriesList:any=[];
-    public she:any;
-    public minDate:NgbDateStruct;
-    schedulepopid="shecdule"
-    public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
-    i="";
-    public check_schedule_flag: boolean = false;
-    public selectedTimeZone :any;
-    public cronOptions: CronOptions = {
-      formInputClass: 'form-control cron-editor-input',
-      formSelectClass: 'form-control cron-editor-select',
-      formRadioClass: 'cron-editor-radio',
-      formCheckboxClass: 'cron-editor-checkbox',
-
-      defaultTime: "00:00:00",
-
-      hideMinutesTab: false,
-      hideHourlyTab: false,
-      hideDailyTab: false,
-      hideWeeklyTab: false,
-      hideMonthlyTab: false,
-      hideYearlyTab: false,
-      hideAdvancedTab: false,
-      hideSpecificWeekDayTab : false,
-      hideSpecificMonthWeekTab : false,
-
-      use24HourTime: true,
-      hideSeconds: false,
-
-      cronFlavor: "standard"
-
-    }
     automatedtasks:any=[];
     log_botid:any;
     log_version:any;
@@ -99,26 +59,18 @@ export class SoBotManagementComponent implements OnInit {
     Viewloglist:MatTableDataSource<any>;
     displayedColumns5: string[] = ['task_name', 'status','start_time','start_date','end_time','end_date','error_info' ];
     logbyrunid:MatTableDataSource<any>;
-    startTime = {hour: 0, minute: 0};
-    endTime = {hour: 23, minute: 59};
+    popup:Boolean=false;
     constructor(private route: ActivatedRoute,
-      private http:HttpClient,
       private rest:RestApiService,
-      private fb : FormBuilder,
       )
-    {
-
-    }
+    {}
 
   ngOnInit() {
     this.getCategoryList();
     this.getallbots();
     this.getautomatedtasks();
     this.getprocessnames();
-    this.form = this.fb.group({
-      'startTime' : [this.startTime, Validators.required],
-      'endTime' : [this.endTime, Validators.required],
-    })
+    this.popup=false;
   }
 
 
@@ -180,6 +132,7 @@ export class SoBotManagementComponent implements OnInit {
         console.log(this.respdata1);
       }
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
+      this.bot_list=this.bot_list.reverse();
       this.dataSource1= new MatTableDataSource(this.bot_list);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
@@ -430,6 +383,19 @@ export class SoBotManagementComponent implements OnInit {
       })
     }
 
+
+
+    openscheduler(botid)
+    {
+      this.botid=botid;
+      this.popup=true;
+    }
+
+
+    close()
+    {
+      this.popup=false;
+    }
 
 
 }

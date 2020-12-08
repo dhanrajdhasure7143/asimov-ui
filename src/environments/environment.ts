@@ -45,15 +45,16 @@ export const environment = {
      rpa_url: 'http://rpaqa.epsoftinc.in',
      loopback_url: 'http://10.11.0.107:3000',
      idm_url:'http://idmqa.epsoftinc.in',
-     pi_node_url: "http://10.11.0.108:3000",
+     pi_node_url: "http://10.11.0.108:3001",
      auth_url: "http://authqa.epsoftinc.in",
      platform_url:'http://apqa.epsoftinc.in',
      schema_registry_url:"http://10.11.0.101:8081",
      alerts_url:'http://alertsqa.epsoftinc.in',
     
-   // Aiotal redirection urls 
+
+  // Aiotal redirection urls 
     myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
-    logout_url: 'http://eiapcloudqa.epsoftinc.in',
+    logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
 
     // PI Connectors
     connector_topic: 'nodeq',

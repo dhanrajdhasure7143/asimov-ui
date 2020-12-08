@@ -1,9 +1,6 @@
 .diagram-parent{
     position: relative;
 }
-.info{
-    color: orange;
-}
 
 /* The Modal (background) */
 .modal {
@@ -158,7 +155,23 @@
         font-weight: bold !important;
         /* font-size: 14px; */
     }
-    
+
     textarea{
         font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    .deploy-menu{
+        display: none;
+        position: absolute;
+        top: 18px;
+        width: 175px;
+        right: 5px;
+        z-index: 2;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f8f8f8;
+        font-size: 12px;
+        padding: 2px 5px;
+    }
+    .start-instance:hover .deploy-menu{
+        display: block;
     }

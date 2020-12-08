@@ -6,8 +6,8 @@ import { FormGroup } from '@angular/forms';
     selector: 'textbox',
     template: `
       <div [formGroup]="form">
-        <input *ngIf="!field.multiline" autocomplete="off" [required]="field.required==true" [attr.maxlength]="100" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control"  [id]="field.name" [name]="field.name" [formControlName]="field.name">
-        <textarea *ngIf="field.multiline" autocomplete="off" [formControlName]="field.name" [id]="field.name" [attr.maxlength]="100" [required]="field.required==true" 
+        <input *ngIf="!field.multiline" autocomplete="off" [required]="field.required==true" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control"  [id]="field.name" [name]="field.name" [formControlName]="field.name">
+        <textarea *ngIf="field.multiline" autocomplete="off" [formControlName]="field.name" [id]="field.name" [required]="field.required==true" 
         rows="9" class="form-control" [placeholder]="field.placeholder"></textarea>
       </div> 
     `,

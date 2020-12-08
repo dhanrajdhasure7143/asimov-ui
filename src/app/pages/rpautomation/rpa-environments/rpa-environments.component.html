@@ -164,7 +164,7 @@
         </ng-container>
 
         <ng-container matColumnDef="environmentName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Environment Name</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
             <td mat-cell *matCellDef="let element"> <button *ngIf="element.environmentName!=null">{{element.environmentName}}</button> <span *ngIf="element.environmentName==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="agentPath">
@@ -172,7 +172,7 @@
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.agentPath!=null">{{element.agentPath}}</span> <span *ngIf="element.agentPath==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="environmentType">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Environment Type</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
             <td mat-cell *matCellDef="let element"> <button *ngIf="element.environmentType!=null">{{element.environmentType}}</button> <span *ngIf="element.environmentType==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="username">
@@ -189,11 +189,11 @@
         </ng-container>
 
         <ng-container matColumnDef="portNumber">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Port Number</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Port</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.portNumber!=null">{{element.portNumber}}</span> <span *ngIf="element.portNumber==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="createdTimeStamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Timestamp</th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date:'medium'}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="createdBy">
@@ -225,7 +225,7 @@
     </table>
 
 </div>
-    <mat-paginator #paginator1 [pageSize]="4" [showFirstLastButtons]="true"></mat-paginator>
+    <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
 </div>
 
 <!-- <div class="container">
@@ -251,19 +251,19 @@
                 <form [formGroup]="insertForm" (ngSubmit)="savedata()">
                     <div class="row">
                         <div class="col-md-3 formelement">
-                            <label for="environmentName">Environment Name*</label>
-                            <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Environment Name">
+                            <label for="environmentName">Name*</label>
+                            <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
                             <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
 
-('environmentName').touched" style="color:red" class="fa fa-info-circle errspan"> Environment Name Required*</span>
+('environmentName').touched" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
                         </div>
                         <div class="col-md-3 formelement ">
-                            <label for="environmentType">Environment Type*</label>
+                            <label for="environmentType">Type*</label>
                             <!--<input type="text" class="form-control" formControlName="environmentType" value=""
 
 placeholder="Enter Environment Type" >-->
                             <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
-          <option value="" [selected]="true">--Select Environment Type--</option>
+          <option value="" [selected]="true">--Select Type--</option>
           <option value="Windows">Windows</option>
           <option value="Mac">Mac</option>
           <option value="Linux">Linux</option>
@@ -271,7 +271,7 @@ placeholder="Enter Environment Type" >-->
         </select>
                             <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
 
-('environmentType').touched" style="color:red" class="fa fa-info-circle errspan"> Environment Type Required*</span>
+('environmentType').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
 
                         </div>
                         <div class="col-md-3 formelement">
@@ -306,7 +306,7 @@ placeholder="Enter Environment Type" >-->
 
                         <div class="col-md-3 formelement">
                             <label for="connectionType">Connection Type*</label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type">
+                            <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
                             <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
 
 ('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
@@ -314,12 +314,12 @@ placeholder="Enter Environment Type" >-->
                         </div>
 
                         <div class="col-md-3 formelement">
-                            <label for="portNumber">Port Number*</label>
-                            <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port Number">
+                            <label for="portNumber">Port*</label>
+                            <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
 
                             <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
 
-('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Number Required*</span>
+('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
 
                         </div>
 
@@ -354,20 +354,20 @@ placeholder="Enter Environment Type" >-->
                 <form [formGroup]="updateForm" (ngSubmit)="updateEnvironment()">
                     <div class="row">
                         <div class="col-md-3 formelement">
-                            <label for="environmentName">Environment Name*</label>
-                            <input type="text" class="form-control" maxlength="50" formControlName="environmentName" placeholder="Enter Environment Name">
-                            <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" style="color:red" class="fa fa-info-circle errspan"> Environment Name Required*</span>
+                            <label for="environmentName">Name*</label>
+                            <input type="text" class="form-control" maxlength="50" formControlName="environmentName" placeholder="Enter Name">
+                            <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
 
                         </div>
                         <div class="col-md-3 formelement ">
-                            <label for="environmentType">Environment Type*</label>
+                            <label for="environmentType">Type*</label>
                             <!--<input type="text" class="form-control" formControlName=" environmentType"
 
 value="{{updateenvdata.environmentType}}" [(ngModel)]="updateenvdata.environmentType"
 
 placeholder="Enter Environment Type" >-->
                             <select class="form-control" (change)="EnvType()" formControlName="environmentType">
-              <option value="">--Select Environment Type--</option>
+              <option value="">--Select Type--</option>
               <option value="Windows">Windows</option>
               <option value="Mac" >Mac</option>
               <option value="Linux" >Linux</option>
@@ -425,7 +425,7 @@ Password">
 
                         <div class="col-md-3 formelement">
                             <label for=" connectionType">Connection Type*</label>
-                            <input type="text" maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type">
+                            <input type="text" maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type" readonly>
                             <span *ngIf="updateForm.get('connectionType').invalid && updateForm.get
 
 ('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
@@ -433,13 +433,13 @@ Password">
                         </div>
 
                         <div class="col-md-3 formelement">
-                            <label for="portNumber">Port Number*</label>
+                            <label for="portNumber">Port*</label>
                             <input type="number" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter
 
-Port Number">
+Port">
                             <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
 
-('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Number Required*</span>
+('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
 
                         </div>
                     </div>
