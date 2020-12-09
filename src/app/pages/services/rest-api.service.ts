@@ -504,5 +504,9 @@ export class RestApiService{
     getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
       return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
     }
-}
 
+    getuserslist(tenantid)
+    {
+      return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
+    }
+}

@@ -4,6 +4,7 @@ import * as Chart from 'chart.js'
 import { NgxSpinnerService } from "ngx-spinner";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import * as moment from 'moment';
+import * as $ from 'jquery';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-so-dashboard',
@@ -56,6 +57,7 @@ export class SoDashboardComponent implements OnInit {
     domain: ['#bf9d76', '#e99450', '#d89f59', '#f2dfa7', '#ff5b4f']
   };
   ngOnInit() {
+    this.spinner.show();
     this.getheaders();
     this.getbotstatistics();
     this.getprocessstatistics();
@@ -63,6 +65,9 @@ export class SoDashboardComponent implements OnInit {
     this.getCategoryList();
     this.getprocessruns();
     this.getbotscount();
+  }
+  ngAfterViewInit(): void {
+
   }
   /* TO get Bot statistics*/
   getbotstatistics()
@@ -80,6 +85,14 @@ export class SoDashboardComponent implements OnInit {
                 })
             })
             this.botstatistics=dataset;
+            setTimeout(() => {
+              $('.chart-legend>div').css({width : '100%'});
+              this.spinner.hide()
+            }, 2000);
+
+      },(err)=>{
+        console.log(err)
+        this.spinner.hide();
       });
   }
 
@@ -119,6 +132,10 @@ export class SoDashboardComponent implements OnInit {
           })
       })
       this.processstatistics=dataset;
+      setTimeout(() => {
+        $('.chart-legend>div').css({width : '100%'});
+      }, 2000);
+
       });
   }
 
@@ -205,14 +222,7 @@ export class SoDashboardComponent implements OnInit {
       {
         if(performance[i]!=undefined)
         {
-            this.Performance.push({"name":"R-"+performance[i].runId,"value":performance[i].timeDuration})
-        }
-        else
-        {
-          this.Performance.push({
-            "name":" No Run"+i,
-            "value":0
-          })
+            this.Performance.push({"name":""+performance[i].runId,"value":performance[i].timeDuration})
         }
       }
     });
@@ -258,16 +268,9 @@ export class SoDashboardComponent implements OnInit {
         if(performances[i]!=undefined)
         {
             this.Performance.push({
-              "name":"RunId "+performances[i].runId,
+              "name":""+performances[i].runId,
               "value":performances[i].timeDuration
             })
-        }
-        else
-        {
-          this.Performance.push({
-            "name":"No Run"+i,
-            "value":0
-          })
         }
       }
     }
@@ -486,4 +489,5 @@ export class FilterBy{
   {
     this.dialogRef.close();
   }
+
 }

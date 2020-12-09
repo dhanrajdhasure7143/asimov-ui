@@ -767,21 +767,21 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           "metaAttrValue": ele.name,
           "attrValue": ''
         }
-        if(ele.type=="checkbox" && this.fieldValues[ele.name]=="")
+        if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
           objAttr["attrValue"]="false";
         }
         else if(ele.type=="restapi")
         {
-          if(this.fieldValues[ele.name]!='' && this.fieldValues[ele.name]!=undefined)
+          if(this.fieldValues[ele.name+'_'+ele.id]!='' && this.fieldValues[ele.name+'_'+ele.id]!=undefined)
           {
             let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
-            objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name]==data[attrnames[0]]));
+            objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name+'_'+ele.id]==data[attrnames[0]]));
           }
         }
         else if(ele.type=="multipart")
         {
-          if(this.fieldValues[ele.name]=="")
+          if(this.fieldValues[ele.name+'_'+ele.id]=="")
           {
             let task=this.finaldataobjects.find(x=>x.nodeId==this.selectedNode.id);
             if(task!=undefined)
@@ -795,12 +795,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
             }
             else
             {
-              objAttr["attrValue"]=this.fieldValues[ele.name];
+              objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
             }
           }
           else
           {
-            objAttr["attrValue"]=this.fieldValues[ele.name];
+            objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
             let file_res:any=this.files_data.find(rec=>rec.attrId==ele.id && rec.nodeId==this.selectedNode.id)
             if(file_res!=undefined)
             {
@@ -811,7 +811,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         }
         else
         {
-          objAttr["attrValue"]=this.fieldValues[ele.name];
+          objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
         }
         obj.push(objAttr);
       }
