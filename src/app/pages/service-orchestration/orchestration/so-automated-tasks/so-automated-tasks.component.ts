@@ -1,9 +1,10 @@
-import {ViewChild, Component, OnInit } from '@angular/core';
+import {ViewChild,Input, Component, OnInit } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {HttpClient,HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/filter';
 import Swal from 'sweetalert2';
 declare var $:any;
@@ -25,6 +26,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   public userRole:any = [];
   public isButtonVisible = false;
   public bot_list:any=[];
+  public humans_list:any=[];
   public process_names:any=[];
   public selectedvalue:any;
   public selectedTab:number;
@@ -34,12 +36,13 @@ export class SoAutomatedTasksComponent implements OnInit {
   public categaoriesList:any=[];
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
-
+  @Input('processid') public processId: any;
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
     private router: Router,
     private spinner:NgxSpinnerService,
+    private http:HttpClient,
    )
   {}
 
@@ -60,28 +63,11 @@ export class SoAutomatedTasksComponent implements OnInit {
       this.isButtonVisible = false;
     }
 
-    let processId=undefined;
     this.getenvironments();
     this.getCategoryList();
     this.getallbots();
-    this.route.queryParams.subscribe(params => {
-      processId=params;
-      if(this.isEmpty(processId))
-      {
-        this.queryparam='';
-        this.getautomatedtasks(0);
-      }
-      else
-      {
-        this.queryparam=processId.processid;
-        this.getautomatedtasks(processId.processid);
-      }
-      this.spinner.show()
-      setTimeout(() => {
-        this.spinner.hide()
-      },4000)
-     }
-    );
+    this.getautomatedtasks(this.processId);
+    this.gethumanslist();
  }
 
 
@@ -125,8 +111,9 @@ export class SoAutomatedTasksComponent implements OnInit {
         this.getprocessnames(process);
       }
       this.update_task_status();
-
+      this.spinner.hide();
     },(err)=>{
+      this.spinner.hide();
     })
   }
 
@@ -152,7 +139,9 @@ export class SoAutomatedTasksComponent implements OnInit {
       {
         this.selectedvalue="";
       }
+      this.spinner.hide();
     },(err)=>{
+      this.spinner.hide();
     })
   }
 
@@ -301,7 +290,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   update_task_status()
   {
     let timer= setInterval(() => {
-      this.rest.getautomatedtasks(0).subscribe(response=>{
+      this.rest.getautomatedtasks(0).subscribe(response => {
         let responsedata:any=response;
         if(responsedata.automationTasks!=undefined)
         {
@@ -374,9 +363,13 @@ export class SoAutomatedTasksComponent implements OnInit {
     });
   }
 
-  openscheduler()
+  gethumanslist()
   {
-
+    let tenant=localStorage.getItem("tenantName");
+    this.rest.getuserslist(tenant).subscribe(data=>
+    {
+        this.humans_list=data;
+    })
   }
 
 }

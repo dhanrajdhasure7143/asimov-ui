@@ -12,7 +12,7 @@ import { FormGroup } from '@angular/forms';
              {{field.label}}</label>
           </div>
         </div>
-      </div> 
+      </div>
     `
     /*
       <div [formGroup]="form">
@@ -23,7 +23,7 @@ import { FormGroup } from '@angular/forms';
              {{opt.label}}</label>
           </div>
         </div>
-      </div> 
+      </div>
     */
 })
 export class CheckBoxComponent {
