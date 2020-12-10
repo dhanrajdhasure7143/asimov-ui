@@ -6352,7 +6352,7 @@
 	  });
 
 	  var ns = parseName(type.name, pkg.prefix),
-	      name = ns.name,
+	      name = ns.name.toLowerCase().indexOf('rpatask') > -1 ? "bpmn:rpaTask": ns.name,
 	      propertiesByName = {};
 
 	  // parse properties
@@ -6407,6 +6407,7 @@
 	 * @param {Boolean} [trait=false]
 	 */
 	Registry.prototype.mapTypes = function(nsName, iterator, trait) {
+		nsName.name = nsName.name.toLowerCase().indexOf('rpatask') > -1 ? "bpmn:rpaTask": nsName.name
 
 	  var type = isBuiltIn(nsName.name) ? { name: nsName.name } : this.typeMap[nsName.name];
 
