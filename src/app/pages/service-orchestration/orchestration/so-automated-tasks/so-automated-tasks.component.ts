@@ -17,6 +17,8 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./so-automated-tasks.component.css']
 })
 export class SoAutomatedTasksComponent implements OnInit {
+  public processId1:any;
+  public popup:any;
   public queryparam:any='';
   public isTableHasData = true;
   public respdata1=false;
@@ -371,5 +373,15 @@ export class SoAutomatedTasksComponent implements OnInit {
         this.humans_list=data;
     })
   }
+
+  getprocesslogs(){
+    this.processId1 = this.selectedvalue;
+    this.popup=true;
+    }
+  
+    closepop()
+      {
+        this.popup=false;
+      }
 
 }

@@ -5,6 +5,15 @@
 <div class="form-inline">
 
   <div class="form-group">
+    <span style="padding:5px">
+      <mat-form-field>
+        <mat-label>Select Category</mat-label>
+          <mat-select (selectionChange)="applyFilter($event.value)">
+            <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </span>
       <span style="padding:5px">
         <mat-form-field *ngIf="process_names!=undefined">
             <mat-label>Select Process</mat-label>
@@ -24,16 +33,6 @@
           </mat-select>
         </mat-form-field>
       </span>
-
-      <span style="padding:5px">
-        <mat-form-field>
-          <mat-label>Select Category</mat-label>
-            <mat-select (selectionChange)="applyFilter($event.value)">
-              <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
-              </mat-option>
-            </mat-select>
-        </mat-form-field>
-      </span>
   </div>
 
 
@@ -46,6 +45,9 @@
         </span>
         <span style="padding:5px">
           <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  (click)="startscheduler()"   title="Run Process"><i class="fa fa-calendar"></i></button>
+        </span>
+        <span style="padding:5px">
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  (click)="getprocesslogs()"   title="View Logs"><i class="fa fa-file" aria-hidden="true"></i></button>
         </span>
   </div>
 
@@ -166,4 +168,18 @@
 <br>
 <br>
 </div>
+</div>
+
+<div *ngIf="popup">
+  <div id='logsid' class="rpa-modal" style="display:block">
+      <div class="rpa-modal-content">
+          <div class="rpa-modal-header">
+              <span class="rpa-modal-close" (click)="closepop()">&times;</span>
+              <h4>Logs</h4>
+          </div>
+          <div class="rpa-modal-body">
+            <app-so-processlog [processId]="processId1"></app-so-processlog>
+          </div>
+      </div>
+  </div>
 </div>
