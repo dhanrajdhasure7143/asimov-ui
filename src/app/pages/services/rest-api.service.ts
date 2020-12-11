@@ -509,4 +509,14 @@ export class RestApiService{
     {
       return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
     }
+
+    getProcesslogsdata(processId)
+    {
+      return this.http.get("/rpa-service/process-logs/"+processId);
+    }
+
+    getprocessruniddata(processId,processrunid)
+    {
+      return this.http.get("/rpa-service/process-logs/"+processId+"/"+processrunid  );
+    }
 }

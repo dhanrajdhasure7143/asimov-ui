@@ -29,11 +29,12 @@ import {MatMenuModule} from '@angular/material/menu';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDialogModule} from '@angular/material/dialog';
+import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
 @NgModule({
   declarations: [OrchestrationComponent,
     BotStatusComponent,
     FilterBy,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent],
+    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent],
   imports: [
     CommonModule,
     FormsModule,
