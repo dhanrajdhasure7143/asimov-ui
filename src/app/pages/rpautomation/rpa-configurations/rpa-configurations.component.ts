@@ -14,7 +14,7 @@ export class RpaConfigurationsComponent implements OnInit {
   ngOnInit() {
     
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
-      this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Configuration"});
+      this.dt.changeChildModule({"route":"/pages/rpautomation/environments","title":"Configurations"});
     }
   }
 

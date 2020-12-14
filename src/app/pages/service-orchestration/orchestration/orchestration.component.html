@@ -18,19 +18,39 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
 
 
-<!--<app-bot-status></app-bot-status>-->
-
-<mat-tab-group [selectedIndex]="selectedTab">
-    <mat-tab label="Dashboard">
-        <app-so-dashboard>
-        </app-so-dashboard>
+<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
+    <mat-tab>
+      <ng-template mat-tab-label>
+          <mat-icon class="text-primary">pie_chart</mat-icon>&nbsp;&nbsp;
+          Dashboard
+      </ng-template>
+      <div *ngIf="check_tab==0">
+        <app-so-dashboard></app-so-dashboard>
+      </div>
     </mat-tab>
     <mat-tab label="Orchestrator">
-        <app-so-automated-tasks>
-        </app-so-automated-tasks>
+
+
+        <ng-template mat-tab-label>
+          <mat-icon class="text-primary">control_camera</mat-icon>
+            &nbsp;&nbsp;
+            Orchestration
+        </ng-template>
+
+        <div *ngIf="check_tab==1">
+          <app-so-automated-tasks [processid]="param"></app-so-automated-tasks>
+        </div>
     </mat-tab>
     <mat-tab label="Bot Management">
+
+              <ng-template mat-tab-label>
+                <mat-icon  class="text-primary">android</mat-icon>
+                  &nbsp;&nbsp;
+                  Bot Management
+              </ng-template>
+      <div *ngIf="check_tab==2">
         <app-so-bot-management></app-so-bot-management>
+      </div>
     </mat-tab>
 </mat-tab-group>
 <!--

@@ -1,9 +1,10 @@
-import {ViewChild, Component, OnInit } from '@angular/core';
+import {ViewChild,Input, Component, OnInit } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {HttpClient,HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/filter';
 import Swal from 'sweetalert2';
 declare var $:any;
@@ -16,14 +17,18 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./so-automated-tasks.component.css']
 })
 export class SoAutomatedTasksComponent implements OnInit {
+  public processId1:any;
+  public popup:any;
+  public queryparam:any='';
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
+  displayedColumns: string[] = ["processName","taskName","taskType","Assign","status","successTask","failureTask","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
   public isButtonVisible = false;
   public bot_list:any=[];
+  public humans_list:any=[];
   public process_names:any=[];
   public selectedvalue:any;
   public selectedTab:number;
@@ -33,12 +38,13 @@ export class SoAutomatedTasksComponent implements OnInit {
   public categaoriesList:any=[];
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
-
+  @Input('processid') public processId: any;
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
     private router: Router,
     private spinner:NgxSpinnerService,
+    private http:HttpClient,
    )
   {}
 
@@ -59,45 +65,13 @@ export class SoAutomatedTasksComponent implements OnInit {
       this.isButtonVisible = false;
     }
 
-    let processId=undefined;
     this.getenvironments();
     this.getCategoryList();
     this.getallbots();
-    this.route.queryParams.subscribe(params => {
-      processId=params;
-      console.log(processId);
-      if(this.isEmpty(processId))
-      {
-        this.getautomatedtasks(0);
-
-        //this.selectedTab=0;
-        console.log(this.process_names);
-      }
-      else
-      {
-        this.getautomatedtasks(processId.processid);
-
-      }
-
-      this.spinner.show()
-      setTimeout(() => {
-        this.spinner.hide()
-      },4000)
-     }
-
-
-    );
-
-
-
-
-
+    this.getautomatedtasks(this.processId);
+    this.gethumanslist();
  }
 
-
-  ngAfterViewInit() {
-
-  }
 
   assignreset(id)
   {
@@ -139,8 +113,9 @@ export class SoAutomatedTasksComponent implements OnInit {
         this.getprocessnames(process);
       }
       this.update_task_status();
-
+      this.spinner.hide();
     },(err)=>{
+      this.spinner.hide();
     })
   }
 
@@ -166,7 +141,9 @@ export class SoAutomatedTasksComponent implements OnInit {
       {
         this.selectedvalue="";
       }
+      this.spinner.hide();
     },(err)=>{
+      this.spinner.hide();
     })
   }
 
@@ -244,14 +221,6 @@ export class SoAutomatedTasksComponent implements OnInit {
   }
 
 
-
-
-  loadbotdata(botId)
-  {
-    //this.rpa_studio.getloadbotdata(botId);
-  }
-
-
   isEmpty(obj) {
     for(var key in obj) {
         if(obj.hasOwnProperty(key))
@@ -259,7 +228,6 @@ export class SoAutomatedTasksComponent implements OnInit {
     }
     return true;
   }
-
 
 
   resetbot(taskid:any)
@@ -324,7 +292,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   update_task_status()
   {
     let timer= setInterval(() => {
-      this.rest.getautomatedtasks(0).subscribe(response=>{
+      this.rest.getautomatedtasks(0).subscribe(response => {
         let responsedata:any=response;
         if(responsedata.automationTasks!=undefined)
         {
@@ -339,7 +307,6 @@ export class SoAutomatedTasksComponent implements OnInit {
                 data="<span class='text-primary'><img src='../../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }else if(statusdata.status=="Success")
               {
-                //data="<img src='../../../../assets/images/RPA/processloading.svg' style='height:30px'>";
 
                 data='<span class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
               }
@@ -398,7 +365,23 @@ export class SoAutomatedTasksComponent implements OnInit {
     });
   }
 
+  gethumanslist()
+  {
+    let tenant=localStorage.getItem("tenantName");
+    this.rest.getuserslist(tenant).subscribe(data=>
+    {
+        this.humans_list=data;
+    })
+  }
 
-
+  getprocesslogs(){
+    this.processId1 = this.selectedvalue;
+    this.popup=true;
+    }
+  
+    closepop()
+      {
+        this.popup=false;
+      }
 
 }

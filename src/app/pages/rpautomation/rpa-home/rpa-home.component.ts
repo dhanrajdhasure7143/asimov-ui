@@ -23,7 +23,7 @@ declare var $:any;
 export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
+  displayedColumns: string[] = ["botName","description","department","botType","version","botStatus"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -66,9 +66,11 @@ export class RpaHomeComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
 
     this.dt.changeHints(this.datahints.rpahomehints );
-    this.getenvironments();
     this.getCategoryList();
-    this.getallbots();
+    this.getenvironments();
+    setTimeout(()=> {
+      this.getallbots();
+      }, 550);
     if(localStorage.getItem("taskId")!=undefined)
     {
        this.createtaskbotoverlay(localStorage.getItem("taskId"))
@@ -112,6 +114,10 @@ export class RpaHomeComponent implements OnInit {
       {
         $("#"+id+"__select").prop('selectedIndex',0);
       }
+  }
+  Resetfilters(){
+    this.botNameFilter.setValue("");
+    this.departmentFilter.setValue("");
   }
 
   getallbots()

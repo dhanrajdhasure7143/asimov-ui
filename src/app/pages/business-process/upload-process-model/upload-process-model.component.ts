@@ -2,7 +2,7 @@ import { Component, OnInit ,ViewChild,TemplateRef, ElementRef, OnDestroy} from '
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { diff } from 'bpmn-js-differ';
 import { NgxSpinnerService } from "ngx-spinner";
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.development.js';
+import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 import CmmnPropertiesPanelModule from 'cmmn-js-properties-panel';
@@ -30,6 +30,7 @@ import { UUID } from 'angular2-uuid';
 import { Subscription } from 'rxjs';
 import { JsonpInterceptor } from '@angular/common/http';
 import * as bpmnlintConfig from '../model/packed-config';
+import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 
 declare var require:any;
 
@@ -362,11 +363,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         }
-        this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))), function(err){
-          if(err){
-            return console.error('could not import BPMN 2.0 notation', err);
-          }
-        })
+        try{
+          this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))))
+        }catch(err){
+          console.error('could not import BPMN 2.0 notation', err);
+        }
      })
     }else{
       let selected_xml = atob(unescape(encodeURIComponent(this.saved_bpmn_list[this.selected_notation].bpmnXmlNotation)));
@@ -376,16 +377,18 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       }
       if(selected_xml == "undefined"){
         this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
-          this[modeler_obj].importXML(res, function(err){
-            if(err)
-              console.error('could not import BPMN 2.0 notation', err);
-          });
+          try{
+            this[modeler_obj].importXML(res);
+          }catch(err){
+            console.error('could not import BPMN 2.0 notation', err);
+          }
         });
       }else{
-        this[modeler_obj].importXML(selected_xml, function(err){
-          if(err)
-            console.error('could not import BPMN 2.0 notation', err)
-        })
+        try{
+          this[modeler_obj].importXML(selected_xml);
+        }catch(err){
+          console.error('could not import BPMN 2.0 notation', err);
+        }
       }
     }
   }
@@ -452,17 +455,23 @@ displayBPMN(){
           if(this.hasConformance) this.initBpmnModeler();
           if(this.bpmnModeler){
             if(selected_xml && selected_xml != "undefined"){
-              this.bpmnModeler.importXML(selected_xml, function(err){
-                _self.oldXml = selected_xml;
-                _self.newXml = selected_xml;
-              });
+              try{
+                this.bpmnModeler.importXML(selected_xml);
+                this.oldXml = selected_xml;
+                this.newXml = selected_xml;
+              }catch(err){
+                console.error('could not import BPMN 2.0 notation', err);
+              }
             }else{
               this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
                 let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
-                this.bpmnModeler.importXML(encrypted_bpmn, function(err){
-                  _self.oldXml = selected_xml;
-                  _self.newXml = selected_xml;
-                });
+                try{
+                  this.bpmnModeler.importXML(encrypted_bpmn);
+                  this.oldXml = selected_xml;
+                  this.newXml = selected_xml;
+                }catch(err){
+                  console.error('could not import BPMN 2.0 notation', err);
+                }
               });
               }
             }
@@ -470,7 +479,11 @@ displayBPMN(){
           if(this.isShowConformance && current_bpmn_info["processIntelligenceId"] && current_bpmn_info["processIntelligenceId"] == this.pid ){
             this.isConfBpmnModeler = !this.hasConformance;
             let bpmn_not = this.hasConformance ? current_bpmn_info["bpmnConfProcessMeta"] : this.pivalues["data"];
-            this.confBpmnModeler.importXML(btoa(unescape(encodeURIComponent(bpmn_not))));
+            try{
+              this.confBpmnModeler.importXML(btoa(unescape(encodeURIComponent(bpmn_not))));
+            }catch(err){
+              console.error('could not import BPMN 2.0 notation', err);
+            }
           }
           _self.isLoading = false;
         }
@@ -498,16 +511,22 @@ displayBPMN(){
       if(this.bpmnModeler){
         if(selected_xml == "undefined"){
           this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
-            this.bpmnModeler.importXML(res, function(err){
-	    _self.oldXml = selected_xml;
-                _self.newXml = selected_xml;
-              });
+              try{
+                this.bpmnModeler.importXML(res);
+                this.oldXml = selected_xml;
+                this.newXml = selected_xml;
+              }catch(err){
+                console.error('could not import BPMN 2.0 notation', err);
+              }
             });
           }else{
-            this.bpmnModeler.importXML(selected_xml, function(err){
-              _self.oldXml = selected_xml;
-              _self.newXml = selected_xml;
-            });
+            try{
+              this.bpmnModeler.importXML(selected_xml);
+              this.oldXml = selected_xml;
+              this.newXml = selected_xml;
+            }catch(err){
+              console.error('could not import BPMN 2.0 notation', err);
+            }
           }
         }
       },0);
@@ -522,9 +541,11 @@ displayBPMN(){
           else
             bpmn_not = this.pivalues["data"];
         }
-        this.confBpmnModeler.importXML(atob(unescape(encodeURIComponent(bpmn_not))), function(err){
-          console.log(err)
-        });
+        try{
+          this.confBpmnModeler.importXML(atob(unescape(encodeURIComponent(bpmn_not))));
+        }catch(err){
+          console.error('could not import BPMN 2.0 notation', err);
+        }
       }
       _self.isLoading = false;
     }
@@ -676,11 +697,14 @@ displayBPMN(){
     myReader.onloadend = (ev) => {
       this.isLoading = true;
       let fileString:string = myReader.result.toString();
-      this.bpmnModeler.importXML(fileString, function(err){
-        _self.oldXml = fileString.trim();
-        _self.newXml = fileString.trim();
-        _self.isLoading = false;
-      });
+      try{
+        this.bpmnModeler.importXML(fileString);
+        this.oldXml = fileString.trim();
+        this.newXml = fileString.trim();
+        this.isLoading = false;
+      }catch(err){
+        console.error('could not import BPMN 2.0 notation', err);
+      }
     }
     myReader.readAsText(e.addedFiles[0]);
   }
@@ -716,6 +740,7 @@ displayBPMN(){
     var CamundaModdleDescriptor = require("camunda-bpmn-moddle/resources/camunda.json");
     var CmmnCamundaModdleDescriptor = require("camunda-cmmn-moddle/resources/camunda.json");
     var DmnCamundaModdleDescriptor = require("camunda-dmn-moddle/resources/camunda.json");
+    this.keyboardLabels=this.shortcut[this.selectedNotationType];
     if(this.selectedNotationType == "cmmn"){
       this[modeler_obj] = new CmmnJS({
         additionalModules: [
@@ -959,10 +984,13 @@ displayBPMN(){
               _self.selected_notation = newVal;
               let current_bpmn_info = _self.saved_bpmn_list[_self.selected_notation];
               let selected_xml = atob(current_bpmn_info.bpmnXmlNotation);
-              _self.bpmnModeler.importXML(selected_xml, function(err){
-                _self.oldXml = selected_xml;
-                _self.newXml = selected_xml;
-              });
+              try{
+                this.bpmnModeler.importXML(selected_xml);
+                this.oldXml = selected_xml;
+                this.newXml = selected_xml;
+              }catch(err){
+                console.error('could not import BPMN 2.0 notation', err);
+              }
             }
           }
         },
@@ -991,15 +1019,15 @@ displayBPMN(){
     this.isLoading = true;
     setTimeout(()=> {
       this.initBpmnModeler();
-      this.bpmnModeler.importXML(decrypted_data, function(err){
-        if(err){
-          return console.error('could not import BPMN 2.0 notation', err);
-        }
-        _self.confBpmnXml = decrypted_data;
-        _self.bpmnservice.uploadConfirmanceBpmnXMLDef( _self.bpmnModeler._definitions);
-        _self.isLoading = false;
-        _self.getUserBpmnList(null);
-      })
+      try{
+        this.bpmnModeler.importXML(decrypted_data);
+        this.confBpmnXml = decrypted_data;
+        this.bpmnservice.uploadConfirmanceBpmnXMLDef( _self.bpmnModeler._definitions);
+        this.isLoading = false;
+        this.getUserBpmnList(null);
+      }catch(err){
+        console.error('could not import BPMN 2.0 notation', err);
+      }
     }, 3000);
    }
 
@@ -1124,6 +1152,8 @@ displayBPMN(){
   displayShortcut(){
      this.dialog.open(this.keyboardShortcut);
   }
-
+  openDeployDialog() {
+    this.dialog.open(DeployNotationComponent);
+  }
 
 }

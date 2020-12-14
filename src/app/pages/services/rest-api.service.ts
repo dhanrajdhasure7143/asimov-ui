@@ -504,5 +504,19 @@ export class RestApiService{
     getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
       return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
     }
-}
 
+    getuserslist(tenantid)
+    {
+      return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
+    }
+
+    getProcesslogsdata(processId)
+    {
+      return this.http.get("/rpa-service/process-logs/"+processId);
+    }
+
+    getprocessruniddata(processId,processrunid)
+    {
+      return this.http.get("/rpa-service/process-logs/"+processId+"/"+processrunid  );
+    }
+}
