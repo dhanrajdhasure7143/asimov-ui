@@ -17,6 +17,7 @@ import { GlobalScript } from './shared/global-script';
 import { LoaderService } from './services/loader/loader.service';
 import { LoaderInterceptor } from './helpers/loader-interceptor.service';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
+import { UserIdleModule } from 'angular-user-idle';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     NotifierModule,
-    BackButtonDisableModule.forRoot()
+    BackButtonDisableModule.forRoot(),
+    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740})
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },
