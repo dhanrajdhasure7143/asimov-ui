@@ -59,6 +59,9 @@ export class RestApiService{
 
     return this.http.post('/api/login/beta/accessToken',data);
   }
+  getNewAccessToken(){
+    return this.http.get<any[]>('/api/login/beta/newAccessToken',{responseType: 'json'});
+  }
   getIP()
      {
         if(localStorage.getItem('ipAddress')==null){
