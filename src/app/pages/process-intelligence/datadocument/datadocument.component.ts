@@ -190,7 +190,7 @@ export class DatadocumentComponent implements OnInit {
         if (!this.invalidCells['row' + x])
           this.invalidCells['row' + x] = [];
         let each_cell = this.fileData[x][index];
-        if(each_cell == ''){
+        if(each_cell == ''||each_cell == undefined){
           isInvalid = true;
           if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
             this.invalidCells['row' + x].push('cell' + index);
