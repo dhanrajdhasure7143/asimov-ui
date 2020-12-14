@@ -53,12 +53,14 @@ export class DatadocumentComponent implements OnInit {
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/datadocument", "title": "Data Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
       
-    //   if (resOne) {
-        var restwo=localStorage.getItem('fileData')
-        var res=JSON.parse(restwo)
+        // var restwo=localStorage.getItem('fileData')
+        // var res=JSON.parse(restwo)
+        let restwo;
+        //   if (resOne) {
+      this.dt.current_piData.subscribe(response => { restwo = response })
+      let res=restwo;
         this.fileData = res;
         this.headerData = res[0];
-       
         this.headerData = this.headerData;
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
