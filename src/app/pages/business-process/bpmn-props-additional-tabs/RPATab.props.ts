@@ -454,7 +454,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                             if(storedValue)
                                 result[taskey] = storedValue;
                         }
-                        return result[taskey];
+                        return result;
                     },
                     set: function(element, values, node) {
                         var bo = getBusinessObject(element); var commands = [];
