@@ -18,15 +18,14 @@ export class SoDashboardComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private dialog:MatDialog,
     private http:HttpClient
-    ) {
-
-
-    }
-
+    ) {}
+  public selectedcat:any;
   categaoriesList:any
+  allprocessnames:any;
   processnames:any
   automatedtasks:any
   bots_list:any;
+  main_bot_list;
   bots:any;
   transactions:any;
   chart:any
@@ -35,13 +34,14 @@ export class SoDashboardComponent implements OnInit {
   chart6:any;
   data_sets:any=[];
   Environments:any;
-  Performance:any;
+  envcount:any;
+  Performance:any=[];
   users:any;
-
+  mainautomatedtasks:any=[];
   view: any[] = [700, 400];
 
-  processstatistics:any;
-  botstatistics:any;
+  processstatistics:any=[];
+  botstatistics:any=[];
   showXAxis = true;
   showYAxis = true;
   showXAxisLabel = true;
@@ -72,6 +72,7 @@ export class SoDashboardComponent implements OnInit {
   /* TO get Bot statistics*/
   getbotstatistics()
   {
+    this.botstatistics=[];
     this.rest.botStatistics().subscribe(data => { this.usageData = data;
             console.log(this.usageData);
             let datacha = Object.keys(data);
@@ -101,9 +102,10 @@ export class SoDashboardComponent implements OnInit {
     this.rest.getautomatedtasks(0).subscribe(data=>{
       let resp:any=data;
       this.automatedtasks=resp.automationTasks;
-
+      this.mainautomatedtasks=resp.automationTasks;
         this.rest.getprocessnames().subscribe(data=>{
           this.processnames=data;
+          this.allprocessnames=data;
           this.getbotsvshumans()
         })
     })
@@ -145,11 +147,10 @@ export class SoDashboardComponent implements OnInit {
   {
     this.rest.listEnvironments().subscribe(data=>{
       this.Environments=data;
-      console.log(this.Environments);
       let Linux=this.Environments.filter(Data=>Data.environmentType=="Linux").length;
       let Mac=this.Environments.filter(Data=>Data.environmentType=="Mac").length;
       let Windows=this.Environments.filter(Data=>Data.environmentType=="Windows").length;
-
+      this.envcount=this.Environments.length;
       let data2={
         "Windows":Windows,
         "Mac":Mac,
@@ -177,6 +178,11 @@ export class SoDashboardComponent implements OnInit {
         },
         options: {
           // cutoutPercentage	: 65,
+          elements: {
+            center: {
+              text: 'Red is 2/3 of the total numbers'
+            },
+          },
           legend: {
             display: true,
             position:'bottom',
@@ -218,7 +224,7 @@ export class SoDashboardComponent implements OnInit {
       let performance:any=[];
       performance=bots[0].coordinates
       performance=performance.reverse();
-      for(let i=0;i<5;i++)
+      for(let i=0;i<10;i++)
       {
         if(performance[i]!=undefined)
         {
@@ -245,7 +251,7 @@ export class SoDashboardComponent implements OnInit {
               "value":this.automatedtasks.filter(taskdata=>taskdata.processId==data.processId && taskdata.taskType=="Human").length,
             }]
           };
-          if(index<5)
+          if(index < 7)
           this.botvshuman.push(value_data);
       })
       console.log(this.botvshuman);
@@ -254,16 +260,17 @@ export class SoDashboardComponent implements OnInit {
 
   getruns(botid)
   {
+    console.log(botid);
     if(this.bots.find(botc=>botc.botId==botid) != undefined)
     {
       console.log(this.bots);
       let bot_check =this.bots.filter(botc=>botc.botId==botid)
       console.log(bot_check);
-      let performances=bot_check[1].coordinates
+      let performances=bot_check[0].coordinates
       console.log(performances)
       performances=performances.reverse();
       this.Performance=[];
-      for(let i=0;i<5;i++)
+      for(let i=0;i<10;i++)
       {
         if(performances[i]!=undefined)
         {
@@ -299,10 +306,10 @@ export class SoDashboardComponent implements OnInit {
           let date_array=this.dateranges(from,to);
           date_array.forEach(date=>{
             labels.push(moment(date).format("D-MM-YYYY"));
-            success.push((this.bots_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
-            failed.push((this.bots_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failed')).length))
-            stopped.push((this.bots_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
-            total.push((this.bots_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+            success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
+            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failed')).length))
+            stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
+            total.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
           });
           this.linechart(labels,success,failed,stopped,total)
         }
@@ -330,6 +337,7 @@ export class SoDashboardComponent implements OnInit {
   {
     this.rest.getAllActiveBots().subscribe(response=>{
       let resp:any=response;
+      this.main_bot_list=resp;
       this.bots_list=resp;
       let to=new Date();
       let from=new Date();
@@ -444,9 +452,90 @@ export class SoDashboardComponent implements OnInit {
   }
 
 
+
+
+  sortbycat()
+  {
+    let bot_list_check:any=[];
+    console.log(this.selectedcat);
+    bot_list_check=this.main_bot_list.filter(item=>item.department==this.selectedcat);
+    console.log(bot_list_check);
+    if(bot_list_check.length!=0)
+    {
+      this.getruns(bot_list_check[0].botId);
+    }
+    this.bots_list=bot_list_check;
+    this.rest.getProcessStatisticsbycat(this.selectedcat).subscribe(data => {
+    let response:any=data;
+    if(response.errorMessage==undefined)
+    {
+      this.usageData = response;
+      let datacha = Object.keys(data);
+      let values=Object.values(this.usageData)
+      let dataset:any=[];
+      datacha.forEach((data,index)=>{
+        dataset.push({
+          "name":this.titleCaseWord(data),
+          "value":values[index]
+          })
+      })
+      this.processstatistics=dataset;
+    }
+    else
+    {
+      this.processstatistics=[];
+    }
+
+    });
+    this.rest.botStatisticsbycat(this.selectedcat).subscribe(data => {
+      let resp:any=data;
+      if(resp.errorMessage ==undefined)
+      {
+        this.usageData = data;
+        console.log(this.usageData);
+        let datacha = Object.keys(data);
+        let values=Object.values(this.usageData)
+        let dataset:any=[];
+
+        datacha.forEach((data,index)=>{
+          dataset.push({
+            "name":data,
+            "value":values[index]
+            })
+        })
+        this.botstatistics=dataset;
+        setTimeout(() => {
+          $('.chart-legend>div').css({width : '100%'});
+          this.spinner.hide()
+        }, 2000);
+      }
+      else
+      {
+        this.botstatistics=[];
+      }
+    },(err)=>{
+      console.log(err)
+      this.spinner.hide();
+    });
+    this.processnames=this.allprocessnames.filter(item=>item.categoryId==this.selectedcat);
+    this.automatedtasks=this.mainautomatedtasks.filter(item=>item.categoryId==this.selectedcat)
+    this.getbotsvshumans();
+  }
+
+  reset_all()
+  {
+    this.selectedcat="";
+    this.ngOnInit();
+  }
+
+
 }
 
 
+
+
+
+// =================================Dailog Box======================================//
 
 
 

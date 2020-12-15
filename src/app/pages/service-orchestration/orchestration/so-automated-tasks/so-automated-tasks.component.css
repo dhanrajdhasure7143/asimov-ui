@@ -28,3 +28,9 @@ select {
   float:right !important;
   font:10px !important;
 }
+td{
+  white-space:nowrap;
+}
+th{
+  white-space:nowrap;
+}

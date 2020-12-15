@@ -195,6 +195,11 @@ export class RestApiService{
   botStatistics(){
     return this.http.get("/rpa-service/bot-statistics")
   }
+
+  botStatisticsbycat(cat)
+  {
+    return  this.http.get("/rpa-service/bot-statistics/"+cat);
+  }
   listEnvironments(){
     return this.http.get("/rpa-service/agent/get-environments")
   }
@@ -401,6 +406,12 @@ export class RestApiService{
     return this.http.get("/rpa-service/process-statistics")
   }
 
+
+  getProcessStatisticsbycat(cat)
+  {
+    return this.http.get("/rpa-service/process-statistics/"+cat);
+  }
+
   getBotStatistics()
   {
     return this.http.get("/rpa-service/bot-statistics")
@@ -468,6 +479,38 @@ export class RestApiService{
   resume_schedule(data)
   {
     return this.http.post("/rpa-service/specifiedscheduled-resumebot", data);
+  }
+
+
+
+  getprocessschedule(id)
+  {
+    return this.http.post("/rpa-service/get-process-schedule?processId="+id,"");
+  }
+
+  saveprocessschedule(data)
+  {
+    return this.http.post("/rpa-service/save-process-schedule",data);
+  }
+
+  startprocessschedule(processid)
+  {
+    return this.http.post("/rpa-service/start-process-schedule?processId="+processid,"");
+  }
+
+  pauseprocessschedule(processid)
+  {
+    return this.http.post("/rpa-service/pause-process-schedule?processId="+processid,"")
+  }
+
+  stopprocessschedule(processid)
+  {
+    return this.http.post("/rpa-service/stop-process-schedule?processId="+processid,"");
+  }
+
+  resumeprocessschedule(processid)
+  {
+    return this.http.post("/rpa-service/resume-process-schedule?processId="+processid,"");
   }
 
   assign_bot_and_task(botid,taskid)
