@@ -292,7 +292,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                             else if(fieldValue.length > each_attr['attributeMax'] || fieldValue.length < each_attr['attributeMin'])
                                 validation[taskey] = each_attr['label']+' length must lie between '+each_attr['attributeMin']+' - '+each_attr['attributeMax']+' characters';
                             else if(each_attr['type'] == 'email'){
-                                let re = /^[a-zA-Z]{1}[a-zA-Z0-9+.]+@[a-zA-Z0-9.-]{2,7}.[a-zA-Z]{2,7}$/;
+                                let re = /^[a-zA-Z]{1}[a-zA-Z0-9+.]+@[a-zA-Z0-9.-]{2,17}.[a-zA-Z]{2,7}$/;
                                 if(!re.test(fieldValue))
                                     validation[taskey] = 'Please enter valid ' + each_attr['label'];
                             }
