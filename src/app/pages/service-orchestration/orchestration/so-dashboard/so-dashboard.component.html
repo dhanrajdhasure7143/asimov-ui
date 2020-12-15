@@ -1,19 +1,22 @@
 <div class="bg-color">
     <div class="container-fluid">
-        <br>
-        <div class="text-right">
+      <div class="text-right">
 
-            <span style="padding:10px">
+      <span style="padding:10px">
         <mat-form-field>
             <mat-label>Select Category</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
+            <mat-select [(ngModel)]="selectedcat" (selectionChange)="sortbycat()">
+                <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">
+                  {{category.categoryName}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
       </span>
-        </div>
-        <br>
+
+      <span style="padding:5px" >
+        <button (click)="reset_all()"><i class="fa fa-undo"></i></button>
+      </span>
+    </div>
 
 
         <div class="row">
@@ -28,8 +31,9 @@
                                 &nbsp;&nbsp;&nbsp;
                             </div>
                               <div class="count-text form-group">DEPARTMENTS</div>
-                              <div class="count-text form-group pull-right">{{categaoriesList.length}}</div>
-                          </div>
+                                <div class="count-text form-group pull-right" *ngIf="selectedcat==''|| selectedcat==undefined">{{categaoriesList.length}}</div>
+                                <div class="count-text form-group pull-right" *ngIf="selectedcat!=''">1</div>
+                            </div>
                       </div>
 
 <!--
@@ -115,17 +119,28 @@
         <br><br>
         <div class="row">
             <div class="col-md-6 text-center ">
-                <div class="graph-card text-center" #botstatistics_graph  *ngIf="botstatistics!=undefined">
-                    <h5><b>Bot Statistics</b></h5>
-                    <ngx-charts-pie-chart [view]="[(botstatistics_graph.offsetWidth), 300]" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="true" [legend]="true" legendPosition="below"  [labels]="true" [doughnut]="false" >
+                <div class="graph-card text-center" #botstatistics_graph >
+                  <h5><b>Bot Statistics</b></h5>
+                  <div *ngIf="botstatistics.length!=0">
+                    <ngx-charts-pie-chart [view]="[400, 300]"  class="chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
                     </ngx-charts-pie-chart>
+                  </div>
+                  <span class="message" *ngIf="botstatistics.length==0" ><br><br><br>
+                    No Records Found
+                  </span>
                 </div>
             </div>
             <div class="col-md-6  text-center">
-                <div class="graph-card" #process_statistics *ngIf="processstatistics!=undefined">
+                <div class="graph-card text-center" #process_statistics *ngIf="processstatistics!=undefined || processstatistics.length!=0">
                     <h5><b>Process Statistics</b></h5>
-                    <ngx-charts-pie-chart [view]="[(process_statistics.offsetWidth),300]" [legendTitle]="''" [scheme]="colorScheme " [results]="processstatistics" [gradient]="true" [legend]="showLegend" legendPosition="below" [labels]="showLabels " [arcWidth]="0.50" [doughnut]="true"  >
+                  <div *ngIf="processstatistics.length!=0" class="text-center" style="justify-content: center;text-align: center;align-items: center;">
+                    <ngx-charts-pie-chart  [view]="[400,300]" [legendTitle]="''" [scheme]="colorScheme " class="chart-container-check" [results]="processstatistics" [gradient]="false" [legend]="showLegend" legendPosition="below" [labels]="showLabels " [arcWidth]="0.50" [doughnut]="true"  >
                     </ngx-charts-pie-chart>
+                  </div>
+                  <span class="message" *ngIf="processstatistics.length==0" ><br><br><br>
+                    No Records Found
+                  </span>
+
                 </div>
             </div>
           </div>
@@ -140,8 +155,8 @@
 
                         <mat-form-field>
                           <mat-label>Select Bot</mat-label>
-                          <mat-select (selectionChange)="getruns($event.value)" [(value)]="bots[0].botId">
-                              <mat-option *ngFor="let bot of bots" [value]="bot.botId">{{bot.botName}}
+                          <mat-select (selectionChange)="getruns($event.value)" [(value)]="bots_list[0].botId">
+                              <mat-option *ngFor="let bot of bots_list" [value]="bot.botId">{{bot.botName}}
                             </mat-option>
                           </mat-select>
                       </mat-form-field>
@@ -154,10 +169,15 @@
             </div>
             <div class="col-md-6  text-center">
                 <div class="graph-card bar-chart" #automated_human >
-                    <h5><b>Automated Vs Human tasks</b></h5>
+                  <h5><b>Automated Vs Human tasks</b></h5>
+                  <div *ngIf="botvshuman.length!=0">
                     <ngx-charts-bar-vertical-2d [view]="[(automated_human.offsetWidth-50),300]" maxXAxisTickLength=4 [scheme]="colorScheme" [results]="botvshuman" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="showXAxisLabel" [showYAxisLabel]="showYAxisLabel" [xAxisLabel]="'Process'"
                         [yAxisLabel]="'No of Resources'">
                     </ngx-charts-bar-vertical-2d>
+                  </div>
+                  <span class="message" *ngIf="botvshuman.length==0"><br><br><br>
+                    No records Found
+                  </span>
                 </div>
 
             </div>

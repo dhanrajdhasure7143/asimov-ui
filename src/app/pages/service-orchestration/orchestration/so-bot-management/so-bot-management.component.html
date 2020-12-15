@@ -31,15 +31,15 @@
                     <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null">{{element.botName}}</button> <span *ngIf="element.botName==''">-</span> </td>
                 </ng-container>
 
-                <ng-container matColumnDef="botType">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type </th>
-                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
-                </ng-container>
 
                 <ng-container matColumnDef="description">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
                     <td mat-cell *matCellDef="let element"> <button *ngIf="element.description!=null">{{element.description}}</button> <span *ngIf="element.botName==''">-</span> </td>
                 </ng-container>
+                <ng-container matColumnDef="botType">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type </th>
+                  <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
+              </ng-container>
 
                 <ng-container matColumnDef="version">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Version </th>
@@ -103,7 +103,7 @@
             <div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
                 No Record Found
             </div>
-            <mat-paginator #paginator1 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
+            <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
           </mat-card>
         </div>
     </div>
@@ -313,7 +313,7 @@
                 <h4>Scheduler</h4>
             </div>
             <div class="rpa-modal-body">
-                <app-so-scheduler [botid]="botid" id="Scheduler"></app-so-scheduler>
+                <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
             </div>
         </div>
     </div>

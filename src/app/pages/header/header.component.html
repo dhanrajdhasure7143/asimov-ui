@@ -15,7 +15,7 @@
                                     <li class="breadcrumb_li">
                                         <div class="breadcrumb">
                                             <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
-                                            <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
+                                            <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" (click)="removenodes()" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
                                             <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
                                         </div>
                                     </li>
@@ -23,17 +23,17 @@
                                         <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img">
                                             <label>{{each_page.title}}</label> </a>
                                     </li>
-                                    <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'> 
+                                    <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
                                         <!-- <img src="assets/images/Group 192.svg"> </li> -->
-                                        <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'> 
-                                           <img src="assets/images/Notification_Bell.svg"> 
+                                        <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
+                                           <img src="assets/images/Notification_Bell.svg">
                                             <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:66px; top:2px;">
-                                            <span>{{notificationscount}}</span> 
+                                            <span>{{notificationscount}}</span>
                                          </div>
                                        </li>
-                                    <li class=""> 
+                                    <li class="">
                                         <!-- <img src="assets/images/pro1.png"> -->
-                                        <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                                        <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
                                         <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
                                         <div class="dropdown">
                                             <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>

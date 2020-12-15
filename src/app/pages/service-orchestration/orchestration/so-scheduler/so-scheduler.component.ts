@@ -10,7 +10,9 @@ import cronstrue from 'cronstrue';
 })
 export class SoSchedulerComponent implements OnInit {
 
-  @Input('botid') public botid: any;
+  @Input('data') public data: any;
+  botid:any;
+  processid:any;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
   i="";
   public cronOptions: CronOptions = {
@@ -37,7 +39,7 @@ export class SoSchedulerComponent implements OnInit {
     cronFlavor: "standard"
   }
   CronOptions:any;
-
+  processName:any;
   cronExpression = '0/1 * 1/1 * *';
   isCronDisabled = false;
   picker1;
@@ -50,7 +52,7 @@ export class SoSchedulerComponent implements OnInit {
   timezone:any;
   schedule_list:any=[];
   botdata:any;
-
+  environmentid:any;
   flags={
     startflag:false,
     stopflag:false,
@@ -61,7 +63,16 @@ export class SoSchedulerComponent implements OnInit {
   constructor(private rest:RestApiService) { }
 
   ngOnInit() {
-
+    if(this.data.processid!=undefined)
+    {
+      this.processid=this.data.processid
+      this.environmentid=this.data.environment
+      this.processName=this.data.processName
+    }
+    else if(this.data.botid!=undefined)
+    {
+      this.botid=this.data.botid;
+    }
     this.get_schedule()
     this.enddate=this.startdate;
   }
@@ -69,7 +80,8 @@ export class SoSchedulerComponent implements OnInit {
   get_schedule()
   {
     this.schedule_list=[];
-    if(this.botid!=""|| this.botid!=undefined)
+    // for bot
+    if(this.botid!="" && this.botid!=undefined)
     {
       this.rest.getbotdata(this.botid).subscribe(data=>{
         let response:any=data;
@@ -85,6 +97,20 @@ export class SoSchedulerComponent implements OnInit {
         }
       })
     }
+    //for process
+    else if(this.processid!='' && this.processid!=undefined)
+    {
+      this.rest.getprocessschedule(this.processid).subscribe(resp=>{
+        this.schedule_list=resp;
+        console.log(resp)
+        this.schedule_list.forEach((sch,index)=>{
+          this.schedule_list[index].intervalId=this.generateid();
+          this.schedule_list[index].check=false;
+          this.schedule_list[index].save_status="saved";
+          this.schedule_list[index].run_status="not_started";
+        })
+      })
+    }
   }
 
   close()
@@ -97,18 +123,39 @@ export class SoSchedulerComponent implements OnInit {
 
   add_sch()
   {
+    // Scheduler
     if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined)
     {
       let starttime=this.starttime.split(":")
       let endtime=this.endtime.split(":")
-      let data={
-        intervalId:this.generateid,
-        scheduleInterval:this.cronExpression,
-        startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
-        endDate:this.enddate.getDate()+","+(this.enddate.getMonth()+1)+","+this.enddate.getFullYear()+","+ endtime[0]+","+ endtime[1],
-        timeZone:this.timezone,
-        save_status:"unsaved",
-        check:false,
+      let data:any;
+      if(this.botid!="" && this.botid!=undefined) 
+      {
+        data={
+          intervalId:this.generateid(),
+          scheduleInterval:this.cronExpression,
+          startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
+          endDate:this.enddate.getDate()+","+(this.enddate.getMonth()+1)+","+this.enddate.getFullYear()+","+ endtime[0]+","+ endtime[1],
+          timeZone:this.timezone,
+          save_status:"unsaved",
+          check:false,
+        }
+      }
+      // Process
+      else if(this.processid!='' && this.processid!=undefined)
+      {
+        data={
+          intervalId:this.generateid(),
+          scheduleInterval:this.cronExpression,
+          startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
+          endDate:this.enddate.getDate()+","+(this.enddate.getMonth()+1)+","+this.enddate.getFullYear()+","+ endtime[0]+","+ endtime[1],
+          timezone:this.timezone,
+          save_status:"unsaved",
+          processId:this.processid,
+          processName:this.processName,
+          envId:this.environmentid,
+          check:false,
+        }
       }
       this.schedule_list.push(data);
     }
@@ -249,23 +296,24 @@ export class SoSchedulerComponent implements OnInit {
 
   async saveschedule()
   {
-    if(this.schedule_list.length==0)
+    if(this.botid !=undefined && this.botid != "")
     {
-      this.botdata.botMainSchedulerEntity=null;
-    }
-    else
-    {
-      if(this.botdata.botMainSchedulerEntity==null)
+      if(this.schedule_list.length==0)
       {
-        this.botdata.botMainSchedulerEntity={"scheduleIntervals":this.schedule_list};
+        this.botdata.botMainSchedulerEntity=null;
       }
       else
       {
-        this.botdata.botMainSchedulerEntity.scheduleIntervals=this.schedule_list;
+        if(this.botdata.botMainSchedulerEntity==null)
+        {
+          this.botdata.botMainSchedulerEntity={"scheduleIntervals":this.schedule_list};
+        }
+        else
+        {
+          this.botdata.botMainSchedulerEntity.scheduleIntervals=this.schedule_list;
+        }
       }
-    }
-
-    await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
+      await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
       let resp:any=data;
       if(resp.botMainSchedulerEntity.scheduleIntervals.length==0){
         Swal.fire("Updated successfully","","success")
@@ -276,6 +324,19 @@ export class SoSchedulerComponent implements OnInit {
 
       this.get_schedule();
     })
+    }
+    else if(this.processid!=undefined && this.processid!="")
+    {
+      let save_schedule_list:any=[];
+      save_schedule_list=this.schedule_list.filter(item=>item.save_status=='unsaved')
+      this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
+        let resp:any=data
+        if(resp.response!=undefined)
+        {
+          Swal.fire(resp.response,"","success");
+        }
+      })
+    }
   }
 
 

@@ -1212,12 +1212,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           {
             let data: any = outdata
             let textval:String=JSON.stringify(data[0].Value);
-            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
+            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />");
+
           }
           if(this.SelectedOutputType=="Image")
           {
             let data=this.outputboxresult[0].Value.split(':');
-            this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
+            //let obj=JSON.parse(this.outputboxresult[0].Value);
+            //console.log("000000000000000000000000000000000000>",obj)
+            let image=data[1].slice(0, -2);
+            this.Image= 'data:' + 'image/png' + ';base64,' +image;
           }
         })
       }
