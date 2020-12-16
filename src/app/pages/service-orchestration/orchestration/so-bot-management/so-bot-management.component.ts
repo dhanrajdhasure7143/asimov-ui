@@ -33,6 +33,8 @@ export class SoBotManagementComponent implements OnInit {
     viewlogid1="check456";
     logflag:Boolean;
     respdata2:Boolean;
+    selectedcat:any;
+    search:any;
     public isDataSource: boolean;
     public userRole:any = [];
     public isButtonVisible = false;
@@ -399,6 +401,13 @@ export class SoBotManagementComponent implements OnInit {
     close()
     {
       this.popup=false;
+    }
+
+    reset()
+    {
+      this.selectedcat="";
+      this.search=""
+      this.getallbots()
     }
 
 
