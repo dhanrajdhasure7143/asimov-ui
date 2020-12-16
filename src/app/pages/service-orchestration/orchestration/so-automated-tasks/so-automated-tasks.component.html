@@ -9,7 +9,7 @@
       <mat-form-field>
         <mat-label>Select Category</mat-label>
           <mat-select [(ngModel)]="selectedcategory" (selectionChange)="applyFilter1()">
-            <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryName">{{category.categoryName}}
+            <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
             </mat-option>
           </mat-select>
       </mat-form-field>
@@ -18,7 +18,7 @@
         <mat-form-field *ngIf="process_names!=undefined">
             <mat-label>Select Process</mat-label>
             <mat-select [(ngModel)]="selectedvalue" (selectionChange)="applyFilter($event.value)">
-                <mat-option *ngFor="let process of process_names" [value]="process.processId">{{process.processName}}
+                <mat-option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -35,23 +35,24 @@
       </span>
 
       <span style="padding:5px">
-      <button (click)="reset_all()"><i class="fa fa-undo"></i></button>
+      <button (click)="reset_all()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
       </span>
   </div>
 
 
   <div class="form-group pull-right">
         <span style="padding:5px">
-          <button [disabled]="selectedvalue=='' || selectedEnvironment==''"  mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-play"></i></button>
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-play"></i></button>
+        </span>
+       <!-- <span style="padding:5px">
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
+        </span>
+        -->
+        <span style="padding:5px">
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><i class="fa fa-calendar"></i></button>
         </span>
         <span style="padding:5px">
-          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
-        </span>
-        <span style="padding:5px">
-          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  (click)="startscheduler()"   title="Run Process"><i class="fa fa-calendar"></i></button>
-        </span>
-        <span style="padding:5px">
-          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  (click)="getprocesslogs()"   title="View Logs"><i class="fa fa-file" aria-hidden="true"></i></button>
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs()"  ><i class="fa fa-file" aria-hidden="true"></i></button>
         </span>
   </div>
 
@@ -97,10 +98,10 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Assign Resource</th>
             <td mat-cell *matCellDef="let element">
 
-            <span *ngIf="element.taskType=='Bot'">
+            <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
               <select class="form-control" style="width:200px;"  [value]="element.botId" [id]="element.taskId+'__select'">
                   <option value="0" >Select Resource</option>
-                  <option *ngFor="let bot of bot_list" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
+                  <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
               </select>
             </span>
             <span *ngIf="element.taskType=='Human'">
@@ -147,17 +148,17 @@
             <td mat-cell *matCellDef="let element">
 
                 <span>
-                  <button (click)="createtaskbotoverlay(element.taskId)" title="Create and Assign Bot">
+                  <button (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Bot">
                     <i  class="fas fa-plus text-primary"></i>
                   </button>
                 </span>
 
                 <span>
-                  <button (click)="assignbot(element.taskId)" title="Assign Bot"><i  class="fas fa-check text-success"></i></button>
+                  <button (click)="assignbot(element.taskId)"  matTooltip="Assign Bot"><i  class="fas fa-check text-success"></i></button>
                 </span>
 
                 <span>
-                  <button (click)="resetbot(element.taskId)" title="Create and Assign Bot"><i  class="fas fa-sync-alt"></i></button>
+                  <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
                 </span>
             </td>
         </ng-container>

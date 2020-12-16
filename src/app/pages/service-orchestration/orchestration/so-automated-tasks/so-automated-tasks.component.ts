@@ -32,6 +32,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   public bot_list:any=[];
   public humans_list:any=[];
   public process_names:any=[];
+  public selected_process_names:any=[];
   public selectedvalue:any;
   public selectedTab:number;
   public responsedata;
@@ -130,6 +131,7 @@ export class SoAutomatedTasksComponent implements OnInit {
     console.log(processId);
     this.rest.getprocessnames().subscribe(processnames=>{
       this.process_names=processnames;
+      this.selected_process_names=processnames;
       let processnamebyid;
 
       if(processId != undefined)
@@ -158,58 +160,15 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
+
     this.dataSource2.filter = filterValue;
   }
 
   applyFilter1() {
-    /*let datafilter:any={
-      categoryName:this.selectedcategory,
-      processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
-    }*/
-    //this.dataSource2.filter=JSON.stringify(datafilter);
-    //this.dataSource2.filterPredicate=this.custompredicate()
-    //console.log(datafilter);
-    //console.log(filterValue)
-    this.dataSource2.filter = this.selectedcategory.trim().toLowerCase();
+    this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
+    this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
+    this.selectedvalue="";
   }
-
-  custompredicate()
-  {
-
-      const myFilterPredicate = function(data:dataSource2, filter: string) {
-        let searchString = JSON.parse(filter);
-        console.log(searchString);
-        console.log(data);
-        /*if(searchString.categoryId != '')
-        {
-        return data.processName.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
-          data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-      }
-      else
-      {
-        return true &&
-          data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
-      }*/
-      return true;
-    }
-      console.log(myFilterPredicate);
-      return myFilterPredicate;
-  }
-
-
-
-  createoverlay()
-  {
-    //this.rpa_studio.onCreate(0);
-    //document.getElementById("create-bot").style.display ="block";
-  }
-
-  /*openload()
-  {
-
-    document.getElementById("load-bot").style.display ="block";
-  }*/
 
 
   close()
@@ -444,7 +403,3 @@ export class SoAutomatedTasksComponent implements OnInit {
 
 
 
-export interface dataSource2 {
-  department: string;
-  botName: string;
-}

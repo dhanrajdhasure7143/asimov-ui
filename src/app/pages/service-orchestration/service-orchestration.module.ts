@@ -21,22 +21,24 @@ import { SoBotManagementComponent } from './orchestration/so-bot-management/so-b
 import { SoDashboardComponent, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
-import { SoSchedulerComponent } from './orchestration/so-scheduler/so-scheduler.component';
+import { SoSchedulerComponent, Envname } from './orchestration/so-scheduler/so-scheduler.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatButtonModule} from '@angular/material/button';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatDialogModule} from '@angular/material/dialog';
 import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
+import { BotlistbycatPipe } from './orchestration/so-automated-tasks/botlistbycat.pipe';
+import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlistbycat.pipe';
 @NgModule({
   declarations: [OrchestrationComponent,
     BotStatusComponent,
     FilterBy,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent],
+    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname],
   imports: [
     CommonModule,
     FormsModule,
@@ -53,7 +55,7 @@ import { SoProcesslogComponent } from './orchestration/so-processlog/so-processl
     FormsModule,
     NgbTimepickerModule,
     NgxSpinnerModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,MatButtonModule,MatSlideToggleModule,
+    MatInputModule, MatIconModule, MatFormFieldModule,MatButtonModule,MatSlideToggleModule,MatTooltipModule,
     MatProgressSpinnerModule, MatSelectModule,
     MatDatepickerModule,
     MatCardModule,

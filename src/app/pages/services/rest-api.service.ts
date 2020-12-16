@@ -485,7 +485,7 @@ export class RestApiService{
 
   getprocessschedule(id)
   {
-    return this.http.post("/rpa-service/get-process-schedule?processId="+id,"");
+    return this.http.get("/rpa-service/get-process-schedule/"+id);
   }
 
   saveprocessschedule(data)
@@ -493,19 +493,19 @@ export class RestApiService{
     return this.http.post("/rpa-service/save-process-schedule",data);
   }
 
-  startprocessschedule(processid)
+  startprocessschedule(schedule)
   {
-    return this.http.post("/rpa-service/start-process-schedule?processId="+processid,"");
+    return this.http.post("/rpa-service/start-process-schedule",schedule);
   }
 
-  pauseprocessschedule(processid)
+  pauseprocessschedule(schedule)
   {
-    return this.http.post("/rpa-service/pause-process-schedule?processId="+processid,"")
+    return this.http.post("/rpa-service/pause-process-schedule",schedule)
   }
 
-  stopprocessschedule(processid)
+  stopprocessschedule(schedule)
   {
-    return this.http.post("/rpa-service/stop-process-schedule?processId="+processid,"");
+    return this.http.post("/rpa-service/stop-process-schedule",schedule);
   }
 
   resumeprocessschedule(processid)
@@ -564,5 +564,9 @@ export class RestApiService{
     getprocessruniddata(processId,processrunid)
     {
       return this.http.get("/rpa-service/process-logs/"+processId+"/"+processrunid  );
+    }
+    deleteprocessschedule(data)
+    {
+      return this.http.post("/rpa-service/stop-process-schedule",data);
     }
 }
