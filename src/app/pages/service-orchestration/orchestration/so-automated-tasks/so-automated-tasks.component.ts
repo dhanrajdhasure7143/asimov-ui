@@ -17,12 +17,14 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./so-automated-tasks.component.css']
 })
 export class SoAutomatedTasksComponent implements OnInit {
+  schdata:any;
   public processId1:any;
   public popup:any;
+  public schedulepopup:Boolean=false;
   public queryparam:any='';
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["processName","taskName","taskType","Assign","status","successTask","failureTask","Operations"];
+  displayedColumns: string[] = ["processName","taskName","taskType", "category","Assign","status","successTask","failureTask","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -35,6 +37,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   public responsedata;
   public selectedEnvironment:any='';
   public environments:any=[];
+  public selectedcategory:any="";
   public categaoriesList:any=[];
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
@@ -46,7 +49,8 @@ export class SoAutomatedTasksComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private http:HttpClient,
    )
-  {}
+  {
+  }
 
 
 
@@ -158,12 +162,39 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.dataSource2.filter = filterValue;
   }
 
-  applyFilter1(filterValue: string) {
+  applyFilter1() {
+    /*let datafilter:any={
+      categoryName:this.selectedcategory,
+      processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
+    }*/
+    //this.dataSource2.filter=JSON.stringify(datafilter);
+    //this.dataSource2.filterPredicate=this.custompredicate()
+    //console.log(datafilter);
+    //console.log(filterValue)
+    this.dataSource2.filter = this.selectedcategory.trim().toLowerCase();
+  }
 
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
-    this.dataSource2.filter = filterValue;
+  custompredicate()
+  {
+
+      const myFilterPredicate = function(data:dataSource2, filter: string) {
+        let searchString = JSON.parse(filter);
+        console.log(searchString);
+        console.log(data);
+        /*if(searchString.categoryId != '')
+        {
+        return data.processName.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
+          data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+      }
+      else
+      {
+        return true &&
+          data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+      }*/
+      return true;
+    }
+      console.log(myFilterPredicate);
+      return myFilterPredicate;
   }
 
 
@@ -377,11 +408,43 @@ export class SoAutomatedTasksComponent implements OnInit {
   getprocesslogs(){
     this.processId1 = this.selectedvalue;
     this.popup=true;
-    }
-  
-    closepop()
-      {
-        this.popup=false;
-      }
+  }
 
+  closepop()
+  {
+    this.popup=false;
+  }
+  reset_all()
+  {
+    this.selectedEnvironment="";
+    this.selectedvalue="";
+    this.selectedcategory="";
+    this.getautomatedtasks(0)
+
+  }
+
+
+  startscheduler()
+  {
+    this.schdata={
+      processid:this.selectedvalue,
+      environment:this.selectedEnvironment,
+      processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
+    }
+    this.schedulepopup=true;
+  }
+
+  closescheduler()
+  {
+    this.schedulepopup=false;
+  }
+
+
+}
+
+
+
+export interface dataSource2 {
+  department: string;
+  botName: string;
 }

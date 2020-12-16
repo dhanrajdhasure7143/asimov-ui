@@ -5,7 +5,7 @@ import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
 import { NgxSpinnerService } from "ngx-spinner";
 
-@Component({ 
+@Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
@@ -88,7 +88,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if(this.pages.filter(f=>f.title === 'Business Process Studio' ).length <= 0){
         this.pages.push({"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"})
       }
-     
+
       // this.pages = [
       //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
 
@@ -115,7 +115,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // ];
 
      }
-     
+
     },error => {
       this.error = "Please complete your registration process";
 
@@ -129,13 +129,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.spinner.hide();
         }, 900);
 
-       
+
   }
 
   loopTrackBy(index, term){
     return index;
   }
 
+  removenodes()
+  {
+    $(".bot-close").click();
+  }
   closeAllModules(){
     this.overlay_user_manage_model = false;
     this.overlay_config_alert_model = false;
@@ -227,7 +231,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
              let notificationbody ={
              "tenantId":this.tenantId
                }
-               
+
                 this.rpa.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
                   this.notificationList = data
                   this.notificationscount=this.notificationList
@@ -239,6 +243,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
               // console.log("count",this.notificationList.length)
                })
                 this.getCount();
-               
+
              }
 }

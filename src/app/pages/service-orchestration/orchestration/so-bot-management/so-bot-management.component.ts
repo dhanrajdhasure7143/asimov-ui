@@ -19,6 +19,7 @@ export class SoBotManagementComponent implements OnInit {
     public botid:any;
     public isTableHasData = true;
     public respdata1=false;
+    schdata:any;
     displayedColumns: string[] = ["botName","botType", "description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     botNameFilter = new FormControl('');
@@ -388,6 +389,9 @@ export class SoBotManagementComponent implements OnInit {
     openscheduler(botid)
     {
       this.botid=botid;
+      this.schdata={
+        botid:botid
+      }
       this.popup=true;
     }
 

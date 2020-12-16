@@ -28,6 +28,8 @@ import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatButtonModule} from '@angular/material/button';
+
+import { NgxPaginationModule } from 'ngx-pagination';
 import {MatDialogModule} from '@angular/material/dialog';
 import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
 @NgModule({
@@ -57,7 +59,8 @@ import { SoProcesslogComponent } from './orchestration/so-processlog/so-processl
     MatCardModule,
     NgxChartsModule,
     MatMenuModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxPaginationModule
   ],
   entryComponents: [FilterBy],
   providers:[MatDatepickerModule],

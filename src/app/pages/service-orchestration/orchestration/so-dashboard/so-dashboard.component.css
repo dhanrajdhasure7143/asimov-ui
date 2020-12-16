@@ -5,7 +5,7 @@
 .count-text {
     color: black;
     font-weight: 500;
-    font-size: 16px;
+    font-size: 19px;
 }
 
 .example-card {
@@ -18,12 +18,19 @@
     background-color:white;
     padding:10px;
     border-radius:10px;
+
+    min-height:420px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
 
+.message{
+  vertical-align: -100%;
+}
 
-
+.active{
+  background-color: none !important;
+}
 
 .card-count{
   width: 100% !important;
@@ -44,4 +51,16 @@
 
   .bar-chart{
     height:400px !important;
+  }
+
+  .chart-container-check{
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%,-50%) !important;
+  }
+
+  .span.active
+  {
+    background-color:white !important;
   }
