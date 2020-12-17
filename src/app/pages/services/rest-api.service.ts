@@ -565,6 +565,13 @@ export class RestApiService{
     {
       return this.http.get("/rpa-service/process-logs/"+processId+"/"+processrunid  );
     }
+
+    deployBPMNNotation(url, body){
+      let headers = new HttpHeaders({
+        "Content-Type":"multipart/form-data",
+        });
+      return this.http.post(url, body, {headers:  headers});
+    }
     deleteprocessschedule(data)
     {
       return this.http.post("/rpa-service/stop-process-schedule",data);

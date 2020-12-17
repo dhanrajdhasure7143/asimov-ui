@@ -53,12 +53,14 @@ export class DatadocumentComponent implements OnInit {
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/datadocument", "title": "Data Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
       
-    //   if (resOne) {
-        var restwo=localStorage.getItem('fileData')
-        var res=JSON.parse(restwo)
+        // var restwo=localStorage.getItem('fileData')
+        // var res=JSON.parse(restwo)
+        let restwo;
+        //   if (resOne) {
+      this.dt.current_piData.subscribe(response => { restwo = response })
+      let res=restwo;
         this.fileData = res;
         this.headerData = res[0];
-       
         this.headerData = this.headerData;
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
@@ -188,7 +190,7 @@ export class DatadocumentComponent implements OnInit {
         if (!this.invalidCells['row' + x])
           this.invalidCells['row' + x] = [];
         let each_cell = this.fileData[x][index];
-        if(each_cell == ''){
+        if(each_cell == ''||each_cell == undefined){
           isInvalid = true;
           if (this.invalidCells['row' + x].indexOf('cell' + index) == -1)
             this.invalidCells['row' + x].push('cell' + index);

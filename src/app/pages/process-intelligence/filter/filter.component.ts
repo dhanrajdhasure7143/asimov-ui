@@ -26,6 +26,7 @@ export class FilterComponent implements OnInit {
   @Output() selectedStartpoints=new EventEmitter<any[]>();
   @Output() selectedEndpoints=new EventEmitter<any[]>();
   @Output() selectedVariantOutput = new EventEmitter<any[]>();
+  @Output() selectedFilterValues=new EventEmitter<any[]>();
   chart_filter_options;
   public chart_filter = Filter;
   search_activity:any;
@@ -342,9 +343,10 @@ selectedVariant(data,index){
       if(this.appliedFilters.indexOf('EndPoint')==-1){
         this.appliedFilters.push("EndPoint")
       }
-      console.log(this.appliedFilters);
       
       var obj:any={startPoint:selectedstartPoints,endPoint:selectedEndPoints,}
+      console.log(obj);
+
       this.selectedStartpoints.emit(obj);
       // this.selectedEndpoints.emit(selectedEndPoints);
 
@@ -406,35 +408,36 @@ selectedVariant(data,index){
       }
      }
      if(value=="EndPoint"){
-       let selectedstartPoints=[];
-       let selectedEndPoints=[];
-       this.endptBt=true;
+      //  let selectedstartPoints=[];
+      //  let selectedEndPoints=[];
+      //  this.endptBt=true;
 
       this.startPointArray.forEach(element => {
           element.selected= "inactive";
-        selectedstartPoints.push(element.name)
+        // selectedstartPoints.push(element.name)
       })
 
       this.endPointArray.forEach(element => {
           element.selected= "inactive";
-        selectedEndPoints.push(element.name)
+        // selectedEndPoints.push(element.name)
       })
-
-      var obj:any={startPoint:selectedstartPoints,endPoint:selectedEndPoints,}
-      this.selectedStartpoints.emit(obj);
+      this.comboFilter();
+      // var obj:any={startPoint:selectedstartPoints,endPoint:selectedEndPoints,}
+      // this.selectedStartpoints.emit(obj);
 
      }else if(value=="Activity"){
-        this.seletedVariant=[];
-        for (var i = 0; i < this.variantListarray.length; i++){
-          if(this.variantListarray[i].selected === "active"){
-              this.seletedVariant.push(this.variantListarray[i].name)
-            }
-          };
+        // this.seletedVariant=[];
+        // for (var i = 0; i < this.variantListarray.length; i++){
+        //   if(this.variantListarray[i].selected === "active"){
+        //       this.seletedVariant.push(this.variantListarray[i].name)
+        //     }
+        //   };
           for (var i = 0; i < this.dataValuesNames.length; i++){
               this.dataValuesNames[i].selected = "inactive"
             };
-        this.selectedNodes.emit(null);
-        this.selectedVariantOutput.emit(this.seletedVariant)
+            this.comboFilter();
+        // this.selectedNodes.emit(null);
+        // this.selectedVariantOutput.emit(this.seletedVariant)
 
      }else if(value=="Variant"){
       this.seletedVariant=[];
@@ -442,26 +445,108 @@ selectedVariant(data,index){
               this.variantListarray[i].selected = "inactive"
               // this.seletedVariant.push(this.variantListarray[i].name)
             };
-        this.seletedActivity=[];
-        let seletedActivity1=[];
+            this.comboFilter();
+        // this.seletedActivity=[];
+        // let seletedActivity1=[];
+        // for (var i = 0; i < this.dataValuesNames.length; i++){
+        //   if(this.dataValuesNames[i].selected === "active"){
+        //       seletedActivity1.push(this.dataValues[i].name)
+        //     }
+        //   };
+          // if(seletedActivity1.length==0){
+          //     this.selectedNodes.emit(null)
+          // }else{
+          //   for (var i = 0; i < this.dataValuesNames.length; i++){
+          //     if(this.dataValuesNames[i].selected === "inactive"){
+          //         this.seletedActivity.push(this.dataValues[i].name)
+          //       }
+          //     };
+          //     // this.selectedNodes.emit(this.seletedActivity)
+          // }
+         
+          // this.selectedVariantOutput.emit(this.seletedVariant)
+     }
+  }
+  comboFilter(){
+    this.appliedFilters=[]
+    // Activity
+    let seletedActivity=[];
+    let seletedActivity1=[];
         for (var i = 0; i < this.dataValuesNames.length; i++){
           if(this.dataValuesNames[i].selected === "active"){
+            seletedActivity.push(this.dataValues[i].name)
+          }
+          if(this.dataValuesNames[i].selected === "inactive"){
               seletedActivity1.push(this.dataValues[i].name)
             }
           };
-          if(seletedActivity1.length==0){
-              this.selectedNodes.emit(null)
-          }else{
-            for (var i = 0; i < this.dataValuesNames.length; i++){
-              if(this.dataValuesNames[i].selected === "inactive"){
-                  this.seletedActivity.push(this.dataValues[i].name)
+
+          // Variant 
+          let seletedVariantArray=[];
+          let seletedVariantArray1=[]
+        for (var i = 0; i < this.variantListarray.length; i++){
+          seletedVariantArray1.push(this.variantListarray[i].name)
+          if(this.variantListarray[i].selected === "active"){
+            seletedVariantArray.push(this.variantListarray[i].name)
+            }
+          };
+
+          // End points
+          let selectedstartPoints=[];
+          let selectedEndPoints=[]
+          let selectedstartPoints1=[];
+          let selectedEndPoints1=[]
+
+          this.startPointArray.forEach(element => {
+            selectedstartPoints1.push(element.name)
+              if(element.selected==="active"){
+                  selectedstartPoints.push(element.name)
                 }
-              };
-              this.selectedNodes.emit(this.seletedActivity)
-          }
-         
-          this.selectedVariantOutput.emit(this.seletedVariant)
-     }
+              })
+          this.endPointArray.forEach(element => {
+            selectedEndPoints1.push(element.name)
+            if(element.selected==="active"){
+                selectedEndPoints.push(element.name)
+              }
+            })
+            let object:any={activity:seletedActivity1,variants:seletedVariantArray,startPoint:selectedstartPoints,endPoint:selectedEndPoints}
+
+            if(seletedVariantArray.length==0){
+              object.variants=seletedVariantArray1;
+            }
+            
+            if(seletedActivity.length==0||seletedActivity1.length==0){
+              object.activity=null;
+            }
+            if(selectedstartPoints.length==0 && selectedEndPoints.length==0){
+              object.startPoint=null;
+              object.endPoint=null;
+            }
+            if(selectedstartPoints.length==0 && selectedEndPoints.length!=0){
+              object.startPoint=selectedstartPoints1;
+            }
+            if(selectedstartPoints.length!=0 && selectedEndPoints.length==0){
+              object.endPoint=selectedEndPoints1;
+            }
+
+            this.selectedFilterValues.emit(object);
+            this.applyFilterValue.emit(true)
+            
+            if(seletedActivity.length!=0 ){
+              if(this.appliedFilters.indexOf('Activity')==-1){
+                this.appliedFilters.push("Activity")
+              }
+            }
+            if(seletedVariantArray.length!=0 ){
+              if(this.appliedFilters.indexOf('Variant')==-1){
+                this.appliedFilters.push("Variant")
+              }
+            }
+              if(selectedstartPoints.length!=0 ||selectedEndPoints.length!=0){
+                if(this.appliedFilters.indexOf('EndPoint')==-1){
+                  this.appliedFilters.push("EndPoint")
+                }
+              }
   }
 
 } 
