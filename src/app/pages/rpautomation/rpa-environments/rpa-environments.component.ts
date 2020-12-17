@@ -124,6 +124,7 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.environments.push(Object.assign({}, response[i], checks));
         }
         console.log(this.environments)
+        this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.dataSource1= new MatTableDataSource(this.environments);
         this.isDataSource = true;
         this.dataSource1.sort=this.sort1;

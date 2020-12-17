@@ -13,6 +13,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class RpaStudioComponent implements OnInit {
   model: any = {};
+  public count:number;
+  public botNamespace:boolean;
   public stud:any = [];
   public emailValue:any = []
   public databaseValue:any = [];
@@ -126,6 +128,26 @@ export class RpaStudioComponent implements OnInit {
         })
       }
     })
+  }
+
+  validate(code){
+    let validate = code;
+    console.log(validate);
+    this.count = 0;
+    for(let i=0;i < validate.length -1; i++){
+      if(validate.charAt(i) == String.fromCharCode(32)){
+        this.count= this.count+1;
+        console.log(this.count);
+      }
+    }
+    if(this.count !== 0)
+    {
+      this.botNamespace = true;
+      console.log(this.botNamespace);
+    }
+    else{
+      this.botNamespace = false;
+    }
   }
 
   checkBotnamevalidation()

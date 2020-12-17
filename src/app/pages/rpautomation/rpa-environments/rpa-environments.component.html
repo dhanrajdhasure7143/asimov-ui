@@ -212,8 +212,8 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
             <td mat-cell *matCellDef="let element">
                 <span *ngIf="element.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
-                <span *ngIf="element.activeStatus == 8"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
-                <span *ngIf="element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Undefined</span>
+                <span *ngIf="element.activeStatus == 8 || element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+                <!--<span *ngIf="element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Undefined</span>-->
             </td>
         </ng-container>
 
