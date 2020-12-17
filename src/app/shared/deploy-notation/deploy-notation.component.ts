@@ -9,7 +9,7 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
   styleUrls: ['./deploy-notation.component.css']
 })
 export class DeployNotationComponent implements OnInit {
-  deploy_success: boolean = false;
+  deploy_success: boolean = true;
   depName:string;
   tenantId:string;
   endPoint:string;
@@ -24,7 +24,7 @@ export class DeployNotationComponent implements OnInit {
   }
 
   deployNotation(){
-    //this.deploy_success = true;
+    this.deploy_success = true;
     console.log(this.depName);
     var formData: any = new FormData();
     formData.append('file', this.data.dataKey)
@@ -65,5 +65,12 @@ export class DeployNotationComponent implements OnInit {
   }
   playDeployedNotation(){
 
+  }
+
+  gotoBPMNPlatform(){
+    var token=localStorage.getItem('accessToken');
+    window.location.href="http://localhost:8080/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
+	
+	
   }
 }
