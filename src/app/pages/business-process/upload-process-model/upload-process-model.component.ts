@@ -654,6 +654,7 @@ displayBPMN(){
       let _self = this;
       if(this.fileType == this.selectedNotationType){
         this[modeler_obj].saveXML({ format: true }, function(err, xml) {
+          console.log(xml);
           var blob = new Blob([xml], { type: "application/xml" });
           var url = window.URL.createObjectURL(blob);
          _self.downloadFile(url);
@@ -1153,7 +1154,27 @@ displayBPMN(){
      this.dialog.open(this.keyboardShortcut);
   }
   openDeployDialog() {
-    this.dialog.open(DeployNotationComponent);
+    let _self = this;
+    let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
+    this[modeler_obj].saveXML({ format: true }, function(err, xml) {
+      //console.log(xml);
+      _self.openDialog(xml)
+    });
+  
+    
+    
+   
+  }
+
+  openDialog(data){
+    console.log(data);
+    let fileName = this.isShowConformance ? this.processName : this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
+    if(fileName.trim().length == 0 ) fileName = "newDiagram";
+    var dd = fileName+"."+this.selectedNotationType;
+     this.dialog.open(DeployNotationComponent, {data: {
+      dataKey: data, fileNme: dd
+    }});
+    
   }
 
 }

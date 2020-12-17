@@ -1,17 +1,11 @@
-[
-  {
- 
-  "context" : ["**"],
- 
-  "target" : "http://10.11.0.107:4444/rpa-service",
- 
+{
+  "/camunda/*":{
+  "target" : "http://127.0.0.1:8080",
   "secure": false,
- 
   "logLevel": "debug",
- 
   "changeOrigin": true
- 
+  
+    
   }
- 
-  ]
+} 
  

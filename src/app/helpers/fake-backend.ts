@@ -17,10 +17,15 @@ export class BackendURLInterceptor implements HttpInterceptor {
     //var encryptrefreshToken=btoa(token.refreshToken);
 
        let ipAddress = '192.168.0.1';
-       var timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
+      
         if(localStorage.getItem('ipAddress'))
            ipAddress = localStorage.getItem('ipAddress');
-    
+           var timezone:any;
+           if(req.url.indexOf('camunda') > -1){
+                timezone="ignore";
+           } else {
+             timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
+           }
         req = req.clone({
             url : this.getRequestUrl(req),
             body: req.body,
@@ -35,6 +40,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
     }
 
     getRequestUrl(req){
+        console.log(req);
         let url = "";
         if(req.url.indexOf('rpa-service') > -1)
             url = this.config.rpaEndPoint + req.url;
@@ -44,14 +50,18 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.processIntelligenceEndPoint + req.url;
         else if(req.url.indexOf('ReddisCopy') > -1)
         url = this.config.processIntelligenceNodeEndPoint + req.url;
-        else if(req.url.indexOf('/api/login/beta/') > -1)
+        else if(req.url.indexOf('accessToken') > -1)
             url = this.config.accessTokenEndPoint + req.url;
         else if(req.url.indexOf('authorizationservice') > -1)
             url = this.config.authorizationEndPoint + req.url;
+        else if(req.url.indexOf('camunda') > -1)
+            url = req.url;
         else if(req.url.indexOf('api') > -1)
             url = this.config.platformEndPoint + req.url;
-        if(req.url.indexOf('notificationservice') > -1)
+        else if(req.url.indexOf('notificationservice') > -1)
             url = this.config.alertsEndPoint + req.url;
+       
+
         return url;
     }
 }
