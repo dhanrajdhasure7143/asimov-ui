@@ -3,7 +3,7 @@
     <div class="col-md-3">
 
         <h2 class="title-font" style="margin-top:10px !important;margin-bottom: 0px !important">Automate the Tasks</h2><br>
-        <h5 class="subtitle" style="margin-top:0px !important">Select below options to configure the Bots</h5><br/>
+        <h5 class="subtitle" style="margin-top:0px !important;font-size: 13.8px !important;">Select below option to create or configure the task</h5><br/>
 
         <div class="rpa-home">
             <!--<div class="rpa-home-block" id="createbot-Home">
@@ -82,7 +82,7 @@
 
                                 <ng-container matColumnDef="botName">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-                                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)=loadbotdata(element.botId)>{{element.botName}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" [title]="element.botName" (click)=loadbotdata(element.botId)>{{element.botName}}</button> <span *ngIf="element.botName==''">-</span> </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="version">
@@ -128,7 +128,7 @@
                                 <ng-container matColumnDef="description">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
                                     <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.description!=null"> {{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
+                                        <span *ngIf="element.description!=null" [title]="element.description"> {{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
                                         <span *ngIf="element.description==null">-</span>
                                     </td>
                                 </ng-container>

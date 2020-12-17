@@ -1,27 +1,28 @@
 <div class="bg-color">
 <div class="container-fluid">
     <br>
-    <span style="float:right;width:200px;">
+    <div class="text-right">
         <span style="padding:10px">
           <mat-form-field class="example-full-width">
             <mat-label>Search</mat-label>
-            <input matInput placeholder="Search" (keyup)="applyFilter2($event.target.value)">
+            <input matInput placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
+            <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
         </span>
-    </span>
-    <span style="float:right;width:200px;">
       <span style="padding:10px">
         <mat-form-field>
           <mat-label>Select Category</mat-label>
-          <mat-select (selectionChange)="applyFilter($event.value)">
+          <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
               <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
             </mat-option>
           </mat-select>
-      </mat-form-field>
-    </span>
-    </span>
-
-    <div class="row">
+        </mat-form-field>
+      </span>
+      <span (click)="reset()"  style="cursor:pointer" matTooltip="Reset">
+        <i  class="fa fa-undo"></i>
+      </span >
+    </div>
+      <div class="row">
         <div class="col-md-12">
           <mat-card>
             <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
@@ -54,27 +55,24 @@
                 <ng-container matColumnDef="Action">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions </th>
                     <td mat-cell *matCellDef="let element">
-                        <span (click)="executionAct(element.botId)">
+                        <span (click)="executionAct(element.botId)"   matTooltip="Start Bot">
                           <li class="fa fa-play text-success" ></li>
                         </span>&nbsp;&nbsp;
-                        <span (click)="pauseBot(element.botId)">
+                        <span (click)="pauseBot(element.botId)"  matTooltip="Pause Bot">
                           <i class="fa fa-pause " aria-hidden="true"></i> &nbsp;&nbsp;
                         </span>
-                        <span (click)="resumeBot(element.botId)">
+                        <span (click)="resumeBot(element.botId)"  matTooltip="Resume Bot">
                           <i class="fa fa-play-circle" aria-hidden="true"></i> &nbsp;&nbsp;
                         </span>
-                        <span (click)="stopBot(element.botId)">
+                        <!--<span (click)="stopBot(element.botId)"  matTooltip="Stop Bot">
                         <i class="fa fa-stop text-danger" aria-hidden="true"></i> &nbsp;&nbsp;
-                      </span >
-                        <span (click)="executionAct(element.botId)">
-                        <i class="fas fa-sync-alt text-primary"></i>
-                      </span>
+                      </span >-->
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Schedule">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Schedule</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span (click)="openscheduler(element.botId)" style="cursor: pointer;">
+                    <td mat-cell *matCellDef="let element" >
+                        <span (click)="openscheduler(element.botId)" matTooltip="Scheduler" style="cursor: pointer;">
                         <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>
                       </span>
                     </td>
@@ -82,7 +80,7 @@
                 <ng-container matColumnDef="Logs">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Logs </th>
                     <td mat-cell *matCellDef="let element">
-                        <a class="text-primary" (click)="viewlogdata(element.botId,element.version)">View</a>
+                        <a class="text-primary" matTooltip="View Logs" (click)="viewlogdata(element.botId,element.version)">View</a>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Loading">
