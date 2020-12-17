@@ -1,6 +1,6 @@
 {
   "/camunda/*":{
-  "target" : "http://127.0.0.1:8080",
+  "target" : "http://10.11.0.127:8081",
   "secure": false,
   "logLevel": "debug",
   "changeOrigin": true
