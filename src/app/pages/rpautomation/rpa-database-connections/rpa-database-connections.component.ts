@@ -15,8 +15,10 @@ import { NgxSpinnerService } from "ngx-spinner";
   templateUrl: './rpa-database-connections.component.html',
   styleUrls: ['./rpa-database-connections.component.css']
 })
+
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","databasename","hostAddress","portNumber","username","schemaName","createdBy"];
+  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","hostAddress","portNumber","username","password","schemaName","activeStatus","createdTimeStamp","createdBy"];
+  public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public dbupdateflag: boolean;
   public submitted:Boolean;
@@ -121,9 +123,66 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     document.getElementById("Updatedbconnection").style.display='block';
   }
   
+
+  async testConnection(data){
+    this.spinner.show();
+    let formdata:any;
+    if(data=="insert"){
+      formdata=this.insertdbForm;
+    }else{
+      formdata=this.updatedbForm;
+    }
+   if(formdata.valid)
+   {
+    if(formdata.value.activeStatus==true)
+    {
+      formdata.value.activeStatus=7
+    }else{
+      formdata.value.activeStatus=8
+    }
+     await this.api.testdbconnections(formdata.value).subscribe( res =>
+      {
+        this.spinner.hide();
+        if(res.errorCode==undefined){
+        Swal.fire({
+          position: 'top-end',
+          icon: 'success',
+          title: "Successfully Connected",
+          showConfirmButton: false,
+          timer: 2000
+        })
+        }else{
+          Swal.fire({
+            position: 'top-end',
+            icon: 'question',
+            title: 'Connection Failed',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+    });
+  }
+  else
+  {
+     alert("Invalid Form")
+  }
+
+  }
+  
+
   saveDBConnection(){
+    
     if(this.insertdbForm.valid)
    {
+    console.log(this.insertdbForm.value.activeStatus)
+    if(this.insertdbForm.value.activeStatus==true)
+     {
+       this.insertdbForm.value.activeStatus=7
+     }else{
+       this.insertdbForm.value.activeStatus=8
+     }
+     console.log(this.insertdbForm.value.activeStatus)
+
     this.insertdbForm.value.createdBy="admin";
     this.submitted=true;
     //this.insertdbForm.value.databasename = this.insertdbForm.value.dataBaseType;
@@ -164,6 +223,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   dbconnectionupdate(){
     if(this.updatedbForm.valid)
     {
+      console.log(this.updatedbForm.value);
+      if(this.updatedbForm.value.activeStatus==true)
+      {
+        this.updatedbForm.value.activeStatus=7
+      }else{
+        this.updatedbForm.value.activeStatus=8
+      }
     console.log(this.updatedbForm.value);
     let dbupdatFormValue =  this.updatedbForm.value;
     console.log(dbupdatFormValue);
@@ -201,6 +267,11 @@ updatedbdata()
     let data:any;
     for(data of this.dbconnections)
     {
+      if(data.activeStatus==7){
+        this.toggle=true;
+      }else{
+        this.toggle=false;
+      }
       if(data.connectionId==this.dbupdateid)
       {
         this.dbupdatedata=data;

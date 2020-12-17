@@ -94,14 +94,14 @@
           <div class="col-md-6">
 
             <label for="botName">Bot Name*</label>
-            <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name"  ngModel maxlength="30" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
+            <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName" ngModel maxlength="30" (input)="validate(botName)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
             <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" class="fa fa-info-circle errspan">
               Bot Name Required*
               </div>
               <div *ngIf="checkbotname && insertbot.get('botName').touched" style="color: red" class="fa fa-info-circle errspan">
                 Bot Name is already exists*
               </div>
-  
+              <div *ngIf="botNamespace" style="color:red;" class="fa fa-info-circle errspan">Spaces are not allowed</div>
           </div>
 
 
@@ -158,7 +158,7 @@
       </div>
 
       <div class="form-group">
-        <button class="btn btn-primary" [disabled]="insertbot.invalid || checkbotname" >Submit</button>
+        <button class="btn btn-primary" [disabled]="insertbot.invalid || botNamespace || checkbotname" >Submit</button>
       </div>
     </form>
   </div>
