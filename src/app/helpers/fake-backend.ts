@@ -58,7 +58,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = req.url;
         else if(req.url.indexOf('api') > -1)
             url = this.config.platformEndPoint + req.url;
-        else if(req.url.indexOf('notificationservice') > -1)
+        if(req.url.indexOf('notificationservice') > -1)
             url = this.config.alertsEndPoint + req.url;
        
 
