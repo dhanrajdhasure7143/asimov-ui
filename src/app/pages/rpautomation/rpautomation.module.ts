@@ -39,8 +39,9 @@ import { Rpa_Home_Hints } from "./model/rpa-home-module-hints";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { RpaConfigurationsComponent } from './rpa-configurations/rpa-configurations.component';
 import { RpaDatabaseConnectionsComponent } from './rpa-database-connections/rpa-database-connections.component';
+import{ipcustompipecreation} from './rpa-environments/IPAddressCustompipe';
 @NgModule({
-  declarations: [RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent, RpaHomeComponent, RpaConfigurationsComponent, RpaDatabaseConnectionsComponent],
+  declarations: [ipcustompipecreation,RpautomationComponent, RpaStudioComponent, RpaStudioTabsComponent, RpaStudioWorkspaceComponent, RpaStudioActionsComponent, RpaenvironmentsComponent, RpaWorkspaceComponent, RpaHomeComponent, RpaConfigurationsComponent, RpaDatabaseConnectionsComponent],
   imports: [
     CommonModule,
     RpautomationRoutingModule,
