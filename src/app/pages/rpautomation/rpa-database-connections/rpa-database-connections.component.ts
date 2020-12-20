@@ -17,7 +17,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","hostAddress","portNumber","username","password","schemaName","activeStatus","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public dbupdateflag: boolean;
@@ -145,7 +145,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.spinner.hide();
         if(res.errorCode==undefined){
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: "Successfully Connected",
           showConfirmButton: false,
@@ -153,8 +153,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         })
         }else{
           Swal.fire({
-            position: 'top-end',
-            icon: 'question',
+            position: 'center',
+            icon: 'error',
             title: 'Connection Failed',
             showConfirmButton: false,
             timer: 2000

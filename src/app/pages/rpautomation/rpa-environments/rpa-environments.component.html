@@ -170,7 +170,7 @@
         <ng-container matColumnDef="hostAddress">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address/Host</th>
             <td mat-cell *matCellDef="let element"> 
-                <span *ngIf="element.hostAddress!=null">{{element.hostAddress}}</span> 
+                <span *ngIf="element.hostAddress!=null">{{element.hostAddress | ipcustompipe}}</span> 
                 <span *ngIf="element.hostAddress==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="agentPath">
