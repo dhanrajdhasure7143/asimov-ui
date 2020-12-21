@@ -214,6 +214,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   resetDBForm(){
     this.insertdbForm.reset();
+    this.insertdbForm.get("dataBaseType").setValue("");
   }
 
   resetupdateDBForm(){

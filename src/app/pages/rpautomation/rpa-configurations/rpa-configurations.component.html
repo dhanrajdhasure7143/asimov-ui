@@ -12,9 +12,21 @@
 </div>
 <mat-tab-group mat-align-tabs="start">
     <mat-tab label="Environments">
-        <app-environments></app-environments>
-    </mat-tab>
-    <mat-tab label="Database Connections">
-        <app-rpa-database-connections></app-rpa-database-connections>
-    </mat-tab>
+
+        <ng-template mat-tab-label>
+          <mat-icon  class="text-primary">airplay</mat-icon>
+            &nbsp;&nbsp;
+            Environments
+        </ng-template>
+    <app-environments></app-environments>
+</mat-tab>
+<mat-tab label="Database Connections">
+
+    <ng-template mat-tab-label>
+      <mat-icon  class="text-primary">list</mat-icon>
+        &nbsp;&nbsp;
+        Database Connections
+    </ng-template>
+    <app-rpa-database-connections></app-rpa-database-connections>
+</mat-tab>
 </mat-tab-group>
