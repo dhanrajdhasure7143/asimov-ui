@@ -474,17 +474,19 @@
 
                 <!-- Task Name Column -->
                 <ng-container matColumnDef="task_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.task_name != null">{{element.task_name}}</span>
-                        <span *ngIf="element.task_name == undefined">-</span>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:10%"> Task Name </th>
+                    <td mat-cell *matCellDef="let element" style="width:10%">
+                        <span *ngIf="element.task_name != null" class="btntaskname">
+                            {{(element.task_name.length > 20) ? ((element.task_name).slice(0, 20) + '...') : element.task_name}}</span>
+                           <span *ngIf="element.task_name == undefined">-</span>
+                           <div class="tasknameelement">{{element.task_name}}</div>
                     </td>
                 </ng-container>
 
                 <!-- Status Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef>Status</th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef style="width:10%">Status</th>
+                    <td mat-cell *matCellDef="let element" style="width:10%">
                         <span *ngIf="element.status!=null">
                                     <span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
 
@@ -499,8 +501,8 @@
 
                 <!-- Start date Column -->
                 <ng-container matColumnDef="start_date">
-                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef style="width:15%"> Start Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:15%">
                         <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
                         <span *ngIf="element.start_date == undefined">-</span>
                     </td>
@@ -511,8 +513,8 @@
 
                 <!-- End Date Column -->
                 <ng-container matColumnDef="end_date">
-                    <th mat-header-cell *matHeaderCellDef> End Date </th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef style="width:15%"> End Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:15%">
                         <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
                         <span *ngIf="element.end_date == undefined">-</span>
                     </td>
@@ -522,8 +524,11 @@
                 <ng-container matColumnDef="error_info">
                     <th mat-header-cell *matHeaderCellDef> Error Info </th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.error_info!=null && element.error_info != 'NA'">{{element.error_info}}</span>
-                        <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span></td>
+                        <span *ngIf="element.error_info!=null && element.error_info != 'NA'" class="btnerrorinfo">
+                            {{(element.error_info.length > 100) ? ((element.error_info).slice(0, 100) + '...') : element.error_info}}</span>
+                        <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span>
+                        <div class="errorinfoelement">{{element.error_info}}</div>
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="noData">

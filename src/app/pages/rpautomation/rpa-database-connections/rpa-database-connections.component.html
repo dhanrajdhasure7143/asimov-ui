@@ -56,25 +56,25 @@
                 <ng-container matColumnDef="connectiontName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Name</th>
                     <td mat-cell *matCellDef="let element"> 
-                        <button *ngIf="element.connectiontName!=null">{{element.connectiontName}}</button> 
+                        <span *ngIf="element.connectiontName!=null">{{element.connectiontName}}</span> 
                         <span *ngIf="element.connectiontName==''">-</span> 
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="password">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
-                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.password!=null">*******</button> <span *ngIf="element.password==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="dataBaseType">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Type</th>
                     <td mat-cell *matCellDef="let element"> 
-                        <button *ngIf="element.dataBaseType!=null">{{element.dataBaseType}}</button> 
+                        <span *ngIf="element.dataBaseType!=null">{{element.dataBaseType}}</span> 
                         <span *ngIf="element.dataBaseType==''">-</span> 
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="databasename">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Name</th>
                     <td mat-cell *matCellDef="let element"> 
-                        <button *ngIf="element.databasename!=null">{{element.databasename}}</button> 
+                        <span *ngIf="element.databasename!=null">{{element.databasename}}</span> 
                         <span *ngIf="element.databasename==''">-</span> 
                     </td>
                 </ng-container>
@@ -146,7 +146,7 @@
                             <label for="dataBaseType">Database Type*</label>
                             <select class="form-control" formControlName="dataBaseType">
                                 <option value="" [selected]="true">--Select Database Type--</option>
-                                <option value="PostgresSQL">PostgresSQL</option>                      
+                                <option value="PostgreSQL">PostgreSQL</option>                      
                               </select>
                             <span *ngIf="insertdbForm.get('dataBaseType').invalid && insertdbForm.get('dataBaseType').touched" style="color:red" class="fa fa-info-circle errspan"> Database Type Required*</span>
                         </div>
@@ -221,7 +221,7 @@
                             <label for="dataBaseType">Database Type*</label>
                             <select class="form-control" formControlName="dataBaseType">
                                 <option value="" [selected]="true">--Select Database Type--</option>
-                                <option value="PostgresSQL">PostgresSQL</option>                      
+                                <option value="PostgreSQL">PostgreSQL</option>                      
                               </select>
                             <span *ngIf="updatedbForm.get('dataBaseType').invalid && updatedbForm.get('dataBaseType').touched" style="color:red" class="fa fa-info-circle errspan"> Database Type Required*</span>
                         </div>

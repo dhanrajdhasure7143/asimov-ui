@@ -241,3 +241,43 @@ cron-time-picker div.ng-star-inserted  {
   padding-left: 5px;
   padding-right: 5px;
 }
+
+.btnerrorinfo:hover + .errorinfoelement{
+  display:block;
+}
+
+.errorinfoelement{
+  display:none;
+  position:absolute; 
+  z-index:100;
+  border:1px;
+  background-color: black;
+  border-style:solid;
+  padding:3px;
+  color:white; 
+  width:auto !important;
+  height:auto !important;
+  border-radius: 5px;
+  margin-left: 15px;
+  /*left:230px;*/ 
+}
+
+.btntaskname:hover + .tasknameelement{
+  display:block;
+}
+
+.tasknameelement{
+  display:none;
+  position:absolute; 
+  z-index:100;
+  border:1px;
+  background-color: black;
+  border-style:solid;
+  padding:3px;
+  color:white; 
+  width:auto !important;
+  height:auto !important;
+  border-radius: 5px;
+  margin-left: 15px;
+  /*left:230px;*/ 
+}
