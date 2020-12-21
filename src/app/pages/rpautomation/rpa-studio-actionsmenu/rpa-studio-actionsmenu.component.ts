@@ -1,12 +1,11 @@
-import { Component, OnInit, Input, Output, ViewChild, EventEmitter } from '@angular/core';
-import { RpaStudioWorkspaceComponent } from '../rpa-studio-workspace/rpa-studio-workspace.component';
+import {Input,ViewChild,Output,EventEmitter, Component, OnInit } from '@angular/core';
+import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import cronstrue from 'cronstrue';
 import {  HttpClient } from '@angular/common/http';
-import { Router} from '@angular/router';
-import { RpaStudioTabsComponent } from '../rpa-studio-tabs/rpa-studio-tabs.component'
+import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component'
 import Swal from 'sweetalert2';
 import { RpaStudioComponent } from '../rpa-studio/rpa-studio.component';
 import {MatSort} from '@angular/material/sort';
@@ -15,13 +14,15 @@ import {MatPaginator} from '@angular/material/paginator';
 import { NotifierService } from 'angular-notifier';
 import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
-import { DatePipe } from '@angular/common'
 @Component({
-  selector: 'app-rpa-studio-actions',
-  templateUrl: './rpa-studio-actions.component.html',
-  styleUrls: ['./rpa-studio-actions.component.css']
+  selector: 'app-rpa-studio-actionsmenu',
+  templateUrl: './rpa-studio-actionsmenu.component.html',
+  styleUrls: ['./rpa-studio-actionsmenu.component.css']
 })
-export class RpaStudioActionsComponent implements OnInit {
+export class RpaStudioActionsmenuComponent implements OnInit {
+
+  @Input('bot') public botState: any;
+  @Input('toolset') public toolset: any;
   public check_schedule_flag: boolean = false;
   public environment: any = [];
   public predefined: any = [];
@@ -46,26 +47,19 @@ export class RpaStudioActionsComponent implements OnInit {
   public botverid:any;
   public resplogbyrun:any;
   public logresponse:any=[];
-  public schpop:Boolean=false;
-  public schedule:any
-
-  displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
+  displayedColumns: string[] = ['run_id','version','start_date','end_date','start_time' ,'end_time', "bot_status"];
   Viewloglist:MatTableDataSource<any>;
-  displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
+  displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','start_time','end_time','error_info' ];
   logbyrunid:MatTableDataSource<any>;
 
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
-
-  @Input('tabsArrayLength') public tabsArrayLength: number;
-  @Input('botState') public botState: any;
   @Output() closeTabEvent = new EventEmitter<void>();
   @ViewChild('t', { static: false }) ngbTabset;
   @Input('tabsArray') public tabsArray: any[];
-  @Input('tabActiveId') public tabActiveId: string;
-  @ViewChild(RpaStudioWorkspaceComponent, { static: false }) childBotWorkspace: RpaStudioWorkspaceComponent;
+  @ViewChild(RpaStudioDesignerworkspaceComponent, { static: false }) childBotWorkspace: RpaStudioDesignerworkspaceComponent;
   pause: any;
   resume: any;
   stop: any;
@@ -124,8 +118,8 @@ export class RpaStudioActionsComponent implements OnInit {
   userRole;
   isButtonVisible: boolean;
   constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
-    private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent,
-    private notifier: NotifierService, private calender:NgbCalendar, private router:Router
+    private rpa_tabs:RpaStudioDesignerComponent, private rpa_studio:RpaStudioComponent,
+    private notifier: NotifierService, private calender:NgbCalendar,
     ) {
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
@@ -225,7 +219,7 @@ export class RpaStudioActionsComponent implements OnInit {
                 title:response.status,
                 showConfirmButton:false,
                 timer:2000})
-                this.rpa_tabs.closeTab(this.botState);
+                //this.rpa_tabs.closeTab(this.botState);
             }else
             {
 
@@ -285,10 +279,6 @@ export class RpaStudioActionsComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
-          for(let p=0 ;p<this.childBotWorkspace.nodes.length;p++)
-          {
-            this.childBotWorkspace.nodes[p].status="executed";
-          }
           this.childBotWorkspace.uploadfile(this.finalenv);
           this.getschecdules();
           this.startbot=true;
@@ -533,7 +523,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
 
   schedulerPopUp(){
-    let date:any=this.calender.getToday(); 
+    let date:any=this.calender.getToday();
     console.log(date["year"])
     this.startDate=this.calender.getToday()
     this.minDate=this.calender.getToday();
@@ -677,9 +667,8 @@ export class RpaStudioActionsComponent implements OnInit {
     let versionsdata:any=[];
     this.rest.getBotVersion(this.savebotrespose.botId).subscribe(data => {
       versionsdata=data;
-      versionsdata.reverse().forEach((version,index )=>{
-          if(index<3)
-          this.versionsList.push(version)
+      versionsdata.forEach(version =>{
+        this.versionsList.push(version)
       })
 
     })
@@ -1090,25 +1079,8 @@ checkEnableDisableBtn(id, event)
     this.removeallchecks();
  }
 
-  navtoenv()
-  {
-
-    localStorage.setItem("tabsArray",JSON.stringify(this.rpa_studio.tabsArray));
-    this.router.navigate(['/pages/rpautomation/configurations']);
-  }
-
-
-  openschedule()
-  {
-    this.schedule={
-      botid:this.savebotrespose.botId
-    }
-    this.schpop=true;
-  }
-
-  closesch()
-  {
-    this.schpop=false;
-  }
 
 }
+
+
+

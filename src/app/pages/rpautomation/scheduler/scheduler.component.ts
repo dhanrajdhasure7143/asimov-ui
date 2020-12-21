@@ -3,12 +3,15 @@ import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import {RestApiService} from 'src/app/pages/services/rest-api.service';
 import Swal from 'sweetalert2';
 import cronstrue from 'cronstrue';
+import { NotifierService } from 'angular-notifier';
+import { RpaStudioActionsComponent } from '../rpa-studio-actions/rpa-studio-actions.component'
 @Component({
-  selector: 'app-so-scheduler',
-  templateUrl: './so-scheduler.component.html',
-  styleUrls: ['./so-scheduler.component.css']
+  selector: 'app-scheduler',
+  templateUrl: './scheduler.component.html',
+  styleUrls: ['./scheduler.component.css']
 })
-export class SoSchedulerComponent implements OnInit {
+export class SchedulerComponent implements OnInit {
+
 
   @Input('data') public data: any;
   botid:any;
@@ -50,7 +53,7 @@ export class SoSchedulerComponent implements OnInit {
   schedules:any=[];
   startdate:any= new Date();
   enddate:any;
-  timezone:any;
+  timezone:any="";
   schedule_list:any=[];
   botdata:any;
   selectedEnvironment:any;
@@ -63,9 +66,10 @@ export class SoSchedulerComponent implements OnInit {
     resumeflag:false,
     deleteflag:false,
   }
-  constructor(private rest:RestApiService) { }
+  constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsComponent) { }
 
   ngOnInit() {
+    this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
     if(this.data.processid!=undefined)
     {
       this.processid=this.data.processid
@@ -133,13 +137,15 @@ export class SoSchedulerComponent implements OnInit {
       let starttime=this.starttime.split(":")
       let endtime=this.endtime.split(":")
       let data:any;
+      let startdate=new Date(this.startdate);
+      let enddate=new Date(this.enddate)
       if(this.botid!="" && this.botid!=undefined)
       {
         data={
           intervalId:this.generateid(),
           scheduleInterval:this.cronExpression,
-          startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
-          endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtime[0]+","+ endtime[1],
+          startDate:startdate.getFullYear()+","+(startdate.getMonth()+1)+","+startdate.getDate()+","+starttime[0]+","+starttime[1],
+          endDate:enddate.getFullYear()+","+(enddate.getMonth()+1)+","+enddate.getDate()+","+ endtime[0]+","+ endtime[1],
           timeZone:this.timezone,
           save_status:"unsaved",
           check:false,
@@ -167,13 +173,16 @@ export class SoSchedulerComponent implements OnInit {
         }
         else
         {
-          Swal.fire("Please give all inputs","","warning")
+          this.notifier.notify("error", "Please fill all inputs");
+          //Swal.fire("Please give all inputs","","warning")
         }
       }
     }
     else
     {
-      Swal.fire("Please fill all details","","warning");
+
+      this.notifier.notify("error", "Please fill all inputs");
+      //Swal.fire("Please fill all details","","warning");
     }
 
   }
@@ -382,9 +391,13 @@ export class SoSchedulerComponent implements OnInit {
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
       let resp:any=data;
       if(resp.botMainSchedulerEntity.scheduleIntervals.length==0){
+        this.actions.schpop=false;
+        this.close()
         Swal.fire("Updated successfully","","success")
       }
       else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length){
+        this.actions.schpop=false;
+        this.close()
         Swal.fire("Schedules saved successfully","","success");
       }
       this.get_schedule();

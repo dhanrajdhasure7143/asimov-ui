@@ -93,11 +93,6 @@
                       </span>
 
                     <span style="padding:5px">
-                       <button [disabled]="!(flags.stopflag)"   mat-mini-fab color="basic"   (click)="stop_schedule()">
-                        <i class="fa fa-stop"></i>
-                        </button>
-                      </span>
-                    <span style="padding:5px">
                       <button [disabled]="!(flags.deleteflag)"   mat-mini-fab color="basic"   (click)="delete_schedule()">
                         <i class="fa fa-trash"></i>
                       </button>
@@ -121,8 +116,10 @@
                             <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timeZone}}</td>
-                            <td>--</td>
-                            <td>--</td>
+                            <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
+                            <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
+                            <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
+                            <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
                             <td>--</td>
                         </tr>
                     </tbody>
@@ -147,7 +144,7 @@
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timezone}}</td>
                             <td>{{schedule.envId | Envname : Environments}}</td>
-                            <td>--</td>
+                            <td >--</td>
                             <td>--</td>
                             <td>--</td>
                         </tr>
