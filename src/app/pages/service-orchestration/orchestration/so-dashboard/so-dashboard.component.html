@@ -171,23 +171,39 @@
         <div class="row">
 
             <div class="col-md-6">
-                <div class="graph-card bar-chart" #run_time *ngIf="bots!=undefined">
-                  <div class="form-inline text-center">
-                    <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
-                    <div class="pull-right form-group">
+              <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==true" >
+                <div class="form-inline text-center">
+                  <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
+                  <div class="pull-right form-group">
 
-                        <mat-form-field>
-                          <mat-label>Select Bot</mat-label>
-                          <mat-select (selectionChange)="getruns($event.value)" [(value)]="bots_list[0].botId">
-                              <mat-option *ngFor="let bot of bots_list" [value]="bot.botId">{{bot.botName}}
-                            </mat-option>
-                          </mat-select>
-                      </mat-form-field>
-                    </div>
+                      <button (click)="openbotstatfilter()"> <i class="fa fa-filter" aria-hidden="true"></i></button>
                   </div>
-                <ngx-charts-bar-vertical  [barPadding]="50" [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="Performance" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
-                    [xAxisLabel]="'Runs'" [yAxisLabel]="'Execution Time (ms)'">
-                </ngx-charts-bar-vertical>
+                </div>
+                <div *ngIf="runtimestats.length!=0">
+                    <ngx-charts-bar-vertical  [barPadding]="50"  [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="runtimestats" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                        [xAxisLabel]="'Bot Names'" [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
+                    </ngx-charts-bar-vertical>
+                </div>
+                <span class="message" *ngIf="runtimestats.length==0" ><br><br><br>
+                  No Records Found
+                </span>
+              </div>
+              <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==false" >
+                <div class="form-inline text-center">
+                  <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
+                  <div class="pull-right form-group">
+
+                      <button (click)="runtimeflag=true"><i class="fas fa-arrow-left"></i></button>
+                  </div>
+                </div>
+                <div *ngIf="Performance.length!=0">
+                    <ngx-charts-bar-vertical  [barPadding]="50"  [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="Performance" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                        [xAxisLabel]="'Bot Names'" [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
+                    </ngx-charts-bar-vertical>
+                </div>
+                <span class="message text-center" *ngIf="Performance.length==0" ><br><br><br>
+                  No Records Found
+                </span>
               </div>
             </div>
             <div class="col-md-6  text-center">

@@ -6,7 +6,7 @@
 <mat-dialog-content class="mat-typography" *ngIf="data.type=='date'">
   <mat-form-field appearance="fill" style="width:100%">
       <mat-label>From Date</mat-label>
-        <input matInput [(ngModel)]="from_date"  [matDatepicker]="filterdate">
+        <input matInput [(ngModel)]="from_date" [min]="startdate" [matDatepicker]="filterdate">
         <mat-datepicker-toggle matSuffix  [for]="filterdate"></mat-datepicker-toggle>
       <mat-datepicker #filterdate></mat-datepicker>
   </mat-form-field>
