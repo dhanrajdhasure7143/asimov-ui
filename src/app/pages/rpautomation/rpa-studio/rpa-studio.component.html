@@ -3,7 +3,7 @@
 <div class="header_addon" style="padding-right:40px">
 
 
-  
+
   <button  type="button" *ngIf="tabsArray.length > 0" style="float:right;height:20px;padding-right:30px" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
     <img src="..\\assets\\images\\RPA\\rpa-load.svg" >
     <br>
@@ -15,13 +15,29 @@
     <br>
     Create
   </button>
+
+  <mat-slide-toggle
+          style="float:right;height:20px;padding-right:30px"
+          *ngIf="tabsArray.length == 0 || tabsArray == undefined"
+          class="example-margin"
+          color="primary"
+          [checked]="change_rpa_screen"
+          [(ngModel)]="changescreen_rpa_model"
+          (change)="checkchange()"
+          >
+        Change Screen
+
+  </mat-slide-toggle>
 </div>
 
 <!-- tabs -->
 <div class="container-fluid"  *ngIf="tabsArray.length < 1">
 <app-rpa-home></app-rpa-home>
 </div>
-<div *ngIf="tabsArray.length > 0" class="container">
+<div *ngIf="changescreen_rpa_model==true && tabsArray.length > 0" class="container-fluid">
+  <app-rpa-studio-designer [tabsArray]="tabsArray" ></app-rpa-studio-designer>
+</div>
+<div *ngIf="tabsArray.length > 0 && changescreen_rpa_model==false" class="container">
 <br><br><br>
 <div class="col-md-12 row">
 <div class="col-md-2 side-slide">
@@ -65,7 +81,7 @@
   <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/workspace']" >
     <img src="..\\assets\\images\\RPA\\rpa-nav-workspace.svg" class="rpa-nav-btn-img">
 
-     <br> 
+     <br>
   Workspace
   </button>-->
   </div>
@@ -82,7 +98,7 @@
           <h4>Create Bot</h4>
       </div>
       <div class="rpa-modal-body">
-     
+
   <div class="container">
 
     <form [formGroup]="insertbot" (ngSubmit)="onCreateSubmit()" >
@@ -148,7 +164,7 @@
           </div>
 
 
-          
+
           <div class="col-md-6">
             <input type="checkbox"  formControlName="predefinedBot" value="true" (click)="predefined($event)" name="predefinedBot">&nbsp; <span style="font-size:16px">Predefined Bot</span>
           </div>
@@ -195,7 +211,7 @@
           <h4>Load Bot</h4>
       </div>
   <div class="rpa-modal-body">
-     
+
   <div class="container">
 
     <form [formGroup]="loadbot" (ngSubmit)="getbotdata()" >
@@ -228,7 +244,7 @@
               </div>
 
           </div>
-          
+
 
         </div>
 
@@ -287,7 +303,7 @@
           <h4>Load Bot</h4>
       </div>
   <div class="rpa-modal-body">
-     
+
   <div class="container">
 
     <form [formGroup]="loadbot" (ngSubmit)="getbotdata()" >
@@ -320,7 +336,7 @@
               </div>
 
           </div>
-          
+
 
         </div>
 

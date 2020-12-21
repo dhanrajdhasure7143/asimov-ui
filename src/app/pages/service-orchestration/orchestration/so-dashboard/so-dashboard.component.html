@@ -119,16 +119,39 @@
         <br><br>
         <div class="row">
             <div class="col-md-6 text-center ">
-                <div class="graph-card text-center" #botstatistics_graph >
+                <div class="graph-card text-center" *ngIf="botstat==true" #botstatistics_graph >
                   <h5><b>Bot Statistics</b></h5>
                   <div *ngIf="botstatistics.length!=0">
-                    <ngx-charts-pie-chart [view]="[400, 300]"  class="chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
+                    <ngx-charts-pie-chart [view]="[400, 300]" (select)="botchart($event)" class="chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
                     </ngx-charts-pie-chart>
                   </div>
                   <span class="message" *ngIf="botstatistics.length==0" ><br><br><br>
                     No Records Found
                   </span>
                 </div>
+                <div class="graph-card "  *ngIf="botstat==false" #botstatistics_graph >
+                  <div style="padding:10px">
+                    <span class="text-center"><b>Bot Statistics</b></span><span class="pull-right" (click)="botstat=true"><i class="fas fa-arrow-left"></i></span>
+                    <br><br>
+                    <table class="table">
+                      <thead class="text-center">
+                        <th>Botname</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Version</th>
+                      </thead>
+                      <tbody class="text-left">
+                        <tr *ngFor="let bot of botstatisticstable  | paginate: { itemsPerPage: 6,currentPage: q }">
+                          <td>{{bot.botName}}</td>
+                          <td>{{bot.categoryName}}</td>
+                          <td>{{bot.botType==0?"Attended":"Unattended"}}</td>
+                          <td>{{bot.botName}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                </div>
+              </div>
             </div>
             <div class="col-md-6  text-center">
                 <div class="graph-card text-center" #process_statistics *ngIf="processstatistics!=undefined || processstatistics.length!=0">

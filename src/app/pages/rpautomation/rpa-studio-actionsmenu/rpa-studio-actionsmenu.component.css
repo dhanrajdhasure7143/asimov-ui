@@ -1,0 +1,34 @@
+.menu-item{
+  font-size:12px;
+  font-weight:bold;
+  color:grey;
+  padding-left:20px !important;
+}
+.menu-item i{
+  font-size: 18px !important;
+}
+.menu-item:hover{
+  color:blue;
+}
+.menu{
+  padding-left:10px;
+}
+
+.pos-right{
+  position: absolute !important;
+  right:-50px !important;
+  width:20px
+}
+/*
+.action-header-addon {
+    content: ".";
+    display: block;
+    overflow: hidden;
+    padding:10px;
+    position: absolute !important;
+    top: -100px !important;
+    left: -5px !important;
+}
+.header-addon:after { clear: both; }
+*/
+

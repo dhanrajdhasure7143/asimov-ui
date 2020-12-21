@@ -19,6 +19,7 @@ export class SoDashboardComponent implements OnInit {
     private dialog:MatDialog,
     private http:HttpClient
     ) {}
+  botstat:Boolean=true;
   public selectedcat:any;
   categaoriesList:any
   allprocessnames:any;
@@ -38,10 +39,12 @@ export class SoDashboardComponent implements OnInit {
   Performance:any=[];
   users:any;
   mainautomatedtasks:any=[];
+  botflag:Boolean=false;
   view: any[] = [700, 400];
 
   processstatistics:any=[];
   botstatistics:any=[];
+  botstatisticstable:any=[];
   showXAxis = true;
   showYAxis = true;
   showXAxisLabel = true;
@@ -65,6 +68,7 @@ export class SoDashboardComponent implements OnInit {
     this.getCategoryList();
     this.getprocessruns();
     this.getbotscount();
+    this.botruntimestats();
   }
   ngAfterViewInit(): void {
 
@@ -95,6 +99,18 @@ export class SoDashboardComponent implements OnInit {
         console.log(err)
         this.spinner.hide();
       });
+  }
+
+
+  botchart(event:any)
+  {
+    this.botstat=false;
+    this.botstatisticstable=this.bots_list.filter(data=>data.botStatus==event.name);
+
+  }
+  backtobotstatistics()
+  {
+    this.botstat=true;
   }
 
   getheaders()
@@ -284,6 +300,25 @@ export class SoDashboardComponent implements OnInit {
   }
 
 
+  botruntimestats()
+  {
+    this.rest.botPerformance().subscribe(data=>{
+      let botperformances:any=[]
+      botperformances=data;
+      let today=new Date();
+      let yesterday=new Date();
+      yesterday.setDate(today.getDate()-1);
+      this.bots_list.forEach(bot => {
+        let filteredbot:any=botperformances.find(item=>item.botId==bot.botId);
+        console.log("--------------abcd-----------",filteredbot.coordinates[0].startTime);
+        console.log("--------------asada------------",moment(today).format("D-MM-YYYY"))
+        console.log("-------------filters----------",moment(filteredbot.coordinates[0].startTime).format("D-MM-YYYY"));
+        let filteredCoordinates:any=filteredbot.coordinates.filter(item=>moment(item.startTime).format("D-MM-YYYY")==moment(today).format("D-MM-YYYY")||moment(item.startTime).format("D-MM-YYYY")==moment(yesterday).format("D-MM-YYYY"));
+        console.log(filteredCoordinates);
+      });
+    })
+  }
+
   openDialog(filterType)
   {
       const dialogRef = this.dialog.open(FilterBy,{
@@ -457,7 +492,7 @@ export class SoDashboardComponent implements OnInit {
   sortbycat()
   {
     let bot_list_check:any=[];
-    console.log(this.selectedcat);
+    this.botstat=true;
     bot_list_check=this.main_bot_list.filter(item=>item.department==this.selectedcat);
     console.log(bot_list_check);
     if(bot_list_check.length!=0)
