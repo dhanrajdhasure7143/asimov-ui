@@ -64,3 +64,15 @@
   {
     background-color:white !important;
   }
+
+  .table th{
+    padding:10px !important;
+    color:white !important;
+    background-color:#0062cf;
+    font-weight: 200 !important;
+  }
+
+  span.active
+  {
+    background-color:  white !important;
+  }
