@@ -338,6 +338,8 @@ export class SoDashboardComponent implements OnInit {
         }
       });
       this.runtimestats=runtimestats;
+      console.log(runtimestats);
+      this.runtimeflag=true;
     })
   }
 
@@ -538,6 +540,7 @@ export class SoDashboardComponent implements OnInit {
 
     this.bots_list=bot_list_check;
     this.botruntimestats()
+
     this.rest.getProcessStatisticsbycat(this.selectedcat).subscribe(data => {
     let response:any=data;
     if(response.errorMessage==undefined)

@@ -184,9 +184,9 @@
                         [xAxisLabel]="'Bot Names'" [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
                     </ngx-charts-bar-vertical>
                 </div>
-                <span class="message" *ngIf="runtimestats.length==0" ><br><br><br>
+                <div class="message text-center" *ngIf="runtimestats.length==0" ><br><br><br>
                   No Records Found
-                </span>
+                </div>
               </div>
               <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==false" >
                 <div class="form-inline text-center">
@@ -201,9 +201,9 @@
                         [xAxisLabel]="'Bot Names'" [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
                     </ngx-charts-bar-vertical>
                 </div>
-                <span class="message text-center" *ngIf="Performance.length==0" ><br><br><br>
+                <div class="message text-center" *ngIf="Performance.length==0" ><br><br><br>
                   No Records Found
-                </span>
+                </div>
               </div>
             </div>
             <div class="col-md-6  text-center">
