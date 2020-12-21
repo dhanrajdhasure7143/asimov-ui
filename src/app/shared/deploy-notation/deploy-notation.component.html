@@ -20,10 +20,10 @@
     </mat-form-field>
     <br/><br/>
     <div class="row col-md-12">
-        <button class="btn btn-danger eiap-btn">Cancel</button>
-        <button class="btn btn-primary eiap-btn" (click)="deployNotation()">Deploy</button>
+        <button class="btn btn-danger eiap-btn" (click)="closedeplyNonation()">Cancel</button>
+        <button class="btn btn-primary eiap-btn" [disabled]="!depName || !endPoint" (click)="deployNotation()">Deploy</button>
     </div>
-</form>
+</form> 
 <!--
 <h2 mat-dialog-title>This is a Dialog title</h2>
 

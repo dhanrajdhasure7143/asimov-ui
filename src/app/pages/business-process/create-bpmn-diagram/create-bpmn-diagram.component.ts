@@ -687,7 +687,22 @@ export class CreateBpmnDiagramComponent implements OnInit {
      this.dialog.open(this.keyboardShortcut);
   }
   openDeployDialog() {
-    this.dialog.open(DeployNotationComponent);
+    let _self = this;
+    
+    this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
+      //console.log(xml);
+      _self.openDialog(xml)
+    }); 
+  }
+
+  openDialog(data){
+    let fileName = this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
+    if(fileName.trim().length == 0 ) fileName = "newDiagram";
+    var dd = fileName+"."+this.selectedNotationType;
+     this.dialog.open(DeployNotationComponent, {data: {
+      dataKey: data, fileNme: dd
+    }});
+    
   }
 
 }

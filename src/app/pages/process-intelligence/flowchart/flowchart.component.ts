@@ -1713,13 +1713,15 @@ filterOverlay(){
   }
 
   viewInsights(){
+    //var token=localStorage.getItem('accessToken');
+    //window.location.href="http://localhost:8080/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
     this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.graphIds}})
   }
   readselectedNodes1(activies){    
     this.filterdNodes=[]
     this.filterdNodes=activies
     this.isClearFilter=false;
-    
+       
   }
 
  
