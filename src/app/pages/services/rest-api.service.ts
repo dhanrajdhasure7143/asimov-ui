@@ -258,7 +258,7 @@ export class RestApiService{
   {
     return this.http.post<any>("/rpa-service/agent/test-connection",data);
   }
-  
+
    // http://rpadev.epsoftinc.in/rpa-service/agent/dbtest-connection
 
   testdbconnections(data:any):Observable<any>
@@ -582,5 +582,10 @@ export class RestApiService{
     deleteprocessschedule(data)
     {
       return this.http.post("/rpa-service/stop-process-schedule",data);
+    }
+
+    get_dynamic_data(url)
+    {
+      return this.http.get(url);
     }
 }

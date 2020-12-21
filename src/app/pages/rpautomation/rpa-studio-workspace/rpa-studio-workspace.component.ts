@@ -610,11 +610,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   addoptions(attributes,node)
   {
+    /*
       let token={​​​​​
         headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
-      }​​​​
+      }​​​*/​
       let restapi_attr=attributes.find(attr => attr.type=='restapi');
-      this.http.get(restapi_attr.dependency,token).subscribe(data=>
+      this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
       {
         this.restapiresponse=data
         let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);

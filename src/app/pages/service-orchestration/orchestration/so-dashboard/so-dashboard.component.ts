@@ -1,4 +1,4 @@
-import {Inject, Component, OnInit } from '@angular/core';
+import {Inject,Input, Component, OnInit ,Pipe, PipeTransform } from '@angular/core';
 import {RestApiService} from '../../../services/rest-api.service';
 import * as Chart from 'chart.js'
 import { NgxSpinnerService } from "ngx-spinner";
@@ -22,7 +22,9 @@ export class SoDashboardComponent implements OnInit {
     ) {}
   botstat:Boolean=true;
   runtimeflag:Boolean=true;
+  processflag:Boolean=true;
   public selectedcat:any;
+  processstats_table:any=[]
   categaoriesList:any
   allprocessnames:any;
   processnames:any
@@ -159,7 +161,13 @@ export class SoDashboardComponent implements OnInit {
 
       });
   }
-
+  processstatstable(event)
+  {
+    console.log(this.processflag)
+      this.processstats_table=this.processnames.filter(item=>item.status==event.name.toUpperCase());
+      console.log(this.processstats_table);
+      this.processflag=false;
+  }
 
 
   getenvironments()
@@ -354,10 +362,45 @@ export class SoDashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       let filterdata:any=[];
       filterdata=result;
-      let from:any=filterdata[0];
-      let to:any=filterdata[1];
-      let date_array=this.dateranges(from,to);
-      console.log("---------------------",date_array);
+      console.log("------------from date-----------",new Date(filterdata[0]));
+      console.log("------------to date-----------",new Date(filterdata[1]));
+      let start_date:any=new Date(filterdata[0]);
+      let end_date:any=new Date(filterdata[1]);
+      let runtimestats:any=[];
+      this.bots_list.forEach(bot => {
+        let filteredbot:any;
+        filteredbot=this.bots.find(item=>item.botId==bot.botId);
+        if(filteredbot != undefined)
+        {
+          let filteredCoordinates:any=[];
+          filteredbot.coordinates.forEach((item,index)=>{
+            let check_date=new Date(moment(item.startTime,"x").format("D-MM-YYYY"));
+            console.log(start_date);
+            console.log(end_date);
+            console.log(check_date)
+            if(1)
+            {
+              // alert("hello");
+            }
+
+          });
+          if(filteredCoordinates.length>0)
+          {
+              let timedur:any=0;
+              filteredCoordinates.forEach(timeseries=>{
+                timedur=timedur+timeseries.timeDuration;
+              })
+              let data:any={
+                //id:filteredbot.botId,
+                "name":filteredbot.botName,
+                "value":timedur
+              }
+              runtimestats.push(data);
+              //console.log(this.Performance);
+          }
+        }
+        this.runtimestats=runtimestats;
+      });
     });
   }
 
@@ -655,4 +698,23 @@ export class FilterBy{
     this.dialogRef.close();
   }
 
+}
+
+
+
+
+
+
+
+
+@Pipe({name: 'Category'})
+export class Category implements PipeTransform {
+  transform(value: any,arg:any)
+  {
+    let categories:any=[];
+    categories=arg;
+    console.log("departments",categories);
+    console.log("id",value);
+    return categories.find(item=>item.categoryId==value).categoryName;
+  }
 }
