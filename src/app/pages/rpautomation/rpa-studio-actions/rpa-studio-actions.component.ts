@@ -95,6 +95,7 @@ export class RpaStudioActionsComponent implements OnInit {
   public respdata1:boolean = false;
   public respdata2:boolean = false;
   public she:any;
+  public insertForm:FormGroup;
   public minDate:NgbDateStruct;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
   i="";
@@ -125,7 +126,8 @@ export class RpaStudioActionsComponent implements OnInit {
   isButtonVisible: boolean;
   constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
     private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent,
-    private notifier: NotifierService, private calender:NgbCalendar, private router:Router
+    private notifier: NotifierService, private calender:NgbCalendar, private router:Router,
+    private formBuilder: FormBuilder,
     ) {
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
@@ -147,6 +149,21 @@ export class RpaStudioActionsComponent implements OnInit {
 
     this.schedulepopid="schedule-"+this.botState.botName;
     this.viewlogid="viewlog-"+this.botState.botName;
+
+    const ipPattern =
+    "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+      this.insertForm=this.formBuilder.group({
+        environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+        activeStatus: [true]
+      })
+
     if(this.botState.botId!=undefined)
     {
       this.savebotrespose=this.botState;
@@ -158,7 +175,6 @@ export class RpaStudioActionsComponent implements OnInit {
       })
 
     }
-
   }
 
   onCreateSubmit(){}
@@ -474,27 +490,30 @@ export class RpaStudioActionsComponent implements OnInit {
   }
 
 
-  getEnvironmentlist() {
+  getEnvironmentlist()
+  {
+    this.listEnvironmentData=[];
+    this.environment=[];
     this.rest.listEnvironments().subscribe(data => {
     this.listEnvironmentData=data;
-    this.listEnvironmentData.forEach(env=>{
-      env["checked"]=false;
-      this.environment.push(env);
-    })
-    if(this.botState.botId!=undefined)
-    {
-      this.botState.envIds.forEach(envdata=>{
-          this.environment.find(data=>data.environmentId==envdata).checked=true;
+      this.listEnvironmentData.forEach(env=>{
+        env["checked"]=false;
+        this.environment.push(env);
       })
-    }
-    this.environment.filter(data =>{
-      if(data.checked==true){
-        this.envflag=false;
+      if(this.botState.botId!=undefined)
+      {
+        this.botState.envIds.forEach(envdata=>{
+            this.environment.find(data=>data.environmentId==envdata).checked=true;
+        })
       }
-    });
-    console.log(this.environment)
-  })
-}
+      this.environment.filter(data =>{
+        if(data.checked==true){
+          this.envflag=false;
+        }
+      });
+      console.log(this.environment)
+    })
+  }
 
 
   checkuncheckenv(id:any)
@@ -1092,11 +1111,59 @@ checkEnableDisableBtn(id, event)
 
   navtoenv()
   {
-
-    localStorage.setItem("tabsArray",JSON.stringify(this.rpa_studio.tabsArray));
-    this.router.navigate(['/pages/rpautomation/configurations']);
+    console.log(this.insertForm.value)
+    document.getElementById("rpa_createenvironment").style.display="block";
+    //localStorage.setItem("tabsArray",JSON.stringify(this.rpa_studio.tabsArray));
+    //this.router.navigate(['/pages/rpautomation/configurations']);
   }
 
+  async saveEnvironment()
+  {
+   if(this.insertForm.valid)
+   {
+     if(this.insertForm.value.activeStatus==true)
+      {
+        this.insertForm.value.activeStatus=7
+      }else{
+        this.insertForm.value.activeStatus=8
+      }
+      this.insertForm.value.createdBy="admin";
+      let environment=this.insertForm.value;
+      await this.rest.addenvironment(environment).subscribe( res =>
+      {
+        this.close_c_env();
+        Swal.fire("Environment added successfully","","success");
+        document.getElementById("createenvironment").style.display='none';
+        this.insertForm.reset();
+        this.insertForm.get("portNumber").setValue("22");
+        this.insertForm.get("connectionType").setValue("SSH");
+        this.getEnvironmentlist()
+        //this.rpa_studio.spinner.hide();
+      });
+    }
+    else
+    {
+      alert("Invalid Form")
+    }
+
+  }
+
+  EnvType1(){
+    if(this.insertForm.value.environmentType == "Windows"){
+      //this.updateForm.value.portNumber="44";
+      this.insertForm.get("portNumber").setValue("44");
+    }else if(this.insertForm.value.environmentType == "Linux"){
+      this.insertForm.get("portNumber").setValue("22");
+    }
+  }
+
+
+
+
+  close_c_env()
+  {
+    document.getElementById("rpa_createenvironment").style.display="none";
+  }
 
   openschedule()
   {

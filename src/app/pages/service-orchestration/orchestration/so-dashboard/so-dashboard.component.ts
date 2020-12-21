@@ -374,15 +374,13 @@ export class SoDashboardComponent implements OnInit {
         {
           let filteredCoordinates:any=[];
           filteredbot.coordinates.forEach((item,index)=>{
-            let check_date=new Date(moment(item.startTime,"x").format("D-MM-YYYY"));
-            console.log(start_date);
-            console.log(end_date);
-            console.log(check_date)
-            if(1)
+            let check_date=moment(item.startTime,"x").format("YYYY-MM-D");
+            let s_date=moment(start_date).format("YYYY-MM-D")
+            let e_date=moment(end_date).format("YYYY-MM-D");
+            if((moment(check_date).isSameOrBefore(e_date) && moment(check_date).isSameOrAfter(s_date)))
             {
-              // alert("hello");
+              filteredCoordinates.push(item);
             }
-
           });
           if(filteredCoordinates.length>0)
           {

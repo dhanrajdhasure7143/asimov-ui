@@ -40,7 +40,6 @@ export class BackendURLInterceptor implements HttpInterceptor {
     }
 
     getRequestUrl(req){
-        console.log(req);
         let url = "";
         if(req.url.indexOf('rpa-service') > -1)
             url = this.config.rpaEndPoint + req.url;
@@ -59,7 +58,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
         else if(req.url.indexOf('api') > -1)
             url = this.config.platformEndPoint + req.url;
         if(req.url.indexOf('mailService') > -1)
-          url = this.config.alertsEndPoint + req.url;
+            url = this.config.alertsEndPoint + req.url;
         if(req.url.indexOf('notificationservice') > -1)
             url = this.config.alertsEndPoint + req.url;
 
