@@ -8,7 +8,7 @@ import { FormGroup } from '@angular/forms';
         <div style="display:flex"  >
           <div  class="form-check form-check">
           <label style="color: #615f5f;padding: 0px 10px;" class="form-check-label">
-             <input  [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" id="inlineCheckbox1"  [checked]="field.value==true" />
+             <input  [formControlName]="field.name+'_'+field.id" class="form-check-input" type="checkbox" id="inlineCheckbox1"  [checked]="field.value==true || field.value=='true'" />
              {{field.label}}</label>
           </div>
         </div>
@@ -29,6 +29,6 @@ import { FormGroup } from '@angular/forms';
 export class CheckBoxComponent {
     @Input() field:any = {};
     @Input() form:FormGroup;
-    get isValid() { return this.form.controls[this.field.name].valid; }
-    get isDirty() { return this.form.controls[this.field.name].dirty; }
+    get isValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
+    get isDirty() { return this.form.controls[this.field.name+"_"+this.field.id].dirty; }
 }
