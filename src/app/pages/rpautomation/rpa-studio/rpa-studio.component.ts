@@ -196,7 +196,7 @@ export class RpaStudioComponent implements OnInit {
 
   onCreateSubmit() {
     // alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.model))
-    //this.userFilter.name = [];
+    this.userFilter.name = "";
     document.getElementById("create-bot").style.display ="none";
     this.model=this.insertbot.value;
     if(this.model.botDepartment=="others"){
@@ -300,6 +300,7 @@ export class RpaStudioComponent implements OnInit {
        botdata=data;
       if(this.tabsArray.find(data=>data.botName==botdata.botName)==undefined)
       {
+        this.userFilter.name="";
         this.tabsArray.push(botdata);
         this.tabActiveId=botdata.botName;
       }

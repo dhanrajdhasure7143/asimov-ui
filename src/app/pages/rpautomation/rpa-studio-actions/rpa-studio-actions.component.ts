@@ -1111,8 +1111,8 @@ checkEnableDisableBtn(id, event)
 
   navtoenv()
   {
-    console.log(this.insertForm.value)
-    document.getElementById("rpa_createenvironment").style.display="block";
+
+    document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="block";
     //localStorage.setItem("tabsArray",JSON.stringify(this.rpa_studio.tabsArray));
     //this.router.navigate(['/pages/rpautomation/configurations']);
   }
@@ -1133,7 +1133,7 @@ checkEnableDisableBtn(id, event)
       {
         this.close_c_env();
         Swal.fire("Environment added successfully","","success");
-        document.getElementById("createenvironment").style.display='none';
+        //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
         this.insertForm.reset();
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
@@ -1162,7 +1162,7 @@ checkEnableDisableBtn(id, event)
 
   close_c_env()
   {
-    document.getElementById("rpa_createenvironment").style.display="none";
+    document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="none";
   }
 
   openschedule()
