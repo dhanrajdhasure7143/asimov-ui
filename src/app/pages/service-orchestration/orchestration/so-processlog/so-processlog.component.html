@@ -71,7 +71,7 @@
 
 
             <ng-container matColumnDef="bot_name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Resource</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name</th>
                 <td mat-cell *matCellDef="let element">
                     <button *ngIf="element.bot_name != null"><a style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.bot_name}}</a></button>
                     <span *ngIf="element.bot_name == undefined">-</span>
@@ -81,7 +81,7 @@
             <ng-container matColumnDef="version">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Version</th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.version != null">{{element.version}}</span>
+                <span *ngIf="element.version != null">V{{element.version}}</span>
                 <span *ngIf="element.version == undefined">-</span>
                 </td>
              </ng-container>
@@ -92,6 +92,13 @@
                     <span *ngIf="element.run_id == undefined">-</span>
                 </td>
             </ng-container>
+            <!--<ng-container matColumnDef="log_statement">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Log Message</th>
+                <td mat-cell *matCellDef="let element" >
+                    <span *ngIf="element.log_statement != null">{{element.log_statement}}</span>
+                    <span *ngIf="element.log_statement == null">-</span>
+                </td>
+            </ng-container>-->
              <ng-container matColumnDef="start_date">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
                 <td mat-cell *matCellDef="let element">

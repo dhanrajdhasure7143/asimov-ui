@@ -51,7 +51,7 @@ export class RpaStudioActionsComponent implements OnInit {
   public schedule_list_scheduler=[];
   displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
   Viewloglist:MatTableDataSource<any>;
-  displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
+  displayedColumns1: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
   logbyrunid:MatTableDataSource<any>;
 
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
@@ -782,7 +782,7 @@ export class RpaStudioActionsComponent implements OnInit {
         log.push(response)
       });
       console.log(log);
-      log.sort((a,b) => a.run_id < b.run_id ? -1 : 1);
+      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
       this.Viewloglist = new MatTableDataSource(log);
       console.log(this.Viewloglist);
 
@@ -825,6 +825,7 @@ export class RpaStudioActionsComponent implements OnInit {
       });
       console.log(resplogbyrun);
       this.logflag=true;
+      resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
       this.logbyrunid = new MatTableDataSource(resplogbyrun);
       console.log(this.logbyrunid);
       this.logbyrunid.paginator=this.paginator2;
