@@ -16,56 +16,100 @@
           </li>
         </ul>
       </div>-->
-            <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
-                <button type="button" id="stopbot" title="Stop Bot" placement="bottom" tooltip="Stop Bot" class="rpa-btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot()">
-      <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
-      <div class="btn_title">Stop</div>
+
+      <div class="dropdown">
+        <button class="  rpa-btn_style dropdown-toggle" style="padding-left:0px;padding-right:0px"  id="bots" placement="bottom" tooltip="Bot Store"  type="button" data-toggle="dropdown" (click)="getpredefinedbotlist()"> <img src="/assets/images/robot.svg" class="imageI1"><div class="btn_title">Bot Store</div></button>
+        <ul *ngIf="predefinedbotsData.length > 0" class="dropdown-menu  rpa-custom-scrollbar" style="width:400px">
+            <li *ngFor="let bots of predefinedbotsData; let i = index">
+                <div class="checkbox">
+                    <div class="environments">
+                        <button (click)="loadpredefinedbot(bots.botId)">{{bots.botName}}</button>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul *ngIf="predefinedbotsData.length <= 0" class="dropdown-menu ">
+            <li>
+                <div class="checkbox">
+                    <div class="environments">
+                        <label [for]="'list'+i">No Records Found</label>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+      <button type="button" class="  rpa-btn_style" aria-hidden="true" id="schedule" tooltip="Schedule Bot" (click)="openschedule()" id="schedule" placement="bottom">
+        <img class="imageI1" src="/assets/images/Group 286.svg">
+        <div class="btn_title">Schedule</div>
       </button>
-            </div>
 
 
-            <div *ngIf="pausebot==true || resumebot==true">
-                <button type="button" class="  rpa-btn_style" title="Stop Bot" placement="bottom" tooltip="Stop Bot" aria-hidden="true" placement="bottom" (click)="stopBot()">
-        <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
-        <div class="btn_title">Stop</div>
-        </button>
-            </div>
-            <div class="dropdown">
-                <button class="  rpa-btn_style dropdown-toggle" id="bots" placement="bottom" tooltip="Bot Store"  type="button" data-toggle="dropdown" (click)="getpredefinedbotlist()"> <img src="/assets/images/robot.svg" class="imageI1"><div class="btn_title">Bot Store</div></button>
-                <ul *ngIf="predefinedbotsData.length > 0" class="dropdown-menu  rpa-custom-scrollbar" style="width:400px">
-                    <li *ngFor="let bots of predefinedbotsData; let i = index">
-                        <div class="checkbox">
-                            <div class="environments">
-                                <button (click)="loadpredefinedbot(bots.botId)">{{bots.botName}}</button>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
 
-                <ul *ngIf="predefinedbotsData.length <= 0" class="dropdown-menu ">
-                    <li>
-                        <div class="checkbox">
-                            <div class="environments">
-                                <label [for]="'list'+i">No Records Found</label>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+
+
+      <div class="dropdown">
+        <button class="  rpa-btn_style dropdown-toggle" style="padding-left:5px;padding-right:5px" id="Environments" placement="bottom" tooltip="Select Environments" type="button" data-toggle="dropdown">
+   <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1">
+<div class="btn_title">Environments</div></button>
+        <ul *ngIf="environment.length > 0" class="dropdown-menu rpa-custom-scrollbar">
+            <li *ngFor="let list of environment;let i = index">
+                <div class="checkbox">
+                    <div class="environments">
+                        <label [for]="list+i"><input type="checkbox" (change)="checkuncheckenv(list.environmentId)" [checked]="list.checked" >{{list.environmentName}}</label>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox" *ngIf="this.isButtonVisible">
+                    <div class="environments">
+                        <a style="color:black" (click)="navtoenv()"><span><i class="fa fa-plus"></i></span>&nbsp; Create Environments</a>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul *ngIf="environment.length <= 0" class="dropdown-menu ">
+            <li>
+                <div class="checkbox">
+                    <div class="environments">
+                        <label [for]="'list'+i">No Records Found</label>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="checkbox" *ngIf="this.isButtonVisible">
+                    <div class="environments">
+                        <a [routerLink]="[ '/pages/rpautomation/environments']"><span><i class="fa fa-plus"></i></span>&nbsp;Create Environments</a>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+
             <!-- <button type="button" id="deployBot" title="Deploy Bot Agent" [disabled]="savebotrespose==undefined" class="rpa-btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
         <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
         <div class="btn_title">Deploy</div>
       </button>-->
+
+      <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom" tooltip="Save Bot" [disabled]="!(envflag==false &&  0 < childBotWorkspace.finaldataobjects.length)" placement="bottom" id="savebot" (click)="saveBotFunAct()">
+        <img class="imageI1" src="/assets/images/Layer 1.svg">
+        <div class="btn_title">Save</div>
+      </button>
             <button type="button" class="  rpa-btn_style" placement="bottom" tooltip="Edit Bot" id="edit" [disabled]="savebotrespose==undefined" aria-hidden="true" placement="bottom" (click)="modify()">
         <img class="imageI1" src="/assets/images/Expanded.svg">
         <div class="btn_title">Edit</div>
       </button>
-            <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom" tooltip="Save Bot" [disabled]="!(envflag==false &&  0 < childBotWorkspace.finaldataobjects.length)" placement="bottom" id="savebot" (click)="saveBotFunAct()">
-      <img class="imageI1" src="/assets/images/Layer 1.svg">
-      <div class="btn_title">Save</div>
-    </button>
 
 
             <button type="button" class="  rpa-btn_style" aria-hidden="true"  tooltip="Start Bot" placement="bottom" id="startbot" [disabled]="savebotrespose==undefined" (click)="executionAct()">
@@ -94,57 +138,31 @@
         </button>
             </div>
 
-            <button type="button" class="  rpa-btn_style" aria-hidden="true" id="schedule" tooltip="Schedule Bot" (click)="openschedule()" id="schedule" placement="bottom">
-    <img class="imageI1" src="/assets/images/Group 286.svg">
-    <div class="btn_title">Schedule</div>
+
+
+
+
+            <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
+              <button type="button" id="stopbot" title="Stop Bot" placement="bottom" tooltip="Stop Bot" class="rpa-btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot()">
+    <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
+    <div class="btn_title">Stop</div>
     </button>
-            <div class="dropdown">
-                <button class="  rpa-btn_style dropdown-toggle" id="Environments" placement="bottom" tooltip="Select Environments" type="button" data-toggle="dropdown">
-           <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1">
-        <div class="btn_title">Environments</div></button>
-                <ul *ngIf="environment.length > 0" class="dropdown-menu rpa-custom-scrollbar">
-                    <li *ngFor="let list of environment;let i = index">
-                        <div class="checkbox">
-                            <div class="environments">
-                                <label [for]="list+i"><input type="checkbox" (change)="checkuncheckenv(list.environmentId)" [checked]="list.checked" >{{list.environmentName}}</label>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="checkbox" *ngIf="this.isButtonVisible">
-                            <div class="environments">
-                                <a style="color:black" (click)="navtoenv()"><span><i class="fa fa-plus"></i></span>&nbsp; Create Environments</a>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+          </div>
 
-                <ul *ngIf="environment.length <= 0" class="dropdown-menu ">
-                    <li>
-                        <div class="checkbox">
-                            <div class="environments">
-                                <label [for]="'list'+i">No Records Found</label>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
 
-                    <li>
-                        <div class="checkbox" *ngIf="this.isButtonVisible">
-                            <div class="environments">
-                                <a [routerLink]="[ '/pages/rpautomation/environments']"><span><i class="fa fa-plus"></i></span>&nbsp;Create Environments</a>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+          <div *ngIf="pausebot==true || resumebot==true">
+              <button type="button" class="  rpa-btn_style" title="Stop Bot" placement="bottom" tooltip="Stop Bot" aria-hidden="true" placement="bottom" (click)="stopBot()">
+      <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
+      <div class="btn_title">Stop</div>
+      </button>
+          </div>
+
+
+
             <div class="dropdown">
-                <button class="  rpa-btn_style dropdown-toggle" tooltip="Bot Versions" placement="bottom" [disabled]="savebotrespose==undefined" id="versions" type="button" data-toggle="dropdown" (click)="getVersionlist()"> <img src="..\\assets\\images\\RPA\\Version_icon.svg" class="imageI1"><div class="btn_title">Versions</div></button>
+                <button class="rpa-btn_style dropdown-toggle" tooltip="Bot Versions" placement="bottom" [disabled]="savebotrespose==undefined" id="versions" type="button" data-toggle="dropdown" (click)="getVersionlist()"> <img src="..\\assets\\images\\RPA\\Version_icon.svg" class="imageI1"><div class="btn_title">Versions</div></button>
                 <ul *ngIf="versionsList.length > 0" class="dropdown-menu rpa-custom-scrollbar">
-                    <li *ngFor="let version of versionsList; let i = index" [class]="botState.version==version.vId?'version-highlight':''">
+                    <li *ngFor="let version of versionsList; let i = index" [class]="savebotrespose.version==version.vId?'version-highlight':''">
                         <div class="checkbox" (click)="switchversion(version.vId)">
                             <div class="environments" >
                                 <label [for]="version+i" (click)="switchversion(version.vId)">V.{{version.vId}}</label>
@@ -166,6 +184,13 @@
                 </ul>
 
             </div>
+
+
+            <button type="button" class="rpa-btn_style" tooltip="Bot Logs" id="Logs" [disabled]="savebotrespose==undefined" aria-hidden="true" (click)="viewlogdata()" placement="bottom">
+              <img class="imageI1" src="/assets/images/RPA/ViewLog.svg">
+              <div class="btn_title">Logs</div>
+              </button>
+
             <button type="button" id="reset" class="rpa-btn_style" tooltip="Reset Bot" aria-hidden="true" placement="bottom">
         <img class="imageI1" src="/assets/images/reload_pp.svg" (click)="reset()">
         <div class="btn_title">Reset</div>
@@ -173,10 +198,6 @@
             <button type="button" class="  rpa-btn_style" id="delete" [disabled]="savebotrespose==undefined" tooltip="Delete Bot" aria-hidden="true" (click)="delete()" placement="bottom">
       <img class="imageI1" src="/assets/images/RPA/delete_icon2.svg">
       <div class="btn_title">Delete</div>
-      </button>
-            <button type="button" class="rpa-btn_style" tooltip="Bot Logs" id="Logs" [disabled]="savebotrespose==undefined" aria-hidden="true" (click)="viewlogdata()" placement="bottom">
-      <img class="imageI1" src="/assets/images/RPA/ViewLog.svg">
-      <div class="btn_title">Logs</div>
       </button>
         </div>
     </div>
