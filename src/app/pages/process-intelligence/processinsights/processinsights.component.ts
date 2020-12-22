@@ -162,7 +162,10 @@ comboBarScheme = {
 
 showRightYAxisLabel: boolean = false;
 yAxisLabelRight: string = 'Bot Cost';
-
+biDataMaxPerct:any;
+biDataMinPerct:any;
+biDataMaxDays:any;
+biDataMinDays:any;
 
 
     constructor(
@@ -206,6 +209,7 @@ yAxisLabelRight: string = 'Bot Cost';
         // this.addpiechart1([]);
         // this.addpiechart2([]);
         //this.getDonutChart();
+        this.getBusinessInsights();
         this.getAllVariantList()
         this.getDurationCall();
         this.getTotalNoOfCases('fullgraph');
@@ -236,6 +240,7 @@ yAxisLabelRight: string = 'Bot Cost';
         this.onResourceSelect(false);
         this.getDurationCall();
         this.canceladdHrs();
+        this.getBusinessInsights();
 
     }
 
@@ -1884,6 +1889,39 @@ svg
     }
     canceladdHrs(){
          this.isAddHrs=!this.isAddHrs;
+    }
+
+    getBusinessInsights(){
+        let reqObj={};
+        reqObj={
+            "data_type":"bussiness_insights",
+            "pid":this.graphIds,
+            "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
+            }
+            let bi_data:any
+        this.rest.getBIinsights(reqObj).subscribe((res: any) => {
+        bi_data=res
+        // if(bi_data.data){
+            let bi_data1=bi_data.data.maximumDays;
+            let bi_data2=bi_data.data.minimumDays;
+            this.biDataMaxDays=bi_data1.max_days
+            this.biDataMinDays=bi_data2.min_days
+            if(String(bi_data1.max_percent).indexOf('.') != -1){
+                let perc=bi_data1.max_percent.toString().split('.')
+                this.biDataMaxPerct=perc[0]+'.'+perc[1].slice(0,2);
+            }else{
+                this.biDataMaxPerct=bi_data1.max_percent
+            }
+
+            if(String(bi_data2.min_percent).indexOf('.') != -1){
+                let perc=bi_data2.min_percent.toString().split('.')
+                this.biDataMinPerct=perc[0]+'.'+perc[1].slice(0,2);
+            }else{
+                this.biDataMinPerct=bi_data2.min_percent
+            }
+        // }
+            
+        })
     }
 
 }

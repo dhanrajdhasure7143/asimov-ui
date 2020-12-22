@@ -33,6 +33,9 @@ export const environment = {
 // PI Connectors
   connector_topic: 'nodeDev',
 
+//BPMN Platform URL
+  bpmnplatformUrl : "http://10.11.0.127:8080",
+
 //DB Connector
   dbConnectorHost: "10.11.0.113",
   dbName: "asimov_aiotal",
@@ -59,6 +62,9 @@ export const environment = {
   // //DB Connector
   //  dbConnectorHost: "10.11.0.104",
   //  dbName: 'eiap_qa'
+
+  //BPMN Platform URL
+    //bpmnplatformUrl : "http://10.11.0.127:8080",
 };
 
 /*
