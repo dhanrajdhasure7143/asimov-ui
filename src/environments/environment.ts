@@ -34,7 +34,7 @@ export const environment = {
   connector_topic: 'nodeDev',
 
 //BPMN Platform URL
-  bpmnplatformUrl : "http://localhost:8080",
+  bpmnplatformUrl : "http://10.11.0.127:8080",
 
 //DB Connector
   dbConnectorHost: "10.11.0.113",
@@ -64,7 +64,7 @@ export const environment = {
   //  dbName: 'eiap_qa'
 
   //BPMN Platform URL
-    //bpmnplatformUrl : "http://localhost:8080",
+    //bpmnplatformUrl : "http://10.11.0.127:8080",
 };
 
 /*
