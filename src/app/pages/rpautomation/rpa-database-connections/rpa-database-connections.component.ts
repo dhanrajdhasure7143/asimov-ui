@@ -9,6 +9,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
+import { RPAdbchints} from '../model/rpa-dbconnection-hints'
 
 @Component({
   selector: 'app-rpa-database-connections',
@@ -39,11 +40,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     public passwordtype2:Boolean;
     
     constructor(private api:RestApiService, 
-      private router:Router, 
+      private router:Router,
+      private hints:RPAdbchints, 
       private formBuilder: FormBuilder,
       private chanref:ChangeDetectorRef, 
       private dt:DataTransferService,
-      private hints:RpaEnvHints,
       private spinner: NgxSpinnerService
       ) { 
       const ipPattern = 
@@ -77,7 +78,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
 
   ngOnInit() {
-    
+    this.dt.changeHints(this.hints.rpadbchints);
     this.getallDBConnection();
     this.passwordtype1=false;
     this.passwordtype2=false;

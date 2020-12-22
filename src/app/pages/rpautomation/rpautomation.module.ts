@@ -54,6 +54,7 @@ import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatNativeDateModule} from '@angular/material';
+import {RPAdbchints} from "./model/rpa-dbconnection-hints";
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -108,6 +109,6 @@ import {MatNativeDateModule} from '@angular/material';
     MatSlideToggleModule,
     Ng5SliderModule,
   ],
-  providers: [RpaHints,RpaDragHints,RpaEnvHints,RpaWorkspace, Rpa_Home_Hints,MatDatepickerModule]
+  providers: [RpaHints,RpaDragHints,RpaEnvHints,RpaWorkspace, Rpa_Home_Hints,MatDatepickerModule,RPAdbchints]
 })
 export class RpautomationModule { }

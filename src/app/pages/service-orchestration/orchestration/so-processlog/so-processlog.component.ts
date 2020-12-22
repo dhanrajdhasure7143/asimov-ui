@@ -32,7 +32,7 @@ export class SoProcesslogComponent implements OnInit {
   public respdata1: boolean = false;
   displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
   displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"];
-  displayedColumnsp3: string[] = ['task_name','start_date','end_date','error_info', 'status' ];
+  displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
   constructor( private rest:RestApiService, private automated:SoAutomatedTasksComponent) { }
 
   ngOnInit() {
