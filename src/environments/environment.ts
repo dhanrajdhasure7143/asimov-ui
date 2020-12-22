@@ -34,7 +34,7 @@ export const environment = {
   //connector_topic: 'nodeDev',
 
 //BPMN Platform URL
-  bpmnplatformUrl : "http://10.11.0.127:8080",
+ // bpmnplatformUrl : "http://10.11.0.127:8080",
 
 //DB Connector
   //dbConnectorHost: "10.11.0.113",
