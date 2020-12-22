@@ -340,6 +340,9 @@ export class SoSchedulerComponent implements OnInit {
       let list=this.schedule_list.filter(data=>data.check==true);
       list.forEach(data=>{
         let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
+        let del_sch=this.schedule_list.find(scheduleitem=>scheduleitem.intervalId==data.intervalId);
+        if(del_sch.save_status=="saved")
+          this.deletestack.push(del_sch);
         this.schedule_list.splice(index2,1);
       })
     }
@@ -380,14 +383,15 @@ export class SoSchedulerComponent implements OnInit {
         }
       }
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
-      let resp:any=data;
-      if(resp.botMainSchedulerEntity.scheduleIntervals.length==0){
-        Swal.fire("Updated successfully","","success")
-      }
-      else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length){
-        Swal.fire("Schedules saved successfully","","success");
-      }
-      this.get_schedule();
+          let resp:any=data;
+          Swal.fire("Updated successfully","","success")
+
+          /*if(resp.botMainSchedulerEntity==null){
+          }
+          else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length){
+            Swal.fire("Schedules saved successfully","","success");
+          }*/
+          this.get_schedule();
     })
     }
     else if(this.processid!=undefined && this.processid!="")

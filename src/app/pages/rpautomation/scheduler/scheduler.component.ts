@@ -221,25 +221,17 @@ export class SchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage!=undefined)
         {
-          Swal.fire(resp.errorMessage,"","warning");
+
+          this.notifier.notify("warning", resp.errorMessage);
+          //Swal.fire(resp.errorMessage,"","warning");
         }
         else
         {
-          Swal.fire(resp.status,"","success")
+          this.notifier.notify("success",resp.status)
           this.schedule_list.find(data=>data.check==true).run_status="started";
           this.updateflags();
         }
 
-      })
-    }
-    else if(this.processid!="" && this.processid != undefined)
-    {
-      let schedule:any=[];
-      schedule.push(checked_schedule);
-      this.rest.startprocessschedule(schedule).subscribe(data=>{
-          Swal.fire("Process started sucessfully","","success");
-          this.schedule_list.find(data=>data.check==true).run_status="started";
-          this.updateflags();
       })
     }
   }
@@ -268,16 +260,6 @@ export class SchedulerComponent implements OnInit {
         }
       })
     }
-    else if(this.processid!=undefined && this.processid!="")
-    {
-      this.rest.pauseprocessschedule(checked_schedule).subscribe(resp=>{
-        let respose:any=resp;
-        //Swal.fire(response[0][checked_schedule.scheduleprocessid],"","success")
-        this.schedule_list.find(data=>data.check==true).run_status="pause";
-        this.updateflags();
-      })
-    }
-
   }
 
   resume_schedule()
@@ -292,11 +274,12 @@ export class SchedulerComponent implements OnInit {
       let resp:any=data
       if(resp.errorMessage!=undefined)
       {
-        Swal.fire(resp.errorMessage,"","warning");
+        this.notifier.notify("warning", resp.errorMessage);
       }
       else
       {
-        Swal.fire(resp.status,"","success")
+
+        this.notifier.notify("warning", resp.status);
         this.schedule_list.find(data=>data.check==true).run_status="resume";
         this.updateflags();
       }
@@ -304,35 +287,6 @@ export class SchedulerComponent implements OnInit {
 
   }
 
-  stop_schedule()
-  {
-    let checked_schedule=this.schedule_list.find(data=>data.check==true)
-    if(this.botid!="" && this.botid!=undefined)
-    {
-      let schedule={
-        botId:this.botid,
-        "scheduleInterval":checked_schedule.scheduleInterval,
-        "intervalId":checked_schedule.intervalId,
-      }
-      this.rest.stop_schedule(schedule).subscribe(data=>{
-        let resp:any=data
-        if(resp.errorMessage!=undefined)
-        {
-          Swal.fire(resp.errorMessage,"","warning");
-        }
-        else
-        {
-          Swal.fire(resp.status,"","success")
-          this.schedule_list.find(data=>data.check==true).run_status="not_started";
-          this.updateflags();
-        }
-      })
-    }
-    else if(this.processid!="" && this.processid != undefined)
-    {
-        this.rest.stopprocessschedule(checked_schedule).subscribe(data=>{})
-    }
-  }
 
   delete_schedule()
   {
@@ -343,16 +297,8 @@ export class SchedulerComponent implements OnInit {
         let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
         this.schedule_list.splice(index2,1);
       })
+      this.updateflags();
     }
-    else if(this.processid!="" && this.processid != undefined)
-    {
-      let list=this.schedule_list.filter(data=>data.check==true);
-      list.forEach(data=>{
-        let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
-        this.schedule_list.splice(index2,1);
-      })
-    }
-
   }
 
 
@@ -389,44 +335,25 @@ export class SchedulerComponent implements OnInit {
         }
       }
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
-      let resp:any=data;
-      if(resp.botMainSchedulerEntity.scheduleIntervals.length==0){
-        this.actions.schpop=false;
-        this.close()
-        Swal.fire("Updated successfully","","success")
-      }
-      else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length){
-        this.actions.schpop=false;
-        this.close()
-        Swal.fire("Schedules saved successfully","","success");
-      }
-      this.get_schedule();
-    })
-    }
-    else if(this.processid!=undefined && this.processid!="")
-    {
-      let save_schedule_list:any=[];
-      save_schedule_list=this.schedule_list.filter(item=>item.save_status=='unsaved')
-      this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
-        let resp:any=data
-        if(resp.response!=undefined)
+        let resp:any=data;
+        if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
         {
-          Swal.fire(resp.response,"","success");
-          this.get_schedule();
-          this.updateflags();
+          //this.actions.schpop=false;
+          //this.close()
+          Swal.fire("Updated successfully","","success")
+
+          //this.notifier.notify("success", resp.errorMessage);
         }
-        else
+        else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
         {
-          Swal.fire(resp.errorMessage,"","error");
+          //this.actions.schpop=false;
+          //this.close()
+
+          this.notifier.notify("success", "Schedules saved successfully");
+          //Swal.fire("Schedules saved successfully","","success");
         }
+        this.get_schedule();
       })
-      if(this.deletestack.length!=0)
-      {
-        this.rest.deleteprocessschedule(this.deletestack).subscribe(data=>{
-          Swal.fire("Schedules deleted sucessfully","","success");
-          this.updateflags();
-        })
-      }
     }
   }
 

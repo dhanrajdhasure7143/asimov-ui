@@ -204,7 +204,7 @@
                 </div>
                 <div *ngIf="runtimestats.length!=0">
                     <ngx-charts-bar-vertical    [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="runtimestats" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
-                        [xAxisLabel]="'Bot Names'"  maxXAxisTickLength=4 [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
+                        [xAxisLabel]="'Bots'"  maxXAxisTickLength=4 [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
                     </ngx-charts-bar-vertical>
                 </div>
                 <div class="message text-center" *ngIf="runtimestats.length==0" ><br><br><br>
@@ -221,7 +221,7 @@
                 </div>
                 <div *ngIf="Performance.length!=0">
                     <ngx-charts-bar-vertical  [barPadding]="50"  [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="Performance" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
-                        [xAxisLabel]="'Bot Names'"  maxXAxisTickLength=4 [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
+                        [xAxisLabel]="'Runs'"  maxXAxisTickLength=4 [rotateXAxisTicks]="true" [yAxisLabel]="'Execution Time (ms)'" (select)="getruns($event)" >
                     </ngx-charts-bar-vertical>
                 </div>
                 <div class="message text-center" *ngIf="Performance.length==0" ><br><br><br>
