@@ -148,3 +148,43 @@ th{
 .run-process{
 padding:20px;
 }
+
+.btnbot:hover + .BotNameelement{
+    display: block;
+}
+
+.btndes:hover + .Botdescriptelement{
+    display:block;
+}
+
+.BotNameelement{
+    display:none;
+    position:absolute; 
+    z-index:100;
+    border:1px;
+    background-color: black;
+    border-style:solid;
+    padding:3px;
+    color:white; 
+    width:auto !important;
+    height:auto !important;
+    border-radius: 5px;
+    margin-left: 15px;
+    /*left:90px;*/
+}
+
+.Botdescriptelement{
+    display:none;
+    position:absolute; 
+    z-index:100;
+    border:1px;
+    background-color: black;
+    border-style:solid;
+    padding:3px;
+    color:white; 
+    width:auto !important;
+    height:auto !important;
+    border-radius: 5px;
+    margin-left: 15px;
+    /*left:230px;*/ 
+}

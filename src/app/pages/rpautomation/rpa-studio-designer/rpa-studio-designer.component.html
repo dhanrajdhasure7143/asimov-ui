@@ -1,0 +1,12 @@
+  <mat-tab-group class="tabs" [selectedIndex]="tabsArray.length-1" >
+      <mat-tab  *ngFor="let tab of tabsArray">
+        <ng-template mat-tab-label>
+            <mat-icon class="text-primary">android</mat-icon>
+              &nbsp;&nbsp;
+              {{tab.botName}}
+              &nbsp;&nbsp;
+            <mat-icon (click)="removetab(tab)">close</mat-icon>
+        </ng-template>
+        <app-rpa-toolset [bot]="tab" ></app-rpa-toolset>
+      </mat-tab>
+  </mat-tab-group>

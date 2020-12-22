@@ -11,16 +11,17 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
+
+import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
 import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
-
-//import {RpaStudioActionsComponent} from "../rpa-studio-actions/rpa-studio-actions.component";
 @Component({
-  selector: 'app-rpa-studio-workspace',
-  templateUrl: './rpa-studio-workspace.component.html',
-  styleUrls: ['./rpa-studio-workspace.component.css']
+  selector: 'app-rpa-studio-designerworkspace',
+  templateUrl: './rpa-studio-designerworkspace.component.html',
+  styleUrls: ['./rpa-studio-designerworkspace.component.css']
 })
-export class RpaStudioWorkspaceComponent implements AfterViewInit {
+export class RpaStudioDesignerworkspaceComponent implements OnInit {
+
   recordandplayid:any;
   jsPlumbInstance;
   public stud: any = [];
@@ -72,7 +73,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   rp_url:string;
   recordedcode:any;
   finalcode:any;
-  constructor(private rest: RestApiService, private notifier: NotifierService, private hints: RpaDragHints, private dt: DataTransferService, private http: HttpClient, private child_rpa_studio: RpaStudioComponent,) {
+  constructor(private rest: RestApiService,
+    private notifier: NotifierService,
+    private hints: RpaDragHints,
+    private dt: DataTransferService,
+    private http: HttpClient,
+    private child_rpa_studio: RpaStudioComponent,
+    private toolset:RpaToolsetComponent,
+    ) {
 
   }
 
@@ -91,15 +99,15 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       id: "",
       name: "",
     }
+    console.log("ssssssssssssssssssssssss",this.finalbot);
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
-      console.log(this.child_rpa_studio.templateNodes)
+      console.log("------------------toolset----------------------",this.toolset.templateNodes)
       this.loadnodes();
-
+      this.dragareaid = "dragarea__" + this.finalbot.botName;
+      this.outputboxid = "outputbox__" + this.finalbot.botName;
+      this.SelectedOutputType = "";
     }
-    this.dragareaid = "dragarea__" + this.finalbot.botName;
-    this.outputboxid = "outputbox__" + this.finalbot.botName;
-    this.SelectedOutputType = "";
   }
 
 
@@ -179,6 +187,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
 
   public loadnodes() {
+    console.log("----------------------->", this.finaldataobjects);
     this.finaldataobjects.forEach(element => {
       if (element.inSeqId == "START_" + this.finalbot.botName) {
         let node = {
@@ -214,16 +223,29 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
       }
 
-
+      let templatenodes:any=[]
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];
+      console.log("---------------->",element)
+      console.log("-----nodeid------",nodeid)
+      console.log("-----nodename----",nodename);
+      console.log("-----templatenodes--",this.toolset.templateNodes);
+      console.log("--------first node---------",this.toolset.templateNodes)
+      //console.log(nodepoint);
+      this.toolset.templateNodes.forEach(element => {
+        console.log("check")
+      });
+      templatenodes=this.toolset.templateNodes;
+      console.log(this.toolset.templateNodes);
+      Array.isArray(templatenodes)?console.log("this is array"):console.log("this is not array")
+      console.log(templatenodes.length)
       let node = {
         id: nodeid,
         name: nodename,
         selectedNodeTask: element.taskName,
         selectedNodeId: element.tMetaId,
-        path: this.child_rpa_studio.templateNodes.find(data => data.name == nodename).path,
-        tasks: this.child_rpa_studio.templateNodes.find(data => data.name == nodename).tasks,
+        path: this.toolset.templateNodes.find(data => data.name == nodename).path,
+        tasks: this.toolset.templateNodes.find(data => data.name == nodename).tasks,
         x: element.x,
         y: element.y,
       }
@@ -610,12 +632,11 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   addoptions(attributes,node)
   {
-    /*
       let token={​​​​​
         headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
-      }​​​*/​
+      }​​​​
       let restapi_attr=attributes.find(attr => attr.type=='restapi');
-      this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
+      this.http.get(restapi_attr.dependency,token).subscribe(data=>
       {
         this.restapiresponse=data
         let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
@@ -1213,16 +1234,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           {
             let data: any = outdata
             let textval:String=JSON.stringify(data[0].Value);
-            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />");
-
+            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
           }
           if(this.SelectedOutputType=="Image")
           {
             let data=this.outputboxresult[0].Value.split(':');
-            //let obj=JSON.parse(this.outputboxresult[0].Value);
-            //console.log("000000000000000000000000000000000000>",obj)
-            let image=data[1].slice(0, -2);
-            this.Image= 'data:' + 'image/png' + ';base64,' +image;
+            this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
           }
         })
       }

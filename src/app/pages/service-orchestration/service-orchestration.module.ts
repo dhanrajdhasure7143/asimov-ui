@@ -18,7 +18,7 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { SoAutomatedTasksComponent } from './orchestration/so-automated-tasks/so-automated-tasks.component';
 import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
-import { SoDashboardComponent, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
+import { Category,SoDashboardComponent, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { SoSchedulerComponent, Envname } from './orchestration/so-scheduler/so-scheduler.component';
@@ -38,6 +38,7 @@ import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlist
   declarations: [OrchestrationComponent,
     BotStatusComponent,
     FilterBy,
+    Category,
     BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname],
   imports: [
     CommonModule,

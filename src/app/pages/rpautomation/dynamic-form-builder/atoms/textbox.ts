@@ -6,7 +6,7 @@ import { FormGroup } from '@angular/forms';
     selector: 'textbox',
     template: `
       <div [formGroup]="form">
-        <input *ngIf="!field.multiline" autocomplete="off" [required]="field.required==true" [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control"  [id]="field.name" [name]="field.name" [formControlName]="field.name+'_'+field.id">
+        <input *ngIf="!field.multiline" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control"  [id]="field.name" [name]="field.name" [formControlName]="field.name+'_'+field.id">
         <textarea *ngIf="field.multiline" autocomplete="off" [formControlName]="field.name" [id]="field.name" [required]="field.required==true"
         rows="9" class="form-control" [placeholder]="field.placeholder"></textarea>
       </div>
@@ -18,8 +18,8 @@ import { FormGroup } from '@angular/forms';
 export class TextBoxComponent {
     @Input() field:any = {};
     @Input() form:FormGroup;
-    get isValid() { return this.form.controls[this.field.name].valid; }
-    get isDirty() { return this.form.controls[this.field.name].dirty; }
+    get isValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
+    get isDirty() { return this.form.controls[this.field.name+"_"+this.field.id].dirty; }
 
     constructor() {
 

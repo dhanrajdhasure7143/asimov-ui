@@ -6,13 +6,13 @@
 <mat-dialog-content class="mat-typography" *ngIf="data.type=='date'">
   <mat-form-field appearance="fill" style="width:100%">
       <mat-label>From Date</mat-label>
-        <input matInput [(ngModel)]="from_date"  [matDatepicker]="filterdate">
+        <input matInput [(ngModel)]="from_date" [max]="startdate" [matDatepicker]="filterdate">
         <mat-datepicker-toggle matSuffix  [for]="filterdate"></mat-datepicker-toggle>
       <mat-datepicker #filterdate></mat-datepicker>
   </mat-form-field>
   <mat-form-field appearance="fill" style="width:100%">
       <mat-label>To Date</mat-label>
-      <input matInput [(ngModel)]="to_date"  [matDatepicker]="filterdate2">
+      <input matInput [(ngModel)]="to_date" [min]="from_date" [max]="startdate"  [matDatepicker]="filterdate2">
       <mat-datepicker-toggle matSuffix  [for]="filterdate2"></mat-datepicker-toggle>
       <mat-datepicker  #filterdate2></mat-datepicker>
   </mat-form-field>

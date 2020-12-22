@@ -1,4 +1,4 @@
-import {Inject, Component, OnInit } from '@angular/core';
+import {Inject,Input, Component, OnInit ,Pipe, PipeTransform } from '@angular/core';
 import {RestApiService} from '../../../services/rest-api.service';
 import * as Chart from 'chart.js'
 import { NgxSpinnerService } from "ngx-spinner";
@@ -6,6 +6,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { noUndefined } from '@angular/compiler/src/util';
 @Component({
   selector: 'app-so-dashboard',
   templateUrl: './so-dashboard.component.html',
@@ -19,7 +20,11 @@ export class SoDashboardComponent implements OnInit {
     private dialog:MatDialog,
     private http:HttpClient
     ) {}
+  botstat:Boolean=true;
+  runtimeflag:Boolean=true;
+  processflag:Boolean=true;
   public selectedcat:any;
+  processstats_table:any=[]
   categaoriesList:any
   allprocessnames:any;
   processnames:any
@@ -37,11 +42,14 @@ export class SoDashboardComponent implements OnInit {
   envcount:any;
   Performance:any=[];
   users:any;
+  runtimestats:any=[]
   mainautomatedtasks:any=[];
+  botflag:Boolean=false;
   view: any[] = [700, 400];
 
   processstatistics:any=[];
   botstatistics:any=[];
+  botstatisticstable:any=[];
   showXAxis = true;
   showYAxis = true;
   showXAxisLabel = true;
@@ -63,8 +71,9 @@ export class SoDashboardComponent implements OnInit {
     this.getprocessstatistics();
     this.getenvironments()
     this.getCategoryList();
-    this.getprocessruns();
+    //this.getprocessruns();
     this.getbotscount();
+    this.botruntimestats();
   }
   ngAfterViewInit(): void {
 
@@ -95,6 +104,18 @@ export class SoDashboardComponent implements OnInit {
         console.log(err)
         this.spinner.hide();
       });
+  }
+
+
+  botchart(event:any)
+  {
+    this.botstat=false;
+    this.botstatisticstable=this.bots_list.filter(data=>data.botStatus==event.name);
+
+  }
+  backtobotstatistics()
+  {
+    this.botstat=true;
   }
 
   getheaders()
@@ -140,7 +161,13 @@ export class SoDashboardComponent implements OnInit {
 
       });
   }
-
+  processstatstable(event)
+  {
+    console.log(this.processflag)
+      this.processstats_table=this.processnames.filter(item=>item.status==event.name.toUpperCase());
+      console.log(this.processstats_table);
+      this.processflag=false;
+  }
 
 
   getenvironments()
@@ -258,13 +285,14 @@ export class SoDashboardComponent implements OnInit {
   }
 
 
-  getruns(botid)
+  getruns(event)
   {
-    console.log(botid);
-    if(this.bots.find(botc=>botc.botId==botid) != undefined)
+    console.log("----------Events-----------",event);
+    let botName=event.name;
+    if(this.bots.find(botc=>botc.botName==botName) != undefined)
     {
       console.log(this.bots);
-      let bot_check =this.bots.filter(botc=>botc.botId==botid)
+      let bot_check =this.bots.filter(botc=>botc.botName==botName)
       console.log(bot_check);
       let performances=bot_check[0].coordinates
       console.log(performances)
@@ -280,9 +308,99 @@ export class SoDashboardComponent implements OnInit {
             })
         }
       }
+      this.runtimeflag=false;
     }
   }
 
+
+  botruntimestats()
+  {
+    this.rest.botPerformance().subscribe(data=>{
+      let botperformances:any=[]
+      botperformances=data;
+      this.bots=botperformances;
+      let today=new Date();
+      let yesterday=new Date();
+      let runtimestats:any=[]
+      yesterday.setDate(today.getDate()-1);
+      this.bots_list.forEach(bot => {
+        let filteredbot:any;
+        filteredbot=botperformances.find(item=>item.botId==bot.botId);
+        if(filteredbot != undefined)
+        {
+          let filteredCoordinates:any=filteredbot.coordinates.filter(item=>moment(item.startTime,"x").format("D-MM-YYYY")==moment(today).format("D-MM-YYYY")||moment(item.startTime,"x").format("D-MM-YYYY")==moment(yesterday).format("D-MM-YYYY"));
+          if(filteredCoordinates.length>0)
+          {
+              let timedur:any=0;
+              filteredCoordinates.forEach(timeseries=>{
+                timedur=timedur+timeseries.timeDuration;
+              })
+              let data:any={
+                //id:filteredbot.botId,
+                "name":filteredbot.botName,
+                "value":timedur
+              }
+              runtimestats.push(data);
+              //console.log(this.Performance);
+          }
+        }
+      });
+      this.runtimestats=runtimestats;
+      console.log(runtimestats);
+      this.runtimeflag=true;
+    })
+  }
+
+
+  openbotstatfilter()
+  {
+    const dialogRef = this.dialog.open(FilterBy,{
+      width: '300px',
+      data: {type:"date"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let filterdata:any=[];
+      filterdata=result;
+      console.log("------------from date-----------",new Date(filterdata[0]));
+      console.log("------------to date-----------",new Date(filterdata[1]));
+      let start_date:any=new Date(filterdata[0]);
+      let end_date:any=new Date(filterdata[1]);
+      let runtimestats:any=[];
+      this.bots_list.forEach(bot => {
+        let filteredbot:any;
+        filteredbot=this.bots.find(item=>item.botId==bot.botId);
+        if(filteredbot != undefined)
+        {
+          let filteredCoordinates:any=[];
+          filteredbot.coordinates.forEach((item,index)=>{
+            let check_date=moment(item.startTime,"x").format("YYYY-MM-D");
+            let s_date=moment(start_date).format("YYYY-MM-D")
+            let e_date=moment(end_date).format("YYYY-MM-D");
+            if((moment(check_date).isSameOrBefore(e_date) && moment(check_date).isSameOrAfter(s_date)))
+            {
+              filteredCoordinates.push(item);
+            }
+          });
+          if(filteredCoordinates.length>0)
+          {
+              let timedur:any=0;
+              filteredCoordinates.forEach(timeseries=>{
+                timedur=timedur+timeseries.timeDuration;
+              })
+              let data:any={
+                //id:filteredbot.botId,
+                "name":filteredbot.botName,
+                "value":timedur
+              }
+              runtimestats.push(data);
+              //console.log(this.Performance);
+          }
+        }
+        this.runtimestats=runtimestats;
+      });
+    });
+  }
 
   openDialog(filterType)
   {
@@ -457,14 +575,13 @@ export class SoDashboardComponent implements OnInit {
   sortbycat()
   {
     let bot_list_check:any=[];
-    console.log(this.selectedcat);
+    this.botstat=true;
     bot_list_check=this.main_bot_list.filter(item=>item.department==this.selectedcat);
     console.log(bot_list_check);
-    if(bot_list_check.length!=0)
-    {
-      this.getruns(bot_list_check[0].botId);
-    }
+
     this.bots_list=bot_list_check;
+    this.botruntimestats()
+
     this.rest.getProcessStatisticsbycat(this.selectedcat).subscribe(data => {
     let response:any=data;
     if(response.errorMessage==undefined)
@@ -579,4 +696,23 @@ export class FilterBy{
     this.dialogRef.close();
   }
 
+}
+
+
+
+
+
+
+
+
+@Pipe({name: 'Category'})
+export class Category implements PipeTransform {
+  transform(value: any,arg:any)
+  {
+    let categories:any=[];
+    categories=arg;
+    console.log("departments",categories);
+    console.log("id",value);
+    return categories.find(item=>item.categoryId==value).categoryName;
+  }
 }
