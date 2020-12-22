@@ -97,6 +97,11 @@
                         <i class="fa fa-trash"></i>
                       </button>
                     </span>
+                    <span style="padding:5px">
+                      <button    mat-mini-fab color="basic"   (click)="get_schedule()">
+                        <i class="fa fa-undo"></i>
+                      </button>
+                    </span>
                 </div>
                 <br><br>
 
@@ -118,10 +123,12 @@
                             <td>{{ schedule.timeZone}}</td>
                             <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
                             <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
-                            <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
+                            <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.nextRunTime}}</td>
                             <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
-                            <td>--</td>
-                        </tr>
+                            <td *ngIf="schedule.botActionStatus!=undefined">{{schedule.botActionStatus}}</td>
+                            <td *ngIf="schedule.botActionStatus==undefined">{{schedule.save_status}}</td>
+
+                          </tr>
                     </tbody>
                 </table>
                 <pagination-controls (pageChange)="q = $event"></pagination-controls>
@@ -144,9 +151,11 @@
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timezone}}</td>
                             <td>{{schedule.envId | Envname : Environments}}</td>
-                            <td >--</td>
-                            <td>--</td>
-                            <td>--</td>
+                            <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
+                            <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
+                            <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.nextRunTime}}</td>
+                            <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
+                            <td>{{schedule.schedularActionStatus}}</td>
                         </tr>
                     </tbody>
                 </table>

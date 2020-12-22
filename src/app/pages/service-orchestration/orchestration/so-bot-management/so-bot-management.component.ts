@@ -58,9 +58,9 @@ export class SoBotManagementComponent implements OnInit {
     @ViewChild("paginator5",{static:false}) paginator5: MatPaginator;
     @ViewChild("sort4",{static:false}) sort4: MatSort;
     @ViewChild("sort5",{static:false}) sort5: MatSort;
-    displayedColumns4: string[] = ['run_id','version','start_date','start_time','end_date' ,'end_time', "bot_status"];
+    displayedColumns4: string[] = ['run_id','version','start_date','end_date' , "bot_status"];
     Viewloglist:MatTableDataSource<any>;
-    displayedColumns5: string[] = ['task_name', 'status','start_time','start_date','end_time','end_date','error_info' ];
+    displayedColumns5: string[] = ['task_name','start_date','end_date','status','error_info' ];
     logbyrunid:MatTableDataSource<any>;
     popup:Boolean=false;
     constructor(private route: ActivatedRoute,

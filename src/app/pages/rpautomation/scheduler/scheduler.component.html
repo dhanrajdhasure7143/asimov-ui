@@ -89,6 +89,11 @@
                       <i class="fa fa-trash"></i>
                     </button>
                   </span>
+                  <span style="padding:5px">
+                    <button   mat-mini-fab color="basic"   (click)="get_schedule()">
+                      <i class="fa fa-undo"></i>
+                    </button>
+                  </span>
               </div>
               <br><br>
 
@@ -112,7 +117,8 @@
                           <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
                           <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
                           <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
-                          <td>--</td>
+                          <td *ngIf="schedule.botActionStatus!=undefined">{{schedule.botActionStatus}}</td>
+                          <td *ngIf="schedule.botActionStatus==undefined">{{schedule.save_status}}</td>
                       </tr>
                   </tbody>
               </table>

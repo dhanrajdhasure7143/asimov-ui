@@ -70,26 +70,25 @@ export class SchedulerComponent implements OnInit {
 
   ngOnInit() {
     this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
-    if(this.data.processid!=undefined)
-    {
-      this.processid=this.data.processid
-      this.environmentid=this.data.environment
-      this.processName=this.data.processName
-    }
-    else if(this.data.botid!=undefined)
+
+    if(this.data.botid!=undefined && this.data.botid !="not_saved")
     {
       this.botid=this.data.botid;
+      this.get_schedule()
+      this.getenvironments();
+
+    }else if(this.data.botid=="not_saved")
+    {
+      this.botid=this.data.botid;
+      this.schedule_list=this.data.schedule_list;
     }
-    this.get_schedule()
-    this.getenvironments();
     this.enddate=this.startdate;
   }
 
   get_schedule()
   {
     this.schedule_list=[];
-    // for bot
-    if(this.botid!="" && this.botid!=undefined)
+    if(this.botid!="" && this.botid!=undefined && this.botid!="not_saved")
     {
       this.rest.getbotdata(this.botid).subscribe(data=>{
         let response:any=data;
@@ -105,19 +104,9 @@ export class SchedulerComponent implements OnInit {
         }
       })
     }
-    //for process
-    else if(this.processid!='' && this.processid!=undefined)
+    else if(this.botid=="not_saved")
     {
-      this.rest.getprocessschedule(this.processid).subscribe(resp=>{
-        this.schedule_list=resp;
-        console.log(resp)
-        this.schedule_list.forEach((sch,index)=>{
-          this.schedule_list[index].intervalId=this.generateid();
-          this.schedule_list[index].check=false;
-          this.schedule_list[index].save_status="saved";
-          this.schedule_list[index].run_status="not_started";
-        })
-      })
+      this.schedule_list=[];
     }
   }
 
@@ -139,7 +128,7 @@ export class SchedulerComponent implements OnInit {
       let data:any;
       let startdate=new Date(this.startdate);
       let enddate=new Date(this.enddate)
-      if(this.botid!="" && this.botid!=undefined)
+      if(this.botid!="" && this.botid!=undefined )
       {
         data={
           intervalId:this.generateid(),
@@ -151,31 +140,6 @@ export class SchedulerComponent implements OnInit {
           check:false,
         }
         this.schedule_list.push(data);
-      }
-      // Process
-      else if(this.processid!='' && this.processid!=undefined)
-      {
-        if(this.selectedEnvironment!="" && this.selectedEnvironment !=  undefined)
-        {
-          data={
-            intervalId:this.generateid(),
-            scheduleInterval:this.cronExpression,
-            startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
-            endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtime[0]+","+ endtime[1],
-            timezone:this.timezone,
-            save_status:"unsaved",
-            processId:this.processid,
-            processName:this.processName,
-            envId:this.selectedEnvironment,
-            check:false,
-          }
-          this.schedule_list.push(data);
-        }
-        else
-        {
-          this.notifier.notify("error", "Please fill all inputs");
-          //Swal.fire("Please give all inputs","","warning")
-        }
       }
     }
     else
@@ -221,25 +185,17 @@ export class SchedulerComponent implements OnInit {
         let resp:any=data
         if(resp.errorMessage!=undefined)
         {
-          Swal.fire(resp.errorMessage,"","warning");
+
+          this.notifier.notify("warning", resp.errorMessage);
+          //Swal.fire(resp.errorMessage,"","warning");
         }
         else
         {
-          Swal.fire(resp.status,"","success")
+          this.notifier.notify("success",resp.status)
           this.schedule_list.find(data=>data.check==true).run_status="started";
           this.updateflags();
         }
 
-      })
-    }
-    else if(this.processid!="" && this.processid != undefined)
-    {
-      let schedule:any=[];
-      schedule.push(checked_schedule);
-      this.rest.startprocessschedule(schedule).subscribe(data=>{
-          Swal.fire("Process started sucessfully","","success");
-          this.schedule_list.find(data=>data.check==true).run_status="started";
-          this.updateflags();
       })
     }
   }
@@ -268,16 +224,6 @@ export class SchedulerComponent implements OnInit {
         }
       })
     }
-    else if(this.processid!=undefined && this.processid!="")
-    {
-      this.rest.pauseprocessschedule(checked_schedule).subscribe(resp=>{
-        let respose:any=resp;
-        //Swal.fire(response[0][checked_schedule.scheduleprocessid],"","success")
-        this.schedule_list.find(data=>data.check==true).run_status="pause";
-        this.updateflags();
-      })
-    }
-
   }
 
   resume_schedule()
@@ -292,11 +238,12 @@ export class SchedulerComponent implements OnInit {
       let resp:any=data
       if(resp.errorMessage!=undefined)
       {
-        Swal.fire(resp.errorMessage,"","warning");
+        this.notifier.notify("warning", resp.errorMessage);
       }
       else
       {
-        Swal.fire(resp.status,"","success")
+
+        this.notifier.notify("warning", resp.status);
         this.schedule_list.find(data=>data.check==true).run_status="resume";
         this.updateflags();
       }
@@ -304,35 +251,6 @@ export class SchedulerComponent implements OnInit {
 
   }
 
-  stop_schedule()
-  {
-    let checked_schedule=this.schedule_list.find(data=>data.check==true)
-    if(this.botid!="" && this.botid!=undefined)
-    {
-      let schedule={
-        botId:this.botid,
-        "scheduleInterval":checked_schedule.scheduleInterval,
-        "intervalId":checked_schedule.intervalId,
-      }
-      this.rest.stop_schedule(schedule).subscribe(data=>{
-        let resp:any=data
-        if(resp.errorMessage!=undefined)
-        {
-          Swal.fire(resp.errorMessage,"","warning");
-        }
-        else
-        {
-          Swal.fire(resp.status,"","success")
-          this.schedule_list.find(data=>data.check==true).run_status="not_started";
-          this.updateflags();
-        }
-      })
-    }
-    else if(this.processid!="" && this.processid != undefined)
-    {
-        this.rest.stopprocessschedule(checked_schedule).subscribe(data=>{})
-    }
-  }
 
   delete_schedule()
   {
@@ -343,23 +261,15 @@ export class SchedulerComponent implements OnInit {
         let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
         this.schedule_list.splice(index2,1);
       })
+      this.updateflags();
     }
-    else if(this.processid!="" && this.processid != undefined)
-    {
-      let list=this.schedule_list.filter(data=>data.check==true);
-      list.forEach(data=>{
-        let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
-        this.schedule_list.splice(index2,1);
-      })
-    }
-
   }
 
 
 
   async saveschedule()
   {
-    if(this.botid !=undefined && this.botid != "")
+    if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
     {
       if(this.schedule_list.length==0)
       {
@@ -389,44 +299,41 @@ export class SchedulerComponent implements OnInit {
         }
       }
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
-      let resp:any=data;
-      if(resp.botMainSchedulerEntity.scheduleIntervals.length==0){
-        this.actions.schpop=false;
-        this.close()
-        Swal.fire("Updated successfully","","success")
-      }
-      else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length){
-        this.actions.schpop=false;
-        this.close()
-        Swal.fire("Schedules saved successfully","","success");
-      }
-      this.get_schedule();
-    })
-    }
-    else if(this.processid!=undefined && this.processid!="")
-    {
-      let save_schedule_list:any=[];
-      save_schedule_list=this.schedule_list.filter(item=>item.save_status=='unsaved')
-      this.rest.saveprocessschedule(save_schedule_list).subscribe(data=>{
-        let resp:any=data
-        if(resp.response!=undefined)
+        let resp:any=data;
+        if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
         {
-          Swal.fire(resp.response,"","success");
-          this.get_schedule();
-          this.updateflags();
+          //this.actions.schpop=false;
+          //this.close()
+          Swal.fire("Updated successfully","","success")
+
+          //this.notifier.notify("success", resp.errorMessage);
         }
-        else
+        else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
         {
-          Swal.fire(resp.errorMessage,"","error");
+          //this.actions.schpop=false;
+          //this.close()
+
+          this.notifier.notify("success", "Schedules saved successfully");
+          //Swal.fire("Schedules saved successfully","","success");
         }
+        this.get_schedule();
       })
-      if(this.deletestack.length!=0)
-      {
-        this.rest.deleteprocessschedule(this.deletestack).subscribe(data=>{
-          Swal.fire("Schedules deleted sucessfully","","success");
-          this.updateflags();
-        })
+    }
+    else
+    {
+      let schedules:any=[]
+        this.schedule_list.forEach(data=>{
+          if(data.save_status=="unsaved")
+          {
+            delete data.intervalId
+            schedules.push(data);
+          }
+        });
+      this.notifier.notify("success","Schedule configured successfully")
+      let sch:any={
+        scheduleIntervals:schedules,
       }
+      this.actions.saveschedule(sch,this.schedule_list);
     }
   }
 

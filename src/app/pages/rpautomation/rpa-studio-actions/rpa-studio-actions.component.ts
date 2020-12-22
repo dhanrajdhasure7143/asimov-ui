@@ -48,7 +48,7 @@ export class RpaStudioActionsComponent implements OnInit {
   public logresponse:any=[];
   public schpop:Boolean=false;
   public schedule:any
-
+  public schedule_list_scheduler=[];
   displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
   Viewloglist:MatTableDataSource<any>;
   displayedColumns1: string[] = ['task_name', 'status','start_date','end_date','error_info' ];
@@ -735,6 +735,7 @@ export class RpaStudioActionsComponent implements OnInit {
     })*/
    }
 
+
    viewlogdata(){
      this.childBotWorkspace.addsquences();
     let response: any;
@@ -793,8 +794,11 @@ export class RpaStudioActionsComponent implements OnInit {
     });
   }
 
+
+  public botrunid:any;
   ViewlogByrunid(runid){
-    console.log(runid);
+    this.botrunid=runid
+    console.log(this.botrunid);
     let responsedata:any=[];
     let logbyrunidresp:any;
     let resplogbyrun:any=[];
@@ -1111,8 +1115,8 @@ checkEnableDisableBtn(id, event)
 
   navtoenv()
   {
-    console.log(this.insertForm.value)
-    document.getElementById("rpa_createenvironment").style.display="block";
+
+    document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="block";
     //localStorage.setItem("tabsArray",JSON.stringify(this.rpa_studio.tabsArray));
     //this.router.navigate(['/pages/rpautomation/configurations']);
   }
@@ -1133,7 +1137,7 @@ checkEnableDisableBtn(id, event)
       {
         this.close_c_env();
         Swal.fire("Environment added successfully","","success");
-        document.getElementById("createenvironment").style.display='none';
+        //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
         this.insertForm.reset();
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
@@ -1162,13 +1166,25 @@ checkEnableDisableBtn(id, event)
 
   close_c_env()
   {
-    document.getElementById("rpa_createenvironment").style.display="none";
+    document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="none";
   }
 
   openschedule()
   {
-    this.schedule={
-      botid:this.savebotrespose.botId
+    if(this.savebotrespose==undefined)
+    {
+
+      this.schedule={
+        botid:"not_saved",
+        schedule_list:this.schedule_list_scheduler,
+      }
+    }
+    else
+    {
+      this.schedule={
+        botid:this.savebotrespose.botId
+      }
+
     }
     this.schpop=true;
   }
@@ -1176,6 +1192,14 @@ checkEnableDisableBtn(id, event)
   closesch()
   {
     this.schpop=false;
+  }
+
+
+  saveschedule(schedule,schedule_list)
+  {
+    //this.scheduleLists=schedule;
+    this.schedule_list_scheduler=schedule_list;
+    this.childBotWorkspace.saveCron(schedule);
   }
 
 }

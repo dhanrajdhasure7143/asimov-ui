@@ -83,7 +83,9 @@ export class SoDashboardComponent implements OnInit {
   {
     this.botstatistics=[];
     this.rest.botStatistics().subscribe(data => { this.usageData = data;
-            console.log(this.usageData);
+          let resp:any=data;
+          if(resp.errorMessage==undefined)
+          {
             let datacha = Object.keys(data);
             let values=Object.values(this.usageData)
             let dataset:any=[];
@@ -99,7 +101,7 @@ export class SoDashboardComponent implements OnInit {
               $('.chart-legend>div').css({width : '100%'});
               this.spinner.hide()
             }, 2000);
-
+          }
       },(err)=>{
         console.log(err)
         this.spinner.hide();
@@ -145,21 +147,25 @@ export class SoDashboardComponent implements OnInit {
 
   getprocessstatistics(){
     this.rest.getProcessStatistics().subscribe(data => { this.usageData = data;
-      let datacha = Object.keys(data);
-      let values=Object.values(this.usageData)
-      let dataset:any=[];
-      datacha.forEach((data,index)=>{
-        dataset.push({
-          "name":this.titleCaseWord(data),
-          "value":values[index]
-          })
-      })
-      this.processstatistics=dataset;
-      setTimeout(() => {
-        $('.chart-legend>div').css({width : '100%'});
-      }, 2000);
+      let resp:any=data
+      if(resp.errorMessage==undefined)
+      {
+        let datacha = Object.keys(data);
+        let values=Object.values(this.usageData)
+        let dataset:any=[];
+        datacha.forEach((data,index)=>{
+          dataset.push({
+            "name":this.titleCaseWord(data),
+            "value":values[index]
+            })
+        })
+        this.processstatistics=dataset;
+        setTimeout(() => {
+          $('.chart-legend>div').css({width : '100%'});
+        }, 2000);
+      }
+    });
 
-      });
   }
   processstatstable(event)
   {
@@ -287,7 +293,6 @@ export class SoDashboardComponent implements OnInit {
 
   getruns(event)
   {
-    console.log("----------Events-----------",event);
     let botName=event.name;
     if(this.bots.find(botc=>botc.botName==botName) != undefined)
     {

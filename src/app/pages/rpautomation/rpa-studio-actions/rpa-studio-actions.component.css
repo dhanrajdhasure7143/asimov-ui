@@ -37,7 +37,7 @@
   position: absolute;
   right: -190px;
   top: 20px;
-  
+
 }
 .rob-status{
   border: 1px solid lightgray;
@@ -248,18 +248,18 @@ cron-time-picker div.ng-star-inserted  {
 
 .errorinfoelement{
   display:none;
-  position:absolute; 
+  position:absolute;
   z-index:100;
   border:1px;
   background-color: black;
   border-style:solid;
   padding:3px;
-  color:white; 
+  color:white;
   width:auto !important;
   height:auto !important;
   border-radius: 5px;
   margin-left: 15px;
-  /*left:230px;*/ 
+  /*left:230px;*/
 }
 
 .btntaskname:hover + .tasknameelement{
@@ -268,16 +268,21 @@ cron-time-picker div.ng-star-inserted  {
 
 .tasknameelement{
   display:none;
-  position:absolute; 
+  position:absolute;
   z-index:100;
   border:1px;
   background-color: black;
   border-style:solid;
   padding:3px;
-  color:white; 
+  color:white;
   width:auto !important;
   height:auto !important;
   border-radius: 5px;
   margin-left: 15px;
-  /*left:230px;*/ 
+  /*left:230px;*/
+}
+
+
+.version-highlight{
+  color:#0062cf !important
 }
