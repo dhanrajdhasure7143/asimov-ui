@@ -23,10 +23,10 @@
         </mat-form-field>
     </div>
     <div class="functionality-icons">
-        <span class="fa fa-upload" (click)="openDeployDialog()"></span>&nbsp;&nbsp;
+        <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
         <span class="start-instance">
-            <span class="fa fa-play" (click)="openDeployDialog()"></span>&nbsp;&nbsp;
-            <div class="deploy-menu">
+            <span class="fa fa-play" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
+            <div class="deploy-menu" *ngIf="rejectedOrApproved == 'APPROVED'">
                 <a (click)="openDeployDialog()">Start process instance</a>
                 <br/>
                 <a (click)="openDeployDialog()">Start process instance with new configuration</a>

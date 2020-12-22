@@ -22,6 +22,7 @@ export interface AsimovAppConfig {
     schemaRegistryEndPoint:string;
     dataPath:string;
     alertsEndPoint:string;
+    bpmPlatfromUrl:string
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -42,5 +43,6 @@ export const AppConfig: AsimovAppConfig = {
     platformEndPoint:environment.platform_url,
     schemaRegistryEndPoint:environment.schema_registry_url,
     dataPath:environment.data_path,
-    alertsEndPoint:environment.alerts_url
+    alertsEndPoint:environment.alerts_url,
+    bpmPlatfromUrl:environment.bpmnplatformUrl
 };

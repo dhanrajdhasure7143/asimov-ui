@@ -1,0 +1,203 @@
+
+<div id="viewlogid1">
+    <div class="container" style="background: white;" class=" table w-100">
+
+          <table mat-table [dataSource]="dataSourcep1" #sortp1="matSort" matSort style="width:100%;">
+            <ng-container matColumnDef="processRunId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Process RunId</th>
+                <td mat-cell *matCellDef="let element" >
+                    <button *ngIf="element.processRunId != null"><a style="color:blue; text-decoration: underline;"  (click)="getprocessrunid(element.processRunId)" >{{element.processRunId}}</a></button>
+                    <span *ngIf="element.processRunId == undefined">-</span>
+                </td>
+
+            </ng-container>
+            <!--<ng-container matColumnDef="processId">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>ProcessId</th>
+              <td mat-cell *matCellDef="let element"> {{element.processId}}</td>
+
+             </ng-container>-->
+
+             <ng-container matColumnDef="Environment">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Environment</th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.envId != 0">{{element.envId | Envname : Environments}}</span>
+                <span *ngIf="element.envId == 0">-</span> </td>
+            </ng-container>
+             <ng-container matColumnDef="processStartDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.processStartDate != null">{{element.processStartDate.split('T')[0] | date:'EEE MMM d, yyyy'}}, {{element.processStartTime.slice(11,19)}}</span>
+                  <span *ngIf="element.processStartDate == undefined">-</span>
+                  </td>
+              </ng-container>
+
+              <ng-container matColumnDef="processEndDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.processEndDate != null">{{element.processEndDate.split('T')[0] | date:'EEE MMM d, yyyy'}}, {{element.processStartTime.slice(11,19)}}</span>
+                  <span *ngIf="element.processEndDate == undefined">-</span> </td>
+              </ng-container>
+            <ng-container matColumnDef="runStatus">
+               <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+               <td mat-cell *matCellDef="let element"> <span *ngIf="element.runStatus!=null">
+                <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+
+              <span *ngIf="element.runStatus=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+
+              <span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+
+              <span *ngIf="element.runStatus=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+              </span>
+              <span *ngIf="element.runStatus == undefined">-</span></td>
+           </ng-container>
+           <ng-container matColumnDef="noData">
+            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="5">
+                No Records Found
+            </td>
+        </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsp1; sticky: true"></tr>
+          <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumnsp1;"></tr>
+          <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
+          </table>
+          <mat-paginator #paginatorp1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+        </div>
+    </div>
+
+<div id="plogrunid">
+    <div class="container" style="background: white;" class=" table w-100">
+        <button (click)="backplogrid()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
+
+          <table mat-table [dataSource]="dataSourcep2" #sortp2="matSort" matSort style="width:100%;">
+
+
+            <ng-container matColumnDef="bot_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Resource</th>
+                <td mat-cell *matCellDef="let element">
+                    <button *ngIf="element.bot_name != null"><a style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.bot_name}}</a></button>
+                    <span *ngIf="element.bot_name == undefined">-</span>
+                </td>
+               </ng-container>
+
+            <ng-container matColumnDef="version">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Version</th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.version != null">{{element.version}}</span>
+                <span *ngIf="element.version == undefined">-</span>
+                </td>
+             </ng-container>
+             <ng-container matColumnDef="run_id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>RunId</th>
+                <td mat-cell *matCellDef="let element" >
+                    <span *ngIf="element.run_id != null">{{element.run_id}}</span>
+                    <span *ngIf="element.run_id == undefined">-</span>
+                </td>
+            </ng-container>
+             <ng-container matColumnDef="start_date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
+                    <span *ngIf="element.start_date == undefined">-</span>
+                </td>
+               </ng-container>
+
+            <ng-container matColumnDef="end_date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
+                    <span *ngIf="element.end_date == undefined">-</span>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="bot_status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.bot_status!=null">
+                        <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                      <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                      <span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                      <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                      </span>
+                      <span *ngIf="element.bot_status == undefined">-</span>
+                </td>
+            </ng-container>
+
+              <ng-container matColumnDef="noData">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                    No Records Found
+                </td>
+            </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsp2; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsp2;"></tr>
+              <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
+        </table>
+        <mat-paginator #paginatorp2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+  </div>
+</div>
+<div id="pbotrunid">
+    <div class="container" style="background: white;" class=" table w-100">
+        <button (click)="backpbotrunid()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
+        <table mat-table [dataSource]="dataSourcep3" #sortp3="matSort" matSort style="width:100%;">
+
+            <ng-container matColumnDef="task_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Task</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.task_name != null">{{element.task_name}}</span>
+                    <span *ngIf="element.task_name == undefined">-</span>
+                </td>
+            </ng-container>
+             <ng-container matColumnDef="start_date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
+                    <span *ngIf="element.start_date == undefined">-</span>
+                </td>
+               </ng-container>
+
+            <ng-container matColumnDef="end_date">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
+                    <span *ngIf="element.end_date == undefined">-</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="error_info">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Info</th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.error_info != null">{{element.error_info}}</span>
+                <span *ngIf="element.error_info == undefined">-</span>
+                </td>
+             </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                <td mat-cell *matCellDef="let element"> <span *ngIf="element.status!=null">
+                    <span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
+
+                  <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
+
+                  <span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.status}}</span></span>
+
+                  <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.status}}</span></span>
+                  </span>
+                  <span *ngIf="element.status == undefined">-</span></td>
+            </ng-container>
+
+              <ng-container matColumnDef="noData">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                    No Records Found
+                </td>
+            </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsp3; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsp3;"></tr>
+              <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata3}"></tr>
+        </table>
+        <mat-paginator #paginatorp3 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+    </div>
+</div>
+
+

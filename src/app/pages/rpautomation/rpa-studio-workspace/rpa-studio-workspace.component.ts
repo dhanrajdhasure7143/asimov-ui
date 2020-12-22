@@ -517,7 +517,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         name: node.selectedNodeTask,
         id: node.selectedNodeId
       }
-      this.formHeader = node.name + "-" + node.selectedNodeTask;
+      this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
       if (taskdata != undefined) {
@@ -610,11 +610,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   addoptions(attributes,node)
   {
+    /*
       let token={​​​​​
         headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
-      }​​​​
+      }​​​*/​
       let restapi_attr=attributes.find(attr => attr.type=='restapi');
-      this.http.get(restapi_attr.dependency,token).subscribe(data=>
+      this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
       {
         this.restapiresponse=data
         let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
@@ -767,21 +768,21 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           "metaAttrValue": ele.name,
           "attrValue": ''
         }
-        if(ele.type=="checkbox" && this.fieldValues[ele.name]=="")
+        if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
           objAttr["attrValue"]="false";
         }
         else if(ele.type=="restapi")
         {
-          if(this.fieldValues[ele.name]!='' && this.fieldValues[ele.name]!=undefined)
+          if(this.fieldValues[ele.name+'_'+ele.id]!='' && this.fieldValues[ele.name+'_'+ele.id]!=undefined)
           {
             let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
-            objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name]==data[attrnames[0]]));
+            objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name+'_'+ele.id]==data[attrnames[0]]));
           }
         }
         else if(ele.type=="multipart")
         {
-          if(this.fieldValues[ele.name]=="")
+          if(this.fieldValues[ele.name+'_'+ele.id]=="")
           {
             let task=this.finaldataobjects.find(x=>x.nodeId==this.selectedNode.id);
             if(task!=undefined)
@@ -795,12 +796,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
             }
             else
             {
-              objAttr["attrValue"]=this.fieldValues[ele.name];
+              objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
             }
           }
           else
           {
-            objAttr["attrValue"]=this.fieldValues[ele.name];
+            objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
             let file_res:any=this.files_data.find(rec=>rec.attrId==ele.id && rec.nodeId==this.selectedNode.id)
             if(file_res!=undefined)
             {
@@ -811,7 +812,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         }
         else
         {
-          objAttr["attrValue"]=this.fieldValues[ele.name];
+          objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
         }
         obj.push(objAttr);
       }
@@ -1212,12 +1213,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           {
             let data: any = outdata
             let textval:String=JSON.stringify(data[0].Value);
-            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
+            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />");
+
           }
           if(this.SelectedOutputType=="Image")
           {
             let data=this.outputboxresult[0].Value.split(':');
-            this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
+            //let obj=JSON.parse(this.outputboxresult[0].Value);
+            //console.log("000000000000000000000000000000000000>",obj)
+            let image=data[1].slice(0, -2);
+            this.Image= 'data:' + 'image/png' + ';base64,' +image;
           }
         })
       }

@@ -18,13 +18,15 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
 
 
-<mat-tab-group [selectedIndex]="selectedTab">
+<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
     <mat-tab>
       <ng-template mat-tab-label>
           <mat-icon class="text-primary">pie_chart</mat-icon>&nbsp;&nbsp;
           Dashboard
       </ng-template>
-      <app-so-dashboard></app-so-dashboard>
+      <div *ngIf="check_tab==0">
+        <app-so-dashboard></app-so-dashboard>
+      </div>
     </mat-tab>
     <mat-tab label="Orchestrator">
 
@@ -35,7 +37,9 @@
             Orchestration
         </ng-template>
 
-        <app-so-automated-tasks></app-so-automated-tasks>
+        <div *ngIf="check_tab==1">
+          <app-so-automated-tasks [processid]="param"></app-so-automated-tasks>
+        </div>
     </mat-tab>
     <mat-tab label="Bot Management">
 
@@ -44,7 +48,9 @@
                   &nbsp;&nbsp;
                   Bot Management
               </ng-template>
+      <div *ngIf="check_tab==2">
         <app-so-bot-management></app-so-bot-management>
+      </div>
     </mat-tab>
 </mat-tab-group>
 <!--

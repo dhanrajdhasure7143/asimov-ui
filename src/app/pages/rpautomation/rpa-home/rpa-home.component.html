@@ -3,7 +3,7 @@
     <div class="col-md-3">
 
         <h2 class="title-font" style="margin-top:10px !important;margin-bottom: 0px !important">Automate the Tasks</h2><br>
-        <h5 class="subtitle" style="margin-top:0px !important">Select below options to configure the Bots</h5><br/>
+        <h5 class="subtitle" style="margin-top:0px !important;font-size: 13.8px !important;">Select below option to create or configure the task</h5><br/>
 
         <div class="rpa-home">
             <!--<div class="rpa-home-block" id="createbot-Home">
@@ -13,11 +13,12 @@
                 <h6 class="rpa-home-btn-title">Create</h6>
               </button>
             </div>-->
-            <div class="rpa-home-block" id="createbot-Home" style="border-radius: 25px;">
-                <img src="../../../../assets/images/RPA/create.svg"style="height:50px;">
-                <h4 style="font-weight: 500;line-height: 1.1;">Create Bot</h4>
-                <h5 style="color:gray">Click to Create New Bot</h5>
-                <button class="btn btn-primary eiap-btn" id="create_newbot" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+            <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;">
+                <img src="../../../../assets/images/RPA/create.svg"style="height:80px;">
+                <!--<h4 style="font-weight: 500;line-height: 1.1;">Create Bot</h4>
+                <h5 style="color:gray">Click to Create New Bot</h5>-->
+                <br><br>
+                <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot" style="margin-left:17px;" (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
             </div>
 
             <!--<div class="rpa-home-block" id="loadbot-Home">
@@ -36,27 +37,29 @@
           <h6 class="rpa-home-btn-title">Configurations</h6>
         </button>
             </div>-->
-            <div class="rpa-home-block py-5" style="border-radius: 25px;"  *ngIf="this.isButtonVisible">
-                <img src="../../../../assets/images/RPA/Environments.svg"style="height:50px;">
-                <h4 style="font-weight: 500;line-height: 1.1;">Configutions</h4>
-                <h5 style="color:gray">Click to View Bot Configurations</h5>
-                <button class="btn btn-primary eiap-btn" id="create_Configuration" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
+            <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible">
+                <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;">
+               <!-- <h4 style="font-weight: 500;line-height: 1.1;">Configutions</h4>
+                <h5 style="color:gray">Click to View Bot Configurations</h5>-->
+                <br>
+                <br>
+                <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" style="margin-left:17px;" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
             </div>
         </div>
 
     </div>
-    <div class="col-md-9" style="padding-right:20px;">
-            <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home" style=" border-radius: 15px;">
-                
-                
+    <div class="col-md-9" style="padding-right:25px;">
+            <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home" style=" border-radius: 4px;">
+
+
                <!-- <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab">
                     <mat-tab label="Bot Details">
-                        <hr>--> 
+                        <hr>-->
                         <div class="row rpa-home-header">
-                            <div class="col-sm-6 col-md-7" style="float:left !important">
+                            <div class="col-sm-7 col-md-7" style="float:left !important;padding-left:37px;">
                                 <h3 class="box-heading  rpa-home-heading">My Workspace</h3>
                             </div>
-                            <div class="col-sm-7 col-md-5"  style="float:right !important;margin-right:8px;padding-top:3px;">
+                            <div class="col-sm-5 col-md-5"  style="margin-right:8px;padding-top:3px;text-align: right;;">
                             <mat-form-field class="filter departmentFilterclass ">
                                 <select matNativeControl id="departmentselect" [formControl]="departmentFilter">
                                     <option value="" selected>Select Category</option>
@@ -64,12 +67,13 @@
                                     </option>
                                 </select>
                             </mat-form-field>&nbsp;&nbsp;&nbsp;
-                            <mat-form-field class="filter" floatLabel="never" style="width:160px;">
+                            <mat-form-field class="filter" floatLabel="never" style="width:142px;">
                                 <mat-label>Search</mat-label>
                                 <input matInput autocomplete="off" id="botNameFilter" [formControl]="botNameFilter">
                                 <mat-icon matSuffix>search</mat-icon>
                               </mat-form-field>
-                              <button id="resetbutton" (click)="Resetfilters()" class="btn btn-primary resetbtn">Reset</button>
+                              &nbsp;
+                              <button class="undobtn" style="font-size:16px;text-align: center;vertical-align: center;" tooltip="Reset" (click)="Resetfilters()"><i class="fa fa-undo"></i></button>
                             </div>
                         </div>
                         <div class="bots-container" style="width:100%;overflow: auto;">
@@ -77,8 +81,11 @@
                             <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
 
                                 <ng-container matColumnDef="botName">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-                                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)=loadbotdata(element.botId)>{{element.botName}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%;">Bot Name </th>
+                                    <td mat-cell *matCellDef="let element" style="width:18%;">
+                                        <button *ngIf="element.botName!=null" class="btnbot"  [tooltip]="element.botName" placement="bottom" (click)=loadbotdata(element.botId)>{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</button>
+                                        <!--<div class="BotNameelement">{{element.botName}}</div>  -->
+                                        <span *ngIf="element.botName==''">-</span> </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="version">
@@ -109,22 +116,22 @@
                                 <ng-container matColumnDef="botStatus">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
                                     <td mat-cell *matCellDef="let element">
-                                        
+
                                         <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-                                        
+
                                         <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
                                         <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-                                        
+
                                         <span *ngIf="element.botStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-                                      
-                                        
+
+
                                         <span *ngIf="element.botStatus==null">---</span> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="description">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.description!=null"> {{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:25%;">Description </th>
+                                    <td mat-cell *matCellDef="let element" style="width:25%;">
+                                        <span *ngIf="element.description!=null" placement="bottom" [tooltip]="element.description" class="btndes"> {{(element.description.length > 30) ? ((element.description).slice(0, 30) + '...') : element.description}}</span>
                                         <span *ngIf="element.description==null">-</span>
                                     </td>
                                 </ng-container>
@@ -153,7 +160,7 @@
                               No Record Found
                              </div>-->
                         </div>
-                        <mat-paginator #paginator1 [pageSize]="9" [showFirstLastButtons]="true"></mat-paginator>
+                        <mat-paginator #paginator1 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
                    <!-- </mat-tab>
                     <mat-tab *ngIf="false" label="Automated Tasks">
                         <div class="rpa-home-header">-->

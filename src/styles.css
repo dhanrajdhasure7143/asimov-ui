@@ -726,3 +726,10 @@ foreignObject{
 .chart-legend .legend-wrap {
   width: calc(100% - -45px) !important;
 }
+.mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary
+{
+  background-color:#0062cf !important
+}
+.mat-input-element {
+  caret-color: #0062cf !important;
+}

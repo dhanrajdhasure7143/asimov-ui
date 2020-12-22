@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   public userRole:any = [];
   selectedIndex: number=0;
   error: string;
+  newAccessToken:any;
 
   constructor(private router: Router, private dt:DataTransferService, private rpa: RestApiService, private route: ActivatedRoute, private hints:PagesHints) {
 
@@ -36,6 +37,11 @@ export class HomeComponent implements OnInit {
         localStorage.setItem("tenantName", tenantName);
       }
     });
+    this.rpa.getNewAccessToken().subscribe(resp=>{
+      this.newAccessToken=resp;
+      console.log("token",this.newAccessToken.accessToken)
+      localStorage.setItem('accessToken', this.newAccessToken.accessToken);
+  });
   }
 
   ngOnInit() {

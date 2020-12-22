@@ -1,9 +1,10 @@
-import {ViewChild, Component, OnInit } from '@angular/core';
+import {ViewChild,Input, Component, OnInit } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import {HttpClient,HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/filter';
 import Swal from 'sweetalert2';
 declare var $:any;
@@ -16,32 +17,41 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./so-automated-tasks.component.css']
 })
 export class SoAutomatedTasksComponent implements OnInit {
+  schdata:any;
+  public processId1:any;
+  public popup:any;
+  public schedulepopup:Boolean=false;
   public queryparam:any='';
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["processName","taskName","taskType","Assign","status","successTask","failureTask","Operations"];
+  displayedColumns: string[] = ["processName","taskName","taskType", "category","Assign","status","successTask","failureTask","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
   public isButtonVisible = false;
   public bot_list:any=[];
+  public humans_list:any=[];
   public process_names:any=[];
+  public selected_process_names:any=[];
   public selectedvalue:any;
   public selectedTab:number;
   public responsedata;
   public selectedEnvironment:any='';
   public environments:any=[];
+  public selectedcategory:any="";
   public categaoriesList:any=[];
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
-
+  @Input('processid') public processId: any;
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
     private router: Router,
     private spinner:NgxSpinnerService,
+    private http:HttpClient,
    )
-  {}
+  {
+  }
 
 
 
@@ -60,28 +70,11 @@ export class SoAutomatedTasksComponent implements OnInit {
       this.isButtonVisible = false;
     }
 
-    let processId=undefined;
     this.getenvironments();
     this.getCategoryList();
     this.getallbots();
-    this.route.queryParams.subscribe(params => {
-      processId=params;
-      if(this.isEmpty(processId))
-      {
-        this.queryparam='';
-        this.getautomatedtasks(0);
-      }
-      else
-      {
-        this.queryparam=processId.processid;
-        this.getautomatedtasks(processId.processid);
-      }
-      this.spinner.show()
-      setTimeout(() => {
-        this.spinner.hide()
-      },4000)
-     }
-    );
+    this.getautomatedtasks(this.processId);
+    this.gethumanslist();
  }
 
 
@@ -125,8 +118,9 @@ export class SoAutomatedTasksComponent implements OnInit {
         this.getprocessnames(process);
       }
       this.update_task_status();
-
+      this.spinner.hide();
     },(err)=>{
+      this.spinner.hide();
     })
   }
 
@@ -137,6 +131,7 @@ export class SoAutomatedTasksComponent implements OnInit {
     console.log(processId);
     this.rest.getprocessnames().subscribe(processnames=>{
       this.process_names=processnames;
+      this.selected_process_names=processnames;
       let processnamebyid;
 
       if(processId != undefined)
@@ -152,7 +147,9 @@ export class SoAutomatedTasksComponent implements OnInit {
       {
         this.selectedvalue="";
       }
+      this.spinner.hide();
     },(err)=>{
+      this.spinner.hide();
     })
   }
 
@@ -163,31 +160,15 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
+
     this.dataSource2.filter = filterValue;
   }
 
-  applyFilter1(filterValue: string) {
-
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
-    this.dataSource2.filter = filterValue;
+  applyFilter1() {
+    this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
+    this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
+    this.selectedvalue="";
   }
-
-
-
-  createoverlay()
-  {
-    //this.rpa_studio.onCreate(0);
-    //document.getElementById("create-bot").style.display ="block";
-  }
-
-  /*openload()
-  {
-
-    document.getElementById("load-bot").style.display ="block";
-  }*/
 
 
   close()
@@ -301,7 +282,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   update_task_status()
   {
     let timer= setInterval(() => {
-      this.rest.getautomatedtasks(0).subscribe(response=>{
+      this.rest.getautomatedtasks(0).subscribe(response => {
         let responsedata:any=response;
         if(responsedata.automationTasks!=undefined)
         {
@@ -374,9 +355,51 @@ export class SoAutomatedTasksComponent implements OnInit {
     });
   }
 
-  openscheduler()
+  gethumanslist()
   {
+    let tenant=localStorage.getItem("tenantName");
+    this.rest.getuserslist(tenant).subscribe(data=>
+    {
+        this.humans_list=data;
+    })
+  }
+
+  getprocesslogs(){
+    this.processId1 = this.selectedvalue;
+    this.popup=true;
+  }
+
+  closepop()
+  {
+    this.popup=false;
+  }
+  reset_all()
+  {
+    this.selectedEnvironment="";
+    this.selectedvalue="";
+    this.selectedcategory="";
+    this.getautomatedtasks(0)
 
   }
 
+
+  startscheduler()
+  {
+    this.schdata={
+      processid:this.selectedvalue,
+      environment:this.selectedEnvironment,
+      processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
+    }
+    this.schedulepopup=true;
+  }
+
+  closescheduler()
+  {
+    this.schedulepopup=false;
+  }
+
+
 }
+
+
+

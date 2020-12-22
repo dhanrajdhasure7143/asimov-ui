@@ -4,6 +4,6 @@ export var RPATask = {
     actionName: 'replace-with-rpa-task',
     className: 'bpmn-icon-rpa',
     target: {
-      type: 'bpmn:RpaTask'
+      type: 'bpmn:rpaTask'
     }
 }

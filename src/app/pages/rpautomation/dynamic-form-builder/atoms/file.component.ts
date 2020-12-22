@@ -1,13 +1,13 @@
 
 import { Component, OnInit, Input } from'@angular/core';
 import { FormGroup } from'@angular/forms';
- 
+
 @Component({
 selector:'file',
 template:`
     <div [formGroup]="form" style = "margin-top: -12px; padding: 16px 0px 4px 0px;">
       <div  class="drop-container dropzone" dropZone (dropped)="field.onUpload($event,field)" >
-            <input style="border: 2px dashed lightgray;padding: 3px 0px;width:210px" type="file" multiple="" [formControlName]="field.name" (change)="field.onUpload($event,field)"> 
+            <input style="border: 2px dashed lightgray;padding: 3px 0px;width:210px" type="file" multiple="" [formControlName]="field.name+'_'+field.id" (change)="field.onUpload($event,field)">
       </div>
       <div *ngIf="field.value!=''">
       {{field.value}}
@@ -16,7 +16,7 @@ template:`
           <img class="card-img-top" style='filter: none; width:20px;' [src]="field.value">
         </div>-->
       </div>
-    </div> 
+    </div>
   `,
 // styles:[
 // `
@@ -34,7 +34,7 @@ template:`
 //     p {
 //       font-size: 16px;
 //       font-weight: 400;
-//       color: #c0c4c7; 
+//       color: #c0c4c7;
 //     }
 //     .upload-button {
 //       background: white !important;
@@ -47,11 +47,11 @@ template:`
 //     .upload-button input {
 //       display: none;
 //     }
-//     .dropzone { 
+//     .dropzone {
 //       display: flex;
 //       align-items: center;
 //       justify-content: center;
-//       flex-direction: column; 
+//       flex-direction: column;
 //       border-radius: 5px;
 //       background: white;
 //       margin: 10px 0;
@@ -71,15 +71,15 @@ export class FileComponent {
   @Input() form:FormGroup;
   isHovering;
   toggleHover;
-  getisValid() { return this.form.controls[this.field.name].valid; }
-  getisDirty() { return this.form.controls[this.field.name].dirty; }
+  getisValid() { return this.form.controls[this.field.name+"_"+this.field.id].valid; }
+  getisDirty() { return this.form.controls[this.field.name+"_"+this.field.id].dirty; }
 
 constructor() {
   }
- 
+
 ngOnChange(){
 console.log(this.field.value);
- 
+
 // this.field.value.
   }
 }

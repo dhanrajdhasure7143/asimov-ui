@@ -18,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements  OnInit{
-    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","username","password","connectionType","portNumber","createdTimeStamp","createdBy","activeStatus","deployStatus"];
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
     dataSource1:MatTableDataSource<any>;
     public isDataSource: boolean;  
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
@@ -124,6 +124,7 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.environments.push(Object.assign({}, response[i], checks));
         }
         console.log(this.environments)
+        this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.dataSource1= new MatTableDataSource(this.environments);
         this.isDataSource = true;
         this.dataSource1.sort=this.sort1;
@@ -207,7 +208,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.spinner.hide();
         if(res.errorCode==undefined){
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: "Successfully Connected",
           showConfirmButton: false,
@@ -215,8 +216,8 @@ import { NgxSpinnerService } from "ngx-spinner";
         })
         }else{
           Swal.fire({
-            position: 'top-end',
-            icon: 'question',
+            position: 'center',
+            icon: 'error',
             title: 'Connection Failed',
             showConfirmButton: false,
             timer: 2000
@@ -251,7 +252,7 @@ import { NgxSpinnerService } from "ngx-spinner";
      await this.api.addenvironment(environment).subscribe( res =>
       {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: res.status,
           showConfirmButton: false,
@@ -297,7 +298,7 @@ import { NgxSpinnerService } from "ngx-spinner";
             console.log(updatFormValue);
       await this.api.updateenvironment(updatFormValue).subscribe( res => {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: res.status,
           showConfirmButton: false,
@@ -375,7 +376,7 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.spinner.show();
           this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
             Swal.fire({
-              position: 'top-end',
+              position: 'center',
               icon: 'success',
               title: res.status,
               showConfirmButton: false,
@@ -453,7 +454,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: data[0].status,
           showConfirmButton: false,

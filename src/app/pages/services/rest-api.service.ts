@@ -59,6 +59,9 @@ export class RestApiService{
 
     return this.http.post('/api/login/beta/accessToken',data);
   }
+  getNewAccessToken(){
+    return this.http.get<any[]>('/api/login/beta/newAccessToken',{responseType: 'json'});
+  }
   getIP()
      {
         if(localStorage.getItem('ipAddress')==null){
@@ -192,6 +195,11 @@ export class RestApiService{
   botStatistics(){
     return this.http.get("/rpa-service/bot-statistics")
   }
+
+  botStatisticsbycat(cat)
+  {
+    return  this.http.get("/rpa-service/bot-statistics/"+cat);
+  }
   listEnvironments(){
     return this.http.get("/rpa-service/agent/get-environments")
   }
@@ -249,6 +257,13 @@ export class RestApiService{
   testenvironment(data:any):Observable<any>
   {
     return this.http.post<any>("/rpa-service/agent/test-connection",data);
+  }
+
+   // http://rpadev.epsoftinc.in/rpa-service/agent/dbtest-connection
+
+  testdbconnections(data:any):Observable<any>
+  {
+    return this.http.post<any>("/rpa-service/agent/dbtest-connection",data);
   }
 
   addenvironment(data:any):Observable<any>
@@ -362,7 +377,7 @@ export class RestApiService{
   }
 
   getSingleTraceBPMN(body){
-    return this.http.get('/processintelligence/v1/bpmn/SingleTrace?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumber='+body.traceNumber)
+    return this.http.get('/processintelligence/v1/bpmn/SingleTraceMulti?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumber='+body.traceNumber)
   }
 
   getMultiTraceBPMN(body){
@@ -371,7 +386,7 @@ export class RestApiService{
       tracNo+='&traceNumberList='+body.traceNumberList[i]
     }
 
-    return this.http.get('/processintelligence/v1/bpmn/MultipleTraces?pi_id='+body.pid+'&pi_name='+body.pname+tracNo)
+    return this.http.get('/processintelligence/v1/bpmn/MulitpleTraces?pi_id='+body.pid+'&pi_name='+body.pname+tracNo)
   }
 
   getSliderTraceBPMN(body){
@@ -390,12 +405,21 @@ export class RestApiService{
   getPIVariantActivity(body){
     return this.http.post("/ReddisCopy/getGraphData", body)
   }
+  getBIinsights(body){
+    return this.http.post("/ReddisCopy/getGraphData", body)
+  }
   //PI Insights END
 
 
   getProcessStatistics()
   {
     return this.http.get("/rpa-service/process-statistics")
+  }
+
+
+  getProcessStatisticsbycat(cat)
+  {
+    return this.http.get("/rpa-service/process-statistics/"+cat);
   }
 
   getBotStatistics()
@@ -467,6 +491,38 @@ export class RestApiService{
     return this.http.post("/rpa-service/specifiedscheduled-resumebot", data);
   }
 
+
+
+  getprocessschedule(id)
+  {
+    return this.http.get("/rpa-service/get-process-schedule/"+id);
+  }
+
+  saveprocessschedule(data)
+  {
+    return this.http.post("/rpa-service/save-process-schedule",data);
+  }
+
+  startprocessschedule(schedule)
+  {
+    return this.http.post("/rpa-service/start-process-schedule",schedule);
+  }
+
+  pauseprocessschedule(schedule)
+  {
+    return this.http.post("/rpa-service/pause-process-schedule",schedule)
+  }
+
+  stopprocessschedule(schedule)
+  {
+    return this.http.post("/rpa-service/stop-process-schedule",schedule);
+  }
+
+  resumeprocessschedule(processid)
+  {
+    return this.http.post("/rpa-service/resume-process-schedule?processId="+processid,"");
+  }
+
   assign_bot_and_task(botid,taskid)
   {
     let data={
@@ -504,5 +560,35 @@ export class RestApiService{
     getNotificationaInitialCount(role,userId,notificationbody):Observable<any>{
       return this.http.post<any>('/notificationservice/api/v1/NotificationsCountinitial?roles='+role+'&userId='+userId,notificationbody,httpOptions);
     }
-}
 
+    getuserslist(tenantid)
+    {
+      return this.http.get<any>('/api/user/tenants/'+tenantid +'/users');
+    }
+
+    getProcesslogsdata(processId)
+    {
+      return this.http.get("/rpa-service/process-logs/"+processId);
+    }
+
+    getprocessruniddata(processId,processrunid)
+    {
+      return this.http.get("/rpa-service/process-logs/"+processId+"/"+processrunid  );
+    }
+
+    deployBPMNNotation(url, body){
+      let headers = new HttpHeaders({
+        "Content-Type":"multipart/form-data",
+        });
+      return this.http.post(url, body, {headers:  headers});
+    }
+    deleteprocessschedule(data)
+    {
+      return this.http.post("/rpa-service/stop-process-schedule",data);
+    }
+
+    get_dynamic_data(url)
+    {
+      return this.http.get(url);
+    }
+}
