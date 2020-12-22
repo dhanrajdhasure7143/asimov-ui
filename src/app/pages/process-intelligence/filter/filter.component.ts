@@ -21,6 +21,7 @@ export class FilterComponent implements OnInit {
   @Input() public fetchData;
   @Input() public resetFilter:boolean;
   @Input() public isClearFilter:boolean;
+  @Input() public isFilterApplied:boolean;
   @Output() selectedNodes=new EventEmitter<any[]>();
   @Output() applyFilterValue=new EventEmitter<boolean>();
   @Output() selectedStartpoints=new EventEmitter<any[]>();
@@ -106,7 +107,6 @@ export class FilterComponent implements OnInit {
   }
   ngOnChanges(){    
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
-    console.log(this.isClearFilter);
     
     if(this.isClearFilter==true){
       this.endptBt=true;
@@ -138,7 +138,22 @@ export class FilterComponent implements OnInit {
     //   obj["selected"]="inactive";
     //   this.dataValuesNames.push(obj)
     // }
-
+    if(this.isFilterApplied==true){
+    this.startPointArray = [];
+    for(var i=0;i<this.startArray.length;i++){
+      var obj={};
+      obj["name"]=this.startArray[i];
+      obj["selected"]="inactive";
+      this.startPointArray.push(obj)
+    }    
+    this.endPointArray = [];
+    for(var i=0;i<this.endArray.length;i++){
+      var obj={};
+      obj["name"]=this.endArray[i];
+      obj["selected"]="inactive";
+      this.endPointArray.push(obj)
+    }
+  }
   }
 
 loopTrackBy(index, term){

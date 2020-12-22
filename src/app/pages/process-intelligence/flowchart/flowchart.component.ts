@@ -140,7 +140,8 @@ export class FlowchartComponent implements OnInit {
   isPerformance:boolean=false;
   selectedPerformancevalue:any
   filterdNodes:any[];
-  isClearFilter:boolean=false
+  isClearFilter:boolean=false;
+  isFilterApplied:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -1136,9 +1137,20 @@ closeNav() { // Variant list Close
     this.filterPerformData = this.fullgraph_model;
     // this.nodeAlignment();
     this.model2 = this.flowchartData(this.model1)
-    // this.gradientApplyforNode();
-    // this.gradientApplyforLinks();
-    // this.linkCurvinessGenerate();
+    // end points update in filter overlay
+    this.isFilterApplied=true;
+    this.startArray=[];
+    this.endArray=[];
+    let fullModel2=this.model2
+    fullModel2.forEach(element => {
+      if(element.from=="Start"){
+        this.startArray.push(element.to)
+      }
+      if(element.to=="End"){
+        this.endArray.push(element.from)
+      }
+    });
+
     this.spinMetrics0="";
     this.spinMetrics0="absoluteFrequency";
     this.activityValue=1;
@@ -1255,6 +1267,22 @@ closeNav() { // Variant list Close
   }
                                 
 sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on activity and path value filter the graph values
+    // end points update in filter overlay
+  let modelA2 = this.flowchartData(this.fullgraph_model)
+  // end points update in filter overlay
+  this.isFilterApplied=true;
+  this.startArray=[];
+  this.endArray=[];
+  let fullModel2=modelA2
+  fullModel2.forEach(element => {
+    if(element.from=="Start"){
+      this.startArray.push(element.to)
+    }
+    if(element.to=="End"){
+      this.endArray.push(element.from)
+    }
+  });
+
   this.activity_value=[];
   this.performanceValue=false;
   if(activity_slider==1&&path_slider==1){
@@ -1552,9 +1580,21 @@ filterOverlay(){
     }
   }
   readSelectedFilterValues(object){
+    this.isFilterApplied=true;
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
       this.model1 = this.fullgraph_model;
       this.model2 = this.flowchartData(this.model1); 
+            this.startArray=[];
+            this.endArray=[];
+            let fullModel2=this.model2
+            fullModel2.forEach(element => {
+              if(element.from=="Start"){
+                this.startArray.push(element.to)
+              }
+              if(element.to=="End"){
+                this.endArray.push(element.from)
+              }
+            });
     }else{
     // var seletedVariant1=[];
     // for (var i = 0; i < this.varaint_data.data.length; i++){
@@ -1584,6 +1624,18 @@ filterOverlay(){
             this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
             this.nodeAlignment();
             this.model2 = this.flowchartData(this.model1);
+            this.startArray=[];
+            this.endArray=[];
+            let fullModel2=this.model2
+            fullModel2.forEach(element => {
+              if(element.from=="Start"){
+                this.startArray.push(element.to)
+              }
+              if(element.to=="End"){
+                this.endArray.push(element.from)
+              }
+            });
+            
       })
     }
   }
