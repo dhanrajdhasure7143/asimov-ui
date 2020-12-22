@@ -405,6 +405,9 @@ export class RestApiService{
   getPIVariantActivity(body){
     return this.http.post("/ReddisCopy/getGraphData", body)
   }
+  getBIinsights(body){
+    return this.http.post("/ReddisCopy/getGraphData", body)
+  }
   //PI Insights END
 
 
