@@ -415,6 +415,7 @@
         </div>
         <div class="container" style="background: white;" class=" table w-100">
             <div class="logs-container">
+              <button (click)="viewlogdata()" style='float:right;margin-top:10px;' class="btn btn-primary">Refresh</button>
                 <table mat-table [dataSource]="Viewloglist" #sort1="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
 
 
@@ -490,6 +491,7 @@
 
         <div class="logs-container">
             <button (click)="back()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
+            <button (click)="ViewlogByrunid(botrunid)" style='float:right;margin-top:10px;' class="btn btn-primary">Refresh</button>
 
             <table mat-table [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
 

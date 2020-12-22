@@ -70,26 +70,25 @@ export class SchedulerComponent implements OnInit {
 
   ngOnInit() {
     this.startdate=this.startdate.getFullYear()+"-"+(this.startdate.getMonth()+1)+"-"+this.startdate.getDate();
-    if(this.data.processid!=undefined)
-    {
-      this.processid=this.data.processid
-      this.environmentid=this.data.environment
-      this.processName=this.data.processName
-    }
-    else if(this.data.botid!=undefined)
+
+    if(this.data.botid!=undefined && this.data.botid !="not_saved")
     {
       this.botid=this.data.botid;
+      this.get_schedule()
+      this.getenvironments();
+
+    }else if(this.data.botid=="not_saved")
+    {
+      this.botid=this.data.botid;
+      this.schedule_list=this.data.schedule_list;
     }
-    this.get_schedule()
-    this.getenvironments();
     this.enddate=this.startdate;
   }
 
   get_schedule()
   {
     this.schedule_list=[];
-    // for bot
-    if(this.botid!="" && this.botid!=undefined)
+    if(this.botid!="" && this.botid!=undefined && this.botid!="not_saved")
     {
       this.rest.getbotdata(this.botid).subscribe(data=>{
         let response:any=data;
@@ -105,19 +104,9 @@ export class SchedulerComponent implements OnInit {
         }
       })
     }
-    //for process
-    else if(this.processid!='' && this.processid!=undefined)
+    else if(this.botid=="not_saved")
     {
-      this.rest.getprocessschedule(this.processid).subscribe(resp=>{
-        this.schedule_list=resp;
-        console.log(resp)
-        this.schedule_list.forEach((sch,index)=>{
-          this.schedule_list[index].intervalId=this.generateid();
-          this.schedule_list[index].check=false;
-          this.schedule_list[index].save_status="saved";
-          this.schedule_list[index].run_status="not_started";
-        })
-      })
+      this.schedule_list=[];
     }
   }
 
@@ -139,7 +128,7 @@ export class SchedulerComponent implements OnInit {
       let data:any;
       let startdate=new Date(this.startdate);
       let enddate=new Date(this.enddate)
-      if(this.botid!="" && this.botid!=undefined)
+      if(this.botid!="" && this.botid!=undefined )
       {
         data={
           intervalId:this.generateid(),
@@ -151,31 +140,6 @@ export class SchedulerComponent implements OnInit {
           check:false,
         }
         this.schedule_list.push(data);
-      }
-      // Process
-      else if(this.processid!='' && this.processid!=undefined)
-      {
-        if(this.selectedEnvironment!="" && this.selectedEnvironment !=  undefined)
-        {
-          data={
-            intervalId:this.generateid(),
-            scheduleInterval:this.cronExpression,
-            startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
-            endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtime[0]+","+ endtime[1],
-            timezone:this.timezone,
-            save_status:"unsaved",
-            processId:this.processid,
-            processName:this.processName,
-            envId:this.selectedEnvironment,
-            check:false,
-          }
-          this.schedule_list.push(data);
-        }
-        else
-        {
-          this.notifier.notify("error", "Please fill all inputs");
-          //Swal.fire("Please give all inputs","","warning")
-        }
       }
     }
     else
@@ -305,7 +269,7 @@ export class SchedulerComponent implements OnInit {
 
   async saveschedule()
   {
-    if(this.botid !=undefined && this.botid != "")
+    if(this.botid !=undefined && this.botid != "" && this.botid!="not_saved")
     {
       if(this.schedule_list.length==0)
       {
@@ -354,6 +318,22 @@ export class SchedulerComponent implements OnInit {
         }
         this.get_schedule();
       })
+    }
+    else
+    {
+      let schedules:any=[]
+        this.schedule_list.forEach(data=>{
+          if(data.save_status=="unsaved")
+          {
+            delete data.intervalId
+            schedules.push(data);
+          }
+        });
+      this.notifier.notify("success","Schedule configured successfully")
+      let sch:any={
+        scheduleIntervals:schedules,
+      }
+      this.actions.saveschedule(sch,this.schedule_list);
     }
   }
 
