@@ -26,7 +26,7 @@ export class DeployNotationComponent implements OnInit {
   }
 
   deployNotation() {
-    this.deploy_success = true;
+    
     let selecetedTenant =  localStorage.getItem("tenantName");
     let splitTenant:any;
     if(selecetedTenant){
@@ -34,18 +34,19 @@ export class DeployNotationComponent implements OnInit {
     }
     var formData: any = new FormData();
     formData.append('file', this.data.dataKey)
-    formData.append('deployment-name', this.depName)
-    formData.append('tenant-id', this.tenantId)
-    formData.append('enable-duplicate-filtering', 'true')
-    formData.append('deployment-source', this.data.fileNme)
-    formData.append('content-type', ' text/xml')
-    formData.append('file-name', this.data.fileNme)
-    formData.append('field-name', this.data.fileNme)
+    formData.append('deploymentName', this.depName)
+    formData.append('tenantID', this.tenantId)
+    formData.append('enableDuplicateFilter', 'true')
+    formData.append('deploymentSource', this.data.fileNme)
+    //formData.append('content-type', ' text/xml')
+    formData.append('fileName', this.data.fileNme)
+    formData.append('fieldName', this.data.fileNme)
     //formData.append('engine',  splitTenant);
     formData.append('engine', '424d2067');
-    this.rest.deployBPMNNotation('/camunda/api/admin/deploy-rest/deploy/create', formData)
+    
+    this.rest.deployBPMNNotation('/deployprocess/notation', formData)
       .subscribe(res => {
-        console.log(res)
+        this.deploy_success = true;
       })
   }
   playDeployedNotation() {
