@@ -377,7 +377,7 @@ export class RestApiService{
   }
 
   getSingleTraceBPMN(body){
-    return this.http.get('/processintelligence/v1/bpmn/SingleTrace?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumber='+body.traceNumber)
+    return this.http.get('/processintelligence/v1/bpmn/SingleTraceMulti?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumber='+body.traceNumber)
   }
 
   getMultiTraceBPMN(body){
@@ -386,7 +386,7 @@ export class RestApiService{
       tracNo+='&traceNumberList='+body.traceNumberList[i]
     }
 
-    return this.http.get('/processintelligence/v1/bpmn/MultipleTraces?pi_id='+body.pid+'&pi_name='+body.pname+tracNo)
+    return this.http.get('/processintelligence/v1/bpmn/MulitpleTraces?pi_id='+body.pid+'&pi_name='+body.pname+tracNo)
   }
 
   getSliderTraceBPMN(body){

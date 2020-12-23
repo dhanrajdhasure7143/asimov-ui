@@ -104,7 +104,7 @@
 
           <div class="col-md-6">
 
-            <label for="botName">Bot Name*</label>
+            <label for="botName">Bot Name<span style="color:red">*</span></label>
             <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName" ngModel maxlength="30" (input)="validate(botName)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
             <div *ngIf="insertbot.get('botName').invalid && insertbot.get('botName').touched" style="color: red" class="fa fa-info-circle errspan">
               Bot Name Required*
@@ -117,7 +117,7 @@
 
 
           <div class="col-md-6">
-            <label for="botType">Bot Type*</label>
+            <label for="botType">Bot Type<span style="color:red">*</span></label>
 
             <select  class="form-control" formControlName="botType" name="botType" >
               <option value="" selected>--Select Bot Type--</option>
@@ -134,7 +134,7 @@
 
         <div class="row">
           <div class="col-md-6">
-            <label for="botDepartment">Category*</label>
+            <label for="botDepartment">Category<span style="color:red">*</span></label>
 
             <select  [(ngModel)]="rpaCategory" class="form-control" formControlName="botDepartment" name="botDepartment" >
               <option  value="" selected>--Select Category--</option>
