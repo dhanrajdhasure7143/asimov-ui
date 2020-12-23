@@ -117,13 +117,13 @@
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
                                     <td mat-cell *matCellDef="let element">
 
-                                        <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 20px;"></span>&nbsp;{{element.botStatus}}</span>
+                                        <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.botStatus}}</span>
 
-                                        <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                                        <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
-                                        <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                                        <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
                                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                                        <span *ngIf="element.botStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot (2).png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                                        <span *ngIf="element.botStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
 
                                         <span *ngIf="element.botStatus==null">---</span> </td>
