@@ -54,7 +54,9 @@ export class BackendURLInterceptor implements HttpInterceptor {
         else if(req.url.indexOf('authorizationservice') > -1)
             url = this.config.authorizationEndPoint + req.url;
         else if(req.url.indexOf('deployprocess') > -1)
-        url = this.config.bussinessProcessEndPoint + req.url;
+           url = this.config.bussinessProcessEndPoint + req.url;
+        else if(req.url.indexOf('newAccessToken') > -1)
+            url = this.config.accessTokenEndPoint + req.url;
         else if(req.url.indexOf('api') > -1)
             url = this.config.platformEndPoint + req.url;
         if(req.url.indexOf('mailService') > -1)
