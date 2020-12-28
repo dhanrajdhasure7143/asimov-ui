@@ -8,3 +8,14 @@ select {
     width: 55px !important;
     /* text-align: center; */
 }
+
+
+
+.mat-tab-label-active {
+  background-color: white !important;
+  color:black !important;
+}
+
+
+.mat-tab-label{
+}

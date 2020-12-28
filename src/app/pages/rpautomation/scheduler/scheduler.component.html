@@ -109,7 +109,7 @@
                       <th>Status</th>
                   </thead>
                   <tbody>
-                      <tr *ngFor="let schedule of schedule_list | paginate: { itemsPerPage: 4,currentPage: q }">
+                      <tr *ngFor="let schedule of schedule_list  | paginate: { itemsPerPage: 4,currentPage: q }">
                           <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                           <td>{{convertcron(schedule.scheduleInterval)}}</td>
                           <td>{{ schedule.timeZone}}</td>

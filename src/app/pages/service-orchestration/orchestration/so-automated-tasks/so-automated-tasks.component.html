@@ -95,7 +95,7 @@
           </td>
       </ng-container>
         <ng-container matColumnDef="Assign">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Assign Resource</th>
+            <th mat-header-cell *matHeaderCellDef>Assign Resource</th>
             <td mat-cell *matCellDef="let element">
 
             <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
@@ -148,7 +148,7 @@
             <td mat-cell *matCellDef="let element">
 
                 <span>
-                  <button (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Bot">
+                  <button [disabled]="element.taskType=='Human' || element.taskType==null" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Bot">
                     <i  class="fas fa-plus text-primary"></i>
                   </button>
                 </span>

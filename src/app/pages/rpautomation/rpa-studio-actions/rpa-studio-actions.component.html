@@ -407,15 +407,19 @@
   </div>
 </div>
 
+
 <div [id]="viewlogid" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="viewlogclose()">&times;</span>
             <h4>Logs</h4>
         </div>
-        <div class="container" style="background: white;" class=" table w-100">
-            <div class="logs-container">
-              <button (click)="viewlogdata()" style='float:right;margin-top:10px;' class="btn btn-primary">Refresh</button>
+
+        <div class="container-fluid" style="background: white;">
+          <button (click)="viewlogdata()" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i></button>
+
+          <div class="container-fluid"  class="table w-100 w-100">
+
                 <table mat-table [dataSource]="Viewloglist" #sort1="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
 
 
@@ -490,8 +494,12 @@
         </div>
 
         <div class="logs-container">
-            <button (click)="back()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
-            <button (click)="ViewlogByrunid(botrunid)" style='float:right;margin-top:10px;' class="btn btn-primary">Refresh</button>
+            <button (click)="back()" style='float:right;margin-top:10px;'>
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>&nbsp;&nbsp;
+            <button (click)="ViewlogByrunid(botrunid)" style='float:right;margin-top:10px;'>
+              <i class="fas fa-sync-alt" aria-hidden="true"></i>
+            </button>
 
             <table mat-table [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
 

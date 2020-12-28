@@ -521,25 +521,28 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
       if (taskdata != undefined) {
-        if (taskdata.tMetaId == node.selectedNodeId) {
+        if (taskdata.tMetaId == node.selectedNodeId)
+        {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
             taskdata.attributes.forEach(element => {
-              if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+              if(finalattributes.find(data => data.id == element.metaAttrId)!= undefined)
               {
-                if(element.attrValue!='' && element.attrValue!=undefined)
+                if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
                 {
-                  let attr_val=JSON.parse(element.attrValue);
-                  let attrnames=Object.getOwnPropertyNames(attr_val);
-                  finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  if(element.attrValue!='' && element.attrValue!=undefined)
+                  {
+                    let attr_val=JSON.parse(element.attrValue);
+                    let attrnames=Object.getOwnPropertyNames(attr_val);
+                    finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  }
+                }
+                else
+                {
+                  finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
                 }
               }
-              else
-              {
-                finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
-              }
-
             });
             if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
             {

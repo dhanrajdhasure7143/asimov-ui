@@ -174,9 +174,8 @@ export class SoBotManagementComponent implements OnInit {
 
 
 
-
   viewlogdata(botid ,version){
-   let response: any;
+  let response: any;
    let log:any=[];
    this.logresponse=[];
    this.log_botid=botid;
@@ -234,8 +233,10 @@ export class SoBotManagementComponent implements OnInit {
    });
  }
 
+ public botrunid
  ViewlogByrunid(runid){
    console.log(runid);
+   this.botrunid=runid;
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
