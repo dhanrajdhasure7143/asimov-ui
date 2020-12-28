@@ -53,7 +53,7 @@
                     <td mat-cell *matCellDef="let element"> <span *ngIf="element.botStatus!=null">{{element.botStatus}}</span> <span *ngIf="element.botStatus==null">---</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="Action">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions </th>
+                    <th mat-header-cell *matHeaderCellDef >Actions </th>
                     <td mat-cell *matCellDef="let element">
                         <span (click)="executionAct(element.botId)"   matTooltip="Start Bot">
                           <li class="fa fa-play text-success" ></li>
@@ -70,7 +70,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Schedule">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Schedule</th>
+                    <th mat-header-cell *matHeaderCellDef >Schedule</th>
                     <td mat-cell *matCellDef="let element" >
                         <span (click)="openscheduler(element.botId)" matTooltip="Scheduler" style="cursor: pointer;">
                         <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>
@@ -78,7 +78,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Logs">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Logs </th>
+                    <th mat-header-cell *matHeaderCellDef >Logs </th>
                     <td mat-cell *matCellDef="let element">
                         <a class="text-primary" matTooltip="View Logs" (click)="viewlogdata(element.botId,element.version)">View</a>
                     </td>
@@ -115,8 +115,10 @@
             <span class="rpa-modal-close" (click)="viewlogclose()">&times;</span>
             <h4>Logs</h4>
         </div>
-        <div class="container" style="background: white;" class=" table w-100">
-            <div class="logs-container">
+        <div class="container-fluid" style="background: white;" >
+          <button (click)="viewlogdata(log_botid,log_version)" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i></button>
+
+            <div class="container-fluid w-100" >
                 <table mat-table [dataSource]="Viewloglist" #sort4="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
 
 
@@ -192,8 +194,12 @@
         </div>
 
         <div class="logs-container">
-            <button (click)="back()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
-
+          <button (click)="back()" style='float:right;margin-top:10px;'>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          </button>&nbsp;&nbsp;
+          <button (click)="ViewlogByrunid(botrunid)" style='float:right;margin-top:10px;'>
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          </button>
             <table mat-table [dataSource]="logbyrunid" #sort5="matSort" matSort style="width:100%;">
 
                 <!-- Task Name Column -->

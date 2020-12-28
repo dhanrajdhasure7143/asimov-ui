@@ -3,5 +3,8 @@
   position:  relative !important;
 }
 .mat-tab-body-content{
-  height:500px !important;
+  height:2000px !important;
+}
+.mat-tab-body.mat-tab-body-active, .mat-tab-body-wrapper{
+  height:2000px !important;
 }

@@ -46,7 +46,8 @@ export class SoDashboardComponent implements OnInit {
   mainautomatedtasks:any=[];
   botflag:Boolean=false;
   view: any[] = [700, 400];
-
+  q:number;
+  r:number;
   processstatistics:any=[];
   botstatistics:any=[];
   botstatisticstable:any=[];
@@ -112,6 +113,7 @@ export class SoDashboardComponent implements OnInit {
   botchart(event:any)
   {
     this.botstat=false;
+    this.q=1;
     this.botstatisticstable=this.bots_list.filter(data=>data.botStatus==event.name);
 
   }
@@ -169,15 +171,15 @@ export class SoDashboardComponent implements OnInit {
   }
   processstatstable(event)
   {
-    console.log(this.processflag)
-      this.processstats_table=this.processnames.filter(item=>item.status==event.name.toUpperCase());
-      console.log(this.processstats_table);
+      this.processstats_table=this.allprocessnames.filter(item=>item.status==event.name.toUpperCase());
+      this.r=1
       this.processflag=false;
   }
 
 
   getenvironments()
   {
+    this.plugin();
     this.rest.listEnvironments().subscribe(data=>{
       this.Environments=data;
       let Linux=this.Environments.filter(Data=>Data.environmentType=="Linux").length;
@@ -213,7 +215,7 @@ export class SoDashboardComponent implements OnInit {
           // cutoutPercentage	: 65,
           elements: {
             center: {
-              text: 'Red is 2/3 of the total numbers'
+              text: this.Environments.length
             },
           },
           legend: {
@@ -270,7 +272,7 @@ export class SoDashboardComponent implements OnInit {
   getbotsvshumans()
   {
     this.botvshuman=[]
-    let tasks_array=this.processnames.reverse();
+    let tasks_array=(this.processnames.filter(item=>item.status=="APPROVED")).reverse();
       tasks_array.forEach((data,index)=>{
         let value_data={
           "name": data.processName,
@@ -287,7 +289,6 @@ export class SoDashboardComponent implements OnInit {
           if(index < 7)
           this.botvshuman.push(value_data);
       })
-      console.log(this.botvshuman);
   }
 
 
@@ -367,8 +368,6 @@ export class SoDashboardComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       let filterdata:any=[];
       filterdata=result;
-      console.log("------------from date-----------",new Date(filterdata[0]));
-      console.log("------------to date-----------",new Date(filterdata[1]));
       let start_date:any=new Date(filterdata[0]);
       let end_date:any=new Date(filterdata[1]);
       let runtimestats:any=[];
@@ -430,9 +429,48 @@ export class SoDashboardComponent implements OnInit {
           date_array.forEach(date=>{
             labels.push(moment(date).format("D-MM-YYYY"));
             success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
-            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failed')).length))
+            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failure')).length))
             stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
             total.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+          });
+          this.linechart(labels,success,failed,stopped,total)
+        }
+        else if(filterType== "month")
+        {
+          let year=filterdata[0];
+          let from_month=filterdata[1];
+          let to_month=filterdata[2];
+          let months=["January","February","March","April","May","June","July",
+          "August","September","October","November","December"];
+          let finalmonths:any=months.slice(months.indexOf(from_month),months.indexOf(to_month)+1);
+          console.log(finalmonths);
+
+          finalmonths.forEach(date=>{
+            console.log(date+"-"+year)
+            labels.push(date+"-"+year);
+            console.log(moment(this.main_bot_list[0].createdAt).format("MMMM-YYYY"))
+            success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")==(date+"-"+year) && bot_check.botStatus=='Success')).length))
+            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")== (date+"-"+year) && bot_check.botStatus=='Failure')).length))
+            stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")== (date+"-"+year) && bot_check.botStatus=='Stopped')).length))
+            total.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")==(date+"-"+year))).length))
+          });
+          this.linechart(labels,success,failed,stopped,total)
+        }
+        else if(filterType== "year")
+        {
+          let from_year=filterdata[0];
+          let to_year=filterdata[1];
+          let years:any=[];
+          for(let p=1; from_year<=to_year;p++)
+            years.push(from_year++);
+
+          years.forEach(date=>{
+            labels.push(date);
+            console.log(moment(this.main_bot_list[0].createdAt).format("YYYY"))
+            success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")==(date) && bot_check.botStatus=='Success')).length))
+            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")== (date) && bot_check.botStatus=='Failure')).length))
+            stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")== (date) && bot_check.botStatus=='Stopped')).length))
+            total.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")==(date))).length))
           });
           this.linechart(labels,success,failed,stopped,total)
         }
@@ -474,7 +512,7 @@ export class SoDashboardComponent implements OnInit {
       dates.forEach(date=>{
         labels.push(moment(date).format("D-MM-YYYY"));
         success.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
-        failed.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failed')).length))
+        failed.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failure')).length))
         stopped.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
         total.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
       });
@@ -483,9 +521,19 @@ export class SoDashboardComponent implements OnInit {
 
   }
 
+
+
+
+  public pop:Boolean=true;
   linechart(labels,success,failed,stopped,total)
   {
 
+      if(this.chart6!=undefined)
+      {
+        this.chart6.destroy();
+        $("#linechart").remove();
+        $("#linechart_data").append(" <canvas id='linechart' style='width:100% !important ;height:300px !important;'></canvas>");
+      }
       this.chart6 = new Chart('linechart', {
                     type: 'line',
                       data: {
@@ -529,7 +577,6 @@ export class SoDashboardComponent implements OnInit {
 
                       options: {
                         responsive: true,
-                        hoverMode: 'index',
                         stacked: false,
                         legend: {
                           display: true,
@@ -571,7 +618,7 @@ export class SoDashboardComponent implements OnInit {
                          }
                       }
                   });
-
+                  this.chart6.update();
   }
 
 
@@ -651,6 +698,94 @@ export class SoDashboardComponent implements OnInit {
   }
 
 
+  plugin()
+  {
+    Chart.pluginService.register({
+      beforeDraw: function(chart) {
+        if (chart.config.options.elements.center) {
+          // Get ctx from string
+          var ctx = chart.chart.ctx;
+
+          // Get options from the center object in options
+          var centerConfig = chart.config.options.elements.center;
+          var fontStyle = centerConfig.fontStyle || 'Arial';
+          var txt = centerConfig.text;
+          var color = centerConfig.color || '#000';
+          var maxFontSize = centerConfig.maxFontSize || 75;
+          var sidePadding = centerConfig.sidePadding || 20;
+          var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+          // Start with a base font of 30px
+          ctx.font = "30px " + fontStyle;
+
+          // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+          var stringWidth = ctx.measureText(txt).width;
+          var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+          // Find out how much the font can grow in width.
+          var widthRatio = elementWidth / stringWidth;
+          var newFontSize = Math.floor(30 * widthRatio);
+          var elementHeight = (chart.innerRadius * 2);
+
+          // Pick a new font size so it will not be larger than the height of label.
+          var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+          var minFontSize = centerConfig.minFontSize;
+          var lineHeight = centerConfig.lineHeight || 25;
+          var wrapText = false;
+
+          if (minFontSize === undefined) {
+            minFontSize = 15;
+          }
+
+          if (minFontSize && fontSizeToUse < minFontSize) {
+            fontSizeToUse = 15;
+            wrapText = true;
+          }
+
+          // Set font settings to draw it correctly.
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+          var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+          ctx.font = "15px";
+          ctx.fillStyle = "#0062cf";
+
+          if (!wrapText) {
+            ctx.fillText(txt, centerX, centerY);
+            return;
+          }
+
+          var words = txt.split(' ');
+          var line = '';
+          var lines = [];
+
+          // Break words up into multiple lines if necessary
+          for (var n = 0; n < words.length; n++) {
+            var testLine = line + words[n] + ' ';
+            var metrics = ctx.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > elementWidth && n > 0) {
+              lines.push(line);
+              line = words[n] + ' ';
+            } else {
+              line = testLine;
+            }
+          }
+
+          // Move the center up depending on line height and number of lines
+          centerY -= (lines.length / 2) * lineHeight;
+
+          for (var n = 0; n < lines.length; n++) {
+            ctx.fillText(lines[n], centerX, centerY);
+            centerY += lineHeight;
+          }
+          //Draw text in center
+          ctx.fillText(line, centerX, centerY);
+        }
+      }
+    });
+  }
+
+
 }
 
 
@@ -674,6 +809,7 @@ export class FilterBy{
   startdate:any= new Date();
   from_date:any;
   to_date:any
+  today:any;
   monthf_year:any;
   from_month:any;
   to_month:any
@@ -689,6 +825,7 @@ export class FilterBy{
     this.startdate=this.startdate.getDate()-30;
     let years=[];
     let currentdate=new Date();
+    this.today=currentdate;
     let year=currentdate.getFullYear()-10;
     for(var i=1;i<11;i++)
       years.push(year+i)
@@ -721,3 +858,18 @@ export class Category implements PipeTransform {
     return categories.find(item=>item.categoryId==value).categoryName;
   }
 }
+
+
+
+@Pipe({name: 'Slicedate'})
+export class Slicedate implements PipeTransform {
+  transform(value: any,arg:any)
+  {
+    let selectedArray:any=[]
+    selectedArray=value;
+    return selectedArray.slice(selectedArray.indexOf(arg),selectedArray.length);
+  }
+}
+
+
+

@@ -1,6 +1,7 @@
 
 <div id="viewlogid1">
     <div class="container" style="background: white;" class=" table w-100">
+      <button (click)="getprocesslog()" matTooltip="Reset" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
 
           <table mat-table [dataSource]="dataSourcep1" #sortp1="matSort" matSort style="width:100%;">
             <ng-container matColumnDef="processRunId">
@@ -65,7 +66,10 @@
 
 <div id="plogrunid">
     <div class="container" style="background: white;" class=" table w-100">
-        <button (click)="backplogrid()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
+
+        <button (click)="backplogrid()"  matTooltip="Back" style='float:right;margin-top:10px;' ><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
+        &nbsp;&nbsp;
+        <button (click)="getprocessrunid(selected_processRunId)" matTooltip="Reset" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
 
           <table mat-table [dataSource]="dataSourcep2" #sortp2="matSort" matSort style="width:100%;">
 
@@ -145,7 +149,9 @@
 </div>
 <div id="pbotrunid">
     <div class="container" style="background: white;" class=" table w-100">
-        <button (click)="backpbotrunid()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
+        <button (click)="backpbotrunid()" matTooltip="Back" style='float:right;margin-top:10px;'><i class="fa fa-arrow-left" aria-hidden="true"></i></button>&nbsp;&nbsp;
+        <button (click)="ViewlogByrunid(selected_runid)" matTooltip="Reset" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
+
         <table mat-table [dataSource]="dataSourcep3" #sortp3="matSort" matSort style="width:100%;">
 
             <ng-container matColumnDef="task_name">

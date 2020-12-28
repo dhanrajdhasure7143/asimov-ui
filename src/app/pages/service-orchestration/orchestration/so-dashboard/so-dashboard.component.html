@@ -29,7 +29,7 @@
                 </div>
                   <div class="count-text form-group">DEPARTMENTS</div>
                     <div class="count-text form-group pull-right" *ngIf="selectedcat==''|| selectedcat==undefined">{{categaoriesList.length}}</div>
-                    <div class="count-text form-group pull-right" *ngIf="selectedcat!=''">1</div>
+                    <div class="count-text form-group pull-right" *ngIf="selectedcat!='' && selectedcat!=undefined">1</div>
                 </div>
           </div>
 
@@ -207,8 +207,8 @@
                         [xAxisLabel]="'Bots'"  maxXAxisTickLength=4 [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
                     </ngx-charts-bar-vertical>
                 </div>
-                <div class="message text-center" *ngIf="runtimestats.length==0" ><br><br><br>
-                  No Records Found
+                <div class="message text-center" *ngIf="runtimestats.length==0" ><br><br><br><br>
+                 <div  style=" vertical-align: middle;"> No Records Found</div>
                 </div>
               </div>
               <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==false" >
@@ -272,7 +272,9 @@
                       </mat-menu>
                     </div>
                   </div>
+                  <div *ngIf="pop" id="linechart_data">
                     <canvas id="linechart" style="width:100% !important ;height:300px !important;"></canvas>
+                  </div>
                 </div>
             </div>
             <div class="col-md-4 text-center">

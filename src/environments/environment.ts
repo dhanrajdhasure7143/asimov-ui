@@ -21,14 +21,14 @@ export const environment = {
   pi_node_url: "http://10.11.0.107:3000",
   //for local environment
   //pi_node_url: "http://10.11.0.112:3000",
-  
+
   platform_url:'http://apdev.epsoftinc.in',
   schema_registry_url:"http://10.11.0.101:8081",
   alerts_url:'http://alertsdev.epsoftinc.in',
 
- // Aiotal redirection urls 
+ // Aiotal redirection urls
   myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
-  logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation', 
+  logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation',
 
 // PI Connectors
   connector_topic: 'nodeDev',
@@ -51,8 +51,8 @@ export const environment = {
   //   platform_url:'http://apqa.epsoftinc.in',
   //   schema_registry_url:"http://10.11.0.101:8081",
   //   alerts_url:'http://alertsqa.epsoftinc.in',
-    
-  // // Aiotal redirection urls 
+
+  // // Aiotal redirection urls
   //  myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
   //  logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
 
