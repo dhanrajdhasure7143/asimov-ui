@@ -77,6 +77,13 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.gethumanslist();
  }
 
+ loadbotdatadesign(botId)
+  {
+    console.log(botId);
+    localStorage.setItem("botId",botId);
+    this.router.navigate(["/pages/rpautomation/home"]);
+  }
+
 
   assignreset(id)
   {

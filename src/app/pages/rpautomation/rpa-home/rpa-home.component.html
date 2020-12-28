@@ -129,7 +129,7 @@
                                         <span *ngIf="element.botStatus==null">---</span> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="description">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:25%;">Description </th>
+                                    <th mat-header-cell *matHeaderCellDef style="width:25%;">Description </th>
                                     <td mat-cell *matCellDef="let element" style="width:25%;">
                                         <span *ngIf="element.description!=null" placement="bottom" [tooltip]="element.description" class="btndes"> {{(element.description.length > 30) ? ((element.description).slice(0, 30) + '...') : element.description}}</span>
                                         <span *ngIf="element.description==null">-</span>
