@@ -19,6 +19,8 @@ select {
     color: #0062cf !important;
 }
 
+.undobtn {background-color:gainsboro; border-radius: 5px;}
+
 .bg-color
   {
     background-color: rgb(241, 240, 240);

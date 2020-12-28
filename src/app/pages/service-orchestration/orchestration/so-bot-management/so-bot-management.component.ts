@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -65,6 +65,7 @@ export class SoBotManagementComponent implements OnInit {
     popup:Boolean=false;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
+      private router: Router,
       )
     {}
 
@@ -76,7 +77,12 @@ export class SoBotManagementComponent implements OnInit {
     this.popup=false;
   }
 
-
+  loadbotdatadesign(botId)
+  {
+    console.log(botId);
+    localStorage.setItem("botId",botId);
+    this.router.navigate(["/pages/rpautomation/home"]);
+  }
 
   getallbots()
   {
