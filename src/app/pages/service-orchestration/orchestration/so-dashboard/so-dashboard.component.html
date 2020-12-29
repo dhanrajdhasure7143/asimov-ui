@@ -21,20 +21,17 @@
 
         <div class="row">
 
-
-
-
-                      <div *ngIf="categaoriesList!=undefined" class=" col-md-3 form-inline">
-                          <div class="example-card form-inline card-count" *ngIf="categaoriesList !=undefined">
-                            <div class="count-text form-group">
-                              <span class="icon"><i class="fa  fa-sitemap text-primary" aria-hidden="true"></i></span>
-                                &nbsp;&nbsp;&nbsp;
-                            </div>
-                              <div class="count-text form-group">DEPARTMENTS</div>
-                                <div class="count-text form-group pull-right" *ngIf="selectedcat==''|| selectedcat==undefined">{{categaoriesList.length}}</div>
-                                <div class="count-text form-group pull-right" *ngIf="selectedcat!=''">1</div>
-                            </div>
-                      </div>
+          <div *ngIf="categaoriesList!=undefined" class=" col-md-3 form-inline">
+              <div class="example-card form-inline card-count" *ngIf="categaoriesList !=undefined">
+                <div class="count-text form-group">
+                  <span class="icon"><i class="fa  fa-sitemap text-primary" aria-hidden="true"></i></span>
+                    &nbsp;&nbsp;&nbsp;
+                </div>
+                  <div class="count-text form-group">DEPARTMENTS</div>
+                    <div class="count-text form-group pull-right" *ngIf="selectedcat==''|| selectedcat==undefined">{{categaoriesList.length}}</div>
+                    <div class="count-text form-group pull-right" *ngIf="selectedcat!='' && selectedcat!=undefined">1</div>
+                </div>
+          </div>
 
 <!--
             <div class="col-md-3 text-center">
@@ -119,22 +116,45 @@
         <br><br>
         <div class="row">
             <div class="col-md-6 text-center ">
-                <div class="graph-card text-center" #botstatistics_graph >
+                <div class="graph-card text-center" *ngIf="botstat==true" #botstatistics_graph >
                   <h5><b>Bot Statistics</b></h5>
                   <div *ngIf="botstatistics.length!=0">
-                    <ngx-charts-pie-chart [view]="[400, 300]"  class="chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
+                    <ngx-charts-pie-chart [view]="[400, 300]" (select)="botchart($event)" class="chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
                     </ngx-charts-pie-chart>
                   </div>
                   <span class="message" *ngIf="botstatistics.length==0" ><br><br><br>
                     No Records Found
                   </span>
                 </div>
+                <div class="graph-card "  *ngIf="botstat==false" #botstatistics_graph >
+                  <div style="padding:10px">
+                    <span class="text-center"><b>Bot Statistics</b></span><span class="pull-right"><button (click)="botstat=true"><i class="fas fa-arrow-left"></i></button></span>
+                    <br><br><br>
+                    <table class="table">
+                      <thead class="text-center">
+                        <th>Bot Name</th>
+                        <th>Category</th>
+                        <th>Type</th>
+                        <th>Version</th>
+                      </thead>
+                      <tbody class="text-left">
+                        <tr *ngFor="let bot of botstatisticstable  | paginate: { itemsPerPage: 6,currentPage: q }">
+                          <td>{{bot.botName}}</td>
+                          <td>{{bot.department | Category:categaoriesList }}</td>
+                          <td>{{bot.botType==0?"Attended":"Unattended"}}</td>
+                          <td>{{bot.botName}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <pagination-controls class="pull-right" (pageChange)="q = $event"></pagination-controls>
+                </div>
+              </div>
             </div>
             <div class="col-md-6  text-center">
-                <div class="graph-card text-center" #process_statistics *ngIf="processstatistics!=undefined || processstatistics.length!=0">
+                <div class="graph-card text-center" *ngIf="processflag==true" #process_statistics >
                     <h5><b>Process Statistics</b></h5>
-                  <div *ngIf="processstatistics.length!=0" class="text-center" style="justify-content: center;text-align: center;align-items: center;">
-                    <ngx-charts-pie-chart  [view]="[400,300]" [legendTitle]="''" [scheme]="colorScheme " class="chart-container-check" [results]="processstatistics" [gradient]="false" [legend]="showLegend" legendPosition="below" [labels]="showLabels " [arcWidth]="0.50" [doughnut]="true"  >
+                  <div *ngIf="processstatistics.length!=0 && processstatistics.length!=0" class="text-center" style="justify-content: center;text-align: center;align-items: center;">
+                    <ngx-charts-pie-chart  [view]="[400,300]" [legendTitle]="''" [scheme]="colorScheme " class="chart-container-check" [results]="processstatistics" [gradient]="false" [legend]="showLegend" legendPosition="below" [labels]="showLabels " [arcWidth]="0.50" [doughnut]="true" (select)="processstatstable($event)" >
                     </ngx-charts-pie-chart>
                   </div>
                   <span class="message" *ngIf="processstatistics.length==0" ><br><br><br>
@@ -142,29 +162,71 @@
                   </span>
 
                 </div>
+                  <div class="graph-card text-center" *ngIf="processflag==false" #process_statistics>
+                    <div style="padding:10px">
+                      <span><b>Process Statistics</b></span><span class="pull-right"><button (click)="processflag=true"><i class="fas fa-arrow-left"></i></button></span>
+                      <div *ngIf="processstats_table.length!=0" class="text-center" style="justify-content: center;text-align: center;align-items: center;">
+                        <br><br>
+                        <table class="table">
+                          <thead class="text-center">
+                            <th>Process Name</th>
+                            <th>Category</th>
+                          </thead>
+                          <tbody class="text-left">
+                            <tr *ngFor="let process of processstats_table  | paginate: { itemsPerPage: 6,currentPage: r }">
+                              <td>{{process.processName}}</td>
+                              <td>{{process.categoryId | Category:categaoriesList }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <pagination-controls class="pull-right" (pageChange)="r = $event"></pagination-controls>
+                      </div>
+
+                      <span class="message" *ngIf="processstats_table.length==0" ><br><br><br>
+                        No Records Found
+                      </span>
+                    </div>
+                  </div>
+
             </div>
           </div>
         <br><br>
         <div class="row">
 
             <div class="col-md-6">
-                <div class="graph-card bar-chart" #run_time *ngIf="bots!=undefined">
-                  <div class="form-inline text-center">
-                    <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
-                    <div class="pull-right form-group">
+              <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==true" >
+                <div class="form-inline text-center">
+                  <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
+                  <div class="pull-right form-group">
 
-                        <mat-form-field>
-                          <mat-label>Select Bot</mat-label>
-                          <mat-select (selectionChange)="getruns($event.value)" [(value)]="bots_list[0].botId">
-                              <mat-option *ngFor="let bot of bots_list" [value]="bot.botId">{{bot.botName}}
-                            </mat-option>
-                          </mat-select>
-                      </mat-form-field>
-                    </div>
+                      <button (click)="openbotstatfilter()"> <i class="fa fa-filter" aria-hidden="true"></i></button>
                   </div>
-                <ngx-charts-bar-vertical  [barPadding]="50" [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="Performance" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
-                    [xAxisLabel]="'Runs'" [yAxisLabel]="'Execution Time (ms)'">
-                </ngx-charts-bar-vertical>
+                </div>
+                <div *ngIf="runtimestats.length!=0">
+                    <ngx-charts-bar-vertical    [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="runtimestats" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                        [xAxisLabel]="'Bots'"  maxXAxisTickLength=4 [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
+                    </ngx-charts-bar-vertical>
+                </div>
+                <div class="message text-center" *ngIf="runtimestats.length==0" ><br><br><br><br>
+                 <div  style=" vertical-align: middle;"> No Records Found</div>
+                </div>
+              </div>
+              <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==false" >
+                <div class="form-inline text-center">
+                  <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
+                  <div class="pull-right form-group">
+
+                      <button (click)="runtimeflag=true"><i class="fas fa-arrow-left"></i></button>
+                  </div>
+                </div>
+                <div *ngIf="Performance.length!=0">
+                    <ngx-charts-bar-vertical  [barPadding]="50"  [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="Performance" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
+                        [xAxisLabel]="'Runs'"  maxXAxisTickLength=4 [rotateXAxisTicks]="true" [yAxisLabel]="'Execution Time (ms)'" (select)="getruns($event)" >
+                    </ngx-charts-bar-vertical>
+                </div>
+                <div class="message text-center" *ngIf="Performance.length==0" ><br><br><br>
+                  No Records Found
+                </div>
               </div>
             </div>
             <div class="col-md-6  text-center">
@@ -210,7 +272,9 @@
                       </mat-menu>
                     </div>
                   </div>
+                  <div *ngIf="pop" id="linechart_data">
                     <canvas id="linechart" style="width:100% !important ;height:300px !important;"></canvas>
+                  </div>
                 </div>
             </div>
             <div class="col-md-4 text-center">

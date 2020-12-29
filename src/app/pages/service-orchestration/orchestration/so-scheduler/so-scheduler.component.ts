@@ -79,6 +79,7 @@ export class SoSchedulerComponent implements OnInit {
     this.get_schedule()
     this.getenvironments();
     this.enddate=this.startdate;
+    this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
   }
 
   get_schedule()
@@ -340,6 +341,9 @@ export class SoSchedulerComponent implements OnInit {
       let list=this.schedule_list.filter(data=>data.check==true);
       list.forEach(data=>{
         let index2=this.schedule_list.findIndex(scheduleitem=>scheduleitem.intervalId==data.intervalId);
+        let del_sch=this.schedule_list.find(scheduleitem=>scheduleitem.intervalId==data.intervalId);
+        if(del_sch.save_status=="saved")
+          this.deletestack.push(del_sch);
         this.schedule_list.splice(index2,1);
       })
     }
@@ -358,24 +362,37 @@ export class SoSchedulerComponent implements OnInit {
       }
       else
       {
+        let schedules:any=[]
+        this.schedule_list.forEach(data=>{
+          if(data.save_status=="unsaved")
+          {
+            delete data.intervalId
+            schedules.push(data);
+          }
+          else if(data.save_status=="saved")
+          {
+            schedules.push(data)
+          }
+        })
         if(this.botdata.botMainSchedulerEntity==null)
         {
-          this.botdata.botMainSchedulerEntity={"scheduleIntervals":this.schedule_list};
+          this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
         }
         else
         {
-          this.botdata.botMainSchedulerEntity.scheduleIntervals=this.schedule_list;
+          this.botdata.botMainSchedulerEntity.scheduleIntervals=schedules;
         }
       }
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
-      let resp:any=data;
-      if(resp.botMainSchedulerEntity.scheduleIntervals.length==0){
-        Swal.fire("Updated successfully","","success")
-      }
-      else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length){
-        Swal.fire("Schedules saved successfully","","success");
-      }
-      this.get_schedule();
+          let resp:any=data;
+          Swal.fire("Updated successfully","","success")
+
+          /*if(resp.botMainSchedulerEntity==null){
+          }
+          else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length){
+            Swal.fire("Schedules saved successfully","","success");
+          }*/
+          this.get_schedule();
     })
     }
     else if(this.processid!=undefined && this.processid!="")
@@ -439,9 +456,14 @@ export class SoSchedulerComponent implements OnInit {
       if(length==1)
       {
         let schedule=this.schedule_list.find(data=>data.check==true)
-        if(schedule.run_status!=undefined)
+        if(schedule.botActionStatus!=undefined || schedule.schedularActionStatus!=undefined )
         {
-          if(schedule.run_status=='not_started')
+          let status:any;
+          if(schedule.schedularActionStatus != undefined)
+            status=schedule.schedularActionStatus
+          else if(schedule.botActionStatus!=undefined)
+            status=schedule.botActionStatus
+          if(status=='Save')
           {
 
             this.flags.startflag=true;
@@ -449,14 +471,14 @@ export class SoSchedulerComponent implements OnInit {
             this.flags.resumeflag=false;
             this.flags.stopflag=false;
           }
-          else if(schedule.run_status=='started' ||schedule.run_status=='resume' )
+          else if(status=='Sart' ||status=='Running' )
           {
             this.flags.startflag=false;
             this.flags.pauseflag=true;
             this.flags.resumeflag=false;
             this.flags.stopflag=true;
           }
-          else if(schedule.run_status=='pause')
+          else if(status=='Pause')
           {
             this.flags.startflag=false;
             this.flags.pauseflag=false;
@@ -501,6 +523,8 @@ export class SoSchedulerComponent implements OnInit {
 
 
 
+
+
 @Pipe({name: 'Envname'})
 export class Envname implements PipeTransform {
   transform(value: any,arg:any)
@@ -508,5 +532,17 @@ export class Envname implements PipeTransform {
     let environments:any=[];
     environments=arg;
     return environments.find(item=>item.environmentId==value).environmentName;
+  }
+}
+
+
+
+@Pipe({name: 'Reverse'})
+export class Reverse implements PipeTransform {
+  transform(value: any)
+  {
+    let arr:any=[];
+    arr=value
+    return arr.reverse();
   }
 }

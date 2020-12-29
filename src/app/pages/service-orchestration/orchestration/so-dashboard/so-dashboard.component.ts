@@ -1,4 +1,4 @@
-import {Inject, Component, OnInit } from '@angular/core';
+import {Inject,Input, Component, OnInit ,Pipe, PipeTransform } from '@angular/core';
 import {RestApiService} from '../../../services/rest-api.service';
 import * as Chart from 'chart.js'
 import { NgxSpinnerService } from "ngx-spinner";
@@ -6,6 +6,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import * as moment from 'moment';
 import * as $ from 'jquery';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { noUndefined } from '@angular/compiler/src/util';
 @Component({
   selector: 'app-so-dashboard',
   templateUrl: './so-dashboard.component.html',
@@ -19,7 +20,11 @@ export class SoDashboardComponent implements OnInit {
     private dialog:MatDialog,
     private http:HttpClient
     ) {}
+  botstat:Boolean=true;
+  runtimeflag:Boolean=true;
+  processflag:Boolean=true;
   public selectedcat:any;
+  processstats_table:any=[]
   categaoriesList:any
   allprocessnames:any;
   processnames:any
@@ -37,11 +42,15 @@ export class SoDashboardComponent implements OnInit {
   envcount:any;
   Performance:any=[];
   users:any;
+  runtimestats:any=[]
   mainautomatedtasks:any=[];
+  botflag:Boolean=false;
   view: any[] = [700, 400];
-
+  q:number;
+  r:number;
   processstatistics:any=[];
   botstatistics:any=[];
+  botstatisticstable:any=[];
   showXAxis = true;
   showYAxis = true;
   showXAxisLabel = true;
@@ -63,8 +72,9 @@ export class SoDashboardComponent implements OnInit {
     this.getprocessstatistics();
     this.getenvironments()
     this.getCategoryList();
-    this.getprocessruns();
+    //this.getprocessruns();
     this.getbotscount();
+    this.botruntimestats();
   }
   ngAfterViewInit(): void {
 
@@ -74,7 +84,9 @@ export class SoDashboardComponent implements OnInit {
   {
     this.botstatistics=[];
     this.rest.botStatistics().subscribe(data => { this.usageData = data;
-            console.log(this.usageData);
+          let resp:any=data;
+          if(resp.errorMessage==undefined)
+          {
             let datacha = Object.keys(data);
             let values=Object.values(this.usageData)
             let dataset:any=[];
@@ -90,11 +102,24 @@ export class SoDashboardComponent implements OnInit {
               $('.chart-legend>div').css({width : '100%'});
               this.spinner.hide()
             }, 2000);
-
+          }
       },(err)=>{
         console.log(err)
         this.spinner.hide();
       });
+  }
+
+
+  botchart(event:any)
+  {
+    this.botstat=false;
+    this.q=1;
+    this.botstatisticstable=this.bots_list.filter(data=>data.botStatus==event.name);
+
+  }
+  backtobotstatistics()
+  {
+    this.botstat=true;
   }
 
   getheaders()
@@ -124,27 +149,37 @@ export class SoDashboardComponent implements OnInit {
 
   getprocessstatistics(){
     this.rest.getProcessStatistics().subscribe(data => { this.usageData = data;
-      let datacha = Object.keys(data);
-      let values=Object.values(this.usageData)
-      let dataset:any=[];
-      datacha.forEach((data,index)=>{
-        dataset.push({
-          "name":this.titleCaseWord(data),
-          "value":values[index]
-          })
-      })
-      this.processstatistics=dataset;
-      setTimeout(() => {
-        $('.chart-legend>div').css({width : '100%'});
-      }, 2000);
+      let resp:any=data
+      if(resp.errorMessage==undefined)
+      {
+        let datacha = Object.keys(data);
+        let values=Object.values(this.usageData)
+        let dataset:any=[];
+        datacha.forEach((data,index)=>{
+          dataset.push({
+            "name":this.titleCaseWord(data),
+            "value":values[index]
+            })
+        })
+        this.processstatistics=dataset;
+        setTimeout(() => {
+          $('.chart-legend>div').css({width : '100%'});
+        }, 2000);
+      }
+    });
 
-      });
   }
-
+  processstatstable(event)
+  {
+      this.processstats_table=this.allprocessnames.filter(item=>item.status==event.name.toUpperCase());
+      this.r=1
+      this.processflag=false;
+  }
 
 
   getenvironments()
   {
+    this.plugin();
     this.rest.listEnvironments().subscribe(data=>{
       this.Environments=data;
       let Linux=this.Environments.filter(Data=>Data.environmentType=="Linux").length;
@@ -180,7 +215,7 @@ export class SoDashboardComponent implements OnInit {
           // cutoutPercentage	: 65,
           elements: {
             center: {
-              text: 'Red is 2/3 of the total numbers'
+              text: this.Environments.length
             },
           },
           legend: {
@@ -237,7 +272,7 @@ export class SoDashboardComponent implements OnInit {
   getbotsvshumans()
   {
     this.botvshuman=[]
-    let tasks_array=this.processnames.reverse();
+    let tasks_array=(this.processnames.filter(item=>item.status=="APPROVED")).reverse();
       tasks_array.forEach((data,index)=>{
         let value_data={
           "name": data.processName,
@@ -254,17 +289,16 @@ export class SoDashboardComponent implements OnInit {
           if(index < 7)
           this.botvshuman.push(value_data);
       })
-      console.log(this.botvshuman);
   }
 
 
-  getruns(botid)
+  getruns(event)
   {
-    console.log(botid);
-    if(this.bots.find(botc=>botc.botId==botid) != undefined)
+    let botName=event.name;
+    if(this.bots.find(botc=>botc.botName==botName) != undefined)
     {
       console.log(this.bots);
-      let bot_check =this.bots.filter(botc=>botc.botId==botid)
+      let bot_check =this.bots.filter(botc=>botc.botName==botName)
       console.log(bot_check);
       let performances=bot_check[0].coordinates
       console.log(performances)
@@ -280,9 +314,97 @@ export class SoDashboardComponent implements OnInit {
             })
         }
       }
+      this.runtimeflag=false;
     }
   }
 
+
+  botruntimestats()
+  {
+    this.rest.botPerformance().subscribe(data=>{
+      let botperformances:any=[]
+      botperformances=data;
+      this.bots=botperformances;
+      let today=new Date();
+      let yesterday=new Date();
+      let runtimestats:any=[]
+      yesterday.setDate(today.getDate()-1);
+      this.bots_list.forEach(bot => {
+        let filteredbot:any;
+        filteredbot=botperformances.find(item=>item.botId==bot.botId);
+        if(filteredbot != undefined)
+        {
+          let filteredCoordinates:any=filteredbot.coordinates.filter(item=>moment(item.startTime,"x").format("D-MM-YYYY")==moment(today).format("D-MM-YYYY")||moment(item.startTime,"x").format("D-MM-YYYY")==moment(yesterday).format("D-MM-YYYY"));
+          if(filteredCoordinates.length>0)
+          {
+              let timedur:any=0;
+              filteredCoordinates.forEach(timeseries=>{
+                timedur=timedur+timeseries.timeDuration;
+              })
+              let data:any={
+                //id:filteredbot.botId,
+                "name":filteredbot.botName,
+                "value":timedur
+              }
+              runtimestats.push(data);
+              //console.log(this.Performance);
+          }
+        }
+      });
+      this.runtimestats=runtimestats;
+      console.log(runtimestats);
+      this.runtimeflag=true;
+    })
+  }
+
+
+  openbotstatfilter()
+  {
+    const dialogRef = this.dialog.open(FilterBy,{
+      width: '300px',
+      data: {type:"date"}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      let filterdata:any=[];
+      filterdata=result;
+      let start_date:any=new Date(filterdata[0]);
+      let end_date:any=new Date(filterdata[1]);
+      let runtimestats:any=[];
+      this.bots_list.forEach(bot => {
+        let filteredbot:any;
+        filteredbot=this.bots.find(item=>item.botId==bot.botId);
+        if(filteredbot != undefined)
+        {
+          let filteredCoordinates:any=[];
+          filteredbot.coordinates.forEach((item,index)=>{
+            let check_date=moment(item.startTime,"x").format("YYYY-MM-D");
+            let s_date=moment(start_date).format("YYYY-MM-D")
+            let e_date=moment(end_date).format("YYYY-MM-D");
+            if((moment(check_date).isSameOrBefore(e_date) && moment(check_date).isSameOrAfter(s_date)))
+            {
+              filteredCoordinates.push(item);
+            }
+          });
+          if(filteredCoordinates.length>0)
+          {
+              let timedur:any=0;
+              filteredCoordinates.forEach(timeseries=>{
+                timedur=timedur+timeseries.timeDuration;
+              })
+              let data:any={
+                //id:filteredbot.botId,
+                "name":filteredbot.botName,
+                "value":timedur
+              }
+              runtimestats.push(data);
+              //console.log(this.Performance);
+          }
+        }
+        this.runtimestats=runtimestats;
+      });
+    });
+  }
 
   openDialog(filterType)
   {
@@ -307,9 +429,48 @@ export class SoDashboardComponent implements OnInit {
           date_array.forEach(date=>{
             labels.push(moment(date).format("D-MM-YYYY"));
             success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
-            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failed')).length))
+            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failure')).length))
             stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
             total.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+          });
+          this.linechart(labels,success,failed,stopped,total)
+        }
+        else if(filterType== "month")
+        {
+          let year=filterdata[0];
+          let from_month=filterdata[1];
+          let to_month=filterdata[2];
+          let months=["January","February","March","April","May","June","July",
+          "August","September","October","November","December"];
+          let finalmonths:any=months.slice(months.indexOf(from_month),months.indexOf(to_month)+1);
+          console.log(finalmonths);
+
+          finalmonths.forEach(date=>{
+            console.log(date+"-"+year)
+            labels.push(date+"-"+year);
+            console.log(moment(this.main_bot_list[0].createdAt).format("MMMM-YYYY"))
+            success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")==(date+"-"+year) && bot_check.botStatus=='Success')).length))
+            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")== (date+"-"+year) && bot_check.botStatus=='Failure')).length))
+            stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")== (date+"-"+year) && bot_check.botStatus=='Stopped')).length))
+            total.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")==(date+"-"+year))).length))
+          });
+          this.linechart(labels,success,failed,stopped,total)
+        }
+        else if(filterType== "year")
+        {
+          let from_year=filterdata[0];
+          let to_year=filterdata[1];
+          let years:any=[];
+          for(let p=1; from_year<=to_year;p++)
+            years.push(from_year++);
+
+          years.forEach(date=>{
+            labels.push(date);
+            console.log(moment(this.main_bot_list[0].createdAt).format("YYYY"))
+            success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")==(date) && bot_check.botStatus=='Success')).length))
+            failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")== (date) && bot_check.botStatus=='Failure')).length))
+            stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")== (date) && bot_check.botStatus=='Stopped')).length))
+            total.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")==(date))).length))
           });
           this.linechart(labels,success,failed,stopped,total)
         }
@@ -351,7 +512,7 @@ export class SoDashboardComponent implements OnInit {
       dates.forEach(date=>{
         labels.push(moment(date).format("D-MM-YYYY"));
         success.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
-        failed.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failed')).length))
+        failed.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failure')).length))
         stopped.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
         total.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
       });
@@ -360,9 +521,19 @@ export class SoDashboardComponent implements OnInit {
 
   }
 
+
+
+
+  public pop:Boolean=true;
   linechart(labels,success,failed,stopped,total)
   {
 
+      if(this.chart6!=undefined)
+      {
+        this.chart6.destroy();
+        $("#linechart").remove();
+        $("#linechart_data").append(" <canvas id='linechart' style='width:100% !important ;height:300px !important;'></canvas>");
+      }
       this.chart6 = new Chart('linechart', {
                     type: 'line',
                       data: {
@@ -406,7 +577,6 @@ export class SoDashboardComponent implements OnInit {
 
                       options: {
                         responsive: true,
-                        hoverMode: 'index',
                         stacked: false,
                         legend: {
                           display: true,
@@ -448,7 +618,7 @@ export class SoDashboardComponent implements OnInit {
                          }
                       }
                   });
-
+                  this.chart6.update();
   }
 
 
@@ -457,14 +627,13 @@ export class SoDashboardComponent implements OnInit {
   sortbycat()
   {
     let bot_list_check:any=[];
-    console.log(this.selectedcat);
+    this.botstat=true;
     bot_list_check=this.main_bot_list.filter(item=>item.department==this.selectedcat);
     console.log(bot_list_check);
-    if(bot_list_check.length!=0)
-    {
-      this.getruns(bot_list_check[0].botId);
-    }
+
     this.bots_list=bot_list_check;
+    this.botruntimestats()
+
     this.rest.getProcessStatisticsbycat(this.selectedcat).subscribe(data => {
     let response:any=data;
     if(response.errorMessage==undefined)
@@ -529,6 +698,94 @@ export class SoDashboardComponent implements OnInit {
   }
 
 
+  plugin()
+  {
+    Chart.pluginService.register({
+      beforeDraw: function(chart) {
+        if (chart.config.options.elements.center) {
+          // Get ctx from string
+          var ctx = chart.chart.ctx;
+
+          // Get options from the center object in options
+          var centerConfig = chart.config.options.elements.center;
+          var fontStyle = centerConfig.fontStyle || 'Arial';
+          var txt = centerConfig.text;
+          var color = centerConfig.color || '#000';
+          var maxFontSize = centerConfig.maxFontSize || 75;
+          var sidePadding = centerConfig.sidePadding || 20;
+          var sidePaddingCalculated = (sidePadding / 100) * (chart.innerRadius * 2)
+          // Start with a base font of 30px
+          ctx.font = "30px " + fontStyle;
+
+          // Get the width of the string and also the width of the element minus 10 to give it 5px side padding
+          var stringWidth = ctx.measureText(txt).width;
+          var elementWidth = (chart.innerRadius * 2) - sidePaddingCalculated;
+
+          // Find out how much the font can grow in width.
+          var widthRatio = elementWidth / stringWidth;
+          var newFontSize = Math.floor(30 * widthRatio);
+          var elementHeight = (chart.innerRadius * 2);
+
+          // Pick a new font size so it will not be larger than the height of label.
+          var fontSizeToUse = Math.min(newFontSize, elementHeight, maxFontSize);
+          var minFontSize = centerConfig.minFontSize;
+          var lineHeight = centerConfig.lineHeight || 25;
+          var wrapText = false;
+
+          if (minFontSize === undefined) {
+            minFontSize = 15;
+          }
+
+          if (minFontSize && fontSizeToUse < minFontSize) {
+            fontSizeToUse = 15;
+            wrapText = true;
+          }
+
+          // Set font settings to draw it correctly.
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
+          var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
+          ctx.font = "15px";
+          ctx.fillStyle = "#0062cf";
+
+          if (!wrapText) {
+            ctx.fillText(txt, centerX, centerY);
+            return;
+          }
+
+          var words = txt.split(' ');
+          var line = '';
+          var lines = [];
+
+          // Break words up into multiple lines if necessary
+          for (var n = 0; n < words.length; n++) {
+            var testLine = line + words[n] + ' ';
+            var metrics = ctx.measureText(testLine);
+            var testWidth = metrics.width;
+            if (testWidth > elementWidth && n > 0) {
+              lines.push(line);
+              line = words[n] + ' ';
+            } else {
+              line = testLine;
+            }
+          }
+
+          // Move the center up depending on line height and number of lines
+          centerY -= (lines.length / 2) * lineHeight;
+
+          for (var n = 0; n < lines.length; n++) {
+            ctx.fillText(lines[n], centerX, centerY);
+            centerY += lineHeight;
+          }
+          //Draw text in center
+          ctx.fillText(line, centerX, centerY);
+        }
+      }
+    });
+  }
+
+
 }
 
 
@@ -552,6 +809,7 @@ export class FilterBy{
   startdate:any= new Date();
   from_date:any;
   to_date:any
+  today:any;
   monthf_year:any;
   from_month:any;
   to_month:any
@@ -567,6 +825,7 @@ export class FilterBy{
     this.startdate=this.startdate.getDate()-30;
     let years=[];
     let currentdate=new Date();
+    this.today=currentdate;
     let year=currentdate.getFullYear()-10;
     for(var i=1;i<11;i++)
       years.push(year+i)
@@ -580,3 +839,37 @@ export class FilterBy{
   }
 
 }
+
+
+
+
+
+
+
+
+@Pipe({name: 'Category'})
+export class Category implements PipeTransform {
+  transform(value: any,arg:any)
+  {
+    let categories:any=[];
+    categories=arg;
+    console.log("departments",categories);
+    console.log("id",value);
+    return categories.find(item=>item.categoryId==value).categoryName;
+  }
+}
+
+
+
+@Pipe({name: 'Slicedate'})
+export class Slicedate implements PipeTransform {
+  transform(value: any,arg:any)
+  {
+    let selectedArray:any=[]
+    selectedArray=value;
+    return selectedArray.slice(selectedArray.indexOf(arg),selectedArray.length);
+  }
+}
+
+
+

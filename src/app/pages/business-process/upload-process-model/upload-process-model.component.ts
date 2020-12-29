@@ -1182,15 +1182,10 @@ displayBPMN(){
     this[modeler_obj].saveXML({ format: true }, function(err, xml) {
       //console.log(xml);
       _self.openDialog(xml)
-    });
-  
-    
-    
-   
+    }); 
   }
 
   openDialog(data){
-    console.log(data);
     let fileName = this.isShowConformance ? this.processName : this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
     if(fileName.trim().length == 0 ) fileName = "newDiagram";
     var dd = fileName+"."+this.selectedNotationType;

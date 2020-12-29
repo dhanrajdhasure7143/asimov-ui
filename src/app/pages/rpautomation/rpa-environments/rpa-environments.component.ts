@@ -208,7 +208,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.spinner.hide();
         if(res.errorCode==undefined){
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: "Successfully Connected",
           showConfirmButton: false,
@@ -216,8 +216,8 @@ import { NgxSpinnerService } from "ngx-spinner";
         })
         }else{
           Swal.fire({
-            position: 'top-end',
-            icon: 'question',
+            position: 'center',
+            icon: 'error',
             title: 'Connection Failed',
             showConfirmButton: false,
             timer: 2000
@@ -252,7 +252,7 @@ import { NgxSpinnerService } from "ngx-spinner";
      await this.api.addenvironment(environment).subscribe( res =>
       {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: res.status,
           showConfirmButton: false,
@@ -298,7 +298,7 @@ import { NgxSpinnerService } from "ngx-spinner";
             console.log(updatFormValue);
       await this.api.updateenvironment(updatFormValue).subscribe( res => {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: res.status,
           showConfirmButton: false,
@@ -376,7 +376,7 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.spinner.show();
           this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
             Swal.fire({
-              position: 'top-end',
+              position: 'center',
               icon: 'success',
               title: res.status,
               showConfirmButton: false,
@@ -454,7 +454,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: data[0].status,
           showConfirmButton: false,

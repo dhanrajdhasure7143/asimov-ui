@@ -118,6 +118,7 @@ export class RpaHomeComponent implements OnInit {
   Resetfilters(){
     this.botNameFilter.setValue("");
     this.departmentFilter.setValue("");
+    this.getallbots();
   }
 
   getallbots()

@@ -16,137 +16,155 @@
           </li>
         </ul>
       </div>-->
-            <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
-                <button type="button" id="stopbot" title="Stop Bot" class="rpa-btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot()">
-      <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
-      <div class="btn_title">Stop</div>
+
+      <div class="dropdown">
+        <button class="  rpa-btn_style dropdown-toggle" style="padding-left:0px;padding-right:0px"  id="bots" placement="bottom" tooltip="Bot Store"  type="button" data-toggle="dropdown" (click)="getpredefinedbotlist()"> <img src="/assets/images/robot.svg" class="imageI1"><div class="btn_title">Bot Store</div></button>
+        <ul *ngIf="predefinedbotsData.length > 0" class="dropdown-menu  rpa-custom-scrollbar" style="width:400px">
+            <li *ngFor="let bots of predefinedbotsData; let i = index">
+                <div class="checkbox">
+                    <div class="environments">
+                        <button (click)="loadpredefinedbot(bots.botId)">{{bots.botName}}</button>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul *ngIf="predefinedbotsData.length <= 0" class="dropdown-menu ">
+            <li>
+                <div class="checkbox">
+                    <div class="environments">
+                        <label [for]="'list'+i">No Records Found</label>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+      <button type="button" class="  rpa-btn_style" aria-hidden="true" id="schedule" tooltip="Schedule Bot" (click)="openschedule()" id="schedule" placement="bottom">
+        <img class="imageI1" src="/assets/images/Group 286.svg">
+        <div class="btn_title">Schedule</div>
       </button>
-            </div>
 
 
-            <div *ngIf="pausebot==true || resumebot==true">
-                <button type="button" class="  rpa-btn_style" title="Stop Bot" aria-hidden="true" placement="bottom" (click)="stopBot()">
-        <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
-        <div class="btn_title">Stop</div>
-        </button>
-            </div>
-            <div class="dropdown">
-                <button class="  rpa-btn_style dropdown-toggle" id="bots" title="Predefined Bots" type="button" data-toggle="dropdown" (click)="getpredefinedbotlist()"> <img src="/assets/images/robot.svg" class="imageI1"><div class="btn_title">Bots</div></button>
-                <ul *ngIf="predefinedbotsData.length > 0" class="dropdown-menu  rpa-custom-scrollbar" style="width:400px">
-                    <li *ngFor="let bots of predefinedbotsData; let i = index">
-                        <div class="checkbox">
-                            <div class="environments">
-                                <button (click)="loadpredefinedbot(bots.botId)">{{bots.botName}}</button>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
 
-                <ul *ngIf="predefinedbotsData.length <= 0" class="dropdown-menu ">
-                    <li>
-                        <div class="checkbox">
-                            <div class="environments">
-                                <label [for]="'list'+i">No Records Found</label>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+
+
+      <div class="dropdown">
+        <button class="  rpa-btn_style dropdown-toggle" style="padding-left:5px;padding-right:5px" id="Environments" placement="bottom" tooltip="Select Environments" type="button" data-toggle="dropdown">
+   <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1">
+<div class="btn_title">Environments</div></button>
+        <ul *ngIf="environment.length > 0" class="dropdown-menu rpa-custom-scrollbar">
+            <li *ngFor="let list of environment;let i = index">
+                <div class="checkbox">
+                    <div class="environments">
+                        <label [for]="list+i"><input type="checkbox" (change)="checkuncheckenv(list.environmentId)" [checked]="list.checked" >{{list.environmentName}}</label>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox" *ngIf="this.isButtonVisible">
+                    <div class="environments">
+                        <a style="color:black" (click)="navtoenv()"><span><i class="fa fa-plus"></i></span>&nbsp; Create Environments</a>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        </ul>
+
+        <ul *ngIf="environment.length <= 0" class="dropdown-menu ">
+            <li>
+                <div class="checkbox">
+                    <div class="environments">
+                        <label [for]="'list'+i">No Records Found</label>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+
+            <li>
+                <div class="checkbox" *ngIf="this.isButtonVisible">
+                    <div class="environments">
+                        <a [routerLink]="[ '/pages/rpautomation/environments']"><span><i class="fa fa-plus"></i></span>&nbsp;Create Environments</a>
+                        <hr>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+
             <!-- <button type="button" id="deployBot" title="Deploy Bot Agent" [disabled]="savebotrespose==undefined" class="rpa-btn_style" aria-hidden="true" placement="bottom" (click)="deploybot()">
         <img class="imageI1" src="/assets/images/RPA/deploy_icon.svg"><br>
         <div class="btn_title">Deploy</div>
       </button>-->
-            <button type="button" class="  rpa-btn_style" title="Edit Bot" id="edit" [disabled]="savebotrespose==undefined" aria-hidden="true" placement="bottom" (click)="modify()">
+
+      <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom" tooltip="Save Bot" [disabled]="!(envflag==false &&  0 < childBotWorkspace.finaldataobjects.length)" placement="bottom" id="savebot" (click)="saveBotFunAct()">
+        <img class="imageI1" src="/assets/images/Layer 1.svg">
+        <div class="btn_title">Save</div>
+      </button>
+            <button type="button" class="  rpa-btn_style" placement="bottom" tooltip="Edit Bot" id="edit" [disabled]="savebotrespose==undefined" aria-hidden="true" placement="bottom" (click)="modify()">
         <img class="imageI1" src="/assets/images/Expanded.svg">
         <div class="btn_title">Edit</div>
       </button>
-            <button type="button" class="  rpa-btn_style" aria-hidden="true" title="Save Bot" [disabled]="!(envflag==false &&  0 < childBotWorkspace.finaldataobjects.length)" placement="bottom" id="savebot" (click)="saveBotFunAct()">
-      <img class="imageI1" src="/assets/images/Layer 1.svg">
-      <div class="btn_title">Save</div>
-    </button>
 
 
-            <button type="button" class="  rpa-btn_style" aria-hidden="true" title="Start Bot" placement="bottom" id="startbot" [disabled]="savebotrespose==undefined" (click)="executionAct()">
+            <button type="button" class="  rpa-btn_style" aria-hidden="true"  tooltip="Start Bot" placement="bottom" id="startbot" [disabled]="savebotrespose==undefined" (click)="executionAct()">
       <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
       <div class="btn_title">Start</div>
       </button>
 
             <div *ngIf="pausebot!=true && resumebot!=true">
-                <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom" title="Pause Bot" [disabled]="true">
+                <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom"  tooltip="Pause Bot" [disabled]="true">
         <img class="imageI1" src="/assets/images/RPA/pause_icon.svg">
         <div class="btn_title">Pause</div>
         </button>
             </div>
 
             <div *ngIf="pausebot==true">
-                <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom" title="Pause Bot" (click)="pauseBot()">
+                <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom" tooltip="Pause Bot" (click)="pauseBot()">
       <img class="imageI1" src="/assets/images/RPA/pause_icon.svg">
       <div class="btn_title">Pause</div>
       </button>
             </div>
 
             <div *ngIf="resumebot==true">
-                <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom" title="Resume Bot" (click)="resumeBot()">
+                <button type="button" class="  rpa-btn_style" aria-hidden="true" placement="bottom" tooltip="Resume Bot" (click)="resumeBot()">
         <img class="imageI1" src="/assets/images/RPA/resume_icon.svg">
         <div class="btn_title">Resume</div>
         </button>
             </div>
 
-            <button type="button" class="  rpa-btn_style" aria-hidden="true" id="schedule" title="Schedule Bot" (click)="schedulerPopUp()" id="schedule" placement="bottom">
-    <img class="imageI1" src="/assets/images/Group 286.svg">
-    <div class="btn_title">Schedule</div>
+
+
+
+
+            <div *ngIf="(startbot==false && pausebot==false && resumebot==false)|| startbot==true ">
+              <button type="button" id="stopbot" title="Stop Bot" placement="bottom" tooltip="Stop Bot" class="rpa-btn_style" aria-hidden="true" placement="bottom" [disabled]="true" (click)="stopBot()">
+    <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
+    <div class="btn_title">Stop</div>
     </button>
-            <div class="dropdown">
-                <button class="  rpa-btn_style dropdown-toggle" id="Environments" title="Select Environments" type="button" data-toggle="dropdown">
-           <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1">
-        <div class="btn_title">Environments</div></button>
-                <ul *ngIf="environment.length > 0" class="dropdown-menu rpa-custom-scrollbar">
-                    <li *ngFor="let list of environment;let i = index">
-                        <div class="checkbox">
-                            <div class="environments">
-                                <label [for]="list+i"><input type="checkbox" (change)="checkuncheckenv(list.environmentId)" [checked]="list.checked" >{{list.environmentName}}</label>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="checkbox" *ngIf="this.isButtonVisible">
-                            <div class="environments">
-                                <a style="color:black" [routerLink]="[ '/pages/rpautomation/environments']"><span><i class="fa fa-plus"></i></span>&nbsp; Create Environments</a>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+          </div>
 
-                <ul *ngIf="environment.length <= 0" class="dropdown-menu ">
-                    <li>
-                        <div class="checkbox">
-                            <div class="environments">
-                                <label [for]="'list'+i">No Records Found</label>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
 
-                    <li>
-                        <div class="checkbox" *ngIf="this.isButtonVisible">
-                            <div class="environments">
-                                <a [routerLink]="[ '/pages/rpautomation/environments']"><span><i class="fa fa-plus"></i></span>&nbsp;Create Environments</a>
-                                <hr>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+          <div *ngIf="pausebot==true || resumebot==true">
+              <button type="button" class="  rpa-btn_style" title="Stop Bot" placement="bottom" tooltip="Stop Bot" aria-hidden="true" placement="bottom" (click)="stopBot()">
+      <img class="imageI1" src="/assets/images/RPA/stop (1).svg">
+      <div class="btn_title">Stop</div>
+      </button>
+          </div>
+
+
+
             <div class="dropdown">
-                <button class="  rpa-btn_style dropdown-toggle" title="Bot Versions" [disabled]="savebotrespose==undefined" id="versions" type="button" data-toggle="dropdown" (click)="getVersionlist()"> <img src="..\\assets\\images\\RPA\\Version_icon.svg" class="imageI1"><div class="btn_title">Versions</div></button>
+                <button class="rpa-btn_style dropdown-toggle" tooltip="Bot Versions" placement="bottom" [disabled]="savebotrespose==undefined" id="versions" type="button" data-toggle="dropdown" (click)="getVersionlist()"> <img src="..\\assets\\images\\RPA\\Version_icon.svg" class="imageI1"><div class="btn_title">Versions</div></button>
                 <ul *ngIf="versionsList.length > 0" class="dropdown-menu rpa-custom-scrollbar">
-                    <li *ngFor="let version of versionsList; let i = index">
+                    <li *ngFor="let version of versionsList; let i = index" [class]="savebotrespose.version==version.vId?'version-highlight':''">
                         <div class="checkbox" (click)="switchversion(version.vId)">
-                            <div class="environments">
+                            <div class="environments" >
                                 <label [for]="version+i" (click)="switchversion(version.vId)">V.{{version.vId}}</label>
                                 <hr>
                             </div>
@@ -166,17 +184,20 @@
                 </ul>
 
             </div>
-            <button type="button" id="reset" class="  rpa-btn_style" title="Reset Bot" aria-hidden="true" placement="bottom">
+
+
+            <button type="button" class="rpa-btn_style" tooltip="Bot Logs" id="Logs" [disabled]="savebotrespose==undefined" aria-hidden="true" (click)="viewlogdata()" placement="bottom">
+              <img class="imageI1" src="/assets/images/RPA/ViewLog.svg">
+              <div class="btn_title">Logs</div>
+              </button>
+
+            <button type="button" id="reset" class="rpa-btn_style" tooltip="Reset Bot" aria-hidden="true" placement="bottom">
         <img class="imageI1" src="/assets/images/reload_pp.svg" (click)="reset()">
         <div class="btn_title">Reset</div>
       </button>
-            <button type="button" class="  rpa-btn_style" id="delete" [disabled]="savebotrespose==undefined" title="Delete Bot" aria-hidden="true" (click)="delete()" placement="bottom">
+            <button type="button" class="  rpa-btn_style" id="delete" [disabled]="savebotrespose==undefined" tooltip="Delete Bot" aria-hidden="true" (click)="delete()" placement="bottom">
       <img class="imageI1" src="/assets/images/RPA/delete_icon2.svg">
       <div class="btn_title">Delete</div>
-      </button>
-            <button type="button" class="rpa-btn_style" title="Logs" id="Logs" [disabled]="savebotrespose==undefined" aria-hidden="true" (click)="viewlogdata()" placement="bottom">
-      <img class="imageI1" src="/assets/images/RPA/ViewLog.svg">
-      <div class="btn_title">Logs</div>
       </button>
         </div>
     </div>
@@ -240,7 +261,7 @@
 
 
     <!-- forms -->
-
+<!--
     <div [id]="schedulepopid" class="rpa-modal">
         <div class="rpa-modal-content">
             <div class="rpa-modal-header">
@@ -263,7 +284,7 @@
                                 <cron-editor #cronEditorDemo [(cron)]="cronExpression" [disabled]="isCronDisabled" [(options)]="cronOptions">Cron here...
                                 </cron-editor>
                                 <!-- date start -->
-                                <div class="col-md-12 row">
+                           <!--k     <div class="col-md-12 row">
                                     <div class="col-md-3 form-group" style="margin-left:0px;margin-top:15px;">
                                         <div class="input-group">
                                             <label for="alertTo">From Date</label>
@@ -277,8 +298,8 @@
                                             <ngb-timepicker class="time btn-padmrar" [(ngModel)]="startTime" formControlName="startTime"></ngb-timepicker>
                                         </form>
                                         <!-- <p>Result : {{form.value | json}}</p> -->
-                                    </div>
-                                    <div class="col-md-3 form-group" style="margin-left:0px;margin-top:15px;">
+                            <!--k            </div>
+                                      <div class="col-md-3 form-group" style="margin-left:0px;margin-top:15px;">
                                         <div class="input-group">
                                             <label for="alertTo">To Date</label>
                                         </div>
@@ -291,13 +312,13 @@
                                             <ngb-timepicker class="time btn-padmrar" [(ngModel)]="endTime" formControlName="endTime"></ngb-timepicker>
                                         </form>
                                         <!-- <p>Result : {{form.value | json}}</p> -->
-                                    </div>
-                                </div>
+                     <!--               </div>
+                                </div>-->
                                 <!-- date end -->
                                 <!-- <div class="col-md-12">
               <h3><b>{{cronExpression}}</b></h3>
             </div> -->
-                            </div>
+             <!--k               </div>
                             <br>
                             <div class="form-group ">
                                 <button class="btn btn-primary eiap-btn" style="float: right;" (click)="addCron()">Add</button>
@@ -370,12 +391,21 @@
         </div>
     </div>
 </div>
+-->
 
-
-
-
-
-
+<div *ngIf="schpop">
+  <div id='sch' class="rpa-modal" style="display:block">
+      <div class="rpa-modal-content">
+          <div class="rpa-modal-header">
+              <span class="rpa-modal-close" (click)="closesch()">&times;</span>
+              <h4>Scheduler</h4>
+          </div>
+          <div class="rpa-modal-body">
+            <app-scheduler [data]="schedule"></app-scheduler>
+          </div>
+      </div>
+  </div>
+</div>
 
 
 <div [id]="viewlogid" class="rpa-modal">
@@ -384,31 +414,35 @@
             <span class="rpa-modal-close" (click)="viewlogclose()">&times;</span>
             <h4>Logs</h4>
         </div>
-        <div class="container" style="background: white;" class=" table w-100">
-            <div class="logs-container">
+
+        <div class="container-fluid" style="background: white;">
+          <button (click)="viewlogdata()" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i></button>
+
+          <div class="container-fluid"  class="table w-100 w-100">
+
                 <table mat-table [dataSource]="Viewloglist" #sort1="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
 
 
                     <!-- Run Id Column -->
                     <ng-container matColumnDef="run_id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Run ID </th>
-                        <td mat-cell *matCellDef="let element"><a style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.run_id}}</a></td>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
+                        <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.run_id}}</button></td>
                     </ng-container>
 
                     <!-- Version Column -->
                     <ng-container matColumnDef="version">
                         <th mat-header-cell *matHeaderCellDef> Version </th>
                         <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.version!=null">{{element.version}}</span>
+                            <span *ngIf="element.version!=null">V{{element.version}}</span>
                             <span *ngIf="element.version == undefined">-</span>
                         </td>
                     </ng-container>
 
                     <!-- Start Date Column -->
                     <ng-container matColumnDef="start_date">
-                        <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                        <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.start_date!=null">{{element.start_date}}</span>
+                        <th mat-header-cell *matHeaderCellDef style="width:25%;"> Start Date </th>
+                        <td mat-cell *matCellDef="let element" style="width:25%;">
+                            <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }}, {{element.start_time}}</span>
                             <span *ngIf="element.start_date == undefined">-</span>
                         </td>
                     </ng-container>
@@ -416,31 +450,12 @@
                     <!-- End Date Column -->
 
                     <ng-container matColumnDef="end_date">
-                        <th mat-header-cell *matHeaderCellDef> End Date </th>
-                        <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.end_date!=null">{{element.end_date}}</span>
+                        <th mat-header-cell *matHeaderCellDef style="width:25%;"> End Date </th>
+                        <td mat-cell *matCellDef="let element" style="width:25%;">
+                            <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy' }}, {{element.end_time}}</span>
                             <span *ngIf="element.end_date == undefined">-</span>
                         </td>
                     </ng-container>
-
-                    <!-- Start Time Column -->
-                    <ng-container matColumnDef="start_time">
-                        <th mat-header-cell *matHeaderCellDef> Start time </th>
-                        <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.start_time!=null">{{element.start_time}}</span>
-                            <span *ngIf="element.start_time == undefined">-</span>
-                        </td>
-                    </ng-container>
-
-                    <!-- End Time Column -->
-                    <ng-container matColumnDef="end_time">
-                        <th mat-header-cell *matHeaderCellDef> End Time </th>
-                        <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.end_time!=null">{{element.end_time}}</span>
-                            <span *ngIf="element.end_time == undefined">-</span>
-                        </td>
-                    </ng-container>
-
                     <ng-container matColumnDef="bot_status">
                         <th mat-header-cell *matHeaderCellDef>Status</th>
                         <td mat-cell *matCellDef="let element">
@@ -479,23 +494,30 @@
         </div>
 
         <div class="logs-container">
-            <button (click)="back()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
+            <button (click)="back()" style='float:right;margin-top:10px;'>
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>&nbsp;&nbsp;
+            <button (click)="ViewlogByrunid(botrunid)" style='float:right;margin-top:10px;'>
+              <i class="fas fa-sync-alt" aria-hidden="true"></i>
+            </button>
 
             <table mat-table [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
 
                 <!-- Task Name Column -->
                 <ng-container matColumnDef="task_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.task_name != null">{{element.task_name}}</span>
-                        <span *ngIf="element.task_name == undefined">-</span>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:18%"> Task Name </th>
+                    <td mat-cell *matCellDef="let element" style="padding-left:55px;width:18%">
+                        <span *ngIf="element.task_name != null" class="btntaskname">
+                            {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}</span>
+                           <span *ngIf="element.task_name == undefined">-</span>
+                           <div class="tasknameelement">{{element.task_name}}</div>
                     </td>
                 </ng-container>
 
                 <!-- Status Column -->
                 <ng-container matColumnDef="status">
-                    <th mat-header-cell *matHeaderCellDef>Status</th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef style="width:13%">Status</th>
+                    <td mat-cell *matCellDef="let element" style="width:13%">
                         <span *ngIf="element.status!=null">
                                     <span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
 
@@ -508,38 +530,23 @@
                         <span *ngIf="element.status == undefined">-</span></td>
                 </ng-container>
 
-                <!-- Start Time Column -->
-                <ng-container matColumnDef="start_time">
-                    <th mat-header-cell *matHeaderCellDef> Start Time </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.start_time != null">{{element.start_time.slice(11,19)}}</span>
-                        <span *ngIf="element.start_time == undefined">-</span>
-                    </td>
-                </ng-container>
-
                 <!-- Start date Column -->
                 <ng-container matColumnDef="start_date">
-                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0]}}</span>
+                    <th mat-header-cell *matHeaderCellDef style="width:18%"> Start Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:18%">
+                        <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
                         <span *ngIf="element.start_date == undefined">-</span>
                     </td>
                 </ng-container>
 
                 <!-- End Time Column -->
-                <ng-container matColumnDef="end_time">
-                    <th mat-header-cell *matHeaderCellDef> End Time </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.end_time != null">{{element.end_time.slice(11,19)}}</span>
-                        <span *ngIf="element.end_time == undefined">-</span>
-                    </td>
-                </ng-container>
+
 
                 <!-- End Date Column -->
                 <ng-container matColumnDef="end_date">
-                    <th mat-header-cell *matHeaderCellDef> End Date </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0]}}</span>
+                    <th mat-header-cell *matHeaderCellDef style="width:18%"> End Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:18%">
+                        <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
                         <span *ngIf="element.end_date == undefined">-</span>
                     </td>
                 </ng-container>
@@ -548,8 +555,11 @@
                 <ng-container matColumnDef="error_info">
                     <th mat-header-cell *matHeaderCellDef> Error Info </th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.error_info!=null && element.error_info != 'NA'">{{element.error_info}}</span>
-                        <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span></td>
+                        <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [tooltip]="element.error_info" class="btnerrorinfo">
+                            {{(element.error_info.length > 50) ? ((element.error_info).slice(0, 50) + '...') : element.error_info}}</span>
+                        <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span>
+                        <!--<div class="errorinfoelement">{{element.error_info}}</div>-->
+                    </td>
                 </ng-container>
 
                 <ng-container matColumnDef="noData">
@@ -566,6 +576,122 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+
+<div [id]="'rpa_createenvironment'+'_'+botState.botName"  class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="close_c_env()">&times;</span>
+          <h4>Create Environment</h4>
+      </div>
+      <div class="rpa-modal-body" *ngIf="insertForm != undefined">
+          <br>
+          <div class="container">
+              <form [formGroup]="insertForm" (ngSubmit)="savedata()">
+                  <div class="row">
+                      <div class="col-md-3 formelement">
+                          <label for="environmentName">Name*</label>
+                          <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
+                          <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
+
+('environmentName').touched" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
+                      </div>
+                      <div class="col-md-3 formelement ">
+                          <label for="environmentType">Type*</label>
+                          <!--<input type="text" class="form-control" formControlName="environmentType" value=""
+
+placeholder="Enter Environment Type" >-->
+                          <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
+        <option value="" [selected]="true">--Select Type--</option>
+        <option value="Windows">Windows</option>
+        <option value="Mac">Mac</option>
+        <option value="Linux">Linux</option>
+
+      </select>
+                          <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
+
+('environmentType').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
+
+                      </div>
+                      <div class="col-md-3 formelement">
+                          <label for="agentPath">Agent Path*</label>
+                          <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
+                          <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
+
+                      </div>
+                      <div class="col-md-3 formelement">
+                          <label for="hostAddress"> IP Address/Host*</label>
+                          <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+                          <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get
+
+('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-3 formelement">
+                          <label for="userName">Username*</label>
+                          <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
+                          <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+
+                      </div>
+
+                      <div class="col-md-3 formelement">
+                          <label for="password">Password*</label>
+                          <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                          <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+                          <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+                          <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+                      </div>
+
+                      <div class="col-md-3 formelement">
+                          <label for="connectionType">Connection Type*</label>
+                          <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
+                          <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
+
+('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+
+                      </div>
+
+                      <div class="col-md-3 formelement">
+                          <label for="portNumber">Port*</label>
+                          <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
+
+                          <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
+
+('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+
+                      </div>
+
+                  </div>
+                  <div class="row">
+                      <div class="col-md-3 formelement">
+                          <input type="checkbox" checked formControlName="activeStatus"> Active
+                      </div>
+                  </div>
+                  <br>
+                  <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
+                  <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
+                  <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()">
+              </form>
+
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
 
 
 

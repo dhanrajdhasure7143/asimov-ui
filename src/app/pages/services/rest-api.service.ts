@@ -275,7 +275,7 @@ export class RestApiService{
   {
     return this.http.post<any>("/rpa-service/agent/test-connection",data);
   }
-  
+
    // http://rpadev.epsoftinc.in/rpa-service/agent/dbtest-connection
 
   testdbconnections(data:any):Observable<any>
@@ -394,7 +394,7 @@ export class RestApiService{
   }
 
   getSingleTraceBPMN(body){
-    return this.http.get('/processintelligence/v1/bpmn/SingleTrace?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumber='+body.traceNumber)
+    return this.http.get('/processintelligence/v1/bpmn/SingleTraceMulti?pi_id='+body.pid+'&pi_name='+body.pname+'&traceNumber='+body.traceNumber)
   }
 
   getMultiTraceBPMN(body){
@@ -403,7 +403,7 @@ export class RestApiService{
       tracNo+='&traceNumberList='+body.traceNumberList[i]
     }
 
-    return this.http.get('/processintelligence/v1/bpmn/MultipleTraces?pi_id='+body.pid+'&pi_name='+body.pname+tracNo)
+    return this.http.get('/processintelligence/v1/bpmn/MulitpleTraces?pi_id='+body.pid+'&pi_name='+body.pname+tracNo)
   }
 
   getSliderTraceBPMN(body){
@@ -420,6 +420,9 @@ export class RestApiService{
     return this.http.post("/ReddisCopy/getGraphData", body)
   }
   getPIVariantActivity(body){
+    return this.http.post("/ReddisCopy/getGraphData", body)
+  }
+  getBIinsights(body){
     return this.http.post("/ReddisCopy/getGraphData", body)
   }
   //PI Insights END
@@ -599,5 +602,10 @@ export class RestApiService{
     deleteprocessschedule(data)
     {
       return this.http.post("/rpa-service/stop-process-schedule",data);
+    }
+
+    get_dynamic_data(url)
+    {
+      return this.http.get(url);
     }
 }

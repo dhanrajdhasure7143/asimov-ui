@@ -42,7 +42,7 @@
     
     <div style="width:100%;overflow-x: scroll;">
     
-            <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table">
+            <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table"  id="listofenv">
                 
                 <ng-container matColumnDef="check">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -56,25 +56,25 @@
                 <ng-container matColumnDef="connectiontName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Name</th>
                     <td mat-cell *matCellDef="let element"> 
-                        <button *ngIf="element.connectiontName!=null">{{element.connectiontName}}</button> 
+                        <span *ngIf="element.connectiontName!=null">{{element.connectiontName}}</span> 
                         <span *ngIf="element.connectiontName==''">-</span> 
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="password">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
-                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.password!=null">*******</button> <span *ngIf="element.password==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="dataBaseType">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Type</th>
                     <td mat-cell *matCellDef="let element"> 
-                        <button *ngIf="element.dataBaseType!=null">{{element.dataBaseType}}</button> 
+                        <span *ngIf="element.dataBaseType!=null">{{element.dataBaseType}}</span> 
                         <span *ngIf="element.dataBaseType==''">-</span> 
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="databasename">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Name</th>
                     <td mat-cell *matCellDef="let element"> 
-                        <button *ngIf="element.databasename!=null">{{element.databasename}}</button> 
+                        <span *ngIf="element.databasename!=null">{{element.databasename}}</span> 
                         <span *ngIf="element.databasename==''">-</span> 
                     </td>
                 </ng-container>
@@ -116,7 +116,7 @@
                 </ng-container>
                 <ng-container matColumnDef="createdTimeStamp">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date:'medium'}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
                 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
@@ -137,27 +137,27 @@
                 <form [formGroup]="insertdbForm" (ngSubmit)="savedata()">
                     <div class="row">
                         <div class="col-md-3 formelement">
-                            <label for="connectiontName">Connection Name*</label>
+                            <label for="connectiontName">Connection Name<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="connectiontName" #connectiontName value="" placeholder="Enter Connection Name">
                             <span *ngIf="insertdbForm.get('connectiontName').invalid && insertdbForm.get('connectiontName').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Name Required*</span>
                         </div>
                         
                         <div class="col-md-3 formelement">
-                            <label for="dataBaseType">Database Type*</label>
+                            <label for="dataBaseType">Database Type<span style="color:red">*</span></label>
                             <select class="form-control" formControlName="dataBaseType">
                                 <option value="" [selected]="true">--Select Database Type--</option>
-                                <option value="PostgresSQL">PostgresSQL</option>                      
+                                <option value="PostgreSQL">PostgreSQL</option>                      
                               </select>
                             <span *ngIf="insertdbForm.get('dataBaseType').invalid && insertdbForm.get('dataBaseType').touched" style="color:red" class="fa fa-info-circle errspan"> Database Type Required*</span>
                         </div>
 
                         <div class="col-md-3 formelement">
-                            <label for="databasename">Database Name*</label>
+                            <label for="databasename">Database Name<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="databasename" #hostAddress value="" placeholder="Database Name">
                             <span *ngIf="insertdbForm.get('databasename').invalid && insertdbForm.get('databasename').touched" style="color:red" class="fa fa-info-circle errspan"> Database Name Required*</span>
                         </div>
                         <div class="col-md-3 formelement">
-                            <label for="hostAddress">IP Address/Host*</label>
+                            <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address/Host">
                             <span *ngIf="insertdbForm.get('hostAddress').invalid && insertdbForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">IP Address/Host Required*</span>
                         </div>                  
@@ -165,17 +165,17 @@
                     </div>
                     <div class="row">  
                         <div class="col-md-3 formelement">
-                            <label for="portNumber">Port*</label>
+                            <label for="portNumber">Port<span style="color:red">*</span></label>
                             <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">        
                             <span *ngIf="insertdbForm.get('portNumber').invalid && insertdbForm.get('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
                         </div>  
                         <div class="col-md-3 formelement">
-                            <label for="username">Username*</label>
+                            <label for="username">Username<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
                             <span *ngIf="insertdbForm.get('username').invalid && insertdbForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>        
                         </div>                    
                         <div class="col-md-3 formelement">
-                            <label for="password">Password*</label>
+                            <label for="password">Password<span style="color:red">*</span></label>
                             <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                             <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
                             <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
@@ -183,7 +183,7 @@
                         </div>
                         
                         <div class="col-md-3 formelement">
-                            <label for="schemaName">Schema*</label>
+                            <label for="schemaName">Schema<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema">
                             <span *ngIf="insertdbForm.get('schemaName').invalid && insertdbForm.get('schemaName').touched" style="color:red" class="fa fa-info-circle errspan"> Schema Required*</span>
                         </div>
@@ -212,26 +212,26 @@
                 <form [formGroup]="updatedbForm" (ngSubmit)="dbconnectionupdate()">
                     <div class="row">
                         <div class="col-md-3 formelement">
-                            <label for="connectiontName">Connection Name*</label>
+                            <label for="connectiontName">Connection Name<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="connectiontName" #connectiontName value="" placeholder="Enter Connection Name">
                             <span *ngIf="updatedbForm.get('connectiontName').invalid && updatedbForm.get('connectiontName').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Name Required*</span>
                         </div>
                         
                         <div class="col-md-3 formelement">
-                            <label for="dataBaseType">Database Type*</label>
+                            <label for="dataBaseType">Database Type<span style="color:red">*</span></label>
                             <select class="form-control" formControlName="dataBaseType">
                                 <option value="" [selected]="true">--Select Database Type--</option>
-                                <option value="PostgresSQL">PostgresSQL</option>                      
+                                <option value="PostgreSQL">PostgreSQL</option>                      
                               </select>
                             <span *ngIf="updatedbForm.get('dataBaseType').invalid && updatedbForm.get('dataBaseType').touched" style="color:red" class="fa fa-info-circle errspan"> Database Type Required*</span>
                         </div>
                         <div class="col-md-3 formelement">
-                            <label for="databasename">Database Name*</label>
+                            <label for="databasename">Database Name<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="databasename" #hostAddress value="" placeholder="Database Name">
                             <span *ngIf="updatedbForm.get('databasename').invalid && updatedbForm.get('databasename').touched" style="color:red" class="fa fa-info-circle errspan"> Database Name Required*</span>
                         </div>
                         <div class="col-md-3 formelement">
-                            <label for="hostAddress">IP Address/Host*</label>
+                            <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address/Host">
                             <span *ngIf="updatedbForm.get('hostAddress').invalid && updatedbForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">IP Address/Host Required*</span>
                         </div>
@@ -240,17 +240,17 @@
                     </div>
                     <div class="row">
                         <div class="col-md-3 formelement">
-                            <label for="portNumber">Port*</label>
+                            <label for="portNumber">Port<span style="color:red">*</span></label>
                             <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">        
                             <span *ngIf="updatedbForm.get('portNumber').invalid && updatedbForm.get('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
                         </div> 
                         <div class="col-md-3 formelement">
-                            <label for="username">Username*</label>
+                            <label for="username">Username<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
                             <span *ngIf="updatedbForm.get('username').invalid && updatedbForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>        
                         </div>
                         <div class="col-md-3 formelement">
-                            <label for="password">Password*</label>
+                            <label for="password">Password<span style="color:red">*</span></label>
                             <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                             <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
                             <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
@@ -258,7 +258,7 @@
                         </div>
                         
                         <div class="col-md-3 formelement">
-                            <label for="schemaName">Schema*</label>
+                            <label for="schemaName">Schema<span style="color:red">*</span></label>
                             <input type="text" maxlength="50" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema">
                             <span *ngIf="updatedbForm.get('schemaName').invalid && updatedbForm.get('schemaName').touched" style="color:red" class="fa fa-info-circle errspan"> Schema Required*</span>
                         </div>

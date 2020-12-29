@@ -1,0 +1,10 @@
+.tabs{
+  overflow:visible !important;
+  position:  relative !important;
+}
+.mat-tab-body-content{
+  height:2000px !important;
+}
+.mat-tab-body.mat-tab-body-active, .mat-tab-body-wrapper{
+  height:2000px !important;
+}

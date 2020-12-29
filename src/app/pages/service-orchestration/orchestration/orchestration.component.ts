@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { DataTransferService } from '../../services/data-transfer.service';
 import {ActivatedRoute} from "@angular/router";
 import {NgxSpinnerService} from 'ngx-spinner';
 @Component({
   selector: 'app-orchestration',
   templateUrl: './orchestration.component.html',
-  styleUrls: ['./orchestration.component.css']
+  styleUrls: ['./orchestration.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class OrchestrationComponent implements OnInit {
 
@@ -48,9 +49,7 @@ export class OrchestrationComponent implements OnInit {
   }
   onTabChanged(event)
   {
-    console.log(event)
     this.check_tab=event.index;
-    console.log(this.selectedTab);
   }
 
 

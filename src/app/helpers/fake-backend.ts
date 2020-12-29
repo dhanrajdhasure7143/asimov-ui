@@ -11,13 +11,13 @@ export class BackendURLInterceptor implements HttpInterceptor {
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         // this.setLocalStorage(req);
         //authentication service logic - post integration with AIOTAL
-        
+
     var token=localStorage.getItem('accessToken');
    // var encryptToken=at(token.accessToken)
     //var encryptrefreshToken=btoa(token.refreshToken);
 
        let ipAddress = '192.168.0.1';
-      
+
         if(localStorage.getItem('ipAddress'))
            ipAddress = localStorage.getItem('ipAddress');
            var timezone:any;
@@ -40,7 +40,6 @@ export class BackendURLInterceptor implements HttpInterceptor {
     }
 
     getRequestUrl(req){
-        console.log(req);
         let url = "";
         if(req.url.indexOf('rpa-service') > -1)
             url = this.config.rpaEndPoint + req.url;
@@ -54,13 +53,17 @@ export class BackendURLInterceptor implements HttpInterceptor {
             url = this.config.accessTokenEndPoint + req.url;
         else if(req.url.indexOf('authorizationservice') > -1)
             url = this.config.authorizationEndPoint + req.url;
-        else if(req.url.indexOf('camunda') > -1)
-            url = req.url;
+        else if(req.url.indexOf('deployprocess') > -1)
+           url = this.config.bussinessProcessEndPoint + req.url;
+        else if(req.url.indexOf('newAccessToken') > -1)
+            url = this.config.accessTokenEndPoint + req.url;
         else if(req.url.indexOf('api') > -1)
             url = this.config.platformEndPoint + req.url;
+        if(req.url.indexOf('mailService') > -1)
+            url = this.config.alertsEndPoint + req.url;
         if(req.url.indexOf('notificationservice') > -1)
             url = this.config.alertsEndPoint + req.url;
-       
+
 
         return url;
     }

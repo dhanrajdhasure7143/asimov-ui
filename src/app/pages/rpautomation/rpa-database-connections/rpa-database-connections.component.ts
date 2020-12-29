@@ -9,6 +9,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
+import { RPAdbchints} from '../model/rpa-dbconnection-hints'
 
 @Component({
   selector: 'app-rpa-database-connections',
@@ -17,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 
 export class RpaDatabaseConnectionsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","hostAddress","portNumber","username","password","schemaName","activeStatus","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","connectiontName","dataBaseType","hostAddress","portNumber","username","password","databasename","schemaName","activeStatus","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public dbupdateflag: boolean;
@@ -39,11 +40,11 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     public passwordtype2:Boolean;
     
     constructor(private api:RestApiService, 
-      private router:Router, 
+      private router:Router,
+      private hints:RPAdbchints, 
       private formBuilder: FormBuilder,
       private chanref:ChangeDetectorRef, 
       private dt:DataTransferService,
-      private hints:RpaEnvHints,
       private spinner: NgxSpinnerService
       ) { 
       const ipPattern = 
@@ -77,7 +78,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
 
   ngOnInit() {
-    
+    this.dt.changeHints(this.hints.rpadbchints);
     this.getallDBConnection();
     this.passwordtype1=false;
     this.passwordtype2=false;
@@ -145,7 +146,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         this.spinner.hide();
         if(res.errorCode==undefined){
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: "Successfully Connected",
           showConfirmButton: false,
@@ -153,8 +154,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         })
         }else{
           Swal.fire({
-            position: 'top-end',
-            icon: 'question',
+            position: 'center',
+            icon: 'error',
             title: 'Connection Failed',
             showConfirmButton: false,
             timer: 2000
@@ -214,6 +215,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   resetDBForm(){
     this.insertdbForm.reset();
+    this.insertdbForm.get("dataBaseType").setValue("");
   }
 
   resetupdateDBForm(){

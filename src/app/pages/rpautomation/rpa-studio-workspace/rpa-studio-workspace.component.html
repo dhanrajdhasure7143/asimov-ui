@@ -3,6 +3,7 @@
         Designer Disabled <span>To make changes click edit</span>
     </div>
     <div #content id="content">
+
         <div [id]="dragareaid" class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)" oncontextmenu="return false;" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
             <ng-container *ngFor="let node of nodes; let i = index">
                 <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i)" [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
@@ -24,7 +25,7 @@
                             <div class="context-menu1">
                                 <div class="context-menu__item">
                                     <a class="context-menu__link" (click)="outputbox(node)" data-action="View">Open Output Box
-                    </a>
+                                     </a>
                                 </div>
                             </div>
                         </nav>

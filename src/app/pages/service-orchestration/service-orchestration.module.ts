@@ -18,10 +18,10 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { SoAutomatedTasksComponent } from './orchestration/so-automated-tasks/so-automated-tasks.component';
 import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
-import { SoDashboardComponent, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
+import { Category,SoDashboardComponent,Slicedate, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
-import { SoSchedulerComponent, Envname } from './orchestration/so-scheduler/so-scheduler.component';
+import { SoSchedulerComponent, Envname, Reverse } from './orchestration/so-scheduler/so-scheduler.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatCardModule} from '@angular/material/card';
@@ -38,6 +38,9 @@ import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlist
   declarations: [OrchestrationComponent,
     BotStatusComponent,
     FilterBy,
+    Category,
+    Reverse,
+    Slicedate,
     BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname],
   imports: [
     CommonModule,
