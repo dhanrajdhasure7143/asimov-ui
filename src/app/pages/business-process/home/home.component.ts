@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 
