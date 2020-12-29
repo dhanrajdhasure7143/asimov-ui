@@ -505,7 +505,8 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                     }
                 })
             }
-            fieldsList.push(tmp)
+            if(tmp.trim() != '')
+                fieldsList.push(tmp)
         })
         return fieldsList;
     }
