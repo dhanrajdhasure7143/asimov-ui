@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-1 ">
+    <div style="height:500px">
+    <div class="toolset" >
+      <input type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" [(ngModel)]="userFilter.name" name="node" placeholder="&#61442; Search"
+      class="form-control search fontAwesome" autocomplete="off">
+      <br>
+      <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:60px"id="dragicons">
+        <button type="button"class="scroll top">
+          <img (click)="scrolltop()"style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
+        </button>
+
+
+        <div #section class="section">
+          <div class="nodes"*ngFor="let node of templateNodes | filterBy: userFilter">
+    <!-- | slice:0:show;  let i=index-->
+              <div class=""title="{{node.name}}"[dndDraggable]="node">
+                <span>
+                  <img [src]="node.path"class="con-img">
+                </span>
+              </div>
+          </div>
+    <!--<div class="slice-icon" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
+                    </div>-->
+        </div>
+        <button (click)="scrollbottom()"type="button"class="scroll bottom">
+          <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\DownArrow.svg">
+        </button>
+      </div>
+
+    </div>
+  </div>
+  </div>
+  <div class="col-md-11 check">
+    <div *ngIf="templateNodes.length!=0" class="check">
+      <app-rpa-studio-actionsmenu [bot]="botState" [toolset]="templateNodes" ></app-rpa-studio-actionsmenu>
+    </div>
+  </div>
+  <!--<div class="col-md-1 text-center">
+
+   <div class="vertical_slider custom-slider text-center" id="act_slider">
+    <i class="fa fa-plus"></i>
+    <br>
+    <ng5-slider  [options]="options" ></ng5-slider>
+    <br>
+    <i class="fa fa-minus"></i>
+
+  </div>
+    <br><br>
+      <button mat-button [matMenuTriggerFor]="belowMenu" class="menu-item">  <img class="actions_butns" src="..\assets\images\PI\download_icon.svg"></button>
+      <mat-menu #belowMenu="matMenu" yPosition="below">
+        <button mat-menu-item  class="" ><i class="far fa-file-image"></i><span>JPEG</span></button>
+        <button  mat-menu-item class="" ><i class="far fa-file-image"></i><span>PNG</span></button>
+        <button  mat-menu-item class="" ><i class="far fa-file-pdf"></i><span>PDF</span></button>
+        <button  mat-menu-item class="" ><i class="fas fa-file-image"></i><span>SVG</span></button>
+      </mat-menu>
+  </div>-->
+</div>

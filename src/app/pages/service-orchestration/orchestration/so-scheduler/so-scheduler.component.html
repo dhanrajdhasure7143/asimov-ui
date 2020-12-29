@@ -3,6 +3,7 @@
         <div class="col-md-6 row">
             <br>
             <div class="col-md-12">
+              <span>
                 <mat-form-field>
                     <mat-label>Select Timezone</mat-label>
                     <mat-select [(ngModel)]="timezone">
@@ -11,6 +12,20 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
+              </span>&nbsp;&nbsp;
+              <span  *ngIf="processid!='' && processid !=undefined">
+                <mat-form-field>
+                    <mat-label>Select Environemt</mat-label>
+                    <mat-select [(ngModel)]="selectedEnvironment">
+                        <mat-option *ngFor="let env of Environments" [value]="env.environmentId">
+                            {{env.environmentName}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+              </span>
+              <span style="padding:5px">
+                <button (click)="reset()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
+              </span>
             </div>
             <div class="col-md-12">
 
@@ -49,7 +64,8 @@
                 <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="endtime"></ngx-timepicker-field>
             </div>
 
-            <div class="text-right" style="padding:10px">
+            <div class="pull-right" style="padding:10px">
+                <br><br>
                 <button class="btn btn-primary eiap-btn" (click)="add_sch()">Add</button>
             </div>
             <br><br>
@@ -77,17 +93,20 @@
                       </span>
 
                     <span style="padding:5px">
-                       <button [disabled]="!(flags.stopflag)"   mat-mini-fab color="basic"   (click)="stop_schedule()">
-                        <i class="fa fa-stop"></i>
-                        </button>
-                      </span>
-                    <span style="padding:5px">
                       <button [disabled]="!(flags.deleteflag)"   mat-mini-fab color="basic"   (click)="delete_schedule()">
                         <i class="fa fa-trash"></i>
                       </button>
                     </span>
+                    <span style="padding:5px">
+                      <button    mat-mini-fab color="basic"   (click)="get_schedule()">
+                        <i class="fa fa-sync-alt"></i>
+                      </button>
+                    </span>
                 </div>
                 <br><br>
+
+                <!--For Bot Schedule-->
+                <div  *ngIf="botid!='' && botid !=undefined">
                 <table class="table">
                     <thead>
                         <th class="text-center"><input type="checkbox" (click)="check_all($event)"></th>
@@ -98,16 +117,50 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let schedule of schedule_list">
+                        <tr *ngFor="let schedule of schedule_list | paginate: { itemsPerPage: 4,currentPage: q }">
                             <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timeZone}}</td>
-                            <td>--</td>
-                            <td>--</td>
-                            <td>--</td>
+                            <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
+                            <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
+                            <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.nextRunTime}}</td>
+                            <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
+                            <td *ngIf="schedule.botActionStatus!=undefined">{{schedule.botActionStatus}}</td>
+                            <td *ngIf="schedule.botActionStatus==undefined">{{schedule.save_status}}</td>
+
+                          </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                </div>
+                <!--For Process schedule-->
+                <div  *ngIf="processid!='' && processid !=undefined">
+                <table class="table">
+                    <thead>
+                        <th class="text-center"><input type="checkbox" (click)="check_all($event)"></th>
+                        <th>Schedule Interval</th>
+                        <th>Timezone</th>
+                        <th>Environment</th>
+                        <th>Last Run</th>
+                        <th>Next Run</th>
+                        <th>Status</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let schedule of (schedule_list | Reverse) |  paginate: { itemsPerPage: 4,currentPage: q }" >
+                            <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
+                            <td>{{convertcron(schedule.scheduleInterval)}}</td>
+                            <td>{{ schedule.timezone}}</td>
+                            <td>{{schedule.envId | Envname : Environments}}</td>
+                            <td *ngIf="schedule.lastRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.lastRunTime}}</td>
+                            <td *ngIf="schedule.lastRunTime=='null' || schedule.nextRunTime==undefined">--</td>
+                            <td *ngIf="schedule.nextRunTime!='null' && schedule.nextRunTime!=undefined">{{schedule.nextRunTime}}</td>
+                            <td *ngIf="schedule.nextRunTime=='null' || schedule.nextRunTime==undefined">--</td>
+                            <td>{{schedule.schedularActionStatus}}</td>
                         </tr>
                     </tbody>
                 </table>
+                <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                </div>
                 <div class="text-right">
                     <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
                 </div>

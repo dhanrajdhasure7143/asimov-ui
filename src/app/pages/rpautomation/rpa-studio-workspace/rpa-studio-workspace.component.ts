@@ -517,29 +517,32 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         name: node.selectedNodeTask,
         id: node.selectedNodeId
       }
-      this.formHeader = node.name + "-" + node.selectedNodeTask;
+      this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
       if (taskdata != undefined) {
-        if (taskdata.tMetaId == node.selectedNodeId) {
+        if (taskdata.tMetaId == node.selectedNodeId)
+        {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
             taskdata.attributes.forEach(element => {
-              if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+              if(finalattributes.find(data => data.id == element.metaAttrId)!= undefined)
               {
-                if(element.attrValue!='' && element.attrValue!=undefined)
+                if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
                 {
-                  let attr_val=JSON.parse(element.attrValue);
-                  let attrnames=Object.getOwnPropertyNames(attr_val);
-                  finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  if(element.attrValue!='' && element.attrValue!=undefined)
+                  {
+                    let attr_val=JSON.parse(element.attrValue);
+                    let attrnames=Object.getOwnPropertyNames(attr_val);
+                    finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  }
+                }
+                else
+                {
+                  finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
                 }
               }
-              else
-              {
-                finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
-              }
-
             });
             if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
             {
@@ -610,11 +613,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
   addoptions(attributes,node)
   {
+    /*
       let token={​​​​​
         headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
-      }​​​​
+      }​​​*/​
       let restapi_attr=attributes.find(attr => attr.type=='restapi');
-      this.http.get(restapi_attr.dependency,token).subscribe(data=>
+      this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
       {
         this.restapiresponse=data
         let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
@@ -1212,12 +1216,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           {
             let data: any = outdata
             let textval:String=JSON.stringify(data[0].Value);
-            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
+            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />");
+
           }
           if(this.SelectedOutputType=="Image")
           {
             let data=this.outputboxresult[0].Value.split(':');
-            this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
+            //let obj=JSON.parse(this.outputboxresult[0].Value);
+            //console.log("000000000000000000000000000000000000>",obj)
+            let image=data[1].slice(0, -2);
+            this.Image= 'data:' + 'image/png' + ';base64,' +image;
           }
         })
       }

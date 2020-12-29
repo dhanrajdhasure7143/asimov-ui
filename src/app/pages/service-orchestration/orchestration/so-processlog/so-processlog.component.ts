@@ -1,10 +1,10 @@
-import { Component, OnInit,Input, ViewChild } from '@angular/core';
+import { Component, OnInit,Input, ViewChild, Pipe, PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import {SoAutomatedTasksComponent} from "../so-automated-tasks/so-automated-tasks.component"
 @Component({
   selector: 'app-so-processlog',
   templateUrl: './so-processlog.component.html',
@@ -27,24 +27,27 @@ export class SoProcesslogComponent implements OnInit {
   @ViewChild("sortp3",{static:false}) sortp3: MatSort;
   public dataSourcep1: MatTableDataSource<any>;
   public dataSourcep2: MatTableDataSource<any>;
+  public Environments:any;
   public dataSourcep3: MatTableDataSource<any>;
   public respdata1: boolean = false;
-  displayedColumnsp1: string[] = ["processRunId","processStartDate","processEndDate","processStartTime","processEndTime","runStatus"];
-  displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date','start_time' ,'end_time', "bot_status"];
-  displayedColumnsp3: string[] = ['task_name','start_date','end_date','start_time','end_time','error_info', 'status' ];
-  constructor( private rest:RestApiService) { }
+  displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
+  displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
+  displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
+  constructor( private rest:RestApiService, private automated:SoAutomatedTasksComponent) { }
 
   ngOnInit() {
     document.getElementById("viewlogid1").style.display="none";
     document.getElementById("plogrunid").style.display="none";
     document.getElementById("pbotrunid").style.display="none";
+    this.Environments=this.automated.environments
     this.getprocesslog();
+
   }
 
   getprocesslog(){
     let logbyrunidresp1:any;
     let resplogbyrun1: any = [];
-    if(this.processId != '')
+    if(this.processId != '' && this.processId != undefined)
     {
     this.logresponse=[];
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
@@ -66,7 +69,7 @@ export class SoProcesslogComponent implements OnInit {
           logbyrunidresp1["processEndDate"]=logbyrunidresp1.processEndTime;
           logbyrunidresp1.processStartTime=logbyrunidresp1.processStartTime;
           logbyrunidresp1.processEndTime=logbyrunidresp1.processEndTime;
-          
+
           resplogbyrun1.push(logbyrunidresp1)
         });
         console.log(resplogbyrun1);
@@ -77,36 +80,36 @@ export class SoProcesslogComponent implements OnInit {
         console.log(this.dataSourcep1);
         this.dataSourcep1.sort=this.sortp1;
         this.dataSourcep1.paginator=this.paginatorp1;
-        document.getElementById("viewlogid1").style.display = "block"; 
-        
+        document.getElementById("viewlogid1").style.display = "block";
+
     });
     }
   }
 
   Processlogclose(){
-    document.getElementById("viewlogid1").style.display = "none"; 
+    document.getElementById("viewlogid1").style.display = "none";
   }
 
   Processlogclose2(){
-    document.getElementById("plogrunid").style.display = "none"; 
+    document.getElementById("plogrunid").style.display = "none";
   }
 
   Processlogclose3(){
-    document.getElementById("pbotrunid").style.display = "none"; 
+    document.getElementById("pbotrunid").style.display = "none";
   }
 
   backplogrid(){
-    document.getElementById("plogrunid").style.display = "none"; 
-    document.getElementById("viewlogid1").style.display = "block"; 
+    document.getElementById("plogrunid").style.display = "none";
+    document.getElementById("viewlogid1").style.display = "block";
   }
 
   backpbotrunid(){
-    document.getElementById("pbotrunid").style.display = "none"; 
-    document.getElementById("plogrunid").style.display = "block"; 
+    document.getElementById("pbotrunid").style.display = "none";
+    document.getElementById("plogrunid").style.display = "block";
   }
-
+  public selected_processRunId:any;
   getprocessrunid(processRunId){
-    console.log(processRunId);
+    this.selected_processRunId=processRunId;
     let logbyrunidresp: any;
     let resplogbyrun = [];
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
@@ -130,7 +133,7 @@ export class SoProcesslogComponent implements OnInit {
         logbyrunidresp["end_date"]=logbyrunidresp.end_time;
         logbyrunidresp.start_time=logbyrunidresp.start_time;
         logbyrunidresp.end_time=logbyrunidresp.end_time;
-        
+
         resplogbyrun.push(logbyrunidresp)
       });
       console.log(resplogbyrun);
@@ -141,21 +144,23 @@ export class SoProcesslogComponent implements OnInit {
       document.getElementById("viewlogid1").style.display="none";
       document.getElementById("plogrunid").style.display="block";
       console.log(this.dataSourcep2);
-      
-      
+
+
     });
     //console.log(processRunId);
   }
 
+  public selected_runid:any;
   ViewlogByrunid(runid){
     console.log(runid);
+    this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
     let resplogbyrun1:any=[];
     let PbotId = this.runidresponse.find(data =>data.run_id == runid).bot_id;
     let pversion = this.runidresponse.find(data =>data.run_id == runid).version;
     this.rest.getViewlogbyrunid(PbotId,pversion,runid).subscribe((data)=>{
-      responsedata = data; 
+      responsedata = data;
       if(responsedata.length >0)
       {
         this.respdata2 = false;
@@ -172,7 +177,7 @@ export class SoProcesslogComponent implements OnInit {
         logbyrunidresp1["end_date"]=logbyrunidresp1.end_time;
         logbyrunidresp1.start_time=logbyrunidresp1.start_time;
         logbyrunidresp1.end_time=logbyrunidresp1.end_time;
-        
+
         resplogbyrun1.push(logbyrunidresp1)
       });
       console.log(resplogbyrun1);
@@ -187,3 +192,6 @@ export class SoProcesslogComponent implements OnInit {
     }
 
 }
+
+
+

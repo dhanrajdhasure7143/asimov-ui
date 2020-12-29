@@ -118,6 +118,7 @@ export class RpaHomeComponent implements OnInit {
   Resetfilters(){
     this.botNameFilter.setValue("");
     this.departmentFilter.setValue("");
+    this.getallbots();
   }
 
   getallbots()
@@ -182,9 +183,9 @@ export class RpaHomeComponent implements OnInit {
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
      this.dataSource1.data = response;
-     this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {   
+     this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
       console.log(departmentFilterValue);
-      if(departmentFilterValue != ""){   
+      if(departmentFilterValue != ""){
     let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
     console.log(category);
       this.filteredValues['department'] = category;
@@ -199,9 +200,9 @@ export class RpaHomeComponent implements OnInit {
       } else {
         this.isTableHasData = false;
       }
-      
+
       },(err)=>{
-        
+
         this.rpa_studio.spinner.hide();
       });
 

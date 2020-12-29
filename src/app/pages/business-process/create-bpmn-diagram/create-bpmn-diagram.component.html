@@ -23,15 +23,15 @@
         </mat-form-field>
     </div>
     <div class="functionality-icons">
-        <span class="fa fa-upload" (click)="openDeployDialog()"></span>&nbsp;&nbsp;
-        <span class="start-instance">
-            <span class="fa fa-play" (click)="openDeployDialog()"></span>&nbsp;&nbsp;
-            <div class="deploy-menu">
+        <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
+        <!-- <span class="start-instance">
+            <span class="fa fa-play" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
+            <div class="deploy-menu" *ngIf="rejectedOrApproved == 'APPROVED'">
                 <a (click)="openDeployDialog()">Start process instance</a>
                 <br/>
                 <a (click)="openDeployDialog()">Start process instance with new configuration</a>
             </div>
-        </span>
+        </span> -->
         <span class="fa fa-keyboard" (click)="displayShortcut()"></span>&nbsp;&nbsp;
         <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
         <!-- <button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button> -->

@@ -17,12 +17,14 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./so-automated-tasks.component.css']
 })
 export class SoAutomatedTasksComponent implements OnInit {
+  schdata:any;
   public processId1:any;
   public popup:any;
+  public schedulepopup:Boolean=false;
   public queryparam:any='';
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["processName","taskName","taskType","Assign","status","successTask","failureTask","Operations"];
+  displayedColumns: string[] = ["processName","taskName","taskType", "category","Assign","status","successTask","failureTask","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -30,11 +32,13 @@ export class SoAutomatedTasksComponent implements OnInit {
   public bot_list:any=[];
   public humans_list:any=[];
   public process_names:any=[];
+  public selected_process_names:any=[];
   public selectedvalue:any;
   public selectedTab:number;
   public responsedata;
   public selectedEnvironment:any='';
   public environments:any=[];
+  public selectedcategory:any="";
   public categaoriesList:any=[];
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
@@ -46,7 +50,8 @@ export class SoAutomatedTasksComponent implements OnInit {
     private spinner:NgxSpinnerService,
     private http:HttpClient,
    )
-  {}
+  {
+  }
 
 
 
@@ -71,6 +76,13 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.getautomatedtasks(this.processId);
     this.gethumanslist();
  }
+
+ loadbotdatadesign(botId)
+  {
+    console.log(botId);
+    localStorage.setItem("botId",botId);
+    this.router.navigate(["/pages/rpautomation/home"]);
+  }
 
 
   assignreset(id)
@@ -126,6 +138,7 @@ export class SoAutomatedTasksComponent implements OnInit {
     console.log(processId);
     this.rest.getprocessnames().subscribe(processnames=>{
       this.process_names=processnames;
+      this.selected_process_names=processnames;
       let processnamebyid;
 
       if(processId != undefined)
@@ -154,31 +167,15 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
+
     this.dataSource2.filter = filterValue;
   }
 
-  applyFilter1(filterValue: string) {
-
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
-    this.dataSource2.filter = filterValue;
+  applyFilter1() {
+    this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
+    this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
+    this.selectedvalue="";
   }
-
-
-
-  createoverlay()
-  {
-    //this.rpa_studio.onCreate(0);
-    //document.getElementById("create-bot").style.display ="block";
-  }
-
-  /*openload()
-  {
-
-    document.getElementById("load-bot").style.display ="block";
-  }*/
 
 
   close()
@@ -377,11 +374,39 @@ export class SoAutomatedTasksComponent implements OnInit {
   getprocesslogs(){
     this.processId1 = this.selectedvalue;
     this.popup=true;
+  }
+
+  closepop()
+  {
+    this.popup=false;
+  }
+  reset_all()
+  {
+    this.selectedEnvironment="";
+    this.selectedvalue="";
+    this.selectedcategory="";
+    this.getautomatedtasks(0)
+
+  }
+
+
+  startscheduler()
+  {
+    this.schdata={
+      processid:this.selectedvalue,
+      environment:this.selectedEnvironment,
+      processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
     }
-  
-    closepop()
-      {
-        this.popup=false;
-      }
+    this.schedulepopup=true;
+  }
+
+  closescheduler()
+  {
+    this.schedulepopup=false;
+  }
+
 
 }
+
+
+

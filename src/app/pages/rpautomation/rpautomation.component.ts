@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTransferService } from "../services/data-transfer.service";
-//import {RpaStudioComponent} from "./rpa-studio/rpa-studio.component" 
+import * as $ from 'jquery';
+//import {RpaStudioComponent} from "./rpa-studio/rpa-studio.component"
 @Component({
   selector: 'app-rpautomation',
   templateUrl: './rpautomation.component.html',
@@ -17,8 +18,8 @@ export class RpautomationComponent implements OnInit {
 
   }
   removenodes()
-  { 
-    
+  {
+    $(".bot-close").click();
   }
 
 }

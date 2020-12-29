@@ -197,8 +197,8 @@
                 <div class="col-sm-12 box-content hedline1 box_shadw">
                     <p><strong>Business insights</strong> </p>
                     <ul>
-                        <li>26% of the cases are taking longer than 6 days</li>
-                        <li>35% of the cases are taking less than 2 days</li>
+                        <li>{{biDataMaxPerct}}% of the cases are taking longer than {{biDataMaxDays}} days</li>
+                        <li>{{biDataMinPerct}}% of the cases are taking less than {{biDataMinDays}} days</li>
                     </ul>
                 </div>
                 <div class="col-sm-12 box-content hedline2 box_shadw" *ngIf="top10_activityData && top10_activityData.length!=0">

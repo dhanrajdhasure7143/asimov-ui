@@ -3,7 +3,7 @@
     <div class="col-md-3">
 
         <h2 class="title-font" style="margin-top:10px !important;margin-bottom: 0px !important">Automate the Tasks</h2><br>
-        <h5 class="subtitle" style="margin-top:0px !important">Select below options to configure the Bots</h5><br/>
+        <h5 class="subtitle" style="margin-top:0px !important;font-size: 13.8px !important;">Select below option to create or configure the task</h5><br/>
 
         <div class="rpa-home">
             <!--<div class="rpa-home-block" id="createbot-Home">
@@ -50,11 +50,11 @@
     </div>
     <div class="col-md-9" style="padding-right:25px;">
             <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home" style=" border-radius: 4px;">
-                
-                
+
+
                <!-- <mat-tab-group mat-align-tabs="start" [selectedIndex]="selectedTab">
                     <mat-tab label="Bot Details">
-                        <hr>--> 
+                        <hr>-->
                         <div class="row rpa-home-header">
                             <div class="col-sm-7 col-md-7" style="float:left !important;padding-left:37px;">
                                 <h3 class="box-heading  rpa-home-heading">My Workspace</h3>
@@ -81,8 +81,11 @@
                             <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
 
                                 <ng-container matColumnDef="botName">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-                                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)=loadbotdata(element.botId)>{{element.botName}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%;">Bot Name </th>
+                                    <td mat-cell *matCellDef="let element" style="width:18%;">
+                                        <button *ngIf="element.botName!=null" class="btnbot"  [tooltip]="element.botName" placement="bottom" (click)=loadbotdata(element.botId)>{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</button>
+                                        <!--<div class="BotNameelement">{{element.botName}}</div>  -->
+                                        <span *ngIf="element.botName==''">-</span> </td>
                                 </ng-container>
 
                                 <ng-container matColumnDef="version">
@@ -113,22 +116,22 @@
                                 <ng-container matColumnDef="botStatus">
                                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
                                     <td mat-cell *matCellDef="let element">
-                                        
-                                        <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-                                        
-                                        <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
-                                        <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-                                        
-                                        <span *ngIf="element.botStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.botStatus}}</span></span>
-                                      
-                                        
+                                        <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.botStatus}}</span>
+
+                                        <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+
+                                        <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                                        <span *ngIf="element.botStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+
+
                                         <span *ngIf="element.botStatus==null">---</span> </td>
                                 </ng-container>
                                 <ng-container matColumnDef="description">
-                                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
-                                    <td mat-cell *matCellDef="let element">
-                                        <span *ngIf="element.description!=null"> {{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
+                                    <th mat-header-cell *matHeaderCellDef style="width:25%;">Description </th>
+                                    <td mat-cell *matCellDef="let element" style="width:25%;">
+                                        <span *ngIf="element.description!=null" placement="bottom" [tooltip]="element.description" class="btndes"> {{(element.description.length > 30) ? ((element.description).slice(0, 30) + '...') : element.description}}</span>
                                         <span *ngIf="element.description==null">-</span>
                                     </td>
                                 </ng-container>

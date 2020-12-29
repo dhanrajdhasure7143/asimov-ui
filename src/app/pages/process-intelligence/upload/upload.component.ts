@@ -189,8 +189,8 @@ export class UploadComponent implements OnInit {
           icon: 'error',
         })
       }else{
-        localStorage.removeItem("fileData")
-        localStorage.setItem("fileData", JSON.stringify(excelfile))
+        // localStorage.removeItem("fileData")
+        // localStorage.setItem("fileData", JSON.stringify(excelfile))
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
     };
@@ -216,8 +216,8 @@ export class UploadComponent implements OnInit {
           icon: 'error',
         })
       }else{
-        localStorage.removeItem("fileData")
-        localStorage.setItem("fileData", JSON.stringify(excelfile))
+        // localStorage.removeItem("fileData")
+        // localStorage.setItem("fileData", JSON.stringify(excelfile))
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
     };
@@ -559,7 +559,7 @@ testDbConnection(){
           message: "Connected Successfully."
       });
       }else{
-        console.log(this.connectionResp.data[0].errors);
+        // console.log(this.connectionResp.data[0].errors);
           this.notifier.show({
               type: 'error',
               message: "Error"+this.connectionResp.data[0].errors

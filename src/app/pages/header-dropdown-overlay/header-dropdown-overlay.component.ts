@@ -105,6 +105,7 @@ close(){
           type: "success",
            message: "Notification deleted successfully!"
          });
+         this.dataid = '';
           },err=>{
           this.getAllNotifications();
             });
@@ -119,7 +120,6 @@ close(){
          }
           this.rpa.getNotifications(this.role,userId,notificationbody).subscribe(data => {
            this.notificationList = data
-           console.log("count",this.notificationList)
           })
         }
 
