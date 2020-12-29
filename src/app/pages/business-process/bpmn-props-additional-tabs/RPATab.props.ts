@@ -312,7 +312,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId") && each_attr['visibility']);
                     }
                 })
-            }else if(each_attr['type'] == "dropdown"){
+            }else if(each_attr['type'] == "dropdown" || each_attr['type'] == "restapi"){
                 tmp = entryFactory.selectBox({
                     id: each_attr['id'],
                     label: each_attr['label'],
@@ -505,7 +505,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                     }
                 })
             }
-            if(tmp.trim() != '')
+            if(tmp != '')
                 fieldsList.push(tmp)
         })
         return fieldsList;
