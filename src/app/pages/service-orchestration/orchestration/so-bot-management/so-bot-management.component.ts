@@ -20,7 +20,7 @@ export class SoBotManagementComponent implements OnInit {
     public isTableHasData = true;
     public respdata1=false;
     schdata:any;
-    displayedColumns: string[] = ["botName","botType", "description","version","botStatus", "Action","Schedule","Logs"];
+    displayedColumns: string[] = ["botName","botType", "department","description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     botNameFilter = new FormControl('');
     botTypeFilter = new FormControl('');
