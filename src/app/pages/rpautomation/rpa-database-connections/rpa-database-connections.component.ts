@@ -3,13 +3,12 @@ import {FormGroup, Validators, FormBuilder, Form } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
-import {RpaEnvHints} from "../model/rpa-environments-module-hints";
+import {RpaconfigHints} from "../model/rpa-environments-module-hints";
 import {Router} from "@angular/router";
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NgxSpinnerService } from "ngx-spinner";
-import { RPAdbchints} from '../model/rpa-dbconnection-hints'
 
 @Component({
   selector: 'app-rpa-database-connections',
@@ -41,7 +40,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     
     constructor(private api:RestApiService, 
       private router:Router,
-      private hints:RPAdbchints, 
+      private hints:RpaconfigHints, 
       private formBuilder: FormBuilder,
       private chanref:ChangeDetectorRef, 
       private dt:DataTransferService,
