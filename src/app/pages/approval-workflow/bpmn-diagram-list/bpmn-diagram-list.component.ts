@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild,HostListener } from '@angular/core';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { DiagListData } from './model/bpmn-diag-list-data';
 import { RestApiService } from '../../services/rest-api.service';
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import { Router } from '@angular/router';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { ApprovalHomeHints } from './model/bpmn_approval_workflow';

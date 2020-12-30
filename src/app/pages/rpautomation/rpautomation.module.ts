@@ -23,7 +23,7 @@ import { RpaHints } from './model/rpa-module-hints';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import { RpaDragHints } from './model/rpa-workspace-module-hints';
 import { FilterPipeModule } from 'ngx-filter-pipe';
-import {RpaEnvHints} from "./model/rpa-environments-module-hints";
+import {RpaconfigHints} from "./model/rpa-environments-module-hints";
 import {RpaWorkspace} from "./model/rpa-workspaceslist-module-hints";
 import { NgxPasswordToggleModule } from 'ngx-password-toggle';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -54,7 +54,6 @@ import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatNativeDateModule} from '@angular/material';
-import {RPAdbchints} from "./model/rpa-dbconnection-hints";
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -109,6 +108,6 @@ import {RPAdbchints} from "./model/rpa-dbconnection-hints";
     MatSlideToggleModule,
     Ng5SliderModule,
   ],
-  providers: [RpaHints,RpaDragHints,RpaEnvHints,RpaWorkspace, Rpa_Home_Hints,MatDatepickerModule,RPAdbchints]
+  providers: [RpaHints,RpaDragHints,RpaWorkspace, Rpa_Home_Hints,MatDatepickerModule,RpaconfigHints]
 })
 export class RpautomationModule { }

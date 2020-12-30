@@ -140,6 +140,23 @@ export class RestApiService{
     return this.http.get('/rpa-service/fetch-attributes/all-tasks')
   }
 
+  getRestAttributes(attribute, taskId, attrId){
+    let all_attr_data = JSON.parse(localStorage.getItem("attributes"))
+    this.http.get(attribute.dependency).subscribe(
+      (res:any[]) => {
+        let tmpOpt = [];
+        let keys = Object.keys(res[0])
+        res.forEach(eachOpt => {
+          let tmp_op = {key: eachOpt[keys[0]], label: eachOpt[keys[1]]};
+          tmpOpt.push(tmp_op);
+        })
+        attribute.options = tmpOpt;
+        all_attr_data[taskId][attrId] = attribute;
+        localStorage.setItem("attributes", JSON.stringify(all_attr_data))
+      }
+    )
+  }
+
   async saveBot(data:any)
   {
     return await this.http.post('/rpa-service/save-bot',data)

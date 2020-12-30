@@ -13,6 +13,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 })
 export class RpaStudioComponent implements OnInit {
   model: any = {};
+  public localstore:boolean = true;
   public count:number;
   public botNamespace:boolean;
   public stud:any = [];
@@ -86,6 +87,10 @@ export class RpaStudioComponent implements OnInit {
 
   ngOnInit()
   {
+    if(localStorage.getItem("botId"))
+    {
+      this.localstore = false;
+    }
 
     console.log(this.insertbot.get("predefinedBot").value)
     if(localStorage.getItem("enablecreate"))
@@ -138,6 +143,12 @@ export class RpaStudioComponent implements OnInit {
           }
           this.spinner.hide();
         })
+      }
+      if(localStorage.getItem("botId"))
+      {
+        console.log("localstorage");
+        this.getloadbotdata(localStorage.getItem("botId"));
+        localStorage.removeItem("botId");
       }
     })
   }
@@ -319,6 +330,7 @@ export class RpaStudioComponent implements OnInit {
       this.loadbot.get("botDepartment").setValue("");
       //this.loadbot.reset();
       document.getElementById("load-bot").style.display="none";
+      this.localstore = true;
     })
   }
 

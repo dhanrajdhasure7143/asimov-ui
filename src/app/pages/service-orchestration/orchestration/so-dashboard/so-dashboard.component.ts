@@ -7,6 +7,9 @@ import * as moment from 'moment';
 import * as $ from 'jquery';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { noUndefined } from '@angular/compiler/src/util';
+import {sohints} from '../model/so-hints';
+import { DataTransferService } from '../../../services/data-transfer.service';
+
 @Component({
   selector: 'app-so-dashboard',
   templateUrl: './so-dashboard.component.html',
@@ -18,7 +21,10 @@ export class SoDashboardComponent implements OnInit {
     private rest:RestApiService,
     private spinner:NgxSpinnerService,
     private dialog:MatDialog,
-    private http:HttpClient
+    private http:HttpClient,
+    private hints: sohints,
+    private dt : DataTransferService,
+
     ) {}
   botstat:Boolean=true;
   runtimeflag:Boolean=true;
@@ -66,6 +72,7 @@ export class SoDashboardComponent implements OnInit {
     domain: ['#bf9d76', '#e99450', '#d89f59', '#f2dfa7', '#ff5b4f']
   };
   ngOnInit() {
+    this.dt.changeHints(this.hints.sodashboardhints);
     this.spinner.show();
     this.getheaders();
     this.getbotstatistics();
