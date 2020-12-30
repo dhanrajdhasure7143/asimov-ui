@@ -6,6 +6,12 @@ export class sohints{
         { selector:'#bmtable', description:'Botmanagment List' }
       ];
 
+      public soinboxhints = [
+        { selector:'#inboxsearch', description:'Search', showNext:true },
+        { selector:'#inboxreset', description:'Reset', showNext:true},
+        { selector:'#inboxtable', description:'Inbox List'},
+      ];
+
     public sodashboardhints = [
         { selector:'#dashcategorysearch', description:'Select Category', showNext:true},
         { selector:'#dashreset', description:'Reset', showNext:true},
