@@ -1,7 +1,7 @@
 
 
 
-@import "~@ng-select/ng-select/themes/material.theme.css";
+/*@import "~@ng-select/ng-select/themes/material.theme.css";*/
 
 select {
     border-top: none;
@@ -22,5 +22,5 @@ select {
 }
 
 
-.mat-tab-label{
-}
+/*.mat-tab-label{
+}*/
