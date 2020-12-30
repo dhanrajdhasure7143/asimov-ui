@@ -540,12 +540,25 @@ export class RestApiService{
     return this.http.post("/rpa-service/resume-process-schedule?processId="+processid,"");
   }
 
-  assign_bot_and_task(botid,taskid)
+  assign_bot_and_task(id,taskid,type)
   {
-    let data={
-      "botId":botid,
-      "taskId":taskid,
-    };
+    let data:any
+    if(type=="Automated")
+    {
+      data={
+        "botId":id,
+        "taskId":taskid,
+        "assignedUserId":"0"
+      };
+    }
+    else if(type=="Human")
+    {
+      data={
+        "botId":"0",
+        "taskId":taskid,
+        "assignedUserId":id
+      }
+    }
     return this.http.post("/rpa-service/assign-bot",data);
   }
 
