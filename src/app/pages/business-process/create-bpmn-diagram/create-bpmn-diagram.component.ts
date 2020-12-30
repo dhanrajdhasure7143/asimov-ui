@@ -699,7 +699,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let fileName = this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
     if(fileName.trim().length == 0 ) fileName = "newDiagram";
     var dd = fileName+"."+this.selectedNotationType;
-     this.dialog.open(DeployNotationComponent, {data: {
+     this.dialog.open(DeployNotationComponent, {disableClose: true,data: {
       dataKey: data, fileNme: dd
     }});
     

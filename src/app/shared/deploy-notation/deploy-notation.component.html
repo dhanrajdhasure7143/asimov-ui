@@ -1,5 +1,5 @@
 <div><label for="" class="keyboard_header_shortcuts">Deploy Notation</label></div>
-<div class="successful-deploy" *ngIf="!deploy_success">
+<div class="successful-deploy" *ngIf="deploy_success">
     <mat-icon class="success-info" matSuffix>info</mat-icon><p><i> Notation has been deployed successfully.
         <a href="javascript:void(0);" (click)=gotoBPMNPlatform()>Click here</a> to verify.</i></p>
 </div>
@@ -20,8 +20,8 @@
     </mat-form-field>
     <br/><br/>
     <div class="row col-md-12">
-        <button class="btn btn-danger eiap-btn" (click)="closedeplyNonation()">Cancel</button>
-        <button class="btn btn-primary eiap-btn" [disabled]="!depName || !endPoint" (click)="deployNotation()">Deploy</button>
+        <button class="btn btn-danger eiap-btn" (click)="closedeplyNonation()" >Cancel</button>
+        <button class="btn btn-primary eiap-btn" [disabled]="!depName || !endPoint || deploy_success" (click)="deployNotation()">Deploy</button>
     </div>
 </form> 
 <!--
