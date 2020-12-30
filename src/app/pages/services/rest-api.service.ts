@@ -52,7 +52,7 @@ export class RestApiService{
   //password -Welcome@123
 
   getAccessToken(){
-    let data = {"userId":"raghavendra.basavaraju@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
+    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -73,6 +73,13 @@ export class RestApiService{
         });
        }
      }
+  
+  getInbox(){
+    return this.http.get('/rpa-service/inbox');
+  }
+  updateInboxstatus(data){
+    return this.http.post('/rpa-service/human-task-action',data);
+  }
   bpmnlist(){
     return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser');
   }

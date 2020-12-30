@@ -6,6 +6,7 @@ import {RestApiService} from '../../../services/rest-api.service';
 import { DataTransferService } from "../../../services/data-transfer.service";
 import{sohints} from '../model/so-hints';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-so-inbox',
@@ -13,9 +14,10 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./so-inbox.component.css']
 })
 export class SoInboxComponent implements OnInit {
-    displayedColumns: string[] = ["botName", "description","botType","version","botStatus", "Action"];
+    displayedColumns: any[] = ["processName","taskName","previousTask", "nextSuccessTask","nextFailureTask", "status", "Action"];
     dataSource1:MatTableDataSource<any>;
     public respdata1:boolean = false;
+    searchinbox:any;
     logflag:Boolean;
     public showaction:boolean = false;
     logresponse:any=[];
@@ -31,7 +33,7 @@ export class SoInboxComponent implements OnInit {
 
   ngOnInit() {
     this.dt.changeHints(this.hints.soinboxhints);
-    document.getElementById("showaction").style.display = "none";
+    //document.getElementById("showaction").style.display = "none";
     this.getallbots();
   }  
 
@@ -42,9 +44,11 @@ export class SoInboxComponent implements OnInit {
     //this.rpa_studio.spinner.show()
     //http://192.168.0.7:8080/rpa-service/get-all-bots
 
-    this.rest.getAllActiveBots().subscribe(botlist =>
+    this.rest.getInbox().subscribe(data =>
     {
-      response=botlist;
+      response=data;
+      console.log("response");
+      console.log(response);
       if(response.length >0)
       {
         this.respdata1 = false;
@@ -63,14 +67,47 @@ export class SoInboxComponent implements OnInit {
     },(err)=>{
       //this.rpa_studio.spinner.hide();
     })
-  }
+}
 
-  botidshowaction(data){
+  /*botidshowaction(data){
     console.log(data);
     document.getElementById("showaction").style.display = "block";
-  }
+  }*/
 
-  showactionclose(){
+  /*showactionclose(){
     document.getElementById("showaction").style.display = "none";
   }
+*/
+  getapproved(processId,status, taskId){
+    let obj = {
+      "processId": processId,
+      "status" : status,
+      "taskId" : taskId
+    }
+    console.log(obj);
+    this.rest.updateInboxstatus(obj).subscribe(data =>
+      {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Task Status Updated Successfully',
+          showConfirmButton: false,
+          timer: 2000
+        })
+        /* let res:any= data;
+       Swal.fire(res.status, "","success")*/
+      });  
+    
+  }
+  applyFilter(filterValue: string) {
+    
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource1.filter = filterValue;
+  }
+
+  reset(){
+    this.searchinbox = '';
+    this.applyFilter('');    
+   }
 }
