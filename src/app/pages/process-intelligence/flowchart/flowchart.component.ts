@@ -607,6 +607,7 @@ isTimeChange:boolean=false;
       }else{
         endTime=this.workingHours.shiftEndTime
       }
+      this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
       this.spinner.show();
       const variantComboBody={
         "data_type":"variant_combo",
@@ -1659,6 +1660,7 @@ filterOverlay(){
         }else{
           endTime=this.workingHours.shiftEndTime
         }
+        this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
         this.spinner.show();
 
           var reqObj={
@@ -1845,7 +1847,8 @@ addWorkingHours(){
   }else{
     endTime=this.workingHours.shiftEndTime
   }
-  this.spinner.show()
+  this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
+  this.spinner.show();
   const fullGraphbody= { 
     "data_type":"full_graph", 
      "pid":this.graphIds,

@@ -439,11 +439,14 @@
   font-size: 12px;
 }
 #dropdownForm2{
-  padding: 10px !important;
+  padding: 20px !important;
 }
 .top-btns{
   margin-left: 15px !important;
 }
 .top-btns1{
   margin-left: -30px !important;
+}
+.dropdown-divider{
+  border: 1px solid #aaa;
 }
