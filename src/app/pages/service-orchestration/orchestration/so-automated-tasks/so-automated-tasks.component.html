@@ -6,7 +6,7 @@
 
   <div class="form-group">
     <span style="padding:5px">
-      <mat-form-field>
+      <mat-form-field id="autocategorysearch">
         <mat-label>Select Category</mat-label>
           <mat-select [(ngModel)]="selectedcategory" (selectionChange)="applyFilter1()">
             <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
@@ -15,7 +15,7 @@
       </mat-form-field>
     </span>
       <span style="padding:5px">
-        <mat-form-field *ngIf="process_names!=undefined">
+        <mat-form-field *ngIf="process_names!=undefined" id="autoprocesssearch">
             <mat-label>Select Process</mat-label>
             <mat-select [(ngModel)]="selectedvalue" (selectionChange)="applyFilter($event.value)">
                 <mat-option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
@@ -25,7 +25,7 @@
       </span>
 
       <span style="padding:5px">
-        <mat-form-field>
+        <mat-form-field id="autoenvsearch">
           <mat-label>Select Environment</mat-label>
           <mat-select  [(ngModel)]="selectedEnvironment">
               <mat-option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}
@@ -34,24 +34,24 @@
         </mat-form-field>
       </span>
 
-      <span style="padding:5px">
+      <span style="padding:5px" id="autoreset">
       <button (click)="reset_all()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
       </span>
   </div>
 
 
   <div class="form-group pull-right">
-        <span style="padding:5px">
+        <span style="padding:5px" id="autoStartProcess">
           <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-play"></i></button>
         </span>
        <!-- <span style="padding:5px">
           <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
         </span>
         -->
-        <span style="padding:5px">
+        <span style="padding:5px" id="autoOpenScheduler">
           <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><i class="fa fa-calendar"></i></button>
         </span>
-        <span style="padding:5px">
+        <span style="padding:5px" id="autoViewLogs">
           <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs()"  ><i class="fa fa-file" aria-hidden="true"></i></button>
         </span>
   </div>
@@ -64,7 +64,7 @@
 <mat-card>
   <div  *ngIf="responsedata!=undefined" style="width:100%;overflow-x: scroll;">
 
-    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table">
+    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table" id="autotable">
 
         <ng-container matColumnDef="processName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>

@@ -3,14 +3,14 @@
     <br>
     <div class="text-right">
         <span style="padding:10px">
-          <mat-form-field class="example-full-width">
+          <mat-form-field class="example-full-width" id="bmsearch">
             <mat-label>Search</mat-label>
             <input matInput placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
             <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
         </span>
       <span style="padding:10px">
-        <mat-form-field>
+        <mat-form-field id="bmategorySearch">
           <mat-label>Select Category</mat-label>
           <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
               <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
@@ -18,14 +18,14 @@
           </mat-select>
         </mat-form-field>
       </span>
-      <span (click)="reset()"  style="cursor:pointer" matTooltip="Reset">
+      <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
         <i  class="fa fa-undo"></i>
       </span >
     </div>
       <div class="row">
         <div class="col-md-12">
           <mat-card>
-            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
+            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
 
                 <ng-container matColumnDef="botName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
