@@ -142,6 +142,16 @@ export class FlowchartComponent implements OnInit {
   filterdNodes:any[];
   isClearFilter:boolean=false;
   isFilterApplied:boolean=false;
+  isAddHrs:boolean=false;
+  workingHours:any = {
+    formDay:'Mon',
+    toDay: 'Sun',
+    shiftStartTime:"00:00",
+    shiftEndTime:"23:59"
+};
+isWorkingHrsBtn:boolean=true;
+allVaraintsCases:any[]=[];
+isTimeChange:boolean=false;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -190,14 +200,13 @@ export class FlowchartComponent implements OnInit {
           this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
           this.spinner.show();
           setTimeout(() => {
-           
             this.onchangegraphId(piId);
             }, 500);
         }
       if(params['piId']!=undefined){
         this.piIdNumber = parseInt(params['piId']);
         piId=this.piIdNumber;
-        this.graphIds = piId;
+        this.graphIds = piId;        
         this.loaderImgSrc = "/assets/images/PI/loader_vr_1.gif"; 
         this.spinner.show();
         //setTimeout(() => {
@@ -228,7 +237,7 @@ export class FlowchartComponent implements OnInit {
   }
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isNodata=true;
-    
+
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
       if (token) {
@@ -242,20 +251,31 @@ export class FlowchartComponent implements OnInit {
   });
 
     let piId=selectedpiId
+    let endTime:any
+    if(this.workingHours.shiftEndTime=='23:59'){
+      endTime="24:00"
+    }else{
+      endTime=this.workingHours.shiftEndTime
+    }
     const variantListbody= { 
       "data_type":"varients_list", 
-       "pid":selectedpiId
+       "pid":selectedpiId,
+       'timeChange':this.isTimeChange,
+    "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
+
       localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
       })
       const fullGraphbody= { 
         "data_type":"full_graph", 
-         "pid":selectedpiId
+        "pid":selectedpiId,
+        'timeChange':this.isTimeChange,
+        "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
          }
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('display_msg')){
@@ -303,13 +323,18 @@ export class FlowchartComponent implements OnInit {
         }));
         const variantGraphbody= { 
           "data_type":"variant_graph", 
-           "pid":selectedpiId
+          "pid":selectedpiId,
+          'timeChange':this.isTimeChange,
+          "cases":[],
+          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
              }
         this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
         })
         const sliderGraphbody= { 
-          "data_type":"slider_graph", 
-           "pid":selectedpiId
+          "data_type":"slider_graph",
+          "pid":selectedpiId,
+          'timeChange':this.isTimeChange,
+          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
         })
@@ -340,11 +365,19 @@ export class FlowchartComponent implements OnInit {
 
       }
   });
+  let endTime:any;
+  if(this.workingHours.shiftEndTime=='23:59'){
+    endTime="24:00"
+  }else{
+    endTime=this.workingHours.shiftEndTime
+  }
 
     let piId=selectedpiId
     const variantListbody= { 
       "data_type":"varients_list", 
-       "pid":selectedpiId
+       "pid":selectedpiId,
+       'timeChange':this.isTimeChange,
+       "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
       for(var i=0; i<this.varaint_data.data.length; i++){
@@ -355,7 +388,9 @@ export class FlowchartComponent implements OnInit {
       })
       const fullGraphbody= { 
         "data_type":"full_graph", 
-         "pid":selectedpiId
+         "pid":selectedpiId,
+         'timeChange':this.isTimeChange,
+       "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
          }
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('display_msg')){
@@ -392,7 +427,7 @@ export class FlowchartComponent implements OnInit {
         });
         
         this.linkCurvinessGenerate();
-        this.spinner.hide();
+          this.spinner.hide();
         this.linkmodel2 = this.model2;
         this.isFullGraphBPMN = true;
         this.isSingleTraceBPMN = false;
@@ -405,13 +440,18 @@ export class FlowchartComponent implements OnInit {
         }));
         const variantGraphbody= { 
           "data_type":"variant_graph", 
-           "pid":selectedpiId
+          "pid":selectedpiId,
+          "cases":[],
+          'timeChange':true,
+          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
              }
         this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
         })
         const sliderGraphbody= { 
           "data_type":"slider_graph", 
-           "pid":selectedpiId
+           "pid":selectedpiId,
+           'timeChange':this.isTimeChange,
+          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
                }
         this.rest.getSliderVariantGraph(sliderGraphbody).subscribe(data=>{this.sliderVariant=data
         })
@@ -517,7 +557,7 @@ export class FlowchartComponent implements OnInit {
       this.isSingleTraceBPMN = false;
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
-
+      this.isWorkingHrsBtn=true;
 
     }else if (this.selectedCaseArry.length == 1) {
       this.isvariantSelectedOne=true;
@@ -555,14 +595,25 @@ export class FlowchartComponent implements OnInit {
       this.isSingleTraceBPMN = true;
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
+      this.isWorkingHrsBtn=false;
     }else{
       this.issliderDisabled=true;
       // this.options = Object.assign({}, this.options, {disabled: true});
       this.isvariantSelectedOne=false;
+
+      let endTime:any
+      if(this.workingHours.shiftEndTime=='23:59'){
+        endTime="24:00"
+      }else{
+        endTime=this.workingHours.shiftEndTime
+      }
+      this.spinner.show();
       const variantComboBody={
         "data_type":"variant_combo",
         "pid":this.graphIds,
-        "cases" : this.selectedCaseArry
+        "cases" : this.selectedCaseArry,
+        'timeChange':this.isTimeChange,
+        "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
           }
     this.rest.getVariantGraphCombo(variantComboBody).subscribe(res=>{this.variantCombo=res
       this.model1=this.variantCombo.data[0].nodeDataArraycase;
@@ -582,9 +633,8 @@ export class FlowchartComponent implements OnInit {
           }else{                
             this.model2 = this.flowchartData(this.model1);
           }
-      // this.gradientApplyforLinks()
-      // this.gradientApplyforNode()
-      // this.linkCurvinessGenerate();
+          this.spinner.hide();
+
     })
 
          /**
@@ -594,6 +644,7 @@ export class FlowchartComponent implements OnInit {
       this.isSingleTraceBPMN = false;
       this.isMultiTraceBPMN = true;
       this.isSliderBPMN = false;
+      this.isWorkingHrsBtn=false;
     }
     // console.log(this.varaint_data.data.length);
     
@@ -721,6 +772,7 @@ export class FlowchartComponent implements OnInit {
         this.varaint_data.data[i].selected = "inactive";
       }
       this.isDefaultData = true;
+      this.isWorkingHrsBtn=true;
     }
     this.performanceValue=false
   }
@@ -1170,6 +1222,7 @@ closeNav() { // Variant list Close
       this.isSliderBPMN = false;
       this.performanceValue=false;
       this.options = Object.assign({}, this.options, {disabled: false});
+      this.isWorkingHrsBtn=true;
   }
 
   resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
@@ -1259,7 +1312,7 @@ closeNav() { // Variant list Close
   
   onchangeActivity(value){ //change activity slider  value
     this.isClearFilter=true;
-    this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue) 
+    this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue)
   }
   onChangePath(value){      //change path slider  value
     this.sliderGraphResponse(this.sliderVariant,this.activityValue,this.pathvalue)
@@ -1286,6 +1339,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   this.activity_value=[];
   this.performanceValue=false;
   if(activity_slider==1&&path_slider==1){
+    this.isWorkingHrsBtn=true;
     this.isNodata=true;
     this.model1=this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
@@ -1319,6 +1373,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
   }else{
+    this.isWorkingHrsBtn=false;
   var sliderGraphArray = [];
     graphData.data.allSelectData.nodeDataArraycase.filter(function (item) {
       if (activity_slider == item.ActivitySlider && path_slider == item.PathSlider) {
@@ -1582,6 +1637,7 @@ filterOverlay(){
   readSelectedFilterValues(object){
     this.isFilterApplied=true;
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
+      this.isWorkingHrsBtn=true;
       this.model1 = this.fullgraph_model;
       this.model2 = this.flowchartData(this.model1); 
             this.startArray=[];
@@ -1596,18 +1652,14 @@ filterOverlay(){
               }
             });
     }else{
-    // var seletedVariant1=[];
-    // for (var i = 0; i < this.varaint_data.data.length; i++){
-    //         seletedVariant1.push(this.varaint_data.data[i].name)
-    //     }
-        
-        // var reqObj={
-        //   "data_type":"end_filter",
-        //   "pid":this.graphIds,
-        //   "cases" :seletedVariant1,
-        //   "startpoints":startPointValue.startPoint,
-        //   "Endpoints":startPointValue.endPoint
-        //   }
+        this.isWorkingHrsBtn=false;
+        let endTime:any
+        if(this.workingHours.shiftEndTime=='23:59'){
+          endTime="24:00"
+        }else{
+          endTime=this.workingHours.shiftEndTime
+        }
+        this.spinner.show();
 
           var reqObj={
             "data_type":"endpoint_activity_filter",
@@ -1615,9 +1667,10 @@ filterOverlay(){
             "cases" :object.variants,
             "startpoints":object.startPoint,
             "Endpoints":object.endPoint,
-            "activities" : object.activity
+            "activities" : object.activity,
+            'timeChange':this.isTimeChange,
+          "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
             }
-
           this.rest.getVariantGraphCombo(reqObj).subscribe(res => {
           this.variantCombo = res
             this.model1 = this.variantCombo.data[0].nodeDataArraycase;
@@ -1635,7 +1688,7 @@ filterOverlay(){
                 this.endArray.push(element.from)
               }
             });
-            
+          this.spinner.hide();
       })
     }
   }
@@ -1775,6 +1828,92 @@ filterOverlay(){
     this.isClearFilter=false;
        
   }
+  openHersOverLay(){
+    this.isAddHrs=!this.isAddHrs
+}
 
+addWorkingHours(){  
+  if(this.workingHours.formDay=='Mon' && this.workingHours.toDay=='Sun'&& this.workingHours.shiftStartTime=='00:00' && this.workingHours.shiftEndTime=='23:59'){
+    this.isTimeChange=false;
+  }else{
+    this.isTimeChange=true;
+  }
+
+    let endTime:any;
+  if(this.workingHours.shiftEndTime=='23:59'){
+    endTime="24:00"
+  }else{
+    endTime=this.workingHours.shiftEndTime
+  }
+  this.spinner.show()
+  const fullGraphbody= { 
+    "data_type":"full_graph", 
+     "pid":this.graphIds,
+     'timeChange':this.isTimeChange,
+   "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+     }
+  this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
+    if(this.fullgraph.hasOwnProperty('display_msg')){
+        Swal.fire(
+          'Oops!',
+          'It is Not You it is Us, Please try again after some time',
+          'error'
+        );
+        this.spinner.hide();
+        this.model1=[];
+        this.model2=[];
+    } else{
+        let fullgraphOne=this.fullgraph.data;
+        this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
+        this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
+        this.fullgraph_model1=this.fullgraph_model
+        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.filterPerformData = this.fullgraph_model;
+        this.nodeAlignment();       
+        this.model2 = this.flowchartData(this.model1)
+        let fullModel2=this.model2
+        this.startArray=[]
+        this.endArray=[]
+        fullModel2.forEach(element => {
+            if(element.from=="Start"){
+              this.startArray.push(element.to)
+            }
+            if(element.to=="End"){
+              this.endArray.push(element.from)
+            }
+          });
+          this.linkCurvinessGenerate();
+          this.spinner.hide();
+          this.linkmodel2 = this.model2;
+          this.isFullGraphBPMN = true;
+          this.isSingleTraceBPMN = false;
+          this.isMultiTraceBPMN = false;
+          this.isSliderBPMN = false;
+          this.filterOverlay()
+      }
+    },(err =>{
+      this.spinner.hide();
+    }));
+    const variantGraphbody= { 
+      "data_type":"variant_graph", 
+      "pid":this.graphIds,
+      'timeChange':this.isTimeChange,
+      "cases":[],
+      "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
+         }
+    this.rest.getvaraintGraph(variantGraphbody).subscribe(data=>{this.varaint_GraphData=data //variant api call
+    })
+  this.canceladdHrs();
+}
+
+resetWorkingHours(){    
+  this.workingHours.formDay = "Mon";
+  this.workingHours.toDay = "Sun";
+  this.workingHours.shiftStartTime="00:00";
+  this.workingHours.shiftEndTime="23:59"
+}
+canceladdHrs(){
+  this.isAddHrs=!this.isAddHrs;
+}
  
 }
