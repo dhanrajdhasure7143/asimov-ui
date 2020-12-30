@@ -40,7 +40,8 @@
               </ng-container>
             <ng-container matColumnDef="runStatus">
                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-               <td mat-cell *matCellDef="let element"> <span *ngIf="element.runStatus!=null">
+               <td mat-cell *matCellDef="let element"> 
+                <!--<span *ngIf="element.runStatus!=null">
                 <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
               <span *ngIf="element.runStatus=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.runStatus}}</span></span>
@@ -48,7 +49,18 @@
               <span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
               <span *ngIf="element.runStatus=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.runStatus}}</span></span>
-              </span>
+              </span>-->
+              <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.runStatus}}</span>
+
+            <span *ngIf="element.runStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+
+            <span *ngIf="element.runStatus=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+            <!--<span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>-->
+            <span *ngIf="element.runStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            
+            <span *ngIf="element.runStatus=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+
               <span *ngIf="element.runStatus == undefined">-</span></td>
            </ng-container>
            <ng-container matColumnDef="noData">
@@ -121,7 +133,7 @@
             <ng-container matColumnDef="bot_status">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
                 <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.bot_status!=null">
+                    <!--<span *ngIf="element.bot_status!=null">
                         <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                       <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.bot_status}}</span></span>
@@ -129,7 +141,18 @@
                       <span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                       <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.bot_status}}</span></span>
-                      </span>
+                      </span>-->
+                      <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
+
+                        <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                        <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                        <!--<span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>-->
+                        <span *ngIf="element.bot_status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        
+                        <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
                       <span *ngIf="element.bot_status == undefined">-</span>
                 </td>
             </ng-container>
@@ -155,23 +178,23 @@
         <table mat-table [dataSource]="dataSourcep3" #sortp3="matSort" matSort style="width:100%;">
 
             <ng-container matColumnDef="task_name">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Task</th>
-                <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.task_name != null">{{element.task_name}}</span>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%;">Task</th>
+                <td mat-cell *matCellDef="let element" style="width:18%;">
+                    <span *ngIf="element.task_name!=null" [matTooltip]="element.task_name">{{(element.task_name.length > 15) ? ((element.task_name).slice(0, 15) + '...') : element.task_name}}</span>
                     <span *ngIf="element.task_name == undefined">-</span>
                 </td>
             </ng-container>
              <ng-container matColumnDef="start_date">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%;">Start Date</th>
+                <td mat-cell *matCellDef="let element" style="width:18%;">
                     <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
                     <span *ngIf="element.start_date == undefined">-</span>
                 </td>
                </ng-container>
 
             <ng-container matColumnDef="end_date">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>End Date</th>
-                <td mat-cell *matCellDef="let element">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%;">End Date</th>
+                <td mat-cell *matCellDef="let element" style="width:18%;">
                     <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
                     <span *ngIf="element.end_date == undefined">-</span>
                 </td>
@@ -180,22 +203,32 @@
             <ng-container matColumnDef="error_info">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Info</th>
               <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.error_info != null">{{element.error_info}}</span>
+                <span *ngIf="element.error_info!=null" [matTooltip]="element.error_info">{{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}</span>
                 <span *ngIf="element.error_info == undefined">-</span>
                 </td>
              </ng-container>
 
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-                <td mat-cell *matCellDef="let element"> <span *ngIf="element.status!=null">
-                    <span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:10%">Status</th>
+                <td mat-cell *matCellDef="let element" style="width:10%"> <span *ngIf="element.status!=null">
+                    <!--<span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
 
                   <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
 
                   <span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.status}}</span></span>
 
                   <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.status}}</span></span>
-                  </span>
+                  </span>-->
+                  <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
+
+                        <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+
+                        <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                        <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
+                        <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
+                        
+                        <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span></span>
                   <span *ngIf="element.status == undefined">-</span></td>
             </ng-container>
 

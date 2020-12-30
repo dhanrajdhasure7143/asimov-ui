@@ -597,7 +597,7 @@ export class RestApiService{
       let headers = new HttpHeaders({
         "Content-Type":"multipart/form-data",
         });
-      return this.http.post(url, body, {headers:  headers});
+      return this.http.post(url, body, {headers:  headers, responseType:'json'});
     }
     deleteprocessschedule(data)
     {
