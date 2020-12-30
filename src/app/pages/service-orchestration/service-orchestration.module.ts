@@ -34,6 +34,9 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
 import { BotlistbycatPipe } from './orchestration/so-automated-tasks/botlistbycat.pipe';
 import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlistbycat.pipe';
+import {sohints} from './orchestration/model/so-hints';
+import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
+
 @NgModule({
   declarations: [OrchestrationComponent,
     BotStatusComponent,
@@ -41,7 +44,7 @@ import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlist
     Category,
     Reverse,
     Slicedate,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname],
+    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -68,7 +71,7 @@ import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlist
     NgxPaginationModule
   ],
   entryComponents: [FilterBy],
-  providers:[MatDatepickerModule],
+  providers:[MatDatepickerModule,sohints],
 })
 export class ServiceOrchestrationModule {
 }

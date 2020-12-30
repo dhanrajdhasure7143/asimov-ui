@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {HttpClient,HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/filter';
 import Swal from 'sweetalert2';
+import {sohints} from '../model/so-hints';
+import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
 
 import { NgxSpinnerService } from "ngx-spinner";
@@ -49,6 +51,8 @@ export class SoAutomatedTasksComponent implements OnInit {
     private router: Router,
     private spinner:NgxSpinnerService,
     private http:HttpClient,
+    private hints: sohints,
+    private dt : DataTransferService,
    )
   {
   }
@@ -56,7 +60,7 @@ export class SoAutomatedTasksComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.dt.changeHints(this.hints.soochestartionhints);
     this.spinner.show();
     this.userRole = localStorage.getItem("userRole")
 

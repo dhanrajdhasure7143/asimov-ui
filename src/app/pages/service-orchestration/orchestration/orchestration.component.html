@@ -47,6 +47,18 @@
         <app-so-bot-management></app-so-bot-management>
       </div>
     </mat-tab>
+    
+    <mat-tab label="Inbox">
+
+      <ng-template mat-tab-label>
+        <mat-icon  class="text-primary">inbox</mat-icon>
+          &nbsp;&nbsp;
+          Inbox  
+        </ng-template>
+      <div *ngIf="check_tab==3">
+        <app-so-inbox></app-so-inbox>
+      </div>
+    </mat-tab>
 </mat-tab-group>
 <!--
 <mat-tab-group [selectedIndex]="selectedTab" class="secondary-tab-group has-header" [dynamicHeight]="true" mat-stretch-tabs>

@@ -5,3 +5,10 @@
         font-weight: bold;
     color: #3F4D67;
     }
+
+    footer{
+        z-index: 1;
+      }
+      .tour_guide{
+        z-index: 1;
+      }
