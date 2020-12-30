@@ -26,11 +26,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatDialogModule} from '@angular/material/dialog';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
 import { BotlistbycatPipe } from './orchestration/so-automated-tasks/botlistbycat.pipe';
 import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlistbycat.pipe';
@@ -58,6 +59,7 @@ import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
     MatTabsModule,
     CronEditorModule,
     MatNativeDateModule,
+    NgMultiSelectDropDownModule,
     FormsModule,
     NgbTimepickerModule,
     NgxSpinnerModule,
@@ -68,8 +70,10 @@ import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
     NgxChartsModule,
     MatMenuModule,
     MatDialogModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+
   ],
+  bootstrap: [SoDashboardComponent],
   entryComponents: [FilterBy],
   providers:[MatDatepickerModule,sohints],
 })

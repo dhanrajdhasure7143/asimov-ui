@@ -11,6 +11,7 @@ import {RestApiService} from '../../../services/rest-api.service';
 import {sohints} from '../model/so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 
+import { NgxSpinnerService } from "ngx-spinner";
 declare var $:any;
 @Component({
   selector: 'app-so-bot-management',
@@ -70,11 +71,13 @@ export class SoBotManagementComponent implements OnInit {
       private router: Router,
       private hints: sohints,
       private dt : DataTransferService,
+      private spinner:NgxSpinnerService,
       )
     {}
 
   ngOnInit() {
     this.dt.changeHints(this.hints.sobotMhints);
+    this.spinner.show();
     this.getCategoryList();
     this.getallbots();
     this.getautomatedtasks();
@@ -152,6 +155,7 @@ export class SoBotManagementComponent implements OnInit {
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
       this.dataSource1.data = response;
+      this.spinner.hide();
       /*this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
         //this.filteredValues['department'] = departmentFilterValue;
         //this.dataSource1.filter = JSON.stringify(this.filteredValues);

@@ -19,7 +19,7 @@
                                             <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
                                         </div>
                                     </li>
-                                    <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i" *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link">
+                                    <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i" [id]="'nav-link-'+i" *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link">
                                         <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img">
                                             <label>{{each_page.title}}</label> </a>
                                     </li>

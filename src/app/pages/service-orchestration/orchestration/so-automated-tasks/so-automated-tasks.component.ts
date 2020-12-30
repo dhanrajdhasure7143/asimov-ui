@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
 import {sohints} from '../model/so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
-
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
@@ -75,9 +74,8 @@ export class SoAutomatedTasksComponent implements OnInit {
     }
 
     this.getenvironments();
-    this.getCategoryList();
+    this.getCategoryList(this.processId);
     this.getallbots();
-    this.getautomatedtasks(this.processId);
     this.gethumanslist();
  }
 
@@ -139,19 +137,21 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   getprocessnames(processId)
   {
-    console.log(processId);
     this.rest.getprocessnames().subscribe(processnames=>{
-      this.process_names=processnames;
-      this.selected_process_names=processnames;
+      let resp:any=[]
+      resp=processnames
+      this.process_names=resp.filter(item=>item.status=="APPROVED");
+      this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
       let processnamebyid;
-
       if(processId != undefined)
       {
         console.log(this.process_names)
         processnamebyid=this.process_names.find(data=>data.processId==processId);
+        //console.log("------------------pedda ammai-----------------",this.responsedata.find(item=>item.processId==processnamebyid.processId).categoryId)
+        this.selectedcategory=processnamebyid.categoryId;
         this.selectedvalue=processnamebyid.processId;
         this.applyFilter(this.selectedvalue);
-        console.log(this.selectedvalue);
+        //console.log(this.selectedvalue);
 
       }
       else
@@ -168,6 +168,8 @@ export class SoAutomatedTasksComponent implements OnInit {
   applyFilter(filterValue:any) {
     console.log(filterValue)
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
+    console.log("-----ProcessName------",processnamebyid.categoryId)
+    this.selectedcategory=processnamebyid.categoryId;
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -194,22 +196,33 @@ export class SoAutomatedTasksComponent implements OnInit {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id).subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,id,"Bot").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title:response.status,
-          showConfirmButton: false,
-          timer: 2000
-        })
+        Swal.fire(response.status,"","success");
+      }else
+      {
+        Swal.fire(response.errorMessage,"","success");
       }
     })
+  }
 
 
-
+  assignhuman(taskid)
+  {
+    let botId=$("#"+taskid+"__select").val();
+    if(botId!=0)
+    this.rest.assign_bot_and_task(botId,taskid,"Human").subscribe(data=>{
+      let response:any=data;
+      if(response.status!=undefined)
+      {
+        Swal.fire(response.status,"","success");
+      }else
+      {
+        Swal.fire(response.errorMessage,"","success");
+      }
+    })
   }
 
 
@@ -357,12 +370,13 @@ export class SoAutomatedTasksComponent implements OnInit {
     })
   }
 
-  getCategoryList()
+  getCategoryList(processid)
   {
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      this.getautomatedtasks(processid);
     });
   }
 

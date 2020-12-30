@@ -314,7 +314,7 @@ export class RpaStudioActionsComponent implements OnInit {
           let bottask:any=this.botState;
           if(bottask.taskId!=0)
           {
-            this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
+            this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId, "Automated");
           }
         }
         else
@@ -916,9 +916,9 @@ convertcron(cronexp)
 
 
 
-  rpa_assignbot(botId,taskId)
+  rpa_assignbot(botId,taskId,type)
   {
-    this.rest.assign_bot_and_task(botId,taskId).subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,taskId,type).subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
