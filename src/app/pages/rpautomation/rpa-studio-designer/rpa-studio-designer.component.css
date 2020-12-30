@@ -3,8 +3,9 @@
   position:  relative !important;
 }
 .mat-tab-body-content{
-  height:2000px !important;
+  overflow: hidden !important;
 }
-.mat-tab-body.mat-tab-body-active, .mat-tab-body-wrapper{
-  height:2000px !important;
+
+.mat-tab-body {  /* Removing the scrollbar from the Tabs card */
+  overflow-y: hidden !important;
 }

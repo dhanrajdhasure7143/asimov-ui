@@ -18,51 +18,51 @@
       <div class="toolset" >
 
         <select class="form-control">
-          <option>V 1</option>
-          <option>V 1</option>
-          <option>V 1</option>
+          <option *ngFor="let version of versionsList">V version.id</option>
         </select>
 
         <br>
         <br>
           <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:60px"id="dragicons">
-            <button type="button"class="scroll top">
+            <!-- <button type="button"class="scroll top">
               <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
-            </button>
+            </button> -->
 
 
             <div class="nodes" tooltip="Scheduler" >
               <div class="" >
                 <span>
-                  <img class="imageI1" src="/assets/images/Group 286.svg">
+                  <button  (click)="openschedule()" >
+                    <img class="imageI1" src="/assets/images/RPA/rpa-actions/schedule.svg">
+                  </button>
                 </span>
               </div>
             </div>
             <div class="nodes"  tooltip="Bot Store">
               <div class="" >
                 <span>
-                  <img src="/assets/images/robot.svg" class="imageI1">
+                  <img src="/assets/images/RPA/rpa-actions/botStore.svg" class="imageI1">
                 </span>
               </div>
             </div>
             <div class="nodes" tooltip="Environments">
               <div class="" >
                 <span>
-                  <img src="..\\assets\\images\\RPA\\Environment_icon.svg" class="imageI1">
+                  <img src="/assets/images/RPA/rpa-actions/environments.svg" class="imageI1">
                 </span>
               </div>
             </div>
             <div class="nodes">
               <div class="" tooltip="Save Bot">
                 <span>
-                  <img class="imageI1" src="/assets/images/Layer 1.svg">
+                  <img class="imageI1" src="/assets/images/RPA/rpa-actions/save.svg">
                 </span>
               </div>
             </div>
             <div class="nodes">
               <div class=""  tooltip="Edit Bot">
                 <span>
-                  <img class="imageI1" src="/assets/images/Expanded.svg">
+                  <img class="imageI1" src="/assets/images/RPA/rpa-actions/edit.svg">
                 </span>
               </div>
             </div>
@@ -71,7 +71,7 @@
             <div class="nodes">
               <div class=""  tooltip="Start Bot">
                 <span>
-                  <img class="imageI1" src="/assets/images/RPA/Play_icon.svg">
+                  <img class="imageI1" src="/assets/images/RPA/rpa-actions/play.svg">
                 </span>
               </div>
             </div>
@@ -88,13 +88,13 @@
             <div class="nodes">
               <div class=""  tooltip="Versions">
                 <span>
-                  <img src="..\\assets\\images\\RPA\\Version_icon.svg" class="imageI1">
+                  <img src="/assets/images/RPA/rpa-actions/version.svg" class="imageI1">
                 </span>
               </div>
             </div>
-            <button (click)="scrollbottom()"type="button"class="scroll bottom">
+            <!-- <button (click)="scrollbottom()"type="button"class="scroll bottom">
               <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\DownArrow.svg">
-            </button>
+            </button> -->
 
 
           </div>

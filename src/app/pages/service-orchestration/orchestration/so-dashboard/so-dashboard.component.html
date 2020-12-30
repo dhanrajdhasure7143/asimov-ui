@@ -11,7 +11,7 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-      </span>
+    </span>
 
       <span style="padding:5px" id="dashreset">
         <button (click)="reset_all()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
@@ -196,11 +196,14 @@
             <div class="col-md-6" id="dashrunprostas">
               <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==true" >
                 <div class="form-inline text-center">
-                  <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
+                  <div class="form-group"><h5 ><b>Bot Runtime Statistics</b></h5></div>
                   <div class="pull-right form-group">
 
                       <button (click)="openbotstatfilter()"> <i class="fa fa-filter" aria-hidden="true"></i></button>
-                  </div>
+                      <button (click)="botruntimestats()">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                      </button>
+                    </div>
                 </div>
                 <div *ngIf="runtimestats.length!=0">
                     <ngx-charts-bar-vertical    [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="runtimestats" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
@@ -213,7 +216,7 @@
               </div>
               <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==false" >
                 <div class="form-inline text-center">
-                  <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
+                  <div class="form-group"><h5 ><b>Bot Runtime Statistics</b></h5></div>
                   <div class="pull-right form-group">
 
                       <button (click)="runtimeflag=true"><i class="fas fa-arrow-left"></i></button>
@@ -256,6 +259,7 @@
                       <h5><b>Bot Transactions</b></h5>
                     </div>
                     <div class="pull-right form-group">
+
                       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                       </button>
@@ -270,6 +274,10 @@
                           <span><i class="fas fa-filter"></i> By Year</span>
                         </button>
                       </mat-menu>
+
+                      <button (click)="resetbottransactions()">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                      </button>
                     </div>
                   </div>
                   <div *ngIf="pop" id="linechart_data">

@@ -69,24 +69,25 @@ export class SoDashboardComponent implements OnInit {
   isDoughnut: boolean = false;
   botvshuman:any=[];
   colorScheme = {
-    domain: ['#bf9d76', '#e99450', '#d89f59', '#f2dfa7', '#ff5b4f']
+    domain: ['#bf9d76', '#e99450', '#d89f59', '#f2dfa7', '#ff5b4f','#74c7b8']
+  };
+  botcolorScheme = {
+    domain: ['#bf9d76', '#e99450', '#d89f59', '#f2dfa7', '#ff5b4f','#74c7b8']
   };
   ngOnInit() {
     this.dt.changeHints(this.hints.sodashboardhints);
     this.spinner.show();
     this.getheaders();
-    this.getbotstatistics();
-    this.getprocessstatistics();
+    this.getbotscount();
     this.getenvironments()
     this.getCategoryList();
     //this.getprocessruns();
-    this.getbotscount();
-    this.botruntimestats();
   }
   ngAfterViewInit(): void {
 
   }
   /* TO get Bot statistics*/
+  /*
   getbotstatistics()
   {
     this.botstatistics=[];
@@ -115,13 +116,62 @@ export class SoDashboardComponent implements OnInit {
         this.spinner.hide();
       });
   }
+  */
+ getbotstatistics()
+ {
+   this.botstatistics=[];
+   let data=[
+              {
+                name:"Success",
+                value:this.bots_list.filter(item=>item.botStatus=="Success").length
+              },
+              {
+                name:"New",
+                value:this.bots_list.filter(item=>item.botStatus=="New").length
+              },
+              {
+                name:"Paused",
+                value:this.bots_list.filter(item=>item.botStatus=="Paused").length
+              },
+              {
+                name:"Stop",
+                value:this.bots_list.filter(item=>item.botStatus=="Stop").length
+              },
 
+              {
+                name:"Failure",
+                value:this.bots_list.filter(item=>item.botStatus=="Failure").length
+              },
+              {
+                name:"Scheduled",
+                value:this.bots_list.filter(item=>item.schedulerId!=null).length
+              },
+
+              {
+                name:"Running",
+                value:this.bots_list.filter(item=>item.botStatus=="Running").length
+              }
+            ]
+        if(data[0].value==0 && data[1].value==0 && data[2].value==0 && data[3].value==0 && data[4].value==0)
+          this.botstatistics=[];
+        else
+          this.botstatistics=data;
+        setTimeout(() => {
+          $('.chart-legend>div').css({width : '100%'});
+          this.spinner.hide()
+        }, 2000);
+        this.spinner.hide();
+ }
 
   botchart(event:any)
   {
     this.botstat=false;
     this.q=1;
-    this.botstatisticstable=this.bots_list.filter(data=>data.botStatus==event.name);
+    console.log(event.name)
+    if(event.name=="Scheduled")
+      this.botstatisticstable=this.bots_list.filter(data=>data.schedulerId!=null)
+    else
+      this.botstatisticstable=this.bots_list.filter(data=>data.botStatus==event.name);
 
   }
   backtobotstatistics()
@@ -139,6 +189,7 @@ export class SoDashboardComponent implements OnInit {
           this.processnames=data;
           this.allprocessnames=data;
           this.getbotsvshumans()
+          this.getprocessstatistics();
         })
     })
 
@@ -154,7 +205,7 @@ export class SoDashboardComponent implements OnInit {
 
 
 
-  getprocessstatistics(){
+ /* getprocessstatistics(){
     this.rest.getProcessStatistics().subscribe(data => { this.usageData = data;
       let resp:any=data
       if(resp.errorMessage==undefined)
@@ -175,10 +226,46 @@ export class SoDashboardComponent implements OnInit {
       }
     });
 
+  }*/
+
+  getprocessstatistics(){
+         let data=[
+
+                  {
+                    "name":"Pending",
+                    "value":this.processnames.filter(item=>item.status=="PENDING").length
+                  },
+                  {
+                    "name":"Inprogress",
+                    "value":this.processnames.filter(item=>item.status=="INPROGRESS").length
+                  },
+
+                  {
+                    "name":"Hold",
+                    "value":this.processnames.filter(item=>item.status=="HOLD").length
+                  },
+                  {
+                    "name":"Approved",
+                    "value":this.processnames.filter(item=>item.status=="APPROVED").length
+                  },
+                  {
+                    "name":"Rejected",
+                    "value":this.processnames.filter(item=>item.status=="REJECTED").length
+                  },
+                ]
+        if(data[0].value==0 && data[1].value==0 && data[2].value==0 && data[3].value==0)
+          this.processstatistics=[];
+        else
+          this.processstatistics=data;
+        setTimeout(() => {
+          $('.chart-legend>div').css({width : '100%'});
+        }, 2000);
   }
+
+
   processstatstable(event)
   {
-      this.processstats_table=this.allprocessnames.filter(item=>item.status==event.name.toUpperCase());
+      this.processstats_table=this.processnames.filter(item=>item.status==event.name.toUpperCase());
       this.r=1
       this.processflag=false;
   }
@@ -524,7 +611,33 @@ export class SoDashboardComponent implements OnInit {
         total.push((resp.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
       });
       this.linechart(labels,success,failed,stopped,total)
+      this.botruntimestats();
+      this.getbotstatistics();
     });
+
+  }
+
+
+
+  resetbottransactions()
+  {
+    let to=new Date();
+      let from=new Date();
+      from.setDate(to.getDate()-30);
+      let dates:any=this.dateranges(from,to)
+      let labels:any=[];
+      let success:any=[];
+      let failed:any=[];
+      let stopped:any=[];
+      let total:any=[];
+      dates.forEach(date=>{
+        labels.push(moment(date).format("D-MM-YYYY"));
+        success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Success')).length))
+        failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Failure')).length))
+        stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY") && bot_check.botStatus=='Stopped')).length))
+        total.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("D-MM-YYYY")==moment(date).format("D-MM-YYYY"))).length))
+      });
+      this.linechart(labels,success,failed,stopped,total)
 
   }
 
@@ -640,7 +753,7 @@ export class SoDashboardComponent implements OnInit {
 
     this.bots_list=bot_list_check;
     this.botruntimestats()
-
+    /*
     this.rest.getProcessStatisticsbycat(this.selectedcat).subscribe(data => {
     let response:any=data;
     if(response.errorMessage==undefined)
@@ -692,10 +805,12 @@ export class SoDashboardComponent implements OnInit {
     },(err)=>{
       console.log(err)
       this.spinner.hide();
-    });
+    })*/;
     this.processnames=this.allprocessnames.filter(item=>item.categoryId==this.selectedcat);
     this.automatedtasks=this.mainautomatedtasks.filter(item=>item.categoryId==this.selectedcat)
     this.getbotsvshumans();
+    this.getprocessstatistics();
+    this.getbotstatistics();
   }
 
   reset_all()
@@ -754,7 +869,7 @@ export class SoDashboardComponent implements OnInit {
           var centerX = ((chart.chartArea.left + chart.chartArea.right) / 2);
           var centerY = ((chart.chartArea.top + chart.chartArea.bottom) / 2);
           ctx.font = "15px";
-          ctx.fillStyle = "#0062cf";
+          ctx.fillStyle = "black";
 
           if (!wrapText) {
             ctx.fillText(txt, centerX, centerY);

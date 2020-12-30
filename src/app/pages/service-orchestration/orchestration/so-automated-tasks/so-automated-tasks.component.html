@@ -8,7 +8,7 @@
     <span style="padding:5px">
       <mat-form-field id="autocategorysearch">
         <mat-label>Select Category</mat-label>
-          <mat-select [(ngModel)]="selectedcategory" (selectionChange)="applyFilter1()">
+          <mat-select [(ngModel)]="selectedcategory" [value]="selectedcategory" (selectionChange)="applyFilter1()">
             <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
             </mat-option>
           </mat-select>
@@ -100,14 +100,14 @@
 
             <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
               <select class="form-control" style="width:200px;"  [value]="element.botId" [id]="element.taskId+'__select'">
-                  <option value="0" >Select Resource</option>
+                  <option value="0"  >Select Bot</option>
                   <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
               </select>
             </span>
             <span *ngIf="element.taskType=='Human'">
-              <select class="form-control" style="width:200px;"   [id]="element.taskId+'__select'">
-                  <option value="0" >Select Resource</option>
-                  <option *ngFor="let human of humans_list">{{human.userId.firstName}} {{human.userId.lastName}} </option>
+              <select class="form-control" style="width:200px;"  [value]="element.assignedUserId"  [id]="element.taskId+'__select'">
+                  <option value="0" >Select Human</option>
+                  <option *ngFor="let human of humans_list" [value]="human.userId.id">{{human.userId.firstName}} {{human.userId.lastName}} </option>
               </select>
             </span>
             </td>
@@ -122,9 +122,9 @@
 
                         <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                        <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
-                        <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
-                        
+                        <span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+                        <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>-->
+
                         <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
 
                 <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
@@ -157,24 +157,44 @@
         <ng-container matColumnDef="Operations">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let element">
-
+              <div *ngIf="element.taskType=='Automated'">
                 <span>
-                  <button [disabled]="element.taskType=='Human' || element.taskType==null" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Bot">
+                  <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
                     <i  class="fas fa-plus text-primary"></i>
                   </button>
                 </span>
 
                 <span>
-                  <button (click)="assignbot(element.taskId)"  matTooltip="Assign Bot"><i  class="fas fa-check text-success"></i></button>
+                  <button (click)="assignbot(element.taskId)"  matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
                 </span>
 
                 <span>
                   <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
                 </span>
                 <span>
-                  <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType !='Automated'" matTooltip="Load Bot"><i class="fa fa-eye"></i></button>
-                  <button  *ngIf="element.taskType =='Automated'" class="undobtn" matTooltip="Load Bot"><i class="fa fa-eye-slash"></i></button>
+                  <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
+                  <button  *ngIf="element.taskType !='Automated'" class="undobtn" matTooltip="Load Bot"><i class="fa fa-eye-slash"></i></button>
                 </span>
+              </div>
+              <div *ngIf="element.taskType=='Human'">
+                <span>
+                  <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
+                    <i  class="fas fa-plus text-primary"></i>
+                  </button>
+                </span>
+
+                <span>
+                  <button (click)="assignhuman(element.taskId)"  matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                </span>
+
+                <span>
+                  <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
+                </span>
+                <span>
+                  <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
+                  <button  *ngIf="element.taskType !='Automated'" class="undobtn" matTooltip="Load Bot"><i class="fa fa-eye-slash"></i></button>
+                </span>
+              </div>
             </td>
         </ng-container>
         <ng-container matColumnDef="Loading">
