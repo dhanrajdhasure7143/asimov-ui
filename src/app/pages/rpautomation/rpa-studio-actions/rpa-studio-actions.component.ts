@@ -294,13 +294,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
         if(this.savebotrespose.botId!=undefined)
         {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: "Bot Saved Sucessfully",
-            showConfirmButton: false,
-            timer: 2000
-          })
+          Swal.fire("Bot saved Sucessfully","","success")
           for(let p=0 ;p<this.childBotWorkspace.nodes.length;p++)
           {
             this.childBotWorkspace.nodes[p].status="executed";
@@ -321,13 +315,7 @@ export class RpaStudioActionsComponent implements OnInit {
         {
 
           this.childBotWorkspace.disable=false;
-          Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: "Bot failed to Save",
-            showConfirmButton: false,
-            timer: 2000
-          })
+         Swal.fire("Bot failed to save","","warning")
         }
       });
       }
@@ -335,7 +323,7 @@ export class RpaStudioActionsComponent implements OnInit {
     else
     {
 
-       this.childBotWorkspace.saveCron(this.she);
+       //this.childBotWorkspace.saveCron(this.she);
        let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
        if(checkbot==false)
        {
@@ -352,13 +340,7 @@ export class RpaStudioActionsComponent implements OnInit {
           this.childBotWorkspace.successCallBack(data);
           this.savebotrespose=data;
           this.rpa_studio.spinner.hide();
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: "Bot Updated Sucessfully",
-            showConfirmButton: false,
-            timer: 2000
-          })
+          Swal.fire("Bot updated Sucessfully","","success")
           this.getschecdules();
           this.childBotWorkspace.uploadfile(this.finalenv);
         });
@@ -373,14 +355,6 @@ export class RpaStudioActionsComponent implements OnInit {
     if(this.savebotrespose!=undefined)
     {
 
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Initiated Sucessfully !!",
-        showConfirmButton: false,
-        timer: 2000
-      })
-
       this.startbot=false;
       this.pausebot=true;
       this.resumebot=false;
@@ -388,24 +362,11 @@ export class RpaStudioActionsComponent implements OnInit {
         response = res;
         if(response.errorCode==undefined)
         {
-          /*
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: response.status,
-            showConfirmButton: false,
-            timer: 2000
-          })*/
+          Swal.fire(response.status,"","success")
 
         }else
         {
-          /*Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: response.errorMessage,
-            showConfirmButton: false,
-            timer: 2000
-          })*/
+          Swal.fire(response.status,"","warning")
         }
       })
     }
@@ -416,26 +377,20 @@ export class RpaStudioActionsComponent implements OnInit {
     {
 
 
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Paused Sucessfully !!",
-        showConfirmButton: false,
-        timer: 2000
-      })
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: "Bot Paused Sucessfully !!",
+      //   showConfirmButton: false,
+      //   timer: 2000
+      // })
 
       this.pausebot=false;
       this.startbot=false;
       this.resumebot=true;
       this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
       this.pause = data;
-       /* Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: this.pause.status,
-          showConfirmButton: false,
-          timer: 2000})
-        })*/
+      Swal.fire(this.pause.status,"","success")
     });
   }
   }
@@ -445,25 +400,20 @@ export class RpaStudioActionsComponent implements OnInit {
     {
 
 
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Resumed Sucessfully !!",
-        showConfirmButton: false,
-        timer: 2000
-      })
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: "Bot Resumed Sucessfully !!",
+      //   showConfirmButton: false,
+      //   timer: 2000
+      // })
       this.pausebot=true;
       this.startbot=false;
       this.resumebot=false;
       this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
         this.resume = data;
-      /*  Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: this.resume.status,
-          showConfirmButton: false,
-          timer: 2000})*/
-        })
+        Swal.fire(this.resume.status,"","success")
+      })
     }
   }
 
@@ -471,20 +421,19 @@ export class RpaStudioActionsComponent implements OnInit {
     let data="";
     if(this.savebotrespose!=undefined)
     {
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Execution Stopped !!",
-        showConfirmButton: false,
-        timer: 2000})
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: "Bot Execution Stopped !!",
+      //   showConfirmButton: false,
+      //   timer: 2000})
 
         this.startbot=true;
         this.pausebot=false;
         this.resumebot=false;
-
         this.rest.stopbot(this.savebotrespose.botId,data).subscribe(data=>{
-          console.log(data)
-
+          let resp:any=data
+          Swal.fire(resp.status,"","success")
         })
     }
   }
@@ -641,7 +590,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
     saveCronexp()
     {
-      console.log(this.she)
+     /* console.log(this.she)
       if(this.she!=undefined)
       {
         let filteredschedules:any=[]
@@ -665,7 +614,7 @@ export class RpaStudioActionsComponent implements OnInit {
         title:'Scheduler Data saved successfull',
         showConfirmButton:false,
         timer:2000
-        })
+        })*/
     }
 
 
@@ -1201,6 +1150,12 @@ checkEnableDisableBtn(id, event)
     //this.scheduleLists=schedule;
     this.schedule_list_scheduler=schedule_list;
     this.childBotWorkspace.saveCron(schedule);
+  }
+
+
+  updatesavedschedules(schedules)
+  {
+    this.childBotWorkspace.saveCron(schedules)
   }
 
 }

@@ -1,7 +1,7 @@
 
 <div id="viewlogid1">
     <div class="container" style="background: white;" class=" table w-100">
-      <button (click)="getprocesslog()" matTooltip="Reset" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
+      <button (click)="getprocesslog()" matTooltip="Refresh" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
 
           <table mat-table [dataSource]="dataSourcep1" #sortp1="matSort" matSort style="width:100%;">
             <ng-container matColumnDef="processRunId">
@@ -40,7 +40,7 @@
               </ng-container>
             <ng-container matColumnDef="runStatus">
                <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-               <td mat-cell *matCellDef="let element"> 
+               <td mat-cell *matCellDef="let element">
                 <!--<span *ngIf="element.runStatus!=null">
                 <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
@@ -58,7 +58,7 @@
             <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
             <!--<span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>-->
             <span *ngIf="element.runStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.runStatus}}</span></span>
-            
+
             <span *ngIf="element.runStatus=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
               <span *ngIf="element.runStatus == undefined">-</span></td>
@@ -81,7 +81,7 @@
 
         <button (click)="backplogrid()"  matTooltip="Back" style='float:right;margin-top:10px;' ><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
         &nbsp;&nbsp;
-        <button (click)="getprocessrunid(selected_processRunId)" matTooltip="Reset" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
+        <button (click)="getprocessrunid(selected_processRunId)" matTooltip="Refresh" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
 
           <table mat-table [dataSource]="dataSourcep2" #sortp2="matSort" matSort style="width:100%;">
 
@@ -150,7 +150,7 @@
                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                         <!--<span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>-->
                         <span *ngIf="element.bot_status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
-                        
+
                         <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                       <span *ngIf="element.bot_status == undefined">-</span>
@@ -173,7 +173,7 @@
 <div id="pbotrunid">
     <div class="container" style="background: white;" class=" table w-100">
         <button (click)="backpbotrunid()" matTooltip="Back" style='float:right;margin-top:10px;'><i class="fa fa-arrow-left" aria-hidden="true"></i></button>&nbsp;&nbsp;
-        <button (click)="ViewlogByrunid(selected_runid)" matTooltip="Reset" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
+        <button (click)="ViewlogByrunid(selected_runid)" matTooltip="Refresh" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt"></i></button>
 
         <table mat-table [dataSource]="dataSourcep3" #sortp3="matSort" matSort style="width:100%;">
 
@@ -227,7 +227,7 @@
                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                         <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
                         <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
-                        
+
                         <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span></span>
                   <span *ngIf="element.status == undefined">-</span></td>
             </ng-container>
