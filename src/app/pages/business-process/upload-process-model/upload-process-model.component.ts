@@ -352,11 +352,24 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     this.global.notify(msg+" is fit to view port", "success")
   }
 
-   togglePosition(){
+  togglePosition(){
     let el = document.getElementById("properties");
     if(el){
       el.classList.toggle("slide-left");
       el.classList.toggle("slide-right");
+    }
+  }
+
+  toggleChanges(){
+    let el = document.getElementById("changes");
+    if(el.classList.contains("slide-top"))
+      this.clearDifferences();
+    else
+      this.getBpmnDifferences();
+
+    if(el){
+      el.classList.toggle("slide-top");
+      el.classList.toggle("slide-bottom");
     }
   }
 

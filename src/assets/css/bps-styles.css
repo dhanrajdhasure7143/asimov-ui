@@ -100,6 +100,8 @@ mat-tab-body{
   width: 100% !important;
   margin: 5px auto;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+  position: relative;
+  z-index: 9999;
 }
 .changeTable tr{
 
@@ -329,18 +331,15 @@ margin-right: -85px;
   /* width: 315px; */
   right: 0;
   height: 69vh;
-  overflow: hidden scroll;
+  overflow: hidden;
   display: inline-flex;
 }
 
  .changesContainer{
   position: absolute;
-  width: 50%;
-  margin: auto;
+  width: 40%;
   bottom: 0;
-  height: 40vh;
-  overflow: hidden auto;
-  display: inline-flex;
+  left: 30%;
 }
 .changesTitle{
   padding: 5px 10px;
@@ -350,9 +349,9 @@ margin-right: -85px;
   border: 1px solid #ccc;
   border-radius: 5px 5px 0 0;
   height: 25px;
+  width: 110px;
   position: relative;
-  right: 0;
-  overflow: hidden;
+  z-index: 9999;
 }
 .propertiesTitle{
   padding: 10px 5px;
@@ -368,7 +367,7 @@ margin-right: -85px;
   top: 20vh;
   overflow: hidden;
 }
-.propertiesTitle:hover{
+.propertiesTitle:hover, .changesTitle:hover{
   background-color: grey;
   color: white;
 }
@@ -382,6 +381,10 @@ margin-right: -85px;
 #properties{
   width: 415px;
 }
+#changes{
+  height: 350px;
+  overflow: auto;
+}
 .slide-left, .slide-right{
   max-width: 0;
   -webkit-transition: max-width 0.01s ease-in-out;
@@ -394,6 +397,19 @@ margin-right: -85px;
 }
 .slide-left{
   max-width: 700px;
+}
+.slide-top, .slide-bottom{
+  max-height: 6px;
+  -webkit-transition: max-height 0.01s ease-in-out;
+  -moz-transition: max-height 0.01s ease-in-out;
+  -o-transition: max-height 0.01s ease-in-out;
+  transition: max-height 0.01s ease-in-out;
+}
+.slide-bottom{
+  overflow: hidden;
+}
+.slide-top{
+  max-height: 500px;
 }
 /* .canvasOpt:focus{
   background-color: #0062cf;

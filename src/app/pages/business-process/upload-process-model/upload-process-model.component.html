@@ -130,11 +130,12 @@
   </span>
   <!-- <button id="download" class="right" *ngIf="isShowConformance && reSize && hasConformance" (click)="downloadBpmn(true)"><img class="action-btn" src="..\assets\downloadimage.svg"></button> -->
 </div>
-<!-- <div class="changesContainer">
-    <button class="btn btn-primary eiap-btn">List of Changes</button>
-    <div class="right"><div class="changesTitle" (click)="toggleChanges()"><div>List of Changes</div></div></div>
-    <app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
-</div> -->
+<div class="changesContainer" [class.hidden]="!isUploaded">
+    <div class="changesTitle" (click)="toggleChanges()">List of Changes</div>
+    <div id="changes" class="slide-bottom">
+        <app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
+    </div>
+</div>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
     <p style="color: white">Auto Saving... </p>
 </ngx-spinner>
