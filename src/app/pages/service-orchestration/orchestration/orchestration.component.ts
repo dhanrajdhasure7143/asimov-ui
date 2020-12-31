@@ -16,7 +16,12 @@ export class OrchestrationComponent implements OnInit {
   public check_tab=0;
   public param:any=0;
   ngOnInit() {
+
     $("#nav-link-3").addClass("active");
+    $("#nav-link-2").removeClass("active");
+    $("#nav-link-1").removeClass("active");
+    $("#nav-link-0").removeClass("active");
+
     //.className+="active"
     this.dt.changeParentModule({"route":"/pages/serviceOrchestration/home", "title":"Service Orchestration"});
     this.dt.changeChildModule(undefined);

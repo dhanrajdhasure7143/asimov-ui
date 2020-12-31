@@ -127,6 +127,8 @@
 
                                         <span *ngIf="element.botStatus=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
 
+                                        <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+
 
                                         <span *ngIf="element.botStatus==null">---</span> </td>
                                 </ng-container>
