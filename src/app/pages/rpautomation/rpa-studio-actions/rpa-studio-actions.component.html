@@ -416,7 +416,7 @@
         </div>
 
         <div class="container-fluid" style="background: white;">
-          <button (click)="viewlogdata()" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i></button>
+          <button (click)="viewlogdata()" style='float:right;margin-top:10px;' tooltip="Refresh" ><i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i></button>
 
           <div class="container-fluid"  class="table w-100 w-100">
 
@@ -497,7 +497,7 @@
             <button (click)="back()" style='float:right;margin-top:10px;'>
               <i class="fa fa-arrow-left" aria-hidden="true"></i>
             </button>&nbsp;&nbsp;
-            <button (click)="ViewlogByrunid(botrunid)" style='float:right;margin-top:10px;'>
+            <button (click)="ViewlogByrunid(botrunid)" tooltip="Refresh" style='float:right;margin-top:10px;'>
               <i class="fas fa-sync-alt" aria-hidden="true"></i>
             </button>
 

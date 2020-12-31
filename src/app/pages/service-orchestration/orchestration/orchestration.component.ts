@@ -2,6 +2,7 @@ import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import { DataTransferService } from '../../services/data-transfer.service';
 import {ActivatedRoute} from "@angular/router";
 import {NgxSpinnerService} from 'ngx-spinner';
+import * as $ from 'jquery';
 @Component({
   selector: 'app-orchestration',
   templateUrl: './orchestration.component.html',
@@ -15,6 +16,8 @@ export class OrchestrationComponent implements OnInit {
   public check_tab=0;
   public param:any=0;
   ngOnInit() {
+    $("#nav-link-3").addClass("active");
+    //.className+="active"
     this.dt.changeParentModule({"route":"/pages/serviceOrchestration/home", "title":"Service Orchestration"});
     this.dt.changeChildModule(undefined);
     let processId;

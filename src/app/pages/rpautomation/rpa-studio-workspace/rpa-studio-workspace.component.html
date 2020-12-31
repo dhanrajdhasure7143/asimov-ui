@@ -143,8 +143,8 @@
                     <div class="col-md-6">
 
                         <br>
-                        <div style="height:300px; overflow-x:auto">
-                            {{outputboxresulttext}}
+                        <div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
+
                         </div>
                         <br>
                         <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
@@ -157,7 +157,7 @@
                     <div class="col-md-6 text-center">
                       <br><br>
                         <img [src]="Image" style="filter: none;height:400px;"><br><br>
-                        <a [href]="Image" download>download image</a>
+                        <a [href]="Image" download><img src="../../../../assets/downloadimage.svg" style="filter: none; width: 40px;"></a>
                         <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
 
                         <br>

@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,Pipe, PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -72,7 +72,6 @@ export class SoAutomatedTasksComponent implements OnInit {
     }else{
       this.isButtonVisible = false;
     }
-
     this.getenvironments();
     this.getCategoryList(this.processId);
     this.getallbots();
@@ -145,14 +144,8 @@ export class SoAutomatedTasksComponent implements OnInit {
       let processnamebyid;
       if(processId != undefined)
       {
-        console.log(this.process_names)
         processnamebyid=this.process_names.find(data=>data.processId==processId);
-        //console.log("------------------pedda ammai-----------------",this.responsedata.find(item=>item.processId==processnamebyid.processId).categoryId)
-        this.selectedcategory=processnamebyid.categoryId;
-        this.selectedvalue=processnamebyid.processId;
         this.applyFilter(this.selectedvalue);
-        //console.log(this.selectedvalue);
-
       }
       else
       {
@@ -170,6 +163,7 @@ export class SoAutomatedTasksComponent implements OnInit {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     console.log("-----ProcessName------",processnamebyid.categoryId)
     this.selectedcategory=processnamebyid.categoryId;
+    console.log(this.selectedcategory);
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -196,7 +190,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id,"Bot").subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,id,"Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
@@ -255,7 +249,6 @@ export class SoAutomatedTasksComponent implements OnInit {
 
     if(this.selectedvalue!=undefined)
     {
-    //this.rpa_studio.spinner.show();
     this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
       let response:any=data;
       if(response.errorMessage==undefined){
@@ -428,3 +421,30 @@ export class SoAutomatedTasksComponent implements OnInit {
 
 
 
+
+@Pipe({
+  name: 'Checkbotslist'
+})
+export class Checkbotslist implements PipeTransform {
+
+  transform(value: any,arg1: any,categories:any) {
+    let users:any=[],usersbycat:any=[];
+    users=value;
+    usersbycat=users.filter(item=>item.userId.department==arg1);
+    return usersbycat;
+  }
+
+}
+@Pipe({
+  name: 'Checkhumanslist'
+})
+export class Checkhumanslist implements PipeTransform {
+
+  transform(value: any,arg1: any,categories:any) {
+    let users:any=[],usersbycat:any=[];
+    users=value;
+    usersbycat=users.filter(item=>item.userId.department==arg1);
+    return usersbycat;
+  }
+
+}
