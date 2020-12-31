@@ -17,7 +17,7 @@ import ReplaceMenuProvider from "../bpmn-props-additional-tabs/ReplaceMenuProvid
 import { OriginalPropertiesProvider, PropertiesPanelModule, InjectionNames} from "../bpmn-props-additional-tabs/bpmn-js";
 import lintModule from 'bpmn-js-bpmnlint';
 import { SplitComponent, SplitAreaDirective } from 'angular-split';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTabGroup } from '@angular/material';
 import { BpmnModel } from '../model/bpmn-autosave-model';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { RestApiService } from '../../services/rest-api.service';
@@ -31,6 +31,7 @@ import { Subscription } from 'rxjs';
 import { JsonpInterceptor } from '@angular/common/http';
 import * as bpmnlintConfig from '../model/packed-config';
 import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 declare var require:any;
 
@@ -101,6 +102,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   ntype: string;
   validNotationTypes: string;
   displayNotation;
+  xmlTabContent: string;
+  errXMLcontent: string = '';
+  modalRef: BsModalRef;
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -126,8 +130,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
 
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
+  @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
+  @ViewChild('wrongXMLcontent', { static: true}) wrongXMLcontent: TemplateRef<any>;
   @ViewChild('canvasopt',{ static: false }) canvasopt: ElementRef;
-   constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService,
+   constructor(private rest:RestApiService, private bpmnservice:SharebpmndiagramService,private router:Router, private spinner:NgxSpinnerService, private modalService: BsModalService,
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
 
    ngOnInit() {
@@ -184,6 +190,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       let rpaActivityOptions: any[] = [];
       let taskLists:any = {};
       let taskAttributes:any = {};
+      let restApiAttributes = []
       if(res["General"]){
         res["General"].forEach((each) => {
           rpaActivityOptions.push({name:each.name, value: each.name});
@@ -191,6 +198,15 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           each.taskList.forEach((each_task) => {
             tmpTasks.push({name:each_task.name, value: each_task.taskId})
             taskAttributes[each_task.taskId] = each_task.value;
+            each_task.value.forEach((each_attr,attr_id) => {
+              if(each_attr.type == "restapi"){
+                let tmp_ = {
+                  taskId: each_task.taskId,
+                  attrId: attr_id
+                }
+                restApiAttributes.push(tmp_);
+              }
+            })
           })
           taskLists[each.name]= tmpTasks;
         })
@@ -202,6 +218,15 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           each.taskList.forEach((each_task) => {
             tmpTasks.push({name:each_task.name, value: each_task.taskId})
             taskAttributes[each_task.taskId] = each_task.value;
+            each_task.value.forEach((each_attr,attr_id) => {
+              if(each_attr.type == "restapi"){
+                let tmp_ = {
+                  taskId: each_task.taskId,
+                  attrId: attr_id
+                }
+                restApiAttributes.push(tmp_);
+              }
+            })
           })
           taskLists[each.name]= tmpTasks;
         });
@@ -209,6 +234,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       localStorage.setItem("rpaActivityOptions", JSON.stringify(rpaActivityOptions))
       localStorage.setItem("rpaActivityTaskListOptions", JSON.stringify(taskLists))
       localStorage.setItem("attributes", JSON.stringify(taskAttributes))
+      for(var i=0; i<restApiAttributes.length; i++){
+        let each_restApi = restApiAttributes[i];
+        taskAttributes[each_restApi.taskId][each_restApi.attrId] = this.rest.getRestAttributes(taskAttributes[each_restApi.taskId][each_restApi.attrId], each_restApi.taskId, each_restApi.attrId);
+      }
     })
   }
   fetchBpmnNotationFromPI(){
@@ -323,11 +352,24 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     this.global.notify(msg+" is fit to view port", "success")
   }
 
-   togglePosition(){
+  togglePosition(){
     let el = document.getElementById("properties");
     if(el){
       el.classList.toggle("slide-left");
       el.classList.toggle("slide-right");
+    }
+  }
+
+  toggleChanges(){
+    let el = document.getElementById("changes");
+    if(el.classList.contains("slide-top"))
+      this.clearDifferences();
+    else
+      this.getBpmnDifferences();
+
+    if(el){
+      el.classList.toggle("slide-top");
+      el.classList.toggle("slide-bottom");
     }
   }
 
@@ -732,6 +774,8 @@ displayBPMN(){
 
   initModeler(){
     let _self = this;
+    if(this.notationXmlTab)
+      this.notationXmlTab.selectedIndex = 0;
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     let elId = modeler_obj == "confBpmnModeler"?"canvas2":"canvas1";
     if(this[modeler_obj]){
@@ -1032,6 +1076,34 @@ displayBPMN(){
     }, 3000);
    }
 
+   displayXML(e){
+    let _self = this;
+    _self.isLoading = true;
+    if(e.index == 1){
+      this.bpmnModeler.saveXML({ format: true }, function(err, updatedXML) {
+        _self.xmlTabContent = updatedXML;
+        _self.isLoading = false;
+      })
+    }else{
+      this.bpmnModeler.importXML(this.xmlTabContent, function(err){
+        if(err){
+          _self.errXMLcontent = err;
+          _self.openModal(_self.wrongXMLcontent);
+          _self.isLoading = false;
+        }
+        else{
+          _self.oldXml = _self.xmlTabContent;
+          _self.newXml = _self.xmlTabContent;
+          _self.isLoading = false;
+        }
+      });
+    }
+  }
+
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
+  }
+
   slideUpDifferences(){
     let ele = document.getElementById("bpmn_differences");
     if(ele){
@@ -1166,7 +1238,7 @@ displayBPMN(){
     let fileName = this.isShowConformance ? this.processName : this.saved_bpmn_list[this.selected_notation]["bpmnProcessName"];
     if(fileName.trim().length == 0 ) fileName = "newDiagram";
     var dd = fileName+"."+this.selectedNotationType;
-     this.dialog.open(DeployNotationComponent, {data: {
+     this.dialog.open(DeployNotationComponent, {disableClose: true,data: {
       dataKey: data, fileNme: dd
     }});
     

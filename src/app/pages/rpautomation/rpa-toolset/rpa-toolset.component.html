@@ -1,9 +1,7 @@
 <div class="row">
   <div class="col-md-1 ">
-
-    <br>
-
-    <div class="toolset">
+    <div style="height:500px">
+    <div class="toolset" >
       <input type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" [(ngModel)]="userFilter.name" name="node" placeholder="&#61442; Search"
       class="form-control search fontAwesome" autocomplete="off">
       <br>
@@ -32,12 +30,13 @@
 
     </div>
   </div>
-  <div class="col-md-10 check">
+  </div>
+  <div class="col-md-11 check">
     <div *ngIf="templateNodes.length!=0" class="check">
       <app-rpa-studio-actionsmenu [bot]="botState" [toolset]="templateNodes" ></app-rpa-studio-actionsmenu>
     </div>
   </div>
-  <div class="col-md-1 text-center">
+  <!--<div class="col-md-1 text-center">
 
    <div class="vertical_slider custom-slider text-center" id="act_slider">
     <i class="fa fa-plus"></i>
@@ -55,5 +54,5 @@
         <button  mat-menu-item class="" ><i class="far fa-file-pdf"></i><span>PDF</span></button>
         <button  mat-menu-item class="" ><i class="fas fa-file-image"></i><span>SVG</span></button>
       </mat-menu>
-  </div>
+  </div>-->
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from '../../pages/services/rest-api.service';
 import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.service';
 import { GlobalScript } from '../global-script';
@@ -32,11 +32,16 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   @Output() update = new EventEmitter<any>();
   @Input() data;
 
-  constructor(private router:Router,private bpmnservice:SharebpmndiagramService,
+  constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
     private global: GlobalScript, private rest:RestApiService) { }
 
   ngOnInit() {
-    this.validNotationTypes = '.bpmn, .cmmn, .dmn';
+    this.route.queryParams.subscribe(params => {
+      this.validNotationTypes = '.bpmn';
+      if(params['isShowConformance'] != 'true')
+        this.validNotationTypes += ', .cmmn, .dmn';
+    });
+    
   }
 
   onSelect(e){

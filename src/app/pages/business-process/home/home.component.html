@@ -3,8 +3,9 @@
     <a routerLink="/pages/approvalWorkflow/home" *ngIf="this.isButtonVisible">Approval Workflow</a>
   </div> -->
   <div class="header_addon row approval_workflow_properties">
-    <div class="col-md-10"></div>
-    <a class="col-md-2" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" >Approval Workflow</a>
+    <div class="col-md-8"></div>
+    <a class="col-md-2" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" ><b>Approval Workflow</b></a>
+    <a class="col-md-2 text-center" href="javascript:void(0);" (click)="gotoBPMNPlatform()"><b>View Cockpit</b></a>
   </div>
   <div class="row">
     <div class="col-md-4 offset-1">

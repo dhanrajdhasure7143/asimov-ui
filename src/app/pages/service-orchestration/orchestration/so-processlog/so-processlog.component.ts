@@ -31,7 +31,7 @@ export class SoProcesslogComponent implements OnInit {
   public dataSourcep3: MatTableDataSource<any>;
   public respdata1: boolean = false;
   displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
-  displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"];
+  displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
   constructor( private rest:RestApiService, private automated:SoAutomatedTasksComponent) { }
 
@@ -47,7 +47,7 @@ export class SoProcesslogComponent implements OnInit {
   getprocesslog(){
     let logbyrunidresp1:any;
     let resplogbyrun1: any = [];
-    if(this.processId != '')
+    if(this.processId != '' && this.processId != undefined)
     {
     this.logresponse=[];
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
@@ -107,9 +107,9 @@ export class SoProcesslogComponent implements OnInit {
     document.getElementById("pbotrunid").style.display = "none";
     document.getElementById("plogrunid").style.display = "block";
   }
-
+  public selected_processRunId:any;
   getprocessrunid(processRunId){
-    console.log(processRunId);
+    this.selected_processRunId=processRunId;
     let logbyrunidresp: any;
     let resplogbyrun = [];
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
@@ -150,8 +150,10 @@ export class SoProcesslogComponent implements OnInit {
     //console.log(processRunId);
   }
 
+  public selected_runid:any;
   ViewlogByrunid(runid){
     console.log(runid);
+    this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
     let resplogbyrun1:any=[];

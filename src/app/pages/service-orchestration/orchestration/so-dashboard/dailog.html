@@ -6,18 +6,18 @@
 <mat-dialog-content class="mat-typography" *ngIf="data.type=='date'">
   <mat-form-field appearance="fill" style="width:100%">
       <mat-label>From Date</mat-label>
-        <input matInput [(ngModel)]="from_date" [max]="startdate" [matDatepicker]="filterdate">
+        <input matInput [(ngModel)]="from_date" [max]="today" [matDatepicker]="filterdate">
         <mat-datepicker-toggle matSuffix  [for]="filterdate"></mat-datepicker-toggle>
       <mat-datepicker #filterdate></mat-datepicker>
   </mat-form-field>
   <mat-form-field appearance="fill" style="width:100%">
       <mat-label>To Date</mat-label>
-      <input matInput [(ngModel)]="to_date" [min]="from_date" [max]="startdate"  [matDatepicker]="filterdate2">
+      <input matInput [(ngModel)]="to_date" [min]="from_date" [max]="today"  [matDatepicker]="filterdate2">
       <mat-datepicker-toggle matSuffix  [for]="filterdate2"></mat-datepicker-toggle>
       <mat-datepicker  #filterdate2></mat-datepicker>
   </mat-form-field>
   <br>
-  <button mat-raised-button color="primary" [mat-dialog-close]="[from_date,to_date]">Apply</button>
+  <button mat-raised-button color="primary" [disabled]="from_date==''||from_date==undefined||to_date==''|| to_date==undefined" [mat-dialog-close]="[from_date,to_date]">Apply</button>
 </mat-dialog-content>
 
 
@@ -34,8 +34,8 @@
   </mat-form-field>
   <mat-form-field style="width:100%">
       <mat-label>Select From Month</mat-label>
-      <mat-select>
-          <mat-option [(ngModel)]="form_month"  *ngFor="let month of months" [value]="month">{{month}}
+      <mat-select [(ngModel)]="form_month">
+          <mat-option   *ngFor="let month of months" [value]="month">{{month}}
         </mat-option>
       </mat-select>
   </mat-form-field>
@@ -43,13 +43,13 @@
   <mat-form-field style="width:100%">
       <mat-label>Select To Month</mat-label>
       <mat-select [(ngModel)]="to_month">
-          <mat-option *ngFor="let month of months" [value]="month">{{month}}
+          <mat-option *ngFor="let month of months | Slicedate : form_month" [value]="month">{{month}}
         </mat-option>
       </mat-select>
   </mat-form-field>
 
 <br>
-  <button mat-raised-button color="primary" (click)="apply()">Apply</button>
+  <button mat-raised-button color="primary" [disabled]="monthf_year==''|| monthf_year==undefined || to_month == '' || to_month == undefined" [mat-dialog-close]="[monthf_year,form_month,to_month]">Apply</button>
 </mat-dialog-content>
 
 
@@ -68,10 +68,10 @@
   <mat-form-field style="width:100%">
       <mat-label>Select To Year</mat-label>
       <mat-select [(ngModel)]="to_year">
-          <mat-option *ngFor="let year of years" [value]="year">{{year}}
+          <mat-option *ngFor="let year of years | Slicedate : form_year " [value]="year">{{year}}
         </mat-option>
       </mat-select>
   </mat-form-field>
   <br>
-  <button mat-raised-button color="primary"   (click)="apply()">Apply</button>
+  <button mat-raised-button color="primary" [disabled]="form_year==''|| to_year=='' || form_year== undefined || to_year==undefined"  [mat-dialog-close]="[form_year,to_year]">Apply</button>
 </mat-dialog-content>

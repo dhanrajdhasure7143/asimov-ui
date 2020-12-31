@@ -48,7 +48,7 @@ export class SchedulerComponent implements OnInit {
   isCronDisabled = false;
   picker1;
   picker2;
-  starttime:any="00:00";
+  starttime:any;
   endtime:any="23:59";
   schedules:any=[];
   startdate:any= new Date();
@@ -83,6 +83,8 @@ export class SchedulerComponent implements OnInit {
       this.schedule_list=this.data.schedule_list;
     }
     this.enddate=this.startdate;
+    this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
+
   }
 
   get_schedule()
@@ -101,12 +103,16 @@ export class SchedulerComponent implements OnInit {
             this.schedule_list[index].save_status="saved";
             this.schedule_list[index].run_status="not_started";
           })
+          this.actions.updatesavedschedules(response.botMainSchedulerEntity);
         }
       })
     }
     else if(this.botid=="not_saved")
     {
       this.schedule_list=[];
+    }
+    let sch:any={
+      scheduleIntervals:this.schedule_list
     }
   }
 
@@ -293,20 +299,16 @@ export class SchedulerComponent implements OnInit {
         {
           this.botdata.botMainSchedulerEntity={"scheduleIntervals":schedules};
         }
-        else
+        else if(schedules.length==0)
         {
-          this.botdata.botMainSchedulerEntity.scheduleIntervals=schedules;
+          this.botdata.botMainSchedulerEntity=null;
         }
       }
       await (await this.rest.updateBot(this.botdata)).subscribe(data =>{
         let resp:any=data;
         if(resp.botMainSchedulerEntity.scheduleIntervals.length==0)
         {
-          //this.actions.schpop=false;
-          //this.close()
           Swal.fire("Updated successfully","","success")
-
-          //this.notifier.notify("success", resp.errorMessage);
         }
         else if(resp.botMainSchedulerEntity.scheduleIntervals.length==this.schedule_list.length)
         {
@@ -371,9 +373,14 @@ export class SchedulerComponent implements OnInit {
       if(length==1)
       {
         let schedule=this.schedule_list.find(data=>data.check==true)
-        if(schedule.run_status!=undefined)
+        if(schedule.botActionStatus!=undefined || schedule.schedularActionStatus!=undefined )
         {
-          if(schedule.run_status=='not_started')
+          let status:any;
+          if(schedule.schedularActionStatus != undefined)
+            status=schedule.schedularActionStatus
+          else if(schedule.botActionStatus!=undefined)
+            status=schedule.botActionStatus
+          if(status=='Save')
           {
 
             this.flags.startflag=true;
@@ -381,14 +388,14 @@ export class SchedulerComponent implements OnInit {
             this.flags.resumeflag=false;
             this.flags.stopflag=false;
           }
-          else if(schedule.run_status=='started' ||schedule.run_status=='resume' )
+          else if(status=='Sart' ||status=='Running' )
           {
             this.flags.startflag=false;
             this.flags.pauseflag=true;
             this.flags.resumeflag=false;
             this.flags.stopflag=true;
           }
-          else if(schedule.run_status=='pause')
+          else if(status=='Pause')
           {
             this.flags.startflag=false;
             this.flags.pauseflag=false;
@@ -440,5 +447,15 @@ export class Envname implements PipeTransform {
     let environments:any=[];
     environments=arg;
     return environments.find(item=>item.environmentId==value).environmentName;
+  }
+}
+
+@Pipe({name: 'Reverse'})
+export class Reverse implements PipeTransform {
+  transform(value: any)
+  {
+    let arr:any=[];
+    arr=value
+    return arr.reverse();
   }
 }

@@ -9,31 +9,31 @@
     </div>
     <div class="env-data-tool">
         <div class="env-btn">
-            <button value="Create" title="Create Database Connection" id="addenvbtn" (click)="createdbconnection()">
+            <button value="Create" title="Create Database Connection" id="adddbbtn" (click)="createdbconnection()">
         <img  src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
         <div>New</div>
       </button>
         </div>
         <div *ngIf="DBupdateflag == true" class="env-btn">
-            <button id="DBupdateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Database Connection" (click)="updatedbdata()">        
+            <button id="updatedbbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Database Connection" (click)="updatedbdata()">        
         <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
         <div>Modify</div>            
             </button>    
         </div>   
         <div *ngIf="DBupdateflag == false" class="env-btn">    
-            <button data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Modify Database Connection" disabled>            
+            <button data-toggle="tooltip" id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>            
              <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'>     
              <div>Modify</div>          
              </button>   
         </div>
         <div *ngIf="DBdeleteflag==true" class="env-btn">
-            <button title="Delete Environment" value="Delete" id="deleteenvbtn" (click)="deletedbconnection()">
+            <button title="Delete Database Connection" value="Delete" id="deletedbbtn" (click)="deletedbconnection()">
                 <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
                 <div>Delete</div>
                 </button>
         </div>       
         <div *ngIf="DBdeleteflag==false" class="env-btn">
-            <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn" title="Delete Environment" disabled>
+            <button data-toggle="tooltip" data-placement="top" id="deletedbbtn" title="Delete Database Connection" disabled>
             <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
             <div>Delete</div>
             </button>
@@ -42,7 +42,7 @@
     
     <div style="width:100%;overflow-x: scroll;">
     
-            <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table"  id="listofenv">
+            <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table"  id="listofdb">
                 
                 <ng-container matColumnDef="check">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>

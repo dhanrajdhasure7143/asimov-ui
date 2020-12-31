@@ -3,7 +3,7 @@
       <div class="text-right">
 
       <span style="padding:10px">
-        <mat-form-field>
+        <mat-form-field id="dashcategorysearch">
             <mat-label>Select Category</mat-label>
             <mat-select [(ngModel)]="selectedcat" (selectionChange)="sortbycat()">
                 <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">
@@ -11,9 +11,9 @@
                 </mat-option>
             </mat-select>
         </mat-form-field>
-      </span>
+    </span>
 
-      <span style="padding:5px" >
+      <span style="padding:5px" id="dashreset">
         <button (click)="reset_all()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
       </span>
     </div>
@@ -29,7 +29,7 @@
                 </div>
                   <div class="count-text form-group">DEPARTMENTS</div>
                     <div class="count-text form-group pull-right" *ngIf="selectedcat==''|| selectedcat==undefined">{{categaoriesList.length}}</div>
-                    <div class="count-text form-group pull-right" *ngIf="selectedcat!=''">1</div>
+                    <div class="count-text form-group pull-right" *ngIf="selectedcat!='' && selectedcat!=undefined">1</div>
                 </div>
           </div>
 
@@ -106,7 +106,7 @@
                       &nbsp;&nbsp;&nbsp;
                   </div>
                     <div class="count-text form-group">USERS</div>
-                    <div class="count-text form-group pull-right">{{users.users_count}}</div>
+                    <div class="count-text form-group pull-right">{{humans_list.length}}</div>
                 </div>
             </div>
 
@@ -116,10 +116,10 @@
         <br><br>
         <div class="row">
             <div class="col-md-6 text-center ">
-                <div class="graph-card text-center" *ngIf="botstat==true" #botstatistics_graph >
+                <div class="graph-card text-center" id="dashbotstas" *ngIf="botstat==true" #botstatistics_graph >
                   <h5><b>Bot Statistics</b></h5>
-                  <div *ngIf="botstatistics.length!=0">
-                    <ngx-charts-pie-chart [view]="[400, 300]" (select)="botchart($event)" class="chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
+                  <div *ngIf="botstatistics.length!=0" >
+                    <ngx-charts-pie-chart [view]="[400, 300]" (select)="botchart($event)" class="bot-chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
                     </ngx-charts-pie-chart>
                   </div>
                   <span class="message" *ngIf="botstatistics.length==0" ><br><br><br>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="graph-card "  *ngIf="botstat==false" #botstatistics_graph >
                   <div style="padding:10px">
-                    <span class="text-center"><b>Bot Statistics</b></span><span class="pull-right"><button (click)="botstat=true"><i class="fas fa-arrow-left"></i></button></span>
+                    <span class="text-center"><b>Bot Statistics</b></span><span class="pull-right"><button (click)="botstat=true;loadcss()"><i class="fas fa-arrow-left"></i></button></span>
                     <br><br><br>
                     <table class="table">
                       <thead class="text-center">
@@ -137,7 +137,7 @@
                         <th>Type</th>
                         <th>Version</th>
                       </thead>
-                      <tbody class="text-left">
+                      <tbody class="text-left" >
                         <tr *ngFor="let bot of botstatisticstable  | paginate: { itemsPerPage: 6,currentPage: q }">
                           <td>{{bot.botName}}</td>
                           <td>{{bot.department | Category:categaoriesList }}</td>
@@ -151,9 +151,9 @@
               </div>
             </div>
             <div class="col-md-6  text-center">
-                <div class="graph-card text-center" *ngIf="processflag==true" #process_statistics >
+                <div class="graph-card text-center" id="dashprostas" *ngIf="processflag==true" #process_statistics >
                     <h5><b>Process Statistics</b></h5>
-                  <div *ngIf="processstatistics.length!=0 && processstatistics.length!=0" class="text-center" style="justify-content: center;text-align: center;align-items: center;">
+                  <div *ngIf="processstatistics.length!=0 && processstatistics.length!=0"   class="text-center" style="justify-content: center;text-align: center;align-items: center;">
                     <ngx-charts-pie-chart  [view]="[400,300]" [legendTitle]="''" [scheme]="colorScheme " class="chart-container-check" [results]="processstatistics" [gradient]="false" [legend]="showLegend" legendPosition="below" [labels]="showLabels " [arcWidth]="0.50" [doughnut]="true" (select)="processstatstable($event)" >
                     </ngx-charts-pie-chart>
                   </div>
@@ -164,7 +164,7 @@
                 </div>
                   <div class="graph-card text-center" *ngIf="processflag==false" #process_statistics>
                     <div style="padding:10px">
-                      <span><b>Process Statistics</b></span><span class="pull-right"><button (click)="processflag=true"><i class="fas fa-arrow-left"></i></button></span>
+                      <span><b>Process Statistics</b></span><span class="pull-right"><button (click)="processflag=true;loadcss()"><i class="fas fa-arrow-left"></i></button></span>
                       <div *ngIf="processstats_table.length!=0" class="text-center" style="justify-content: center;text-align: center;align-items: center;">
                         <br><br>
                         <table class="table">
@@ -193,27 +193,30 @@
         <br><br>
         <div class="row">
 
-            <div class="col-md-6">
+            <div class="col-md-6" id="dashrunprostas">
               <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==true" >
                 <div class="form-inline text-center">
-                  <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
+                  <div class="form-group"><h5 ><b>Bot Runtime Statistics</b></h5></div>
                   <div class="pull-right form-group">
 
                       <button (click)="openbotstatfilter()"> <i class="fa fa-filter" aria-hidden="true"></i></button>
-                  </div>
+                      <button (click)="botruntimestats()" matTooltip="Reset">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                      </button>
+                    </div>
                 </div>
                 <div *ngIf="runtimestats.length!=0">
                     <ngx-charts-bar-vertical    [view]="[(run_time.offsetWidth-50),300]" [scheme]="colorScheme" [results]="runtimestats" [gradient]="gradient" [xAxis]="showXAxis" [yAxis]="showYAxis" [legend]="false" [showXAxisLabel]="true" [showYAxisLabel]="true"
                         [xAxisLabel]="'Bots'"  maxXAxisTickLength=4 [rotateXAxisTicks]="true" [yAxisLabel]="'Total Execution Time (ms)'" (select)="getruns($event)" >
                     </ngx-charts-bar-vertical>
                 </div>
-                <div class="message text-center" *ngIf="runtimestats.length==0" ><br><br><br>
-                  No Records Found
+                <div class="message text-center" *ngIf="runtimestats.length==0" ><br><br><br><br>
+                 <div  style=" vertical-align: middle;"> No Records Found</div>
                 </div>
               </div>
               <div class="graph-card bar-chart" #run_time *ngIf="runtimeflag==false" >
                 <div class="form-inline text-center">
-                  <div class="form-group"><h5 ><b>Bot Runtime Process Statistics</b></h5></div>
+                  <div class="form-group"><h5 ><b>Bot Runtime Statistics</b></h5></div>
                   <div class="pull-right form-group">
 
                       <button (click)="runtimeflag=true"><i class="fas fa-arrow-left"></i></button>
@@ -229,7 +232,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6  text-center">
+            <div class="col-md-6  text-center" id="dashautovshuman">
                 <div class="graph-card bar-chart" #automated_human >
                   <h5><b>Automated Vs Human tasks</b></h5>
                   <div *ngIf="botvshuman.length!=0">
@@ -249,13 +252,14 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-8  text-center">
+            <div class="col-md-8  text-center" id="dashbottrans">
                 <div class="graph-card bar-chart">
                   <div class="form-inline">
                     <div class="form-group text-center">
                       <h5><b>Bot Transactions</b></h5>
                     </div>
                     <div class="pull-right form-group">
+
                       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
                         <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
                       </button>
@@ -270,12 +274,18 @@
                           <span><i class="fas fa-filter"></i> By Year</span>
                         </button>
                       </mat-menu>
+
+                      <button (click)="resetbottransactions()" matTooltip="Reset">
+                        <i class="fa fa-undo" aria-hidden="true"></i>
+                      </button>
                     </div>
                   </div>
+                  <div *ngIf="pop" id="linechart_data">
                     <canvas id="linechart" style="width:100% !important ;height:300px !important;"></canvas>
+                  </div>
                 </div>
             </div>
-            <div class="col-md-4 text-center">
+            <div class="col-md-4 text-center" id="dashenv">
                 <div class="graph-card bar-chart">
                     <h5><b>Environments</b></h5><br><br>
                     <canvas id="environmets" style="width:100% !important"></canvas>

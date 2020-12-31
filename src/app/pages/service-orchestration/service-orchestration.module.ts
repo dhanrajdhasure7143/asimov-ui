@@ -18,28 +18,34 @@ import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { SoAutomatedTasksComponent } from './orchestration/so-automated-tasks/so-automated-tasks.component';
 import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
-import { Category,SoDashboardComponent, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
+import { Category,SoDashboardComponent,Slicedate, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
-import { SoSchedulerComponent, Envname } from './orchestration/so-scheduler/so-scheduler.component';
+import { SoSchedulerComponent, Envname, Reverse } from './orchestration/so-scheduler/so-scheduler.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatCardModule} from '@angular/material/card';
 import {MatMenuModule} from '@angular/material/menu';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
+import {NgxChartsModule } from '@swimlane/ngx-charts';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatDialogModule} from '@angular/material/dialog';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
 import { BotlistbycatPipe } from './orchestration/so-automated-tasks/botlistbycat.pipe';
 import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlistbycat.pipe';
+import {sohints} from './orchestration/model/so-hints';
+import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
+
 @NgModule({
   declarations: [OrchestrationComponent,
     BotStatusComponent,
     FilterBy,
     Category,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname],
+    Reverse,
+    Slicedate,
+    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -53,6 +59,7 @@ import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlist
     MatTabsModule,
     CronEditorModule,
     MatNativeDateModule,
+    NgMultiSelectDropDownModule,
     FormsModule,
     NgbTimepickerModule,
     NgxSpinnerModule,
@@ -63,10 +70,12 @@ import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlist
     NgxChartsModule,
     MatMenuModule,
     MatDialogModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+
   ],
+  bootstrap: [SoDashboardComponent],
   entryComponents: [FilterBy],
-  providers:[MatDatepickerModule],
+  providers:[MatDatepickerModule,sohints],
 })
 export class ServiceOrchestrationModule {
 }

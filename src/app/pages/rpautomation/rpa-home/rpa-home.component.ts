@@ -118,6 +118,7 @@ export class RpaHomeComponent implements OnInit {
   Resetfilters(){
     this.botNameFilter.setValue("");
     this.departmentFilter.setValue("");
+    this.getallbots();
   }
 
   getallbots()
@@ -343,7 +344,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id).subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,id,"Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {

@@ -1,0 +1,121 @@
+<div class="bg-color">
+    <div class="container-fluid">
+        <br>
+        <div class="text-right">
+            <span style="padding:10px">
+              <mat-form-field class="example-full-width" id="inboxsearch">
+                <mat-label>Search</mat-label>
+                <input matInput placeholder="Search" [(ngModel)]="searchinbox" (keyup)="applyFilter($event.target.value)">
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+            </span>
+          <span (click)="reset()"  style="cursor:pointer" id="inboxreset" matTooltip="Reset">
+            <i  class="fa fa-undo"></i>
+          </span >
+        </div>
+          <div class="row">
+            <div class="col-md-12">
+              <mat-card>
+                <table mat-table  [dataSource]="dataSource1" matSort class="table" id="inboxtable">
+
+                    <ng-container matColumnDef="processName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name </th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.processName!=null">{{element.processName}}</span>
+                          <span *ngIf="element.processName==null">-</span> </td>
+                    </ng-container>
+
+
+                    <ng-container matColumnDef="taskName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Task Name </th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.taskName!=null">{{element.taskName}}</span>
+                          <span *ngIf="element.taskName==null">-</span> </td>
+                    </ng-container>
+                    <ng-container matColumnDef="previousTask">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Previous Task </th>
+                      <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.previousTask!=null">{{element.previousTask}}</span>
+                        <span *ngIf="element.previousTask==null">-</span> </td>
+                  </ng-container>
+
+                    <ng-container matColumnDef="nextSuccessTask">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Success Task </th>
+                        <td mat-cell *matCellDef="let element">
+                            <button *ngIf="element.nextSuccessTask!=null">{{element.nextSuccessTask}}</button>
+                            <span *ngIf="element.nextSuccessTask==null">-</span> </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nextFailureTask">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Failure Task </th>
+                      <td mat-cell *matCellDef="let element">
+                          <button *ngIf="element.nextFailureTask!=null">{{element.nextFailureTask}}</button>
+                          <span *ngIf="element.nextFailureTask==null">-</span> </td>
+                  </ng-container>
+                  <ng-container matColumnDef="Action">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Action </th>
+                    <td mat-cell *matCellDef="let element">
+                      <span>
+                        <button (click)="getapproved(element.processId,'Approved', element.taskId)" *ngIf="element.status != 'Approved' && element.status != 'Rejected'" matTooltip="Approved"><i class="fa fa-check text-success"></i></button>
+                        <button  *ngIf="element.status == 'Approved' || element.status == 'Rejected'" class="undobtn" matTooltip="Approve Disabled"><i class="fa fa-check text-success"></i></button>
+                      </span>&nbsp;&nbsp;&nbsp;
+                      <span>
+                        <button (click)="getapproved(element.processId,'Rejected', element.taskId)" *ngIf="element.status != 'Approved' && element.status != 'Rejected'" matTooltip="Rejected"><i class="fa fa-times text-danger"></i></button>
+                        <button  *ngIf="element.status == 'Approved' || element.status == 'Rejected'" class="undobtn" matTooltip="Reject Disabled"><i class="fa fa-times text-danger"></i></button>
+                      </span>
+                    </td>
+                </ng-container>
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
+                        <td mat-cell *matCellDef="let element">
+
+                            <span *ngIf="element.status=='Pending'" class="text-primary" ><!--<span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>-->&nbsp;{{element.status}}</span>
+
+                            <span *ngIf="element.status=='Approved'" class="text-success"><!--<span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;--><span>{{element.status}}</span></span>
+
+                            <span *ngIf="element.status=='Rejected'" class="text-danger"><!--<span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;--><span>{{element.status}}</span></span>
+                            <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                            <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+
+                            <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fa fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+
+                            <span *ngIf="element.status==null">---</span> --></td>
+                    </ng-container>
+                    <!--<ng-container matColumnDef="Action">
+                        <th mat-header-cell *matHeaderCellDef >Actions </th>
+                        <td mat-cell *matCellDef="let element">
+                            <span (click)="botidshowaction(10)"  matTooltip="Start Bot">
+                              <li class="fa fa-check text-primary" ></li>
+                            </span>&nbsp;&nbsp;
+                            <span (click)="removeBot()"  matTooltip="Pause Bot">
+                              <i class="fa fa fa-times text-danger " aria-hidden="true"></i> &nbsp;&nbsp;
+                            </span>
+                        </td>
+                    </ng-container>-->
+                    <ng-container matColumnDef="noData">
+                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
+                            No Records Found
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                    <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
+                </table>
+                <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+              </mat-card>
+            </div>
+        </div>
+      </div>
+</div>
+<!--<div id="showaction" class="rpa-modal">
+    <div class="rpa-modal-content">
+        <div class="rpa-modal-header">
+            <span class="rpa-modal-close" (click)="showactionclose()">&times;</span>
+            <h4>Logs</h4>
+        </div>
+        <div>
+                <label>Logs</label>
+        </div>
+    </div>
+</div>-->
+

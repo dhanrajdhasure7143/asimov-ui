@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,Pipe, PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -7,8 +7,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {HttpClient,HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/filter';
 import Swal from 'sweetalert2';
+import {sohints} from '../model/so-hints';
+import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
-
 import { NgxSpinnerService } from "ngx-spinner";
 
 @Component({
@@ -49,6 +50,8 @@ export class SoAutomatedTasksComponent implements OnInit {
     private router: Router,
     private spinner:NgxSpinnerService,
     private http:HttpClient,
+    private hints: sohints,
+    private dt : DataTransferService,
    )
   {
   }
@@ -56,7 +59,7 @@ export class SoAutomatedTasksComponent implements OnInit {
 
 
   ngOnInit() {
-
+    this.dt.changeHints(this.hints.soochestartionhints);
     this.spinner.show();
     this.userRole = localStorage.getItem("userRole")
 
@@ -69,13 +72,18 @@ export class SoAutomatedTasksComponent implements OnInit {
     }else{
       this.isButtonVisible = false;
     }
-
     this.getenvironments();
-    this.getCategoryList();
+    this.getCategoryList(this.processId);
     this.getallbots();
-    this.getautomatedtasks(this.processId);
     this.gethumanslist();
  }
+
+ loadbotdatadesign(botId)
+  {
+    console.log(botId);
+    localStorage.setItem("botId",botId);
+    this.router.navigate(["/pages/rpautomation/home"]);
+  }
 
 
   assignreset(id)
@@ -128,20 +136,16 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   getprocessnames(processId)
   {
-    console.log(processId);
     this.rest.getprocessnames().subscribe(processnames=>{
-      this.process_names=processnames;
-      this.selected_process_names=processnames;
+      let resp:any=[]
+      resp=processnames
+      this.process_names=resp.filter(item=>item.status=="APPROVED");
+      this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
       let processnamebyid;
-
       if(processId != undefined)
       {
-        console.log(this.process_names)
         processnamebyid=this.process_names.find(data=>data.processId==processId);
-        this.selectedvalue=processnamebyid.processId;
         this.applyFilter(this.selectedvalue);
-        console.log(this.selectedvalue);
-
       }
       else
       {
@@ -157,6 +161,9 @@ export class SoAutomatedTasksComponent implements OnInit {
   applyFilter(filterValue:any) {
     console.log(filterValue)
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
+    console.log("-----ProcessName------",processnamebyid.categoryId)
+    this.selectedcategory=processnamebyid.categoryId;
+    console.log(this.selectedcategory);
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
@@ -183,22 +190,33 @@ export class SoAutomatedTasksComponent implements OnInit {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id).subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,id,"Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
-        Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title:response.status,
-          showConfirmButton: false,
-          timer: 2000
-        })
+        Swal.fire("Resource Assigned Successfully !!","","success");
+      }else
+      {
+        Swal.fire("Failed to Assign Resource !!","","warning");
       }
     })
+  }
 
 
-
+  assignhuman(taskid)
+  {
+    let botId=$("#"+taskid+"__select").val();
+    if(botId!=0)
+    this.rest.assign_bot_and_task(botId,taskid,"Human").subscribe(data=>{
+      let response:any=data;
+      if(response.status!=undefined)
+      {
+        Swal.fire(response.status,"","success");
+      }else
+      {
+        Swal.fire(response.errorMessage,"","success");
+      }
+    })
   }
 
 
@@ -231,7 +249,6 @@ export class SoAutomatedTasksComponent implements OnInit {
 
     if(this.selectedvalue!=undefined)
     {
-    //this.rpa_studio.spinner.show();
     this.rest.startprocess(this.selectedvalue,this.selectedEnvironment).subscribe(data=>{
       let response:any=data;
       if(response.errorMessage==undefined){
@@ -346,12 +363,13 @@ export class SoAutomatedTasksComponent implements OnInit {
     })
   }
 
-  getCategoryList()
+  getCategoryList(processid)
   {
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      this.getautomatedtasks(processid);
     });
   }
 
@@ -403,3 +421,30 @@ export class SoAutomatedTasksComponent implements OnInit {
 
 
 
+
+@Pipe({
+  name: 'Checkbotslist'
+})
+export class Checkbotslist implements PipeTransform {
+
+  transform(value: any,arg1: any,categories:any) {
+    let users:any=[],usersbycat:any=[];
+    users=value;
+    usersbycat=users.filter(item=>item.userId.department==arg1);
+    return usersbycat;
+  }
+
+}
+@Pipe({
+  name: 'Checkhumanslist'
+})
+export class Checkhumanslist implements PipeTransform {
+
+  transform(value: any,arg1: any,categories:any) {
+    let users:any=[],usersbycat:any=[];
+    users=value;
+    usersbycat=users.filter(item=>item.userId.department==arg1);
+    return usersbycat;
+  }
+
+}

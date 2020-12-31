@@ -1,6 +1,6 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, Inject } from '@angular/core';
 import { Router } from '@angular/router';
-import * as BpmnJS from 'bpmn-js/dist/bpmn-modeler.production.min.js';
+import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 
@@ -10,6 +10,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { BpsHints } from '../model/bpmn-module-hints';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
+
 
 @Component({
   selector: 'app-bpshome',
@@ -39,7 +40,8 @@ export class BpsHomeComponent implements OnInit {
   isButtonVisible:boolean = false;
 
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
-     private rest:RestApiService, private hints:BpsHints, private global:GlobalScript ) { }
+     private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
+    ) { }
 
   ngOnInit(){
     this.userRole = localStorage.getItem("userRole")
@@ -241,6 +243,19 @@ export class BpsHomeComponent implements OnInit {
         })
       }
     })
-  }  
+  } 
+  
+  gotoBPMNPlatform() {
+    var token = localStorage.getItem('accessToken');
+    let selecetedTenant =  localStorage.getItem("tenantName");
+    let userId = localStorage.getItem("ProfileuserId");
+    let splitTenant:any;
+    if(selecetedTenant){
+       splitTenant = selecetedTenant.split('-')[0];
+    }
+    window.location.href = "http://10.11.0.128:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+   //var token=localStorage.getItem('accessToken');
+    // window.location.href=this.config.bpmPlatfromUrl+"/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
+  }
  
 }

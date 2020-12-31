@@ -4,6 +4,7 @@ import { Inject } from '@angular/core';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { APP_CONFIG } from 'src/app/app.config';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-deploy-notation',
@@ -11,7 +12,7 @@ import { APP_CONFIG } from 'src/app/app.config';
   styleUrls: ['./deploy-notation.component.css']
 })
 export class DeployNotationComponent implements OnInit {
-  deploy_success: boolean = true;
+  deploy_success: boolean = false;
   depName: string;
   tenantId: string;
   endPoint: string;
@@ -20,10 +21,11 @@ export class DeployNotationComponent implements OnInit {
     private rest: RestApiService,
     public dialogRef: MatDialogRef<DeployNotationComponent>,
     @Inject(APP_CONFIG) private config
-  ) { }
+  ) { 
+    dialogRef.disableClose = true;
+  }
 
   ngOnInit() {
-    this.deploy_success = false;
     this.endPoint = this.config.bussinessProcessEndPoint+"/deployprocess/notation";
   }
 
@@ -43,12 +45,21 @@ export class DeployNotationComponent implements OnInit {
     //formData.append('content-type', ' text/xml')
     formData.append('fileName', this.data.fileNme)
     formData.append('fieldName', this.data.fileNme)
-    //formData.append('engine',  splitTenant);
-    formData.append('engine', '424d2067');
+    formData.append('engine',  splitTenant);
+    // formData.append('engine', '424d2067');
     
     this.rest.deployBPMNNotation('/deployprocess/notation', formData)
       .subscribe(res => {
+        let response:any = res;
+        if(response.status == 'success' || response.status == 'Success'){
         this.deploy_success = true;
+        } else{
+          Swal.fire(
+            'Oops!',
+            response.message,
+            'error'
+          )
+        }
       })
   }
   playDeployedNotation() {
@@ -63,9 +74,9 @@ export class DeployNotationComponent implements OnInit {
     if(selecetedTenant){
        splitTenant = selecetedTenant.split('-')[0];
     }
-    //window.location.href = this.config.bpmPlatfromUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    window.location.href = this.config.bpmPlatfromUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
    //var token=localStorage.getItem('accessToken');
-    window.location.href=this.config.bpmPlatfromUrl+"/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
+    // window.location.href=this.config.bpmPlatfromUrl+"/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
   }
 
   closedeplyNonation() {

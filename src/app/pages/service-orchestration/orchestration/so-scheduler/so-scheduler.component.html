@@ -77,29 +77,29 @@
                 <br>
                 <div class="text-right">
                     <span style="padding:5px">
-                        <button [disabled]="!(flags.startflag)"   mat-mini-fab color="basic"   (click)="start_schedule()" >
+                        <button [disabled]="!(flags.startflag)"  matTooltip="Start"   mat-mini-fab color="basic"   (click)="start_schedule()" >
                           <i class="fa fa-play"></i>
                         </button>
                       </span>
                     <span style="padding:5px">
-                        <button [disabled]="!(flags.pauseflag)"   mat-mini-fab color="basic"   (click)="pause_schedule()">
+                        <button [disabled]="!(flags.pauseflag)"  matTooltip="Pause"   mat-mini-fab color="basic"   (click)="pause_schedule()">
                           <i class="fa fa-pause"></i>
                         </button>
                       </span>
                     <span style="padding:5px">
-                        <button  [disabled]="!(flags.resumeflag)"   mat-mini-fab color="basic"   (click)="resume_schedule()">
+                        <button  [disabled]="!(flags.resumeflag)"   matTooltip="Resume"  mat-mini-fab color="basic"   (click)="resume_schedule()">
                           <i class="fa fa-play-circle"></i>
                         </button>
                       </span>
 
                     <span style="padding:5px">
-                      <button [disabled]="!(flags.deleteflag)"   mat-mini-fab color="basic"   (click)="delete_schedule()">
+                      <button [disabled]="!(flags.deleteflag)"   matTooltip="Delete" mat-mini-fab color="basic"   (click)="delete_schedule()">
                         <i class="fa fa-trash"></i>
                       </button>
                     </span>
                     <span style="padding:5px">
-                      <button    mat-mini-fab color="basic"   (click)="get_schedule()">
-                        <i class="fa fa-undo"></i>
+                      <button    mat-mini-fab color="basic"  matTooltip="Refresh"  (click)="get_schedule()">
+                        <i class="fa fa-sync-alt"></i>
                       </button>
                     </span>
                 </div>
@@ -146,7 +146,7 @@
                         <th>Status</th>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let schedule of schedule_list | paginate: { itemsPerPage: 4,currentPage: q }" >
+                        <tr *ngFor="let schedule of (schedule_list | Reverse) |  paginate: { itemsPerPage: 4,currentPage: q }" >
                             <td class="text-center"><input type="checkbox" (click)="check_schedule($event,schedule.intervalId)" [checked]="schedule.check"></td>
                             <td>{{convertcron(schedule.scheduleInterval)}}</td>
                             <td>{{ schedule.timezone}}</td>

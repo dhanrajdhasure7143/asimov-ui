@@ -3,5 +3,9 @@
   position:  relative !important;
 }
 .mat-tab-body-content{
-  height:500px !important;
+  overflow: hidden !important;
+}
+
+.mat-tab-body {  /* Removing the scrollbar from the Tabs card */
+  overflow-y: hidden !important;
 }

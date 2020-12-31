@@ -3,14 +3,14 @@
     <br>
     <div class="text-right">
         <span style="padding:10px">
-          <mat-form-field class="example-full-width">
+          <mat-form-field class="example-full-width" id="bmsearch">
             <mat-label>Search</mat-label>
             <input matInput placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
             <mat-icon matSuffix>search</mat-icon>
           </mat-form-field>
         </span>
       <span style="padding:10px">
-        <mat-form-field>
+        <mat-form-field id="bmategorySearch">
           <mat-label>Select Category</mat-label>
           <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
               <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
@@ -18,30 +18,36 @@
           </mat-select>
         </mat-form-field>
       </span>
-      <span (click)="reset()"  style="cursor:pointer" matTooltip="Reset">
+      <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
         <i  class="fa fa-undo"></i>
       </span >
     </div>
       <div class="row">
         <div class="col-md-12">
           <mat-card>
-            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table">
+            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
 
                 <ng-container matColumnDef="botName">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
-                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null">{{element.botName}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span *ngIf="element.botName!=null" [matTooltip]="element.botName">{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</span>
+                        <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="description">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Description </th>
-                    <td mat-cell *matCellDef="let element"> <button *ngIf="element.description!=null">{{element.description}}</button> <span *ngIf="element.botName==''">-</span> </td>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.description!=null" [matTooltip]="element.description">{{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
+                         <span *ngIf="element.description==null || element.description==''">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="botType">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type </th>
                   <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
               </ng-container>
-
+              <ng-container matColumnDef="department">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                <td mat-cell *matCellDef="let element"> <button *ngIf="element.department !=null">{{element.department}}</button> <span *ngIf="element.botName==''">-</span> </td>
+            </ng-container>
                 <ng-container matColumnDef="version">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Version </th>
                     <td mat-cell *matCellDef="let element">
@@ -50,10 +56,23 @@
                 </ng-container>
                 <ng-container matColumnDef="botStatus">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.botStatus!=null">{{element.botStatus}}</span> <span *ngIf="element.botStatus==null">---</span> </td>
+                    <td mat-cell *matCellDef="let element"> 
+
+                        <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.botStatus}}</span>
+
+                        <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+
+                        <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                        <!--<span *ngIf="element.botStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.botStatus}}</span></span>-->
+                        <span *ngIf="element.botStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                        
+                        <span *ngIf="element.botStatus=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+
+                        <span *ngIf="element.botStatus==null">---</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="Action">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Actions </th>
+                    <th mat-header-cell *matHeaderCellDef >Actions </th>
                     <td mat-cell *matCellDef="let element">
                         <span (click)="executionAct(element.botId)"   matTooltip="Start Bot">
                           <li class="fa fa-play text-success" ></li>
@@ -70,7 +89,7 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Schedule">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Schedule</th>
+                    <th mat-header-cell *matHeaderCellDef >Schedule</th>
                     <td mat-cell *matCellDef="let element" >
                         <span (click)="openscheduler(element.botId)" matTooltip="Scheduler" style="cursor: pointer;">
                         <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>
@@ -78,18 +97,18 @@
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Logs">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Logs </th>
+                    <th mat-header-cell *matHeaderCellDef >Logs </th>
                     <td mat-cell *matCellDef="let element">
                         <a class="text-primary" matTooltip="View Logs" (click)="viewlogdata(element.botId,element.version)">View</a>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Loading">
-                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                         Loading
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="noData">
-                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                         No Records Found
                     </td>
                 </ng-container>
@@ -115,22 +134,24 @@
             <span class="rpa-modal-close" (click)="viewlogclose()">&times;</span>
             <h4>Logs</h4>
         </div>
-        <div class="container" style="background: white;" class=" table w-100">
-            <div class="logs-container">
+        <div class="container-fluid" style="background: white;" >
+          <button (click)="viewlogdata(log_botid,log_version)" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i></button>
+
+            <div class="container-fluid w-100" >
                 <table mat-table [dataSource]="Viewloglist" #sort4="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
 
 
                     <!-- Run Id Column -->
                     <ng-container matColumnDef="run_id">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Run ID </th>
-                        <td mat-cell *matCellDef="let element"><a style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.run_id}}</a></td>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:15%"> Run ID </th>
+                        <td mat-cell *matCellDef="let element" style="width:15%"><a style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.run_id}}</a></td>
                     </ng-container>
 
                     <!-- Version Column -->
                     <ng-container matColumnDef="version">
-                        <th mat-header-cell *matHeaderCellDef> Version </th>
-                        <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.version!=null">{{element.version}}</span>
+                        <th mat-header-cell *matHeaderCellDef style="width:15%"> Version </th>
+                        <td mat-cell *matCellDef="let element" style="width:15%">
+                            <span *ngIf="element.version!=null">V{{element.version}}</span>
                             <span *ngIf="element.version == undefined">-</span>
                         </td>
                     </ng-container>
@@ -139,7 +160,7 @@
                     <ng-container matColumnDef="start_date">
                         <th mat-header-cell *matHeaderCellDef> Start Date </th>
                         <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }}, {{element.start_time}}</span>
+                            <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }} {{element.start_time}}</span>
                             <span *ngIf="element.start_date == undefined">-</span>
                         </td>
                     </ng-container>
@@ -149,7 +170,7 @@
                     <ng-container matColumnDef="end_date">
                         <th mat-header-cell *matHeaderCellDef> End Date </th>
                         <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy'}}, {{element.end_date}}</span>
+                            <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy'}} {{element.end_time}}</span>
                             <span *ngIf="element.end_date == undefined">-</span>
                         </td>
                     </ng-container>
@@ -157,7 +178,7 @@
                     <ng-container matColumnDef="bot_status">
                         <th mat-header-cell *matHeaderCellDef>Status</th>
                         <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.bot_status!=null">
+                            <!--<span *ngIf="element.bot_status!=null">
                               <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                             <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.bot_status}}</span></span>
@@ -165,7 +186,17 @@
                             <span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                             <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.bot_status}}</span></span>
-                            </span>
+                            </span>-->
+                            <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
+
+                        <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                        <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                        <!--<span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>-->
+                        <span *ngIf="element.bot_status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        
+                        <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
                             <span *ngIf="element.bot_status == undefined">-</span></td>
                     </ng-container>
 
@@ -192,15 +223,19 @@
         </div>
 
         <div class="logs-container">
-            <button (click)="back()" style='float:right;margin-top:10px;' class="btn btn-primary">Back</button>
-
+          <button (click)="back()" style='float:right;margin-top:10px;'>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          </button>&nbsp;&nbsp;
+          <button (click)="ViewlogByrunid(botrunid)" style='float:right;margin-top:10px;'>
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+          </button>
             <table mat-table [dataSource]="logbyrunid" #sort5="matSort" matSort style="width:100%;">
 
                 <!-- Task Name Column -->
                 <ng-container matColumnDef="task_name">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Task Name </th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.task_name != null">{{element.task_name}}</span>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:18%"> Task Name </th>
+                    <td mat-cell *matCellDef="let element" style="width:18%">
+                        <span *ngIf="element.task_name!=null" [matTooltip]="element.task_name">{{(element.task_name.length > 15) ? ((element.task_name).slice(0, 15) + '...') : element.task_name}}</span>
                         <span *ngIf="element.task_name == undefined">-</span>
                     </td>
                 </ng-container>
@@ -208,8 +243,8 @@
 
                 <!-- Start date Column -->
                 <ng-container matColumnDef="start_date">
-                    <th mat-header-cell *matHeaderCellDef> Start Date </th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef style="width:18%"> Start Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:18%">
                         <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0]  | date:'EEE MMM d, yyyy'}}, {{element.start_time.slice(11,19)}}</span>
                         <span *ngIf="element.start_date == undefined">-</span>
                     </td>
@@ -217,8 +252,8 @@
 
                 <!-- End Date Column -->
                 <ng-container matColumnDef="end_date">
-                    <th mat-header-cell *matHeaderCellDef> End Date </th>
-                    <td mat-cell *matCellDef="let element">
+                    <th mat-header-cell *matHeaderCellDef style="width:18%"> End Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:18%">
                         <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy'}}, {{element.end_time.slice(11,19)}}</span>
                         <span *ngIf="element.end_date == undefined">-</span>
                     </td>
@@ -227,9 +262,9 @@
 
                                 <!-- Status Column -->
                 <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef>Status</th>
-                  <td mat-cell *matCellDef="let element">
-                      <span *ngIf="element.status!=null">
+                  <th mat-header-cell *matHeaderCellDef style="width:10%">Status</th>
+                  <td mat-cell *matCellDef="let element" style="width:10%">
+                     <!-- <span *ngIf="element.status!=null">
                         <span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
 
                       <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
@@ -237,7 +272,20 @@
                       <span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;"></span>&nbsp;<span>{{element.status}}</span></span>
 
                       <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.status}}</span></span>
-                      </span>
+                      </span>-->
+
+                      <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
+
+                        <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+
+                        <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                        <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
+                        <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
+                        
+                        <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+                            
+                      
                       <span *ngIf="element.status == undefined">-</span></td>
                 </ng-container>
 
@@ -247,7 +295,7 @@
                 <ng-container matColumnDef="error_info">
                     <th mat-header-cell *matHeaderCellDef> Error Info </th>
                     <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.error_info!=null && element.error_info != 'NA'">{{element.error_info}}</span>
+                        <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [matTooltip]="element.error_info">{{(element.error_info.length > 30) ? ((element.error_info).slice(0, 30) + '...') : element.error_info}}</span>
                         <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span></td>
                 </ng-container>
 

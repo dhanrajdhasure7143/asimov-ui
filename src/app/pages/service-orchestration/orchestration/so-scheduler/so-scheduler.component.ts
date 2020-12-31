@@ -79,6 +79,7 @@ export class SoSchedulerComponent implements OnInit {
     this.get_schedule()
     this.getenvironments();
     this.enddate=this.startdate;
+    this.starttime=(new Date).getHours()+":"+(new Date).getMinutes();
   }
 
   get_schedule()
@@ -455,9 +456,14 @@ export class SoSchedulerComponent implements OnInit {
       if(length==1)
       {
         let schedule=this.schedule_list.find(data=>data.check==true)
-        if(schedule.run_status!=undefined)
+        if(schedule.botActionStatus!=undefined || schedule.schedularActionStatus!=undefined )
         {
-          if(schedule.run_status=='not_started')
+          let status:any;
+          if(schedule.schedularActionStatus != undefined)
+            status=schedule.schedularActionStatus
+          else if(schedule.botActionStatus!=undefined)
+            status=schedule.botActionStatus
+          if(status=='Save')
           {
 
             this.flags.startflag=true;
@@ -465,14 +471,14 @@ export class SoSchedulerComponent implements OnInit {
             this.flags.resumeflag=false;
             this.flags.stopflag=false;
           }
-          else if(schedule.run_status=='started' ||schedule.run_status=='resume' )
+          else if(status=='Sart' ||status=='Running' )
           {
             this.flags.startflag=false;
             this.flags.pauseflag=true;
             this.flags.resumeflag=false;
             this.flags.stopflag=true;
           }
-          else if(schedule.run_status=='pause')
+          else if(status=='Pause')
           {
             this.flags.startflag=false;
             this.flags.pauseflag=false;
@@ -517,6 +523,8 @@ export class SoSchedulerComponent implements OnInit {
 
 
 
+
+
 @Pipe({name: 'Envname'})
 export class Envname implements PipeTransform {
   transform(value: any,arg:any)
@@ -524,5 +532,17 @@ export class Envname implements PipeTransform {
     let environments:any=[];
     environments=arg;
     return environments.find(item=>item.environmentId==value).environmentName;
+  }
+}
+
+
+
+@Pipe({name: 'Reverse'})
+export class Reverse implements PipeTransform {
+  transform(value: any)
+  {
+    let arr:any=[];
+    arr=value
+    return arr.reverse();
   }
 }

@@ -49,7 +49,7 @@
                          </select>
                      </div>
          </div>
-         <div class='col-sm-3'>
+         <div class='col-sm-2'>
              <!-- <button class="btn eiap-btn btn-primary" (click)="d3GraphTogle()">D3 Graph</button> -->
          </div>
             <div class="col-md-2 row">
@@ -67,12 +67,68 @@
                     <button (click)="playAnimation()" class="action-btn" title="Stop" *ngIf="isplay"><i class="fa fa-stop"></i></button>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                  <div class='row'>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4 top-btns1">
                         <button class="btn btn-thin eiap-btn" id="kpi_btn"(click)="viewInsights()" ><img src="..\assets\images\PI\viewKPI.svg">PI Insights</button>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-4 hrs-dropdwn top-btns">
+                        <button [disabled]="!isWorkingHrsBtn" class="btn btn-primary btn-thin eiap-btn" (click)="openHersOverLay()">Time Feed</button>
+
+                        <div *ngIf="isAddHrs" aria-labelledby="dropdownForm1" id="dropdownForm2">
+                            <form class="row">
+                              <div class="form-group col-sm-6">
+                                  <label for="exampleDropdownFormEmail1">Working From</label>
+                                  <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours.formDay">
+                                      <option value="" selected disabled>Select</option>
+                                      <option value="Sun">Sunday</option>
+                                      <option value="Mon">Monday</option>
+                                      <option value="Tue">Tuesday</option>
+                                      <option value="Wed">Wednesday</option>
+                                      <option value="Thu">Thursday</option>
+                                      <option value="Fri">Friday</option>
+                                      <option value="Sat">Saturday</option>
+                                  </select>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                  <label for="">Working To</label>
+                                  <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours.toDay">
+                                      <option value="" selected disabled>Select</option>
+                                      <option value="Sun">Sunday</option>
+                                      <option value="Mon">Monday</option>
+                                      <option value="Tue">Tuesday</option>
+                                      <option value="Wed">Wednesday</option>
+                                      <option value="Thu">Thursday</option>
+                                      <option value="Fri">Friday</option>
+                                      <option value="Sat">Saturday</option>
+                                  </select>
+                                </div>
+                                <hr>
+                                <p class="p_warning">*Please select business start time and end time</p>
+                              <div class="col-sm-6">
+                                  <label for="">Shift Start Time</label>
+                                  <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
+                              </div>
+  
+                              <div class="col-sm-6">
+                                  <label for="">Shift End Time</label>
+                                  <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
+                              </div>
+                              <div class="col-sm-12 dropdown-divider"></div>
+                              <div class="col-sm-2"></div>
+                              <div class="col-sm-3">
+                                  <button type="submit" class="btn btn-warning reset-btn btn-thin eiap-btn" (click)="resetWorkingHours()">Reset</button>
+                              </div>
+                          <div class="col-sm-3">
+                              <button type="submit" class="btn btn-primary btn-thin eiap-btn" (click)="addWorkingHours()">Apply</button>
+                          </div>
+                          <div class="col-sm-3">
+                              <button type="submit" class="btn btn-secondary btn-thin btn-cancel" (click)="canceladdHrs()">Cancel</button>
+                          </div>
+                        </form>
+                          </div>
+                    </div>
+                    <div class="col-sm-4 top-btns">
                         <button class="btn btn-primary btn-thin eiap-btn" id="generate_btn" (click)="generateBpmn()">Generate BPMN</button>
                     </div>
                 </div>

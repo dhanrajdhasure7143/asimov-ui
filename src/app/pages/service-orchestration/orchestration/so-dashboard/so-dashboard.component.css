@@ -59,6 +59,12 @@
     left: 50% !important;
     transform: translate(-50%,-50%) !important;
   }
+  .bot-chart-container-check{
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%,-50%) !important;
+  }
 
   .span.active
   {

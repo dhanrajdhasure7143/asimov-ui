@@ -521,25 +521,28 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
       if (taskdata != undefined) {
-        if (taskdata.tMetaId == node.selectedNodeId) {
+        if (taskdata.tMetaId == node.selectedNodeId)
+        {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
             taskdata.attributes.forEach(element => {
-              if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+              if(finalattributes.find(data => data.id == element.metaAttrId)!= undefined)
               {
-                if(element.attrValue!='' && element.attrValue!=undefined)
+                if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
                 {
-                  let attr_val=JSON.parse(element.attrValue);
-                  let attrnames=Object.getOwnPropertyNames(attr_val);
-                  finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  if(element.attrValue!='' && element.attrValue!=undefined)
+                  {
+                    let attr_val=JSON.parse(element.attrValue);
+                    let attrnames=Object.getOwnPropertyNames(attr_val);
+                    finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  }
+                }
+                else
+                {
+                  finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
                 }
               }
-              else
-              {
-                finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
-              }
-
             });
             if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
             {
@@ -867,6 +870,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
     else
     {
+        console.log("----------------save-------------------",this.saveBotdata);
        return await this.rest.saveBot(this.saveBotdata)
     }
   }
@@ -970,6 +974,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     else
       data = sche;
     this.scheduler = data;
+    console.log(sche);
   }
 
 
@@ -1212,16 +1217,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           if (this.SelectedOutputType == "Text")
           {
             let data: any = outdata
-            let textval:String=JSON.stringify(data[0].Value);
-            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />");
-
+            setTimeout(()=>{
+              $("#text_"+this.outputboxid).html((data[0].Value).toString().replace(/\n/g, "<br />"));
+            },1000)
           }
           if(this.SelectedOutputType=="Image")
           {
-            let data=this.outputboxresult[0].Value.split(':');
+            let image=this.outputboxresult[0].Value;
             //let obj=JSON.parse(this.outputboxresult[0].Value);
             //console.log("000000000000000000000000000000000000>",obj)
-            let image=data[1].slice(0, -2);
+            //let image=data[1].slice(0, -2);
             this.Image= 'data:' + 'image/png' + ';base64,' +image;
           }
         })
@@ -1292,7 +1297,10 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     return;
   }
 
+  saveentity()
+  {
 
+  }
 
   start_automation()
   {

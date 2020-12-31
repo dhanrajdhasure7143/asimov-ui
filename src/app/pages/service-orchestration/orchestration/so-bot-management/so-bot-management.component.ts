@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -8,7 +8,10 @@ import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import {RestApiService} from '../../../services/rest-api.service';
+import {sohints} from '../model/so-hints';
+import { DataTransferService } from '../../../services/data-transfer.service';
 
+import { NgxSpinnerService } from "ngx-spinner";
 declare var $:any;
 @Component({
   selector: 'app-so-bot-management',
@@ -20,7 +23,7 @@ export class SoBotManagementComponent implements OnInit {
     public isTableHasData = true;
     public respdata1=false;
     schdata:any;
-    displayedColumns: string[] = ["botName","botType", "description","version","botStatus", "Action","Schedule","Logs"];
+    displayedColumns: string[] = ["botName","botType", "department","description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     botNameFilter = new FormControl('');
     botTypeFilter = new FormControl('');
@@ -65,10 +68,16 @@ export class SoBotManagementComponent implements OnInit {
     popup:Boolean=false;
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
+      private router: Router,
+      private hints: sohints,
+      private dt : DataTransferService,
+      private spinner:NgxSpinnerService,
       )
     {}
 
   ngOnInit() {
+    this.dt.changeHints(this.hints.sobotMhints);
+    this.spinner.show();
     this.getCategoryList();
     this.getallbots();
     this.getautomatedtasks();
@@ -76,7 +85,12 @@ export class SoBotManagementComponent implements OnInit {
     this.popup=false;
   }
 
-
+  loadbotdatadesign(botId)
+  {
+    console.log(botId);
+    localStorage.setItem("botId",botId);
+    this.router.navigate(["/pages/rpautomation/home"]);
+  }
 
   getallbots()
   {
@@ -141,6 +155,7 @@ export class SoBotManagementComponent implements OnInit {
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
       this.dataSource1.data = response;
+      this.spinner.hide();
       /*this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
         //this.filteredValues['department'] = departmentFilterValue;
         //this.dataSource1.filter = JSON.stringify(this.filteredValues);
@@ -174,9 +189,8 @@ export class SoBotManagementComponent implements OnInit {
 
 
 
-
   viewlogdata(botid ,version){
-   let response: any;
+  let response: any;
    let log:any=[];
    this.logresponse=[];
    this.log_botid=botid;
@@ -234,8 +248,10 @@ export class SoBotManagementComponent implements OnInit {
    });
  }
 
+ public botrunid
  ViewlogByrunid(runid){
    console.log(runid);
+   this.botrunid=runid;
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];

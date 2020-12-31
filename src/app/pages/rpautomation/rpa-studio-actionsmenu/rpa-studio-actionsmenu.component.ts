@@ -138,7 +138,6 @@ export class RpaStudioActionsmenuComponent implements OnInit {
     this.botstatistics();
     this.getEnvironmentlist();
     this.getpredefinedbotlist();
-
     this.schedulepopid="schedule-"+this.botState.botName;
     this.viewlogid="viewlog-"+this.botState.botName;
     if(this.botState.botId!=undefined)
@@ -150,7 +149,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
       this.botState.envIds.forEach(envdata=>{
           this.environment.find(data=>data.environmentId==envdata).checked=true;
       })
-
+      this.getVersionlist();
     }
 
   }
@@ -883,7 +882,7 @@ convertcron(cronexp)
 
   rpa_assignbot(botId,taskId)
   {
-    this.rest.assign_bot_and_task(botId,taskId).subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,taskId, "Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {

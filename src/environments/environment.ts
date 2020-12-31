@@ -51,7 +51,7 @@ export const environment = {
      pi_node_url: "http://10.11.0.108:3000",
      auth_url: "http://authqa.epsoftinc.in",
      platform_url:'http://apqa.epsoftinc.in',
-     schema_registry_url:"http://10.11.0.119:8081",
+     schema_registry_url:"http://10.11.0.101:8081",
      alerts_url:'http://alertsqa.epsoftinc.in',
     
 
@@ -69,7 +69,7 @@ export const environment = {
 
   
   //BPMN Platform URL
-  bpmnplatformUrl : "http://10.11.0.127:8080"
+  bpmnplatformUrl : "http://10.11.0.128:8080"
 
 };
 

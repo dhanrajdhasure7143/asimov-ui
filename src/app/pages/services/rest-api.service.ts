@@ -52,7 +52,7 @@ export class RestApiService{
   //password -Welcome@123
 
   getAccessToken(){
-    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
+    let data = {"userId":"raghavendra.basavaraju@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -73,6 +73,13 @@ export class RestApiService{
         });
        }
      }
+  
+  getInbox(){
+    return this.http.get('/rpa-service/inbox');
+  }
+  updateInboxstatus(data){
+    return this.http.post('/rpa-service/human-task-action',data);
+  }
   bpmnlist(){
     return this.http.get<any[]>('/bpsprocess/approvalTnfoByUser');
   }
@@ -138,6 +145,23 @@ export class RestApiService{
 
   getAllAttributes(){
     return this.http.get('/rpa-service/fetch-attributes/all-tasks')
+  }
+
+  getRestAttributes(attribute, taskId, attrId){
+    let all_attr_data = JSON.parse(localStorage.getItem("attributes"))
+    this.http.get(attribute.dependency).subscribe(
+      (res:any[]) => {
+        let tmpOpt = [];
+        let keys = Object.keys(res[0])
+        res.forEach(eachOpt => {
+          let tmp_op = {key: eachOpt[keys[0]], label: eachOpt[keys[1]]};
+          tmpOpt.push(tmp_op);
+        })
+        attribute.options = tmpOpt;
+        all_attr_data[taskId][attrId] = attribute;
+        localStorage.setItem("attributes", JSON.stringify(all_attr_data))
+      }
+    )
   }
 
   async saveBot(data:any)
@@ -523,12 +547,25 @@ export class RestApiService{
     return this.http.post("/rpa-service/resume-process-schedule?processId="+processid,"");
   }
 
-  assign_bot_and_task(botid,taskid)
+  assign_bot_and_task(id,taskid,type)
   {
-    let data={
-      "botId":botid,
-      "taskId":taskid,
-    };
+    let data:any
+    if(type=="Automated")
+    {
+      data={
+        "botId":id,
+        "taskId":taskid,
+        "assignedUserId":"0"
+      };
+    }
+    else if(type=="Human")
+    {
+      data={
+        "botId":"0",
+        "taskId":taskid,
+        "assignedUserId":id
+      }
+    }
     return this.http.post("/rpa-service/assign-bot",data);
   }
 
@@ -580,7 +617,7 @@ export class RestApiService{
       let headers = new HttpHeaders({
         "Content-Type":"multipart/form-data",
         });
-      return this.http.post(url, body, {headers:  headers});
+      return this.http.post(url, body, {headers:  headers, responseType:'json'});
     }
     deleteprocessschedule(data)
     {

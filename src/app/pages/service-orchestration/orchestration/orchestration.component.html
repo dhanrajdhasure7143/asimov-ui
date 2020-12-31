@@ -16,8 +16,6 @@
 </ngb-tabset>-->
 
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
-
-
 <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
     <mat-tab>
       <ng-template mat-tab-label>
@@ -29,27 +27,36 @@
       </div>
     </mat-tab>
     <mat-tab label="Orchestrator">
-
-
         <ng-template mat-tab-label>
           <mat-icon class="text-primary">control_camera</mat-icon>
             &nbsp;&nbsp;
             Orchestration
         </ng-template>
-
         <div *ngIf="check_tab==1">
           <app-so-automated-tasks [processid]="param"></app-so-automated-tasks>
         </div>
     </mat-tab>
     <mat-tab label="Bot Management">
 
-              <ng-template mat-tab-label>
-                <mat-icon  class="text-primary">android</mat-icon>
-                  &nbsp;&nbsp;
-                  Bot Management
-              </ng-template>
+      <ng-template mat-tab-label>
+        <mat-icon  class="text-primary">android</mat-icon>
+          &nbsp;&nbsp;
+          Bot Management
+      </ng-template>
       <div *ngIf="check_tab==2">
         <app-so-bot-management></app-so-bot-management>
+      </div>
+    </mat-tab>
+    
+    <mat-tab label="Inbox">
+
+      <ng-template mat-tab-label>
+        <mat-icon  class="text-primary">inbox</mat-icon>
+          &nbsp;&nbsp;
+          Inbox  
+        </ng-template>
+      <div *ngIf="check_tab==3">
+        <app-so-inbox></app-so-inbox>
       </div>
     </mat-tab>
 </mat-tab-group>

@@ -1,3 +1,4 @@
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
 .menu-item{
   font-size:12px;
   font-weight:bold;
@@ -10,14 +11,20 @@
 .menu-item:hover{
   color:blue;
 }
-.menu{
-  padding-left:10px;
-}
 
 .pos-right{
   position: absolute !important;
   right:-50px !important;
   width:20px
+}
+
+.menu{
+  border: 1 solid grey !important;
+
+}
+.menu-item i{
+
+  font-size:22px !important;
 }
 /*
 .action-header-addon {
@@ -32,3 +39,57 @@
 .header-addon:after { clear: both; }
 */
 
+
+.search{
+  border-radius: 0px !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  padding: 0em !important;
+  height:25px !important;
+  border-bottom-color: lightgray !important;
+}
+
+
+.section {
+  overflow: scroll;
+  min-height: 65px;
+  max-height: 443px;
+  white-space: nowrap;
+}
+.con-img{
+  width:14px;
+  height:auto
+}
+
+.toolset{
+  padding:10px;
+}
+
+.check{
+  overflow:visible !important;
+  position: relative  !important;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.imageI{
+  width: 100%;
+}
+.nodes{
+  padding:10px ! important;
+}
+
+
+select.form-control
+{
+  padding:0px !important;
+  border-radius: 0px !important;
+  border-top:none !important;
+  border-right:none !important;
+  border-left:none !important;
+  box-shadow: none !important;
+}
