@@ -761,7 +761,8 @@ displayBPMN(){
 
   initModeler(){
     let _self = this;
-    this.notationXmlTab.selectedIndex = 0;
+    if(this.notationXmlTab)
+      this.notationXmlTab.selectedIndex = 0;
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
     let elId = modeler_obj == "confBpmnModeler"?"canvas2":"canvas1";
     if(this[modeler_obj]){

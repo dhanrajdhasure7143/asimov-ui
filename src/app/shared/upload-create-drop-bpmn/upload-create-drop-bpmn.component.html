@@ -5,7 +5,9 @@
             <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
                 <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
                     <h3>Upload Process Model</h3>
-                    <h5>Drag and drop files here <br>(.bpmn, .cmmn, .dmn)</h5>
+                    <h5>Drag and drop files here <br>
+                        <span>{{'('+validNotationTypes+')'}}</span>
+                    </h5>
                     <button class="btn btn-primary eiap-btn">Select</button>
                 </ngx-dropzone-label>
             </ngx-dropzone>

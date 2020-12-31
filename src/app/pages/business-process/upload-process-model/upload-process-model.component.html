@@ -48,12 +48,25 @@
 </div>
 <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
 <as-split class="ex-percent" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
-    <!-- (dragEnd)="dragEnd($event)" -->
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:100):0">
         <div class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</div>
         <div *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
             <span class="info" *ngIf="rejectedOrApproved == 'PENDING' && !reSize">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-            <div class="canvas2" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'" id="canvas2"></div>
+            <div class="row">
+                <div class="canvas2 col-md-12" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'" id="canvas2"></div>
+                <div class="propertiesContainer" [class.hidden]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
+                    <div class="propertiesTitle" (click)="togglePosition()">
+                        <div>Properties Panel</div>
+                    </div>
+                    <div id="properties" class="slide-right"></div>
+                </div>
+                <!-- <div class="propertiesContainer" [class.hidden]="!uploaded && !(reSize|| hasConformance ||rejectedOrApproved=='PENDING')">
+                    <div class="propertiesTitle" (click)="togglePosition()">
+                        <div>Properties Panel</div>
+                    </div>
+                    <div id="properties" class="slide-right"></div>
+                </div> -->
+            </div>
         </div>
         <div class="canvas2" *ngIf="!isShowConformance" id="canvas2"></div>
     </as-split-area>
@@ -93,12 +106,6 @@
                     </mat-tab>
                 </mat-tab-group>
             </div>
-            <!-- <div class="propertiesContainer">
-                <div class="propertiesTitle" (click)="togglePosition()">
-                    <div>Properties Panel</div>
-                </div>
-                <div id="properties" class="slide-right"></div>
-            </div> -->
         </div>
     </as-split-area>
 </as-split>
@@ -123,7 +130,11 @@
   </span>
   <!-- <button id="download" class="right" *ngIf="isShowConformance && reSize && hasConformance" (click)="downloadBpmn(true)"><img class="action-btn" src="..\assets\downloadimage.svg"></button> -->
 </div>
-<app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
+<!-- <div class="changesContainer">
+    <button class="btn btn-primary eiap-btn">List of Changes</button>
+    <div class="right"><div class="changesTitle" (click)="toggleChanges()"><div>List of Changes</div></div></div>
+    <app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
+</div> -->
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
     <p style="color: white">Auto Saving... </p>
 </ngx-spinner>

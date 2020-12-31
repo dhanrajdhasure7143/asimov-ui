@@ -147,13 +147,23 @@ export class CreateBpmnDiagramComponent implements OnInit {
       let rpaActivityOptions: any[] = [];
       let taskLists:any = {};
       let taskAttributes:any = {};
+      let restApiAttributes = []
       if(res["General"]){
         res["General"].forEach((each) => {
           rpaActivityOptions.push({name:each.name, value: each.name});
-          let tmpTasks = [];
+          let tmpTasks = []; 
           each.taskList.forEach((each_task) => {
             tmpTasks.push({name:each_task.name, value: each_task.taskId})
             taskAttributes[each_task.taskId] = each_task.value;
+            each_task.value.forEach((each_attr,attr_id) => {
+              if(each_attr.type == "restapi"){
+                let tmp_ = {
+                  taskId: each_task.taskId,
+                  attrId: attr_id
+                }
+                restApiAttributes.push(tmp_);
+              }
+            })
           })
           taskLists[each.name]= tmpTasks;
         })
@@ -165,6 +175,15 @@ export class CreateBpmnDiagramComponent implements OnInit {
           each.taskList.forEach((each_task) => {
             tmpTasks.push({name:each_task.name, value: each_task.taskId})
             taskAttributes[each_task.taskId] = each_task.value;
+            each_task.value.forEach((each_attr,attr_id) => {
+              if(each_attr.type == "restapi"){
+                let tmp_ = {
+                  taskId: each_task.taskId,
+                  attrId: attr_id
+                }
+                restApiAttributes.push(tmp_);
+              }
+            })
           })
           taskLists[each.name]= tmpTasks;
         });
@@ -172,6 +191,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       localStorage.setItem("rpaActivityOptions", JSON.stringify(rpaActivityOptions))
       localStorage.setItem("rpaActivityTaskListOptions", JSON.stringify(taskLists))
       localStorage.setItem("attributes", JSON.stringify(taskAttributes))
+      for(var i=0; i<restApiAttributes.length; i++){
+        let each_restApi = restApiAttributes[i];
+        taskAttributes[each_restApi.taskId][each_restApi.attrId] = this.rest.getRestAttributes(taskAttributes[each_restApi.taskId][each_restApi.attrId], each_restApi.taskId, each_restApi.attrId);
+      }
     })
   }
    getApproverList(){

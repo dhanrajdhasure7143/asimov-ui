@@ -332,6 +332,28 @@ margin-right: -85px;
   overflow: hidden scroll;
   display: inline-flex;
 }
+
+ .changesContainer{
+  position: absolute;
+  width: 50%;
+  margin: auto;
+  bottom: 0;
+  height: 40vh;
+  overflow: hidden auto;
+  display: inline-flex;
+}
+.changesTitle{
+  padding: 5px 10px;
+  font-size: 12px;
+  background-color: #ccc;
+  cursor: pointer;
+  border: 1px solid #ccc;
+  border-radius: 5px 5px 0 0;
+  height: 25px;
+  position: relative;
+  right: 0;
+  overflow: hidden;
+}
 .propertiesTitle{
   padding: 10px 5px;
   line-height: 12px;
