@@ -35,7 +35,7 @@ export class SoInboxComponent implements OnInit {
     this.dt.changeHints(this.hints.soinboxhints);
     //document.getElementById("showaction").style.display = "none";
     this.getallbots();
-  }  
+  }
 
   getallbots()
   {
@@ -63,7 +63,7 @@ export class SoInboxComponent implements OnInit {
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
       this.dataSource1.data = response;
-      
+
     },(err)=>{
       //this.rpa_studio.spinner.hide();
     })
@@ -96,11 +96,12 @@ export class SoInboxComponent implements OnInit {
         })
         /* let res:any= data;
        Swal.fire(res.status, "","success")*/
-      });  
-    
+       this.getallbots();
+      });
+
   }
   applyFilter(filterValue: string) {
-    
+
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource1.filter = filterValue;
@@ -108,6 +109,6 @@ export class SoInboxComponent implements OnInit {
 
   reset(){
     this.searchinbox = '';
-    this.applyFilter('');    
+    this.applyFilter('');
    }
 }
