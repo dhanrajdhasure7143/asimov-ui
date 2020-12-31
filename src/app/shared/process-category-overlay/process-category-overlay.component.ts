@@ -34,6 +34,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
   constructor( private rest:RestApiService, private activatedRoute: ActivatedRoute, private global:GlobalScript) { }
 
   ngOnChanges(changes: SimpleChanges) {
+  if(changes['uploadedFileName']){
     let change = changes['uploadedFileName'];
     if(!change.firstChange){
       this.uploadedFileName = change.currentValue;
@@ -41,6 +42,7 @@ export class ProcessCategoryOverlayComponent implements OnInit {
       this.uploadedFileExtension = this.uploadedFileSplit[this.uploadedFileSplit.length - 1];
       this.notationType = this.uploadedFileExtension;
     }
+  }
   }
   ngOnInit() {
     if(this.data){
