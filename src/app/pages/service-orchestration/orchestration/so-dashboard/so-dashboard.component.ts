@@ -26,6 +26,9 @@ export class SoDashboardComponent implements OnInit {
     private dt : DataTransferService,
 
     ) {}
+
+  all_humans_list:any=[]
+  humans_list:any=[]
   botstat:Boolean=true;
   runtimeflag:Boolean=true;
   processflag:Boolean=true;
@@ -177,6 +180,16 @@ export class SoDashboardComponent implements OnInit {
   backtobotstatistics()
   {
     this.botstat=true;
+
+  }
+
+  loadcss()
+  {
+    console.log("css loaded")
+    setTimeout(() => {
+      $('.chart-legend>div').css({width : '100%'});
+      this.spinner.hide()
+    }, 2000);
   }
 
   getheaders()
@@ -200,6 +213,14 @@ export class SoDashboardComponent implements OnInit {
       this.users=data;
       console.log(this.users)
     })
+
+    let tenant=localStorage.getItem("tenantName");
+    this.rest.getuserslist(tenant).subscribe(data=>
+    {
+        this.humans_list=data;
+        this.all_humans_list=data;
+    })
+
 
   }
 
@@ -268,6 +289,7 @@ export class SoDashboardComponent implements OnInit {
       this.processstats_table=this.processnames.filter(item=>item.status==event.name.toUpperCase());
       this.r=1
       this.processflag=false;
+
   }
 
 
@@ -750,7 +772,9 @@ export class SoDashboardComponent implements OnInit {
     this.botstat=true;
     bot_list_check=this.main_bot_list.filter(item=>item.department==this.selectedcat);
     console.log(bot_list_check);
-
+    let category:any;
+    category=this.categaoriesList.find(item=>item.categoryId==this.selectedcat);
+    this.humans_list=this.all_humans_list.filter(item=>item.userId.department==category.categoryName);
     this.bots_list=bot_list_check;
     this.botruntimestats()
     /*

@@ -106,7 +106,7 @@
                       &nbsp;&nbsp;&nbsp;
                   </div>
                     <div class="count-text form-group">USERS</div>
-                    <div class="count-text form-group pull-right">{{users.users_count}}</div>
+                    <div class="count-text form-group pull-right">{{humans_list.length}}</div>
                 </div>
             </div>
 
@@ -118,8 +118,8 @@
             <div class="col-md-6 text-center ">
                 <div class="graph-card text-center" id="dashbotstas" *ngIf="botstat==true" #botstatistics_graph >
                   <h5><b>Bot Statistics</b></h5>
-                  <div *ngIf="botstatistics.length!=0">
-                    <ngx-charts-pie-chart [view]="[400, 300]" (select)="botchart($event)" class="chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
+                  <div *ngIf="botstatistics.length!=0" >
+                    <ngx-charts-pie-chart [view]="[400, 300]" (select)="botchart($event)" class="bot-chart-container-check" [legendTitle]="''" [labels]="true" [scheme]="colorScheme " [results]="botstatistics" [gradient]="false" [legend]="true" legendPosition="below"  [labels]="true"[arcWidth]="0.50" [doughnut]="true"  >
                     </ngx-charts-pie-chart>
                   </div>
                   <span class="message" *ngIf="botstatistics.length==0" ><br><br><br>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="graph-card "  *ngIf="botstat==false" #botstatistics_graph >
                   <div style="padding:10px">
-                    <span class="text-center"><b>Bot Statistics</b></span><span class="pull-right"><button (click)="botstat=true"><i class="fas fa-arrow-left"></i></button></span>
+                    <span class="text-center"><b>Bot Statistics</b></span><span class="pull-right"><button (click)="botstat=true;loadcss()"><i class="fas fa-arrow-left"></i></button></span>
                     <br><br><br>
                     <table class="table">
                       <thead class="text-center">
@@ -137,7 +137,7 @@
                         <th>Type</th>
                         <th>Version</th>
                       </thead>
-                      <tbody class="text-left">
+                      <tbody class="text-left" >
                         <tr *ngFor="let bot of botstatisticstable  | paginate: { itemsPerPage: 6,currentPage: q }">
                           <td>{{bot.botName}}</td>
                           <td>{{bot.department | Category:categaoriesList }}</td>
@@ -153,7 +153,7 @@
             <div class="col-md-6  text-center">
                 <div class="graph-card text-center" id="dashprostas" *ngIf="processflag==true" #process_statistics >
                     <h5><b>Process Statistics</b></h5>
-                  <div *ngIf="processstatistics.length!=0 && processstatistics.length!=0" class="text-center" style="justify-content: center;text-align: center;align-items: center;">
+                  <div *ngIf="processstatistics.length!=0 && processstatistics.length!=0"   class="text-center" style="justify-content: center;text-align: center;align-items: center;">
                     <ngx-charts-pie-chart  [view]="[400,300]" [legendTitle]="''" [scheme]="colorScheme " class="chart-container-check" [results]="processstatistics" [gradient]="false" [legend]="showLegend" legendPosition="below" [labels]="showLabels " [arcWidth]="0.50" [doughnut]="true" (select)="processstatstable($event)" >
                     </ngx-charts-pie-chart>
                   </div>
@@ -164,7 +164,7 @@
                 </div>
                   <div class="graph-card text-center" *ngIf="processflag==false" #process_statistics>
                     <div style="padding:10px">
-                      <span><b>Process Statistics</b></span><span class="pull-right"><button (click)="processflag=true"><i class="fas fa-arrow-left"></i></button></span>
+                      <span><b>Process Statistics</b></span><span class="pull-right"><button (click)="processflag=true;loadcss()"><i class="fas fa-arrow-left"></i></button></span>
                       <div *ngIf="processstats_table.length!=0" class="text-center" style="justify-content: center;text-align: center;align-items: center;">
                         <br><br>
                         <table class="table">
@@ -200,7 +200,7 @@
                   <div class="pull-right form-group">
 
                       <button (click)="openbotstatfilter()"> <i class="fa fa-filter" aria-hidden="true"></i></button>
-                      <button (click)="botruntimestats()">
+                      <button (click)="botruntimestats()" matTooltip="Reset">
                         <i class="fa fa-undo" aria-hidden="true"></i>
                       </button>
                     </div>
@@ -275,7 +275,7 @@
                         </button>
                       </mat-menu>
 
-                      <button (click)="resetbottransactions()">
+                      <button (click)="resetbottransactions()" matTooltip="Reset">
                         <i class="fa fa-undo" aria-hidden="true"></i>
                       </button>
                     </div>
