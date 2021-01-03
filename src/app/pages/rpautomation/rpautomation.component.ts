@@ -15,6 +15,10 @@ export class RpautomationComponent implements OnInit {
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.current_child_module.subscribe(res => this.child_link = res);
+    $("#nav-link-3").removeClass("active");
+    $("#nav-link-2").addClass("active");
+    $("#nav-link-1").removeClass("active");
+    $("#nav-link-0").removeClass("active");
 
   }
   removenodes()

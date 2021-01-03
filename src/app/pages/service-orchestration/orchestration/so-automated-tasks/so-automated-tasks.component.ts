@@ -145,7 +145,7 @@ export class SoAutomatedTasksComponent implements OnInit {
       if(processId != undefined)
       {
         processnamebyid=this.process_names.find(data=>data.processId==processId);
-        this.applyFilter(this.selectedvalue);
+        this.applyFilter(processnamebyid.processId);
       }
       else
       {
@@ -159,15 +159,11 @@ export class SoAutomatedTasksComponent implements OnInit {
 
 
   applyFilter(filterValue:any) {
-    console.log(filterValue)
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
-    console.log("-----ProcessName------",processnamebyid.categoryId)
-    this.selectedcategory=processnamebyid.categoryId;
-    console.log(this.selectedcategory);
-    this.selectedvalue=filterValue;
+    //this.selectedcategory=processnamebyid.categoryId;
+    this.selectedvalue=processnamebyid.processId;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-
     this.dataSource2.filter = filterValue;
   }
 

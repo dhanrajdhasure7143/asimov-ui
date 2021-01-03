@@ -116,23 +116,23 @@
         <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.status=='Running'|| element.status=='InProgress'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp; Running</span>
-
-                        <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
-
-                        <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
-                        <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                        <span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
-                        <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>-->
-
-                        <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
-
-                <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
+              <span *ngIf="element.status=='Running' || element.status=='InProgress'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp; Running</span>
+              <span *ngIf="element.status=='Success' || element.status=='Executed' " class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+              <span *ngIf="element.status=='Rejected' " class="text-danger"><span><li class="fa fa-times-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+              <span *ngIf="element.status=='Approved' " class="text-success"><span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+              <span *ngIf="element.status=='Failure' || element.status=='Failed'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+              <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+              <span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+              <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>-->
+              <span *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+              <span *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+              <span *ngIf="element.status==null||element.status==''" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>--</span>
+              <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
               <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span>{{element.status}}</span></span>
-                <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
-                <span *ngIf="element.status=='New'" class="text-primary"><span><img src="/assets/images/RPA/newicon.png" style="height:20px;"></span>&nbsp;<span>{{element.status}}</span></span>
-                <span *ngIf="element.status=='Failed'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.status}}</span></span>
-                </span>-->
+              <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
+              <span *ngIf="element.status=='New'" class="text-primary"><span><img src="/assets/images/RPA/newicon.png" style="height:20px;"></span>&nbsp;<span>{{element.status}}</span></span>
+              <span *ngIf="element.status=='Failed'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.status}}</span></span>
+              </span>-->
 
                 <span *ngIf="element.status=='null'">---</span>
             </td>
