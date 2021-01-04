@@ -20,16 +20,13 @@ export class ipcustompipecreation implements PipeTransform {
       if( this.countD < 3){
         this.str = (ip.charCodeAt(i) != 46 ? '*':'.');
         this.str1 = this.str1+ this.str;
-        console.log(this.str1);
         if(ip.charCodeAt(i) == 46 ){
           this.countD++;
-          console.log(this.countD);
         }
       }
       else
       {
         this.str2 = this.str2+ip[i];
-        console.log(this.str2);
       }
     }
     this.hostadd = this.str1+ this.str2;
