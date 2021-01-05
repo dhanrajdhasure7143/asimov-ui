@@ -99,9 +99,16 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         console.log(this.dbconnections);
         this.dbconnections.sort((a,b) => a.connectionId > b.connectionId ? -1 : 1);
         this.dataSource2= new MatTableDataSource(this.dbconnections);
-        this.dataSource2.sort = this.sort2;
-        this.dataSource2.paginator=this.paginator2;
+        setTimeout(() => {
+          this.sortmethod(); 
+        }, 80);
       });
+  }
+
+  sortmethod(){
+    this.dataSource2.sort = this.sort2;   
+    console.log(this.dataSource2.sort);  
+    this.dataSource2.paginator=this.paginator2; 
   }
 
   DBcheckAllCheckBox(ev) {
