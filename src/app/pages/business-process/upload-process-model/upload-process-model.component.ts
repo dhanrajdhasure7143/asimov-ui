@@ -127,7 +127,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       }
     ]
   }
-
+  public variables: any[] = [];
+  isStartProcessBtn:boolean=false;
+  definationId:any;
+  businessKey:any;
+  @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
   @ViewChild("notationXMLTab", { static: false }) notationXmlTab: MatTabGroup;
@@ -1242,6 +1246,50 @@ displayBPMN(){
       dataKey: data, fileNme: dd
     }});
     
+    let deployResponse;
+    this.dt.current_startProcessValues.subscribe(res=>{
+      if(res){
+      deployResponse=res
+          this.definationId=deployResponse.definationId
+          this.isStartProcessBtn=deployResponse.startprocess
+      }
+    })
+  }
+
+  openVariableDialog(){
+    this.dialog.open(this.variabletemplate);
+    this.variables= [];
+    this.businessKey='';
+  }
+  addVariable(){
+    this.variables.push({
+      variableName: '',
+      type: '',
+      value: ''
+    })
+  }
+  removevariable(index){
+    this.variables.splice(index, 1);
+  }
+  cancelProcess(){
+    this.dialog.closeAll()
+  }
+  startProcess(){
+    let reqBody={
+      "definitionId":this.definationId,
+      "businessKey":this.businessKey,
+      "variableList":this.variables
+    };
+    this.rest.startBpmnProcess(reqBody).subscribe(res=>{
+      console.log(res);
+      Swal.fire(
+        'Success!',
+        'Process started successfully',
+        'success'
+      )
+      this.cancelProcess();
+      this.isStartProcessBtn=false;
+    })    
   }
 
 }
