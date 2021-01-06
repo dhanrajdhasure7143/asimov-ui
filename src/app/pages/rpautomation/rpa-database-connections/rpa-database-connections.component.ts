@@ -3,7 +3,7 @@ import {FormGroup, Validators, FormBuilder, Form } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
-import {RpaconfigHints} from "../model/rpa-environments-module-hints";
+import {Rpa_Hints} from "../model/RPA-Hints";
 import {Router} from "@angular/router";
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -40,7 +40,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     
     constructor(private api:RestApiService, 
       private router:Router,
-      private hints:RpaconfigHints, 
+      private hints:Rpa_Hints, 
       private formBuilder: FormBuilder,
       private chanref:ChangeDetectorRef, 
       private dt:DataTransferService,
@@ -57,7 +57,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],     
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],    
+        activeStatus: [true], 
     })
   
     this.updatedbForm=this.formBuilder.group({
@@ -68,7 +69,8 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         portNumber: ["",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
         schemaName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],  
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])], 
+        activeStatus: [""], 
       
     })
       this.DBupdateflag=false;

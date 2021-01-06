@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
 import { ActivatedRoute, Router} from "@angular/router";
 import { HttpClient } from '@angular/common/http';
-import {RpaWorkspace} from "../model/rpa-workspaceslist-module-hints";
+import {Rpa_Hints} from "../model/RPA-Hints";
 import { DataTransferService } from "../../services/data-transfer.service";
 @Component({
   selector: 'app-rpa-workspace',
@@ -20,13 +20,13 @@ public id:any;
 public startbot:Boolean;
 public pausebot:Boolean;
 
-constructor(private api:RestApiService ,private route:ActivatedRoute, private router:Router, private dt:DataTransferService, private hints:RpaWorkspace) {}
+constructor(private api:RestApiService ,private route:ActivatedRoute, private router:Router, private dt:DataTransferService, private hints:Rpa_Hints) {}
   
   ngOnInit() 
   {
     try{
       
-    this.dt.changeHints(this.hints.rpaworkspacehints );
+    this.dt.changeHints(this.hints.rpaworkspacehints1 );
       this.route.queryParams.subscribe(data => {
         console.log(data)
         if(data.processid==undefined)
