@@ -6,6 +6,27 @@
   overflow: hidden !important;
 }
 
-.mat-tab-body {  /* Removing the scrollbar from the Tabs card */
-  overflow-y: hidden !important;
+
+/*
+::ng-deep mat-tab-body {
+  overflow-y: unset !important;
+}
+
+::ng-deep .mat-tab-body-content
+{
+
+  overflow: hidden ! important;
+}
+::ng-deep mat-tab-body
+{
+  overflow-y: unset !important;
+}*/
+
+::ng-deep .tabs .mat-tab-label{
+  height :31px !important;
+  padding: 0 6px !important;
+}
+
+::ng-deep .tabs .mat-ink-bar{
+  min-width:169px !important;
 }
