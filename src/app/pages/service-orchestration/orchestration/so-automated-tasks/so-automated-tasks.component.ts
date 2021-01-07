@@ -160,14 +160,16 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
-    //this.selectedcategory=processnamebyid.categoryId;
+    this.selectedcategory=parseInt(processnamebyid.categoryId);
+    this.applyFilter1(this.selectedcategory);
     this.selectedvalue=processnamebyid.processId;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource2.filter = filterValue;
   }
 
-  applyFilter1() {
+  applyFilter1(value) {
+    this.selectedcategory=parseInt(value);
     this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
     this.selectedvalue="";

@@ -49,6 +49,8 @@ import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatNativeDateModule} from '@angular/material';
+import { RpaSchedulerComponent } from './rpa-scheduler/rpa-scheduler.component';
+
 import {Rpa_Hints} from './model/RPA-Hints';
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import {Rpa_Hints} from './model/RPA-Hints';
     RpaStudioDesignerComponent,
     RpaStudioActionsmenuComponent,
     RpaStudioDesignerworkspaceComponent,
-    SchedulerComponent
+    SchedulerComponent,
+    RpaSchedulerComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,

@@ -5,7 +5,7 @@
               &nbsp;&nbsp;
               {{tab.botName}}
               &nbsp;&nbsp;
-            <mat-icon (click)="removetab(tab)">close</mat-icon>
+            <span class="pull-right"><mat-icon  (click)="removetab(tab)">close</mat-icon></span>
         </ng-template>
         <app-rpa-toolset [bot]="tab" ></app-rpa-toolset>
       </mat-tab>
