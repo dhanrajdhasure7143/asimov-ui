@@ -395,7 +395,7 @@ export class SoDashboardComponent implements OnInit {
           "series":[
             {
               "name":"Bots",
-              "value":this.automatedtasks.filter(taskdata=>taskdata.processId==data.processId && taskdata.taskType=="Bot").length,
+              "value":this.automatedtasks.filter(taskdata=>taskdata.processId==data.processId && (taskdata.taskType=="Bot"|| taskdata.taskType=="Automated")).length,
             },
             {
               "name":"Humans",
