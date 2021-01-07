@@ -19,12 +19,8 @@ import { RpaWorkspaceComponent } from './rpa-workspace/rpa-workspace.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { RpaHints } from './model/rpa-module-hints';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
-import { RpaDragHints } from './model/rpa-workspace-module-hints';
 import { FilterPipeModule } from 'ngx-filter-pipe';
-import {RpaconfigHints} from "./model/rpa-environments-module-hints";
-import {RpaWorkspace} from "./model/rpa-workspaceslist-module-hints";
 import { NgxPasswordToggleModule } from 'ngx-password-toggle';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { RpaHomeComponent } from './rpa-home/rpa-home.component';
@@ -36,7 +32,6 @@ import {MatInputModule, MatIconModule, MatFormFieldModule} from '@angular/materi
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
 import { NgxSpinnerModule } from "ngx-spinner";
-import { Rpa_Home_Hints } from "./model/rpa-home-module-hints";
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatSliderModule} from '@angular/material/slider';
 import { RpaConfigurationsComponent } from './rpa-configurations/rpa-configurations.component';
@@ -56,6 +51,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatNativeDateModule} from '@angular/material';
 import { RpaSchedulerComponent } from './rpa-scheduler/rpa-scheduler.component';
 
+import {Rpa_Hints} from './model/RPA-Hints';
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -111,7 +107,6 @@ import { RpaSchedulerComponent } from './rpa-scheduler/rpa-scheduler.component';
     MatSlideToggleModule,
     Ng5SliderModule,
   ],
-
-  providers: [RpaHints,RpaDragHints,RpaWorkspace, Rpa_Home_Hints,MatDatepickerModule,RpaconfigHints,]
+  providers: [MatDatepickerModule,Rpa_Hints]
 })
 export class RpautomationModule { }

@@ -6,7 +6,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import jsPDF from 'jspdf';
 import { NotifierService } from 'angular-notifier';
-import { RpaDragHints } from '../model/rpa-workspace-module-hints';
+import { Rpa_Hints } from '../model/RPA-Hints';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
@@ -72,7 +72,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   rp_url:string;
   recordedcode:any;
   finalcode:any;
-  constructor(private rest: RestApiService, private notifier: NotifierService, private hints: RpaDragHints, private dt: DataTransferService, private http: HttpClient, private child_rpa_studio: RpaStudioComponent,) {
+  constructor(private rest: RestApiService, private notifier: NotifierService, private hints: Rpa_Hints, private dt: DataTransferService, private http: HttpClient, private child_rpa_studio: RpaStudioComponent,) {
 
   }
 
