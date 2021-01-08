@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./so-inbox.component.css']
 })
 export class SoInboxComponent implements OnInit {
-    displayedColumns: any[] = ["processName","taskName","previousTask", "nextSuccessTask","nextFailureTask", "status", "Action"];
+    displayedColumns: any[] = ["processRunId","processName","taskName","previousTask", "nextSuccessTask","nextFailureTask", "status", "Action"];
     dataSource1:MatTableDataSource<any>;
     public respdata1:boolean = false;
     searchinbox:any;
@@ -78,11 +78,13 @@ export class SoInboxComponent implements OnInit {
     document.getElementById("showaction").style.display = "none";
   }
 */
-  getapproved(processId,status, taskId){
+  getapproved(processId,status, taskId,runId, envId){
     let obj = {
       "processId": processId,
       "status" : status,
-      "taskId" : taskId
+      "taskId" : taskId,
+      "processRunId":runId,
+      "envId": envId
     }
     console.log(obj);
     this.rest.updateInboxstatus(obj).subscribe(data =>

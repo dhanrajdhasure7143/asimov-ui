@@ -8,7 +8,7 @@
     <span style="padding:5px">
       <mat-form-field id="autocategorysearch">
         <mat-label>Select Category</mat-label>
-          <mat-select [(ngModel)]="selectedcategory" [value]="selectedcategory" (selectionChange)="applyFilter1()">
+          <mat-select  [value]="selectedcategory" (selectionChange)="applyFilter1($event.value)">
             <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
             </mat-option>
           </mat-select>
@@ -172,8 +172,8 @@
                   <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
                 </span>
                 <span>
-                  <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
-                  <button  *ngIf="element.taskType !='Automated'" class="undobtn" matTooltip="Load Bot"><i class="fa fa-eye-slash"></i></button>
+                  <button [disabled]="element.botId==0" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
+                  <button  *ngIf="element.taskType !='Automated'" class="undobtn" ><i class="fa fa-eye-slash"></i></button>
                 </span>
               </div>
               <div *ngIf="element.taskType=='Human'">

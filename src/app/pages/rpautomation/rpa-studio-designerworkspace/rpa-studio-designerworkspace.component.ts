@@ -6,7 +6,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import jsPDF from 'jspdf';
 import { NotifierService } from 'angular-notifier';
-import { RpaDragHints } from '../model/rpa-workspace-module-hints';
+import { Rpa_Hints } from '../model/RPA-Hints';
 import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
@@ -75,7 +75,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   finalcode:any;
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
-    private hints: RpaDragHints,
+    private hints: Rpa_Hints,
     private dt: DataTransferService,
     private http: HttpClient,
     private child_rpa_studio: RpaStudioComponent,
@@ -99,10 +99,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       id: "",
       name: "",
     }
-    console.log("ssssssssssssssssssssssss",this.finalbot);
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
-      console.log("------------------toolset----------------------",this.toolset.templateNodes)
       this.loadnodes();
       this.dragareaid = "dragarea__" + this.finalbot.botName;
       this.outputboxid = "outputbox__" + this.finalbot.botName;
@@ -187,7 +185,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   public loadnodes() {
-    console.log("----------------------->", this.finaldataobjects);
     this.finaldataobjects.forEach(element => {
       if (element.inSeqId == "START_" + this.finalbot.botName) {
         let node = {
@@ -226,12 +223,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let templatenodes:any=[]
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];
-      console.log("---------------->",element)
-      console.log("-----nodeid------",nodeid)
-      console.log("-----nodename----",nodename);
-      console.log("-----templatenodes--",this.toolset.templateNodes);
-      console.log("--------first node---------",this.toolset.templateNodes)
-      //console.log(nodepoint);
       this.toolset.templateNodes.forEach(element => {
         console.log("check")
       });
@@ -609,12 +600,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       }
     }else
     {
-      Swal.fire({
-        icon: "warning",
-        title: "Please select task",
-        showConfirmButton: true,
-
-      })
+      Swal.fire("Please select task","","warning");
     }
   }
 
@@ -729,7 +715,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   recording(command)
   {
-      ///let editorExtensionId="cgmlkfjpbibldanihfidkfbmmkemphpn";
       let editorExtensionId="efhogiiggfblodigpphpedpbkclgfcje"
        window["chrome"].runtime.sendMessage(editorExtensionId, {url: this.rp_url,data:command},
         function(response) {
@@ -1033,16 +1018,21 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   reset(e) {
+    console.log(e);
     this.indexofArr = 5;
     this.dagvalue = this.zoomArr[this.indexofArr];
     this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+    this.jsPlumbInstance.repaintEverything()
+
   }
 
   zoomin(e) {
+    console.log(e);
     if (this.indexofArr < this.zoomArr.length - 1) {
       this.indexofArr += 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
       this.dragelement.style['transform'] = `scale(${this.dagvalue})`
+      this.jsPlumbInstance.repaintEverything()
     }
   }
 
@@ -1082,7 +1072,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   downloadJpeg() {
 
     var element=document.getElementById(this.dragareaid)
-    domtoimage.toPng(element,{ quality: 0.95,background: "white"})
+    domtoimage.toPng(element,{ quality: 1,background: "white"})
     .then(function (dataUrl) {
       var link = document.createElement('a');
       link.download = 'bot_image.jpeg';

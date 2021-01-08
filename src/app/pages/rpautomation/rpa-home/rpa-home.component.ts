@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { DataTransferService } from "../../services/data-transfer.service";
-import { Rpa_Home_Hints } from "../model/rpa-home-module-hints"
+import { Rpa_Hints } from "../model/RPA-Hints"
 // import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
@@ -48,7 +48,7 @@ export class RpaHomeComponent implements OnInit {
   @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
 
-  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Home_Hints,)
+  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Hints,)
   {
 
   }
