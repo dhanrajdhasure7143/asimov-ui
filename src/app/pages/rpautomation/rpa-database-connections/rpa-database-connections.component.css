@@ -49,7 +49,14 @@
     color:black !important;
     width:25px;
     background-color: white !important;
-    
+  }
+
+  .rpa-modal-content{
+    padding-bottom:25px !important;
+  }
+
+  .mat-paginator{
+    padding-right:25px !important;
   }
   
   .env-btn > button:disabled > img{
