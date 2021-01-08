@@ -72,10 +72,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
     },
     "types": [
       {
-        "name": "BotType",
-        "superClass": [ "Element" ],
-      },
-      {
         "name": "Activity",
         "superClass": [ "Element" ],
       },

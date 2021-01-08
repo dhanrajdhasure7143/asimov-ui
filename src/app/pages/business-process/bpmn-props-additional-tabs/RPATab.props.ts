@@ -68,69 +68,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
         }
     }
 
-    function getRPABotType(element, bpmnFactory){
-        return entryFactory.selectBox({
-            id: 'bottype',
-            label: 'Select RPA Bot Type',
-            selectOptions: [
-                        {name: 'Ui Path', value: 1},
-                        {name: 'EPSoft', value: 2}
-                    ],
-            modelProperty: 'bottype',
-            divider: true,
-            prefix: 'RpAaCtivity',
-            emptyParameter: true,
-            get: function(element, node) {
-                var result = { bottype: '' };
-                var bo = getBusinessObject(element);
-                var formDataExtension = getExtensionElements(bo, "bpmn:rpaTask");
-                if(!formDataExtension)
-                    formDataExtension = getExtensionElements(bo, "rpa:Activity")
-                if (formDataExtension) {
-                    var formData = getRpaData(element, "rpa:Activity");
-                    var storedValue = formData.get('bottype');
-                    result = { bottype: storedValue };
-                }
-                return result;
-            },
-            set: function(element, values, node) {
-                var bo = getBusinessObject(element); var commands = [];
-                var rpaExtensionElements = getExtensionElements(bo, "bpmn:rpaTask");
-                if(!rpaExtensionElements)
-                    rpaExtensionElements = getExtensionElements(bo, "rpa:Activity");
-                if (!rpaExtensionElements) {
-                    rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
-                    commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
-                }
-                var rpaFData = getRpaData(element, "rpa:Activity");
-                if(!rpaFData){
-                    rpaFData = elementHelper.createElement('rpa:Activity', { bottype: "", activity: "", taskId: ""}, rpaExtensionElements, bpmnFactory);
-                    commands.push(cmdHelper.addAndRemoveElementsFromList(
-                        element,
-                        rpaExtensionElements,
-                        'values',
-                        'extensionElements',
-                        [rpaFData],
-                        []
-                    ));
-                }
-                var field = elementHelper.createElement('rpa:Activity', values.bottype , rpaFData, bpmnFactory);
-                if (typeof rpaFData.bottype !== 'undefined') {
-                    commands.push(cmdHelper.addElementsTolist(element, rpaFData, 'bottype', values.bottype));
-                } else {
-                    commands.push(cmdHelper.updateBusinessObject(element, rpaFData, {
-                        bottype: values.bottype,
-                        activity: "",
-                        taskId: ""
-                    }));
-                }
-                return commands;
-            },
-            setControlValue: true
-        });
-    }
-
-    function getActivityEntry(element, bpmnFactory) {
+    function getActivityEntry(element, bpmnFactory){
         let rpa_activity_opts = localStorage.getItem("rpaActivityOptions");
         var rpaActivityOptions = rpa_activity_opts? JSON.parse(rpa_activity_opts) :[];
         return entryFactory.selectBox({
@@ -138,22 +76,20 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
             label: 'RPA Activity',
             selectOptions: rpaActivityOptions,
             modelProperty: 'activity',
+            divider: true,
+            prefix: 'RpAaCtivity',
             emptyParameter: true,
             get: function(element, node) {
                 var result = { activity: '' };
                 var bo = getBusinessObject(element);
-                var formDataExtension = getExtensionElements(bo, "rpa:Activity");
+                var formDataExtension = getExtensionElements(bo, "bpmn:rpaTask");
+                if(!formDataExtension)
+                    formDataExtension = getExtensionElements(bo, "rpa:Activity")
                 if (formDataExtension) {
                     var formData = getRpaData(element, "rpa:Activity");
                     var storedValue = formData.get('activity');
                     result = { activity: storedValue };
                 }
-                var rpaFData = getRpaData(element, "rpa:Activity");
-
-                cmdHelper.updateBusinessObject(element, rpaFData, {
-                    activity: result.activity
-                });
-
                 return result;
             },
             set: function(element, values, node) {
@@ -166,8 +102,10 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                     commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
                 }
                 var rpaFData = getRpaData(element, "rpa:Activity");
+                var rpaFOutputData = getRpaData(element, "rpa:OutputParams");
+                var rpaFInputData = getRpaData(element, "rpa:InputParams");
                 if(!rpaFData){
-                    rpaFData = elementHelper.createElement('rpa:Activity', { activity: "", taskId:"" }, rpaExtensionElements, bpmnFactory);
+                    rpaFData = elementHelper.createElement('rpa:Activity', { activity: "", taskId: ""}, rpaExtensionElements, bpmnFactory);
                     commands.push(cmdHelper.addAndRemoveElementsFromList(
                         element,
                         rpaExtensionElements,
@@ -175,9 +113,33 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         'extensionElements',
                         [rpaFData],
                         []
-                    ));
+                        ));
+                }
+                if(!rpaFOutputData){
+                    rpaFOutputData = elementHelper.createElement('rpa:OutputParams', {}, rpaExtensionElements, bpmnFactory);
+                    commands.push(cmdHelper.addAndRemoveElementsFromList(
+                        element,
+                        rpaExtensionElements,
+                        'values',
+                        'extensionElements',
+                        [rpaFOutputData],
+                        []
+                        ));
+                }
+                if(!rpaFInputData){
+                    rpaFInputData = elementHelper.createElement('rpa:InputParams', {}, rpaExtensionElements, bpmnFactory);
+                    commands.push(cmdHelper.addAndRemoveElementsFromList(
+                        element,
+                        rpaExtensionElements,
+                        'values',
+                        'extensionElements',
+                        [rpaFInputData],
+                        []
+                        ));
                 }
                 var field = elementHelper.createElement('rpa:Activity', values.activity , rpaFData, bpmnFactory);
+                elementHelper.createElement('rpa:OutputParams', "" , rpaFOutputData, bpmnFactory);
+                elementHelper.createElement('rpa:InputParams', "" , rpaFInputData, bpmnFactory);
                 if(rpaFData.get('taskId') == "") updateTaskList(element, values.activity);
                 if (typeof rpaFData.activity !== 'undefined') {
                     commands.push(cmdHelper.addElementsTolist(element, rpaFData, 'activity', values.activity));
@@ -189,15 +151,11 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                 }
                 return commands;
             },
-            setControlValue: true,
-            hidden: function(element, node) {
-                var rpaFData = getRpaData(element, "rpa:Activity");
-                return !(rpaFData && rpaFData.get("bottype") && rpaFData.get("bottype")==2 );
-            }
+            setControlValue: true
         });
     }
 
-    function getTaskListEntry(element, bpmnFactory){
+    function getTaskListEntry(element, bpmnFactory) {
         return entryFactory.selectBox({
             id: 'taskList',
             label: 'RPA Task List',
@@ -256,7 +214,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
             setControlValue: true,
             hidden: function(element, node) {
                 var rpaFData = getRpaData(element, "rpa:Activity");
-                return !(rpaFData && rpaFData.get("bottype") && rpaFData.get("bottype")==2 && rpaFData.get("activity"));
+                return !(rpaFData && rpaFData.get("activity"));
             }
         });
     }
@@ -352,7 +310,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                     },
                     hidden: function(element, node) {
                         var rpaFData = getRpaData(element, "rpa:Activity");
-                        return !(rpaFData && rpaFData.get("bottype") && rpaFData.get("bottype")==2 && rpaFData.get("activity") && rpaFData.get("taskId") && each_attr['visibility']);
+                        return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId") && each_attr['visibility']);
                     }
                 })
             }else if(each_attr['type'] == "dropdown" || each_attr['type'] == "restapi"){
@@ -416,7 +374,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                     },
                     hidden: function(element, node) {
                         var rpaFData = getRpaData(element, "rpa:Activity");
-                        return !(rpaFData && rpaFData.get("bottype") && rpaFData.get("bottype")==2 && rpaFData.get("activity") && rpaFData.get("taskId"));
+                        return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId"));
                     }
                 });
             }else if(each_attr['type'] == "checkbox"){
@@ -475,7 +433,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                     },
                     hidden: function(element, node) {
                         var rpaFData = getRpaData(element, "rpa:Activity");
-                        return !(rpaFData && rpaFData.get("bottype") && rpaFData.get("bottype")==2 && rpaFData.get("activity") && rpaFData.get("taskId"));
+                        return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId"));
                     }
                 });
             }else if(each_attr['type'] == "textarea"){
@@ -542,9 +500,9 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                         }
                         return validation;
                     },
-                    show: function(element, node) {
+                    hidden: function(element, node) {
                         var rpaFData = getRpaData(element, "rpa:Activity");
-                        return rpaFData && rpaFData.get("bottype") && rpaFData.get("bottype")==2 && rpaFData.get("activity") && rpaFData.get("taskId") && each_attr['visibility'];
+                        return !(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId") && each_attr['visibility']);
                     }
                 })
             }
@@ -554,89 +512,19 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
         return fieldsList;
     }
 
-    function getUiPathAttributes(element, bpmnFactory){
-        return [
-            entryFactory.textField({
-                id: 'url',
-                label: 'url',
-                modelProperty: 'url',
-                description: 'ulr',
-                get: function(element, node) {
-                    var result = {};
-                    result['url'] = '';
-                    var bo = getBusinessObject(element);
-                    var formDataExtension = getExtensionElements(bo, "bpmn:rpaTask");
-                    if(!formDataExtension)
-                        formDataExtension = getExtensionElements(bo, "rpa:Activity");
-                    if (formDataExtension) {
-                        var formData = getRpaData(element, "rpa:Activity");
-                        var storedValue = formData.get('url');
-                        if(storedValue)
-                            result['url'] = storedValue;
-                    }
-                    return result;
-                },
-                set: function(element, values, node) {
-                    var bo = getBusinessObject(element); var commands = [];
-                    var rpaExtensionElements = getExtensionElements(bo, "bpmn:rpaTask");
-                    if(!rpaExtensionElements)
-                        rpaExtensionElements = getExtensionElements(bo, "rpa:Activity");
-                    if (!rpaExtensionElements) {
-                        rpaExtensionElements = elementHelper.createElement('bpmn:ExtensionElements', { values: [] }, bo, bpmnFactory);
-                        commands.push(cmdHelper.updateProperties(element, { extensionElements: rpaExtensionElements }));
-                    }
-                    var rpaFData = getRpaData(element, "rpa:Activity");
-                    if(!rpaFData){
-                        rpaFData = elementHelper.createElement('rpa:Activity', values, rpaExtensionElements, bpmnFactory);
-                        commands.push(cmdHelper.addAndRemoveElementsFromList(
-                            element,
-                            rpaExtensionElements,
-                            'values',
-                            'extensionElements',
-                            [rpaFData],
-                            []
-                        ));
-                    }
-                    var field = elementHelper.createElement('rpa:Activity', values['url'] , rpaFData, bpmnFactory);
-                    if (typeof rpaFData[''] !== 'undefined') {
-                        commands.push(cmdHelper.addElementsTolist(element, rpaFData, 'url', values['url']));
-                    } else {
-                        commands.push(cmdHelper.updateBusinessObject(element, rpaFData, values ));
-                    }
-                    return commands;
-                },
-                hidden: function(element, node) {
-                    var rpaFData = getRpaData(element, "rpa:Activity");
-                    return !(rpaFData && rpaFData.get("bottype") && rpaFData.get("bottype")==1 );
-                }
-            })
-
-        ];
-    }
-
     function getRPAEntries(element, bpmnFactory) {
         var processBo = getBusinessObject(element);
         if (is(processBo, 'bpmn:Participant')) {
           processBo = processBo.processRef;
         }
-        // var entries_ = [getActivityEntry(element, bpmnFactory)]
-        var entries_ = [getRPABotType(element, bpmnFactory)]
+        var entries_ = [getActivityEntry(element, bpmnFactory)]
         var rpaFData = getRpaData(element, "rpa:Activity");
-        var botType = rpaFData.get("bottype")
-        if(rpaFData && botType){
-            if(botType == "1"){
-                entries_.push(...getUiPathAttributes(element, bpmnFactory))
-            }else if(botType == "2"){
-                entries_.push(getActivityEntry(element, bpmnFactory))
-                if(rpaFData.get("activity")){
-                    entries_.push(getTaskListEntry(element, bpmnFactory))
-                    if(rpaFData.get("taskId")){
-                        let attrList = getAttributesEntry(element, bpmnFactory)
-                        if(attrList.length > 0)
-                            entries_.push(...attrList)
-                    }
-                }
-            }
+        if(rpaFData && rpaFData.get("activity"))
+            entries_.push(getTaskListEntry(element, bpmnFactory))
+        if(rpaFData && rpaFData.get("activity") && rpaFData.get("taskId")){
+            let attrList = getAttributesEntry(element, bpmnFactory)
+            if(attrList.length > 0)
+                entries_.push(...attrList)
         }
         return {
             entries: entries_
