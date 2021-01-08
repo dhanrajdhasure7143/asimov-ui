@@ -11,6 +11,8 @@
     border-bottom-width: thin; 
     font-weight: 200; 
   }
+
+
   .rpa-table tbody tr td
   {
     border-top-color:#d9d9d9;
@@ -48,8 +50,15 @@
   .env-btn > button > img{
     color:black !important;
     width:25px;
-    background-color: white !important;
-    
+    background-color: white !important; 
+  }
+
+  .mat-paginator{
+    padding-right:25px !important;
+  }
+
+  .rpa-modal-content{
+    padding-bottom:25px !important;
   }
   
   .env-btn > button:disabled > img{
