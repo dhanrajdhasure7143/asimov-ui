@@ -99,7 +99,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
          {
            this.DBcheckeddisabled = true;
          }
-        console.log(this.dbconnections);
         this.dbconnections.sort((a,b) => a.connectionId > b.connectionId ? -1 : 1);
         this.dataSource2= new MatTableDataSource(this.dbconnections);
         setTimeout(() => {
@@ -111,7 +110,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
 
   sortmethod(){
     this.dataSource2.sort = this.sort2;   
-    console.log(this.dataSource2.sort);  
     this.dataSource2.paginator=this.paginator2; 
   }
 
@@ -124,7 +122,6 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   
   createdbconnection()
   {
-    console.log("New button clicked"); 
     document.getElementById("filters").style.display='none';
     document.getElementById("createdbconnection").style.display='block';
     document.getElementById("Updatedbconnection").style.display='none';
@@ -187,20 +184,17 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     
     if(this.insertdbForm.valid)
    {
-    console.log(this.insertdbForm.value.activeStatus)
     if(this.insertdbForm.value.activeStatus==true)
      {
        this.insertdbForm.value.activeStatus=7
      }else{
        this.insertdbForm.value.activeStatus=8
      }
-     console.log(this.insertdbForm.value.activeStatus)
 
     this.insertdbForm.value.createdBy="admin";
     this.submitted=true;
     //this.insertdbForm.value.databasename = this.insertdbForm.value.dataBaseType;
     let DBConnection = this.insertdbForm.value;
-    console.log(DBConnection);
     this.api.addDBConnection(DBConnection).subscribe( res =>{
       let status:any=res;
     Swal.fire({
@@ -237,20 +231,16 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   dbconnectionupdate(){
     if(this.updatedbForm.valid)
     {
-      console.log(this.updatedbForm.value);
       if(this.updatedbForm.value.activeStatus==true)
       {
         this.updatedbForm.value.activeStatus=7
       }else{
         this.updatedbForm.value.activeStatus=8
       }
-    console.log(this.updatedbForm.value);
     let dbupdatFormValue =  this.updatedbForm.value;
-    console.log(dbupdatFormValue);
     //dbupdatFormValue["databasename"]= this.dbupdatedata.dataBaseType;
     dbupdatFormValue["connectionId"]= this.dbupdatedata.connectionId;
     dbupdatFormValue["createdBy"]= this.dbupdatedata.createdBy;
-    console.log(dbupdatFormValue);
     this.api.updateDBConnection(dbupdatFormValue).subscribe( res => {
       let status: any= res;
       Swal.fire({
@@ -259,8 +249,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
         title: status.status,
         showConfirmButton: false,
         timer: 2000
-      })
-      console.log(res);
+      });
       this.removeallchecks();
       this.getallDBConnection();
       this.DBchecktoupdate();
@@ -298,7 +287,6 @@ updatedbdata()
         this.updatedbForm.get("portNumber").setValue(this.dbupdatedata["portNumber"]);
         this.updatedbForm.get("schemaName").setValue(this.dbupdatedata["schemaName"]);
         this.updatedbForm.get("username").setValue(this.dbupdatedata["username"]);
-        console.log(this.updatedbForm.value);
         break;
       }
     }
@@ -314,7 +302,6 @@ updatedbdata()
 
   deletedbconnection(){
     const selecteddbconnection = this.dbconnections.filter(product => product.checked==true).map(p => p.connectionId);
-    console.log(selecteddbconnection);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -334,7 +321,6 @@ updatedbdata()
             showConfirmButton: false,
             timer: 2000    
           });
-          console.log(res);
           this.removeallchecks();
           this.getallDBConnection();
           this.DBchecktoupdate();  
@@ -360,7 +346,6 @@ updatedbdata()
 
   DBcheckEnableDisableBtn(id, event)
   {
-    console.log(event.target.checked);
     this.dbconnections.find(data=>data.connectionId==id).checked=event.target.checked;
     if(this.dbconnections.filter(data=>data.checked==true).length==this.dbconnections.length)
     {
@@ -397,9 +382,7 @@ updatedbdata()
     for(let i=0;i<this.dbconnections.length;i++)
     {
       this.dbconnections[i].checked= false;
-      console.log(this.dbconnections[i]);
     }
     this.DBcheckflag=false;
-    //console.log(this.environments);
   }
 }

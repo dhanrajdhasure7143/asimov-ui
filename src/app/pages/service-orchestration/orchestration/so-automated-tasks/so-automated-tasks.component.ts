@@ -80,8 +80,7 @@ export class SoAutomatedTasksComponent implements OnInit {
 
  loadbotdatadesign(botId)
   {
-    console.log(botId);
-    localStorage.setItem("botId",botId);
+     localStorage.setItem("botId",botId);
     this.router.navigate(["/pages/rpautomation/home"]);
   }
 
@@ -113,7 +112,6 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
       this.responsedata=response.automationTasks;
-      console.log(response.automationTasks);
       this.dataSource2= new MatTableDataSource(response.automationTasks);
       this.dataSource2.sort=this.sort10;
       this.dataSource2.paginator=this.paginator10;

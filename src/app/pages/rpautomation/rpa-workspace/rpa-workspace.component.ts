@@ -28,7 +28,6 @@ constructor(private api:RestApiService ,private route:ActivatedRoute, private ro
       
     this.dt.changeHints(this.hints.rpaworkspacehints1 );
       this.route.queryParams.subscribe(data => {
-        console.log(data)
         if(data.processid==undefined)
         {
           this.id="";
@@ -41,14 +40,11 @@ constructor(private api:RestApiService ,private route:ActivatedRoute, private ro
       
     }
     if(this.id=="")
-    {
-      console.log(this.id);
-      this.getallservices(0);
+    { this.getallservices(0);
     }
     else
-    { 
-      console.log(this.id)
-      this.getallservices(this.id);
+    {
+       this.getallservices(this.id);
     }
     this.getallorcservices();
     
