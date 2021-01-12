@@ -123,7 +123,6 @@ import { NgxSpinnerService } from "ngx-spinner";
             }
           this.environments.push(Object.assign({}, response[i], checks));
         }
-        console.log(this.environments)
         this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.dataSource1= new MatTableDataSource(this.environments);
         this.isDataSource = true;
@@ -135,7 +134,6 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
 
   EnvType1(){
-    console.log(this.insertForm.value.environmentType)
     if(this.insertForm.value.environmentType == "Windows"){
       //this.updateForm.value.portNumber="44";
       this.insertForm.get("portNumber").setValue("44");
@@ -145,7 +143,6 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
 
   EnvType(){
-    console.log(this.updateForm.value.environmentType)
     if(this.updateForm.value.environmentType == "Windows"){
       //this.updateForm.value.portNumber="44";
       this.updateForm.get("portNumber").setValue("44");
@@ -239,15 +236,12 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.spinner.show();
    if(this.insertForm.valid)
    {
-     console.log(this.insertForm.value.activeStatus)
      if(this.insertForm.value.activeStatus==true)
       {
         this.insertForm.value.activeStatus=7
       }else{
         this.insertForm.value.activeStatus=8
       }
-      console.log(this.insertForm.value.activeStatus)
-
       this.insertForm.value.createdBy="admin";
      this.submitted=true;
      let environment=this.insertForm.value;
@@ -281,7 +275,6 @@ import { NgxSpinnerService } from "ngx-spinner";
   async updateEnvironment()
   {
     this.spinner.show();
-    console.log(this.updateForm.value);
     if(this.updateForm.valid)
     {
       if(this.updateForm.value.activeStatus==true)
@@ -290,14 +283,10 @@ import { NgxSpinnerService } from "ngx-spinner";
       }else{
         this.updateForm.value.activeStatus=8
       }
-      console.log(this.updateForm.value.environmentName);
-      console.log(this.updateForm.value);
       let updatFormValue =  this.updateForm.value;
       updatFormValue["environmentId"]= this.updateenvdata.environmentId;
-      console.log(this.updateenvdata.createdBy);
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-            console.log(updatFormValue);
       await this.api.updateenvironment(updatFormValue).subscribe( res => {
         Swal.fire({
           position: 'center',
@@ -306,7 +295,6 @@ import { NgxSpinnerService } from "ngx-spinner";
           showConfirmButton: false,
           timer: 2000
         })
-        console.log(res);
       this.removeallchecks();
       this.getallData();
       this.checktoupdate();
@@ -338,9 +326,6 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.toggle=false;
         }
         this.updateenvdata=data;
-        console.log(this.updateenvdata);
-      console.log(this.updateForm.value);
-      console.log(this.updateenvdata.environmentId);
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
@@ -433,7 +418,6 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   checkEnableDisableBtn(id, event)
   {
-    console.log(event.target.checked);
     this.environments.find(data=>data.environmentId==id).checked=event.target.checked;
     if(this.environments.filter(data=>data.checked==true).length==this.environments.length)
     {
@@ -485,10 +469,8 @@ import { NgxSpinnerService } from "ngx-spinner";
     for(let i=0;i<this.environments.length;i++)
     {
       this.environments[i].checked= false;
-      console.log(this.environments[i]);
     }
     this.checkflag=false;
-    //console.log(this.environments);
   }
 
 }

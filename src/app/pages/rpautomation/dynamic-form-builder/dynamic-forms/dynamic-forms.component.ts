@@ -24,7 +24,6 @@ export class DynamicFormsComponent implements OnInit {
   form: FormGroup;
   constructor() { }
   onSub(){
-    console.log(this.form.value)
     this.onSubmit.emit(this.form.value)
   }
   ngOnInit() {

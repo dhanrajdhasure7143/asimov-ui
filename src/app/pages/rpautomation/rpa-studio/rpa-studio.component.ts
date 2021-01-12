@@ -91,8 +91,6 @@ export class RpaStudioComponent implements OnInit {
     {
       this.localstore = false;
     }
-
-    console.log(this.insertbot.get("predefinedBot").value)
     if(localStorage.getItem("enablecreate"))
     {
       this.hiddenCreateBotPopUp=true;
@@ -108,7 +106,6 @@ export class RpaStudioComponent implements OnInit {
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA"});
     this.dt.changeChildModule("");
     this.rest.toolSet().subscribe(data => {
-      console.log(data);
       data1 = data
       this.userRole = localStorage.getItem("userRole")
       this.userRole = this.userRole.split(',');
@@ -146,7 +143,6 @@ export class RpaStudioComponent implements OnInit {
       }
       if(localStorage.getItem("botId"))
       {
-        console.log("localstorage");
         this.getloadbotdata(localStorage.getItem("botId"));
         localStorage.removeItem("botId");
       }
@@ -155,18 +151,15 @@ export class RpaStudioComponent implements OnInit {
 
   validate(code){
     let validate = code;
-    console.log(validate);
     this.count = 0;
     for(let i=0;i < validate.length -1; i++){
       if(validate.charAt(i) == String.fromCharCode(32)){
         this.count= this.count+1;
-        console.log(this.count);
       }
     }
     if(this.count !== 0)
     {
       this.botNamespace = true;
-      console.log(this.botNamespace);
     }
     else{
       this.botNamespace = false;
@@ -279,8 +272,7 @@ export class RpaStudioComponent implements OnInit {
 
   getbotdata()
   {
-    let botid=this.loadbot.get("bot").value
-    console.log(botid)
+    let botid=this.loadbot.get("bot").value;
     this.getloadbotdata(botid);
 
   }

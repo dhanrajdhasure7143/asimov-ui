@@ -427,13 +427,10 @@ export class RpaStudioActionsmenuComponent implements OnInit {
        if(this.logresponse.length >0)
        {
          this.respdata1 = false;
-         console.log(this.respdata1)
        }else
        {
          this.respdata1 = true;
-         console.log(this.respdata1);
        }
-       console.log(this.logresponse)
        if(this.logresponse.length>0)
        this.logresponse.forEach(data=>{
        response=data;
@@ -462,14 +459,10 @@ export class RpaStudioActionsmenuComponent implements OnInit {
        }
        log.push(response)
      });
-     console.log(log);
      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
      this.Viewloglist = new MatTableDataSource(log);
-     console.log(this.Viewloglist);
-
      this.Viewloglist.paginator=this.paginator1;
      this.Viewloglist.sort=this.sort1;
-
      document.getElementById(this.viewlogid).style.display="block";
 
    });
@@ -478,8 +471,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
 
  public botrunid:any;
  ViewlogByrunid(runid){
-   this.botrunid=runid
-   console.log(this.botrunid);
+   this.botrunid=runid;
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
@@ -488,13 +480,10 @@ export class RpaStudioActionsmenuComponent implements OnInit {
      if(responsedata.length >0)
      {
        this.respdata2 = false;
-       console.log(this.respdata2)
      }else
      {
        this.respdata2 = true;
-       console.log(this.respdata2);
      }
-     console.log(responsedata);
      responsedata.forEach(rlog=>{
        logbyrunidresp=rlog;
        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
@@ -504,11 +493,9 @@ export class RpaStudioActionsmenuComponent implements OnInit {
 
        resplogbyrun.push(logbyrunidresp)
      });
-     console.log(resplogbyrun);
      this.logflag=true;
      resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
      this.logbyrunid = new MatTableDataSource(resplogbyrun);
-     console.log(this.logbyrunid);
      this.logbyrunid.paginator=this.paginator2;
      this.logbyrunid.sort=this.sort2;
      document.getElementById(this.viewlogid).style.display="none";
@@ -543,7 +530,6 @@ loadpredefinedbot(botId)
       this.childBotWorkspace.finaldataobjects.push(element)
       let nodename=  element.nodeId.split("__")[0];
       let nodeid=element.nodeId.split("__")[1];
-      console.log(nodeid);
       j=j+100;
       let node={
         id:this.childBotWorkspace.idGenerator(),

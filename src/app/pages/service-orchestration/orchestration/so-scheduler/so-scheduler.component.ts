@@ -107,7 +107,6 @@ export class SoSchedulerComponent implements OnInit {
     {
       this.rest.getprocessschedule(this.processid).subscribe(resp=>{
         this.schedule_list=resp;
-        console.log(resp)
         this.schedule_list.forEach((sch,index)=>{
           this.schedule_list[index].intervalId=this.generateid();
           this.schedule_list[index].check=false;

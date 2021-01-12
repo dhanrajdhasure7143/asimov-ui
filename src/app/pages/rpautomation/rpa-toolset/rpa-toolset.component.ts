@@ -40,7 +40,6 @@ export class RpaToolsetComponent implements OnInit {
         this.userRole = localStorage.getItem("userRole")
         this.userRole = this.userRole.split(',');
         this.rest.toolSet().subscribe(data => {
-          console.log(data);
           data1 = data
           data1.General.forEach(element => {
             let temp:any = {

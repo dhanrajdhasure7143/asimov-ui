@@ -77,7 +77,6 @@ export class BotManagementComponent implements OnInit {
   ngOnInit() {
   }
   CheckAllOptions(data) {
-    console.log(data);
     
     if (this.feesDetails.bookingDetails.every(val => val.cheked == true))
       this.feesDetails.bookingDetails.forEach(val => { val.cheked = false });
@@ -85,8 +84,7 @@ export class BotManagementComponent implements OnInit {
       this.feesDetails.bookingDetails.forEach(val => { val.cheked = true });
   }
   expression(data){
-    console.log(data);
-    
+   // console.log(data);
   }
   loopTrackBy(index, term){
     return index;
