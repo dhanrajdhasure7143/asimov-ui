@@ -111,7 +111,7 @@ export class SoAutomatedTasksComponent implements OnInit {
 
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
-      this.responsedata=response.automationTasks;
+      this.responsedata=response.automationTasks
       this.dataSource2= new MatTableDataSource(response.automationTasks);
       this.dataSource2.sort=this.sort10;
       this.dataSource2.paginator=this.paginator10;
@@ -305,17 +305,24 @@ export class SoAutomatedTasksComponent implements OnInit {
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
-              if(statusdata.status=="InProgress")
+              if(statusdata.status="Pending")
+              {
+                data="<span class='text-warning' style='font-size:18px'><i class='fa fa-clock' aria-hidden='true'></i></span>&nbsp;<span class='text-warning'>"+statusdata.status+"</span>";
+
+                //data="<span class='text-primary'><img src='../../../../../assets/images/RPA/pending-work.png' style='height:20px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+
+              }
+              else if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
                 data="<span class='text-primary'><img src='../../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }else if(statusdata.status=="Success")
               {
 
-                data='<span class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
+                data='<span class="text-success"><i class="fa fa-check-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
               }
               else if(statusdata.status=="Failed")
               {
-                data='<span class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';
+                data='<span class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';
               }
               else if(statusdata.status=="New")
               {
