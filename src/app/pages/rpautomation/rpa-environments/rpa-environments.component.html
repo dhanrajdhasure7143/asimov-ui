@@ -321,7 +321,7 @@ placeholder="Enter Environment Type" >-->
 
                         <div class="col-md-3 formelement">
                             <label for="portNumber">Port<span style="color:red">*</span></label>
-                            <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
+                            <input type="text" maxlength="6" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
 
                             <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
 
@@ -440,9 +440,7 @@ Password">
 
                         <div class="col-md-3 formelement">
                             <label for="portNumber">Port<span style="color:red">*</span></label>
-                            <input type="number" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter
-
-Port">
+                            <input type="text" maxlength="6" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
                             <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
 
 ('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>

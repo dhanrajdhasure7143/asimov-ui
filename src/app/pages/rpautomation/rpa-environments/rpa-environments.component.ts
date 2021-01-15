@@ -67,7 +67,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         activeStatus: [true]
        
     })
@@ -80,7 +80,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-      portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+      portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
       activeStatus: [""]
     
     })
