@@ -68,7 +68,7 @@
                         
                       </span>&nbsp;&nbsp;&nbsp;
                       <span>
-                        <button [disabled]="element.status=='Approved' || element.status=='Rejected'" [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''" (click)="getapproved(element.processId,'Rejected', element.taskId,element.processRunId,element.envId)"  matTooltip="Approved">
+                        <button [disabled]="element.status=='Approved' || element.status=='Rejected'" [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''" (click)="getapproved(element.processId,'Rejected', element.taskId,element.processRunId,element.envId)"  matTooltip="Rejected">
                           <i  class="fas fa-times text-danger"></i>
                         </button>
                        
