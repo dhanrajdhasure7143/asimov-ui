@@ -86,7 +86,7 @@ export class SoInboxComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Task Status Updated Successfully',
+          title: 'Task Status Updated Successfully !!',
           showConfirmButton: false,
           timer: 2000
         })
