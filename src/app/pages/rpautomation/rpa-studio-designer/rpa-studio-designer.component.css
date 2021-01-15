@@ -25,8 +25,9 @@
 ::ng-deep .tabs .mat-tab-label{
   height :31px !important;
   padding: 0 6px !important;
+  min-width: 10px !important;
 }
 
 ::ng-deep .tabs .mat-ink-bar{
-  min-width:169px !important;
+  min-width:10px !important;
 }

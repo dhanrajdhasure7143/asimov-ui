@@ -47,92 +47,92 @@
 
 
   <div [id]="outputboxid" class="rpa-modal">
-      <div class="rpa-modal-content">
-          <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="closeoutputbox()">&times;</span>
-              <h4>Output Box</h4>
-          </div>
-          <div class="rpa-modal-body">
+    <div class="rpa-modal-content">
+        <div class="rpa-modal-header">
+            <span class="rpa-modal-close" (click)="closeoutputbox()">&times;</span>
+            <h4>Output Box</h4>
+        </div>
+        <div class="rpa-modal-body">
 
-              <div class="container-fluid">
-                  <div class="row">
-                      <div class="col-md-4">
-                      </div>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                    </div>
 
-                      <div class="col-md-4" *ngIf="outputboxresult==undefined">
-                          <br><br>
-                          <select class="form-control" [(ngModel)]="SelectedOutputType">
-                    <option value="">--Select View Type--</option>
-                    <option value="Table">Table</option>
-                    <option value="Text">Text</option>
-                    <option value="Image">Image</option>
-                  </select><br>
-                          <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
-
-                          <br><br>
-                      </div>
-                      <div class="col-md-4">
-
-                      </div>
-
-                  </div>
-
-                  <div class="row py-4" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
-                      <div class="col-md-3"></div>
-                      <div class="col-md-6" style="height:300px; overflow-x:auto">
-
-                          <table class="table">
-                              <thead>
-                                  <th>Key</th>
-                                  <th>Value</th>
-                              </thead>
-                              <tbody>
-                                  <tr *ngFor="let result of outputboxresult">
-                                      <td>{{result.Key}}</td>
-                                      <td>{{result.Value}}</td>
-                                  </tr>
-                                  <tr *ngIf="outputboxresult.length==0" colspan=2>
-                                      <td style='text-align: center'>No Records Found</td>
-                                  </tr>
-                              </tbody>
-                          </table>
-                          <br>
-                          <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
-                      </div>
-                      <div class="col-md-3"></div>
-                  </div>
-                  <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
-                      <div class="col-md-3"></div>
-                      <div class="col-md-6">
-
-                          <br>
-                          <div style="height:300px; overflow-x:auto">
-                              {{outputboxresulttext}}
-                          </div>
-                          <br>
-                          <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
-                          <br>
-                      </div>
-                      <div class="col-md-3"></div>
-                  </div>
-                  <div class="row" *ngIf="SelectedOutputType=='Image' && outputboxresult!=undefined">
-                      <div class="col-md-3"></div>
-                      <div class="col-md-6 text-center">
+                    <div class="col-md-4" *ngIf="outputboxresult==undefined">
                         <br><br>
-                          <img [src]="Image" style="filter: none;height:400px;"><br><br>
-                          <a [href]="Image" download>Download Image</a>
-                          <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+                        <select class="form-control" [(ngModel)]="SelectedOutputType">
+                  <option value="">--Select View Type--</option>
+                  <option value="Table">Table</option>
+                  <option value="Text">Text</option>
+                  <option value="Image">Image</option>
+                </select><br>
+                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="getoutput()">Submit</button>
 
-                          <br>
-                      </div>
-                      <div class="col-md-3"></div>
-                  </div>
-              </div>
+                        <br><br>
+                    </div>
+                    <div class="col-md-4">
 
-          </div>
-      </div>
-  </div>
+                    </div>
 
+                </div>
+
+                <div class="row py-4" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6" style="height:300px; overflow-x:auto">
+
+                        <table class="table">
+                            <thead>
+                                <th>Key</th>
+                                <th>Value</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let result of outputboxresult">
+                                    <td>{{result.Key}}</td>
+                                    <td>{{result.Value}}</td>
+                                </tr>
+                                <tr *ngIf="outputboxresult.length==0" colspan=2>
+                                    <td style='text-align: center'>No Records Found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+
+                        <br>
+                        <div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
+
+                        </div>
+                        <br>
+                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+                        <br>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+                <div class="row" *ngIf="SelectedOutputType=='Image' && outputboxresult!=undefined">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6 text-center">
+                      <br><br>
+                        <img [src]="Image" style="filter: none;height:400px;"><br><br>
+                        <a [href]="Image" download><img src="../../../../assets/downloadimage.svg" style="filter: none; width: 40px;"></a>
+                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+
+                        <br>
+                    </div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+
+        </div>
+        <br><br>
+    </div>
+</div>
 
 
   <div id="recordandplay" class="rpa-modal">

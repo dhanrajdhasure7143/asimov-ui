@@ -154,3 +154,6 @@ background-color: blue !important;
   color:#75a8e2 !important;
 
 }
+::ng-deep .mat-menu-panel{
+  max-height:200px !important;
+}

@@ -15,9 +15,9 @@ import { FormGroup } from '@angular/forms';
             <i *ngIf="showpassword==false" class="fa fa-eye-slash"></i>
           </span>
 
-          <input *ngIf="!field.multiline && field.type!='password'" (keydown)="stope($event)" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control"  [id]="field.name" [name]="field.name" [formControlName]="field.name+'_'+field.id">
-          <textarea *ngIf="field.multiline  && field.type!='password'" autocomplete="off" [formControlName]="field.name" [id]="field.name" [required]="field.required==true"
-          rows="9" class="form-control" [placeholder]="field.placeholder"></textarea>
+          <input *ngIf="!field.multiline && field.type!='password' && field.type!='textarea'" (keydown)="stope($event)" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control"  [id]="field.name" [name]="field.name" [formControlName]="field.name+'_'+field.id">
+          <textarea *ngIf="field.type=='textarea'  && field.type!='password'" autocomplete="off" [formControlName]="field.name" [id]="field.name" [required]="field.required==true"
+          rows="4" class="form-control" [placeholder]="field.placeholder"></textarea>
 
       </div>
     `,

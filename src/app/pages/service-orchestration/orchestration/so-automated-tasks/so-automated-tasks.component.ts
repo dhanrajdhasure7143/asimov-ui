@@ -190,7 +190,7 @@ export class SoAutomatedTasksComponent implements OnInit {
       let response:any=data;
       if(response.status!=undefined)
       {
-        Swal.fire("Resource Assigned Successfully !!","","success");
+        Swal.fire("Task  assigned to resource successfully !!","","success");
       }else
       {
         Swal.fire("Failed to Assign Resource !!","","warning");
@@ -210,7 +210,7 @@ export class SoAutomatedTasksComponent implements OnInit {
         Swal.fire(response.status,"","success");
       }else
       {
-        Swal.fire(response.errorMessage,"","success");
+        Swal.fire(response.errorMessage,"","warning");
       }
     })
   }
