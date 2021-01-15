@@ -37,7 +37,7 @@ export class RpaStudioComponent implements OnInit {
   toolSetData: void;
 
   changerpa_screen:Boolean;
-  changescreen_rpa_model:Boolean =false;
+  changescreen_rpa_model:Boolean =true;
   listEnvironmentData:any =[];
   changePx: { x: number; y: number; };
   // forms

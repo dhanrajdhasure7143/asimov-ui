@@ -11,7 +11,6 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
-
 import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
 import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
@@ -191,7 +190,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Start.png",
-          x: "2px",
+          x: "10px",
           y: "9px",
         }
         this.nodes.push(node);
@@ -208,7 +207,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
-          x: "941px",
+          x: "900px",
           y: "396px",
         }
         this.nodes.push(stopnode);
@@ -221,11 +220,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let templatenodes:any=[]
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];
-      this.toolset.templateNodes.forEach(element => {
-        console.log("check")
-      });
       templatenodes=this.toolset.templateNodes;
-      Array.isArray(templatenodes)?console.log("this is array"):console.log("this is not array")
       let node = {
         id: nodeid,
         name: nodename,
@@ -524,7 +519,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         name: node.selectedNodeTask,
         id: node.selectedNodeId
       }
-      this.formHeader = node.name + "-" + node.selectedNodeTask;
+      this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
       if (taskdata != undefined) {
@@ -612,11 +607,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
   addoptions(attributes,node)
   {
+    /*
       let token={​​​​​
         headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
-      }​​​​
+      }​​​*/​
       let restapi_attr=attributes.find(attr => attr.type=='restapi');
-      this.http.get(restapi_attr.dependency,token).subscribe(data=>
+      this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
       {
         this.restapiresponse=data
         let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
@@ -1079,22 +1075,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   modifyEnableDisable() {
     this.disable = !this.disable;
     if (this.disable) {
-      Swal.fire({
-        position: 'top-end',
-        icon: "warning",
-        title: "Designer Disabled Now",
-        showConfirmButton: false,
-        timer: 2000
-      })
+      Swal.fire("Designer Disabled Now","","warning")
     }
     else {
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Designer Enabled Now',
-        showConfirmButton: false,
-        timer: 2000
-      })
+      Swal.fire("Designer Enabled Now","","success")
     }
   }
 
@@ -1193,21 +1177,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           if (this.SelectedOutputType == "Text")
           {
             let data: any = outdata
-            let textval:String=JSON.stringify(data[0].Value);
-            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
+            setTimeout(()=>{
+              $("#text_"+this.outputboxid).html((data[0].Value).toString().replace(/\n/g, "<br />"));
+            },1000)
           }
           if(this.SelectedOutputType=="Image")
           {
-            let data=this.outputboxresult[0].Value.split(':');
-            this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
+            let image=this.outputboxresult[0].Value;
+            this.Image= 'data:' + 'image/png' + ';base64,' +image;
           }
         })
       }
-
-
     }
   }
-
 
   outputlayoutback() {
     this.outputboxresult = undefined;
@@ -1265,13 +1247,5 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     return;
   }
-
-
-
-  start_automation()
-  {
-    alert("start recording")
-  }
-
 
 }

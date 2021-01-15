@@ -1,6 +1,7 @@
 import {ViewChild,Input, Component,Injectable, OnInit, ElementRef  } from '@angular/core';
 import { RestApiService } from '../../services/rest-api.service';
 import { Options } from 'ng5-slider';
+import { DataTransferService } from '../../services/data-transfer.service';
 @Injectable()
 @Component({
   selector: 'app-rpa-toolset',
@@ -9,7 +10,9 @@ import { Options } from 'ng5-slider';
 })
 export class RpaToolsetComponent implements OnInit {
 
-  constructor(private rest:RestApiService) { }
+  constructor(private rest:RestApiService,
+    public dt:DataTransferService
+    ) { }
 
   public userFilter:any={name:""};
   @ViewChild('section', {static: false}) section: ElementRef<any>;
@@ -19,6 +22,9 @@ export class RpaToolsetComponent implements OnInit {
   userRole:any;
   templateNodes:any=[];
   ngOnInit() {
+
+    this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
+    this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"Designer"});
     this.gettoolset();
   }
 
