@@ -146,7 +146,7 @@ export class SoBotManagementComponent implements OnInit {
         this.respdata1 = true;
       }
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
-      this.bot_list=this.bot_list.reverse();
+      //this.bot_list=this.bot_list.reverse();
       this.dataSource1= new MatTableDataSource(this.bot_list);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
