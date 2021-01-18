@@ -178,13 +178,17 @@ export class RpaStudioActionsmenuComponent implements OnInit {
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
         if (result.value) {
-          let response;
           this.rest.getDeleteBot(this.savebotrespose.botId).subscribe(data=>{
-            response=data
+            let response:any=data;
             if(response.status!=undefined)
+            {
                 Swal.fire(response.status,"","success");
-              else
+                $("#close_bot_"+this.botState.botName).click();
+            }
+            else
+            {
                 Swal.fire(response.errorMessage,"","error")
+            }
           })
         }
 
