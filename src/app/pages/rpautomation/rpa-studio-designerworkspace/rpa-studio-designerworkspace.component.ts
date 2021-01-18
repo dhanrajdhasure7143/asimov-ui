@@ -184,7 +184,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   public loadnodes() {
     this.finaldataobjects.forEach(element => {
       if (element.inSeqId == "START_" + this.finalbot.botName) {
-        let node = {
+        let startnode = {
           id: "START_" + this.finalbot.botName,
           name: "START",
           selectedNodeTask: "",
@@ -193,11 +193,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           x: "10px",
           y: "9px",
         }
-        this.nodes.push(node);
-        setTimeout(() => {
-          this.populateNodes(node);
-        }, 240);
-
+        if(this.nodes.find(item=>item.id==startnode.id)==undefined)
+        {
+          this.nodes.push(startnode);
+          setTimeout(() => {
+            this.populateNodes(startnode);
+          }, 240);
+        }
       }
       if (element.outSeqId == "STOP_" + this.finalbot.botName) {
 
@@ -210,10 +212,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           x: "900px",
           y: "396px",
         }
-        this.nodes.push(stopnode);
-        setTimeout(() => {
-          this.populateNodes(stopnode);
-        }, 240);
+        if(this.nodes.find(item=>item.id==stopnode.id)==undefined)
+        {
+          this.nodes.push(stopnode);
+          setTimeout(() => {
+            this.populateNodes(stopnode);
+          }, 240);
+        }
 
       }
 
@@ -231,10 +236,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         x: element.x,
         y: element.y,
       }
-      this.nodes.push(node);
-      setTimeout(() => {
-        this.populateNodes(node);
-      }, 240);
+      if(this.nodes.find(item=>item.id==node.id)==undefined)
+      {
+        this.nodes.push(node);
+        setTimeout(() => {
+          this.populateNodes(node);
+        }, 240);
+      }
 
     });
   }
