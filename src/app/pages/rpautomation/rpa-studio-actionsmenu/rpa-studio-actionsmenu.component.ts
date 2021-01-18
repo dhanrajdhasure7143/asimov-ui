@@ -1,7 +1,7 @@
 import {Input,ViewChild,Output,EventEmitter, Component, OnInit } from '@angular/core';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import { RestApiService } from '../../services/rest-api.service';
-import { FormBuilder } from '@angular/forms';
+import { FormGroup,Validators,FormBuilder } from '@angular/forms';
 import {  HttpClient } from '@angular/common/http';
 import { RpaStudioDesignerComponent } from '../rpa-studio-designer/rpa-studio-designer.component'
 import Swal from 'sweetalert2';
@@ -67,6 +67,8 @@ export class RpaStudioActionsmenuComponent implements OnInit {
   resume: any;
   stop: any;
   checked: boolean;
+
+  public insertForm:FormGroup;
   listEnvironmentData: any = [];
   dropdownList: any = [];
   predefinedList: any = [];
@@ -89,7 +91,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
   };
   constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
     private rpa_tabs:RpaStudioDesignerComponent, private rpa_studio:RpaStudioComponent,
-    private notifier: NotifierService, private calender:NgbCalendar,
+    private notifier: NotifierService, private calender:NgbCalendar, private formBuilder: FormBuilder,
     ) {}
 
   ngOnInit() {
@@ -109,6 +111,20 @@ export class RpaStudioActionsmenuComponent implements OnInit {
       this.savebotrespose=this.botState;
       this.getVersionlist();
     }
+
+    const ipPattern =
+    "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+      this.insertForm=this.formBuilder.group({
+        environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+        activeStatus: [true]
+      })
 
   }
 
@@ -162,13 +178,17 @@ export class RpaStudioActionsmenuComponent implements OnInit {
           confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
         if (result.value) {
-          let response;
           this.rest.getDeleteBot(this.savebotrespose.botId).subscribe(data=>{
-            response=data
+            let response:any=data;
             if(response.status!=undefined)
+            {
                 Swal.fire(response.status,"","success");
-              else
+                $("#close_bot_"+this.botState.botName).click();
+            }
+            else
+            {
                 Swal.fire(response.errorMessage,"","error")
+            }
           })
         }
 
@@ -237,6 +257,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
           {
             //this.childBotWorkspace.successCallBack(data);
             this.savebotrespose=data;
+            this.selectedversion=response.version;
             this.rpa_studio.spinner.hide();
             this.getVersionlist();
             Swal.fire("Bot updated successfully","","success")
@@ -427,13 +448,10 @@ export class RpaStudioActionsmenuComponent implements OnInit {
        if(this.logresponse.length >0)
        {
          this.respdata1 = false;
-         console.log(this.respdata1)
        }else
        {
          this.respdata1 = true;
-         console.log(this.respdata1);
        }
-       console.log(this.logresponse)
        if(this.logresponse.length>0)
        this.logresponse.forEach(data=>{
        response=data;
@@ -462,14 +480,10 @@ export class RpaStudioActionsmenuComponent implements OnInit {
        }
        log.push(response)
      });
-     console.log(log);
      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
      this.Viewloglist = new MatTableDataSource(log);
-     console.log(this.Viewloglist);
-
      this.Viewloglist.paginator=this.paginator1;
      this.Viewloglist.sort=this.sort1;
-
      document.getElementById(this.viewlogid).style.display="block";
 
    });
@@ -478,8 +492,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
 
  public botrunid:any;
  ViewlogByrunid(runid){
-   this.botrunid=runid
-   console.log(this.botrunid);
+   this.botrunid=runid;
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
@@ -488,13 +501,10 @@ export class RpaStudioActionsmenuComponent implements OnInit {
      if(responsedata.length >0)
      {
        this.respdata2 = false;
-       console.log(this.respdata2)
      }else
      {
        this.respdata2 = true;
-       console.log(this.respdata2);
      }
-     console.log(responsedata);
      responsedata.forEach(rlog=>{
        logbyrunidresp=rlog;
        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
@@ -504,11 +514,9 @@ export class RpaStudioActionsmenuComponent implements OnInit {
 
        resplogbyrun.push(logbyrunidresp)
      });
-     console.log(resplogbyrun);
      this.logflag=true;
      resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
      this.logbyrunid = new MatTableDataSource(resplogbyrun);
-     console.log(this.logbyrunid);
      this.logbyrunid.paginator=this.paginator2;
      this.logbyrunid.sort=this.sort2;
      document.getElementById(this.viewlogid).style.display="none";
@@ -537,54 +545,60 @@ loadpredefinedbot(botId)
   let responsedata:any=[]
   this.rest.getpredefinedotdata(botId).subscribe(data=>{
     responsedata=data;
-    let j=200;
-    responsedata.tasks.forEach(element=>
+    if(responsedata.errorMessage==undefined)
     {
-      this.childBotWorkspace.finaldataobjects.push(element)
-      let nodename=  element.nodeId.split("__")[0];
-      let nodeid=element.nodeId.split("__")[1];
-      console.log(nodeid);
-      j=j+100;
-      let node={
-        id:this.childBotWorkspace.idGenerator(),
-        name:nodename,
-        selectedNodeTask:element.taskName,
-        path:this.rpa_studio.templateNodes.find(data=>data.name==nodename).path,
-        tasks:this.rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
-        x:j+'px',
-        y:"10px",
-    }
-
-
-    for(var i=0; i<responsedata.sequences.length; i++)
-    {
-      if(responsedata.sequences[i].sourceTaskId!=undefined )
+      let j=200;
+      responsedata.tasks.forEach(element=>
       {
-        if(responsedata.sequences[i].sourceTaskId==nodeid)
+        this.childBotWorkspace.finaldataobjects.push(element)
+        let nodename=  element.nodeId.split("__")[0];
+        let nodeid=element.nodeId.split("__")[1];
+        j=j+100;
+        let node={
+          id:this.childBotWorkspace.idGenerator(),
+          name:nodename,
+          selectedNodeTask:element.taskName,
+          path:this.rpa_studio.templateNodes.find(data=>data.name==nodename).path,
+          tasks:this.rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
+          x:j+'px',
+          y:"10px",
+      }
+
+
+      for(var i=0; i<responsedata.sequences.length; i++)
+      {
+        if(responsedata.sequences[i].sourceTaskId!=undefined )
         {
-          responsedata.sequences[i].sourceTaskId=node.id;
+          if(responsedata.sequences[i].sourceTaskId==nodeid)
+          {
+            responsedata.sequences[i].sourceTaskId=node.id;
+          }
+        }
+        if(responsedata.sequences[i].targetTaskId!=undefined )
+        {
+
+          if( responsedata.sequences[i].targetTaskId==nodeid)
+          {
+            responsedata.sequences[i].targetTaskId=node.id;
+          }
         }
       }
-      if(responsedata.sequences[i].targetTaskId!=undefined )
-      {
+      element.nodeId=nodename+"__"+node.id;
+      this.childBotWorkspace.nodes.push(node);
+      this.childBotWorkspace.finaldataobjects.push(element);
+      setTimeout(() => {
+        this.childBotWorkspace.populateNodes(node);
+      }, 240);
 
-        if( responsedata.sequences[i].targetTaskId==nodeid)
-        {
-          responsedata.sequences[i].targetTaskId=node.id;
-        }
-      }
+
+      })
+      this.childBotWorkspace.addconnections(responsedata.sequences);
+      this.rpa_studio.spinner.hide();
+    }else
+    {
+      this.rpa_studio.spinner.hide();
+      Swal.fire(responsedata.errorMessage,"","warning");
     }
-    element.nodeId=nodename+"__"+node.id;
-    this.childBotWorkspace.nodes.push(node);
-    this.childBotWorkspace.finaldataobjects.push(element);
-    setTimeout(() => {
-      this.childBotWorkspace.populateNodes(node);
-    }, 240);
-
-
-    })
-    this.childBotWorkspace.addconnections(responsedata.sequences);
-    this.rpa_studio.spinner.hide();
   })
 }
 
@@ -673,6 +687,45 @@ loadpredefinedbot(botId)
 
   }
 
+
+  create_env()
+  {
+        document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="block";
+  }
+
+  async saveEnvironment()
+  {
+   if(this.insertForm.valid)
+   {
+     if(this.insertForm.value.activeStatus==true)
+      {
+        this.insertForm.value.activeStatus=7
+      }else{
+        this.insertForm.value.activeStatus=8
+      }
+      this.insertForm.value.createdBy="admin";
+      let environment=this.insertForm.value;
+      await this.rest.addenvironment(environment).subscribe( res =>
+      {
+        this.close_c_env();
+        Swal.fire("Environment added successfully","","success");
+        this.insertForm.reset();
+        this.insertForm.get("portNumber").setValue("22");
+        this.insertForm.get("connectionType").setValue("SSH");
+        this.getEnvironmentlist()
+      });
+    }
+    else
+    {
+      alert("Invalid Form")
+    }
+  }
+
+
+    close_c_env()
+    {
+      document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="none";
+    }
 
 }
 

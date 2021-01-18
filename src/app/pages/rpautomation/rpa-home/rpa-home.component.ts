@@ -78,19 +78,15 @@ export class RpaHomeComponent implements OnInit {
     }
     this.route.queryParams.subscribe(params => {
       processId=params;
-      console.log(processId);
       if(this.isEmpty(processId))
       {
         this.getautomatedtasks(0);
-
         this.selectedTab=0;
-        console.log(this.process_names)
       }
       else
       {
         this.getautomatedtasks(processId.processid);
         this.selectedTab=1;
-        console.log(this.process_names)
       }
      }
 
@@ -171,11 +167,9 @@ export class RpaHomeComponent implements OnInit {
       if(this.bot_list.length >0)
       {
         this.respdata1 = false;
-        console.log(this.respdata1)
       }else
       {
         this.respdata1 = true;
-        console.log(this.respdata1);
       }
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       this.dataSource1= new MatTableDataSource(response);
@@ -184,16 +178,13 @@ export class RpaHomeComponent implements OnInit {
       this.dataSource1.paginator=this.paginator1;
      this.dataSource1.data = response;
      this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
-      console.log(departmentFilterValue);
       if(departmentFilterValue != ""){
     let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
-    console.log(category);
       this.filteredValues['department'] = category;
       }
       else{
         this.filteredValues['department'] = departmentFilterValue;
       }
-      console.log(this.filteredValues['department']);
       this.dataSource1.filter = JSON.stringify(this.filteredValues);
       if(this.dataSource1.filteredData.length > 0){
         this.isTableHasData = true;
@@ -226,7 +217,6 @@ export class RpaHomeComponent implements OnInit {
   customFilterPredicate() {
     const myFilterPredicate = (data: dataSource1, filter: string): boolean => {
       let searchString = JSON.parse(filter);
-      console.log(searchString);
       if(searchString.department != ''){
       return data.department.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
         data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
@@ -248,7 +238,6 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
       this.responsedata=response.automationTasks;
-      console.log(response.automationTasks);
       this.dataSource2= new MatTableDataSource(response.automationTasks);
       this.dataSource2.sort=this.sort2;
       this.dataSource2.paginator=this.paginator2;
@@ -273,17 +262,14 @@ export class RpaHomeComponent implements OnInit {
 
   getprocessnames(processId)
   {
-    console.log(processId);
     this.rest.getprocessnames().subscribe(processnames=>{
       this.process_names=processnames;
       let processnamebyid;
       if(processId != undefined)
       {
-        console.log(this.process_names)
         processnamebyid=this.process_names.find(data=>processId==data.processId);
         this.selectedvalue=processnamebyid.processId;
         this.applyFilter(this.selectedvalue);
-        console.log(this.selectedvalue);
       }
       else
       {
@@ -298,13 +284,10 @@ export class RpaHomeComponent implements OnInit {
 
 
   applyFilter(filterValue:any) {
-    console.log(filterValue)
-
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
     this.dataSource2.filter = filterValue;
   }
 
@@ -312,7 +295,6 @@ export class RpaHomeComponent implements OnInit {
 
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
     this.dataSource1.filter = filterValue;
   }
 
@@ -412,7 +394,6 @@ export class RpaHomeComponent implements OnInit {
       this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
-      console.log(err)
       this.rpa_studio.spinner.hide();
     })
   }

@@ -87,8 +87,7 @@ export class SoBotManagementComponent implements OnInit {
 
   loadbotdatadesign(botId)
   {
-    console.log(botId);
-    localStorage.setItem("botId",botId);
+     localStorage.setItem("botId",botId);
     this.router.navigate(["/pages/rpautomation/home"]);
   }
 
@@ -142,11 +141,9 @@ export class SoBotManagementComponent implements OnInit {
       if(this.bot_list.length >0)
       {
         this.respdata1 = false;
-        console.log(this.respdata1)
       }else
       {
         this.respdata1 = true;
-        console.log(this.respdata1);
       }
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       this.bot_list=this.bot_list.reverse();
@@ -200,13 +197,10 @@ export class SoBotManagementComponent implements OnInit {
        if(this.logresponse.length >0)
        {
          this.respdata1 = false;
-         console.log(this.respdata1)
        }else
        {
          this.respdata1 = true;
-         console.log(this.respdata1);
        }
-       console.log(this.logresponse)
        if(this.logresponse.length>0)
        this.logresponse.forEach(data=>{
        response=data;
@@ -235,11 +229,8 @@ export class SoBotManagementComponent implements OnInit {
        }
        log.push(response)
      });
-     console.log(log);
      log.sort((a,b) => a.run_id < b.run_id ? -1 : 1);
      this.Viewloglist = new MatTableDataSource(log);
-     console.log(this.Viewloglist);
-
      this.Viewloglist.paginator=this.paginator4;
      this.Viewloglist.sort=this.sort4;
 
@@ -250,7 +241,6 @@ export class SoBotManagementComponent implements OnInit {
 
  public botrunid
  ViewlogByrunid(runid){
-   console.log(runid);
    this.botrunid=runid;
    let responsedata:any=[];
    let logbyrunidresp:any;
@@ -260,13 +250,10 @@ export class SoBotManagementComponent implements OnInit {
      if(responsedata.length >0)
      {
        this.respdata2 = false;
-       console.log(this.respdata2)
      }else
      {
        this.respdata2 = true;
-       console.log(this.respdata2);
      }
-     console.log(responsedata);
      responsedata.forEach(rlog=>{
        logbyrunidresp=rlog;
        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
@@ -276,10 +263,8 @@ export class SoBotManagementComponent implements OnInit {
 
        resplogbyrun.push(logbyrunidresp)
      });
-     console.log(resplogbyrun);
      this.logflag=true;
      this.logbyrunid = new MatTableDataSource(resplogbyrun);
-     console.log(this.logbyrunid);
      this.logbyrunid.paginator=this.paginator5;
      this.logbyrunid.sort=this.sort5;
      document.getElementById(this.viewlogid).style.display="none";
@@ -354,20 +339,16 @@ export class SoBotManagementComponent implements OnInit {
           })
 
           this.rest.stopbot(botid,"").subscribe(data=>{
-            console.log(data)
-
           })
     }
 
 
 
     applyFilter(filterValue:any) {
-      console.log(filterValue)
       let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
       //this.selectedvalue=filterValue;
       filterValue = category.categoryName.trim(); // Remove whitespace
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-      console.log(filterValue);
       this.dataSource1.filter = filterValue;
     }
 

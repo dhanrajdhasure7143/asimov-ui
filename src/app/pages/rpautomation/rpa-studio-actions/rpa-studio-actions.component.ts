@@ -167,7 +167,6 @@ export class RpaStudioActionsComponent implements OnInit {
     if(this.botState.botId!=undefined)
     {
       this.savebotrespose=this.botState;
-      console.log(this.botState.botId)
       this.getschecdules();
       this.childBotWorkspace.saveCron(this.she);
       this.botState.envIds.forEach(envdata=>{
@@ -460,14 +459,12 @@ export class RpaStudioActionsComponent implements OnInit {
           this.envflag=false;
         }
       });
-      console.log(this.environment)
     })
   }
 
 
   checkuncheckenv(id:any)
   {
-   // console.log(this.environment.filter(data => data.checked==true).length)
     if(this.environment.find(data=>data.environmentId==id).checked==false)
     {
       this.environment.find(data=>data.environmentId==id).checked=true
@@ -487,7 +484,6 @@ export class RpaStudioActionsComponent implements OnInit {
 
   getallpredefinebots() {
     this.predefined = [];
-    console.log(this.predefinedbotsData);
     if (this.predefinedbotsData) {
       this.optionPredefinedbotList = !this.optionPredefinedbotList;
       this.predefinedbotsData.forEach(element => {
@@ -502,7 +498,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
   schedulerPopUp(){
     let date:any=this.calender.getToday(); 
-    console.log(date["year"])
+    //console.log(date["year"])
     this.startDate=this.calender.getToday()
     this.minDate=this.calender.getToday();
       //this.startDate=this.calender.getToday();
@@ -513,7 +509,6 @@ export class RpaStudioActionsComponent implements OnInit {
     }
 
     scheduleResponse(data){
-      console.log(data);
       this.scheduleLists = data;
       let schedules:any =[];
       if(this.she==undefined)
@@ -535,8 +530,6 @@ export class RpaStudioActionsComponent implements OnInit {
           //"numberofRepetitions":1,
           "scheduleIntervals" :schedules,
         }
-        console.log()
-
       }
     }
 
@@ -578,11 +571,8 @@ export class RpaStudioActionsComponent implements OnInit {
     }
     else
     {
-
       this.she.scheduleIntervals.push(scheduleddata);
-      console.log(this.she)
     }
-    console.log(this.she)
     this.scheduleLists.push(sche2)
     this.hiddenSchedlerPopUp = false;
     this.resetscheduler();
@@ -632,7 +622,6 @@ export class RpaStudioActionsComponent implements OnInit {
     botstatistics() {
     this.rest.botStatistics().subscribe(Status => {
       this.botStatisticsData = Status;
-      console.log(this.botStatisticsData);
     })
   }
 
@@ -695,13 +684,10 @@ export class RpaStudioActionsComponent implements OnInit {
         if(this.logresponse.length >0)
         {
           this.respdata1 = false;
-          console.log(this.respdata1)
         }else
         {
           this.respdata1 = true;
-          console.log(this.respdata1);
         }
-        console.log(this.logresponse)
         if(this.logresponse.length>0)
         this.logresponse.forEach(data=>{
         response=data;
@@ -730,10 +716,8 @@ export class RpaStudioActionsComponent implements OnInit {
         }
         log.push(response)
       });
-      console.log(log);
       log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
       this.Viewloglist = new MatTableDataSource(log);
-      console.log(this.Viewloglist);
 
       this.Viewloglist.paginator=this.paginator1;
       this.Viewloglist.sort=this.sort1;
@@ -746,8 +730,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
   public botrunid:any;
   ViewlogByrunid(runid){
-    this.botrunid=runid
-    console.log(this.botrunid);
+    this.botrunid=runid;
     let responsedata:any=[];
     let logbyrunidresp:any;
     let resplogbyrun:any=[];
@@ -756,13 +739,10 @@ export class RpaStudioActionsComponent implements OnInit {
       if(responsedata.length >0)
       {
         this.respdata2 = false;
-        console.log(this.respdata2)
       }else
       {
         this.respdata2 = true;
-        console.log(this.respdata2);
       }
-      console.log(responsedata);
       responsedata.forEach(rlog=>{
         logbyrunidresp=rlog;
         logbyrunidresp["start_date"]=logbyrunidresp.start_time;
@@ -772,11 +752,9 @@ export class RpaStudioActionsComponent implements OnInit {
 
         resplogbyrun.push(logbyrunidresp)
       });
-      console.log(resplogbyrun);
       this.logflag=true;
       resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
       this.logbyrunid = new MatTableDataSource(resplogbyrun);
-      console.log(this.logbyrunid);
       this.logbyrunid.paginator=this.paginator2;
       this.logbyrunid.sort=this.sort2;
       document.getElementById(this.viewlogid).style.display="none";
@@ -811,7 +789,6 @@ loadpredefinedbot(botId)
       this.childBotWorkspace.finaldataobjects.push(element)
       let nodename=  element.nodeId.split("__")[0];
       let nodeid=element.nodeId.split("__")[1];
-      console.log(nodeid);
       j=j+100;
       let node={
         id:this.childBotWorkspace.idGenerator(),
@@ -895,11 +872,7 @@ startSchedule()
 
   for(i=0;i<scheduleRecord.length;i++)
   {
-  console.log(scheduleRecord[i]);
   let s = scheduleRecord[i];
-  console.log(s.scheduleInterval);
-  console.log(s.intervalId);
-  console.log(this.savebotrespose.botId);
   let startschedule={
     "botId":this.savebotrespose.botId,
     "scheduleInterval":s.scheduleInterval,
@@ -925,11 +898,7 @@ stopSchedule()
 
   for(i=0;i<scheduleRecord.length;i++)
   {
-  console.log(scheduleRecord[i]);
   let s = scheduleRecord[i];
-  console.log(s.scheduleInterval);
-  console.log(s.intervalId);
-  console.log(this.savebotrespose.botId);
   let stopschedule={
     "botId":this.savebotrespose.botId,
     "scheduleInterval":s.scheduleInterval,
@@ -955,11 +924,7 @@ pauseSchedule()
 
   for(i=0;i<scheduleRecord.length;i++)
   {
-  console.log(scheduleRecord[i]);
   let s = scheduleRecord[i];
-  console.log(s.scheduleInterval);
-  console.log(s.intervalId);
-  console.log(this.savebotrespose.botId);
   let pauseschedule={
     "botId":this.savebotrespose.botId,
     "scheduleInterval":s.scheduleInterval,
@@ -985,11 +950,7 @@ resumeSchedule()
 
   for(i=0;i<scheduleRecord.length;i++)
   {
-  console.log(scheduleRecord[i]);
   let s = scheduleRecord[i];
-  console.log(s.scheduleInterval);
-  console.log(s.intervalId);
-  console.log(this.savebotrespose.botId);
   let resumeschedule={
     "botId":this.savebotrespose.botId,
     "scheduleInterval":s.scheduleInterval,
@@ -997,8 +958,7 @@ resumeSchedule()
   }
   let responsemessage:any
   this.rest.resume_schedule(resumeschedule).subscribe(response=>{
-    responsemessage=response
-     console.log(responsemessage.errorMessage);
+    responsemessage=response;
     if(responsemessage.errorMessage == undefined)
     {
       this.notifier.notify("info",responsemessage.status);
@@ -1014,9 +974,7 @@ removeallchecks()
   for(let i=0;i<this.scheduleLists.length;i++)
   {
     this.scheduleLists[i].checked= false;
-    console.log(this.scheduleLists[i]);
   }
-  console.log(this.check_schedule_flag);
 }
 
 checkAllCheckBox(ev) {
@@ -1026,10 +984,7 @@ checkAllCheckBox(ev) {
 
 checkEnableDisableBtn(id, event)
 {
-  console.log(id);
-  console.log(event.target.checked);
   this.scheduleLists.find(data=>data.intervalId==id).checked=event.target.checked;
-  console.log(this.scheduleLists.length)
   if(this.scheduleLists.filter(data=>data.checked==true).length==this.scheduleLists.length)
   {
     this.check_schedule_flag=true;
@@ -1044,13 +999,10 @@ checkEnableDisableBtn(id, event)
  {
    let i:number;
   const scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p.intervalId);
-  console.log(scheduleRecord);
     if(scheduleRecord!=undefined)
     {
       for(i=scheduleRecord.length; i > 0 ; i--){
-      console.log(this.she)
       let index=this.she.scheduleIntervals.findIndex(schedule=>schedule.intervalId==scheduleRecord);
-      console.log(index)
       this.she.scheduleIntervals.splice(index,1);
       let index2=this.scheduleLists.findIndex(scheduleitem=>scheduleitem.intervalId==scheduleRecord);
       this.scheduleLists.splice(index2,1);

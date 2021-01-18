@@ -19,7 +19,6 @@ export class EnvironmentsService {
       /* other options here */
       responseType: 'text'
     }
-    console.log(data)
     return this.http.post<any>("/rpa-service/agent/save-environment",data, requestOptions);
   }
 
@@ -36,7 +35,6 @@ export class EnvironmentsService {
     const requestOptions: Object = {
       responseType: 'text'
     }
-    console.log(data);
     return this.http.put<any>("/rpa-service/agent/update-environment",data, requestOptions);
   }
 }

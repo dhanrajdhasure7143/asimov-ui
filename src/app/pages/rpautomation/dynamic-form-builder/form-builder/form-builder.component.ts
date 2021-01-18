@@ -8,7 +8,7 @@ template:`
   <div *ngIf ="field.visibility">
   <label style="color:black;padding-right:14px" class="form-control-label" [attr.for]="field.label">
       {{field.label}}
-      <strong class="text-danger" *ngIf="field.required">*</strong>
+      <strong class="text-danger" *ngIf="field.required==true">*</strong>
     </label></div>
   <div class="col-md-12 row">
 

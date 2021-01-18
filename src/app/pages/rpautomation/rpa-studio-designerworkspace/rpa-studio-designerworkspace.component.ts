@@ -11,7 +11,6 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
-
 import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
 import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
@@ -170,8 +169,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.jsPlumbInstance.detach(info);
     });
     if (this.finalbot.botId != undefined) {
-      console.log(this.finalbot.sequences)
-
       this.addconnections(this.finalbot.sequences)
       this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector('#' + this.dragareaid);
@@ -193,7 +190,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Start.png",
-          x: "2px",
+          x: "10px",
           y: "9px",
         }
         this.nodes.push(node);
@@ -210,7 +207,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           selectedNodeTask: "",
           selectedNodeId: "",
           path: "/assets/images/RPA/Stop.png",
-          x: "941px",
+          x: "900px",
           y: "396px",
         }
         this.nodes.push(stopnode);
@@ -223,13 +220,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       let templatenodes:any=[]
       let nodename = element.nodeId.split("__")[0];
       let nodeid = element.nodeId.split("__")[1];
-      this.toolset.templateNodes.forEach(element => {
-        console.log("check")
-      });
       templatenodes=this.toolset.templateNodes;
-      console.log(this.toolset.templateNodes);
-      Array.isArray(templatenodes)?console.log("this is array"):console.log("this is not array")
-      console.log(templatenodes.length)
       let node = {
         id: nodeid,
         name: nodename,
@@ -310,7 +301,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     };
 
     const node = event.data;
-    console.log(node)
     node.id = this.idGenerator();
     node.selectedNodeTask = "";
     node.selectedNodeId = "";
@@ -486,8 +476,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   onRightClick(n: any, e: { target: { id: string; } }, i: string | number) {
-    this.selectedNode = n
-    console.log(e);
+    this.selectedNode = n;
     this.stud = [];
     if (n.tasks.length > 0) {
       if (this.optionsVisible == true) {
@@ -530,7 +519,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         name: node.selectedNodeTask,
         id: node.selectedNodeId
       }
-      this.formHeader = node.name + "-" + node.selectedNodeTask;
+      this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
       if (taskdata != undefined) {
@@ -618,11 +607,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
   addoptions(attributes,node)
   {
+    /*
       let token={​​​​​
         headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
-      }​​​​
+      }​​​*/​
       let restapi_attr=attributes.find(attr => attr.type=='restapi');
-      this.http.get(restapi_attr.dependency,token).subscribe(data=>
+      this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
       {
         this.restapiresponse=data
         let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
@@ -653,7 +643,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     } else {
       this.fields = [];
       this.hiddenPopUp = true;
-      console.log(data);
       data.forEach(element => {
         element.nodeId=node.id;
         if (element.type == "multipart") {
@@ -670,15 +659,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         fields: new FormControl(JSON.stringify(this.fields))
       })
       this.unsubcribe = this.form.valueChanges.subscribe((update) => {
-        console.log(update);
         this.fields = JSON.parse(update.fields);
       })
     }
   }
 
   onUpload(event ,field) {
-    console.log(event)
-    console.log(field)
     let data:any={
       file:event.target.files[0],
       attrId:field.id,
@@ -698,7 +684,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   onChange(e) {
-    console.log(e)
     this.fields.map(ele => {
       if (ele.dependency == e) {
         ele.visibility = true
@@ -731,11 +716,9 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
   submitcode()
   {
-    console.log(this.finalcode)
     let data={
       "codeSnippet":$("#record_n_play").val()
     }
-    console.log(data);
     this.close_record_play();
     this.onFormSubmit(data);
   }
@@ -748,7 +731,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   onFormSubmit(event) {
-    console.log(event)
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
@@ -764,9 +746,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.hiddenPopUp = false;
     let objAttr: any;
     let obj: any = [];
-    console.log(this.formVales);
     this.formVales.forEach((ele, i) => {
-      console.log(ele);
       if (ele.visibility == true) {
         let objKeys = Object.keys(this.fieldValues);
         objAttr = {
@@ -794,7 +774,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             if(task!=undefined)
             {
               let attval=task.attributes.find(a=>a.metaAttrId==ele.id)
-              console.log(attval);
               if(attval!=undefined)
               {
                 objAttr["attrValue"]=attval.attrValue;
@@ -835,7 +814,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "y": this.selectedNode.y,
       "attributes": obj,
     }
-    console.log(this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId))
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     if (index != undefined && index >= 0) {
       this.finaldataobjects[index] = cutedata;
@@ -843,7 +821,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.finaldataobjects.push(cutedata);
 
     }
-    console.log(this.finaldataobjects)
     this.notifier.notify("info", "Data Saved Successfully");
   }
 
@@ -884,12 +861,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       for(let filedata of tasks)
       {
         let filepath:any=filedata.attributes.find(data_file_rpa=>(data_file_rpa.metaAttrId==278));
-        console.log(filepath);
         if(filepath!=undefined)
         {
-          console.log(filepath);
-          console.log(this.saveBotdata.envIds);
-
           let form = new FormData();
           let file = new Blob([filepath.file]);
           form.append("file",filepath.file);
@@ -991,10 +964,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.disable = true;
       let message = "Data is Saved Successfully"
       this.notifier.notify(type, message);
-      console.log(data);
     }
-    console.log(data);
-
   }
   execution(botid) {
     let eqObj: any
@@ -1018,7 +988,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   reset(e) {
-    console.log(e);
     this.indexofArr = 5;
     this.dagvalue = this.zoomArr[this.indexofArr];
     this.dragelement.style['transform'] = `scale(${this.dagvalue})`
@@ -1027,7 +996,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   zoomin(e) {
-    console.log(e);
     if (this.indexofArr < this.zoomArr.length - 1) {
       this.indexofArr += 1;
       this.dagvalue = this.zoomArr[this.indexofArr];
@@ -1107,22 +1075,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   modifyEnableDisable() {
     this.disable = !this.disable;
     if (this.disable) {
-      Swal.fire({
-        position: 'top-end',
-        icon: "warning",
-        title: "Designer Disabled Now",
-        showConfirmButton: false,
-        timer: 2000
-      })
+      Swal.fire("Designer Disabled Now","","warning")
     }
     else {
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Designer Enabled Now',
-        showConfirmButton: false,
-        timer: 2000
-      })
+      Swal.fire("Designer Enabled Now","","success")
     }
   }
 
@@ -1196,7 +1152,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
 
   outputbox(node) {
-    console.log(node);
     document.getElementById(this.outputboxid).style.display = "block";
     document.getElementById("output_" + node.id).style.display = "none"
   }
@@ -1211,7 +1166,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.SelectedOutputType != "") {
       if (this.finaldataobjects.find(object => object.nodeId.split("__")[1] == this.outputnode.id) != undefined) {
         let task: any = this.finaldataobjects.find(object => object.nodeId.split("__")[1] == this.outputnode.id);
-        console.log(task)
         let postdata: any = {
           "botId": this.finalbot.botId,
           "version": this.finalbot.version,
@@ -1223,21 +1177,19 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           if (this.SelectedOutputType == "Text")
           {
             let data: any = outdata
-            let textval:String=JSON.stringify(data[0].Value);
-            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
+            setTimeout(()=>{
+              $("#text_"+this.outputboxid).html((data[0].Value).toString().replace(/\n/g, "<br />"));
+            },1000)
           }
           if(this.SelectedOutputType=="Image")
           {
-            let data=this.outputboxresult[0].Value.split(':');
-            this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
+            let image=this.outputboxresult[0].Value;
+            this.Image= 'data:' + 'image/png' + ';base64,' +image;
           }
         })
       }
-
-
     }
   }
-
 
   outputlayoutback() {
     this.outputboxresult = undefined;
@@ -1255,7 +1207,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     let end = "STOP_" + this.finalbot.botName;
     this.final_tasks.push(object);
-    console.log(object)
     if(object==undefined)
     {
       this.checkorderflag=false;
@@ -1263,9 +1214,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     if (object.outSeqId == end)
     {
-      console.log(end)
-      console.log(object.outSeqId)
-      return;
+       return;
     }
     else {
       object = this.finaldataobjects.find(object2 => object2.nodeId.split("__")[1] == object.outSeqId);
@@ -1298,13 +1247,5 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     return;
   }
-
-
-
-  start_automation()
-  {
-    alert("start recording")
-  }
-
 
 }

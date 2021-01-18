@@ -4,8 +4,8 @@
             <mat-icon class="text-primary">android</mat-icon>
               &nbsp;&nbsp;
               {{tab.botName}}
-              &nbsp;&nbsp;
-            <span class="pull-right"><mat-icon  (click)="removetab(tab)">close</mat-icon></span>
+              &emsp;&nbsp; &nbsp;&nbsp;
+            <div class="text-right"><button [id]="'close_bot_'+tab.botName"  class="bot-close" (click)="removetab(tab)"><i class="fa fa-times"  ></i></button></div>
         </ng-template>
         <app-rpa-toolset [bot]="tab" ></app-rpa-toolset>
       </mat-tab>

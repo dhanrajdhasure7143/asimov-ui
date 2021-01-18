@@ -47,18 +47,13 @@ export class SoInboxComponent implements OnInit {
     this.rest.getInbox().subscribe(data =>
     {
       response=data;
-      console.log("response");
-      console.log(response);
       if(response.length >0)
       {
         this.respdata1 = false;
-        console.log(this.respdata1)
       }else
       {
         this.respdata1 = true;
-        console.log(this.respdata1);
       }
-      console.log(response);
       this.dataSource1= new MatTableDataSource(response);
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
@@ -86,13 +81,12 @@ export class SoInboxComponent implements OnInit {
       "processRunId":runId,
       "envId": envId
     }
-    console.log(obj);
     this.rest.updateInboxstatus(obj).subscribe(data =>
       {
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Task Status Updated Successfully',
+          title: 'Task Status Updated Successfully !!',
           showConfirmButton: false,
           timer: 2000
         })
