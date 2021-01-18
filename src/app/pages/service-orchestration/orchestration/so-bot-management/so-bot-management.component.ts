@@ -87,6 +87,7 @@ export class SoBotManagementComponent implements OnInit {
 
   loadbotdatadesign(botId)
   {
+    this.spinner.show();
      localStorage.setItem("botId",botId);
     this.router.navigate(["/pages/rpautomation/home"]);
   }
