@@ -153,7 +153,7 @@
           </div>
           <div class="col-md-6">
             <label for="botDescription">Bot Description</label>
-            <textarea type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" ngModel maxlength="500" class="form-control" name="botDescription"  ></textarea>
+            <textarea type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" ngModel maxlength="500" style="height:70px" class="form-control" name="botDescription"  ></textarea>
             <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" class="fa fa-info-circle errspan">
               Bot Description Required*
             </div>

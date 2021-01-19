@@ -80,6 +80,7 @@ export class SoAutomatedTasksComponent implements OnInit {
 
  loadbotdatadesign(botId)
   {
+    this.spinner.show();
      localStorage.setItem("botId",botId);
     this.router.navigate(["/pages/rpautomation/home"]);
   }
@@ -111,7 +112,7 @@ export class SoAutomatedTasksComponent implements OnInit {
 
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
-      this.responsedata=response.automationTasks
+      this.responsedata=response.automationTasks;
       this.dataSource2= new MatTableDataSource(response.automationTasks);
       this.dataSource2.sort=this.sort10;
       this.dataSource2.paginator=this.paginator10;
@@ -305,14 +306,8 @@ export class SoAutomatedTasksComponent implements OnInit {
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
-              if(statusdata.status="Pending")
-              {
-                data="<span class='text-warning' style='font-size:18px'><i class='fa fa-clock' aria-hidden='true'></i></span>&nbsp;<span class='text-warning'>"+statusdata.status+"</span>";
 
-                //data="<span class='text-primary'><img src='../../../../../assets/images/RPA/pending-work.png' style='height:20px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
-
-              }
-              else if(statusdata.status=="InProgress" || statusdata.status=="Running")
+              if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
                 data="<span class='text-primary'><img src='../../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }else if(statusdata.status=="Success")
@@ -327,6 +322,10 @@ export class SoAutomatedTasksComponent implements OnInit {
               else if(statusdata.status=="New")
               {
                 data="<span><img src='../../../../../assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+              }
+              else if(statusdata.status=="Pending")
+              {
+                data="<span class='text-warning' style='font-size:18px'><i class='fa fa-clock' aria-hidden='true'></i></span>&nbsp;<span class='text-warning'>"+statusdata.status+"</span>";
               }
               else if(statusdata.status=="")
               {

@@ -6,7 +6,7 @@ selector:'form-builder',
 template:`
   <div class="col-md-4 form-group row" [formGroup]="form">
   <div *ngIf ="field.visibility">
-  <label style="color:black;padding-right:14px" class="form-control-label" [attr.for]="field.label">
+  <label *ngIf="field.type!='checkbox'" style="color:black;padding-right:14px" class="form-control-label" [attr.for]="field.label">
       {{field.label}}
       <strong class="text-danger" *ngIf="field.required==true">*</strong>
     </label></div>
