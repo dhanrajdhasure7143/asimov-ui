@@ -55,8 +55,14 @@ export class DeployNotationComponent implements OnInit {
         let response:any = res;
         if(response.status == 'success' || response.status == 'Success'){
         this.deploy_success = true;
-        let obj={startprocess:true,definationId:response.definitionId}
-        this.dt.deployNotationValue(obj);
+        if(response.definitionId !=''){
+          let obj={startprocess:true,definationId:response.definitionId}
+          this.dt.deployNotationValue(obj);
+        }else{
+          let obj={startprocess:false,definationId:response.definitionId}
+          this.dt.deployNotationValue(obj);
+        }
+        
         } else{
           Swal.fire(
             'Oops!',
