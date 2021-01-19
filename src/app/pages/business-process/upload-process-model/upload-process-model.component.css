@@ -151,5 +151,38 @@
         font-weight: bold !important;
         /* font-size: 14px; */
     }
-
-   
+    .modal_size{
+        width: 500px;
+    }
+    .variable{
+        color: blue;
+        cursor: pointer;
+        text-decoration-line: underline;
+    }
+    .variable:hover{
+        font-weight: bold !important;
+    }
+    .modal_size .variable-input{
+        width: 100px !important;
+    }
+    .modal_size .form-control{
+        border-radius: 0px !important;
+        box-shadow: none !important;
+    }
+    .cancel_btn{
+        background-color: gray;
+        color: #fff;
+    }
+    .border{
+        border: 1px solid black;
+    }
+    .modal_size hr{
+    padding-left: 22px !important;
+    margin-left: -22px !important;
+    width: 104% !important;
+    margin-top: 15px !important;
+    margin-bottom: 12px !important;
+    }
+    .business-input input{
+        width: 95%;
+    }
