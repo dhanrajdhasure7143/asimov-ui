@@ -62,13 +62,13 @@
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Action </th>
                     <td mat-cell *matCellDef="let element">
                       <span>
-                        <button [disabled]="element.status=='Approved' || element.status=='Rejected'" [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''" (click)="getapproved(element.processId,'Approved', element.taskId,element.processRunId,element.envId)"  matTooltip="Approved">
+                        <button [disabled]="element.status=='Approved' || element.status=='Rejected'" [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''" (click)="getapproved(element.processId,'Approved', element.taskId,element.processRunId,element.envId)"  matTooltip="Approve">
                           <i  class="fas fa-check text-success"></i>
                         </button>
                         
                       </span>&nbsp;&nbsp;&nbsp;
                       <span>
-                        <button [disabled]="element.status=='Approved' || element.status=='Rejected'" [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''" (click)="getapproved(element.processId,'Rejected', element.taskId,element.processRunId,element.envId)"  matTooltip="Rejected">
+                        <button [disabled]="element.status=='Approved' || element.status=='Rejected'" [class]="(element.status=='Approved' || element.status=='Rejected')?'undobtn':''" (click)="getapproved(element.processId,'Rejected', element.taskId,element.processRunId,element.envId)"  matTooltip="Reject">
                           <i  class="fas fa-times text-danger"></i>
                         </button>
                        
