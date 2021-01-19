@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input , Pipe, PipeTransform} from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb, jsPlumbInstance } from 'jsplumb';
@@ -101,10 +101,10 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
       this.loadnodes();
-      this.dragareaid = "dragarea__" + this.finalbot.botName;
-      this.outputboxid = "outputbox__" + this.finalbot.botName;
       this.SelectedOutputType = "";
     }
+    this.dragareaid = "dragarea__" + this.finalbot.botName;
+    this.outputboxid = "outputbox__" + this.finalbot.botName;
   }
 
 
@@ -1256,4 +1256,27 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     return;
   }
 
+}
+
+
+
+@Pipe({name: 'Checkoutputbox'})
+export class Checkoutputbox implements PipeTransform {
+  transform(value: any,arg:any)
+  {
+    let allnodes:any=[];
+    allnodes=arg.tasks;
+    console.log("-------------------------",allnodes)
+    let node:any=value;
+    if(allnodes.find(item=>item.nodeId.split('__')[1]==node.id)!=undefined)
+    {
+      if(allnodes.find(item=>item.nodeId.split('__')[1]==node.id).botTId!=undefined)
+        return true;
+      else
+        return false;
+    }else
+    {
+      return false;
+    }
+  }
 }

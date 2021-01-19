@@ -37,12 +37,12 @@ import {MatSliderModule} from '@angular/material/slider';
 import { RpaConfigurationsComponent } from './rpa-configurations/rpa-configurations.component';
 import { RpaDatabaseConnectionsComponent } from './rpa-database-connections/rpa-database-connections.component';
 import { RpaToolsetComponent } from './rpa-toolset/rpa-toolset.component';
-import { RpaStudioDesignerComponent } from './rpa-studio-designer/rpa-studio-designer.component';
+import { RpaStudioDesignerComponent} from './rpa-studio-designer/rpa-studio-designer.component';
 import { RpaStudioActionsmenuComponent } from './rpa-studio-actionsmenu/rpa-studio-actionsmenu.component';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import{ipcustompipecreation} from './rpa-environments/IPAddressCustompipe';
-import { RpaStudioDesignerworkspaceComponent } from './rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
+import { RpaStudioDesignerworkspaceComponent, Checkoutputbox } from './rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import { SchedulerComponent,Envname } from './scheduler/scheduler.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
@@ -71,7 +71,8 @@ import {Rpa_Hints} from './model/RPA-Hints';
     RpaStudioActionsmenuComponent,
     RpaStudioDesignerworkspaceComponent,
     SchedulerComponent,
-    RpaSchedulerComponent
+    RpaSchedulerComponent,
+    Checkoutputbox
   ],
   imports: [
     NgxMaterialTimepickerModule,
