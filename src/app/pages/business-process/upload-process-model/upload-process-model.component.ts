@@ -1280,13 +1280,22 @@ displayBPMN(){
       "businessKey":this.businessKey,
       "variableList":this.variables
     };
-    this.rest.startBpmnProcess(reqBody).subscribe(res=>{
-      console.log(res);
-      Swal.fire(
-        'Success!',
-        'Process started successfully',
-        'success'
-      )
+    let response;
+    this.rest.startBpmnProcess(reqBody).subscribe(res=>{response=res
+      if(response.failure){
+        Swal.fire(
+          'Error!',
+          response.failure,
+          'error'
+        )
+      }else{
+        Swal.fire(
+          'Success!',
+          'Process started successfully',
+          'success'
+        )
+      }
+      
       this.cancelProcess();
       this.isStartProcessBtn=false;
     })    

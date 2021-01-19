@@ -380,11 +380,13 @@ isTimeChange:boolean=false;
        "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
+      if(this.varaint_data.data){ 
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
       localStorage.setItem("variants",btoa(JSON.stringify(this.varaint_data)));
       this.onchangeVaraint("0");
+      }
       })
       const fullGraphbody= { 
         "data_type":"full_graph", 

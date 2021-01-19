@@ -41,7 +41,7 @@ export class DeployNotationComponent implements OnInit {
     var formData: any = new FormData();
     formData.append('file', this.data.dataKey)
     formData.append('deploymentName', this.depName)
-    formData.append('tenantID', this.tenantId)
+    formData.append('tenantID', selecetedTenant)
     formData.append('enableDuplicateFilter', 'true')
     formData.append('deploymentSource', this.data.fileNme)
     //formData.append('content-type', ' text/xml')
