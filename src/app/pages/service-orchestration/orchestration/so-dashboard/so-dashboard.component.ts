@@ -170,7 +170,6 @@ export class SoDashboardComponent implements OnInit {
   {
     this.botstat=false;
     this.q=1;
-    console.log(event.name)
     if(event.name=="Scheduled")
       this.botstatisticstable=this.bots_list.filter(data=>data.schedulerId!=null)
     else
@@ -185,7 +184,6 @@ export class SoDashboardComponent implements OnInit {
 
   loadcss()
   {
-    console.log("css loaded")
     setTimeout(() => {
       $('.chart-legend>div').css({width : '100%'});
       this.spinner.hide()
@@ -211,7 +209,6 @@ export class SoDashboardComponent implements OnInit {
     }​​​​
     this.http.get("http://authdev.epsoftinc.in/authorizationservice/api/v1/application/2/usercount",token).subscribe(data=>{
       this.users=data;
-      console.log(this.users)
     })
 
     let tenant=localStorage.getItem("tenantName");
@@ -395,7 +392,7 @@ export class SoDashboardComponent implements OnInit {
           "series":[
             {
               "name":"Bots",
-              "value":this.automatedtasks.filter(taskdata=>taskdata.processId==data.processId && taskdata.taskType=="Bot").length,
+              "value":this.automatedtasks.filter(taskdata=>taskdata.processId==data.processId && (taskdata.taskType=="Bot"|| taskdata.taskType=="Automated")).length,
             },
             {
               "name":"Humans",
@@ -413,11 +410,8 @@ export class SoDashboardComponent implements OnInit {
     let botName=event.name;
     if(this.bots.find(botc=>botc.botName==botName) != undefined)
     {
-      console.log(this.bots);
-      let bot_check =this.bots.filter(botc=>botc.botName==botName)
-      console.log(bot_check);
-      let performances=bot_check[0].coordinates
-      console.log(performances)
+      let bot_check =this.bots.filter(botc=>botc.botName==botName);
+      let performances=bot_check[0].coordinates;
       performances=performances.reverse();
       this.Performance=[];
       for(let i=0;i<10;i++)
@@ -468,7 +462,6 @@ export class SoDashboardComponent implements OnInit {
         }
       });
       this.runtimestats=runtimestats;
-      console.log(runtimestats);
       this.runtimeflag=true;
     })
   }
@@ -559,12 +552,8 @@ export class SoDashboardComponent implements OnInit {
           let months=["January","February","March","April","May","June","July",
           "August","September","October","November","December"];
           let finalmonths:any=months.slice(months.indexOf(from_month),months.indexOf(to_month)+1);
-          console.log(finalmonths);
-
           finalmonths.forEach(date=>{
-            console.log(date+"-"+year)
             labels.push(date+"-"+year);
-            console.log(moment(this.main_bot_list[0].createdAt).format("MMMM-YYYY"))
             success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")==(date+"-"+year) && bot_check.botStatus=='Success')).length))
             failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")== (date+"-"+year) && bot_check.botStatus=='Failure')).length))
             stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("MMMM-YYYY")== (date+"-"+year) && bot_check.botStatus=='Stopped')).length))
@@ -582,7 +571,6 @@ export class SoDashboardComponent implements OnInit {
 
           years.forEach(date=>{
             labels.push(date);
-            console.log(moment(this.main_bot_list[0].createdAt).format("YYYY"))
             success.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")==(date) && bot_check.botStatus=='Success')).length))
             failed.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")== (date) && bot_check.botStatus=='Failure')).length))
             stopped.push((this.main_bot_list.filter(bot_check=>(moment(bot_check.createdAt).format("YYYY")== (date) && bot_check.botStatus=='Stopped')).length))
@@ -771,7 +759,6 @@ export class SoDashboardComponent implements OnInit {
     let bot_list_check:any=[];
     this.botstat=true;
     bot_list_check=this.main_bot_list.filter(item=>item.department==this.selectedcat);
-    console.log(bot_list_check);
     let category:any;
     category=this.categaoriesList.find(item=>item.categoryId==this.selectedcat);
     this.humans_list=this.all_humans_list.filter(item=>item.userId.department==category.categoryName);
@@ -999,8 +986,6 @@ export class Category implements PipeTransform {
   {
     let categories:any=[];
     categories=arg;
-    console.log("departments",categories);
-    console.log("id",value);
     return categories.find(item=>item.categoryId==value).categoryName;
   }
 }

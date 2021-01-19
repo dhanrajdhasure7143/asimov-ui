@@ -52,7 +52,7 @@ export class RestApiService{
   //password -Welcome@123
 
   getAccessToken(){
-    let data = {"userId":"raghavendra.basavaraju@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
+    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -627,5 +627,8 @@ export class RestApiService{
     get_dynamic_data(url)
     {
       return this.http.get(url);
+    }
+    startBpmnProcess(body){
+      return this.http.post("/deployprocess/start-process",body);
     }
 }

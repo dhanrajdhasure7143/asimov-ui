@@ -26,19 +26,42 @@
 
   font-size:22px !important;
 }
-/*
-.action-header-addon {
-    content: ".";
-    display: block;
-    overflow: hidden;
-    padding:10px;
-    position: absolute !important;
-    top: -100px !important;
-    left: -5px !important;
-}
-.header-addon:after { clear: both; }
-*/
 
+.rpa-dropdown.dropdown-menu
+{
+  margin: -109px 0 0 !important;
+  min-width: 55px !important;
+}
+.download{
+  position: absolute;
+  top: auto !important;
+  left:auto !important;
+}
+.dropdown-item{
+  font-size:10px
+}
+.rpa-context-menu1{
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  z-index: 100;
+  position: sticky;
+  background-color: white;
+  right: 153px;
+  top: 47px;
+  padding: 5px;
+  margin: 2px 0 0;
+}
+.rpa-context-menu{
+  position: absolute;
+  margin: -15px 8px 8px 7px;
+  white-space: nowrap;
+  background-color: white !important;
+}
+.rpa-context-menu__item a {
+    background-color: white;
+    color: black;
+}
 
 .search{
   border-radius: 0px !important;
@@ -92,4 +115,45 @@ select.form-control
   border-right:none !important;
   border-left:none !important;
   box-shadow: none !important;
+}
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
+{
+  background-color: blue !important;
+}
+
+
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
+{
+
+  background-color: blue !important;
+}
+
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill{
+background-color: blue !important;
+}
+
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
+{
+  background-color: #0062cf !important;
+}
+
+.dis{
+  display:none;
+}
+
+
+
+
+.clickable{
+  cursor: pointer;
+}
+
+
+.nodes .clickable button:disabled{
+  background-color: white !important;
+  color:#75a8e2 !important;
+
+}
+::ng-deep .mat-menu-panel{
+  max-height:200px !important;
 }

@@ -2,6 +2,18 @@
 
 <div class="header_addon" style="padding-right:40px;padding-top:7px;">
 
+  <mat-slide-toggle
+  style="float:right;height:20px;padding-right:30px"
+  class="example-margin"
+  color="primary"
+  *ngIf="tabsArray.length > 0"
+  [checked]="change_rpa_screen"
+  [(ngModel)]="changescreen_rpa_model"
+  (change)="checkchange()"
+  tooltip="change screen"
+  placement="bottom"
+  >
+</mat-slide-toggle>
 
   <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
     <i class="fa fa-list"></i>&nbsp;&nbsp;Load
@@ -11,18 +23,7 @@
     <i class="fa fa-plus"></i>&nbsp;&nbsp;Create
   </button>
 
-  <!-- <mat-slide-toggle
-          style="float:right;height:20px;padding-right:30px"
-          *ngIf="tabsArray.length == 0 || tabsArray == undefined"
-          class="example-margin"
-          color="primary"
-          [checked]="change_rpa_screen"
-          [(ngModel)]="changescreen_rpa_model"
-          (change)="checkchange()"
-          >
-        Change Screen
 
-  </mat-slide-toggle> -->
 </div>
 
 <!-- tabs -->
@@ -152,13 +153,13 @@
           </div>
           <div class="col-md-6">
             <label for="botDescription">Bot Description</label>
-            <textarea type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" ngModel maxlength="500" class="form-control" name="botDescription"  ></textarea>
+            <textarea type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" ngModel maxlength="500" style="height:70px" class="form-control" name="botDescription"  ></textarea>
             <div *ngIf="insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched" style="color: red" class="fa fa-info-circle errspan">
               Bot Description Required*
             </div>
           </div>
-
-
+        </div>
+        <div class="row">
 
           <div class="col-md-6">
             <input type="checkbox"  formControlName="predefinedBot" value="true" (click)="predefined($event)" name="predefinedBot">&nbsp; <span style="font-size:16px">Predefined Bot</span>

@@ -80,8 +80,8 @@ export class SoAutomatedTasksComponent implements OnInit {
 
  loadbotdatadesign(botId)
   {
-    console.log(botId);
-    localStorage.setItem("botId",botId);
+    this.spinner.show();
+     localStorage.setItem("botId",botId);
     this.router.navigate(["/pages/rpautomation/home"]);
   }
 
@@ -113,7 +113,6 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
       this.responsedata=response.automationTasks;
-      console.log(response.automationTasks);
       this.dataSource2= new MatTableDataSource(response.automationTasks);
       this.dataSource2.sort=this.sort10;
       this.dataSource2.paginator=this.paginator10;
@@ -160,14 +159,16 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
-    //this.selectedcategory=processnamebyid.categoryId;
+    this.selectedcategory=parseInt(processnamebyid.categoryId);
+    this.applyFilter1(this.selectedcategory);
     this.selectedvalue=processnamebyid.processId;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource2.filter = filterValue;
   }
 
-  applyFilter1() {
+  applyFilter1(value) {
+    this.selectedcategory=parseInt(value);
     this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
     this.selectedvalue="";
@@ -190,7 +191,7 @@ export class SoAutomatedTasksComponent implements OnInit {
       let response:any=data;
       if(response.status!=undefined)
       {
-        Swal.fire("Resource Assigned Successfully !!","","success");
+        Swal.fire("Task  assigned to resource successfully !!","","success");
       }else
       {
         Swal.fire("Failed to Assign Resource !!","","warning");
@@ -210,7 +211,7 @@ export class SoAutomatedTasksComponent implements OnInit {
         Swal.fire(response.status,"","success");
       }else
       {
-        Swal.fire(response.errorMessage,"","success");
+        Swal.fire(response.errorMessage,"","warning");
       }
     })
   }
@@ -305,21 +306,26 @@ export class SoAutomatedTasksComponent implements OnInit {
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
-              if(statusdata.status=="InProgress")
+
+              if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
                 data="<span class='text-primary'><img src='../../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }else if(statusdata.status=="Success")
               {
 
-                data='<span class="text-success"><i class="fa fa-check" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
+                data='<span class="text-success"><i class="fa fa-check-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
               }
               else if(statusdata.status=="Failed")
               {
-                data='<span class="text-danger"><i class="fa fa-times" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';
+                data='<span class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';
               }
               else if(statusdata.status=="New")
               {
                 data="<span><img src='../../../../../assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+              }
+              else if(statusdata.status=="Pending")
+              {
+                data="<span class='text-warning' style='font-size:18px'><i class='fa fa-clock' aria-hidden='true'></i></span>&nbsp;<span class='text-warning'>"+statusdata.status+"</span>";
               }
               else if(statusdata.status=="")
               {

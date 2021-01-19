@@ -11,6 +11,20 @@
     margin-right: 20px
 }
 
+.rpa-home-block:hover {
+    background: #fff;
+    -webkit-box-shadow: 0 2px 10px -5px #000;
+    box-shadow: 0 2px 10px -5px #000;
+}
+
+.rpa-home-block:hover  .rpa-home-btn-title {
+    font-size: 14px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: white;
+    font-weight: bold;
+}
+
+
 .resetbtn{
     height:30px;
     margin-top:0px;

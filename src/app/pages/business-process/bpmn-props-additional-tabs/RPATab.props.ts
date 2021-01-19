@@ -233,7 +233,7 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
         let fieldsList = [];
         attributesList.forEach((each_attr, i) => {
             let tmp = '';
-            let taskey = each_attr['name'];
+            let taskey = each_attr['name']+'_'+each_attr['id'];
             if(["text", "email", "password", "number", "multipart"].indexOf(each_attr['type']) > -1){
                 tmp = entryFactory.validationAwareTextField({
                     id: each_attr['id'],
@@ -249,14 +249,15 @@ import { getBusinessObject, is } from 'bpmn-js/lib/util/ModelUtil';
                             formDataExtension = getExtensionElements(bo, "rpa:OutputParams");
                         else if(!formDataExtension)
                             formDataExtension = getExtensionElements(bo, "rpa:Activity");
-                        if (formDataExtension) {
                             let ext = each_attr['id'] == "4" ? "rpa:OutputParams": "rpa:Activity";
                             var formData = getRpaData(element, ext);
+                        if (formDataExtension) {
                             var storedValue = formData.get(taskey);
                             if(each_attr['type'] == 'password' && storedValue)
                                 storedValue = '\u2022'.repeat(storedValue.length);
                             result[taskey] = storedValue;
                         }
+                        cmdHelper.addElementsTolist(element, formData, taskey, result[taskey])
                         return result[taskey];
                     },
                     setProperty: function(element, values, node) {

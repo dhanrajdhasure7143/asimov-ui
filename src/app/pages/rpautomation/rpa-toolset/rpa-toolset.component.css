@@ -2,7 +2,7 @@
 .section {
   overflow: scroll;
   min-height: 65px;
-  max-height: 443px;
+  max-height: 350px;
   white-space: nowrap;
 }
 .nodes {

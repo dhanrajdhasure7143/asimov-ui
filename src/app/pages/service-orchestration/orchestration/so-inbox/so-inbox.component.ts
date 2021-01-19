@@ -14,7 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./so-inbox.component.css']
 })
 export class SoInboxComponent implements OnInit {
-    displayedColumns: any[] = ["processName","taskName","previousTask", "nextSuccessTask","nextFailureTask", "status", "Action"];
+    displayedColumns: any[] = ["processRunId","processName","taskName","previousTask", "nextSuccessTask","nextFailureTask", "status", "Action"];
     dataSource1:MatTableDataSource<any>;
     public respdata1:boolean = false;
     searchinbox:any;
@@ -47,18 +47,13 @@ export class SoInboxComponent implements OnInit {
     this.rest.getInbox().subscribe(data =>
     {
       response=data;
-      console.log("response");
-      console.log(response);
       if(response.length >0)
       {
         this.respdata1 = false;
-        console.log(this.respdata1)
       }else
       {
         this.respdata1 = true;
-        console.log(this.respdata1);
       }
-      console.log(response);
       this.dataSource1= new MatTableDataSource(response);
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
@@ -78,22 +73,35 @@ export class SoInboxComponent implements OnInit {
     document.getElementById("showaction").style.display = "none";
   }
 */
-  getapproved(processId,status, taskId){
+  getapproved(processId,status, taskId,runId, envId){
     let obj = {
       "processId": processId,
       "status" : status,
-      "taskId" : taskId
+      "taskId" : taskId,
+      "processRunId":runId,
+      "envId": envId
     }
-    console.log(obj);
+
     this.rest.updateInboxstatus(obj).subscribe(data =>
       {
+        if(obj.status == "Approved"){
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Task Status Updated Successfully',
+          title: 'Task Status Approved Successfully !!',
           showConfirmButton: false,
           timer: 2000
-        })
+        });
+      }
+      if(obj.status == "Rejected"){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Task Status Rejected Successfully !!',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
         /* let res:any= data;
        Swal.fire(res.status, "","success")*/
        this.getallbots();

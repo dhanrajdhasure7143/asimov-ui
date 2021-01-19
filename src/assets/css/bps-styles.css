@@ -331,7 +331,7 @@ margin-right: -85px;
   /* width: 315px; */
   right: 0;
   height: 69vh;
-  overflow: hidden;
+  overflow: auto;
   display: inline-flex;
 }
 

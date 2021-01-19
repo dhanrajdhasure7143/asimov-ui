@@ -24,14 +24,14 @@
     </div>
     <div class="functionality-icons">
         <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
-        <!-- <span class="start-instance">
-            <span class="fa fa-play" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
-            <div class="deploy-menu" *ngIf="rejectedOrApproved == 'APPROVED'">
+        <span class="start-instance">
+            <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>&nbsp;&nbsp;
+            <!-- <div class="deploy-menu" *ngIf="rejectedOrApproved == 'APPROVED'">
                 <a (click)="openDeployDialog()">Start process instance</a>
                 <br/>
                 <a (click)="openDeployDialog()">Start process instance with new configuration</a>
-            </div>
-        </span> -->
+            </div> -->
+        </span>
         <span class="fa fa-keyboard" (click)="displayShortcut()"></span>&nbsp;&nbsp;
         <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
         <!-- <button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button> -->
@@ -105,3 +105,84 @@
         </tr>
     </table>
 </ng-template>
+
+
+<ng-template #variabletemplate>
+    <div class="modal_size">
+    <div><h4>Start Process</h4></div>
+    <hr>
+        <div class="row">
+            <div class="col-sm-12 row">
+                <form action="" #business='ngForm'>
+                <div class="col-sm-4">
+                    <h5 for="">Business Key:</h5>
+                </div>
+                <div class="col-sm-8 business-input">
+                    <input type="text" class="form-control" placeholder="Enter Business Key" #business_key id='business_key' name='business_key' [(ngModel)]="businessKey" required>
+                    <span *ngIf="((business_key.invalid && business.submitted) || (business_key.errors && business_key.touched) )" 
+                    class='fa fa-info-circle errspan'> Business Key is required </span>
+                </div>
+            </form>
+            </div>
+            
+        </div>
+        <div class="col-sm-4" >
+            <div>
+            <p class="variable" (click)='addVariable()'>+ Add Variable</p>
+        </div>
+        </div>
+        <div class="col-sm-12" *ngIf="variables.length>0">
+            <div class="col-sm-3">Name</div>
+            <div class="col-sm-3">Type</div>
+            <div class="col-sm-3">Value</div>
+            <div class="col-sm-3"></div>
+        </div>
+        <form action="" #variableForm="ngForm">
+        <section class="col-sm-12 row" *ngFor="let item of variables; let i = index;">
+            <div class="col-sm-3">
+                <input type="text" class="variable-input form-control" placeholder="Name"  name="variable_name{{i}}" [(ngModel)]='item.variableName' required>
+            </div>
+            <div class="col-sm-3">
+                <select class="variable-input form-control" name="variable_type{{i}}" id="" [(ngModel)]='item.type' required>
+                    <option value="" disabled hidden>Select</option>
+                    <option value="boolean">Boolean</option>
+                    <option value="short">Short</option>
+                    <option value="integer">Integer</option>
+                    <option value="long">Long</option>
+                    <option value="double">Double</option>
+                    <option value="string">String</option>
+                    <option value="date">Date</option>
+                </select>
+                <!-- <input type="text" class="variable-input form-control" placeholder="Type" name="variable_type{{i}}" [(ngModel)]='item.variablesType' required> -->
+            </div>
+            <div class="col-sm-3">
+                <input *ngIf="item.type!='boolean'" type="text" class="variable-input form-control" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value' required>
+                <!-- <input *ngIf="item.type=='boolean'" type="checkbox" class="" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value'> -->
+            <select class="variable-input form-control" *ngIf="item.type=='boolean'" name="variable_value{{i}}" [(ngModel)]='item.value' id="" required>
+                <option value="" disabled hidden>Select</option>    
+                <option value="true">True</option>
+                    <option value="false">False</option>
+            </select>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-danger eiap-btn" (click)="removevariable(i)">Remove</button>
+            </div>
+
+        <!-- </div> -->
+    </section>
+    </form>
+    <hr>
+
+    <div class="col-sm-12 row">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-3">
+            <button class="btn btn-secondary cancel_btn eiap-btn" (click)="cancelProcess()">Cancel</button>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+            <button class="btn btn-primary eiap-btn" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
+        </div>
+    </div>
+    </div>
+
+  </ng-template>

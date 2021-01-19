@@ -5,6 +5,7 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { APP_CONFIG } from 'src/app/app.config';
 import Swal from 'sweetalert2';
+import { DataTransferService } from 'src/app/pages/services/data-transfer.service';
 
 @Component({
   selector: 'app-deploy-notation',
@@ -20,6 +21,7 @@ export class DeployNotationComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private rest: RestApiService,
     public dialogRef: MatDialogRef<DeployNotationComponent>,
+    private dt:DataTransferService,
     @Inject(APP_CONFIG) private config
   ) { 
     dialogRef.disableClose = true;
@@ -39,7 +41,7 @@ export class DeployNotationComponent implements OnInit {
     var formData: any = new FormData();
     formData.append('file', this.data.dataKey)
     formData.append('deploymentName', this.depName)
-    formData.append('tenantID', this.tenantId)
+    formData.append('tenantID', selecetedTenant)
     formData.append('enableDuplicateFilter', 'true')
     formData.append('deploymentSource', this.data.fileNme)
     //formData.append('content-type', ' text/xml')
@@ -53,6 +55,14 @@ export class DeployNotationComponent implements OnInit {
         let response:any = res;
         if(response.status == 'success' || response.status == 'Success'){
         this.deploy_success = true;
+        if(response.definitionId !=''){
+          let obj={startprocess:true,definationId:response.definitionId}
+          this.dt.deployNotationValue(obj);
+        }else{
+          let obj={startprocess:false,definationId:response.definitionId}
+          this.dt.deployNotationValue(obj);
+        }
+        
         } else{
           Swal.fire(
             'Oops!',

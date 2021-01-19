@@ -6,6 +6,32 @@
   overflow: hidden !important;
 }
 
-.mat-tab-body {  /* Removing the scrollbar from the Tabs card */
-  overflow-y: hidden !important;
+
+/*
+::ng-deep mat-tab-body {
+  overflow-y: unset !important;
+}
+
+::ng-deep .mat-tab-body-content
+{
+
+  overflow: hidden ! important;
+}
+::ng-deep mat-tab-body
+{
+  overflow-y: unset !important;
+}*/
+
+::ng-deep .tabs .mat-tab-label{
+  height :31px !important;
+  padding: 0 6px !important;
+  min-width: 10px !important;
+}
+
+::ng-deep .tabs .mat-ink-bar{
+  min-width:10px !important;
+}
+
+::ng-deep .mat-tab-label-active, .mat-tab-label, .mat-tab-label {
+  color:black !important;
 }

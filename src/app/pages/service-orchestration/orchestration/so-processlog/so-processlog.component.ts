@@ -52,19 +52,15 @@ export class SoProcesslogComponent implements OnInit {
     this.logresponse=[];
     this.rest.getProcesslogsdata(this.processId).subscribe(data =>{
         this.logresponse = data;
-        console.log(this.logresponse);
         if(this.logresponse.length >0)
         {
           this.respdata1 = false;
-          console.log(this.respdata1)
         }else
         {
           this.respdata1 = true;
-          console.log(this.respdata1);
         }
         this.logresponse.forEach(rlog=>{
           logbyrunidresp1=rlog;
-          console.log(logbyrunidresp1);
           logbyrunidresp1["processStartDate"]=logbyrunidresp1.processStartTime;
           logbyrunidresp1["processEndDate"]=logbyrunidresp1.processEndTime;
           logbyrunidresp1.processStartTime=logbyrunidresp1.processStartTime;
@@ -72,12 +68,10 @@ export class SoProcesslogComponent implements OnInit {
 
           resplogbyrun1.push(logbyrunidresp1)
         });
-        console.log(resplogbyrun1);
         this.runidresponse = resplogbyrun1;
 
         this.runidresponse.sort((a,b) => a.processRunId > b.processRunId ? -1 : 1);
         this.dataSourcep1 =  new MatTableDataSource(this.runidresponse);
-        console.log(this.dataSourcep1);
         this.dataSourcep1.sort=this.sortp1;
         this.dataSourcep1.paginator=this.paginatorp1;
         document.getElementById("viewlogid1").style.display = "block";
@@ -113,22 +107,17 @@ export class SoProcesslogComponent implements OnInit {
     let logbyrunidresp: any;
     let resplogbyrun = [];
     let processId = this.logresponse.find(data =>data.processRunId == processRunId).processId;
-    console.log(processId);
     this.rest.getprocessruniddata(processId,processRunId).subscribe(data =>{
       this.runidresponse = data;
-      console.log(this.runidresponse);
       if(this.runidresponse.length >0)
         {
           this.respdata2 = false;
-          console.log(this.respdata2)
         }else
         {
           this.respdata2 = true;
-          console.log(this.respdata2);
         }
       this.runidresponse.forEach(rlog=>{
         logbyrunidresp=rlog;
-        console.log(logbyrunidresp);
        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
         logbyrunidresp["end_date"]=logbyrunidresp.end_time;
         logbyrunidresp.start_time=logbyrunidresp.start_time;
@@ -136,23 +125,18 @@ export class SoProcesslogComponent implements OnInit {
 
         resplogbyrun.push(logbyrunidresp)
       });
-      console.log(resplogbyrun);
       this.runidresponse = resplogbyrun;
       this.dataSourcep2 = new MatTableDataSource(this.runidresponse);
       this.dataSourcep2.sort=this.sortp2;
       this.dataSourcep2.paginator=this.paginatorp2;
       document.getElementById("viewlogid1").style.display="none";
       document.getElementById("plogrunid").style.display="block";
-      console.log(this.dataSourcep2);
-
-
     });
     //console.log(processRunId);
   }
 
   public selected_runid:any;
   ViewlogByrunid(runid){
-    console.log(runid);
     this.selected_runid=runid;
     let responsedata:any=[];
     let logbyrunidresp1:any;
@@ -164,13 +148,10 @@ export class SoProcesslogComponent implements OnInit {
       if(responsedata.length >0)
       {
         this.respdata2 = false;
-        console.log(this.respdata3)
       }else
       {
         this.respdata2 = true;
-        console.log(this.respdata3);
       }
-      console.log(responsedata);
       responsedata.forEach(rlog=>{
         logbyrunidresp1=rlog;
         logbyrunidresp1["start_date"]=logbyrunidresp1.start_time;
@@ -180,10 +161,8 @@ export class SoProcesslogComponent implements OnInit {
 
         resplogbyrun1.push(logbyrunidresp1)
       });
-      console.log(resplogbyrun1);
       //this.logflag=true;
       this.dataSourcep3 = new MatTableDataSource(resplogbyrun1);
-      console.log(this.dataSourcep3);
       this.dataSourcep3.sort=this.sortp3;
       this.dataSourcep3.paginator=this.paginatorp3;
       document.getElementById("plogrunid").style.display="none";
