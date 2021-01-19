@@ -16,7 +16,7 @@
                     </div>
                 </nav>
             </div>
-            <div [id]="'output_'+node.id" style="display:none" class="node_tooltip">
+            <div [id]="'output_'+node.id" *ngIf="finalbot.botId!=undefined && node.selectedNodeTask=='Output Box' && (node | Checkoutputbox : finalbot) " style="display:none" class="node_tooltip">
                 <nav id="context-menu" class="context-menu contextmenu">
                     <div class="context-menu1">
                         <div class="context-menu__item">

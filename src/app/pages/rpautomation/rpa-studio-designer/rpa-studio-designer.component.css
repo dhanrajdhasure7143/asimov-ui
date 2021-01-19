@@ -31,3 +31,7 @@
 ::ng-deep .tabs .mat-ink-bar{
   min-width:10px !important;
 }
+
+::ng-deep .mat-tab-label-active, .mat-tab-label, .mat-tab-label {
+  color:black !important;
+}

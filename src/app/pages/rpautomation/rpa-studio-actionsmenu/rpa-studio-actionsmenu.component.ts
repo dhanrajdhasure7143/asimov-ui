@@ -218,9 +218,11 @@ export class RpaStudioActionsmenuComponent implements OnInit {
       {
         checkbotres.subscribe(data=>{
         this.savebotrespose=data;
+
         this.rpa_studio.spinner.hide();
         if(this.savebotrespose.botId!=undefined)
         {
+          this.botState=data;
           Swal.fire("Bot saved successfully !!","","success");
           this.startbot=true;
           this.pausebot=false;
@@ -257,6 +259,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
           {
             //this.childBotWorkspace.successCallBack(data);
             this.savebotrespose=data;
+            this.botState=data;
             this.selectedversion=response.version;
             this.rpa_studio.spinner.hide();
             this.getVersionlist();
