@@ -78,8 +78,15 @@ export class SoBotManagementComponent implements OnInit {
   ngOnInit() {
     this.dt.changeHints(this.hints.sobotMhints);
     this.spinner.show();
-    this.getCategoryList();
-    this.getallbots();
+    this.rest.getCategoriesList().subscribe(data=>{
+      let catResponse : any;
+      catResponse=data;
+      this.categaoriesList=catResponse.data;
+    });
+    setTimeout(()=> {
+      this.getallbots();
+      }, 550);
+    //this.getallbots();
     this.getautomatedtasks();
     this.getprocessnames();
     this.popup=false;
@@ -360,13 +367,7 @@ export class SoBotManagementComponent implements OnInit {
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
       this.dataSource1.filter = filterValue;
     }
-  getCategoryList(){
-    this.rest.getCategoriesList().subscribe(data=>{
-      let catResponse : any;
-      catResponse=data
-      this.categaoriesList=catResponse.data;
-    });
-  }
+  
 
 
 

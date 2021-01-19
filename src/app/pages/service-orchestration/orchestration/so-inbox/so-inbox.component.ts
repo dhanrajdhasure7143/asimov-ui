@@ -81,15 +81,27 @@ export class SoInboxComponent implements OnInit {
       "processRunId":runId,
       "envId": envId
     }
+
     this.rest.updateInboxstatus(obj).subscribe(data =>
       {
+        if(obj.status == "Approved"){
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Task Status Updated Successfully !!',
+          title: 'Task Status Approved Successfully !!',
           showConfirmButton: false,
           timer: 2000
-        })
+        });
+      }
+      if(obj.status == "Rejected"){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: 'Task Status Rejected Successfully !!',
+          showConfirmButton: false,
+          timer: 2000
+        });
+      }
         /* let res:any= data;
        Swal.fire(res.status, "","success")*/
        this.getallbots();
