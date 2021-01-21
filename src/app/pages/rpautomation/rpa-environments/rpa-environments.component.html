@@ -258,10 +258,11 @@
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="environmentName">Name<span style="color:red">*</span></label>
-                            <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
-                            <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
-
-('environmentName').touched" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
+                            <input type="text" maxlength="51" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
+                            <span *ngIf="(insertForm.get('environmentName').invalid && insertForm.get('environmentName').touched) && !insertForm.controls['environmentName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
+                            <div *ngIf="insertForm.controls['environmentName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
                         </div>
                         <div class="col-md-3 formelement ">
                             <label for="environmentType">Type<span style="color:red">*</span></label>
@@ -282,50 +283,73 @@ placeholder="Enter Environment Type" >-->
                         </div>
                         <div class="col-md-3 formelement">
                             <label for="agentPath">Agent Path<span style="color:red">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
-                            <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
+                            <input type="text" maxlength="51" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
+                            <span *ngIf="(insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched) && !insertForm.controls['agentPath'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
 
+                            <div *ngIf="insertForm.controls['agentPath'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
                         </div>
                         <div class="col-md-3 formelement">
                             <label for="hostAddress"> IP Address/Host<span style="color:red">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                            <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get
+                            <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+                            <span *ngIf="(insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched) && !insertForm.controls['hostAddress'].hasError('maxlength') && !insertForm.controls['hostAddress'].hasError('pattern')" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
 
-('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+                            <!--<div *ngIf="insertForm.controls['hostAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>-->
+                            <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && !insertForm.controls['hostAddress'].hasError('maxlength')) && insertForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">
+                                Invalid IP Address format
+                            </div>
+                            <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && insertForm.controls['hostAddress'].hasError('maxlength'))" style="color:red" class="fa fa-info-circle errspan">
+                                Invalid IP Address format
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="userName">Username<span style="color:red">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
-                            <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+                            <input type="text" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
+                            <span *ngIf="(insertForm.get('username').invalid && insertForm.get('username').touched) && !insertForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+
+                            <div *ngIf="insertForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
 
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for="password">Password<span style="color:red">*</span></label>
-                            <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                            <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
                             <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
                             <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                            <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+
+                            <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+
+                            <div *ngIf="insertForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for="connectionType">Connection Type<span style="color:red">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
-                            <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
-
-('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+                            <input type="text" maxlength="51" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
+                            <span *ngIf="(insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched) && !insertForm.controls['connectionType'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+                            <div *ngIf="insertForm.controls['connectionType'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
 
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for="portNumber">Port<span style="color:red">*</span></label>
-                            <input type="text" maxlength="6" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
+                            <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
 
-                            <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
-
-('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+                            <span *ngIf="(insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched) && !insertForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+                        
+                            <div *ngIf="insertForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 6 characters
+                            </div>
 
                         </div>
 
@@ -361,8 +385,11 @@ placeholder="Enter Environment Type" >-->
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="environmentName">Name<span style="color:red">*</span></label>
-                            <input type="text" class="form-control" maxlength="50" formControlName="environmentName" placeholder="Enter Name">
-                            <span *ngIf="updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
+                            <input type="text" class="form-control" maxlength="51" formControlName="environmentName" placeholder="Enter Name">
+                            <span *ngIf="(updateForm.get('environmentName').invalid && updateForm.get('environmentName').touched) && !updateForm.controls['environmentName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
+                            <div *ngIf="updateForm.controls['environmentName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
 
                         </div>
                         <div class="col-md-3 formelement ">
@@ -385,65 +412,73 @@ placeholder="Enter Environment Type" >-->
                         <div class="col-md-3 formelement">
 
                             <label for="agentPath">Agent Path<span style="color:red">*</span></label>
-                            <input type="text" class="form-control" maxlength="50" formControlName="agentPath" placeholder="Enter
+                            <input type="text" class="form-control" maxlength="51" formControlName="agentPath" placeholder="Enter Agent Path">
+                            <span *ngIf="(updateForm.get('agentPath').invalid && updateForm.get('agentPath').touched) && !updateForm.controls['agentPath'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
 
-Agent Path">
-                            <span *ngIf="updateForm.get('agentPath').invalid && updateForm.get
-
-('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
+                            <div *ngIf="updateForm.controls['agentPath'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
 
                         </div>
                         <div class="col-md-3 formelement">
 
                             <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
-                            <input type="text" class="form-control" maxlength="50" formControlName="hostAddress" placeholder="Enter
+                            <input type="text" class="form-control" maxlength="51" formControlName="hostAddress" placeholder="Enter IP Address/Host">
+                            <span *ngIf="(updateForm.get('hostAddress').invalid && updateForm.get('hostAddress').touched) && !updateForm.controls['hostAddress'].hasError('maxlength') && !updateForm.controls['hostAddress'].hasError('pattern')" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
 
-IP Address/Host">
-                            <span *ngIf="updateForm.get('hostAddress').invalid && updateForm.get
-
-('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+                            <!--<div *ngIf="updateForm.controls['hostAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>-->
+                            <div *ngIf="(updateForm.controls['hostAddress'].hasError('pattern') && !updateForm.controls['hostAddress'].hasError('maxlength')) && updateForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">
+                                Invalid IP Address format
+                            </div>
+                            <div *ngIf="(updateForm.controls['hostAddress'].hasError('pattern') && updateForm.controls['hostAddress'].hasError('maxlength'))" style="color:red" class="fa fa-info-circle errspan">
+                                Invalid IP Address format
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="userName">Username<span style="color:red">*</span></label>
-                            <input type="text" class="form-control" maxlength="50" formControlName="username" placeholder="Enter
+                            <input type="text" class="form-control" maxlength="51" formControlName="username" placeholder="Enter Username">
+                            <span *ngIf="(updateForm.get('username').invalid && updateForm.get('username').touched) && !updateForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
 
-Username">
-                            <span *ngIf="updateForm.get('username').invalid && updateForm.get
-
-('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
-
+                            <div *ngIf="updateForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for="password">Password<span style="color:red">*</span></label>
-                            <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" maxlength="50" formControlName="password" placeholder="Enter
-
-Password">
+                            <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" maxlength="51" formControlName="password" placeholder="Enter Password">
                             <span *ngIf="passwordtype2==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype2 =!passwordtype2"></span>
                             <span *ngIf="passwordtype2==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype2 =!passwordtype2"></span>
 
-                            <span *ngIf="updateForm.get('password').invalid && updateForm.get
+                            <span *ngIf="(updateForm.get('password').invalid && updateForm.get('password').touched) && !updateForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
 
-('password').touched" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+                            <div *ngIf="updateForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for=" connectionType">Connection Type<span style="color:red">*</span></label>
-                            <input type="text" maxlength="50" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type" readonly>
-                            <span *ngIf="updateForm.get('connectionType').invalid && updateForm.get
-
-('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+                            <input type="text" maxlength="51" class="form-control" pattern="[a-zA-Z ]*" formControlName="connectionType"  placeholder="Enter Connection Type" readonly>
+                            <span *ngIf="(updateForm.get('connectionType').invalid && updateForm.get('connectionType').touched) && !updateForm.controls['connectionType'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+                            <div *ngIf="updateForm.controls['connectionType'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
 
                         </div>
 
                         <div class="col-md-3 formelement">
                             <label for="portNumber">Port<span style="color:red">*</span></label>
-                            <input type="text" maxlength="6" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
-                            <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
-
-('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+                            <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">  
+                            <span *ngIf="(updateForm.get('portNumber').invalid && updateForm.get('portNumber').touched) && !updateForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+                        
+                            <div *ngIf="updateForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 6 characters
+                            </div>
 
                         </div>
                     </div>
@@ -452,8 +487,9 @@ Password">
                             <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
                         </div>
                     </div>
-                    <input type="button" class="btn btn-primary" value="Modify" (click)="updateEnvironment()">
-                    <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')">
+                    <input type="button" class="btn btn-primary" value="Modify" (click)="updateEnvironment()" [disabled]="updateForm.invalid || submitted">
+                    <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')" [disabled]="updateForm.invalid">
+                    <input type="button" class="btn btn-primary" value="Reset" (click)="resetupdateEnvForm()">
                 </form>
             </div>
         </div>

@@ -222,10 +222,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   resetDBForm(){
     this.insertdbForm.reset();
     this.insertdbForm.get("dataBaseType").setValue("");
+    this.insertdbForm.get("activeStatus").setValue(true);
   }
 
   resetupdateDBForm(){
     this.updatedbForm.reset();
+    this.updatedbForm.get("dataBaseType").setValue("");
+    this.updatedbForm.get("activeStatus").setValue(true);
   }
   
   dbconnectionupdate(){
@@ -273,8 +276,10 @@ updatedbdata()
     {
       if(data.activeStatus==7){
         this.toggle=true;
+        this.updatedbForm.get("activeStatus").setValue(true);
       }else{
         this.toggle=false;
+        this.updatedbForm.get("activeStatus").setValue(false);
       }
       if(data.connectionId==this.dbupdateid)
       {
