@@ -104,6 +104,7 @@
 }
 .nodes{
   padding:10px ! important;
+  position: relative;
 }
 
 

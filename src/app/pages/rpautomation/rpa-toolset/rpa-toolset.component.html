@@ -15,7 +15,7 @@
         <div #section class="section">
           <div class="nodes"*ngFor="let node of templateNodes | filterBy: userFilter">
     <!-- | slice:0:show;  let i=index-->
-              <div class=""title="{{node.name}}"[dndDraggable]="node">
+              <div class=""tooltip="{{node.name}}" placement="bottom" [dndDraggable]="node">
                 <span>
                   <img [src]="node.path"class="con-img">
                 </span>
