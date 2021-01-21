@@ -100,3 +100,12 @@
 .fontAwesome {
   font-family: Helvetica, 'FontAwesome', sans-serif;
 }
+
+
+::ng-deep .tooltip-inner {
+
+  background-color:black;
+  margin-left:-20px !important;
+  color : white;
+  position:fixed !important;
+}
