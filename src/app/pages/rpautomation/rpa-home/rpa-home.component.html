@@ -13,7 +13,7 @@
                 <h6 class="rpa-home-btn-title">Create</h6>
               </button>
             </div>-->
-            <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;">
+            <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot">
                 <img src="../../../../assets/images/RPA/create.svg"style="height:80px;">
                 <!--<h4 style="font-weight: 500;line-height: 1.1;">Create Bot</h4>
                 <h5 style="color:gray">Click to Create New Bot</h5>-->
@@ -37,7 +37,7 @@
           <h6 class="rpa-home-btn-title">Configurations</h6>
         </button>
             </div>-->
-            <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible">
+            <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration">
                 <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;">
                <!-- <h4 style="font-weight: 500;line-height: 1.1;">Configutions</h4>
                 <h5 style="color:gray">Click to View Bot Configurations</h5>-->
@@ -48,7 +48,7 @@
         </div>
 
     </div>
-    <div class="col-md-9" style="padding-right:25px;">
+    <div class="col-md-9" style="padding-right:25px;" *ngIf="this.isButtonVisible || showWorkspace">
             <div class="mat-elevation-z8 rpa-home-bots" id="botdetails-Home" style=" border-radius: 4px;">
 
 

@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit {
   selectedIndex: number=0;
   error: string;
   newAccessToken:any;
-
+  customUserRole: any;
+  
   constructor(private router: Router, private dt:DataTransferService, private rpa: RestApiService, private route: ActivatedRoute, private hints:PagesHints) {
 
     this.route.queryParams.subscribe(params => {
@@ -86,6 +87,73 @@ export class HomeComponent implements OnInit {
       // ];
 
      }
+
+     this.rpa.getCustomUserRole(2).subscribe(role=>{
+
+      this.customUserRole=role.message[0].permission;
+      var test = false;
+
+      this.customUserRole.forEach(element => {
+        if(!test){
+
+        if(element.permissionName.includes('RPA_Bot_Create') ||element.permissionName.includes('RPA_Bot_Configuration_full')
+        || element.permissionName.includes('RPA_Workspace_full') || element.permissionName.includes('RPA_Environmet_full') 
+        || element.permissionName.includes('RPA_DbConnection_full')){
+        console.log(element.permissionName)
+          this.dataArr.push({"id":"RPABox", "img":"assets/images/Group 348.svg", "title":"RPA", "link":"rpautomation/home"})
+        test = true;
+        }
+      }
+          });
+        
+          
+        })
+        this.rpa.getCustomUserRole(2).subscribe(role=>{
+          this.customUserRole=role.message[0].permission;
+          var test = false;
+        this.customUserRole.forEach(element => {
+          if(!test){
+          if(element.permissionName.includes('PI_upload_full')
+          || element.permissionName.includes('PI_Workspace_full') || element.permissionName.includes('PI_Process_Graph_full')){
+          console.log(element.permissionName)
+            this.dataArr.push( {"id":"PIBox", "img":"assets/images/Group 214.svg", "title":"Process Intelligence", "link":"processIntelligence/upload"})
+            test = true;
+          }
+          }
+            });
+           
+          })
+          this.rpa.getCustomUserRole(2).subscribe(role=>{
+            this.customUserRole=role.message[0].permission;
+            var test = false;
+            this.customUserRole.forEach(element => {
+              if(!test){
+              if(element.permissionName.includes('Bpmn_Home_full')
+              || element.permissionName.includes('Bpmn_Studio_full')){
+                 console.log(element.permissionName)
+                  this.dataArr.push( {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"})
+                  test = true;
+                }
+              }
+                });
+              })
+
+              this.rpa.getCustomUserRole(2).subscribe(role=>{
+                this.customUserRole=role.message[0].permission;
+                var test = false;
+                this.customUserRole.forEach(element => {
+                  if(!test){
+                  if(element.permissionName.includes('SO_Dashboard_full')
+                  || element.permissionName.includes('SO_Orchestration_full')|| element.permissionName.includes('SO_Bot_Management_full')
+                  || element.permissionName.includes('SO_Inbox_full')){
+                     console.log(element.permissionName)
+                      this.dataArr.push({"id":"SOBox", "img":"assets/images/Group 216.1.svg", "title":"Service Orchestration", "link":"serviceOrchestration/home"})
+                      test = true;
+                    }
+                  }
+                    });
+                  })
+
      if(this.userRole.includes('Data Architect') || this.userRole.includes('Process Modeler') || this.userRole.includes('Automation Designer')){
       if(this.dataArr.filter(f=>f.id === 'BPSBox' ).length <= 0){
         this.dataArr.push( {"id":"BPSBox", "img":"assets/images/Group 215.svg", "title":"Business Process Studio", "link":"businessProcess/home"})

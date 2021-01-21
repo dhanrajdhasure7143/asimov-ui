@@ -631,4 +631,8 @@ export class RestApiService{
     startBpmnProcess(body){
       return this.http.post("/deployprocess/start-process",body);
     }
+
+    getCustomUserRole(appID):Observable<any>{
+      return this.http.get<any>('/authorizationservice/api/v1/user/role/'+appID,httpOptions)
+    }
 }
