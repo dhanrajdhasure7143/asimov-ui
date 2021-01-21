@@ -1683,7 +1683,8 @@ filterOverlay(){
             this.model2 = this.flowchartData(this.model1);
             this.startArray=[];
             this.endArray=[];
-            let fullModel2=this.model2
+            let fullModel2=this.model2;
+            this.getselectedVariantList(object.variants);
             fullModel2.forEach(element => {
               if(element.from=="Start"){
                 this.startArray.push(element.to)
@@ -1727,7 +1728,7 @@ filterOverlay(){
     }
   }
 
-  getselectedVariantList(e) {
+  getselectedVariantList(e?) {
     let filtered_Variants = [];
     let decryptedVariants: any = {};
     if (e.length == 0) {
@@ -1786,14 +1787,14 @@ filterOverlay(){
       }
       }
     }
-      this.rest.getVariantGraphCombo(reqObj).subscribe(res => {
-      this.variantCombo = res
-        this.model1 = this.variantCombo.data[0].nodeDataArraycase;
-        this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
-        this.nodeAlignment();
-        this.model2 = this.flowchartData(this.model1);
-        this.linkCurvinessGenerate();
-      })
+      // this.rest.getVariantGraphCombo(reqObj).subscribe(res => {
+      // this.variantCombo = res
+      //   this.model1 = this.variantCombo.data[0].nodeDataArraycase;
+      //   this.filterPerformData = this.variantCombo.data[0].nodeDataArraycase;
+      //   this.nodeAlignment();
+      //   this.model2 = this.flowchartData(this.model1);
+      //   this.linkCurvinessGenerate();
+      // })
 
       /**
     * BPMN Boolean Variables
