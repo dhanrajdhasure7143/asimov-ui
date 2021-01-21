@@ -47,7 +47,12 @@ import { NgxSpinnerService } from "ngx-spinner";
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
     isDtInitialized:boolean = false;
-    
+    customUserRole: any;
+    enableEnvironment: boolean =false;
+    enabledbconnection: boolean=false;
+    public isButtonVisible = false;
+    public userRole:any = [];
+
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
@@ -99,7 +104,18 @@ import { NgxSpinnerService } from "ngx-spinner";
     document.getElementById("createenvironment").style.display='none';
     document.getElementById("update-popup").style.display='none';
     
-
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer');
+    this.api.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('RPA_Environmet_full')){
+          this.enableEnvironment=true;
+        } 
+      }
+      );
+        })
   }
 
  async getallData()

@@ -43,6 +43,10 @@ export class RpaHomeComponent implements OnInit {
   public selectedEnvironment:any='';
   public environments:any=[];
   public categaoriesList:any=[];
+  customUserRole: any;
+  enableConfiguration: boolean=false;
+  enablecreatebot: boolean=false;
+  showWorkspace: boolean=false;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -92,7 +96,19 @@ export class RpaHomeComponent implements OnInit {
 
     );
 
-
+    this.rest.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('RPA_Bot_Configuration_full')){
+          this.enableConfiguration=true;
+        } if(element.permissionName.includes('RPA_Bot_Create')){
+          this.enablecreatebot=true;
+        }if(element.permissionName.includes('RPA_Workspace_full')){
+          this.showWorkspace=true;
+        }
+      }
+          );
+        })
 
 
 

@@ -67,7 +67,13 @@ export class UploadComponent implements OnInit {
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   displayedColumns: string[] = ["piId","createdTime","piName","categoryName" ,"status","action"];
-
+  customUserRole: any;
+  enableuploadbuttons: boolean=false;
+  enableWorkspace: boolean=false;
+  showprocessgraph: boolean=false;
+  userRole: any;
+  public isButtonVisible = false;
+  
   constructor(private router: Router,
     private dt: DataTransferService,
     private rest: RestApiService,
@@ -87,6 +93,24 @@ export class UploadComponent implements OnInit {
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
     this.getAllCategories();
+
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Analyst');
+    this.rest.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('PI_upload_full')){
+          this.enableuploadbuttons=true;
+        } if(element.permissionName.includes('PI_Workspace_full')){
+          this.enableWorkspace=true;
+        }
+        // if(element.permissionName.includes('PI_Process_Graph_full')){
+        //   this.showprocessgraph=true;
+        // }
+      }
+          );
+        })
   }
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
