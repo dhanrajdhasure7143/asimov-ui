@@ -47,7 +47,12 @@ import { NgxSpinnerService } from "ngx-spinner";
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
     isDtInitialized:boolean = false;
-    
+    customUserRole: any;
+    enableEnvironment: boolean =false;
+    enabledbconnection: boolean=false;
+    public isButtonVisible = false;
+    public userRole:any = [];
+
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
@@ -99,7 +104,18 @@ import { NgxSpinnerService } from "ngx-spinner";
     document.getElementById("createenvironment").style.display='none';
     document.getElementById("update-popup").style.display='none';
     
-
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer');
+    this.api.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('RPA_Environmet_full')){
+          this.enableEnvironment=true;
+        } 
+      }
+      );
+        })
   }
 
  async getallData()
@@ -184,6 +200,15 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.insertForm.get("connectionType").setValue("SSH");
     this.insertForm.get("environmentType").setValue("");
     this.insertForm.get("activeStatus").setValue(true);
+  }
+
+  resetupdateEnvForm(){
+    this.updateForm.reset();
+    
+    this.updateForm.get("portNumber").setValue("22");
+    this.updateForm.get("connectionType").setValue("SSH");
+    this.updateForm.get("environmentType").setValue("");
+    this.updateForm.get("activeStatus").setValue(true);
   }
 
   async testConnection(data){
@@ -322,10 +347,13 @@ import { NgxSpinnerService } from "ngx-spinner";
       {
         if(data.activeStatus==7){
           this.toggle=true;
+          this.updateForm.get("activeStatus").setValue(true);
         }else{
           this.toggle=false;
+          this.updateForm.get("activeStatus").setValue(false);
         }
         this.updateenvdata=data;
+        console.log(this.updateenvdata);
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);

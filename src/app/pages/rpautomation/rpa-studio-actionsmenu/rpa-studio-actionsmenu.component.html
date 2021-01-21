@@ -12,6 +12,7 @@
 
 
   </div>
+
   <div class="col-md-1 " style="display:flex">
 
     <div class="toolset text-left" >
@@ -111,29 +112,40 @@
               </span>
             </div>
           </div>
-          <div class="nodes"  >
+          <div class="nodes" tooltip="Bot Store" placement="bottom" dropdown>
 
-            <div class="clickable  text-primary" placement="bottom" tooltip="Bot Store" >
-              <span  [matMenuTriggerFor]="beforeMenu">
+            <button class="clickable  text-primary dropdown-toggle" id="bot-store-menu" dropdownToggle type="button"
+            aria-controls="bot-store" >
+              <span  >
                 <i class="fa fa-robot text-primary"></i>
               </span>
 
-            </div>
-            <mat-menu #beforeMenu="matMenu" xPosition="before">
-              <div *ngFor="let bot of predefinedbotsData" (click)="loadpredefinedbot(bot.botId)"  mat-menu-item>{{bot.botName}}</div>
-            </mat-menu>
+            </button>
+
+            <ul id="bot-store" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
+                <li role="menuitem" class="clickable" *ngFor="let bot of predefinedbotsData"  >
+                  <a   class="clickable"  (click)="loadpredefinedbot(bot.botId)"> {{bot.botName}}</a></li>
+            </ul>
+
           </div>
-          <div class="nodes" placement="bottom" tooltip="Environments">
-            <div class="clickable  text-primary" >
-              <span [matMenuTriggerFor]="afterMenu">
+          <div class="nodes" dropdown placement="bottom" tooltip="Environments">
+            <button class="clickable  text-primary" class="clickable  text-primary dropdown-toggle" id="bot-store-menu" dropdownToggle type="button"
+            aria-controls="environments" >
+              <span >
                 <i class="fa fa-desktop"></i>
               </span>
-              <mat-menu #afterMenu="matMenu" xPosition="before" style="max-height: 100px;overflow: scroll;">
-                <div mat-menu-item *ngFor="let env of environment"  (click)="$event.stopPropagation();"><input type="checkbox" [checked]="env.checked==true" (change)="checkuncheckenv(env.environmentId)" >&nbsp; {{env.environmentName}}</div>
-                <div mat-menu-item  (click)="create_env();"><i class="fa fa-plus"></i>&nbsp;New</div>
 
-              </mat-menu>
-            </div>
+            </button>
+            <ul id="environments" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
+              <li role="menuitem" class="clickable"  *ngFor="let env of environment" >
+                <input type="checkbox" [checked]="env.checked==true" (change)="checkuncheckenv(env.environmentId)" >
+                &nbsp; {{env.environmentName}}
+              </li>
+              <li role="menuitem" class="clickable"  >
+                <a class="clickable"  (click)="create_env();"><i class="fa  fa-plus"></i>&nbsp;&nbsp;New</a>
+              </li>
+            </ul>
+
           </div>
           <div class="nodes">
             <div class="clickable  text-primary" *ngIf="childBotWorkspace!=undefined" >
@@ -209,8 +221,8 @@
         </div>
 
 
-    </div>
-    <div>
+  </div>
+<div>
 
 
       <select class="form-control" [(ngModel)]="selectedversion" (change)="switchversion($event.target.value)">
@@ -245,7 +257,7 @@
       </div>
     </div>
 </div>
-
+</div>
 
 
 

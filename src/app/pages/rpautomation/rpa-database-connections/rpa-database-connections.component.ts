@@ -37,6 +37,10 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     public DBdeleteflag:Boolean;
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
+    customUserRole: any;
+    enableDbconnection: boolean=false;
+    userRole: any;
+    public isButtonVisible = false;
     
     constructor(private api:RestApiService, 
       private router:Router,
@@ -84,6 +88,20 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     this.getallDBConnection();
     this.passwordtype1=false;
     this.passwordtype2=false;
+
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer');
+    
+    this.api.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('RPA_DbConnection_full')){
+          this.enableDbconnection=true;
+        } 
+      }
+      );
+        })
   }
 
   async getallDBConnection(){
@@ -222,10 +240,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   resetDBForm(){
     this.insertdbForm.reset();
     this.insertdbForm.get("dataBaseType").setValue("");
+    this.insertdbForm.get("activeStatus").setValue(true);
   }
 
   resetupdateDBForm(){
     this.updatedbForm.reset();
+    this.updatedbForm.get("dataBaseType").setValue("");
+    this.updatedbForm.get("activeStatus").setValue(true);
   }
   
   dbconnectionupdate(){
@@ -273,8 +294,10 @@ updatedbdata()
     {
       if(data.activeStatus==7){
         this.toggle=true;
+        this.updatedbForm.get("activeStatus").setValue(true);
       }else{
         this.toggle=false;
+        this.updatedbForm.get("activeStatus").setValue(false);
       }
       if(data.connectionId==this.dbupdateid)
       {

@@ -11,6 +11,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import { NotifierService } from 'angular-notifier';
 import {NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import { RpaToolsetComponent } from '../rpa-toolset/rpa-toolset.component';
 
 @Component({
   selector: 'app-rpa-studio-actionsmenu',
@@ -89,9 +90,16 @@ export class RpaStudioActionsmenuComponent implements OnInit {
     ceil: 8,
     vertical: true
   };
-  constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
-    private rpa_tabs:RpaStudioDesignerComponent, private rpa_studio:RpaStudioComponent,
-    private notifier: NotifierService, private calender:NgbCalendar, private formBuilder: FormBuilder,
+  constructor(
+    private fb : FormBuilder,
+    private rest : RestApiService,
+    private http:HttpClient,
+    private rpa_tabs:RpaStudioDesignerComponent,
+    private rpa_toolset:RpaToolsetComponent,
+    private rpa_studio:RpaStudioComponent,
+    private notifier: NotifierService,
+    private calender:NgbCalendar,
+    private formBuilder: FormBuilder,
     ) {}
 
   ngOnInit() {
@@ -561,8 +569,8 @@ loadpredefinedbot(botId)
           id:this.childBotWorkspace.idGenerator(),
           name:nodename,
           selectedNodeTask:element.taskName,
-          path:this.rpa_studio.templateNodes.find(data=>data.name==nodename).path,
-          tasks:this.rpa_studio.templateNodes.find(data=>data.name==nodename).tasks,
+          path:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).path,
+          tasks:this.rpa_toolset.templateNodes.find(data=>data.name==nodename).tasks,
           x:j+'px',
           y:"10px",
       }
