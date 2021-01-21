@@ -67,9 +67,9 @@ export class RpaStudioComponent implements OnInit {
     this.show = 8;
 
     this.insertbot=this.formBuilder.group({
-      botName:["", Validators.required],
+      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
       botDepartment:["", Validators.required],
-      botDescription:[""],
+      botDescription:["", Validators.compose([Validators.required, Validators.maxLength(500)])],
       botType:["", Validators.required],
       taskId:[""],
       predefinedBot:["false"],

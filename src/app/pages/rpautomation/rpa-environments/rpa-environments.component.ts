@@ -186,6 +186,15 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.insertForm.get("activeStatus").setValue(true);
   }
 
+  resetupdateEnvForm(){
+    this.updateForm.reset();
+    
+    this.updateForm.get("portNumber").setValue("22");
+    this.updateForm.get("connectionType").setValue("SSH");
+    this.updateForm.get("environmentType").setValue("");
+    this.updateForm.get("activeStatus").setValue(true);
+  }
+
   async testConnection(data){
     this.spinner.show();
     let formdata:any;
@@ -322,10 +331,13 @@ import { NgxSpinnerService } from "ngx-spinner";
       {
         if(data.activeStatus==7){
           this.toggle=true;
+          this.updateForm.get("activeStatus").setValue(true);
         }else{
           this.toggle=false;
+          this.updateForm.get("activeStatus").setValue(false);
         }
         this.updateenvdata=data;
+        console.log(this.updateenvdata);
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
