@@ -16,8 +16,7 @@ import { FormGroup } from '@angular/forms';
           </span>
 
           <input *ngIf="!field.multiline && field.type!='password' && field.type!='textarea'" [minlength]="field.attributeMin" [maxlength]="field.attributeMax" (keydown)="stope($event)" autocomplete="off" [required]="field.required==true"  [value]="field.value" [attr.type]="field.type" [attr.placeholder]="field.placeholder" class="form-control"  [id]="field.name" [name]="field.name" [formControlName]="field.name+'_'+field.id">
-          <textarea [minlength]="field.attributeMin" [maxlength]="field.attributeMax" *ngIf="field.type=='textarea'  && field.type!='password'" autocomplete="off" [formControlName]="field.name" [id]="field.name" [required]="field.required==true"
-          rows="4" class="form-control" [placeholder]="field.placeholder">{{field.value}}</textarea>
+          <textarea [minlength]="field.attributeMin" [maxlength]="field.attributeMax" *ngIf="field.type=='textarea'  && field.type!='password'" autocomplete="off" [formControlName]="field.name+'_'+field.id" [id]="field.name" [required]="field.required==true" rows="4" class="form-control" [placeholder]="field.placeholder">{{field.value}}</textarea>
 
       </div>
     `,
