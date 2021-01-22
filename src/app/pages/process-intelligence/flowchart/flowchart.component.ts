@@ -1,6 +1,5 @@
 
 
-
 import { Component, OnInit, AfterViewInit,ViewChild,EventEmitter,ElementRef, Renderer2,Output ,HostListener} from '@angular/core';
 import { Options } from 'ng5-slider';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -212,7 +211,7 @@ isTimeChange:boolean=false;
         //setTimeout(() => {
            this.graphgenetaionInterval = setInterval(() => {
              this.onchangegenerategraphId(piId);
-           }, 40*1000);
+           }, 10*1000);
          // this.onchangegraphId(piId);
         //}, 1.5*60*1000);
       }
