@@ -97,13 +97,13 @@
         </div>-->
 
 
-        <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:50px"id="dragicons">
+        <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:50px"id="menuicons" class="menuicons_rpa">
     <!-- <button type="button"class="scroll top">
             <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
           </button> -->
 
 
-          <div class="nodes">
+          <div class="nodes ">
             <div class="clickable  text-primary" tooltip="Scheduler" placement="bottom" >
               <span>
                 <button class="text-center" (click)="openschedule()" >
@@ -149,7 +149,7 @@
           </div>
           <div class="nodes">
             <div class="clickable  text-primary" *ngIf="childBotWorkspace!=undefined" >
-              <button  placement="bottom" [disabled]="envflag==false && childBotWorkspace.finaldataobjects.length==0 " tooltip="Save Bot" (click)="saveBotFunAct()">
+              <button  placement="bottom" [disabled]="envflag==false && childBotWorkspace.finaldataobjects.length==0" tooltip="Save Bot" (click)="saveBotFunAct()">
                 <i class="fa fa-save"></i>
               </button>
             </div>

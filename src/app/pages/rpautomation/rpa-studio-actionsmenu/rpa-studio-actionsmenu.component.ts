@@ -239,7 +239,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
           let bottask:any=this.botState;
           this.getVersionlist();
           this.childBotWorkspace.uploadfile(this.finalenv);
-          if(bottask.taskId!=0)
+          if(bottask.taskId!=0 && bottask.taskId!=undefined)
           {
             this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
           }
@@ -367,7 +367,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
   getEnvironmentlist() {
     this.rest.listEnvironments().subscribe(data => {
       let response:any=data
-      if(response.errorMessaage==undefined)
+      if(response.errorMessage==undefined)
       {
         let environments:any=[];
         environments=response;
@@ -394,7 +394,6 @@ export class RpaStudioActionsmenuComponent implements OnInit {
       }
       else
       {
-        Swal.fire(response.errorMessage,"","error");
       }
   })
 }
