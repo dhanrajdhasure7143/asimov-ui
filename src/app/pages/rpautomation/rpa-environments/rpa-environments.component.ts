@@ -101,8 +101,8 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.dt.changeHints(this.hints.rpaenvhints);
     this.getallData();
     document.getElementById("filters").style.display='block';
-    document.getElementById("createenvironment").style.display='none';
-    document.getElementById("update-popup").style.display='none';
+    //document.getElementById("createenvironment").style.display='none';
+    //document.getElementById("update-popup").style.display='none';
     
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
