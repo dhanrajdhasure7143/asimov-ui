@@ -1,4 +1,4 @@
-import {Input,ViewChild,Output,EventEmitter, Component, OnInit } from '@angular/core';
+import {Input,ViewChild,Output,EventEmitter, Component, OnInit,  ChangeDetectorRef,AfterContentChecked } from '@angular/core';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup,Validators,FormBuilder } from '@angular/forms';
@@ -18,7 +18,7 @@ import { RpaToolsetComponent } from '../rpa-toolset/rpa-toolset.component';
   templateUrl: './rpa-studio-actionsmenu.component.html',
   styleUrls: ['./rpa-studio-actionsmenu.component.css']
 })
-export class RpaStudioActionsmenuComponent implements OnInit {
+export class RpaStudioActionsmenuComponent implements OnInit , AfterContentChecked{
 
   @Input('bot') public botState: any;
   @Input('toolset') public toolset: any;
@@ -100,6 +100,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
     private notifier: NotifierService,
     private calender:NgbCalendar,
     private formBuilder: FormBuilder,
+    private changeDetector:ChangeDetectorRef,
     ) {}
 
   ngOnInit() {
@@ -153,7 +154,9 @@ export class RpaStudioActionsmenuComponent implements OnInit {
   //   })
 
   // }
-
+  ngAfterContentChecked() : void {
+    this.changeDetector.detectChanges();
+}
 
   reset()
   {
@@ -239,7 +242,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
           let bottask:any=this.botState;
           this.getVersionlist();
           this.childBotWorkspace.uploadfile(this.finalenv);
-          if(bottask.taskId!=0)
+          if(bottask.taskId!=0 && bottask.taskId!=undefined)
           {
             this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
           }
@@ -367,7 +370,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
   getEnvironmentlist() {
     this.rest.listEnvironments().subscribe(data => {
       let response:any=data
-      if(response.errorMessaage==undefined)
+      if(response.errorMessage==undefined)
       {
         let environments:any=[];
         environments=response;
@@ -394,7 +397,6 @@ export class RpaStudioActionsmenuComponent implements OnInit {
       }
       else
       {
-        Swal.fire(response.errorMessage,"","error");
       }
   })
 }
