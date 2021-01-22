@@ -152,7 +152,7 @@ background-color: blue !important;
 
 .nodes .clickable button:disabled{
   background-color: white !important;
-  color:#75a8e2 !important;
+  color:grey !important;
 
 }
 ::ng-deep .mat-menu-panel{
