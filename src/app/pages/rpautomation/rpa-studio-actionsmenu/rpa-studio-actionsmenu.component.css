@@ -27,11 +27,6 @@
   font-size:22px !important;
 }
 
-.rpa-dropdown.dropdown-menu
-{
-  margin: -109px 0 0 !important;
-  min-width: 55px !important;
-}
 .download{
   position: absolute;
   top: auto !important;
@@ -99,6 +94,11 @@
   display: none;
 }
 
+
+.dropdown-menu::-webkit-scrollbar {
+  display: block;
+}
+
 .imageI{
   width: 100%;
 }
@@ -157,4 +157,11 @@ background-color: blue !important;
 }
 ::ng-deep .mat-menu-panel{
   max-height:200px !important;
+}
+
+
+
+.nodes .dropdown-menu{
+  max-height: 200px !important;
+  overflow:scroll;
 }
