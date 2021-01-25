@@ -85,6 +85,7 @@ export class UploadComponent implements OnInit {
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
+    document.getElementById("filters").style.display = "block";
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule("");
     this.xlsx_csv_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.csv,.xlsx,.xls';

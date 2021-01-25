@@ -61,6 +61,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   ngOnInit() {
     this.dt.changeHints(this.hints.soochestartionhints);
     this.spinner.show();
+    
     this.userRole = localStorage.getItem("userRole")
 
     if(this.userRole.includes('SuperAdmin')){
@@ -388,12 +389,14 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   getprocesslogs(){
     this.processId1 = this.selectedvalue;
+    document.getElementById("filters").style.display = "none";
     this.popup=true;
   }
 
   closepop()
   {
     this.popup=false;
+    document.getElementById("filters").style.display = "block";
   }
   reset_all()
   {
@@ -412,12 +415,14 @@ export class SoAutomatedTasksComponent implements OnInit {
       environment:this.selectedEnvironment,
       processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
     }
+    document.getElementById("filters").style.display = "none";
     this.schedulepopup=true;
   }
 
   closescheduler()
   {
     this.schedulepopup=false;
+    document.getElementById("filters").style.display = "block";
   }
 
 

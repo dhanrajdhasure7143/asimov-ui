@@ -44,6 +44,7 @@ export class BpsHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(){
+    document.getElementById("filters").style.display = "block";
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     if(this.userRole.includes('SuperAdmin')){
