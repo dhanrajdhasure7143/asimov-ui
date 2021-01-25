@@ -97,13 +97,13 @@
         </div>-->
 
 
-        <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:50px"id="dragicons">
+        <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:50px"id="menuicons" class="menuicons_rpa">
     <!-- <button type="button"class="scroll top">
             <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
           </button> -->
 
 
-          <div class="nodes">
+          <div class="nodes ">
             <div class="clickable  text-primary" tooltip="Scheduler" placement="bottom" >
               <span>
                 <button class="text-center" (click)="openschedule()" >
@@ -136,20 +136,20 @@
               </span>
 
             </button>
-            <ul id="environments" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
+            <ul id="environments" style="height:200px;overflow-y:scroll" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
               <li role="menuitem" class="clickable"  *ngFor="let env of environment" >
                 <input type="checkbox" [checked]="env.checked==true" (change)="checkuncheckenv(env.environmentId)" >
                 &nbsp; {{env.environmentName}}
               </li>
               <li role="menuitem" class="clickable"  >
-                <a class="clickable"  (click)="create_env();"><i class="fa  fa-plus"></i>&nbsp;&nbsp;New</a>
+                <span class="clickable"  (click)="create_env();"><i class="fa  fa-plus"></i>&nbsp;&nbsp;New</span>
               </li>
             </ul>
 
           </div>
           <div class="nodes">
             <div class="clickable  text-primary" *ngIf="childBotWorkspace!=undefined" >
-              <button  placement="bottom" [disabled]="envflag==false && childBotWorkspace.finaldataobjects.length==0 " tooltip="Save Bot" (click)="saveBotFunAct()">
+              <button  placement="bottom" [disabled]="envflag==false || childBotWorkspace.finaldataobjects.length==0" tooltip="Save Bot" (click)="saveBotFunAct()">
                 <i class="fa fa-save"></i>
               </button>
             </div>

@@ -1180,7 +1180,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           "botId": this.finalbot.botId,
           "version": this.finalbot.version,
           "viewType": this.SelectedOutputType,
-          "inputRefName": task.attributes[0].attrValue,
+          "inputRefName": task.attributes.find(item=>item.metaAttrId==135).attrValue,
         }
         this.rest.getoutputbox(postdata).subscribe(outdata => {
           this.outputboxresult = outdata;
