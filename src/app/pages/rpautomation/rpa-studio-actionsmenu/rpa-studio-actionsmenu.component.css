@@ -12,6 +12,10 @@
   color:blue;
 }
 
+.rpa-modal-content{
+  padding-bottom: 25px !important;
+}
+
 .pos-right{
   position: absolute !important;
   right:-50px !important;

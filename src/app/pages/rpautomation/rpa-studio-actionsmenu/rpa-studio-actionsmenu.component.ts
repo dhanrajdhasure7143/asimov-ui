@@ -453,6 +453,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
    viewlogdata(){
     this.childBotWorkspace.addsquences();
+    document.getElementById("filters").style.display = "none";
    let response: any;
    let log:any=[];
    this.logresponse=[];
@@ -545,11 +546,13 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
     viewlogclose(){
       document.getElementById(this.viewlogid).style.display="none";
+      document.getElementById("filters").style.display = "block";
     }
 
     viewlogclose1(){
       document.getElementById(this.viewlogid1).style.display="none";
       document.getElementById(this.viewlogid).style.display="none";
+      document.getElementById("filters").style.display = "block";
     }
 
 loadpredefinedbot(botId)
@@ -634,7 +637,6 @@ loadpredefinedbot(botId)
   {
     if(this.savebotrespose==undefined)
     {
-
       this.schedule={
         botid:"not_saved",
         schedule_list:this.schedule_list_scheduler,
@@ -648,11 +650,13 @@ loadpredefinedbot(botId)
 
     }
     this.schpop=true;
+    document.getElementById("filters").style.display = "none";
   }
 
   closesch()
   {
     this.schpop=false;
+    document.getElementById("filters").style.display = "block";
   }
 
 
@@ -704,6 +708,7 @@ loadpredefinedbot(botId)
   create_env()
   {
         document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="block";
+        document.getElementById("filters").style.display = "none";
   }
 
   async saveEnvironment()
@@ -738,6 +743,7 @@ loadpredefinedbot(botId)
     close_c_env()
     {
       document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="none";
+      document.getElementById("filters").style.display = "block";
     }
 
 }

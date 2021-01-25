@@ -87,6 +87,7 @@ export class RpaStudioComponent implements OnInit {
 
   ngOnInit()
   {
+    document.getElementById("filters").style.display = "block";
     if(localStorage.getItem("botId"))
     {
       this.localstore = false;
