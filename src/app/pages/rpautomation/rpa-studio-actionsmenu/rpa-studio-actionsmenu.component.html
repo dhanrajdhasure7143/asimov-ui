@@ -223,11 +223,11 @@
 
 
   </div>
-<div>
+<div >
 
 
-      <select class="form-control" [(ngModel)]="selectedversion" (change)="switchversion($event.target.value)">
-        <option *ngIf="savebotrespose==undefined" [value]="undefined" >NA</option>
+      <select class="form-control versions" [(ngModel)]="selectedversion" (change)="switchversion($event.target.value)">
+        <option *ngIf="savebotrespose==undefined" [value]="undefined" >V 1</option>
         <option *ngFor="let version of versionsList" [value]="version.vId">V {{version.vId}}</option>
       </select>
       <br>
