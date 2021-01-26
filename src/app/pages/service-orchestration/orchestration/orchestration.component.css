@@ -1,7 +1,13 @@
 
 
 
-/*@import "~@ng-select/ng-select/themes/material.theme.css";*/
+
+
+
+
+
+
+
 
 select {
     border-top: none;
@@ -14,13 +20,3 @@ select {
     /* text-align: center; */
 }
 
-
-
-.mat-tab-label-active {
-  background-color: white !important;
-  color:black !important;
-}
-
-
-/*.mat-tab-label{
-}*/

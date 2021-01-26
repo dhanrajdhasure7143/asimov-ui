@@ -192,7 +192,9 @@ export class SoAutomatedTasksComponent implements OnInit {
       let response:any=data;
       if(response.status!=undefined)
       {
+
         Swal.fire("Task  assigned to resource successfully !!","","success");
+        this.responsedata.find(item=>item.taskId==id).status="New";
       }else
       {
         Swal.fire("Failed to Assign Resource !!","","warning");
