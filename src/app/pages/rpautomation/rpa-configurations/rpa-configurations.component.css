@@ -8,16 +8,16 @@
   }
   .rpa-table tfoot th{
     border-top-color:#d9d9d9;
-    border-bottom-width: thin; 
-    font-weight: 200; 
+    border-bottom-width: thin;
+    font-weight: 200;
   }
   .rpa-table tbody tr td
   {
     border-top-color:#d9d9d9;
-    border-bottom-width: thin; 
+    border-bottom-width: thin;
     font-weight: 200;
     padding-top: 20px;
-    padding-bottom: 20px; 
+    padding-bottom: 20px;
   }
 
   .errspan{
@@ -29,7 +29,7 @@
     padding-right: 10px;
     line-height: 12px;
     }
-  
+
   .rpa-tablebox{
   padding-top:10px;
   padding-bottom:10px;
@@ -45,9 +45,9 @@
     color:black !important;
     width:25px;
     background-color: white !important;
-    
+
   }
-  
+
   .env-btn > button:disabled > img{
     color:rgb(116, 116, 116) !important;
     background-color:white!important;
@@ -79,7 +79,7 @@
   td{
     white-space:nowrap;
   }
-  
+
   th{
     white-space:nowrap;
   }
@@ -95,4 +95,20 @@
 ::-webkit-scrollbar {
   width: 10px;
   height:4px
+}
+::ng-deep .mat-tab-label{
+  height :50px !important;
+  padding: 0 10px !important;
+  min-width: 10px !important;
+  }
+::ng-deep .mat-ink-bar{
+min-width:10px !important;
+}
+
+
+::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
+::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
+  font-weight: 500;
+  color: black;
+  opacity: 1;
 }
