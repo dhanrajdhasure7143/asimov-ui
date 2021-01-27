@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit,Pipe, PipeTransform } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,Pipe,OnDestroy , PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -17,7 +17,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   templateUrl: './so-automated-tasks.component.html',
   styleUrls: ['./so-automated-tasks.component.css']
 })
-export class SoAutomatedTasksComponent implements OnInit {
+export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   schdata:any;
   public processId1:any;
   public popup:any;
@@ -41,6 +41,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   public environments:any=[];
   public selectedcategory:any="";
   public categaoriesList:any=[];
+  public timer:any;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
@@ -54,6 +55,12 @@ export class SoAutomatedTasksComponent implements OnInit {
     private dt : DataTransferService,
    )
   {
+  }
+  ngOnDestroy(): void {
+    if(this.timer!=undefined)
+    {
+      clearInterval(this.timer);
+    }
   }
 
 
@@ -298,14 +305,14 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   update_task_status()
   {
-    let timer= setInterval(() => {
+    this.timer= setInterval(() => {
       this.rest.getautomatedtasks(0).subscribe(response => {
         let responsedata:any=response;
         if(responsedata.automationTasks!=undefined)
         {
           if(responsedata.automationTasks.length==0)
           {
-            clearInterval(timer);
+            clearInterval(this.timer);
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
@@ -325,7 +332,7 @@ export class SoAutomatedTasksComponent implements OnInit {
               }
               else if(statusdata.status=="New")
               {
-                data="<span><img src='../../../../../assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+                data="<span><img src='../../../../assets/images/RPA/userobot.png' style='filter: none; width: 19px;'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }
               else if(statusdata.status=="Pending")
               {
@@ -344,13 +351,13 @@ export class SoAutomatedTasksComponent implements OnInit {
               {
               }else
               {
-                clearInterval(timer);
+                clearInterval(this.timer);
               }
             })
           }
         }else
         {
-          clearInterval(timer);
+          clearInterval(this.timer);
         }
 
       })
@@ -425,6 +432,7 @@ export class SoAutomatedTasksComponent implements OnInit {
     this.schedulepopup=false;
     document.getElementById("filters").style.display = "block";
   }
+
 
 
 }
