@@ -3,3 +3,7 @@
 }
 
 .undobtn {background-color:gainsboro; border-radius: 5px;}
+
+.verticalalignmiddle{
+    vertical-align: middle !important;
+}

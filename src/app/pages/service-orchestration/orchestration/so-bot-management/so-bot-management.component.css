@@ -15,3 +15,12 @@ select {
 .bg-color {
     background-color: rgb(241, 240, 240);
 }
+
+
+.rpa-modal-content{
+    padding-bottom: 25px !important;
+}
+
+.verticalalignmiddle{
+    vertical-align: middle !important;
+}

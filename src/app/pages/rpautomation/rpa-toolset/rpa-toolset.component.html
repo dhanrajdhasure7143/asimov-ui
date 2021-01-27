@@ -6,16 +6,16 @@
       <input type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" [(ngModel)]="userFilter.name" name="node" placeholder="&#61442; Search"
       class="form-control search fontAwesome" autocomplete="off">
       </div>
-      <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:60px"id="dragicons">
+      <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:60px"id="dragicons" class="dragicons">
         <button type="button"class="scroll top">
           <img (click)="scrolltop()"style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
         </button>
 
 
         <div #section class="section">
-          <div class="nodes"*ngFor="let node of templateNodes | filterBy: userFilter">
+          <div class="nodes rpa-dragicon" tooltip="{{node.name}}" placement="bottom" *ngFor="let node of templateNodes | filterBy: userFilter">
     <!-- | slice:0:show;  let i=index-->
-              <div class=""tooltip="{{node.name}}" placement="bottom" [dndDraggable]="node">
+              <div class="" [dndDraggable]="node">
                 <span>
                   <img [src]="node.path"class="con-img">
                 </span>

@@ -61,6 +61,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   ngOnInit() {
     this.dt.changeHints(this.hints.soochestartionhints);
     this.spinner.show();
+    
     this.userRole = localStorage.getItem("userRole")
 
     if(this.userRole.includes('SuperAdmin')){
@@ -191,7 +192,9 @@ export class SoAutomatedTasksComponent implements OnInit {
       let response:any=data;
       if(response.status!=undefined)
       {
+
         Swal.fire("Task  assigned to resource successfully !!","","success");
+        this.responsedata.find(item=>item.taskId==id).status="New";
       }else
       {
         Swal.fire("Failed to Assign Resource !!","","warning");
@@ -386,12 +389,14 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   getprocesslogs(){
     this.processId1 = this.selectedvalue;
+    document.getElementById("filters").style.display = "none";
     this.popup=true;
   }
 
   closepop()
   {
     this.popup=false;
+    document.getElementById("filters").style.display = "block";
   }
   reset_all()
   {
@@ -410,12 +415,14 @@ export class SoAutomatedTasksComponent implements OnInit {
       environment:this.selectedEnvironment,
       processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
     }
+    document.getElementById("filters").style.display = "none";
     this.schedulepopup=true;
   }
 
   closescheduler()
   {
     this.schedulepopup=false;
+    document.getElementById("filters").style.display = "block";
   }
 
 

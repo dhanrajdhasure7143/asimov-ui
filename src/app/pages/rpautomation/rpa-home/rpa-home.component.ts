@@ -318,9 +318,7 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
-
     this.rpa_studio.onCreate(0);
-    //document.getElementById("create-bot").style.display ="block";
   }
 
   /*openload()

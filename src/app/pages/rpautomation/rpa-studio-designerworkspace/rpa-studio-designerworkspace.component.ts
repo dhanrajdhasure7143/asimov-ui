@@ -874,7 +874,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           let form = new FormData();
           let file = new Blob([filepath.file]);
           form.append("file",filepath.file);
-           let uploadrest:any=await  this.rest.uploadfile(form,envids);
+          let uploadrest:any=await  this.rest.uploadfile(form,envids);
           await uploadrest.subscribe(res=> {
             if(res[0].Path!=undefined)
             {
@@ -1173,12 +1173,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   getoutput() {
     if (this.SelectedOutputType != "") {
       if (this.finaldataobjects.find(object => object.nodeId.split("__")[1] == this.outputnode.id) != undefined) {
-        let task: any = this.finaldataobjects.find(object => object.nodeId.split("__")[1] == this.outputnode.id);
-        let postdata: any = {
+       let task: any = this.finaldataobjects.find(object => object.nodeId.split("__")[1] == this.outputnode.id);
+       let postdata: any = {
           "botId": this.finalbot.botId,
           "version": this.finalbot.version,
           "viewType": this.SelectedOutputType,
-          "inputRefName": task.attributes[0].attrValue,
+          "inputRefName": task.attributes.find(item=>item.metaAttrId==135).attrValue,
         }
         this.rest.getoutputbox(postdata).subscribe(outdata => {
           this.outputboxresult = outdata;

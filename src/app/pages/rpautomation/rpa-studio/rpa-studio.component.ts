@@ -69,7 +69,7 @@ export class RpaStudioComponent implements OnInit {
     this.insertbot=this.formBuilder.group({
       botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
       botDepartment:["", Validators.required],
-      botDescription:["", Validators.compose([Validators.required, Validators.maxLength(500)])],
+      botDescription:["", Validators.compose([Validators.maxLength(500)])],
       botType:["", Validators.required],
       taskId:[""],
       predefinedBot:["false"],
@@ -87,6 +87,7 @@ export class RpaStudioComponent implements OnInit {
 
   ngOnInit()
   {
+    document.getElementById("filters").style.display = "block";
     if(localStorage.getItem("botId"))
     {
       this.localstore = false;

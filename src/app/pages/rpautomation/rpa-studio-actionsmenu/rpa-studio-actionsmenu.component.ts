@@ -1,4 +1,4 @@
-import {Input,ViewChild,Output,EventEmitter, Component, OnInit } from '@angular/core';
+import {Input,ViewChild,Output,EventEmitter, Component, OnInit,  ChangeDetectorRef,AfterContentChecked } from '@angular/core';
 import { RpaStudioDesignerworkspaceComponent } from '../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup,Validators,FormBuilder } from '@angular/forms';
@@ -18,7 +18,7 @@ import { RpaToolsetComponent } from '../rpa-toolset/rpa-toolset.component';
   templateUrl: './rpa-studio-actionsmenu.component.html',
   styleUrls: ['./rpa-studio-actionsmenu.component.css']
 })
-export class RpaStudioActionsmenuComponent implements OnInit {
+export class RpaStudioActionsmenuComponent implements OnInit , AfterContentChecked{
 
   @Input('bot') public botState: any;
   @Input('toolset') public toolset: any;
@@ -100,6 +100,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
     private notifier: NotifierService,
     private calender:NgbCalendar,
     private formBuilder: FormBuilder,
+    private changeDetector:ChangeDetectorRef,
     ) {}
 
   ngOnInit() {
@@ -153,7 +154,9 @@ export class RpaStudioActionsmenuComponent implements OnInit {
   //   })
 
   // }
-
+  ngAfterContentChecked() : void {
+    this.changeDetector.detectChanges();
+}
 
   reset()
   {
@@ -239,7 +242,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
           let bottask:any=this.botState;
           this.getVersionlist();
           this.childBotWorkspace.uploadfile(this.finalenv);
-          if(bottask.taskId!=0)
+          if(bottask.taskId!=0 && bottask.taskId!=undefined)
           {
             this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
           }
@@ -367,7 +370,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
   getEnvironmentlist() {
     this.rest.listEnvironments().subscribe(data => {
       let response:any=data
-      if(response.errorMessaage==undefined)
+      if(response.errorMessage==undefined)
       {
         let environments:any=[];
         environments=response;
@@ -394,7 +397,6 @@ export class RpaStudioActionsmenuComponent implements OnInit {
       }
       else
       {
-        Swal.fire(response.errorMessage,"","error");
       }
   })
 }
@@ -451,6 +453,7 @@ export class RpaStudioActionsmenuComponent implements OnInit {
 
    viewlogdata(){
     this.childBotWorkspace.addsquences();
+    document.getElementById("filters").style.display = "none";
    let response: any;
    let log:any=[];
    this.logresponse=[];
@@ -543,11 +546,13 @@ export class RpaStudioActionsmenuComponent implements OnInit {
 
     viewlogclose(){
       document.getElementById(this.viewlogid).style.display="none";
+      document.getElementById("filters").style.display = "block";
     }
 
     viewlogclose1(){
       document.getElementById(this.viewlogid1).style.display="none";
       document.getElementById(this.viewlogid).style.display="none";
+      document.getElementById("filters").style.display = "block";
     }
 
 loadpredefinedbot(botId)
@@ -632,7 +637,6 @@ loadpredefinedbot(botId)
   {
     if(this.savebotrespose==undefined)
     {
-
       this.schedule={
         botid:"not_saved",
         schedule_list:this.schedule_list_scheduler,
@@ -646,11 +650,13 @@ loadpredefinedbot(botId)
 
     }
     this.schpop=true;
+    document.getElementById("filters").style.display = "none";
   }
 
   closesch()
   {
     this.schpop=false;
+    document.getElementById("filters").style.display = "block";
   }
 
 
@@ -702,6 +708,7 @@ loadpredefinedbot(botId)
   create_env()
   {
         document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="block";
+        document.getElementById("filters").style.display = "none";
   }
 
   async saveEnvironment()
@@ -736,6 +743,7 @@ loadpredefinedbot(botId)
     close_c_env()
     {
       document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="none";
+      document.getElementById("filters").style.display = "block";
     }
 
 }

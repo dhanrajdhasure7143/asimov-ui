@@ -14,7 +14,6 @@
 
     </ngb-tab>
 </ngb-tabset>-->
-
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
 <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
     <mat-tab>
@@ -47,13 +46,13 @@
         <app-so-bot-management></app-so-bot-management>
       </div>
     </mat-tab>
-    
+
     <mat-tab label="Inbox">
 
       <ng-template mat-tab-label>
         <mat-icon  class="text-primary">inbox</mat-icon>
           &nbsp;&nbsp;
-          Inbox  
+          Inbox
         </ng-template>
       <div *ngIf="check_tab==3">
         <app-so-inbox></app-so-inbox>

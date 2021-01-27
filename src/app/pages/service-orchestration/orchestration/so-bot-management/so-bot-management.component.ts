@@ -195,7 +195,8 @@ export class SoBotManagementComponent implements OnInit {
 
 
   viewlogdata(botid ,version){
-  let response: any;
+   document.getElementById("filters").style.display = "none";
+   let response: any;
    let log:any=[];
    this.logresponse=[];
    this.log_botid=botid;
@@ -287,10 +288,12 @@ export class SoBotManagementComponent implements OnInit {
    }
 
    viewlogclose(){
+    document.getElementById("filters").style.display = "block";
      document.getElementById(this.viewlogid).style.display="none";
    }
 
    viewlogclose1(){
+    document.getElementById("filters").style.display = "block";
      document.getElementById(this.viewlogid1).style.display="none";
      document.getElementById(this.viewlogid).style.display="none";
    }
@@ -394,11 +397,13 @@ export class SoBotManagementComponent implements OnInit {
         botid:botid
       }
       this.popup=true;
+      document.getElementById("filters").style.display = "none";
     }
 
 
     close()
     {
+      document.getElementById("filters").style.display = "block";
       this.popup=false;
     }
 
