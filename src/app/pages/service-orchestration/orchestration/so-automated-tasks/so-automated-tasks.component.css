@@ -7,7 +7,9 @@ select {
      border-bottom-color: grey !important;
 }
 
-
+.verticalalignmiddle{
+  vertical-align: middle !important;
+}
 
 .rpa-modal-content{
   padding-bottom: 25px !important;

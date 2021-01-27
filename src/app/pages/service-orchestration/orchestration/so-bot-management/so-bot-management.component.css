@@ -20,3 +20,7 @@ select {
 .rpa-modal-content{
     padding-bottom: 25px !important;
 }
+
+.verticalalignmiddle{
+    vertical-align: middle !important;
+}
