@@ -61,7 +61,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   ngOnInit() {
     this.dt.changeHints(this.hints.soochestartionhints);
     this.spinner.show();
-    
+
     this.userRole = localStorage.getItem("userRole")
 
     if(this.userRole.includes('SuperAdmin')){
@@ -312,8 +312,9 @@ export class SoAutomatedTasksComponent implements OnInit {
 
               if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
-                data="<span class='text-primary'><img src='../../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
-              }else if(statusdata.status=="Success")
+                data="<span class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+              }
+              else if(statusdata.status=="Success")
               {
 
                 data='<span class="text-success"><i class="fa fa-check-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
@@ -339,7 +340,7 @@ export class SoAutomatedTasksComponent implements OnInit {
               $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
 
               $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
-              if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress").length>0)
+              if(responsedata.automationTasks.filter(prodata=>(prodata.status=="InProgress" || prodata.status=="Running")).length>0)
               {
               }else
               {
@@ -354,7 +355,7 @@ export class SoAutomatedTasksComponent implements OnInit {
 
       })
 
-    }, 5000);
+    }, 7000);
   }
 
   getenvironments()
