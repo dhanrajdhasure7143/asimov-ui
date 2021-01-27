@@ -112,33 +112,33 @@
               </span>
             </div>
           </div>
-          <div class="nodes" tooltip="Bot Store" placement="bottom" dropdown [insideClick]="true"  >
+          <div class="nodes" dropdown [insideClick]="true"  >
 
             <button class="clickable  text-primary dropdown-toggle"  id="bot-store-menu" dropdownToggle type="button"
             aria-controls="bot-store" >
-              <span  >
+              <span  tooltip="Bot Store" placement="bottom" >
                 <i class="fa fa-robot text-primary"></i>
               </span>
 
             </button>
 
-            <ul id="bot-store" style="height:150px;overflow:auto"   *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic" >
-                <li role="menuitem" class="clickable" *ngFor="let bot of predefinedbotsData"  >
+            <ul id="bot-store" style="max-width:300px;max-height:250px;overflow:auto;"   *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic" >
+                <li role="menuitem" class="clickable" style="white-space: nowrap;"  *ngFor="let bot of predefinedbotsData"  >
                   <a   class="clickable"  (click)="loadpredefinedbot(bot.botId)"> {{bot.botName}}</a>
                 </li>
             </ul>
 
           </div>
-          <div class="nodes" dropdown  #dropdown="bs-dropdown" placement="bottom" tooltip="Environments"  [insideClick]="true" >
+          <div class="nodes" dropdown  #dropdown="bs-dropdown"   [insideClick]="true" >
             <button class="clickable  text-primary" class="clickable  text-primary dropdown-toggle" id="bot-store-menu" dropdownToggle type="button"
             aria-controls="environments" >
-              <span >
+              <span placement="bottom" tooltip="Environments" >
                 <i class="fa fa-desktop"></i>
               </span>
 
             </button>
-            <ul id="environments" style="height:150px;overflow:auto;" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
-              <li  role="menuitem" class="clickable"  *ngFor="let env of environment" >
+            <ul id="environments" style="max-width:300px;max-height:250px;overflow:auto;" *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="button-basic">
+              <li  role="menuitem" class="clickable"  *ngFor="let env of environment" style="white-space: nowrap;" >
                 <input type="checkbox" [checked]="env.checked==true" (change)="checkuncheckenv(env.environmentId)" >
                 &nbsp; {{env.environmentName}}
               </li>
@@ -243,7 +243,7 @@
   </mat-slider> -->
       </div>
       <br>
-      <button style="width: 45px;" (click)="childBotWorkspace.reset('');slider=0;"><i class="fa fa-sync-alt text-primary"></i></button><br>
+      <button style="width: 45px;" tooltip="Reset" placement="bottom" (click)="childBotWorkspace.reset('');slider=0;"><i class="fa fa-sync-alt text-primary"></i></button><br>
       <br><br>
       <br><br><br>
       <div class="download">
