@@ -321,12 +321,12 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
               {
                 data="<span class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }
-              else if(statusdata.status=="Success")
+              else if(statusdata.status=="Success" || statusdata.status=="Approved")
               {
 
                 data='<span class="text-success"><i class="fa fa-check-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
               }
-              else if(statusdata.status=="Failed")
+              else if(statusdata.status=="Failed" || statusdata.status=="Failure"|| statusdata.status=="Rejected")
               {
                 data='<span class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';
               }
@@ -337,6 +337,11 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
               else if(statusdata.status=="Pending")
               {
                 data="<span class='text-warning' style='font-size:18px'><i class='fa fa-clock' aria-hidden='true'></i></span>&nbsp;<span class='text-warning'>"+statusdata.status+"</span>";
+              }
+
+              else if(statusdata.status=="Paused" || statusdata.status=="Pause")
+              {
+                data="<span class='text-warning' style='font-size:18px'><li class='verticalalignmiddle fas fa-pause-circle' style='font-size: 19px;'></span>&nbsp;<span class='text-warning'>"+statusdata.status+"</span>";
               }
               else if(statusdata.status=="")
               {
