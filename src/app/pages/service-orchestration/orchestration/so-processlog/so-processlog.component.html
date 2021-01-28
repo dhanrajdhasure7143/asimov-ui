@@ -58,6 +58,7 @@
             <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
             <!--<span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>-->
             <span *ngIf="element.runStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            <span *ngIf="element.runStatus=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
             <span *ngIf="element.runStatus=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
@@ -150,6 +151,7 @@
                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                         <!--<span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>-->
                         <span *ngIf="element.bot_status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        <span *ngIf="element.bot_status=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
                         <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
@@ -227,6 +229,7 @@
                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                         <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
                         <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
+                        <span *ngIf="element.status=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
                         <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span></span>
                   <span *ngIf="element.status == undefined">-</span></td>

@@ -79,11 +79,11 @@
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
                   <td mat-cell *matCellDef="let element">
 
-                    <span *ngIf="element.status=='Approved'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='Approved'" class="text-success"><span><li class="verticalalignmiddle fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
 
-                    <span *ngIf="element.status=='Rejected'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='Rejected'" class="text-danger"><span><li class="verticalalignmiddle fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
 					  
-                    <span *ngIf="element.status=='Pending'" ><span class="text-warning" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fa fa-clock"></i></span>&nbsp;<span>{{element.status}}</span></span>
+                    <span *ngIf="element.status=='Pending'" ><span class="verticalalignmiddle text-warning" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fa fa-clock"></i></span>&nbsp;<span>{{element.status}}</span></span>
                     
                     <span *ngIf="element.status==null">---</span>
                      

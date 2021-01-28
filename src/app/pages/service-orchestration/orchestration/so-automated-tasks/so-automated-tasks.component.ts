@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit,Pipe, PipeTransform } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,Pipe,OnDestroy , PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -17,7 +17,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   templateUrl: './so-automated-tasks.component.html',
   styleUrls: ['./so-automated-tasks.component.css']
 })
-export class SoAutomatedTasksComponent implements OnInit {
+export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   schdata:any;
   public processId1:any;
   public popup:any;
@@ -41,6 +41,7 @@ export class SoAutomatedTasksComponent implements OnInit {
   public environments:any=[];
   public selectedcategory:any="";
   public categaoriesList:any=[];
+  public timer:any;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
@@ -55,12 +56,19 @@ export class SoAutomatedTasksComponent implements OnInit {
    )
   {
   }
+  ngOnDestroy(): void {
+    if(this.timer!=undefined)
+    {
+      clearInterval(this.timer);
+    }
+  }
 
 
 
   ngOnInit() {
     this.dt.changeHints(this.hints.soochestartionhints);
     this.spinner.show();
+
     this.userRole = localStorage.getItem("userRole")
 
     if(this.userRole.includes('SuperAdmin')){
@@ -191,7 +199,9 @@ export class SoAutomatedTasksComponent implements OnInit {
       let response:any=data;
       if(response.status!=undefined)
       {
+
         Swal.fire("Task  assigned to resource successfully !!","","success");
+        this.responsedata.find(item=>item.taskId==id).status="New";
       }else
       {
         Swal.fire("Failed to Assign Resource !!","","warning");
@@ -295,22 +305,23 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   update_task_status()
   {
-    let timer= setInterval(() => {
+    this.timer= setInterval(() => {
       this.rest.getautomatedtasks(0).subscribe(response => {
         let responsedata:any=response;
         if(responsedata.automationTasks!=undefined)
         {
           if(responsedata.automationTasks.length==0)
           {
-            clearInterval(timer);
+            clearInterval(this.timer);
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
 
               if(statusdata.status=="InProgress" || statusdata.status=="Running")
               {
-                data="<span class='text-primary'><img src='../../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
-              }else if(statusdata.status=="Success")
+                data="<span class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+              }
+              else if(statusdata.status=="Success")
               {
 
                 data='<span class="text-success"><i class="fa fa-check-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
@@ -321,7 +332,7 @@ export class SoAutomatedTasksComponent implements OnInit {
               }
               else if(statusdata.status=="New")
               {
-                data="<span><img src='../../../../../assets/images/RPA/newicon.png' style='height:20px' ></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
+                data="<span><img src='../../../../assets/images/RPA/userobot.png' style='filter: none; width: 19px;'></span>&nbsp;<span class='text-primary'>"+statusdata.status+"</span>";
               }
               else if(statusdata.status=="Pending")
               {
@@ -336,22 +347,22 @@ export class SoAutomatedTasksComponent implements OnInit {
               $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
 
               $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
-              if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress").length>0)
+              if(responsedata.automationTasks.filter(prodata=>(prodata.status=="InProgress" || prodata.status=="Running")).length>0)
               {
               }else
               {
-                clearInterval(timer);
+                clearInterval(this.timer);
               }
             })
           }
         }else
         {
-          clearInterval(timer);
+          clearInterval(this.timer);
         }
 
       })
 
-    }, 5000);
+    }, 7000);
   }
 
   getenvironments()
@@ -386,12 +397,14 @@ export class SoAutomatedTasksComponent implements OnInit {
 
   getprocesslogs(){
     this.processId1 = this.selectedvalue;
+    document.getElementById("filters").style.display = "none";
     this.popup=true;
   }
 
   closepop()
   {
     this.popup=false;
+    document.getElementById("filters").style.display = "block";
   }
   reset_all()
   {
@@ -410,13 +423,16 @@ export class SoAutomatedTasksComponent implements OnInit {
       environment:this.selectedEnvironment,
       processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
     }
+    document.getElementById("filters").style.display = "none";
     this.schedulepopup=true;
   }
 
   closescheduler()
   {
     this.schedulepopup=false;
+    document.getElementById("filters").style.display = "block";
   }
+
 
 
 }

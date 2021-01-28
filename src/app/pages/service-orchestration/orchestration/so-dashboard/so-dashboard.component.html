@@ -138,15 +138,15 @@
                         <th>Version</th>
                       </thead>
                       <tbody class="text-left" >
-                        <tr *ngFor="let bot of botstatisticstable  | paginate: { itemsPerPage: 6,currentPage: q }">
+                        <tr *ngFor="let bot of botstatisticstable  | paginate: {id:'botspagination', itemsPerPage: 6,currentPage: q }">
                           <td>{{bot.botName}}</td>
                           <td>{{bot.department | Category:categaoriesList }}</td>
                           <td>{{bot.botType==0?"Attended":"Unattended"}}</td>
-                          <td>{{bot.botName}}</td>
+                          <td>V{{bot.version}}</td>
                         </tr>
                       </tbody>
                     </table>
-                    <pagination-controls class="pull-right" (pageChange)="q = $event"></pagination-controls>
+                    <pagination-controls id="botspagination" class="pull-right" (pageChange)="q = $event"></pagination-controls>
                 </div>
               </div>
             </div>
@@ -173,13 +173,13 @@
                             <th>Category</th>
                           </thead>
                           <tbody class="text-left">
-                            <tr *ngFor="let process of processstats_table  | paginate: { itemsPerPage: 6,currentPage: r }">
+                            <tr *ngFor="let process of processstats_table  | paginate: {id:'proccesspagination', itemsPerPage: 6,currentPage: r }">
                               <td>{{process.processName}}</td>
                               <td>{{process.categoryId | Category:categaoriesList }}</td>
                             </tr>
                           </tbody>
                         </table>
-                        <pagination-controls class="pull-right" (pageChange)="r = $event"></pagination-controls>
+                        <pagination-controls id="proccesspagination" class="pull-right"  (pageChange)="r = $event"></pagination-controls>
                       </div>
 
                       <span class="message" *ngIf="processstats_table.length==0" ><br><br><br>
