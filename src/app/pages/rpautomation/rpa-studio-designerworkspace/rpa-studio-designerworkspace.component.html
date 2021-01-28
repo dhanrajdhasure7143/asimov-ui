@@ -1,5 +1,5 @@
 
-  <div class="main">
+  <div class="main" id="screen">
     <div [id]="dragareaid" class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)" oncontextmenu="return false;" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
       <ng-container *ngFor="let node of nodes; let i = index">
         <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i)" [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
