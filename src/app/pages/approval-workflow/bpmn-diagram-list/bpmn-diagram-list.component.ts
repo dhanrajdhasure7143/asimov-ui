@@ -7,6 +7,8 @@ import { Router } from '@angular/router';
 import { SharebpmndiagramService } from '../../services/sharebpmndiagram.service';
 import { ApprovalHomeHints } from './model/bpmn_approval_workflow';
 import { GlobalScript } from 'src/app/shared/global-script';
+import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
+import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
 
 @Component({
   selector: 'app-bpmn-diagram-list',
@@ -58,29 +60,35 @@ export class BpmnDiagramListComponent implements OnInit {
   collapseExpansion(){
     this.approval_msg="";
   }
-  expandPanel(i, bpmnProcessInfo): void {
-    this.selected_processInfo = bpmnProcessInfo;
+  expandPanel(i, eachBPMN): void {
+    this.selected_processInfo = eachBPMN;
     let bpmnXmlNotation = this.selected_processInfo["bpmnXmlNotation"];
     let approval_msg = this.selected_processInfo["reviewComments"];
     this.index=i;
     this.approval_msg=approval_msg;
-    // if(!this.bpmnModeler){
-    if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() == ""){
-      this.bpmnModeler = new BpmnJS({
-        container: '.diagram_container'+i,
-        keyboard: {
-          bindTo: window
-        }
-      });
-    }
-    this.bpmnModeler.importXML(atob(bpmnXmlNotation), function(err){
-      if(err){
-        this.notifier.show({
-          type: "error",
-          message: "Could not import Bpmn notation!"
-        });
+    let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
+    if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
+    let notationJson = {
+      container: '.diagram_container'+i,
+      keyboard: {
+        bindTo: window
       }
-    })
+    }
+    if(eachBPMN.ntype == "bpmn")
+      this.bpmnModeler = new BpmnJS(notationJson);
+    else if(eachBPMN.ntype == "cmmn")
+      this.bpmnModeler = new CmmnJS(notationJson);
+    else if(eachBPMN.ntype == "dmn")
+      this.bpmnModeler = new DmnJS(notationJson); 
+
+        this.bpmnModeler.importXML(byteBpmn, function(err){
+          if(err){
+            this.notifier.show({
+              type: "error",
+              message: "Could not import Bpmn notation!"
+            });
+          }
+        })
     // let canvas = this.bpmnModeler.get('canvas');
     // canvas.zoom('fit-viewport');
   }
@@ -139,7 +147,7 @@ this.selectedrow =i;
         var url = window.URL.createObjectURL(blob);
         var link = document.createElement("a");
         link.href = url;
-        let fileName = _self.griddata[_self.index].bpmnProcessInfo['bpmnProcessName'];
+        let fileName = _self.griddata[_self.index].bpmnProcessInfo[0]['bpmnProcessName'];
         if(fileName.trim().length == 0 ) fileName = "newDiagram";
         link.download = fileName+".bpmn";
         link.innerHTML = "Click here to download the notation";
@@ -190,7 +198,7 @@ this.selectedrow =i;
     };
     this.rest_Api.approve_producemessage(this.approver_info).subscribe(
       data =>{
-        let message = "Notation submitted for approval"; //this has to change after approval API
+        let message = "Notation Successfully Approved"; //this has to change after approval API
         this.bpmnlist();
         this.global.notify(message,'success');
       },
