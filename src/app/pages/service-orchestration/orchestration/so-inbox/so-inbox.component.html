@@ -46,14 +46,14 @@
                   </ng-container>
 
                     <ng-container matColumnDef="nextSuccessTask">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Success Task </th>
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Task (Upon Success) </th>
                         <td mat-cell *matCellDef="let element">
                             <span *ngIf="element.nextSuccessTask!=null">{{element.nextSuccessTask}}</span>
                             <span *ngIf="element.nextSuccessTask==null">-</span> </td>
                     </ng-container>
 
                     <ng-container matColumnDef="nextFailureTask">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Failure Task </th>
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Next Task (Upon Failure) </th>
                       <td mat-cell *matCellDef="let element">
                           <span *ngIf="element.nextFailureTask!=null">{{element.nextFailureTask}}</span>
                           <span *ngIf="element.nextFailureTask==null">-</span> </td>
