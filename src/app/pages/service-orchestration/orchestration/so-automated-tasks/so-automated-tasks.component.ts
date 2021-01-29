@@ -324,11 +324,11 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
               else if(statusdata.status=="Success" || statusdata.status=="Approved")
               {
 
-                data='<span class="text-success"><i class="fa fa-check-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-success">Success</span>';
+                data='<span class="text-success"><i class="fa fa-check-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-success">'+statusdata.status+'</span>';
               }
               else if(statusdata.status=="Failed" || statusdata.status=="Failure"|| statusdata.status=="Rejected")
               {
-                data='<span class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">Failed</span>';
+                data='<span class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger">'+statusdata.status+'</span>';
               }
               else if(statusdata.status=="New")
               {
