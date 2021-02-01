@@ -52,9 +52,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.child_subscription = this.dataTransfer.current_child_module.subscribe(res => this.child_link = res);
     this.rpa.getUserRole(2).subscribe(res=>{
     this.userRole=res.message;
-
-      localStorage.setItem('userRole',this.userRole);
-    console.log("user role is",this.userRole)
+    localStorage.setItem('userRole',this.userRole);
     if(this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('User')){
       this.pages = [
         {"img":"assets/images/pi.svg", "title":"Process Intelligence", "link":"/pages/processIntelligence/upload"},
@@ -62,10 +60,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
         {"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"},
         {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
          ];
-
-
-     }
-     if(this.userRole.includes('RPA Admin')){
+    }
+    if(this.userRole.includes('RPA Admin')){
       if(this.pages.filter(f=>f.title === 'RPA Studio' ).length <= 0){
         this.pages.push({"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"})
       }
@@ -77,8 +73,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       //   {"img":"assets/images/settingsicon.svg", "title":"Service Orchestration", "link":"/pages/serviceOrchestration/home"}
 
       // ];
-
-     }
+    }
      if(this.userRole.includes('RPA Designer')){
       if(this.pages.filter(f=>f.title === 'RPA Studio' ).length <= 0){
         this.pages.push({"img":"assets/images/robothand.svg", "title":"RPA Studio", "link":"/pages/rpautomation/home"})
@@ -93,7 +88,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if(this.pages.filter(f=>f.title === 'Business Process Studio' ).length <= 0){
         this.pages.push({"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"})
       }
-     
+
       // this.pages = [
       //   {"img":"assets/images/busstudioicon1.svg", "title":"Business Process Studio", "link":"/pages/businessProcess/home"},
 
@@ -120,7 +115,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
       // ];
 
      }
-     
+
     },error => {
       this.error = "Please complete your registration process";
 
@@ -134,13 +129,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
           this.spinner.hide();
         }, 900);
 
-       
+
   }
 
   loopTrackBy(index, term){
     return index;
   }
 
+  removenodes()
+  {
+    $(".bot-close").click();
+  }
   closeAllModules(){
     this.overlay_user_manage_model = false;
     this.overlay_config_alert_model = false;
@@ -232,7 +231,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
              let notificationbody ={
              "tenantId":this.tenantId
                }
-               
+
                 this.rpa.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
                   this.notificationList = data
                   this.notificationscount=this.notificationList
@@ -244,6 +243,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
               // console.log("count",this.notificationList.length)
                })
                 this.getCount();
-               
+
              }
 }

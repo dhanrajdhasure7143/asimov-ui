@@ -5,7 +5,7 @@ import { EnvironmentsService } from './rpa-environments.service';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { DataTransferService} from "../../services/data-transfer.service";
-import {RpaEnvHints} from "../model/rpa-environments-module-hints";
+import {Rpa_Hints} from "../model/RPA-Hints";
 import {Router} from "@angular/router";
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -18,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-environments.component.css']
 })
   export class RpaenvironmentsComponent implements  OnInit{
-    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","username","password","connectionType","portNumber","createdTimeStamp","createdBy","activeStatus","deployStatus"];
+    displayedColumns: string[] = ["check","environmentName","environmentType","agentPath","hostAddress","portNumber","username","password","activeStatus","deployStatus","createdTimeStamp","createdBy"]; //,"connectionType"
     dataSource1:MatTableDataSource<any>;
     public isDataSource: boolean;  
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
@@ -47,14 +47,19 @@ import { NgxSpinnerService } from "ngx-spinner";
     public passwordtype1:Boolean;
     public passwordtype2:Boolean;
     isDtInitialized:boolean = false;
-    
+    customUserRole: any;
+    enableEnvironment: boolean =false;
+    enabledbconnection: boolean=false;
+    public isButtonVisible = false;
+    public userRole:any = [];
+
   constructor(private api:RestApiService, 
     private router:Router, 
     private formBuilder: FormBuilder,
     private environmentservice:EnvironmentsService, 
     private chanref:ChangeDetectorRef, 
     private dt:DataTransferService,
-    private hints:RpaEnvHints,
+    private hints:Rpa_Hints,
     private spinner: NgxSpinnerService
     ) { 
     const ipPattern = 
@@ -67,7 +72,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
         activeStatus: [true]
        
     })
@@ -80,7 +85,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
-      portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+      portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(6)])],
       activeStatus: [""]
     
     })
@@ -90,15 +95,27 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
   ngOnInit() {
     this.spinner.show();
+    this.passwordtype1=false;
+    this.passwordtype2=false;
     //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
     this.getallData();
+    document.getElementById("filters").style.display='block';
+    //document.getElementById("createenvironment").style.display='none';
+    //document.getElementById("update-popup").style.display='none';
     
-    document.getElementById("createenvironment").style.display='none';
-    document.getElementById("update-popup").style.display='none';
-    this.passwordtype1=false;
-    this.passwordtype2=false;
-
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin') || this.userRole.includes('RPA Designer');
+    this.api.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('RPA_Environmet_full')){
+          this.enableEnvironment=true;
+        } 
+      }
+      );
+        })
   }
 
  async getallData()
@@ -122,17 +139,17 @@ import { NgxSpinnerService } from "ngx-spinner";
             }
           this.environments.push(Object.assign({}, response[i], checks));
         }
-        console.log(this.environments)
+        this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
         this.dataSource1= new MatTableDataSource(this.environments);
         this.isDataSource = true;
         this.dataSource1.sort=this.sort1;
         this.dataSource1.paginator=this.paginator1;
         this.spinner.hide();
       });
+      document.getElementById("filters").style.display = "block";
   }
 
   EnvType1(){
-    console.log(this.insertForm.value.environmentType)
     if(this.insertForm.value.environmentType == "Windows"){
       //this.updateForm.value.portNumber="44";
       this.insertForm.get("portNumber").setValue("44");
@@ -142,7 +159,6 @@ import { NgxSpinnerService } from "ngx-spinner";
   }
 
   EnvType(){
-    console.log(this.updateForm.value.environmentType)
     if(this.updateForm.value.environmentType == "Windows"){
       //this.updateForm.value.portNumber="44";
       this.updateForm.get("portNumber").setValue("44");
@@ -172,6 +188,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   create()
   {
     
+    document.getElementById("filters").style.display='none';
     document.getElementById("createenvironment").style.display='block';
     document.getElementById("update-popup").style.display='none';
   
@@ -183,6 +200,15 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.insertForm.get("connectionType").setValue("SSH");
     this.insertForm.get("environmentType").setValue("");
     this.insertForm.get("activeStatus").setValue(true);
+  }
+
+  resetupdateEnvForm(){
+    this.updateForm.reset();
+    
+    this.updateForm.get("portNumber").setValue("22");
+    this.updateForm.get("connectionType").setValue("SSH");
+    this.updateForm.get("environmentType").setValue("");
+    this.updateForm.get("activeStatus").setValue(true);
   }
 
   async testConnection(data){
@@ -206,7 +232,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.spinner.hide();
         if(res.errorCode==undefined){
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: "Successfully Connected",
           showConfirmButton: false,
@@ -214,8 +240,8 @@ import { NgxSpinnerService } from "ngx-spinner";
         })
         }else{
           Swal.fire({
-            position: 'top-end',
-            icon: 'question',
+            position: 'center',
+            icon: 'error',
             title: 'Connection Failed',
             showConfirmButton: false,
             timer: 2000
@@ -235,22 +261,19 @@ import { NgxSpinnerService } from "ngx-spinner";
     this.spinner.show();
    if(this.insertForm.valid)
    {
-     console.log(this.insertForm.value.activeStatus)
      if(this.insertForm.value.activeStatus==true)
       {
         this.insertForm.value.activeStatus=7
       }else{
         this.insertForm.value.activeStatus=8
       }
-      console.log(this.insertForm.value.activeStatus)
-
       this.insertForm.value.createdBy="admin";
      this.submitted=true;
      let environment=this.insertForm.value;
      await this.api.addenvironment(environment).subscribe( res =>
       {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: res.status,
           showConfirmButton: false,
@@ -277,7 +300,6 @@ import { NgxSpinnerService } from "ngx-spinner";
   async updateEnvironment()
   {
     this.spinner.show();
-    console.log(this.updateForm.value);
     if(this.updateForm.valid)
     {
       if(this.updateForm.value.activeStatus==true)
@@ -286,27 +308,23 @@ import { NgxSpinnerService } from "ngx-spinner";
       }else{
         this.updateForm.value.activeStatus=8
       }
-      console.log(this.updateForm.value.environmentName);
-      console.log(this.updateForm.value);
       let updatFormValue =  this.updateForm.value;
       updatFormValue["environmentId"]= this.updateenvdata.environmentId;
-      console.log(this.updateenvdata.createdBy);
       updatFormValue["createdBy"]= this.updateenvdata.createdBy;
       updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
-            console.log(updatFormValue);
       await this.api.updateenvironment(updatFormValue).subscribe( res => {
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: res.status,
           showConfirmButton: false,
           timer: 2000
         })
-        console.log(res);
       this.removeallchecks();
       this.getallData();
       this.checktoupdate();
       this.checktodelete();
+      
       document.getElementById("update-popup").style.display='none';
       this.spinner.hide();
       });
@@ -319,7 +337,8 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   updatedata()
   {
-    document.getElementById("createenvironment").style.display='none';
+    document.getElementById("createenvironment").style.display='none';    
+    document.getElementById("filters").style.display='none';
     document.getElementById('update-popup').style.display='block';
     let data:environmentobservable;
     for(data of this.environments)
@@ -328,13 +347,13 @@ import { NgxSpinnerService } from "ngx-spinner";
       {
         if(data.activeStatus==7){
           this.toggle=true;
+          this.updateForm.get("activeStatus").setValue(true);
         }else{
           this.toggle=false;
+          this.updateForm.get("activeStatus").setValue(false);
         }
         this.updateenvdata=data;
         console.log(this.updateenvdata);
-      console.log(this.updateForm.value);
-      console.log(this.updateenvdata.environmentId);
         this.updateForm.get("environmentName").setValue(this.updateenvdata["environmentName"]);
         this.updateForm.get("environmentType").setValue(this.updateenvdata["environmentType"]);
         this.updateForm.get("agentPath").setValue(this.updateenvdata["agentPath"]);
@@ -350,7 +369,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   close()
   { 
-    
+    document.getElementById("filters").style.display='block';
     document.getElementById('createenvironment').style.display='none';
     document.getElementById('update-popup').style.display='none';
     this.resetEnvForm();
@@ -374,7 +393,7 @@ import { NgxSpinnerService } from "ngx-spinner";
           this.spinner.show();
           this.api.deleteenvironment(selectedEnvironments).subscribe( res =>{ 
             Swal.fire({
-              position: 'top-end',
+              position: 'center',
               icon: 'success',
               title: res.status,
               showConfirmButton: false,
@@ -427,7 +446,6 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   checkEnableDisableBtn(id, event)
   {
-    console.log(event.target.checked);
     this.environments.find(data=>data.environmentId==id).checked=event.target.checked;
     if(this.environments.filter(data=>data.checked==true).length==this.environments.length)
     {
@@ -452,7 +470,7 @@ import { NgxSpinnerService } from "ngx-spinner";
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
         Swal.fire({
-          position: 'top-end',
+          position: 'center',
           icon: 'success',
           title: data[0].status,
           showConfirmButton: false,
@@ -479,10 +497,8 @@ import { NgxSpinnerService } from "ngx-spinner";
     for(let i=0;i<this.environments.length;i++)
     {
       this.environments[i].checked= false;
-      console.log(this.environments[i]);
     }
     this.checkflag=false;
-    //console.log(this.environments);
   }
 
 }

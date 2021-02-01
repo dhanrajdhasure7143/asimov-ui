@@ -1,0 +1,17 @@
+cron-time-picker div.ng-star-inserted {
+    line-height: 4 !important;
+}
+
+.ngb-tp-input {
+    text-align: center !important;
+    width: 55px !important;
+}
+
+.time {
+    font-size: 12px;
+}
+
+.bt-padmrar {
+    padding: 0px;
+    margin: 0px;
+}

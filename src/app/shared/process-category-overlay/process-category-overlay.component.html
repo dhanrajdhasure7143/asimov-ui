@@ -28,7 +28,7 @@
                     <div *ngIf='isBpmnModule'>
                         <mat-form-field class="row col-md-12">
                             <mat-label>Select Notation Type</mat-label>
-                            <mat-select name="notation" #notation="ngModel" [(ngModel)]="notationType" required>
+                            <mat-select name="notation" #notation="ngModel" [(ngModel)]="notationType" required [disabled]="uploadedFileExtension">
                                 <mat-option value="bpmn">BPMN</mat-option>
                                 <mat-option value="cmmn">CMMN</mat-option>
                                 <mat-option value="dmn">DMN</mat-option>
@@ -37,9 +37,9 @@
                     </div>
                     <mat-form-field class="row col-md-12">
                         <mat-label>Enter Process Name</mat-label>
-                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="[a-zA-Z0-9 _-]+" required  [disabled]="data">
+                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9 _-]{4,25}$" required  [disabled]="data">
                     </mat-form-field>
-                    <span class="error_msg" [class.show]="process_name.dirty && process_name.invalid">Alphanumerics with _- are allowed</span>
+                    <span class="error_msg" [class.show]="process_name.dirty && process_name.invalid">Alphanumerics with _- are allowed having 4 - 25 characters</span>
                     <br/>
                     <div class="center">
                         <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="!data && !processCategoryForm.valid">{{buttonName}}</button>

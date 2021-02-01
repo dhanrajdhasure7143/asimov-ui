@@ -22,38 +22,70 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <div><button class="keyboard_style_upload" (click)="displayShortcut()"><img src="..\assets\bpmnkeyboard.png"></button>
-        <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button>
+    <div class="functionality-icons">
+        <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
+        <span class="start-instance">
+            <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>&nbsp;&nbsp;
+            <!-- <div class="deploy-menu" *ngIf="rejectedOrApproved == 'APPROVED'">
+                <a (click)="openDeployDialog()">Start process instance</a>
+                <br/>
+                <a (click)="openDeployDialog()">Start process instance with new configuration</a>
+            </div> -->
+        </span>
+        <span class="fa fa-keyboard" (click)="displayShortcut()"></span>&nbsp;&nbsp;
+        <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
+        <!-- <button class="keyboard_style_upload" (click)="displayShortcut()" ><img src="..\assets\bpmnkeyboard.png"></button> -->
+        <!-- <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button> -->
     </div>
 </div>
-
 <div class="container-fluid">
     <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
     <div>
         <span class="err-msg"></span>
-        <div class="row">
-            <div id="canvas" class="col-md-12"></div>
-            <div class="propertiesContainer">
-                <div class="propertiesTitle" (click)="togglePosition()">
-                    <div>Properties Panel</div>
+        <mat-tab-group class="canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
+            <mat-tab label="Notation">
+                <div class="row">
+                    <div id="canvas" class="col-md-12"></div>
+                    <div class="propertiesContainer">
+                        <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
+                        <div id="properties" class="slide-right"></div>
+                    </div>
+                    <div #dmnTabs id="dmn-tabs" *ngIf="selectedNotationType=='dmn'"></div>
                 </div>
-                <div id="properties" class="slide-right"></div>
-            </div>
-        </div>
+                <ng-template #wrongXMLcontent>
+                    <div class="modal-header">
+                        <h4 class="modal-title pull-left xml-error">Error in XML</h4>
+                        <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        {{errXMLcontent}}
+                    </div>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="XML">
+                <div class="text-area">
+                    <textarea [(ngModel)]="xmlTabContent" rows="22" cols="150">
+                        {{xmlTabContent}}
+                    </textarea>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
     </div>
     <div class="row btn_row">
-        <span class="pull-left">
-                    <select [(ngModel)]="fileType">
-                      <option value="svg">SVG</option>
-                      <option value="png">PNG</option>
-                      <option value="jpg">JPG</option>
-                      <option value="bpmn">BPMN</option>
-                    </select>
-                    <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
-                  </span>
         <button class="right btn btn-primary eiap-btn" id="approvalSubmit" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
         <button class="right btn btn-primary eiap-btn" id="save" (click)="saveprocess(null)">Save Process</button>
-        <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="orchestrate" (click)="orchestrate()">Orchestrate</button>
+        <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn"  id="automate" (click)="automate()">Automate</button>
+        <span class="right">
+            <select [(ngModel)]="fileType">
+                <option value="svg">SVG</option>
+                <option value="png">PNG</option>
+                <option value="jpg">JPG</option>
+                <option [value]="selectedNotationType">{{selectedNotationType | uppercase }}</option>
+            </select>
+            <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+        </span>
     </div>
     <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
         <p style="color: white">Auto Saving... </p>
@@ -61,17 +93,96 @@
 </div>
 <div class="spinoverlay" *ngIf="isLoading">
     <div class="spincenter">
-        <mat-progress-spinner diameter=50 mode="indeterminate"></mat-progress-spinner>
+        <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner>
     </div>
 </div>
 <ng-template #keyboardShortcut>
-    <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
-    <table>
-        <tr *ngFor="let keyboardLabels of keyboardLabels">
-            <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
-            <td>
-                <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
-            </td>
+ <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+ <table>
+        <tr *ngFor="let keyboardLabels of keyboardLabels" >
+            <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+             <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
         </tr>
     </table>
 </ng-template>
+
+
+<ng-template #variabletemplate>
+    <div class="modal_size">
+    <div><h4>Start Process</h4></div>
+    <hr>
+        <div class="row">
+            <div class="col-sm-12 row">
+                <form action="" #business='ngForm'>
+                <div class="col-sm-4">
+                    <h5 for="">Business Key:</h5>
+                </div>
+                <div class="col-sm-8 business-input">
+                    <input type="text" class="form-control" placeholder="Enter Business Key" #business_key id='business_key' name='business_key' [(ngModel)]="businessKey" required>
+                    <span *ngIf="((business_key.invalid && business.submitted) || (business_key.errors && business_key.touched) )" 
+                    class='fa fa-info-circle errspan'> Business Key is required </span>
+                </div>
+            </form>
+            </div>
+            
+        </div>
+        <div class="col-sm-4" >
+            <div>
+            <p class="variable" (click)='addVariable()'>+ Add Variable</p>
+        </div>
+        </div>
+        <div class="col-sm-12" *ngIf="variables.length>0">
+            <div class="col-sm-3">Name</div>
+            <div class="col-sm-3">Type</div>
+            <div class="col-sm-3">Value</div>
+            <div class="col-sm-3"></div>
+        </div>
+        <form action="" #variableForm="ngForm">
+        <section class="col-sm-12 row" *ngFor="let item of variables; let i = index;">
+            <div class="col-sm-3">
+                <input type="text" class="variable-input form-control" placeholder="Name"  name="variable_name{{i}}" [(ngModel)]='item.variableName' required>
+            </div>
+            <div class="col-sm-3">
+                <select class="variable-input form-control" name="variable_type{{i}}" id="" [(ngModel)]='item.type' required>
+                    <option value="" disabled hidden>Select</option>
+                    <option value="boolean">Boolean</option>
+                    <option value="short">Short</option>
+                    <option value="integer">Integer</option>
+                    <option value="long">Long</option>
+                    <option value="double">Double</option>
+                    <option value="string">String</option>
+                    <option value="date">Date</option>
+                </select>
+                <!-- <input type="text" class="variable-input form-control" placeholder="Type" name="variable_type{{i}}" [(ngModel)]='item.variablesType' required> -->
+            </div>
+            <div class="col-sm-3">
+                <input *ngIf="item.type!='boolean'" type="text" class="variable-input form-control" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value' required>
+                <!-- <input *ngIf="item.type=='boolean'" type="checkbox" class="" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value'> -->
+            <select class="variable-input form-control" *ngIf="item.type=='boolean'" name="variable_value{{i}}" [(ngModel)]='item.value' id="" required>
+                <option value="" disabled hidden>Select</option>    
+                <option value="true">True</option>
+                    <option value="false">False</option>
+            </select>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-danger eiap-btn" (click)="removevariable(i)">Remove</button>
+            </div>
+
+        <!-- </div> -->
+    </section>
+    </form>
+    <hr>
+
+    <div class="col-sm-12 row">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-3">
+            <button class="btn btn-secondary cancel_btn eiap-btn" (click)="cancelProcess()">Cancel</button>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+            <button class="btn btn-primary eiap-btn" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
+        </div>
+    </div>
+    </div>
+
+  </ng-template>

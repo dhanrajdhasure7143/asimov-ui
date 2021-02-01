@@ -6,9 +6,9 @@ import { RestApiService } from '../../services/rest-api.service';
 import { FormGroup, FormControl } from '@angular/forms';
 import jsPDF from 'jspdf';
 import { NotifierService } from 'angular-notifier';
-import { RpaDragHints } from '../model/rpa-workspace-module-hints';
+import { Rpa_Hints } from '../model/RPA-Hints';
 import { DataTransferService } from "../../services/data-transfer.service";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import Swal from 'sweetalert2';
 import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
 import domtoimage from 'dom-to-image';
@@ -21,7 +21,7 @@ import * as $ from 'jquery';
   styleUrls: ['./rpa-studio-workspace.component.css']
 })
 export class RpaStudioWorkspaceComponent implements AfterViewInit {
-
+  recordandplayid:any;
   jsPlumbInstance;
   public stud: any = [];
   public optionsVisible: boolean = true;
@@ -67,7 +67,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   Image:any;
   files_data:any=[];
   fileobj:any;
-  constructor(private rest: RestApiService, private notifier: NotifierService, private hints: RpaDragHints, private dt: DataTransferService, private http: HttpClient, private child_rpa_studio: RpaStudioComponent,) {
+  options:any=[];
+  restapiresponse:any;
+  rp_url:string;
+  recordedcode:any;
+  finalcode:any;
+  constructor(private rest: RestApiService, private notifier: NotifierService, private hints: Rpa_Hints, private dt: DataTransferService, private http: HttpClient, private child_rpa_studio: RpaStudioComponent,) {
 
   }
 
@@ -88,7 +93,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
-      console.log(this.child_rpa_studio.templateNodes)
       this.loadnodes();
 
     }
@@ -159,8 +163,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.jsPlumbInstance.detach(info);
     });
     if (this.finalbot.botId != undefined) {
-      console.log(this.finalbot.sequences)
-
       this.addconnections(this.finalbot.sequences)
       this.child_rpa_studio.spinner.hide()
       this.dragelement = document.querySelector('#' + this.dragareaid);
@@ -292,7 +294,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     };
 
     const node = event.data;
-    console.log(node)
     node.id = this.idGenerator();
     node.selectedNodeTask = "";
     node.selectedNodeId = "";
@@ -384,7 +385,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       Connector: ["Flowchart", { curviness: 90, cornerRadius: 5 }],
       connectorClass: "path",
       connectorOverlays: [['Arrow', { width: 10, length: 10, location: 1 }]],
-      
+
 
     };
 
@@ -457,19 +458,18 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         let task=this.finaldataobjects.find(task => task.nodeId == nodeId);
         if(task!=undefined)
         {
-          this.finaldataobjects.splice(this.finaldataobjects.indexOf(task),1)  
+          this.finaldataobjects.splice(this.finaldataobjects.indexOf(task),1)
         }
       }
     });
   }
 
-  
+
 
 
 
   onRightClick(n: any, e: { target: { id: string; } }, i: string | number) {
-    this.selectedNode = n
-    console.log(e);
+    this.selectedNode = n;
     this.stud = [];
     if (n.tasks.length > 0) {
       if (this.optionsVisible == true) {
@@ -512,18 +512,46 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         name: node.selectedNodeTask,
         id: node.selectedNodeId
       }
-      this.formHeader = node.name + "-" + node.selectedNodeTask;
+      this.formHeader = node.name + " - " + node.selectedNodeTask;
       this.selectedNode = node;
       let taskdata = this.finaldataobjects.find(data => data.nodeId == node.name + "__" + node.id);
       if (taskdata != undefined) {
-        if (taskdata.tMetaId == node.selectedNodeId) {
+        if (taskdata.tMetaId == node.selectedNodeId)
+        {
           let finalattributes: any = [];
           this.rest.attribute(node.selectedNodeId).subscribe((data) => {
             finalattributes = data
             taskdata.attributes.forEach(element => {
-              finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+              if(finalattributes.find(data => data.id == element.metaAttrId)!= undefined)
+              {
+                if(finalattributes.find(data => data.id == element.metaAttrId).type=='restapi')
+                {
+                  if(element.attrValue!='' && element.attrValue!=undefined)
+                  {
+                    let attr_val=JSON.parse(element.attrValue);
+                    let attrnames=Object.getOwnPropertyNames(attr_val);
+                    finalattributes.find(data => data.id == element.metaAttrId).value=attr_val[attrnames[0]];
+                  }
+                }
+                else
+                {
+                  finalattributes.find(data => data.id == element.metaAttrId).value = element.attrValue;
+                }
+              }
             });
-            this.response(finalattributes,node)
+            if(finalattributes.find(attr=>attr.taskId==71)!=undefined)
+            {
+              this.formVales = finalattributes;
+              this.update_record_n_play(finalattributes, node)
+            }
+            else if(finalattributes.find(attr=>attr.type=='restapi')!=undefined)
+            {
+              this.addoptions(finalattributes, node);
+            }
+            else
+            {
+              this.response(finalattributes,node);
+            }
           });
         }
         else {
@@ -533,8 +561,25 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         }
       }
       else {
+
         this.rest.attribute(node.selectedNodeId).subscribe((data) => {
-          this.response(data,node)
+          let attr_response:any=data;
+          if(node.selectedNodeTask=="Record & Play")
+          {
+
+              this.formVales = attr_response;
+              this.recordandplayid="recordandplay_"+this.finalbot.botName+"_"+node.id;
+              document.getElementById('recordandplay').style.display='block';
+          }
+          else if(attr_response.find(attr=>attr.type=='restapi')!=undefined)
+          {
+             this.addoptions(attr_response, node);
+          }
+          else
+          {
+            this.response(attr_response,node);
+          }
+
         })
 
       }
@@ -544,11 +589,48 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         icon: "warning",
         title: "Please select task",
         showConfirmButton: true,
-        
+
       })
     }
   }
 
+
+
+  update_record_n_play(finalattributes, node)
+  {
+    if(finalattributes.find(attr=>attr.taskId==71).value!=undefined)
+    {
+      $("#record_n_play").val(finalattributes.find(attr=>attr.taskId==71).value);
+      document.getElementById('recordandplay').style.display='block';
+
+    }
+
+  }
+  addoptions(attributes,node)
+  {
+    /*
+      let token={​​​​​
+        headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
+      }​​​*/​
+      let restapi_attr=attributes.find(attr => attr.type=='restapi');
+      this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
+      {
+        this.restapiresponse=data
+        let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
+        let options:any=[];
+        this.restapiresponse.forEach(data_obj=>{
+          let key={
+              key:data_obj[attrnames[0]],
+              label:data_obj[attrnames[1]],
+            }
+            options.push(key);
+        })
+        attributes.find(attr => attr.type=='restapi').options=options;
+        this.response(attributes,node);
+      });
+
+
+  }
 
 
 
@@ -562,14 +644,13 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     } else {
       this.fields = [];
       this.hiddenPopUp = true;
-      console.log(data);
       data.forEach(element => {
         element.nodeId=node.id;
         if (element.type == "multipart") {
           element.onUpload = this.onUpload.bind(this)
         }
         if (element.type == "dropdown") {
-          element.onChange = this.onChange.bind(this)
+          ///element.onChange = this.onChange.bind(this)
         }
       });
       this.formVales = data
@@ -579,19 +660,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
         fields: new FormControl(JSON.stringify(this.fields))
       })
       this.unsubcribe = this.form.valueChanges.subscribe((update) => {
-        console.log(update);
         this.fields = JSON.parse(update.fields);
       })
     }
   }
 
   onUpload(event ,field) {
-    console.log(event)
-    console.log(field)
     let data:any={
       file:event.target.files[0],
       attrId:field.id,
-      nodeId:field.nodeId, 
+      nodeId:field.nodeId,
     }
     this.fileobj=event.target.files[0];
     let attr_data=this.files_data.find(check=>(check.nodeId==field.nodeId && field.id==check.attrId))
@@ -605,9 +683,8 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
   }
 
-  
+
   onChange(e) {
-    console.log(e)
     this.fields.map(ele => {
       if (ele.dependency == e) {
         ele.visibility = true
@@ -622,10 +699,40 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
 
 
+  recording(command)
+  {
+      ///let editorExtensionId="cgmlkfjpbibldanihfidkfbmmkemphpn";
+      let editorExtensionId="efhogiiggfblodigpphpedpbkclgfcje"
+       window["chrome"].runtime.sendMessage(editorExtensionId, {url: this.rp_url,data:command},
+        function(response) {
+          let code:any;
+          code=response;
+          let completecode="describe('My First Test', () => { \n it('Test case', () => { \n";
+          code.code.codeBlocks.forEach(statment=>{
+            completecode=completecode+statment.value+"\n";
+          });
+          completecode=completecode+"}) \n })";
+          $("#record_n_play").val(completecode);
+        });
+  }
+
+  submitcode()
+  {
+    let data={
+      "codeSnippet":$("#record_n_play").val()
+    }
+    this.close_record_play();
+    this.onFormSubmit(data);
+  }
+
+
+
+  close_record_play(){
+    document.getElementById('recordandplay').style.display='none';
+  }
 
 
   onFormSubmit(event) {
-    console.log(event)
     this.fieldValues = event
     if (this.fieldValues['file1']) {
       this.fieldValues['file1'] = this.fieldValues['file1'].substring(12)
@@ -641,9 +748,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.hiddenPopUp = false;
     let objAttr: any;
     let obj: any = [];
-    console.log(this.formVales);
     this.formVales.forEach((ele, i) => {
-      console.log(ele);
       if (ele.visibility == true) {
         let objKeys = Object.keys(this.fieldValues);
         objAttr = {
@@ -651,42 +756,50 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
           "metaAttrValue": ele.name,
           "attrValue": ''
         }
-        if(ele.type=="checkbox" && this.fieldValues[ele.name]=="")
+        if(ele.type=="checkbox" && this.fieldValues[ele.name+"_"+ele.id]=="")
         {
           objAttr["attrValue"]="false";
         }
+        else if(ele.type=="restapi")
+        {
+          if(this.fieldValues[ele.name+'_'+ele.id]!='' && this.fieldValues[ele.name+'_'+ele.id]!=undefined)
+          {
+            let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
+            objAttr["attrValue"]=JSON.stringify(this.restapiresponse.find(data=>this.fieldValues[ele.name+'_'+ele.id]==data[attrnames[0]]));
+          }
+        }
         else if(ele.type=="multipart")
         {
-          if(this.fieldValues[ele.name]=="")
+          if(this.fieldValues[ele.name+'_'+ele.id]=="")
           {
             let task=this.finaldataobjects.find(x=>x.nodeId==this.selectedNode.id);
             if(task!=undefined)
             {
-              let attval=task.attributes.find(a=>a.metaAttrId==ele.id)
-              console.log(attval);
+              let attval=task.attributes.find(a=>a.metaAttrId==ele.id);
               if(attval!=undefined)
               {
                 objAttr["attrValue"]=attval.attrValue;
-              }   
-            }else
+              }
+            }
+            else
             {
-              objAttr["attrValue"]=this.fieldValues[ele.name];
-            } 
+              objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
+            }
           }
           else
           {
-            objAttr["attrValue"]=this.fieldValues[ele.name];
+            objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
             let file_res:any=this.files_data.find(rec=>rec.attrId==ele.id && rec.nodeId==this.selectedNode.id)
             if(file_res!=undefined)
             {
               objAttr["file"]=file_res.file;
-              objAttr["attrValue"]=file_res.file.name;      
+              objAttr["attrValue"]=file_res.file.name;
             }
           }
         }
         else
         {
-          objAttr["attrValue"]=this.fieldValues[ele.name];
+          objAttr["attrValue"]=this.fieldValues[ele.name+'_'+ele.id];
         }
         obj.push(objAttr);
       }
@@ -703,15 +816,12 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       "y": this.selectedNode.y,
       "attributes": obj,
     }
-    console.log(this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId))
     let index = this.finaldataobjects.findIndex(sweetdata => sweetdata.nodeId == cutedata.nodeId)
     if (index != undefined && index >= 0) {
       this.finaldataobjects[index] = cutedata;
     } else {
       this.finaldataobjects.push(cutedata);
-
     }
-    console.log(this.finaldataobjects)
     this.notifier.notify("info", "Data Saved Successfully");
   }
 
@@ -734,7 +844,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       "scheduler": this.scheduler,
       "sequences": this.getsequences(),
     }
-    
+
     if(this.checkorderflag==false)
     {
       return false;
@@ -745,20 +855,15 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
   }
 
-
- async uploadfile(envids)
+  async uploadfile(envids)
   {
      let tasks:any=[];
      tasks=this.finaldataobjects.filter(data=>data.tMetaId==64);
       for(let filedata of tasks)
       {
-        let filepath:any=filedata.attributes.find(data_file_rpa=>(data_file_rpa.metaAttrId==278));  
-        console.log(filepath);
+        let filepath:any=filedata.attributes.find(data_file_rpa=>(data_file_rpa.metaAttrId==278));
         if(filepath!=undefined)
         {
-          console.log(filepath);
-          console.log(this.saveBotdata.envIds);
-          
           let form = new FormData();
           let file = new Blob([filepath.file]);
           form.append("file",filepath.file);
@@ -826,7 +931,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       "sequences": this.getsequences()
     }
     if(this.checkorderflag==false)
-    {      
+    {
       return false;
     }
     else
@@ -860,10 +965,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       this.disable = true;
       let message = "Data is Saved Successfully"
       this.notifier.notify(type, message);
-      console.log(data);
     }
-    console.log(data);
-
   }
   execution(botid) {
     let eqObj: any
@@ -918,7 +1020,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     this.fields = []
   }
 
-  downloadPng() 
+  downloadPng()
   {
     var element=document.getElementById(this.dragareaid)
     domtoimage.toPng(element)
@@ -934,7 +1036,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
   }
 
   downloadJpeg() {
-    
+
     var element=document.getElementById(this.dragareaid)
     domtoimage.toPng(element,{ quality: 0.95,background: "white"})
     .then(function (dataUrl) {
@@ -953,7 +1055,7 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     var element=document.getElementById(this.dragareaid)
     domtoimage.toPng(element)
       .then(function (dataUrl) {
-      let img=dataUrl;  
+      let img=dataUrl;
       var doc = new jsPDF('l', 'mm', 'a4', 1);
       const bufferX = 5;
       const bufferY = 5;
@@ -1060,7 +1162,6 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
 
   outputbox(node) {
-    console.log(node);
     document.getElementById(this.outputboxid).style.display = "block";
     document.getElementById("output_" + node.id).style.display = "none"
   }
@@ -1075,25 +1176,28 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     if (this.SelectedOutputType != "") {
       if (this.finaldataobjects.find(object => object.nodeId.split("__")[1] == this.outputnode.id) != undefined) {
         let task: any = this.finaldataobjects.find(object => object.nodeId.split("__")[1] == this.outputnode.id);
-        console.log(task)
         let postdata: any = {
           "botId": this.finalbot.botId,
           "version": this.finalbot.version,
           "viewType": this.SelectedOutputType,
-          "inputRefName": task.attributes[0].attrValue,
+          "inputRefName": task.attributes.find(item=>item.metaAttrId==135).attrValue,
         }
         this.rest.getoutputbox(postdata).subscribe(outdata => {
           this.outputboxresult = outdata;
-          if (this.SelectedOutputType == "Text") 
+          if (this.SelectedOutputType == "Text")
           {
             let data: any = outdata
-            let textval:String=JSON.stringify(data[0].Value);
-            this.outputboxresulttext = textval.replace(new RegExp('\r?\n','g'), "<br />")
+            setTimeout(()=>{
+              $("#text_"+this.outputboxid).html((data[0].Value).toString().replace(/\n/g, "<br />"));
+            },1000)
           }
           if(this.SelectedOutputType=="Image")
-          { 
-            let data=this.outputboxresult[0].Value.split(':');
-            this.Image= 'data:' + 'image/png' + ';base64,' +data[1];
+          {
+            let image=this.outputboxresult[0].Value;
+            //let obj=JSON.parse(this.outputboxresult[0].Value);
+            //console.log("000000000000000000000000000000000000>",obj)
+            //let image=data[1].slice(0, -2);
+            this.Image= 'data:' + 'image/png' + ';base64,' +image;
           }
         })
       }
@@ -1116,24 +1220,21 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
 
 
   add_order(object) {
-    
+
     let end = "STOP_" + this.finalbot.botName;
     this.final_tasks.push(object);
-    console.log(object)
     if(object==undefined)
     {
       this.checkorderflag=false;
       return;
     }
-    if (object.outSeqId == end) 
+    if (object.outSeqId == end)
     {
-      console.log(end)
-      console.log(object.outSeqId)
       return;
     }
     else {
       object = this.finaldataobjects.find(object2 => object2.nodeId.split("__")[1] == object.outSeqId);
-      if(object == undefined) 
+      if(object == undefined)
       {
         this.checkorderflag=false;
         return;
@@ -1161,6 +1262,16 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
       }
     }
     return;
+  }
+
+  saveentity()
+  {
+
+  }
+
+  start_automation()
+  {
+    alert("start recording")
   }
 
 

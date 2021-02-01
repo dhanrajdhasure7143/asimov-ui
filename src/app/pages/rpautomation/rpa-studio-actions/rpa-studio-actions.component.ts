@@ -5,6 +5,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
 import cronstrue from 'cronstrue';
 import {  HttpClient } from '@angular/common/http';
+import { Router} from '@angular/router';
 import { RpaStudioTabsComponent } from '../rpa-studio-tabs/rpa-studio-tabs.component'
 import Swal from 'sweetalert2';
 import { RpaStudioComponent } from '../rpa-studio/rpa-studio.component';
@@ -14,6 +15,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import { NotifierService } from 'angular-notifier';
 import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
+import { DatePipe } from '@angular/common'
 @Component({
   selector: 'app-rpa-studio-actions',
   templateUrl: './rpa-studio-actions.component.html',
@@ -44,11 +46,14 @@ export class RpaStudioActionsComponent implements OnInit {
   public botverid:any;
   public resplogbyrun:any;
   public logresponse:any=[];
-  displayedColumns: string[] = ['run_id','version','start_date','start_time','end_date' ,'end_time', "bot_status"];
+  public schpop:Boolean=false;
+  public schedule:any
+  public schedule_list_scheduler=[];
+  displayedColumns: string[] = ['run_id','version','start_date','end_date', "bot_status"];
   Viewloglist:MatTableDataSource<any>;
-  displayedColumns1: string[] = ['task_name', 'status','start_time','start_date','end_time','end_date','error_info' ];
-  logbyrunid:MatTableDataSource<any>; 
-  
+  displayedColumns1: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
+  logbyrunid:MatTableDataSource<any>;
+
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -90,6 +95,7 @@ export class RpaStudioActionsComponent implements OnInit {
   public respdata1:boolean = false;
   public respdata2:boolean = false;
   public she:any;
+  public insertForm:FormGroup;
   public minDate:NgbDateStruct;
   public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
   i="";
@@ -116,12 +122,13 @@ export class RpaStudioActionsComponent implements OnInit {
 
     cronFlavor: "standard"
   }
-  userRole: string;
+  userRole;
   isButtonVisible: boolean;
   constructor(private fb : FormBuilder,private rest : RestApiService, private http:HttpClient,
     private rpa_tabs:RpaStudioTabsComponent, private rpa_studio:RpaStudioComponent,
-    private notifier: NotifierService, private calender:NgbCalendar,
-    ) { 
+    private notifier: NotifierService, private calender:NgbCalendar, private router:Router,
+    private formBuilder: FormBuilder,
+    ) {
     this.form = this.fb.group({
       'startTime' : [this.startTime, Validators.required],
       'endTime' : [this.endTime, Validators.required],
@@ -130,16 +137,8 @@ export class RpaStudioActionsComponent implements OnInit {
 
   ngOnInit() {
     this.userRole = localStorage.getItem("userRole")
-    
-    if(this.userRole.includes('SuperAdmin')){
-      this.isButtonVisible = true;
-    }else if(this.userRole.includes('Admin')){
-      this.isButtonVisible = true;
-    }else if(this.userRole.includes('RPA Admin')){
-      this.isButtonVisible = true;
-    }else{
-      this.isButtonVisible = false;
-    }
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin');
     this.startbot=false;
     this.pausebot=false;
     this.resumebot=false;
@@ -148,26 +147,39 @@ export class RpaStudioActionsComponent implements OnInit {
     this.getEnvironmentlist();
     this.getpredefinedbotlist();
 
-    this.schedulepopid="schedule-"+this.botState.botName;  
+    this.schedulepopid="schedule-"+this.botState.botName;
     this.viewlogid="viewlog-"+this.botState.botName;
+
+    const ipPattern =
+    "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+      this.insertForm=this.formBuilder.group({
+        environmentName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        environmentType: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        agentPath: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        hostAddress: ["", Validators.compose([Validators.required, Validators.pattern(ipPattern), Validators.maxLength(50)])],
+        username: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        connectionType: ["SSH",Validators.compose([Validators.required,, Validators.maxLength(50), Validators.pattern("[A-Za-z]*")])],
+        portNumber: ["22",  Validators.compose([Validators.required, Validators.maxLength(50), Validators.pattern("[0-9]*")])],
+        activeStatus: [true]
+      })
+
     if(this.botState.botId!=undefined)
     {
       this.savebotrespose=this.botState;
-      console.log(this.botState.botId)
       this.getschecdules();
       this.childBotWorkspace.saveCron(this.she);
       this.botState.envIds.forEach(envdata=>{
           this.environment.find(data=>data.environmentId==envdata).checked=true;
       })
-      
-    }
 
+    }
   }
 
   onCreateSubmit(){}
-  
+
   deploybot() {
-    
+
     this.rest.deployremotemachine(this.savebotrespose.botId).subscribe(data => {
       this.deploymachinedata = data;
       Swal.fire({
@@ -177,9 +189,9 @@ export class RpaStudioActionsComponent implements OnInit {
         showConfirmButton: false,
         timer: 2000
       })
-      
+
     })
-    
+
   }
 
   //loadpredefinedbot(){}
@@ -199,7 +211,7 @@ export class RpaStudioActionsComponent implements OnInit {
     }).then((result) => {
     if (result.value) {
       this.childBotWorkspace.resetdata();
-    } 
+    }
   })
   }
 
@@ -230,8 +242,8 @@ export class RpaStudioActionsComponent implements OnInit {
                 timer:2000})
                 this.rpa_tabs.closeTab(this.botState);
             }else
-            { 
-              
+            {
+
                 Swal.fire({
                   position:'top-end',
                   icon:"error",
@@ -239,7 +251,7 @@ export class RpaStudioActionsComponent implements OnInit {
                   showConfirmButton:false,
                   timer:2000})
                   //this.rpa_tabs.closeTab(this.botState);
-              
+
             }
           })
           //this.nodes = this.nodes.filter((node): boolean => nodeId !== node.id);
@@ -265,8 +277,8 @@ export class RpaStudioActionsComponent implements OnInit {
       let checkbotres=await this.childBotWorkspace.saveBotFun(this.botState,this.finalenv);
       if(checkbotres==false)
       {
-        
-        this.rpa_studio.spinner.hide();  
+
+        this.rpa_studio.spinner.hide();
         Swal.fire({
           icon: 'warning',
           title: "Please check connections",
@@ -281,13 +293,11 @@ export class RpaStudioActionsComponent implements OnInit {
 
         if(this.savebotrespose.botId!=undefined)
         {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: "Bot Saved Sucessfully",
-            showConfirmButton: false,
-            timer: 2000
-          })
+          Swal.fire("Bot saved Sucessfully","","success")
+          for(let p=0 ;p<this.childBotWorkspace.nodes.length;p++)
+          {
+            this.childBotWorkspace.nodes[p].status="executed";
+          }
           this.childBotWorkspace.uploadfile(this.finalenv);
           this.getschecdules();
           this.startbot=true;
@@ -297,28 +307,22 @@ export class RpaStudioActionsComponent implements OnInit {
           let bottask:any=this.botState;
           if(bottask.taskId!=0)
           {
-            this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId);
+            this.rpa_assignbot(this.savebotrespose.botId, bottask.taskId, "Automated");
           }
         }
         else
         {
-          
+
           this.childBotWorkspace.disable=false;
-          Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: "Bot failed to Save",
-            showConfirmButton: false,
-            timer: 2000
-          })
-        }  
+         Swal.fire("Bot failed to save","","warning")
+        }
       });
       }
     }
     else
     {
-      
-       this.childBotWorkspace.saveCron(this.she);  
+
+       //this.childBotWorkspace.saveCron(this.she);
        let checkbot:any=await this.childBotWorkspace.updateBotFun(this.savebotrespose,this.finalenv)
        if(checkbot==false)
        {
@@ -335,35 +339,21 @@ export class RpaStudioActionsComponent implements OnInit {
           this.childBotWorkspace.successCallBack(data);
           this.savebotrespose=data;
           this.rpa_studio.spinner.hide();
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: "Bot Updated Sucessfully",
-            showConfirmButton: false,
-            timer: 2000
-          })
+          Swal.fire("Bot updated Sucessfully","","success")
           this.getschecdules();
           this.childBotWorkspace.uploadfile(this.finalenv);
         });
       }
     }
   }
- 
-  
+
+
 
   executionAct() {
     let response:any;
     if(this.savebotrespose!=undefined)
     {
-      
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Initiated Sucessfully !!",
-        showConfirmButton: false,
-        timer: 2000            
-      })
-      
+
       this.startbot=false;
       this.pausebot=true;
       this.resumebot=false;
@@ -371,54 +361,35 @@ export class RpaStudioActionsComponent implements OnInit {
         response = res;
         if(response.errorCode==undefined)
         {
-          /*
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: response.status,
-            showConfirmButton: false,
-            timer: 2000            
-          })*/
-      
+          Swal.fire(response.status,"","success")
+
         }else
         {
-          /*Swal.fire({
-            position: 'top-end',
-            icon: 'warning',
-            title: response.errorMessage,
-            showConfirmButton: false,
-            timer: 2000            
-          })*/
+          Swal.fire(response.status,"","warning")
         }
       })
     }
   }
-  
+
   pauseBot() {
     if(this.savebotrespose!=undefined)
     {
-      
-      
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Paused Sucessfully !!",
-        showConfirmButton: false,
-        timer: 2000            
-      })
-      
+
+
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: "Bot Paused Sucessfully !!",
+      //   showConfirmButton: false,
+      //   timer: 2000
+      // })
+
       this.pausebot=false;
       this.startbot=false;
       this.resumebot=true;
       this.rest.getUserPause(this.savebotrespose.botId).subscribe(data => {
       this.pause = data;
-       /* Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: this.pause.status,
-          showConfirmButton: false,
-          timer: 2000}) 
-        })*/
+      Swal.fire(this.pause.status,"","success")
     });
   }
   }
@@ -426,27 +397,22 @@ export class RpaStudioActionsComponent implements OnInit {
   resumeBot() {
     if(this.savebotrespose!=undefined)
     {
-      
-      
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Resumed Sucessfully !!",
-        showConfirmButton: false,
-        timer: 2000            
-      })
+
+
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: "Bot Resumed Sucessfully !!",
+      //   showConfirmButton: false,
+      //   timer: 2000
+      // })
       this.pausebot=true;
       this.startbot=false;
       this.resumebot=false;
       this.rest.getUserResume(this.savebotrespose.botId).subscribe(data => {
         this.resume = data;
-      /*  Swal.fire({
-          position: 'top-end',
-          icon: 'success',
-          title: this.resume.status,
-          showConfirmButton: false,
-          timer: 2000})*/
-        })
+        Swal.fire(this.resume.status,"","success")
+      })
     }
   }
 
@@ -454,71 +420,70 @@ export class RpaStudioActionsComponent implements OnInit {
     let data="";
     if(this.savebotrespose!=undefined)
     {
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: "Bot Execution Stopped !!",
-        showConfirmButton: false,
-        timer: 2000})
+      // Swal.fire({
+      //   position: 'top-end',
+      //   icon: 'success',
+      //   title: "Bot Execution Stopped !!",
+      //   showConfirmButton: false,
+      //   timer: 2000})
 
         this.startbot=true;
         this.pausebot=false;
         this.resumebot=false;
-        
         this.rest.stopbot(this.savebotrespose.botId,data).subscribe(data=>{
-          console.log(data)
-        
+          let resp:any=data
+          Swal.fire(resp.status,"","success")
         })
     }
   }
 
 
-  getEnvironmentlist() {
+  getEnvironmentlist()
+  {
+    this.listEnvironmentData=[];
+    this.environment=[];
     this.rest.listEnvironments().subscribe(data => {
     this.listEnvironmentData=data;
-    this.listEnvironmentData.forEach(env=>{
-      env["checked"]=false;
-      this.environment.push(env);
-    })
-    if(this.botState.botId!=undefined)
-    {
-      this.botState.envIds.forEach(envdata=>{
-          this.environment.find(data=>data.environmentId==envdata).checked=true;
+      this.listEnvironmentData.forEach(env=>{
+        env["checked"]=false;
+        this.environment.push(env);
       })
-    }
-    this.environment.filter(data =>{ 
-      if(data.checked==true){
-        this.envflag=false;
+      if(this.botState.botId!=undefined)
+      {
+        this.botState.envIds.forEach(envdata=>{
+            this.environment.find(data=>data.environmentId==envdata).checked=true;
+        })
       }
-    });
-    console.log(this.environment)
-  })
-}
+      this.environment.filter(data =>{
+        if(data.checked==true){
+          this.envflag=false;
+        }
+      });
+    })
+  }
 
 
   checkuncheckenv(id:any)
   {
-   // console.log(this.environment.filter(data => data.checked==true).length)
     if(this.environment.find(data=>data.environmentId==id).checked==false)
-    { 
+    {
       this.environment.find(data=>data.environmentId==id).checked=true
     }
     else if(  this.environment.find(data=>data.environmentId==id).checked==true)
     {
       this.environment.find(data=>data.environmentId==id).checked=false
     }
-    this.environment.filter(data =>{ 
+    this.environment.filter(data =>{
       if(data.checked==true){
         this.envflag=false;
       }
     })
 
-    
-  } 
-  
+
+  }
+
   getallpredefinebots() {
     this.predefined = [];
-    console.log(this.predefinedbotsData);
     if (this.predefinedbotsData) {
       this.optionPredefinedbotList = !this.optionPredefinedbotList;
       this.predefinedbotsData.forEach(element => {
@@ -529,11 +494,11 @@ export class RpaStudioActionsComponent implements OnInit {
       })
     }
   }
-   
-  
+
+
   schedulerPopUp(){
     let date:any=this.calender.getToday(); 
-    console.log(date["year"])
+    //console.log(date["year"])
     this.startDate=this.calender.getToday()
     this.minDate=this.calender.getToday();
       //this.startDate=this.calender.getToday();
@@ -542,17 +507,16 @@ export class RpaStudioActionsComponent implements OnInit {
       this.hiddenSchedlerPopUp = true
       let data:any
     }
-  
+
     scheduleResponse(data){
-      console.log(data);
       this.scheduleLists = data;
       let schedules:any =[];
       if(this.she==undefined)
       {
         this.scheduleLists.forEach(savedschedule=>{
-         
+
           let savecond={
-            
+
           "timeZone":savedschedule.timeZone,
           "scheduleInterval" :savedschedule.scheduleInterval,
           "startDate":savedschedule.startDate,
@@ -564,10 +528,8 @@ export class RpaStudioActionsComponent implements OnInit {
         this.she={
           //"TimeZone":this.scheduleLists[0].timeZone,
           //"numberofRepetitions":1,
-          "scheduleIntervals" :schedules, 
+          "scheduleIntervals" :schedules,
         }
-        console.log()
-       
       }
     }
 
@@ -576,25 +538,25 @@ export class RpaStudioActionsComponent implements OnInit {
     {
       this.rest.scheduleList(this.savebotrespose.botId).subscribe((data)=> this.scheduleResponse(data))
     }
-    
-    
 
-    addCron(){      
+
+
+    addCron(){
     let scheduleddata={
-      
+
       "timeZone":this.selectedTimeZone,
       "scheduleInterval" :this.cronExpression,
       "startDate":`${this.startDate["year"]+","+this.startDate["month"]+","+this.startDate["day"]+","+this.startTime["hour"]+","+this.startTime["minute"]}`,
       "endDate"  :`${this.endDate["year"]+","+this.endDate["month"]+","+this.endDate["day"]+","+this.endTime["hour"]+","+this.endTime["minute"]}`,
       "intervalId": this.childBotWorkspace.idGenerator(),
     }
-    let sche2= 
+    let sche2=
     {
       "timeZone":this.selectedTimeZone,
       "scheduleInterval" :this.cronExpression,
       "lastRunTime":"---",
-      "nextRunTime":"---", 
-      "executionStatus":"---",    
+      "nextRunTime":"---",
+      "executionStatus":"---",
       "intervalId": scheduleddata.intervalId,
     }
     if(this.she == undefined)
@@ -609,11 +571,8 @@ export class RpaStudioActionsComponent implements OnInit {
     }
     else
     {
-
       this.she.scheduleIntervals.push(scheduleddata);
-      console.log(this.she)
     }
-    console.log(this.she)
     this.scheduleLists.push(sche2)
     this.hiddenSchedlerPopUp = false;
     this.resetscheduler();
@@ -621,7 +580,7 @@ export class RpaStudioActionsComponent implements OnInit {
 
     saveCronexp()
     {
-      console.log(this.she)
+     /* console.log(this.she)
       if(this.she!=undefined)
       {
         let filteredschedules:any=[]
@@ -645,28 +604,27 @@ export class RpaStudioActionsComponent implements OnInit {
         title:'Scheduler Data saved successfull',
         showConfirmButton:false,
         timer:2000
-        })
+        })*/
     }
 
 
-    
-    
-    
-    
-    
+
+
+
+
+
     close(){
       document.getElementById(this.schedulepopid).style.display="none";
     }
-  
-  
-  
+
+
+
     botstatistics() {
     this.rest.botStatistics().subscribe(Status => {
       this.botStatisticsData = Status;
-      console.log(this.botStatisticsData);
     })
   }
-  
+
   modify(){
     this.childBotWorkspace.modifyEnableDisable();
   }
@@ -676,16 +634,17 @@ export class RpaStudioActionsComponent implements OnInit {
     let versionsdata:any=[];
     this.rest.getBotVersion(this.savebotrespose.botId).subscribe(data => {
       versionsdata=data;
-      versionsdata.forEach(version =>{
-        this.versionsList.push(version)
+      versionsdata.reverse().forEach((version,index )=>{
+          if(index<3)
+          this.versionsList.push(version)
       })
-   
+
     })
   }
 
   getpredefinedbotlist() {
     this.rest.getpredefinedbots().subscribe(data => {
-      this.predefinedbotsData=data;   
+      this.predefinedbotsData=data;
     });
    }
 
@@ -702,7 +661,7 @@ export class RpaStudioActionsComponent implements OnInit {
       cancelButtonColor: '#d33',
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
-        if (result.value) 
+        if (result.value)
         {*/
           this.rest.getbotversiondata(this.savebotrespose.botId,vid).subscribe(data =>{
             response=data;
@@ -714,6 +673,7 @@ export class RpaStudioActionsComponent implements OnInit {
     })*/
    }
 
+
    viewlogdata(){
      this.childBotWorkspace.addsquences();
     let response: any;
@@ -724,13 +684,10 @@ export class RpaStudioActionsComponent implements OnInit {
         if(this.logresponse.length >0)
         {
           this.respdata1 = false;
-          console.log(this.respdata1)
         }else
         {
           this.respdata1 = true;
-          console.log(this.respdata1);
         }
-        console.log(this.logresponse)
         if(this.logresponse.length>0)
         this.logresponse.forEach(data=>{
         response=data;
@@ -739,10 +696,10 @@ export class RpaStudioActionsComponent implements OnInit {
           let startdate=response.start_time.split("T");
           response["start_date"]=startdate[0];
           response.start_time=startdate[1].slice(0,8);
-     
-          
+
+
         }else
-        { 
+        {
           response["start_date"]="-";
           response.start_time="-";
         }
@@ -755,70 +712,66 @@ export class RpaStudioActionsComponent implements OnInit {
         {
           response["end_date"]="---";
           response.end_time="---";
-        
+
         }
         log.push(response)
       });
-      console.log(log);
-      log.sort((a,b) => a.run_id < b.run_id ? -1 : 1);
+      log.sort((a,b) => a.run_id > b.run_id ? -1 : 1);
       this.Viewloglist = new MatTableDataSource(log);
-      console.log(this.Viewloglist);
 
       this.Viewloglist.paginator=this.paginator1;
       this.Viewloglist.sort=this.sort1;
-      
+
       document.getElementById(this.viewlogid).style.display="block";
-    
+
     });
   }
 
+
+  public botrunid:any;
   ViewlogByrunid(runid){
-    console.log(runid);
+    this.botrunid=runid;
     let responsedata:any=[];
     let logbyrunidresp:any;
     let resplogbyrun:any=[];
     this.rest.getViewlogbyrunid(this.savebotrespose.botId,this.savebotrespose.version,runid).subscribe((data)=>{
-      responsedata = data; 
+      responsedata = data;
       if(responsedata.length >0)
       {
         this.respdata2 = false;
-        console.log(this.respdata2)
       }else
       {
         this.respdata2 = true;
-        console.log(this.respdata2);
       }
-      console.log(responsedata);
       responsedata.forEach(rlog=>{
         logbyrunidresp=rlog;
         logbyrunidresp["start_date"]=logbyrunidresp.start_time;
         logbyrunidresp["end_date"]=logbyrunidresp.end_time;
         logbyrunidresp.start_time=logbyrunidresp.start_time;
         logbyrunidresp.end_time=logbyrunidresp.end_time;
-        
+
         resplogbyrun.push(logbyrunidresp)
       });
-      console.log(resplogbyrun);
       this.logflag=true;
+      resplogbyrun.sort((a,b) => a.task_id > b.task_id ? 1 : -1);
       this.logbyrunid = new MatTableDataSource(resplogbyrun);
-      console.log(this.logbyrunid);
       this.logbyrunid.paginator=this.paginator2;
       this.logbyrunid.sort=this.sort2;
       document.getElementById(this.viewlogid).style.display="none";
       document.getElementById(this.viewlogid1).style.display="block";
         })
     }
-    
+
     back(){
       //document.getElementById("ViewLog").style.display="none";
       document.getElementById(this.viewlogid1).style.display="none";
       document.getElementById(this.viewlogid).style.display="block";
     }
-    
+
     viewlogclose(){
       document.getElementById(this.viewlogid).style.display="none";
     }
-    
+
     viewlogclose1(){
       document.getElementById(this.viewlogid1).style.display="none";
       document.getElementById(this.viewlogid).style.display="none";
@@ -836,7 +789,6 @@ loadpredefinedbot(botId)
       this.childBotWorkspace.finaldataobjects.push(element)
       let nodename=  element.nodeId.split("__")[0];
       let nodeid=element.nodeId.split("__")[1];
-      console.log(nodeid);
       j=j+100;
       let node={
         id:this.childBotWorkspace.idGenerator(),
@@ -847,8 +799,8 @@ loadpredefinedbot(botId)
         x:j+'px',
         y:"10px",
     }
-             
-           
+
+
     for(var i=0; i<responsedata.sequences.length; i++)
     {
       if(responsedata.sequences[i].sourceTaskId!=undefined )
@@ -874,7 +826,7 @@ loadpredefinedbot(botId)
       this.childBotWorkspace.populateNodes(node);
     }, 240);
 
-            
+
     })
     this.childBotWorkspace.addconnections(responsedata.sequences);
     this.rpa_studio.spinner.hide();
@@ -890,14 +842,14 @@ convertcron(cronexp)
 
 
 
-  rpa_assignbot(botId,taskId)
+  rpa_assignbot(botId,taskId,type)
   {
-    this.rest.assign_bot_and_task(botId,taskId).subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,taskId,type).subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
         this.notifier.notify("info",response.status);
-      } 
+      }
     });
   }
 
@@ -912,19 +864,15 @@ convertcron(cronexp)
     this.endDate=undefined;
   }
 
-  
+
 startSchedule()
-{ 
+{
   let scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p);
   let i:any;
 
   for(i=0;i<scheduleRecord.length;i++)
   {
-  console.log(scheduleRecord[i]);
   let s = scheduleRecord[i];
-  console.log(s.scheduleInterval);  
-  console.log(s.intervalId);
-  console.log(this.savebotrespose.botId);
   let startschedule={
     "botId":this.savebotrespose.botId,
     "scheduleInterval":s.scheduleInterval,
@@ -936,25 +884,21 @@ startSchedule()
     if(responsemessage.errorMessage==undefined)
     {
       this.notifier.notify("info",responsemessage.status);
-      
-    }     
+
+    }
   });
 }
   this.removeallchecks();
 }
 
 stopSchedule()
-{  
+{
   const scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p);
   let i:any;
 
   for(i=0;i<scheduleRecord.length;i++)
   {
-  console.log(scheduleRecord[i]);
   let s = scheduleRecord[i];
-  console.log(s.scheduleInterval);
-  console.log(s.intervalId);
-  console.log(this.savebotrespose.botId);
   let stopschedule={
     "botId":this.savebotrespose.botId,
     "scheduleInterval":s.scheduleInterval,
@@ -967,8 +911,8 @@ this.rest.stop_schedule(stopschedule).subscribe(response=>{
   if(responsemessage.errorMessage==undefined)
   {
     this.notifier.notify("info",responsemessage.status);
-    
-  }  
+
+  }
 });
 }
 this.removeallchecks();
@@ -980,11 +924,7 @@ pauseSchedule()
 
   for(i=0;i<scheduleRecord.length;i++)
   {
-  console.log(scheduleRecord[i]);
   let s = scheduleRecord[i];
-  console.log(s.scheduleInterval);  
-  console.log(s.intervalId);
-  console.log(this.savebotrespose.botId);
   let pauseschedule={
     "botId":this.savebotrespose.botId,
     "scheduleInterval":s.scheduleInterval,
@@ -993,7 +933,7 @@ pauseSchedule()
   let responsemessage:any
   this.rest.pause_schedule(pauseschedule).subscribe(response=>{
     responsemessage=response
- 
+
     if(responsemessage.errorMessage==undefined)
     {
         this.notifier.notify("info",responsemessage.status);
@@ -1004,17 +944,13 @@ pauseSchedule()
 }
 
 resumeSchedule()
-{ 
+{
   const scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p);
   let i:any;
 
   for(i=0;i<scheduleRecord.length;i++)
   {
-  console.log(scheduleRecord[i]);
   let s = scheduleRecord[i];
-  console.log(s.scheduleInterval);  
-  console.log(s.intervalId);
-  console.log(this.savebotrespose.botId);
   let resumeschedule={
     "botId":this.savebotrespose.botId,
     "scheduleInterval":s.scheduleInterval,
@@ -1022,8 +958,7 @@ resumeSchedule()
   }
   let responsemessage:any
   this.rest.resume_schedule(resumeschedule).subscribe(response=>{
-    responsemessage=response
-     console.log(responsemessage.errorMessage);
+    responsemessage=response;
     if(responsemessage.errorMessage == undefined)
     {
       this.notifier.notify("info",responsemessage.status);
@@ -1039,43 +974,35 @@ removeallchecks()
   for(let i=0;i<this.scheduleLists.length;i++)
   {
     this.scheduleLists[i].checked= false;
-    console.log(this.scheduleLists[i]);
   }
-  console.log(this.check_schedule_flag);
 }
 
 checkAllCheckBox(ev) {
-  this.scheduleLists.forEach(x => x.checked = ev.target.checked)  
+  this.scheduleLists.forEach(x => x.checked = ev.target.checked)
   this.check_schedule_flag = true;
 }
 
 checkEnableDisableBtn(id, event)
 {
-  console.log(id);
-  console.log(event.target.checked);
   this.scheduleLists.find(data=>data.intervalId==id).checked=event.target.checked;
-  console.log(this.scheduleLists.length)
   if(this.scheduleLists.filter(data=>data.checked==true).length==this.scheduleLists.length)
   {
     this.check_schedule_flag=true;
   }else
   {
-    this.check_schedule_flag=false;  
+    this.check_schedule_flag=false;
   }
 }
 
 
  removeSchedule()
- { 
+ {
    let i:number;
   const scheduleRecord = this.scheduleLists.filter(product => product.checked==true).map(p => p.intervalId);
-  console.log(scheduleRecord);
     if(scheduleRecord!=undefined)
-    { 
+    {
       for(i=scheduleRecord.length; i > 0 ; i--){
-      console.log(this.she)
       let index=this.she.scheduleIntervals.findIndex(schedule=>schedule.intervalId==scheduleRecord);
-      console.log(index)
       this.she.scheduleIntervals.splice(index,1);
       let index2=this.scheduleLists.findIndex(scheduleitem=>scheduleitem.intervalId==scheduleRecord);
       this.scheduleLists.splice(index2,1);
@@ -1088,5 +1015,99 @@ checkEnableDisableBtn(id, event)
     this.removeallchecks();
  }
 
-  
+  navtoenv()
+  {
+
+    document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="block";
+    //localStorage.setItem("tabsArray",JSON.stringify(this.rpa_studio.tabsArray));
+    //this.router.navigate(['/pages/rpautomation/configurations']);
+  }
+
+  async saveEnvironment()
+  {
+   if(this.insertForm.valid)
+   {
+     if(this.insertForm.value.activeStatus==true)
+      {
+        this.insertForm.value.activeStatus=7
+      }else{
+        this.insertForm.value.activeStatus=8
+      }
+      this.insertForm.value.createdBy="admin";
+      let environment=this.insertForm.value;
+      await this.rest.addenvironment(environment).subscribe( res =>
+      {
+        this.close_c_env();
+        Swal.fire("Environment added successfully","","success");
+        //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
+        this.insertForm.reset();
+        this.insertForm.get("portNumber").setValue("22");
+        this.insertForm.get("connectionType").setValue("SSH");
+        this.getEnvironmentlist()
+        //this.rpa_studio.spinner.hide();
+      });
+    }
+    else
+    {
+      alert("Invalid Form")
+    }
+
+  }
+
+  EnvType1(){
+    if(this.insertForm.value.environmentType == "Windows"){
+      //this.updateForm.value.portNumber="44";
+      this.insertForm.get("portNumber").setValue("44");
+    }else if(this.insertForm.value.environmentType == "Linux"){
+      this.insertForm.get("portNumber").setValue("22");
+    }
+  }
+
+
+
+
+  close_c_env()
+  {
+    document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display="none";
+  }
+
+  openschedule()
+  {
+    if(this.savebotrespose==undefined)
+    {
+
+      this.schedule={
+        botid:"not_saved",
+        schedule_list:this.schedule_list_scheduler,
+      }
+    }
+    else
+    {
+      this.schedule={
+        botid:this.savebotrespose.botId
+      }
+
+    }
+    this.schpop=true;
+  }
+
+  closesch()
+  {
+    this.schpop=false;
+  }
+
+
+  saveschedule(schedule,schedule_list)
+  {
+    //this.scheduleLists=schedule;
+    this.schedule_list_scheduler=schedule_list;
+    this.childBotWorkspace.saveCron(schedule);
+  }
+
+
+  updatesavedschedules(schedules)
+  {
+    this.childBotWorkspace.saveCron(schedules)
+  }
+
 }

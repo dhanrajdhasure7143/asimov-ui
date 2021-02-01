@@ -87,8 +87,11 @@ export class DataselectionComponent implements OnInit {
     this.cathead10=this.headertypeArray[9];
     this.cathead11=this.headertypeArray[10];
     this.cathead12=this.headertypeArray[11];
-      var restwo=localStorage.getItem('fileData')
-      var res=JSON.parse(restwo)
+      // var restwo=localStorage.getItem('fileData')
+      // var res=JSON.parse(restwo)
+      let restwo;
+      this.dt.current_piData.subscribe(response => { restwo = response })
+      var res=restwo;
         this.fileData = res;
         this.headerData = res[0];
         this.bkp_headerData = res[0];

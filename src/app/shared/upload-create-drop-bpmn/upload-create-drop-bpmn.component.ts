@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from '../../pages/services/rest-api.service';
 import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.service';
 import { GlobalScript } from '../global-script';
@@ -26,15 +26,22 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   uploaded_file:File;
   processName:string;
   category:string;
+  validNotationTypes: string;
+  uploadedFileName:string;
 
   @Output() update = new EventEmitter<any>();
   @Input() data;
 
-  constructor(private router:Router,private bpmnservice:SharebpmndiagramService,
+  constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
     private global: GlobalScript, private rest:RestApiService) { }
 
   ngOnInit() {
-
+    this.route.queryParams.subscribe(params => {
+      this.validNotationTypes = '.bpmn';
+      if(params['isShowConformance'] != 'true')
+        this.validNotationTypes += ', .cmmn, .dmn';
+    });
+    
   }
 
   onSelect(e){
@@ -42,6 +49,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
     this.hideEditor=false;
     if(e.addedFiles.length == 1 && e.rejectedFiles.length == 0){
       this.uploaded_file = e.addedFiles[0];
+      this.uploadedFileName = this.uploaded_file.name;
     }else{
       let message = "Oops! Something went wrong";
       if(e.rejectedFiles[0].reason == "type")
@@ -88,7 +96,7 @@ export class UploadCreateDropBpmnComponent implements OnInit {
       myReader.readAsText(this.uploaded_file);
     }else{
       this.bpmnservice.changeConfNav(false);
-      this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
+      this.rest.getBPMNFileContent("assets/resources/newDiagram."+e.ntype).subscribe(res => {
         let encrypted_bpmn = btoa(unescape(encodeURIComponent(res)));
         this.bpmnservice.uploadBpmn(encrypted_bpmn);
         this.bpmnModel.bpmnXmlNotation=encrypted_bpmn;

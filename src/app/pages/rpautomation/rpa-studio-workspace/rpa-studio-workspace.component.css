@@ -12,22 +12,22 @@
     font-size: 4rem;
     font-weight: 100;
     color: #fff;
-    cursor: not-allowed   
+    cursor: not-allowed
   }
 
-  .dndDropzoneDisabled::before{   
+  .dndDropzoneDisabled::before{
     content: "";
-    z-index: 9;  
+    z-index: 9;
     display: block;
     /* background-image: url('http://666a658c624a3c03a6b2-25cda059d975d2f318c03e90bcf17c40.r92.cf1.rackcdn.com/unsplash_527bf56961712_1.JPG'); */
-    background-size:cover;  
+    background-size:cover;
     -webkit-filter: blur(5px);
     -moz-filter: blur(5px);
     -o-filter: blur(5px);
     -ms-filter: blur(5px);
-    filter: blur(5px); 
+    filter: blur(5px);
   }
-  
+
   .dndDropzoneDisabled span{
     font-size: 16px;
     text-transform: uppercase;
@@ -47,9 +47,9 @@
     float: right;
     height: 45px;
     width: 45px;
-    
+
   }
-  
+
   .slide-menu {
     border: 1px solid rgba(128, 128, 128, .2);
     padding-left: 32px;
@@ -68,18 +68,18 @@
     border-radius: 12px;
     box-shadow: 2px 2px 23px rgba(0,0,0,.04);
   }
-  
+
   .nodes {
     padding: 10px;
   }
   .con-img{
-    width:32px; 
+    width:32px;
     height:auto
   }
   .slice-icon{
     padding: 0px 0px 0px 20px;
   }
-  
+
   .drag-area {
     height: 460px;
     width: 1000px;
@@ -88,17 +88,17 @@
     transform-origin:0% 0%;
     display: inline;
   }
-  
-  
+
+
   .slideDiv {
     width: 2%;
     float: right;
     display: inline;
     position: absolute;
   }
-  
+
   .connector-name{
-    color: #fff !important; 
+    color: #fff !important;
     font-weight: 600;
   }
 
@@ -122,13 +122,13 @@
     background-repeat: no-repeat;
     background-position: center;
   }
-  
+
   .nodes-container {
     height: 250px;
     overflow: auto;
     min-width: 106%;
   }
-  
+
   .connector-name{
     text-align: center;
     font-size: 1rem;
@@ -158,7 +158,7 @@
     width: 52px;
     padding: 0px;
   }
-  
+
 
 .robotic-run {
   position: absolute;
@@ -237,7 +237,7 @@
 .downloadBtn {
 margin-top: 90px;
 }
- 
+
 .dropdown-menu {
 min-width: 10px;
 margin-left: 8px;
@@ -247,7 +247,7 @@ margin-left: 8px;
 .download {
 position: absolute;
 top: 387px;
-margin-left: 1130px;
+margin-left: 1114px;
 /* left:0px; */
 }
 

@@ -148,8 +148,8 @@
                             </tbody>
                         </table>
                         </div>
-                    <button *ngIf="!isEndpoint" class="btn btn-primary eiap-btn" (click)="applyFilter()">Apply Filter</button>
-                    <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" [disabled]='endptBt' (click)="applyEndpointFilter()">Apply Filter</button>
+                    <button  class="btn btn-primary eiap-btn" (click)="comboFilter()">Apply Filter</button>
+                    <!-- <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" [disabled]='endptBt' (click)="applyEndpointFilter()">Apply Filter</button> -->
                     <!-- <button *ngIf="isVariantFilter" class="btn btn-primary eiap-btn" (click)="applyVariantFilter()">Apply Filter</button> -->
         
                     </div>

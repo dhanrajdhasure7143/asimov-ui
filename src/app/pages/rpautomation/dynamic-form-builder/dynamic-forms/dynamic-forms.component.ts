@@ -24,14 +24,13 @@ export class DynamicFormsComponent implements OnInit {
   form: FormGroup;
   constructor() { }
   onSub(){
-    console.log(this.form.value)
     this.onSubmit.emit(this.form.value)
   }
   ngOnInit() {
     let fieldsCtrls = {};
     for (let f of this.fields) {
     //  if (f.type != 'checkbox') {
-        fieldsCtrls[f.name] = new FormControl(f.value || '', f.required && f.dependency == ''  ? Validators.required : [])
+        fieldsCtrls[f.name+'_'+f.id] = new FormControl(f.value || '', f.required && f.dependency == ''  ? Validators.required : [])
       //  console.log(f);
      /* } else {
         let opts = {};
@@ -43,5 +42,5 @@ export class DynamicFormsComponent implements OnInit {
     }
     this.form = new FormGroup(fieldsCtrls);
   }
- 
+
 }

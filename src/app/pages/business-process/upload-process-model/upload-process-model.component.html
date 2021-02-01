@@ -7,7 +7,7 @@
     <div class="col-md-1">
         <div *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
             {{rejectedOrApproved}}</div>
-        <div *ngIf="isfromApprover" class="label_icon">Pending</div>
+        <div *ngIf="isfromApprover" class="label_icon">{{rejectedOrApproved}}</div>
     </div>
     <div class="col-md-2">
         <mat-form-field id="bpmnNotationList">
@@ -31,58 +31,111 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <div><button class="keyboard_style_upload" (click)="displayShortcut()"><img src="..\assets\bpmnkeyboard.png"></button>
-        <button title="Fit to the view port" class="right header_btn" (click)="fitNotationView()"><img src="..\assets\fillView.svg"></button>
+    <div class="functionality-icons">
+        <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
+        <span class="start-instance">
+            <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>&nbsp;&nbsp;
+            <!-- <div class="deploy-menu" *ngIf="rejectedOrApproved == 'APPROVED'">
+                <a (click)="openDeployDialog()">Start process instance</a>
+                <br/>
+                <a (click)="openDeployDialog()">Start process instance with new configuration</a>
+            </div> -->
+        </span>
+        <span class="fa fa-keyboard" (click)="displayShortcut()"></span>&nbsp;&nbsp;
+        <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
     </div>
 
 </div>
 <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
 <as-split class="ex-percent" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
-    <!-- (dragEnd)="dragEnd($event)" -->
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:100):0">
         <div class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</div>
         <div *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
             <span class="info" *ngIf="rejectedOrApproved == 'PENDING' && !reSize">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-            <div class="canvas2" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'" id="canvas2"></div>
+            <div class="row">
+                <div class="canvas2 col-md-12" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'" id="canvas2"></div>
+                <div class="propertiesContainer" [class.hidden]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
+                    <div class="propertiesTitle" (click)="togglePosition()">
+                        <div>Properties Panel</div>
+                    </div>
+                    <div id="properties" class="slide-right"></div>
+                </div>
+                <!-- <div class="propertiesContainer" [class.hidden]="!uploaded && !(reSize|| hasConformance ||rejectedOrApproved=='PENDING')">
+                    <div class="propertiesTitle" (click)="togglePosition()">
+                        <div>Properties Panel</div>
+                    </div>
+                    <div id="properties" class="slide-right"></div>
+                </div> -->
+            </div>
         </div>
         <div class="canvas2" *ngIf="!isShowConformance" id="canvas2"></div>
     </as-split-area>
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100">
         <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
         <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
-        <div class="row" [class.bps_overlay]="isfromApprover">
-            <div class="canvas1 col-md-12" [class.readOnly]="isfromApprover" id="canvas1" *ngIf="hasConformance || isUploaded||!isShowConformance"></div>
-            <div class="propertiesContainer">
-                <div class="propertiesTitle" (click)="togglePosition()">
-                    <div>Properties Panel</div>
-                </div>
-                <div id="properties" class="slide-right"></div>
+        <div [class.bps_overlay]="isfromApprover">
+            <div class="canvas1 col-md-12" [class.readOnly]="isfromApprover" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
+            <div *ngIf="!isShowConformance">
+                <mat-tab-group class="canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
+                    <mat-tab label="Notation">
+                        <div class="row">
+                            <div class="canvas1 col-md-12" id="canvas1" [class.readOnly]="isfromApprover"></div>
+                            <div class="propertiesContainer">
+                                <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
+                                <div id="properties" class="slide-right"></div>
+                            </div>
+                        </div>
+                        <ng-template #wrongXMLcontent>
+                            <div class="modal-header">
+                                <h4 class="modal-title pull-left xml-error">Error in XML</h4>
+                                <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                {{errXMLcontent}}
+                            </div>
+                        </ng-template>
+                    </mat-tab>
+                    <mat-tab label="XML">
+                        <div class="text-area">
+                            <textarea [(ngModel)]="xmlTabContent" rows="22" cols="150">
+                                {{xmlTabContent}}
+                            </textarea>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
         </div>
     </as-split-area>
 </as-split>
 <div class="row btn_row">
-    <span class="pull-left">
+<button class="right btn btn-primary eiap-btn"  id="approvalSubmit" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
+<ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.'+selectedNotationType"  *ngIf="!isShowConformance||(isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'">
+  <ngx-dropzone-label>
+      <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button>
+  </ngx-dropzone-label>
+</ngx-dropzone>
+<button class="right btn btn-primary eiap-btn"  [disabled]="isfromApprover" id="save" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="saveprocess(null)">Save Process</button>
+<button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="orchestrate" (click)="orchestrate()">Orchestrate</button>
+  <!-- [disabled]="isShowConformance && !isConfNavigation" -->
+  <span class="right">
     <select [(ngModel)]="fileType">
       <option value="svg">SVG</option>
       <option value="png">PNG</option>
       <option value="jpg">JPG</option>
-      <option value="bpmn">BPMN</option>
+      <option [value]="selectedNotationType">{{selectedNotationType | uppercase }}</option>
     </select>
-    <button id="download" (click)="downloadBpmn(false)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+    <button id="download" (click)="downloadBpmn()"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
   </span>
-    <button class="right btn btn-primary eiap-btn" id="approvalSubmit" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
-    <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.bpmn, .cmmn, .dmn'" *ngIf="!isShowConformance||(isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'">
-        <ngx-dropzone-label>
-            <button class="btn btn-primary eiap-btn" *ngIf="!isfromApprover">Upload Again</button>
-        </ngx-dropzone-label>
-    </ngx-dropzone>
-    <button class="right btn btn-primary eiap-btn" [disabled]="isfromApprover" id="save" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="saveprocess(null)">Save Process</button>
-    <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="orchestrate" (click)="orchestrate()">Orchestrate</button>
-    <!-- [disabled]="isShowConformance && !isConfNavigation" -->
-    <button id="download" class="right" *ngIf="isShowConformance && reSize && hasConformance" (click)="downloadBpmn(true)"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
+  <!-- <button id="download" class="right" *ngIf="isShowConformance && reSize && hasConformance" (click)="downloadBpmn(true)"><img class="action-btn" src="..\assets\downloadimage.svg"></button> -->
 </div>
-<app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
+<div class="changesContainer" [class.hidden]="!isUploaded">
+    <div class="changesTitle" (click)="toggleChanges()">List of Changes</div>
+    <div id="changes" class="slide-bottom">
+        <app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
+    </div>
+</div>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
     <p style="color: white">Auto Saving... </p>
 </ngx-spinner>
@@ -102,3 +155,83 @@
         </tr>
     </table>
 </ng-template>
+
+<ng-template #variabletemplate>
+    <div class="modal_size">
+    <div><h4>Start Process</h4></div>
+    <hr>
+        <div class="row">
+            <div class="col-sm-12 row">
+                <form action="" #business='ngForm'>
+                <div class="col-sm-4">
+                    <h5 for="">Business Key:</h5>
+                </div>
+                <div class="col-sm-8 business-input">
+                    <input type="text" class="form-control" placeholder="Enter Business Key" #business_key id='business_key' name='business_key' [(ngModel)]="businessKey" required>
+                    <span *ngIf="((business_key.invalid && business.submitted) || (business_key.errors && business_key.touched) )" 
+                    class='fa fa-info-circle errspan'> Business Key is required </span>
+                </div>
+            </form>
+            </div>
+            
+        </div>
+        <div class="col-sm-4" >
+            <div>
+            <p class="variable" (click)='addVariable()'>+ Add Variable</p>
+        </div>
+        </div>
+        <div class="col-sm-12" *ngIf="variables.length>0">
+            <div class="col-sm-3">Name</div>
+            <div class="col-sm-3">Type</div>
+            <div class="col-sm-3">Value</div>
+            <div class="col-sm-3"></div>
+        </div>
+        <form action="" #variableForm="ngForm">
+        <section class="col-sm-12 row" *ngFor="let item of variables; let i = index;">
+            <div class="col-sm-3">
+                <input type="text" class="variable-input form-control" placeholder="Name"  name="variable_name{{i}}" [(ngModel)]='item.variableName' required>
+            </div>
+            <div class="col-sm-3">
+                <select class="variable-input form-control" name="variable_type{{i}}" id="" [(ngModel)]='item.type' required>
+                    <option value="" disabled hidden>Select</option>
+                    <option value="boolean">Boolean</option>
+                    <option value="short">Short</option>
+                    <option value="integer">Integer</option>
+                    <option value="long">Long</option>
+                    <option value="double">Double</option>
+                    <option value="string">String</option>
+                    <option value="date">Date</option>
+                </select>
+                <!-- <input type="text" class="variable-input form-control" placeholder="Type" name="variable_type{{i}}" [(ngModel)]='item.variablesType' required> -->
+            </div>
+            <div class="col-sm-3">
+                <input *ngIf="item.type!='boolean'" type="text" class="variable-input form-control" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value' required>
+                <!-- <input *ngIf="item.type=='boolean'" type="checkbox" class="" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value'> -->
+                <select class="variable-input form-control" *ngIf="item.type=='boolean'" name="variable_value{{i}}" [(ngModel)]='item.value' id="" required>
+                    <option value="" disabled hidden>Select</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <button class="btn btn-danger eiap-btn" (click)="removevariable(i)">Remove</button>
+            </div>
+
+        <!-- </div> -->
+    </section>
+    </form>
+    <hr>
+
+    <div class="col-sm-12 row">
+        <div class="col-sm-5"></div>
+        <div class="col-sm-3">
+            <button class="btn btn-secondary cancel_btn eiap-btn" (click)="cancelProcess()">Cancel</button>
+        </div>
+        <div class="col-sm-1"></div>
+        <div class="col-sm-3">
+            <button class="btn btn-primary eiap-btn" [disabled]='business.invalid || variableForm.invalid' (click)="startProcess()">Submit</button>
+        </div>
+    </div>
+    </div>
+
+  </ng-template>

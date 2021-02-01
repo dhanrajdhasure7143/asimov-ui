@@ -5,12 +5,22 @@ import { FormGroup } from '@angular/forms';
     selector: 'dropdown',
     template: `
       <div [formGroup]="form">
-        <select class="form-control" [value]="field.value" [id]="field.name" (change)="field.onChange($event.target.value)" [formControlName]="field.name">
-        <option  value="" >--{{field.placeholder}}--</option>  
+        <select class="form-control" [value]="field.value" [id]="field.name" [formControlName]="field.name+'_'+field.id">
+        <option  value="" >--{{field.placeholder}}--</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
         </select>
-      </div> 
-    `
+      </div>
+    `,
+    styles:[`
+    .form-control
+    {
+      border-radius:0px;
+      border-top:none;
+      border-right:none;
+      border-left:none;
+      box-shadow:none;
+    }
+    `],
 })
 export class DropDownComponent {
     @Input() field:any = {};

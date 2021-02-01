@@ -1,20 +1,39 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
 
-<div class="rpaenv_header_addon" style="padding-right:40px">
+<div class="rpaenv_header_addon" style="padding-right:40px;padding-top:7px;">
 
     <!-- <div class="rpa-env-nav"> -->
-    <button type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="['/pages/rpautomation/home']">
+    <!--<button type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="['/pages/rpautomation/home']">
     <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpaenv-nav-btn-img">
       <b>Bot Studio</b>
+    </button>-->
+    <button  type="button" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Load_Bot" [routerLink]="['/pages/rpautomation/home']">
+      <i class="fa fa-reply"></i>&nbsp;&nbsp;Bot Studio
     </button>
     <!-- </div> -->
 
 </div>
-<mat-tab-group mat-align-tabs="start">
+<mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
     <mat-tab label="Environments">
-        <app-environments></app-environments>
-    </mat-tab>
-    <mat-tab label="Database Connections">
-        <app-rpa-database-connections></app-rpa-database-connections>
-    </mat-tab>
+
+        <ng-template mat-tab-label>
+          <mat-icon  class="text-primary">desktop_windows</mat-icon>
+            &nbsp;&nbsp;
+            Environments
+        </ng-template>
+        <div *ngIf="check_tab==0">
+    <app-environments></app-environments>
+        </div>
+</mat-tab>
+<mat-tab label="Database Connections">
+
+    <ng-template mat-tab-label>
+      <mat-icon  class="text-primary">dns</mat-icon>
+        &nbsp;&nbsp;
+        Database Connections
+    </ng-template>
+    <div *ngIf="check_tab==1">
+    <app-rpa-database-connections></app-rpa-database-connections>
+  </div>
+</mat-tab>
 </mat-tab-group>

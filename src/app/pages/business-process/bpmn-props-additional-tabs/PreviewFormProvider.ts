@@ -68,7 +68,7 @@ export class PreviewFormProvider implements IPropertiesProvider {
     }
 
     //add RPA Task tab
-    if (is(bo, 'bpmn:RPATask')) {
+    if (is(bo, 'bpmn:rpaTask')) {
       var RPATab = this.createProcessIoTab(element, this.injector, "rpaTab");
       //add in case of additional tabs
       // actualTabs = [actualTabs[0], RPATab]

@@ -134,7 +134,6 @@ export class BotStatusComponent implements OnInit {
       this.spinner.hide();
       }, 4000);
     this.api.botPerformance().subscribe(data => { this.performData = data;
-      console.log(this.performData);
       this.performData = []
     //   this.performData = [{
     //     'botName' : 'ifugj',
@@ -186,8 +185,6 @@ export class BotStatusComponent implements OnInit {
         finalObjectData.push(botData)
       }
       });
-
-      console.log(finalObjectData);
       var getElementById:any = document.getElementById('myChart');
       var ctx = getElementById.getContext("2d");
       // var ctx = document.getElementById('chart');
@@ -232,7 +229,6 @@ export class BotStatusComponent implements OnInit {
     })
 
     this.api.botUsage().subscribe(data => { this.usageData = data;
-      console.log(this.usageData);
        let datacha = Object.keys(data);
       if(datacha[0] != 'errorMessage' && datacha[1] != 'errorCode'){
       this.chart = new Chart('canvas', {
@@ -425,8 +421,7 @@ active(){
 getprocessStatus()
 {
   this.api.getProcessStatistics().subscribe(data=>{
-    this.processStatus=data
-    console.log(data)
+    this.processStatus=data;
     if(this.processStatus.ONHOLD==undefined)
     {
       this.processStatus.ONHOLD="-";
@@ -450,7 +445,6 @@ getBotStatus()
 {
   this.api.getBotStatistics().subscribe(data=>{
     this.BotStatus=data;
-    console.log(data)
 
   })
 }
@@ -461,7 +455,6 @@ getBotStatus()
     {
       this.activeBots=data;
       response=data;
-      console.log(response)
       this.dataSource= new MatTableDataSource(response);
 
     })
@@ -469,9 +462,7 @@ getBotStatus()
 
   getgraph()
   {
-
-    console.log(this.botnames);
-    let data:any= {
+     let data:any= {
 
       renderTo: 'container1',
       chart: {

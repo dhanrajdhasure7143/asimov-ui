@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import 'rxjs/add/operator/filter';
 import { DataTransferService } from "../../services/data-transfer.service";
-import { Rpa_Home_Hints } from "../model/rpa-home-module-hints"
+import { Rpa_Hints } from "../model/RPA-Hints"
 // import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
@@ -23,7 +23,7 @@ declare var $:any;
 export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["botName","version","botType","department","botStatus","description"];
+  displayedColumns: string[] = ["botName","description","department","botType","version","botStatus"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
   botNameFilter = new FormControl('');
@@ -43,12 +43,16 @@ export class RpaHomeComponent implements OnInit {
   public selectedEnvironment:any='';
   public environments:any=[];
   public categaoriesList:any=[];
+  customUserRole: any;
+  enableConfiguration: boolean=false;
+  enablecreatebot: boolean=false;
+  showWorkspace: boolean=false;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
 
-  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Home_Hints,)
+  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Hints,)
   {
 
   }
@@ -57,16 +61,8 @@ export class RpaHomeComponent implements OnInit {
 
   ngOnInit() {
     this.userRole = localStorage.getItem("userRole")
-
-    if(this.userRole.includes('SuperAdmin')){
-      this.isButtonVisible = true;
-    }else if(this.userRole.includes('Admin')){
-      this.isButtonVisible = true;
-    }else if(this.userRole.includes('RPA Admin')){
-      this.isButtonVisible = true;
-    }else{
-      this.isButtonVisible = false;
-    }
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('RPA Admin');
 
     let processId=undefined;
     //this.dataSource1.filterPredicate = this.createFilter();
@@ -74,9 +70,11 @@ export class RpaHomeComponent implements OnInit {
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
 
     this.dt.changeHints(this.datahints.rpahomehints );
-    this.getenvironments();
     this.getCategoryList();
-    this.getallbots();
+    this.getenvironments();
+    setTimeout(()=> {
+      this.getallbots();
+      }, 550);
     if(localStorage.getItem("taskId")!=undefined)
     {
        this.createtaskbotoverlay(localStorage.getItem("taskId"))
@@ -84,25 +82,33 @@ export class RpaHomeComponent implements OnInit {
     }
     this.route.queryParams.subscribe(params => {
       processId=params;
-      console.log(processId);
       if(this.isEmpty(processId))
       {
         this.getautomatedtasks(0);
-
         this.selectedTab=0;
-        console.log(this.process_names)
       }
       else
       {
         this.getautomatedtasks(processId.processid);
         this.selectedTab=1;
-        console.log(this.process_names)
       }
      }
 
     );
 
-
+    this.rest.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('RPA_Bot_Configuration_full')){
+          this.enableConfiguration=true;
+        } if(element.permissionName.includes('RPA_Bot_Create')){
+          this.enablecreatebot=true;
+        }if(element.permissionName.includes('RPA_Workspace_full')){
+          this.showWorkspace=true;
+        }
+      }
+          );
+        })
 
 
 
@@ -120,6 +126,11 @@ export class RpaHomeComponent implements OnInit {
       {
         $("#"+id+"__select").prop('selectedIndex',0);
       }
+  }
+  Resetfilters(){
+    this.botNameFilter.setValue("");
+    this.departmentFilter.setValue("");
+    this.getallbots();
   }
 
   getallbots()
@@ -154,7 +165,7 @@ export class RpaHomeComponent implements OnInit {
       {
         object.department=this.categaoriesList.find(resp => resp.categoryId==data.department).categoryName;
       }
-        /*if(data.department==1)
+        if(data.department==1)
         {
           object.department='Development'
         }
@@ -165,37 +176,42 @@ export class RpaHomeComponent implements OnInit {
         else if(data.department==3)
         {
           object.department='QA';
-        }*/
+        }
         this.bot_list.push(object)
       })
       this.bot_list=botlist;
       if(this.bot_list.length >0)
       {
         this.respdata1 = false;
-        console.log(this.respdata1)
       }else
       {
         this.respdata1 = true;
-        console.log(this.respdata1);
       }
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       this.dataSource1= new MatTableDataSource(response);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
-      this.dataSource1.data = response;
-      this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
+     this.dataSource1.data = response;
+     this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
+      if(departmentFilterValue != ""){
+    let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
+      this.filteredValues['department'] = category;
+      }
+      else{
         this.filteredValues['department'] = departmentFilterValue;
-        this.dataSource1.filter = JSON.stringify(this.filteredValues);
-        if(this.dataSource1.filteredData.length > 0){
-          this.isTableHasData = true;
-        } else {
-          this.isTableHasData = false;
-        }
-        },(err)=>{
+      }
+      this.dataSource1.filter = JSON.stringify(this.filteredValues);
+      if(this.dataSource1.filteredData.length > 0){
+        this.isTableHasData = true;
+      } else {
+        this.isTableHasData = false;
+      }
 
-          this.rpa_studio.spinner.hide();
-        });
+      },(err)=>{
+
+        this.rpa_studio.spinner.hide();
+      });
 
         this.botNameFilter.valueChanges.subscribe((botNameFilterValue) => {
           this.filteredValues['botName'] = botNameFilterValue;
@@ -215,22 +231,19 @@ export class RpaHomeComponent implements OnInit {
   }
 
   customFilterPredicate() {
-    return (data: dataSource1, filter: string): boolean => {
-      let searchString = JSON.parse(filter) as MyFilter;
-      let isdepartmentAvailable = false;
-
-      if (searchString.department.length) {
-
-        for (const d of searchString.department) {
-          if (data.department.toString().trim().indexOf(d) !== -1)  {
-            isdepartmentAvailable = true;
-          }
-        }
-      } else {
-        isdepartmentAvailable = true;
-      }
-      return isdepartmentAvailable && data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+    const myFilterPredicate = (data: dataSource1, filter: string): boolean => {
+      let searchString = JSON.parse(filter);
+      if(searchString.department != ''){
+      return data.department.toString().trim().indexOf(searchString.department.categoryName) !== -1 &&
+        data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
     }
+    else
+    {
+      return true &&
+        data.botName.toString().trim().toLowerCase().indexOf(searchString.botName.toLowerCase()) !== -1;
+    }
+  }
+    return myFilterPredicate;
   }
 
   getautomatedtasks(process)
@@ -241,7 +254,6 @@ export class RpaHomeComponent implements OnInit {
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
       this.responsedata=response.automationTasks;
-      console.log(response.automationTasks);
       this.dataSource2= new MatTableDataSource(response.automationTasks);
       this.dataSource2.sort=this.sort2;
       this.dataSource2.paginator=this.paginator2;
@@ -266,17 +278,14 @@ export class RpaHomeComponent implements OnInit {
 
   getprocessnames(processId)
   {
-    console.log(processId);
     this.rest.getprocessnames().subscribe(processnames=>{
       this.process_names=processnames;
       let processnamebyid;
       if(processId != undefined)
       {
-        console.log(this.process_names)
         processnamebyid=this.process_names.find(data=>processId==data.processId);
         this.selectedvalue=processnamebyid.processId;
         this.applyFilter(this.selectedvalue);
-        console.log(this.selectedvalue);
       }
       else
       {
@@ -291,13 +300,10 @@ export class RpaHomeComponent implements OnInit {
 
 
   applyFilter(filterValue:any) {
-    console.log(filterValue)
-
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedvalue=filterValue;
     filterValue = processnamebyid.processName.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
     this.dataSource2.filter = filterValue;
   }
 
@@ -305,7 +311,6 @@ export class RpaHomeComponent implements OnInit {
 
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    console.log(filterValue);
     this.dataSource1.filter = filterValue;
   }
 
@@ -313,9 +318,7 @@ export class RpaHomeComponent implements OnInit {
 
   createoverlay()
   {
-
     this.rpa_studio.onCreate(0);
-    //document.getElementById("create-bot").style.display ="block";
   }
 
   /*openload()
@@ -337,7 +340,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id).subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,id,"Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
@@ -405,7 +408,6 @@ export class RpaHomeComponent implements OnInit {
       this.rpa_studio.spinner.hide();
       this.update_task_status();
     },(err)=>{
-      console.log(err)
       this.rpa_studio.spinner.hide();
     })
   }

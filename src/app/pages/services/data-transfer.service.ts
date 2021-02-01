@@ -41,4 +41,11 @@ export class DataTransferService {
     this.piData.next(piData);
   }
 
+  private notation_startprocess:BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  current_startProcessValues = this.notation_startprocess.asObservable();
+  
+  deployNotationValue(notation_startprocess:any){
+    this.notation_startprocess.next(notation_startprocess);
+  }
+
 }

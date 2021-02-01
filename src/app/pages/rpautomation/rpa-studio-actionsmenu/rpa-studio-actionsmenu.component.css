@@ -1,0 +1,179 @@
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
+.menu-item{
+  font-size:12px;
+  font-weight:bold;
+  color:grey;
+  padding-left:20px !important;
+}
+.menu-item i{
+  font-size: 18px !important;
+}
+.menu-item:hover{
+  color:blue;
+}
+
+.rpa-modal-content{
+  padding-bottom: 25px !important;
+}
+
+.pos-right{
+  position: absolute !important;
+  right:-50px !important;
+  width:20px
+}
+
+.menu{
+  border: 1 solid grey !important;
+
+}
+.menu-item i{
+
+  font-size:22px !important;
+}
+
+.download{
+  position: absolute;
+  top: auto !important;
+  left:auto !important;
+}
+.dropdown-item{
+  font-size:10px
+}
+.rpa-context-menu1{
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  z-index: 100;
+  position: sticky;
+  background-color: white;
+  right: 153px;
+  top: 47px;
+  padding: 5px;
+  margin: 2px 0 0;
+}
+.rpa-context-menu{
+  position: absolute;
+  margin: -15px 8px 8px 7px;
+  white-space: nowrap;
+  background-color: white !important;
+}
+.rpa-context-menu__item a {
+    background-color: white;
+    color: black;
+}
+
+.search{
+  border-radius: 0px !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  box-shadow: none !important;
+  padding: 0em !important;
+  height:25px !important;
+  border-bottom-color: lightgray !important;
+}
+
+
+.section {
+  overflow: scroll;
+  min-height: 65px;
+  max-height: 443px;
+  white-space: nowrap;
+}
+.con-img{
+  width:14px;
+  height:auto
+}
+
+.toolset{
+  padding:10px;
+}
+
+.check{
+  overflow:visible !important;
+  position: relative  !important;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+.dropdown-menu::-webkit-scrollbar {
+  display: block;
+}
+
+.imageI{
+  width: 100%;
+}
+.nodes{
+  padding:10px ! important;
+  position: relative;
+}
+
+
+select.versions.form-control
+{
+  padding:0px !important;
+  border-radius: 0px !important;
+  border-top:none !important;
+  border-right:none !important;
+  border-left:none !important;
+  box-shadow: none !important;
+  width: 53px !important;
+}
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
+{
+  background-color: blue !important;
+}
+
+
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
+{
+
+  background-color: blue !important;
+}
+
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill{
+background-color: blue !important;
+}
+
+::ng-deep .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label, .mat-accent .mat-slider-track-fill
+{
+  background-color: #0062cf !important;
+}
+
+.dis{
+  display:none;
+}
+
+
+
+
+.clickable{
+  cursor: pointer;
+}
+
+
+.nodes .clickable button:disabled{
+  background-color: white !important;
+  color:grey !important;
+
+}
+::ng-deep .mat-menu-panel{
+  max-height:200px !important;
+}
+
+
+
+.nodes .dropdown-menu{
+  max-height: 200px !important;
+  overflow:scroll;
+}
+
+
+.rpa-dropdown{
+ top:-78px !important;
+ min-width:53px !important;
+
+}

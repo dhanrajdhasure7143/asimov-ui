@@ -1,102 +1,158 @@
+<div class="bg-color">
 <br>
-
 <br>
-<span class="run-process">
-  <span style="padding:20px">
-  <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i class="fa fa-calendar"></i></button>
-</span>
-</span>
-<span class="run-process">
-  <span style="padding:20px">
-  <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-pause"></i></button>
-</span>
-</span>
+<div class="container-fluid">
+<div class="form-inline">
+
+  <div class="form-group">
+    <span style="padding:5px">
+      <mat-form-field id="autocategorysearch">
+        <mat-label>Select Category</mat-label>
+          <mat-select  [value]="selectedcategory" (selectionChange)="applyFilter1($event.value)">
+            <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </span>
+      <span style="padding:5px">
+        <mat-form-field *ngIf="process_names!=undefined" id="autoprocesssearch">
+            <mat-label>Select Process</mat-label>
+            <mat-select [(ngModel)]="selectedvalue" (selectionChange)="applyFilter($event.value)">
+                <mat-option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </span>
+
+      <span style="padding:5px">
+        <mat-form-field id="autoenvsearch">
+          <mat-label>Select Environment</mat-label>
+          <mat-select  [(ngModel)]="selectedEnvironment">
+              <mat-option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </span>
+
+      <span style="padding:5px" id="autoreset">
+      <button (click)="reset_all()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
+      </span>
+  </div>
 
 
-<span class="run-process">
-  <span style="padding:20px">
-  <button [disabled]="selectedvalue=='' || selectedEnvironment==''" (click)="startprocess()" class="btn btn-primary" style="float:right;padding-right:10px;padding-left:10px" title="Run Process"><i  class="fas fa-play"></i></button>
-</span>
-</span>
+  <div class="form-group pull-right">
+        <span style="padding:5px" id="autoStartProcess">
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-play"></i></button>
+        </span>
+       <!-- <span style="padding:5px">
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
+        </span>
+        -->
+        <span style="padding:5px" id="autoOpenScheduler">
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><i class="fa fa-calendar"></i></button>
+        </span>
+        <span style="padding:5px" id="autoViewLogs">
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs()"  ><i class="fa fa-file" aria-hidden="true"></i></button>
+        </span>
+  </div>
+
+</div>
+</div>
 
 
+<div class="container-fluid">
+<mat-card>
+  <!--<div  *ngIf="responsedata!=undefined" style="width:100%;overflow-x: scroll;">-->
 
-<span class="run-process">
-  <select class="form-control" style="width:250px;float:right" [value]="selectedvalue" (change)="applyFilter($event.target.value)" >
-  <option value="" [selected]="true">Select Process</option>
-  <option *ngFor="let process of process_names" [value]="process.processId">{{process.processName}}</option>
-</select>
-</span>
-
-<span class="run-process">
-  <select class="form-control" style="width:250px;float:right"  [(ngModel)]="selectedEnvironment">
-      <option value="" selected=true>Select Environment</option>
-      <option  *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}</option>
-  </select>
-</span>
-
-<span class="run-process">
-  <select class="form-control" style="width:250px;float:right"  [(ngModel)]="selectedEnvironment">
-      <option value="" selected=true>Select Category</option>
-      <option  *ngFor="let cat of categaoriesList" [value]="cat.categoryId" >{{cat.categoryName}}</option>
-  </select>
-</span>
-
-
-
-<div *ngIf="responsedata!=undefined">
-    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table">
+    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table" id="autotable">
 
         <ng-container matColumnDef="processName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
             <td mat-cell *matCellDef="let element"> {{element.processName}}</td>
         </ng-container>
 
+
         <ng-container matColumnDef="taskName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Task</th>
+          <th mat-header-cell *matHeaderCellDef>Task</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.taskName!=null" [matTooltip]="element.taskName">{{(element.taskName.length > 15) ? ((element.taskName).slice(0, 15) + '...') : element.taskName}}</span>
+              <span *ngIf="element.taskName==null">---</span>
+          </td>
+      </ng-container>
+        <ng-container matColumnDef="taskType">
+            <th mat-header-cell *matHeaderCellDef>Task type</th>
             <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.taskName!=null">{{element.taskName}}</span>
-                <span *ngIf="element.taskName==null">---</span>
+                <span *ngIf="element.taskType!=null">{{element.taskType}}</span>
+                <span *ngIf="element.taskType==null">---</span>
             </td>
         </ng-container>
 
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category</th>
+          <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.category!=null">{{element.category}}</span>
+              <span *ngIf="element.category==null">---</span>
+          </td>
+      </ng-container>
         <ng-container matColumnDef="Assign">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned Bot</th>
+            <th mat-header-cell *matHeaderCellDef>Assign Resource</th>
             <td mat-cell *matCellDef="let element">
 
-                <span>
-  <select class="form-control" style="width:200px;"  [value]="element.botId" [id]="element.taskId+'__select'">
-      <option value="0" >Select Bot</option>
-      <option *ngFor="let bot of bot_list" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
-  </select>
-</span>
+            <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
+              <select class="form-control" style="width:200px;"  [value]="element.botId" [id]="element.taskId+'__select'">
+                  <option value="0"  >Select Bot</option>
+                  <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
+              </select>
+            </span>
+            <span *ngIf="element.taskType=='Human'">
+              <select class="form-control" style="width:200px;"  [value]="element.assignedUserId"  [id]="element.taskId+'__select'">
+                  <option value="0" >Select Human</option>
+                  <option *ngFor="let human of (humans_list | HumanlistbycatPipe : element.category )" [value]="human.userId.id">{{human.userId.firstName}} {{human.userId.lastName}} </option>
+              </select>
+            </span>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <th mat-header-cell *matHeaderCellDef>Status</th>
             <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
-              <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span>{{element.status}}</span></span>
+              <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
+
+                <span *ngIf="element.status=='Running' || element.status=='InProgress'  " class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp; Running</span>
+                <span *ngIf="element.status=='Success' || element.status=='Executed' " class="text-success"><span><li class="verticalalignmiddle fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                <span *ngIf="element.status=='Rejected' " class="text-danger"><span><li class="verticalalignmiddle fa fa-times-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                <span *ngIf="element.status=='Approved' " class="text-success"><span><li class="verticalalignmiddle fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                <span *ngIf="element.status=='Failure' || element.status=='Failed'" class="text-danger"><span><li class="verticalalignmiddle fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                  <span *ngIf="element.status=='Pending' " class="text-warning" ><span style='font-size:18px'><i class="verticalalignmiddle fa fa-clock"></i></span>&nbsp; Pending</span>
+
+                  <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                <span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+                <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>-->
+                <span *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span><li class="verticalalignmiddle fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+                <span *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary"><span><li class="verticalalignmiddle fas fa-pause-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+                <span *ngIf="element.status==null||element.status==''" class="text-primary"><span><li class="verticalalignmiddle fas fa-pause-circle" style="font-size: 19px;"></span>--</span>
+                <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
+                <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span>{{element.status}}</span></span>
                 <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
                 <span *ngIf="element.status=='New'" class="text-primary"><span><img src="/assets/images/RPA/newicon.png" style="height:20px;"></span>&nbsp;<span>{{element.status}}</span></span>
                 <span *ngIf="element.status=='Failed'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.status}}</span></span>
-                </span>
+                </span>-->
 
                 <span *ngIf="element.status=='null'">---</span>
+              </span>
             </td>
         </ng-container>
 
         <ng-container matColumnDef="successTask">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Success</th>
-            <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.successTask!='null'" [id]="element.taskId+'__success'">{{element.successTask}}</span>
-                <span *ngIf="element.successTask=='null'">---</span>
-            </td>
-        </ng-container>
+          <th mat-header-cell *matHeaderCellDef>Success</th>
+          <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.successTask!='null'" [id]="element.taskId+'__success'" [matTooltip]="element.successTask">{{(element.successTask.length > 20) ? ((element.successTask).slice(0, 20) + '...') : element.successTask}}</span>
+              <span *ngIf="element.successTask=='null'">---</span>
+          </td>
+      </ng-container>
 
         <ng-container matColumnDef="failureTask">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Failure</th>
+            <th mat-header-cell *matHeaderCellDef>Failure</th>
             <td mat-cell *matCellDef="let element">
                 <span *ngIf="element.failureTask!='null'" [id]="element.taskId+'__failed'">{{element.failureTask}}</span>
                 <span *ngIf="element.failureTask=='null'">---</span>
@@ -106,31 +162,100 @@
         <ng-container matColumnDef="Operations">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let element">
+              <div *ngIf="element.taskType=='Automated'">
+                <span>
+                  <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
+                    <i  class="fas fa-plus text-primary"></i>
+                  </button>
+                </span>
 
                 <span>
-<button (click)="createtaskbotoverlay(element.taskId)" title="Create and Assign Bot">
-<img style="width:15px" src="../../../../assets/images/RPA/rpa-env-add-btn.svg">
-</button>
-</span>
+                  <button (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot"><i  class="fas fa-check text-success"></i></button>
+                  <button (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                </span>
 
                 <span>
-<button (click)="assignbot(element.taskId)" title="Assign Bot"><img style="width:15px" src="../../../../assets/images/iconfinder_check_2561355.svg"></button>
-</span>
+                  <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
+                </span>
+                <span>
+                  <button [disabled]="element.botId==0" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
+                  <button  *ngIf="element.taskType !='Automated'" class="undobtn" ><i class="fa fa-eye-slash"></i></button>
+                </span>
+              </div>
+              <div *ngIf="element.taskType=='Human'">
+                <span>
+                  <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
+                    <i  class="fas fa-plus text-primary"></i>
+                  </button>
+                </span>
 
                 <span>
-<button (click)="resetbot(element.taskId)" title="Create and Assign Bot"><i  class="fas fa-sync-alt"></i></button>
-</span>
+                  <button (click)="assignhuman(element.taskId)"  matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                </span>
+
+                <span>
+                  <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
+                </span>
+                <span>
+                  <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
+                  <button  *ngIf="element.taskType !='Automated'" class="undobtn"><i class="fa fa-eye-slash"></i></button>
+                </span>
+              </div>
             </td>
         </ng-container>
+        <ng-container matColumnDef="Loading">
+          <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+              Loading
+          </td>
+      </ng-container>
         <ng-container matColumnDef="noData">
-            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
+            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                 No Records Found
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
     </table>
+
+
+  <!--</div>-->
+  <mat-paginator #paginator10 [pageSize]="8" [showFirstLastButtons]="true">
+  </mat-paginator>
+</mat-card>
+
+<br>
+<br>
 </div>
-<mat-paginator #paginator10 [pageSize]="5" [showFirstLastButtons]="true">
-</mat-paginator>
+</div>
+
+<div *ngIf="popup">
+  <div id='logsid' class="rpa-modal" style="display:block">
+      <div class="rpa-modal-content">
+          <div class="rpa-modal-header">
+              <span class="rpa-modal-close" (click)="closepop()">&times;</span>
+              <h4>Logs</h4>
+          </div>
+          <div class="rpa-modal-body">
+            <app-so-processlog [processId]="processId1"></app-so-processlog>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="schedulepopup">
+  <div id='sch' class="rpa-modal" style="display:block">
+      <div class="rpa-modal-content">
+          <div class="rpa-modal-header">
+              <span class="rpa-modal-close" (click)="closescheduler()">&times;</span>
+              <h4>Scheduler</h4>
+          </div>
+          <div class="rpa-modal-body">
+              <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
+          </div>
+      </div>
+  </div>
+</div>

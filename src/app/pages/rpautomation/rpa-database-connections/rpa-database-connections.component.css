@@ -20,6 +20,10 @@
     padding-bottom: 20px; 
   }
 
+  tr.mat-footer-row, tr.mat-row {
+    height: auto !important;
+}
+
   .errspan{
     position: relative;
     z-index: 2;
@@ -45,7 +49,14 @@
     color:black !important;
     width:25px;
     background-color: white !important;
-    
+  }
+
+  .rpa-modal-content{
+    padding-bottom:25px !important;
+  }
+
+  .mat-paginator{
+    padding-right:25px !important;
   }
   
   .env-btn > button:disabled > img{
@@ -95,4 +106,24 @@
 ::-webkit-scrollbar {
   width: 10px;
   height:4px
+}
+
+
+input[type="text"]:not(.mat-input-element), input[type="password"] {
+  width: 101%;
+  border: none;
+  /* border-bottom: 1px solid gray; */
+  text-align: left;
+  padding: 1em;
+  border-bottom: 1px solid black;
+  border-radius: 0px;
+  /* margin: 15px 0px; */
+  box-shadow: none;
+}
+
+.form-control {
+  border:0px solid black;
+  border-bottom:1px solid black;
+  box-shadow: none;
+  border-radius: 0px;
 }

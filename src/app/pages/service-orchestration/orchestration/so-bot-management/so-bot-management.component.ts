@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
@@ -8,10 +8,10 @@ import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import {RestApiService} from '../../../services/rest-api.service';
-import { CronOptions } from 'src/app/shared/cron-editor/CronOptions';
-import cronstrue from 'cronstrue';
-import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import {sohints} from '../model/so-hints';
+import { DataTransferService } from '../../../services/data-transfer.service';
 
+import { NgxSpinnerService } from "ngx-spinner";
 declare var $:any;
 @Component({
   selector: 'app-so-bot-management',
@@ -19,10 +19,11 @@ declare var $:any;
   styleUrls: ['./so-bot-management.component.css']
 })
 export class SoBotManagementComponent implements OnInit {
-
-  public isTableHasData = true;
+    public botid:any;
+    public isTableHasData = true;
     public respdata1=false;
-    displayedColumns: string[] = ["botName", "description","version","botStatus", "Action","Schedule","Logs"];
+    schdata:any;
+    displayedColumns: string[] = ["botName","botType", "department","description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     botNameFilter = new FormControl('');
     botTypeFilter = new FormControl('');
@@ -30,17 +31,13 @@ export class SoBotManagementComponent implements OnInit {
     dataSource1:MatTableDataSource<any>;
     dataSource4:MatTableDataSource<any>;
     dataSource5:MatTableDataSource<any>;
-
-    public startDate: NgbDateStruct;
-    public endDate: NgbDateStruct;
-    selectTime;
-    public cronExpression = '0/1 * 1/1 * *';
-    public isCronDisabled = false;
     viewlogid="check123";
     processnames:any=[]
     viewlogid1="check456";
     logflag:Boolean;
     respdata2:Boolean;
+    selectedcat:any;
+    search:any;
     public isDataSource: boolean;
     public userRole:any = [];
     public isButtonVisible = false;
@@ -53,37 +50,6 @@ export class SoBotManagementComponent implements OnInit {
     public selectedEnvironment:any='';
     public environments:any=[];
     public categaoriesList:any=[];
-    public she:any;
-    public minDate:NgbDateStruct;
-    schedulepopid="shecdule"
-    public timesZones: any[] = ["UTC","Asia/Dubai","America/New_York","America/Los_Angeles","Asia/Kolkata","Canada/Atlantic","Canada/Central","Canada/Eastern","GMT"];
-    i="";
-    public check_schedule_flag: boolean = false;
-    public selectedTimeZone :any;
-    public cronOptions: CronOptions = {
-      formInputClass: 'form-control cron-editor-input',
-      formSelectClass: 'form-control cron-editor-select',
-      formRadioClass: 'cron-editor-radio',
-      formCheckboxClass: 'cron-editor-checkbox',
-
-      defaultTime: "00:00:00",
-
-      hideMinutesTab: false,
-      hideHourlyTab: false,
-      hideDailyTab: false,
-      hideWeeklyTab: false,
-      hideMonthlyTab: false,
-      hideYearlyTab: false,
-      hideAdvancedTab: false,
-      hideSpecificWeekDayTab : false,
-      hideSpecificMonthWeekTab : false,
-
-      use24HourTime: true,
-      hideSeconds: false,
-
-      cronFlavor: "standard"
-
-    }
     automatedtasks:any=[];
     log_botid:any;
     log_version:any;
@@ -95,33 +61,43 @@ export class SoBotManagementComponent implements OnInit {
     @ViewChild("paginator5",{static:false}) paginator5: MatPaginator;
     @ViewChild("sort4",{static:false}) sort4: MatSort;
     @ViewChild("sort5",{static:false}) sort5: MatSort;
-    displayedColumns4: string[] = ['run_id','version','start_date','start_time','end_date' ,'end_time', "bot_status"];
+    displayedColumns4: string[] = ['run_id','version','start_date','end_date' , "bot_status"];
     Viewloglist:MatTableDataSource<any>;
-    displayedColumns5: string[] = ['task_name', 'status','start_time','start_date','end_time','end_date','error_info' ];
+    displayedColumns5: string[] = ['task_name','start_date','end_date','status','error_info' ];
     logbyrunid:MatTableDataSource<any>;
-    startTime = {hour: 0, minute: 0};
-    endTime = {hour: 23, minute: 59};
+    popup:Boolean=false;
     constructor(private route: ActivatedRoute,
-      private http:HttpClient,
       private rest:RestApiService,
-      private fb : FormBuilder,
+      private router: Router,
+      private hints: sohints,
+      private dt : DataTransferService,
+      private spinner:NgxSpinnerService,
       )
-    {
-
-    }
+    {}
 
   ngOnInit() {
-    this.getCategoryList();
-    this.getallbots();
+    this.dt.changeHints(this.hints.sobotMhints);
+    this.spinner.show();
+    this.rest.getCategoriesList().subscribe(data=>{
+      let catResponse : any;
+      catResponse=data;
+      this.categaoriesList=catResponse.data;
+    });
+    setTimeout(()=> {
+      this.getallbots();
+      }, 550);
+    //this.getallbots();
     this.getautomatedtasks();
     this.getprocessnames();
-    this.form = this.fb.group({
-      'startTime' : [this.startTime, Validators.required],
-      'endTime' : [this.endTime, Validators.required],
-    })
+    this.popup=false;
   }
 
-
+  loadbotdatadesign(botId)
+  {
+    this.spinner.show();
+     localStorage.setItem("botId",botId);
+    this.router.navigate(["/pages/rpautomation/home"]);
+  }
 
   getallbots()
   {
@@ -173,18 +149,18 @@ export class SoBotManagementComponent implements OnInit {
       if(this.bot_list.length >0)
       {
         this.respdata1 = false;
-        console.log(this.respdata1)
       }else
       {
         this.respdata1 = true;
-        console.log(this.respdata1);
       }
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
+      //this.bot_list=this.bot_list.reverse();
       this.dataSource1= new MatTableDataSource(this.bot_list);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
       this.dataSource1.data = response;
+      this.spinner.hide();
       /*this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
         //this.filteredValues['department'] = departmentFilterValue;
         //this.dataSource1.filter = JSON.stringify(this.filteredValues);
@@ -218,8 +194,8 @@ export class SoBotManagementComponent implements OnInit {
 
 
 
-
   viewlogdata(botid ,version){
+   document.getElementById("filters").style.display = "none";
    let response: any;
    let log:any=[];
    this.logresponse=[];
@@ -230,13 +206,10 @@ export class SoBotManagementComponent implements OnInit {
        if(this.logresponse.length >0)
        {
          this.respdata1 = false;
-         console.log(this.respdata1)
        }else
        {
          this.respdata1 = true;
-         console.log(this.respdata1);
        }
-       console.log(this.logresponse)
        if(this.logresponse.length>0)
        this.logresponse.forEach(data=>{
        response=data;
@@ -265,11 +238,8 @@ export class SoBotManagementComponent implements OnInit {
        }
        log.push(response)
      });
-     console.log(log);
      log.sort((a,b) => a.run_id < b.run_id ? -1 : 1);
      this.Viewloglist = new MatTableDataSource(log);
-     console.log(this.Viewloglist);
-
      this.Viewloglist.paginator=this.paginator4;
      this.Viewloglist.sort=this.sort4;
 
@@ -278,8 +248,9 @@ export class SoBotManagementComponent implements OnInit {
    });
  }
 
+ public botrunid
  ViewlogByrunid(runid){
-   console.log(runid);
+   this.botrunid=runid;
    let responsedata:any=[];
    let logbyrunidresp:any;
    let resplogbyrun:any=[];
@@ -288,13 +259,10 @@ export class SoBotManagementComponent implements OnInit {
      if(responsedata.length >0)
      {
        this.respdata2 = false;
-       console.log(this.respdata2)
      }else
      {
        this.respdata2 = true;
-       console.log(this.respdata2);
      }
-     console.log(responsedata);
      responsedata.forEach(rlog=>{
        logbyrunidresp=rlog;
        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
@@ -304,10 +272,8 @@ export class SoBotManagementComponent implements OnInit {
 
        resplogbyrun.push(logbyrunidresp)
      });
-     console.log(resplogbyrun);
      this.logflag=true;
      this.logbyrunid = new MatTableDataSource(resplogbyrun);
-     console.log(this.logbyrunid);
      this.logbyrunid.paginator=this.paginator5;
      this.logbyrunid.sort=this.sort5;
      document.getElementById(this.viewlogid).style.display="none";
@@ -322,10 +288,12 @@ export class SoBotManagementComponent implements OnInit {
    }
 
    viewlogclose(){
+    document.getElementById("filters").style.display = "block";
      document.getElementById(this.viewlogid).style.display="none";
    }
 
    viewlogclose1(){
+    document.getElementById("filters").style.display = "block";
      document.getElementById(this.viewlogid1).style.display="none";
      document.getElementById(this.viewlogid).style.display="none";
    }
@@ -382,20 +350,16 @@ export class SoBotManagementComponent implements OnInit {
           })
 
           this.rest.stopbot(botid,"").subscribe(data=>{
-            console.log(data)
-
           })
     }
 
 
 
     applyFilter(filterValue:any) {
-      console.log(filterValue)
       let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
       //this.selectedvalue=filterValue;
       filterValue = category.categoryName.trim(); // Remove whitespace
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-      console.log(filterValue);
       this.dataSource1.filter = filterValue;
     }
 
@@ -406,13 +370,7 @@ export class SoBotManagementComponent implements OnInit {
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
       this.dataSource1.filter = filterValue;
     }
-  getCategoryList(){
-    this.rest.getCategoriesList().subscribe(data=>{
-      let catResponse : any;
-      catResponse=data
-      this.categaoriesList=catResponse.data;
-    });
-  }
+  
 
 
 
@@ -428,6 +386,32 @@ export class SoBotManagementComponent implements OnInit {
       this.rest.getprocessnames().subscribe(processnames=>{
         this.processnames=processnames;
       })
+    }
+
+
+
+    openscheduler(botid)
+    {
+      this.botid=botid;
+      this.schdata={
+        botid:botid
+      }
+      this.popup=true;
+      document.getElementById("filters").style.display = "none";
+    }
+
+
+    close()
+    {
+      document.getElementById("filters").style.display = "block";
+      this.popup=false;
+    }
+
+    reset()
+    {
+      this.selectedcat="";
+      this.search=""
+      this.getallbots()
     }
 
 

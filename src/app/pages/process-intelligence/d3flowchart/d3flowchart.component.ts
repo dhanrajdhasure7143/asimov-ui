@@ -84,6 +84,8 @@ export class D3flowchartComponent {
     }
 
     processGraph(){
+      if(this.model2){
+        if(this.model2.length>0&&this.model1.length>0){
         // Create a new directed graph
     var g = new dagreD3.graphlib.Graph().setGraph({ ranksep: 100,rankdir: "TB"});
 
@@ -985,7 +987,9 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
     svg.attr('height', g.graph().height * initialScale1 + 53)
   }
 }
-    }
+}
+}
+}
     
     
     exportSVG(fileType){ 

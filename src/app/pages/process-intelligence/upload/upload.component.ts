@@ -67,7 +67,13 @@ export class UploadComponent implements OnInit {
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   @ViewChild(MatSort,{static:false}) sort: MatSort;
   displayedColumns: string[] = ["piId","createdTime","piName","categoryName" ,"status","action"];
-
+  customUserRole: any;
+  enableuploadbuttons: boolean=false;
+  enableWorkspace: boolean=false;
+  showprocessgraph: boolean=false;
+  userRole: any;
+  public isButtonVisible = false;
+  
   constructor(private router: Router,
     private dt: DataTransferService,
     private rest: RestApiService,
@@ -79,6 +85,7 @@ export class UploadComponent implements OnInit {
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
+    document.getElementById("filters").style.display = "block";
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule("");
     this.xlsx_csv_mime = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel,.csv,.xlsx,.xls';
@@ -87,6 +94,24 @@ export class UploadComponent implements OnInit {
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
     this.getAllCategories();
+
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Analyst');
+    this.rest.getCustomUserRole(2).subscribe(role=>{
+      this.customUserRole=role.message[0].permission;
+      this.customUserRole.forEach(element => {
+        if(element.permissionName.includes('PI_upload_full')){
+          this.enableuploadbuttons=true;
+        } if(element.permissionName.includes('PI_Workspace_full')){
+          this.enableWorkspace=true;
+        }
+        // if(element.permissionName.includes('PI_Process_Graph_full')){
+        //   this.showprocessgraph=true;
+        // }
+      }
+          );
+        })
   }
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
@@ -189,8 +214,8 @@ export class UploadComponent implements OnInit {
           icon: 'error',
         })
       }else{
-        localStorage.removeItem("fileData")
-        localStorage.setItem("fileData", JSON.stringify(excelfile))
+        // localStorage.removeItem("fileData")
+        // localStorage.setItem("fileData", JSON.stringify(excelfile))
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
     };
@@ -216,8 +241,8 @@ export class UploadComponent implements OnInit {
           icon: 'error',
         })
       }else{
-        localStorage.removeItem("fileData")
-        localStorage.setItem("fileData", JSON.stringify(excelfile))
+        // localStorage.removeItem("fileData")
+        // localStorage.setItem("fileData", JSON.stringify(excelfile))
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
     };
@@ -559,7 +584,7 @@ testDbConnection(){
           message: "Connected Successfully."
       });
       }else{
-        console.log(this.connectionResp.data[0].errors);
+        // console.log(this.connectionResp.data[0].errors);
           this.notifier.show({
               type: 'error',
               message: "Error"+this.connectionResp.data[0].errors

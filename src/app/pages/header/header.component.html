@@ -15,25 +15,25 @@
                                     <li class="breadcrumb_li">
                                         <div class="breadcrumb">
                                             <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
-                                            <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
+                                            <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" (click)="removenodes()" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
                                             <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
                                         </div>
                                     </li>
-                                    <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i" *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link">
+                                    <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i" [id]="'nav-link-'+i" *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link">
                                         <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img">
                                             <label>{{each_page.title}}</label> </a>
                                     </li>
-                                    <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'> 
+                                    <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
                                         <!-- <img src="assets/images/Group 192.svg"> </li> -->
-                                        <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'> 
-                                           <img src="assets/images/Notification_Bell.svg"> 
+                                        <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
+                                           <img src="assets/images/Notification_Bell.svg">
                                             <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:66px; top:2px;">
-                                            <span>{{notificationscount}}</span> 
+                                            <span>{{notificationscount}}</span>
                                          </div>
                                        </li>
-                                    <li class=""> 
+                                    <li class="">
                                         <!-- <img src="assets/images/pro1.png"> -->
-                                        <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                                        <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
                                         <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
                                         <div class="dropdown">
                                             <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
@@ -45,7 +45,7 @@
                           <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a> -->
                                                 <a  (click)='myAccount()'><i class="far fa-user hd_icon"></i> My Account</a>
                                                 <a *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
-                                                <a *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
+                                                <a *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configuration</a>
                                                 <a *ngIf="this.userRole.includes('Admin')" (click)='inviteUser()'><img class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
                                                 <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a>
 

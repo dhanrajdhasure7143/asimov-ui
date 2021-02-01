@@ -8,7 +8,7 @@ export default function Renderer(eventBus, styles, pathMap, canvas, priority) {
 Renderer.$inject = [ 'eventBus', 'styles', 'pathMap', 'canvas' ];
 
 Renderer.prototype.drawShape = function(parentGfx, element) {
-    if (is(element, 'bpmn:RpaTask')) { 
+    if (is(element, 'bpmn:rpaTask')) { 
         return this.drawCustomTask(parentGfx, element);
     } else {
         return BpmnRenderer.prototype.drawShape.call(this, parentGfx, element);
