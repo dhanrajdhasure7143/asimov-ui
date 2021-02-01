@@ -252,7 +252,7 @@ export class BpsHomeComponent implements OnInit {
     let userId = localStorage.getItem("ProfileuserId");
     let splitTenant:any;
     if(selecetedTenant){
-       splitTenant = selecetedTenant.split('-')[0];
+       splitTenant = selecetedTenant.split('-')[0]; 
     }
     window.location.href = "http://172.16.0.73:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
    //var token=localStorage.getItem('accessToken');
