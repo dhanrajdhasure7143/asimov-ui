@@ -339,7 +339,7 @@ export class RpaStudioActionsComponent implements OnInit {
           this.childBotWorkspace.successCallBack(data);
           this.savebotrespose=data;
           this.rpa_studio.spinner.hide();
-          Swal.fire("Bot updated Sucessfully","","success")
+          Swal.fire("Bot updated Successfully","","success")
           this.getschecdules();
           this.childBotWorkspace.uploadfile(this.finalenv);
         });
