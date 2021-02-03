@@ -88,7 +88,7 @@ export class SoInboxComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Task Status Approved Successfully !!',
+          title: 'Task Approved Successfully !!',
           showConfirmButton: false,
           timer: 2000
         });
@@ -97,7 +97,7 @@ export class SoInboxComponent implements OnInit {
         Swal.fire({
           position: 'center',
           icon: 'success',
-          title: 'Task Status Rejected Successfully !!',
+          title: 'Task Rejected Successfully !!',
           showConfirmButton: false,
           timer: 2000
         });

@@ -44,11 +44,11 @@
 
 <div class="status-zoom" id="zoominzoomout">
     <div class="row">
-        <button class="btn reset" (click)="reset($event)"><i class="fas fa-sync-alt"></i></button></div>
+        <button class="btn reset" tooltip="Reset" placement="bottom" (click)="reset($event)"><i class="fas fa-sync-alt"></i></button></div>
     <div class="row">
-        <button class="btn zoomin" (click)="zoomin($event)"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
+        <button class="btn zoomin" tooltip="Zoom In" placement="bottom"  placement="bottom" (click)="zoomin($event)"><i class="fa fa-plus" aria-hidden="true"></i></button></div>
     <div class="row">
-        <button class="btn zoomout" (click)="zoomout($event)"><i class="fa fa-minus" aria-hidden="true"></i></button></div>
+        <button class="btn zoomout" tooltip="Zoom Out" placement="bottom" (click)="zoomout($event)"><i class="fa fa-minus" aria-hidden="true"></i></button></div>
 </div>
 
 <div class="download">
