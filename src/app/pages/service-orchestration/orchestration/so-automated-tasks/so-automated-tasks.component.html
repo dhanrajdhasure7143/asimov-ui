@@ -62,7 +62,7 @@
 
 <div class="container-fluid">
 <mat-card>
-  <!--<div  *ngIf="responsedata!=undefined" style="width:100%;overflow-x: scroll;">-->
+  <div  *ngIf="responsedata!=undefined" style="width:100%;overflow-x: scroll;">
 
     <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table" id="autotable">
 
@@ -218,7 +218,7 @@
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
     </table>
-
+  </div>
 
   <!--</div>-->
   <mat-paginator #paginator10 [pageSize]="8" [showFirstLastButtons]="true">
