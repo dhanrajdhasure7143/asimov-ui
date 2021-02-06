@@ -177,3 +177,11 @@ background-color: blue !important;
  min-width:53px !important;
 
 }
+
+
+.env .form-control {
+  border:0px solid black;
+  border-bottom:1px solid black;
+  box-shadow: none;
+  border-radius: 0px;
+}

@@ -481,102 +481,126 @@
 
 <div [id]="'rpa_createenvironment'+'_'+botState.botName"  class="rpa-modal">
   <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="close_c_env()">&times;</span>
-          <h4>Create Environment</h4>
-      </div>
-      <div class="rpa-modal-body" *ngIf="insertForm != undefined">
-          <br>
-          <div class="container">
-              <form [formGroup]="insertForm" (ngSubmit)="savedata()">
-                  <div class="row">
-                      <div class="col-md-3 formelement">
-                          <label for="environmentName">Name*</label>
-                          <input type="text" maxlength="50" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
-                          <span *ngIf="insertForm.get('environmentName').invalid && insertForm.get
-
-('environmentName').touched" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
-                      </div>
-                      <div class="col-md-3 formelement ">
-                          <label for="environmentType">Type*</label>
-                          <!--<input type="text" class="form-control" formControlName="environmentType" value=""
+    <div class="rpa-modal-header">
+        <span class="rpa-modal-close" (click)=" close_c_env()">&times;</span>
+        <h4>Create Environment</h4>
+    </div>
+    <div class="rpa-modal-body">
+        <br>
+        <div class="container env">
+            <form [formGroup]="insertForm" (ngSubmit)="savedata()">
+                <div class="row">
+                    <div class="col-md-3 formelement">
+                        <label for="environmentName">Name<span style="color:red">*</span></label>
+                        <input type="text" maxlength="51" class="form-control data" formControlName="environmentName" #environmentName value="" placeholder="Enter Name">
+                        <span *ngIf="(insertForm.get('environmentName').invalid && insertForm.get('environmentName').touched) && !insertForm.controls['environmentName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Name Required*</span>
+                        <div *ngIf="insertForm.controls['environmentName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                            Maximum of 50 characters
+                        </div>
+                    </div>
+                    <div class="col-md-3 formelement ">
+                        <label for="environmentType">Type<span style="color:red">*</span></label>
+                        <!--<input type="text" class="form-control" formControlName="environmentType" value=""
 
 placeholder="Enter Environment Type" >-->
-                          <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
-        <option value="" [selected]="true">--Select Type--</option>
-        <option value="Windows">Windows</option>
-        <option value="Mac">Mac</option>
-        <option value="Linux">Linux</option>
+                        <select class="form-control" formControlName="environmentType" (change)="EnvType1()">
+      <option value="" [selected]="true">--Select Type--</option>
+      <option value="Windows">Windows</option>
+      <option value="Mac">Mac</option>
+      <option value="Linux">Linux</option>
 
-      </select>
-                          <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
+    </select>
+                        <span *ngIf="insertForm.get('environmentType').invalid && insertForm.get
 
 ('environmentType').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
 
-                      </div>
-                      <div class="col-md-3 formelement">
-                          <label for="agentPath">Agent Path*</label>
-                          <input type="text" maxlength="50" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
-                          <span *ngIf="insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
+                    </div>
+                    <div class="col-md-3 formelement">
+                        <label for="agentPath">Agent Path<span style="color:red">*</span></label>
+                        <input type="text" maxlength="51" class="form-control" formControlName="agentPath" value="" placeholder="Enter Agent Path">
+                        <span *ngIf="(insertForm.get('agentPath').invalid && insertForm.get('agentPath').touched) && !insertForm.controls['agentPath'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
 
-                      </div>
-                      <div class="col-md-3 formelement">
-                          <label for="hostAddress"> IP Address/Host*</label>
-                          <input type="text" maxlength="50" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
-                          <span *ngIf="insertForm.get('hostAddress').invalid && insertForm.get
+                        <div *ngIf="insertForm.controls['agentPath'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                            Maximum of 50 characters
+                        </div>
+                    </div>
+                    <div class="col-md-3 formelement">
+                        <label for="hostAddress"> IP Address/Host<span style="color:red">*</span></label>
+                        <input type="text" maxlength="51" class="form-control" formControlName="hostAddress" value="" placeholder="Enter IP Address/Host">
+                        <span *ngIf="(insertForm.get('hostAddress').invalid && insertForm.get('hostAddress').touched) && !insertForm.controls['hostAddress'].hasError('maxlength') && !insertForm.controls['hostAddress'].hasError('pattern')" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
 
-('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
-                      </div>
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 formelement">
-                          <label for="userName">Username*</label>
-                          <input type="text" maxlength="50" class="form-control" formControlName="username" value="" placeholder="Enter Username">
-                          <span *ngIf="insertForm.get('username').invalid && insertForm.get('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+                        <!--<div *ngIf="insertForm.controls['hostAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                            Maximum of 50 characters
+                        </div>-->
+                        <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && !insertForm.controls['hostAddress'].hasError('maxlength')) && insertForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">
+                            Invalid IP Address format
+                        </div>
+                        <div *ngIf="(insertForm.controls['hostAddress'].hasError('pattern') && insertForm.controls['hostAddress'].hasError('maxlength'))" style="color:red" class="fa fa-info-circle errspan">
+                            Invalid IP Address format
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 formelement">
+                        <label for="userName">Username<span style="color:red">*</span></label>
+                        <input type="text" maxlength="51" class="form-control" formControlName="username" value="" placeholder="Enter Username">
+                        <span *ngIf="(insertForm.get('username').invalid && insertForm.get('username').touched) && !insertForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
 
-                      </div>
+                        <div *ngIf="insertForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                            Maximum of 50 characters
+                        </div>
 
-                      <div class="col-md-3 formelement">
-                          <label for="password">Password*</label>
-                          <input [type]="passwordtype1 ? 'text': 'password'" maxlength="50" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
-                          <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                          <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                          <span *ngIf="insertForm.get('password').invalid && insertForm.get('password').touched" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
-                      </div>
+                    </div>
 
-                      <div class="col-md-3 formelement">
-                          <label for="connectionType">Connection Type*</label>
-                          <input type="text" maxlength="50" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
-                          <span *ngIf="insertForm.get('connectionType').invalid && insertForm.get
+                    <div class="col-md-3 formelement">
+                        <label for="password">Password<span style="color:red">*</span></label>
+                        <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                        <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+                        <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
 
-('connectionType').touched" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+                        <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
 
-                      </div>
+                        <div *ngIf="insertForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                            Maximum of 50 characters
+                        </div>
+                    </div>
 
-                      <div class="col-md-3 formelement">
-                          <label for="portNumber">Port*</label>
-                          <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
+                    <div class="col-md-3 formelement">
+                        <label for="connectionType">Connection Type<span style="color:red">*</span></label>
+                        <input type="text" maxlength="51" class="form-control" formControlName="connectionType" value="" placeholder="Enter Connection Type" readonly>
+                        <span *ngIf="(insertForm.get('connectionType').invalid && insertForm.get('connectionType').touched) && !insertForm.controls['connectionType'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Connection Type Required*</span>
+                        <div *ngIf="insertForm.controls['connectionType'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                            Maximum of 50 characters
+                        </div>
 
-                          <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
+                    </div>
 
-('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+                    <div class="col-md-3 formelement">
+                        <label for="portNumber">Port<span style="color:red">*</span></label>
+                        <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">
 
-                      </div>
+                        <span *ngIf="(insertForm.get('portNumber').invalid && insertForm.get('portNumber').touched) && !insertForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
 
-                  </div>
-                  <div class="row">
-                      <div class="col-md-3 formelement">
-                          <input type="checkbox" checked formControlName="activeStatus"> Active
-                      </div>
-                  </div>
-                  <br>
-                  <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
-                  <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
-                  <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()">
-              </form>
+                        <div *ngIf="insertForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                            Maximum of 6 characters
+                        </div>
 
-          </div>
-      </div>
-  </div>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-md-3 formelement">
+                        <input type="checkbox" formControlName="activeStatus"> Active
+                    </div>
+                </div>
+                <br>
+                <input type="button" class="btn btn-primary" value="Save" (click)="saveEnvironment()" [disabled]="insertForm.invalid || submitted">
+                <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertForm.invalid">
+                <input type="button" class="btn btn-primary" value="Reset" (click)="resetEnvForm()">
+            </form>
+
+        </div>
+    </div>
+</div>
 </div>
 
