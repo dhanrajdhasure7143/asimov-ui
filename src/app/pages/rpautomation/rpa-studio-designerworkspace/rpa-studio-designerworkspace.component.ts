@@ -93,6 +93,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         ["Label", { label: "FOO" }]
       ]
     });
+    this.SelectedOutputType = "";
     this.dt.changeHints(this.hints.rpaWorkspaceHints);
     this.selectedTask = {
       id: "",
@@ -101,7 +102,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
       this.loadnodes();
-      this.SelectedOutputType = "";
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;

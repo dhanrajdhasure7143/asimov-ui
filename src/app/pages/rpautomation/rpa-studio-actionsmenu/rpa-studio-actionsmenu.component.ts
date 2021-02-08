@@ -713,8 +713,10 @@ loadpredefinedbot(botId)
 
   async saveEnvironment()
   {
+
    if(this.insertForm.valid)
    {
+     this.rpa_studio.spinner.show();
      if(this.insertForm.value.activeStatus==true)
       {
         this.insertForm.value.activeStatus=7
@@ -725,12 +727,24 @@ loadpredefinedbot(botId)
       let environment=this.insertForm.value;
       await this.rest.addenvironment(environment).subscribe( res =>
       {
-        this.close_c_env();
-        Swal.fire("Environment added successfully","","success");
-        this.insertForm.reset();
-        this.insertForm.get("portNumber").setValue("22");
-        this.insertForm.get("connectionType").setValue("SSH");
-        this.getEnvironmentlist()
+        let resp:any=res;
+        this.rpa_studio.spinner.hide();
+        if(resp.status !=undefined)
+        {
+            this.close_c_env();
+            Swal.fire("Environment added successfully","","success");
+            //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
+            this.insertForm.reset();
+            this.insertForm.get("portNumber").setValue("22");
+            this.insertForm.get("connectionType").setValue("SSH");
+            this.getEnvironmentlist()
+        }else if(resp.errorMessage!=undefined)
+        {
+          Swal.fire(resp.errorMessage,"","error");
+        }
+      },()=>{
+        this.rpa_studio.spinner.hide();
+        Swal.fire("Something went wrong","","warning");
       });
     }
     else
@@ -739,6 +753,60 @@ loadpredefinedbot(botId)
     }
   }
 
+
+  async testConnection(data){
+    this.rpa_studio.spinner.show();
+    let formdata:any;
+    formdata=this.insertForm;
+   if(formdata.valid)
+   {
+    if(formdata.value.activeStatus==true)
+    {
+      formdata.value.activeStatus=7
+    }else{
+      formdata.value.activeStatus=8
+    }
+     await this.rest.testenvironment(formdata.value).subscribe( res =>
+      {
+        this.rpa_studio.spinner.hide();
+        if(res.errorCode==undefined){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: "Successfully Connected",
+          showConfirmButton: false,
+          timer: 2000
+        })
+        }else{
+          Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Connection Failed',
+            showConfirmButton: false,
+            timer: 2000
+          })
+        }
+    });
+    this.activestatus();
+  }
+  else
+  {
+    this.rpa_studio.spinner.hide();
+     Swal.fire("Invalid Form","","success");
+     this.activestatus();
+  }
+
+  }
+
+
+  activestatus(){
+    if(this.insertForm.value.activeStatus == 7)
+    {
+      this.insertForm.value.activeStatus = true;
+    }else{
+      this.insertForm.value.activeStatus = false;
+    }
+  }
 
     close_c_env()
     {
