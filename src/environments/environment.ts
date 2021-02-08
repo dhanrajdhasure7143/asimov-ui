@@ -34,7 +34,7 @@ export const environment = {
 
 
   //BPMN Platform URL
-  bpmnplatformUrl : "https://eiapcamundademo.epsoftinc.com:86"
+  bpmnplatformUrl : "http://172.16.0.73:8080"
 
  //  * QA ENV URl's
  
