@@ -104,7 +104,7 @@
 
 
           <div class="nodes ">
-            <div class="clickable  text-primary" tooltip="Scheduler" placement="bottom" >
+            <div class="clickable  text-primary" id="schedule" tooltip="Scheduler" placement="bottom" >
               <span>
                 <button class="text-center" (click)="openschedule()" >
                   <i class="fa fa-calendar"></i>
@@ -114,7 +114,7 @@
           </div>
           <div class="nodes" dropdown [insideClick]="true"  >
 
-            <button class="clickable  text-primary dropdown-toggle"  id="bot-store-menu" dropdownToggle type="button"
+            <button class="clickable  text-primary dropdown-toggle"  id="bots" dropdownToggle type="button"
             aria-controls="bot-store" >
               <span  tooltip="Bot Store" placement="bottom" >
                 <i class="fa fa-robot text-primary"></i>
@@ -130,7 +130,7 @@
 
           </div>
           <div class="nodes" dropdown  #dropdown="bs-dropdown"   [insideClick]="true" >
-            <button class="clickable  text-primary" class="clickable  text-primary dropdown-toggle" id="bot-store-menu" dropdownToggle type="button"
+            <button class="clickable  text-primary" class="clickable  text-primary dropdown-toggle" id="Environments" dropdownToggle type="button"
             aria-controls="environments" >
               <span placement="bottom" tooltip="Environments" >
                 <i class="fa fa-desktop"></i>
@@ -150,7 +150,7 @@
           </div>
           <div class="nodes">
             <div class="clickable  text-primary" *ngIf="childBotWorkspace!=undefined" >
-              <button  placement="bottom" [disabled]="envflag==false || childBotWorkspace.finaldataobjects.length==0" tooltip="Save Bot" (click)="saveBotFunAct()">
+              <button  placement="bottom" id="savebot" [disabled]="envflag==false || childBotWorkspace.finaldataobjects.length==0" tooltip="Save Bot" (click)="saveBotFunAct()">
                 <i class="fa fa-save"></i>
               </button>
             </div>
@@ -159,7 +159,7 @@
 
           <div class="nodes" >
             <div class="clickable text-primary" >
-              <button [disabled]="savebotrespose == undefined" placement="bottom" tooltip="Start Bot"  (click)="executionAct()">
+              <button [disabled]="savebotrespose == undefined"  id="startbot"  placement="bottom" tooltip="Start Bot"  (click)="executionAct()">
                 <i class="fas fa-play "></i>
               </button>
             </div>
@@ -168,7 +168,7 @@
 
           <div class="nodes">
             <div class="clickable text-primary" >
-              <button placement="bottom" [disabled]="(pausebot==false && resumebot==false)"  tooltip="Stop Bot"   (click)="stopBot()">
+              <button placement="bottom" [disabled]="(pausebot==false && resumebot==false)"  id="stopbot"   tooltip="Stop Bot"   (click)="stopBot()">
                 <i class="fas fa-stop "></i>
               </button>
             </div>
@@ -192,7 +192,7 @@
           </div>
 
           <div class="nodes">
-            <div class="clickable text-primary">
+            <div class="clickable text-primary"  id="Logs" >
               <button  placement="bottom" [disabled]="savebotrespose == undefined" tooltip="View Logs" (click)="viewlogdata()">
                 <i class="fas fa-list"></i>
               </button>
@@ -200,14 +200,14 @@
           </div>
 
           <div class="nodes">
-            <div class="clickable text-primary" >
+            <div class="clickable text-primary"  id="delete"   >
               <button  placement="bottom" [disabled]="savebotrespose == undefined" tooltip="Delete Bot" (click)="delete()">
                 <i class="fas fa-trash"></i>
               </button>
             </div>
           </div>
           <div class="nodes">
-            <div class="clickable text-primary" >
+            <div class="clickable text-primary"  id="reset"  >
               <button  placement="bottom" tooltip="Reset Bot" (click)="reset()" >
                 <i class="fas fa-sync-alt "></i>
               </button>
@@ -226,13 +226,13 @@
 <div >
 
 
-      <select class="form-control versions" [(ngModel)]="selectedversion" (change)="switchversion($event.target.value)">
+      <select class="form-control versions"  id="versions"  [(ngModel)]="selectedversion" (change)="switchversion($event.target.value)">
         <option *ngIf="savebotrespose==undefined" [value]="undefined" >V 1</option>
         <option *ngFor="let version of versionsList" [value]="version.vId">V {{version.vId}}</option>
       </select>
       <br>
       <div style="height:200px" class="rpa-custom-slider">
-      <ng5-slider [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
+      <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
 <!--
       <mat-slider
       (mouseup)="sliderEvent()"
