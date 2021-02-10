@@ -1027,6 +1027,7 @@ checkEnableDisableBtn(id, event)
   {
    if(this.insertForm.valid)
    {
+     this.rpa_studio.spinner.show();
      if(this.insertForm.value.activeStatus==true)
       {
         this.insertForm.value.activeStatus=7
@@ -1037,14 +1038,24 @@ checkEnableDisableBtn(id, event)
       let environment=this.insertForm.value;
       await this.rest.addenvironment(environment).subscribe( res =>
       {
-        this.close_c_env();
-        Swal.fire("Environment added successfully","","success");
-        //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
-        this.insertForm.reset();
-        this.insertForm.get("portNumber").setValue("22");
-        this.insertForm.get("connectionType").setValue("SSH");
-        this.getEnvironmentlist()
-        //this.rpa_studio.spinner.hide();
+        let resp:any=res;
+        this.rpa_studio.spinner.hide();
+        if(resp.status !=undefined)
+        {
+            this.close_c_env();
+            Swal.fire("Environment added successfully","","success");
+            //document.getElementById("rpa_createenvironment"+"_"+this.botState.botName).style.display='none';
+            this.insertForm.reset();
+            this.insertForm.get("portNumber").setValue("22");
+            this.insertForm.get("connectionType").setValue("SSH");
+            this.getEnvironmentlist()
+        }else if(resp.errorMessage!=undefined)
+        {
+          Swal.fire(resp.errorMessage,"","error");
+        }
+      },()=>{
+        this.rpa_studio.spinner.hide();
+        Swal.fire("Something went wrong","","warning");
       });
     }
     else
