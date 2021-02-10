@@ -80,7 +80,7 @@ export class BpmnDiagramListComponent implements OnInit {
       this.bpmnModeler = new CmmnJS(notationJson);
     else if(eachBPMN.ntype == "dmn")
       this.bpmnModeler = new DmnJS(notationJson); 
-
+      
         this.bpmnModeler.importXML(byteBpmn, function(err){
           if(err){
             this.notifier.show({
@@ -149,7 +149,7 @@ this.selectedrow =i;
         link.href = url;
         let fileName = _self.griddata[_self.index].bpmnProcessInfo[0]['bpmnProcessName'];
         if(fileName.trim().length == 0 ) fileName = "newDiagram";
-        link.download = fileName+".bpmn";
+        link.download = fileName+"."+_self.selected_processInfo.ntype;
         link.innerHTML = "Click here to download the notation";
         link.click();
       });
