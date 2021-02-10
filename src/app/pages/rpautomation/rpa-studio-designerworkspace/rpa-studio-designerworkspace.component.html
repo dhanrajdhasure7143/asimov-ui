@@ -104,13 +104,16 @@
                 <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-
-                        <br>
-                        <div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
-
+                        <div style="padding-top:8px; padding-bottom: 8px;">
+                            <button style="float: right;border-radius: 20px;" class="btn-primary" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()"><i class="fa fa-arrow-left"></i></button>
                         </div>
                         <br>
-                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+                        <!--<div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
+
+                        </div>-->
+                            <textarea [(ngModel)]="outputboxid" disabled class="outputtextareastyle"></textarea>
+                        <br>
+                        
                         <br>
                     </div>
                     <div class="col-md-3"></div>
