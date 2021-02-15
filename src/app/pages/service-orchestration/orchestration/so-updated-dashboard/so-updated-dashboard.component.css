@@ -1,0 +1,84 @@
+.bg-color {
+  background-color: rgb(241, 240, 240);
+}
+
+.count-text {
+  color: black;
+  font-weight: 500;
+  font-size: 19px;
+}
+
+.example-card {
+  padding: 40px;
+}
+
+.graph-card {
+  position: relative;
+  width: 100% !important;
+  background-color:white;
+  padding:10px;
+  border-radius:10px;
+
+  min-height:420px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+
+.message{
+vertical-align: -100%;
+}
+
+.active{
+background-color: none !important;
+}
+
+.card-count{
+width: 100% !important;
+background-color:white;
+padding-top:20px;
+padding-bottom:20px;
+border-radius:10px;
+box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.icon{
+font-size:18px;
+padding:12px;
+border-radius:50px;
+background-color:#ccd9ff;
+}
+
+
+.bar-chart{
+  height:400px !important;
+}
+
+.chart-container-check{
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%,-50%) !important;
+}
+.bot-chart-container-check{
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%,-50%) !important;
+}
+
+.span.active
+{
+  background-color:white !important;
+}
+
+.table th{
+  padding:10px !important;
+  color:white !important;
+  background-color:#0062cf;
+  font-weight: 200 !important;
+}
+
+span.active
+{
+  background-color:  white !important;
+}

@@ -38,6 +38,8 @@ import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlist
 import {sohints} from './orchestration/model/so-hints';
 import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
 
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { SoUpdatedDashboardComponent } from './orchestration/so-updated-dashboard/so-updated-dashboard.component';
 @NgModule({
   declarations: [OrchestrationComponent,
     BotStatusComponent,
@@ -45,7 +47,7 @@ import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
     Category,
     Reverse,
     Slicedate,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent],
+    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, SoUpdatedDashboardComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -71,6 +73,7 @@ import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
     MatMenuModule,
     MatDialogModule,
     NgxPaginationModule,
+    ModalModule.forRoot(),
 
   ],
   bootstrap: [SoDashboardComponent],
