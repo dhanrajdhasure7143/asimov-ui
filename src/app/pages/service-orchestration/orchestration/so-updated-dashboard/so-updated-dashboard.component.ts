@@ -520,30 +520,26 @@ export class SoUpdatedDashboardComponent implements OnInit {
     setTimeout(()=>{
       this.botsvshumanschart = am4core.create("botsvshumans-chart", am4charts.XYChart);
       this.botsvshumanschart.legend = new am4charts.Legend()
-      this.botsvshumanschart.legend.position = 'top'
+      this.botsvshumanschart.legend.position = 'bottom'
       this.botsvshumanschart.legend.paddingBottom = 20
 
       this.botsvshumanschart.zoomOutButton.disabled = true;
       //this.botsvshumanschart.legend.labels.template.maxWidth = 95
       var xAxis = this.botsvshumanschart.xAxes.push(new am4charts.CategoryAxis())
       xAxis.dataFields.category = 'process'
+      xAxis.title.text = "Process";
       xAxis.renderer.cellStartLocation = 0.1
       xAxis.renderer.cellEndLocation = 0.9
       xAxis.renderer.grid.template.location = 0;
-      xAxis.renderer.minGridDistance = 80;
+      xAxis.renderer.minGridDistance = 40;
       let label1 = xAxis.renderer.labels.template;
       label1.truncate = true;
-      label1.maxWidth = 80;
+      label1.maxWidth = 90;
       label1.wrap = true;
       label1.disabled = false;
-
-      // xAxis.events.on("sizechanged", function(ev) {
-      //   var axis = ev.target;
-      //   var cellWidth = axis.pixelWidth / (axis.endIndex - axis.startIndex);
-      //   axis.renderer.labels.template.maxWidth = 100;
-      // });
       var yAxis = this.botsvshumanschart.yAxes.push(new am4charts.ValueAxis());
       yAxis.min = 0;
+      yAxis.title.text = "No of Resources";
       this.botsvshumanschart.data=this.botvshuman;
       let botvshumanschartref=this.botsvshumanschart;
       function createSeries(value, name)
@@ -555,8 +551,8 @@ export class SoUpdatedDashboardComponent implements OnInit {
         series.events.on("hidden", arrangeColumns);
         series.events.on("shown", arrangeColumns);
         var columnTemplate = series.columns.template;
-        columnTemplate.column.cornerRadiusTopLeft = 20;
-        columnTemplate.column.cornerRadiusTopRight = 20;
+        columnTemplate.column.cornerRadiusTopLeft = 10;
+        columnTemplate.column.cornerRadiusTopRight = 10;
         var bullet = series.bullets.push(new am4charts.LabelBullet())
         bullet.interactionsEnabled = false
         bullet.dy = 30;
@@ -617,7 +613,7 @@ export class SoUpdatedDashboardComponent implements OnInit {
       this.botsvshumanschart.cursor = cursor;
       this.botsvshumanschart.events.on("datavalidated", function () {
         if(this.botvshuman.length>5)
-          xAxis.zoomToIndexes(0,6,false,true);
+          xAxis.zoomToIndexes(0,5,false,true);
         else
           xAxis.zoomToIndexes(0,this.botvshuman.length,false,true);
       },this);
@@ -713,6 +709,7 @@ export class SoUpdatedDashboardComponent implements OnInit {
       var categoryAxis = this.runtimestatschart.xAxes.push(new am4charts.CategoryAxis());
 
       categoryAxis.dataFields.category = "name";
+      categoryAxis.title.text = "Bots";
       let label1 = categoryAxis.renderer.labels.template;
       label1.truncate = true;
       label1.maxWidth = 90;
@@ -725,7 +722,7 @@ export class SoUpdatedDashboardComponent implements OnInit {
       valueAxis.min = 0;
       valueAxis.cursorTooltipEnabled = false;
       valueAxis.renderer.gridContainer.zIndex = 1;
-
+      valueAxis.title.text = "Total Execution Time (ms)";
       var series = this.runtimestatschart.series.push(new am4charts.ColumnSeries);
       series.dataFields.valueY = "value";
       series.dataFields.categoryX = "name";
@@ -733,8 +730,8 @@ export class SoUpdatedDashboardComponent implements OnInit {
 
       var columnTemplate = series.columns.template;
       columnTemplate.width = 40;
-      columnTemplate.column.cornerRadiusTopLeft = 20;
-      columnTemplate.column.cornerRadiusTopRight = 20;
+      columnTemplate.column.cornerRadiusTopLeft = 10;
+      columnTemplate.column.cornerRadiusTopRight = 10;
       columnTemplate.strokeOpacity = 0;
       let runtimeref=this.runtimestatschart;
       columnTemplate.events.once("inited", function(event){
@@ -760,8 +757,9 @@ export class SoUpdatedDashboardComponent implements OnInit {
       var label = this.runtimestatschart.plotContainer.createChild(am4core.Label);
        label.x = 90;
        label.y = 50;
+       $("#runtimestatistics-piechart > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
+
     },30)
-    $("#runtimestatistics-piechart > div > svg > g > g:nth-child(2) > g:nth-child(2) > g > g:nth-child(4) > g:nth-child(2)").hide();
 
   }
 
