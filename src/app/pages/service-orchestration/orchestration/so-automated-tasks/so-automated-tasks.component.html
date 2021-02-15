@@ -94,6 +94,19 @@
               <span *ngIf="element.category==null">---</span>
           </td>
       </ng-container>
+      <ng-container matColumnDef="processOwner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Owner</th>
+        <td mat-cell *matCellDef="let element" >
+          {{element.processOwner}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="taskOwner">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Task Owner</th>
+        <td mat-cell *matCellDef="let element" >
+          {{element.taskOwner}}
+        </td>
+      </ng-container>
         <ng-container matColumnDef="Assign">
             <th mat-header-cell *matHeaderCellDef>Assign Resource</th>
             <td mat-cell *matCellDef="let element">

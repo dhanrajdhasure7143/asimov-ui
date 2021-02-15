@@ -25,7 +25,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   public queryparam:any='';
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["processName","taskName","taskType", "category","Assign","status","successTask","failureTask","Operations"];
+  displayedColumns: string[] = ["processName","taskName","taskType", "category","processOwner","taskOwner","Assign","status","successTask","failureTask","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -118,12 +118,11 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     let response:any=[];
    // this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
 
-    this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
+    this.rest.getautomatedtasks(process).subscribe(automatedtasks=>
+    {
       response=automatedtasks;
       this.responsedata=response.automationTasks;
-      this.dataSource2= new MatTableDataSource(response.automationTasks);
-      this.dataSource2.sort=this.sort10;
-      this.dataSource2.paginator=this.paginator10;
+      console.log("automated tasks",response.automationTasks);
       if(process==0)
       {
         this.getprocessnames(undefined);
@@ -149,6 +148,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       this.process_names=resp.filter(item=>item.status=="APPROVED");
       this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
       let processnamebyid;
+      this.addprocess_and_task_owner();
       if(processId != undefined)
       {
         processnamebyid=this.process_names.find(data=>data.processId==processId);
@@ -162,6 +162,51 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     },(err)=>{
       this.spinner.hide();
     })
+  }
+
+
+  addprocess_and_task_owner()
+  {
+    this.rest.getAllActiveBots().subscribe(botlist =>
+      {
+          this.bot_list=botlist;
+          this.responsedata=this.responsedata.map(item=>
+          {
+            if(item.botId!="0")
+            {
+              if(this.bot_list.find(bot=>bot.botId==item.botId)!= undefined)
+              {
+                item["taskOwner"]=this.bot_list.find(bot=>bot.botId==item.botId).createdBy;
+              }
+              else
+              {
+                item["taskOwner"]="--";
+              }
+            }
+            else
+            {
+              item["taskOwner"]="--";
+            }
+            if(this.process_names.find(process=>process.processId==item.processId)!=undefined)
+            {
+              if(this.process_names.find(process=>process.processId==item.processId).createdBy=="")
+              {
+                item["processOwner"]="--";
+              }
+              else
+              {
+                item["processOwner"]=this.process_names.find(process=>process.processId==item.processId).createdBy;
+              }
+            }else
+            {
+              item["processOwner"]="--"
+            }
+            return item;
+          });
+      });
+      this.dataSource2= new MatTableDataSource(this.responsedata);
+      this.dataSource2.sort=this.sort10;
+      this.dataSource2.paginator=this.paginator10;
   }
 
 
@@ -199,9 +244,11 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       let response:any=data;
       if(response.status!=undefined)
       {
-
         Swal.fire("Task  assigned to resource successfully !!","","success");
         this.responsedata.find(item=>item.taskId==id).status="New";
+        this.bot_list.find(bot=>bot.botId==botId)!=undefined?
+        this.responsedata.find(item=>item.taskId==id).taskOwner=this.bot_list.find(bot=>bot.botId==botId).createdBy:
+        this.responsedata.find(item=>item.taskId==id).taskOwner="--";
       }else
       {
         Swal.fire("Failed to Assign Resource !!","","warning");
