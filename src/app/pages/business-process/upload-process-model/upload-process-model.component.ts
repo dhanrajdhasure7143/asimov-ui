@@ -599,6 +599,7 @@ displayBPMN(){
   }
 
   autoSaveBpmnDiagram(){
+    this.isStartProcessBtn=false;
     let _self = this;
     let bpmnModel={};
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
@@ -867,6 +868,7 @@ displayBPMN(){
 
   submitDiagramForApproval(){
     let yesProceed = true;
+    this.isStartProcessBtn=false;
     if(this.isShowConformance && this.isUploaded && this.bpmnModeler){
       yesProceed = confirm('You are about to save and submit '+(this.isConfBpmnModeler?'"AS IS"':'"TO BE"')+' notation for approval')
     }
@@ -946,6 +948,7 @@ displayBPMN(){
 
   saveprocess(newVal){
     let yesProceed = true;
+    this.isStartProcessBtn=false;
     if(this.isShowConformance && this.isUploaded){
       yesProceed = confirm('You are about to save '+(this.isConfBpmnModeler?'"AS IS"':'"TO BE"')+' notation')
     }

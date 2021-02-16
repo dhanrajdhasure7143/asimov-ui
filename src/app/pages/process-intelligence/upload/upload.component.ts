@@ -528,7 +528,7 @@ testDbConnection(){
       "mode": this.dbDetails.mode,
       "numeric.mapping": "best_fit",
       "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-      "poll.interval.ms": 3600000,
+      "poll.interval.ms": 10000,
       "topic.prefix": this.config.piConnector+"connector-"+this.processId,
       "quote.sql.identifiers": "ALWAYS",
       // "table.whitelist": "public.accounts_payable",
@@ -622,7 +622,7 @@ generateGraph(e){
     "mode": this.dbDetails.mode,
     "numeric.mapping": "best_fit",
     "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-    "poll.interval.ms": 3600000,
+    "poll.interval.ms": 10000,
     "topic.prefix": this.config.piConnector+"connector-"+this.processId,
     "quote.sql.identifiers": "ALWAYS",
     // "table.whitelist": "public.accounts_payable",
@@ -701,6 +701,10 @@ getDBTables(value){
       var tData: any = res;
       if(tData.data.length != 0){
         this.tableList = tData.data;
+        this.tableList.sort(function (a, b) {
+          return a.localeCompare(b);
+        });
+        this.tableList = [...new Set(this.tableList)];
       }
       this.spinner.hide()
     },
