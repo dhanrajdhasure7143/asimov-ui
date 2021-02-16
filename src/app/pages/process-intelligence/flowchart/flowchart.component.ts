@@ -212,7 +212,7 @@ isTimeChange:boolean=false;
         //setTimeout(() => {
            this.graphgenetaionInterval = setInterval(() => {
              this.onchangegenerategraphId(piId);
-           }, 40*1000);
+           }, 10*1000);
          // this.onchangegraphId(piId);
         //}, 1.5*60*1000);
       }
