@@ -24,6 +24,7 @@ export class D3flowchartComponent {
     @Input()  public isdownloadsvg:boolean;
     @Input()  public processGraphName:any;
     @Input()  public performanceValue:boolean;
+    @Input() private isSlider:boolean;
     @Output() ispdf=new EventEmitter<boolean>()
     @Output() isjpeg=new EventEmitter<boolean>()
     @Output() ispng=new EventEmitter<boolean>()
@@ -37,6 +38,7 @@ export class D3flowchartComponent {
   maxLabelValue: any;
   searchNode: any;
   isnoNode:boolean=false;
+  activeCssStyle = "stroke";
   
     constructor(){
   
@@ -81,6 +83,11 @@ export class D3flowchartComponent {
             else if(this.isdownloadsvg==true){
               this.exportSVG('svg')
           }
+      if (this.isSlider == true) {
+        this.activeCssStyle = "fill";
+      } else {
+        this.activeCssStyle = "stroke";
+      }
     }
 
     processGraph(){
@@ -210,7 +217,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
  
  gradient.append("stop")
     .attr('class', 'end')
-    .attr("offset", "90%")
+  .attr("offset", "90%")
     .attr("stop-color", "#1E1E1E")
     .attr("stop-opacity", 1);
 
@@ -425,10 +432,10 @@ var count1
         g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", class: this.class3,style:"stroke:#736f6f;stroke-width: 6px; marker-end:url(#arrow4);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*4 && this.model2[i].text < maxLinkCount*5){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis', class:this.class2,style:"stroke:url(#svgGradient);stroke-width: 8px; marker-end:url(#arrow);fill:none;", 
-         curve: d3.curveBasis,arrowhead: "normal"})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", class:this.class2, style:this.activeCssStyle+":url(#svgGradient);stroke-width: 8px; marker-end:url(#arrow);fill:none;", 
+        curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text == maxCount){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis',class:this.class1, style:"stroke:#1E1E1E;stroke-width: 10px;marker-end:url(#arrow);fill:none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class:this.class1, style:"stroke:#1E1E1E;stroke-width: 10px;marker-end:url(#arrow);fill:none;", 
         arrowhead: "normal",curve: d3.curveBasis})
        } 
       } 

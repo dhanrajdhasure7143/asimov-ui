@@ -72,6 +72,7 @@ export class UploadComponent implements OnInit {
   enableWorkspace: boolean=false;
   showprocessgraph: boolean=false;
   userRole: any;
+  categoryName: any;
   public isButtonVisible = false;
   
   constructor(private router: Router,
@@ -112,6 +113,7 @@ export class UploadComponent implements OnInit {
       }
           );
         })
+    
   }
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
@@ -442,10 +444,16 @@ export class UploadComponent implements OnInit {
   searchByCategory(category) {
     if (category == "allcategories") {
       var fulldata='';
-      // this.dataSource=this.dataSource
+       //this.dataSource=this.dataSource
+     
       this.dataSource.filter = fulldata;
     }else{
-      this.dataSource.filter = category
+    
+      this.dataSource.filterPredicate = (data: any, filter: string) => {
+        return data.categoryName === category;
+       };
+       this.dataSource.filter = category;
+       this.dataSource.paginator=this.paginator;
     }
     // if (category == "allcategories") {
     //   this.dtElement.dtInstance.then((dtInstance) => {
@@ -748,8 +756,11 @@ getDBTables(value){
 
   }
   applyFilter(event: Event) {
+    this.categoryName = 'allcategories';
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource= new MatTableDataSource(this.process_graph_list);
+    this.dataSource.filter = filterValue.trim().toString();
+    this.dataSource.paginator=this.paginator;
     // console.log(this.dataSource.filter)
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
