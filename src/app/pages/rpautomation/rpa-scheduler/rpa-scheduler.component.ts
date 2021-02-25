@@ -442,7 +442,7 @@ export class RpaSchedulerComponent implements OnInit {
 
 
 @Pipe({name: 'Envname'})
-export class Envname implements PipeTransform {
+export class EnvnameRpa implements PipeTransform {
   transform(value: any,arg:any)
   {
     let environments:any=[];
@@ -452,7 +452,7 @@ export class Envname implements PipeTransform {
 }
 
 @Pipe({name: 'Reverse'})
-export class Reverse implements PipeTransform {
+export class ReverseRpa implements PipeTransform {
   transform(value: any)
   {
     let arr:any=[];

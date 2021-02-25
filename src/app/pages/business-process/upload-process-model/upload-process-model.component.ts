@@ -864,6 +864,12 @@ displayBPMN(){
         _self.last_updated_time = now;
       }
     })
+
+    if(this.isShowConformance){
+      setTimeout(() => {
+        this.fitNotationViewfromPI()
+        }, 4000);
+    }
   }
 
   submitDiagramForApproval(){
@@ -1302,6 +1308,21 @@ displayBPMN(){
       this.cancelProcess();
       this.isStartProcessBtn=false;
     })    
+  }
+
+  fitNotationViewfromPI(){
+    let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
+    this[modeler_obj].get('canvas').zoom('fit-viewport');
+    // let msg = "";
+    // if(this.isConfBpmnModeler){
+    //   if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
+    //     msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
+    //   else
+    //     msg = "Notation"
+    // }
+    // else
+    //   msg = "Notation"
+    // this.global.notify(msg+" is fit to view port", "success")
   }
 
 }
