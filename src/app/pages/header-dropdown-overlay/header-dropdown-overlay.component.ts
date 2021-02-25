@@ -16,7 +16,7 @@ export class HeaderDropdownOverlayComponent implements OnInit {
   @Input() overlay_invite_user_dt: string;
   @Input() overlay_notifications_dt:string;
   @ViewChild('dialog_model',{ static: true }) dialog_model: TemplateRef<any>;
- 
+  table_details:any[]
   // table_details=[
   //   {
   //     "sub_id":"1",
@@ -144,5 +144,20 @@ close(){
          
         }
         }
+  overview(){
+
+  }
+  downloadBpmn(){
+
+  }
+  hasError(value){
+
+  }
+  getNumber(e){
+
+  }
+    loopTrackBy(index, term) {
+    return index;
+  }
 }
 

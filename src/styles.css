@@ -733,3 +733,13 @@ foreignObject{
 .mat-input-element {
   caret-color: #0062cf !important;
 }
+
+.insight-back-button {
+  float: right;
+  /* top: -8px; */
+  position: relative;
+  top: 10px;
+  font-size: 18px;
+  color: #333333;
+  text-decoration: none;
+}

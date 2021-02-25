@@ -70,7 +70,7 @@
                                         <div class="col-sm-2">
                                                 <mat-form-field>
                                                         <mat-label>Search Workspace</mat-label>
-                                                        <input (keyup)="applyFilter($event)" class="toolbar-search" type="text" matInput>
+                                                        <input (input)="applyFilter($event)" class="toolbar-search" type="text" matInput>
                                                         <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
                                                       </mat-form-field>
                                                 <!-- <button class="search_btn pull-right" *ngIf="isSearch" (click)="onsearchSelect()"><i class="fa fa-search " aria-hidden="true" style="color: gray"></i></button>
