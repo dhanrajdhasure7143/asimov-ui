@@ -166,6 +166,7 @@ biDataMaxPerct:any;
 biDataMinPerct:any;
 biDataMaxDays:any;
 biDataMinDays:any;
+isselected: number;
 
 
     constructor(
@@ -1338,7 +1339,7 @@ biDataMinDays:any;
         this.isEditable1 = !this.isEditable1
     }
 
-    getAllGraphsPriceCalculation() {
+    getAllGraphsPriceCalculation(e) {
         // console.log(this.input1);
         this.getTotalNoOfCases('fullgraph');
         this.getActivityMetrics('fullgraph');
@@ -1923,5 +1924,9 @@ svg
             
         })
     }
+
+    loopTrackBy(index, term){
+        return index;
+      }
 
 }
