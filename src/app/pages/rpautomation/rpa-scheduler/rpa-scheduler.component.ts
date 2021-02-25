@@ -67,6 +67,7 @@ export class RpaSchedulerComponent implements OnInit {
     resumeflag:false,
     deleteflag:false,
   }
+  q=0;
   constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent) { }
 
   ngOnInit() {
