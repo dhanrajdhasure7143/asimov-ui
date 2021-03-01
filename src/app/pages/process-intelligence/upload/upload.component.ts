@@ -73,6 +73,7 @@ export class UploadComponent implements OnInit {
   showprocessgraph: boolean=false;
   userRole: any;
   categoryName: any;
+  isUploadFileName:string;
   public isButtonVisible = false;
   
   constructor(private router: Router,
@@ -152,6 +153,7 @@ export class UploadComponent implements OnInit {
   getUID(id, name) {
     if (id == 0) {
       let extension = this.getFileExtension(name);
+      console.log(extension)
       if (extension == 'csv') {
         id = 2;
       }
@@ -181,7 +183,23 @@ export class UploadComponent implements OnInit {
     if (upload_id == 2)
       this.readCSVFile(event);
     if (upload_id == 3)
-      this.readXESFile(event);
+    console.log(upload_id);
+    let file: File = event.addedFiles[0];
+    let extension = this.getFileExtension(file.name);
+      console.log(extension)
+      switch(extension){
+        case 'xes':
+          this.readXESFile(event);
+          break;
+        case 'gz':
+          this.openXESGZFile()
+      }
+      //this.readXESFile(event);
+  }
+
+  openXESGZFile(){
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
   }
 
   error_display(event) {
@@ -368,6 +386,7 @@ export class UploadComponent implements OnInit {
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
     this.dbDetails={};
+    this.rest.fileName.next(null);
   }
   closePopup() {
     var modal = document.getElementById('myModal1');
@@ -608,6 +627,22 @@ slideUp(){
   }
 
 generateGraph(e){
+
+  this.rest.fileName.subscribe(res => {
+    this.isUploadFileName = res;
+  });
+console.log(this.isUploadFileName);
+
+  if (this.isUploadFileName) {
+    if (this.isUploadFileName.includes('gz')) {
+      console.log("in gz file");
+      this.generateXESGZGraph(e);
+    } else {
+      console.log("in fb")
+    }
+  }
+  else {
+    console.log("in db file");
   let modekey
   let modekey1
   let connectorBody:any= {}
@@ -678,6 +713,7 @@ generateGraph(e){
   this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
     this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
 })
+  }
 }
 getDBTables(value){
   // let zeroTo255 = "(\\d{1,2}|(0|1)\\"
@@ -728,6 +764,44 @@ getDBTables(value){
     }))
   // }
     // this.onChangeTable()
+}
+
+generateXESGZGraph(e){
+  this.processId = Math.floor(100000 + Math.random() * 900000);
+    this.rest.fileName.subscribe(res => {
+      this.isUploadFileName = res;
+    });
+    const connectorBody = {
+      "name": "xes-" + this.processId,
+      "config": {
+        "connector.class": "com.epsoft.asimov.connector.xes.XesSourceConnector",
+        "tasks.max": "1",
+        // "file": "/var/kafka/HospitalBilling.xes",
+        "file": this.config.dataPath + "/" + this.isUploadFileName,
+        // "topic": "topqconnector-xesTesting107",
+        "topic": this.config.piConnector+"connector-xes-" + this.processId,
+        // "topic": "tytyconnector-xes-" + this.processId,
+        "key.converter": "io.confluent.connect.avro.AvroConverter",
+        "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+        "transforms": "TimestampConverter,ValueToKey,InsertField",
+        "transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.TimestampConverter.format": "MM/dd/yyyy HH:mm:ss",
+        "transforms.TimestampConverter.field": "startTime",
+        "transforms.TimestampConverter.target.type": "string",
+        "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+        "transforms.ValueToKey.fields": "caseID",
+        "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+        "transforms.InsertField.static.field": "piIdName",
+        // "transforms.InsertField.static.value": "1098-p1098"
+        "transforms.InsertField.static.value": this.processId + "-p" + this.processId
+      }
+    }
+    this.rest.saveConnectorConfig(connectorBody, e.categoryName, this.processId, e.processName).subscribe(res => {
+      this.router.navigate(['/pages/processIntelligence/flowChart'], { queryParams: { piId: this.processId } });
+
+    })
 }
   onChangeTable(){
     if(this.dbDetails.mode){
