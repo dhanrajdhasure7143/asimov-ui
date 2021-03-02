@@ -76,6 +76,9 @@ export class SoUpdatedDashboardComponent implements OnInit {
   botvshuman:any=[];
   runtimestatschart:any;
   botsvshumanschart:any;
+  public selectedAreas:any;
+  public mycatInput:any;
+  public NorecordFound: boolean = false;
   colorScheme = {
     domain: ['#bf9d76', '#e99450', '#d89f59', '#f2dfa7', '#ff5b4f','#74c7b8']
   };
@@ -469,7 +472,46 @@ export class SoUpdatedDashboardComponent implements OnInit {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      this.selectedAreas = this.categaoriesList;
     });
+  }
+  searchstring(query: string){
+    /*console.log('query', query)
+    let result = this.select(query);
+    this.selectedAreas = result;*/
+    if(query != '')
+   {
+    console.log('query', query);
+    let result = this.select(query);
+    console.log("Categoryresult:",result.length);
+    if(result.length == 0){
+      this.NorecordFound = true;
+      console.log("true");
+      this.selectedAreas = result;
+    }
+    else
+    {
+      console.log("false");
+      this.NorecordFound = false;
+      this.selectedAreas = result;
+      console.log("else categorysearch",result);
+    }
+  }
+  else
+  {
+    this.selectedAreas = this.categaoriesList;
+  }
+  }
+
+  select(query: string):string[]{
+    let result: string[] = [];
+    let value1 = query.toLowerCase();
+    for(let a of this.categaoriesList){
+      if(a.categoryName.toLowerCase().indexOf(value1) > -1){
+        result.push(a)
+      }
+    }
+    return result;
   }
 
 
@@ -1127,6 +1169,7 @@ export class SoUpdatedDashboardComponent implements OnInit {
   reset_all()
   {
     this.selectedcat="";
+    this.mycatInput = '';
     this.ngOnInit();
   }
 
