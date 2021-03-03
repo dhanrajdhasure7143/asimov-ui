@@ -42,6 +42,15 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   public selectedcategory:any="";
   public categaoriesList:any=[];
   public timer:any;
+  public envlist_NorecordFound:boolean = false;
+  public Select_pro_NorecordFound:boolean = false;
+  public NorecordFound:boolean = false;
+  public envlist : any;
+  public selectprocesslist : any;
+  public selectedCategorylist : any;
+  public myprocessInput :any;
+  public myenvInput :any;
+  public catmyInput :any;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
@@ -147,6 +156,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       resp=processnames
       this.process_names=resp.filter(item=>item.status=="APPROVED");
       this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+      this.selectprocesslist = this.selected_process_names;
       let processnamebyid;
       this.addprocess_and_task_owner();
       if(processId != undefined)
@@ -210,7 +220,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   }
 
 
-  applyFilter(filterValue:any) {
+  /*applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.applyFilter1(this.selectedcategory);
@@ -225,7 +235,37 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
     this.selectedvalue="";
+  }*/
+  applyFilter(filterValue:any) {
+    console.log("applyfilter:", filterValue);
+    if(filterValue == ''){
+      this.dataSource2.filter = '';
+    }
+    else{
+    let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
+    this.selectedcategory=parseInt(processnamebyid.categoryId);
+    this.applyFilter1(this.selectedcategory);
+    this.selectedvalue=processnamebyid.processId;
+    filterValue = processnamebyid.processName.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource2.filter = filterValue;
+    }
   }
+
+  applyFilter1(value) {
+    if(value == ''){
+      console.log("applyfilter1",value)
+    this.dataSource2.filter = '';
+    this.selected_process_names = this.process_names;
+    }else{
+    this.selectedcategory=parseInt(value);
+    console.log("applyfilter1:", this.selectedcategory);
+    this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
+    this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
+    this.selectedvalue="";
+  }
+  }
+
 
 
   close()
@@ -424,6 +464,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       if(resp.errorCode == undefined)
       {
         this.environments=response;
+        this.envlist = this.environments;
       }
     })
   }
@@ -434,9 +475,123 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      this.selectedCategorylist = this.categaoriesList;
       this.getautomatedtasks(processid);
     });
   }
+
+  categorysearchstring(query: string)
+ {
+   if(query != '')
+   {
+    console.log('query', query);
+    let result = this.categoryselectval(query);
+    console.log("Categoryresult:",result.length);
+    if(result.length == 0){
+      this.NorecordFound = true;
+      console.log("true");
+      this.selectedCategorylist = result;
+    }
+    else
+    {
+      console.log("false");
+      this.NorecordFound = false;
+      this.selectedCategorylist = result;
+      console.log("else categorysearch",result);
+    }
+  }
+  else
+  {
+    this.selectedCategorylist = this.categaoriesList;
+  }
+}
+
+categoryselectval(query: string):string[]{
+  let result: string[] = [];
+  console.log("query:",query);
+  let value1 = query.toLowerCase();
+  for(let a of this.categaoriesList){
+    if(a.categoryName.toLowerCase().indexOf(value1) > -1){
+      result.push(a)
+    }
+  }
+  console.log("result:",result);
+  return result;
+}
+
+processsearchstring(query: string)
+{
+  if(query != '')
+  {
+    console.log('query', query);
+    let result = this.processselectval(query);
+    console.log(result.length);
+    if(result.length == 0){
+      this.Select_pro_NorecordFound = true;
+      console.log("true");
+      this.selectprocesslist = result;
+    }
+    else
+    {
+      console.log("false");
+      this.Select_pro_NorecordFound = false;
+      this.selectprocesslist = result;
+    }
+  }
+  else
+  {
+    this.selectprocesslist = this.process_names;
+    console.log("this.selectprocesslist",this.selectprocesslist);
+  }
+}
+
+processselectval(query: string):string[]{
+  let result: string[] = [];
+  console.log("query:",query);
+  let value1 = query.toLowerCase();
+  for(let a of this.selected_process_names){
+    if(a.processName.toLowerCase().indexOf(value1) > -1){
+      result.push(a)
+    }
+  }
+  console.log("result:",result);
+  return result;
+}
+
+envsearchstring(query: string)
+{
+  if(query != '')
+  {
+    console.log('query', query);
+    let result = this.envselectval(query);
+    console.log(result.length);
+    if(result.length == 0){
+      this.envlist_NorecordFound = true;
+      console.log("true");
+      this.envlist = result;
+    }
+    else
+    {
+      console.log("false");
+      this.envlist_NorecordFound = false;
+      this.envlist = result;
+    }
+  }
+}
+
+envselectval(query: string):string[]{
+  let result: string[] = [];
+  console.log("query:",query);
+  let value1 = query.toLowerCase();
+  for(let a of this.environments){
+    if(a.environmentName.toLowerCase().indexOf(value1) > -1){
+      result.push(a)
+    }
+  }
+  console.log("result:",result);
+  return result;
+}
+
 
   gethumanslist()
   {
@@ -458,13 +613,30 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     this.popup=false;
     document.getElementById("filters").style.display = "block";
   }
-  reset_all()
+
+  /*reset_all()
   {
     this.selectedEnvironment="";
     this.selectedvalue="";
     this.selectedcategory="";
     this.getautomatedtasks(0)
 
+  }*/
+  reset_all()
+  {
+    this.selectedEnvironment="";
+    this.selectedvalue="";
+    this.selectedcategory="";
+    this.myprocessInput = "";
+    this.myenvInput = "";
+    this.catmyInput = "";
+    this.envlist = this.environments;
+    this.selectprocesslist = this.selected_process_names;
+    this.selectedCategorylist = this.categaoriesList;
+    this.processsearchstring('');
+    this.categorysearchstring('');
+    this.applyFilter('');
+    this.applyFilter1('');
   }
 
 

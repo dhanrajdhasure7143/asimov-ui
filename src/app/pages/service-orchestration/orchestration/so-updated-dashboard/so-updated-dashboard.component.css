@@ -23,6 +23,11 @@
   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
 }
 
+.myInput{
+  padding:10px;
+  padding-bottom: 0px !important;
+  width: 90% !important;
+}
 
 .message{
 vertical-align: -100%;
