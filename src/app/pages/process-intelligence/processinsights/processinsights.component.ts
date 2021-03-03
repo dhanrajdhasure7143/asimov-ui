@@ -167,6 +167,13 @@ biDataMinPerct:any;
 biDataMaxDays:any;
 biDataMinDays:any;
 isselected: number;
+xScaleMin:number;
+xScaleMax:number;
+top;
+yLeftTickFormat;
+yRightTickFormat;
+yLeftAxisScale:number;
+robotValue:number;
 
 
     constructor(
