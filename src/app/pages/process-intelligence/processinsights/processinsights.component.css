@@ -233,7 +233,7 @@ input:disabled{
 .backgr{
 background: #f8f8f8;
 border-radius: 3px;
-width: 105%;
+width: 100%;
 margin-left: -20px;
 }
 .lineChart{

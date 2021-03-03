@@ -78,11 +78,11 @@
                 <i (click)="editInput()"  class="fas fa-pen"></i>
             </div>
             <!-- <div class="col-sm-1"></div> -->
-            <div class="col-sm-3 amountinputs" id="humancost">
+            <div class="col-sm-3 amountinputs botcost1" id="humancost">
                 <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
                 <i (click)="editInput1()"  class="fas fa-pen"></i>
             </div>
-            <div class="col-sm-3 amountinputs">
+            <div class="col-sm-3 amountinputs toatalcases1">
                 <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
             </div>
 
@@ -424,3 +424,4 @@
     </p>
     <p>Activity Cost : <strong id="value1"></strong></p>
 </div>
+<ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color: white" ></p></ngx-spinner>
