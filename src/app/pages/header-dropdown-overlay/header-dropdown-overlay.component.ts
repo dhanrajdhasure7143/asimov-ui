@@ -38,7 +38,7 @@ export class HeaderDropdownOverlayComponent implements OnInit {
   tenantId: string;
   role: string;
   c=0;
-  public notificationList: any[];
+  public notificationList: any;
   public dataid: any;
   notificationscount: any;
   notificationbody: { tenantId: string; };
