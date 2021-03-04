@@ -1324,7 +1324,7 @@ export class FilterBy{
 
 
 @Pipe({name: 'Category'})
-export class Category implements PipeTransform {
+export class CategoryUpdate implements PipeTransform {
   transform(value: any,arg:any)
   {
     let categories:any=[];
@@ -1336,7 +1336,7 @@ export class Category implements PipeTransform {
 
 
 @Pipe({name: 'Slicedate'})
-export class Slicedate implements PipeTransform {
+export class SlicedateUpdate implements PipeTransform {
   transform(value: any,arg:any)
   {
     let selectedArray:any=[]

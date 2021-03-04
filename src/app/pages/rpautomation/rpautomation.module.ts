@@ -43,13 +43,13 @@ import {MatMenuModule} from '@angular/material/menu';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import{ipcustompipecreation} from './rpa-environments/IPAddressCustompipe';
 import { RpaStudioDesignerworkspaceComponent, Checkoutputbox } from './rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
-import { SchedulerComponent,Envname } from './scheduler/scheduler.component';
+import { SchedulerComponent,Envname, Reverse } from './scheduler/scheduler.component';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatNativeDateModule} from '@angular/material';
-import { RpaSchedulerComponent } from './rpa-scheduler/rpa-scheduler.component';
+import { RpaSchedulerComponent,ReverseRpa,EnvnameRpa } from './rpa-scheduler/rpa-scheduler.component';
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import {Rpa_Hints} from './model/RPA-Hints';
@@ -58,6 +58,7 @@ import {Rpa_Hints} from './model/RPA-Hints';
     RpautomationComponent,
     ipcustompipecreation,
     Envname,
+    Reverse,
     RpaStudioComponent,
     RpaStudioTabsComponent,
     RpaStudioWorkspaceComponent,
@@ -73,7 +74,9 @@ import {Rpa_Hints} from './model/RPA-Hints';
     RpaStudioDesignerworkspaceComponent,
     SchedulerComponent,
     RpaSchedulerComponent,
-    Checkoutputbox
+    Checkoutputbox,
+    ReverseRpa,
+    EnvnameRpa
   ],
   imports: [
     NgxMaterialTimepickerModule,

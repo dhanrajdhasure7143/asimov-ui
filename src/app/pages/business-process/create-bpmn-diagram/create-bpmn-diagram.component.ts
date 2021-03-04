@@ -455,7 +455,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
 
-  downloadBpmn(){
+  downloadBpmn(e){
     if(this.bpmnModeler){
       let _self = this;
       if(this.fileType == this.selectedNotationType){

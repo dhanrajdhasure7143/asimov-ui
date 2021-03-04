@@ -16,7 +16,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatNativeDateModule, MatSlideToggleModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
-import { SoAutomatedTasksComponent } from './orchestration/so-automated-tasks/so-automated-tasks.component';
+import { SoAutomatedTasksComponent,Checkbotslist,Checkhumanslist } from './orchestration/so-automated-tasks/so-automated-tasks.component';
 import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
 import { Category,SoDashboardComponent,Slicedate, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
@@ -39,7 +39,7 @@ import {sohints} from './orchestration/model/so-hints';
 import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
 
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { SoUpdatedDashboardComponent } from './orchestration/so-updated-dashboard/so-updated-dashboard.component';
+import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './orchestration/so-updated-dashboard/so-updated-dashboard.component';
 @NgModule({
   declarations: [OrchestrationComponent,
     BotStatusComponent,
@@ -47,7 +47,11 @@ import { SoUpdatedDashboardComponent } from './orchestration/so-updated-dashboar
     Category,
     Reverse,
     Slicedate,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, SoUpdatedDashboardComponent],
+    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, SoUpdatedDashboardComponent,
+    Checkbotslist,
+    Checkhumanslist,
+    SlicedateUpdate,
+    CategoryUpdate],
   imports: [
     CommonModule,
     FormsModule,

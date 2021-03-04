@@ -39,9 +39,19 @@ export class PiHints{
         { selector:'#download_template', description:'Download Sample Template'}
       ];
       public insightsHints = [
-        { selector:'.varint-open', description:'Click here to see the variants', showNext:true },
-        { selector:'#humancost', description:'Click to edit cost', showNext:true },
-        { selector:'.groupBtn', description:'Click to view events and throught', showNext:true },
-        { selector:'#resourcesselect', description:'Select by resource to view duration and activity '}
+     // { selector:'.varint-open', description:'Click here to see the variants', showNext:true },
+     { selector:'.divbox0', description:'Total Time Spent', showNext:true },
+     { selector:'#humancost', description:'Click to edit cost', showNext:true },
+     
+     { selector:'.divbox1', description:'Potential Time Savings', showNext:true},
+     { selector:'.botcost1', description:'Click to edit cost', showNext:true },
+     { selector:'.divbox2', description:'Total Human Cost', showNext:true },
+     { selector:'.toatalcases1', description:'Total Cases', showNext:true },
+     { selector:'.divbox3', description:'Potential Savings', showNext:true},
+     { selector:'#dropdownForm1', description:'Click to Time Feed', showNext:true},
+     { selector:'.hedline1', description:'Business Insights', showNext:true},
+     { selector:'.hedline2', description:'Recommendations'}
+     // { selector:'.groupBtn', description:'Click to view events and throught', showNext:true },
+     // { selector:'#resourcesselect', description:'Select by resource to view duration and activity '}
       ];
 }
