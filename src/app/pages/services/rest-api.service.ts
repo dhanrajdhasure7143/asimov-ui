@@ -635,4 +635,7 @@ export class RestApiService{
     getCustomUserRole(appID):Observable<any>{
       return this.http.get<any>('/authorizationservice/api/v1/user/role/'+appID,httpOptions)
     }
+    getBPMNProcessArchNotations(bpmnModelId){
+      return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
+    }
 }

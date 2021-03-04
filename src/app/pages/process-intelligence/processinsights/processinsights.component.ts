@@ -11,6 +11,7 @@ import {curveBasis} from 'd3-shape';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from 'src/app/shared/global-script';
+import { NgxSpinnerService } from "ngx-spinner";
 HC_more(Highcharts)
 enum VariantList {
     'Most Common',
@@ -166,6 +167,14 @@ biDataMaxPerct:any;
 biDataMinPerct:any;
 biDataMaxDays:any;
 biDataMinDays:any;
+isselected: number;
+xScaleMin:number;
+xScaleMax:number;
+top;
+yLeftTickFormat;
+yRightTickFormat;
+yLeftAxisScale:number;
+robotValue:number;
 
 
     constructor(
@@ -173,7 +182,8 @@ biDataMinDays:any;
         private route: ActivatedRoute,
         private dt: DataTransferService,
         private hints: PiHints,
-        private global:GlobalScript
+        private global:GlobalScript,
+        private spinner:NgxSpinnerService
     ) {
        // Object.assign(this, { multi });
       // Object.assign(this.bubbleData,  this.bubbleData );
@@ -258,6 +268,7 @@ biDataMinDays:any;
             data_type: 'variant_metrics',
             "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
         }
+        this.spinner.show();
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.variant_Duration_list = res.data;
@@ -265,9 +276,11 @@ biDataMinDays:any;
                 this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"];
                 //this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"]/3;
                 this.totalMedianDuration = this.bkp_totalMedianDuration;
+                this.spinner.hide();
 
             },
                 (err => {
+                    this.spinner.hide();
                     // console.log("Internal server error, Please try again later.")
                 }))
 
@@ -334,6 +347,7 @@ biDataMinDays:any;
                 variants: varinatArray //if flag is true
             }
         }
+        this.spinner.show();
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.insight_human_robot_cost = res.data;
@@ -342,6 +356,7 @@ biDataMinDays:any;
                 if (from == 'fullgraph') {
                     this.getResources(this.insight_human_robot_cost);
                 }
+                this.spinner.hide();
             })
 
     }
@@ -396,6 +411,7 @@ biDataMinDays:any;
                 "resources": selected_resources,
                 "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
+            this.spinner.show();
             this.rest.getPIInsightResourceSelection(reqObj)
                 .subscribe((res: any) => {
                     // console.log(res)
@@ -475,6 +491,7 @@ biDataMinDays:any;
                     // this.addpiechart2(activityCost);
                     //this.getDonutChart1(activityDuration);
                     //this.getDonutChart2(activityCost);
+                    this.spinner.hide();
                 })
         }
     }
@@ -584,6 +601,7 @@ biDataMinDays:any;
             }
 
         }
+        this.spinner.show();
         this.rest.getPIVariantActivity(reqObj)
             .subscribe((res: any) => {
                 // console.log(JSON.stringify(res));
@@ -641,6 +659,7 @@ biDataMinDays:any;
                 //this.addpiechart2(activityCost);
                 //this.getDonutChart1(activityDuration);
                 //this.getDonutChart2(activityCost);
+                this.spinner.hide();
             })
 
     }
@@ -1338,7 +1357,7 @@ biDataMinDays:any;
         this.isEditable1 = !this.isEditable1
     }
 
-    getAllGraphsPriceCalculation() {
+    getAllGraphsPriceCalculation(e) {
         // console.log(this.input1);
         this.getTotalNoOfCases('fullgraph');
         this.getActivityMetrics('fullgraph');
@@ -1899,6 +1918,7 @@ svg
             "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
             let bi_data:any
+            this.spinner.show();
         this.rest.getBIinsights(reqObj).subscribe((res: any) => {
         bi_data=res
         // if(bi_data.data){
@@ -1920,8 +1940,13 @@ svg
                 this.biDataMinPerct=bi_data2.min_percent
             }
         // }
+        this.spinner.hide();
             
         })
     }
+
+    loopTrackBy(index, term){
+        return index;
+      }
 
 }

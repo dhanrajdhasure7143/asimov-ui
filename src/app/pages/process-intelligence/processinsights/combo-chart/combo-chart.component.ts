@@ -132,7 +132,7 @@ import {
                 [visibleValue]="hoveredVertical"
                 [activeEntries]="activeEntries"
                 [tooltipDisabled]="tooltipDisabled"
-                (select)="onClick($event, series)"
+                (select)="onClick($event)"
                 (activate)="onActivate($event)"
                 (deactivate)="onDeactivate($event)"
               />
