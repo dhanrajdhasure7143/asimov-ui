@@ -51,6 +51,7 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import {MatNativeDateModule} from '@angular/material';
 import { RpaSchedulerComponent } from './rpa-scheduler/rpa-scheduler.component';
 
+import { MatExpansionModule } from '@angular/material/expansion';
 import {Rpa_Hints} from './model/RPA-Hints';
 @NgModule({
   declarations: [
@@ -87,7 +88,7 @@ import {Rpa_Hints} from './model/RPA-Hints';
     MatTabsModule,
     FilterPipeModule,
     DataTablesModule,
-    NgbModule,
+    NgbModule,MatExpansionModule,
     ContextMenuModule.forRoot(),
     DynamicFormBuilderModule,
     ReactiveFormsModule,
