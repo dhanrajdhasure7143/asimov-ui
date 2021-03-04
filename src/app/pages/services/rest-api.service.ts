@@ -73,7 +73,7 @@ export class RestApiService{
         });
        }
      }
-  
+
   getInbox(){
     return this.http.get('/rpa-service/inbox');
   }
@@ -542,9 +542,9 @@ export class RestApiService{
     return this.http.post("/rpa-service/stop-process-schedule",schedule);
   }
 
-  resumeprocessschedule(processid)
+  resumeprocessschedule(schedule)
   {
-    return this.http.post("/rpa-service/resume-process-schedule?processId="+processid,"");
+    return this.http.post("/rpa-service/resume-process-schedule",schedule);
   }
 
   assign_bot_and_task(id,taskid,type)
