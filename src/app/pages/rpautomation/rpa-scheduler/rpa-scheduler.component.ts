@@ -67,6 +67,7 @@ export class RpaSchedulerComponent implements OnInit {
     resumeflag:false,
     deleteflag:false,
   }
+  q=0;
   constructor(private rest:RestApiService, private notifier: NotifierService, private actions:RpaStudioActionsmenuComponent) { }
 
   ngOnInit() {
@@ -442,7 +443,7 @@ export class RpaSchedulerComponent implements OnInit {
 
 
 @Pipe({name: 'Envname'})
-export class Envname implements PipeTransform {
+export class EnvnameRpa implements PipeTransform {
   transform(value: any,arg:any)
   {
     let environments:any=[];
@@ -452,7 +453,7 @@ export class Envname implements PipeTransform {
 }
 
 @Pipe({name: 'Reverse'})
-export class Reverse implements PipeTransform {
+export class ReverseRpa implements PipeTransform {
   transform(value: any)
   {
     let arr:any=[];
