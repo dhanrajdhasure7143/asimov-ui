@@ -38,16 +38,34 @@ import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlist
 import {sohints} from './orchestration/model/so-hints';
 import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
 
+
+import { NewSoDashboardComponent } from './orchestration/new-so-dashboard/new-so-dashboard.component'
+import { NewSoBotsComponent } from './orchestration/new-so-bots/new-so-bots.component';
+import { NewSoManagementComponent } from './orchestration/new-so-management/new-so-management.component';
+import { SoEnvironmentsComponent} from './orchestration/so-environments/so-environments.component';
+import { SoHealthStatusComponent } from './orchestration/so-health-status/so-health-status.component';
+import { SoEnvBlueprismComponent } from './orchestration/so-env-blueprism/so-env-blueprism.component';
+import { SoEnvUipathComponent } from './orchestration/so-env-uipath/so-env-uipath.component';
+import { SoEnvEpsoftComponent ,ipcustompipecreation } from './orchestration/so-env-epsoft/so-env-epsoft.component';
+import { ReactiveFormsModule } from '@angular/forms';
+
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './orchestration/so-updated-dashboard/so-updated-dashboard.component';
 @NgModule({
-  declarations: [OrchestrationComponent,
+  declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
     FilterBy,
     Category,
     Reverse,
     Slicedate,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, SoUpdatedDashboardComponent,
+    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, NewSoDashboardComponent,
+  NewSoBotsComponent,
+  NewSoManagementComponent,
+  SoEnvironmentsComponent,
+  SoHealthStatusComponent,
+  SoEnvBlueprismComponent,
+  SoEnvUipathComponent,
+  SoEnvEpsoftComponent,
     Checkbotslist,
     Checkhumanslist,
     SlicedateUpdate,
@@ -55,6 +73,7 @@ import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './o
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     ServiceOrchestrationRoutingModule,
     SharedModule,

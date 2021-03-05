@@ -13,7 +13,7 @@ export const environment = {
   pi_url: 'http://pidev.epsoftinc.in',
 
   bps_url: 'http://bpsdev.epsoftinc.in',
-  rpa_url: 'http://rpadev.epsoftinc.in',
+  rpa_url: 'http://10.11.0.133:4444',
   loopback_url: 'http://10.11.0.107:3000',
   idm_url:'http://idmdev.epsoftinc.in',
   auth_url: "http://authdev.epsoftinc.in",

@@ -1,0 +1,732 @@
+/* body {
+    margin: 0px;
+    padding: 0px;
+    font-family: Montserrat, sans-serif;
+    background: rgb(249, 249, 249);
+    height: 100vh;
+    color: rgb(0, 21, 50);
+    background-color: #ffffff;
+}
+@font-face {
+    font-family: "Material Icons";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Material Icons"), local("MaterialIcons-Regular"), url("https://example.com/MaterialIcons-Regular.woff2") format("woff2"), url("https://example.com/MaterialIcons-Regular.woff") format("woff"),
+        url("https://example.com/MaterialIcons-Regular.ttf") format("truetype");
+} */
+.my-new-div .btn:focus {
+    outline: 0px;
+    box-shadow: none;
+}
+.my-new-div h1,
+.my-new-div h2,
+.my-new-div h3,
+.my-new-div h4,
+.my-new-div h5,
+.my-new-div h6,
+.my-new-div p,
+.my-new-div ul,
+.my-new-div li,
+.my-new-div ol,
+.my-new-div span,
+.my-new-div th,
+.my-new-div td{
+    margin: 0px;
+    padding: 0px;
+    font-size: 15px !important;
+}
+.my-new-div div{
+    font-size: 15px !important;
+}
+.my-new-div a{
+    font-size: 15px !important;
+}
+#cheader nav.navbar.navbar-light.bg-light {
+    width: 100%;
+    padding: 0px;
+}
+.my-new-div .row {
+    width: 100%;
+    margin: 0px;
+}
+#cheader a.nav-link {
+    text-align: center;
+}
+#cheader .nav-link img {
+    display: block;
+    width: 30px;
+    margin: auto;
+}
+#cheader a.nav-link label {
+    display: block;
+    width: 100%;
+    margin: 5px auto 0px;
+    font-size: 14px;
+    font-weight: 500;
+}
+#cheader li.nav-item {
+    max-width: 120px;
+    margin: 0px 6px;
+}
+#cheader a.nav-link:hover,
+.my-new-div a.nav-link.active {
+    background: rgb(0, 98, 207);
+    color: white;
+}
+#cheader a.nav-link:hover img,
+.my-new-div a.nav-link.active img {
+    filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
+}
+#cheader li.nav-item:nth-child(5) a:hover img {
+    color: rgb(0, 98, 207);
+    background: inherit;
+    filter: inherit;
+}
+#cheader a.nav-link {
+    padding: 15px;
+    border-radius: none;
+    text-align: center;
+    height: 100%;
+    min-width: 140px;
+    cursor: pointer;
+    font-size: 17px !important;
+}
+#cheader a.navbar-brand {
+    padding: 0px;
+}
+#cheader .navbar-brand img {
+    height: 100%;
+}
+#cheader ol.breadcrumb {
+    margin: auto;
+    background: transparent;
+    display: none;
+}
+#cheader .breadcrumb-item.active {
+    color: rgba(0, 98, 207, 0.8);
+    letter-spacing: 0.25px;
+}
+#cheader .breadcrumb-item.active a {
+    color: rgb(0, 98, 207);
+}
+.my-new-div nav#cheader {
+    background: white;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 6px;
+    padding: 0 35px;
+}
+#cheader .noactive a.nav-link {
+    height: 100%;
+    display: flex;
+    position: relative;
+    background: transparent !important;
+}
+/* #cheader .noactive a.nav-link:hover {
+} */
+.noactive a.nav-link:hover img {
+    filter: unset;
+}
+.noactive a.nav-link img {
+    vertical-align: middle;
+}
+.my-new-div span.not-dot {
+    position: absolute;
+    background: #64e572;
+    padding: 6px;
+    border-radius: 50%;
+    top: 22px;
+    right: 42px;
+    color: #fff;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    padding: 0;
+    font-size: 12px !important;
+    font-weight: 500;
+}
+.my-new-div ul#mainUl {
+    display: inline-flex;
+}
+#cheader .dropdown {
+    display: inline-block;
+}
+#cheader .dropdown-toggle::after {
+    bottom: -15px;
+    right: 24px;
+    position: absolute;
+    opacity: 0.25;
+    display: none;
+}
+#cheader button#dropdownMenuButton {
+    background: aliceblue;
+    text-align: center;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 21px !important;
+    width: 60px;
+    height: 60px;
+    line-height: 20px;
+    display: inline-block;
+}
+#cheader .dropdown-menu.show {
+    left: auto;
+    right: 0px;
+    top: 80px;
+}
+#cheader .header-right {
+    display: flex;
+    align-items: center;
+}
+#cheader li.nav-item.noactive,
+.my-new-div li.nav-item.noactive a {
+    min-width: auto;
+}
+#chartdiv1 {
+    width: 100%;
+    height: 550px;
+}
+* {
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    font-family: Montserrat, sans-serif;
+    font-size: 15px;
+}
+/* h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li,
+ol,
+span,
+label {
+    margin: 0px;
+    padding: 0px;
+} */
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+.my-new-div .nav-tabs .nav-link:focus,
+.my-new-div .nav-tabs .nav-link:hover {
+    border: none;
+}
+.wrapper {
+    padding: 0px 40px 50px;
+}
+.headerdbi-tabs {
+    border: none;
+    padding: 0px 55px;
+    background: rgb(240, 248, 255);
+    align-items: center;
+}
+.headerdbi-tabs li a.nav-link.active {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-image: initial;
+    opacity: 1;
+    background: rgb(255, 255, 255);
+    color: rgb(0, 98, 207);
+    border-bottom: 3px solid rgb(0, 98, 207);
+}
+.headerdbi-tabs li a.nav-link {
+    color: rgb(104, 113, 123);
+    font-weight: 600;
+    padding: 12px 20px;
+    border: none;
+    display: inline-block;
+    vertical-align: middle;
+}
+.headerdbi-tabs li a.nav-link i {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 4px;
+}
+.headerdbi-tabs li a.nav-link:hover {
+    color: rgb(0, 98, 207);
+}
+/* .headerdbi-tabs li:nth-child(1) a.nav-link {
+} */
+.dbi-tab-content .container.tab-pane {
+    max-width: 100%;
+    padding: 15px 0px 0px;
+}
+.dbi-tab-content .container.tab-pane .row {
+    margin-bottom: 25px;
+}
+#lobchart,
+#botsbyprocess,
+#bothumantask,
+#modalchartdiv,
+.amart {
+    width: 100%;
+    height: 350px;
+}
+#dashboardchart2,#dashboardchart1{
+    height: 350px;
+}
+.dashboardchart_shownnxt{
+    display: none;
+}
+.dbichart-block {
+    border: 1px solid rgb(221, 236, 248);
+    border-radius: 2px;
+    padding: 10px;
+    width: 100%;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 6px;
+}
+.dbichart-block .dbichart-head label {
+    font-weight: 500;
+    margin-bottom: 0px;
+}
+.dbichart-block .dbichart-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0px;
+}
+/* .dbichart-block .dbichart-head .dbichart-dropdown {
+} */
+.dbichart-block .dbichart-head .dbichart-dropdown span {
+    color: rgb(51, 51, 51);
+    font-size: 14px;
+}
+.dbichart-block .dbichart-head .dbichart-dropdown select {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-image: initial;
+    border-bottom: 1px solid rgba(51, 51, 51, 0.15);
+    color: rgb(51, 51, 51);
+    font-weight: 600;
+    background: transparent;
+    width: 110px;
+    padding: 0px 0px 6px;
+}
+.dbichart-block .dbichart-head .dbichart-dropdown select:focus {
+    outline: none;
+    box-shadow: none;
+}
+.botsbyprocess-sec,
+.lob-sec,.botsbyprocess-sec2 {
+    padding: 10px;
+    border: 1px solid rgb(221, 236, 248);
+    border-radius: 2px;
+    box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 6px;
+    display: none;
+}
+.botsbyprocess-sec .bbp-title,
+.lob-sec .bbp-title,
+.modalpopup .bbp-title,
+.botsbyprocess-sec2 .bbp-title {
+    padding: 5px 0px 10px;
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    display: inline-block;
+    margin-right: 30px;
+}
+.botsbyprocess-sec .bbp-title span,
+.botsbyprocess-sec2 .bbp-title span,
+.lob-sec .bbp-title span,
+.my-new-div .modalpopup .bbp-title span {
+    color: rgb(45, 115, 238);
+    margin-left: 10px;
+    text-decoration: underline;
+}
+.botsbyprocess-sec .bbp-buttons,
+.botsbyprocess-sec2 .bbp-buttons,
+.lob-sec .bbp-buttons,
+.modalpopup .bbp-buttons {
+    margin-bottom: 15px;
+}
+.botsbyprocess-sec .bbp-buttons button,
+.botsbyprocess-sec2 .bbp-buttons button,
+.lob-sec .bbp-buttons button {
+    border: none;
+    margin-right: 15px;
+    height: 50px;
+    line-height: 50px;
+    padding: 0px 10px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 230px;
+    text-align: center;
+    font-weight: 500;
+}
+.botsbyprocess-sec .bbp-buttons button img,
+.botsbyprocess-sec2 .bbp-buttons button img,
+.lob-sec .bbp-buttons button img,
+.modalpopup .bbp-buttons button img {
+    margin-right: 15px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.my-new-div .color1 {
+    background: rgb(80, 81, 107);
+    color: rgb(255, 255, 255);
+}
+.my-new-div .color2 {
+    background: rgb(118, 192, 220);
+    color: rgb(255, 255, 255);
+}
+.my-new-div .color3 {
+    background: rgb(182, 230, 154);
+    color: rgb(0, 0, 0);
+}
+.my-new-div .color4 {
+    background: rgb(255, 170, 57);
+    color: rgb(0, 0, 0);
+}
+.my-new-div span.dot1.Success {
+    width: 10px;
+    height: 10px;
+    background: rgb(78, 171, 106);
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.my-new-div span.dot1.Paused {
+    width: 10px;
+    height: 10px;
+    background: rgb(249, 175, 3);
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.my-new-div span.dot1.Failed {
+    width: 10px;
+    height: 10px;
+    background: rgb(249, 3, 3);
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.my-new-div .red td {
+    color: rgb(249, 3, 3) !important;
+}
+.my-new-div .table tbody td {
+    color: rgb(0, 0, 0);
+    font-size: 14px;
+}
+.my-new-div .table thead th {
+    color: rgb(51, 51, 51);
+    font-size: 14px;
+}
+.my-new-div .botactive {
+    padding: 10px;
+    border: 1px solid rgb(221, 236, 248);
+    margin-top: 0px;
+}
+.my-new-div .botstatusactive,
+.my-new-div .botactive.except {
+    display: none;
+}
+/* .graphsec .row .col-md-4,
+.graphsec .row .col-md-8 {
+} */
+.chartinner {
+    margin-bottom: 30px;
+}
+.my-new-div.headsec h1 {
+    font-size: 14px;
+    color: rgb(0, 0, 0);
+    margin-bottom: 20px;
+}
+.my-new-div .headsec h1 span {
+    color: rgb(45, 115, 238);
+    margin-left: 10px;
+    text-decoration: underline;
+}
+.my-new-div g[aria-labelledby*="-title"] {
+    display: none;
+}
+.my-new-div div#content {
+    background: white;
+}
+.my-new-div .incgrid {
+    padding: 15px 0px 0px;
+    height: 70vh;
+}
+.my-new-div #myModal .modal-dialog {
+    margin: 0.75rem 0.75rem 0.25rem;
+    max-width: 99% !important;
+}
+.my-new-div div#myModal {
+    padding-right: 0px !important;
+}
+.my-new-div.modal-header {
+    border: none;
+}
+.my-new-div button.close {
+    font-weight: 500;
+    color: rgb(220, 53, 69);
+    font-size: 30px !important;
+}
+.my-new-div .modalpopup li.nav-item {
+    padding-right: 25px;
+    float: left;
+}
+.my-new-div .modalpopup a.nav-link {
+    color: black;
+    padding: 0.25rem 0.75rem;
+}
+.my-new-div .modal-body .modalpopup {
+    padding: 20px 0px;
+}
+.my-new-div .modalpopup .bbp-buttons button {
+    border: none;
+    margin-right: 10px;
+    height: 60px;
+    line-height: 50px;
+    padding: 0px 10px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 325px;
+    text-align: left;
+    font-weight: 500;
+    border-radius: 0px !important;
+}
+.my-new-div .mspan {
+    float: right;
+}
+.my-new-div .color5 {
+    background: rgb(237, 239, 20);
+}
+.my-new-div td {
+    position: relative;
+}
+.my-new-div a.commcl {
+    display: inline-block;
+    color: rgb(0, 0, 0);
+    padding: 0px 10px;
+    font-weight: 700 !important;
+}
+.my-new-div a.commcl:hover {
+    text-decoration: none;
+}
+.my-new-div .commcl:hover .toolt {
+    display: block;
+}
+.my-new-div .toolt {
+    width: 200px;
+    position: absolute;
+    top: 3px;
+    right: -121px;
+    display: none;
+    z-index: 9;
+}
+.my-new-div .arrow {
+    width: 10px;
+    height: 10px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: rgb(79, 79, 79) transparent transparent rgb(79, 79, 79);
+    transform: rotate(-45deg);
+    position: absolute;
+    top: 10px;
+    left: -4px;
+}
+.my-new-div .tooltip-inner {
+    padding: 10px;
+    text-align: center;
+    background-color: rgb(79, 79, 79);
+    border-radius: 45px;
+}
+.my-new-div .toolt img {
+    width: 20px;
+    margin-right: 6px;
+    margin-top: -4px;
+}
+.my-new-div #myModal2 .modal-header ul {
+    display: flex;
+    width: 100%;
+}
+.my-new-div #myModal2 .modal-header ul li {
+    list-style: none;
+    width: 24%;
+}
+.my-new-div .modal-header ul li p {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+}
+.my-new-div .modal-header ul li p a {
+    text-decoration: underline;
+}
+.my-new-div .modal-body .headsec h1 {
+    font-size: 16px !important;
+}
+.my-new-div .modal-body p.text-danger {
+    position: relative;
+    font-weight: 600;
+    padding-left: 16px;
+}
+.my-new-div .modal-body p.text-danger::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    position: absolute;
+    left: 0px;
+    top: 5px;
+    background-color: rgb(220, 53, 69) !important;
+}
+.my-new-div #myModal2 .modal-dialog,
+.my-new-div #myModal3 .modal-dialog {
+    width: 100%;
+    margin: 30px auto;
+    border-radius: 0px !important;
+    max-width: 99% !important;
+}
+.my-new-div button.close {
+    opacity: 1;
+    font-size: 32px;
+    color: rgb(220, 53, 69) !important;
+    padding: 10px 20px !important;
+}
+.my-new-div .titlese h3 {
+    color: rgb(0, 0, 0);
+    font-size: 16px;
+}
+.my-new-div .modal-body.formarea {
+    padding: 20px;
+}
+.my-new-div .modal-content {
+    border-radius: 0px;
+}
+.formarea .col-md-4 {
+    margin-bottom: 40px;
+}
+.formarea .col-md-4 p,
+.formarea .col-md-12 p {
+    display: flex;
+}
+.formarea label {
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    font-size: 16px;
+    width: 190px;
+}
+span.requir {
+    color: rgb(220, 53, 69);
+    margin-left: 3px;
+}
+.formarea input[type="text"],
+.formarea select,
+.formarea textarea {
+    width: 100%;
+    padding: 5px 10px;
+    border-radius: 0px;
+    border-width: medium medium 1px;
+    border-style: none none solid;
+    border-top-color: initial;
+    border-right-color: initial;
+    border-left-color: initial;
+    border-image: initial;
+    border-bottom-color: rgb(204, 204, 204);
+    outline: unset;
+}
+.formarea input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+.formarea input[type="file"]::before {
+    content: "No Attachments";
+    padding: 5px 8px 5px 38px;
+    outline: none;
+    white-space: nowrap;
+    user-select: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+}
+.formarea input[type="file"]::after {
+    content: "";
+    background-image: url('src/assets/images/vartusaimages/atticon.png');
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    left: 0px;
+    opacity: 1;
+    visibility: visible;
+    z-index: 9;
+    background-size: 30px;
+}
+.formarea input[type="file"] {
+    position: relative;
+    color: transparent;
+    width: 100%;
+    outline: unset;
+}
+.formarea .col-md-12 textarea {
+    padding: 10px 20px;
+    height: 90px;
+}
+.formarea .col-md-12 label {
+    width: 140px;
+}
+.formarea .col-md-12 textarea {
+    padding: 10px 20px;
+    height: 90px;
+}
+.my-new-div .textare textarea {
+    width: 100%;
+    border: 1px solid rgb(204, 204, 204);
+    margin-top: 30px;
+    height: 150px !important;
+}
+.my-new-div .footebut ul li {
+    list-style: none;
+    margin-left: 20px;
+}
+.my-new-div .footebut ul li a {
+    background-color: rgb(0, 98, 207);
+    padding: 6px 20px;
+    display: inline-block;
+    color: rgb(255, 255, 255);
+    border-radius: 90px;
+    border: 1px solid rgb(0, 98, 207);
+    text-decoration: none;
+}
+.my-new-div .footebut ul li a:hover {
+    background-color: rgb(255, 255, 255);
+    color: rgb(0, 98, 207);
+}
+.my-new-div .footebut ul {
+    display: flex;
+    float: right;
+    padding: 0px 20px 20px;
+}
+
+.my-new-div .text-danger span{
+    color: #dc3545 !important;
+}
+.headerdbi-tabs a:hover{
+    background-color: rgb(240, 248, 255) !important;
+    color: rgb(0, 98, 207) !important;
+}
+.my-new-div.headerdbi-tabs .active a:hover{
+    background-color:#fff !important;
+    color: rgb(0, 98, 207) !important;
+}
+.my-new-div .headerdbi-tabs .active{
+    border-bottom: 2px solid rgb(0, 98, 207);
+}
+.headerdbi-tabs.nav-tabs li .active a{
+    border: 0px !important;
+}
+.my-new-div.maincontent .nav {
+    padding-left: 17px !important;
+}
+.my-new-div .nav-tabs>li.active>a, .my-new-div .nav-tabs>li.active>a:focus, .my-new-div .nav-tabs>li.active>a:hover {
+    border: 0px !important;
+}

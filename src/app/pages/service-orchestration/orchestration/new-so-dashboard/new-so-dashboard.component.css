@@ -1,0 +1,13 @@
+/* @import "../../../../../assets/css/new-so-styles.css"; */
+.dbichart-block label{
+    font-size: 15px;
+    font-weight: 500;
+}
+button{
+    border-radius: 0px !important;
+}
+.backgr{
+    background:white;
+    border-radius: 3px;
+    height: 600px;
+    }

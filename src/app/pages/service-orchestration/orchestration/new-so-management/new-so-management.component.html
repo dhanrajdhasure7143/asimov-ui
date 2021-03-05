@@ -1,0 +1,100 @@
+<!-- <div class="main my-new-div">
+    <div class="wrapper">
+        <div  class="incgrid">
+
+          <div class="text-right">
+            <span style="padding:10px">
+              <mat-form-field class="example-full-width" id="bmsearch">
+                <mat-label>Search</mat-label>
+                <input matInput placeholder="Search" (keyup)="applyFilter2($event.target.value)">
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+            </span>
+            </div>
+          <mat-card>
+            <div style="overflow-x: scroll;">
+
+
+            <table mat-table #sort1="matSort" [dataSource]="dataSource1"  matSort class="incident table" id="bmtable">
+
+                      <ng-container matColumnDef="incidentId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Incident Id</th>
+                        <td mat-cell *matCellDef="let element">
+
+                          <span *ngIf="element.incidentId==''">--</span>
+                          <span *ngIf="element.incidentId!=''">{{element.incidentId}}</span>
+                        </td>
+                    </ng-container>
+
+                      <ng-container matColumnDef="incidentStatus">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.incidentStatus==''">--</span>
+                          <span *ngIf="element.incidentStatus!=''">
+                            {{element.incidentStatus}}
+                          </span>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="assignedTo">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Assigned To</th>
+                        <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.assignedTo==''">--</span>
+                          <span *ngIf="element.assignedTo!=''">
+                            {{element.assignedTo}}
+                          </span>
+                        </td>
+                      </ng-container>
+                      
+                    <ng-container matColumnDef="createdAt">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Created At</th>
+                      <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.createdAt==''">--</span>
+                        <span *ngIf="element.createdAt!=''">
+                          {{element.createdAt}}
+                        </span>
+                      </td>
+                    </ng-container>
+                    <ng-container matColumnDef="description">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Description</th>
+                      <td mat-cell *matCellDef="let element">
+
+                        <span *ngIf="element.description==''">--</span>
+                        <span [matTooltip]="element.description" *ngIf="element.description!=''">{{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
+                      </td>
+                   </ng-container>
+
+
+                  <ng-container matColumnDef="short_description">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Short Description </th>
+                    <td mat-cell *matCellDef="let element" >
+                      <span *ngIf="element.short_description==''">--</span>
+                      <span [matTooltip]="element.short_description" *ngIf="element.short_description!=''">{{(element.short_description.length > 15) ? ((element.short_description).slice(0, 15) + '...') : element.short_description}}</span>
+                    </td>
+                </ng-container>
+
+
+
+                <ng-container matColumnDef="noData">
+                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="6">
+                      No Records Found
+                  </td>
+              </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1 && isTableHasData}"></tr>
+
+            </table>
+          </div>
+            <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+          </mat-card>
+        </div>
+    </div>
+</div> -->
+
+
+<div class="backgr">
+  <!-- <div class="container-fluid">
+      </div> -->
+      <br>
+      <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" ></iframe>
+      </div>

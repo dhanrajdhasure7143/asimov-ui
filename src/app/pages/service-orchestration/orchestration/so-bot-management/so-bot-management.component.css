@@ -30,3 +30,17 @@ select {
     padding-bottom: 0px !important;
     width: 90% !important;
   }
+
+  .lbl_chk_cls{
+    font-size: 15px;
+    font-weight: lighter !important;
+    margin-left:3px
+  }
+
+  .swal-wide{
+    width:1000px !important;
+    height: 500px !important;
+  }
+.margin-25>span{
+  margin-left:14px!important;
+}
