@@ -547,7 +547,7 @@ export class RestApiService{
     return this.http.post("/rpa-service/resume-process-schedule?processId="+processid,"");
   }
 
-  assign_bot_and_task(id,taskid,type)
+  assign_bot_and_task(id,taskid,source,type)
   {
     let data:any
     if(type=="Automated")
@@ -555,7 +555,8 @@ export class RestApiService{
       data={
         "botId":id,
         "taskId":taskid,
-        "assignedUserId":"0"
+        "assignedUserId":"0",
+       "sourceType":source,
       };
     }
     else if(type=="Human")
@@ -563,9 +564,10 @@ export class RestApiService{
       data={
         "botId":"0",
         "taskId":taskid,
-        "assignedUserId":id
+        "assignedUserId":id,
       }
     }
+    console.log(data);
     return this.http.post("/rpa-service/assign-bot",data);
   }
 
@@ -637,5 +639,113 @@ export class RestApiService{
     }
     getBPMNProcessArchNotations(bpmnModelId){
       return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
+    }
+
+
+    getincidenttickets()
+    {
+      return this.http.get("/rpa-service/management/incidents");
+    }
+	
+	slaconfigapi(data){
+    return this.http.post('/rpa-service/save-sla-confuguration',data);
+  }
+  
+getblueprisconnections()
+    {
+      return this.http.get("/rpa-service/agent/get-blue-prisms")
+    }
+	
+ testcon_blueprism_config(data)
+    {
+      return this.http.post("/rpa-service/agent/blueprism-testconnection",data);
+    }
+	
+save_blueprism_config(data)
+    {
+      return this.http.post("/rpa-service/agent/save-blue-prism",data);
+    }
+
+    edit_blueprism_config(data)
+    {
+      return this.http.put("/rpa-service/agent/update-blue-prism",data);
+    }
+
+    delete_blueprism_config(id)
+    {
+      return this.http.post("/rpa-service/agent/delete-blue-prism",id);
+    }
+	
+	
+	getblueprismbots()
+    {
+      return this.http.post("/rpa-service/management/get-blueprism-bots","");
+    }
+	
+	getOrchestrationconfig()
+    {
+      return this.http.get("/rpa-service/management/get-source-details");
+    }
+	
+	saveOrchestrationconfig(data)
+    {
+      return this.http.post("/rpa-service/management/save-source-details",data);
+    }
+	
+	get_uipath_bots()
+    {
+      return this.http.post("/rpa-service/management/get-uipath-bots","");
+    }
+	
+	getslalist()
+    {
+      return this.http.get("/rpa-service/list-sla-confuguration");
+    }
+
+    getallsobots()
+    {
+      return this.http.post("/rpa-service/management/all-bots","");
+    }
+	
+	startuipathbot(botid)
+    {
+      return this.http.post("/rpa-service/management/start-uipath-bot?botKey="+botid,"")
+    }
+	start_blueprism_bot(bot)
+    {
+      return this.http.post("/rpa-service/management/start-blueprism-bot?botName="+bot,"", {responseType: "text" });
+    }
+	
+	get_blue_prism_logs(botName)
+    {
+      return this.http.post("/rpa-service/management/blueprism-bot-logs?botName="+botName,"");
+    }
+	
+	getuipathlogs()
+    {
+      return this.http.get("/rpa-service/management/uipath-bot-logs");
+    }
+	
+	runsmoketestuipath(){
+      let data = "";
+      return this.http.post("/rpa-service/management/uipath-smoketest",data);
+    }
+  
+
+    runsmoketestBluePrism(data){
+      let value = data;
+      console.log(value);
+      return this.http.post("/rpa-service/management/blueprism-smoketest?botName="+value,"", {responseType: "text" });
+    }
+	
+	getschedules(botid,version)
+    {
+      return this.http.post("/rpa-service/getschedulesintervals-bot/"+botid+"?version="+version,"");
+    }
+
+
+    updateuipathschedules(schedules,bot)
+    {
+      return this.http.put("/rpa-service/management/update-schedules-otherbot",schedules);
     }
 }

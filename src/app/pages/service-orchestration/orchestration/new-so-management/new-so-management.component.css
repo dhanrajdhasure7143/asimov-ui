@@ -1,0 +1,21 @@
+.incident tr{
+ white-space:  nowrap !important;
+}
+.main{
+  background-color: rgb(241, 240, 240);
+}
+
+::ng-deep  .mat-form-field
+{
+  line-height: 1.7 !important;
+}
+::ng-deep .mat-tooltip.tooltip {
+
+  color:white !important;
+  font-size: 16px !important;
+}
+.backgr{
+  background:white;
+  border-radius: 3px;
+  height: 2000px;
+  }

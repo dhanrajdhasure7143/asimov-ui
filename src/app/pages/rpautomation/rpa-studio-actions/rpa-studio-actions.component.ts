@@ -844,7 +844,7 @@ convertcron(cronexp)
 
   rpa_assignbot(botId,taskId,type)
   {
-    this.rest.assign_bot_and_task(botId,taskId,type).subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,taskId,"EPSoft",type).subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {

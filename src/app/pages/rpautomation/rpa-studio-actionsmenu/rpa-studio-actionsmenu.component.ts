@@ -622,7 +622,7 @@ loadpredefinedbot(botId)
 
   rpa_assignbot(botId,taskId)
   {
-    this.rest.assign_bot_and_task(botId,taskId, "Automated").subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,taskId, "EPSoft","Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
