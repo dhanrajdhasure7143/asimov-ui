@@ -178,15 +178,16 @@ export class UploadComponent implements OnInit {
   }
 
   checkUploadId(event, upload_id) {
-    if (upload_id == 1)
+    if (upload_id == 1){
       this.readExcelFile(event);
-    if (upload_id == 2)
+    }
+    if (upload_id == 2){
       this.readCSVFile(event);
-    if (upload_id == 3)
-    console.log(upload_id);
-    let file: File = event.addedFiles[0];
+    }
+    if (upload_id == 3){
+      let file: File = event.addedFiles[0];
     let extension = this.getFileExtension(file.name);
-      console.log(extension)
+      
       switch(extension){
         case 'xes':
           this.readXESFile(event);
@@ -194,6 +195,7 @@ export class UploadComponent implements OnInit {
         case 'gz':
           this.openXESGZFile()
       }
+    }
       //this.readXESFile(event);
   }
 
@@ -635,14 +637,10 @@ console.log(this.isUploadFileName);
 
   if (this.isUploadFileName) {
     if (this.isUploadFileName.includes('gz')) {
-      console.log("in gz file");
       this.generateXESGZGraph(e);
-    } else {
-      console.log("in fb")
-    }
+    } 
   }
   else {
-    console.log("in db file");
   let modekey
   let modekey1
   let connectorBody:any= {}
