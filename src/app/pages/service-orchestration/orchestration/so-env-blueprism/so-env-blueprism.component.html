@@ -156,7 +156,8 @@
                     <br>
                 </form>
                 <button class='btn btn-primary' (click)="saveBluePrism()" tooltip="Save" [disabled]="BluePrismConfigForm.invalid || submitted">Save</button>
-                <button class="btn btn-primary" (click)="testBluePrismconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection
+                <!-- <button class="btn btn-primary" (click)="testBluePrismconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection -->
+                <button class="btn btn-primary" (click)="BluePrismCreatetestconnection()" tooltip="Test Connection" [disabled]="BluePrismConfigForm.invalid">Test Connection
                 </button>
                 <button class="btn btn-primary" (click)="reset_createblueprism()" tooltip="Reset">Reset
                 </button>
@@ -234,7 +235,8 @@
                     <br>
                 </form>
                     <button class='btn btn-primary' (click)="Update_BluePrism()" tooltip="Save" [disabled]="UpdateBluePrismConfigForm.invalid || updatesubmitted">Save</button>
-                    <button class="btn btn-primary" (click)="testBluePrismconnection()" [disabled]="UpdateBluePrismConfigForm.invalid" tooltip="Test Connection">Test Connection
+                    <!-- <button class="btn btn-primary" (click)="testBluePrismconnection()" [disabled]="UpdateBluePrismConfigForm.invalid" tooltip="Test Connection">Test Connection -->
+                    <button class="btn btn-primary" (click)="BluePrismupdatetestconnection()" [disabled]="UpdateBluePrismConfigForm.invalid" tooltip="Test Connection">Test Connection
                     </button>
                     <button class="btn btn-primary" (click)="reset_Updateblueprism()" tooltip="Reset">Reset
                     </button>

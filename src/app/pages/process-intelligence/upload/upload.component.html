@@ -13,7 +13,7 @@
                         </ngx-dropzone>
                 </div>
                 <div class="col-sm-3 upload_zone" id="upload_xes">
-                        <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false [accept]="xes_mime" >
+                        <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false accept=".xes, .gzip, .gz" >
                                 <ngx-dropzone-label><img src ="assets/images/XES.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
                                         <label>XES</label></h5>

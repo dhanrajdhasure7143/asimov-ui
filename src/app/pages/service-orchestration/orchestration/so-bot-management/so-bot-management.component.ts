@@ -10,7 +10,6 @@ import { FormControl } from '@angular/forms';
 import {RestApiService} from '../../../services/rest-api.service';
 import {sohints} from '../model/so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
-import * as moment from 'moment';
 
 import { NgxSpinnerService } from "ngx-spinner";
 declare var $:any;
@@ -21,16 +20,13 @@ declare var $:any;
 })
 export class SoBotManagementComponent implements OnInit {
     public botid:any;
-    public slaupdate : boolean = false;
     public isTableHasData = true;
     public respdata1=false;
     schdata:any;
-    displayedColumns: string[] = ["botName","botType","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs","Smoke_Test"];
+    displayedColumns: string[] = ["botName","botType", "department","description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
-    displayedblueprismcolums: string[] = ['sessionId','startTime','endTime','Status'];
     botNameFilter = new FormControl('');
     botTypeFilter = new FormControl('');
-    blueprimslogs : MatTableDataSource<any>;
     departmentFilter = new FormControl('');
     dataSource1:MatTableDataSource<any>;
     dataSource4:MatTableDataSource<any>;
@@ -54,23 +50,12 @@ export class SoBotManagementComponent implements OnInit {
     public selectedEnvironment:any='';
     public environments:any=[];
     public categaoriesList:any=[];
-    //automatedtasks:any=[];
-    public automatedtasks:any=[];
-    public insertslaForm_so_bot:FormGroup;
-    public emailcheck: boolean = false;
-    public smscheck: boolean = false;
-    public castoggle:boolean = false;
-    //public expectedTime : any = 0;
-    public expectedDate : any = 0;
-    public automatedtask: any;
-    public updatesladata: any;
-    public fakearray:any=(new Array(60));
-  public cascadingImpactbtn: boolean = false;
+    automatedtasks:any=[];
     log_botid:any;
     log_version:any;
-    logresponse:any=[];
-    public slaconId:any;
-    public sla_list:any=[];
+    logresponse:any=[];    
+    public selectedAreas:any;
+    public mycatInput:any;
     public NorecordFound: boolean = false;
       @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -79,172 +64,42 @@ export class SoBotManagementComponent implements OnInit {
     @ViewChild("paginator5",{static:false}) paginator5: MatPaginator;
     @ViewChild("sort4",{static:false}) sort4: MatSort;
     @ViewChild("sort5",{static:false}) sort5: MatSort;
-    @ViewChild("paginator6",{static:false}) paginator6: MatPaginator;
-    @ViewChild("sort6",{static:false}) sort6: MatSort;
     displayedColumns4: string[] = ['run_id','version','start_date','end_date' , "bot_status"];
     Viewloglist:MatTableDataSource<any>;
     displayedColumns5: string[] = ['task_name','start_date','end_date','status','error_info' ];
     logbyrunid:MatTableDataSource<any>;
     popup:Boolean=false;
-    uipathlogs:MatTableDataSource<any>;
-    displayedColumns6: string[] = ['ProcessName','Timestamp','WindowsIdentity','Message' ];
     constructor(private route: ActivatedRoute,
       private rest:RestApiService,
       private router: Router,
       private hints: sohints,
       private dt : DataTransferService,
       private spinner:NgxSpinnerService,
-      private formBuilder: FormBuilder,
       )
-    {
-      this.insertslaForm_so_bot=this.formBuilder.group({
-        botName: ["", Validators.compose([Validators.required])],
-        botSource: ["", Validators.compose([Validators.required])],
-        breachAlerts: ["", Validators.compose([Validators.required])],
-        notificationType: [""],
-        retriesInterval: [""],
-        slaConfigId: ["", Validators.compose([Validators.required])],
-        taskOwner: ["", Validators.compose([Validators.required])],
-        thresholdLimit: ["", Validators.compose([Validators.required])],
-        email:[false],
-        sms:[false],
-        totalRetries: [""],
-      });
-    }
+    {}
 
   ngOnInit() {
     this.dt.changeHints(this.hints.sobotMhints);
     this.spinner.show();
-    // this.rest.getCategoriesList().subscribe(data=>{
-    //   let catResponse : any;
-    //   catResponse=data;
-    //   this.categaoriesList=catResponse.data;
-    //   this.selectedAreas = this.categaoriesList;
-    // });
-    // setTimeout(()=> {
-    //   this.getallbots();
-    //   }, 550);
+    this.rest.getCategoriesList().subscribe(data=>{
+      let catResponse : any;
+      catResponse=data;
+      this.categaoriesList=catResponse.data;
+      this.selectedAreas = this.categaoriesList;
+    });
+    setTimeout(()=> {
+      this.getallbots();
+      }, 550);
     //this.getallbots();
     this.getautomatedtasks();
     this.getprocessnames();
-    this.getCategoryList();
-    this.get_sla_list();
-    this.getallbots();
     this.popup=false;
   }
-  
-  getslaconfig(){
 
-  }
-  public sla_bot:any
-  SelectSLACon(bot){
-    this.sla_bot=bot;
-    if(this.sla_bot.sourceType=="EPSoft")
-      this.slaconId=this.sla_list.find(item=>item.botId==bot.botId);
-    else
-      this.slaconId=this.sla_list.find(item=>item.botName==bot.botName);
-    if(this.slaconId!=undefined)
-    {
-      this.insertslaForm_so_bot.get("botName").setValue(this.slaconId.botName);
-      this.insertslaForm_so_bot.get("botSource").setValue(this.slaconId.botSource);
-      this.insertslaForm_so_bot.get("breachAlerts").setValue(this.slaconId.breachAlerts);
-      this.insertslaForm_so_bot.get("taskOwner").setValue(this.slaconId.taskOwner);
-      this.insertslaForm_so_bot.get("retriesInterval").setValue(this.slaconId.retriesInterval);
-      this.insertslaForm_so_bot.get("thresholdLimit").setValue(this.slaconId.thresholdLimit);
-      this.insertslaForm_so_bot.get("totalRetries").setValue(this.slaconId.totalRetries);
-      this.insertslaForm_so_bot.get("slaConfigId").setValue(this.slaconId.slaConfigId);
-      if(this.slaconId.notificationType=="email")
-        this.insertslaForm_so_bot.get("email").setValue(true);
-      if(this.slaconId.notificationType=="sms")
-        this.insertslaForm_so_bot.get("sms").setValue(true);
-      if(this.slaconId.notificationType=="email,sms")
-      {
-        this.insertslaForm_so_bot.get("sms").setValue(true);
-        this.insertslaForm_so_bot.get("email").setValue(true);
-      }
-    }
-    else
-    {
-      this.insertslaForm_so_bot.get("taskOwner").setValue(this.sla_bot.createdBy);
-      this.insertslaForm_so_bot.get("botName").setValue(this.sla_bot.botName);
-      this.insertslaForm_so_bot.get("botSource").setValue(this.sla_bot.sourceType);
-      this.insertslaForm_so_bot.get("breachAlerts").setValue("");
-      this.slaconId=undefined
-    }
-    document.getElementById("SLAConfig_overlay").style.display="block";
-  }
-
-
-  get_sla_list()
-  {
-    this.rest.getslalist().subscribe(sla_list=>{
-      this.sla_list=sla_list;
-    })
-  }
-  checkboxstatus(data){
-    let checkboxstatus = data;
-    this.insertslaForm_so_bot.value.Alerts = checkboxstatus;
-  }
- 
-  SLAclose_SO_bot(){
-    document.getElementById("SLAConfig_overlay").style.display = "none";
-    this.resetsla();
-  }
-  slaalerts(){
-   let notificationtype="";
-   if(this.insertslaForm_so_bot.get("email").value==true)
-     notificationtype="email"
-   if(this.insertslaForm_so_bot.get("sms").value==true)
-     notificationtype="sms"
-   if(this.insertslaForm_so_bot.get("sms").value==true&&this.insertslaForm_so_bot.get("email").value==true)
-     notificationtype="email,sms"
-    let slaalertsc = {
-      botName : this.insertslaForm_so_bot.value.botName,
-      botSource : this.insertslaForm_so_bot.value.botSource,
-      breachAlerts : this.insertslaForm_so_bot.value.breachAlerts,
-      cascadingImpact : false,
-      expectedETime : "0000-00-00T00:00:00.000Z",
-      notificationType : notificationtype,
-      processName : "NA",
-      retriesInterval :  parseInt(this.insertslaForm_so_bot.value.retriesInterval),
-      slaConfigId :  parseInt(this.insertslaForm_so_bot.value.slaConfigId),
-      systemImpacted : "NA",
-      taskOwner : this.insertslaForm_so_bot.value.taskOwner,
-      thresholdLimit :  parseInt(this.insertslaForm_so_bot.value.thresholdLimit),
-      totalRetries :  parseInt(this.insertslaForm_so_bot.value.totalRetries),
-      notificationStatus:0
-    };
-     if(this.sla_bot.sourceType=="EPSoft")
-       slaalertsc["botId"]=this.sla_bot.botId;
-     else
-       slaalertsc["botId"]=0;
-     this.rest.slaconfigapi(slaalertsc).subscribe( res =>
-     {
-         let resp:any=res
-         if(resp.errorMessage==undefined)
-         {
-           Swal.fire(resp.Status,"","success")
-           this.get_sla_list();
-         }
-         else
-           Swal.fire(resp.errorMessage,"","success")
- 
-    });
-  }
- 
-  resetsla(){
-    this.insertslaForm_so_bot.reset();
-    this.insertslaForm_so_bot.get("thresholdLimit").setValue("");
-    this.emailcheck = false;
-    this.smscheck = false;
-    this.castoggle = false;
-    this.cascadingImpactbtn = false;
-    $('.emailcheck').prop('checked', false);
-    $('.smscheck').prop('checked', false);
-  }
-
-  /*searchstring(query: string){
-   
+  searchstring(query: string){
+    /*console.log('query', query)
+    let result = this.select(query);
+    this.selectedAreas = result;*/
     if(query != '')
    {
     console.log('query', query);
@@ -279,30 +134,27 @@ export class SoBotManagementComponent implements OnInit {
     }
     return result;
   }
-*/
+
 
   loadbotdatadesign(botId)
   {
-    // this.spinner.show();
-    //  localStorage.setItem("botId",botId);
-    // this.router.navigate(["/pages/rpautomation/home"]);
-    console.log(botId);
-    localStorage.setItem("botId",botId);
+    this.spinner.show();
+     localStorage.setItem("botId",botId);
     this.router.navigate(["/pages/rpautomation/home"]);
   }
 
   getallbots()
   {
     let response:any=[];
-    this.spinner.show()
-    this.rest.getallsobots().subscribe(botlist =>
+
+    //this.rpa_studio.spinner.show()
+    //http://192.168.0.7:8080/rpa-service/get-all-bots
+
+    this.rest.getAllActiveBots().subscribe(botlist =>
     {
       response=botlist;
-      if(response.errorMessage!=undefined)
+      if(response.length==0)
       {
-        this.spinner.hide();
-        Swal.fire(response.errorMessage,"","error");
-        return;
         //this.rpa_studio.spinner.hide();
       }
       response.forEach(data=>{
@@ -345,25 +197,15 @@ export class SoBotManagementComponent implements OnInit {
       {
         this.respdata1 = true;
       }
-      this.rest.get_uipath_bots().subscribe(bots=>{
-        let uipath_bots:any=[];
-        uipath_bots=bots
-        let uipathbots:any=uipath_bots.value.map(item=>{
-          item["createdAt"]=item.CreationTime;
-          return item
-        });
-        response.concat(uipathbots);
-      })
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
-      this.bot_list=response;
-      this.automatedtask = this.bot_list;
+      //this.bot_list=this.bot_list.reverse();
       this.dataSource1= new MatTableDataSource(this.bot_list);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
       this.dataSource1.data = response;
-     // this.spinner.hide();
-       /*this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
+      this.spinner.hide();
+      /*this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
         //this.filteredValues['department'] = departmentFilterValue;
         //this.dataSource1.filter = JSON.stringify(this.filteredValues);
         if(this.dataSource1.filteredData.length > 0){
@@ -386,10 +228,10 @@ export class SoBotManagementComponent implements OnInit {
           }
         });
 
-      //this.dataSource1.filterPredicate = this.customFilterPredicate();*/
-      this.spinner.hide();
+      //this.dataSource1.filterPredicate = this.customFilterPredicate();
+      //this.rpa_studio.spinner.hide()*/
     },(err)=>{
-      this.spinner.hide();
+      //this.rpa_studio.spinner.hide();
     })
   }
 
@@ -397,7 +239,7 @@ export class SoBotManagementComponent implements OnInit {
 
 
   viewlogdata(botid ,version){
-  // document.getElementById("filters").style.display = "none";
+   document.getElementById("filters").style.display = "none";
    let response: any;
    let log:any=[];
    this.logresponse=[];
@@ -490,12 +332,12 @@ export class SoBotManagementComponent implements OnInit {
    }
 
    viewlogclose(){
-    //document.getElementById("filters").style.display = "block";
+    document.getElementById("filters").style.display = "block";
      document.getElementById(this.viewlogid).style.display="none";
    }
 
    viewlogclose1(){
-   // document.getElementById("filters").style.display = "block";
+    document.getElementById("filters").style.display = "block";
      document.getElementById(this.viewlogid1).style.display="none";
      document.getElementById(this.viewlogid).style.display="none";
    }
@@ -510,86 +352,18 @@ export class SoBotManagementComponent implements OnInit {
 
 
 
-   executionAct(botid,source) {
+   executionAct(botid) {
 
-    console.log(source);
-    if(source=="EPSoft")
-    this.rest.execution(botid).subscribe(res =>{
-      let response:any;
-      response=res;
-      if(response.status!= undefined)
-      Swal.fire(response.status,"","success")
-      else
-      Swal.fire(response.errorMessage,"","warning");
-    });
-    else if(source=="UIPath")
-    this.rest.startuipathbot(botid).subscribe(res=>{
-      let response:any=res;
-      if(response.value!=undefined)
-      {
-        Swal.fire("Bot Initated Successfully !!","","success");
-      }
-      else
-      {
-        Swal.fire(response.errorMessage,"","warning");
-      }
-    })
-    else if(source=="BluePrism")
-    {
-      let bot=this.bot_list.find(data=>data.botId==botid)
-      this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
-        console.log(data);
-        Swal.fire("Bot Initiated Successfully!","","success");
-      });
+      Swal.fire({
+        icon: 'success',
+        title: "Bot Initiated Sucessfully !!",
+        showConfirmButton: true,
+      })
+
+      this.rest.execution(botid).subscribe(res =>{
+      })
     }
-  }
 
-  getBluePrismlogs(botname){
-    document.getElementById("divblueprismlogs").style.display = "block";
-    let blueprismlogs:any=[]
-    this.spinner.show();
-    this.rest.get_blue_prism_logs(botname).subscribe(logsdataresp=>{
-      let response:any=logsdataresp
-      if(response.errorMessage==undefined)
-      {
-        blueprismlogs=logsdataresp;
-        this.blueprimslogs = new MatTableDataSource(blueprismlogs);
-        this.spinner.hide()
-      }
-      else
-      {
-        this.spinner.hide()
-      }
-    },(err)=>{
-      this.spinner.hide();
-    })
- ;
-  }
-  viewblueprismlogclose(){
-    document.getElementById("divblueprismlogs").style.display = "none"
-  }
-  public uipathbotName:any;
-  getuipathlogs(botname)
-  {
-    this.uipathbotName=botname;
-    document.getElementById("uipathlogs").style.display="block";
-    this.spinner.show();
-    this.rest.getuipathlogs().subscribe(resp=>{
-      let response:any=resp;
-      let logs:any=response.value.filter(rest=>rest.ProcessName==botname+"_Env");
-      let logsbytime:any=logs.sort((right,left)=>{
-        return moment.utc(left.TimeStamp).diff(moment.utc(right.TimeStamp))
-      });
-      this.uipathlogs=new MatTableDataSource(logsbytime);
-      this.uipathlogs.sort=this.sort6;
-      this.uipathlogs.paginator=this.paginator6;
-      this.spinner.hide();
-    });
-  }
-  viewuipathlogclose()
-  {
-    document.getElementById("uipathlogs").style.display="none";
-  }
 
     pauseBot(botId) {
         Swal.fire({
@@ -642,13 +416,7 @@ export class SoBotManagementComponent implements OnInit {
     }
   
 
-    getCategoryList(){
-      this.rest.getCategoriesList().subscribe(data=>{
-        let catResponse : any;
-        catResponse=data
-        this.categaoriesList=catResponse.data;
-      });
-    }
+
 
   getautomatedtasks()
   {
@@ -666,17 +434,14 @@ export class SoBotManagementComponent implements OnInit {
 
 
 
-    openscheduler(bot)
+    openscheduler(botid)
     {
-
-      this.botid=bot.botId;
+      this.botid=botid;
       this.schdata={
-        botid:bot.botId,
-        source:bot.sourceType,
-        version:bot.version,
-        botname:bot.botName
+        botid:botid
       }
       this.popup=true;
+      document.getElementById("filters").style.display = "none";
     }
 
 
@@ -689,107 +454,10 @@ export class SoBotManagementComponent implements OnInit {
     reset()
     {
       this.selectedcat="";
-      this.search=""
+      this.search="";
+      this.mycatInput = '';
       this.getallbots()
     }
 
 
-
-/*runsmoketest(botid)
-    {
-      let data=this.bot_list.find(item=>item.botId==botid)
-      let header=" <div class='text-center'><span style='padding:10px;font-size:12px'>Bot Name:&nbsp;"+data.botName+"</span><span style='padding:10px;font-size:12px'>Status:&nbsp;"+data.botStatus+"</span><span style='padding:10px;font-size:12px'>Source:&nbsp;"+data.sourceType+"</span></div><br><br>";
-      let errorbody="<div class='text-center'><br><br><i style='font-size:28px;color:red' class='fas  fa-exclamation-triangle'></i><br><br> <div style='font-size:24px;color:red;'> Smoke Test Run Failed</div><br><br></div> "
-      let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Sucessfully</div><br><br></div> "
-      this.spinner.show();
-      setTimeout(()=>{
-        this.spinner.hide();
-        Swal.fire({
-          width: '500px',
-          html:header+(data.botStatus=="Success"?successbody:errorbody),
-          confirmButtonColor: (data.botStatus=="Success"?"green":"red"),
-          confirmButtonText: 'Dismiss',
-          showConfirmButton:true
-        });
-      }, 5000)
-
-    }*/
-
-    runsmoketest(botId){
-      let data=this.bot_list.find(item=>item.botId==botId);
-      let header=" <div class='text-center'><span style='padding:10px;font-size:16px'>Bot Name:&nbsp;<a>"+data.botName+"</a></span><span style='padding:10px;font-size:16px'>Status:&nbsp;<a>"+data.botStatus+"</a></span><span style='padding:10px;font-size:16px'>Source:&nbsp;<a>"+data.sourceType+"</a></span></div><br><br>";
-      let errorbody="<div class='text-center'><br><br><i style='font-size:28px;color:red' class='fas  fa-exclamation-triangle'></i><br><br> <div style='font-size:24px;color:red;'> Smoke Test Run Failed</div><br><br></div> "
-      let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Successful</div><br><br></div> "
-      this.spinner.show();
-      if(data.sourceType == 'BluePrism'){
-      let botName = data.botName;
-      this.rest.runsmoketestBluePrism(botName).subscribe(processnames=>{
-        let response:any;
-        this.spinner.hide();
-        response=processnames;
-        response =JSON.parse(response); 
-        if(response.status!= undefined)        
-       {
-        Swal.fire({
-          width: '500px',
-          html:header+(successbody),
-          confirmButtonColor: "green",
-          confirmButtonText: 'Dismiss',
-          showConfirmButton:true
-        });
-      }
-        else{
-        Swal.fire({
-          width: '500px',
-          html:header+(errorbody),
-          confirmButtonColor: "warning",
-          confirmButtonText: 'Dismiss',
-          showConfirmButton:true
-        });
-      }
-      });
-
-    }
-    else if(data.sourceType == 'UIPath')
-    {
-      this.rest.runsmoketestuipath().subscribe(processnames=>{
-        let response:any;
-        this.spinner.hide();
-        response=processnames;
-        if(response.status!= undefined)        
-       {
-        Swal.fire({
-          width: '500px',
-          html:header+(successbody),
-          confirmButtonColor: "green",
-          confirmButtonText: 'Dismiss',
-          showConfirmButton:true
-        });
-      }
-        else{
-        Swal.fire({
-          width: '500px',
-          html:header+(errorbody),
-          confirmButtonColor: "warning",
-          confirmButtonText: 'Dismiss',
-          showConfirmButton:true
-        });
-      }
-      });
-    }
-    else
-    {
-      this.spinner.show();
-      setTimeout(()=>{
-        this.spinner.hide();
-        Swal.fire({
-          width: '500px',
-          html:header+(data.botStatus=="Success"?successbody:errorbody),
-          confirmButtonColor: (data.botStatus=="Success"?"green":"red"),
-          confirmButtonText: 'Dismiss',
-          showConfirmButton:true
-        });
-      },5000)
-    }
-  }
 }
