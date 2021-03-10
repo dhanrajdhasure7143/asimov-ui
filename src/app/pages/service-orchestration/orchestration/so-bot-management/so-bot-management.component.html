@@ -10,15 +10,14 @@
           </mat-form-field>
         </span>
       <span style="padding:10px">
-        <mat-form-field id="bmategorySearch">
-            <mat-label>Select Category</mat-label>
-            <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
-                <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-      </span>
-        <!--<mat-form-field id="dashcategorysearch">
+       <!--- <mat-form-field id="bmategorySearch">
+          <mat-label>Select Category</mat-label>
+          <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
+              <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>-->
+        <mat-form-field id="dashcategorysearch">
             <mat-label>Select Category</mat-label>
             <mat-select [(ngModel)]="selectedcat" disableOptionCentering panelClass="myPanelClass" (selectionChange)="applyFilter($event.value)">
                 <span><input class="myInput" id="mycatInput" [(ngModel)]="mycatInput" matInput type="text" (keyup)="searchstring($event.target.value)" autocomplete="off" placeholder="Search">
@@ -29,7 +28,7 @@
               <mat-option *ngIf="NorecordFound">No Record Found</mat-option>
             </mat-select>
           </mat-form-field>
-      </span>-->
+      </span>
       <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
         <i  class="fa fa-undo"></i>
       </span >
@@ -53,18 +52,12 @@
                          <span *ngIf="element.description==null || element.description==''">-</span> </td>
                 </ng-container>
                 <ng-container matColumnDef="botType">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Type  </th>
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Type </th>
                   <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
               </ng-container>
-              <ng-container matColumnDef="sourceType">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Source </th>
-                <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.sourceType}}</button> <span *ngIf="element.botName==''">-</span> </td>
-            </ng-container>
               <ng-container matColumnDef="department">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-                <td mat-cell *matCellDef="let  element">
-                    <button *ngIf="element.department !=null && element.sourceType=='EPSoft' ">{{element.department}}</button>
-                    <button *ngIf="element.sourceType!='EPSoft' || element.department ==null " class="text-center">-</button>
+                <td mat-cell *matCellDef="let element"> <button *ngIf="element.department !=null">{{element.department}}</button> <span *ngIf="element.botName==''">-</span> </td>
             </ng-container>
                 <ng-container matColumnDef="version">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Version </th>
@@ -74,66 +67,42 @@
                 </ng-container>
                 <ng-container matColumnDef="botStatus">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Status </th>
-                    <td mat-cell  *matCellDef="let element" >
-                        <div class="margin-25">
-                          <span *ngIf="element.botStatus=='Running'"  [matTooltip]="element.botStatus" class="text-primary" >
-                            <span>
-                              <img src="../../../../assets/images/RPA/DotSpin.gif"  style="filter: none; width: 19px;">
-                            </span>
-                          </span>
-  
-                          <span *ngIf="element.botStatus=='Success'"  [matTooltip]="element.botStatus" class="text-success">
-                            <span>
-                              <li class="fa fa-check-circle"style="font-size:19px">
-                            </span>
-                          </span>
-  
-                          <span *ngIf="element.botStatus=='Failure'"  [matTooltip]="element.botStatus" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span></span>
-                          <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                          <span *ngIf="element.botStatus=='New'"   [matTooltip]="element.botStatus"  class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style="filter: none; width: 19px;"></span></span>
-  
-                          <span *ngIf="element.botStatus=='Stop'" >
-                            <span class="bg-danger"  [matTooltip]="element.botStatus" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;">
-                              <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                              <i class="fas fa-stop"></i>
-                            </span>
-                            </span>
-  
-                          <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'" >
-                            <span class="text-primary"  [matTooltip]="element.botStatus"  style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                              <i class="fas fa-pause-circle"></i>
-                            </span>
-                          </span>
-  
-                          <span *ngIf="element.botStatus==null">---</span>
-                        </div>
-                      </td>
+                    <td mat-cell *matCellDef="let element">
+                      <span *ngIf="element.botStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.botStatus}}</span>
+
+                      <span *ngIf="element.botStatus=='Success'" class="text-success"><span><li class="verticalalignmiddle fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+
+                      <span *ngIf="element.botStatus=='Failure'" class="text-danger"><span><li class="verticalalignmiddle fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.botStatus}}</span></span>
+                      <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                      <span *ngIf="element.botStatus=='New'" class="text-primary">
+                        <span>
+                          <img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->&nbsp;
+                          <span>{{element.botStatus}}</span>
+                        </span>
+                      </span>
+
+                      <span *ngIf="element.botStatus=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="verticalalignmiddle fas fa-stop"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+
+                      <span *ngIf="element.botStatus=='Pause'||element.botStatus=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="verticalalignmiddle fas fa-pause-circle"></i></span>&nbsp;<span>{{element.botStatus}}</span></span>
+
+
+                      <span *ngIf="element.botStatus==null">---</span> </td>
               </ng-container>
                 <ng-container matColumnDef="Action">
                     <th mat-header-cell *matHeaderCellDef >Actions </th>
                     <td mat-cell *matCellDef="let element">
-                        <span (click)="executionAct(element.botId,element.sourceType)"  matTooltip="Start Bot">
+                        <span (click)="executionAct(element.botId)"   matTooltip="Start Bot">
                           <li class="fa fa-play text-success" ></li>
                         </span>&nbsp;&nbsp;
-                        <!-- <span (click)="pauseBot(element.botId)"  matTooltip="Pause Bot">
-                          <i class="fa fa-pause "  aria-hidden="true" ></i> &nbsp;&nbsp;
-                        </span>
-                        <span (click)="resumeBot(element.botId)"  matTooltip="Resume Bot" >
-                          <i class="fa fa-play-circle" aria-hidden="true"></i> &nbsp;&nbsp;
-                        </span> -->
                         <span (click)="stopBot(element.botId)"  matTooltip="Stop Bot">
                         <i class="fa fa-stop text-danger" aria-hidden="true"></i> &nbsp;&nbsp;
-                    </span >
-                    <span>
-                        <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration">
-                            <i class="fa fa-cog" aria-hidden="true"></i></button>
-                      </span>
+                      </span >
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Schedule">
                     <th mat-header-cell *matHeaderCellDef >Schedule</th>
-                    <td mat-cell *matCellDef="let element" class=" text-center">
-                        <span (click)="openscheduler(element)" matTooltip="Scheduler" style="cursor: pointer;margin-right: 25px;">
+                    <td mat-cell *matCellDef="let element" >
+                        <span (click)="openscheduler(element.botId)" matTooltip="Scheduler" style="cursor: pointer;">
                         <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>
                       </span>
                     </td>
@@ -141,17 +110,7 @@
                 <ng-container matColumnDef="Logs">
                     <th mat-header-cell *matHeaderCellDef >Logs </th>
                     <td mat-cell *matCellDef="let element">
-                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='EPSoft'" matTooltip="View Logs" (click)="viewlogdata(element.botId,element.version)">View</a>
-                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='UIPath'" matTooltip="View Logs" (click)="getuipathlogs(element.botName)">View</a>
-                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='BluePrism'" matTooltip="View Logs" (click)="getBluePrismlogs(element.botName)">View</a>
-                    </td>
-                </ng-container>
-                <ng-container matColumnDef="Smoke_Test">
-                    <th mat-header-cell *matHeaderCellDef >Smoke Test</th>
-                    <td mat-cell *matCellDef="let element">
-                      <button class="btn btn-xs btn-primary" (click)="runsmoketest(element.botId)">
-                        Run Test
-                      </button>
+                        <button><a class="text-primary" matTooltip="View Logs" (click)="viewlogdata(element.botId,element.version)">View</a></button>
                     </td>
                 </ng-container>
                 <ng-container matColumnDef="Loading">
@@ -179,7 +138,7 @@
   </div>
 
 
-<!-- <div style="margin-bottom:30px !important"> -->
+<div style="margin-bottom:30px !important">
 <div [id]="viewlogid" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
@@ -368,7 +327,7 @@
     </div>
 </div>
 
-<!-- </div> -->
+</div>
 <br><br>
 </div>
 
@@ -386,183 +345,3 @@
         </div>
     </div>
 </div>
-
-
-<!--
-
-    <div id="uipathlogs" class="rpa-modal">
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="viewuipathlogclose()">&times;</span>
-          <h4>Logs</h4>
-      </div>
-      <div class="container-fluid" style="background: white;" >
-        <button (click)="getuipathlogs(uipathbotName)" matTooltip="Refresh" style='float:right;margin-top:10px;' ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i></button>
-          <div class="container-fluid w-100" >
-              <table mat-table [dataSource]="uipathlogs" #sort6="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
-               
-                  <ng-container matColumnDef="ProcessName">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:15%">Process Name</th>
-                    <td mat-cell *matCellDef="let element" style="width:15%">
-                       {{element.ProcessName}}
-                    </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="Timestamp">
-                    <th mat-header-cell *matHeaderCellDef style="width:15%"> Date </th>
-                    <td mat-cell *matCellDef="let element" style="width:15%">
-                        <span *ngIf="element.TimeStamp!=null">{{element.TimeStamp   | date:'EEE MMM d, yyyy, HH:MM'}}</span>
-                    </td>
-                </ng-container>
-               
-                <ng-container matColumnDef="WindowsIdentity">
-                    <th mat-header-cell *matHeaderCellDef>Environment</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span >{{element.WindowsIdentity }}</span>
-                    </td>
-                </ng-container>
-                
-                <ng-container matColumnDef="Message">
-                    <th mat-header-cell *matHeaderCellDef>Message</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.Message!=null">{{element.Message}}</span>
-                    </td>
-                </ng-container>
-                <tr mat-header-row *matHeaderRowDef="displayedColumns6; sticky: true"></tr>
-                <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
-           </table>
-            <mat-paginator #paginator6 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
-        </div>
-    </div>
-</div>
-</div>
-<div id="divblueprismlogs" class="rpa-modal">
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="viewblueprismlogclose()">&times;</span>
-          <h4>BluePrism Logs</h4>
-      </div>
-      <div class="container-fluid" style="background: white;" >
-          <div class="container-fluid w-100" >
-              <table mat-table [dataSource]="blueprimslogs" #sort6="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
-                 
-                  <ng-container matColumnDef="sessionId">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header >Session Id </th>
-                      <td mat-cell *matCellDef="let element">
-                         {{element.sessionId}}
-                      </td>
-                  </ng-container>
-                  
-                   <ng-container matColumnDef="startTime">
-                      <th mat-header-cell *matHeaderCellDef>Start Time</th>
-                      <td mat-cell *matCellDef="let element">
-                          <span >{{element.startTime }}</span>
-                      </td>
-                  </ng-container>
-               
-                  <ng-container matColumnDef="endTime">
-                      <th mat-header-cell *matHeaderCellDef>End Time</th>
-                      <td mat-cell *matCellDef="let element">
-                          <span >{{element.endTime }}</span>
-                      </td>
-                  </ng-container>
-                  <ng-container matColumnDef="Status">
-                      <th mat-header-cell *matHeaderCellDef>Status</th>
-                      <td mat-cell *matCellDef="let element">
-                          <span *ngIf="element.Status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.Status}}</span>
-                    <span *ngIf="element.Status=='Completed'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.Status}}</span></span>
-                    <span *ngIf="element.Status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.Status}}</span></span>
-                      </td>
-                  </ng-container>
-                  <tr mat-header-row *matHeaderRowDef="displayedblueprismcolums; sticky: true"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedblueprismcolums;"></tr>
-             </table>
-              <mat-paginator #paginator6 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
-          </div>
-      </div>
-  </div>
-</div>
-<div id='SLAConfig_overlay' class="rpa-modal" >
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="SLAclose_SO_bot()">&times;</span>
-          <h4>SLA Configuration</h4>
-      </div>
-      <div class="container">
-          <form [formGroup]="insertslaForm_so_bot" (ngSubmit)="savedata_SO_bot()">
-              <div class="row">
-                  
-                  <div class="col-md-3 formelement">
-                      <label for="botName">Bot Name<span style="color:red">*</span></label>
-                      <input type="text" class="form-control data" formControlName="botName" value="" placeholder="Enter Bot Name">
-                      <span *ngIf="(insertslaForm_so_bot.get('botName').invalid && insertslaForm_so_bot.get('botName').touched) && !insertslaForm_so_bot.controls['botName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Bot Name*</span>
-                     
-                  </div>
-                  <div class="col-md-3 formelement">
-                      <label for="botSource">Bot Source<span style="color:red">*</span></label>
-                      <input type="text" class="form-control data" formControlName="botSource"  value="" placeholder="Enter Bot Source">
-                      <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Bot Source*</span>
-                    
-                  </div>
-                  <div class="col-md-3 formelement">
-                      <label for="taskOwner">Task Owner<span style="color:red">*</span></label>
-                      <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name">
-                      <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Task Owner*</span>
-                     
-                  </div>
-                  <div class="col-md-3 formelement">
-                      <label for="slaConfigId">SLA Breach Limit<span style="color:red">*</span></label>
-                      <input type="number" style="width:100px" min=0 max=60 maxlength="2" formControlName="slaConfigId"  onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"   value="" placeholder="00">
-                      
-                    </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3 formelement">
-                  <label for="breachAlerts">Breach Actual Alert<span style="color:red">*</span></label>
-                  <select class="form-control"  value="" formControlName="breachAlerts">
-                      <option value="">-- Select Breach Actual Alerts --</option>
-                      <option value="Error">Error</option>
-                      <option value="Warning">Warning</option>
-                      <option value="All">All</option>
-                    </select>
-                  <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Breach Actual Alert*</span>
-                 
-              </div>
-                  <div class="col-md-2 formelement">
-                      <label for="thresholdLimit">Threshold Limit <span style="color:red">*</span></label>
-                      <input type="number" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit"  value="" maxlength="2" placeholder="00">
-                      <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Threshold Limit*</span>
-                  </div>
-                  <div class="col-md-2 formelement">
-                      <label for="totalRetries">Total Retries</label>
-                      <input type="number" style="width:100px" min=0 max=10 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="totalRetries"  value="" placeholder="0">
-                     
-                  </div>
-                  <div class="col-md-2 formelement">
-                      <label for="retriesInterval">Retry Interval</label>
-                      <input type="number"  maxlength="2" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
-                  </div>
-                  <div class="col-md-2 formelement">
-                    <label for="notificationType">Notificaion Type</label><br>
-                    <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
-                     <label class="lbl_chk_cls"  for="emailcheck">E-mail</label> &nbsp;
-                    <input type="checkbox" class="smscheck" formControlName="sms"  id="smscheck">
-                     <label class="lbl_chk_cls" for="smscheck">SMS</label>
-                </div>
-              </div>
-              <div class="row">
-               
-              </div>
-              
-              <div class="row" >
-                  <div class="col-md-12 formelement">
-                      <input type="button" class="btn btn-primary" value="Save" (click)="slaalerts()" >
-                      <input type="button" class="btn btn-primary" value="Reset" (click)="resetsla()">
-                  </div>
-              </div>
-              <br><br>
-          </form>
-      </div>
-  </div>
-</div>
--->

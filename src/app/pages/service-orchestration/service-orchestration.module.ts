@@ -16,8 +16,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatNativeDateModule, MatSlideToggleModule} from '@angular/material';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatSelectModule} from '@angular/material/select';
-import { SoAutomatedTasksComponent,Checkbotslist,Checkhumanslist } from './orchestration/so-automated-tasks/so-automated-tasks.component';
-import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
+// import { SoAutomatedTasksComponent,Checkbotslist,Checkhumanslist } from './orchestration/so-automated-tasks/so-automated-tasks.component';
+// import { SoBotManagementComponent } from './orchestration/so-bot-management/so-bot-management.component';
 import { Category,SoDashboardComponent,Slicedate, FilterBy } from './orchestration/so-dashboard/so-dashboard.component';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import {NgbTimepickerModule} from '@ng-bootstrap/ng-bootstrap';
@@ -33,8 +33,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import {MatDialogModule} from '@angular/material/dialog';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
-import { BotlistbycatPipe } from './orchestration/so-automated-tasks/botlistbycat.pipe';
-import { HumanlistbycatPipe } from './orchestration/so-automated-tasks/humanlistbycat.pipe';
+
 import {sohints} from './orchestration/model/so-hints';
 import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
 
@@ -51,6 +50,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './orchestration/so-updated-dashboard/so-updated-dashboard.component';
+import { Checkbotslist, Checkhumanslist, NewSoAutomatedTasksComponent } from './orchestration/new-so-automated-tasks/new-so-automated-tasks.component';
+import { BotlistbycatPipe } from './orchestration/new-so-automated-tasks/botlistbycat.pipe';
+import { HumanlistbycatPipe } from './orchestration/new-so-automated-tasks/humanlistbycat.pipe';
+import { NewSoBotManagementComponent } from './orchestration/new-so-bot-management/new-so-bot-management.component';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -58,9 +61,10 @@ import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './o
     Category,
     Reverse,
     Slicedate,
-    BotManagementComponent, ServiceOrchestrationComponent, SoAutomatedTasksComponent, SoBotManagementComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, NewSoDashboardComponent,
+    BotManagementComponent, ServiceOrchestrationComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, NewSoDashboardComponent,
   NewSoBotsComponent,
   NewSoManagementComponent,
+  NewSoAutomatedTasksComponent,
   SoEnvironmentsComponent,
   SoHealthStatusComponent,
   SoEnvBlueprismComponent,
@@ -69,7 +73,9 @@ import { SlicedateUpdate, SoUpdatedDashboardComponent,CategoryUpdate } from './o
     Checkbotslist,
     Checkhumanslist,
     SlicedateUpdate,
-    CategoryUpdate],
+    CategoryUpdate,
+    NewSoBotManagementComponent
+    ],
   imports: [
     CommonModule,
     FormsModule,

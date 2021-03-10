@@ -105,3 +105,7 @@
   .hide{
       display:none;
   }
+
+  :host td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+    padding-left: 5px;
+  }

@@ -425,4 +425,98 @@ testBluePrismconnection()
       this.FilterHasnodata = false;
     }
   }
+
+  BluePrismCreatetestconnection()
+  {
+    if(this.BluePrismConfigForm.valid)
+    {
+      this.spinner.show();
+      this.Formresponse=this.BluePrismConfigForm.value;
+      let response:any;
+      response= this.Formresponse;
+      (response.status==true)?response.status=1:response.status=0;
+      response.port=parseInt(response.port);
+      this.api.testcon_blueprism_config(response).subscribe(resp=>{
+        let response:any=resp;
+        this.spinner.hide();
+        Swal.fire(response.status,"","success");
+        if(response.errorCode==undefined){
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: response.status,
+            showConfirmButton: false,
+            timer: 2000
+          })
+          }else{
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: response.errorMessage,
+              showConfirmButton: false,
+              timer: 2000
+            })
+          }
+      })
+    }
+    else
+    {
+      console.log("Invalid Form");
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Invalid Form',
+        showConfirmButton: false,
+        timer: 2000
+      })
+
+    }
+  }
+
+  BluePrismupdatetestconnection()
+  {
+    if(this.UpdateBluePrismConfigForm.valid)
+    {
+      this.spinner.show();
+      this.Formresponse=this.UpdateBluePrismConfigForm.value;
+      let response:any;
+      response= this.Formresponse;
+      (response.status==true)?response.status=1:response.status=0;
+      response.port=parseInt(response.port);
+      this.api.testcon_blueprism_config(response).subscribe(resp=>{
+        let response:any=resp
+        this.spinner.hide();
+        Swal.fire(response.status,"","success");
+        if(response.errorCode==undefined){
+          Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: response.status,
+            showConfirmButton: false,
+            timer: 2000
+          })
+          }else{
+            Swal.fire({
+              position: 'center',
+              icon: 'error',
+              title: response.errorMessage,
+              showConfirmButton: false,
+              timer: 2000
+            })
+          }
+      })
+    }
+    else
+    {
+      console.log("Invalid Form");
+      Swal.fire({
+        position: 'center',
+        icon: 'warning',
+        title: 'Invalid Form',
+        showConfirmButton: false,
+        timer: 2000
+      })
+    }
+  }
+
 }
