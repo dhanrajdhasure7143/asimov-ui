@@ -144,18 +144,6 @@ close(){
          
         }
         }
-  overview(){
-
-  }
-  downloadBpmn(){
-
-  }
-  hasError(value){
-
-  }
-  getNumber(e){
-
-  }
     loopTrackBy(index, term) {
     return index;
   }
