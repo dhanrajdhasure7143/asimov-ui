@@ -89,7 +89,7 @@ public slaupdate : boolean = false;
     displayedColumns5: string[] = ['task_name','start_date','end_date','status','error_info' ];
     uipathlogs:MatTableDataSource<any>;
 
-    displayedColumns6: string[] = ['ProcessName','Timestamp','WindowsIdentity','Message' ];
+    displayedColumns6: string[] = ['ReleaseName','StartTime','EndTime','State','Info'];
     logbyrunid:MatTableDataSource<any>;
     popup:Boolean=false;
     constructor(private route: ActivatedRoute,
@@ -596,10 +596,11 @@ public slaupdate : boolean = false;
       this.spinner.show();
       this.rest.getuipathlogs().subscribe(resp=>{
         let response:any=resp;
-        let logs:any=response.value.filter(rest=>rest.ProcessName==botname+"_Env");
+        let logs:any=response.value.filter(rest=>rest.ReleaseName==botname+"_Env");
         let logsbytime:any=logs.sort((right,left)=>{
-          return moment.utc(left.TimeStamp).diff(moment.utc(right.TimeStamp))
+          return moment.utc(left.StartTime).diff(moment.utc(right.StartTime))
         });
+        console.log(logsbytime)
         this.uipathlogs=new MatTableDataSource(logsbytime);
         this.uipathlogs.sort=this.sort6;
         this.uipathlogs.paginator=this.paginator6;
@@ -607,6 +608,7 @@ public slaupdate : boolean = false;
       });
 
     }
+
     viewuipathlogclose()
     {
       document.getElementById("uipathlogs").style.display="none";
