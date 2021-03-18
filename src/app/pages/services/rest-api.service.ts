@@ -771,4 +771,14 @@ save_blueprism_config(data)
     {
       return this.http.put("/rpa-service/management/update-schedules-otherbot",schedules);
     }
+
+    update_sla_config(data)
+    {
+     return this.http.post("/rpa-service/update-sla-confuguration",data)
+    }
+
+    runsmoketestepsoftpath(data){
+      let value = data;
+      return this.http.post("/rpa-service/agent/bot-testconnection?botId="+value,"", {responseType: "text" });
+    }
 }

@@ -3,7 +3,7 @@ import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-
+import {NgxSpinnerService} from 'ngx-spinner'
 @Component({
   selector: 'app-new-so-bots',
   templateUrl: './new-so-bots.component.html',
@@ -21,9 +21,10 @@ export class NewSoBotsComponent implements OnInit {
     urlSafe: SafeResourceUrl;
     urlSafe1: SafeResourceUrl;
 
-  constructor(public sanitizer: DomSanitizer) { }
+  constructor(public sanitizer: DomSanitizer, private spinner:NgxSpinnerService) { }
 
   ngOnInit(){
+    this.spinner.show();
     this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
     this.urlSafe1= this.sanitizer.bypassSecurityTrustResourceUrl(this.url1);
 this.chart1();

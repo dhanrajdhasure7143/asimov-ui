@@ -38,10 +38,10 @@ export class NewSoDashboardComponent implements OnInit {
     this.spinner.show();
     setTimeout(()=>{
 
-      this.loadChart1();
-      this.loadBarChart();
-      this.loadBarChart1();
-      this.chart2();
+      // this.loadChart1();
+      // this.loadBarChart();
+      // this.loadBarChart1();
+      // this.chart2();
       this.spinner.hide();
     },500)
     // console.log('test');

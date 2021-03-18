@@ -16,7 +16,8 @@ export class OrchestrationComponent implements OnInit {
   public check_tab=0;
   public param:any=0;
   ngOnInit() {
-
+    $('.link').removeClass('active')
+    $('#so').addClass("active")
     $("#nav-link-3").addClass("active");
     $("#nav-link-2").removeClass("active");
     $("#nav-link-1").removeClass("active");
@@ -38,8 +39,10 @@ export class OrchestrationComponent implements OnInit {
       else
       {
         this.selectedTab=1;
+        this.selectedTab=4;
         this.param=processId.processid;
         this.check_tab=1;
+        this.check_tab=4;
         console.log(this.param)
       }
     });

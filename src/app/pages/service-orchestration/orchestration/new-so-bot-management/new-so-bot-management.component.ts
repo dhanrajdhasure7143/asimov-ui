@@ -135,11 +135,14 @@ public slaupdate : boolean = false;
     this.sla_bot=bot;
     if(this.sla_bot.sourceType=="EPSoft")
       this.slaconId=this.sla_list.find(item=>item.botId==bot.botId);
+    else if(this.sla_bot.sourceType=="UIPath")
+      this.slaconId=this.sla_list.find(item=>item.botName==bot.botName+"_Env");
     else
       this.slaconId=this.sla_list.find(item=>item.botName==bot.botName);
     if(this.slaconId!=undefined)
     {
-      this.insertslaForm_so_bot.get("botName").setValue(this.slaconId.botName);
+      //this.insertslaForm_so_bot.get("botName").setValue(this.slaconId.botName);
+      this.insertslaForm_so_bot.get("botName").setValue(bot.botName);
       this.insertslaForm_so_bot.get("botSource").setValue(this.slaconId.botSource);
       this.insertslaForm_so_bot.get("breachAlerts").setValue(this.slaconId.breachAlerts);
       this.insertslaForm_so_bot.get("taskOwner").setValue(this.slaconId.taskOwner);
@@ -194,7 +197,7 @@ public slaupdate : boolean = false;
   if(this.insertslaForm_so_bot.get("sms").value==true&&this.insertslaForm_so_bot.get("email").value==true)
     notificationtype="email,sms"
    let slaalertsc = {
-     botName : this.insertslaForm_so_bot.value.botName,
+     //botName : this.insertslaForm_so_bot.value.botName,
      botSource : this.insertslaForm_so_bot.value.botSource,
      breachAlerts : this.insertslaForm_so_bot.value.breachAlerts,
      cascadingImpact : false,
@@ -207,24 +210,42 @@ public slaupdate : boolean = false;
      taskOwner : this.insertslaForm_so_bot.value.taskOwner,
      thresholdLimit :  parseInt(this.insertslaForm_so_bot.value.thresholdLimit),
      totalRetries :  parseInt(this.insertslaForm_so_bot.value.totalRetries),
-     notificationStatus:0
+     notificationStatus:1
    };
+   if(this.sla_bot.sourceType=="UIPath")
+     slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName+"_Env";
+    else
+      slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName;
+
     if(this.sla_bot.sourceType=="EPSoft")
       slaalertsc["botId"]=this.sla_bot.botId;
     else
       slaalertsc["botId"]=0;
-    this.rest.slaconfigapi(slaalertsc).subscribe( res =>
+    if(this.slaconId==undefined)
+      this.rest.slaconfigapi(slaalertsc).subscribe( res =>
+      {
+          let resp:any=res
+          if(resp.errorMessage==undefined)
+          {
+            Swal.fire(resp.Status,"","success")
+            this.get_sla_list();
+          }
+          else
+            Swal.fire(resp.errorMessage,"","success")
+    });
+   else
+    this.rest.update_sla_config(slaalertsc).subscribe( res =>
     {
-        let resp:any=res
-        if(resp.errorMessage==undefined)
-        {
-          Swal.fire(resp.Status,"","success")
-          this.get_sla_list();
-        }
-        else
-          Swal.fire(resp.errorMessage,"","success")
+          let resp:any=res
+          if(resp.errorMessage==undefined)
+          {
+            Swal.fire(resp.Status,"","success")
+            this.get_sla_list();
+          }
+          else
+            Swal.fire(resp.errorMessage,"","success")
 
-   });
+    });
  }
 
  resetsla(){
@@ -480,12 +501,13 @@ public slaupdate : boolean = false;
 
 
    executionAct(botid,source) {
-
+    this.spinner.show();
       console.log(source);
       if(source=="EPSoft")
       this.rest.execution(botid).subscribe(res =>{
         let response:any;
         response=res;
+        this.spinner.hide();
         if(response.status!= undefined)
         Swal.fire(response.status,"","success")
         else
@@ -494,6 +516,7 @@ public slaupdate : boolean = false;
       else if(source=="UIPath")
       this.rest.startuipathbot(botid).subscribe(res=>{
         let response:any=res;
+        this.spinner.hide();
         if(response.value!=undefined)
         {
           Swal.fire("Bot Initated Successfully !!","","success");
@@ -508,6 +531,7 @@ public slaupdate : boolean = false;
         let bot=this.bot_list.find(data=>data.botId==botid)
         this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
           console.log(data);
+          this.spinner.hide();
           Swal.fire("Bot Initiated Successfully!","","success");
         });
       }
@@ -717,8 +741,8 @@ public slaupdate : boolean = false;
         let response:any;
         this.spinner.hide();
         response=processnames;
-        response =JSON.parse(response); 
-        if(response.status!= undefined)        
+        response =JSON.parse(response);
+        if(response.status!= undefined)     
        {
         Swal.fire({
           width: '500px',
