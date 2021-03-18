@@ -570,12 +570,12 @@
   <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
     <mat-tab label="Statistics">
       <div class="backgr">
-      <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" ></iframe>
+      <iframe width="100%" height="100%" (load)="spinner.hide()" frameBorder="0" [src]="urlSafe" ></iframe>
     </div>
       </mat-tab>
       <mat-tab label="Monitoring">
         <div class="backgr">
-        <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe1" ></iframe>
+        <iframe width="100%" height="100%" load)="spinner.hide()" frameBorder="0" [src]="urlSafe1" ></iframe>
       </div>
       </mat-tab>
       </mat-tab-group>
