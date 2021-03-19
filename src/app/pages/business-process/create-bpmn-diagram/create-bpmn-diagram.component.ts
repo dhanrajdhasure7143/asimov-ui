@@ -26,6 +26,7 @@ import { DndModule } from 'ngx-drag-drop';
 import lintModule from 'bpmn-js-bpmnlint';
 import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import minimapModule from "diagram-js-minimap";
 declare var require:any;
 
 @Component({
@@ -548,6 +549,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
            active: _self.getUrlParam('linting')
         },
         additionalModules: [
+          minimapModule,
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
@@ -570,6 +572,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       });
       let canvas = this.bpmnModeler.get('canvas');
       canvas.zoom('fit-viewport');
+      this.bpmnModeler.get("minimap").open();
     }
     this.bpmnModeler.on('element.changed', function(){
       _self.isDiagramChanged = true;
