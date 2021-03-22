@@ -638,4 +638,7 @@ export class RestApiService{
     getBPMNProcessArchNotations(bpmnModelId){
       return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
     }
+    retryFailedProcessGraph(bpmnModelId){
+      // return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
+    }
 }

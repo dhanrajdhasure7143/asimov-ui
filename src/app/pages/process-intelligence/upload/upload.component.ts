@@ -839,6 +839,15 @@ generateXESGZGraph(e){
       // console.log(this.dataSource.paginator.firstPage())
     }
   }
+  onRetryGraphGenerate(){
+    // this.rest.retryFailedProcessGraph('id').subscribe(res=>{
+    //   console.log(res);
+      
+    // })
+    console.log('test');
+    
+
+  }
 }
 
 
