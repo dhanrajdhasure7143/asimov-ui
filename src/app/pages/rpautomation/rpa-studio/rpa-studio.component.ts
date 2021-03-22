@@ -310,6 +310,7 @@ export class RpaStudioComponent implements OnInit {
       }
       else
       {
+        this.spinner.hide();
         Swal.fire({
           title: 'Selected Bot is already loaded',
           icon: 'warning',

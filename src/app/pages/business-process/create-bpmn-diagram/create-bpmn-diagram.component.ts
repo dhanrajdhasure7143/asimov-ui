@@ -391,6 +391,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   autoSaveBpmnDiagram(){
     let bpmnModel={};
+    this.isStartProcessBtn=false;
     let _self = this;
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       _self.oldXml = _self.newXml;
@@ -454,7 +455,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
 
-  downloadBpmn(){
+  downloadBpmn(e){
     if(this.bpmnModeler){
       let _self = this;
       if(this.fileType == this.selectedNotationType){
@@ -584,6 +585,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
+    this.isStartProcessBtn=false;
     let bpmnModel:BpmnModel = new BpmnModel();
     this.isLoading = true;
     let _self = this;
@@ -628,6 +630,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   saveprocess(newVal){
     this.isDiagramChanged = false;
+    this.isStartProcessBtn=false;
     this.isLoading = true;
     let bpmnModel:BpmnModel = new BpmnModel();
     let _self=this;

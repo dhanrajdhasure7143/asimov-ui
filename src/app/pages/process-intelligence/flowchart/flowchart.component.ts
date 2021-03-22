@@ -236,7 +236,7 @@ isTimeChange:boolean=false;
   }
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isNodata=true;
-
+    let self = this;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
       if (token) {
@@ -278,12 +278,36 @@ isTimeChange:boolean=false;
          }
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
         if(this.fullgraph.hasOwnProperty('display_msg')){
-          Swal.fire(
-            'Oops!',
-            'It is Not You it is Us, Please try again after some time',
-            'error'
-          );
+          // Swal.fire(
+          //   'Oops!',
+          //   'It is Not You it is Us, Please try again after some time',
+          //   'error'
+          // );
+          Swal.fire({
+            title: 'Oops!',
+            text: "It is Not You it is Us, Please try again after some time",
+            icon: 'error',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Okay'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                position: 'center',
+                icon: 'info',
+                title: 'Please wait, Redirecting to workspace',
+                showConfirmButton: false,
+                timer: 1500
+              })
+              setTimeout(() => {
+                self.router.navigate(['pages/processIntelligence/upload'])
+              }, 1500);
+            }
+          })
+
           this.spinner.hide();
+         // this.redirectToWorkspace()
           this.model1=[];
           this.model2=[];
         } else{
@@ -1837,6 +1861,7 @@ filterOverlay(){
 }
 
 addWorkingHours(){  
+  let _self = this;
   if(this.workingHours.formDay=='Mon' && this.workingHours.toDay=='Sun'&& this.workingHours.shiftStartTime=='00:00' && this.workingHours.shiftEndTime=='23:59'){
     this.isTimeChange=false;
   }else{
@@ -1859,11 +1884,33 @@ addWorkingHours(){
      }
   this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
     if(this.fullgraph.hasOwnProperty('display_msg')){
-        Swal.fire(
-          'Oops!',
-          'It is Not You it is Us, Please try again after some time',
-          'error'
-        );
+        // Swal.fire(
+        //   'Oops!',
+        //   'It is Not You it is Us, Please try again after some time',
+        //   'error'
+        // );
+        Swal.fire({
+          title: 'Oops!',
+          text: "It is Not You it is Us, Please try again after some time",
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Okay'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: 'Please wait, Redirecting to workspace',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            setTimeout(() => {
+              _self.router.navigate(['pages/processIntelligence/upload'])
+            }, 1500);
+          }
+        })
         this.spinner.hide();
         this.model1=[];
         this.model2=[];
@@ -1919,6 +1966,20 @@ resetWorkingHours(){
 }
 canceladdHrs(){
   this.isAddHrs=!this.isAddHrs;
+}
+redirectToWorkspace(){
+  let timerInterval
+Swal.fire({
+  title: 'Auto close alert!',
+  html: 'I will close in <b></b> milliseconds.',
+  timer: 2000,
+  timerProgressBar: true,
+}).then((result) => {
+  /* Read more about handling dismissals below */
+  if (result.dismiss === Swal.DismissReason.timer) {
+    console.log('I was closed by the timer')
+  }
+})
 }
  
 }

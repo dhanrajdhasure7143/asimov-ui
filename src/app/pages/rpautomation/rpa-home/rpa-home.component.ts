@@ -12,12 +12,13 @@ import { Rpa_Hints } from "../model/RPA-Hints"
 // import * as $ from 'jquery';
 import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
+import { Category } from '../../service-orchestration/orchestration/so-dashboard/so-dashboard.component';
 
 declare var $:any;
 
 @Component({
   selector: 'app-rpa-home',
-  templateUrl: './rpa-home.component.html',
+  templateUrl: './rpa-new-home.component.html',
   styleUrls: ['./rpa-home.component.css']
 })
 export class RpaHomeComponent implements OnInit {
@@ -44,9 +45,13 @@ export class RpaHomeComponent implements OnInit {
   public environments:any=[];
   public categaoriesList:any=[];
   customUserRole: any;
+  term:any;
+  userFilter:any = { botName:'',department:'' };
+  globalfilter:any;
   enableConfiguration: boolean=false;
   enablecreatebot: boolean=false;
   showWorkspace: boolean=false;
+
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -68,7 +73,14 @@ export class RpaHomeComponent implements OnInit {
     //this.dataSource1.filterPredicate = this.createFilter();
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
     this.dt.changeChildModule({"route":"/pages/rpautomation/home","title":"RPA Home"});
-
+    this.sortkey={
+        botName:true,
+        version:true,
+        botType:true,
+        department:true,
+        botStatus:true,
+        description:true,
+      }
     this.dt.changeHints(this.datahints.rpahomehints );
     this.getCategoryList();
     this.getenvironments();
@@ -139,7 +151,6 @@ export class RpaHomeComponent implements OnInit {
 
     this.rpa_studio.spinner.show()
     //http://192.168.0.7:8080/rpa-service/get-all-bots
-
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
       response=botlist;
@@ -340,7 +351,7 @@ export class RpaHomeComponent implements OnInit {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id,"Automated").subscribe(data=>{
+    this.rest.assign_bot_and_task(botId,id,"EPSoft","Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
@@ -508,6 +519,24 @@ export class RpaHomeComponent implements OnInit {
       catResponse=data
       this.categaoriesList=catResponse.data;
     });
+  }
+
+  public sortkey:any;
+
+  sortasc(colKey,sorttype)
+  {
+    let sortdes=this.sortkey[colKey];
+    this.bot_list=this.bot_list.sort(function(a,b){
+      let check_a=isNaN(a[colKey])?a[colKey].toUpperCase():a[colKey];
+      let check_b=isNaN(b[colKey])?b[colKey].toUpperCase():b[colKey];
+      console.log(sortdes)
+      console.log(colKey)
+      if (sortdes==true)
+        return (check_a > check_b) ? 1 : -1;
+      else
+        return (check_a < check_b) ? 1 : -1;
+   },this);
+   this.sortkey[colKey]=!sortdes;
   }
 
 }

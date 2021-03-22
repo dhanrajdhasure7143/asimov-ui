@@ -1,0 +1,358 @@
+<div class="wrapper">
+  <div id="" class="container-fluid my-new-div"><br>
+    <div class="row">
+        <div class="col-md-6" >
+            <div class="graph-card chartinner dbichart-body" style="height:100%">
+              <div class="message" *ngIf="botstatistics == 0" >
+                <br>
+                <label >Tickets By Status</label>
+                <br>
+                <div style="text-align: center;padding-top: 150px;">No Data Found</div>
+              </div>
+                <div class="chartdivbody"  *ngIf="botstatistics != 0">
+                    <div class="dbichart-head">
+                        <label>Tickets By Status</label>
+                        
+                    </div>
+                    <div class="dbichart-body ">
+                      <div id="chartdiv" class="amart"></div>
+                    </div>
+                    
+                </div>
+           
+           <div  class="botactive ASSolvedPer">
+            <div class="headsec row" style="padding-top:5px; padding-bottom: 5px;">
+              <div class="col-md-10">
+                <h1>Incident Status : <span>Solved (Permanently)</span></h1>
+              </div>
+              <div class="col-md-2" style="text-align: right !important;">
+                  <button class="left_arrow_chart1" (click)="selectchart1()"><i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+
+            <table width="100%" class="table datatable">
+                <thead>
+                    <tr>
+                        <th>IncidentId</th>
+                        <th>AssignedTo</th>
+                        <th>CreatedAt</th>
+                        <th>Priority</th>               
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  style="padding:5px;" *ngFor="let config of activestatusSolvedPer | paginate: {id:'InactiveSolvedPer', itemsPerPage: 6,currentPage: q}">
+                      
+                        <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.incidentId}}</a></td>
+                        <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.assignedTo}}</a></td>
+                        <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.createdAt}}</a></td>
+                        <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.priority}}</a></td>
+                      
+                        
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls id="InactiveSolvedPer" style="text-align:right;" (pageChange)="q = $event"></pagination-controls>
+        </div>
+        <div class="botactive AsClosedRes">
+          <div class="headsec row" style="padding-top:5px; padding-bottom: 5px;">
+            <div class="col-md-10">
+              <h1>Insident Status : <span>Closed/Resolved by Caller</span></h1>
+            </div>
+            <div class="col-md-2" style="text-align: right !important;">
+                <button class="left_arrow_chart1" (click)="selectchart1()"><i class="fas fa-arrow-left"></i></button>
+              </div>
+          </div>
+          <table width="100%" class="table datatable">
+            <thead>
+                <tr>
+                    <th>IncidentId</th>
+                    <th>AssignedTo</th>
+                    <th>CreatedAt</th>
+                    <th>Priority</th>                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="padding:5px;" *ngFor="let config of inactivestatusClosedRes | paginate: {id:'InactiveClosedRes', itemsPerPage: 6,currentPage: q}">
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.incidentId}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.assignedTo}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.createdAt}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.priority}}</a></td>                
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls id="InactiveClosedRes" style="text-align:right;" (pageChange)="q = $event"></pagination-controls>
+        </div>
+        <div class="botactive ASSolvedWA">
+          <div class="headsec row" style="padding-top:5px; padding-bottom: 5px;">
+            <div class="col-md-10">
+              <h1>Insident Status : <span>Solved (Work Around)</span></h1>
+            </div>
+            <div class="col-md-2" style="text-align: right !important;">
+                <button class="left_arrow_chart1" (click)="selectchart1()"><i class="fas fa-arrow-left"></i></button>
+              </div>
+          </div>
+          <table width="100%" class="table datatable">
+            <thead>
+                <tr>
+                    <th>IncidentId</th>
+                    <th>AssignedTo</th>
+                    <th>CreatedAt</th>
+                    <th>Priority</th>                 
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="padding:5px;" *ngFor="let config of inactivestatusSolvedWA | paginate: {id:'InactiveSWA', itemsPerPage: 6,currentPage: q}">
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.incidentId}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.assignedTo}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.createdAt}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.priority}}</a></td>                
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls id="InactiveSWA" style="text-align:right;" (pageChange)="q = $event"></pagination-controls>
+        </div>
+        <div class="botactive ASSolvedRemo">
+          <div class="headsec row" style="padding-top:5px; padding-bottom: 5px;">
+            <div class="col-md-10">
+              <h1>Insident Status : <span>Solved Remotely (Permanently)</span></h1>
+            </div>
+            <div class="col-md-2" style="text-align: right !important;">
+                <button class="left_arrow_chart1" (click)="selectchart1()"><i class="fas fa-arrow-left"></i></button>
+              </div>
+          </div>
+          <table width="100%" class="table datatable">
+            <thead>
+                <tr>
+                    <th>IncidentId</th>
+                    <th>AssignedTo</th>
+                    <th>CreatedAt</th>
+                    <th>Priority</th>                
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="padding:5px;" *ngFor="let config of inactivestatusSolvedRemo | paginate: {id:'InactiveSR', itemsPerPage: 6,currentPage: q}">
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.incidentId}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.assignedTo}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.createdAt}}</a></td>
+                    <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.priority}}</a></td>               
+                </tr>
+            </tbody>
+        </table>
+        <pagination-controls id="InactiveSR" style="text-align:right;" (pageChange)="q = $event"></pagination-controls>
+        </div>
+          <div class="botactive ASNew">
+            <div class="headsec row" style="padding-top:5px; padding-bottom: 5px;">
+              <div class="col-md-10">
+                <h1>Insident Status : <span>New</span></h1>
+              </div>
+              <div class="col-md-2" style="text-align: right !important;">
+                  <button class="left_arrow_chart1" (click)="selectchart1()"><i class="fas fa-arrow-left"></i></button>
+                </div>
+            </div>
+            <table width="100%" class="table datatable">
+              <thead>
+                  <tr>
+                      <th>IncidentId</th>
+                      <th>AssignedTo</th>
+                      <th>CreatedAt</th>
+                      <th>Priority</th>                 
+                  </tr>
+              </thead>
+              <tbody>
+                  <tr style="padding:5px;" *ngFor="let config of inactivestatusNew | paginate: {id:'inactivenew', itemsPerPage: 6,currentPage: q}">
+                      <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.incidentId}}</a></td>
+                      <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.assignedTo}}</a></td>
+                      <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.createdAt}}</a></td>
+                      <td><a style="color:black !important;text-decoration: none;" href="https://dev105659.service-now.com/navpage.do" target="_blank">{{config.priority}}</a></td>                  
+                  </tr>
+              </tbody>
+          </table>
+          <pagination-controls id ="inactivenew" style="text-align:right;" (pageChange)="q = $event"></pagination-controls>
+          </div>
+      </div>
+      </div>
+      <div class="col-md-6">
+        <div class="graph-card  chartinner">
+            <div class="chart">
+              
+            </div>
+            <div>
+                <div class="dbichart-head">
+                    <label>Tickets By Department</label>
+                    <!--<div style="float:right !important">
+                      <button class="left_arrow_chart1" (click)="selectchart2()"><i class="fas fa-arrow-left"></i></button>
+                    </div>-->
+                </div>
+                <div class="dbichart-body chartdivbody2">
+                  <div id="chartdiv2" class="amart"></div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="graph-card chartinner">
+          <div class="message" *ngIf="botstatistics == 0">
+            <br>
+            <label style="font-size: 15px;font-weight: 500; padding-left:20px;">Tickets By Event</label>
+            <br>
+            <div style="text-align: center;padding-top: 150px;">No Data Found</div>
+          </div>
+            <div class="" *ngIf="botstatistics != 0">
+                <div class="dbichart-head">
+                    <label>Tickets By Event</label>
+                </div>
+                <div class="dbichart-body">
+                  <div id="chartdiv3" class="amart"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+      <div class="graph-card chartinner">
+        <div class="message" *ngIf="botstatistics == 0">
+          <br>
+          <label style="font-size: 15px;font-weight: 500; padding-left:20px;">Tickets By Severity</label>
+          <br>
+          <div style="text-align: center;padding-top: 150px;">No Data Found</div>
+        </div>
+          <div class="chart_div_4" *ngIf="botstatistics != 0">
+              <div class="dbichart-head">
+                  <label>Tickets By Severity</label>
+              </div>
+              
+              <div class="chart_div_4">
+                <div id="chartdiv4" class="amart"></div>
+              </div>
+          </div>
+              <div class="botactive chart_div_High_4">
+                <div class="headsec row" style="padding-top:5px; padding-bottom: 5px;">
+                  <div class="col-md-6">
+                    <h1>Priority Status : <span>High</span></h1>
+                  </div>
+                  <div class="col-md-6" style="text-align: right !important;">
+                      <button class="left_arrow_chart4" (click)="selectchart4()"><i class="fas fa-arrow-left"></i></button>
+                    </div>
+                </div>
+                <table width="100%" class="table datatable">
+                  <thead>
+                      <tr>
+                          <th>IncidentId</th>
+                          <th>AssignedTo</th>
+                          <th>CreatedAt</th>                     
+                          <th>Description</th>                   
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr style="padding:5px;" *ngFor="let config of priorityHigh | paginate: {id:'prihigh', itemsPerPage: 6,currentPage: q}">
+                          <td>
+                            {{(config.incidentId.length > 15) ? ((config.incidentId).slice(0, 15) + '...') : config.incidentId}}
+                          </td>
+                          <td>
+                            {{(config.assignedTo.length > 15) ? ((config.assignedTo).slice(0, 15) + '...') : config.assignedTo}}
+                          </td>
+                          <td>{{config.createdAt}}</td>
+                          <td>
+                            {{(config.short_description.length > 15) ? ((config.short_description).slice(0, 15) + '...') : config.short_description}}
+                          </td> 
+                      </tr>
+                  </tbody>
+                  <tr>
+                    <td colspan="4" style="text-align: right; padding-top:5px;">
+                  <pagination-controls id="prihigh" style="text-align:right;" (pageChange)="q = $event"></pagination-controls>
+                </td>
+                  </tr>
+              </table>
+              
+              </div>
+              
+              <div class="botactive chart_div_Medium_4">
+                <div class="headsec row" style="padding-top:5px; padding-bottom: 5px;">
+                  <div class="col-md-6">
+                    <h1>Priority Status : <span>Medium</span></h1>
+                  </div>
+                  <div class="col-md-6" style="text-align: right !important;">
+                      <button class="left_arrow_chart4" (click)="selectchart4()"><i class="fas fa-arrow-left"></i></button>
+                    </div>
+                </div>
+                <table width="100%" class="table datatable">
+                  <thead>
+                      <tr>
+                          <th>IncidentId</th>
+                          <th>AssignedTo</th>
+                          <th>CreatedAt</th>                     
+                          <th>Description</th>                   
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr style="padding:5px;" *ngFor="let config of priorityMedium | paginate: {id:'primedium', itemsPerPage: 6,currentPage: q}">
+                        <td>
+                          {{(config.incidentId.length > 15) ? ((config.incidentId).slice(0, 15) + '...') : config.incidentId}}
+                        </td>
+                        <td>
+                          {{(config.assignedTo.length > 15) ? ((config.assignedTo).slice(0, 15) + '...') : config.assignedTo}}
+                        </td>
+                        <td>{{config.createdAt}}</td>
+                        <td>
+                          {{(config.short_description.length > 15) ? ((config.short_description).slice(0, 15) + '...') : config.short_description}}
+                        </td>                   
+                      </tr>
+                      <tr>
+                        <td colspan="4" style="text-align: right; padding-top:5px;">
+                      <pagination-controls id="primedium" style="text-align:right;" (pageChange)="q = $event"></pagination-controls>
+                    </td>
+                      </tr>
+                  </tbody>
+              </table>
+              </div>
+              <div class="botactive chart_div_Low_4">
+                <div class="headsec row" style="padding-top:5px; padding-bottom: 5px;">
+                  <div class="col-md-6">
+                    <h1>Priority Status : <span>Low</span></h1>
+                  </div>
+                  <div class="col-md-6" style="text-align: right !important;">
+                      <button class="left_arrow_chart4" (click)="selectchart4()"><i class="fas fa-arrow-left"></i></button>
+                    </div>
+                </div>
+                <table width="100%" class="table datatable">
+                  <thead>
+                      <tr>
+                          <th>IncidentId</th>
+                          <th>AssignedTo</th>
+                          <th>CreatedAt</th>                     
+                          <th>Description</th>                   
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr style="padding:5px;" *ngFor="let config of priorityLow | paginate: {id:'prilow', itemsPerPage: 6,currentPage: q} ">
+                        <td>
+                          {{(config.incidentId.length > 15) ? ((config.incidentId).slice(0, 15) + '...') : config.incidentId}}
+                        </td>
+                        <td>
+                          {{(config.assignedTo.length > 15) ? ((config.assignedTo).slice(0, 15) + '...') : config.assignedTo}}
+                        </td>
+                        <td>{{config.createdAt}}</td>
+                        <td>
+                          {{(config.short_description.length > 15) ? ((config.short_description).slice(0, 15) + '...') : config.short_description}}
+                        </td>                   
+                      </tr>
+                      <tr>
+                        <td colspan="4" style="text-align: right; padding-top:5px;">
+                      <pagination-controls id="prilow" style="text-align:right;" (pageChange)="q = $event"></pagination-controls>
+                    </td>
+                      </tr>
+                  </tbody>
+              </table>
+              </div>
+          </div>
+      </div>
+  </div>
+
+    </div>
+  </div>
+
+
+
+<!-- <div class="backgr">
+      <br>
+      <iframe width="100%" height="100%" frameBorder="0" [src]="urlSafe" ></iframe>
+      </div> -->

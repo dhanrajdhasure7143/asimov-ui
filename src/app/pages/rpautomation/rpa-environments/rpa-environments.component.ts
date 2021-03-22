@@ -248,12 +248,31 @@ import { NgxSpinnerService } from "ngx-spinner";
           })
         }
     });
+    this.activestatus();
   }
   else
   {
-     alert("Invalid Form")
+    this.spinner.hide(); 
+     alert("Invalid Form");
+     this.activestatus();
   }
 
+  }
+
+  activestatus(){
+    if(this.insertForm.value.activeStatus == 7)
+    {
+      this.insertForm.value.activeStatus = true;
+    }else{
+      this.insertForm.value.activeStatus = false;
+    }
+
+    if(this.updateForm.value.activeStatus == 7)
+    {
+      this.updateForm.value.activeStatus = true;
+    }else{
+      this.updateForm.value.activeStatus = false;
+    }
   }
   
   async saveEnvironment()
@@ -286,22 +305,26 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.insertForm.reset();
         this.insertForm.get("portNumber").setValue("22");
         this.insertForm.get("connectionType").setValue("SSH");
+        this.insertForm.get("activeStatus").setValue(true);
         this.submitted=false;
         this.spinner.hide();
     });
   }
   else
   {
-     alert("Invalid Form")
+    this.spinner.hide();
+     alert("Invalid Form");
+     this.activestatus();
   }
 
   }
 
   async updateEnvironment()
   {
-    this.spinner.show();
+    
     if(this.updateForm.valid)
     {
+      this.spinner.show();
       if(this.updateForm.value.activeStatus==true)
       {
         this.updateForm.value.activeStatus=7
@@ -483,6 +506,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.spinner.hide();   
       })
     }
+    this.spinner.hide(); 
   }
   
   applyFilter(filterValue: string) {
