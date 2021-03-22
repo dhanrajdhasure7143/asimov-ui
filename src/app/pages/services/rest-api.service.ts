@@ -781,4 +781,8 @@ save_blueprism_config(data)
       let value = data;
       return this.http.post("/rpa-service/agent/bot-testconnection?botId="+value,"", {responseType: "text" });
     }
+
+    loadChart1(){
+      return this.http.get('/rpa-service/management/incidents');
+    }
 }
