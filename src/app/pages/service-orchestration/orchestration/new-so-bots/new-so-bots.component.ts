@@ -4,6 +4,7 @@ import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import {NgxSpinnerService} from 'ngx-spinner'
+import * as moment from 'moment';
 @Component({
   selector: 'app-new-so-bots',
   templateUrl: './new-so-bots.component.html',
@@ -16,23 +17,28 @@ export class NewSoBotsComponent implements OnInit {
     public selectedTab=0;
     public check_tab=0;
 
-    url: string = "http://10.11.0.129:8080/knowage/servlet/AdapterHTTP?ACTION_NAME=EXECUTE_DOCUMENT_ACTION&OBJECT_LABEL=Bots Tab&TOOLBAR_VISIBLE=false&ORGANIZATION=DEMO&NEW_SESSION=false";
-    url1: string = "http://10.11.0.129:8080/knowage/servlet/AdapterHTTP?ACTION_NAME=EXECUTE_DOCUMENT_ACTION&OBJECT_LABEL=Monitoring tab&TOOLBAR_VISIBLE=false&ORGANIZATION=DEMO&NEW_SESSION=false";
-    urlSafe: SafeResourceUrl;
-    urlSafe1: SafeResourceUrl;
+    // url: string = "http://10.11.0.129:8080/knowage/servlet/AdapterHTTP?ACTION_NAME=EXECUTE_DOCUMENT_ACTION&OBJECT_LABEL=Bots Tab&TOOLBAR_VISIBLE=false&ORGANIZATION=DEMO&NEW_SESSION=false";
+    // url1: string = "http://10.11.0.129:8080/knowage/servlet/AdapterHTTP?ACTION_NAME=EXECUTE_DOCUMENT_ACTION&OBJECT_LABEL=Monitoring tab&TOOLBAR_VISIBLE=false&ORGANIZATION=DEMO&NEW_SESSION=false";
+    // urlSafe: SafeResourceUrl;
+    // urlSafe1: SafeResourceUrl;
 
   constructor(public sanitizer: DomSanitizer, private spinner:NgxSpinnerService) { }
 
   ngOnInit(){
+    // this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
+    // this.urlSafe1= this.sanitizer.bypassSecurityTrustResourceUrl(this.url1);
     this.spinner.show();
-    this.urlSafe= this.sanitizer.bypassSecurityTrustResourceUrl(this.url);
-    this.urlSafe1= this.sanitizer.bypassSecurityTrustResourceUrl(this.url1);
-this.chart1();
-this.chart2();
-this.chart3();
-this.chart4();
-this.chart5();
-this.modelChart();
+    setTimeout(()=>{
+    
+    this.chart1();
+    this.chart2();
+    this.slachart();
+    this.chart3();
+    this.chart4();
+    this.chart5();
+    this.modelChart();
+    this.spinner.hide();
+        },500)
   }
   onTabChanged(event)
   {
@@ -64,9 +70,9 @@ this.modelChart();
           case 'Active':
               $('.botstatusactive').show();
               $('.botactive.except').hide();
-              document.querySelector('.botstatusactive').scrollIntoView({
-                behavior: 'smooth'
-            });
+            //   document.querySelector('.botstatusactive').scrollIntoView({
+            //     behavior: 'smooth'
+            // });
             //   $('html,body').animate({
             //     scrollTop: $(".botstatusactive").offset().top},
             //     'slow');
@@ -74,9 +80,9 @@ this.modelChart();
           case 'Exception':
               $('.botactive.except').show();
               $('.botstatusactive').hide();
-              document.querySelector('.except').scrollIntoView({
-                behavior: 'smooth'
-            });
+            //   document.querySelector('.except').scrollIntoView({
+            //     behavior: 'smooth'
+            // });
             //   $('html,body').animate({
             //     scrollTop: $(".botactive.except").offset().top},
             //     'slow');
@@ -152,43 +158,29 @@ pieSeries.labels.template.fontSize = 18;
 
 // Create chart instance
 var chart = am4core.create("chartdiv2", am4charts.XYChart);
+function getDate(value,type){
+  let currentdate=new Date();
+    (type == "1") ? currentdate.setDate(currentdate.getDate() + value) : currentdate.setDate(currentdate.getDate() - value);
+    return moment(currentdate).format('YYYY,MM,DD');
+
+}
 
 // Add data
 chart.data = [{
-"date": new Date(2018, 0, 1),
+"date": new Date(getDate(0,"0")),
 "value": 450,
 "value2": 362,
 "value3": 699
 }, {
-"date": new Date(2018, 0, 2),
+"date": new Date(getDate(1,"0")),
 "value": 269,
 "value2": 450,
 "value3": 841
 }, {
-"date": new Date(2018, 0, 3),
+"date": new Date(getDate(2,"0")),
 "value": 700,
 "value2": 358,
 "value3": 699
-}, {
-"date": new Date(2018, 0, 4),
-"value": 490,
-"value2": 367,
-"value3": 500
-}, {
-"date": new Date(2018, 0, 5),
-"value": 500,
-"value2": 485,
-"value3": 369
-}, {
-"date": new Date(2018, 0, 6),
-"value": 550,
-"value2": 354,
-"value3": 250
-}, {
-"date": new Date(2018, 0, 7),
-"value": 420,
-"value2": 350,
-"value3": 600
 }];
 
 // Create axes
@@ -295,12 +287,91 @@ chart.cursor = new am4charts.XYCursor();
           "litres": 27,
           "color": am4core.color("#ffda83")
         },{
-          "country": "IAP",
+          "country": "BluePrism",
           "litres": 35,
           "color": am4core.color("#55d8fe")
+        },{
+          "country": "EPSoft",
+          "litres": 29,
+          "color": am4core.color("#fa4616")
         }];
         
         });  
+
+  }
+  slachart(){
+    
+    // Themes begin
+    am4core.useTheme(am4themes_animated);
+    // Themes end
+    
+    // Create chart instance
+    var chart = am4core.create("slachartdiv", am4charts.PieChart);
+    
+    // Add and configure Series
+    var pieSeries = chart.series.push(new am4charts.PieSeries());
+    pieSeries.dataFields.value = "litres";
+    pieSeries.dataFields.category = "country";
+    pieSeries.slices.template.propertyFields.fill = "color";
+    // Let's cut a hole in our Pie chart the size of 30% the radius
+    chart.innerRadius = am4core.percent(30);
+   
+    // Put a thick white border around each Slice
+    pieSeries.slices.template.stroke = am4core.color("#fff");
+    pieSeries.slices.template.strokeWidth = 2;
+    pieSeries.slices.template.strokeOpacity = 1;
+    pieSeries.slices.template
+      // change the cursor on hover to make it apparent the object can be interacted with
+      .cursorOverStyle = [
+        {
+          "property": "cursor",
+          "value": "pointer"
+        }
+      ];
+      pieSeries.labels.template.maxWidth = 130;
+pieSeries.labels.template.wrap = true;
+pieSeries.labels.template.fontSize = 18;
+    pieSeries.labels.template.bent = false;
+    pieSeries.labels.template.padding(0,0,0,0);
+    pieSeries.ticks.template.disabled = true;
+    pieSeries.alignLabels = false;
+    pieSeries.labels.template.text = "{value.percent.formatNumber('#.')}";
+    pieSeries.labels.template.radius = am4core.percent(-40);
+    pieSeries.labels.template.fill = am4core.color("white");
+    // Create a base filter effect (as if it's not there) for the hover to return to
+    var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
+    shadow.opacity = 0;
+    
+    // Create hover state
+    var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
+    
+    // Slightly shift the shadow and make it more prominent on hover
+    var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
+    hoverShadow.opacity = 0.7;
+    hoverShadow.blur = 5;
+    
+    // Add a legend
+
+    chart.legend = new am4charts.Legend();
+    chart.legend.fontSize = 13;
+    let markerTemplate = chart.legend.markers.template;
+    markerTemplate.width = 10;
+    markerTemplate.height = 10;
+    chart.innerRadius = am4core.percent(0);
+    chart.data = [{
+      "country": "SLA Breach",
+      "litres": 16,
+      "color": am4core.color("#BC1D28")
+    },{
+      "country": "Alerts Triggered",
+      "litres": 21,
+      "color": am4core.color("#F9AF03")
+    }, {
+      "country": "Within SLA",
+      "litres": 50.7,
+      "color": am4core.color("#62C849")
+    }];
+
 
   }
   chart4(){
@@ -708,6 +779,11 @@ chart.cursor = new am4charts.XYCursor();
     chart.legend = new am4charts.Legend();
     chart.legend.fontSize = 11;
 
+  }
+  getdate(value,type){
+    let currentdate=new Date();
+    (type == "1") ? currentdate.setDate(currentdate.getDate() + value) : currentdate.setDate(currentdate.getDate() - value);
+    return moment(currentdate).format('DD/MM/YYYY');
   }
   
 
