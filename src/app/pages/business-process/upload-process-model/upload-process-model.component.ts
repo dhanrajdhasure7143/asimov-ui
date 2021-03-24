@@ -32,7 +32,7 @@ import { JsonpInterceptor } from '@angular/common/http';
 import * as bpmnlintConfig from '../model/packed-config';
 import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
+import minimapModule from "diagram-js-minimap";
 declare var require:any;
 
 @Component({
@@ -856,6 +856,7 @@ displayBPMN(){
            active: _self.getUrlParam('linting')
         },
         additionalModules: [
+          minimapModule,
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
@@ -878,6 +879,7 @@ displayBPMN(){
       });
       let canvas = this[modeler_obj].get('canvas');
       canvas.zoom('fit-viewport');
+      this[modeler_obj].get("minimap").open();
     }
     this[modeler_obj].on('element.changed', function(){
       _self.isDiagramChanged = true;

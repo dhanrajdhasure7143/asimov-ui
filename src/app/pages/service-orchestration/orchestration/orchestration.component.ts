@@ -63,5 +63,12 @@ export class OrchestrationComponent implements OnInit {
     this.check_tab=event.index;
   }
 
+  options:any
+  option(page)
+  {
+    this.spinner.show();
+    this.options=page
+  }
+
 
 }

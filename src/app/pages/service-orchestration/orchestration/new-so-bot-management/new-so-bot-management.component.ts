@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Pipe, PipeTransform } from '@angular/core';
 declare var $:any;
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-new-so-bot-management',
   templateUrl: './new-so-bot-management.component.html',
@@ -99,6 +100,7 @@ public slaupdate : boolean = false;
       private dt : DataTransferService,
       private spinner:NgxSpinnerService,
       private formBuilder: FormBuilder,
+      private notify:NotifierService,
       )
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
@@ -130,6 +132,7 @@ public slaupdate : boolean = false;
   getslaconfig(){
 
   }
+  public selected_source:any;
   public sla_bot:any
   SelectSLACon(bot){
     this.sla_bot=bot;
@@ -272,6 +275,7 @@ public slaupdate : boolean = false;
   {
     let response:any=[];
     this.spinner.show()
+    this.selected_source="";
     this.rest.getallsobots().subscribe(botlist =>
     {
       response=botlist;
@@ -519,22 +523,46 @@ public slaupdate : boolean = false;
         this.spinner.hide();
         if(response.value!=undefined)
         {
-          Swal.fire("Bot Initated Successfully !!","","success");
+          Swal.fire("Bot  Execution Initated Successfully !!","","success");
         }
         else
         {
           Swal.fire(response.errorMessage,"","warning");
         }
       })
+      // else if(source=="BluePrism")
+      // {
+      //   let bot=this.bot_list.find(data=>data.botId==botid)
+      //   this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
+      //     console.log(data);
+      //     this.spinner.hide();
+      //     Swal.fire("Bot Initiated Successfully!","","success");
+      //     this.notify.notify("success",data);
+      //   });
+      // }
       else if(source=="BluePrism")
       {
         let bot=this.bot_list.find(data=>data.botId==botid)
+        this.spinner.show();
+          setTimeout(()=>{
+            this.spinner.hide();
+            Swal.fire("Bot Execution initiated successfully","","success");
+          },3000)
         this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
-          console.log(data);
-          this.spinner.hide();
-          Swal.fire("Bot Initiated Successfully!","","success");
+          // console.log(data);
+          // this.spinner.hide();
+          // Swal.fire("Bot Initiated Successfully!","","success");
+          
+          let response:any=data;
+          if(response.errorMessage==undefined)
+           this.notify.notify("success",response.status);
+          else
+           this.notify.notify("error",response.errorMessage);
         });
       }
+
+
+
     }
 
 
@@ -591,8 +619,9 @@ public slaupdate : boolean = false;
        }
         if(response.errorMessage==undefined)
         {
-          blueprismlogs=logsdataresp;
-          console.log(blueprismlogs);
+          blueprismlogs=response.sort((right,left)=>{
+            return moment.utc(left.startTimeStamp).diff(moment.utc(right.startTimeStamp))
+          });
           this.blueprimslogs = new MatTableDataSource(blueprismlogs);
           this.blueprimslogs.sort=this.sort7;
           this.blueprimslogs.paginator=this.paginator7;
@@ -651,6 +680,12 @@ public slaupdate : boolean = false;
 
     applyFilter2(filterValue: string) {
 
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+      this.dataSource1.filter = filterValue;
+    }
+
+    applyFilter3(filterValue: string) {
       filterValue = filterValue.trim(); // Remove whitespace
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
       this.dataSource1.filter = filterValue;

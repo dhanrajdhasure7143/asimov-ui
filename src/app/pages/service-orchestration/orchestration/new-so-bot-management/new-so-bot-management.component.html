@@ -9,9 +9,19 @@
               <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
           </span>
+          <span style="padding:10px">
+            <mat-form-field id="bmategorySearch">
+              <mat-label>Select By Source</mat-label>
+              <mat-select [(ngModel)]="selected_source" (selectionChange)="applyFilter3($event.value)">
+                  <mat-option value="EPSoft">EPSoft</mat-option>
+                  <mat-option value="BluePrism">BluePrism</mat-option>
+                  <mat-option value="UiPath">UiPath</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </span>
         <span style="padding:10px">
           <mat-form-field id="bmategorySearch">
-            <mat-label>Select Category</mat-label>
+            <mat-label>Select Process Group</mat-label>
             <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
                 <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
               </mat-option>
@@ -20,7 +30,7 @@
         </span>
         <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
           <i  class="fa fa-undo"></i>
-        </span >
+        </span >  
       </div>
         <div class="row">
           <div class="col-md-12">
@@ -71,13 +81,13 @@
                             </span>
                           </span>
   
-                          <span *ngIf="element.botStatus=='Success'"  [matTooltip]="element.botStatus" class="text-success">
+                          <span *ngIf="element.botStatus=='Success'|| element.botStatus=='Completed'"  [matTooltip]="element.botStatus" class="text-success">
                             <span>
                               <li class="fa fa-check-circle"style="font-size:19px">
                             </span>
                           </span>
   
-                          <span *ngIf="element.botStatus=='Failure'"  [matTooltip]="element.botStatus" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span></span>
+                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'"  [matTooltip]="element.botStatus" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span></span>
                           <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                           <span *ngIf="element.botStatus=='New'"   [matTooltip]="element.botStatus"  class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style="filter: none; width: 19px;"></span></span>
   
@@ -677,6 +687,3 @@
           </div>
       </div>
   </div>
-  
-  
-  
