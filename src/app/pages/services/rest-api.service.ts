@@ -736,7 +736,7 @@ save_blueprism_config(data)
     }
 	start_blueprism_bot(bot)
     {
-      return this.http.post("/rpa-service/management/start-blueprism-bot?botName="+bot,"", {responseType: "text" });
+      return this.http.post("/rpa-service/management/start-blueprism-bot?botName="+bot,"");
     }
 	
 	get_blue_prism_logs(botName)
@@ -785,4 +785,9 @@ save_blueprism_config(data)
     loadChart1(){
       return this.http.get('/rpa-service/management/incidents');
     }
+
+    retryFailedProcessGraph(bpmnModelId){
+      // return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
+    }
+
 }

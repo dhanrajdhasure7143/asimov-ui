@@ -131,11 +131,16 @@ body, html {
   height: 20px;
 }
 /* notifications to right */
-notifier-notification{
+/* notifier-notification{
+  float:right;
     position: absolute;
-    text-align: right;
-    left: calc(100% - 325px) !important;
+    text-align: left;
 }
+
+notifier-notification > button
+{
+  text-align: right;
+} */
 /* remove dropzone dotted border */
 ngx-dropzone{
   border: none !important;
