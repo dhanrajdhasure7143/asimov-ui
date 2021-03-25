@@ -90,7 +90,9 @@
     </mat-expansion-panel>
   </mat-accordion>
 </div>
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
+  <div *ngIf="griddata.length>0">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
 </div>
 <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
   <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 

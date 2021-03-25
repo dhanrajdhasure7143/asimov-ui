@@ -196,7 +196,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   getImage() {
-    console.log("inside image")
+    // console.log("inside image")
       const userid=localStorage.getItem('ProfileuserId');
           this.rpa.getUserDetails(userid).subscribe(res => {
                 this.retrieveResonse = res;
@@ -235,7 +235,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
                 this.rpa.getNotificationaInitialCount(this.role,userId,notificationbody).subscribe(data => {
                   this.notificationList = data
                   this.notificationscount=this.notificationList
-                  console.log(this.notificationscount)
+                  // console.log(this.notificationscount)
                   if(this.notificationscount==undefined||this.notificationscount==null)
                   {
                     this.notificationscount=0;
