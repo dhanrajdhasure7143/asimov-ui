@@ -322,9 +322,7 @@
                                     <div class="col-md-3 formelement">
               
                                         <label for="agentPath">Agent Path<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" maxlength="50" formControlName="agentPath" placeholder="Enter
-              
-              Agent Path">
+                                        <input type="text" class="form-control" maxlength="50" formControlName="agentPath" placeholder="Enter Agent Path">
                                         <span *ngIf="updateForm.get('agentPath').invalid && updateForm.get
               
               ('agentPath').touched" style="color:red" class="fa fa-info-circle errspan"> Agent Path Required*</span>
@@ -333,9 +331,7 @@
                                     <div class="col-md-3 formelement">
               
                                         <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" maxlength="50" formControlName="hostAddress" placeholder="Enter
-              
-              IP Address/Host">
+                                        <input type="text" class="form-control" maxlength="50" formControlName="hostAddress" placeholder="Enter IP Address/Host">
                                         <span *ngIf="updateForm.get('hostAddress').invalid && updateForm.get
               
               ('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
@@ -344,9 +340,7 @@
                                 <div class="row">
                                     <div class="col-md-3 formelement">
                                         <label for="userName">Username<span style="color:red">*</span></label>
-                                        <input type="text" class="form-control" maxlength="50" formControlName="username" placeholder="Enter
-              
-              Username">
+                                        <input type="text" class="form-control" maxlength="50" formControlName="username" placeholder="Enter Username">
                                         <span *ngIf="updateForm.get('username').invalid && updateForm.get
               
               ('username').touched" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
@@ -355,9 +349,7 @@
               
                                     <div class="col-md-3 formelement">
                                         <label for="password">Password<span style="color:red">*</span></label>
-                                        <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" maxlength="50" formControlName="password" placeholder="Enter
-              
-              Password">
+                                        <input [type]="passwordtype2 ? 'text': 'password'" class="form-control" maxlength="50" formControlName="password" placeholder="Enter Password">
                                         <span *ngIf="passwordtype2==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype2 =!passwordtype2"></span>
                                         <span *ngIf="passwordtype2==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype2 =!passwordtype2"></span>
               
@@ -377,9 +369,7 @@
               
                                     <div class="col-md-3 formelement">
                                         <label for="portNumber">Port<span style="color:red">*</span></label>
-                                        <input type="number" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter
-              
-              Port">
+                                        <input type="number" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter Port">
                                         <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
               
               ('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
@@ -391,8 +381,10 @@
                                         <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
                                     </div>
                                 </div>
-                                <input type="button" class="btn btn-primary" value="Modify" (click)="updateEnvironment()">
-                                <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')">
+                                <input type="button" class="btn btn-primary" value="Modify" [disabled]="updateForm.invalid || updatesubmitted" (click)="updateEnvironment()">
+                                <input type="button" class="btn btn-primary" value="Test Connection" [disabled]="updateForm.invalid"  (click)="testConnection('update')">
+                                <input type="button" class="btn btn-primary" value="Reset" (click)="reset_UpdateEpsoft()">
+                                
                             </form>
                         </div>
                     </div>
