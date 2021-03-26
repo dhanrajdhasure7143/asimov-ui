@@ -39,7 +39,7 @@
         </ng-container>
         
         <ng-container matColumnDef="bluPrismPassword">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>BluePrism Password</th>
+            <th mat-header-cell *matHeaderCellDef >BluePrism Password</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.bluPrismPassword!=null">{{element.bluPrismPassword  | ipcustompipe}}</span> <span *ngIf="element.bluPrismPassword==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="hostAddress">
@@ -53,7 +53,7 @@
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null">{{(element.username.length > 10) ? ((element.username).slice(0, 10) + '...') : element.username}}</span> <span *ngIf="element.username==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="password">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
+            <th mat-header-cell *matHeaderCellDef>Password</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">{{element.password  | ipcustompipe}}</span> <span *ngIf="element.password==''">-</span> </td>
         </ng-container>
   
@@ -64,8 +64,8 @@
        <ng-container matColumnDef="status">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
             <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.status == 1"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
-                <span *ngIf="element.status == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+                <span *ngIf="element.status == 'Active'"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
+                <span *ngIf="element.status == 'Inactive'"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
            </td>
         </ng-container>
         <ng-container matColumnDef="createdTimeStamp">
@@ -145,7 +145,7 @@
   
                         <div class="col-md-3 formelement">
                             <label for="port">Port<span style="color:red">*</span></label>
-                            <input type="text"  maxlength="6" class="form-control" formControlName="port" value="" placeholder="Enter Port">
+                            <input type="text"  maxlength="6" onkeypress="return (event.charCode > 48 && event.charCode < 57)" class="form-control" formControlName="port" value="" placeholder="Enter Port">
   
                             <span *ngIf="BluePrismConfigForm.get('port').invalid && BluePrismConfigForm.get('port').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
                         </div> 
@@ -224,12 +224,12 @@
   
                         <div class="col-md-3 formelement">
                             <label for="port">Port<span style="color:red">*</span></label>
-                            <input type="text"  maxlength="6" class="form-control" formControlName="port" value="" placeholder="Enter Port">
+                            <input type="text"  maxlength="6" class="form-control" onkeypress="return (event.charCode > 48 && event.charCode < 57)" formControlName="port" value="" placeholder="Enter Port">
   
                             <span *ngIf="UpdateBluePrismConfigForm.get('port').invalid && UpdateBluePrismConfigForm.get('port').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
                         </div> 
                         <div class="col-md-3 formelement" style="padding-top: 38px;padding-left: 19px;">
-                            <input type="checkbox" checked formControlName="status"> Active
+                            <input type="checkbox" [checked]="toggle" formControlName="status"> Active
                         </div> 
                     </div>
                     <br>
