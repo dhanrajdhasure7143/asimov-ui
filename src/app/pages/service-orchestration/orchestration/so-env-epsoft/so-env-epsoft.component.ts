@@ -52,6 +52,7 @@ export class SoEnvEpsoftComponent implements OnInit {
   public passwordtype1:Boolean;
   public passwordtype2:Boolean;
   isDtInitialized:boolean = false;
+  public updatesubmitted : Boolean;
 
 constructor(private api:RestApiService,
   private router:Router,
@@ -216,6 +217,7 @@ async testConnection(data){
   }
    await this.api.testenvironment(formdata.value).subscribe( res =>
     {
+      let response:any=res;
       this.spinner.hide();
       if(res.errorCode==undefined){
       Swal.fire({
@@ -229,7 +231,7 @@ async testConnection(data){
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'Connection Failed',
+          title: response.errorMessage,
           showConfirmButton: false,
           timer: 2000
         })
@@ -307,6 +309,7 @@ async updateEnvironment()
     updatFormValue["createdBy"]= this.updateenvdata.createdBy;
     updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
           console.log(updatFormValue);
+          this.updatesubmitted = true;
     await this.api.updateenvironment(updatFormValue).subscribe( res => {
       Swal.fire({
         position: 'center',
@@ -321,13 +324,23 @@ async updateEnvironment()
     this.checktoupdate();
     this.checktodelete();
     document.getElementById("update-popup").style.display='none';
+    this.updatesubmitted = false;
     this.spinner.hide();
     });
   }
   else
   {
-    alert("please fill all details");
+    //alert("please fill all details");
   }
+}
+
+reset_UpdateEpsoft(){
+  this.updateForm.reset();
+
+  this.updateForm.get("portNumber").setValue("22");
+  this.updateForm.get("connectionType").setValue("SSH");
+  this.updateForm.get("environmentType").setValue("");
+  this.updateForm.get("activeStatus").setValue(true);
 }
 
 updatedata()

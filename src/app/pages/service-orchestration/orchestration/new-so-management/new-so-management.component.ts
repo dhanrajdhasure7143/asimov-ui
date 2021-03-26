@@ -433,7 +433,7 @@ export class NewSoManagementComponent implements OnInit {
       "litres": 20,
       "color": am4core.color("#bf00ff")
     }, {
-      "country": "Markating",
+      "country": "Marketing",
       "litres": 17,
       "color": am4core.color("#bcb88a")
     }, {
@@ -503,7 +503,7 @@ categoryAxis.renderer.labels.template.rotation = -70;
 categoryAxis.renderer.labels.template.horizontalCenter = "right";
 
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-valueAxis.renderer.inside = true;
+valueAxis.renderer.inside = false;
     valueAxis.renderer.labels.template.fillOpacity = 0.3;
     valueAxis.renderer.grid.template.strokeOpacity = 0;
 valueAxis.min = 0;
