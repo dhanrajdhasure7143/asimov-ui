@@ -444,7 +444,7 @@ testBluePrismconnection()
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: response.status,
+            title: 'Successfully Connected',
             showConfirmButton: false,
             timer: 2000
           })
@@ -491,7 +491,7 @@ testBluePrismconnection()
           Swal.fire({
             position: 'center',
             icon: 'success',
-            title: response.status,
+            title: 'Successfully Connected',
             showConfirmButton: false,
             timer: 2000
           })

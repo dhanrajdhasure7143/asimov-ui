@@ -222,11 +222,11 @@
                   <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
                 </span>
                 &nbsp;
-                <!-- <span>
-                  <button [disabled]="element.botId==0" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
+                 <span>
+                  <button [disabled]="element.botId==0" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
                   <button  *ngIf="element.taskType !='Automated'" class="undobtn" ><i class="fa fa-eye-slash"></i></button>
                 </span>
-                &nbsp; -->
+                &nbsp;
                 <span>
                   <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button>
                 </span>
