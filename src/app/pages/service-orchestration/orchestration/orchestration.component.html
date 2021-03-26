@@ -128,31 +128,33 @@
 
   <mat-tab label="Monitoring">
     <ng-template mat-tab-label  >
-      <button (mouseover)="createPlanmenuTrigger.openMenu()" (mouseout)="$event.stopPropagation();createPlanmenuTrigger.openMenu()"   #createPlanmenuTrigger="matMenuTrigger"  [matMenuTriggerFor]="Menu" >
+     <!-- <button (mouseover)="createPlanmenuTrigger.openMenu()" (mouseout)="$event.stopPropagation();createPlanmenuTrigger.openMenu()"   #createPlanmenuTrigger="matMenuTrigger"  [matMenuTriggerFor]="Menu" > -->
         <i class="fa fa-chart-area text-primary"  style="font-size:20px"></i>
           &nbsp;&nbsp;
           Monitoring
 
-      </button>
+      <!-- </button> -->
 
-      <mat-menu #Menu="matMenu">
+      <!-- <mat-menu #Menu="matMenu">
         <button mat-menu-item (click)="option(0);selectedTab=6;check_tab=6">Health Status</button>
         <button mat-menu-item>
           <a style="color:black;text-decoration: none;"
           href="https://www.site24x7.in/app/client#/home/monitors/9895000000009020/Device" target="_blank">Dashboard</a>
         </button>
         <button mat-menu-item (click)="option(1);selectedTab=6;check_Tab=6">Metrics</button>
-      </mat-menu>
+      </mat-menu> -->
     </ng-template>
-
-    <div *ngIf="options==0">
+    <div *ngIf="check_tab==6">
+      <app-so-monitoring></app-so-monitoring>
+    </div>
+    <!-- <div *ngIf="options==0">
       <br>
       <app-so-health-status></app-so-health-status>
     </div>
     <div *ngIf="options==1">
       <iframe src='https://www.site24x7.in/public/dashboard/pKHl5Tx2Kb8SZoqcmJDaF3ziM9MyghE1VrBRTQQpOj9Ryc96EyKu/oDHVjt8ZTmMvy2blPi5kZ4kSBRbVULvP0csw2a0rmiewwe3Qt39Ur/dqnq0NXu6kw==' (load)="spinner.hide()" scrolling='yes'  height='600' style="width:100%"  (load)="spinner.hide()" border='0' frameborder='0'></iframe>
 
-  </div>
+  </div>-->
 
   </mat-tab>
 

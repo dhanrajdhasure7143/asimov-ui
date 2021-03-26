@@ -34,7 +34,7 @@
       </div>
         <div class="row">
           <div class="col-md-12">
-            <mat-card>
+            <!-- <mat-card> -->
               <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
   
                   <ng-container matColumnDef="botName">
@@ -171,8 +171,8 @@
               <div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
                   No Record Found
               </div>
-              <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
-            </mat-card>
+              <mat-paginator #paginator1 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
+            <!-- </mat-card> -->
           </div>
       </div>
     </div>
@@ -592,7 +592,9 @@
                           </div>-->
                       </div>
                       <div class="col-md-3 formelement">
-                          <label for="slaConfigId">SLA Breach Limit<span style="color:red">*</span></label>
+                        <label for="slaConfigId">SLA Breach Limit
+                           <!-- <span style="color:red">*</span> -->
+                         </label>
                           <input type="number" style="width:100px" min=0 max=60 maxlength="2" formControlName="slaConfigId"  onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"   value="" placeholder="00">
   
                           <!-- <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"  #slaConfigId value="" placeholder="MM">
@@ -603,21 +605,23 @@
                         </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-3 formelement">
-                      <label for="breachAlerts">Breach Actual Alert<span style="color:red">*</span></label>
-                      <select class="form-control"  value="" formControlName="breachAlerts">
-                          <option value="">-- Select Breach Actual Alerts --</option>
-                          <option value="Error">Error</option>
-                          <option value="Warning">Warning</option>
-                          <option value="All">All</option>
-                        </select>
-                      <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Breach Actual Alert*</span>
-                      <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                          Maximum of 50 characters
-                      </div>-->
-                  </div>
+                  <!-- <div class="col-md-3 formelement">
+                    <label for="breachAlerts">Breach Actual Alert<span style="color:red">*</span></label>
+                    <select class="form-control"  value="" formControlName="breachAlerts">
+                        <option value="">-- Select Breach Actual Alerts --</option>
+                        <option value="Error">Error</option>
+                        <option value="Warning">Warning</option>
+                        <option value="All">All</option>
+                      </select>
+                    <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Breach Actual Alert*</span> -->
+                    <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                        Maximum of 50 characters
+                    </div>-->
+                <!-- </div> -->
                       <div class="col-md-2 formelement">
-                          <label for="thresholdLimit">Threshold Limit <span style="color:red">*</span></label>
+                        <label for="thresholdLimit">Threshold Limit 
+                           <!-- <span style="color:red">*</span> -->
+                         </label>
                           <input type="number" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit"  value="" maxlength="2" placeholder="00">
                           <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Threshold Limit*</span>
                       </div>
@@ -637,7 +641,7 @@
                       </div>
   
                       <div class="col-md-2 formelement">
-                        <label for="notificationType">Notificaion Type</label><br>
+                        <label for="notificationType">Notificaion Type<span style="color:red">*</span></label><br>
                         <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
                          <label class="lbl_chk_cls"  for="emailcheck">E-mail</label> &nbsp;
                         <input type="checkbox" class="smscheck" formControlName="sms"  id="smscheck">
