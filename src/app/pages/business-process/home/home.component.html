@@ -68,7 +68,9 @@
           </mat-expansion-panel>
         </mat-accordion>
      </div>
+     <div *ngIf='saved_diagrams.length>0'>
      <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+     </div>
     </div>
   </div>
 </div>

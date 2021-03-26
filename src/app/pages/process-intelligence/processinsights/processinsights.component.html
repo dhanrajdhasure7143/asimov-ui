@@ -1,4 +1,5 @@
-<div class="backgr container-fluid">
+<div class='backgr'>
+<div class="container">
     <div class="">
     <div class="row">
         <div class='col-md-12 boxes'>
@@ -14,12 +15,12 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="col-sm-12 divbox divbox2">Total Human Cost
-                            <div>{{totalMedianDuration && input1 && input2 ? getHumanTotalCost(getHours(totalMedianDuration)*this.input1) : '-'}}</div>
+                            <div>{{totalMedianDuration && input1 && input2 ? (getHumanTotalCost(getHours(totalMedianDuration)*this.input1)| currency) : '-'}}</div>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="col-sm-12 divbox divbox3"> Potential Savings
-                            <div>{{calculateSavings(this.totalMedianDuration)}}</div>
+                            <div>{{calculateSavings(this.totalMedianDuration) | currency}}</div>
                         </div>
                     </div>
         </div>
@@ -352,6 +353,7 @@
        
 
     </div>
+</div>
 </div>
 </div>
 </div>

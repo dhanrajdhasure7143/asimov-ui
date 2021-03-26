@@ -303,12 +303,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     let current_bpmn_info
     if(user_role=='Process Architect'){
       current_bpmn_info = this.saved_bpmn_list[0];
-      console.log("process");
+      // console.log("process");
       
     }else{
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
     }
-    console.log(current_bpmn_info);
+    // console.log(current_bpmn_info);
 
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
@@ -724,7 +724,7 @@ displayBPMN(){
       let _self = this;
       if(this.fileType == this.selectedNotationType){
         this[modeler_obj].saveXML({ format: true }, function(err, xml) {
-          console.log(xml);
+          // console.log(xml);
           var blob = new Blob([xml], { type: "application/xml" });
           var url = window.URL.createObjectURL(blob);
          _self.downloadFile(url);

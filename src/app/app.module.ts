@@ -18,11 +18,13 @@ import { LoaderService } from './services/loader/loader.service';
 import { LoaderInterceptor } from './helpers/loader-interceptor.service';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { UserIdleModule } from 'angular-user-idle';
+import { RedirectionComponent } from './rediraction/redirection.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    RedirectionComponent
 
   ],
 

@@ -293,7 +293,7 @@ robotValue:number;
             //let totalCost = (val*this.input1)/(1000 * 60 * 60);
             let roboCost = Math.round(this.getHours(val) * 60 / 100 * this.robotinput);
             let totalCost = Math.round(this.getHours(val) * this.input1);
-            return '$' + ((totalCost - roboCost));
+            return ((totalCost - roboCost));
         } else {
             return '-';
         }
@@ -301,7 +301,7 @@ robotValue:number;
 
     getHumanTotalCost(val) {
         if (val) {
-            return '$' + Math.round(Number(val))
+            return Math.round(Number(val))
         }
     }
 
@@ -542,7 +542,7 @@ robotValue:number;
     }
 
     getHours(millisec) {
-        var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
+        var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);       
         return hours;
     }
 
