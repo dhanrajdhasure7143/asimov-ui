@@ -141,7 +141,7 @@
                       <th mat-header-cell *matHeaderCellDef >Logs </th>
                       <td mat-cell *matCellDef="let element">
                         <a class="text-primary text-center clickable" *ngIf="element.sourceType=='EPSoft'" matTooltip="View Logs" (click)="viewlogdata(element.botId,element.version)">View</a>
-                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='UIPath'" matTooltip="View Logs" (click)="getuipathlogs(element.botName)">View</a>
+                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='UiPath'" matTooltip="View Logs" (click)="getuipathlogs(element.botName)">View</a>
                         <a class="text-primary text-center clickable" *ngIf="element.sourceType=='BluePrism'" matTooltip="View Logs" (click)="getBluePrismlogs(element.botName)">View</a>
                       </td>
                   </ng-container>

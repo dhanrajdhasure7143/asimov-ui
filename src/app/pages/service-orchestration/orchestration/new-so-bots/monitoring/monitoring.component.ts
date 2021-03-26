@@ -226,7 +226,7 @@ export class MonitoringComponent implements OnInit {
       
       pieSeries.ticks.template.disabled = true;
       var label = pieSeries.createChild(am4core.Label);
-      label.text = "uipath 122";
+      label.text = "EPSoft-369";
       label.horizontalCenter = "middle";
       label.verticalCenter = "middle";
       label.fontSize = 20;
@@ -247,17 +247,17 @@ export class MonitoringComponent implements OnInit {
       
       
       chart.data = [{
-        "country": "UiPath",
+        "country": "Success",
         "litres": 27,
-        "color": am4core.color("#ffda83")
+        "color": am4core.color("#42E174")
       },{
-        "country": "BluePrism",
-        "litres": 35,
-        "color": am4core.color("#55d8fe")
+        "country": "Failure",
+        "litres": 20,
+        "color": am4core.color("#a60e3f")
       },{
-        "country": "EPSoft",
-        "litres": 29,
-        "color": am4core.color("#fa4616")
+        "country": "Stopped",
+        "litres": 18,
+        "color": am4core.color("#fb5124")
       }];
       
       });  
@@ -311,7 +311,7 @@ export class MonitoringComponent implements OnInit {
         
         pieSeries.ticks.template.disabled = true;
         var label = pieSeries.createChild(am4core.Label);
-        label.text = "uipath 122";
+        label.text = "BluePrism-225";
         label.horizontalCenter = "middle";
         label.verticalCenter = "middle";
         label.fontSize = 20;
@@ -332,17 +332,13 @@ export class MonitoringComponent implements OnInit {
         
         
         chart.data = [{
-          "country": "UiPath",
+          "country": "Success",
           "litres": 27,
-          "color": am4core.color("#ffda83")
+          "color": am4core.color("#42E174")
         },{
-          "country": "BluePrism",
+          "country": "Failure",
           "litres": 35,
-          "color": am4core.color("#55d8fe")
-        },{
-          "country": "EPSoft",
-          "litres": 29,
-          "color": am4core.color("#fa4616")
+          "color": am4core.color("#a60e3f")
         }];
         
         });  
@@ -394,7 +390,7 @@ export class MonitoringComponent implements OnInit {
         
         pieSeries.ticks.template.disabled = true;
         var label = pieSeries.createChild(am4core.Label);
-        label.text = "uipath 122";
+        label.text = "UiPath-122";
         label.horizontalCenter = "middle";
         label.verticalCenter = "middle";
         label.fontSize = 20;
@@ -415,17 +411,17 @@ export class MonitoringComponent implements OnInit {
         
         
         chart.data = [{
-          "country": "UiPath",
+          "country": "Success",
           "litres": 27,
-          "color": am4core.color("#ffda83")
+          "color": am4core.color("#42E174")
         },{
-          "country": "BluePrism",
+          "country": "Failure",
           "litres": 35,
-          "color": am4core.color("#55d8fe")
+          "color": am4core.color("#a60e3f")
         },{
-          "country": "EPSoft",
-          "litres": 29,
-          "color": am4core.color("#fa4616")
+          "country": "Stopped",
+          "litres": 15,
+          "color": am4core.color("#fb5124")
         }];
         
         });  
@@ -560,6 +556,12 @@ export class MonitoringComponent implements OnInit {
                       }
                   });
                   this.chart6.update();
+  }
+
+  getdate(value,type){
+    let currentdate=new Date();
+    (type == "1") ? currentdate.setDate(currentdate.getDate() + value) : currentdate.setDate(currentdate.getDate() - value);
+    return moment(currentdate).format('MMM-DD-YYYY');
   }
 
 }

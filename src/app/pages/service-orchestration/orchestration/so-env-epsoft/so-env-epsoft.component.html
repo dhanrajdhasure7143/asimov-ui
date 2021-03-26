@@ -117,7 +117,7 @@
                         <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null" [matTooltip]="element.username">{{(element.username.length > 15) ? ((element.username).slice(0, 15) + '...') : element.username}}</span> <span *ngIf="element.username==''">-</span> </td>
                     </ng-container>
                     <ng-container matColumnDef="password">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
+                        <th mat-header-cell *matHeaderCellDef >Password</th>
                         <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
                     </ng-container>
                     <!--<ng-container matColumnDef="connectionType">
@@ -142,8 +142,8 @@
                     <ng-container matColumnDef="activeStatus">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
                         <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
-                            <span *ngIf="element.activeStatus == 8 || element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+                            <span *ngIf="element.activeStatus == 'Active'"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
+                            <span *ngIf="element.activeStatus == 'Inactive' || element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
                             <!--<span *ngIf="element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Undefined</span>-->
                         </td>
                     </ng-container>
@@ -151,8 +151,8 @@
                     <ng-container matColumnDef="deployStatus">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Deployed</th>
                         <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.deployStatus == true"><span style="color:darkgreen">Yes</span></span>
-                            <span *ngIf="element.deployStatus == false"><span style="color:red">No</span></span>
+                            <span *ngIf="element.deployStatus == 'Yes'"><span style="color:darkgreen">Yes</span></span>
+                            <span *ngIf="element.deployStatus == 'No'"><span style="color:red">No</span></span>
                         </td>
                     </ng-container>
                     <ng-container matColumnDef="noData">
@@ -257,7 +257,7 @@
               
                                     <div class="col-md-3 formelement">
                                         <label for="portNumber">Port<span style="color:red">*</span></label>
-                                        <input type="number"  maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
+                                        <input type="text" onkeypress="return (event.charCode > 48 && event.charCode < 57)" maxlength="6" class="form-control" formControlName="portNumber" value="" placeholder="Enter Port">
               
                                         <span *ngIf="insertForm.get('portNumber').invalid && insertForm.get
               
@@ -369,7 +369,7 @@
               
                                     <div class="col-md-3 formelement">
                                         <label for="portNumber">Port<span style="color:red">*</span></label>
-                                        <input type="number" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter Port">
+                                        <input type="text" onkeypress="return (event.charCode > 48 && event.charCode < 57)" maxlength="6" class="form-control" formControlName="portNumber" placeholder="Enter Port">
                                         <span *ngIf="updateForm.get('portNumber').invalid && updateForm.get
               
               ('portNumber').touched" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>

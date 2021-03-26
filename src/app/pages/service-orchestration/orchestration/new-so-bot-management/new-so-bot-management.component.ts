@@ -138,7 +138,7 @@ public slaupdate : boolean = false;
     this.sla_bot=bot;
     if(this.sla_bot.sourceType=="EPSoft")
       this.slaconId=this.sla_list.find(item=>item.botId==bot.botId);
-    else if(this.sla_bot.sourceType=="UIPath")
+    else if(this.sla_bot.sourceType=="UiPath")
       this.slaconId=this.sla_list.find(item=>item.botName==bot.botName+"_Env");
     else
       this.slaconId=this.sla_list.find(item=>item.botName==bot.botName);
@@ -215,7 +215,7 @@ public slaupdate : boolean = false;
      totalRetries :  parseInt(this.insertslaForm_so_bot.value.totalRetries),
      notificationStatus:1
    };
-   if(this.sla_bot.sourceType=="UIPath")
+   if(this.sla_bot.sourceType=="UiPath")
      slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName+"_Env";
     else
       slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName;
@@ -517,7 +517,7 @@ public slaupdate : boolean = false;
         else
         Swal.fire(response.errorMessage,"","warning");
       });
-      else if(source=="UIPath")
+      else if(source=="UiPath")
       this.rest.startuipathbot(botid).subscribe(res=>{
         let response:any=res;
         this.spinner.hide();
@@ -799,7 +799,7 @@ public slaupdate : boolean = false;
       });
 
     }
-    else if(data.sourceType == 'UIPath')
+    else if(data.sourceType == 'UiPath')
     {
       this.rest.runsmoketestuipath().subscribe(processnames=>{
         let response:any;

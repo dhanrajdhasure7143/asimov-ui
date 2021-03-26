@@ -49,6 +49,7 @@ export class SoEnvBlueprismComponent implements OnInit {
   public BluePrismFlag:boolean=false;
   public addBPconfigstatus:boolean=false;
   public bpid : any;
+  public toggle: boolean = false;
 constructor(private api:RestApiService,
   private router:Router,
   private formBuilder: FormBuilder,
@@ -106,7 +107,14 @@ getblueprismconnections()
       this.isTableHasData = true;
      }
    console.log(this.blueprism_configs);
-   this.dataSource1= new MatTableDataSource(this.blueprism_configs);
+   let envchange = this.blueprism_configs;
+      console.log(envchange);
+ 
+      for(let i = 0; i< envchange.length;i++)
+      {
+       envchange[i].status = envchange[i].status == 1 ? 'Active': envchange[i].status == 0? 'Inactive': ''; 
+      }
+   this.dataSource1= new MatTableDataSource(envchange);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
@@ -347,7 +355,11 @@ updatedata()
   {
     if(data.bluePrismId==this.updateid)
     {
-      (data.status==true)?data.status=1:data.status=0;
+      if(data.status=='Active'){
+        this.toggle=true;
+      }else{
+        this.toggle=false;
+      }
       this.bpid = this.updateid;
       this.UpdateBluePrismConfigForm.get("configName").setValue(data["configName"]);
       this.UpdateBluePrismConfigForm.get("bluePrismUsername").setValue(data["bluePrismUsername"]);
@@ -356,7 +368,7 @@ updatedata()
       this.UpdateBluePrismConfigForm.get("username").setValue(data["username"]);
       this.UpdateBluePrismConfigForm.get("password").setValue(data["password"]);
       this.UpdateBluePrismConfigForm.get("port").setValue(data["port"]);
-      this.UpdateBluePrismConfigForm.get("status").setValue(data["status"]);
+      //this.UpdateBluePrismConfigForm.get("status").setValue(data["status"]);
       break;
     }
   }
