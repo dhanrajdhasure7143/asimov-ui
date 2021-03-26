@@ -126,7 +126,7 @@
 .process_view span{
     cursor: pointer;
 }
-.process_view.fa:hoverhover{
+.process_view .fa:hover{
     color: #0061cf;
 }
 .process_view .glyphicon:hover{

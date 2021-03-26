@@ -250,7 +250,7 @@ input:disabled{
 }
 .backgr{
 background: rgb(241, 240, 240);
-padding: 0px 80px !important;
+/* padding: 0px 80px !important; */
 /* border-radius: 3px; */
 /* width: 100%; */
 /* margin-left: -20px; */
