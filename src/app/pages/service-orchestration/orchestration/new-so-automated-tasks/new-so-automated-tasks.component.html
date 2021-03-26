@@ -63,14 +63,14 @@
 
 
 <div class="container-fluid">
-<mat-card>
-<div  *ngIf="responsedata!=undefined" style="width:100%;overflow-x: scroll;">
+<!-- <mat-card> -->
+  <div  *ngIf="responsedata!=undefined" style="width:100%;">
 
     <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table" id="autotable">
 
         <ng-container matColumnDef="processName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
-            <td mat-cell *matCellDef="let element"> {{element.processName}}</td>
+            <td mat-cell [matTooltip]="element.processName"  *matCellDef="let element">{{(element.processName.length > 15) ? ((element.processName).slice(0, 15) + '...') : element.processName}}</td>
         </ng-container>
 
         <ng-container matColumnDef="taskName">
@@ -283,7 +283,7 @@
   <!--</div>-->
   <mat-paginator #paginator10 [pageSize]="8" [showFirstLastButtons]="true">
   </mat-paginator>
-</mat-card>
+<!-- </mat-card> -->
 
 <br>
 <br>
