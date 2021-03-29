@@ -5,14 +5,14 @@
           <span style="padding:10px">
             <mat-form-field class="example-full-width" id="bmsearch">
               <mat-label>Search</mat-label>
-              <input matInput placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
+              <input matInput placeholder="Search" [(ngModel)]="search" (input)="method()"> <!--(keyup)="applyFilter2($event.target.value)">-->
               <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
           </span>
           <span style="padding:10px">
             <mat-form-field id="bmategorySearch">
               <mat-label>Select By Source</mat-label>
-              <mat-select [(ngModel)]="selected_source" (selectionChange)="applyFilter3($event.value)">
+              <mat-select [(ngModel)]="selected_source" (selectionChange)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
                   <mat-option value="EPSoft">EPSoft</mat-option>
                   <mat-option value="BluePrism">BluePrism</mat-option>
                   <mat-option value="UiPath">UiPath</mat-option>
@@ -22,7 +22,7 @@
         <span style="padding:10px">
           <mat-form-field id="bmategorySearch">
             <mat-label>Select Process Group</mat-label>
-            <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
+            <mat-select [(ngModel)]="selectedcat" (selectionChange)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
                 <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
               </mat-option>
             </mat-select>

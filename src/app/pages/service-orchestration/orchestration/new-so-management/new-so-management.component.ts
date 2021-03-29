@@ -9,6 +9,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+
 import { throwMatDuplicatedDrawerError } from '@angular/material';
 import { NotifierService } from 'angular-notifier';
 @Component({
@@ -17,13 +18,14 @@ import { NotifierService } from 'angular-notifier';
   styleUrls: ['./new-so-management.component.css']
 })
 export class NewSoManagementComponent implements OnInit {
-  // url: string = "http://10.11.0.129:8080/knowage/servlet/AdapterHTTP?ACTION_NAME=EXECUTE_DOCUMENT_ACTION&OBJECT_LABEL=Incident_Mngmt Tab&TOOLBAR_VISIBLE=false&ORGANIZATION=DEMO&NEW_SESSION=false";
-  // urlSafe: SafeResourceUrl;
+  url: string = "http://10.11.0.129:8080/knowage/servlet/AdapterHTTP?ACTION_NAME=EXECUTE_DOCUMENT_ACTION&OBJECT_LABEL=Incident_Mngmt Tab&TOOLBAR_VISIBLE=false&ORGANIZATION=DEMO&NEW_SESSION=false";
+  urlSafe: SafeResourceUrl;
   constructor(
     private rest:RestApiService,
-    private spinner:NgxSpinnerService,public sanitizer: DomSanitizer
+    private spinner:NgxSpinnerService,
+    private notifier: NotifierService,
+    public sanitizer: DomSanitizer
   ) { }
-
   public botstatistics: any = 0;
   public select:any;
   public datasource: any;
@@ -119,26 +121,32 @@ export class NewSoManagementComponent implements OnInit {
   }
   
   chart1(){
-    
     this.spinner.show();
-    // Themes begin
     this.activestatusSolvedPer = [];
     this.inactivestatusClosedRes = [];
     this.inactivestatusSolvedWA = [];
     this.inactivestatusSolvedRemo = [];
     this.inactivestatusNew = [];
-    am4core.useTheme(am4themes_animated);
-    // Themes end
     
-    // Create chart instance
-    var chart = am4core.create("chartdiv", am4charts.PieChart);
+    am4core.useTheme(am4themes_animated);
+    let chart = am4core.create("chartdiv", am4charts.PieChart);
+    
+        
     // Add and configure Series
-    var pieSeries = chart.series.push(new am4charts.PieSeries());
+    let pieSeries = chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = "litres";
     pieSeries.dataFields.category = "country";
     pieSeries.slices.template.propertyFields.fill = "color";
-    // Let's cut a hole in our Pie chart the size of 30% the radius
-    chart.innerRadius = am4core.percent(30);
+    pieSeries.slices.template.strokeWidth = 2;
+    pieSeries.slices.template.strokeOpacity = 1;
+    pieSeries.labels.template.maxWidth = 130;
+    pieSeries.labels.template.bent = false;
+    pieSeries.labels.template.wrap = true;
+    pieSeries.labels.template.fontSize = 11;
+    pieSeries.labels.template.padding(0,0,0,0);
+    pieSeries.ticks.template.disabled = false;
+    chart.innerRadius = am4core.percent(40);
+    
     pieSeries.slices.template.events.on(
       "hit",
       ev => {
@@ -237,102 +245,84 @@ export class NewSoManagementComponent implements OnInit {
       },
     this
     );
-    // Put a thick white border around each Slice
-    pieSeries.slices.template.stroke = am4core.color("#fff");
-    pieSeries.slices.template.strokeWidth = 2;
-    pieSeries.slices.template.strokeOpacity = 1;
-    pieSeries.slices.template
-      // change the cursor on hover to make it apparent the object can be interacted with
-      .cursorOverStyle = [
-        {
-          "property": "cursor",
-          "value": "pointer"
-        }
-      ];
-    pieSeries.labels.template.maxWidth = 130;
-    pieSeries.labels.template.wrap = true;
-    pieSeries.labels.template.fontSize = 18;
-    pieSeries.labels.template.bent = false;
-    pieSeries.labels.template.padding(0,0,0,0);
-    pieSeries.ticks.template.disabled = true;
-    pieSeries.alignLabels = false;
-    pieSeries.labels.template.text = "{value.percent.formatNumber('#.')}";
-    pieSeries.labels.template.radius = am4core.percent(-40);
-    pieSeries.labels.template.fill = am4core.color("white");
-    // Create a base filter effect (as if it's not there) for the hover to return to
-    var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
-    shadow.opacity = 0;
-    
-    // Create hover state
-    var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
-    
-    // Slightly shift the shadow and make it more prominent on hover
-    var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
-    hoverShadow.opacity = 0.7;
-    hoverShadow.blur = 5;
-    
-    // Add a legend
 
+    //label
+    var label = pieSeries.createChild(am4core.Label);
+    label.text = this.datasource.length;
+    label.horizontalCenter = "middle";
+    label.verticalCenter = "middle";
+    label.fontSize = 20;
+
+
+    // This creates initial animation
+    pieSeries.hiddenState.properties.opacity = 1;
+    pieSeries.hiddenState.properties.endAngle = -90;
+    pieSeries.hiddenState.properties.startAngle = -90;
+    
+    //chart.hiddenState.properties.radius = am4core.percent(-15);
+    // Add a legend
     chart.legend = new am4charts.Legend();
     chart.legend.fontSize = 13;
     let markerTemplate = chart.legend.markers.template;
     markerTemplate.width = 10;
     markerTemplate.height = 10;
-    chart.innerRadius = am4core.percent(0);
-        this.SolvedPer = 0;
-        this.ClosedRes = 0;
-        this.SolvedWA = 0;
-        this.SolvedRemo = 0;
-        this.New = 0;
-        for(let i = 0; i< this.datasource.length ; i++ )
-        {
-            this.obj.push(this.datasource[i].incidentStatus);
+
+    this.SolvedPer = 0;
+    this.ClosedRes = 0;
+    this.SolvedWA = 0;
+    this.SolvedRemo = 0;
+    this.New = 0;
+    for(let i = 0; i< this.datasource.length ; i++ )
+    {
+        this.obj.push(this.datasource[i].incidentStatus);
+    }
+    this.obj = [...new Set(this.obj)];
+    console.log(this.obj);
+    let seriesName =this.obj;
+    for(let i=0 ; i< this.obj.length ;i++){
+      for(let j = 0; j < this.datasource.length; j++){
+        if(seriesName[i] == this.datasource[j].incidentStatus){
+        if(seriesName[i] == "Solved (Permanently)"){
+        this.SolvedPer = this.SolvedPer+1; 
         }
-        this.obj = [...new Set(this.obj)];
-        let seriesName =this.obj;
-        for(let i=0 ; i< this.obj.length ;i++){
-          for(let j = 0; j < this.datasource.length; j++){
-            if(seriesName[i] == this.datasource[j].incidentStatus){
-            if(seriesName[i] == "Solved (Permanently)"){
-            this.SolvedPer = this.SolvedPer+1; 
-            }
-            else if(seriesName[i] == "Closed/Resolved by Caller"){
-            this.ClosedRes = this.ClosedRes+1;
-            }
-            else if(seriesName[i] == "Solved (Work Around)"){
-            this.SolvedWA = this.SolvedWA+1;
-            }
-            else if(seriesName[i] == "Solved Remotely (Permanently)"){
-            this.SolvedRemo = this.SolvedRemo+1;
-            }
-            else if(seriesName[i] == "New"){
-            this.New = this.New+1;
-            }
-            }
-          }
+        else if(seriesName[i] == "Closed/Resolved by Caller"){
+        this.ClosedRes = this.ClosedRes+1;
         }
-        let data1 : any;
-        for( data1 of this.datasource){
-           if(data1.incidentStatus == "Solved (Permanently)"){
-            this.activestatusSolvedPer.push(data1);
-           }
-           if(data1.incidentStatus == "Closed/Resolved by Caller"){
-            this.inactivestatusClosedRes.push(data1);
-           }
-           if(data1.incidentStatus == "Solved (Work Around)"){
-            this.inactivestatusSolvedWA.push(data1);
-           }
-           if(data1.incidentStatus == "Solved Remotely (Permanently)"){
-            this.inactivestatusSolvedRemo.push(data1);
-           }
-           if(data1.incidentStatus == "New"){
-            this.inactivestatusNew.push(data1);
-           }
+        else if(seriesName[i] == "Solved (Work Around)"){
+        this.SolvedWA = this.SolvedWA+1;
         }
+        else if(seriesName[i] == "Solved Remotely (Permanently)"){
+        this.SolvedRemo = this.SolvedRemo+1;
+        }
+        else if(seriesName[i] == "New"){
+        this.New = this.New+1;
+        }
+        }
+      }
+    }
+    let data1 : any;
+    for( data1 of this.datasource){
+       if(data1.incidentStatus == "Solved (Permanently)"){
+        this.activestatusSolvedPer.push(data1);
+       }
+       if(data1.incidentStatus == "Closed/Resolved by Caller"){
+        this.inactivestatusClosedRes.push(data1);
+       }
+       if(data1.incidentStatus == "Solved (Work Around)"){
+        this.inactivestatusSolvedWA.push(data1);
+       }
+       if(data1.incidentStatus == "Solved Remotely (Permanently)"){
+        this.inactivestatusSolvedRemo.push(data1);
+       }
+       if(data1.incidentStatus == "New"){
+        this.inactivestatusNew.push(data1);
+       }
+    }
+    
     chart.data = [{
       "country": "Solved (Permanently)",
       "litres": this.SolvedPer,
-      "color": am4core.color("#32cd32")
+      "color": am4core.color("#00c45f")
     },{
       "country": "Closed/Resolved by Caller",
       "litres": this.ClosedRes,
@@ -340,11 +330,11 @@ export class NewSoManagementComponent implements OnInit {
     }, {
       "country": "Solved (Work Around)",
       "litres": this.SolvedWA,
-      "color": am4core.color("#bf00ff")
+      "color": am4core.color("#aa28eb")
     }, {
       "country": "Solved Remotely (Permanently)",
       "litres": this.SolvedRemo,
-      "color": am4core.color("#fbec5d")
+      "color": am4core.color("#9e9e9e")
     }, {
       "country": "New",
       "litres": this.New,
@@ -507,7 +497,7 @@ valueAxis.renderer.inside = false;
     valueAxis.renderer.labels.template.fillOpacity = 0.3;
     valueAxis.renderer.grid.template.strokeOpacity = 0;
 valueAxis.min = 0;
-valueAxis.max = 5;
+valueAxis.max = 40;
 valueAxis.strictMinMax = true;
 valueAxis.cursorTooltipEnabled = false;
     valueAxis.renderer.labels.template.fontSize = 11;
@@ -517,18 +507,22 @@ valueAxis.cursorTooltipEnabled = false;
     valueAxis.startLocation = 0.5;
     valueAxis.endLocation = 0.5;
 
+
 // Create series
 var series = chart.series.push(new am4charts.ColumnSeries());
 series.dataFields.valueY = "value";
 series.dataFields.categoryX = "incidentId";
-
+series.columns.template.tooltipText = "{value}" 
 series.name = "Ticket ID";
 var columnTemplate = series.columns.template;
-    columnTemplate.width = 25;
-    columnTemplate.column.cornerRadiusTopLeft = 20;
-    columnTemplate.column.cornerRadiusTopRight = 20;
-    columnTemplate.strokeOpacity = 0;
-    
+columnTemplate.width = 25;
+columnTemplate.column.cornerRadiusTopLeft = 20;
+columnTemplate.column.cornerRadiusTopRight = 20;
+columnTemplate.strokeOpacity = 0;
+let label = categoryAxis.renderer.labels.template;
+label.truncate = true;
+label.maxWidth = 100;
+label.tooltipText = "{incidentId}";
     this.spinner.hide();
 
   }
