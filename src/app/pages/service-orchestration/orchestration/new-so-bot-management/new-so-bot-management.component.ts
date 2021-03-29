@@ -73,6 +73,8 @@ public slaupdate : boolean = false;
     logresponse:any=[];
     public slaconId:any;
     public sla_list:any=[];
+    public datasourcelist : any = [];
+
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -127,6 +129,128 @@ public slaupdate : boolean = false;
     this.getprocessnames();
     this.get_sla_list();
     this.popup=false;
+  }
+
+  method(){
+    let result: any = [];
+    this.dataSource1 = this.datasourcelist;
+    if(this.selectedcat == undefined){
+      this.selectedcat = '';
+    }
+    if(this.selected_source == undefined){
+      this.selected_source = '';
+    }
+    if(this.search == undefined){
+      this.search = '';
+    }
+    if(this.search != '' && this.selected_source != '' && this.selectedcat != '')
+    {
+      console.log(this.search, this.selectedcat, this.selected_source);
+      let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
+      for(let a of this.datasourcelist){
+        if( category == a.department){
+          if(this.selected_source == a.sourceType){
+          result.push(a);
+        }
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      console.log(this.dataSource1);
+      let value1 = this.search.toLowerCase();
+       console.log(value1);
+       this.dataSource1.filter = value1;
+       console.log(this.dataSource1.filteredData);
+       this.dataSource1.sort=this.sort1;
+       this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.search != '' && this.selected_source)
+    {
+      for(let a of this.bot_list){
+        console.log(a.sourceType);
+        if(this.selected_source == a.sourceType){
+          result.push(a);
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      let value1 = this.search.toLowerCase();
+       console.log(value1);
+       this.dataSource1.filter = value1;
+       console.log(this.dataSource1.filteredData);
+       this.dataSource1.sort=this.sort1;
+       this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.search != '' && this.selectedcat != '')
+    {
+      let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
+      for(let a of this.bot_list){
+        console.log(a.department);
+        if( category == a.department){
+          result.push(a);
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      let value1 = this.search.toLowerCase();
+       console.log(value1);
+       this.dataSource1.filter = value1;
+       console.log(this.dataSource1.filteredData);
+       this.dataSource1.sort=this.sort1;
+       this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.selected_source !='' && this.selectedcat != '')
+    {
+      let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
+      for(let a of this.datasourcelist){
+        if( category == a.department){
+          if(this.selected_source == a.sourceType){
+          result.push(a);
+          if(this.search != '')
+          {
+            let value1 = this.search.toLowerCase();
+            result.filter = value1;
+            console.log(result);
+          }
+        }
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      this.dataSource1.sort=this.sort1;
+      this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.search)
+    {
+      this.dataSource1 = new MatTableDataSource(this.datasourcelist);
+      let value1 = this.search.toLowerCase();
+       console.log(value1);
+       this.dataSource1.filter = value1;
+       console.log(this.dataSource1.filteredData);
+       this.dataSource1.sort=this.sort1;
+       this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.selected_source)
+    {
+      for(let a of this.bot_list){
+        console.log(a.sourceType);
+        if(this.selected_source == a.sourceType){
+          result.push(a);
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      this.dataSource1.sort=this.sort1;
+      this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.selectedcat)
+    {
+      let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
+      for(let a of this.bot_list){
+        console.log(a.department);
+        if( category == a.department){
+          result.push(a);
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      this.dataSource1.sort=this.sort1;
+      this.dataSource1.paginator=this.paginator1;
+    }
   }
 
   getslaconfig(){
@@ -341,6 +465,8 @@ public slaupdate : boolean = false;
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       this.bot_list=response;
       this.automatedtask = this.bot_list;
+      console.log(this.bot_list)
+      this.datasourcelist = this.bot_list;
       this.dataSource1= new MatTableDataSource(this.bot_list);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
@@ -667,7 +793,7 @@ public slaupdate : boolean = false;
       document.getElementById("uipathlogs").style.display="none";
     }
 
-    applyFilter(filterValue:any) {
+   /* applyFilter(filterValue:any) {
       console.log(filterValue)
       let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
       //this.selectedvalue=filterValue;
@@ -690,6 +816,8 @@ public slaupdate : boolean = false;
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
       this.dataSource1.filter = filterValue;
     }
+    */
+   
   getCategoryList(){
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;

@@ -927,6 +927,7 @@ displayBPMN(){
     bpmnModel.ntype = this.ntype;
     bpmnModel.category = this.category;
     bpmnModel.processIntelligenceId = this.pid;
+    bpmnModel.ntype ='bpmn' //Notation type for bpmnFromPI
     let match = this.full_saved_bpmn_list.filter(each_diag => {
       return each_diag.bpmnProcessName == this.processName && each_diag.processIntelligenceId && each_diag.processIntelligenceId == this.pid
     })
@@ -1013,6 +1014,7 @@ displayBPMN(){
      // bpmnModel.createdTimestamp = this.pivalues["createdTime"];
       bpmnModel.bpmnProcessStatus = "INPROGRESS";
       bpmnModel.notationFromPI = true;
+      bpmnModel.ntype ='bpmn' //Notation type for bpmnFromPI
     }else{
       bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
       bpmnModel.bpmnModelId = sel_List['bpmnModelId'];

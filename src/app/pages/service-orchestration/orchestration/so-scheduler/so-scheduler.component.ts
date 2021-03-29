@@ -132,15 +132,17 @@ export class SoSchedulerComponent implements OnInit {
     if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined)
     {
       let starttime=this.starttime.split(":")
+      let starttimeparse=parseInt(starttime[0])
       let endtime=this.endtime.split(":")
+      let endtimeparse=parseInt(endtime[0])
       let data:any;
       if(this.botid!="" && this.botid!=undefined)
       {
         data={
           intervalId:this.generateid(),
           scheduleInterval:this.cronExpression,
-          startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttime[0]+","+starttime[1],
-          endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtime[0]+","+ endtime[1],
+          startDate:this.startdate.getFullYear()+","+(this.startdate.getMonth()+1)+","+this.startdate.getDate()+","+starttimeparse+","+starttime[1],
+          endDate:this.enddate.getFullYear()+","+(this.enddate.getMonth()+1)+","+this.enddate.getDate()+","+ endtimeparse+","+ endtime[1],
           timeZone:this.timezone,
           save_status:"unsaved",
           check:false,
@@ -206,9 +208,11 @@ export class SoSchedulerComponent implements OnInit {
     {
       let schedule={
         botId:this.botid,
+        "botVersion": checked_schedule.botVersion,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
+      console.log("schedule",schedule)
       this.rest.start_schedule(schedule).subscribe(data=>{
         let resp:any=data
         if(resp.errorMessage!=undefined)
