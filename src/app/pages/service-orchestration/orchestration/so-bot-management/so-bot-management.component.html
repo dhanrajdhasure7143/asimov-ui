@@ -10,13 +10,24 @@
           </mat-form-field>
         </span>
       <span style="padding:10px">
-        <mat-form-field id="bmategorySearch">
+       <!--- <mat-form-field id="bmategorySearch">
           <mat-label>Select Category</mat-label>
           <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
               <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
             </mat-option>
           </mat-select>
-        </mat-form-field>
+        </mat-form-field>-->
+        <mat-form-field id="dashcategorysearch">
+            <mat-label>Select Category</mat-label>
+            <mat-select [(ngModel)]="selectedcat" disableOptionCentering panelClass="myPanelClass" (selectionChange)="applyFilter($event.value)">
+                <span><input class="myInput" id="mycatInput" [(ngModel)]="mycatInput" matInput type="text" (keyup)="searchstring($event.target.value)" autocomplete="off" placeholder="Search">
+                <span class="fa fa-search" aria-hidden="true"></span></span>
+                <hr>
+                <mat-option *ngFor="let category of selectedAreas" [value]="category.categoryId">{{category.categoryName}}
+              </mat-option>
+              <mat-option *ngIf="NorecordFound">No Record Found</mat-option>
+            </mat-select>
+          </mat-form-field>
       </span>
       <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
         <i  class="fa fa-undo"></i>
@@ -83,12 +94,6 @@
                         <span (click)="executionAct(element.botId)"   matTooltip="Start Bot">
                           <li class="fa fa-play text-success" ></li>
                         </span>&nbsp;&nbsp;
-                        <span (click)="pauseBot(element.botId)"  matTooltip="Pause Bot">
-                          <i class="fa fa-pause " aria-hidden="true"></i> &nbsp;&nbsp;
-                        </span>
-                        <span (click)="resumeBot(element.botId)"  matTooltip="Resume Bot">
-                          <i class="fa fa-play-circle" aria-hidden="true"></i> &nbsp;&nbsp;
-                        </span>
                         <span (click)="stopBot(element.botId)"  matTooltip="Stop Bot">
                         <i class="fa fa-stop text-danger" aria-hidden="true"></i> &nbsp;&nbsp;
                       </span >

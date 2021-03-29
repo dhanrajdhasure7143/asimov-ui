@@ -27,6 +27,7 @@ import lintModule from 'bpmn-js-bpmnlint';
 import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 declare var require:any;
+import minimapModule from "diagram-js-minimap";
 
 @Component({
   selector: 'app-create-bpmn-diagram',
@@ -391,6 +392,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   autoSaveBpmnDiagram(){
     let bpmnModel={};
+    this.isStartProcessBtn=false;
     let _self = this;
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       _self.oldXml = _self.newXml;
@@ -454,7 +456,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
 
-  downloadBpmn(){
+  downloadBpmn(e){
     if(this.bpmnModeler){
       let _self = this;
       if(this.fileType == this.selectedNotationType){
@@ -547,6 +549,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
            active: _self.getUrlParam('linting')
         },
         additionalModules: [
+          minimapModule,
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
@@ -569,6 +572,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       });
       let canvas = this.bpmnModeler.get('canvas');
       canvas.zoom('fit-viewport');
+      this.bpmnModeler.get("minimap").open();
     }
     this.bpmnModeler.on('element.changed', function(){
       _self.isDiagramChanged = true;
@@ -584,6 +588,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;
     }
+    this.isStartProcessBtn=false;
     let bpmnModel:BpmnModel = new BpmnModel();
     this.isLoading = true;
     let _self = this;
@@ -628,6 +633,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   saveprocess(newVal){
     this.isDiagramChanged = false;
+    this.isStartProcessBtn=false;
     this.isLoading = true;
     let bpmnModel:BpmnModel = new BpmnModel();
     let _self=this;

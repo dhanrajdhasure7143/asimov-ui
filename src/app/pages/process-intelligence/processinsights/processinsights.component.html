@@ -1,92 +1,50 @@
-<div class="backgr">
+<div class='backgr'>
 <div class="container">
+    <div class="">
     <div class="row">
-
-        <div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
-            <div class='variants_slider'>
-               <div class="col-sm-12 select_drpdwnone">
-                    <div class="col-sm-12"><button class="closebtn" (click)="closeNav()">&times;</button></div>
-                    <div class="col-sm-12 form-group">
-                        <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
-                        <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class='col-sm-12 row variant2'>
-                       <div class="col-sm-7 check_box">
-                           <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()"><span class="">Select all</span>
-                       </div>
-                       <div class='col-sm-5 event2'>Time Taken</div>
-                </div>
-                <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.varaint_data.data; let i=index">
-                    <div (click)="caseIdSelect(data,i)"  class='col-sm-4 event3'>Variant <b>{{i+1}}</b></div>
-                    <div class='col-sm-6 variant_parcent'>
-                        <div (click)="caseIdSelect(data,i)" class='col-sm-12'>Cases Covered <b>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</b></div>
-                        <div (click)="caseIdSelect(data,i)" class='col-sm-3'></div>
-                    </div>
-                    <div class='col-sm-2' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
-                </div>
-                </div>
-                
-    </div>
-
-
-        <div class="col-md-12">
-            <!-- <div class="col-sm-10"> -->
-                <!-- <div class="col-sm-12 box-content hedline1">
-                    <p>Content 1</p>
-                </div>
-                <div class="col-sm-12 box-content hedline2">
-                    <p>Content 2</p>
-                </div>
-                <div class="col-sm-12 box-content hedline3">
-                    <p class="">Content 3</p>
-                </div>
-                <div class="col-sm-12 box-content hedline4">
-                    <p>Content 4</p>
-                </div> -->
-            <!-- </div> -->
-            <div class="col-sm-10"></div>
-            <div class="col-sm-2 pull-right varaint-button1 varint-open" (click)="openVariantListNav()">Variant List
-                <!-- <div class="variant-Btn" (click)="openVariantListNav()">Variant List</div> -->
-                <!-- <button class="btn btn-primary eiap-btn varaint-button" (click)="openVariantListNav()">Variant List</button> -->
-            </div>
-        </div>
         <div class='col-md-12 boxes'>
-            <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox divbox0">Total Time Spent
-                <div>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}}</div>
-            </div>
-            <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox divbox1"> Potential Time Savings
-                <div>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}}</div>
-            </div>
-            <div class="col-sm-1 "></div>
-
-            <div class="col-sm-2 divbox divbox2">Total Human Cost
-                <div>{{totalMedianDuration && input1 && input2 ? getHumanTotalCost(getHours(totalMedianDuration)*this.input1) : '-'}}</div>
-            </div>
-            <div class="col-sm-1 "></div>
-            <div class="col-sm-2 divbox divbox3"> Potential Savings
-                <div>{{calculateSavings(this.totalMedianDuration)}}</div>
-            </div>
+                <div class="col-sm-3">
+                    <div class="col-sm-12 divbox divbox0">Total Time Spent
+                        <div>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}}</div>
+                    </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="col-sm-12 divbox divbox1"> Potential Time Savings
+                            <div>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="col-sm-12 divbox divbox2">Total Human Cost
+                            <div>{{totalMedianDuration && input1 && input2 ? (getHumanTotalCost(getHours(totalMedianDuration)*this.input1)| currency) : '-'}}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="col-sm-12 divbox divbox3"> Potential Savings
+                            <div>{{calculateSavings(this.totalMedianDuration) | currency}}</div>
+                        </div>
+                    </div>
         </div>
         <div class="col-md-12 input-fields">
-            <div class="col-sm-1"></div>
-            <div class="col-sm-3 amountinputs" id="humancost">
-                <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
-                <i (click)="editInput()"  class="fas fa-pen"></i>
+            <div class="col-sm-8">
+                <div class="col-sm-4 amountinputs" id="humancost">
+                    <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
+                    <i (click)="editInput()"  class="fas fa-pen"></i>
+                </div>
+            <!-- </div>
+            <div class='col-sm-4'> -->
+                <div class="col-sm-4 amountinputs" id="humancost">
+                    <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
+                    <i (click)="editInput1()"  class="fas fa-pen"></i>
+                </div>
+            <!-- </div>
+            <div class="col-sm-2"> -->
+                <div class="col-sm-4 amountinputs">
+                    <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
+                </div>    
             </div>
-            <!-- <div class="col-sm-1"></div> -->
-            <div class="col-sm-3 amountinputs" id="humancost">
-                <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
-                <i (click)="editInput1()"  class="fas fa-pen"></i>
-            </div>
-            <div class="col-sm-3 amountinputs">
-                <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
-            </div>
+            <div class='col-sm-4'>
 
-            <div class="col-sm-2 dropdown hrs-dropdwn">
+            <div class="col-sm-6 dropdown hrs-dropdwn">
                 
                       <div  class="d-inline-block">
                         <!--ngbDropdown ngbDropdownToggle -->
@@ -144,26 +102,19 @@
                         </div>
                       </form>
                           
+   
 
-                        </div>
-                      </div>
-            
-                  
-                <!-- <button class="eiap-btn btn btn-primary dropdown-toggle" data-toggle="dropdown">Add Working Hours</button>
-                
-                    <div class="dropdown-menu drop_down download_selection hrsDropdwn" >
-                       <div class="hrsInput">
-                        <label for="">Hours :</label><input type="text" placeholder="Enter Hours">
-                       </div>
-                       <div class="row btns-grop">
-                        <button class="eiap-btn btn btn-primary">Apply</button>
-                        <button class="btn btn-secondary btn-cancel">Cancel</button>
-                       </div>
-                       <ngb-timepicker [(ngModel)]="time"></ngb-timepicker>
-                   </div> -->
-            </div>
-            
-        </div>
+                    </div>
+                </div>
+      
+      </div>
+      <div class='col-sm-6'>
+      <button class="btn btn-primary eiap-btn pull-right " (click)="openVariantListNav()">Variant List</button>
+
+      </div>
+      </div>
+      
+  </div>
     <!-- </div> -->
     <br>
     <!-- <div class="row"> -->
@@ -195,15 +146,15 @@
             </div>
             <div class="col-sm-4">
                 <div class="col-sm-12 box-content hedline1 box_shadw">
-                    <p><strong>Business insights</strong> </p>
-                    <ul>
+                    <p class="business_heading"><strong>Business insights</strong> </p>
+                    <ul class="business_content">
                         <li>{{biDataMaxPerct}}% of the cases are taking longer than {{biDataMaxDays}}</li>
                         <li>{{biDataMinPerct}}% of the cases are taking less than {{biDataMinDays}}</li>
                     </ul>
                 </div>
                 <div class="col-sm-12 box-content hedline2 box_shadw" *ngIf="top10_activityData && top10_activityData.length!=0">
-                    <p><strong>Recommendations</strong> </p>
-                    <ul >
+                    <p class="business_heading"><strong>Recommendations</strong> </p>
+                    <ul class="business_content">
                             <li *ngFor="let acti of top10_activityData | slice:0:3;let i=index"><b>{{acti.Activity}}</b> automation saves <b>{{calculateSavings(acti.Duration_range)}}</b></li>
 
 
@@ -219,7 +170,7 @@
         <div class="col-md-12 btm-line"></div>
         <br>
         <div class="col-md-12">
-            <div class="col-sm-6 box_shadw1">
+            <div class="col-sm-6 box_shadw1 box_shadw-activity">
                 <ul class="groupBtn">
                     <li>
                         <button [class.active]="isEventGraph" (click)="getEventBubboleGraph('event')">Events</button>
@@ -229,7 +180,7 @@
                  <!-- <div id="scatter" class=""></div> <br/> -->
                  <div class="l_title"><p>Activity Vs Occurences</p></div>
                  <div id="scatter">
-                <ngx-charts-bubble-chart
+                    <ngx-charts-bubble-chart
                     [view]="view1"
                     [scheme]="colorScheme1"
                     [results]="bubbleData"
@@ -250,43 +201,36 @@
                     [rotateXAxisTicks]="rotateXAxisTicks"
                     [legendPosition]="top">
                 </ngx-charts-bubble-chart>
-</div>
             </div>
-            <div class="col-sm-6">
-                <!-- <div class="dropdown pull-right">
-                    <button title="Download" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
-                    <div class="dropdown-menu drop_down download_selection" aria-labelledby="dropdownMenuButton">
-                       <p *ngIf="flag1==0" class="click" (click)="switch1('pie')" ><span>View In Pei chart</span></p>
-                       <p *ngIf="flag1==1" class="click"(click)="switch1('bar')" ><span>View In Bar chart</span></p>
-                   </div>
-               </div> -->
-               <div class="l_title "><p>Activity Based Human and Bot Cost</p></div>
+            </div>
+            <div class="col-sm-6 box_shade">
+                <div class="l_title "><p>Activity Based Human and Bot Cost</p></div>
                 <div id="scatter" >
 
-                <combo-chart-component
-  [view]="view2"
-  [scheme]="comboBarScheme"
-  [colorSchemeLine]="lineChartScheme"
-  [results]="barChart"
-  [animations]="animations"
-  [lineChart]="lineChartSeries"
-  [yAxisTickFormatting]="yLeftTickFormat"
-  [yLeftAxisScaleFactor]="yLeftAxisScale"
-  [yRightAxisTickFormatting]="yRightTickFormat"
-  [gradient]="gradient"
-  [xAxis]="showXAxis"
-  [yAxis]="showYAxis"
-  [legend]="showLegend"
-  [legendTitle]="legendTitle"
-  [legendPosition]="legendPosition"
-  [showGridLines]="showGridLines"
-  [showXAxisLabel]="showXAxisLabel"
-  [showYAxisLabel]="showYAxisLabel"
-  [showRightYAxisLabel]="showYAxisLabel1"
-  [xAxisLabel]="xAxisLabel2"
-  [yAxisLabel]="yAxisLabel2"
-  [yAxisLabelRight]="yAxisLabelRight">
-</combo-chart-component>
+                    <combo-chart-component
+                    [view]="view2"
+                    [scheme]="comboBarScheme"
+                    [colorSchemeLine]="lineChartScheme"
+                    [results]="barChart"
+                    [animations]="animations"
+                    [lineChart]="lineChartSeries"
+                    [yAxisTickFormatting]="yLeftTickFormat"
+                    [yLeftAxisScaleFactor]="yLeftAxisScale"
+                    [yRightAxisTickFormatting]="yRightTickFormat"
+                    [gradient]="gradient"
+                    [xAxis]="showXAxis"
+                    [yAxis]="showYAxis"
+                    [legend]="showLegend"
+                    [legendTitle]="legendTitle"
+                    [legendPosition]="legendPosition"
+                    [showGridLines]="showGridLines"
+                    [showXAxisLabel]="showXAxisLabel"
+                    [showYAxisLabel]="showYAxisLabel"
+                    [showRightYAxisLabel]="showYAxisLabel1"
+                    [xAxisLabel]="xAxisLabel2"
+                    [yAxisLabel]="yAxisLabel2"
+                    [yAxisLabelRight]="yAxisLabelRight">
+                </combo-chart-component>
                 </div>
             </div>
         </div>
@@ -338,7 +282,7 @@
     </div>
     <br class="col-md-12 btm-line">
     <div class="col-md-12">
-            <div class="col-md-2 no-padding">
+            <div class="col-sm-2">
                     <div class="box_shadw1" id="resourcesselect">
                         <ng-multiselect-dropdown
                         [placeholder]="'All'"
@@ -365,7 +309,9 @@
             <div id="piechart1" class="box_shadw34"> 
                     <ngx-charts-pie-chart
                     [view]="[400, 300]"
-                    [scheme]="{domain: ['#1a88ef', '#20ad00', '#e07400', '#5d65fe', '#f9063f', '#d3bb03', '#248f8d', '#940a0a']}"
+                    [scheme]="{domain: ['#4AB0F5', '#4FA908', '
+                    #FEAE3F', '#098DE6', '#EA3D3D', '#F2D12B', '#3EC1A4
+                    ', '#f02e2e']}"
                     [results]="dChart1"
                     [legend]="true"
                     [labels]="true"
@@ -391,7 +337,7 @@
         <div id="piechart2" class="box_shadw34">
                 <ngx-charts-pie-chart
                 [view]="[400, 300]"
-                [scheme]="{domain: ['#1a88ef', '#20ad00', '#e07400', '#5d65fe', '#f9063f', '#d3bb03', '#248f8d', '#940a0a']}"
+                [scheme]="{domain: ['#4AB0F5', '#4FA908', '#FEAE3F', '#098DE6', '#EA3D3D', '#F2D12B', '#3EC1A4', '#f02e2e']}"
                 [results]="dChart2"
                 [legend]="true"
                 [labels]="true"
@@ -410,6 +356,7 @@
 </div>
 </div>
 </div>
+</div>
 
 
 <div id="pietooltip" class="">
@@ -423,4 +370,34 @@
     <p><strong id="tooltip_head1"></strong>
     </p>
     <p>Activity Cost : <strong id="value1"></strong></p>
+</div>
+<!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color: white" ></p></ngx-spinner> -->
+
+
+<div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
+    <div class='variants_slider'>
+       <div class="col-sm-12 select_drpdwnone">
+            <div class="col-sm-12"><button class="closebtn" (click)="closeNav()">&times;</button></div>
+            <div class="col-sm-12 form-group">
+                <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
+                <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                </select>
+            </div>
+        </div>
+        <div class='col-sm-12 row variant2'>
+               <div class="col-sm-7 check_box">
+                   <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()"><span class="">Select all</span>
+               </div>
+               <div class='col-sm-5 event2'>Time Taken</div>
+        </div>
+        <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.varaint_data.data; let i=index">
+            <div (click)="caseIdSelect(data,i)"  class='col-sm-4 event3'>Variant <b>{{i+1}}</b></div>
+            <div class='col-sm-6 variant_parcent'>
+                <div (click)="caseIdSelect(data,i)" class='col-sm-12'>Cases Covered <b>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</b></div>
+                <div (click)="caseIdSelect(data,i)" class='col-sm-3'></div>
+            </div>
+            <div class='col-sm-2' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
+        </div>
+        </div>
+        
 </div>

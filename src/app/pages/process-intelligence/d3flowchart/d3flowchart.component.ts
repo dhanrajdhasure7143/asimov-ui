@@ -24,6 +24,7 @@ export class D3flowchartComponent {
     @Input()  public isdownloadsvg:boolean;
     @Input()  public processGraphName:any;
     @Input()  public performanceValue:boolean;
+    @Input() private isSlider:boolean;
     @Output() ispdf=new EventEmitter<boolean>()
     @Output() isjpeg=new EventEmitter<boolean>()
     @Output() ispng=new EventEmitter<boolean>()
@@ -37,6 +38,7 @@ export class D3flowchartComponent {
   maxLabelValue: any;
   searchNode: any;
   isnoNode:boolean=false;
+  activeCssStyle = "stroke";
   
     constructor(){
   
@@ -81,6 +83,11 @@ export class D3flowchartComponent {
             else if(this.isdownloadsvg==true){
               this.exportSVG('svg')
           }
+      if (this.isSlider == true) {
+        this.activeCssStyle = "fill";
+      } else {
+        this.activeCssStyle = "stroke";
+      }
     }
 
     processGraph(){
@@ -210,7 +217,7 @@ let svg = d3.select("#exportSVGtoPDF").append("svg")
  
  gradient.append("stop")
     .attr('class', 'end')
-    .attr("offset", "90%")
+  .attr("offset", "90%")
     .attr("stop-color", "#1E1E1E")
     .attr("stop-opacity", 1);
 
@@ -425,10 +432,10 @@ var count1
         g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", class: this.class3,style:"stroke:#736f6f;stroke-width: 6px; marker-end:url(#arrow4);fill:none;", 
          curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text > maxLinkCount*4 && this.model2[i].text < maxLinkCount*5){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis', class:this.class2,style:"stroke:url(#svgGradient);stroke-width: 8px; marker-end:url(#arrow);fill:none;", 
-         curve: d3.curveBasis,arrowhead: "normal"})
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html", class:this.class2, style:this.activeCssStyle+":url(#svgGradient);stroke-width: 8px; marker-end:url(#arrow);fill:none;", 
+        curve: d3.curveBasis,arrowhead: "normal"})
        }else if(this.model2[i].text == maxCount){
-        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",lineInterpolate: 'basis',class:this.class1, style:"stroke:#1E1E1E;stroke-width: 10px;marker-end:url(#arrow);fill:none;", 
+        g.setEdge(this.model2[i].from,  this.model2[i].to,{ label: this.model2[i].text,  labelType: "html",class:this.class1, style:"stroke:#1E1E1E;stroke-width: 10px;marker-end:url(#arrow);fill:none;", 
         arrowhead: "normal",curve: d3.curveBasis})
        } 
       } 
@@ -701,7 +708,7 @@ var tooltip = d3.select("body")
   .text("Simple Tooltip...");
   render(inner, g);
 
-
+var fontSize
 inner.selectAll('g.node').on('mouseover', function(d){
   
   let selectedNode = d3.select(this)
@@ -729,11 +736,11 @@ inner.selectAll('g.node').on('mouseover', function(d){
     d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][5]['value'] = this.rectNodeData.height *1.3;
     // d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][7]['value'] = this.rectNodeData.stroke+";stroke:red;stroke-width:6";
     d3.select('g.node text tspan')['style']= 'font-size: 30px';
-    // console.log(nodeValue[0]['childNodes'][0]['attributes'][7]['value']);
+    fontSize=d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']
     d3.select(this).select("g text")
       .style('font-size','18')
+      
   }
-  // console.log(d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes']);
   
 })
 .on('mouseout', function(this){
@@ -744,8 +751,9 @@ inner.selectAll('g.node').on('mouseover', function(d){
     // d3.select(this)['_groups'][0][0]['childNodes'][0]['attributes'][7]['value'] = this.rectNodeData.stroke;
     
     this.style = this.nodeTextPreviousStyle;
-    d3.select(this).select("g text")
-  .style('font-size','14')
+  //   d3.select(this).select("g text")
+  // .style('font-size','14')
+   d3.select(this).select("g text")['_groups'][0][0]['attributes'][1]['value']=fontSize
   }
 })
 
@@ -1206,9 +1214,17 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
       //   UN_MATCH_NODE.style("opacity","0.1");
       //   UN_MATCH_NODE.style("zIndex", '9999')
       //   UN_MATCH_NODE.style("pointer-events", 'none')
+      
       d3.selectAll(".node").style("opacity","0.1");
             d3.selectAll(".node").style("pointer-events","none");
-
+            d3.selectAll(".node").selectAll("g text").style('font-size','14')
+            
+            var allnodesArray=[]
+            allnodesArray=d3.selectAll(".node")['_groups'][0]
+            for(var j=1; j<allnodesArray.length-1;j++){
+              
+              allnodesArray[j]['childNodes'][0]['attributes'][5]['value']=50
+            }
         var _MATCHE_NODE = d3.selectAll(".node") // all LowerCase search
                               .filter(function(d) {
                                   return d.includes(itemName)
@@ -1258,11 +1274,21 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
                   for(var i=0;i<_MATCHED_NODE_Array.length;i++){
                     _MATCHED_NODE_Array[i].style("opacity","1");
                     _MATCHED_NODE_Array[i].style("pointer-events", 'auto');
+                    _MATCHED_NODE_Array[i].selectAll("g text").style('font-size','18')
+                      if(_MATCHED_NODE_Array[i]['_groups'][0][0]['childNodes'][0]['localName']!='circle')
+                        _MATCHED_NODE_Array[i]['_groups'][0][0]['childNodes'][0]['attributes'][5]['value']=60
+
                   }
               }
         }else{
             d3.selectAll(".node").style("opacity","1");
             d3.selectAll(".node").style("pointer-events","auto");
+            d3.selectAll(".node").selectAll("g text").style('font-size','14')
+              var allnodesArray=[]
+              allnodesArray=d3.selectAll(".node")['_groups'][0]
+              for(var j=1; j<allnodesArray.length-1;j++){
+                allnodesArray[j]['childNodes'][0]['attributes'][5]['value']=50
+              }
           this.isnoNode=false;
         }
       }

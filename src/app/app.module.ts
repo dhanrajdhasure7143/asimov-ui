@@ -18,11 +18,13 @@ import { LoaderService } from './services/loader/loader.service';
 import { LoaderInterceptor } from './helpers/loader-interceptor.service';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { UserIdleModule } from 'angular-user-idle';
+import { RedirectionComponent } from './rediraction/redirection.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    RedirectionComponent
 
   ],
 
@@ -35,6 +37,28 @@ import { UserIdleModule } from 'angular-user-idle';
     HttpClientModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     NotifierModule,
+    NotifierModule.withConfig({
+      position: {
+        horizontal: {
+          position: 'right',
+          distance: 12,
+        },
+        vertical: {
+          position: 'bottom',
+          distance: 20,
+          gap: 20,
+        },
+      },
+      behaviour: {
+        autoHide: 2000,
+        onClick: false,
+        onMouseover: 'pauseAutoHide',
+        showDismissButton: true,
+        stacking: 4,
+      },
+    
+    }),
+
     BackButtonDisableModule.forRoot(),
     UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740})
   ],

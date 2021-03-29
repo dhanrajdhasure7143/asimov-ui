@@ -1,9 +1,9 @@
 export class PagesHints{
     public homeHints = [
-        { selector:'#PIBox', description:'Process Intelligence box', showNext:true },
-        { selector:'#BPSBox', description:'BPStudio box', showNext:true },
-        { selector:'#RPABox', description:'RPA box', showNext:true },
-        { selector:'#SOBox', description:'SO box', showNext:true },
+        { selector:'#PIBox', description:'Process Intelligence', showNext:true },
+        { selector:'#BPSBox', description:'Business Process Studio', showNext:true },
+        { selector:'#RPABox', description:'RPA', showNext:true },
+        { selector:'#SOBox', description:'Service Orchestration', showNext:true },
         { selector:'#launch_btn', description:'Click to open the module' },
       ];
 }

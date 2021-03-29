@@ -2,10 +2,10 @@
     <div class="modal-content" *ngIf="overlay_acc_dt">
         <div class="tab">
             <div class="container">
-                <button class="tablinks" (click)="openTab(event, 'my_account')">My Account</button>
-                <button class="tablinks" (click)="openTab(event, 'subscription')">Subscriptions</button>
-                <button class="tablinks" (click)="openTab(event, 'payment_history')">Payment History</button>
-                <button class="tablinks" (click)="openTab(event, 'payment_mode')">Payment Mode</button>
+                <button class="tablinks" (click)="openTab($event, 'my_account')">My Account</button>
+                <button class="tablinks" (click)="openTab($event, 'subscription')">Subscriptions</button>
+                <button class="tablinks" (click)="openTab($event, 'payment_history')">Payment History</button>
+                <button class="tablinks" (click)="openTab($event, 'payment_mode')">Payment Mode</button>
                 <span class="search_span"><input class="search_btn" type="text" placeholder="Search">&nbsp;<i class="fa fa-search"></i></span>
             </div>
             <span class="close" (click)="slideDown();">&times;</span>
@@ -76,7 +76,7 @@
                         <div class="col-md-3">
                             <div class="">
                                 <label for="phone" class="label_cell">Phone</label><br>
-                                <input type="text" name="phone" class="form-control phonenumber" ng2TelInput (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)" (intlTelInputObject)="telInputObject($event)" />
+                                <input type="text" name="phone" class="form-control phonenumber" ng2TelInput (intlTelInputObject)="telInputObject($event)" />
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -108,7 +108,7 @@
                         <td class="table_cell">{{details.amount}}</td>
                         <td class="table_cell">{{details.status}}</td>
                         <td class="table_cell">
-                            <button class="left" id="download" (click)="overview()"><img src="..\assets\icons\bpmn_Overview.svg"></button>
+                            <button class="left" id="download"><img src="..\assets\icons\bpmn_Overview.svg"></button>
                             <!-- <i class="fa fa-times-circle-o"></i>  -->
 
                         </td>
@@ -133,7 +133,7 @@
                         <td class="table_cell">{{details.amount}}</td>
                         <td class="table_cell">{{details.status}}</td>
                         <td class="table_cell">
-                            <button class="download_btn" id="download" (click)="downloadBpmn()"><img  class="download_icon"  src="..\assets\downloadimage.svg"></button>
+                            <button class="download_btn" id="download"><img  class="download_icon"  src="..\assets\downloadimage.svg"></button>
                         </td>
                     </tr>
                 </table>
@@ -170,8 +170,8 @@
     <div class="modal-content" *ngIf="overlay_user_manage_dt">
         <div class="tab">
             <div class="container">
-                <button class="tablinks" (click)="openTab(event, 'my_account')">Roles</button>
-                <button class="tablinks" (click)="openTab(event, 'subscription')">Users</button>
+                <button class="tablinks" (click)="openTab($event, 'my_account')">Roles</button>
+                <button class="tablinks" (click)="openTab($event, 'subscription')">Users</button>
             </div>
             <span class="close" (click)="slideDown();">&times;</span>
         </div>
@@ -305,7 +305,7 @@
                                 <span aria-hidden="true">&times;</span>
                               </button> -->
                             <p class="pull-left">Are you sure you want to delete the notification ?</p>
-                            <button class="pull-left confm" aria-label="Close" (click)="deleteNotification(messageList.id)">Yes</button>
+                            <button class="pull-left confm" aria-label="Close" (click)="deleteNotification(messageList.id,i)">Yes</button>
                             <button class="confm pull-left" (click)="canceldeleteNotification(i)">No</button>
                             </div>
                             </div>

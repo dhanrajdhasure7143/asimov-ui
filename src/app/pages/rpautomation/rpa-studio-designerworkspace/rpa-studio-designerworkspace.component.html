@@ -1,5 +1,5 @@
 
-  <div class="main">
+  <div class="main" id="screen">
     <div [id]="dragareaid" class="drag-area" dndDropzone (dndDrop)="onDrop($event,$event)" oncontextmenu="return false;" (click)="closemenu()" [ngClass]="{ 'workspace': disable, 'dndDropzoneDisabled': false, 'lightTheme': lightTheme }">
       <ng-container *ngFor="let node of nodes; let i = index">
         <div id="{{node.id}}" class="dndDropzone" (mouseover)="openoutputmenu(node)" (dblclick)="formNodeFunc(node)" (contextmenu)="onRightClick(node, $event,i)" [ngStyle]="{'left': node.x, 'top' : node.y, 'background-image' :  'url(' + node.path + ')' }">
@@ -104,13 +104,16 @@
                 <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-
-                        <br>
-                        <div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
-
+                        <div style="padding-top:8px; padding-bottom: 8px;">
+                            <button style="float: right;border-radius: 20px;" class="btn-primary" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()"><i class="fa fa-arrow-left"></i></button>
                         </div>
                         <br>
-                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+                        <!--<div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
+
+                        </div>-->
+                            <textarea [(ngModel)]="outputboxid" disabled class="outputtextareastyle"></textarea>
+                        <br>
+                        
                         <br>
                     </div>
                     <div class="col-md-3"></div>

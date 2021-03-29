@@ -19,7 +19,7 @@ import { HeaderDropdownOverlayComponent } from './header-dropdown-overlay/header
 import {Ng2TelInputModule} from 'ng2-tel-input';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 @NgModule({
   declarations: [
     PagesComponent,
@@ -39,7 +39,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     SharedModule,
     MatTabsModule,
     NgxSpinnerModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatExpansionModule,
   ],
   providers: [SharebpmndiagramService, PagesHints,
   //  LoaderService,
