@@ -130,8 +130,11 @@
                                         </ng-container>
                                   
                                         <ng-container matColumnDef="action">
-                                          <th mat-header-cell *matHeaderCellDef class="table_header">Action</th>
-                                          <td mat-cell *matCellDef="let element" align="center" (click)="onGraphSelection(element)" class="process_view" title="View Process Graph"><i class='fa fa-eye'></i> </td>
+                                           <th mat-header-cell *matHeaderCellDef class="table_header">Action</th>fa-refresh
+                                           <td mat-cell *matCellDef="let element" class="process_view" align="center">
+                                                <span  title="View Process Graph" (click)="onGraphSelection(element)"> <i class='fa fa-eye'></i></span>
+                                                <!-- <span *ngIf='element.status !="Completed"' title="Retry Process Graph" (click)="onRetryGraphGenerate(element)"> <i class='glyphicon glyphicon-refresh'></i></span> -->
+                                           </td>
                                         </ng-container>
                                   
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -54,6 +54,10 @@ import { Checkbotslist, Checkhumanslist, NewSoAutomatedTasksComponent } from './
 import { BotlistbycatPipe } from './orchestration/new-so-automated-tasks/botlistbycat.pipe';
 import { HumanlistbycatPipe } from './orchestration/new-so-automated-tasks/humanlistbycat.pipe';
 import { NewSoBotManagementComponent } from './orchestration/new-so-bot-management/new-so-bot-management.component';
+import { StatisticsComponent } from './orchestration/new-so-bots/statistics/statistics.component';
+import { MonitoringComponent } from './orchestration/new-so-bots/monitoring/monitoring.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { SoMonitoringComponent } from './orchestration/so-monitoring/so-monitoring.component';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -74,8 +78,10 @@ import { NewSoBotManagementComponent } from './orchestration/new-so-bot-manageme
     Checkhumanslist,
     SlicedateUpdate,
     CategoryUpdate,
-    NewSoBotManagementComponent
-    ],
+    NewSoBotManagementComponent,
+    StatisticsComponent,
+    MonitoringComponent,
+    SoMonitoringComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -94,7 +100,7 @@ import { NewSoBotManagementComponent } from './orchestration/new-so-bot-manageme
     FormsModule,
     NgbTimepickerModule,
     NgxSpinnerModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,MatButtonModule,MatSlideToggleModule,MatTooltipModule,
+    MatInputModule, MatIconModule, MatFormFieldModule,MatButtonModule,MatSlideToggleModule,MatTooltipModule,MatProgressBarModule,
     MatProgressSpinnerModule, MatSelectModule,
     MatDatepickerModule,
     MatCardModule,

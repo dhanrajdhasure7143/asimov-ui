@@ -5,14 +5,24 @@
           <span style="padding:10px">
             <mat-form-field class="example-full-width" id="bmsearch">
               <mat-label>Search</mat-label>
-              <input matInput placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
+              <input matInput placeholder="Search" [(ngModel)]="search" (input)="method()"> <!--(keyup)="applyFilter2($event.target.value)">-->
               <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+          </span>
+          <span style="padding:10px">
+            <mat-form-field id="bmategorySearch">
+              <mat-label>Select By Source</mat-label>
+              <mat-select [(ngModel)]="selected_source" (selectionChange)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
+                  <mat-option value="EPSoft">EPSoft</mat-option>
+                  <mat-option value="BluePrism">BluePrism</mat-option>
+                  <mat-option value="UiPath">UiPath</mat-option>
+              </mat-select>
             </mat-form-field>
           </span>
         <span style="padding:10px">
           <mat-form-field id="bmategorySearch">
-            <mat-label>Select Category</mat-label>
-            <mat-select [(ngModel)]="selectedcat" (selectionChange)="applyFilter($event.value)">
+            <mat-label>Select Process Group</mat-label>
+            <mat-select [(ngModel)]="selectedcat" (selectionChange)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
                 <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
               </mat-option>
             </mat-select>
@@ -20,11 +30,11 @@
         </span>
         <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
           <i  class="fa fa-undo"></i>
-        </span >
+        </span >  
       </div>
         <div class="row">
           <div class="col-md-12">
-            <mat-card>
+            <!-- <mat-card> -->
               <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
   
                   <ng-container matColumnDef="botName">
@@ -71,13 +81,13 @@
                             </span>
                           </span>
   
-                          <span *ngIf="element.botStatus=='Success'"  [matTooltip]="element.botStatus" class="text-success">
+                          <span *ngIf="element.botStatus=='Success'|| element.botStatus=='Completed'"  [matTooltip]="element.botStatus" class="text-success">
                             <span>
                               <li class="fa fa-check-circle"style="font-size:19px">
                             </span>
                           </span>
   
-                          <span *ngIf="element.botStatus=='Failure'"  [matTooltip]="element.botStatus" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span></span>
+                          <span *ngIf="element.botStatus=='Failure'|| element.botStatus=='Failed'"  [matTooltip]="element.botStatus" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span></span>
                           <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                           <span *ngIf="element.botStatus=='New'"   [matTooltip]="element.botStatus"  class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style="filter: none; width: 19px;"></span></span>
   
@@ -131,7 +141,7 @@
                       <th mat-header-cell *matHeaderCellDef >Logs </th>
                       <td mat-cell *matCellDef="let element">
                         <a class="text-primary text-center clickable" *ngIf="element.sourceType=='EPSoft'" matTooltip="View Logs" (click)="viewlogdata(element.botId,element.version)">View</a>
-                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='UIPath'" matTooltip="View Logs" (click)="getuipathlogs(element.botName)">View</a>
+                        <a class="text-primary text-center clickable" *ngIf="element.sourceType=='UiPath'" matTooltip="View Logs" (click)="getuipathlogs(element.botName)">View</a>
                         <a class="text-primary text-center clickable" *ngIf="element.sourceType=='BluePrism'" matTooltip="View Logs" (click)="getBluePrismlogs(element.botName)">View</a>
                       </td>
                   </ng-container>
@@ -161,8 +171,8 @@
               <div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
                   No Record Found
               </div>
-              <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
-            </mat-card>
+              <mat-paginator #paginator1 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
+            <!-- </mat-card> -->
           </div>
       </div>
     </div>
@@ -266,9 +276,9 @@
           </div>
   
           <div class="logs-container">
-            <button (click)="back()" matTooltip="Back" style='float:right;margin-top:10px;'>
+            <button (click)="back()" matTooltip="Back" style='float:right;margin-top:10px;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <i class="fa fa-arrow-left" aria-hidden="true"></i>
-            </button>&nbsp;&nbsp;
+            </button>
             <button (click)="ViewlogByrunid(botrunid)" matTooltip="Refresh" style='float:right;margin-top:10px;'>
               <i class="fas fa-sync-alt" aria-hidden="true"></i>
             </button>
@@ -582,7 +592,9 @@
                           </div>-->
                       </div>
                       <div class="col-md-3 formelement">
-                          <label for="slaConfigId">SLA Breach Limit<span style="color:red">*</span></label>
+                        <label for="slaConfigId">SLA Breach Limit
+                           <!-- <span style="color:red">*</span> -->
+                         </label>
                           <input type="number" style="width:100px" min=0 max=60 maxlength="2" formControlName="slaConfigId"  onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"   value="" placeholder="00">
   
                           <!-- <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"  #slaConfigId value="" placeholder="MM">
@@ -593,21 +605,23 @@
                         </div>
                   </div>
                   <div class="row">
-                    <div class="col-md-3 formelement">
-                      <label for="breachAlerts">Breach Actual Alert<span style="color:red">*</span></label>
-                      <select class="form-control"  value="" formControlName="breachAlerts">
-                          <option value="">-- Select Breach Actual Alerts --</option>
-                          <option value="Error">Error</option>
-                          <option value="Warning">Warning</option>
-                          <option value="All">All</option>
-                        </select>
-                      <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Breach Actual Alert*</span>
-                      <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                          Maximum of 50 characters
-                      </div>-->
-                  </div>
+                  <!-- <div class="col-md-3 formelement">
+                    <label for="breachAlerts">Breach Actual Alert<span style="color:red">*</span></label>
+                    <select class="form-control"  value="" formControlName="breachAlerts">
+                        <option value="">-- Select Breach Actual Alerts --</option>
+                        <option value="Error">Error</option>
+                        <option value="Warning">Warning</option>
+                        <option value="All">All</option>
+                      </select>
+                    <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Breach Actual Alert*</span> -->
+                    <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                        Maximum of 50 characters
+                    </div>-->
+                <!-- </div> -->
                       <div class="col-md-2 formelement">
-                          <label for="thresholdLimit">Threshold Limit <span style="color:red">*</span></label>
+                        <label for="thresholdLimit">Threshold Limit 
+                           <!-- <span style="color:red">*</span> -->
+                         </label>
                           <input type="number" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit"  value="" maxlength="2" placeholder="00">
                           <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Threshold Limit*</span>
                       </div>
@@ -627,7 +641,7 @@
                       </div>
   
                       <div class="col-md-2 formelement">
-                        <label for="notificationType">Notificaion Type</label><br>
+                        <label for="notificationType">Notificaion Type<span style="color:red">*</span></label><br>
                         <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
                          <label class="lbl_chk_cls"  for="emailcheck">E-mail</label> &nbsp;
                         <input type="checkbox" class="smscheck" formControlName="sms"  id="smscheck">
@@ -677,6 +691,3 @@
           </div>
       </div>
   </div>
-  
-  
-  

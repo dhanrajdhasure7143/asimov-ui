@@ -76,7 +76,7 @@
                         <div class="col-md-3">
                             <div class="">
                                 <label for="phone" class="label_cell">Phone</label><br>
-                                <input type="text" name="phone" class="form-control phonenumber" ng2TelInput (hasError)="hasError($event)" (ng2TelOutput)="getNumber($event)" (intlTelInputObject)="telInputObject($event)" />
+                                <input type="text" name="phone" class="form-control phonenumber" ng2TelInput (intlTelInputObject)="telInputObject($event)" />
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -108,7 +108,7 @@
                         <td class="table_cell">{{details.amount}}</td>
                         <td class="table_cell">{{details.status}}</td>
                         <td class="table_cell">
-                            <button class="left" id="download" (click)="overview()"><img src="..\assets\icons\bpmn_Overview.svg"></button>
+                            <button class="left" id="download"><img src="..\assets\icons\bpmn_Overview.svg"></button>
                             <!-- <i class="fa fa-times-circle-o"></i>  -->
 
                         </td>
@@ -133,7 +133,7 @@
                         <td class="table_cell">{{details.amount}}</td>
                         <td class="table_cell">{{details.status}}</td>
                         <td class="table_cell">
-                            <button class="download_btn" id="download" (click)="downloadBpmn()"><img  class="download_icon"  src="..\assets\downloadimage.svg"></button>
+                            <button class="download_btn" id="download"><img  class="download_icon"  src="..\assets\downloadimage.svg"></button>
                         </td>
                     </tr>
                 </table>

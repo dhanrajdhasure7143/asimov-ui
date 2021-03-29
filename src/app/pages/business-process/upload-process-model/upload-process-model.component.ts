@@ -32,7 +32,7 @@ import { JsonpInterceptor } from '@angular/common/http';
 import * as bpmnlintConfig from '../model/packed-config';
 import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-notation.component';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-
+import minimapModule from "diagram-js-minimap";
 declare var require:any;
 
 @Component({
@@ -303,12 +303,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     let current_bpmn_info
     if(user_role=='Process Architect'){
       current_bpmn_info = this.saved_bpmn_list[0];
-      console.log("process");
+      // console.log("process");
       
     }else{
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
     }
-    console.log(current_bpmn_info);
+    // console.log(current_bpmn_info);
 
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
@@ -724,7 +724,7 @@ displayBPMN(){
       let _self = this;
       if(this.fileType == this.selectedNotationType){
         this[modeler_obj].saveXML({ format: true }, function(err, xml) {
-          console.log(xml);
+          // console.log(xml);
           var blob = new Blob([xml], { type: "application/xml" });
           var url = window.URL.createObjectURL(blob);
          _self.downloadFile(url);
@@ -856,6 +856,7 @@ displayBPMN(){
            active: _self.getUrlParam('linting')
         },
         additionalModules: [
+          minimapModule,
           PropertiesPanelModule,
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
@@ -878,6 +879,7 @@ displayBPMN(){
       });
       let canvas = this[modeler_obj].get('canvas');
       canvas.zoom('fit-viewport');
+      this[modeler_obj].get("minimap").open();
     }
     this[modeler_obj].on('element.changed', function(){
       _self.isDiagramChanged = true;
@@ -925,6 +927,7 @@ displayBPMN(){
     bpmnModel.ntype = this.ntype;
     bpmnModel.category = this.category;
     bpmnModel.processIntelligenceId = this.pid;
+    bpmnModel.ntype ='bpmn' //Notation type for bpmnFromPI
     let match = this.full_saved_bpmn_list.filter(each_diag => {
       return each_diag.bpmnProcessName == this.processName && each_diag.processIntelligenceId && each_diag.processIntelligenceId == this.pid
     })
@@ -1011,6 +1014,7 @@ displayBPMN(){
      // bpmnModel.createdTimestamp = this.pivalues["createdTime"];
       bpmnModel.bpmnProcessStatus = "INPROGRESS";
       bpmnModel.notationFromPI = true;
+      bpmnModel.ntype ='bpmn' //Notation type for bpmnFromPI
     }else{
       bpmnModel.bpmnProcessName = sel_List['bpmnProcessName'];
       bpmnModel.bpmnModelId = sel_List['bpmnModelId'];

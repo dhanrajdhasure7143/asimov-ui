@@ -52,6 +52,7 @@ export class SoEnvEpsoftComponent implements OnInit {
   public passwordtype1:Boolean;
   public passwordtype2:Boolean;
   isDtInitialized:boolean = false;
+  public updatesubmitted : Boolean;
 
 constructor(private api:RestApiService,
   private router:Router,
@@ -136,7 +137,17 @@ async getallData()
       this.isTableHasData = true;
      }
       this.environments.sort((a,b) => a.activeTimeStamp > b.activeTimeStamp ? -1 : 1);
-      this.dataSource1= new MatTableDataSource(this.environments);
+      let envchange = this.environments;
+      console.log(envchange);
+ 
+      for(let i = 0; i< envchange.length;i++)
+      {
+       envchange[i].activeStatus = envchange[i].activeStatus == 7 ? 'Active': envchange[i].activeStatus == 8? 'Inactive': '';
+       envchange[i].deployStatus = envchange[i].deployStatus == true ? 'Yes': envchange[i].deployStatus ==  false ? 'No': ''; 
+      }
+ 
+      console.log(envchange);
+      this.dataSource1= new MatTableDataSource(envchange);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
@@ -216,6 +227,7 @@ async testConnection(data){
   }
    await this.api.testenvironment(formdata.value).subscribe( res =>
     {
+      let response:any=res;
       this.spinner.hide();
       if(res.errorCode==undefined){
       Swal.fire({
@@ -229,7 +241,7 @@ async testConnection(data){
         Swal.fire({
           position: 'center',
           icon: 'error',
-          title: 'Connection Failed',
+          title: response.errorMessage,
           showConfirmButton: false,
           timer: 2000
         })
@@ -305,8 +317,10 @@ async updateEnvironment()
     updatFormValue["environmentId"]= this.updateenvdata.environmentId;
     console.log(this.updateenvdata.createdBy);
     updatFormValue["createdBy"]= this.updateenvdata.createdBy;
+    this.updateenvdata.deployStatus = this.updateenvdata.deployStatus == 'Yes'? true: this.updateenvdata.deployStatus == 'No'? false: '';
     updatFormValue["deployStatus"]= this.updateenvdata.deployStatus;
           console.log(updatFormValue);
+          this.updatesubmitted = true;
     await this.api.updateenvironment(updatFormValue).subscribe( res => {
       Swal.fire({
         position: 'center',
@@ -321,13 +335,23 @@ async updateEnvironment()
     this.checktoupdate();
     this.checktodelete();
     document.getElementById("update-popup").style.display='none';
+    this.updatesubmitted = false;
     this.spinner.hide();
     });
   }
   else
   {
-    alert("please fill all details");
+    //alert("please fill all details");
   }
+}
+
+reset_UpdateEpsoft(){
+  this.updateForm.reset();
+
+  this.updateForm.get("portNumber").setValue("22");
+  this.updateForm.get("connectionType").setValue("SSH");
+  this.updateForm.get("environmentType").setValue("");
+  this.updateForm.get("activeStatus").setValue(true);
 }
 
 updatedata()
@@ -339,7 +363,7 @@ updatedata()
   {
     if(data.environmentId==this.updateid)
     {
-      if(data.activeStatus==7){
+      if(data.activeStatus=='Active'){
         this.toggle=true;
       }else{
         this.toggle=false;

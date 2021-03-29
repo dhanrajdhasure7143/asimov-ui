@@ -1,7 +1,7 @@
 export class BpsHints{
     public bpsHomeHints = [
         { selector:'#upload_bpmn', description:'Drag/Drop or Upload BPMN/CMMN/DMN File', showNext:true },
-        { selector:'#create_bpmn', description:'Create BPMN/CMMN/DMN notation', showNext:true },
+        { selector:'#create_bpmn-box', description:'Create BPMN/CMMN/DMN notation', showNext:true },
         { selector:'#bpmn_list', description:'List of saved BPMN/CMMN/DMN files for user', showNext:true },
         { selector:'#bpmn_list_item0', event:'click', description:'Click on each notation to preview' },
         { selector:'.diagram_container0', description:'BPMN/CMMN/DMN notation of the clicked record' }

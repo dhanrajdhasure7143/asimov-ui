@@ -14,6 +14,7 @@ import * as moment from 'moment';
 import { NgxSpinnerService } from "ngx-spinner";
 import { Pipe, PipeTransform } from '@angular/core';
 declare var $:any;
+import { NotifierService } from 'angular-notifier';
 @Component({
   selector: 'app-new-so-bot-management',
   templateUrl: './new-so-bot-management.component.html',
@@ -72,6 +73,8 @@ public slaupdate : boolean = false;
     logresponse:any=[];
     public slaconId:any;
     public sla_list:any=[];
+    public datasourcelist : any = [];
+
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -99,6 +102,7 @@ public slaupdate : boolean = false;
       private dt : DataTransferService,
       private spinner:NgxSpinnerService,
       private formBuilder: FormBuilder,
+      private notify:NotifierService,
       )
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
@@ -127,15 +131,138 @@ public slaupdate : boolean = false;
     this.popup=false;
   }
 
+  method(){
+    let result: any = [];
+    this.dataSource1 = this.datasourcelist;
+    if(this.selectedcat == undefined){
+      this.selectedcat = '';
+    }
+    if(this.selected_source == undefined){
+      this.selected_source = '';
+    }
+    if(this.search == undefined){
+      this.search = '';
+    }
+    if(this.search != '' && this.selected_source != '' && this.selectedcat != '')
+    {
+      console.log(this.search, this.selectedcat, this.selected_source);
+      let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
+      for(let a of this.datasourcelist){
+        if( category == a.department){
+          if(this.selected_source == a.sourceType){
+          result.push(a);
+        }
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      console.log(this.dataSource1);
+      let value1 = this.search.toLowerCase();
+       console.log(value1);
+       this.dataSource1.filter = value1;
+       console.log(this.dataSource1.filteredData);
+       this.dataSource1.sort=this.sort1;
+       this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.search != '' && this.selected_source)
+    {
+      for(let a of this.bot_list){
+        console.log(a.sourceType);
+        if(this.selected_source == a.sourceType){
+          result.push(a);
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      let value1 = this.search.toLowerCase();
+       console.log(value1);
+       this.dataSource1.filter = value1;
+       console.log(this.dataSource1.filteredData);
+       this.dataSource1.sort=this.sort1;
+       this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.search != '' && this.selectedcat != '')
+    {
+      let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
+      for(let a of this.bot_list){
+        console.log(a.department);
+        if( category == a.department){
+          result.push(a);
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      let value1 = this.search.toLowerCase();
+       console.log(value1);
+       this.dataSource1.filter = value1;
+       console.log(this.dataSource1.filteredData);
+       this.dataSource1.sort=this.sort1;
+       this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.selected_source !='' && this.selectedcat != '')
+    {
+      let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
+      for(let a of this.datasourcelist){
+        if( category == a.department){
+          if(this.selected_source == a.sourceType){
+          result.push(a);
+          if(this.search != '')
+          {
+            let value1 = this.search.toLowerCase();
+            result.filter = value1;
+            console.log(result);
+          }
+        }
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      this.dataSource1.sort=this.sort1;
+      this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.search)
+    {
+      this.dataSource1 = new MatTableDataSource(this.datasourcelist);
+      let value1 = this.search.toLowerCase();
+       console.log(value1);
+       this.dataSource1.filter = value1;
+       console.log(this.dataSource1.filteredData);
+       this.dataSource1.sort=this.sort1;
+       this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.selected_source)
+    {
+      for(let a of this.bot_list){
+        console.log(a.sourceType);
+        if(this.selected_source == a.sourceType){
+          result.push(a);
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      this.dataSource1.sort=this.sort1;
+      this.dataSource1.paginator=this.paginator1;
+    }
+    else if(this.selectedcat)
+    {
+      let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
+      for(let a of this.bot_list){
+        console.log(a.department);
+        if( category == a.department){
+          result.push(a);
+        }
+      }
+      this.dataSource1 = new MatTableDataSource(result);
+      this.dataSource1.sort=this.sort1;
+      this.dataSource1.paginator=this.paginator1;
+    }
+  }
+
   getslaconfig(){
 
   }
+  public selected_source:any;
   public sla_bot:any
   SelectSLACon(bot){
     this.sla_bot=bot;
     if(this.sla_bot.sourceType=="EPSoft")
       this.slaconId=this.sla_list.find(item=>item.botId==bot.botId);
-    else if(this.sla_bot.sourceType=="UIPath")
+    else if(this.sla_bot.sourceType=="UiPath")
       this.slaconId=this.sla_list.find(item=>item.botName==bot.botName+"_Env");
     else
       this.slaconId=this.sla_list.find(item=>item.botName==bot.botName);
@@ -212,7 +339,7 @@ public slaupdate : boolean = false;
      totalRetries :  parseInt(this.insertslaForm_so_bot.value.totalRetries),
      notificationStatus:1
    };
-   if(this.sla_bot.sourceType=="UIPath")
+   if(this.sla_bot.sourceType=="UiPath")
      slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName+"_Env";
     else
       slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName;
@@ -272,6 +399,7 @@ public slaupdate : boolean = false;
   {
     let response:any=[];
     this.spinner.show()
+    this.selected_source="";
     this.rest.getallsobots().subscribe(botlist =>
     {
       response=botlist;
@@ -337,6 +465,8 @@ public slaupdate : boolean = false;
       response.sort((a,b) => a.createdAt > b.createdAt ? -1 : 1);
       this.bot_list=response;
       this.automatedtask = this.bot_list;
+      console.log(this.bot_list)
+      this.datasourcelist = this.bot_list;
       this.dataSource1= new MatTableDataSource(this.bot_list);
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
@@ -513,28 +643,52 @@ public slaupdate : boolean = false;
         else
         Swal.fire(response.errorMessage,"","warning");
       });
-      else if(source=="UIPath")
+      else if(source=="UiPath")
       this.rest.startuipathbot(botid).subscribe(res=>{
         let response:any=res;
         this.spinner.hide();
         if(response.value!=undefined)
         {
-          Swal.fire("Bot Initated Successfully !!","","success");
+          Swal.fire("Bot  Execution Initated Successfully !!","","success");
         }
         else
         {
           Swal.fire(response.errorMessage,"","warning");
         }
       })
+      // else if(source=="BluePrism")
+      // {
+      //   let bot=this.bot_list.find(data=>data.botId==botid)
+      //   this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
+      //     console.log(data);
+      //     this.spinner.hide();
+      //     Swal.fire("Bot Initiated Successfully!","","success");
+      //     this.notify.notify("success",data);
+      //   });
+      // }
       else if(source=="BluePrism")
       {
         let bot=this.bot_list.find(data=>data.botId==botid)
+        this.spinner.show();
+          setTimeout(()=>{
+            this.spinner.hide();
+            Swal.fire("Bot Execution initiated successfully","","success");
+          },3000)
         this.rest.start_blueprism_bot(bot.botName).subscribe(data=>{
-          console.log(data);
-          this.spinner.hide();
-          Swal.fire("Bot Initiated Successfully!","","success");
+          // console.log(data);
+          // this.spinner.hide();
+          // Swal.fire("Bot Initiated Successfully!","","success");
+          
+          let response:any=data;
+          if(response.errorMessage==undefined)
+           this.notify.notify("success",response.status);
+          else
+           this.notify.notify("error",response.errorMessage);
         });
       }
+
+
+
     }
 
 
@@ -591,8 +745,9 @@ public slaupdate : boolean = false;
        }
         if(response.errorMessage==undefined)
         {
-          blueprismlogs=logsdataresp;
-          console.log(blueprismlogs);
+          blueprismlogs=response.sort((right,left)=>{
+            return moment.utc(left.startTimeStamp).diff(moment.utc(right.startTimeStamp))
+          });
           this.blueprimslogs = new MatTableDataSource(blueprismlogs);
           this.blueprimslogs.sort=this.sort7;
           this.blueprimslogs.paginator=this.paginator7;
@@ -638,7 +793,7 @@ public slaupdate : boolean = false;
       document.getElementById("uipathlogs").style.display="none";
     }
 
-    applyFilter(filterValue:any) {
+   /* applyFilter(filterValue:any) {
       console.log(filterValue)
       let category=this.categaoriesList.find(val=>filterValue==val.categoryId);
       //this.selectedvalue=filterValue;
@@ -655,6 +810,14 @@ public slaupdate : boolean = false;
       filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
       this.dataSource1.filter = filterValue;
     }
+
+    applyFilter3(filterValue: string) {
+      filterValue = filterValue.trim(); // Remove whitespace
+      filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+      this.dataSource1.filter = filterValue;
+    }
+    */
+   
   getCategoryList(){
     this.rest.getCategoriesList().subscribe(data=>{
       let catResponse : any;
@@ -764,7 +927,7 @@ public slaupdate : boolean = false;
       });
 
     }
-    else if(data.sourceType == 'UIPath')
+    else if(data.sourceType == 'UiPath')
     {
       this.rest.runsmoketestuipath().subscribe(processnames=>{
         let response:any;

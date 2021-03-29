@@ -131,11 +131,16 @@ body, html {
   height: 20px;
 }
 /* notifications to right */
-notifier-notification{
+/* notifier-notification{
+  float:right;
     position: absolute;
-    text-align: right;
-    left: calc(100% - 325px) !important;
+    text-align: left;
 }
+
+notifier-notification > button
+{
+  text-align: right;
+} */
 /* remove dropzone dotted border */
 ngx-dropzone{
   border: none !important;
@@ -750,4 +755,18 @@ foreignObject{
 .ep-primary-bg{
  /*background-color: #098DE6 !important;*/
  background-color: #0062cf  !important;
+}
+
+.progress-bar-green .mat-progress-bar-fill::after {
+  background-color: #4FA908 !important ;
+}
+.progress-bar-warn .mat-progress-bar-fill::after{
+background-color:rgb(231, 151, 3) !important;
+}
+
+.progress-bar-red .mat-progress-bar-fill::after{
+background-color:#a94442 !important;
+}
+.dbichart-head>label{
+font-size: 18px !important;
 }
