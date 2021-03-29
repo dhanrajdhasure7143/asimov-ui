@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, Input , Pipe, PipeTransform} from '@angular/core';
+import { Component, OnInit,  NgZone ,AfterViewInit, ViewChild, ElementRef, Input , Pipe, PipeTransform} from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb, jsPlumbInstance } from 'jsplumb';
@@ -72,6 +72,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   rp_url:string;
   recordedcode:any;
   finalcode:any;
+  svg:any;
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -93,6 +94,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         ["Label", { label: "FOO" }]
       ]
     });
+    this.SelectedOutputType = "";
     this.dt.changeHints(this.hints.rpaWorkspaceHints);
     this.selectedTask = {
       id: "",
@@ -101,7 +103,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
       this.loadnodes();
-      this.SelectedOutputType = "";
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;
@@ -837,29 +838,31 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.addsquences();
     this.get_coordinates();
     this.arrange_task_order("START_" + this.finalbot.botName);
-    this.saveBotdata = {
-      "botName": botProperties.botName,
-      "botType": botProperties.botType,
-      "description": botProperties.botDescription,
-      "department": botProperties.botDepartment,
-      "botMainSchedulerEntity": this.scheduler,
-      "envIds": env,
-      "isPredefined": botProperties.predefinedBot,
-      "tasks": this.final_tasks,
-      "createdBy": "admin",
-      "lastSubmittedBy": "admin",
-      "scheduler": this.scheduler,
-      "sequences": this.getsequences(),
-    }
+    await this.getsvg();
+      this.saveBotdata = {
+        "botName": botProperties.botName,
+        "botType": botProperties.botType,
+        "description": botProperties.botDescription,
+        "department": botProperties.botDepartment,
+        "botMainSchedulerEntity": this.scheduler,
+        "envIds": env,
+        "isPredefined": botProperties.predefinedBot,
+        "tasks": this.final_tasks,
+        "createdBy": "admin",
+        "lastSubmittedBy": "admin",
+        "scheduler": this.scheduler,
+        "svg":this.svg,
+        "sequences": this.getsequences(),
+      }
 
-    if(this.checkorderflag==false)
-    {
-      return false;
-    }
-    else
-    {
-       return await this.rest.saveBot(this.saveBotdata)
-    }
+      if(this.checkorderflag==false)
+      {
+        return  false;
+      }
+      else
+      {
+        return  await  this.rest.saveBot(this.saveBotdata)
+      }
   }
 
   async uploadfile(envids)
@@ -921,6 +924,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     this.addsquences();
     this.get_coordinates();
     this.arrange_task_order("START_" + this.finalbot.botName);
+    await this.getsvg();
     this.saveBotdata = {
       "version": botProperties.version,
       "botId": botProperties.botId,
@@ -935,16 +939,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       "createdBy": "admin",
       "lastSubmittedBy": "admin",
       "scheduler": this.scheduler,
+      "svg":this.svg,
       "sequences": this.getsequences()
     }
     if(this.checkorderflag==false)
-    {
-      return false;
-    }
+     return false;
     else
-    {
-      return await this.rest.updateBot(this.saveBotdata)
-    }
+      return this.rest.updateBot(this.saveBotdata)
+
   }
 
 
@@ -1078,6 +1080,13 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       .catch(function (error) {
           console.error('oops, something went wrong!', error);
       });
+  }
+
+
+  async getsvg()
+  {
+    let data= await domtoimage.toPng(document.getElementById(this.dragareaid))
+    this.svg=data;
   }
 
   modifyEnableDisable() {
@@ -1266,7 +1275,6 @@ export class Checkoutputbox implements PipeTransform {
   {
     let allnodes:any=[];
     allnodes=arg.tasks;
-    console.log("-------------------------",allnodes)
     let node:any=value;
     if(allnodes.find(item=>item.nodeId.split('__')[1]==node.id)!=undefined)
     {

@@ -53,8 +53,11 @@ export class SoBotManagementComponent implements OnInit {
     automatedtasks:any=[];
     log_botid:any;
     log_version:any;
-    logresponse:any=[];
-    @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
+    logresponse:any=[];    
+    public selectedAreas:any;
+    public mycatInput:any;
+    public NorecordFound: boolean = false;
+      @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
 
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -82,6 +85,7 @@ export class SoBotManagementComponent implements OnInit {
       let catResponse : any;
       catResponse=data;
       this.categaoriesList=catResponse.data;
+      this.selectedAreas = this.categaoriesList;
     });
     setTimeout(()=> {
       this.getallbots();
@@ -91,6 +95,46 @@ export class SoBotManagementComponent implements OnInit {
     this.getprocessnames();
     this.popup=false;
   }
+
+  searchstring(query: string){
+    /*console.log('query', query)
+    let result = this.select(query);
+    this.selectedAreas = result;*/
+    if(query != '')
+   {
+    console.log('query', query);
+    let result = this.select(query);
+    console.log("Categoryresult:",result.length);
+    if(result.length == 0){
+      this.NorecordFound = true;
+      console.log("true");
+      this.selectedAreas = result;
+    }
+    else
+    {
+      console.log("false");
+      this.NorecordFound = false;
+      this.selectedAreas = result;
+      console.log("else categorysearch",result);
+    }
+  }
+  else
+  {
+    this.selectedAreas = this.categaoriesList;
+  }
+  }
+
+  select(query: string):string[]{
+    let result: string[] = [];
+    let value1 = query.toLowerCase();
+    for(let a of this.categaoriesList){
+      if(a.categoryName.toLowerCase().indexOf(value1) > -1){
+        result.push(a)
+      }
+    }
+    return result;
+  }
+
 
   loadbotdatadesign(botId)
   {
@@ -410,7 +454,8 @@ export class SoBotManagementComponent implements OnInit {
     reset()
     {
       this.selectedcat="";
-      this.search=""
+      this.search="";
+      this.mycatInput = '';
       this.getallbots()
     }
 

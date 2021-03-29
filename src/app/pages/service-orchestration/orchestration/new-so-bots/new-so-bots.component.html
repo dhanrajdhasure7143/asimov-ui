@@ -1,0 +1,577 @@
+
+        <div class="wrapper">
+          <div id="" class="container-fluid my-new-div"><br>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="chartinner">
+                        <div class="dbichart-block">
+                            <div class="dbichart-head">
+                                <label>Bot Status</label>
+                            </div>
+                            <div class="dbichart-body">
+                              <div id="chartdiv" class="amart"></div>
+                            </div>
+                        </div>
+                   </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chartinner">
+                        <div class="dbichart-block">
+                            <div class="dbichart-head">
+                                <label>Current Queue Volumes</label>
+                            </div>
+                            <div class="dbichart-body">
+                              <div id="chartdiv2" class="amart"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="chartinner">
+                      <div class="dbichart-block">
+                          <div class="dbichart-head">
+                              <label>SLA Metrics</label>
+                          </div>
+                          <div class="dbichart-body">
+                            <div id="slachartdiv" class="amart"></div>
+                          </div>
+                      </div>
+                 </div>
+              </div>
+                <div class="col-md-4">
+                    <div class="chartinner">
+                        <div class="dbichart-block">
+                            <div class="dbichart-head">
+                                <label>Bots By Source</label>
+                            </div>
+                            <div class="dbichart-body">
+                              <div id="chartdiv3" class="amart"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chartinner">
+                        <div class="dbichart-block">
+                            <div class="dbichart-head">
+                                <label>Exception Alerts</label>
+                            </div>
+                            <div class="dbichart-body">
+                              <div id="chartdiv4" class="amart"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="chartinner">
+                        <div class="dbichart-block">
+                            <div class="dbichart-head">
+                                <label>Long Running Bots</label>
+                                <div class="dbichart-dropdown">
+                                    <span>Select Source :</span>
+                                    <select name="" id="">
+                                        <option selected>ALL</option>
+                                        <option >BluePrism</option>
+                                        <option >UiPath</option>
+                                        <option >EPSoft</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="dbichart-body">
+                              <div id="chartdiv5" class="amart"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div  class="botactive botstatusactive">
+                  <div class="headsec">
+                      <h1>Bot Details : <span>Active Bots</span></h1>
+                  </div>
+                  <table width="100%" class="table datatable">
+                      <thead>
+                          <tr>
+                              <th>Process Name</th>
+                              <th>Task Source</th>
+                              <th>Task Name</th>
+                              <th>Business Owner</th>
+                              <th>IT Owner</th>
+                              <th>Last Execution Duration</th>
+                              <th>Next Run</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr>
+                              <td>Accounts Payable</td>
+                              <td>BluePrism</td>
+                              <td>Extract Invoice</td>
+                              <td>Madeleine</td>
+                              <td>Karen</td>
+                              <td>13 Sec</td>
+                              <td>{{getdate(1,"1")}} 12:00:00</td>
+                          </tr>
+                          <tr>
+                              <td>Order to Cash</td>
+                              <td>UiPath</td>
+                              <td>Invoice Check</td>
+                              <td>Sophia</td>
+                              <td>Olivia</td>
+                              <td>10 Mins, 05 Sec</td>
+                              <td>{{getdate(2,"1")}} 11:30:00</td>
+                          </tr>
+                          <tr>
+                              <td>Accounts Receivable</td>
+                              <td>EPSoft</td>
+                              <td>Process Payment</td>
+                              <td>Rebecca</td>
+                              <td>Diane</td>
+                              <td>45 Sec</td>
+                              <td>{{getdate(1,"1")}} 11:45:00</td>
+                          </tr>
+                          <tr>
+                              <td>Purchase to Pay</td>
+                              <td>BluePrism</td>
+                              <td>Update Payment</td>
+                              <td>Stephanie</td>
+                              <td>Lauren</td>
+                              <td>10 Mins, 15 Sec</td>
+                              <td>{{getdate(1,"1")}} 23:30:00</td>
+                          </tr>
+                          <tr>
+                              <td>Procure to Pay</td>
+                              <td>EPSoft</td>
+                              <td>Send Report</td>
+                              <td>Kimberly</td>
+                              <td>Sue</td>
+                              <td>30 Sec</td>
+                              <td>{{getdate(1,"1")}} 23:45:00</td>
+                          </tr>
+                      </tbody>
+                  </table>
+              </div>
+              <div class="botactive except">
+                <div class="headsec">
+                    <h1>Bot Details : <span>Exception Bots</span></h1>
+                </div>
+                <table width="100%" class="table datatable">
+                    <thead>
+                        <tr>
+                            <th>Bot Name</th>
+                            <th>Source</th>
+                            <th>Exception</th>
+                            <th>Maximum Retries</th>
+                            <th>Alerts Send to</th>
+                            <th>Last Execution Time</th>
+                            <th>Incident Number</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Create Vendor</td>
+                            <td>BluePrism</td>
+                            <td>Connection Failed</td>
+                            <td>
+                             <a class="text-danger commcl"  data-toggle="modal" data-target="#myModal2"><span>5</span>
+                              </a>
+                            </td>
+                            <td>Madeleine</td>
+                            <td>{{getdate(0,"0")}} 12:00:00</td>
+                            <td><a href="https://dev105659.service-now.com/nav_to.do?uri=%2Fincident_list.do%3Fsysparm_userpref_module%3D087800c1c0a80164004e32c8a64a97c9%26sysparm_view%3Dess%26sysparm_query%3Dcaller_id%253Djavascript%253Ags.getUserID%2528%2529%255Eactive%253Dtrue%255Euniversal_requestISEMPTY%255EEQ%26caller_id%3Djavascript:gs.getUserID()%5Eactive%3Dtrue%5Euniversal_requestISEMPTY%26sysparm_clear_stack%3Dtrue"  target="_blank" rel="noopener noreferrer" class="commcl1">IN-324456</a></td>
+                        </tr>
+                        <tr>
+                          <td>Place Order</td>
+                          <td>EPSoft</td>
+                          <td>DB Error</td>
+                          <td>
+                            <a  class="commcl"><span>1</span>
+                             </a>
+                           </td>
+                          <td>Sophia</td>
+                          <td>{{getdate(0,"0")}} 04:30:00</td>
+                          <td>--
+                            <!-- <a href=""  data-toggle="modal" data-target="#myModal3" class="commcl1">SNOW-3177483</a> -->
+                          </td>
+                      </tr>
+                      <tr>
+                        <td>Clear Invoice</td>
+                        <td>UiPath</td>
+                        <td>Connection Failed</td>
+                        <td>
+                          <a  class="commcl"><span>2</span>
+                           </a>
+                         </td>
+                        <td>Rebecca</td>
+                        <td>{{getdate(0,"0")}} 07:00:00</td>
+                        <td>--
+                          <!-- <a href=""  data-toggle="modal" data-target="#myModal3" class="commcl1">SNOW-3125367</a> -->
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>Enter in SAP</td>
+                      <td>BluePrism</td>
+                      <td>DB Connection Error</td>
+                      <td>
+                        <a class="commcl"><span>4</span>
+                         </a>
+                       </td>
+                      <td>Stephanie</td>
+                      <td>{{getdate(0,"0")}} 01:30:00</td>
+                      <td>--
+                        <!-- <a href=""  data-toggle="modal" data-target="#myModal3" class="commcl1">SNOW-1029348</a> -->
+                      </td>
+                  </tr>
+                  <tr>
+                    <td>Send-Test-Mail</td>
+                    <td>BluePrism</td>
+                    <td>SMTP Error</td>
+                    <td>
+                      <a class="text-danger commcl"  ><span>5</span>
+                      </a>
+                     </td>
+                    <td>Kimberly</td>
+                    <td>{{getdate(0,"0")}} 09:15:00</td>
+                    <td><a href="https://dev105659.service-now.com/nav_to.do?uri=%2Fincident_list.do%3Fsysparm_userpref_module%3D087800c1c0a80164004e32c8a64a97c9%26sysparm_view%3Dess%26sysparm_query%3Dcaller_id%253Djavascript%253Ags.getUserID%2528%2529%255Eactive%253Dtrue%255Euniversal_requestISEMPTY%255EEQ%26caller_id%3Djavascript:gs.getUserID()%5Eactive%3Dtrue%5Euniversal_requestISEMPTY%26sysparm_clear_stack%3Dtrue"  target="_blank" rel="noopener noreferrer" class="commcl1">IN-317741</a></td>
+                </tr>
+                    </tbody>
+                </table>
+            </div>
+              </div>
+            </div>
+    </div>
+</div>
+<div class="my-new-div modal" id="myModal">
+    <div class="modal-dialog" style='width:100% !important;' >
+      <div class="modal-content" style='width:100% !important;margin-top: 0px !important;'>
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <!-- <h4 class="modal-title">Modal Heading</h4> -->
+          <div class="row modalpopup">
+            <ul class="nav">
+              <li class="nav-item"><div class="bbp-title">Process Details:<span>Accounts Payable</span></div></li>
+              <li class="nav-item"><div class="bbp-title">Bot Name:<span>Extract Invoice</span></div></li>
+              <li class="nav-item"><div class="bbp-title">Bot Source:<span>UiPath</span></div></li>
+              <li class="nav-item"><div class="bbp-title"><span>01/07/2021 </span> TO <span>01/11/2021</span></div></li>
+
+              <li class="nav-item"><a href="#" class="nav-link">Day</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">Weekly</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">Monthly</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">Yearly</a></li>
+              <li class="nav-item"><a href="#" class="nav-link">All</a></li>
+            </ul>
+          </div>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+
+          <div class="botactive">
+            <h1 style="margin: 0.3rem 0rem 1rem 0.5rem;">Execution Time</h1>
+            <div id="modalchartdiv"></div>
+          </div>
+          <div class="modalpopup">
+            <div class="bbp-buttons">
+              <button class="button color2"><img src="assets/images/vartusaimages/Executions.png"><strong>90</strong><span class="mspan">Total No. of Executions</span> </button>
+              <button class="button color3"><img src="assets/images/vartusaimages/Failures.png"><strong>04</strong><span class="mspan">Total Failures</span></button>
+              <button class="button color4"><img src="assets/images/vartusaimages/Velocity.png"><strong>00:07:25</strong><span class="mspan">Bot Velocity</span></button>
+              <button class="button color5"><img src="assets/images/vartusaimages/Execution Time.png"><strong>00:10:00</strong><span class="mspan">SLA For Execution Time</span></button>
+            </div>
+          </div>
+            <div class="botactive">
+              <h1 style="margin: 0.3rem 0rem 1rem 0.5rem;">Recent Execution Details</h1>
+              <table class="datatable table">
+                <thead>
+                    <tr>
+                        <th>Execution Duration</th>
+                        <th>Execution Time</th>
+                        <th>CPU Utilization</th>
+                        <th>SLA Breach</th>
+                        <th>Alert Sent</th>
+                        <th>Current Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>3 Mins</td>
+                        <td>01/11/2021 11:30:00</td>
+                        <td>5%</td>
+                        <td>No</td>
+                        <td>--</td>
+                        <td><span class="dot1 Success"></span> Success</td>
+                    </tr>
+                    <tr>
+                        <td>1 Min, 05 Sec</td>
+                        <td>01/10/2021 11:30:00</td>
+                        <td>12%</td>
+                        <td>No</td>
+                        <td>--</td>
+                        <td><span class="dot1 Paused"></span> Stopped</td>
+                    </tr>
+                    <tr>
+                        <td>6 Min, 30 Sec</td>
+                        <td>01/09/2021 11:30:00</td>
+                        <td>8%</td>
+                        <td>No</td>
+                        <td>--</td>
+                        <td><span class="dot1 Success"></span> Success</td>
+                    </tr>
+                    <tr class="red">
+                        <td>60 Mins</td>
+                        <td>01/08/2021 11:30:00</td>
+                        <td>27%</td>
+                        <td>Yes</td>
+                        <td>Yes</td>
+                        <td><span class="dot1 Failed"></span> Failed</td>
+                    </tr>
+                </tbody>
+              </table>
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="my-new-div modal" id="myModal2">
+    <div class="modal-dialog" style='width:100% !important;'>
+      <div class="modal-content" style='width:100% !important;margin-top: 0px !important;'>
+
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <ul>
+            <li>
+              <p>Bot Type : <a href="">Exceptions</a></p>
+            </li>
+            <li>
+              <p>Source Type : <a href="">UiPath</a></p>
+            </li>
+            <li>
+              <p>Incident Ticket : <a href="">SNOW-324456</a></p>
+            </li>
+          </ul>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body">
+          <div class="headsec">
+            <h1>Bot Exception Details</h1>
+        </div>
+          <table class="table" width="100%">
+            <thead>
+              <tr>
+                <th>Attempt Number</th>
+                <th>Execution Time</th>
+                <th>Execution Duration</th>
+                <th>Execution Alert</th>
+                <th>Execution Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>11/01/2021 12:00:00</td>
+                <td>2 Mins, 1 Sec</td>
+                <td>Connection Failure</td>
+                <td><p class="text-danger">Failed</p></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>11/01/2021 12:00:00</td>
+                <td>2 Mins, 1 Sec</td>
+                <td>Connection Failure</td>
+                <td><p class="text-danger">Failed</p></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>11/01/2021 12:00:00</td>
+                <td>2 Mins, 1 Sec</td>
+                <td>Connection Failure</td>
+                <td><p class="text-danger">Failed</p></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>11/01/2021 12:00:00</td>
+                <td>2 Mins, 1 Sec</td>
+                <td>Connection Failure</td>
+                <td><p class="text-danger">Failed</p></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>11/01/2021 12:00:00</td>
+                <td>2 Mins, 1 Sec</td>
+                <td>Connection Failure</td>
+                <td><p class="text-danger">Failed</p></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="my-new-div modal" id="myModal3">
+    <div class="modal-dialog" style='width:100% !important;'>
+      <div class="modal-content" style='width:100% !important;margin-top: 0px !important;'>
+
+        <!-- Modal Header -->
+        <div class="modal-header titlese">
+          <h3>View Incident Details</h3>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <!-- Modal body -->
+        <div class="modal-body formarea">
+          <form action="">
+            <div class="row">
+              <div class="col-md-4">
+                <p>
+                  <label for="">ID<span class="requir">*</span></label>
+                  <input type="text" name="" id="" placeholder="" value="SNOW-324456">
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <label for="">Bot Name<span class="requir">*</span></label>
+                  <input type="text" name="" id="" value="Create Vendor">
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <label for="">Description<span class="requir">*</span></label>
+                  <input type="text" name="" id="" value="Connection Failed">
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <label for="">LOB<span class="requir">*</span></label>
+                  <select name="" id="">
+                    <option value="">Accounts Management</option>
+                    <option value="">UiPath</option>
+                  </select>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <label for="">Priority<span class="requir">*</span></label>
+                  <select name="" id="">
+                    <option value="">High</option>
+                    <option value="">Low</option>
+                  </select>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <label for="">Severity<span class="requir">*</span></label>
+                  <select name="" id="">
+                    <option value="">Medium</option>
+                    <option value="">Low</option>
+                  </select>
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <label for="">Status<span class="requir">*</span></label>
+                  <select name="" id="">
+                    <option value="">New</option>
+                    <option value="">Old</option>
+                  </select>
+                </p>
+              </div>
+              <div class="col-md-4 fileatt">
+                <p>
+                  <label for="">Attachment</label>
+                  <input type="file" name="" id="">
+                </p>
+              </div>
+              <div class="col-md-4">
+                <p>
+                  <label for="">Owner</label>
+                  <select name="" id="">
+                    <option value="">Madeleine</option>
+                    <option value="">Madeleine</option>
+                  </select>
+                </p>
+              </div>
+              <div class="col-md-12">
+                <p>
+                  <label for="">Details<span class="requir">*</span></label>
+                  <textarea name="" id="" cols="30" rows="10" placeholder="">alter the configuration of your system's syslog daemon in order to make use of the syslog option for log destination Logging to syslog facilities LOCAL0 through LOCAL7 (see syslog facility) failed</textarea>
+                </p>
+              </div>
+              <div class="col-md-12 textare">
+                <div id="editparent">
+                  <div id="editControls">
+                    <div class="btn-group">
+                      <a class="btn btn-xs btn-default" data-role="undo" href="#" title="Undo"><i class="fa fa-undo"></i></a>
+                      <a class="btn btn-xs btn-default" data-role="redo" href="#" title="Redo"><i class="fa fa-repeat"></i></a>
+                    </div>
+                    <div class="btn-group">
+                      <a class="btn btn-xs btn-default" data-role="bold" href="#" title="Bold"><i class="fa fa-bold"></i></a>
+                      <a class="btn btn-xs btn-default" data-role="italic" href="#" title="Italic"><i class="fa fa-italic"></i></a>
+                      <a class="btn btn-xs btn-default" data-role="underline" href="#" title="Underline"><i class="fa fa-underline"></i></a>
+                      <a class="btn btn-xs btn-default" data-role="strikeThrough" href="#" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+                    </div>
+                    <div class="btn-group">
+                      <a class="btn btn-xs btn-default" data-role="indent" href="#" title="Blockquote"><i class="fa fa-indent"></i></a>
+                      <a class="btn btn-xs btn-default" data-role="insertUnorderedList" href="#" title="Unordered List"><i class="fa fa-list-ul"></i></a>
+                      <a class="btn btn-xs btn-default" data-role="insertOrderedList" href="#" title="Ordered List"><i class="fa fa-list-ol"></i></a>
+                    </div>
+                    <div class="btn-group">
+                      <a class="btn btn-xs btn-default" data-role="h1" href="#" title="Heading 1"><i class="fa fa-header"></i><sup>1</sup></a>
+                      <a class="btn btn-xs btn-default" data-role="h2" href="#" title="Heading 2"><i class="fa fa-header"></i><sup>2</sup></a>
+                      <a class="btn btn-xs btn-default" data-role="h3" href="#" title="Heading 3"><i class="fa fa-header"></i><sup>3</sup></a>
+                      <a class="btn btn-xs btn-default" data-role="p" href="#" title="Paragraph"><i class="fa fa-paragraph"></i></a>
+                    </div>
+                  </div>
+                  <div id="richeditor" contenteditable></div>
+                  <textarea name="ticketDesc" id="editorCopy" required="required" style="display:none;"></textarea>
+                </div>
+              </div>
+                  <div class="footerbtns">
+                    <div>
+                      <button class="btn btn-primary">Update</button>
+                    </div>
+                    <div>
+                      <button class="btn btn-primary">Cancel</button>
+                    </div>
+                  </div>
+            </div>
+          </form>
+        </div>
+        <div class="model-footer footebut">
+          <!-- <div class="footerbtns">
+          <div>
+            <button class="btn btn-primary">Update</button>
+          </div>
+          <div>
+            <button class="btn btn-primary">Cancel</button>
+          </div>
+        </div> -->
+          <!-- <ul>
+
+            <li><a href="#">Update</a></li>
+            <li><a href="#">Cancel</a></li>
+          </ul> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
+    <mat-tab label="Statistics">
+      <div class="backgr">
+      <iframe width="100%" height="100%" (load)="spinner.hide()" frameBorder="0" [src]="urlSafe" ></iframe>
+    </div>
+      </mat-tab>
+      <mat-tab label="Monitoring">
+        <div class="backgr">
+        <iframe width="100%" height="100%" load)="spinner.hide()" frameBorder="0" [src]="urlSafe1" ></iframe>
+      </div>
+      </mat-tab>
+      </mat-tab-group> -->

@@ -24,3 +24,9 @@ select {
 .verticalalignmiddle{
     vertical-align: middle !important;
 }
+
+.myInput{
+    padding:10px;
+    padding-bottom: 0px !important;
+    width: 90% !important;
+  }

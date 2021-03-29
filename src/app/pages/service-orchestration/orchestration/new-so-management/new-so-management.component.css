@@ -1,0 +1,110 @@
+.incident tr{
+  white-space:  nowrap !important;
+ }
+ .main{
+   background-color: rgb(241, 240, 240);
+ }
+ 
+ ::ng-deep  .mat-form-field
+ {
+   line-height: 1.7 !important;
+ }
+ ::ng-deep .mat-tooltip.tooltip {
+ 
+   color:white !important;
+   font-size: 16px !important;
+ }
+ .backgr{
+   background:white;
+   border-radius: 3px;
+ 
+   }
+ 
+ 
+  /* @import "../../../../../assets/css/new-so-styles.css"; */
+  div#editparent {
+   margin-top: 20px;
+   border: 1px solid #ddd;
+   }
+   
+   div#editparent div#editControls {
+   border-bottom: 1px solid #ddd;
+   }
+   
+   div#editparent div#richeditor {
+   height: 200px;
+   padding: 10px;
+   }
+   
+   div#editparent div#richeditor:focus {
+   outline: none;
+   }
+ 
+ .commcl, .commcl1{
+   color: #007bff !important;
+ }
+ .footerbtns{
+   display: flex !important;
+   float: right !important;
+   padding: 0px 20px 20px !important;
+   margin-top: 5px;
+ }
+ .modal-header .close {
+   margin-top: -44px;
+ }
+ .modal-header {
+   padding: 25px !important;
+   
+ }
+ .modalpopup a.nav-link {
+   color: black !important;
+   padding: 0.25rem 0.75rem !important;
+ }
+ .dbichart-block label{
+   font-size: 15px;
+   font-weight: 500;
+ }
+ .botactive a{
+   color:  rgb(0, 98, 207) !important;
+ }
+ .backgr{
+   background:white;
+   border-radius: 3px;
+   height: 2000px;
+   }
+ 
+ .left_arrow_chart1{
+   display: none;
+ }
+ 
+ .message{
+   vertical-align: -100%;
+ }
+ 
+ div label{
+   font-size: 15px !important;
+   font-weight: 500 !important; 
+   padding-left:20px !important;
+   padding-left:20px;
+   padding-top:20px;
+ }
+ 
+ .my-new-div .botactive {
+   border: 0px !important;
+ }
+ 
+ .graph-card {
+   position: relative;
+   width: 100% !important;
+   background-color:white;
+   padding:10px;
+   border-radius:10px;
+ 
+   min-height:420px;
+   box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+ }
+.backgr{
+  background:white;
+  border-radius: 3px;
+  height: 2000px;
+  }

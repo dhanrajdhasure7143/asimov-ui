@@ -25,7 +25,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   public queryparam:any='';
   public isTableHasData = true;
   public respdata1=false;
-  displayedColumns: string[] = ["processName","taskName","taskType", "category","Assign","status","successTask","failureTask","Operations"];
+  displayedColumns: string[] = ["processName","taskName","taskType", "category","processOwner","taskOwner","Assign","status","successTask","failureTask","Operations"];
   dataSource2:MatTableDataSource<any>;
   public isDataSource: boolean;
   public userRole:any = [];
@@ -42,6 +42,15 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   public selectedcategory:any="";
   public categaoriesList:any=[];
   public timer:any;
+  public envlist_NorecordFound:boolean = false;
+  public Select_pro_NorecordFound:boolean = false;
+  public NorecordFound:boolean = false;
+  public envlist : any;
+  public selectprocesslist : any;
+  public selectedCategorylist : any;
+  public myprocessInput :any;
+  public myenvInput :any;
+  public catmyInput :any;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
@@ -118,12 +127,11 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     let response:any=[];
    // this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
 
-    this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
+    this.rest.getautomatedtasks(process).subscribe(automatedtasks=>
+    {
       response=automatedtasks;
       this.responsedata=response.automationTasks;
-      this.dataSource2= new MatTableDataSource(response.automationTasks);
-      this.dataSource2.sort=this.sort10;
-      this.dataSource2.paginator=this.paginator10;
+      console.log("automated tasks",response.automationTasks);
       if(process==0)
       {
         this.getprocessnames(undefined);
@@ -148,7 +156,9 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       resp=processnames
       this.process_names=resp.filter(item=>item.status=="APPROVED");
       this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+      this.selectprocesslist = this.selected_process_names;
       let processnamebyid;
+      this.addprocess_and_task_owner();
       if(processId != undefined)
       {
         processnamebyid=this.process_names.find(data=>data.processId==processId);
@@ -165,7 +175,52 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   }
 
 
-  applyFilter(filterValue:any) {
+  addprocess_and_task_owner()
+  {
+    this.rest.getAllActiveBots().subscribe(botlist =>
+      {
+          this.bot_list=botlist;
+          this.responsedata=this.responsedata.map(item=>
+          {
+            if(item.botId!="0")
+            {
+              if(this.bot_list.find(bot=>bot.botId==item.botId)!= undefined)
+              {
+                item["taskOwner"]=this.bot_list.find(bot=>bot.botId==item.botId).createdBy;
+              }
+              else
+              {
+                item["taskOwner"]="--";
+              }
+            }
+            else
+            {
+              item["taskOwner"]="--";
+            }
+            if(this.process_names.find(process=>process.processId==item.processId)!=undefined)
+            {
+              if(this.process_names.find(process=>process.processId==item.processId).createdBy=="")
+              {
+                item["processOwner"]="--";
+              }
+              else
+              {
+                item["processOwner"]=this.process_names.find(process=>process.processId==item.processId).createdBy;
+              }
+            }else
+            {
+              item["processOwner"]="--"
+            }
+            return item;
+          });
+      });
+      this.dataSource2= new MatTableDataSource(this.responsedata);
+      this.dataSource2.sort=this.sort10;
+      this.dataSource2.paginator=this.paginator10;
+  }
+
+
+  /*applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
     this.selectedcategory=parseInt(processnamebyid.categoryId);
     this.applyFilter1(this.selectedcategory);
@@ -180,7 +235,37 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
     this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
     this.selectedvalue="";
+  }*/
+  applyFilter(filterValue:any) {
+    console.log("applyfilter:", filterValue);
+    if(filterValue == ''){
+      this.dataSource2.filter = '';
+    }
+    else{
+    let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
+    this.selectedcategory=parseInt(processnamebyid.categoryId);
+    this.applyFilter1(this.selectedcategory);
+    this.selectedvalue=processnamebyid.processId;
+    filterValue = processnamebyid.processName.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource2.filter = filterValue;
+    }
   }
+
+  applyFilter1(value) {
+    if(value == ''){
+      console.log("applyfilter1",value)
+    this.dataSource2.filter = '';
+    this.selected_process_names = this.process_names;
+    }else{
+    this.selectedcategory=parseInt(value);
+    console.log("applyfilter1:", this.selectedcategory);
+    this.dataSource2.filter = this.categaoriesList.find(data=>this.selectedcategory==data.categoryId).categoryName.toLowerCase();
+    this.selected_process_names=this.process_names.filter(item=>item.categoryId==this.selectedcategory)
+    this.selectedvalue="";
+  }
+  }
+
 
 
   close()
@@ -195,13 +280,15 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id,"Automated").subscribe(data=>{
+    this.rest.assign_bot_and_task_develop(botId,id,"Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
-
         Swal.fire("Task  assigned to resource successfully !!","","success");
         this.responsedata.find(item=>item.taskId==id).status="New";
+        this.bot_list.find(bot=>bot.botId==botId)!=undefined?
+        this.responsedata.find(item=>item.taskId==id).taskOwner=this.bot_list.find(bot=>bot.botId==botId).createdBy:
+        this.responsedata.find(item=>item.taskId==id).taskOwner="--";
       }else
       {
         Swal.fire("Failed to Assign Resource !!","","warning");
@@ -214,7 +301,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   {
     let botId=$("#"+taskid+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,taskid,"Human").subscribe(data=>{
+    this.rest.assign_bot_and_task_develop(botId,taskid,"Human").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
@@ -377,6 +464,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       if(resp.errorCode == undefined)
       {
         this.environments=response;
+        this.envlist = this.environments;
       }
     })
   }
@@ -387,9 +475,123 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
       let catResponse : any;
       catResponse=data
       this.categaoriesList=catResponse.data;
+      this.selectedCategorylist = this.categaoriesList;
       this.getautomatedtasks(processid);
     });
   }
+
+  categorysearchstring(query: string)
+ {
+   if(query != '')
+   {
+    console.log('query', query);
+    let result = this.categoryselectval(query);
+    console.log("Categoryresult:",result.length);
+    if(result.length == 0){
+      this.NorecordFound = true;
+      console.log("true");
+      this.selectedCategorylist = result;
+    }
+    else
+    {
+      console.log("false");
+      this.NorecordFound = false;
+      this.selectedCategorylist = result;
+      console.log("else categorysearch",result);
+    }
+  }
+  else
+  {
+    this.selectedCategorylist = this.categaoriesList;
+  }
+}
+
+categoryselectval(query: string):string[]{
+  let result: string[] = [];
+  console.log("query:",query);
+  let value1 = query.toLowerCase();
+  for(let a of this.categaoriesList){
+    if(a.categoryName.toLowerCase().indexOf(value1) > -1){
+      result.push(a)
+    }
+  }
+  console.log("result:",result);
+  return result;
+}
+
+processsearchstring(query: string)
+{
+  if(query != '')
+  {
+    console.log('query', query);
+    let result = this.processselectval(query);
+    console.log(result.length);
+    if(result.length == 0){
+      this.Select_pro_NorecordFound = true;
+      console.log("true");
+      this.selectprocesslist = result;
+    }
+    else
+    {
+      console.log("false");
+      this.Select_pro_NorecordFound = false;
+      this.selectprocesslist = result;
+    }
+  }
+  else
+  {
+    this.selectprocesslist = this.process_names;
+    console.log("this.selectprocesslist",this.selectprocesslist);
+  }
+}
+
+processselectval(query: string):string[]{
+  let result: string[] = [];
+  console.log("query:",query);
+  let value1 = query.toLowerCase();
+  for(let a of this.selected_process_names){
+    if(a.processName.toLowerCase().indexOf(value1) > -1){
+      result.push(a)
+    }
+  }
+  console.log("result:",result);
+  return result;
+}
+
+envsearchstring(query: string)
+{
+  if(query != '')
+  {
+    console.log('query', query);
+    let result = this.envselectval(query);
+    console.log(result.length);
+    if(result.length == 0){
+      this.envlist_NorecordFound = true;
+      console.log("true");
+      this.envlist = result;
+    }
+    else
+    {
+      console.log("false");
+      this.envlist_NorecordFound = false;
+      this.envlist = result;
+    }
+  }
+}
+
+envselectval(query: string):string[]{
+  let result: string[] = [];
+  console.log("query:",query);
+  let value1 = query.toLowerCase();
+  for(let a of this.environments){
+    if(a.environmentName.toLowerCase().indexOf(value1) > -1){
+      result.push(a)
+    }
+  }
+  console.log("result:",result);
+  return result;
+}
+
 
   gethumanslist()
   {
@@ -411,13 +613,30 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
     this.popup=false;
     document.getElementById("filters").style.display = "block";
   }
-  reset_all()
+
+  /*reset_all()
   {
     this.selectedEnvironment="";
     this.selectedvalue="";
     this.selectedcategory="";
     this.getautomatedtasks(0)
 
+  }*/
+  reset_all()
+  {
+    this.selectedEnvironment="";
+    this.selectedvalue="";
+    this.selectedcategory="";
+    this.myprocessInput = "";
+    this.myenvInput = "";
+    this.catmyInput = "";
+    this.envlist = this.environments;
+    this.selectprocesslist = this.selected_process_names;
+    this.selectedCategorylist = this.categaoriesList;
+    this.processsearchstring('');
+    this.categorysearchstring('');
+    this.applyFilter('');
+    this.applyFilter1('');
   }
 
 

@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {SoAutomatedTasksComponent} from "../so-automated-tasks/so-automated-tasks.component"
+import { NewSoAutomatedTasksComponent } from '../new-so-automated-tasks/new-so-automated-tasks.component';
 @Component({
   selector: 'app-so-processlog',
   templateUrl: './so-processlog.component.html',
@@ -33,7 +33,7 @@ export class SoProcesslogComponent implements OnInit {
   displayedColumnsp1: string[] = ["processRunId","Environment","processStartDate","processEndDate","runStatus"];
   displayedColumnsp2: string[] = ['bot_name','version','run_id','start_date','end_date', "bot_status"]; //,'log_statement'
   displayedColumnsp3: string[] = ['task_name','start_date','end_date', 'status','error_info' ];
-  constructor( private rest:RestApiService, private automated:SoAutomatedTasksComponent) { }
+  constructor( private rest:RestApiService, private automated:NewSoAutomatedTasksComponent) { }
 
   ngOnInit() {
     document.getElementById("viewlogid1").style.display="none";

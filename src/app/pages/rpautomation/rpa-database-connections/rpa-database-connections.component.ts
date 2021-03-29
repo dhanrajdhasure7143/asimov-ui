@@ -189,19 +189,40 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           })
         }
     });
+    this.activestatus();
   }
   else
   {
-     alert("Invalid Form")
+    this.spinner.hide();
+     alert("Invalid Form");
+     this.activestatus();
   }
 
   }
+
+  activestatus(){
+    if(this.insertdbForm.value.activeStatus == 7)
+    {
+      this.insertdbForm.value.activeStatus = true;
+    }else{
+      this.insertdbForm.value.activeStatus = false;
+    }
+
+    if(this.updatedbForm.value.activeStatus == 7)
+    {
+      this.updatedbForm.value.activeStatus = true;
+    }else{
+      this.updatedbForm.value.activeStatus = false;
+    }
+  }
+  
   
 
   saveDBConnection(){
     
     if(this.insertdbForm.valid)
    {
+    this.spinner.show();
     if(this.insertdbForm.value.activeStatus==true)
      {
        this.insertdbForm.value.activeStatus=7
@@ -215,6 +236,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     let DBConnection = this.insertdbForm.value;
     this.api.addDBConnection(DBConnection).subscribe( res =>{
       let status:any=res;
+      this.spinner.hide();
     Swal.fire({
             position: 'center',
             icon: 'success',
@@ -228,12 +250,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           document.getElementById('createdbconnection').style.display= "none";
           this.resetDBForm();
           this.submitted=false;
-      
+          this.insertdbForm.get("activeStatus").setValue(true);    
     });
    
   }
   else{
     alert("Invalid Form");
+    this.activestatus();
   }
    }
 
@@ -252,6 +275,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   dbconnectionupdate(){
     if(this.updatedbForm.valid)
     {
+      this.spinner.show();
       if(this.updatedbForm.value.activeStatus==true)
       {
         this.updatedbForm.value.activeStatus=7
@@ -264,6 +288,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     dbupdatFormValue["createdBy"]= this.dbupdatedata.createdBy;
     this.api.updateDBConnection(dbupdatFormValue).subscribe( res => {
       let status: any= res;
+      this.spinner.hide();
       Swal.fire({
         position: 'center',
         icon: 'success',

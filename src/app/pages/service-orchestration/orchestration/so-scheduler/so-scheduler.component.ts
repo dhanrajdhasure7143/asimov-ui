@@ -63,6 +63,7 @@ export class SoSchedulerComponent implements OnInit {
     resumeflag:false,
     deleteflag:false,
   }
+  q=0;
   constructor(private rest:RestApiService) { }
 
   ngOnInit() {
