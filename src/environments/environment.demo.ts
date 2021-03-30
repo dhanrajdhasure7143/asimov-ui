@@ -16,7 +16,7 @@ export const environment = {
  // Aiotal redirection urls 
   myaccount_url : "https://eiapclouddemo.epsoftinc.com:86/#/activation",
   logout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/activation', 
-
+  redirection_logout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/user',
 // PI Connectors
   connector_topic: 'nodeq',
 
