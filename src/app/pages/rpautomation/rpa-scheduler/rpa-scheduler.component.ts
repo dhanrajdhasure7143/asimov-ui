@@ -132,7 +132,9 @@ export class RpaSchedulerComponent implements OnInit {
     if(this.startdate !="" && this.enddate!=""  && this.cronExpression != "" && this.starttime!=undefined && this.endtime!=undefined && this.timezone!="" && this.timezone!=undefined)
     {
       let starttime=this.starttime.split(":")
+      let starttimeparse=parseInt(starttime[0])
       let endtime=this.endtime.split(":")
+      let endtimeparse=parseInt(endtime[0])
       let data:any;
       let startdate=new Date(this.startdate);
       let enddate=new Date(this.enddate)
@@ -141,8 +143,8 @@ export class RpaSchedulerComponent implements OnInit {
         data={
           intervalId:this.generateid(),
           scheduleInterval:this.cronExpression,
-          startDate:startdate.getFullYear()+","+(startdate.getMonth()+1)+","+startdate.getDate()+","+starttime[0]+","+starttime[1],
-          endDate:enddate.getFullYear()+","+(enddate.getMonth()+1)+","+enddate.getDate()+","+ endtime[0]+","+ endtime[1],
+          startDate:startdate.getFullYear()+","+(startdate.getMonth()+1)+","+startdate.getDate()+","+starttimeparse+","+starttime[1],
+          endDate:enddate.getFullYear()+","+(enddate.getMonth()+1)+","+enddate.getDate()+","+ endtimeparse+","+ endtime[1],
           timeZone:this.timezone,
           save_status:"unsaved",
           check:false,
@@ -186,6 +188,7 @@ export class RpaSchedulerComponent implements OnInit {
     {
       let schedule={
         botId:this.botid,
+        "botVersion": checked_schedule.botVersion,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
