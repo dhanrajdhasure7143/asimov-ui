@@ -68,7 +68,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   public categaoriesList:any=[];
   public uipath_bots:any=[];
   public blueprism_configs:any=[];
-  public checkedsource:String="UIPath";
+  public checkedsource:String="UiPath";
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
@@ -157,7 +157,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
             }
           });
         }
-        else if(data.sourceType == 'UIPath')
+        else if(data.sourceType == 'UiPath')
          {
            console.log("uiapath_bots",data.sourceType);
              this.uipath_bots.filter(x =>
@@ -348,7 +348,7 @@ resetsla(){
       if(response.automationTasks != undefined)
       {
         this.responsedata=response.automationTasks.map(item=>{
-            if(item.sourceType=="UIPath")
+            if(item.sourceType=="UiPath")
               item["taskOwner"]="Karthik Peddinti";
             else if(item.sourceType=="EPSoft")
             {
@@ -440,7 +440,7 @@ resetsla(){
   {
     let botId=$("#"+id+"__select").val();
     let source=this.responsedata.find(item=>item.taskId==id).sourceType;
-    if(source=="UIPath")
+    if(source=="UiPath")
     this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
     else if(source=="EPSoft")
     {
