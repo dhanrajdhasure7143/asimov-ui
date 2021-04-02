@@ -1,0 +1,83 @@
+
+        <div id="" class="container-fluid ">
+            <div style="padding-top:25px;padding-bottom:25px;">
+                <div class="text-right">
+                    <span style="padding:10px">
+                        <mat-form-field class="example-full-width" id="bmsearch">
+                          <mat-label>Search</mat-label>
+                          <input matInput placeholder="Search" autocomplete="off" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
+                          <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+                      </span>
+                </div>
+                <table mat-table [dataSource]="blueprimslogs" #sort4="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
+                    <ng-container matColumnDef="botName">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header  style="width:320px;">Bot Name </th>
+                        <td mat-cell *matCellDef="let element" [matTooltip]="element.botName" style="width:320px;">
+                          <span *ngIf="element.botName != null">{{(element.botName.length > 30) ? ((element.botName).slice(0, 30) + '...') : element.botName}}
+                          </span>
+                          <span *ngIf="element.botName == null">-</span>
+                        </td>
+                    </ng-container>
+
+                     <ng-container matColumnDef="lastRunTS">
+                        <th mat-header-cell *matHeaderCellDef style="width:210px;">Previous Run</th>
+                        <td mat-cell *matCellDef="let element" style="width:210px;">
+                            <span *ngIf="element.lastRunTS != null">{{element.lastRunTS}}</span>
+                            <span *ngIf="element.lastRunTS == null">-</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="nextRunTS">
+                        <th mat-header-cell *matHeaderCellDef style="width:210px;">Next Run</th>
+                        <td mat-cell *matCellDef="let element" style="width:210px;">
+                            <span *ngIf="element.nextRunTS != null">{{element.nextRunTS}}</span>
+                            <span *ngIf="element.nextRunTS == null">-</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="scheduleInterval">
+                        <th mat-header-cell *matHeaderCellDef style="width:210px;">Schedule Interval</th>
+                        <td mat-cell *matCellDef="let element" style="width:210px;">
+                            <span *ngIf="element.scheduleInterval != null">{{element.scheduleInterval}}</span>
+                            <span *ngIf="element.scheduleInterval == null">-</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="status">
+                        <th mat-header-cell *matHeaderCellDef style="width:210px;">Status</th>
+                        <td mat-cell *matCellDef="let element" style="width:210px;">
+                            <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
+
+                            <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                
+                            <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                           
+                            <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
+                            <span *ngIf="element.status=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.status}}</span></span>
+                
+                            <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+                
+                              <span *ngIf="element.status == undefined">-</span>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="timezone">
+                        <th mat-header-cell *matHeaderCellDef style="width:210px;">Timezone</th>
+                        <td mat-cell *matCellDef="let element" style="width:210px;">
+                            <span *ngIf="element.timezone != null">{{element.timezone}}</span>
+                            <span *ngIf="element.timezone == null">-</span>
+                        </td>
+                    </ng-container>
+                    <ng-container matColumnDef="noData">
+                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                            No Records Found
+                        </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedblueprismcolums; sticky: true"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedblueprismcolums;"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': tabledata}"></tr>
+               </table>
+                <mat-paginator #paginator4 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
+            </div>
+            </div>

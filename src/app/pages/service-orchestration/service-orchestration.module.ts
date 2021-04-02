@@ -58,6 +58,7 @@ import { StatisticsComponent } from './orchestration/new-so-bots/statistics/stat
 import { MonitoringComponent } from './orchestration/new-so-bots/monitoring/monitoring.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { SoMonitoringComponent } from './orchestration/so-monitoring/so-monitoring.component';
+import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled-bots.component';
 @NgModule({
   declarations: [OrchestrationComponent,ipcustompipecreation,
     BotStatusComponent,
@@ -81,7 +82,8 @@ import { SoMonitoringComponent } from './orchestration/so-monitoring/so-monitori
     NewSoBotManagementComponent,
     StatisticsComponent,
     MonitoringComponent,
-    SoMonitoringComponent],
+    SoMonitoringComponent,
+    ScheduledBotsComponent],
   imports: [
     CommonModule,
     FormsModule,

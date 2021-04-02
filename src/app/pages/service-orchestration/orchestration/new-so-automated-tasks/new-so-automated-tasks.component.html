@@ -102,7 +102,7 @@
               <select class="form-control" style="width:110px;padding:0px" [value]="element.sourceType" (change)="changesource($event.target.value,element.taskId)">
                   <option value="">Select Bot Source</option>
                   <option value="EPSoft">EPSoft</option>
-                  <option value="UIPath">UiPath</option>
+                  <option value="UiPath">UiPath</option>
                   <option value="BluePrism">BluePrism</option>
                   <!--<option value="Blue Prism">Blue Prism</option>
                   <option value="Kofax">Kofax</option> -->
@@ -137,7 +137,7 @@
                     <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
                 </select>
               </span>
-              <span *ngIf="element.sourceType=='UIPath'">
+              <span *ngIf="element.sourceType=='UiPath'">
                 <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
                     <option [value]="'0'"  >Select Resource</option>
                     <option *ngFor="let bot of uipath_bots" [value]="bot.Key" [selected]="bot.Key==element.botId" >{{bot.ProcessKey}}</option>
@@ -465,7 +465,7 @@
                 <div class="row">
                     <div class="col-md-12" *ngIf="addconfigstatus==false">
                       <span>
-                        <input type="checkbox" (click)="blueprism=false;kofax=false;checked('UIPath',uipath)" [(ngModel)]="uipath"> UiPath
+                        <input type="checkbox" (click)="blueprism=false;kofax=false;checked('UiPath',uipath)" [(ngModel)]="uipath"> UiPath
                       </span>
                       <!-- &nbsp;&nbsp;
                       <span>
