@@ -247,6 +247,7 @@ export class SoSchedulerComponent implements OnInit {
     {
       let schedule={
         botId:this.botid,
+        "botVersion": checked_schedule.botVersion,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
@@ -281,6 +282,7 @@ export class SoSchedulerComponent implements OnInit {
     let checked_schedule=this.schedule_list.find(data=>data.check==true)
     let schedule={
       botId:this.botid,
+      "botVersion": checked_schedule.botVersion,
       "scheduleInterval":checked_schedule.scheduleInterval,
       "intervalId":checked_schedule.intervalId,
     }
@@ -307,6 +309,7 @@ export class SoSchedulerComponent implements OnInit {
     {
       let schedule={
         botId:this.botid,
+        "botVersion": checked_schedule.botVersion,
         "scheduleInterval":checked_schedule.scheduleInterval,
         "intervalId":checked_schedule.intervalId,
       }
