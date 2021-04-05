@@ -68,7 +68,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   public categaoriesList:any=[];
   public uipath_bots:any=[];
   public blueprism_configs:any=[];
-  public checkedsource:String="UIPath";
+  public checkedsource:String="UiPath";
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
@@ -157,7 +157,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
             }
           });
         }
-        else if(data.sourceType == 'UIPath')
+        else if(data.sourceType == 'UiPath')
          {
            console.log("uiapath_bots",data.sourceType);
              this.uipath_bots.filter(x =>
@@ -348,7 +348,7 @@ resetsla(){
       if(response.automationTasks != undefined)
       {
         this.responsedata=response.automationTasks.map(item=>{
-            if(item.sourceType=="UIPath")
+            if(item.sourceType=="UiPath")
               item["taskOwner"]="Karthik Peddinti";
             else if(item.sourceType=="EPSoft")
             {
@@ -440,7 +440,7 @@ resetsla(){
   {
     let botId=$("#"+id+"__select").val();
     let source=this.responsedata.find(item=>item.taskId==id).sourceType;
-    if(source=="UIPath")
+    if(source=="UiPath")
     this.responsedata.find(item=>item.taskId==id).taskOwner="Karthik Peddinti";
     else if(source=="EPSoft")
     {
@@ -912,14 +912,14 @@ resetsla(){
   runsmoketest(taskId)
   {
     let data=this.responsedata.find(item=>item.taskId==taskId)
-    let header=" <div class='text-center'><span style='padding:10px;font-size:12px'>TaskName:&nbsp;"+data.taskName+"</span><span style='padding:10px;font-size:12px'>Status:&nbsp;"+data.status+"</span><span style='padding:10px;font-size:12px'>Source:&nbsp;"+data.sourceType+"</span></div><br><br>";
+    let header=" <div class='text-center'><span style='padding:10px;font-size:12px'>Task Name:&nbsp;"+data.taskName+"</span><span style='padding:10px;font-size:12px'>Status:&nbsp;"+data.status+"</span><span style='padding:10px;font-size:12px'>Source:&nbsp;"+data.sourceType+"</span></div><br><br>";
     let errorbody="<div class='text-center'><br><br><i style='font-size:28px;color:red' class='fas  fa-exclamation-triangle'></i><br><br> <div style='font-size:24px;color:red;'> Smoke Test Run Failed</div><br><br></div> "
-    let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Sucessfully</div><br><br></div> "
+    let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Successfully</div><br><br></div> "
     this.spinner.show()
     setTimeout(()=>{
       this.spinner.hide();
       Swal.fire({
-        width: '500px',
+        width: '700px',
         html:header+(data.status=="Success"?successbody:errorbody),
         confirmButtonColor: (data.status=="Success"?"green":"red"),
         confirmButtonText: 'Dismiss',

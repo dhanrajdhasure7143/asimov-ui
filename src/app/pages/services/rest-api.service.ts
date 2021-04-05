@@ -790,4 +790,9 @@ save_blueprism_config(data)
       // return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
     }
 
+    get_scheduled_bots(){
+      return this.http.get('/rpa-service/management/scheduled-bots');
+    }
+
+
 }
