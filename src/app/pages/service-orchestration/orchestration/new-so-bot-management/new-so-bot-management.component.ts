@@ -748,6 +748,11 @@ public slaupdate : boolean = false;
           blueprismlogs=response.sort((right,left)=>{
             return moment.utc(left.startTimeStamp).diff(moment.utc(right.startTimeStamp))
           });
+          blueprismlogs=blueprismlogs.map(item=>{
+               item["startTimeStamp"]=moment(item.startTimeStamp).format("MMM D ,yyyy, HH:MM");
+               item["endTimeStamp"]=moment(item.endTimeStamp).format("MMM D ,yyyy, HH:MM");
+              return item;
+           })
           this.blueprimslogs = new MatTableDataSource(blueprismlogs);
           this.blueprimslogs.sort=this.sort7;
           this.blueprimslogs.paginator=this.paginator7;
