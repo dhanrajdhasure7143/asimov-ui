@@ -128,3 +128,7 @@ input[type="text"]:not(.mat-input-element), input[type="password"] {
   box-shadow: none;
   border-radius: 0px;
 }
+.env-btn{
+  margin-left: 5px !important;
+  margin-right: 5px !important;
+}

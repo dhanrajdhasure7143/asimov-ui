@@ -186,6 +186,7 @@
               <h4>Logs</h4>
           </div>
           <div class="container-fluid" style="background: white;" >
+            <div class="container-fluid w-100" >
             <button (click)="viewlogdata(log_botid,log_version)" matTooltip="Refresh" style='float:right;padding:10px;' ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i>&nbsp; Refresh</button>  
               <div class="container-fluid w-100" >
                   <table mat-table [dataSource]="Viewloglist" #sort4="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
@@ -264,6 +265,7 @@
                   </table>
                   <mat-paginator #paginator4 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
               </div>
+            </div>
           </div>
       </div>
   </div>
