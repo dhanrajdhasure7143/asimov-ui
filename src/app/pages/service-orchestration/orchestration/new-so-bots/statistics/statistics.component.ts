@@ -253,7 +253,7 @@ chart.cursor = new am4charts.XYCursor();
         
         pieSeries.ticks.template.disabled = true;
         var label = pieSeries.createChild(am4core.Label);
-        label.text = "122";
+        //label.text = "122";
         label.horizontalCenter = "middle";
         label.verticalCenter = "middle";
         label.fontSize = 20;
