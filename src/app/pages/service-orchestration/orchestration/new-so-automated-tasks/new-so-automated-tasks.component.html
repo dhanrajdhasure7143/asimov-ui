@@ -99,8 +99,9 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Source</th>
           <td mat-cell *matCellDef="let element" class="text-center">
             <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
-              <select class="form-control" style="width:110px;padding:0px" [value]="element.sourceType" (change)="changesource($event.target.value,element.taskId)">
-                  <option value="">Select Bot Source</option>
+              <select class="form-control" style="width:140px;padding:0px" [value]="element.sourceType" (change)="changesource($event.target.value,element.taskId)">
+                  <option [value]="null" disabled hidden>Select Bot Source</option>
+                  <!-- <option value="">Select Bot Source</option> -->
                   <option value="EPSoft">EPSoft</option>
                   <option value="UiPath">UiPath</option>
                   <option value="BluePrism">BluePrism</option>

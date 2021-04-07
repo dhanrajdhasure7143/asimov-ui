@@ -113,11 +113,14 @@ export class NewSoManagementComponent implements OnInit {
   }
 
   selectchart4(){
-    $(".left_arrow_chart4").hide();
+    this.spinner.show();
+    this.chart4();
     $('.chart_div_4').show();
+    $(".left_arrow_chart4").hide();
     $('.chart_div_High_4').hide();
     $('.chart_div_Medium_4').hide();
     $('.chart_div_Low_4').hide();
+    this.spinner.hide();
   }
   
   chart1(){
@@ -480,7 +483,7 @@ for(let i = 0 ; i < this.objincidentId.length ; i++ )
 }
 console.log(incidentarra)
 chart.data = incidentarra;
-
+/*
 // Create axes
 var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 categoryAxis.dataFields.category = "incidentId";
@@ -507,22 +510,49 @@ valueAxis.cursorTooltipEnabled = false;
     valueAxis.startLocation = 0.5;
     valueAxis.endLocation = 0.5;
 
+*/
+
+// Create axes
+var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+categoryAxis.dataFields.category = "incidentId";
+categoryAxis.renderer.grid.template.location = 0;
+categoryAxis.renderer.minGridDistance = 20;
+categoryAxis.renderer.labels.template.fontSize = 12;
+categoryAxis.renderer.labels.template.maxWidth = 120;
+categoryAxis.renderer.labels.template.wrap = true;
+// categoryAxis.renderer.labels.template.fontWeight = 500;
+categoryAxis.renderer.labels.template.rotation = -60;
+categoryAxis.renderer.labels.template.horizontalCenter = "right";
+categoryAxis.tooltip.hiddenState.properties.visible = true;
+
+var  valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+valueAxis.renderer.labels.template.fontSize = 11;
+valueAxis.renderer.grid.template.location = 0;
+valueAxis.renderer.minGridDistance = 30;
+
 
 // Create series
 var series = chart.series.push(new am4charts.ColumnSeries());
 series.dataFields.valueY = "value";
 series.dataFields.categoryX = "incidentId";
-series.columns.template.tooltipText = "{value}" 
+series.columns.template.tooltipText = "{incidentId}:{value}" 
 series.name = "Ticket ID";
 var columnTemplate = series.columns.template;
 columnTemplate.width = 25;
 columnTemplate.column.cornerRadiusTopLeft = 20;
 columnTemplate.column.cornerRadiusTopRight = 20;
 columnTemplate.strokeOpacity = 0;
-let label = categoryAxis.renderer.labels.template;
-label.truncate = true;
-label.maxWidth = 100;
-label.tooltipText = "{incidentId}";
+
+// Legend
+chart.legend = new am4charts.Legend();
+chart.legend.fontSize = 12;
+let markerTemplate = chart.legend.markers.template;
+markerTemplate.width = 10;
+markerTemplate.height = 10;
+
+// Add cursor
+chart.cursor = new am4charts.XYCursor();
+
     this.spinner.hide();
 
   }
@@ -543,6 +573,9 @@ this.ClosedRes = 0;
 this.SolvedWA = 0;
 this.SolvedRemo = 0;
 this.New = 0;
+this.PriHigh=0;
+this.PriMedium=0;
+this.PriLow=0;
 for(let i = 0; i< this.datasource.length ; i++ )
 {
     this.objpriority.push(this.datasource[i].priority);
@@ -603,16 +636,17 @@ chart.data = [{
 
 var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
 categoryAxis.dataFields.category = "category";
-categoryAxis.renderer.grid.template.strokeOpacity = 0;
+categoryAxis.renderer.grid.template.location = 0;
 categoryAxis.renderer.minGridDistance = 10;
-categoryAxis.tooltip.hiddenState.properties.opacity = 1;
+categoryAxis.renderer.labels.template.fontSize = 12;
+categoryAxis.renderer.labels.template.maxWidth = 120;
 categoryAxis.tooltip.hiddenState.properties.visible = true;
 var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-valueAxis.renderer.inside = true;
+valueAxis.renderer.inside = false;
 valueAxis.min = 0;
 valueAxis.max = 100;
-valueAxis.renderer.labels.template.fillOpacity = 0.3;
-valueAxis.renderer.grid.template.strokeOpacity = 0;
+//valueAxis.renderer.labels.template.fillOpacity = 0.3;
+//valueAxis.renderer.grid.template.strokeOpacity = 1;
 valueAxis.cursorTooltipEnabled = false;
 valueAxis.renderer.labels.template.fontSize = 11;
 // Create series
@@ -680,10 +714,8 @@ series.columns.template.events.on(
           return am4core.color("#a8b3b7");
       }
     });*/
-    var cursor = new am4charts.XYCursor();
-    cursor.behavior = "panX";
-    chart.cursor = cursor;
-    cursor.lineX.disabled = true;
+    // Add cursor
+    chart.cursor = new am4charts.XYCursor();
 
     chart.legend = new am4charts.Legend();
     chart.legend.fontSize = 13;
