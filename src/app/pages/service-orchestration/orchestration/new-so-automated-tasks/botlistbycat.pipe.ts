@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'botlistbycat'
+  name: 'BotlistbycatPipe'
 })
 export class BotlistbycatPipe implements PipeTransform {
 

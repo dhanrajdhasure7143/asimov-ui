@@ -112,3 +112,12 @@ min-width:10px !important;
   color: black;
   opacity: 1;
 }
+
+.rpaenv_header_addon {
+  position: relative !important;
+  top: 10px !important;
+  /*text-align: right !important;*/
+  width: 0% !important;
+  float: right !important;
+
+}

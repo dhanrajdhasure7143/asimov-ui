@@ -18,7 +18,7 @@
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 body, html {
-  font-family: 'Roboto';
+  font-family: 'Source Sans Pro', sans-serif  !important;
   user-select: none;
 }
 .breadcrumb{
@@ -689,6 +689,11 @@ foreignObject{
   z-index: 0;
   position: relative;
 }
+.mat-tab-group{
+
+  font-family: 'Source Sans Pro', sans-serif  !important;
+}
+
 #piechart1 text,#piechart2 text {
   font-size: 10px;
   fill: black !important;
