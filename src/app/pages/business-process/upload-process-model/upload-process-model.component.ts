@@ -245,13 +245,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       }
     })
   }
+
   fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
        this.pivalues=res;
     })
    }
 
-   async getUserBpmnList(isFromConf){
+  async getUserBpmnList(isFromConf){
     this.isLoading = true;
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.full_saved_bpmn_list = res;
@@ -303,12 +304,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     let current_bpmn_info
     if(user_role=='Process Architect'){
       current_bpmn_info = this.saved_bpmn_list[0];
-      // console.log("process");
       
     }else{
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
     }
-    // console.log(current_bpmn_info);
 
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
@@ -336,10 +335,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     else
       this.selected_approver = null;
-      
    }
 
-   getAutoSavedDiagrams(){
+  getAutoSavedDiagrams(){
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
       if(Array.isArray(res))
         this.autosavedDiagramList = res;
@@ -353,7 +351,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     });
    }
 
-   filterAutoSavedDiagrams(){
+  filterAutoSavedDiagrams(){
      let sel_not = this.saved_bpmn_list[this.selected_notation]
       this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
       if(this.isShowConformance){
@@ -364,7 +362,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       })
    }
 
-   fitNotationView(){
+  fitNotationView(){
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].get('canvas').zoom('fit-viewport');
     let msg = "";
@@ -463,9 +461,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   }
 
   setUrlParam(name, value) {
-
     var url = new URL(window.location.href);
-
     if (value) {
       url.searchParams.set(name, '1');
     } else {
@@ -477,11 +473,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
 
    getUrlParam(name) {
     var url = new URL(window.location.href);
-
     return url.searchParams.has(name);
   }
 
-displayBPMN(){
+  displayBPMN(){
   let value = this.notationListOldValue;
   let _self = this;
   this.updated_date_time = null;
@@ -626,14 +621,12 @@ displayBPMN(){
     let _self = this;
     let bpmnModel={};
     let modeler_obj = this.isShowConformance && !this.reSize ? "confBpmnModeler":"bpmnModeler";
-    // bpmnModel["modifiedTimestamp"] = new Date();
     bpmnModel["ntype"] = this.isShowConformance ? "bpmn":_self.saved_bpmn_list[_self.selected_notation]["ntype"];
     if(!(this.isShowConformance && !this.reSize)){
       bpmnModel["bpmnModelId"] = _self.saved_bpmn_list[_self.selected_notation]["bpmnModelId"];
       bpmnModel["version"] = _self.saved_bpmn_list[_self.selected_notation]["version"];
       if(_self.autosavedDiagramVersion[0] && _self.autosavedDiagramVersion[0]["bpmnModelId"] == bpmnModel["bpmnModelId"]){
         bpmnModel["bpmnModelTempId"] = _self.autosavedDiagramVersion[0]["bpmnModelTempId"];
-       // bpmnModel["createdTimestamp"]=_self.autosavedDiagramVersion[0]["createdTimestamp"]
       }else{
       //  bpmnModel["createdTimestamp"] = new Date();
       }
@@ -695,7 +688,6 @@ displayBPMN(){
         'success'
       );
     })
-    //this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
   }
 
   orchestrate(){
@@ -724,7 +716,6 @@ displayBPMN(){
       let _self = this;
       if(this.fileType == this.selectedNotationType){
         this[modeler_obj].saveXML({ format: true }, function(err, xml) {
-          // console.log(xml);
           var blob = new Blob([xml], { type: "application/xml" });
           var url = window.URL.createObjectURL(blob);
          _self.downloadFile(url);
@@ -1011,7 +1002,6 @@ displayBPMN(){
       }else{
         bpmnModel.bpmnModelId = this.randomNumber;
       }
-     // bpmnModel.createdTimestamp = this.pivalues["createdTime"];
       bpmnModel.bpmnProcessStatus = "INPROGRESS";
       bpmnModel.notationFromPI = true;
       bpmnModel.ntype ='bpmn' //Notation type for bpmnFromPI
@@ -1024,10 +1014,8 @@ displayBPMN(){
         bpmnModel.id = sel_List['id'];
       else
         delete(bpmnModel.id);
-     // bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
       bpmnModel.bpmnProcessStatus = sel_List['bpmnProcessStatus'];
     }
-    // this.initBpmnModeler();
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
@@ -1097,7 +1085,6 @@ displayBPMN(){
     })
   }
 
-
   uploadConfBpmn(confBpmnData){
     let _self = this;
     let decrypted_data = atob(unescape(encodeURIComponent(confBpmnData)));
@@ -1116,7 +1103,7 @@ displayBPMN(){
     }, 3000);
    }
 
-   displayXML(e){
+  displayXML(e){
     let _self = this;
     _self.isLoading = true;
     if(e.index == 1){
@@ -1262,14 +1249,15 @@ displayBPMN(){
       this.global.notify(message, "error");
     }
   }
+
   displayShortcut(){
      this.dialog.open(this.keyboardShortcut);
   }
+  
   openDeployDialog() {
     let _self = this;
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].saveXML({ format: true }, function(err, xml) {
-      //console.log(xml);
       _self.openDialog(xml)
     }); 
   }
@@ -1297,6 +1285,7 @@ displayBPMN(){
     this.variables= [];
     this.businessKey='';
   }
+
   addVariable(){
     this.variables.push({
       variableName: '',
@@ -1304,12 +1293,15 @@ displayBPMN(){
       value: ''
     })
   }
+
   removevariable(index){
     this.variables.splice(index, 1);
   }
+
   cancelProcess(){
     this.dialog.closeAll()
   }
+
   startProcess(){
     let reqBody={
       "definitionId":this.definationId,
@@ -1340,16 +1332,6 @@ displayBPMN(){
   fitNotationViewfromPI(){
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].get('canvas').zoom('fit-viewport');
-    // let msg = "";
-    // if(this.isConfBpmnModeler){
-    //   if(document.getElementById("canvas1") && document.getElementById("canvas1").innerHTML.trim() != "")
-    //     msg = (this.isConfBpmnModeler?"Left":"Right")+" side notation";
-    //   else
-    //     msg = "Notation"
-    // }
-    // else
-    //   msg = "Notation"
-    // this.global.notify(msg+" is fit to view port", "success")
   }
 
 }

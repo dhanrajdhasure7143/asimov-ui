@@ -52,11 +52,7 @@ export class DatadocumentComponent implements OnInit {
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/datadocument", "title": "Data Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
-      
-        // var restwo=localStorage.getItem('fileData')
-        // var res=JSON.parse(restwo)
         let restwo;
-        //   if (resOne) {
       this.dt.current_piData.subscribe(response => { restwo = response })
       let res=restwo;
         this.fileData = res;
@@ -65,10 +61,8 @@ export class DatadocumentComponent implements OnInit {
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
         this.fileData = this.fileData.slice(0, this.fileData.length-1);
-        
         this.fileData = this.fileData;
         for (var f = 0; f < this.headerData.length; f++) {
-         
           switch (f) {
             case 0:
               {
@@ -122,18 +116,10 @@ export class DatadocumentComponent implements OnInit {
                                     {
                                       this.getDataType(this.headerData[12], this.fileData[0][12], 12);
                                     }
-                     
-                     
           }
         }
-    //   }
-    // });
+  }
 
-  }
-  generatepg() {
-    var modal = document.getElementById('myModal');
-    modal.style.display = "block";
-  }
   caseIdSelection() {
     var headerstype=[];
     var headerstypeArray=[]
@@ -146,12 +132,14 @@ export class DatadocumentComponent implements OnInit {
     localStorage.setItem('headertypeObj',JSON.stringify(headerstypeArray))
     this.router.navigate(['/pages/processIntelligence/selection']);
   }
-  sort(property) {
+
+  sort(property) {   //table sorting
     this.isDesc = !this.isDesc; //change the direction 
     let direction = this.isDesc ? 1 : -1;
     let index = this.headerData.indexOf(property);
     return this.checkNsort(direction, index);
   }
+
   checkNsort(direction, index) {
     this.fileData.sort(function (a, b) {
       let value = 0;
@@ -168,20 +156,15 @@ export class DatadocumentComponent implements OnInit {
   loopTrackBy(index, term) {
     return index;
   }
-  selectedCell(tr_index, index, e, v) {
+
+  selectedCell(tr_index, index, e, v) {     //Validate each cell for valid data type
     this.headerName = v;
     if (!e.srcElement.classList.contains("valid") && this.headerName) {
-     //let hdr_ar_index = this.headerData.indexOf(this.headerName);
       let reg_expression;
       let isDateCheck: boolean = false;
       if (this.headerName.indexOf('Timestamp') == -1 || this.headerName.indexOf('Time') == -1 || this.headerName.indexOf('Date') == -1) {
-        //reg_expression = new RegExp(/^\d+$/);
         reg_expression = new RegExp(/[-~]*$/); //    /^[-\w\s]+$/
       } //alphanum check else
-      // isDateCheck = hdr_ar_index == 3 || hdr_ar_index == 4;
-      // if (hdr_ar_index == 2 || hdr_ar_index == 5 || hdr_ar_index == 6) {
-      //   reg_expression = new RegExp(/^[a-z\s ,]{0,255}$/i ); //string check   /^[a-z\s ,]{0,255}$/i
-      // }
       isDateCheck = this.headerName.indexOf('Timestamp') != -1 || this.headerName.indexOf('Time') != -1 || this.headerName.indexOf('Date') != -1
       let isInvalid: boolean = false;
       for (var x = 0; x < this.fileData.length; x++) {
@@ -244,7 +227,6 @@ export class DatadocumentComponent implements OnInit {
         }
         
         this.headerData[index] = this.headerName;
-       // this.headerName = this.headerData[hdr_ar_index + 1];
       }
     
     }
@@ -256,22 +238,18 @@ export class DatadocumentComponent implements OnInit {
     this.invalidCells = [];
     this.isValidPiData = false;
   }
+
   openModal(template) {
     this.modalRef = this.modalService.show(template);
-
   }
 
-  searchTable() {
+  searchTable() {   // Search value on table
     let _self = this;
     this.fileData = this.fileData.filter(each_row => {
       each_row.forEach(each_cell => {
         return each_cell.indexOf(_self.searchTerm) > -1;
       })
     })
-  }
-  closePopup() {
-    var modal = document.getElementById('myModal');
-    modal.style.display = "none";
   }
 
   getDataType(index, fData, headValue) {
@@ -465,59 +443,45 @@ export class DatadocumentComponent implements OnInit {
     
   }
 
-
-
-  isNumeric(num) {
+  isNumeric(num) {    // validate number or not
     return !isNaN(num)
   }
 
-  isDate(date){
-    if(!isNaN(Date.parse(date)))
-	{
-    return true;
-	} else {
-    return false;
-  }
+  isDate(date){     // valodate date formate
+      if(!isNaN(Date.parse(date))){
+        return true;
+      } else {
+        return false;
+      }
   }
 
   getDataTypeChange(hData, cData){
-   //if(this.dTypeArray.length == 0){
       this.dTypeArray.push({'colType': hData, 'type': cData});
-    //} else {
       for(var i=0;i<this.dTypeArray.length;i++){
         if(this.dTypeArray[i].colType == hData){
           this.dTypeArray[i].type = cData;
-        // } else {
-        //   this.dTypeArray.push({colType: hData, type: cData});
-        // }
       }
     }
     let diffArray = this.removeDuplicates(this.dTypeArray);
-    // localStorage.setItem("DDType",JSON.stringify(diffArray));
   }
+
   removeDuplicates(arr) {
     let newArray = []; 
-            // Declare an empty object 
-            let uniqueObject = {}; 
-              
-            // Loop for the array elements 
-            for (let i in arr) { 
-      
-                // Extract the title 
-              let   objTitle = arr[i]['colType']; 
-      
-                // Use the title as the index 
-                uniqueObject[objTitle] = arr[i]; 
-            } 
-              
-            // Loop to push unique object into array 
-            for (let j in uniqueObject) { 
-                newArray.push(uniqueObject[j]); 
-            } 
-              
-            // Display the unique objects 
-            
-            return newArray;
+      let uniqueObject = {}; 
+      // Loop for the array elements 
+      for (let i in arr) { 
+          // Extract the title 
+        let   objTitle = arr[i]['colType']; 
+          // Use the title as the index 
+          uniqueObject[objTitle] = arr[i]; 
+      }
 
+      // Loop to push unique object into array 
+      for (let j in uniqueObject) { 
+          newArray.push(uniqueObject[j]); 
+      } 
+        
+      // Display the unique objects 
+      return newArray;
   }
 }
