@@ -1195,7 +1195,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
           {
             let data: any = outdata
             setTimeout(()=>{
-              $("#text_"+this.outputboxid).html((data[0].Value).toString().replace(/\n/g, "<br />"));
+              $("#text_"+this.outputboxid).val((this.outputboxresult[0].Value).toString().replace(/\n/g, "<br />"));
             },1000)
           }
           if(this.SelectedOutputType=="Image")
