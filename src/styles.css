@@ -775,3 +775,6 @@ background-color:#a94442 !important;
 .dbichart-head>label{
 font-size: 18px !important;
 }
+.pisvg{
+  width: 100% !important;
+}

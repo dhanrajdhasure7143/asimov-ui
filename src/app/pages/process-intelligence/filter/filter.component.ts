@@ -131,34 +131,28 @@ export class FilterComponent implements OnInit {
         this.filterby="Activity";
     }
     
-    // this.dataValuesNames = [];
-    // for(var i=0;i<this.dataValues.length;i++){
-    //   var obj={};
-    //   obj["name"]=this.dataValues[i].name;
-    //   obj["selected"]="inactive";
-    //   this.dataValuesNames.push(obj)
-    // }
     if(this.isFilterApplied==true){
-    this.startPointArray = [];
-    for(var i=0;i<this.startArray.length;i++){
-      var obj={};
-      obj["name"]=this.startArray[i];
-      obj["selected"]="inactive";
-      this.startPointArray.push(obj)
-    }    
-    this.endPointArray = [];
-    for(var i=0;i<this.endArray.length;i++){
-      var obj={};
-      obj["name"]=this.endArray[i];
-      obj["selected"]="inactive";
-      this.endPointArray.push(obj)
+      this.startPointArray = [];
+        for(var i=0;i<this.startArray.length;i++){
+          var obj={};
+          obj["name"]=this.startArray[i];
+          obj["selected"]="inactive";
+          this.startPointArray.push(obj)
+        }    
+      this.endPointArray = [];
+        for(var i=0;i<this.endArray.length;i++){
+          var obj={};
+          obj["name"]=this.endArray[i];
+          obj["selected"]="inactive";
+          this.endPointArray.push(obj)
+        }
     }
-  }
   }
 
 loopTrackBy(index, term){
   return index;
 }
+
 selectData(selectedData, index){
   if(this.dataValuesNames[index].selected == "inactive"){
     var select = {
@@ -249,24 +243,9 @@ applyFilter(){
       this.selectedNodes.emit(null)
           this.applyFilterValue.emit(true);
     }
-    
-  // this.seletedActivity=[];
-  // if(this.isDeselectAll == true){
-  //   this.seletedActivity = [];
-  //   // this.selectedNodes.emit(this.seletedActivity)
-  //   this.selectedNodes.emit(this.seletedActivity)
-  //   this.applyFilterValue.emit(true);
-  // } else {
-  // for (var i = 0; i < this.dataValuesNames.length; i++){
-  //   if(this.dataValuesNames[i].selected === "inactive")
-  //     this.seletedActivity.push(this.dataValues[i].name)
-  //   };
-  //     this.selectedNodes.emit(this.seletedActivity)
-  //     this.applyFilterValue.emit(true);
-  // }
   this.applyVariantFilter()
 }
-channgeFilter(){
+channgeFilter(){    // filter type in bottom over lay
   this.endPointsArray=[{name:"Start",selected:"inactive"},{name:"End",selected:"inactive"}]
   if(this.filterby=="Activity"){
     this.isActivity=true;
@@ -301,6 +280,7 @@ selectedStartPoint(data,index){
     this.endptBt=true;
   }
 }
+
 selectedVariant(data,index){
   if(data.selected=="inactive"){
     this.variantListarray[index].selected= "active"
@@ -320,6 +300,7 @@ selectedVariant(data,index){
     }
     this.isDeselectAll = false;
 }
+
   selectedEndPoint(data,index){
     if(data.selected=="inactive"){
       this.endPointArray[index].selected= "active"
@@ -338,6 +319,7 @@ selectedVariant(data,index){
         this.endptBt=true;
       }
   }
+
   applyEndpointFilter(){
     var selectedEndPoints=[]
     var selectedstartPoints=[]
@@ -363,13 +345,13 @@ selectedVariant(data,index){
       console.log(obj);
 
       this.selectedStartpoints.emit(obj);
-      // this.selectedEndpoints.emit(selectedEndPoints);
-
       this.applyFilterValue.emit(true)
   }
+
   onStartPoint(){
     this.isStartPoint=!this.isStartPoint;
   }
+
   onEndPoint(){
     this.isEndPoint=!this.isEndPoint;
   }
@@ -377,7 +359,6 @@ selectedVariant(data,index){
   caseParcent(parcent){       // case persent value in variant list
     if(String(parcent).indexOf('.') != -1){
     let perc=parcent.toString().split('.')
-  // return parcent.toString().slice(0,5);
   return perc[0]+'.'+perc[1].slice(0,2);
     }else{
       return parcent;
@@ -415,7 +396,7 @@ selectedVariant(data,index){
         this.applyFilterValue.emit(true)  
   }
 
-  removeTag(value){
+  removeTag(value){   // remove applied tag on filter
 
     for (var i = this.appliedFilters.length - 1; i >= 0; i--) {
       if (this.appliedFilters[i] === value) {
@@ -423,66 +404,29 @@ selectedVariant(data,index){
       }
      }
      if(value=="EndPoint"){
-      //  let selectedstartPoints=[];
-      //  let selectedEndPoints=[];
-      //  this.endptBt=true;
+        this.startPointArray.forEach(element => {
+            element.selected= "inactive";
+        })
 
-      this.startPointArray.forEach(element => {
-          element.selected= "inactive";
-        // selectedstartPoints.push(element.name)
-      })
-
-      this.endPointArray.forEach(element => {
-          element.selected= "inactive";
-        // selectedEndPoints.push(element.name)
-      })
-      this.comboFilter();
-      // var obj:any={startPoint:selectedstartPoints,endPoint:selectedEndPoints,}
-      // this.selectedStartpoints.emit(obj);
-
+        this.endPointArray.forEach(element => {
+            element.selected= "inactive";
+        })
+        this.comboFilter();
      }else if(value=="Activity"){
-        // this.seletedVariant=[];
-        // for (var i = 0; i < this.variantListarray.length; i++){
-        //   if(this.variantListarray[i].selected === "active"){
-        //       this.seletedVariant.push(this.variantListarray[i].name)
-        //     }
-        //   };
           for (var i = 0; i < this.dataValuesNames.length; i++){
               this.dataValuesNames[i].selected = "inactive"
             };
             this.comboFilter();
-        // this.selectedNodes.emit(null);
-        // this.selectedVariantOutput.emit(this.seletedVariant)
-
      }else if(value=="Variant"){
-      this.seletedVariant=[];
+        this.seletedVariant=[];
           for(var i = 0; i < this.variantListarray.length; i++){
               this.variantListarray[i].selected = "inactive"
-              // this.seletedVariant.push(this.variantListarray[i].name)
             };
             this.comboFilter();
-        // this.seletedActivity=[];
-        // let seletedActivity1=[];
-        // for (var i = 0; i < this.dataValuesNames.length; i++){
-        //   if(this.dataValuesNames[i].selected === "active"){
-        //       seletedActivity1.push(this.dataValues[i].name)
-        //     }
-        //   };
-          // if(seletedActivity1.length==0){
-          //     this.selectedNodes.emit(null)
-          // }else{
-          //   for (var i = 0; i < this.dataValuesNames.length; i++){
-          //     if(this.dataValuesNames[i].selected === "inactive"){
-          //         this.seletedActivity.push(this.dataValues[i].name)
-          //       }
-          //     };
-          //     // this.selectedNodes.emit(this.seletedActivity)
-          // }
-         
-          // this.selectedVariantOutput.emit(this.seletedVariant)
      }
   }
-  comboFilter(){
+  
+  comboFilter(){      //cobination filter apply
     this.appliedFilters=[]
     // Activity
     let seletedActivity=[];
