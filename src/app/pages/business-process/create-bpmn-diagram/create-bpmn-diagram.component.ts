@@ -780,6 +780,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.isStartProcessBtn=false;
     })    
   }
+  zoomIn() {
+    this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+  }
+  zoomOut() {
+    this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
+  }
 
 }
 

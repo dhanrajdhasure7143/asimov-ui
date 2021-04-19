@@ -768,3 +768,24 @@ padding-top: 11px;
   background-color: white;
   margin-left: 0px !important;
 }
+.djs-minimap .toggle:before {
+  content: '' !important;
+  background: url(./../../assets/images/icons/map-marked-alt-solid.svg);
+  background-size: cover;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-left: -11px;
+  margin-top: -13px;
+  color: black;
+}
+.open .toggle:before {
+  content: 'X' !important ;
+  font-size: 18px;
+  line-height: 40px;
+  color: black;
+  background-image: none !important;
+}
+.djs-minimap:not(.open) .toggle {
+  padding: 16px !important;
+}

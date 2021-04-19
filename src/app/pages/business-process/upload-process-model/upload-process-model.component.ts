@@ -280,10 +280,19 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
      let user_role=localStorage.getItem('userRole')
      if(user_role=='Process Architect'){
       this.isLoading = true;
-      this.rest.getBPMNProcessArchNotations(this.selected_modelId).subscribe(res=>{
-        this.saved_bpmn_list=res
-          this.isLoading=false;
-      })
+      if(this.selected_modelId){
+        this.rest.getBPMNProcessArchNotations(this.selected_modelId).subscribe(res=>{
+          this.saved_bpmn_list=res
+            this.isLoading=false;
+        })
+      }else{
+        this.saved_bpmn_list.forEach((each_bpmn,i) => {
+          if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()
+              && each_bpmn.version >= 0 && this.selected_version == each_bpmn.version)
+              this.selected_notation = i;
+        })
+      }
+      
      }else{
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
       if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()
@@ -1332,6 +1341,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   fitNotationViewfromPI(){
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].get('canvas').zoom('fit-viewport');
+  }
+  zoomIn() {
+    this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+  }
+  zoomOut() {
+    this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
   }
 
 }

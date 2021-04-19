@@ -23,6 +23,7 @@ export interface AsimovAppConfig {
     dataPath:string;
     alertsEndPoint:string;
     bpmPlatfromUrl:string;
+    signoutRedirectionURL:any;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -45,4 +46,5 @@ export const AppConfig: AsimovAppConfig = {
     dataPath:environment.data_path,
     alertsEndPoint:environment.alerts_url,
     bpmPlatfromUrl:environment.bpmnplatformUrl,
+    signoutRedirectionURL: environment.redirectout_url,
 };

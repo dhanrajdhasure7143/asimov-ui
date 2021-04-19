@@ -53,6 +53,7 @@ export class DataselectionComponent implements OnInit {
   isDateformat:any;
   count=0;
   dateformat:any;
+  content_no:number=1;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
@@ -277,8 +278,8 @@ export class DataselectionComponent implements OnInit {
     return index;
   }
 
-  selectedCell(tr_index, index,e, v,row){       //case id selection for cell
-      let obj={}
+  selectedCell(tr_index, index,e, v,row){       //case id selection mapping
+    let obj={}
       this.name=''
       if(v=='S.No' || index==0){
         for(var x = 0;x < this.fileData.length;x++){
@@ -293,6 +294,10 @@ export class DataselectionComponent implements OnInit {
       this.headerName=''
     }
     else if(this.id.length == 1){
+      if(v.includes('Time')){
+        Swal.fire("Oops!", "Case ID canot be Timestamp", "warning");
+        this.id=[];
+      }else{
       Swal.fire({
         title: 'Confirmation?',
         text: "Are you sure want to use this as caseID!",
@@ -305,10 +310,12 @@ export class DataselectionComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.name=v.trim();
+          this.step_id=1
         obj[this.name]='caseID';
         this.headerArray.push(obj)
         this.headerName = 'caseID';
         this.selected=v;
+        this.content_no +=1;
         for(var x = 0;x < this.fileData.length;x++){
             if(!this.validCells['row'+x])
               this.validCells['row'+x]=[];
@@ -321,7 +328,15 @@ export class DataselectionComponent implements OnInit {
           this.headerArray=[];
         }
       })
+    }
     }else if(this.id.length == 2){
+      if(v.includes('Time')){
+        console.log(v);
+        Swal.fire("Oops!", "Activity must be string!", "warning");
+        this.id.pop();
+        console.log(this.id);
+        
+      }else{
       this.selected=v;
       this.headerName='Activity';
       this.name=v;
@@ -333,6 +348,8 @@ export class DataselectionComponent implements OnInit {
           this.validCells['row'+x]=[];
           this.validCells['row'+x].push('cell'+index);
         }
+        this.content_no +=1;
+      }
     }
     else{
       this.headerName = v.trim();
@@ -346,6 +363,7 @@ export class DataselectionComponent implements OnInit {
           this.validCells['row'+x]=[];
           this.validCells['row'+x].push('cell'+index);
         }
+        this.content_no +=1;
     }
       if(this.step_id == this.headerData.length-1){
         this.isgenerate=true;
@@ -357,7 +375,8 @@ export class DataselectionComponent implements OnInit {
   }
 
   resetColMap(){  //reset data mapping
-    this.step_id = 1;
+    this.step_id = 0;
+    this.content_no =1;
     this.validCells = [];
     this.invalidCells = [];
     this.isValidPiData = false;
@@ -373,7 +392,8 @@ export class DataselectionComponent implements OnInit {
   }  
 
   resetcaseId(){  //reset case id selection
-    this.step_id = 1;
+    this.step_id = 0;
+    this.content_no =1;
     this.validCells = [];
     this.invalidCells = [];
     this.headerArray=[];

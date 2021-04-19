@@ -10,9 +10,9 @@
     </div>
     <div class="row" *ngIf="headerName" class="columnSelection">
       <div class="col-md-4"><b>Select Column - Step {{step_id}}/{{headerData.length-1}}:"{{getCaseName(headerName)}}"</b></div>
-      <div class="col-md-4" *ngIf="headerName == 'caseID' && step_id == 1"><small>(Click on the column that contains your Case IDs. The Case ID usually is a numeric value that is unique and identifies each case in your process.)</small></div>
-      <div class="col-md-4" *ngIf="headerName == 'Activity' && step_id == 2"><small>(Click on the column that contains your activities. Activities are the actions that take place in your process. For example, if your process is Purchasing then ”Create Purchase Order” is an activity in that process.)</small></div>
-      <div class="col-md-4" *ngIf="headerName.indexOf('Timestamp') != -1 || headerName.indexOf('Time') != -1"><small>(Click on the columns that contains the timestamp for each activity. Timestamps usually look something like “2016-02-01 14:24:30” although the exact format of the timestamp may differ.)</small></div>
+      <div class="col-md-4" *ngIf="content_no == 1"><small>(Click on the column that contains your Case IDs. The Case ID usually is a numeric value that is unique and identifies each case in your process.)</small></div>
+      <div class="col-md-4" *ngIf="content_no == 2"><small>(Click on the column that contains your activities. Activities are the actions that take place in your process. For example, if your process is Purchasing then ”Create Purchase Order” is an activity in that process.)</small></div>
+      <div class="col-md-4" *ngIf="content_no == 3 || content_no == 4"><small>(Click on the columns that contains the timestamp for each activity. Timestamps usually look something like “2016-02-01 14:24:30” although the exact format of the timestamp may differ.)</small></div>  
     </div>
     <div class="">
       <form id="DataDocTableForm">

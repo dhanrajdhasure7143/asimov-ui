@@ -9,8 +9,9 @@ export class RedirectionComponent{
   constructor(private authService:AuthenticationService, @Inject(APP_CONFIG) private config) { 
     this.authService.logout();
       localStorage.clear();
-      var input = btoa("Signout");
-      window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+      console.log(this.config.signoutRedirectionURL);
+      
+      window.location.href=this.config.signoutRedirectionURL;
   }
   ngOnInit() {}
 }

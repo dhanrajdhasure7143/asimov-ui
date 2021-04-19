@@ -217,13 +217,17 @@ export class DatadocumentComponent implements OnInit {
           break;
         }
       }
-    
       if (!isInvalid) {
         this.isValidPiData = true;
        if (this.step_id == this.headerData.length) {
          
         } else {
-          this.step_id = this.step_id + 1;
+          if(v=='S.No' || index==0){
+            this.step_id = this.step_id
+          }else{
+            this.step_id = this.step_id + 1;
+          }
+         
         }
         
         this.headerData[index] = this.headerName;

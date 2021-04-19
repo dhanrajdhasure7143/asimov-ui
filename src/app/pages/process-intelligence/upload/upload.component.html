@@ -12,7 +12,7 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-3 upload_zone" id="upload_xes">
+                <div class="col-sm-3 upload_zone" id="upload_xes" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false accept=".xes, .gzip, .gz" >
                                 <ngx-dropzone-label><img src ="assets/images/XES.svg">
                                         <h5 style="color:#006ed5;font-weight: 300">
@@ -20,7 +20,7 @@
                                 </ngx-dropzone-label>
                         </ngx-dropzone>
                 </div>
-                <div class="col-sm-3 upload_zone" id="upload_db" (click)="onDbSelect()" >
+                <div class="col-sm-3 upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone [multiple]=false [accept]="db_mime" [disableClick]=true >
                                 <ngx-dropzone-label>
                                         <img src ="assets/images/DataBase.svg"> 
