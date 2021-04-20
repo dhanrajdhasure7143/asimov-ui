@@ -1355,5 +1355,6 @@ this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
     }else{
 this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
     }
+}
 
 }
