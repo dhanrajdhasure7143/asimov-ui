@@ -280,7 +280,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   {
     let botId=$("#"+id+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,id,"Automated").subscribe(data=>{
+    this.rest.assign_bot_and_task_develop(botId,id,"Automated").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {
@@ -301,7 +301,7 @@ export class SoAutomatedTasksComponent implements OnInit, OnDestroy {
   {
     let botId=$("#"+taskid+"__select").val();
     if(botId!=0)
-    this.rest.assign_bot_and_task(botId,taskid,"Human").subscribe(data=>{
+    this.rest.assign_bot_and_task_develop(botId,taskid,"Human").subscribe(data=>{
       let response:any=data;
       if(response.status!=undefined)
       {

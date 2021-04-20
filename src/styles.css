@@ -18,7 +18,7 @@
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 body, html {
-  font-family: 'Roboto';
+  font-family: 'Source Sans Pro', sans-serif  !important;
   user-select: none;
 }
 .breadcrumb{
@@ -131,11 +131,16 @@ body, html {
   height: 20px;
 }
 /* notifications to right */
-notifier-notification{
+/* notifier-notification{
+  float:right;
     position: absolute;
-    text-align: right;
-    left: calc(100% - 325px) !important;
+    text-align: left;
 }
+
+notifier-notification > button
+{
+  text-align: right;
+} */
 /* remove dropzone dotted border */
 ngx-dropzone{
   border: none !important;
@@ -684,6 +689,11 @@ foreignObject{
   z-index: 0;
   position: relative;
 }
+.mat-tab-group{
+
+  font-family: 'Source Sans Pro', sans-serif  !important;
+}
+
 #piechart1 text,#piechart2 text {
   font-size: 10px;
   fill: black !important;
@@ -744,8 +754,27 @@ foreignObject{
   text-decoration: none;
 }
 
+.shadow{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
+}
+.ep-primary-bg{
+ /*background-color: #098DE6 !important;*/
+ background-color: #0062cf  !important;
+}
 
+.progress-bar-green .mat-progress-bar-fill::after {
+  background-color: #4FA908 !important ;
+}
+.progress-bar-warn .mat-progress-bar-fill::after{
+background-color:rgb(231, 151, 3) !important;
+}
 
-.text-success{
-  color:#4FA908 !important
+.progress-bar-red .mat-progress-bar-fill::after{
+background-color:#a94442 !important;
+}
+.dbichart-head>label{
+font-size: 18px !important;
+}
+.pisvg{
+  width: 100% !important;
 }

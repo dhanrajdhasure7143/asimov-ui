@@ -22,7 +22,8 @@ export interface AsimovAppConfig {
     schemaRegistryEndPoint:string;
     dataPath:string;
     alertsEndPoint:string;
-    bpmPlatfromUrl:string
+    bpmPlatfromUrl:string;
+    signoutRedirectionURL:any;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -44,5 +45,6 @@ export const AppConfig: AsimovAppConfig = {
     schemaRegistryEndPoint:environment.schema_registry_url,
     dataPath:environment.data_path,
     alertsEndPoint:environment.alerts_url,
-    bpmPlatfromUrl:environment.bpmnplatformUrl
+    bpmPlatfromUrl:environment.bpmnplatformUrl,
+    signoutRedirectionURL: environment.redirectout_url,
 };

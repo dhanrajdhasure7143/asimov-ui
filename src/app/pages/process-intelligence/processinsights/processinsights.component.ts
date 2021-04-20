@@ -158,7 +158,7 @@ comboBarScheme = {
   name: 'singleLightBlue',
   selectable: true,
   group: 'linear',
-  domain: ['#2d7dd7']
+  domain: ['#098DE6']
 };
 
 showRightYAxisLabel: boolean = false;
@@ -182,8 +182,8 @@ robotValue:number;
         private route: ActivatedRoute,
         private dt: DataTransferService,
         private hints: PiHints,
-        private global:GlobalScript,
-        private spinner:NgxSpinnerService
+        private global:GlobalScript
+        // private spinner:NgxSpinnerService
     ) {
        // Object.assign(this, { multi });
       // Object.assign(this.bubbleData,  this.bubbleData );
@@ -268,7 +268,7 @@ robotValue:number;
             data_type: 'variant_metrics',
             "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
         }
-        this.spinner.show();
+       // this.spinner.show();
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.variant_Duration_list = res.data;
@@ -276,11 +276,11 @@ robotValue:number;
                 this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"];
                 //this.bkp_totalMedianDuration = res["data"]["total"]["totalDuration"]/3;
                 this.totalMedianDuration = this.bkp_totalMedianDuration;
-                this.spinner.hide();
+             //   this.spinner.hide();
 
             },
                 (err => {
-                    this.spinner.hide();
+                 //   this.spinner.hide();
                     // console.log("Internal server error, Please try again later.")
                 }))
 
@@ -293,7 +293,7 @@ robotValue:number;
             //let totalCost = (val*this.input1)/(1000 * 60 * 60);
             let roboCost = Math.round(this.getHours(val) * 60 / 100 * this.robotinput);
             let totalCost = Math.round(this.getHours(val) * this.input1);
-            return '$' + ((totalCost - roboCost));
+            return ((totalCost - roboCost));
         } else {
             return '-';
         }
@@ -301,7 +301,7 @@ robotValue:number;
 
     getHumanTotalCost(val) {
         if (val) {
-            return '$' + Math.round(Number(val))
+            return Math.round(Number(val))
         }
     }
 
@@ -347,7 +347,7 @@ robotValue:number;
                 variants: varinatArray //if flag is true
             }
         }
-        this.spinner.show();
+       // this.spinner.show();
         this.rest.getPIInsightMeanMedianDuration(reqObj)
             .subscribe((res: any) => {
                 this.insight_human_robot_cost = res.data;
@@ -356,7 +356,7 @@ robotValue:number;
                 if (from == 'fullgraph') {
                     this.getResources(this.insight_human_robot_cost);
                 }
-                this.spinner.hide();
+              //  this.spinner.hide();
             })
 
     }
@@ -411,7 +411,7 @@ robotValue:number;
                 "resources": selected_resources,
                 "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
-            this.spinner.show();
+           // this.spinner.show();
             this.rest.getPIInsightResourceSelection(reqObj)
                 .subscribe((res: any) => {
                     // console.log(res)
@@ -491,7 +491,7 @@ robotValue:number;
                     // this.addpiechart2(activityCost);
                     //this.getDonutChart1(activityDuration);
                     //this.getDonutChart2(activityCost);
-                    this.spinner.hide();
+                 //   this.spinner.hide();
                 })
         }
     }
@@ -542,7 +542,7 @@ robotValue:number;
     }
 
     getHours(millisec) {
-        var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);
+        var hours: any = (millisec / (1000 * 60 * 60)).toFixed(1);       
         return hours;
     }
 
@@ -601,7 +601,7 @@ robotValue:number;
             }
 
         }
-        this.spinner.show();
+      //  this.spinner.show();
         this.rest.getPIVariantActivity(reqObj)
             .subscribe((res: any) => {
                 // console.log(JSON.stringify(res));
@@ -646,7 +646,7 @@ robotValue:number;
                 });
                 this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
-                    domain: ['#212F3C']
+                    domain: ['#232832']
                   };
 
                 this.dChart1 = activityDuration;
@@ -659,7 +659,7 @@ robotValue:number;
                 //this.addpiechart2(activityCost);
                 //this.getDonutChart1(activityDuration);
                 //this.getDonutChart2(activityCost);
-                this.spinner.hide();
+              //  this.spinner.hide();
             })
 
     }
@@ -728,7 +728,7 @@ robotValue:number;
                 this.isEventGraph = false;
                 this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
-                    domain: ['#008080']
+                    domain: ['#3EC1A4']
                   };
                   this.yAxisLabel1 = 'Duration(Hrs)';
             }
@@ -1357,16 +1357,13 @@ robotValue:number;
         this.isEditable1 = !this.isEditable1
     }
 
-    getAllGraphsPriceCalculation(e) {
-        // console.log(this.input1);
+    getAllGraphsPriceCalculation() {
         this.getTotalNoOfCases('fullgraph');
         this.getActivityMetrics('fullgraph');
         this.getHumanBotCost('fullgraph');
     }
 
     switch1(data) {
-        // console.log(data);
-
         if (data == "bar") {
             this.flag1 = 0
             this.verticleBarGraph();
@@ -1918,7 +1915,7 @@ svg
             "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+this.workingHours.shiftEndTime+":00"
             }
             let bi_data:any
-            this.spinner.show();
+           // this.spinner.show();
         this.rest.getBIinsights(reqObj).subscribe((res: any) => {
         bi_data=res
         // if(bi_data.data){
@@ -1940,13 +1937,13 @@ svg
                 this.biDataMinPerct=bi_data2.min_percent
             }
         // }
-        this.spinner.hide();
+       // this.spinner.hide();
             
         })
     }
 
-    loopTrackBy(index, term){
-        return index;
-      }
+    // loopTrackBy(index, term){
+    //     return index;
+    //   }
 
 }

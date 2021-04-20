@@ -5,22 +5,31 @@
     font-weight: 700;
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-    color: #fff;
+    /* color: #fff; */
+    color: black;
 }
 .boxes{
   margin-top: 10px;
 }
 .divbox0{
-  background:   #b38d1c
+  background:  white;
+  border-radius: 10px;
+  padding: 5px 0px;
 }
 .divbox1{
-  background:  rgb(72 160 91)
+  background:  white;
+  border-radius: 10px;
+  padding: 5px 0px;
 }
 .divbox2{
-  background:   #b38d1c
+  background:white;
+  border-radius: 10px;
+  padding: 5px 0px;
 }
 .divbox3{
-  background:  rgb(72 160 91)
+  background: white;
+  border-radius: 10px;
+  padding: 5px 0px;
 }
 .btm-line{
     border: 1px solid rgb(20, 20, 20);
@@ -34,9 +43,18 @@
     background-color: #ebf2d3 !important;
 }
 thead{
-    background-color: #7cb5ec !important;
+    background-color: #4AB0F5 !important;
 
 }
+.table-bordered>thead>tr>th {
+  font-size: 18px;
+  color: #fff;
+  text-align: left;
+  }
+  .table>tbody>tr>td{
+    font-size: 16px;
+    text-align: left;
+  }
 input:disabled{
     cursor: no-drop;
     background-color: rgb(192, 181, 181) !important;
@@ -193,8 +211,8 @@ input:disabled{
     position: absolute;
     z-index: 10;
     float: right;
-    left: 110%;
-    margin-top: 50px;
+    margin-left: 100%;
+    margin-top: 110px;
     height: 35px;
     cursor: pointer;
     font-weight: 600;
@@ -231,9 +249,10 @@ input:disabled{
   cursor: pointer;
 }
 .backgr{
-background: #f8f8f8;
+background: rgb(241, 240, 240);
+/* padding: 0px 80px !important; */
 /* border-radius: 3px; */
-width: 100%;
+/* width: 100%; */
 /* margin-left: -20px; */
 }
 .lineChart{
@@ -250,7 +269,7 @@ width: 100%;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
   background: #fff;
   margin-bottom: 10px;
-  margin-top: 10px; 
+  margin-top: 20px; 
 }
 .box_shadw2{
   border: 1px solid #f8f8f8;
@@ -304,12 +323,14 @@ padding: 10px;
 }
 
 .l_title{
-  position: relative;
-  top: 11px;
-  left: 190px;
+ /* position: relative; */
+  /* top: 11px; */
+  /* left: 190px; */
   color: #333333;
   font-size: 18px;
   fill: #333333;
+  text-align: center;
+  margin-top: 10px;
 }
 .titleHB-cost{
   text-align: center;
@@ -390,4 +411,25 @@ padding: 10px;
 
 .hvsbot{
   height: 360px;
+}
+
+.business_heading{
+  text-align: center;
+  padding-top: 5px;
+  font-size: 17px;
+}
+.business_content{
+  padding: 5px 15px;
+}
+.box_shade{
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  background: #fff;
+  margin-top: 20px;
+  margin-left: 10px;
+  width: 51% !important;
+  padding: 0px !important;
+}
+.box_shadw-activity{
+  width: 48% !important;
+  height: 444px ;
 }

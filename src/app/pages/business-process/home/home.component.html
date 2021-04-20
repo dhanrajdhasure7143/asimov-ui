@@ -1,7 +1,4 @@
 <div class="container-fluid">
-  <!-- <div class="right header_addon">
-    <a routerLink="/pages/approvalWorkflow/home" *ngIf="this.isButtonVisible">Approval Workflow</a>
-  </div> -->
   <div class="header_addon row approval_workflow_properties">
     <div class="col-md-8"></div>
     <a class="col-md-2" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" ><b>Approval Workflow</b></a>
@@ -68,7 +65,9 @@
           </mat-expansion-panel>
         </mat-accordion>
      </div>
+     <div *ngIf='saved_diagrams.length>0'>
      <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+     </div>
     </div>
   </div>
 </div>

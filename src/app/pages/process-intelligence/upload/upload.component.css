@@ -136,6 +136,7 @@
     color: red !important;
     font-weight: 900;
 }
+
 input[type="text"]{
   padding:4px !important;
 }
@@ -219,6 +220,10 @@ input[type="text"]{
         margin-top: 5px;
     }
     .table_header{
-        font-size: 14px;
-        font-weight: 700 !important;
+        font-size: 16px;
+        color: #fff;
+        /* font-weight: 700 !important; */
     }
+tr.mat-header-row {
+    background-color: #4AB0F5;
+}

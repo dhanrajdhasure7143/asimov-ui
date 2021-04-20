@@ -28,6 +28,7 @@ import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-n
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import minimapModule from "diagram-js-minimap";
 declare var require:any;
+import minimapModule from "diagram-js-minimap";
 
 @Component({
   selector: 'app-create-bpmn-diagram',
@@ -127,7 +128,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.getAutoSavedDiagrams();
     });
    }
-   getSelectedNotation(){
+
+  getSelectedNotation(){
     this.saved_bpmn_list.forEach((each_bpmn,i) => {
       if(each_bpmn.bpmnModelId && this.selected_modelId && each_bpmn.bpmnModelId.toString() == this.selected_modelId.toString()
           && each_bpmn.version >= 0 && this.selected_version == each_bpmn.version){
@@ -135,6 +137,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
    }
+  
    fitNotationView(){
     let canvas;
     if(this.selectedNotationType == "bpmn" || this.selectedNotationType == "cmmn")
@@ -145,8 +148,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let msg = "Notation";
     if(document.getElementById("canvas") )
     this.global.notify(msg+" is fit to view port", "success")
-
    }
+  
    setRPAData(){
     this.rest.getAllAttributes().subscribe( res => {
       let rpaActivityOptions: any[] = [];
@@ -202,14 +205,15 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
   }
-   getApproverList(){
+
+  getApproverList(){
      this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
       if(Array.isArray(res))
         this.approver_list = res;
     });
    }
 
-   getSelectedApprover(){
+  getSelectedApprover(){
     let current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
     let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype':current_bpmn_info["ntype"]}
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
@@ -230,7 +234,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.selected_approver = null;
    }
 
-   getAutoSavedDiagrams(){
+  getAutoSavedDiagrams(){
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
       if(Array.isArray(res))
         this.autosavedDiagramList = res;
@@ -243,21 +247,22 @@ export class CreateBpmnDiagramComponent implements OnInit {
         this.initiateDiagram();
     });
    }
-   filterAutoSavedDiagrams(){
+
+  filterAutoSavedDiagrams(){
      let sel_not = this.saved_bpmn_list[this.selected_notation]
       this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
         return sel_not["bpmnProcessStatus"] != "APPROVED" && sel_not["bpmnProcessStatus"] != "REJECTED" && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
       })
-   }
+  }
 
-   togglePosition(){
+  togglePosition(){
     let el = document.getElementById("properties");
     if(el){
       el.classList.toggle("slide-left");
       el.classList.toggle("slide-right");
     }
   }
-  // ngAfterViewInit(){
+  
   initiateDiagram(){
     let _self = this;
     this.initModeler();
@@ -276,21 +281,17 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
 
   setUrlParam(name, value) {
-
     var url = new URL(window.location.href);
-
     if (value) {
       url.searchParams.set(name, '1');
     } else {
       url.searchParams.delete(name);
     }
-
     window.history.replaceState({}, null, url.href);
   }
 
-   getUrlParam(name) {
+  getUrlParam(name) {
     var url = new URL(window.location.href);
-
     return url.searchParams.has(name);
   }
 
@@ -420,7 +421,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj = data;
-        //this.updated_date_time = new Date();
         this.spinner.hide();
       },
       err => {
@@ -437,7 +437,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
         'success'
       );
     })
-    //this.router.navigate(["/pages/rpautomation/home"], { queryParams: { processid: selected_id }});
   }
 
   orchestrate(){
@@ -454,7 +453,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
     link.innerHTML = "Click here to download the notation";
     link.click();
   }
-
 
   downloadBpmn(e){
     if(this.bpmnModeler){
@@ -496,6 +494,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     }
   }
+  
   initModeler(){
     let _self = this;
     this.notationXmlTab.selectedIndex = 0;
@@ -554,8 +553,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
           PropertiesProviderModule,
           {[InjectionNames.bpmnPropertiesProvider]: ['type', OriginalPropertiesProvider.propertiesProvider[1]]},
           {[InjectionNames.propertiesProvider]: ['type', PreviewFormProvider]},
-          // {[InjectionNames.replaceMenuProvider]: ['type', ReplaceMenuProvider]},
-          // CustomRenderer,
           lintModule
         ],
         container: '#canvas',
@@ -583,6 +580,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     })
   }
+
   submitDiagramForApproval(){
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
@@ -609,7 +607,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
     bpmnModel.bpmnProcessApproved = 0;
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
-      // bpmnModel.bpmnJsonNotation = final_notation;
       bpmnModel.bpmnXmlNotation = final_notation;
       _self.rest.submitBPMNforApproval(bpmnModel).subscribe(
         data=>{
@@ -649,7 +646,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
       delete(bpmnModel.id);
     bpmnModel.userName = sel_List['userName'];
     bpmnModel.tenantId = sel_List['tenantId'];
-   // bpmnModel.createdTimestamp = sel_List['createdTimestamp'];
     bpmnModel.bpmnProcessStatus = "INPROGRESS";
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
       let final_notation = btoa(unescape(encodeURIComponent(xml)));
@@ -716,16 +712,16 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.global.notify(message, "error");
     }
   }
+
   displayShortcut(){
      this.dialog.open(this.keyboardShortcut);
   }
+
   openDeployDialog() {
     let _self = this;
-    
     this.bpmnModeler.saveXML({ format: true }, function(err, xml) {
-      //console.log(xml);
       _self.openDialog(xml)
-    }); 
+    });
   }
 
   openDialog(data){
@@ -744,7 +740,6 @@ export class CreateBpmnDiagramComponent implements OnInit {
           this.isStartProcessBtn=deployResponse.startprocess
       }
     })
-    
   }
 
   openVariableDialog(){
@@ -752,6 +747,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.variables= [];
     this.businessKey='';
   }
+
   addVariable(){
     this.variables.push({
       variableName: '',
@@ -759,12 +755,15 @@ export class CreateBpmnDiagramComponent implements OnInit {
       value: ''
     })
   }
+
   removevariable(index){
     this.variables.splice(index, 1);
   }
+
   cancelProcess(){
     this.dialog.closeAll()
   }
+  
   startProcess(){    
     let reqBody={
       "definitionId":this.definationId,
@@ -781,6 +780,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
       this.cancelProcess();
       this.isStartProcessBtn=false;
     })    
+  }
+  zoomIn() {
+    this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+  }
+  zoomOut() {
+    this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
   }
 
 }

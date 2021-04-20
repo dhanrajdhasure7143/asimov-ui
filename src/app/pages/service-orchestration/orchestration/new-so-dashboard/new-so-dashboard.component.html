@@ -1,0 +1,1239 @@
+<div class="my-new-div wrapper">
+    <!-- Tab panes -->
+    <br>
+    <div class="">
+      <div >
+            <div class="row">
+                <!-- <div class="col-sm-4">
+                    <div class="dbichart-block">
+                        <div class="dbichart-head">
+                            <label>LOB</label>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="lobchart"></div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-sm-4">
+                    <div class="dbichart-block">
+                        <div class="dbichart-head">
+                            <label>Process Group</label>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="dashboardchart1"></div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-8 dashboardchart_show">
+                    <div class="dbichart-block">
+                        <div class="dbichart-head">
+                            <label>Bots by Process</label>
+                            <div class="dbichart-dropdown">
+                                <span>Select by Process Group :</span>
+								<select name="botOptions" >
+									<!-- <option value="" disabled hidden>Select</option> -->
+									<option value="all" selected>All</option>
+									<option value='Accounts Management'>Accounts Management</option>
+									<option value='Wealth Management'>Wealth Management</option>
+									<option value='Insurance'>Insurance</option>
+									<option value='Mergers & Acquisitions'>Mergers & Acquisitions</option>
+									<option value='Consumer banking'>Consumer banking</option>
+								  </select>
+                            </div>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="dashboardchart2"></div>
+                        </div>
+                    </div>
+                  </div>
+                <div class="col-sm-4 dashboardchart_shownnxt">
+                    <div class="dbichart-block">
+                        <div class="dbichart-head">
+                            <label>Tasks by Process</label>
+                            <div class="dbichart-dropdown">
+                                <span>Select by PG :</span>
+                                <select (change)='onchange($event.target.value)' name="botOptions" >
+									<option value="" disabled hidden>Select</option>
+									<option value='Accounts Management'>Accounts Management</option>
+									<option value='Wealth Management'>Wealth Management</option>
+									<option value='Insurance'>Insurance</option>
+									<option value='Mergers & Acquisitions'>Mergers & Acquisitions</option>
+									<option value='Consumer banking'>Consumer banking</option>
+								  </select>
+                            </div>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="botsbyprocess"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 dashboardchart_shownnxt">
+                    <div class="dbichart-block">
+                        <div class="dbichart-head">
+                            <label>Bot vs Human Task</label>
+                            <div class="dbichart-dropdown">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="bothumantask"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="lob-sec accounts-management">
+                        <div class="bbp-title">Process Group :<span>Accounts Management</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>05</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Bots : <strong>22</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>04</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>25</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>4</td>
+                                    <td>4</td>
+                                    <td>James</td>
+                                    <td>{{getdate(1,"1")}} 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>John</td>
+                                    <td>{{getdate(2,"1")}} 11:30:00</td>
+                                    <td><span class="dot1 Failed"></span> Failed</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Oliver</td>
+                                    <td>{{getdate(1,"1")}} 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>William</td>
+                                    <td>{{getdate(1,"1")}} 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Charlotte</td>
+                                    <td>{{getdate(1,"1")}} 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="lob-sec wealth-management">
+                        <div class="bbp-title">Process Group :<span>Wealth Management</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>08</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>03</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>03</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>02</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Sophia</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="lob-sec insurance">
+                        <div class="bbp-title">Process Group :<span>Insurance</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>09</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>02</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>04</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>06</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Samantha</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="lob-sec mergers-acquisitions">
+                        <div class="bbp-title">Process Group :<span>Mergers Acquisitions</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>06</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>03</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>05</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>06</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Samantha</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="lob-sec consumer-banking">
+                        <div class="bbp-title">Process Group :<span>Consumer Banking</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>08</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>03</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>04</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>04</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Samantha</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="botsbyprocess-sec accounts-management">
+                        <div class="bbp-title">Process Group :<span>Accounts Management</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>03</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>05</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>04</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>02</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Samantha</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="botsbyprocess-sec wealth-management">
+                        <div class="bbp-title">Process Group :<span>Wealth Management</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>01</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>03</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>08</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>04</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Samantha</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="botsbyprocess-sec insurance">
+                        <div class="bbp-title">Process Group :<span>Insurance</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>06</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>01</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>02</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>09</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Samantha</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="botsbyprocess-sec mergers-acquisitions">
+                        <div class="bbp-title">Process Group :<span>Mergers Acquisitions</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>08</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>02</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>07</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>07</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Samantha</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="botsbyprocess-sec consumer-banking">
+                        <div class="bbp-title">Process Group :<span>Consumer Banking</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>08</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>02</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>04</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>03</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Accounts Payable</td>
+                                    <td>3</td>
+                                    <td>4</td>
+                                    <td>Madeleine</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Order to Cash</td>
+                                    <td>4</td>
+                                    <td>0</td>
+                                    <td>Samantha</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Invoice Processing</td>
+                                    <td>7</td>
+                                    <td>1</td>
+                                    <td>Rebecca</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Accounts Receivable</td>
+                                    <td>1</td>
+                                    <td>10</td>
+                                    <td>Stephanie</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Clients Processing</td>
+                                    <td>6</td>
+                                    <td>10</td>
+                                    <td>Kimberly</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="botsbyprocess-sec2 accounts-payble">
+                        <div class="bbp-title">Process Group :<span>Accounts Management</span></div>
+                        <div class="bbp-title">Process Name :<span>Accounts Payble</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>04</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>00</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>04</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>Process Name</th>
+                                    <th>Task Source</th>
+                                    <th>Task Name</th>
+                                    <th>Business Owner</th>
+                                    <th>IT Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                   
+                                <tr>
+                                    <td>Accounts Payable</td>
+                              <td><select name="" id="">
+                                <option>UiPath</option>
+                                <option selected>EPSoft</option>
+                                <option>Human Task</option>
+                            </select></td>
+                              <td>Extract Invoice</td>
+                              <td>Madeleine</td>
+                              <td>Karen</td>
+                              <td>{{getdate(1,"1")}} 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Accounts Payable</td>
+                              <td><select name="" id="">
+                                <option>UiPath</option>
+                                <option selected>EPSoft</option>
+                                <option>Human Task</option>
+                            </select></td>
+                              <td>Invoice Check</td>
+                              <td>Liam</td>
+                              <td>Olivia</td>
+                              <td>{{getdate(1,"1")}} 11:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Accounts Payable</td>
+                                    <td><select name="" id="">
+                                    <option>UiPath</option>
+
+                                    <option selected>BluePrism</option>
+                                    <option>Human Task</option>
+                                    </select></td>
+                                    <td>Process Payment</td>
+                                    <td>Rebecca</td>
+                                    <td>Diane</td>
+                                    <td>{{getdate(1,"1")}} 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Accounts Payable</td>
+                                <td><select name="" id="">
+                                <option selected>UiPath</option>
+                                <option>EPSoft</option>
+                                <option>Human Task</option>
+                                </select></td>
+                                <td>Email Reconciliation Report</td>
+                                <td>Stephanie</td>
+                                <td>Lauren</td>
+                                <td>{{getdate(1,"1")}} 23:30:00</td>
+                                <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>Accounts Payable</td>
+                                    <td><select name="" id="">
+                                    <option selected>UiPath</option>
+                                    <option>Blueprism</option>
+                                    <option>Epsoft</option>
+                                    </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Send Report</a></td>
+                                    <td>Kimberly</td>
+                                    <td>Sue</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="botsbyprocess-sec2 ordertocash">
+                        <div class="bbp-title">Process Group :<span>Accounts Management</span></div>
+                        <div class="bbp-title">Process Name :<span>Order to Cash</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>03</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>08</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>04</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Order to Cash</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Extract Invoice</a></td>
+                                    <td>Madeleine</td>
+                                    <td>Karen</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Order to Cash</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Invoice Check</a></td>
+                                    <td>Samantha</td>
+                                    <td>Olivia</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>Order to Cash</td>
+                                    <td><select name="" id="">
+                                        <option >UiPath</option>
+                                        <option selected>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Process Payment</a></td>
+                                    <td>Rebecca</td>
+                                    <td>Diane</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Order to Cash</td>
+                                    <td><select name="" id="">
+                                        <option>UiPath</option>
+                                        <option selected>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Update Payment</a></td>
+                                    <td>Stephanie</td>
+                                    <td>Lauren</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Order to Cash</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Send Report</a></td>
+                                    <td>Kimberly</td>
+                                    <td>Sue</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="botsbyprocess-sec2 invoice-pro">
+                        <div class="bbp-title">Process Group :<span>Accounts Management</span></div>
+                        <div class="bbp-title">Process Name :<span>Invoice Processing</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>01</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>02</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>09</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Invoice Processing</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Extract Invoice</a></td>
+                                    <td>Madeleine</td>
+                                    <td>Karen</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Invoice Processing</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Invoice Check</a></td>
+                                    <td>Samantha</td>
+                                    <td>Olivia</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>Invoice Processing</td>
+                                    <td><select name="" id="">
+                                        <option>UiPath</option>
+                                        <option selected>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Process Payment</a></td>
+                                    <td>Rebecca</td>
+                                    <td>Diane</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Invoice Processing</td>
+                                    <td><select name="" id="">
+                                        <option>UiPath</option>
+                                        <option  selected>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Update Payment</a></td>
+                                    <td>Stephanie</td>
+                                    <td>Lauren</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Invoice Processing</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Send Report</a></td>
+                                    <td>Kimberly</td>
+                                    <td>Sue</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="botsbyprocess-sec2 account-receive">
+                        <div class="bbp-title">Process Group :<span>Accounts Management</span></div>
+                        <div class="bbp-title">Process Name :<span>Account Receivable</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>02</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>07</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>07</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Account Receivable</td>
+                              <td><select name="" id="">
+                                <option>UiPath</option>
+                                <option selected>Blueprism</option>
+                                <option>Epsoft</option>
+                                </select></td>
+                              <td><a href="" data-toggle="modal" data-target="#myModal">Extract Invoice</a></td>
+                              <td>Madeleine</td>
+                              <td>Karen</td>
+                              <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Account Receivable</td>
+                              <td><select name="" id="">
+                                <option selected>UiPath</option>
+                                <option>Blueprism</option>
+                                <option>Epsoft</option>
+                                </select></td>
+                              <td><a href="" data-toggle="modal" data-target="#myModal">Invoice Check</a></td>
+                              <td>Samantha</td>
+                              <td>Olivia</td>
+                              <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>Account Receivable</td>
+                              <td><select name="" id="">
+                                <option selected>UiPath</option>
+                                <option>Blueprism</option>
+                                <option>Epsoft</option>
+                                </select></td>
+                              <td><a href="" data-toggle="modal" data-target="#myModal">Process Payment</a></td>
+                              <td>Rebecca</td>
+                              <td>Diane</td>
+                              <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Account Receivable</td>
+                                    <td><select name="" id="">
+                                        <option>UiPath</option>
+                                        <option selected>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Update Payment</a></td>
+                                    <td>Stephanie</td>
+                                    <td>Lauren</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Account Receivable</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Send Report</a></td>
+                                    <td>Kimberly</td>
+                                    <td>Sue</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="botsbyprocess-sec2 clients-pro">
+                        <div class="bbp-title">Process Group :<span>Accounts Management</span></div>
+                        <div class="bbp-title">Process Name :<span>Client Processing</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>02</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>04</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>03</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                    <th>Next Run</th>
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Client Processing</td>
+                                    <td><select name="" id="">
+                                        <option>UiPath</option>
+                                        <option selected>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Extract Invoice</a></td>
+                                    <td>Madeleine</td>
+                                    <td>Karen</td>
+                                    <td>10/01/2020 12:00:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Client Processing</td>
+                                    <td><select name="" id="">
+                                        <option>UiPath</option>
+                                        <option selected>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Invoice Check</a></td>
+                                    <td>Samantha</td>
+                                    <td>Olivia</td>
+                                    <td>10/01/2020 11:30:00</td>
+                                    <td><span class="dot1 Paused"></span> Paused</td>
+                                </tr>
+                                <tr>
+                                    <td>Client Processing</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Process Payment</a></td>
+                                    <td>Rebecca</td>
+                                    <td>Diane</td>
+                                    <td>10/01/2020 11:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Client Processing</td>
+                                    <td><select name="" id="">
+                                        <option selected>UiPath</option>
+                                        <option>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Update Payment</a></td>
+                                    <td>Stephanie</td>
+                                    <td>Lauren</td>
+                                    <td>10/01/2020 23:30:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                                <tr>
+                                    <td>Client Processing</td>
+                                    <td><select name="" id="">
+                                        <option>UiPath</option>
+                                        <option selected>Blueprism</option>
+                                        <option>Epsoft</option>
+                                        </select></td>
+                                    <td><a href="" data-toggle="modal" data-target="#myModal">Send Report</a></td>
+                                    <td>Kimberly</td>
+                                    <td>Sue</td>
+                                    <td>10/01/2020 23:45:00</td>
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+      </div>
+
+    </div>
+</div>
+
+
+<!-- <div class="backgr">
+    <br>
+    <iframe width="100%" height="100%" (load)="spinner.hide()" frameBorder="0" [src]="urlSafe" ></iframe>
+  </div> -->

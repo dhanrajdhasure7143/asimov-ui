@@ -317,10 +317,10 @@ margin-right: -85px;
   margin-left: 0;
   margin-right: 0;
 }
-.bjs-container{
+/* .bjs-container{ */
   /* zoom: 0.8; */
   /* margin-top: 40px; */
-}
+/* } */
 .canvasOpt{
   display: inline-block;
   margin-left: 15px;
@@ -756,4 +756,36 @@ padding-top: 11px;
 }
 .start-instance:hover .deploy-menu{
   display: block;
+}
+.enjoy_hint_label{
+  opacity: 1 !important;
+}
+.djs-minimap{
+  background-color: rgba(255, 255, 255, 0) !important;
+}
+.djs-minimap svg{
+  z-index: 0 !important;
+  background-color: white;
+  margin-left: 0px !important;
+}
+.djs-minimap .toggle:before {
+  content: '' !important;
+  background: url(./../../assets/images/icons/map-marked-alt-solid.svg);
+  background-size: cover;
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  margin-left: -11px;
+  margin-top: -13px;
+  color: black;
+}
+.open .toggle:before {
+  content: 'X' !important ;
+  font-size: 18px;
+  line-height: 40px;
+  color: black;
+  background-image: none !important;
+}
+.djs-minimap:not(.open) .toggle {
+  padding: 16px !important;
 }

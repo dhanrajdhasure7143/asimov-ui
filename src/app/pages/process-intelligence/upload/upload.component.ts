@@ -73,9 +73,9 @@ export class UploadComponent implements OnInit {
   showprocessgraph: boolean=false;
   userRole: any;
   categoryName: any;
-  isUploadFileName:string;
   public isButtonVisible = false;
-  
+  isUploadFileName:string;
+
   constructor(private router: Router,
     private dt: DataTransferService,
     private rest: RestApiService,
@@ -96,7 +96,6 @@ export class UploadComponent implements OnInit {
     this.dt.changeHints(this.hints.uploadHints);
     this.getAlluserProcessPiIds();
     this.getAllCategories();
-
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     this.isButtonVisible = this.userRole.includes('SuperAdmin') || this.userRole.includes('Admin') || this.userRole.includes('Process Analyst');
@@ -119,8 +118,7 @@ export class UploadComponent implements OnInit {
   ngOnDestroy() {
     this.dtTrigger.unsubscribe();
   }
-  onUpload(event, id) {
-    // console.log("event",event.addedFiles.length);
+  onUpload(event, id) {     //for Upload csv/xls/xes/xes.gz file
     if(event.addedFiles.length==0){
       Swal.fire({
         title: 'Error',
@@ -150,10 +148,9 @@ export class UploadComponent implements OnInit {
     }
   }
 
-  getUID(id, name) {
+  getUID(id, name) {    // get id based uploaded extension file
     if (id == 0) {
       let extension = this.getFileExtension(name);
-      console.log(extension)
       if (extension == 'csv') {
         id = 2;
       }
@@ -164,7 +161,7 @@ export class UploadComponent implements OnInit {
     return id;
   }
 
-  getFileExtension(filename) {
+  getFileExtension(filename) {        // get uploaded file extension
     var ext = /^.+\.([^.]+)$/.exec(filename);
     return ext == null ? "" : ext[1];
   }
@@ -177,7 +174,7 @@ export class UploadComponent implements OnInit {
       this.error_display(event);
   }
 
-  checkUploadId(event, upload_id) {
+  checkUploadId(event, upload_id) { // read file based on selected file
     if (upload_id == 1){
       this.readExcelFile(event);
     }
@@ -187,7 +184,6 @@ export class UploadComponent implements OnInit {
     if (upload_id == 3){
       let file: File = event.addedFiles[0];
     let extension = this.getFileExtension(file.name);
-      
       switch(extension){
         case 'xes':
           this.readXESFile(event);
@@ -213,10 +209,9 @@ export class UploadComponent implements OnInit {
     this.global.notify(message, "error");
   }
 
-  readExcelFile(evt) {
+  readExcelFile(evt) {    // read xls files
     const target: DataTransfer = <DataTransfer>(evt.addedFiles);
     const reader: FileReader = new FileReader();
-
     reader.onload = (e: any) => {
       const bstr: string = e.target.result;
       const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
@@ -228,7 +223,6 @@ export class UploadComponent implements OnInit {
       this.dt.changePiData(this.data);
       let excelfile = [];
       excelfile = this.data;
-      // console.log("excelfile",excelfile,excelfile[1]);
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
         Swal.fire({
           title: 'Error',
@@ -236,15 +230,13 @@ export class UploadComponent implements OnInit {
           icon: 'error',
         })
       }else{
-        // localStorage.removeItem("fileData")
-        // localStorage.setItem("fileData", JSON.stringify(excelfile))
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
     };
     reader.readAsBinaryString(target[0]);
   }
 
-  readCSVFile(e) {
+  readCSVFile(e) {        //  read CSV files
     let reader = new FileReader();
     reader.readAsText(e.addedFiles[0]);
     let _self = this;
@@ -253,7 +245,7 @@ export class UploadComponent implements OnInit {
       (<string>reader.result).split(/\r\n|\n/).forEach((each, i) => {
         csvRecordsArray.push(each.split(','));
       })
-      this.dt.changePiData(csvRecordsArray);
+      this.dt.changePiData(csvRecordsArray); // share file data using behavior subject
       let excelfile = [];
       excelfile = csvRecordsArray;
       if(excelfile.length<=2||excelfile[0].length==0||(excelfile[1].length==0&&excelfile[2].length==0)||excelfile[1].length==1){
@@ -263,8 +255,6 @@ export class UploadComponent implements OnInit {
           icon: 'error',
         })
       }else{
-        // localStorage.removeItem("fileData")
-        // localStorage.setItem("fileData", JSON.stringify(excelfile))
         this.router.navigate(['/pages/processIntelligence/datadocument']);
       }
     };
@@ -273,7 +263,7 @@ export class UploadComponent implements OnInit {
     };
   }
 
-  readXESFile(e): void {
+  readXESFile(e): void {    // read XES files
     let me = this;
     let file = e.addedFiles[0];
     let fileReader: FileReader = new FileReader();
@@ -283,10 +273,8 @@ export class UploadComponent implements OnInit {
       const parser = new DOMParser();
       const xml = parser.parseFromString(_xml, "text/xml");
       let _obj = _self.ngxXml2jsonService.xmlToJson(xml);
-
       var resultTable = _obj['log']['trace'];
       let xesData = [];
-
       var e = resultTable;
       for (var i = 0; i < e.length; i++) {
         var dType = [{
@@ -304,7 +292,6 @@ export class UploadComponent implements OnInit {
             } else {
                tmp_arr.push(e[i].string['@attributes']['value']);
             }
-           
             d.string.forEach(ss => {
               if (ss['@attributes']['key'] == 'concept:name') {
                 tmp_arr.push(ss['@attributes']['value']);
@@ -331,7 +318,6 @@ export class UploadComponent implements OnInit {
             } else {
                tmp_arr.push(e[i].string['@attributes']['value']);
             }
-          //tmp_arr.push(e[i].string['@attributes']['value']);
           for (let key in e[i].event) {
             if (e[i].event.hasOwnProperty(key)) {
               if (key == 'string') {
@@ -342,7 +328,6 @@ export class UploadComponent implements OnInit {
               }
             }
           }
-   
           string[0].forEach(ss => {
 
             if (ss['@attributes']['key'] == 'concept:name') {
@@ -361,8 +346,6 @@ export class UploadComponent implements OnInit {
         }
       }
       _self.dt.changePiData(xesData)
-      // console.log("xesData",xesData);
-      
       if(xesData.length<=2||(xesData[0].length==0 && xesData[1].length==0)){
         Swal.fire({
           title: 'Error',
@@ -381,7 +364,7 @@ export class UploadComponent implements OnInit {
       return Array.isArray(v);
   }
 
-  onDbSelect() {
+  onDbSelect() {    // file upload from DB
     this.isTableEnable=false;
     this.isTimestammp=false;
     this.isIncrement=false;
@@ -390,11 +373,13 @@ export class UploadComponent implements OnInit {
     this.dbDetails={};
     this.rest.fileName.next(null);
   }
-  closePopup() {
+
+  closePopup() {    // close overlay
     var modal = document.getElementById('myModal1');
     modal.style.display = "none";
   }
-  downloadCSV() {
+
+  downloadCSV() { // Download sample csv file
     var data = [];
     var options = {
       fieldSeparator: ',',
@@ -405,17 +390,15 @@ export class UploadComponent implements OnInit {
       useBom: true,
       headers: ['S.No', 'CaseID', 'Activity', 'Start Timestamp', 'End Timestamp', 'Resource']
     };
-
     new ngxCsv(data, 'Sample_Template', options);
   }
 
-  getAlluserProcessPiIds() {
+  getAlluserProcessPiIds() {        // get user process ids list on workspace
     this.spinner.show();
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 6,
       language: { searchPlaceholder: 'Search', },
-      // "order": [[ 0, 'asc' ], [ 1, 'asc' ]]
       "order": [],
     };
     this.rest.getAlluserProcessPiIds().subscribe(data => {
@@ -426,23 +409,24 @@ export class UploadComponent implements OnInit {
         return a > b ? -1 : a < b ? 1 : 0;
       });
       this.process_graph_list = this.process_List.data
-      // this.dtTrigger.next();
       this.dataSource= new MatTableDataSource(this.process_graph_list);
       this.dataSource.sort=this.sort;
       this.dataSource.paginator=this.paginator;
       this.spinner.hide();
     })
   }
+
   loopTrackBy(index, term) {
     return index;
   }
-  onGraphSelection(selectedpiIdData) {
+
+  onGraphSelection(selectedpiIdData) {    // View selected graph on workspace
     this.isgraph = true;
     let selected_process_id = selectedpiIdData.piId
     this.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { wpiId: selected_process_id } });
-
   }
-  getcategoryName(categoryName) {
+
+  getcategoryName(categoryName) {   
     return categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
   }
   sortDataTable(arrayColNames, asc) { // if not asc, desc
@@ -457,19 +441,18 @@ export class UploadComponent implements OnInit {
       });
     }
   }
-  getAllCategories() {
+
+  getAllCategories() {    // get all categories list for dropdown
     this.rest.getCategoriesList().subscribe(res => {
     this.categoryList = res
     })
   }
-  searchByCategory(category) {
+
+  searchByCategory(category) {      // Filter table data based on selected categories
     if (category == "allcategories") {
       var fulldata='';
-       //this.dataSource=this.dataSource
-     
       this.dataSource.filter = fulldata;
-    }else{
-    
+    }else{  
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         return data.categoryName === category;
        };
@@ -508,16 +491,16 @@ export class UploadComponent implements OnInit {
       // })
     // }
   }
+
   onsearchSelect() {
     this.isSearch = false;
     var searcgraph = document.getElementById("myTableId_filter")
     searcgraph.style.display = "block";
   }
+
   changeType(){
-    //this.dbDetails.hostName=this.config.dbHostName //10.11.0.104-QA
     this.dbDetails.portNumber="5432"
     this.dbDetails.dbName=this.config.dbName // eiap_qa - QA
-   // this.dbDetails.tableName="public.accounts_payable"
   }
   onChangeMode(value){
     if(value=="incrementing"){
@@ -532,64 +515,56 @@ export class UploadComponent implements OnInit {
     }
   }
 
-testDbConnection(){
+testDbConnection(){     // check DB connection with port id and psw
   this.processId = Math.floor(100000 + Math.random() * 900000);
-    // this.portNumber=this.dbDetails.portNumber
     let modekey
     let modekey1
     let connectorBody:any= {}
-    connectorBody={
-      // "name": "dbconnector-113",
-      "name": "dbconnector-"+this.processId,
-      // "config": {
-      "batch.max.rows": "1000",
-      "catalog.pattern": "public",
-      "connection.attempts": "10",
-      "connection.backoff.ms": "10000",
-      "connection.user": this.dbDetails.userName,
-      "connection.password": this.dbDetails.password,
-      // "connection.url": "jdbc:postgresql://10.11.0.104:5432/asimov_aiotal",
-      "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
-      "db.timezone": "UTC",
-      //"incrementing.column.name": "id",
-      "validate.non.null": "true",
-      // "mode": "incrementing",
-      "mode": this.dbDetails.mode,
-      "numeric.mapping": "best_fit",
-      "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-      "poll.interval.ms": 10000,
-      "topic.prefix": this.config.piConnector+"connector-"+this.processId,
-      "quote.sql.identifiers": "ALWAYS",
-      // "table.whitelist": "public.accounts_payable",
-      "table.whitelist": this.dbDetails.tableName,
-      "table.poll.interval.ms": "60000",
-      "table.types": "TABLE",
-      "key.converter": "io.confluent.connect.avro.AvroConverter",
-      "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      "value.converter": "io.confluent.connect.avro.AvroConverter",
-      "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      "transforms": "RenameField,ReplaceField,convert_endTime_string,convert_startTime_string,createKey,extractInt,InsertField",
-      "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      "transforms.RenameField.renames": "start_time:startTime,end_time:endTime,operation:activity,agent:resource,caseid:caseID",
-      "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      "transforms.ReplaceField.whitelist": "caseID,startTime,endTime,activity,resource",
-      "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      "transforms.convert_startTime_string.field": "startTime",
-      "transforms.convert_startTime_string.target.type": "string",
-      "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
-      "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      "transforms.convert_endTime_string.field": "endTime",
-      "transforms.convert_endTime_string.target.type": "string",
-      "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss",
-      "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-      "transforms.createKey.fields": "caseID",
-      "transforms.extractInt.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
-      "transforms.extractInt.field": "caseID",
-      "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-      "transforms.InsertField.static.field": "piIdName",
-      "transforms.InsertField.static.value": this.processId+"-p"+this.processId
-        // }
-      }
+      connectorBody={
+        "name": "dbconnector-"+this.processId,
+        "batch.max.rows": "1000",
+        "catalog.pattern": "public",
+        "connection.attempts": "10",
+        "connection.backoff.ms": "10000",
+        "connection.user": this.dbDetails.userName,
+        "connection.password": this.dbDetails.password,
+        "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
+        "db.timezone": "UTC",
+        "validate.non.null": "true",
+        "mode": this.dbDetails.mode,
+        "numeric.mapping": "best_fit",
+        "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+        "poll.interval.ms": 10000,
+        "topic.prefix": this.config.piConnector+"connector-"+this.processId,
+        "quote.sql.identifiers": "ALWAYS",
+        "table.whitelist": this.dbDetails.tableName,
+        "table.poll.interval.ms": "60000",
+        "table.types": "TABLE",
+        "key.converter": "io.confluent.connect.avro.AvroConverter",
+        "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+        "value.converter": "io.confluent.connect.avro.AvroConverter",
+        "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+        "transforms": "RenameField,ReplaceField,convert_endTime_string,convert_startTime_string,createKey,extractInt,InsertField",
+        "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+        "transforms.RenameField.renames": "start_time:startTime,end_time:endTime,operation:activity,agent:resource,caseid:caseID",
+        "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+        "transforms.ReplaceField.whitelist": "caseID,startTime,endTime,activity,resource",
+        "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_startTime_string.field": "startTime",
+        "transforms.convert_startTime_string.target.type": "string",
+        "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
+        "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_endTime_string.field": "endTime",
+        "transforms.convert_endTime_string.target.type": "string",
+        "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss",
+        "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+        "transforms.createKey.fields": "caseID",
+        "transforms.extractInt.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+        "transforms.extractInt.field": "caseID",
+        "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+        "transforms.InsertField.static.field": "piIdName",
+        "transforms.InsertField.static.value": this.processId+"-p"+this.processId
+        }
       if(this.dbDetails.mode=="incrementing"){
         modekey="incrementing.column.name"
         connectorBody[modekey]=this.dbDetails.increment
@@ -602,143 +577,148 @@ testDbConnection(){
         modekey="timestamp.column.name"
         connectorBody[modekey]=this.dbDetails.timestamp
       }
-
-   
     this.rest.getJDBCConnectorConfig(connectorBody).subscribe(res => {this.connectionResp=res
-      
-      if(this.connectionResp.data.length==0){
-        this.isDisabled = false;
-        this.notifier.show({
-          type: 'success',
-          message: "Connected Successfully."
-      });
-      }else{
-        // console.log(this.connectionResp.data[0].errors);
-          this.notifier.show({
+        if(this.connectionResp.data.length==0){
+          this.isDisabled = false;
+            this.notifier.show({
+              type: 'success',
+              message: "Connected Successfully."
+              });
+          }else{
+            this.notifier.show({
               type: 'error',
               message: "Error"+this.connectionResp.data[0].errors
-          });
-      }
-           
+            });
+          }
       })
 }
-slideUp(){
-  this.closePopup();
-  var modal = document.getElementById('myModal');
-  modal.style.display="block";
+
+  slideUp(){    //Open bottom Overlay
+    this.closePopup();
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
   }
 
-generateGraph(e){
-
-  this.rest.fileName.subscribe(res => {
-    this.isUploadFileName = res;
-  });
-console.log(this.isUploadFileName);
-
-  if (this.isUploadFileName) {
-    if (this.isUploadFileName.includes('gz')) {
-      this.generateXESGZGraph(e);
-    } 
+  generateGraph(e){       // Graph generation from bottom overlay
+    this.rest.fileName.subscribe(res => {
+      this.isUploadFileName = res;
+    });
+    if (this.isUploadFileName) {
+      if (this.isUploadFileName.includes('gz')) {
+        this.generateXESGZGraph(e);
+      } 
+    }else {
+      let modekey
+      let modekey1
+      let connectorBody:any= {}
+      connectorBody={
+        "name": "dbconnector-"+this.processId,
+          "config": {
+          "batch.max.rows": "1000",
+          "catalog.pattern": "public",
+          "connection.attempts": "10",
+          "connection.backoff.ms": "10000",
+          "connection.user": this.dbDetails.userName,
+          "connection.password": this.dbDetails.password,
+          "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
+          "db.timezone": "UTC",
+          "validate.non.null": "true",
+          "mode": this.dbDetails.mode,
+          "numeric.mapping": "best_fit",
+          "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
+          "poll.interval.ms": 10000,
+          "topic.prefix": this.config.piConnector+"connector-"+this.processId,
+          "quote.sql.identifiers": "ALWAYS",
+          "table.whitelist": this.dbDetails.tableName,
+          "table.poll.interval.ms": "60000",
+          "table.types": "TABLE",
+          "key.converter": "io.confluent.connect.avro.AvroConverter",
+          "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+          "value.converter": "io.confluent.connect.avro.AvroConverter",
+          "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+          "transforms": "RenameField,ReplaceField,convert_endTime_string,convert_startTime_string,createKey,extractInt,InsertField",
+          "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+          "transforms.RenameField.renames": "start_time:startTime,end_time:endTime,operation:activity,agent:resource,caseid:caseID",
+          "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+          "transforms.ReplaceField.whitelist": "caseID,startTime,endTime,activity,resource",
+          "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+          "transforms.convert_startTime_string.field": "startTime",
+          "transforms.convert_startTime_string.target.type": "string",
+          "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
+          "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+          "transforms.convert_endTime_string.field": "endTime",
+          "transforms.convert_endTime_string.target.type": "string",
+          "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss",
+          "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+          "transforms.createKey.fields": "caseID",
+          "transforms.extractInt.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
+          "transforms.extractInt.field": "caseID",
+          "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+          "transforms.InsertField.static.field": "piIdName",
+          "transforms.InsertField.static.value": this.processId+"-p"+this.processId
+          }
+        }
+      if(this.dbDetails.mode=="incrementing"){
+        modekey="incrementing.column.name"
+        connectorBody.config[modekey]=this.dbDetails.increment
+      }else if(this.dbDetails.mode=="timestamp"){
+        modekey="timestamp.column.name"
+        connectorBody.config[modekey]=this.dbDetails.timestamp
+      }else{
+        modekey1="incrementing.column.name"
+        connectorBody.config[modekey1]=this.dbDetails.increment
+        modekey="timestamp.column.name"
+        connectorBody.config[modekey]=this.dbDetails.timestamp
+      }
+      this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+        this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
+      })
+    }
   }
-  else {
-  let modekey
-  let modekey1
-  let connectorBody:any= {}
-  connectorBody={
-    // "name": "dbconnector-113",
-    "name": "dbconnector-"+this.processId,
-    "config": {
-    "batch.max.rows": "1000",
-    "catalog.pattern": "public",
-    "connection.attempts": "10",
-    "connection.backoff.ms": "10000",
-    "connection.user": this.dbDetails.userName,
-    "connection.password": this.dbDetails.password,
-    // "connection.url": "jdbc:postgresql://10.11.0.104:5432/asimov_aiotal",
-    "connection.url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
-    "db.timezone": "UTC",
-    //"incrementing.column.name": "id",
-    "validate.non.null": "true",
-    // "mode": "incrementing",
-    "mode": this.dbDetails.mode,
-    "numeric.mapping": "best_fit",
-    "connector.class": "io.confluent.connect.jdbc.JdbcSourceConnector",
-    "poll.interval.ms": 10000,
-    "topic.prefix": this.config.piConnector+"connector-"+this.processId,
-    "quote.sql.identifiers": "ALWAYS",
-    // "table.whitelist": "public.accounts_payable",
-    "table.whitelist": this.dbDetails.tableName,
-    "table.poll.interval.ms": "60000",
-    "table.types": "TABLE",
-    "key.converter": "io.confluent.connect.avro.AvroConverter",
-    "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-    "value.converter": "io.confluent.connect.avro.AvroConverter",
-    "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-    "transforms": "RenameField,ReplaceField,convert_endTime_string,convert_startTime_string,createKey,extractInt,InsertField",
-    "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-    "transforms.RenameField.renames": "start_time:startTime,end_time:endTime,operation:activity,agent:resource,caseid:caseID",
-    "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-    "transforms.ReplaceField.whitelist": "caseID,startTime,endTime,activity,resource",
-    "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-    "transforms.convert_startTime_string.field": "startTime",
-    "transforms.convert_startTime_string.target.type": "string",
-    "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
-    "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-    "transforms.convert_endTime_string.field": "endTime",
-    "transforms.convert_endTime_string.target.type": "string",
-    "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss",
-    "transforms.createKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-    "transforms.createKey.fields": "caseID",
-    "transforms.extractInt.type": "org.apache.kafka.connect.transforms.ExtractField$Key",
-    "transforms.extractInt.field": "caseID",
-    "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-    "transforms.InsertField.static.field": "piIdName",
-    "transforms.InsertField.static.value": this.processId+"-p"+this.processId
-    }
-    }
-    if(this.dbDetails.mode=="incrementing"){
-      modekey="incrementing.column.name"
-      connectorBody.config[modekey]=this.dbDetails.increment
-    }else if(this.dbDetails.mode=="timestamp"){
-      modekey="timestamp.column.name"
-      connectorBody.config[modekey]=this.dbDetails.timestamp
-    }else{
-      modekey1="incrementing.column.name"
-      connectorBody.config[modekey1]=this.dbDetails.increment
-      modekey="timestamp.column.name"
-      connectorBody.config[modekey]=this.dbDetails.timestamp
-    }
-  this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
-    this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
-})
+
+  generateXESGZGraph(e){    //Graph generate for uploaded XES.GZ file
+    this.processId = Math.floor(100000 + Math.random() * 900000);
+      this.rest.fileName.subscribe(res => {
+        this.isUploadFileName = res;
+      });
+      const connectorBody = {
+        "name": "xes-" + this.processId,
+        "config": {
+          "connector.class": "com.epsoft.asimov.connector.xes.XesSourceConnector",
+          "tasks.max": "1",
+          "file": this.config.dataPath + "/" + this.isUploadFileName,
+          "topic": this.config.piConnector+"connector-xes-" + this.processId,
+          "key.converter": "io.confluent.connect.avro.AvroConverter",
+          "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+          "value.converter": "io.confluent.connect.avro.AvroConverter",
+          "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+          "transforms": "TimestampConverter,ValueToKey,InsertField",
+          "transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+          "transforms.TimestampConverter.format": "MM/dd/yyyy HH:mm:ss",
+          "transforms.TimestampConverter.field": "startTime",
+          "transforms.TimestampConverter.target.type": "string",
+          "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+          "transforms.ValueToKey.fields": "caseID",
+          "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+          "transforms.InsertField.static.field": "piIdName",
+          "transforms.InsertField.static.value": this.processId + "-p" + this.processId
+        }
+      }
+      this.rest.saveConnectorConfig(connectorBody, e.categoryName, this.processId, e.processName).subscribe(res => {
+        this.router.navigate(['/pages/processIntelligence/flowChart'], { queryParams: { piId: this.processId } });
+      })
   }
-}
-getDBTables(){
-  // let zeroTo255 = "(\\d{1,2}|(0|1)\\"
-  // + "d{2}|2[0-4]\\d|25[0-5])";
   
-  //  // Regex for a digit from 0 to 255 and
-  // // followed by a dot, repeat 4 times.
-  // // this is the regex to validate an IP address.
-  // let regex  = zeroTo255 + "\\."+ zeroTo255 + "\\."+ zeroTo255 + "\\."+ zeroTo255;
-
-  // let ipReg =new RegExp(regex)
-  
-  // if(ipReg.test(value)==true){
-    this.spinner.show()
-
-    // console.log("true");
-
-  // this.dbDetails.tableName=null;
- var reqObj =  {
-    "dbType": this.dbDetails.dbType,
-    "password": this.dbDetails.password,
-    "url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
-    "userName": this.dbDetails.userName
-  }
+getDBTables(){      //get DB tables list
+  this.spinner.show()
+  var reqObj =  {
+      "dbType": this.dbDetails.dbType,
+      "password": this.dbDetails.password,
+      "url": "jdbc:"+this.dbDetails.dbType+"://"+this.dbDetails.hostName+":"+this.dbDetails.portNumber+"/"+this.dbDetails.dbName,
+      "userName": this.dbDetails.userName
+    }
   this.rest.getDBTableList(reqObj)
     .subscribe(res => {
-     // console.log(res)
      this.isTableEnable=true;
       var tData: any = res;
       if(tData.data.length != 0){
@@ -753,54 +733,14 @@ getDBTables(){
     (err=>{
       this.isTableEnable=false;
       this.tableList = [];
-  
-      this.notifier.show({
-        type: 'error',
-        message: err.error.message
-    });
+        this.notifier.show({
+          type: 'error',
+          message: err.error.message
+        });
     this.spinner.hide();
     }))
-  // }
-    // this.onChangeTable()
 }
 
-generateXESGZGraph(e){
-  this.processId = Math.floor(100000 + Math.random() * 900000);
-    this.rest.fileName.subscribe(res => {
-      this.isUploadFileName = res;
-    });
-    const connectorBody = {
-      "name": "xes-" + this.processId,
-      "config": {
-        "connector.class": "com.epsoft.asimov.connector.xes.XesSourceConnector",
-        "tasks.max": "1",
-        // "file": "/var/kafka/HospitalBilling.xes",
-        "file": this.config.dataPath + "/" + this.isUploadFileName,
-        // "topic": "topqconnector-xesTesting107",
-        "topic": this.config.piConnector+"connector-xes-" + this.processId,
-        // "topic": "tytyconnector-xes-" + this.processId,
-        "key.converter": "io.confluent.connect.avro.AvroConverter",
-        "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-        "value.converter": "io.confluent.connect.avro.AvroConverter",
-        "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-        "transforms": "TimestampConverter,ValueToKey,InsertField",
-        "transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-        "transforms.TimestampConverter.format": "MM/dd/yyyy HH:mm:ss",
-        "transforms.TimestampConverter.field": "startTime",
-        "transforms.TimestampConverter.target.type": "string",
-        "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-        "transforms.ValueToKey.fields": "caseID",
-        "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-        "transforms.InsertField.static.field": "piIdName",
-        // "transforms.InsertField.static.value": "1098-p1098"
-        "transforms.InsertField.static.value": this.processId + "-p" + this.processId
-      }
-    }
-    this.rest.saveConnectorConfig(connectorBody, e.categoryName, this.processId, e.processName).subscribe(res => {
-      this.router.navigate(['/pages/processIntelligence/flowChart'], { queryParams: { piId: this.processId } });
-
-    })
-}
   onChangeTable(){
     if(this.dbDetails.mode){
       this.dbDetails.mode=null
@@ -815,11 +755,9 @@ generateXESGZGraph(e){
       this.isTimestammp=false;
       this.isIncrement=false;
     }
-    
-    
   }
+
   onKeyUpPassword(){
-    
     if(this.dbDetails.hostName){
       this.dbDetails.hostName=''
     }else{
@@ -827,27 +765,26 @@ generateXESGZGraph(e){
     }
 
   }
-  applyFilter(event: Event) {
+
+  applyFilter(event: Event) {       // search entered process ids from search input
     this.categoryName = 'allcategories';
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource= new MatTableDataSource(this.process_graph_list);
     this.dataSource.filter = filterValue.trim().toString();
     this.dataSource.paginator=this.paginator;
-    // console.log(this.dataSource.filter)
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
-      // console.log(this.dataSource.paginator.firstPage())
     }
   }
+
   onRetryGraphGenerate(){
     // this.rest.retryFailedProcessGraph('id').subscribe(res=>{
     //   console.log(res);
       
     // })
-    console.log('test');
-    
 
   }
+
 }
 
 
