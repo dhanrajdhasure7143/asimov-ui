@@ -1342,11 +1342,19 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
     this[modeler_obj].get('canvas').zoom('fit-viewport');
   }
-  zoomIn() {
-    this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+zoomIn() {
+if(this.isShowConformance){
+this.confBpmnModeler.get('zoomScroll').stepZoom(0.1);
+    }else{
+this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+    }
   }
-  zoomOut() {
-    this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
-  }
+zoomOut() {
+if(this.isShowConformance){
+this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
+    }else{
+this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
+    }
+}
 
 }
