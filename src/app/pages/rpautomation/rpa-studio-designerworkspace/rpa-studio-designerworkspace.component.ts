@@ -122,7 +122,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       ]
     });
 
-
+   
+  
 
     this.jsPlumbInstance.bind('connection', info => {
       // alert(info.sourceId);
@@ -161,7 +162,12 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
           });
         }
+
+
       }
+      
+        
+      this.setConnectionLabel(info.connection);
     });
 
 
@@ -274,13 +280,57 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             overlays: [["Arrow", { width: 12, length: 12, location: 1 }],],
           })
 
-
+          
 
       });
       this.loadflag = true;
+      
     });
 
   }
+
+  delconn:Boolean=false;
+  setConnectionLabel(connection) {
+   let self=this;
+   connection.addOverlay(["Label", { 
+    label: "<span style='padding:10px'><i class='text-danger fa fa-times' style=' padding: 5px; background: white; cursor: pointer;'></i></span>",
+    location:0.5, 
+    cssClass: "connLabel",
+    id:"label"+connection.id,
+    events:{
+      click:function(labelOverlay, originalEvent) {
+   
+      let conn=self.jsPlumbInstance.getConnections({
+          source:labelOverlay.component.sourceId,
+          target:labelOverlay.component.targetId
+        });
+        self.delconn=true;
+        conn[0].removeOverlay("label"+conn[0].id);
+        setTimeout(()=>{
+
+          self.jsPlumbInstance.deleteConnection(conn[0]);
+          
+          self.delconn=false;
+        },100)
+        
+      }
+    } 
+    }]);
+    
+    connection.getOverlay("label"+connection.id).setVisible(false);
+    connection.bind("mouseover", function(conn) {
+      
+      connection.getOverlay("label"+conn.id).setVisible(true);
+       
+    }); 
+    if(self.jsPlumbInstance.getAllConnections().find(item=>item.sourceId==connection.sourceId && item.targetId==connection.targetId)!=undefined)
+    connection.bind("mouseout", function(conn) {
+      if(self.delconn==false)
+      setTimeout(()=>{
+        connection.getOverlay("label"+conn.id).setVisible(false);
+      },1500);
+    });
+}
 
 
 
