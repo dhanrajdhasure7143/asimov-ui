@@ -20,3 +20,8 @@
     background-repeat: no-repeat;
     background-size: cover;
   }
+
+  .header_logo{
+      width:240px;
+      height:90px;
+  }

@@ -442,7 +442,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         try{
           this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))))
         }catch(err){
-          console.error('could not import BPMN 2.0 notation', err);
+          console.error('could not import BPMN EZFlow notation', err);
         }
      })
     }else{
@@ -456,14 +456,14 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           try{
             this[modeler_obj].importXML(res);
           }catch(err){
-            console.error('could not import BPMN 2.0 notation', err);
+            console.error('could not import BPMN EZFlow notation', err);
           }
         });
       }else{
         try{
           this[modeler_obj].importXML(selected_xml);
         }catch(err){
-          console.error('could not import BPMN 2.0 notation', err);
+          console.error('could not import BPMN EZFlow notation', err);
         }
       }
     }
@@ -533,7 +533,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
                 this.oldXml = selected_xml;
                 this.newXml = selected_xml;
               }catch(err){
-                console.error('could not import BPMN 2.0 notation', err);
+                console.error('could not import BPMN EZFlow notation', err);
               }
             }else{
               this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
@@ -543,7 +543,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
                   this.oldXml = selected_xml;
                   this.newXml = selected_xml;
                 }catch(err){
-                  console.error('could not import BPMN 2.0 notation', err);
+                  console.error('could not import BPMN EZFlow notation', err);
                 }
               });
               }
@@ -555,7 +555,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
             try{
               this.confBpmnModeler.importXML(btoa(unescape(encodeURIComponent(bpmn_not))));
             }catch(err){
-              console.error('could not import BPMN 2.0 notation', err);
+              console.error('could not import BPMN EZFlow notation', err);
             }
           }
           _self.isLoading = false;
@@ -589,7 +589,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
                 this.oldXml = selected_xml;
                 this.newXml = selected_xml;
               }catch(err){
-                console.error('could not import BPMN 2.0 notation', err);
+                console.error('could not import BPMN EZFlow notation', err);
               }
             });
           }else{
@@ -598,7 +598,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
               this.oldXml = selected_xml;
               this.newXml = selected_xml;
             }catch(err){
-              console.error('could not import BPMN 2.0 notation', err);
+              console.error('could not import BPMN EZFlow notation', err);
             }
           }
         }
@@ -617,7 +617,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         try{
           this.confBpmnModeler.importXML(atob(unescape(encodeURIComponent(bpmn_not))));
         }catch(err){
-          console.error('could not import BPMN 2.0 notation', err);
+          console.error('could not import BPMN EZFlow notation', err);
         }
       }
       _self.isLoading = false;
@@ -774,7 +774,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.newXml = fileString.trim();
         this.isLoading = false;
       }catch(err){
-        console.error('could not import BPMN 2.0 notation', err);
+        console.error('could not import BPMN EZFlow notation', err);
       }
     }
     myReader.readAsText(e.addedFiles[0]);
@@ -1071,7 +1071,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
                 this.oldXml = selected_xml;
                 this.newXml = selected_xml;
               }catch(err){
-                console.error('could not import BPMN 2.0 notation', err);
+                console.error('could not import BPMN EZFlow notation', err);
               }
             }
           }
@@ -1107,7 +1107,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.isLoading = false;
         this.getUserBpmnList(null);
       }catch(err){
-        console.error('could not import BPMN 2.0 notation', err);
+        console.error('could not import BPMN EZFlow notation', err);
       }
     }, 3000);
    }

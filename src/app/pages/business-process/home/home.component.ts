@@ -158,14 +158,14 @@ export class BpsHomeComponent implements OnInit {
         this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
           this.bpmnModeler.importXML(res, function(err){
             if(err){
-              console.error('could not import BPMN 2.0 notation', err);
+              console.error('could not import BPMN EZFlow notation', err);
             }
           })
         });
       }else{
         this.bpmnModeler.importXML(byteBpmn, function(err){
           if(err){
-            console.error('could not import BPMN 2.0 diagram', err);
+            console.error('could not import BPMN EZFlow diagram', err);
           }
         })
       }
