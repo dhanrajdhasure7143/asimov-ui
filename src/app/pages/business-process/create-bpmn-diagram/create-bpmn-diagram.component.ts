@@ -28,7 +28,6 @@ import { DeployNotationComponent } from 'src/app/shared/deploy-notation/deploy-n
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import minimapModule from "diagram-js-minimap";
 declare var require:any;
-import minimapModule from "diagram-js-minimap";
 
 @Component({
   selector: 'app-create-bpmn-diagram',
