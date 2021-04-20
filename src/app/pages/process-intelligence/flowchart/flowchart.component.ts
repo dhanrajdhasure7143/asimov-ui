@@ -78,6 +78,17 @@ export class FlowchartComponent implements OnInit {
     hidePointerLabels: false,
     vertical: true,
   }
+  options1: Options = {
+    step:0.1,
+    floor: 0,
+    ceil: 1,
+    // translate: (value: number): string => `${value}%`,
+    translate: (value: number): string => `${value*100}`,
+    hideLimitLabels: true,
+    hidePointerLabels: false,
+    vertical: false,
+  }
+  highValue: number = 1;
   filterPerformData:any =[]; 
   process_graph_list:any=[];
   process_graph_options;
@@ -152,6 +163,137 @@ export class FlowchartComponent implements OnInit {
 isWorkingHrsBtn:boolean=true;
 allVaraintsCases:any[]=[];
 isTimeChange:boolean=false;
+
+
+
+/*peroformance filter variables start*/
+single = [
+  {
+    "name": "Germany",
+    "value": 8940000
+  },
+  {
+    "name": "USA",
+    "value": 5000000
+  },
+  {
+    "name": "France",
+    "value": 7200000
+  },
+  {
+    "name": "Germany1",
+    "value": 8940000
+  },
+  {
+    "name": "USA1",
+    "value": 5000000
+  },
+  {
+    "name": "France1",
+    "value": 7200000
+  },
+  {
+    "name": "Germany2",
+    "value": 8940000
+  },
+  {
+    "name": "USA2",
+    "value": 5000000
+  },
+  {
+    "name": "France2",
+    "value": 7200000
+  },
+  {
+    "name": "Germany3",
+    "value": 8940000
+  },
+  {
+    "name": "USA3",
+    "value": 5000000
+  },
+  {
+    "name": "France3",
+    "value": 7200000
+  },
+  {
+    "name": "Germany4",
+    "value": 8940000
+  },
+  {
+    "name": "USA4",
+    "value": 5000000
+  },
+  {
+    "name": "France4",
+    "value": 7200000
+  },
+  {
+    "name": "Germany5",
+    "value": 8940000
+  },
+  {
+    "name": "USA5",
+    "value": 5000000
+  },
+  {
+    "name": "France5",
+    "value": 7200000
+  },
+  {
+    "name": "Germany6",
+    "value": 8940000
+  },
+  {
+    "name": "USA6",
+    "value": 5000000
+  },
+  {
+    "name": "France6",
+    "value": 7200000
+  }
+];
+
+
+  view: any[] = [1200, 200];
+
+  // options
+  showXAxis = false;
+  showYAxis = false;
+  gradient = false;
+  showLegend = false;
+  showXAxisLabel = true;
+  xAxisLabel = 'dd';
+  showYAxisLabel = true;
+  yAxisLabel = 'gg';
+
+  colorScheme = {
+    domain: ['#337ab7', '#cdc9c9']
+  };
+
+  //Pie chart
+  piesingle = [
+    {
+      "name": "Germany",
+      "value": 8940000
+    },
+    {
+      "name": "USA",
+      "value": 5000000
+    }
+  ];
+  // options
+  piegradient: boolean = true;
+  pieshowLegend: boolean = false;
+  showLabels: boolean = false;
+  isDoughnut: boolean = false;
+  legendPosition: string = 'below';
+  pieview: any[] = [90, 100];
+  piecolorScheme = {
+    domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+  };
+
+/*peroformance filter variables end*/
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -1849,7 +1991,15 @@ filterOverlay(){
   viewInsights(){
     //var token=localStorage.getItem('accessToken');
     //window.location.href="http://localhost:8080/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
-    this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.graphIds}})
+    //this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.graphIds}})
+    
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
+  }
+
+  closePerformancePopup() {
+    var modal = document.getElementById('myModal');
+    modal.style.display="none";
   }
   readselectedNodes1(activies){    
     this.filterdNodes=[]
