@@ -86,7 +86,7 @@
                                 <th>Key</th>
                                 <th>Value</th>
                             </thead>
-                            <tbody>
+                           
                                 <tr *ngFor="let result of outputboxresult">
                                     <td>{{result.Key}}</td>
                                     <td>{{result.Value}}</td>
@@ -94,7 +94,7 @@
                                 <tr *ngIf="outputboxresult.length==0" colspan=2>
                                     <td style='text-align: center'>No Records Found</td>
                                 </tr>
-                            </tbody>
+                            
                         </table>
                         <br>
                         <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
@@ -104,16 +104,15 @@
                 <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
                     <div class="col-md-3"></div>
                     <div class="col-md-6">
-                        <div style="padding-top:8px; padding-bottom: 8px;">
-                            <button style="float: right;border-radius: 20px;" class="btn-primary" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()"><i class="fa fa-arrow-left"></i></button>
-                        </div>
+                    
                         <br>
-                        <!--<div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
+                        <!-- <div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
 
-                        </div>-->
-                            <textarea [(ngModel)]="outputboxid" disabled class="outputtextareastyle"></textarea>
+                        </div> -->
+                            <textarea [id]="'text_'+outputboxid" disabled class="outputtextareastyle"></textarea>
                         <br>
-                        
+                        <button style="float: right" class="btn btn-primary eiap-btn" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()"><i class="fa fa-arrow-left"></i>&nbsp;back</button>
+            
                         <br>
                     </div>
                     <div class="col-md-3"></div>

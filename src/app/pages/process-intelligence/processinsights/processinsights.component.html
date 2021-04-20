@@ -32,13 +32,13 @@
                 </div>
             <!-- </div>
             <div class='col-sm-4'> -->
-                <div class="col-sm-4 amountinputs" id="humancost">
+                <div class="col-sm-4 amountinputs" id="BotCost">
                     <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
                     <i (click)="editInput1()"  class="fas fa-pen"></i>
                 </div>
             <!-- </div>
             <div class="col-sm-2"> -->
-                <div class="col-sm-4 amountinputs">
+                <div class="col-sm-4 amountinputs" id="totalcases">
                     <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
                 </div>    
             </div>
@@ -108,7 +108,7 @@
                 </div>
       
       </div>
-      <div class='col-sm-6'>
+      <div class='col-sm-6' id='variant-btn'>
       <button class="btn btn-primary eiap-btn pull-right " (click)="openVariantListNav()">Variant List</button>
 
       </div>

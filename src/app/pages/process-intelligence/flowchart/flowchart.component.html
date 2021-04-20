@@ -169,14 +169,9 @@
                      </form>
                  </div>
              </div>
-             <!-- <div [hidden]="isHide"> -->
                 <!-- <app-piflowchart [model1]="model1" [model2]="model2" [isplay]="isplay" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadJpeg]="isdownloadJpeg" [isdownloadPng]="isdownloadPng" [spinMetrics0]="spinMetrics0" (myOutputVal)="readOutputValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispdf)="pdfValueEmitted($event)"(isjpeg)="jpegValueEmitted($event)"(ispng)="pngValueEmitted($event)"></app-piflowchart> -->
 
-             <!-- </div> -->
-             <!-- <div [hidden]="!isHide"> -->
                 <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispng)="pngValueEmitted($event)" [performanceValue]="performanceValue" [processGraphName]='processGraphName' [isSlider]="isSliderBPMN"></app-d3flowchart>
-
-             <!-- </div> -->
 
      </div>
      <div class='col-md-1'>

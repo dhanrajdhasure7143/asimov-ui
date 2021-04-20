@@ -1358,15 +1358,12 @@ robotValue:number;
     }
 
     getAllGraphsPriceCalculation() {
-        // console.log(this.input1);
         this.getTotalNoOfCases('fullgraph');
         this.getActivityMetrics('fullgraph');
         this.getHumanBotCost('fullgraph');
     }
 
     switch1(data) {
-        // console.log(data);
-
         if (data == "bar") {
             this.flag1 = 0
             this.verticleBarGraph();

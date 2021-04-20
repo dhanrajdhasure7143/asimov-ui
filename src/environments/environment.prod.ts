@@ -24,6 +24,7 @@ export const environment = {
  // Aiotal redirection urls
   myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
   logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation',
+  redirectout_url: 'http://eiapclouddev.epsoftinc.in/#/signout',
 
 // PI Connectors
   connector_topic: 'nodeDev',
@@ -50,6 +51,7 @@ export const environment = {
   // // Aiotal redirection urls
   //  myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
   //  logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
+  // redirectout_url: 'http://eiapcloudqa.epsoftinc.in/#/signout',
 
   // // PI Connectors
   //  connector_topic: 'nodeq',

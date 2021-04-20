@@ -14,7 +14,6 @@
             <mat-label>BPMN Notation</mat-label>
             <mat-select *ngIf="!isfromApprover" [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()" panelClass="myPanelDownClass" disableOptionCentering>
                 <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
-                    <!--[selected]="each_bpmn.bpmnModelId == selected_modelId"-->
                     {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
             </mat-select>
             <mat-select *ngIf="isfromApprover">
@@ -35,11 +34,6 @@
         <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
         <span class="start-instance">
             <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>&nbsp;&nbsp;
-            <!-- <div class="deploy-menu" *ngIf="rejectedOrApproved == 'APPROVED'">
-                <a (click)="openDeployDialog()">Start process instance</a>
-                <br/>
-                <a (click)="openDeployDialog()">Start process instance with new configuration</a>
-            </div> -->
         </span>
         <span class="fa fa-keyboard" (click)="displayShortcut()"></span>&nbsp;&nbsp;
         <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
@@ -60,12 +54,6 @@
                     </div>
                     <div id="properties" class="slide-right"></div>
                 </div>
-                <!-- <div class="propertiesContainer" [class.hidden]="!uploaded && !(reSize|| hasConformance ||rejectedOrApproved=='PENDING')">
-                    <div class="propertiesTitle" (click)="togglePosition()">
-                        <div>Properties Panel</div>
-                    </div>
-                    <div id="properties" class="slide-right"></div>
-                </div> -->
             </div>
         </div>
         <div class="canvas2" *ngIf="!isShowConformance" id="canvas2"></div>
@@ -118,7 +106,6 @@
 </ngx-dropzone>
 <button class="right btn btn-primary eiap-btn"  [disabled]="isfromApprover" id="save" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="saveprocess(null)">Save Process</button>
 <button *ngIf="isApprovedNotation" class="right btn btn-primary eiap-btn" id="orchestrate" (click)="orchestrate()">Orchestrate</button>
-  <!-- [disabled]="isShowConformance && !isConfNavigation" -->
   <span class="right">
     <select [(ngModel)]="fileType">
       <option value="svg">SVG</option>
@@ -128,7 +115,10 @@
     </select>
     <button id="download" (click)="downloadBpmn()"><img class="action-btn" src="..\assets\downloadimage.svg"></button>
   </span>
-  <!-- <button id="download" class="right" *ngIf="isShowConformance && reSize && hasConformance" (click)="downloadBpmn(true)"><img class="action-btn" src="..\assets\downloadimage.svg"></button> -->
+  <div class="zoom_btns">
+    <button (click)="zoomIn()" class="btn btn1 zoom btn-primary" id="zoom_in"><i class="fas fa-search-plus"></i></button>
+    <button (click)="zoomOut()" class="btn btn1 zoom-out btn-primary" id="zoom_out"><i class="fas fa-search-minus"></i></button>
+</div>
 </div>
 <div class="changesContainer" [class.hidden]="!isUploaded">
     <div class="changesTitle" (click)="toggleChanges()">List of Changes</div>
@@ -202,11 +192,9 @@
                     <option value="string">String</option>
                     <option value="date">Date</option>
                 </select>
-                <!-- <input type="text" class="variable-input form-control" placeholder="Type" name="variable_type{{i}}" [(ngModel)]='item.variablesType' required> -->
             </div>
             <div class="col-sm-3">
                 <input *ngIf="item.type!='boolean'" type="text" class="variable-input form-control" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value' required>
-                <!-- <input *ngIf="item.type=='boolean'" type="checkbox" class="" placeholder="Value" name="variable_value{{i}}" [(ngModel)]='item.value'> -->
                 <select class="variable-input form-control" *ngIf="item.type=='boolean'" name="variable_value{{i}}" [(ngModel)]='item.value' id="" required>
                     <option value="" disabled hidden>Select</option>
                     <option value="true">True</option>
@@ -217,7 +205,6 @@
                 <button class="btn btn-danger eiap-btn" (click)="removevariable(i)">Remove</button>
             </div>
 
-        <!-- </div> -->
     </section>
     </form>
     <hr>
