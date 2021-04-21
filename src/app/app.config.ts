@@ -46,5 +46,5 @@ export const AppConfig: AsimovAppConfig = {
     dataPath:environment.data_path,
     alertsEndPoint:environment.alerts_url,
     bpmPlatfromUrl:environment.bpmnplatformUrl,
-    signoutRedirectionURL: environment.redirectout_url,
+    signoutRedirectionURL: environment.redirectout_url
 };
