@@ -58,8 +58,8 @@ export const environment = {
 
    //DB Connector
     dbConnectorHost: "10.11.0.104",
-    dbName: 'eiap_qa'
+    dbName: 'eiap_qa',
 
   //BPMN Platform URL
-    bpmnplatformUrl : "http://10.11.0.128:8080",
+    bpmnplatformUrl : "http://10.11.0.128:8080"
 };
