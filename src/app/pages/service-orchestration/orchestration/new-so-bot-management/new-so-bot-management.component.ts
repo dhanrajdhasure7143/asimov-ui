@@ -748,6 +748,12 @@ public slaupdate : boolean = false;
           blueprismlogs=response.sort((right,left)=>{
             return moment.utc(left.startTimeStamp).diff(moment.utc(right.startTimeStamp))
           });
+          // blueprismlogs=blueprismlogs.map(item=>{
+          //   item["startTimeStamp"]=moment(item.startTimeStamp).format("MMM D ,yyyy, HH:MM");
+          //   item["endTimeStamp"]=moment(item.endTimeStamp).format("MMM D ,yyyy, HH:MM");
+          //   return item;
+          // })
+          console.log("logs---------------->",blueprismlogs)
           this.blueprimslogs = new MatTableDataSource(blueprismlogs);
           this.blueprimslogs.sort=this.sort7;
           this.blueprimslogs.paginator=this.paginator7;
@@ -896,7 +902,7 @@ public slaupdate : boolean = false;
       let data=this.bot_list.find(item=>item.botId==botId);
       let header=" <div class='text-center'><span style='padding:10px;font-size:16px'>Bot Name:&nbsp;<a>"+data.botName+"</a></span><span style='padding:10px;font-size:16px'>Status:&nbsp;<a>"+data.botStatus+"</a></span><span style='padding:10px;font-size:16px'>Source:&nbsp;<a>"+data.sourceType+"</a></span></div><br><br>";
       let errorbody="<div class='text-center'><br><br><i style='font-size:28px;color:red' class='fas  fa-exclamation-triangle'></i><br><br> <div style='font-size:24px;color:red;'> Smoke Test Run Failed</div><br><br></div> "
-      let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Successful</div><br><br></div> "
+      let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Successfully</div><br><br></div> "
       this.spinner.show();
       if(data.sourceType == 'BluePrism'){
       let botName = data.botName;
@@ -908,7 +914,7 @@ public slaupdate : boolean = false;
         if(response.status!= undefined)     
        {
         Swal.fire({
-          width: '500px',
+          width: '700px',
           html:header+(successbody),
           confirmButtonColor: "green",
           confirmButtonText: 'Dismiss',
@@ -917,7 +923,7 @@ public slaupdate : boolean = false;
       }
         else{
         Swal.fire({
-          width: '500px',
+          width: '700px',
           html:header+(errorbody),
           confirmButtonColor: "warning",
           confirmButtonText: 'Dismiss',
@@ -936,7 +942,7 @@ public slaupdate : boolean = false;
         if(response.status!= undefined)        
        {
         Swal.fire({
-          width: '500px',
+          width: '700px',
           html:header+(successbody),
           confirmButtonColor: "green",
           confirmButtonText: 'Dismiss',
@@ -945,7 +951,7 @@ public slaupdate : boolean = false;
       }
         else{
         Swal.fire({
-          width: '500px',
+          width: '700px',
           html:header+(errorbody),
           confirmButtonColor: "warning",
           confirmButtonText: 'Dismiss',
@@ -960,7 +966,7 @@ public slaupdate : boolean = false;
       setTimeout(()=>{
         this.spinner.hide();
         Swal.fire({
-          width: '500px',
+          width: '700px',
           html:header+(data.botStatus=="Success"?successbody:errorbody),
           confirmButtonColor: (data.botStatus=="Success"?"green":"red"),
           confirmButtonText: 'Dismiss',

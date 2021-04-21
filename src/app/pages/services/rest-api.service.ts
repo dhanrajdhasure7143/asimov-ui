@@ -52,7 +52,7 @@ export class RestApiService{
   //password -Welcome@123
 
   getAccessToken(){
-    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
+    let data = {"userId":"lakshmi.kadali@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -789,5 +789,10 @@ save_blueprism_config(data)
     retryFailedProcessGraph(bpmnModelId){
       // return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
     }
+
+    get_scheduled_bots(){
+      return this.http.get('/rpa-service/management/scheduled-bots');
+    }
+
 
 }

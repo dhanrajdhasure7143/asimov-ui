@@ -8,17 +8,7 @@
 <a class="btn btn1 zoom-out btn-primary" id="zoom_out"><i class="fas fa-search-minus"></i></a>
 <a class="btn btn1 zoom-init btn-primary" id="zoom_reset"><i class="fas fa-recycle"></i></a>
 </div>
-<!-- <button (click)="exportSVG('pdf')">Download PDF</button>
-<button (click)="exportSVG('png')">Download PNG</button>
-<button (click)="exportSVG('jpeg')">Download JPEG</button>
-<button (click)="exportSVG('svg')">Download svg</button>
-<button (click)="onPlayProcees()">
-  <span *ngIf="!isPlayAnimation">Play</span>
-  <span *ngIf="isPlayAnimation">Pause</span>
-</button> -->
 
-<!-- <a id="download" href="#" download="graph.png"> Export my D3 visualization to PNG Download</a> -->
-<!-- <button class="eiap-btn btn btn-primary" id='download'>Export my D3 visualization to PNG</button> -->
 <div *ngIf="isnoNode" class="nonode">No Nodes found</div>
 <div id="exportSVGtoPDF" #exportSVGtoPDF>
     <svg id="render"  #render>

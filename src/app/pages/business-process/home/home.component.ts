@@ -90,6 +90,7 @@ export class BpsHomeComponent implements OnInit {
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId , ver: bpmnVersion, ntype: bpmnType}});
   }
+
   getAutoSavedDiagrams(){
     this.rest.getBPMNTempNotations().subscribe( (res:any) =>  {
       if(Array.isArray(res))
@@ -97,7 +98,7 @@ export class BpsHomeComponent implements OnInit {
     });
    }
 
-   getColor(status) { 
+  getColor(status) {
     switch (status) {
       case 'PENDING':
         return 'orange';
@@ -115,13 +116,14 @@ export class BpsHomeComponent implements OnInit {
       return processName.substr(0,15)+'..';
     return processName;
   }
-   filterAutoSavedDiagrams(modelId){
+
+  filterAutoSavedDiagrams(modelId){
     this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
       return each_asDiag.bpmnModelId == modelId;
     })
    }
 
-   formatApproverName(apprName){
+  formatApproverName(apprName){
     let appr_arr = apprName.split('.');
     let fName = appr_arr[0];
     let lName = appr_arr[1];
@@ -131,6 +133,7 @@ export class BpsHomeComponent implements OnInit {
       lName = lName.charAt(0).toUpperCase()+lName.substr(1);
     return fName&&lName?fName+" "+lName:fName?fName:lName?lName:'-';
    }
+
   getDiagram(eachBPMN,i){
     let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
     this.index=i;
@@ -155,14 +158,14 @@ export class BpsHomeComponent implements OnInit {
         this.rest.getBPMNFileContent("assets/resources/newDiagram.bpmn").subscribe(res => {
           this.bpmnModeler.importXML(res, function(err){
             if(err){
-              console.error('could not import BPMN 2.0 notation', err);
+              console.error('could not import BPMN EZFlow notation', err);
             }
           })
         });
       }else{
         this.bpmnModeler.importXML(byteBpmn, function(err){
           if(err){
-            console.error('could not import BPMN 2.0 diagram', err);
+            console.error('could not import BPMN EZFlow diagram', err);
           }
         })
       }
@@ -173,6 +176,7 @@ export class BpsHomeComponent implements OnInit {
   loopTrackBy(index, term){
     return index;
   }
+
   sort(colKey,ind) { // if not asc, desc
     this.sortIndex=ind
     let asc=this.orderAsc
@@ -209,14 +213,13 @@ export class BpsHomeComponent implements OnInit {
       }
     })
   }
-  fitNotationView(){
+
+  fitNotationView(){    //Fit notation to canvas
    let canvas = this.bpmnModeler.get('canvas');
     canvas.zoom('fit-viewport');
     let msg="Notation";
     this.global.notify(msg+" is fit to view port", "success")
-    
   }
-  
 
   deleteProcess(e, bpmNotation){
     e.stopPropagation();
@@ -255,8 +258,6 @@ export class BpsHomeComponent implements OnInit {
        splitTenant = selecetedTenant.split('-')[0];
     }
     window.location.href = "http://10.11.0.128:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
-   //var token=localStorage.getItem('accessToken');
-    // window.location.href=this.config.bpmPlatfromUrl+"/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
   }
  
 }

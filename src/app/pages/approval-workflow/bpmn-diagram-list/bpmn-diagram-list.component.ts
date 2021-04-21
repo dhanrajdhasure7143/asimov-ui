@@ -43,7 +43,7 @@ export class BpmnDiagramListComponent implements OnInit {
     this.dt.changeParentModule({ "route": "/pages/approvalWorkflow/home", "title": "Approval Workflow" });
     this.dt.changeChildModule(undefined);
     this.bpmnlist();
-    this.dt.changeHints(this.hints.bpsApprovalHomeHints);
+    // this.dt.changeHints(this.hints.bpsApprovalHomeHints);
   }
   getColor(status) {
     switch (status) {
@@ -161,14 +161,26 @@ this.selectedrow =i;
       this.griddata = data;
       this.griddata.map(item => {item.xpandStatus = false;return item;})
       this.disable_panels();
+     
+     if(this.griddata.length==0){
+      let touiGuide_ids=[{selector:'#bpmn_list', description:'List of saved BPMN/CMMN/DMN notations'}]
+     this.dt.changeHints(touiGuide_ids);
+    }else{
+     let touiGuide_ids=[
+       { selector:'#bpmn_list', description:'List of saved BPMN/CMMN/DMN notations', showNext:true },
+       { selector:'#bpmn_list_item1', event:'click', description:'Click on each record to display it as diagram' },
+       { selector:'.diagram_container1', description:'BPMN Diagram of the clicked record' }
+     ]
+     this.dt.changeHints(touiGuide_ids);
+    }
      });
    }
+
    @HostListener('document:click',['$event'])
    clickout(event) {
      if(!document.getElementById("bpmn_list").contains(event.target) && this.index>=0)
        this.griddata[this.index].xpandStatus=false;
    }
-
 
   approveDiagram(data) {
     let disabled_items = localStorage.getItem("pending_bpmnId")
@@ -188,7 +200,6 @@ this.selectedrow =i;
       "approverEmail": data.approverEmail,
       "userEmail": data.userEmail,
       "id": data.id,
-     // "modifiedTimestamp": new Date(),
       "processIntelligenceId": data.processIntelligenceId,
       "reviewComments":data.reviewComments,
       "tenantId": data.tenantId,

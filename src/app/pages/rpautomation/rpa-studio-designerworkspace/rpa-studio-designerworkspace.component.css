@@ -106,3 +106,8 @@
   border-style: solid;
   border-color: transparent gray transparent transparent;
 }
+
+.connLabel{
+  background-color:white !important;
+  padding:10px !important;
+}
