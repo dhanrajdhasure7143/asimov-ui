@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output,EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output,EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Options, PointerType} from 'ng5-slider';
 
 enum Filter{
@@ -6,6 +6,7 @@ enum Filter{
   // 'Cases',
    'Variants',
   'End Points',
+  'Performance'
 } 
 @Component({
   selector: 'app-filter',
@@ -64,7 +65,147 @@ export class FilterComponent implements OnInit {
   selectedStartPointsCount=[];
   appliedFilters: any[]=[];
 
-  constructor() { }
+  // performance filter Variable start
+  options1: Options = {
+    step:0.1,
+    floor: 0,
+    ceil: 1,
+    // translate: (value: number): string => `${value}%`,
+    translate: (value: number): string => `${value*100}`,
+    hideLimitLabels: true,
+    hidePointerLabels: false,
+    vertical: false,
+  }
+  highValue: number = 1;
+  single = [
+    {
+      "name": "Germany",
+      "value": 8940000
+    },
+    {
+      "name": "USA",
+      "value": 5000000
+    },
+    {
+      "name": "France",
+      "value": 7200000
+    },
+    {
+      "name": "Germany1",
+      "value": 8940000
+    },
+    {
+      "name": "USA1",
+      "value": 5000000
+    },
+    {
+      "name": "France1",
+      "value": 7200000
+    },
+    {
+      "name": "Germany2",
+      "value": 8940000
+    },
+    {
+      "name": "USA2",
+      "value": 5000000
+    },
+    {
+      "name": "France2",
+      "value": 7200000
+    },
+    {
+      "name": "Germany3",
+      "value": 8940000
+    },
+    {
+      "name": "USA3",
+      "value": 5000000
+    },
+    {
+      "name": "France3",
+      "value": 7200000
+    },
+    {
+      "name": "Germany4",
+      "value": 8940000
+    },
+    {
+      "name": "USA4",
+      "value": 5000000
+    },
+    {
+      "name": "France4",
+      "value": 7200000
+    },
+    {
+      "name": "Germany5",
+      "value": 8940000
+    },
+    {
+      "name": "USA5",
+      "value": 5000000
+    },
+    {
+      "name": "France5",
+      "value": 7200000
+    },
+    {
+      "name": "Germany6",
+      "value": 8940000
+    },
+    {
+      "name": "USA6",
+      "value": 5000000
+    },
+    {
+      "name": "France6",
+      "value": 7200000
+    }
+  ];
+  
+  
+    view: any[] = [1200, 200];
+  
+    // options
+    showXAxis = false;
+    showYAxis = false;
+    gradient = false;
+    showLegend = false;
+    showXAxisLabel = true;
+    xAxisLabel = 'dd';
+    showYAxisLabel = true;
+    yAxisLabel = 'gg';
+  
+    colorScheme = {
+      domain: ['#337ab7', '#cdc9c9']
+    };
+  
+    //Pie chart
+    piesingle = [
+      {
+        "name": "Germany",
+        "value": 8940000
+      },
+      {
+        "name": "USA",
+        "value": 5000000
+      }
+    ];
+    // options
+    piegradient: boolean = true;
+    pieshowLegend: boolean = false;
+    showLabels: boolean = false;
+    isDoughnut: boolean = false;
+    legendPosition: string = 'below';
+    pieview: any[] = [90, 100];
+    piecolorScheme = {
+      domain: ['#5AA454', '#A10A28', '#C7B42C', '#AAAAAA']
+    };
+  
+  // performance filter Variable end
+
+  constructor(private changeDetectorRef:ChangeDetectorRef) { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -147,6 +288,8 @@ export class FilterComponent implements OnInit {
           this.endPointArray.push(obj)
         }
     }
+    console.log(this.filterby)
+    
   }
 
 loopTrackBy(index, term){
@@ -255,7 +398,16 @@ channgeFilter(){    // filter type in bottom over lay
     this.isVariantFilter = true;
     this.isActivity=false;
     this.isEndpoint=false;
-  } else{
+  } else if(this.filterby == "Performance"){
+    this.isVariantFilter = false;
+    this.isActivity=true;
+    this.isEndpoint=false;
+    this.filterby = 'Activity';
+    var modal = document.getElementById('myModal');
+    modal.style.display="block";
+
+
+  }else{
     this.isActivity=false;
     this.isEndpoint=true;
     this.isVariantFilter = false;
@@ -507,5 +659,13 @@ selectedVariant(data,index){
                 }
               }
   }
+
+  closePerformancePopup() {
+   
+    var modal = document.getElementById('myModal');
+    modal.style.display="none";
+    this.filterby="Activity";
+  }
+
 
 } 

@@ -777,15 +777,20 @@ getDBTables(){      //get DB tables list
     }
   }
 
-  onRetryGraphGenerate(){
-    // this.rest.retryFailedProcessGraph('id').subscribe(res=>{
-    //   console.log(res);
-      
-    // })
+  onRetryGraphGenerate(processDt){
+    console.log(processDt);
+    return;
+    this.rest.retryFailedProcessGraph(processDt.piId).subscribe(res=>{
+      console.log(res); 
+    },(err)=>{
+      console.log(err);
+    })
 
   }
 
 }
+
+
 
 
 

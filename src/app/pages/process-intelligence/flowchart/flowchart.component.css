@@ -299,47 +299,7 @@
   -webkit-animation-duration: 0.4s;
   animation-name: slideIn;
   animation-duration: 0.4s
-  }
-
-.barchart_graph{
-  border: 1px solid #f8f8f8;
-  box-shadow: 0px 2px 5px rgb(0 0 0 / 20%);
-  background: #07051d;
-  height: 200px;
-  border-radius: 20px;
-  margin-top: 15px;
-}
-.piechart_graph{
-  border: 1px solid #1b1a1a;
-  box-shadow: 0px 2px 5px rgb(0 0 0 / 20%);
-  background: #ffff;
-  width: 166px;
-  height: 96px;
-  border-radius: 6px;
-}
-.max_time_select{
-  position: relative;
-  left: 315px;
-  top: 20px;
-}
-.min_time_select{
-  position: relative;
-  top: 20px;
-}
-.pie_label{
-  position: relative;
-    top: 30px;
-    font-weight: 600;
-}
-.drp_btns {
-  position: relative;
-  top:10px
-}
-.pp_chart {
-  position: relative;
-  left:160px
-}
-  
+  }  
   /* The Close Button */
   .close {
   color: #000;
@@ -488,32 +448,4 @@
 }
 .dropdown-divider{
   border: 1px solid #aaa;
-}
-
-
-
-
-
-select.arrows {
-  background-color: white;
-  border: thin solid grey;
-  border-radius: 4px;
-  display: inline-block;
-  font: inherit;
-  line-height: 1.5em;
-  padding: 0.5em 3.5em 0.5em 1em;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  background-image:    url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAA3klEQVRIS+3VMU9CMRTF8d8zBL+aizoQFhx0kUk33RzdYMNFXUFnYeGrYYyaJiUxJHDLSxodbNKpfeffc9/pbaPyaCrr+3OA++z4rtT5Pg5GuMnCY9yWQEoBE1xhlUUP8YDrCBIB0vojLvGO0yz4hm4JJAKcYYoPHGOZAUdYoIMBXrc5iQAHeMlzviFygj7O8dkWEJU4XI8chALRhn9AVKHf70VRTHu4wFfbmKZLNKt50dLBnna0imcMd/2I0phWa3Y/D1e1Xa9BCZJG0VuQNpaWKMx72xS1Fl5/WN3BN+AgJhnZQlq4AAAAAElFTkSuQmCC');
-  background-position: calc(100% - .5rem), 100% 0;
-  background-size:  1.5em 1.5em;
-  background-repeat: no-repeat;
-}
-
-select.arrows:focus {
-  border-color: blue;
-  outline: 0;
 }

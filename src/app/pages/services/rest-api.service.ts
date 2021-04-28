@@ -786,8 +786,8 @@ save_blueprism_config(data)
       return this.http.get('/rpa-service/management/incidents');
     }
 
-    retryFailedProcessGraph(bpmnModelId){
-      // return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
+    retryFailedProcessGraph(pid){
+       return this.http.post("/retryPID", pid)
     }
 
     get_scheduled_bots(){
