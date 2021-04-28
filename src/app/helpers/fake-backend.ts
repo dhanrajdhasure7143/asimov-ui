@@ -13,7 +13,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
         //authentication service logic - post integration with AIOTAL
 
     var token=localStorage.getItem('accessToken');
-   // var encryptToken=at(token.accessToken)
+    var aKey= localStorage.getItem('authKey');
     //var encryptrefreshToken=btoa(token.refreshToken);
 
        let ipAddress = '192.168.0.1';
@@ -29,7 +29,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
         req = req.clone({
             url : this.getRequestUrl(req),
             body: req.body,
-            headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress,'timezone':timezone})
+            headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress,'timezone':timezone, 'authKey': aKey})
         });
         return next.handle(req);
     }
