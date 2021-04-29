@@ -14,7 +14,7 @@ export class BackendURLInterceptor implements HttpInterceptor {
 
     var token=localStorage.getItem('accessToken');
     var aKey= localStorage.getItem('authKey');
-    //var encryptrefreshToken=btoa(token.refreshToken);
+    var encryptedaKey=atob(aKey);
 
        let ipAddress = '192.168.0.1';
 
@@ -25,12 +25,20 @@ export class BackendURLInterceptor implements HttpInterceptor {
                 timezone="ignore";
            } else {
              timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
-           }
+           }     
+        if(aKey){
         req = req.clone({
             url : this.getRequestUrl(req),
             body: req.body,
-            headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress,'timezone':timezone, 'authKey': aKey})
+            headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress,'timezone':timezone,'authKey': encryptedaKey})
         });
+        } else {
+            req = req.clone({
+                url : this.getRequestUrl(req),
+                body: req.body,
+                headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress,'timezone':timezone})
+            });
+        }
         return next.handle(req);
     }
 
