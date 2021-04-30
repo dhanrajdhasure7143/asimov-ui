@@ -73,8 +73,8 @@
                   </ng-container>
                   <ng-container matColumnDef="botStatus">
                       <th mat-header-cell *matHeaderCellDef  mat-sort-header>Status </th>
-                      <td mat-cell  *matCellDef="let element" [id]="element.botId+'__status'">
-                        <div class="margin-25">
+                      <td mat-cell  *matCellDef="let element" >
+                        <div class="margin-25" [id]="element.botId+'__status'">
                           <span *ngIf="element.botStatus=='Running'"  [matTooltip]="element.botStatus" class="text-primary" >
                             <span>
                               <img src="../../../../assets/images/RPA/DotSpin.gif"  style="filter: none; width: 19px;">
