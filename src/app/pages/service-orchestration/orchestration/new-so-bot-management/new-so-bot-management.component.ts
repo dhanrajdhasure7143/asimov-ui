@@ -74,6 +74,7 @@ public slaupdate : boolean = false;
     public slaconId:any;
     public sla_list:any=[];
     public datasourcelist : any = [];
+    public timer:any;
 
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -337,7 +338,8 @@ public slaupdate : boolean = false;
      taskOwner : this.insertslaForm_so_bot.value.taskOwner,
      thresholdLimit :  parseInt(this.insertslaForm_so_bot.value.thresholdLimit),
      totalRetries :  parseInt(this.insertslaForm_so_bot.value.totalRetries),
-     notificationStatus:1
+     notificationStatus:1,
+     notificationStatusError:1
    };
    if(this.sla_bot.sourceType=="UiPath")
      slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName+"_Env";
@@ -497,6 +499,7 @@ public slaupdate : boolean = false;
         });
 
       //this.dataSource1.filterPredicate = this.customFilterPredicate();*/
+      this.update_bot_status();
       this.spinner.hide();
     },(err)=>{
       this.spinner.hide();
@@ -504,6 +507,33 @@ public slaupdate : boolean = false;
   }
 
 
+  update_bot_status(){
+    this.timer = setInterval(() => {
+      this.rest.getallsobots().subscribe(botlist =>{
+        let responsedata:any=botlist
+        responsedata.forEach(statusdata => {
+          let data:any;
+          if(statusdata.status=="InProgress" || statusdata.status=="Running")
+                {
+                  data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
+                }
+                else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
+                {
+                  data='<span  matTooltip="'+statusdata.botStatus+'"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
+                }
+               
+                else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
+                {
+                  data='<span  matTooltip="'+statusdata.botStatus+'"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
+                }
+                
+          $("#"+statusdata.botId+"__status").html(data);
+        });
+          
+        })
+    }, 5000);
+  
+  }
 
 
   viewlogdata(botid ,version){
