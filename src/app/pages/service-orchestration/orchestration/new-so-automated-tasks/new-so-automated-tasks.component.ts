@@ -723,7 +723,7 @@ resetsla(){
               {
                 data='<span  matTooltip="'+statusdata.status+'"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
               }
-              else if(statusdata.status=="Failed")
+              else if(statusdata.status=="Failed" || statusdata.status=="Failure")
               {
                 data='<span  matTooltip="'+statusdata.status+'"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
               }
@@ -1057,7 +1057,7 @@ resetsla(){
   runsmoketest(taskId)
   {
     let data=this.responsedata.find(item=>item.taskId==taskId)
-    let header=" <div class='text-center'><span style='padding:10px;font-size:12px'>Task Name:&nbsp;"+data.taskName+"</span><span style='padding:10px;font-size:12px'>Status:&nbsp;"+data.status+"</span><span style='padding:10px;font-size:12px'>Source:&nbsp;"+data.sourceType+"</span></div><br><br>";
+    let header=" <div class='text-center'><span style='padding:10px;font-size:16px'>Task Name:&nbsp;<a>"+data.taskName+"</a></span><span style='padding:10px;font-size:16px'>Status:&nbsp;<a>"+data.status+"</a></span><span style='padding:10px;font-size:16px'>Source:&nbsp;<a>"+data.sourceType+"</a></span></div><br><br>";
     let errorbody="<div class='text-center'><br><br><i style='font-size:28px;color:red' class='fas  fa-exclamation-triangle'></i><br><br> <div style='font-size:24px;color:red;'> Smoke Test Run Failed</div><br><br></div> "
     let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Successfully</div><br><br></div> "
     this.spinner.show()
