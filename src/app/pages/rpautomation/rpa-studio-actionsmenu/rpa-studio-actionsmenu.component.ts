@@ -704,6 +704,23 @@ loadpredefinedbot(botId)
 
   }
 
+  exportbot(bot)
+  {
+    this.rest.bot_export(bot.botId).subscribe((data)=>{
+      console.log(data)
+        const linkSource = `data:application/txt;base64,${data}`;
+        const downloadLink = document.createElement('a');
+        document.body.appendChild(downloadLink);
+
+        downloadLink.href = linkSource;
+        downloadLink.target = '_self';
+        downloadLink.download = bot.botName+"-V"+bot.version+".sql";
+        downloadLink.click(); 
+        Swal.fire("Bot Exported Successfully","","success");
+    })
+  }
+
+
 
   create_env()
   {

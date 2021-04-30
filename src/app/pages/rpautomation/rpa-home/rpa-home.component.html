@@ -1,5 +1,34 @@
+
+
+<div class="header_addon" style="padding-right:40px;padding-top:7px;">
+    <!--
+      <mat-slide-toggle
+      style="float:right;height:20px;padding-right:30px"
+      class="example-margin"
+      color="primary"
+      *ngIf="tabsArray.length > 0"
+      [checked]="change_rpa_screen"
+      [(ngModel)]="changescreen_rpa_model"
+      (change)="checkchange()"
+      tooltip="change screen"
+      placement="bottom"
+      >
+    </mat-slide-toggle> -->
+    
+      <button  type="button" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
+        <i class="fa fa-list"></i>&nbsp;&nbsp;Load
+      </button>
+    
+      <button  type="button"    class="btn btn-primary"  style="float:right;"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate(0)">
+        <i class="fa fa-plus"></i>&nbsp;&nbsp;Create
+      </button>
+    
+    
+    </div>
+
 <div class="row">
 
+    
     <div class="col-md-3">
 
         <h2 class="title-font" style="margin-top:10px !important;margin-bottom: 0px !important">Automate the Tasks</h2><br>
