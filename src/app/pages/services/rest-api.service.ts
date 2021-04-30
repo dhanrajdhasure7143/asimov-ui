@@ -584,11 +584,18 @@ export class RestApiService{
     }
     else if(type=="Human")
     {
+      // data={
+      //   "botId":"0",
+      //   "taskId":taskid,
+      //   "assignedUserId":id,
+      // }
+
       data={
-        "botId":"0",
-        "taskId":taskid,
-        "assignedUserId":id,
-      }
+        "botId": "", 
+        "taskId": taskid,
+        "assignedUserId": id,
+        "sourceType":""
+        }
     }
     console.log(data);
     return this.http.post("/rpa-service/assign-bot",data);

@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
       var lastName=params['lastName']
       var ProfileuserId=params['ProfileuserId']
       var tenantName=params['tenantName']
+      var authKey = params['authKey']
       if(acToken && refToken){
         var accessToken=atob(acToken);
         var refreshToken=atob(refToken);
@@ -37,6 +38,7 @@ export class HomeComponent implements OnInit {
         localStorage.setItem("lastName", lastName);
         localStorage.setItem("ProfileuserId", ProfileuserId);
         localStorage.setItem("tenantName", tenantName);
+        localStorage.setItem("authKey", authKey)
       }
     });
     this.rpa.getNewAccessToken().subscribe(resp=>{

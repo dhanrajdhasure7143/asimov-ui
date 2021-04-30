@@ -1,6 +1,6 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif'/></ngx-spinner>
 
-<div class="header_addon" style="padding-right:40px;padding-top:7px;">
+<div class="header_addon">
 <!--
   <mat-slide-toggle
   style="float:right;height:20px;padding-right:30px"
@@ -15,15 +15,20 @@
   >
 </mat-slide-toggle> -->
 
-  <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-primary" style="float:right;" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
+<div class="row">
+  <div class="col-md-6">
+    &nbsp;
+  </div>
+  <div class="col-md-6">
+  <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-primary" style="float:right" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
     <i class="fa fa-list"></i>&nbsp;&nbsp;Load
   </button>
-
-  <button  type="button"  *ngIf="tabsArray.length > 0"  class="btn btn-primary"  style="float:right;"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate(0)">
+  
+  <button  type="button"  *ngIf="tabsArray.length > 0"  class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate(0)">
     <i class="fa fa-plus"></i>&nbsp;&nbsp;Create
   </button>
-
-
+</div>
+</div>
 </div>
 
 <!-- tabs -->

@@ -75,6 +75,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
+  public timer:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -703,14 +704,14 @@ resetsla(){
 
   update_task_status()
   {
-    let timer= setInterval(() => {
+    this.timer = setInterval(() => {
       this.rest.getautomatedtasks(0).subscribe(response => {
         let responsedata:any=response;
         if(responsedata.automationTasks!=undefined)
         {
           if(responsedata.automationTasks.length==0)
           {
-            clearInterval(timer);
+            clearInterval(this.timer);
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
@@ -743,22 +744,26 @@ resetsla(){
               $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
 
               $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
-              if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress"||prodata.status=="Running").length>0)
-              {
-              }else
-              {
-                clearInterval(timer);
-              }
+              // if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress"||prodata.status=="Running").length>0)
+              // {
+              // }else
+              // {
+              //   clearInterval(timer);
+              // }
             })
           }
         }else
         {
-          clearInterval(timer);
+          clearInterval(this.timer);
         }
 
       })
 
     }, 5000);
+  }
+
+  ngOnDestroy() { 
+     clearInterval(this.timer)
   }
 
   getenvironments()
