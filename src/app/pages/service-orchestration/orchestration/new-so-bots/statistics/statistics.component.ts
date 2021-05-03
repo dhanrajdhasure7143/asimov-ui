@@ -14,24 +14,81 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 export class StatisticsComponent implements OnInit {
     isActiveBot:boolean=false;
     isActiveException:boolean=false;
-  constructor(private spinner:NgxSpinnerService) { }
+  constructor(
+    private spinner:NgxSpinnerService,
+    private rest:RestApiService
+    ) { }
 
+    public allbots:any;
   ngOnInit(){
     this.spinner.show();
+    this.getallbots();
+    this.getslametrics();
     setTimeout(()=>{
 
-this.chart1();
-this.chart2();
+//this.chart1();
 this.slachart();
-this.chart3();
-this.chart4();
 this.chart5();
 this.modelChart();
-this.spinner.hide();
     },500)
   }
 
-  chart1(){
+
+
+
+  getslametrics()
+  {
+    this.rest.getslametrics().subscribe(metrics=>{
+      console.log(metrics);
+    
+    })
+  }
+  getallbots()
+  {
+    am4core.useTheme(am4themes_animated);
+    this.rest.getallsobots().subscribe(item=>{
+       this.allbots=item;
+       let data:any=[{
+        "Failure": "Failure",
+        "litres": this.allbots.filter(bot=>bot.botStatus=="Failure").length,
+        "color": "#BC1D28"
+      },{
+        "country": "New",
+        "litres":  this.allbots.filter(bot=>bot.botStatus=="New").length,
+        "color": "#6E6E6E"
+      }, {
+        "country": "Success",
+        "litres":  this.allbots.filter(bot=>bot.botStatus=="Success").length,
+        "color":"#62C849"
+      }];
+
+      
+      this.chart1(data)
+      this.chart2()
+      let sourceType=[{
+        "country": "UiPath",
+        "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
+        "color": "#ffda83"
+      },{
+        "country": "BluePrism",
+        "litres":  this.allbots.filter(item=>item.sourceType=="BluePrism").length,
+        "color": "#55d8fe"
+      },{
+        "country": "EPSoft",
+        "litres":this.allbots.filter(item=>item.sourceType=="EPSoft").length,
+        "color": "#fa4616"
+      }];
+      
+      this.chart3(sourceType);
+      this.chart4();
+      
+      this.spinner.hide();
+      
+    })
+  }
+
+
+  chart1(data){
     
     // Themes begin
     am4core.useTheme(am4themes_animated);
@@ -52,31 +109,31 @@ this.spinner.hide();
       ev => {
       let a = ev.target;
       var idOfPie = ev.target._dataItem.dataContext["country"];
-        switch(idOfPie) {
-          case 'Active':
-              $('.botstatusactive').show();
-              $('.botactive.except').hide();
-            //   document.querySelector('.botstatusactive').scrollIntoView({
-            //     behavior: 'smooth'
-            // });
-            //   $('html,body').animate({
-            //     scrollTop: $(".botstatusactive").offset().top},
-            //     'slow');
-              break;
-          case 'Exception':
-              $('.botactive.except').show();
-              $('.botstatusactive').hide();
-            //   document.querySelector('.except').scrollIntoView({
-            //     behavior: 'smooth'
-            // });
-            //   $('html,body').animate({
-            //     scrollTop: $(".botactive.except").offset().top},
-            //     'slow');
-              break;
-          default:
-              $('.botstatusactive').hide();
-              $('.botactive.except').hide();
-        }
+        // switch(idOfPie) {
+        //   case 'Active':
+        //       $('.botstatusactive').show();
+        //       $('.botactive.except').hide();
+        //     //   document.querySelector('.botstatusactive').scrollIntoView({
+        //     //     behavior: 'smooth'
+        //     // });
+        //     //   $('html,body').animate({
+        //     //     scrollTop: $(".botstatusactive").offset().top},
+        //     //     'slow');
+        //       break;
+        //   case 'Exception':
+        //       $('.botactive.except').show();
+        //       $('.botstatusactive').hide();
+        //     //   document.querySelector('.except').scrollIntoView({
+        //     //     behavior: 'smooth'
+        //     // });
+        //     //   $('html,body').animate({
+        //     //     scrollTop: $(".botactive.except").offset().top},
+        //     //     'slow');
+        //       break;
+        //   default:
+        //       $('.botstatusactive').hide();
+        //       $('.botactive.except').hide();
+        // }
         
       },
     this
@@ -123,22 +180,11 @@ pieSeries.labels.template.fontSize = 18;
     markerTemplate.width = 10;
     markerTemplate.height = 10;
     chart.innerRadius = am4core.percent(0);
-    chart.data = [{
-      "country": "Exception",
-      "litres": 12,
-      "color": am4core.color("#BC1D28")
-    },{
-      "country": "Idle",
-      "litres": 21,
-      "color": am4core.color("#6E6E6E")
-    }, {
-      "country": "Active",
-      "litres": 84.8,
-      "color": am4core.color("#62C849")
-    }];
+    chart.data = data;
 
 
   }
+
   chart2(){
     am4core.useTheme(am4themes_animated);
 
@@ -212,7 +258,7 @@ series3.show();
 chart.cursor = new am4charts.XYCursor();
 // chart.legend.fontSize = 11;
   }
-  chart3(){
+  chart3(data){
 
     am4core.ready(function() {
         
@@ -273,20 +319,7 @@ chart.cursor = new am4charts.XYCursor();
         // Add a legend
         
         
-        chart.data = [{
-          "country": "UiPath",
-          "litres": 27,
-          "color": am4core.color("#ffda83")
-        },{
-          "country": "BluePrism",
-          "litres": 35,
-          "color": am4core.color("#55d8fe")
-        },{
-          "country": "EPSoft",
-          "litres": 29,
-          "color": am4core.color("#fa4616")
-        }];
-        
+        chart.data = data
         });  
 
   }
