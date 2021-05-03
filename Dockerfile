@@ -7,7 +7,7 @@
 #RUN npm run build --prod
 
 ### STAGE 2: Run ###
-FROM nginx:1.16.0-alpine
+FROM nginx:1.20.0-alpine
 #COPY --from=build /app/dist/asimov /usr/share/nginx/html
 COPY dist/epsoft /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/nginx.conf

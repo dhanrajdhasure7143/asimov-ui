@@ -802,4 +802,9 @@ save_blueprism_config(data)
     }
 
 
+    bot_export(botid)
+    {
+      return this.http.get("/rpa-service/exportBot/"+botid,{responseType: 'text'});
+    }
+
 }

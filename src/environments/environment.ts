@@ -6,9 +6,9 @@ export const environment = {
   production: false,
 
   // Data upload path
-  data_path:"/var/kafka",
+   data_path:"/var/kafka",
 
-  //  * DEV ENV URl's
+//   //  * DEV ENV URl's
 
   pi_url: 'http://pidev.epsoftinc.in',
 
@@ -65,10 +65,10 @@ export const environment = {
 
   // //DB Connector
   //  dbConnectorHost: "10.11.0.104",
-  //  dbName: 'eiap_qa'
+  //  dbName: 'eiap_qa',
 
-  //BPMN Platform URL
-    //bpmnplatformUrl : "http://10.11.0.127:8080",
+  // // BPMN Platform URL
+  //   bpmnplatformUrl : "http://10.11.0.127:8080",
 };
 
 /*

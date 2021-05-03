@@ -268,6 +268,38 @@ isTimeChange:boolean=false;
         "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
          }
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
+        if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
+          if(this.fullgraph.is_kafka_failure == 'Y'){
+            console.log("kafka fail");
+            Swal.fire({
+              title: 'Oops!',
+              text: ""+this.fullgraph.display_msg.info,
+              icon: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Okay'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'info',
+                  title: 'Please wait, Redirecting to workspace',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                setTimeout(() => {
+                  self.router.navigate(['pages/processIntelligence/upload'])
+                }, 1500);
+              }
+            });
+            if(this.graphgenetaionInterval){
+              clearInterval(this.graphgenetaionInterval);
+            }
+            this.spinner.hide();
+            return;
+          } 
+        }
         if(this.fullgraph.hasOwnProperty('display_msg')){
           Swal.fire({
             title: 'Oops!',
@@ -397,7 +429,40 @@ isTimeChange:boolean=false;
          'timeChange':this.isTimeChange,
        "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
          }
+         var self = this;
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
+        if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
+          if(this.fullgraph.is_kafka_failure == 'Y'){
+            console.log("kafka fail");
+            Swal.fire({
+              title: 'Oops!',
+              text: ""+this.fullgraph.display_msg.info,
+              icon: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Okay'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'info',
+                  title: 'Please wait, Redirecting to workspace',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                setTimeout(() => {
+                  self.router.navigate(['pages/processIntelligence/upload'])
+                }, 1500);
+              }
+            });
+            if(this.graphgenetaionInterval){
+              clearInterval(this.graphgenetaionInterval);
+            }
+            this.spinner.hide();
+            return;
+          } 
+        }
         if(this.fullgraph.hasOwnProperty('display_msg')){
           this.spinner.show();
           this.model1=[];
@@ -406,14 +471,14 @@ isTimeChange:boolean=false;
           if(this.graphgenetaionInterval){
             clearInterval(this.graphgenetaionInterval);
           }
-         let fullgraphOne=this.fullgraph.data;
+         let fullgraphOne=this.fullgraph.data; 
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
         this.model2 = this.flowchartData(this.model1)
-        this.startArray=[]
+        this.startArray=[];
         this.endArray=[]
         let fullModel2=this.model2
         fullModel2.forEach(element => {
