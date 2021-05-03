@@ -113,7 +113,7 @@
                       <td mat-cell *matCellDef="let element">
                           <span (click)="executionAct(element.botId,element.sourceType)"   matTooltip="Start Bot">
                             <li class="fa fa-play text-success" ></li>
-                          </span>&nbsp;&nbsp;
+                          </span>&nbsp;
                           <!-- <span (click)="pauseBot(element.botId)"  matTooltip="Pause Bot">
                             <i class="fa fa-pause "  aria-hidden="true" ></i> &nbsp;&nbsp;
                           </span>
@@ -121,16 +121,19 @@
                             <i class="fa fa-play-circle" aria-hidden="true"></i> &nbsp;&nbsp;
                           </span> -->
                           <span (click)="stopBot(element.botId)"  matTooltip="Stop Bot">
-                          <i class="fa fa-stop text-danger" aria-hidden="true"></i> &nbsp;&nbsp;
+                          <i class="fa fa-stop text-danger" aria-hidden="true"></i> &nbsp;
                           </span >
                           <span>
                               <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration">
                                   <i class="fa fa-cog" aria-hidden="true"></i></button>
+                            </span>&nbsp;
+                            <span> <!--"Failure"-->
+                              <button matTooltip="Delete Bot" [disabled]="element.botStatus == 'Running' || element.botStatus == 'InProgress'" (click)="botdelete(element.botId)"><i class="fas fa-trash-alt" style="font-size: 14px;"></i></button>
                             </span>
                       </td>
                   </ng-container>
                   <ng-container matColumnDef="Schedule">
-                      <th mat-header-cell *matHeaderCellDef    > Schedule</th>
+                      <th mat-header-cell *matHeaderCellDef>Schedule</th>
                       <td mat-cell *matCellDef="let element" class=" text-center" >
                           <span (click)="openscheduler(element)" matTooltip="Scheduler" style="cursor: pointer;margin-right: 25px;">
                           <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>
