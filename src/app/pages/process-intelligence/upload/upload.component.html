@@ -87,8 +87,8 @@
                                         <ng-container matColumnDef="action">
                                            <th mat-header-cell *matHeaderCellDef class="table_header">Action</th>
                                            <td mat-cell *matCellDef="let element" class="process_view" align="center">
-                                                <span  *ngIf='element.status =="Completed"' title="View Process Graph" (click)="onGraphSelection(element)"> <i class='fa fa-eye'></i></span>
-                                                <span *ngIf='element.status !="Completed"' title="Retry Process Graph" (click)="onRetryGraphGenerate(element)"> <i class='glyphicon glyphicon-refresh'></i></span>
+                                                <span  *ngIf='element.kafkaConFail != "Y"' title="View Process Graph" (click)="onGraphSelection(element)"> <i class='fa fa-eye'></i></span>
+                                                <span *ngIf='element.kafkaConFail == "Y"' title="Retry Process Graph" (click)="onRetryGraphGenerate(element)"> <i class='glyphicon glyphicon-refresh'></i></span>
                                            </td>
                                         </ng-container>
                                   
