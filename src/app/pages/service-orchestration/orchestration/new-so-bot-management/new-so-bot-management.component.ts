@@ -338,7 +338,8 @@ public slaupdate : boolean = false;
      taskOwner : this.insertslaForm_so_bot.value.taskOwner,
      thresholdLimit :  parseInt(this.insertslaForm_so_bot.value.thresholdLimit),
      totalRetries :  parseInt(this.insertslaForm_so_bot.value.totalRetries),
-     notificationStatus:1
+     notificationStatus:1,
+     notificationStatusError:1
    };
    if(this.sla_bot.sourceType=="UiPath")
      slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName+"_Env";
@@ -510,7 +511,7 @@ public slaupdate : boolean = false;
     this.timer = setInterval(() => {
       this.rest.getallsobots().subscribe(botlist =>{
         let responsedata:any=botlist
-        responsedata.array.forEach(statusdata => {
+        responsedata.forEach(statusdata => {
           let data:any;
           if(statusdata.status=="InProgress" || statusdata.status=="Running")
                 {
