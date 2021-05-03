@@ -411,6 +411,7 @@ export class RpaHomeComponent implements OnInit {
   }
 
 
+  
 
   resetbot(taskid:any)
   {

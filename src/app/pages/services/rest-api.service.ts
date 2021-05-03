@@ -807,4 +807,8 @@ save_blueprism_config(data)
       return this.http.get("/rpa-service/exportBot/"+botid,{responseType: 'text'});
     }
 
+    getslametrics()
+    {
+      return this.http.post("/rpa-service/management/sla-metrics","");
+    }
 }
