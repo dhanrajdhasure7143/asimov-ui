@@ -373,7 +373,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       if(response.errorMessage==undefined)
       {
         let environments:any=[];
-        environments=response;
+        environments=response.filter(item=>item.activeStatus==7);
         if(environments.length!=0)
         {
           this.environment=response.map((item)=>{

@@ -397,6 +397,7 @@ export class RpaHomeComponent implements OnInit {
 
   loadbotdata(botId)
   {
+    localStorage.setItem("botId",botId)
     this.rpa_studio.getloadbotdata(botId);
   }
 
