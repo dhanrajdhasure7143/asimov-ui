@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, TemplateRef,ViewChild} from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -14,6 +14,10 @@ import Swal from 'sweetalert2';
 import { FormControl } from '@angular/forms';
 import { Category } from '../../service-orchestration/orchestration/so-dashboard/so-dashboard.component';
 
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
+
+
 declare var $:any;
 
 @Component({
@@ -24,6 +28,7 @@ declare var $:any;
 export class RpaHomeComponent implements OnInit {
   public isTableHasData = true;
   public respdata1=false;
+
   displayedColumns: string[] = ["botName","description","department","botType","version","botStatus"];
   displayedColumns2: string[] = ["processName","taskName","Assign","status","successTask","failureTask","Operations"];
   departmentlist :string[] = ['Development','QA','HR'];
@@ -51,18 +56,28 @@ export class RpaHomeComponent implements OnInit {
   enableConfiguration: boolean=false;
   enablecreatebot: boolean=false;
   showWorkspace: boolean=false;
-
+ modalRef: BsModalRef;
+ exportid:any;
+ allbots:any=[];
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
 
-  constructor(private route: ActivatedRoute, private rest:RestApiService, private rpa_studio:RpaStudioComponent,private http:HttpClient, private dt:DataTransferService, private datahints:Rpa_Hints,)
-  {
+  constructor(
+    private route: ActivatedRoute, 
+    private rest:RestApiService, 
+    private rpa_studio:RpaStudioComponent,
+    private http:HttpClient, 
+    private dt:DataTransferService, 
+    private datahints:Rpa_Hints,
+    private modalService: BsModalService
+    )
+  {}
 
+  openModal(template: TemplateRef<any>) {
+    this.modalRef = this.modalService.show(template);
   }
-
-
 
   ngOnInit() {
     this.userRole = localStorage.getItem("userRole")
@@ -204,6 +219,7 @@ export class RpaHomeComponent implements OnInit {
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
      this.dataSource1.data = response;
+     this.allbots=response;
      this.departmentFilter.valueChanges.subscribe((departmentFilterValue) => {
       if(departmentFilterValue != ""){
     let category=this.categaoriesList.find(val=>departmentFilterValue ==val.categoryId);
@@ -381,6 +397,7 @@ export class RpaHomeComponent implements OnInit {
 
   loadbotdata(botId)
   {
+    localStorage.setItem("botId",botId)
     this.rpa_studio.getloadbotdata(botId);
   }
 
@@ -443,6 +460,56 @@ export class RpaHomeComponent implements OnInit {
     });
   }
 
+
+  mark_export(botid,value)
+  {
+    alert(value);
+    if(value==true)
+      this.exportid=botid;
+    else
+      this.exportid=undefined
+     this.allbots.forEach(data=>{
+        if(botid!=data.botId)
+          $("#export_check_"+data.botId).attr('checked',false);
+     })
+  }
+
+  exportbot(bot)
+  {
+    this.rest.bot_export(bot.botId).subscribe((data)=>{
+      console.log(data)
+        const linkSource = `data:application/txt;base64,${data}`;
+        const downloadLink = document.createElement('a');
+        document.body.appendChild(downloadLink);
+
+        downloadLink.href = linkSource;
+        downloadLink.target = '_self';
+        downloadLink.download = bot.botName+"-V"+bot.version+".sql";
+        downloadLink.click(); 
+        Swal.fire("Bot Exported Successfully","","success");
+    })
+  }
+
+  converBase64toBlob(content, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = window.atob(content); //method which converts base64 to binary
+    var byteArrays = [
+    ];
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      var byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    var blob = new Blob(byteArrays, {
+      type: contentType
+    }); //statement which creates the blob
+    return blob;
+  }
 
 
   update_task_status()
