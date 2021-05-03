@@ -178,3 +178,6 @@ select.arrows:focus {
   animation-name: slideIn;
   animation-duration: 0.4s
   }
+  .apply-btn{
+    margin-top: 240px;
+  }

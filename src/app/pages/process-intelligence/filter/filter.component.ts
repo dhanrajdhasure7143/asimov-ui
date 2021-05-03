@@ -288,7 +288,6 @@ export class FilterComponent implements OnInit {
           this.endPointArray.push(obj)
         }
     }
-    console.log(this.filterby)
     
   }
 
@@ -318,7 +317,7 @@ selectData(selectedData, index){
     }
     };  
     if(activityArray.length>=1){
-      this.isApplyFilter=false;
+      // this.isApplyFilter=false;
       this.isDeselectActivity=false;
     }else{
       this.isApplyFilter=true;
@@ -402,7 +401,7 @@ channgeFilter(){    // filter type in bottom over lay
     this.isVariantFilter = false;
     this.isActivity=true;
     this.isEndpoint=false;
-    this.filterby = 'Activity';
+    // this.filterby = 'Activity';
     var modal = document.getElementById('myModal');
     modal.style.display="block";
 
@@ -569,13 +568,17 @@ selectedVariant(data,index){
               this.dataValuesNames[i].selected = "inactive"
             };
             this.comboFilter();
+            this.isDeselectActivity=true;
      }else if(value=="Variant"){
         this.seletedVariant=[];
           for(var i = 0; i < this.variantListarray.length; i++){
               this.variantListarray[i].selected = "inactive"
             };
             this.comboFilter();
+            this.isApplyFilter=true;
      }
+     this.isStartPoint=false;
+     this.isEndPoint=false;
   }
   
   comboFilter(){      //cobination filter apply
@@ -661,10 +664,9 @@ selectedVariant(data,index){
   }
 
   closePerformancePopup() {
-   
+   this.filterby="Activity";
     var modal = document.getElementById('myModal');
     modal.style.display="none";
-    this.filterby="Activity";
   }
 
 
