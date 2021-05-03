@@ -226,3 +226,7 @@ padding:20px;
 .flex-row button{
   font-size: 10px  !important;
 }
+.mat-menu-item {
+    height:30px !important;
+    line-height:31px!important;
+}
