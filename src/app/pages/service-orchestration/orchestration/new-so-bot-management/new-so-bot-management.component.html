@@ -126,9 +126,6 @@
                           <span>
                               <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration">
                                   <i class="fa fa-cog" aria-hidden="true"></i></button>
-                            </span>&nbsp;
-                            <span> <!--"Failure"-->
-                              <button matTooltip="Delete Bot" [disabled]="element.botStatus == 'Running' || element.botStatus == 'InProgress'" (click)="botdelete(element.botId)"><i class="fas fa-trash-alt" style="font-size: 14px;"></i></button>
                             </span>
                       </td>
                   </ng-container>
