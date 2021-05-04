@@ -182,6 +182,12 @@ export class RpaHomeComponent implements OnInit {
 
             }
           })
+          this.getCategoryList();
+          this.getenvironments();
+          setTimeout(()=> {
+            this.getallbots();
+            }, 550);
+    
           //this.nodes = this.nodes.filter((node): boolean => nodeId !== node.id);
           //this.jsPlumbInstance.removeAllEndpoints(nodeId);
         }
