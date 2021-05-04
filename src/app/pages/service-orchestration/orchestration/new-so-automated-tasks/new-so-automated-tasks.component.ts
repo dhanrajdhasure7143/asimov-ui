@@ -72,9 +72,10 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
-  public insertslaForm:FormGroup;
+  public insertslaForm_so_bot:FormGroup;
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
+  public timer:any;
 
   constructor(
     private route: ActivatedRoute,
@@ -99,7 +100,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
       status : [],
     });
 
-    this.insertslaForm=this.formBuilder.group({
+    this.insertslaForm_so_bot=this.formBuilder.group({
       botName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       botSource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       breachAlerts: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -109,6 +110,8 @@ export class NewSoAutomatedTasksComponent implements OnInit {
       expectedEDate : [],
       notificationType: [],
       processName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      processOwner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       retriesInterval: ["", Validators.compose([Validators.maxLength(2)])],
       slaConfigId: ["", Validators.compose([Validators.required, Validators.maxLength(2)])],
       systemImpacted: ["", Validators.compose([ Validators.maxLength(50)])],
@@ -140,49 +143,187 @@ export class NewSoAutomatedTasksComponent implements OnInit {
     this.getblueprismbots();
  }
 
- SLACon(botId){
-   let slaconId = botId;
-   this.slabotId = botId;
-   let data: any;
-   for(data of this.automatedtask)
-    {
-      if(data.botId==slaconId)
+ sla_bot:any;
+ sla_data:any;
+ sla_selected_task:any;
+ SLACon(taskdata){
+   console.log(taskdata)
+   this.sla_selected_task=taskdata;
+   this.insertslaForm_so_bot.get("processName").setValue(this.sla_selected_task.processName);
+   this.insertslaForm_so_bot.get("processOwner").setValue(this.sla_selected_task.createdBy);
+   this.insertslaForm_so_bot.get("taskName").setValue(this.sla_selected_task.taskName);
+   this.insertslaForm_so_bot.get("botSource").setValue(this.sla_selected_task.sourceType);
+   this.insertslaForm_so_bot.get("taskOwner").setValue(this.sla_selected_task.taskOwner);
+   this.insertslaForm_so_bot.get("breachAlerts").setValue("");
+   if(this.sla_list.find(item=>item.botId==taskdata.botId)!=undefined)
+   {
+      this.sla_data= this.sla_list.find(item=>item.botId==taskdata.botId)
+      this.insertslaForm_so_bot.get("breachAlerts").setValue(this.sla_data.breachAlerts);
+      this.insertslaForm_so_bot.get("retriesInterval").setValue(this.sla_data.retriesInterval);
+      this.insertslaForm_so_bot.get("thresholdLimit").setValue(this.sla_data.thresholdLimit);
+      this.insertslaForm_so_bot.get("totalRetries").setValue(this.sla_data.totalRetries);
+      this.insertslaForm_so_bot.get("slaConfigId").setValue(this.sla_data.slaConfigId);
+      if(this.sla_data.notificationType=="email")
+        this.insertslaForm_so_bot.get("email").setValue(true);
+      if(this.sla_data.notificationType=="sms")
+        this.insertslaForm_so_bot.get("sms").setValue(true);
+      if(this.sla_data.notificationType=="email,sms")
       {
-        if(data.sourceType == 'EPSoft')
-        {
-          this.bot_list.filter(x =>
-            {
-            if(x.botId == slaconId){
-            this.insertslaForm.get("botName").setValue(x.botName);
-            }
-          });
-        }
-        else if(data.sourceType == 'UiPath')
-         {
-           console.log("uiapath_bots",data.sourceType);
-             this.uipath_bots.filter(x =>
-              {
-              if(x.Key == slaconId){
-              console.log(x.ProcessKey);
-              this.insertslaForm.get("botName").setValue(x.ProcessKey);
-              }
-            });
-        }
-        this.updatesladata=data;
-        this.insertslaForm.get("processName").setValue(this.updatesladata["processName"]);
-        this.insertslaForm.get("taskOwner").setValue(this.updatesladata["taskOwner"]);
-        this.insertslaForm.get("botSource").setValue(this.updatesladata["sourceType"]);
-        break;
+        this.insertslaForm_so_bot.get("sms").setValue(true);
+        this.insertslaForm_so_bot.get("email").setValue(true);
       }
+   }
+   else if(this.sla_selected_task.sourceType=="EPSoft"){
+    this.sla_bot=this.bot_list.find(item=>item.botId==this.sla_selected_task.botId);
+    this.insertslaForm_so_bot.get("botName").setValue(this.sla_bot.botName);
+   }
+   else if(taskdata.sourceType=="BluePrism")
+    {
+      console.log(this.blueprismbots)
+      this.sla_bot=this.blueprismbots.find(item=>item.botName==this.sla_selected_task.botId);
+      console.log(this.sla_bot);
+      this.insertslaForm_so_bot.get("botName").setValue(this.sla_bot.botName);
     }
+    else if(this.sla_selected_task.sourceType=="UiPath")
+    {
+      this.sla_bot=this.uipath_bots.find(item=>item.Key==this.sla_selected_task.botId);
+      this.insertslaForm_so_bot.get("botName").setValue(this.sla_bot.Name);
+    }
+  //  this.slabotId = botId;
+  //  let bot_data:any;
+  //  if(this.bot_list.find(item=>item.botId==botId)!=undefined)
+  //    this.sla_bot=this.bot_list.find(item=>item.botId==botId); 
+  //   if(bot_data.sourceType=="EPSoft")
+  //   {
+  //     this.insertslaForm_so_bot.get("botName").setValue(bot_data.botName)
+  //   }
+  //   else if(bot_data.sourceType=="UiPath")
+  //   {
+  //     this.insertslaForm_so_bot.get("botName").setValue(bot_data.botName)
+  //   }
+  //   else if(bot_data.sourceType=="BluePrism")
+  //   {
+  //   }
+    // }
+    // this.insertslaForm_so_bot.get("processName").setValue(this.updatesladata["processName"]);
+    // this.insertslaForm_so_bot.get("taskOwner").setValue(this.updatesladata["taskOwner"]);
+    // this.insertslaForm.get("botSource").setValue(this.updatesladata["sourceType"]);
+  //  for(data of this.automatedtask)
+  //   {
+  //     if(data.botId==slaconId)
+  //     {
+  //       if(data.sourceType == 'EPSoft')
+  //       {
+  //         this.bot_list.filter(x =>
+  //           {
+  //           if(x.botId == slaconId){
+  //           this.insertslaForm.get("botName").setValue(x.botName);
+  //           }
+  //         });
+  //       }
+  //       else if(data.sourceType == 'UIPath')
+  //        {
+  //          console.log("uiapath_bots",data.sourceType);
+  //            this.uipath_bots.filter(x =>
+  //             {
+  //             if(x.Key == slaconId){
+  //             console.log(x.ProcessKey);
+  //             this.insertslaForm.get("botName").setValue(x.ProcessKey);
+  //             }
+  //           });
+  //       }
+  //       this.updatesladata=data;
+    //     this.insertslaForm.get("processName").setValue(this.updatesladata["processName"]);
+    //     this.insertslaForm.get("taskOwner").setValue(this.updatesladata["taskOwner"]);
+    //     this.insertslaForm.get("botSource").setValue(this.updatesladata["sourceType"]);
+    //     break;
+    //   }
+    // }
     document.getElementById("SLAConfig").style.display="block";
  }
 
+ slaconId:any;
+ sla_list:any=[]
+ get_sla_list()
+ {
+   this.rest.getslalist().subscribe(sla_list=>{
+     this.sla_list=sla_list;
+   })
+ }
+
+
  savedata(){}
 
+ slaalerts(){
+  /* let notificationtype="";
+   if(this.insertslaForm_so_bot.get("email").value==true)
+     notificationtype="email"
+   if(this.insertslaForm_so_bot.get("sms").value==true)
+     notificationtype="sms"
+   if(this.insertslaForm_so_bot.get("sms").value==true&&this.insertslaForm_so_bot.get("email").value==true)
+     notificationtype="email,sms"
+    let slaalertsc = {
+      botSource : this.insertslaForm_so_bot.value.botSource,
+      breachAlerts : this.insertslaForm_so_bot.value.breachAlerts,
+      cascadingImpact : false,
+      expectedETime : "0000-00-00T00:00:00.000Z",
+      notificationType : notificationtype,
+      processName : this.sla_selected_task.processName,
+      retriesInterval :  parseInt(this.insertslaForm_so_bot.value.retriesInterval),
+      slaConfigId :  parseInt(this.insertslaForm_so_bot.value.slaConfigId),
+      systemImpacted : "NA",
+      taskOwner : this.insertslaForm_so_bot.value.taskOwner,
+      thresholdLimit :  parseInt(this.insertslaForm_so_bot.value.thresholdLimit),
+      totalRetries :  parseInt(this.insertslaForm_so_bot.value.totalRetries),
+      notificationStatus:1
+    };*/
+    /*
+     if(this.sla_bot.sourceType=="UiPath")
+      slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName+"_Env";
+     else
+       slaalertsc["botName"]=this.insertslaForm_so_bot.value.botName;
+ 
+     if(this.sla_bot.sourceType=="EPSoft")
+       slaalertsc["botId"]=this.sla_bot.botId;
+     else
+       slaalertsc["botId"]=0;
+     if(this.slaconId==undefined)
+       this.rest.slaconfigapi(slaalertsc).subscribe( res =>
+       {
+           let resp:any=res
+           if(resp.errorMessage==undefined)
+           {
+             Swal.fire(resp.Status,"","success")
+             this.get_sla_list();
+           }
+           else
+             Swal.fire(resp.errorMessage,"","success")
+     });
+    else
+     this.rest.update_sla_config(slaalertsc).subscribe( res =>
+     {
+           let resp:any=res
+           if(resp.errorMessage==undefined)
+           {
+             Swal.fire(resp.Status,"","success")
+             this.get_sla_list();
+           }
+           else
+             Swal.fire(resp.errorMessage,"","success")
+ 
+     });*/
+     setTimeout(()=>{
+       Swal.fire("SLA configuration saved successfully","","success")
+       this.SLAclose();
+     },1000)
+ 
+ 
+  }
+ 
+ 
 checkboxstatus(data){
   let checkboxstatus = data;
-  this.insertslaForm.value.Alerts = checkboxstatus;
+  this.insertslaForm_so_bot.value.Alerts = checkboxstatus;
 }
 
 SLAclose(){
@@ -190,30 +331,30 @@ SLAclose(){
   this.resetsla();
 }
 
-emailcheckm(){
-  if(this.emailcheck == true)
-  {
-    this.emailcheck = false;
-  }
-  else
-  {
-    this.emailcheck = true;
-  }
-}
+// emailcheckm(){
+//   if(this.emailcheck == true)
+//   {
+//     this.emailcheck = false;
+//   }
+//   else
+//   {
+//     this.emailcheck = true;
+//   }
+// }
 
-smscheckm(){
-  if(this.smscheck == true)
-  {
-    this.smscheck = false;
-  }
-  else
-  {
-    this.smscheck = true;
-  }
-}
+// smscheckm(){
+//   if(this.smscheck == true)
+//   {
+//     this.smscheck = false;
+//   }
+//   else
+//   {
+//     this.smscheck = true;
+//   }
+// }
 
 cascadingImp(){
-  if(this.insertslaForm.value.cascadingImpact == true)
+  if(this.insertslaForm_so_bot.value.cascadingImpact == true)
 
   {
     this.cascadingImpactbtn = true;
@@ -224,86 +365,86 @@ cascadingImp(){
   }
 }
 
-slaalerts(){
-  if(this.emailcheck == true){
-    if(this.smscheck == true){
-      this.insertslaForm.value.notificationType = 'email,sms';
-    }
-    else{
-      this.insertslaForm.value.notificationType = 'email';
-    }
-  }
-  else if(this.smscheck == true)
-  {
-    this.insertslaForm.value.notificationType = 'sms';
-  }
-  else
-  {
-    this.insertslaForm.value.notificationType = '';
-  }
-  let expectedDate : any;
-  expectedDate = new Date();
-  //this.insertslaForm.value.expectedDate+"T"+this.insertslaForm.value.expectedTime+":00.000Z"
-  let date1: any;
+// slaalerts(){
+//   if(this.emailcheck == true){
+//     if(this.smscheck == true){
+//       this.insertslaForm.value.notificationType = 'email,sms';
+//     }
+//     else{
+//       this.insertslaForm.value.notificationType = 'email';
+//     }
+//   }
+//   else if(this.smscheck == true)
+//   {
+//     this.insertslaForm.value.notificationType = 'sms';
+//   }
+//   else
+//   {
+//     this.insertslaForm.value.notificationType = '';
+//   }
+//   let expectedDate : any;
+//   expectedDate = new Date();
+//   //this.insertslaForm.value.expectedDate+"T"+this.insertslaForm.value.expectedTime+":00.000Z"
+//   let date1: any;
 
-  if((expectedDate.getMonth()+1)<10){
-  date1 = expectedDate.getFullYear()+"-0"+(expectedDate.getMonth()+1)+"-"+expectedDate.getDate()+"T00:"+this.insertslaForm.value.expectedEDate+":00.000Z";
-  }
-  else{
-   date1 = expectedDate.getFullYear()+"-"+(expectedDate.getMonth()+1)+"-"+expectedDate.getDate()+"T00:"+this.insertslaForm.value.expectedEDate+":00.000Z";
-  }
+//   if((expectedDate.getMonth()+1)<10){
+//   date1 = expectedDate.getFullYear()+"-0"+(expectedDate.getMonth()+1)+"-"+expectedDate.getDate()+"T00:"+this.insertslaForm.value.expectedEDate+":00.000Z";
+//   }
+//   else{
+//    date1 = expectedDate.getFullYear()+"-"+(expectedDate.getMonth()+1)+"-"+expectedDate.getDate()+"T00:"+this.insertslaForm.value.expectedEDate+":00.000Z";
+//   }
 
- let slaalertsc = {
-     botId : parseInt(this.slabotId),
-    botName : this.insertslaForm.value.botName,
-    botSource : this.insertslaForm.value.botSource,
-    breachAlerts : this.insertslaForm.value.breachAlerts,
-    cascadingImpact : this.insertslaForm.value.cascadingImpact,
-    expectedETime :  date1,
-    notificationType : this.insertslaForm.value.notificationType,
-    processName : this.insertslaForm.value.processName,
-    retriesInterval : parseInt(this.insertslaForm.value.retriesInterval),
-    slaConfigId : parseInt(this.insertslaForm.value.slaConfigId),
-    systemImpacted : this.insertslaForm.value.systemImpacted,
-    taskOwner : this.insertslaForm.value.taskOwner,
-    thresholdLimit : parseInt(this.insertslaForm.value.thresholdLimit),
-    totalRetries : parseInt(this.insertslaForm.value.totalRetries),
-  };
-  console.log(slaalertsc);
-   this.rest.slaconfigapi(slaalertsc).subscribe( res =>
-    {
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: 'SLA Configuration Updated Successfully',
-        showConfirmButton: false,
-        timer: 2000
-      })
-     /* if(res.errorCode==undefined){
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: "Successfully Connected",
-        showConfirmButton: false,
-        timer: 2000
-      })
-      }else{
-        Swal.fire({
-          position: 'center',
-          icon: 'error',
-          title: 'Connection Failed',
-          showConfirmButton: false,
-          timer: 2000
-        })
-      }*/
-    });
-  this.SLAclose();
-}
+//  let slaalertsc = {
+//      botId : parseInt(this.slabotId),
+//     botName : this.insertslaForm.value.botName,
+//     botSource : this.insertslaForm.value.botSource,
+//     breachAlerts : this.insertslaForm.value.breachAlerts,
+//     cascadingImpact : this.insertslaForm.value.cascadingImpact,
+//     expectedETime :  date1,
+//     notificationType : this.insertslaForm.value.notificationType,
+//     processName : this.insertslaForm.value.processName,
+//     retriesInterval : parseInt(this.insertslaForm.value.retriesInterval),
+//     slaConfigId : parseInt(this.insertslaForm.value.slaConfigId),
+//     systemImpacted : this.insertslaForm.value.systemImpacted,
+//     taskOwner : this.insertslaForm.value.taskOwner,
+//     thresholdLimit : parseInt(this.insertslaForm.value.thresholdLimit),
+//     totalRetries : parseInt(this.insertslaForm.value.totalRetries),
+//   };
+//   console.log(slaalertsc);
+//    this.rest.slaconfigapi(slaalertsc).subscribe( res =>
+//     {
+//       Swal.fire({
+//         position: 'center',
+//         icon: 'success',
+//         title: 'SLA Configuration Updated Successfully',
+//         showConfirmButton: false,
+//         timer: 2000
+//       })
+//      /* if(res.errorCode==undefined){
+//       Swal.fire({
+//         position: 'center',
+//         icon: 'success',
+//         title: "Successfully Connected",
+//         showConfirmButton: false,
+//         timer: 2000
+//       })
+//       }else{
+//         Swal.fire({
+//           position: 'center',
+//           icon: 'error',
+//           title: 'Connection Failed',
+//           showConfirmButton: false,
+//           timer: 2000
+//         })
+//       }*/
+//     });
+//   this.SLAclose();
+// }
 
 resetsla(){
-  this.insertslaForm.reset();
+  this.insertslaForm_so_bot.reset();
   //this.insertslaForm.get("thresholdLimit").setValue("");
-  this.insertslaForm.get("breachAlerts").setValue("");
+  this.insertslaForm_so_bot.get("breachAlerts").setValue("");
   this.emailcheck = false;
   this.smscheck = false;
   this.castoggle = false;
@@ -331,7 +472,7 @@ resetsla(){
 
   getallbots()
   {
-    this.rest.getAllActiveBots().subscribe(botlist =>
+    this.rest.getallsobots().subscribe(botlist =>
     {
       this.bot_list=botlist;
     });
@@ -563,14 +704,14 @@ resetsla(){
 
   update_task_status()
   {
-    let timer= setInterval(() => {
+    this.timer = setInterval(() => {
       this.rest.getautomatedtasks(0).subscribe(response => {
         let responsedata:any=response;
         if(responsedata.automationTasks!=undefined)
         {
           if(responsedata.automationTasks.length==0)
           {
-            clearInterval(timer);
+            clearInterval(this.timer);
           }else{
             responsedata.automationTasks.forEach(statusdata=>{
               let data:any;
@@ -592,7 +733,7 @@ resetsla(){
               }
               else if(statusdata.status=="Pending")
               {
-                data="<span  matTooltip='"+statusdata.status+"'  class='text-warning' style='font-size:19px'><i class='fa fa-clock-o'></i></span>";
+                data="<span  matTooltip='"+statusdata.status+"'  class='text-warning' style='font-size:20px'><i class='fa fa-clock'></i></span>";
               }
               else if(statusdata.status=="")
               {
@@ -603,22 +744,26 @@ resetsla(){
               $("#"+statusdata.taskId+"__failed").html(statusdata.failureTask)
 
               $("#"+statusdata.taskId+"__success").html(statusdata.successTask)
-              if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress"||prodata.status=="Running").length>0)
-              {
-              }else
-              {
-                clearInterval(timer);
-              }
+              // if(responsedata.automationTasks.filter(prodata=>prodata.status=="InProgress"||prodata.status=="Running").length>0)
+              // {
+              // }else
+              // {
+              //   clearInterval(timer);
+              // }
             })
           }
         }else
         {
-          clearInterval(timer);
+          clearInterval(this.timer);
         }
 
       })
 
     }, 5000);
+  }
+
+  ngOnDestroy() { 
+     clearInterval(this.timer)
   }
 
   getenvironments()
@@ -912,14 +1057,14 @@ resetsla(){
   runsmoketest(taskId)
   {
     let data=this.responsedata.find(item=>item.taskId==taskId)
-    let header=" <div class='text-center'><span style='padding:10px;font-size:12px'>TaskName:&nbsp;"+data.taskName+"</span><span style='padding:10px;font-size:12px'>Status:&nbsp;"+data.status+"</span><span style='padding:10px;font-size:12px'>Source:&nbsp;"+data.sourceType+"</span></div><br><br>";
+    let header=" <div class='text-center'><span style='padding:10px;font-size:12px'>Task Name:&nbsp;"+data.taskName+"</span><span style='padding:10px;font-size:12px'>Status:&nbsp;"+data.status+"</span><span style='padding:10px;font-size:12px'>Source:&nbsp;"+data.sourceType+"</span></div><br><br>";
     let errorbody="<div class='text-center'><br><br><i style='font-size:28px;color:red' class='fas  fa-exclamation-triangle'></i><br><br> <div style='font-size:24px;color:red;'> Smoke Test Run Failed</div><br><br></div> "
-    let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Sucessfully</div><br><br></div> "
+    let successbody="<div class='text-center'><br><br><i style='font-size:28px;' class='fas text-success  fa-check-circle'></i><br><br> <div style='font-size:24px;' class='text-success'> Smoke Test Run Successfully</div><br><br></div> "
     this.spinner.show()
     setTimeout(()=>{
       this.spinner.hide();
       Swal.fire({
-        width: '500px',
+        width: '700px',
         html:header+(data.status=="Success"?successbody:errorbody),
         confirmButtonColor: (data.status=="Success"?"green":"red"),
         confirmButtonText: 'Dismiss',

@@ -52,7 +52,7 @@ export class RestApiService{
   //password -Welcome@123
 
   getAccessToken(){
-    let data = {"userId":"karthik.peddinti@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
+    let data = {"userId":"lakshmi.kadali@epsoftinc.com",//"raghavendra.basavaraju@epsoftinc.com",
                 "password":"Welcome@123"};
 
 
@@ -584,11 +584,18 @@ export class RestApiService{
     }
     else if(type=="Human")
     {
+      // data={
+      //   "botId":"0",
+      //   "taskId":taskid,
+      //   "assignedUserId":id,
+      // }
+
       data={
-        "botId":"0",
-        "taskId":taskid,
-        "assignedUserId":id,
-      }
+        "botId": "", 
+        "taskId": taskid,
+        "assignedUserId": id,
+        "sourceType":""
+        }
     }
     console.log(data);
     return this.http.post("/rpa-service/assign-bot",data);
@@ -789,5 +796,10 @@ save_blueprism_config(data)
     retryFailedProcessGraph(bpmnModelId){
       // return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
     }
+
+    get_scheduled_bots(){
+      return this.http.get('/rpa-service/management/scheduled-bots');
+    }
+
 
 }

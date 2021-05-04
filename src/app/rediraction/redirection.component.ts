@@ -9,7 +9,9 @@ export class RedirectionComponent{
   constructor(private authService:AuthenticationService, @Inject(APP_CONFIG) private config) { 
     this.authService.logout();
       localStorage.clear();
-      window.location.href=this.config.camunda_redirectionLogout;
+      console.log(this.config.signoutRedirectionURL);
+      
+      window.location.href=this.config.signoutRedirectionURL;
   }
   ngOnInit() {}
 }

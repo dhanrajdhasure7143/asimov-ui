@@ -53,6 +53,7 @@ export class DataselectionComponent implements OnInit {
   isDateformat:any;
   count=0;
   dateformat:any;
+  content_no:number=1;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
@@ -68,7 +69,6 @@ export class DataselectionComponent implements OnInit {
     this.dt.changeParentModule({"route":"/pages/processIntelligence/upload", "title":"Process Intelligence"});
     this.dt.changeChildModule({"route":"/pages/processIntelligence/selection", "title":"Data Selection"});
     this.dt.changeHints(this.hints.dataSelectionHints);
-
     var headertype=JSON.parse(localStorage.getItem('headertypeObj'))
     for(var i=0;i<headertype.length;i++){
       for (let [key, value] of Object.entries(headertype[i])) {
@@ -87,8 +87,6 @@ export class DataselectionComponent implements OnInit {
     this.cathead10=this.headertypeArray[9];
     this.cathead11=this.headertypeArray[10];
     this.cathead12=this.headertypeArray[11];
-      // var restwo=localStorage.getItem('fileData')
-      // var res=JSON.parse(restwo)
       let restwo;
       this.dt.current_piData.subscribe(response => { restwo = response })
       var res=restwo;
@@ -96,25 +94,23 @@ export class DataselectionComponent implements OnInit {
         this.headerData = res[0];
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
-    
-
   }
 
   getDataTypeChange(a,b){
 
   }
 
-  slideUp(){
+  slideUp(){    //Open bottom overlay for Enter process name and generate graph
     var modal = document.getElementById('myModal');
     modal.style.display="block";
-    }
-    generateGraph(e){
+  }
+  
+  generateGraph(e){   //Generate process graph for csv and xls
     this.processId = Math.floor(100000 + Math.random() * 900000);
     var renamesObj=[];
     for(var i=0; i<this.headerArray.length; i++){
       for (let [key, value] of Object.entries(this.headerArray[i])) {
         var obj={}
-        // var lowercase=value.toString().charAt(0).toLowerCase() + value.toString().slice(1)
         var lowercase=value
         if(lowercase=='Start Timestamp' || lowercase=='Start Time'){
           lowercase='start Time'
@@ -129,10 +125,9 @@ export class DataselectionComponent implements OnInit {
           lowercase='resource'
         }
         obj[key]=lowercase.toString().split(' ').join('')
-        
         renamesObj.push(obj) ;
       }
-  }
+    }
   let renamestring='';
   for(var k=0;k<renamesObj.length;k++){
     for (let [key, value] of Object.entries(renamesObj[k])) {
@@ -158,157 +153,114 @@ export class DataselectionComponent implements OnInit {
     this.isUploadFileName = res;
   });
   if(this.isUploadFileName.includes("csv")){
-    // const connectorBody = {
-    //   "name": "CsvSchemaSpool-" + this.processId,
-    //   "config": {
-    //     "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
-    //     "input.path": "/var/kafka",
-    //     "input.file.pattern": this.isUploadFileName,
-    //     "error.path": "/var/kafka",
-    //     "topic": this.config.piConnector + "connector-spooldir-" + this.processId,
-    //     "finished.path": "/var/kafka/data",
-    //     "halt.on.error": "false",
-    //     "csv.first.row.as.header": "true",
-    //     "cleanup.policy": "DELETE",
-    //     "schema.generation.enabled": "true",
-    //     "parser.timestamp.date.formats": "yyyy/MM/dd’ ‘HH:mm:ss.SSSZ",
-    //     "csv.case.sensitive.field.names": "true",
-    //     "parser.timestamp.timezone": "UTC",
-    //     "key.converter": "io.confluent.connect.avro.AvroConverter",
-    //     "key.converter.schema.registry.url": "http://10.11.0.101:8081",
-    //     "value.converter": "io.confluent.connect.avro.AvroConverter",
-    //     "value.converter.schema.registry.url": "http://10.11.0.101:8081",
-    //     "transforms": "RenameField,ReplaceField,TimestampConverter,ValueToKey,InsertField",
-    //     "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-    //     "transforms.RenameField.renames": renamestring,
-    //     "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-    //     "transforms.ReplaceField.whitelist": renamesObjOne.join(),
-    //     "transforms.TimestampConverter.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-    //     "transforms.TimestampConverter.field": "startTime,endTime",
-    //     "transforms.TimestampConverter.target.type": "Timestamp",
-    //     "transforms.TimestampConverter.format": "yyyy/MM/dd HH:mm:ss",
-    //     "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-    //     "transforms.ValueToKey.fields": "caseID",
-    //     "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-    //     "transforms.InsertField.static.field": "piIdName",
-    //     "transforms.InsertField.static.value": this.processId + "-p" + this.processId
-    //   }
-    // }
-
     const connectorBody ={
       "name": "CsvSchemaSpool-" + this.processId,
-      "config": {
-      "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
-      "input.path": this.config.dataPath,
-      "input.file.pattern": this.isUploadFileName,
-      "error.path": this.config.dataPath,
-      "topic": this.config.piConnector + "connector-spooldir-" + this.processId,
-      "finished.path": this.config.dataPath + "/data",
-      "halt.on.error": "false",
-      "csv.first.row.as.header": "true",
-      "cleanup.policy": "DELETE",
-      "schema.generation.enabled": "true",
-      "parser.timestamp.date.formats": "yyyy/MM/dd’ ‘HH:mm:ss.SSSZ",
-      "csv.case.sensitive.field.names": "true",
-      "parser.timestamp.timezone": "UTC",
-      "key.converter": "io.confluent.connect.avro.AvroConverter",
-      "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      "value.converter": "io.confluent.connect.avro.AvroConverter",
-      "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-      "transforms": "RenameField,ReplaceField,ValueToKey,InsertField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string"
-      ,
-      "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      "transforms.RenameField.renames": renamestring,
-      "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-      "transforms.ReplaceField.whitelist": renamesObjOne.join(),
-      "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
-      "transforms.ValueToKey.fields": "caseID",
-      "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-      "transforms.InsertField.static.field": "piIdName",
-      "transforms.InsertField.static.value": this.processId + "-p" + this.processId,
-      "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      "transforms.convert_startTime_unix.field": "startTime",
-      "transforms.convert_startTime_unix.target.type": "unix",
-      "transforms.convert_startTime_unix.format": this.isDateformat,
-      "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      "transforms.convert_startTime_string.field": "startTime",
-      "transforms.convert_startTime_string.target.type": "string",
-      "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
-      "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      "transforms.convert_endTime_unix.field": "endTime",
-      "transforms.convert_endTime_unix.target.type": "unix",
-      "transforms.convert_endTime_unix.format":this.isDateformat,
-      "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-      "transforms.convert_endTime_string.field": "endTime",
-      "transforms.convert_endTime_string.target.type": "string",
-      "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
-      }
-      }
-      
-      this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
-            this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
-      })
-    }else{
-      const xlsxConnectorBody={
-      "name": "xls-"+this.processId,
-      "config": {
-        "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
-        "tasks.max": "1",
-        "file": this.config.dataPath + "/" + this.isUploadFileName,
-        "topic": this.config.piConnector+"connector-xls-"+this.processId,
-        // "topic": "tytyconnector-xls-"+this.processId,
+        "config": {
+        "connector.class": "com.github.jcustenborder.kafka.connect.spooldir.SpoolDirCsvSourceConnector",
+        "input.path": this.config.dataPath,
+        "input.file.pattern": this.isUploadFileName,
+        "error.path": this.config.dataPath,
+        "topic": this.config.piConnector + "connector-spooldir-" + this.processId,
+        "finished.path": this.config.dataPath + "/data",
+        "halt.on.error": "false",
+        "csv.first.row.as.header": "true",
+        "cleanup.policy": "DELETE",
+        "schema.generation.enabled": "true",
+        "parser.timestamp.date.formats": "yyyy/MM/dd’ ‘HH:mm:ss.SSSZ",
+        "csv.case.sensitive.field.names": "true",
+        "parser.timestamp.timezone": "UTC",
         "key.converter": "io.confluent.connect.avro.AvroConverter",
         "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
         "value.converter": "io.confluent.connect.avro.AvroConverter",
         "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
-        "transforms": "RenameField,ReplaceField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string,InsertField,ValueToKey",
+        "transforms": "RenameField,ReplaceField,ValueToKey,InsertField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string"
+        ,
         "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-        // "transforms.RenameField.renames": "Start Time:startTime,End Time:endTime,Operation:activity,Agent:resource,caseID:caseID",
         "transforms.RenameField.renames": renamestring,
-        "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-        "transforms.convert_startTime_unix.field": "startTime",
-        "transforms.convert_startTime_unix.target.type": "unix",
-        "parseDateFormat": this.isDateformat,
-        "transforms.convert_startTime_unix.format": this.isDateformat,
-        // "transforms.convert_startTime_unix.format": "dd.MM.yyyy HH:mm",
         "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
-        // "transforms.ReplaceField.whitelist": "caseID,activity,startTime,endTime,resource",
-        "transforms.ReplaceField.whitelist":renamesObjOne.join(),
-        "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
-        "transforms.convert_startTime_string.field": "startTime",
-        "transforms.convert_startTime_string.target.type": "string",
-        "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
+        "transforms.ReplaceField.whitelist": renamesObjOne.join(),
         "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
         "transforms.ValueToKey.fields": "caseID",
         "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
         "transforms.InsertField.static.field": "piIdName",
-        "transforms.InsertField.static.value":this.processId+"-p"+this.processId,
+        "transforms.InsertField.static.value": this.processId + "-p" + this.processId,
+        "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_startTime_unix.field": "startTime",
+        "transforms.convert_startTime_unix.target.type": "unix",
+        "transforms.convert_startTime_unix.format": this.isDateformat,
+        "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+        "transforms.convert_startTime_string.field": "startTime",
+        "transforms.convert_startTime_string.target.type": "string",
+        "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
         "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
         "transforms.convert_endTime_unix.field": "endTime",
         "transforms.convert_endTime_unix.target.type": "unix",
-        // "transforms.convert_endTime_unix.format":"dd.MM.yyyy HH:mm",
         "transforms.convert_endTime_unix.format":this.isDateformat,
         "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
         "transforms.convert_endTime_string.field": "endTime",
         "transforms.convert_endTime_string.target.type": "string",
         "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
+        }
       }
-    }
+
+      this.rest.saveConnectorConfig(connectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
+            this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
+      })
+    }else{
+          const xlsxConnectorBody={
+            "name": "xls-"+this.processId,
+            "config": {
+              "connector.class": "com.epsoft.asimov.connector.xlsx.XlsxConnector",
+              "tasks.max": "1",
+              "file": this.config.dataPath+"/"+this.isUploadFileName,
+              "topic": this.config.piConnector+"connector-xls-"+this.processId,
+              "key.converter": "io.confluent.connect.avro.AvroConverter",
+              "key.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+              "value.converter": "io.confluent.connect.avro.AvroConverter",
+              "value.converter.schema.registry.url": this.config.schemaRegistryEndPoint,
+              "transforms": "RenameField,ReplaceField,convert_startTime_unix,convert_startTime_string,convert_endTime_unix,convert_endTime_string,InsertField,ValueToKey",
+              "transforms.RenameField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+              "transforms.RenameField.renames": renamestring,
+              "transforms.convert_startTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+              "transforms.convert_startTime_unix.field": "startTime",
+              "transforms.convert_startTime_unix.target.type": "unix",
+              "parseDateFormat": this.isDateformat,
+              "transforms.convert_startTime_unix.format": this.isDateformat,
+              "transforms.ReplaceField.type": "org.apache.kafka.connect.transforms.ReplaceField$Value",
+              "transforms.ReplaceField.whitelist":renamesObjOne.join(),
+              "transforms.convert_startTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+              "transforms.convert_startTime_string.field": "startTime",
+              "transforms.convert_startTime_string.target.type": "string",
+              "transforms.convert_startTime_string.format": "MM/dd/yyyy HH:mm:ss",
+              "transforms.ValueToKey.type": "org.apache.kafka.connect.transforms.ValueToKey",
+              "transforms.ValueToKey.fields": "caseID",
+              "transforms.InsertField.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+              "transforms.InsertField.static.field": "piIdName",
+              "transforms.InsertField.static.value":this.processId+"-p"+this.processId,
+              "transforms.convert_endTime_unix.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+              "transforms.convert_endTime_unix.field": "endTime",
+              "transforms.convert_endTime_unix.target.type": "unix",
+              "transforms.convert_endTime_unix.format":this.isDateformat,
+              "transforms.convert_endTime_string.type": "org.apache.kafka.connect.transforms.TimestampConverter$Value",
+              "transforms.convert_endTime_string.field": "endTime",
+              "transforms.convert_endTime_string.target.type": "string",
+              "transforms.convert_endTime_string.format": "MM/dd/yyyy HH:mm:ss"
+            }
+          }
         this.rest.saveConnectorConfig(xlsxConnectorBody,e.categoryName,this.processId,e.processName).subscribe(res=>{
               this.router.navigate(['/pages/processIntelligence/flowChart'],{queryParams:{piId:this.processId}});
         })
-
     }
+  }
 
-    }
-
-  sort(ind,property) {
+  sort(ind,property) {    //Sort table data
     this.isDesc = !this.isDesc; //change the direction    
     let direction = this.isDesc ? 1 : -1;
     let index = this.headerData.indexOf(property);
     
     return this.checkNsort(direction, index);
   }
+
   checkNsort(direction, index){
     this.fileData.sort(function (a, b) {
       let value = 0;
@@ -325,8 +277,9 @@ export class DataselectionComponent implements OnInit {
   loopTrackBy(index, term){
     return index;
   }
-  selectedCell(tr_index, index,e, v,row){
-      let obj={}
+
+  selectedCell(tr_index, index,e, v,row){       //case id selection mapping
+    let obj={}
       this.name=''
       if(v=='S.No' || index==0){
         for(var x = 0;x < this.fileData.length;x++){
@@ -337,11 +290,14 @@ export class DataselectionComponent implements OnInit {
         return;
       }else{
     this.id.push(v.trim())
-    // console.log('id',this.id);
     if(this.id.length == 0){
       this.headerName=''
     }
     else if(this.id.length == 1){
+      if(v.includes('Time')){
+        Swal.fire("Oops!", "Case ID canot be Timestamp", "warning");
+        this.id=[];
+      }else{
       Swal.fire({
         title: 'Confirmation?',
         text: "Are you sure want to use this as caseID!",
@@ -354,10 +310,12 @@ export class DataselectionComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.name=v.trim();
+          this.step_id=1
         obj[this.name]='caseID';
         this.headerArray.push(obj)
         this.headerName = 'caseID';
         this.selected=v;
+        this.content_no +=1;
         for(var x = 0;x < this.fileData.length;x++){
             if(!this.validCells['row'+x])
               this.validCells['row'+x]=[];
@@ -365,15 +323,20 @@ export class DataselectionComponent implements OnInit {
             }
         }else if (result.dismiss === Swal.DismissReason.cancel){
           this.id=[];
-          // this.step_id = 1;
           this.validCells = [];
           this.invalidCells = [];
           this.headerArray=[];
-
         }
       })
-
+    }
     }else if(this.id.length == 2){
+      if(v.includes('Time')){
+        console.log(v);
+        Swal.fire("Oops!", "Activity must be string!", "warning");
+        this.id.pop();
+        console.log(this.id);
+        
+      }else{
       this.selected=v;
       this.headerName='Activity';
       this.name=v;
@@ -385,6 +348,8 @@ export class DataselectionComponent implements OnInit {
           this.validCells['row'+x]=[];
           this.validCells['row'+x].push('cell'+index);
         }
+        this.content_no +=1;
+      }
     }
     else{
       this.headerName = v.trim();
@@ -398,26 +363,26 @@ export class DataselectionComponent implements OnInit {
           this.validCells['row'+x]=[];
           this.validCells['row'+x].push('cell'+index);
         }
+        this.content_no +=1;
     }
+      if(this.step_id == this.headerData.length-1){
+        this.isgenerate=true;
+      }
+      else{
+        this.isgenerate=false;
+      }
+    } 
+  }
 
-    if(this.step_id == this.headerData.length-1){
-      this.isgenerate=true;
-    }
-    else{
-      this.isgenerate=false;
-    }
-  } 
-  
-    }
-
-  resetColMap(){
-    this.step_id = 1;
+  resetColMap(){  //reset data mapping
+    this.step_id = 0;
+    this.content_no =1;
     this.validCells = [];
     this.invalidCells = [];
     this.isValidPiData = false;
   }
 
-  searchTable(){
+  searchTable(){    // Search value in table
     let _self = this;
     this.fileData = this.fileData.filter(each_row => {
       each_row.forEach(each_cell => {
@@ -425,8 +390,10 @@ export class DataselectionComponent implements OnInit {
       })
     })
   }  
-  resetcaseId(){
-    this.step_id = 1;
+
+  resetcaseId(){  //reset case id selection
+    this.step_id = 0;
+    this.content_no =1;
     this.validCells = [];
     this.invalidCells = [];
     this.headerArray=[];
@@ -437,29 +404,24 @@ export class DataselectionComponent implements OnInit {
   }
 
   getCaseName(name){
-   
       if(name.indexOf('Timestamp') != -1 || name.indexOf('Time') != -1){
         return 'Timestamp';
     } else {
       return name;
     }
   }
+  
   getDateFormat(value,headername){
     if(headername.indexOf('Time')!=-1 ||headername.indexOf('Timestamp')!=-1){
       this.findDatePattern(value);
       return value
-    }else{
-      
-      // this.findDatePattern(value);
+    }else{    
       return value;
     }
   }
 
-  findDatePattern(dateInput){
-    // console.log(dateInput);
-    
+  findDatePattern(dateInput){   //Find the max repated date formate for uploaded file    
     var splitDate;
-    // var dateformat;
     var yearformat;
     var timeOne;
     var OnlyDate=dateInput.split(' ',1)
@@ -500,8 +462,6 @@ export class DataselectionComponent implements OnInit {
                       this.dateformat='dd-MM';
                 }
                 var splitYear=splitDate[2].split(' ',1)
-                  
-                  
                     if(splitYear[0].length==4){
                       yearformat='yyyy'
                     }else{
@@ -651,7 +611,6 @@ export class DataselectionComponent implements OnInit {
     }else{
       timeFormat =time;
     }
-
     var inputDateformat=fullDateFormat+' '+timeFormat
        this.isDateformat=inputDateformat
   }

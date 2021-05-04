@@ -186,3 +186,9 @@
     .business-input input{
         width: 95%;
     }
+.zoom_btns{
+    /* position: absolute; */
+    margin-left: 12%;
+    /* margin-top: 75px; */
+    /* z-index: 999999; */
+}
