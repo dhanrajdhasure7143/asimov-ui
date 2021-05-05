@@ -10,6 +10,14 @@
       box-shadow: none;
     }
 
+    .header_addon{
+      top: 100px !important;
+      padding-right:40px;
+      position: absolute !important;
+      width:0% !important;
+      right:100px;
+    }
+
     .form-control {
       border:0px solid black;
       border-bottom:1px solid black;
