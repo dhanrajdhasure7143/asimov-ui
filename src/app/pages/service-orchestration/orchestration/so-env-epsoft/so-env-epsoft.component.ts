@@ -147,7 +147,7 @@ async getallData()
       }
  
       console.log(envchange);
-      this.dataSource1= new MatTableDataSource(envchange);
+      this.dataSource1= new MatTableDataSource(envchange.filter(item=>item.activeStatus=="Active"));
       this.isDataSource = true;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;

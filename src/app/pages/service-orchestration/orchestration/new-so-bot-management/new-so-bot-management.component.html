@@ -10,7 +10,7 @@
             </mat-form-field>
           </span>
           <span style="padding:10px">
-            <mat-form-field id="bmategorySearch">
+            <mat-form-field id="bmcategorySearch">
               <mat-label>Select By Source</mat-label>
               <mat-select [(ngModel)]="selected_source" (selectionChange)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
                   <mat-option value="EPSoft">EPSoft</mat-option>
@@ -20,7 +20,7 @@
             </mat-form-field>
           </span>
         <span style="padding:10px">
-          <mat-form-field id="bmategorySearch">
+          <mat-form-field id="bmcategorySearch">
             <mat-label>Select Process Group</mat-label>
             <mat-select [(ngModel)]="selectedcat" (selectionChange)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
                 <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
@@ -37,7 +37,7 @@
             <!-- <mat-card> -->
               <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
   
-                  <ng-container matColumnDef="botName">
+                  <ng-container matColumnDef="botName"id="botname">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
                       <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span *ngIf="element.botName!=null" [matTooltip]="element.botName">{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</span>
                           <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
@@ -50,7 +50,7 @@
                           <span *ngIf="element.description!=null" [matTooltip]="element.description">{{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
                            <span *ngIf="element.description==null || element.description==''">-</span> </td>
                   </ng-container>
-                  <ng-container matColumnDef="botType">
+                  <ng-container matColumnDef="botType"id="bottype">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Type </th>
                     <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
                 </ng-container>
@@ -74,7 +74,7 @@
                   <ng-container matColumnDef="botStatus">
                       <th mat-header-cell *matHeaderCellDef  mat-sort-header>Status </th>
                       <td mat-cell  *matCellDef="let element" >
-                        <div class="margin-25">
+                        <div class="margin-25" [id]="element.botId+'__status'">
                           <span *ngIf="element.botStatus=='Running'"  [matTooltip]="element.botStatus" class="text-primary" >
                             <span>
                               <img src="../../../../assets/images/RPA/DotSpin.gif"  style="filter: none; width: 19px;">
@@ -113,7 +113,7 @@
                       <td mat-cell *matCellDef="let element">
                           <span (click)="executionAct(element.botId,element.sourceType)"   matTooltip="Start Bot">
                             <li class="fa fa-play text-success" ></li>
-                          </span>&nbsp;&nbsp;
+                          </span>&nbsp;
                           <!-- <span (click)="pauseBot(element.botId)"  matTooltip="Pause Bot">
                             <i class="fa fa-pause "  aria-hidden="true" ></i> &nbsp;&nbsp;
                           </span>
@@ -121,7 +121,7 @@
                             <i class="fa fa-play-circle" aria-hidden="true"></i> &nbsp;&nbsp;
                           </span> -->
                           <span (click)="stopBot(element.botId)"  matTooltip="Stop Bot">
-                          <i class="fa fa-stop text-danger" aria-hidden="true"></i> &nbsp;&nbsp;
+                          <i class="fa fa-stop text-danger" aria-hidden="true"></i> &nbsp;
                           </span >
                           <span>
                               <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration">
@@ -130,7 +130,7 @@
                       </td>
                   </ng-container>
                   <ng-container matColumnDef="Schedule">
-                      <th mat-header-cell *matHeaderCellDef    > Schedule</th>
+                      <th mat-header-cell *matHeaderCellDef>Schedule</th>
                       <td mat-cell *matCellDef="let element" class=" text-center" >
                           <span (click)="openscheduler(element)" matTooltip="Scheduler" style="cursor: pointer;margin-right: 25px;">
                           <i class="fa fa-calendar text-primary"  aria-hidden="true"></i>

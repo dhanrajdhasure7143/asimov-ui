@@ -34,7 +34,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { SoProcesslogComponent } from './orchestration/so-processlog/so-processlog.component';
 
-import {sohints} from './orchestration/model/so-hints';
+import {sohints} from './orchestration/model/new-so-hints';
 import { SoInboxComponent } from './orchestration/so-inbox/so-inbox.component'
 
 
