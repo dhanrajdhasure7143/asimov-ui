@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import {RestApiService} from '../../../services/rest-api.service';
-import {sohints} from '../model/so-hints';
+import {sohints} from '../model/new-so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 import * as moment from 'moment';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -122,7 +122,7 @@ public slaupdate : boolean = false;
     }
 
   ngOnInit() {
-    this.dt.changeHints(this.hints.sobotMhints);
+    this.dt.changeHints(this.hints.botmanagment);
     this.spinner.show();
     this.getCategoryList();
     this.getallbots();

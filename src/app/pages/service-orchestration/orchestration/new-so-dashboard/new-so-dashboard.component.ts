@@ -6,7 +6,9 @@ import { DataTransferService } from 'src/app/pages/services/data-transfer.servic
 import {NgxSpinnerService} from 'ngx-spinner';
 import * as moment from 'moment';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import {sohints} from '../model/new-so-hints';
 import { any } from '@amcharts/amcharts4/.internal/core/utils/Array';
+
 @Component({
   selector: 'app-new-so-dashboard',
   templateUrl: './new-so-dashboard.component.html',
@@ -17,6 +19,7 @@ export class NewSoDashboardComponent implements OnInit {
   constructor(
     private dt:DataTransferService,
     private spinner:NgxSpinnerService,
+    private hints:sohints,
     private rest:RestApiService
     ) { }
 
@@ -55,6 +58,7 @@ export class NewSoDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
+    this.dt.changeHints(this.hints.sodashboard1);
     setTimeout(()=>{
       this.getdepartments();
       this.getprocessnames()
