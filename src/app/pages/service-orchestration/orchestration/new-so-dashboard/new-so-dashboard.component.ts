@@ -58,7 +58,7 @@ export class NewSoDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    this.dt.changeHints(this.hints.sodashboard1);
+    //this.dt.changeHints(this.hints.sodashboard1);
     setTimeout(()=>{
       this.getdepartments();
       this.getprocessnames()
