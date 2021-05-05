@@ -19,7 +19,7 @@ export class NewSoDashboardComponent implements OnInit {
   constructor(
     private dt:DataTransferService,
     private spinner:NgxSpinnerService,
-    private hints:sohints,
+    //private hints:sohints,
     private rest:RestApiService
     ) { }
 
