@@ -24,6 +24,15 @@
     font-weight: bold;
 }
 
+.mat-expansion-panel-header-title .bg_threebtn:hover {
+    padding: 8px ;
+    margin-left: -12px;
+    background-color: white;
+    border-radius: 15px;
+    width: 32px;
+    height: 30px;
+    box-shadow: -1px 0px 1px #888888;
+}
 
 .resetbtn{
     height:30px;

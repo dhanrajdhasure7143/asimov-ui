@@ -182,7 +182,7 @@
 
               <div class="flex-col">
                   &nbsp;
-                  <span  [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 10) ? ((bot.botName).slice(0, 10) + '...') : bot.botName}}</span>
+                  <span [tooltip]=bot.botName placement="bottom"> {{(bot.botName.length > 10) ? ((bot.botName).slice(0, 10) + '...') : bot.botName}}</span>
                 </div>
               <div class="flex-col">
                 <span *ngIf="bot.description!=null" placement="bottom" [tooltip]="bot.description" class="btndes"> {{(bot.description.length > 10) ? ((bot.description).slice(0, 10) + '...') : bot.description}}</span>
@@ -200,12 +200,12 @@
                   <!-- &nbsp;{{bot.botStatus}} -->
                 </span>
 
-                <span *ngIf="bot.botStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>
+                <span *ngIf="bot.botStatus=='Success'" class=""><span><li class="fa fa-check-circle" style="font-size:19px;color:#4FA908"></span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                 </span>
 
-                <span *ngIf="bot.botStatus=='Failure'" class="text-danger">
-                  <span><li class="fa fa-times-circle" style="font-size:19px"></span>
+                <span *ngIf="bot.botStatus=='Failure'">
+                  <span><li class="fa fa-times-circle" style="font-size:19px; color:#ab1512"></span>
                     <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                   </span>
                 <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
@@ -231,11 +231,11 @@
 
 
                 <span *ngIf="bot.botStatus==null">---</span>
-                <span style="padding-left:90px">
-                  <button mat-button  (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu"><i style="font-size: 19px" class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                <span style="padding-left:78px">
+                  <button mat-button tooltip="More Actions" class="bg_threebtn"  placement="top" (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu"><i style="font-size: 15px" class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
                   <mat-menu #menu="matMenu">
                     <button  mat-menu-item><i class="fas fa-edit"></i> &nbsp;Edit </button>
-                    <button  mat-menu-item><i class="fas fa-trash"></i> &nbsp;Delete</button>
+                    <button  mat-menu-item (click)="botdelete(bot.botId)"><i class="fas fa-trash"></i> &nbsp;Delete</button>
                     <button (click)="exportbot(bot)" mat-menu-item><i class="fa  fa-file-export " aria-hidden="true"></i> &nbsp;Export</button>
                   </mat-menu>
                 </span>

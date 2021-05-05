@@ -10,7 +10,7 @@
             </mat-form-field>
           </span>
           <span style="padding:10px">
-            <mat-form-field id="bmategorySearch">
+            <mat-form-field id="bmcategorySearch">
               <mat-label>Select By Source</mat-label>
               <mat-select [(ngModel)]="selected_source" (selectionChange)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
                   <mat-option value="EPSoft">EPSoft</mat-option>
@@ -20,7 +20,7 @@
             </mat-form-field>
           </span>
         <span style="padding:10px">
-          <mat-form-field id="bmategorySearch">
+          <mat-form-field id="bmcategorySearch">
             <mat-label>Select Process Group</mat-label>
             <mat-select [(ngModel)]="selectedcat" (selectionChange)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
                 <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
@@ -37,7 +37,7 @@
             <!-- <mat-card> -->
               <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
   
-                  <ng-container matColumnDef="botName">
+                  <ng-container matColumnDef="botName"id="botname">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
                       <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span *ngIf="element.botName!=null" [matTooltip]="element.botName">{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</span>
                           <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
@@ -50,7 +50,7 @@
                           <span *ngIf="element.description!=null" [matTooltip]="element.description">{{(element.description.length > 15) ? ((element.description).slice(0, 15) + '...') : element.description}}</span>
                            <span *ngIf="element.description==null || element.description==''">-</span> </td>
                   </ng-container>
-                  <ng-container matColumnDef="botType">
+                  <ng-container matColumnDef="botType"id="bottype">
                     <th mat-header-cell *matHeaderCellDef mat-sort-header>Type </th>
                     <td mat-cell *matCellDef="let element"> <button *ngIf="element.botType!=null">{{element.botType}}</button> <span *ngIf="element.botName==''">-</span> </td>
                 </ng-container>
@@ -126,9 +126,6 @@
                           <span>
                               <button (click)="SelectSLACon(element)" matTooltip="SLA Configuration">
                                   <i class="fa fa-cog" aria-hidden="true"></i></button>
-                            </span>&nbsp;
-                            <span> <!--"Failure"-->
-                              <button matTooltip="Delete Bot" [disabled]="element.botStatus == 'Running' || element.botStatus == 'InProgress'" (click)="botdelete(element.botId)"><i class="fas fa-trash-alt" style="font-size: 14px;"></i></button>
                             </span>
                       </td>
                   </ng-container>

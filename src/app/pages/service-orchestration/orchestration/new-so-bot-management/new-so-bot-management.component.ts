@@ -8,7 +8,7 @@ import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import {RestApiService} from '../../../services/rest-api.service';
-import {sohints} from '../model/so-hints';
+import {sohints} from '../model/new-so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 import * as moment from 'moment';
 import { NgxSpinnerService } from "ngx-spinner";
@@ -122,7 +122,7 @@ public slaupdate : boolean = false;
     }
 
   ngOnInit() {
-    this.dt.changeHints(this.hints.sobotMhints);
+    this.dt.changeHints(this.hints.botmanagment);
     this.spinner.show();
     this.getCategoryList();
     this.getallbots();
@@ -131,51 +131,6 @@ public slaupdate : boolean = false;
     this.get_sla_list();
     this.popup=false;
   }
-
-  botdelete(botId)
-  {
-        Swal.fire({
-          title: 'Are you sure?',
-          text: "You won't be able to revert this!",
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: '#3085d6',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-        if (result.value) {
-          let response;
-          this.rest.getDeleteBot(botId).subscribe(data=>{
-            
-            response= data;
-            if(response.status!=undefined)
-            {
-              Swal.fire({
-                position:'center',
-                icon:"success",
-                title:response.status,
-                showConfirmButton:false,
-                timer:2000})
-            }else
-            {
-
-                Swal.fire({
-                  position:'center',
-                  icon:"error",
-                  title:response.errorMessage,
-                  showConfirmButton:false,
-                  timer:2000})
-                  //this.rpa_tabs.closeTab(this.botState);
-
-            }
-          })
-          //this.nodes = this.nodes.filter((node): boolean => nodeId !== node.id);
-          //this.jsPlumbInstance.removeAllEndpoints(nodeId);
-        }
-
-      })
-    }
-
   method(){
     let result: any = [];
     this.dataSource1 = this.datasourcelist;
