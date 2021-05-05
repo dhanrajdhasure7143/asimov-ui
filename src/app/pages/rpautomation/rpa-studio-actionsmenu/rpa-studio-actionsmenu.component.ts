@@ -373,7 +373,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       if(response.errorMessage==undefined)
       {
         let environments:any=[];
-        environments=response;
+        environments=response.filter(item=>item.activeStatus==7);
         if(environments.length!=0)
         {
           this.environment=response.map((item)=>{
@@ -703,6 +703,23 @@ loadpredefinedbot(botId)
     }
 
   }
+
+  exportbot(bot)
+  {
+    this.rest.bot_export(bot.botId).subscribe((data)=>{
+      console.log(data)
+        const linkSource = `data:application/txt;base64,${data}`;
+        const downloadLink = document.createElement('a');
+        document.body.appendChild(downloadLink);
+
+        downloadLink.href = linkSource;
+        downloadLink.target = '_self';
+        downloadLink.download = bot.botName+"-V"+bot.version+".sql";
+        downloadLink.click(); 
+        Swal.fire("Bot Exported Successfully","","success");
+    })
+  }
+
 
 
   create_env()

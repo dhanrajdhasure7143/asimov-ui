@@ -18,3 +18,6 @@ th{
     border-radius: 3px;
     height: 2000px;
     }
+    .lob-sec{
+        display:block !important;
+    }

@@ -93,12 +93,14 @@ export class RpaStudioWorkspaceComponent implements AfterViewInit {
     }
     if (this.finalbot.botId != undefined) {
       this.finaldataobjects = this.finalbot.tasks;
+      localStorage.setItem("botId",this.finaldataobjects.botId)
       this.loadnodes();
 
     }
     this.dragareaid = "dragarea__" + this.finalbot.botName;
     this.outputboxid = "outputbox__" + this.finalbot.botName;
     this.SelectedOutputType = "";
+
   }
 
 
