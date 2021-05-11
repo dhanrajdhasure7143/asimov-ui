@@ -53,6 +53,7 @@ import { RpaSchedulerComponent,ReverseRpa,EnvnameRpa } from './rpa-scheduler/rpa
 
 import { MatExpansionModule } from '@angular/material/expansion';
 import {Rpa_Hints} from './model/RPA-Hints';
+import { RpaCredentialsComponent } from './rpa-credentials/rpa-credentials.component';
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -76,7 +77,8 @@ import {Rpa_Hints} from './model/RPA-Hints';
     RpaSchedulerComponent,
     Checkoutputbox,
     ReverseRpa,
-    EnvnameRpa
+    EnvnameRpa,
+	RpaCredentialsComponent
   ],
   imports: [
     NgxMaterialTimepickerModule,
