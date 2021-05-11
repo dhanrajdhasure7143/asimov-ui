@@ -153,7 +153,309 @@ export class FlowchartComponent implements OnInit {
 isWorkingHrsBtn:boolean=true;
 allVaraintsCases:any[]=[];
 isTimeChange:boolean=false;
-
+performanceFilterInput ={
+  "status": 4200,
+  "message": "Successfully fetched the variant details",
+  "data": [
+    {
+      "casepercent": 100,
+      "name": "case0",
+      "detail": "8 events per case on average",
+      "varaintDetails": "0 of 1 Variant",
+      "casesCovred": "100 cases Covered",
+      "selected": "inactive",
+      "days": 395760000,
+      "case": "case0",
+      "trace_number": 962116,
+      "case_value": 17,
+      "total_duration": "4681.5",
+      "total_duration_cases": "79585.8",
+      "filter_caseIds": [
+        5,
+        11,
+        7,
+        9,
+        4,
+        1,
+        12,
+        17,
+        3,
+        10,
+        6,
+        8,
+        2,
+        13,
+        15,
+        16,
+        14
+      ],
+      "filter_total_durations": [
+        {
+          "142440000": {
+            "caseIds": "3,13",
+            "bar_graph_count_caseIds": 2
+          },
+          "180480000": {
+            "caseIds": "7,17",
+            "bar_graph_count_caseIds": 2
+          },
+          "206460000": {
+            "caseIds": "12,2",
+            "bar_graph_count_caseIds": 2
+          },
+          "262200000": {
+            "caseIds": "10",
+            "bar_graph_count_caseIds": 1
+          },
+          "321180000": {
+            "caseIds": "8",
+            "bar_graph_count_caseIds": 1
+          },
+          "395760000": {
+            "caseIds": "5,15",
+            "bar_graph_count_caseIds": 2
+          },
+          "425580000": {
+            "caseIds": "4,14",
+            "bar_graph_count_caseIds": 2
+          },
+          "502020000": {
+            "caseIds": "11,1",
+            "bar_graph_count_caseIds": 2
+          },
+          "3012540000": {
+            "caseIds": "6,16",
+            "bar_graph_count_caseIds": 2
+          },
+          "6539520000": {
+            "caseIds": "9",
+            "bar_graph_count_caseIds": 1
+          }
+        }
+      ],
+      "filter_case_utlization": [
+        {
+          "5.50333535476046": {
+            "caseIds": "5,15",
+            "bar_graph_count_caseIds": 2
+          },
+          "1.35054380303574": {
+            "caseIds": "11,1",
+            "bar_graph_count_caseIds": 2
+          },
+          "2.52659574468085": {
+            "caseIds": "7,17",
+            "bar_graph_count_caseIds": 2
+          },
+          "0.110099823840282": {
+            "caseIds": "9",
+            "bar_graph_count_caseIds": 1
+          },
+          "1.62131679120259": {
+            "caseIds": "4,14",
+            "bar_graph_count_caseIds": 2
+          },
+          "11.1886079628015": {
+            "caseIds": "12,2",
+            "bar_graph_count_caseIds": 2
+          },
+          "3.62257792754844": {
+            "caseIds": "3,13",
+            "bar_graph_count_caseIds": 2
+          },
+          "2.74599542334096": {
+            "caseIds": "10",
+            "bar_graph_count_caseIds": 1
+          },
+          "0.235017626321974": {
+            "caseIds": "6,16",
+            "bar_graph_count_caseIds": 2
+          },
+          "2.09228470016813": {
+            "caseIds": "8",
+            "bar_graph_count_caseIds": 1
+          }
+        }
+      ],
+      "filter_mean_active_time": [
+        {
+          "760000": {
+            "caseIds": "7,17",
+            "bar_graph_count_caseIds": 2
+          },
+          "860000": {
+            "caseIds": "3,13",
+            "bar_graph_count_caseIds": 2
+          },
+          "1120000": {
+            "caseIds": "8",
+            "bar_graph_count_caseIds": 1
+          },
+          "1130000": {
+            "caseIds": "11,1",
+            "bar_graph_count_caseIds": 2
+          },
+          "1150000": {
+            "caseIds": "4,14",
+            "bar_graph_count_caseIds": 2
+          },
+          "1180000": {
+            "caseIds": "6,16",
+            "bar_graph_count_caseIds": 2
+          },
+          "1200000": {
+            "caseIds": "9,10",
+            "bar_graph_count_caseIds": 2
+          },
+          "3630000": {
+            "caseIds": "5,15",
+            "bar_graph_count_caseIds": 2
+          },
+          "3850000": {
+            "caseIds": "12,2",
+            "bar_graph_count_caseIds": 2
+          }
+        }
+      ],
+      "filter_mean_wait_time": [
+        {
+          "27456000": {
+            "caseIds": "3,13",
+            "bar_graph_count_caseIds": 2
+          },
+          "35184000": {
+            "caseIds": "7,17",
+            "bar_graph_count_caseIds": 2
+          },
+          "36672000": {
+            "caseIds": "12,2",
+            "bar_graph_count_caseIds": 2
+          },
+          "51000000": {
+            "caseIds": "10",
+            "bar_graph_count_caseIds": 1
+          },
+          "62892000": {
+            "caseIds": "8",
+            "bar_graph_count_caseIds": 1
+          },
+          "74796000": {
+            "caseIds": "5,15",
+            "bar_graph_count_caseIds": 2
+          },
+          "83736000": {
+            "caseIds": "4,14",
+            "bar_graph_count_caseIds": 2
+          },
+          "99048000": {
+            "caseIds": "11,1",
+            "bar_graph_count_caseIds": 2
+          },
+          "601092000": {
+            "caseIds": "6,16",
+            "bar_graph_count_caseIds": 2
+          },
+          "1306464000": {
+            "caseIds": "9",
+            "bar_graph_count_caseIds": 1
+          }
+        }
+      ],
+      "filter_median_active_time": [
+        {
+          "540000": {
+            "caseIds": "7,17",
+            "bar_graph_count_caseIds": 2
+          },
+          "630000": {
+            "caseIds": "3,13",
+            "bar_graph_count_caseIds": 2
+          },
+          "810000": {
+            "caseIds": "6,16",
+            "bar_graph_count_caseIds": 2
+          },
+          "870000": {
+            "caseIds": "11,1",
+            "bar_graph_count_caseIds": 2
+          },
+          "1020000": {
+            "caseIds": "4,14",
+            "bar_graph_count_caseIds": 2
+          },
+          "1080000": {
+            "caseIds": "8",
+            "bar_graph_count_caseIds": 1
+          },
+          "1110000": {
+            "caseIds": "9,10",
+            "bar_graph_count_caseIds": 2
+          },
+          "1200000": {
+            "caseIds": "12,2",
+            "bar_graph_count_caseIds": 2
+          },
+          "1260000": {
+            "caseIds": "5,15",
+            "bar_graph_count_caseIds": 2
+          }
+        }
+      ],
+      "filter_median_waiting_time": [
+        {
+          "4920000": {
+            "caseIds": "4,14",
+            "bar_graph_count_caseIds": 2
+          },
+          "5160000": {
+            "caseIds": "3,13",
+            "bar_graph_count_caseIds": 2
+          },
+          "13800000": {
+            "caseIds": "12,2",
+            "bar_graph_count_caseIds": 2
+          },
+          "17280000": {
+            "caseIds": "7,17",
+            "bar_graph_count_caseIds": 2
+          },
+          "18420000": {
+            "caseIds": "10",
+            "bar_graph_count_caseIds": 1
+          },
+          "29100000": {
+            "caseIds": "5,15",
+            "bar_graph_count_caseIds": 2
+          },
+          "33360000": {
+            "caseIds": "9",
+            "bar_graph_count_caseIds": 1
+          },
+          "58380000": {
+            "caseIds": "6,16",
+            "bar_graph_count_caseIds": 2
+          },
+          "65460000": {
+            "caseIds": "11,1",
+            "bar_graph_count_caseIds": 2
+          },
+          "76320000": {
+            "caseIds": "8",
+            "bar_graph_count_caseIds": 1
+          }
+        }
+      ],
+      "filter_num_of_cases": [
+        {
+          "6": {
+            "caseIds": "5,11,7,9,4,1,12,17,3,10,6,8,2,13,15,16,14",
+            "bar_graph_count_caseIds": 17
+          }
+        }
+      ]
+    }
+  ]
+}
 
   constructor(private dt: DataTransferService,
     private router: Router,

@@ -107,7 +107,7 @@
 }
 .max_time_select{
   position: relative;
-  left: 315px;
+  left: 290px;
   top: 20px;
 }
 .min_time_select{
@@ -127,9 +127,9 @@
   position: relative;
   left:160px
 }
-select.arrows {
+.arrows {
   background-color: white;
-  border: thin solid grey;
+  border: thin solid grey !important;
   border-radius: 4px;
   display: inline-block;
   font: inherit;
@@ -146,7 +146,7 @@ select.arrows {
   background-repeat: no-repeat;
 }
 
-select.arrows:focus {
+.arrows:focus {
   border-color: blue;
   outline: 0;
 }
