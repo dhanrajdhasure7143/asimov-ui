@@ -819,4 +819,8 @@ save_blueprism_config(data)
     getAllCredentials(){
       return this.http.get("/rpa-service/agent/get-credentials")
     }
+
+   applyPerformanceFilter(data){
+    return this.http.post("/ReddisCopy/getGraphData",data)
+   }
 }

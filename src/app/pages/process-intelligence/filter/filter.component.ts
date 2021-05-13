@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Options, PointerType, LabelType } from 'ng5-slider';
+import { Subject } from 'rxjs';
 
 enum Filter {
   'Activity',
@@ -30,6 +31,7 @@ export class FilterComponent implements OnInit {
   @Output() selectedEndpoints = new EventEmitter<any[]>();
   @Output() selectedVariantOutput = new EventEmitter<any[]>();
   @Output() selectedFilterValues = new EventEmitter<any[]>();
+  @Output() appliedPerformanceFiterValues = new EventEmitter<any>();
   chart_filter_options;
   public chart_filter = Filter;
   search_activity: any;
@@ -38,6 +40,7 @@ export class FilterComponent implements OnInit {
   chagnedCases = 0;
   casePercentage: any;
   filterValue: number = 60;
+  public manualRefresh = new Subject<void>();
   filterOptions: Options = {
     floor: 0,
     ceil: 100,
@@ -69,11 +72,12 @@ export class FilterComponent implements OnInit {
   selectedEndPointsCount = [];
   selectedStartPointsCount = [];
   appliedFilters: any[] = [];
+  pFilterType:any = "caseduration";
 
   performanceTotalDuration: any = [];
   perfrmanceFilterKeyValuepair: any[] = [];
-  minPerfValue: any;
-  maxPerfValue: any;
+  minPerfValue: any =0;
+  maxPerfValue: any = 0;
   // performance filter Variable start
   options1: Options = {
     step: 0.1,
@@ -86,6 +90,7 @@ export class FilterComponent implements OnInit {
     vertical: false,
   }
   highValue: number = 1;
+  vaue:number = 0;
   single = [];
 
 
@@ -108,6 +113,7 @@ export class FilterComponent implements OnInit {
 
   //Pie chart
   piesingle = [
+    {name: "Total Cases", value: 100}
   ];
   // options
   piegradient: boolean = true;
@@ -159,128 +165,19 @@ export class FilterComponent implements OnInit {
         obj["selected"] = "inactive";
         this.endPointArray.push(obj)
       }
+      this.performanceLogic(this.performanceFilterInput, 'caseduration');
     }, 4000);
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
 
     // Performance filter logic 
-    this.performanceLogic(this.performanceFilterInput);
+    
+    
+    this.manualRefresh.next();
   }
 
-  startValue(e) {
-    this.fcount = []
-    this.perfrmanceFilterKeyValuepair.filter(res => {
-      if (Number(res.duration) >= Number(this.minPerfValue) && Number(res.duration) <= Number(this.maxPerfValue)) {
-        this.fcount.push(res);
-      }
-    });
-    var cc = 0;
-    const unique = [...new Set(this.fcount.map(item => item.noofCases))];
-    unique.filter(r => {
-      cc += Number(r);
-    })
-    this.chagnedCases = cc;
-    this.casePercentage = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
-    if(this.totalCases == this.chagnedCases){
-      this.piesingle = [
-        {name: "Total Cases", value: this.totalCases}
-      ]
-    } else {
-    this.piesingle = [
-      {name: "Total Cases", value: this.totalCases},
-      {name: "Filter Cases", value: this.chagnedCases}
-    ]
-  }
-  }
-  endValue(e) {
-    this.fcount = []
-    this.perfrmanceFilterKeyValuepair.filter(res => {
-      if (Number(res.duration) >= Number(this.minPerfValue) && Number(res.duration) <= Number(this.maxPerfValue)) {
-        this.fcount.push(res);
-      }
-    });
-    var cc = 0;
-    const unique = [...new Set(this.fcount.map(item => item.noofCases))];
-    unique.filter(r => {
-      cc += Number(r);
-    })
-    this.chagnedCases = cc;
-    this.casePercentage = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
-
-  }
-
-  submitperf() {
-
-
-  }
-
-  performanceLogic(performData) {
-    performData.data.filter(res => {
-      this.totalCases += Number(res.case_value);
-      this.performanceTotalDuration.push({ durationArray: res.filter_total_durations, caseValue: res.case_value });
-    });
-
-    this.performanceTotalDuration.forEach((obj) => {
-      obj.durationArray.forEach(objDuartion => {
-        Object.entries(objDuartion).forEach(([key, value]) => {
-          this.perfrmanceFilterKeyValuepair.push({ duration: key, caseID: value['caseIds'],caseCount: value['bar_graph_count_caseIds'], noofCases: obj.caseValue })
-        });
-      });
-    });
-    this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
-      return a.duration - b.duration;
-    });
-    this.perfrmanceFilterKeyValuepair.filter(res => {
-      this.single.push({ name: res.duration, value: res.caseCount })
-    });
-
-    this.options1 = {
-
-      floor: this.perfrmanceFilterKeyValuepair[0].duration,
-      ceil: this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration,
-      // translate: (value: number): string => `${value}%`,
-      translate: (value: number, label: LabelType): string => {
-        switch (label) {
-          case LabelType.Low:
-            this.minPerfValue = value;
-            console.log(value);
-            return this.convertMS(value);
-          case LabelType.High:
-            this.maxPerfValue = value;
-            console.log(value);
-            return this.convertMS(value);
-          default:
-            return this.convertMS(value);
-        }
-      },
-      hideLimitLabels: true,
-      hidePointerLabels: false,
-      vertical: false,
-    }
-    this.highValue = this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration
-  }
-  convertMS(ms) {
-    var d, h, m, s;
-    s = Math.floor(ms / 1000);
-    m = Math.floor(s / 60);
-    s = s % 60;
-    h = Math.floor(m / 60);
-    m = m % 60;
-    d = Math.floor(h / 24);
-    h = h % 24;
-
-    var pad = function (n) { return n < 10 ? '0' + n : n; };
-    var result: any;
-    if (d == 0) {
-      result = pad(h) + ' hours ,' + pad(m) + ' mins';
-    } else {
-      var ext = 'day';
-      (d == 1) ? ext = " day" : ext = " days";
-      result = d + ext + ' ,' + pad(h) + ' hours ,' + pad(m) + ' mins';
-    }
-
-    return result;
-  };
-
+  isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
 
   ngOnChanges() {
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
@@ -325,6 +222,8 @@ export class FilterComponent implements OnInit {
       }
     }
 
+   // this.performanceLogic(this.performanceFilterInput, 'caseduration');
+    
   }
 
   loopTrackBy(index, term) {
@@ -529,7 +428,7 @@ export class FilterComponent implements OnInit {
     }
 
     var obj: any = { startPoint: selectedstartPoints, endPoint: selectedEndPoints, }
-    console.log(obj);
+   
 
     this.selectedStartpoints.emit(obj);
     this.applyFilterValue.emit(true)
@@ -704,6 +603,484 @@ export class FilterComponent implements OnInit {
     var modal = document.getElementById('myModal');
     modal.style.display = "none";
   }
+
+  startValue(e) {
+    this.fcount = []
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      if (Number(res.duration) >= Number(this.minPerfValue) && Number(res.duration) <= Number(this.maxPerfValue)) {
+        this.fcount.push(res);
+      }
+    });
+    var cc = 0;
+    const unique = [...new Set(this.fcount.map(item => item.noofCases))];
+    unique.filter(r => {
+      cc += Number(r);
+    })
+    this.chagnedCases = cc;
+    this.casePercentage = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
+    if(this.totalCases == this.chagnedCases){
+      this.piesingle = [
+        {name: "Total Cases", value: this.totalCases}
+      ]
+    } else {
+    this.piesingle = [
+      {name: "Total Cases", value: this.totalCases},
+      {name: "Filter Cases", value: this.chagnedCases}
+    ]
+  }
+  }
+  endValue(e) {
+    this.fcount = []
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      if (Number(res.duration) >= Number(this.minPerfValue) && Number(res.duration) <= Number(this.maxPerfValue)) {
+        this.fcount.push(res);
+      }
+    });
+    var cc = 0;
+    const unique = [...new Set(this.fcount.map(item => item.noofCases))];
+    unique.filter(r => {
+      cc += Number(r);
+    })
+    this.chagnedCases = cc;
+    this.casePercentage = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
+
+  }
+
+  setselectedFilter(type){
+    this.performanceLogic(this.performanceFilterInput, type)
+  }
+
+  performanceLogic(performData, pType) {
+    if(pType == 'caseduration'){
+      
+        this.getCaseDurationMetrics(performData)
+      
+     
+    } else if(pType == 'meanactivetime'){
+      this.getMeanActiveTime(performData);
+    } else if(pType == 'meanwaitingtime'){
+      this.getMeanWaitingTime(performData);
+    } else if(pType == 'medianactivetime'){
+      this.getMedianActiveTime(performData)
+    } else if(pType == 'medianwaitingtime'){
+      this.getMedianWaitingTime(performData)
+    } else if(pType == 'caseutilization'){
+      this.getCaseUtilization(performData)
+    } else if(pType == 'noofcases'){
+      this.getNoOfCases(performData)
+    }
+    
+  }
+  convertMS(ms) {
+    if(this.pFilterType == 'noofcases'){
+      return ms;
+    }else if(this.pFilterType == 'caseutilization'){
+      return Number(Number(ms).toFixed(2));
+    } else{
+    var d, h, m, s;
+    s = Math.floor(ms / 1000);
+    m = Math.floor(s / 60);
+    s = s % 60;
+    h = Math.floor(m / 60);
+    m = m % 60;
+    d = Math.floor(h / 24);
+    h = h % 24;
+
+    var pad = function (n) { return n < 10 ? '0' + n : n; };
+    var result: any;
+    if (d == 0) {
+      result = pad(h) + ' hours ,' + pad(m) + ' mins';
+    } else {
+      var ext = 'day';
+      (d == 1) ? ext = " day" : ext = " days";
+      result = d + ext + ' ,' + pad(h) + ' hours ,' + pad(m) + ' mins';
+    }
+
+    return result;
+  } 
+  };
+  getCaseDurationMetrics(pData){
+
+    this.performanceTotalDuration =[];
+    this.perfrmanceFilterKeyValuepair =[];
+    this.single = [];
+    this.totalCases = 0;
+    this.minPerfValue = 0;
+    this.maxPerfValue = 0;
+    this.options1 = {};
+    pData.data.filter(res => {
+      this.totalCases += Number(res.case_value);
+      this.performanceTotalDuration.push({ durationArray: res.filter_total_durations, caseValue: res.case_value });
+    });
+
+    this.performanceTotalDuration.forEach((obj) => {
+      obj.durationArray.forEach(objDuartion => {
+        Object.entries(objDuartion).forEach(([key, value]) => {
+          this.perfrmanceFilterKeyValuepair.push({ duration: key, caseID: value['caseIds'],caseCount: value['bar_graph_count_caseIds'], noofCases: obj.caseValue })
+        });
+      });
+    });
+    this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
+      return a.duration - b.duration;
+    });
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      this.single.push({ name: res.duration, value: res.caseCount })
+    });
+
+    this.options1 = {
+
+      floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
+      ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
+      // translate: (value: number): string => `${value}%`,
+      translate: (value: number, label: LabelType): string => {
+        switch (label) {
+          case LabelType.Low:
+            this.minPerfValue = value;
+            //console.log(value);
+            return this.convertMS(value);
+          case LabelType.High:
+            this.maxPerfValue = value;
+           // console.log(value);
+            return this.convertMS(value);
+          default:
+            return this.convertMS(value);
+        }
+      },
+      hideLimitLabels: true,
+      hidePointerLabels: false,
+      vertical: false,
+    }
+    this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
+    this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
+    console.log(this.casePercentage);
+  }
+  getMeanActiveTime(pData){
+   
+    this.performanceTotalDuration =[];
+    this.perfrmanceFilterKeyValuepair =[];
+    this.single = [];
+    this.totalCases = 0;
+    this.minPerfValue = 0;
+    this.maxPerfValue = 0;
+    this.options1 = {};
+    pData.data.filter(res => {
+      this.totalCases += Number(res.case_value);
+      this.performanceTotalDuration.push({ durationArray: res.filter_mean_active_time, caseValue: res.case_value });
+    });
+
+    this.performanceTotalDuration.forEach((obj) => {
+      obj.durationArray.forEach(objDuartion => {
+        Object.entries(objDuartion).forEach(([key, value]) => {
+          this.perfrmanceFilterKeyValuepair.push({ duration: key, caseID: value['caseIds'],caseCount: value['bar_graph_count_caseIds'], noofCases: obj.caseValue })
+        });
+      });
+    });
+    this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
+      return a.duration - b.duration;
+    });
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      this.single.push({ name: res.duration, value: res.caseCount })
+    });
+    this.options1 = {
+
+      floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
+      ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
+      // translate: (value: number): string => `${value}%`,
+      translate: (value: number, label: LabelType): string => {
+        switch (label) {
+          case LabelType.Low:
+            this.minPerfValue = value;
+            return this.convertMS(value);
+          case LabelType.High:
+            this.maxPerfValue = value;
+            return this.convertMS(value);
+          default:
+            return this.convertMS(value);
+        }
+      },
+      hideLimitLabels: true,
+      hidePointerLabels: false,
+      vertical: false,
+    }
+    this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
+    this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
+
+  }
+
+  getMeanWaitingTime(pData){
+    this.performanceTotalDuration =[];
+    this.perfrmanceFilterKeyValuepair =[];
+    this.single = [];
+    this.totalCases = 0;
+    this.minPerfValue = 0;
+    this.maxPerfValue = 0;
+    this.options1 = {};
+    pData.data.filter(res => {
+      this.totalCases += Number(res.case_value);
+      this.performanceTotalDuration.push({ durationArray: res.filter_mean_wait_time, caseValue: res.case_value });
+    });
+
+    this.performanceTotalDuration.forEach((obj) => {
+      obj.durationArray.forEach(objDuartion => {
+        Object.entries(objDuartion).forEach(([key, value]) => {
+          this.perfrmanceFilterKeyValuepair.push({ duration: key, caseID: value['caseIds'],caseCount: value['bar_graph_count_caseIds'], noofCases: obj.caseValue })
+        });
+      });
+    });
+    this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
+      return a.duration - b.duration;
+    });
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      this.single.push({ name: res.duration, value: res.caseCount })
+    });
+
+    this.options1 = {
+
+      floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
+      ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
+      // translate: (value: number): string => `${value}%`,
+      translate: (value: number, label: LabelType): string => {
+        switch (label) {
+          case LabelType.Low:
+            this.minPerfValue = value;
+            return this.convertMS(value);
+          case LabelType.High:
+            this.maxPerfValue = value;
+            return this.convertMS(value);
+          default:
+            return this.convertMS(value);
+        }
+      },
+      hideLimitLabels: true,
+      hidePointerLabels: false,
+      vertical: false,
+    }
+    this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
+    this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
+
+  }
+
+  getMedianActiveTime(pData){
+    this.performanceTotalDuration =[];
+    this.perfrmanceFilterKeyValuepair =[];
+    this.single = [];
+    this.totalCases = 0;
+    this.minPerfValue = 0;
+    this.maxPerfValue = 0;
+    this.options1 = {};
+    pData.data.filter(res => {
+      this.totalCases += Number(res.case_value);
+      this.performanceTotalDuration.push({ durationArray: res.filter_median_active_time, caseValue: res.case_value });
+    });
+
+    this.performanceTotalDuration.forEach((obj) => {
+      obj.durationArray.forEach(objDuartion => {
+        Object.entries(objDuartion).forEach(([key, value]) => {
+          this.perfrmanceFilterKeyValuepair.push({ duration: key, caseID: value['caseIds'],caseCount: value['bar_graph_count_caseIds'], noofCases: obj.caseValue })
+        });
+      });
+    });
+    this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
+      return a.duration - b.duration;
+    });
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      this.single.push({ name: res.duration, value: res.caseCount })
+    });
+
+    this.options1 = {
+
+      floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
+      ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
+      // translate: (value: number): string => `${value}%`,
+      translate: (value: number, label: LabelType): string => {
+        switch (label) {
+          case LabelType.Low:
+            this.minPerfValue = value;
+            return this.convertMS(value);
+          case LabelType.High:
+            this.maxPerfValue = value;
+            return this.convertMS(value);
+          default:
+            return this.convertMS(value);
+        }
+      },
+      hideLimitLabels: true,
+      hidePointerLabels: false,
+      vertical: false,
+    }
+    this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
+    this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
+
+  }
+
+  getMedianWaitingTime(pData){
+    this.performanceTotalDuration =[];
+    this.perfrmanceFilterKeyValuepair =[];
+    this.single = [];
+    this.totalCases = 0;
+    this.minPerfValue = 0;
+    this.maxPerfValue = 0;
+    this.options1 = {};
+    pData.data.filter(res => {
+      this.totalCases += Number(res.case_value);
+      this.performanceTotalDuration.push({ durationArray: res.filter_median_waiting_time, caseValue: res.case_value });
+    });
+
+    this.performanceTotalDuration.forEach((obj) => {
+      obj.durationArray.forEach(objDuartion => {
+        Object.entries(objDuartion).forEach(([key, value]) => {
+          this.perfrmanceFilterKeyValuepair.push({ duration: key, caseID: value['caseIds'],caseCount: value['bar_graph_count_caseIds'], noofCases: obj.caseValue })
+        });
+      });
+    });
+    this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
+      return a.duration - b.duration;
+    });
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      this.single.push({ name: res.duration, value: res.caseCount })
+    });
+
+    this.options1 = {
+
+      floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
+      ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
+      // translate: (value: number): string => `${value}%`,
+      translate: (value: number, label: LabelType): string => {
+        switch (label) {
+          case LabelType.Low:
+            this.minPerfValue = value;
+            return this.convertMS(value);
+          case LabelType.High:
+            this.maxPerfValue = value;
+            return this.convertMS(value);
+          default:
+            return this.convertMS(value);
+        }
+      },
+      hideLimitLabels: true,
+      hidePointerLabels: false,
+      vertical: false,
+    }
+    this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
+    this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
+
+  }
+
+  getCaseUtilization(pData){
+    this.performanceTotalDuration =[];
+    this.perfrmanceFilterKeyValuepair =[];
+    this.single = [];
+    this.totalCases = 0;
+    this.minPerfValue = 0;
+    this.maxPerfValue = 0;
+    this.options1 = {};
+    pData.data.filter(res => {
+      this.totalCases += Number(res.case_value);
+      this.performanceTotalDuration.push({ durationArray: res.filter_case_utlization, caseValue: res.case_value });
+    });
+
+    this.performanceTotalDuration.forEach((obj) => {
+      obj.durationArray.forEach(objDuartion => {
+        Object.entries(objDuartion).forEach(([key, value]) => {
+          this.perfrmanceFilterKeyValuepair.push({ duration: key, caseID: value['caseIds'],caseCount: value['bar_graph_count_caseIds'], noofCases: obj.caseValue })
+        });
+      });
+    });
+    this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
+      return a.duration - b.duration;
+    });
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      this.single.push({ name: res.duration, value: res.caseCount })
+    });
+    this.options1 = {
+      step: 0.1,
+      floor: Number(Number(this.perfrmanceFilterKeyValuepair[0].duration).toFixed(2)),
+      ceil: Number(Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration).toFixed(2)),
+      // translate: (value: number): string => `${value}%`,
+      translate: (value: number, label: LabelType): string => {
+        switch (label) {
+          case LabelType.Low:
+            this.minPerfValue = value;
+            return this.convertMS(value);
+          case LabelType.High:
+            this.maxPerfValue = value;
+            return this.convertMS(value);
+          default:
+            return this.convertMS(value);
+        }
+      },
+      hideLimitLabels: true,
+      hidePointerLabels: false,
+      vertical: false,
+    }
+    this.vaue = Number(Number(this.perfrmanceFilterKeyValuepair[0].duration).toFixed(2))
+    this.highValue = Number(Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration).toFixed(2));
+  }
+
+  getNoOfCases(pData){
+    this.performanceTotalDuration =[];
+    this.perfrmanceFilterKeyValuepair =[];
+    this.single = [];
+    this.totalCases = 0;
+    this.minPerfValue = 0;
+    this.maxPerfValue = 0;
+    this.options1 = {};
+    pData.data.filter(res => {
+      this.totalCases += Number(res.case_value);
+      this.performanceTotalDuration.push({ durationArray: res.filter_num_of_cases, caseValue: res.case_value });
+    });
+
+    this.performanceTotalDuration.forEach((obj) => {
+      obj.durationArray.forEach(objDuartion => {
+        Object.entries(objDuartion).forEach(([key, value]) => {
+          this.perfrmanceFilterKeyValuepair.push({ duration: key, caseID: value['caseIds'],caseCount: value['bar_graph_count_caseIds'], noofCases: obj.caseValue })
+        });
+      });
+    });
+    this.perfrmanceFilterKeyValuepair = this.perfrmanceFilterKeyValuepair.sort((a, b) => {
+      return a.duration - b.duration;
+    });
+    this.perfrmanceFilterKeyValuepair.filter(res => {
+      this.single.push({ name: res.duration, value: res.caseCount })
+    });
+
+    this.options1 = {
+
+      floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
+      ceil: Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration),
+      // translate: (value: number): string => `${value}%`,
+      translate: (value: number, label: LabelType): string => {
+        switch (label) {
+          case LabelType.Low:
+            this.minPerfValue = value;
+            return this.convertMS(value);
+          case LabelType.High:
+            this.maxPerfValue = value;
+            return this.convertMS(value);
+          default:
+            return this.convertMS(value);
+        }
+      },
+      hideLimitLabels: true,
+      hidePointerLabels: false,
+      vertical: false,
+    }
+    this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
+    this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
+  }
+
+
+  applyPerformanceFilter(){
+    this.closePerformancePopup();
+    var reqObj = {
+      "min_tot_duration":this.minPerfValue,
+      "max_tot_duration":this.maxPerfValue,
+      "filterType": this.pFilterType
+    }
+    this.appliedPerformanceFiterValues.emit(reqObj)
+  }
+
+
 
 
 } 
