@@ -29,7 +29,7 @@ export class RpaCredentialsComponent implements OnInit {
   public credentials:any=[];
   public checkeddisabled:boolean =false;
   public Credcheckeddisabled:boolean =false;
-  public dbupdatedata:any;
+  public credupdatedata:any;
   public insertForm:FormGroup;
     public updateForm:FormGroup;
     public Credupdateflag:Boolean;
@@ -49,8 +49,7 @@ export class RpaCredentialsComponent implements OnInit {
       private dt:DataTransferService,
       private spinner: NgxSpinnerService
       ) { 
-      const ipPattern = 
-      "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+     
           
       this.insertForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -90,7 +89,7 @@ export class RpaCredentialsComponent implements OnInit {
 
   async getallCredentials(){
     this.credentials= [];
-    await this.api.getAllCredentials().subscribe(
+    await this.api.get_All_Credentials().subscribe(
       data1 => {
         this.credentials = data1;
         if(this.credentials.length>0)
@@ -180,10 +179,9 @@ export class RpaCredentialsComponent implements OnInit {
     if(this.updateForm.valid)
     {
       this.spinner.show();
-    let dbupdatFormValue =  this.updateForm.value;
-    dbupdatFormValue["connectionId"]= this.dbupdatedata.connectionId;
-    dbupdatFormValue["createdBy"]= this.dbupdatedata.createdBy;
-    this.api.updateDBConnection(dbupdatFormValue).subscribe( res => {
+    let credupdatFormValue =  this.updateForm.value;
+    credupdatFormValue["credentialId"]= this.credupdatedata.credentialId;
+    this.api.update_Credentials(credupdatFormValue).subscribe( res =>{
       let status: any= res;
       this.spinner.hide();
       Swal.fire({
@@ -216,9 +214,9 @@ updatecreddata()
     {
       if(data.credentialId==this.dbupdateid)
       {
-        this.dbupdatedata=data;
-        this.updateForm.get("userName").setValue(this.dbupdatedata["userName"]);
-        this.updateForm.get("password").setValue(this.dbupdatedata["password"]);
+        this.credupdatedata=data;
+        this.updateForm.get("userName").setValue(this.credupdatedata["userName"]);
+        this.updateForm.get("password").setValue(this.credupdatedata["password"]);
         break;
       }
     }
@@ -233,7 +231,7 @@ updatecreddata()
   }
 
   deleteCredentials(){
-    const selecteddbconnection = this.credentials.filter(product => product.checked==true).map(p => p.connectionId);
+    const selectedcredentials = this.credentials.filter(product => product.checked==true).map(p => p.credentialId);
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -244,7 +242,7 @@ updatecreddata()
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
-        this.api.deleteDBConnection(selecteddbconnection).subscribe( res =>{ 
+        this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
           Swal.fire({
             position: 'center',
@@ -265,11 +263,11 @@ updatecreddata()
 
   Credchecktoupdate()
   {
-    const selectedbdconnections = this.credentials.filter(product => product.checked==true);
-    if(selectedbdconnections.length==1)
+    const selectedcredentials = this.credentials.filter(product => product.checked==true);
+    if(selectedcredentials.length==1)
     {
       this.Credupdateflag=true;
-      this.dbupdateid=selectedbdconnections[0].credentialId;
+      this.dbupdateid=selectedcredentials[0].credentialId;
     }else
     {
       this.Credupdateflag=false;
@@ -292,8 +290,8 @@ updatecreddata()
 
   checktodelete()
   {
-    const selecteddbconnection = this.credentials.filter(product => product.checked).map(p => p.connectionId);
-    if(selecteddbconnection.length>0)
+    const selectedcredentialsdata = this.credentials.filter(product => product.checked).map(p => p.credentialId);
+    if(selectedcredentialsdata.length>0)
     {
       this.Creddeleteflag=true;
     }else
