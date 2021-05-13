@@ -816,8 +816,8 @@ save_blueprism_config(data)
     return this.http.post('/rpa-service/agent/save-credentials', data)
   }
 
-  get_All_Credentials() {
-    return this.http.get("/rpa-service/agent/get-credentials")
+  get_All_Credentials(role) {
+    return this.http.get("/rpa-service/agent/get-credentials?role="+role)
   }
 
   update_Credentials(data: any) {

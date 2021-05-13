@@ -160,3 +160,52 @@
           </div>
       </div>
   </div>
+
+  <ng-template #template>
+    <div id="createcredentials" class="modal-header">
+        <div><h3 class="modal-title pull-left" style="padding:7px">Create Credentials</h3></div>
+            <button type="button" style="padding:7px" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="insertForm" (ngSubmit)="savedata()">
+            <div class="row">
+                <div class="col-md-6 formelement">
+                    <label for="userName">Email<span style="color:red">*</span></label>
+                    <input type="text" maxlength="51" class="form-control data" formControlName="userName" #userName value="" placeholder="Enter Email">
+                    <span *ngIf="(insertForm.get('userName').invalid && insertForm.get('userName').touched) && !insertForm.controls['userName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Email Required*</span>
+                    <div *ngIf="insertForm.controls['userName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                        Maximum of 50 characters
+                    </div>
+                </div>
+                
+                <div class="col-md-6 formelement">
+                    <label for="password">Password<span style="color:red">*</span></label>
+                    <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                    <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+                    <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+    
+                    <span *ngIf="(insertForm.get('password').invalid && insertForm.get('password').touched) && !insertForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+                    <div *ngIf="insertForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                        Maximum of 50 characters
+                    </div> 
+                </div>
+      
+              
+            </div>
+            <div class="row">  
+                
+                
+            </div>
+            <div class="row">
+                <div class="col-md-3 formelement">
+                    
+                </div>
+            </div>
+            <input type="button" class="btn btn-primary" value="Save" (click)="saveCredentials()" [disabled]="insertForm.invalid || submitted">
+            <input type="button" class="btn btn-primary" value="Reset" (click)="resetCredForm()">
+        </form>
+        <br> <br>
+      </div>
+    </ng-template>
