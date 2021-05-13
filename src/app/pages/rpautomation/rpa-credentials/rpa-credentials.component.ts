@@ -89,7 +89,8 @@ export class RpaCredentialsComponent implements OnInit {
 
   async getallCredentials(){
     this.credentials= [];
-    await this.api.get_All_Credentials().subscribe(
+    let role=localStorage.getItem('userRole')
+    await this.api.get_All_Credentials(role).subscribe(
       data1 => {
         this.credentials = data1;
         if(this.credentials.length>0)
