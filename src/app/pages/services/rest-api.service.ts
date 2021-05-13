@@ -827,4 +827,8 @@ save_blueprism_config(data)
   delete_Credentials(data: any) {
     return this.http.post("/rpa-service/agent/delete-credentials", data)
   }
+
+  modifybotdetails(botdetails):Observable<any>{
+      return this.http.post("/rpa-service/updateBotMetaDetails",botdetails);
+  }
 }
