@@ -191,6 +191,16 @@
                         Maximum of 50 characters
                     </div> 
                 </div>
+
+                <div class="col-md-6 formelement">
+                    <label for="serverName">Mail Server<span style="color:red">*</span></label>
+                    <select class="form-control" formControlName="serverName">
+                        <option value="" [selected]="true">--Select Mail Server--</option>
+                        <option value="Office365">Office365</option>
+                        <option value="G-mail">G-mail</option>            
+                      </select>
+                    <span *ngIf="insertForm.get('serverName').invalid && insertForm.get('serverName').touched" style="color:red" class="fa fa-info-circle errspan"> Server Type Required*</span>
+                </div>
       
               
             </div>

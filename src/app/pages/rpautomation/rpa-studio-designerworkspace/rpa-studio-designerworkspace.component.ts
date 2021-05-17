@@ -96,6 +96,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
       this.insertForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
   }
 
@@ -692,7 +693,6 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         this.restapiresponse=data
         if(this.restapiresponse.length!=0){
         let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
-        let options:any=[];
         this.restapiresponse.forEach(data_obj=>{
           let key={
               key:data_obj[attrnames[0]],
