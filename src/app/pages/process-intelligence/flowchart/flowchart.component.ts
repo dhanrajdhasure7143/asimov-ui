@@ -1829,7 +1829,7 @@ addWorkingHours(){
 
   applyPerformanceFilterMethod(event){
     var reqObj = {};
-    this.closePopup();
+    
     var _self = this;
     switch(event.filterType){
       case 'noofcases':
@@ -1948,6 +1948,7 @@ addWorkingHours(){
         this.model1=[];
         this.model2=[];
     } else{
+        this.closePopup();
         let fullgraphOne=this.fullgraph.data;
         this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
         this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
