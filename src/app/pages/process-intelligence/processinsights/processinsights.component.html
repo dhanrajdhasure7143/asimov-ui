@@ -14,8 +14,9 @@
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="col-sm-12 divbox divbox2">Total Human Cost
-                            <div>{{totalMedianDuration && input1 && input2 ? (getHumanTotalCost(getHours(totalMedianDuration)*this.input1)| currency) : '-'}}</div>
+                        <div class="col-sm-12 divbox divbox2">Total Human Cost 
+                             <div>{{(totalMedianDuration && input1 && input2) ? (getHumanTotalCost(getHours(totalMedianDuration)*this.input1)| currency) : 0}}</div>
+                            <!-- <div>{{getHumanTotalCost(getHours(totalMedianDuration) * this.input1)}}</div> -->
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -155,7 +156,7 @@
                 <div class="col-sm-12 box-content hedline2 box_shadw" *ngIf="top10_activityData && top10_activityData.length!=0">
                     <p class="business_heading"><strong>Recommendations</strong> </p>
                     <ul class="business_content">
-                            <li *ngFor="let acti of top10_activityData | slice:0:3;let i=index"><b>{{acti.Activity}}</b> automation saves <b>{{calculateSavings(acti.Duration_range)}}</b></li>
+                            <li *ngFor="let acti of top10_activityData | slice:0:3;let i=index"><b>{{acti.Activity}}</b> automation saves <b>{{calculateSavings(acti.Duration_range) | currency}}</b></li>
 
 
                         <!-- <li><b>{{top10_activityData[0]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[0]['Duration_range'])}}</b></li>
@@ -272,7 +273,7 @@
                         <tr *ngFor="let each_data of top10_activityData">
                             <td>{{each_data.Activity}}</td>
                             <td>{{timeConversion(each_data.Duration_range)}}</td>
-                            <td>{{calculateSavings(each_data.Duration_range)}}</td>
+                            <td>{{calculateSavings(each_data.Duration_range) | currency}}</td>
                         </tr>
                     </tbody>
                 </table>
