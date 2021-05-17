@@ -16,7 +16,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   styleUrls: ['./rpa-credentials.component.css']
 })
 export class RpaCredentialsComponent implements OnInit {
-  displayedColumns1: string[] = ["check","userName","password","createdTimeStamp","createdBy"];
+  displayedColumns1: string[] = ["check","userName","password","serverName","createdTimeStamp","createdBy"];
   public toggle:boolean;
   dataSource2:MatTableDataSource<any>;
   public updateflag: boolean;
@@ -54,11 +54,13 @@ export class RpaCredentialsComponent implements OnInit {
       this.insertForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
   
     this.updateForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
       this.Credupdateflag=false;
       this.Creddeleteflag=false;
@@ -218,6 +220,7 @@ updatecreddata()
         this.credupdatedata=data;
         this.updateForm.get("userName").setValue(this.credupdatedata["userName"]);
         this.updateForm.get("password").setValue(this.credupdatedata["password"]);
+        this.updateForm.get("serverName").setValue(this.credupdatedata["serverName"]);
         break;
       }
     }
