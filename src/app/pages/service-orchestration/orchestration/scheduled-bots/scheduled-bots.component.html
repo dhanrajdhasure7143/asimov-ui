@@ -9,6 +9,7 @@
                 </mat-form-field>
               </span>
         </div>
+        <div  style="width:100%;height:45vh;overflow: scroll;">
         <table mat-table [dataSource]="blueprimslogs" #sort4="matSort" matSort style="width:100%;">
             <ng-container matColumnDef="botName">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header  style="width:200px;">Bot Name </th>
@@ -93,6 +94,7 @@
             <tr mat-row *matRowDef="let row; columns: displayedblueprismcolums;"></tr>
             <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': tabledata}"></tr>
        </table>
+       </div>
         <mat-paginator #paginator4 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
     </div>
     </div>
