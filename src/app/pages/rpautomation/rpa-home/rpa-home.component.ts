@@ -61,6 +61,10 @@ export class RpaHomeComponent implements OnInit {
  modalRef: BsModalRef;
  exportid:any;
  allbots:any=[];
+
+ importenv:any;
+ importcat:any;
+ importfile:any;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -529,19 +533,22 @@ export class RpaHomeComponent implements OnInit {
     });
   }
 
-
-  mark_export(botid,value)
+  importbotfile()
   {
-    alert(value);
-    if(value==true)
-      this.exportid=botid;
-    else
-      this.exportid=undefined
-     this.allbots.forEach(data=>{
-        if(botid!=data.botId)
-          $("#export_check_"+data.botId).attr('checked',false);
-     })
+    if(this.importenv!="",this.importfile!="",this.importcat!="")
+    {
+       let form=new FormData();
+       form.append("file",this.importfile);
+       form.append("env-id",this.importenv);
+       form.append("categoryId",this.importcat);
+       this.rest.importbot(form).subscribe(data=>{
+          Swal.fire("Bot imported successfully !!","","success");
+          this.getallbots();
+       })
+
+    }
   }
+  
 
   exportbot(bot)
   {

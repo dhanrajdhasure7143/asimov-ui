@@ -15,23 +15,23 @@
       </div>
       <div class="modal-body">
 
-        <select class="form-control">
+        <select class="form-control" [(ngModel)]="importenv">
 
             <option>Select Environment</option>
-            <option *ngFor="let env of environments">{{env.environmentName}}</option>
+            <option *ngFor="let env of environments" [value]="env.environmentId">{{env.environmentName}}</option>
         </select>
           <br>
-        <select class="form-control">
+        <select class="form-control" [(ngModel)]="importcat">
 
           <option>Select Category</option>
-          <option *ngFor="let cat of categaoriesList">{{cat.categoryName}}</option>
+          <option *ngFor="let cat of categaoriesList" [value]="cat.categoryId">{{cat.categoryName}}</option>
         </select>
         <br>
         <h5>Browse file</h5>
-        <input class="form-control" type="file">
+        <input class="form-control" (change)="importfile=$event.target.files[0]" type="file">
         <br>
         <div class="pull-right">
-          <button class="btn btn-primary">Import</button>&nbsp;<button class="btn btn-primary">Cancel</button>
+          <button class="btn btn-primary"  (click)="importbotfile()">Import</button>&nbsp;<button class="btn btn-primary">Cancel</button>
         </div>
         <br> <br>
       </div>
@@ -59,7 +59,7 @@
             </button>
           </div>-->
           <div class="rpa-home-block" id="createbot-Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enablecreatebot">
-              <img src="../../../../assets/images/RPA/create.svg"style="height:80px;">
+              <img src="../../../../assets/images/RPA/create.svg"style="height:10vh;">
               <!--<h4 style="font-weight: 500;line-height: 1.1;">Create Bot</h4>
               <h5 style="color:gray">Click to Create New Bot</h5>-->
               <br><br>
@@ -83,7 +83,7 @@
       </button>
           </div>-->
           <div class="rpa-home-block py-5" id="Configuration_Home" style="border-radius: 5px;" *ngIf="this.isButtonVisible || enableConfiguration">
-              <img src="../../../../assets/images/RPA/Environments.svg"style="height:80px;">
+              <img src="../../../../assets/images/RPA/Environments.svg"style="height:10vh;">
              <!-- <h4 style="font-weight: 500;line-height: 1.1;">Configutions</h4>
               <h5 style="color:gray">Click to View Bot Configurations</h5>-->
               <br>
@@ -169,7 +169,7 @@
 
       </div>
       <br>
-    <div  style="height:360px;overflow-y: scroll;" >
+    <div  class="rpa-home-table">
       <mat-expansion-panel hideToggle  *ngFor="let bot of bot_list | filterBy:userFilter | paginate: { itemsPerPage: 10, currentPage: p } ;let i=index;"  >
        
           
