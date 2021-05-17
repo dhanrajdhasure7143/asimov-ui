@@ -831,4 +831,10 @@ save_blueprism_config(data)
   modifybotdetails(botdetails):Observable<any>{
       return this.http.post("/rpa-service/updateBotMetaDetails",botdetails);
   }
+
+
+    importbot(data)
+    {
+      return this.http.post("/rpa-service/importBot",data,{responseType: 'text'});
+    }
 }

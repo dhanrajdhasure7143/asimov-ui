@@ -385,3 +385,10 @@ mat-paginator button:disabled{
   width: 36px;
   margin-right: 5px;
 }
+
+
+
+.rpa-home-table{
+  height:50vh;
+  overflow-y: scroll;
+}
