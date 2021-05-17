@@ -77,6 +77,7 @@ export class FlowchartComponent implements OnInit {
     hidePointerLabels: false,
     vertical: true,
   }
+
   filterPerformData:any =[]; 
   process_graph_list:any=[];
   process_graph_options;
@@ -151,6 +152,7 @@ export class FlowchartComponent implements OnInit {
 isWorkingHrsBtn:boolean=true;
 allVaraintsCases:any[]=[];
 isTimeChange:boolean=false;
+performanceFilterInput:any ={};
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -251,6 +253,8 @@ isTimeChange:boolean=false;
       "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
+      this.performanceFilterInput = data;
+      console.log(this.performanceFilterInput);
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
       }
@@ -265,6 +269,38 @@ isTimeChange:boolean=false;
         "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
          }
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
+        if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
+          if(this.fullgraph.is_kafka_failure == 'Y'){
+            console.log("kafka fail");
+            Swal.fire({
+              title: 'Oops!',
+              text: ""+this.fullgraph.display_msg.info,
+              icon: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Okay'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'info',
+                  title: 'Please wait, Redirecting to workspace',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                setTimeout(() => {
+                  self.router.navigate(['pages/processIntelligence/upload'])
+                }, 1500);
+              }
+            });
+            if(this.graphgenetaionInterval){
+              clearInterval(this.graphgenetaionInterval);
+            }
+            this.spinner.hide();
+            return;
+          } 
+        }
         if(this.fullgraph.hasOwnProperty('display_msg')){
           Swal.fire({
             title: 'Oops!',
@@ -380,6 +416,8 @@ isTimeChange:boolean=false;
        "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
        } 
     this.rest.getAllVaraintList(variantListbody).subscribe(data=>{this.varaint_data=data // variant List call
+      this.performanceFilterInput = data;
+      console.log(this.performanceFilterInput);
       if(this.varaint_data.data){ 
       for(var i=0; i<this.varaint_data.data.length; i++){
           this.varaint_data.data[i].selected= "inactive";
@@ -394,7 +432,40 @@ isTimeChange:boolean=false;
          'timeChange':this.isTimeChange,
        "workingHours": this.workingHours.formDay+"-"+this.workingHours.toDay+" "+this.workingHours.shiftStartTime+":00-"+endTime+":00"
          }
+         var self = this;
       this.rest.getfullGraph(fullGraphbody).subscribe(data=>{this.fullgraph=data //process graph full data call
+        if(this.fullgraph.hasOwnProperty('is_kafka_failure')){
+          if(this.fullgraph.is_kafka_failure == 'Y'){
+            console.log("kafka fail");
+            Swal.fire({
+              title: 'Oops!',
+              text: ""+this.fullgraph.display_msg.info,
+              icon: 'error',
+              showCancelButton: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Okay'
+            }).then((result) => {
+              if (result.isConfirmed) {
+                Swal.fire({
+                  position: 'center',
+                  icon: 'info',
+                  title: 'Please wait, Redirecting to workspace',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+                setTimeout(() => {
+                  self.router.navigate(['pages/processIntelligence/upload'])
+                }, 1500);
+              }
+            });
+            if(this.graphgenetaionInterval){
+              clearInterval(this.graphgenetaionInterval);
+            }
+            this.spinner.hide();
+            return;
+          } 
+        }
         if(this.fullgraph.hasOwnProperty('display_msg')){
           this.spinner.show();
           this.model1=[];
@@ -403,14 +474,14 @@ isTimeChange:boolean=false;
           if(this.graphgenetaionInterval){
             clearInterval(this.graphgenetaionInterval);
           }
-         let fullgraphOne=this.fullgraph.data;
+         let fullgraphOne=this.fullgraph.data; 
           this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
           this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
           this.fullgraph_model1=this.fullgraph_model
         this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
         this.filterPerformData = this.fullgraph_model;
         this.model2 = this.flowchartData(this.model1)
-        this.startArray=[]
+        this.startArray=[];
         this.endArray=[]
         let fullModel2=this.model2
         fullModel2.forEach(element => {
@@ -1619,8 +1690,13 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   }
 
   viewInsights(){
+    //var token=localStorage.getItem('accessToken');
+    //window.location.href="http://localhost:8080/camunda/app/welcome/424d2067/#!/login?accessToken="+token+"&userID=karthik.peddinti@epsoftinc.com&tenentID=424d2067-41dc-44c1-b9a3-221efda06681"
     this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.graphIds}})
+    
   }
+
+ 
 
   readselectedNodes1(activies){    
     this.filterdNodes=[]
@@ -1748,5 +1824,160 @@ addWorkingHours(){
 
       }
     })
+  }
+
+  applyPerformanceFilterMethod(event){
+    var reqObj = {};
+    
+    var _self = this;
+    switch(event.filterType){
+      case 'noofcases':
+        reqObj={
+          "data_type":"cases_graph",
+          "pid": this.graphIds,
+          "isPfilter":true,
+          "is_fullgraph":true,
+          "pfilterParams":{
+          "min_event_cases":event.min_tot_duration,
+          "max_event_cases":event.max_tot_duration
+          }
+        }
+        break
+      case 'caseutilization':
+        reqObj={
+          "data_type":"cases_graph",
+          "pid": this.graphIds,
+          "isPfilter":true,
+          "is_fullgraph":true,
+          "pfilterParams":{
+          "min_case_utilization":event.min_tot_duration,
+          "max_case_utilization":event.max_tot_duration
+          }
+        }
+        break
+      case 'caseduration':
+        reqObj={
+          "data_type":"cases_graph",
+          "pid": this.graphIds,
+          "isPfilter":true,
+          "is_fullgraph":true,
+          "pfilterParams":{
+          "min_tot_duration":event.min_tot_duration,
+          "max_tot_duration":event.max_tot_duration
+          }
+        }
+        break
+      case 'meanactivetime':
+        reqObj={
+          "data_type":"cases_graph",
+          "pid": this.graphIds,
+          "isPfilter":true,
+          "is_fullgraph":true,
+          "pfilterParams":{
+          "min_mean_activity_dur":event.min_tot_duration,
+          "max_mean_activity_dur":event.max_tot_duration
+          }
+        }
+        break
+      case 'medianactivetime':
+        reqObj={
+          "data_type":"cases_graph",
+          "pid": this.graphIds,
+          "isPfilter":true,
+          "is_fullgraph":true,
+          "pfilterParams":{
+          "min_median_activity_dur":event.min_tot_duration,
+          "max_median_activity_dur":event.max_tot_duration
+          }
+        }
+        break
+      case 'meanwaitingtime':
+        reqObj={
+          "data_type":"cases_graph",
+          "pid": this.graphIds,
+          "isPfilter":true,
+          "is_fullgraph":true,
+          "pfilterParams":{
+          "min_mean_waiting_dur":event.min_tot_duration,
+          "max_mean_waiting_dur":event.max_tot_duration
+          }
+        }
+        break
+      case 'medianwaitingtime':
+        reqObj={
+          "data_type":"cases_graph",
+          "pid": this.graphIds,
+          "isPfilter":true,
+          "is_fullgraph":true,
+          "pfilterParams":{
+          "min_median_waiting_dur":event.min_tot_duration,
+          "max_median_waiting_dur":event.max_tot_duration
+          }
+        }
+        break
+    }
+
+    this.rest.applyPerformanceFilter(reqObj)
+    .subscribe(data =>{
+       this.fullgraph=data //process graph full data call
+    if(this.fullgraph.hasOwnProperty('display_msg')){
+        Swal.fire({
+          title: 'Oops!',
+          text: "It is Not You it is Us, Please try again after some time",
+          icon: 'error',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Okay'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: 'Please wait, Redirecting to workspace',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            setTimeout(() => {
+              _self.router.navigate(['pages/processIntelligence/upload'])
+            }, 1500);
+          }
+        })
+        this.spinner.hide();
+        this.model1=[];
+        this.model2=[];
+    } else{
+        this.closePopup();
+        let fullgraphOne=this.fullgraph.data;
+        this.activity_list=fullgraphOne.allSelectData.nodeDataArraycase.slice(1,-1)
+        this.fullgraph_model=fullgraphOne.allSelectData.nodeDataArraycase
+        this.fullgraph_model1=this.fullgraph_model
+        this.model1 = fullgraphOne.allSelectData.nodeDataArraycase;
+        this.filterPerformData = this.fullgraph_model;
+        this.model2 = this.flowchartData(this.model1)
+        let fullModel2=this.model2
+        this.startArray=[]
+        this.endArray=[]
+        fullModel2.forEach(element => {
+            if(element.from=="Start"){
+              this.startArray.push(element.to)
+            }
+            if(element.to=="End"){
+              this.endArray.push(element.from)
+            }
+          });
+          this.spinner.hide();
+          this.linkmodel2 = this.model2;
+          this.isFullGraphBPMN = true;
+          this.isSingleTraceBPMN = false;
+          this.isMultiTraceBPMN = false;
+          this.isSliderBPMN = false;
+          this.filterOverlay();
+      }
+    }
+     ,(err=>{
+      this.spinner.hide();
+       console.log(err);
+     }));
   }
 }

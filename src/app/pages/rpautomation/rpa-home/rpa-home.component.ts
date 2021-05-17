@@ -11,10 +11,12 @@ import { DataTransferService } from "../../services/data-transfer.service";
 import { Rpa_Hints } from "../model/RPA-Hints"
 // import * as $ from 'jquery';
 import Swal from 'sweetalert2';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Category } from '../../service-orchestration/orchestration/so-dashboard/so-dashboard.component';
 
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { validateHorizontalPosition } from '@angular/cdk/overlay';
+import { isNumber } from 'util';
 
 
 
@@ -59,10 +61,23 @@ export class RpaHomeComponent implements OnInit {
  modalRef: BsModalRef;
  exportid:any;
  allbots:any=[];
+
+ importenv:any;
+ importcat:any;
+ importfile:any;
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
+  modbotName: any;
+  modbotDescription: any;
+  modDepartment: any;
+  count:any;
+  botNamespace: boolean;
+  checkbotname: boolean;
+  public editbot:FormGroup;
+  rpaCategory: any;
+  newRpaCategory: any;
 
   constructor(
     private route: ActivatedRoute, 
@@ -71,9 +86,18 @@ export class RpaHomeComponent implements OnInit {
     private http:HttpClient, 
     private dt:DataTransferService, 
     private datahints:Rpa_Hints,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private formBuilder:FormBuilder
     )
-  {}
+  {
+    this.editbot=this.formBuilder.group({
+      botId: ["", Validators.required],
+      botName: ["", Validators.compose([Validators.required, Validators.maxLength(30)])],
+      department:["", Validators.required],
+      description:["", Validators.compose([Validators.maxLength(500)])],
+      newCategoryName:[""]
+     });
+  }
 
   openModal(template: TemplateRef<any>) {
     this.modalRef = this.modalService.show(template);
@@ -136,11 +160,8 @@ export class RpaHomeComponent implements OnInit {
       }
           );
         })
-
-
-
- }
-
+      
+     }
 
   ngAfterViewInit() {
 
@@ -407,8 +428,10 @@ export class RpaHomeComponent implements OnInit {
   close()
   {
     document.getElementById("create-bot").style.display ="none";
-
+    
     document.getElementById("load-bot").style.display ="none";
+
+    document.getElementById("edit-bot").style.display="none";
 
   }
 
@@ -510,19 +533,22 @@ export class RpaHomeComponent implements OnInit {
     });
   }
 
-
-  mark_export(botid,value)
+  importbotfile()
   {
-    alert(value);
-    if(value==true)
-      this.exportid=botid;
-    else
-      this.exportid=undefined
-     this.allbots.forEach(data=>{
-        if(botid!=data.botId)
-          $("#export_check_"+data.botId).attr('checked',false);
-     })
+    if(this.importenv!="",this.importfile!="",this.importcat!="")
+    {
+       let form=new FormData();
+       form.append("file",this.importfile);
+       form.append("env-id",this.importenv);
+       form.append("categoryId",this.importcat);
+       this.rest.importbot(form).subscribe(data=>{
+          Swal.fire("Bot imported successfully !!","","success");
+          this.getallbots();
+       })
+
+    }
   }
+  
 
   exportbot(bot)
   {
@@ -655,8 +681,102 @@ export class RpaHomeComponent implements OnInit {
    },this);
    this.sortkey[colKey]=!sortdes;
   }
+  editbotoverlay(botdetails){
+    document.getElementById("edit-bot").style.display="block";
+   let category=botdetails.department;
+   let selectedcategory=this.categaoriesList.find(item=>item.categoryName==category)
+    this.rpaCategory=selectedcategory.categoryId;
+    if(this.rpaCategory==="others"){
+    this.editbot.setValue({
+      botId:botdetails.botId,
+      botName:botdetails.botName, 
+      department:this.rpaCategory, 
+      description:botdetails.description,
+      newCategoryName:this.newRpaCategory})
+    }else{
+      this.editbot.setValue({
+        botId:botdetails.botId,
+        botName:botdetails.botName, 
+        department:this.rpaCategory, 
+        description:botdetails.description,
+        newCategoryName:this.rpaCategory})
+    }
+  }
 
+  validate(code){
+    let validate = code;
+    this.count = 0;
+    for(let i=0;i < validate.length -1; i++){
+      if(validate.charAt(i) == String.fromCharCode(32)){
+        this.count= this.count+1;
+      }
+    }
+    if(this.count !== 0)
+    {
+      this.botNamespace = true;
+    }
+    else{
+      this.botNamespace = false;
+    }
+  }
+
+  checkBotnamevalidation()
+  {
+    let botname=this.editbot.get("botName").value;
+
+    this.rest.checkbotname(botname).subscribe(data=>{
+    if(data==true)
+    {
+      this.checkbotname=false;
+    }else
+    {
+      this.checkbotname=true;
+    }
+    })
+  }
+  saveRpaCategory(){
+    let rpaCategory:any={"categoryName":"","categoryId":0, "createdAt":""};
+     rpaCategory["categoryName"] =this.editbot.value.newCategoryName;
+   return this.rest.addCategory(rpaCategory);
+  }
+  onEditBot() {
+    let botdetails = this.editbot.value;
+    if(botdetails.department==="others"){
+      this.saveRpaCategory().subscribe(data=>{
+        let catResponse : any;
+        catResponse=data;
+        botdetails.department=catResponse.data.categoryId;
+        let modbotdetails={
+          "botId": botdetails.botId,
+          "botName": botdetails.botName,
+          "department": botdetails.department,
+          "description": botdetails.description
+         };
+       
+       this.rest.modifybotdetails(modbotdetails).subscribe(data=>{
+        if(data.message==="Bot details updated successfully"){
+          Swal.fire("Bot Details Updated Successfully","","success");
+           this.getallbots();
+        }else {
+          Swal.fire("Failed to update bot details","","error");
+        }
+          })
+          document.getElementById("edit-bot").style.display="none";
+       });
+      } else {
+      this.rest.modifybotdetails(botdetails).subscribe(data=>{
+        if(data.message==="Bot details updated successfully"){
+          Swal.fire("Bot Details Updated Successfully","","success");
+          this.getallbots();
+        }else {
+          Swal.fire("Failed to update bot details","","error");
+        }
+          })
+          document.getElementById("edit-bot").style.display="none";
+        }
+      }
 }
+
 export interface dataSource1 {
   department: string;
   botName: string;
@@ -666,3 +786,5 @@ export interface MyFilter {
   department: string[],
   botName: string,
 }
+
+

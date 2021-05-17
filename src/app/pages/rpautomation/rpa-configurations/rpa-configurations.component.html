@@ -41,4 +41,16 @@
     <app-rpa-database-connections></app-rpa-database-connections>
   </div>
 </mat-tab>
+
+<mat-tab label="Credentials">
+
+  <ng-template mat-tab-label>
+    <mat-icon  class="text-primary">fingerprint</mat-icon>
+      &nbsp;&nbsp;
+      Credentials
+  </ng-template>
+  <div *ngIf="check_tab==2">
+  <app-rpa-credentials></app-rpa-credentials>
+</div>
+</mat-tab>
 </mat-tab-group>

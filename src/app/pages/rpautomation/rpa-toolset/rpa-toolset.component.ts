@@ -21,6 +21,7 @@ export class RpaToolsetComponent implements OnInit {
   toolSetData:any=[];
   userRole:any;
   templateNodes:any=[];
+  search:any=false;
   ngOnInit() {
 
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});

@@ -2,7 +2,7 @@
 .section {
   overflow: scroll;
   min-height: 65px;
-  max-height: 350px;
+  max-height: 50vh;
   white-space: nowrap;
 }
 .nodes {
@@ -109,3 +109,22 @@
   color : white;
   position:fixed !important;
 }
+.toolset-search-button{
+  text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+    font-size: 18px;
+    padding-bottom: 15px;
+
+    border: 1px solid lightgrey;
+    font-weight: 300;
+}
+
+.toolset-search-close{
+  
+  float: right;
+  margin-top: -22px;
+  cursor: pointer;
+}
+

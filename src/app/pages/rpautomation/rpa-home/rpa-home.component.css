@@ -4,11 +4,12 @@
     align-items: center;
     text-align: center;
     border: 1px solid lightgrey;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding-top: 5vh;
+    padding-bottom: 5vh;
     padding-right: 0px;
     padding-left: 0px;
-    margin-right: 20px
+    margin-right: 20px;
+    height:25vh;
 }
 
 .rpa-home-block:hover {
@@ -238,4 +239,8 @@ padding:20px;
 .mat-menu-item {
     height:30px !important;
     line-height:31px!important;
+}
+.edit-bot-button{
+    margin-left: 70%;
+    margin-top: 5%;
 }

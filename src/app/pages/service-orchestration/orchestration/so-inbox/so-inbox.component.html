@@ -1,4 +1,4 @@
-<div class="bg-color">
+<div>
     <div class="container-fluid">
         <br>
         <div class="text-right">
@@ -15,7 +15,7 @@
         </div>
           <div class="row">
             <div class="col-md-12">
-              <mat-card>
+              <div  style="width:100%;height:45vh;overflow: scroll;">
                 <table mat-table  [dataSource]="dataSource1" #sort1="matSort" matSort class="table" id="inboxtable">
 
                     <ng-container matColumnDef="processName">
@@ -109,9 +109,9 @@
                     <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                     <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
                 </table>
-                <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
-              </mat-card>
+              </div>
 
+              <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
             </div>
         </div>
       </div>

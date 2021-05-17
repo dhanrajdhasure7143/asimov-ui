@@ -777,15 +777,48 @@ getDBTables(){      //get DB tables list
     }
   }
 
-  onRetryGraphGenerate(){
-    // this.rest.retryFailedProcessGraph('id').subscribe(res=>{
-    //   console.log(res);
-      
-    // })
+  onRetryGraphGenerate(processDt){
+    console.log(processDt);
+    var _self = this;
+    this.rest.retryFailedProcessGraph(processDt.piId).subscribe((res:any)=>{
+      console.log(res); 
+      if(res.is_error == false){
+        Swal.fire("Great", ""+res.display_msg.info, "success");
+        Swal.fire({
+          title: 'Great',
+          text: ""+res.display_msg.info,
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire({
+              position: 'center',
+              icon: 'info',
+              title: 'Please wait, Redirecting to process map',
+              showConfirmButton: false,
+              timer: 1500
+            })
+            setTimeout(() => {
+              _self.router.navigate(["/pages/processIntelligence/flowChart"], { queryParams: { piId: processDt.piId } });
+            }, 1500);
+          }
+        })
+       
+      } else{
+        Swal.fire("Oops!", ""+res.display_msg.info, "error");
+      }
+    },(err)=>{
+      console.log(err); 
+    })
 
   }
 
 }
+
+
 
 
 

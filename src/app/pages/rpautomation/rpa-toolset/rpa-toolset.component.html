@@ -1,17 +1,25 @@
 <div class="row">
   <div class="col-md-1">
-    <div style="height:500px">
+    <div>
     <div class="toolset" >
       <div style="padding-bottom:4px;" id="search">
-      <input type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" [(ngModel)]="userFilter.name" name="node" placeholder="&#61442; Search"
-      class="form-control search fontAwesome" autocomplete="off">
+        <div  *ngIf="search==true" >
+          <span>
+          <input type="text" *ngIf="search==true" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" [(ngModel)]="userFilter.name" name="node" placeholder="&#61442; Search"
+          class="form-control search fontAwesome" autocomplete="off"></span> <span (click)="search=false" class="toolset-search-close"><i class="fa fa-times"></i></span>
+        </div>
+        <button  *ngIf="search==false" (click)="search=true" class="border toolset-search-button">
+          <span  class="text-primary">
+            <i class="fa fa-search"></i>
+          </span>
+        </button>
       </div>
-      <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:60px"id="dragicons" class="dragicons">
+        <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:60px"id="dragicons" class="dragicons">
         <button type="button"class="scroll top">
           <img (click)="scrolltop()"style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
         </button>
 
-
+       
         <div #section class="section">
           <div class="nodes rpa-dragicon" tooltip="{{node.name}}" placement="bottom" *ngFor="let node of templateNodes | filterBy: userFilter">
     <!-- | slice:0:show;  let i=index-->
