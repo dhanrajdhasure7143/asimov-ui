@@ -793,8 +793,8 @@ save_blueprism_config(data)
       return this.http.get('/rpa-service/management/incidents');
     }
 
-    retryFailedProcessGraph(bpmnModelId){
-      // return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
+    retryFailedProcessGraph(pid){
+       return this.http.post("/retryPID", pid)
     }
 
     get_scheduled_bots(){
@@ -816,6 +816,14 @@ save_blueprism_config(data)
     return this.http.post('/rpa-service/agent/save-credentials', data)
   }
 
+    getAllCredentials(){
+      return this.http.get("/rpa-service/agent/get-credentials")
+    }
+
+   applyPerformanceFilter(data){
+    return this.http.post("/ReddisCopy/getGraphData",data)
+   }
+ 
   get_All_Credentials(role) {
     return this.http.get("/rpa-service/agent/get-credentials?role="+role)
   }

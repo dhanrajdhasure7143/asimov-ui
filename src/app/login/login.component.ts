@@ -128,7 +128,7 @@ export class LoginComponent{
   getAccessToken(){
     this.rest.getAccessToken().subscribe(res =>{
       localStorage.setItem("accessToken", res['accessToken']);
-      localStorage.setItem("authKey", "V2t6Q2Q3N01Gb1dDR252TXJ0TzJiT0pEaHR3a1ZXNFVBdjlIRVprVG9Vaz0=");
+      localStorage.setItem('authKey', 'V2t6Q2Q3N01Gb1dDR252TXJ0TzJiT0pEaHR3a1ZXNFVBdjlIRVprVG9Vaz0=');
       this.router.navigateByUrl("pages/home")
     });
   }
