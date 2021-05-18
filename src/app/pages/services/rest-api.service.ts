@@ -844,6 +844,6 @@ save_blueprism_config(data)
 
     importbot(data)
     {
-      return this.http.post("/rpa-service/importBot",data,{responseType: 'text'});
+      return this.http.post("/rpa-service/importBot",data);
     }
 }
