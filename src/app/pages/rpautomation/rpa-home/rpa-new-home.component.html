@@ -15,15 +15,15 @@
       </div>
       <div class="modal-body">
 
-        <select class="form-control" [(ngModel)]="importenv">
+        <select class="form-control" value="" [(ngModel)]="importenv">
 
-            <option>Select Environment</option>
+            <option value="">Select Environment</option>
             <option *ngFor="let env of environments" [value]="env.environmentId">{{env.environmentName}}</option>
         </select>
           <br>
-        <select class="form-control" [(ngModel)]="importcat">
+        <select class="form-control" value="" [(ngModel)]="importcat">
 
-          <option>Select Category</option>
+          <option value="">Select Category</option>
           <option *ngFor="let cat of categaoriesList" [value]="cat.categoryId">{{cat.categoryName}}</option>
         </select>
         <br>
@@ -31,7 +31,7 @@
         <input class="form-control" (change)="importfile=$event.target.files[0]" type="file">
         <br>
         <div class="pull-right">
-          <button class="btn btn-primary"  (click)="importbotfile()">Import</button>&nbsp;<button class="btn btn-primary">Cancel</button>
+          <button class="btn btn-primary"  (click)="importbotfile()">Import</button>&nbsp;<button (click)="modalRef.hide()" class="btn btn-primary">Cancel</button>
         </div>
         <br> <br>
       </div>

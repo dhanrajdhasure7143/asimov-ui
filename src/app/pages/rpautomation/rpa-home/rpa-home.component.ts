@@ -62,9 +62,9 @@ export class RpaHomeComponent implements OnInit {
  exportid:any;
  allbots:any=[];
 
- importenv:any;
- importcat:any;
- importfile:any;
+ importenv:any="";
+ importcat:any="";
+ importfile:any="";
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -124,8 +124,10 @@ export class RpaHomeComponent implements OnInit {
     this.getCategoryList();
     this.getenvironments();
     setTimeout(()=> {
+      
+      this.rpa_studio.spinner.show()
       this.getallbots();
-      }, 550);
+      }, 100);
     if(localStorage.getItem("taskId")!=undefined)
     {
        this.createtaskbotoverlay(localStorage.getItem("taskId"))
@@ -234,7 +236,6 @@ export class RpaHomeComponent implements OnInit {
   {
     let response:any=[];
 
-    this.rpa_studio.spinner.show()
     //http://192.168.0.7:8080/rpa-service/get-all-bots
     this.rest.getAllActiveBots().subscribe(botlist =>
     {
@@ -542,7 +543,18 @@ export class RpaHomeComponent implements OnInit {
        form.append("env-id",this.importenv);
        form.append("categoryId",this.importcat);
        this.rest.importbot(form).subscribe(data=>{
-          Swal.fire("Bot imported successfully !!","","success");
+        let response:any=data; 
+        this.importcat="";
+        this.importenv="";
+        this.importfile="";
+        if(response.errorMessage==undefined)
+        {
+          Swal.fire(response.status,"","success");
+          this.getallbots();
+        }
+        else
+          Swal.fire(response.errorMessage,"","warning");
+          this.modalRef.hide()
           this.getallbots();
        })
 

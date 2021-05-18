@@ -1,15 +1,14 @@
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
     <mat-tab-group [selectedIndex]="selectedTab" (selectedTabChange)="onTabChanged($event)">
-        <mat-tab>
+        <!-- <mat-tab>
           <ng-template mat-tab-label>
-              <!--<mat-icon class="text-primary">pie_chart</mat-icon>&nbsp;&nbsp;-->
               <img style="height:30px;width:30px;" src="..\\assets\\icons\icon-72x72.png">&nbsp;
               EPSoft
           </ng-template>
           <div *ngIf="check_tab==0">
                 <app-so-env-epsoft></app-so-env-epsoft>
           </div>
-</mat-tab>
+</mat-tab> -->
 <mat-tab label="Orchestrator">
     <ng-template mat-tab-label>
       <!--<mat-icon class="text-primary">control_camera</mat-icon>
@@ -17,7 +16,7 @@
         <img style="height:30px;width:30px;" src="..\\assets\\icons\BluePrism_icon.png">&nbsp;
         BluePrism
     </ng-template>
-    <div *ngIf="check_tab==1">
+    <div *ngIf="check_tab==0">
       <app-so-env-blueprism></app-so-env-blueprism>
     </div>
 </mat-tab>
@@ -29,7 +28,7 @@
       <img style="height: 22px;width: 43px;" src="..\\assets\\icons\uipath_icon.svg">
       UiPath
   </ng-template>
-  <div *ngIf="check_tab==2">
+  <div *ngIf="check_tab==1">
     <app-so-env-uipath></app-so-env-uipath>
   </div>
 </mat-tab>
