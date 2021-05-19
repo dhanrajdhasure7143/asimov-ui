@@ -303,7 +303,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           Swal.fire(response.status,"","success")
         }else
         {
-          Swal.fire(response.errorMessage,"","success");
+          Swal.fire(response.errorMessage,"","warning");
         }
       })
     }

@@ -611,13 +611,16 @@ export class FilterComponent implements OnInit {
         this.fcount.push(res);
       }
     });
+   
     var cc = 0;
-    const unique = [...new Set(this.fcount.map(item => item.noofCases))];
-    unique.filter(r => {
-      cc += Number(r);
+    //const unique = [...new Set(this.fcount.map(item => item.caseCount))];
+  
+    this.fcount.filter(r => {
+      cc += Number(r.caseCount);
     })
     this.chagnedCases = cc;
-    this.casePercentage = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
+    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(2);
+    this.casePercentage =Number(casePer);
     if(this.totalCases == this.chagnedCases){
       this.piesingle = [
         {name: "Total Cases", value: this.totalCases}
@@ -637,12 +640,22 @@ export class FilterComponent implements OnInit {
       }
     });
     var cc = 0;
-    const unique = [...new Set(this.fcount.map(item => item.noofCases))];
-    unique.filter(r => {
-      cc += Number(r);
+    this.fcount.filter(r => {
+      cc += Number(r.caseCount);
     })
     this.chagnedCases = cc;
-    this.casePercentage = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
+    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(2);
+    this.casePercentage =Number(casePer);
+    if(this.totalCases == this.chagnedCases){
+      this.piesingle = [
+        {name: "Total Cases", value: this.totalCases}
+      ]
+    } else {
+    this.piesingle = [
+      {name: "Total Cases", value: this.totalCases},
+      {name: "Filter Cases", value: this.chagnedCases}
+    ]
+  }
 
   }
 

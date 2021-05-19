@@ -45,7 +45,9 @@ export class RestApiService{
     responseType: 'text'
   }
   public fileName = new BehaviorSubject<any>('file');
-  constructor(private http:HttpClient, private ip:IpServiceService) { this.getIP(); }
+  constructor(private http:HttpClient, private ip:IpServiceService) { 
+    //this.getIP();
+   }
 
   public ipAddress:string;
     //nethan.price@guerrillamailblock.com
@@ -66,8 +68,7 @@ export class RestApiService{
      {
         if(localStorage.getItem('ipAddress')==null){
         this.ip.getIPAddress().then(res => {
-
-        var obj = JSON.parse(JSON.stringify(res));
+ var obj = JSON.parse(JSON.stringify(res));
         this.ipAddress = obj.ip;
         localStorage.setItem('ipAddress', this.ipAddress);
         });
@@ -843,6 +844,6 @@ save_blueprism_config(data)
 
     importbot(data)
     {
-      return this.http.post("/rpa-service/importBot",data,{responseType: 'text'});
+      return this.http.post("/rpa-service/importBot",data);
     }
 }

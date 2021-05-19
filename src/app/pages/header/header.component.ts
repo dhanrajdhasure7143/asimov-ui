@@ -4,6 +4,7 @@ import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
 import { NgxSpinnerService } from "ngx-spinner";
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -44,7 +45,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private dataTransfer:DataTransferService,
     private rpa:RestApiService,
     private spinner:NgxSpinnerService,
-    @Inject(APP_CONFIG) private config) { }
+    @Inject(APP_CONFIG) private config,
+    private authService:AuthenticationService) { }
 
   ngOnInit() {
     this.parent_subscription = this.dataTransfer.current_parent_module.subscribe(res => this.parent_link = res);
@@ -184,7 +186,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     clearTimeout(this.stopnotificationsapicall)
     localStorage.clear();
     var input = btoa("Signout")
-    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    //window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    this.authService.logout();
+    localStorage.clear(); 
+    window.location.href=this.config.signoutRedirectionURL;
   }
 
   profileName(){

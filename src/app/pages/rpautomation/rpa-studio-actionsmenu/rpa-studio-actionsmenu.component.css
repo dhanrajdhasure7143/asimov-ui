@@ -189,6 +189,6 @@ background-color: blue !important;
   border: 1px solid lightgray;
   text-align:center; 
   width:50px;
-  overflow: scroll;
+  /* overflow-y: scroll; */
   height:60vh;
 }
