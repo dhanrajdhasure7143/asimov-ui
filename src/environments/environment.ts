@@ -53,6 +53,7 @@ export const environment = {
      platform_url:'http://apqa.epsoftinc.in',
      schema_registry_url:"http://10.11.0.101:8081",
      alerts_url:'http://alertsqa.epsoftinc.in',
+     pi_node_jobs: "http://10.11.0.108:5000",
     
 
   // Aiotal redirection urls 
