@@ -514,16 +514,16 @@ public slaupdate : boolean = false;
           let data:any;
           if(statusdata.status=="InProgress" || statusdata.status=="Running")
                 {
-                  data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
+                  data="<span matTooltip='"+statusdata.status+"' style='filter: none; width: 19px;' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
                 }
                 else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
                 {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
+                  data='<span  matTooltip="'+statusdata.botStatus+'"  style="filter: none; width: 19px;"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
                 }
                
                 else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
                 {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
+                  data='<span  matTooltip="'+statusdata.botStatus+'"    style="filter: none; width: 19px;"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
                 }
                 
           $("#"+statusdata.botId+"__status").html(data);
