@@ -9,7 +9,7 @@ import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerwo
         <select (change)="onChangeEmail($event)" class="form-control" [value]="field.value" [id]="field.name" [formControlName]="field.name+'_'+field.id">
         <option  value="" >--{{field.placeholder}}--</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
-        <option  *ngIf="field.type=='restapi'" value="New">&nbsp;&nbsp;New</option>
+        <option  *ngIf="field.label=='Email'" value="New">&nbsp;&nbsp;New</option>
         </select>
       </div>
     `,
