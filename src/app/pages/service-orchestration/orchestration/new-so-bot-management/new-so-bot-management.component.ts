@@ -591,6 +591,7 @@ public slaupdate : boolean = false;
      this.Viewloglist.sort=this.sort4;
 
      document.getElementById(this.viewlogid).style.display="block";
+     $(".tour_guide").hide()
 
    });
  }
@@ -631,6 +632,7 @@ public slaupdate : boolean = false;
      this.logbyrunid.sort=this.sort5;
      document.getElementById(this.viewlogid).style.display="none";
      document.getElementById(this.viewlogid1).style.display="block";
+     $(".tour_guide").hide()
        })
    }
 
@@ -641,10 +643,12 @@ public slaupdate : boolean = false;
    }
 
    viewlogclose(){
+    $(".tour_guide").show()
      document.getElementById(this.viewlogid).style.display="none";
    }
 
    viewlogclose1(){
+    $(".tour_guide").show()
      document.getElementById(this.viewlogid1).style.display="none";
      document.getElementById(this.viewlogid).style.display="none";
    }
@@ -756,6 +760,7 @@ public slaupdate : boolean = false;
     }
 
     getBluePrismlogs(botname){
+      $(".tour_guide").hide()
       this.blueprismbotname = botname;
       console.log("this.blueprismbotname",this.blueprismbotname)
       document.getElementById("divblueprismlogs").style.display = "block";
@@ -798,6 +803,7 @@ public slaupdate : boolean = false;
    ;
     }
     viewblueprismlogclose(){
+      $(".tour_guide").show()
       document.getElementById("divblueprismlogs").style.display = "none"
     }
 
@@ -807,6 +813,7 @@ public slaupdate : boolean = false;
     {
       this.uipathbotName=botname;
       document.getElementById("uipathlogs").style.display="block";
+      $(".tour_guide").hide()
       this.spinner.show();
       this.rest.getuipathlogs().subscribe(resp=>{
         let response:any=resp;
@@ -825,6 +832,7 @@ public slaupdate : boolean = false;
 
     viewuipathlogclose()
     {
+      $(".tour_guide").show()
       document.getElementById("uipathlogs").style.display="none";
     }
 
@@ -881,7 +889,7 @@ public slaupdate : boolean = false;
 
     openscheduler(bot)
     {
-
+      $(".tour_guide").hide();
       this.botid=bot.botId;
       this.schdata={
         botid:bot.botId,
@@ -895,6 +903,7 @@ public slaupdate : boolean = false;
 
     close()
     {
+      $(".tour_guide").show();
       this.popup=false;
     }
 
