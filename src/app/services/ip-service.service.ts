@@ -13,6 +13,6 @@ export class IpServiceService {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('origin', 'local');
     headers = headers.append('Access-Control-Allow-Origin', '*');
-    return this.http.get("https://cors-anywhere.herokuapp.com/http://api.ipify.org/?format=json",  {headers}).toPromise();  
+    return this.http.get("http://api.ipify.org/?format=json",  {headers}).toPromise();  
   } 
 }

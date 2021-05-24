@@ -93,6 +93,7 @@
     "ngx-pagination": "^5.0.0",
     "ngx-password-toggle": "^1.0.3",
     "ngx-spinner": "^8.1.0",
+    "ngx-toastr": "^10.1.0",
     "ngx-webstorage-service": "^4.1.0",
     "ngx-xml2json": "^1.0.2",
     "particles": "^0.3.1",
