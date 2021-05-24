@@ -20,7 +20,7 @@
             </mat-form-field>
           </span>
         <span style="padding:10px">
-          <mat-form-field id="bmcategorySearch">
+          <mat-form-field id="bmcategorySearch1">
             <mat-label>Select Process Group</mat-label>
             <mat-select [(ngModel)]="selectedcat" (selectionChange)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
                 <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
@@ -38,8 +38,8 @@
               <div  style="width:100%;height:45vh;overflow: scroll;">
               <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
   
-                  <ng-container matColumnDef="botName"id="botname">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Name </th>
+                  <ng-container matColumnDef="botName"id="bmbotname">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Names </th>
                       <td mat-cell *matCellDef="let element"> <button *ngIf="element.botName!=null" (click)="loadbotdatadesign(element.botId);"><span *ngIf="element.botName!=null" [matTooltip]="element.botName">{{(element.botName.length > 15) ? ((element.botName).slice(0, 15) + '...') : element.botName}}</span>
                           <span *ngIf="element.botName==null || element.botName==''">---</span></button> </td>
                   </ng-container>
