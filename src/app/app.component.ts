@@ -1,8 +1,10 @@
 import { Component, Inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserIdleService } from 'angular-user-idle';
 import { APP_CONFIG } from './app.config';
 import { RestApiService } from './pages/services/rest-api.service';
 import { AuthenticationService } from './services';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-root',
@@ -13,10 +15,16 @@ export class AppComponent {
 
   newAccessToken: any;
   constructor(private userIdle: UserIdleService, private apiservice: RestApiService,
-     private authservice: AuthenticationService, @Inject(APP_CONFIG) private config) { }
+     private authservice: AuthenticationService, @Inject(APP_CONFIG) private config,
+     private router: Router,private toastr: ToastrService) { }
 
   ngOnInit() {
-    
+    addEventListener("offline",(e)=>{
+      this.toastr.error('Please check your internet connection');
+    });
+    addEventListener("online",(e)=>{
+      this.toastr.success('You are now online');
+    });
     //Start watching for user inactivity.
     this.userIdle.startWatching();
     this.userIdle.ping$.subscribe(() => {
@@ -34,8 +42,9 @@ export class AppComponent {
     // Start watch when time is up.
     this.userIdle.onTimeout().subscribe(() => {
       localStorage.clear();
-    var input = btoa("Signout")
-    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    // var input = btoa("Signout")
+    // window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    this.router.navigate(['/redirect'])
     });
   }
   
