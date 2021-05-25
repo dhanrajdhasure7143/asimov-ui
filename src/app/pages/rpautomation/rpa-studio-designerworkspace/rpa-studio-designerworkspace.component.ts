@@ -78,6 +78,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   svg:any;
   public insertForm:FormGroup;
   modalRef: BsModalRef;
+  public passwordtype1:Boolean;
+  public passwordtype2:Boolean;
 
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
   public nodedata: any;
@@ -107,6 +109,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   ngOnInit() {
+     this.passwordtype1=false;
+    this.passwordtype2=false;
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -1350,10 +1354,15 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   resetCredForm(){
     this.insertForm.reset();
   }
+
+  back(){
+    document.getElementById("createcredentials").style.display="none";
+    this.resetCredForm();
+  }
   createcredentials()
   {
-    this.modalRef = this.modalService.show(this.template);
-   // document.getElementById("createcredentials").style.display='block';
+   // this.modalRef = this.modalService.show(this.template);
+    document.getElementById("createcredentials").style.display='block';
   }
 
   saveCredentials(){
@@ -1374,7 +1383,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             timer: 2000
           })
         this.formNodeFunc(this.nodedata)
-          this.modalRef.hide();
+         // this.modalRef.hide();
           document.getElementById('createcredentials').style.display= "none";
           this.resetCredForm();
     });
