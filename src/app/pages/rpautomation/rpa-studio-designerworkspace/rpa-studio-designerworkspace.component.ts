@@ -1,9 +1,9 @@
-import { Component, OnInit,  NgZone ,AfterViewInit, ViewChild, ElementRef, Input , Pipe, PipeTransform} from '@angular/core';
+import { Component, OnInit,  NgZone ,AfterViewInit, ViewChild, ElementRef, Input , Pipe, PipeTransform, TemplateRef} from '@angular/core';
 import { DndDropEvent } from 'ngx-drag-drop';
 import { fromEvent } from 'rxjs';
 import { jsPlumb, jsPlumbInstance } from 'jsplumb';
 import { RestApiService } from '../../services/rest-api.service';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl,Validators,FormBuilder } from '@angular/forms';
 import jsPDF from 'jspdf';
 import { NotifierService } from 'angular-notifier';
 import { Rpa_Hints } from '../model/RPA-Hints';
@@ -14,6 +14,9 @@ import { RpaStudioComponent } from "../rpa-studio/rpa-studio.component";
 import { RpaToolsetComponent } from "../rpa-toolset/rpa-toolset.component";
 import domtoimage from 'dom-to-image';
 import * as $ from 'jquery';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+
 @Component({
   selector: 'app-rpa-studio-designerworkspace',
   templateUrl: './rpa-studio-designerworkspace.component.html',
@@ -73,6 +76,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   recordedcode:any;
   finalcode:any;
   svg:any;
+  public insertForm:FormGroup;
+  modalRef: BsModalRef;
+
+  @ViewChild('template', { static: false }) template: TemplateRef<any>;
+
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
     private hints: Rpa_Hints,
@@ -80,8 +88,16 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     private http: HttpClient,
     private child_rpa_studio: RpaStudioComponent,
     private toolset:RpaToolsetComponent,
+    private formBuilder: FormBuilder,
+    private spinner: NgxSpinnerService,
+    private modalService: BsModalService
     ) {
 
+      this.insertForm=this.formBuilder.group({
+        userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    })
   }
 
   ngOnInit() {
@@ -669,13 +685,14 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     /*
       let token={​​​​​
         headers: new HttpHeaders().set('Authorization', 'Bearer '+ localStorage.getItem('accessToken')),
-      }​​​*/​
+      }​​​*/
+      let options:any=[];​​
       let restapi_attr=attributes.find(attr => attr.type=='restapi');
       this.rest.get_dynamic_data(restapi_attr.dependency).subscribe(data=>
       {
         this.restapiresponse=data
+        if(this.restapiresponse.length!=0){
         let attrnames=Object.getOwnPropertyNames(this.restapiresponse[0]);
-        let options:any=[];
         this.restapiresponse.forEach(data_obj=>{
           let key={
               key:data_obj[attrnames[0]],
@@ -683,6 +700,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             }
             options.push(key);
         })
+      }
         attributes.find(attr => attr.type=='restapi').options=options;
         this.response(attributes,node);
       });
@@ -1314,6 +1332,50 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     }
     return;
   }
+
+  closecredentials()
+  {     
+    document.getElementById('createcredentials').style.display='none';
+    this.resetCredForm();
+  }
+
+
+  resetCredForm(){
+    this.insertForm.reset();
+  }
+  createcredentials()
+  {
+    this.modalRef = this.modalService.show(this.template);
+   // document.getElementById("createcredentials").style.display='block';
+  }
+
+  saveCredentials(){
+    if(this.insertForm.valid)
+   {
+
+    this.insertForm.value.createdBy="admin";
+   
+    let Credentials = this.insertForm.value;
+    this.rest.save_credentials(Credentials).subscribe( res =>{
+      let status:any=res;
+      this.spinner.hide();
+    Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: status.status,
+            showConfirmButton: false,
+            timer: 2000
+          })
+          this.modalRef.hide();
+          document.getElementById('createcredentials').style.display= "none";
+          this.resetCredForm();
+    });
+   
+  }
+  else{
+    alert("Invalid Form");
+  }
+   }
 
 }
 

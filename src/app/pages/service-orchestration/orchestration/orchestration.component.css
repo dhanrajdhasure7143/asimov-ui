@@ -16,10 +16,6 @@ select {
 
 
 
-.mat-tab-label-active {
-  background-color: white !important;
-  color:black !important;
-}
 .my-new-div .tab-content{
   margin-top: 5px !important;
 }
@@ -110,6 +106,20 @@ td{
 }
 
 
-.mat-tab-label-content{
-  color:rgb(46, 44, 44) !important;
+ #Orchestration-tabs  .mat-tab-label .mat-tab-label-content{
+  color:black ;
+  font-family:noto-sans,Noto Sans,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
+}
+
+
+
+
+#Orchestration-tabs .mat-tab-label-active .mat-tab-label-content {
+  background-color: white !important;
+  color:rgb(0, 98, 207) !important ;
+  font-family:noto-sans,Noto Sans,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 15px !important;
 }

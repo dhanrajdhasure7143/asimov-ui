@@ -45,7 +45,9 @@ export class RestApiService{
     responseType: 'text'
   }
   public fileName = new BehaviorSubject<any>('file');
-  constructor(private http:HttpClient, private ip:IpServiceService) { this.getIP(); }
+  constructor(private http:HttpClient, private ip:IpServiceService) { 
+    //this.getIP();
+   }
 
   public ipAddress:string;
     //nethan.price@guerrillamailblock.com
@@ -66,8 +68,7 @@ export class RestApiService{
      {
         if(localStorage.getItem('ipAddress')==null){
         this.ip.getIPAddress().then(res => {
-
-        var obj = JSON.parse(JSON.stringify(res));
+ var obj = JSON.parse(JSON.stringify(res));
         this.ipAddress = obj.ip;
         localStorage.setItem('ipAddress', this.ipAddress);
         });
@@ -793,8 +794,8 @@ save_blueprism_config(data)
       return this.http.get('/rpa-service/management/incidents');
     }
 
-    retryFailedProcessGraph(bpmnModelId){
-      // return this.http.get("/bpsprocess/fetchByBpmnModel?bpmnModelId="+bpmnModelId)
+    retryFailedProcessGraph(pid){
+       return this.http.post("/retryPID", pid)
     }
 
     get_scheduled_bots(){
@@ -810,5 +811,39 @@ save_blueprism_config(data)
     getslametrics()
     {
       return this.http.post("/rpa-service/management/sla-metrics","");
+    }
+	
+  save_credentials(data: any) {
+    return this.http.post('/rpa-service/agent/save-credentials', data)
+  }
+
+    getAllCredentials(){
+      return this.http.get("/rpa-service/agent/get-credentials")
+    }
+
+   applyPerformanceFilter(data){
+    return this.http.post("/ReddisCopy/getGraphData",data)
+   }
+ 
+  get_All_Credentials(role) {
+    return this.http.get("/rpa-service/agent/get-credentials?role="+role)
+  }
+
+  update_Credentials(data: any) {
+    return this.http.put("/rpa-service/agent/update-credential", data)
+  }
+
+  delete_Credentials(data: any) {
+    return this.http.post("/rpa-service/agent/delete-credentials", data)
+  }
+
+  modifybotdetails(botdetails):Observable<any>{
+      return this.http.post("/rpa-service/updateBotMetaDetails",botdetails);
+  }
+
+
+    importbot(data)
+    {
+      return this.http.post("/rpa-service/importBot",data);
     }
 }
