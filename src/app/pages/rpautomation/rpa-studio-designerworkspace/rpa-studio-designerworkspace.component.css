@@ -112,3 +112,16 @@
   background-color:white !important;
   padding:10px !important;
 }
+
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+  }
+
+.back-container{
+  max-height: 400px;
+  overflow: auto;
+}

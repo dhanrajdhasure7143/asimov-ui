@@ -514,16 +514,16 @@ public slaupdate : boolean = false;
           let data:any;
           if(statusdata.status=="InProgress" || statusdata.status=="Running")
                 {
-                  data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
+                  data="<span matTooltip='"+statusdata.status+"' style='filter: none; width: 19px;' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
                 }
                 else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
                 {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
+                  data='<span  matTooltip="'+statusdata.botStatus+'"  style="filter: none; width: 19px;"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
                 }
                
                 else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
                 {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
+                  data='<span  matTooltip="'+statusdata.botStatus+'"    style="filter: none; width: 19px;"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
                 }
                 
           $("#"+statusdata.botId+"__status").html(data);
@@ -591,6 +591,7 @@ public slaupdate : boolean = false;
      this.Viewloglist.sort=this.sort4;
 
      document.getElementById(this.viewlogid).style.display="block";
+     $(".tour_guide").hide()
 
    });
  }
@@ -631,6 +632,7 @@ public slaupdate : boolean = false;
      this.logbyrunid.sort=this.sort5;
      document.getElementById(this.viewlogid).style.display="none";
      document.getElementById(this.viewlogid1).style.display="block";
+     $(".tour_guide").hide()
        })
    }
 
@@ -641,10 +643,12 @@ public slaupdate : boolean = false;
    }
 
    viewlogclose(){
+    $(".tour_guide").show()
      document.getElementById(this.viewlogid).style.display="none";
    }
 
    viewlogclose1(){
+    $(".tour_guide").show()
      document.getElementById(this.viewlogid1).style.display="none";
      document.getElementById(this.viewlogid).style.display="none";
    }
@@ -756,6 +760,7 @@ public slaupdate : boolean = false;
     }
 
     getBluePrismlogs(botname){
+      $(".tour_guide").hide()
       this.blueprismbotname = botname;
       console.log("this.blueprismbotname",this.blueprismbotname)
       document.getElementById("divblueprismlogs").style.display = "block";
@@ -798,6 +803,7 @@ public slaupdate : boolean = false;
    ;
     }
     viewblueprismlogclose(){
+      $(".tour_guide").show()
       document.getElementById("divblueprismlogs").style.display = "none"
     }
 
@@ -808,6 +814,7 @@ public slaupdate : boolean = false;
       
       this.uipathbotName=botname;
       document.getElementById("uipathlogs").style.display="block";
+      $(".tour_guide").hide()
       this.spinner.show();
       this.rest.getuipathlogs().subscribe(resp=>{
         let response:any=resp;
@@ -826,6 +833,7 @@ public slaupdate : boolean = false;
 
     viewuipathlogclose()
     {
+      $(".tour_guide").show()
       document.getElementById("uipathlogs").style.display="none";
     }
 
@@ -882,7 +890,7 @@ public slaupdate : boolean = false;
 
     openscheduler(bot)
     {
-
+      $(".tour_guide").hide();
       this.botid=bot.botId;
       this.schdata={
         botid:bot.botId,
@@ -896,6 +904,7 @@ public slaupdate : boolean = false;
 
     close()
     {
+      $(".tour_guide").show();
       this.popup=false;
     }
 

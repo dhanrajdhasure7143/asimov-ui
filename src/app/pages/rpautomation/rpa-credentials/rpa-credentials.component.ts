@@ -55,12 +55,22 @@ export class RpaCredentialsComponent implements OnInit {
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+
     })
   
     this.updateForm=this.formBuilder.group({
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+
     })
       this.Credupdateflag=false;
       this.Creddeleteflag=false;
@@ -68,6 +78,7 @@ export class RpaCredentialsComponent implements OnInit {
     }
 
   ngOnInit() {
+    this.spinner.show();
     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     this.getallCredentials();
@@ -98,16 +109,18 @@ export class RpaCredentialsComponent implements OnInit {
         if(this.credentials.length>0)
          { 
            this.Credcheckeddisabled = false;
+           this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
+           setTimeout(() => {
+            this.sortmethod(); 
+          }, 80);
+  
          }
          else
          {
            this.Credcheckeddisabled = true;
          }
-        this.credentials.sort((a,b) => a.credentialId > b.credentialId ? -1 : 1);
         this.dataSource2= new MatTableDataSource(this.credentials);
-        setTimeout(() => {
-          this.sortmethod(); 
-        }, 80);
+        this.spinner.hide();
       });
       document.getElementById("filters").style.display='block'; 
   }
@@ -143,7 +156,7 @@ export class RpaCredentialsComponent implements OnInit {
     if(this.insertForm.valid)
    {
     this.spinner.show();
-    this.insertForm.value.createdBy="admin";
+   // this.insertForm.value.createdBy="admin";
     this.submitted=true;
     let Credentials = this.insertForm.value;
     this.api.save_credentials(Credentials).subscribe( res =>{
@@ -162,6 +175,7 @@ export class RpaCredentialsComponent implements OnInit {
           document.getElementById('createcredentials').style.display= "none";
           this.resetCredForm();
           this.submitted=false; 
+          this.spinner.hide();
     });
    
   }
@@ -199,6 +213,7 @@ export class RpaCredentialsComponent implements OnInit {
       this.Credchecktoupdate();
       this.checktodelete(); 
       document.getElementById('Updatecredntials').style.display='none';   
+      this.spinner.hide();
   });
 }
 else
@@ -221,6 +236,10 @@ updatecreddata()
         this.updateForm.get("userName").setValue(this.credupdatedata["userName"]);
         this.updateForm.get("password").setValue(this.credupdatedata["password"]);
         this.updateForm.get("serverName").setValue(this.credupdatedata["serverName"]);
+        this.updateForm.get("inBoundAddress").setValue(this.credupdatedata["inBoundAddress"]);
+        this.updateForm.get("inBoundAddressPort").setValue(this.credupdatedata["inBoundAddressPort"]);
+        this.updateForm.get("outBoundAddress").setValue(this.credupdatedata["outBoundAddress"]);
+        this.updateForm.get("outboundAddressPort").setValue(this.credupdatedata["outboundAddressPort"]);
         break;
       }
     }
@@ -246,6 +265,7 @@ updatecreddata()
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.value) {
+        this.spinner.show();
         this.api.delete_Credentials(selectedcredentials).subscribe( res =>{ 
           let status:any = res;
           Swal.fire({
@@ -257,6 +277,7 @@ updatecreddata()
           });
           this.removeallchecks();
           this.getallCredentials();
+          this.spinner.hide();
           this.Credchecktoupdate();  
           this.checktodelete();                 
         });
