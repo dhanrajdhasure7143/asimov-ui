@@ -262,7 +262,7 @@
             </td>
         </ng-container>
         <ng-container matColumnDef="Smoke_Test">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Smoke Test</th>
+          <th mat-header-cell *matHeaderCellDef >Smoke Test</th>
           <td mat-cell *matCellDef="let element" >
             <button [disabled]="element.taskType!='Automated'" class='btn btn-xs btn-primary' (click)="runsmoketest(element.taskId)">Run Test</button>
           </td>
@@ -285,7 +285,7 @@
   </div>
 
   <!--</div>-->
-  <mat-paginator #paginator10 [pageSize]="8" [showFirstLastButtons]="true">
+  <mat-paginator #paginator10 [pageSize]="10" [showFirstLastButtons]="true">
   </mat-paginator>
 <!-- </mat-card> -->
 

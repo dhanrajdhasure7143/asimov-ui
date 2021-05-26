@@ -30,6 +30,7 @@ export class AuthenticationService {
   logout() {
     this.loggedIn.next(false);
     localStorage.clear();
+    sessionStorage.clear();
   }
 
   loginExpired() {

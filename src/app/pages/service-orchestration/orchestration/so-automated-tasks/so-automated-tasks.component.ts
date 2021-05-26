@@ -642,12 +642,13 @@ envselectval(query: string):string[]{
 
   startscheduler()
   {
+    document.getElementById("filters").style.display = "none";
     this.schdata={
       processid:this.selectedvalue,
       environment:this.selectedEnvironment,
       processName:this.process_names.find(item=>item.processId==this.selectedvalue).processName,
     }
-    document.getElementById("filters").style.display = "none";
+    
     this.schedulepopup=true;
   }
 

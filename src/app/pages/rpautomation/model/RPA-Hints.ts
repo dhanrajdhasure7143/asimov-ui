@@ -3,7 +3,7 @@ export class Rpa_Hints{
         { selector:'#createbot-Home', description:'Create Bot',showNext:true },
         //{ selector:'#loadbot-Home', description:'Load Bot',showNext:true },
         { selector:'#Configuration_Home', description:'Configurations',showNext:true },
-        { selector:'#botdetails-Home', description:'My Workspace' },
+        { selector:'#botdetails-Home', description:'My Workspace',showNext:false },
     ]
 
     public rpaenvhints = [

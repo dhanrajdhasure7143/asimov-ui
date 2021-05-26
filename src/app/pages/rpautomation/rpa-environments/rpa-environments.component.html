@@ -168,7 +168,7 @@
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.environmentName!=null">{{element.environmentName}}</span> <span *ngIf="element.environmentName==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="hostAddress">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address/Host</th>
+            <th mat-header-cell *matHeaderCellDef>IP Address/Host</th>
             <td mat-cell *matCellDef="let element"> 
                 <span *ngIf="element.hostAddress!=null">{{element.hostAddress | ipcustompipe}}</span> 
                 <span *ngIf="element.hostAddress==''">-</span> </td>
@@ -186,7 +186,7 @@
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null">{{element.username}}</span> <span *ngIf="element.username==''">-</span> </td>
         </ng-container>
         <ng-container matColumnDef="password">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
+            <th mat-header-cell *matHeaderCellDef >Password</th>
             <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
         </ng-container>
         <!--<ng-container matColumnDef="connectionType">
