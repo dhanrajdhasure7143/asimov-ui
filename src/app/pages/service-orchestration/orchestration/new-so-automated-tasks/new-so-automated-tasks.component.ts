@@ -797,13 +797,19 @@ resetsla(){
   }
 
   getprocesslogs(){
+    document.getElementById("filters").style.display = "none";
+   
     this.processId1 = this.selectedvalue;
     this.popup=true;
+   
   }
 
   closepop()
   {
     this.popup=false;
+    document.getElementById("filters").style.display = "block";
+
+    
   }
   reset_all()
   {
@@ -817,6 +823,7 @@ resetsla(){
 
   startscheduler()
   {
+    document.getElementById("filters").style.display = "none";
     this.schdata={
       processid:this.selectedvalue,
       environment:this.selectedEnvironment,
@@ -828,6 +835,9 @@ resetsla(){
   closescheduler()
   {
     this.schedulepopup=false;
+    document.getElementById("filters").style.display = "block";
+
+
   }
 
   changesource(botsource,id)

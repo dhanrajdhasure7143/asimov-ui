@@ -811,6 +811,7 @@ public slaupdate : boolean = false;
     public uipathbotName:any;
     getuipathlogs(botname)
     {
+      
       this.uipathbotName=botname;
       document.getElementById("uipathlogs").style.display="block";
       $(".tour_guide").hide()

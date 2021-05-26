@@ -6,13 +6,24 @@ export class sohints{
       ];
       public botmanagment=[
         { selector:'#bmsearch', description:'Search', showNext:true },
-        { selector:'#bmcategorySearch', description:'Category Search', showNext:true },
-        { selector:'#bmcategorySearch', description:'process group', showNext:true },
-        { selector:'#bmbotname', description:'Bot Names', showNext:true },
-        { selector:'#bmbottype', description:'Bot Type', showNext:true },
-        { selector:'#bmcategorySearch', description:'Category Search', showNext:true },
+        { selector:'#bmcategorySearch', description:'Bot by Source', showNext:true },
+        { selector:'#bmcategorySearch1', description:'process group', showNext:false },
+       
+       
+        
+        
 
       ];
+      // public botmanagment1=[
+      //   { selector:'#bmbotname', description:'Bot Names', showNext:true },
+      //   { selector:'#bmcategorySearch', description:'Bot by Source', showNext:true },
+      //   { selector:'#bmcategorySearch1', description:'process group', showNext:false },
+        
+
+      // ];
+      
+      
+
       public soinboxhints = [
         { selector:'#inboxsearch', description:'Search', showNext:true },
         { selector:'#inboxreset', description:'Reset', showNext:true},
