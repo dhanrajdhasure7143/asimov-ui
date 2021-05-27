@@ -319,7 +319,7 @@
                   <div class="row">
                         <div class="col-md-3 formelement">
                             <label for="inBoundAddressPort">In Bound Address Port<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="inBoundAddressPort" #inBoundAddressPort value="" placeholder="Enter In Bound Address Port">
+                            <input type="text" onkeypress="return (event.charCode > 48 && event.charCode < 57)" maxlength="6" class="form-control data" formControlName="inBoundAddressPort" #inBoundAddressPort value="" placeholder="Enter In Bound Address Port">
                             <span *ngIf="(insertForm.get('inBoundAddressPort').invalid && insertForm.get('inBoundAddressPort').touched) && !insertForm.controls['inBoundAddressPort'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">In Bound Address Port is required*</span>
                             <div *ngIf="insertForm.controls['inBoundAddressPort'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                                 Maximum of 50 characters
@@ -337,7 +337,7 @@
 
                         <div class="col-md-3 formelement">
                             <label for="outboundAddressPort">Out Bound Address Port<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="outboundAddressPort" #outboundAddressPort value="" placeholder="Enter Out Bound Address Port">
+                            <input type="text" onkeypress="return (event.charCode > 48 && event.charCode < 57)" maxlength="6" class="form-control data" formControlName="outboundAddressPort" #outboundAddressPort value="" placeholder="Enter Out Bound Address Port">
                             <span *ngIf="(insertForm.get('outboundAddressPort').invalid && insertForm.get('outboundAddressPort').touched) && !insertForm.controls['outboundAddressPort'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Out Bound Address Port is required*</span>
                             <div *ngIf="insertForm.controls['outboundAddressPort'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                                 Maximum of 50 characters
