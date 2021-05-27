@@ -530,7 +530,7 @@ public slaupdate : boolean = false;
         });
           
         })
-    }, 5000);
+    }, (5*60000));
   
   }
 
