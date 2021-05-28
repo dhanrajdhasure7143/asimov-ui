@@ -846,4 +846,10 @@ save_blueprism_config(data)
     {
       return this.http.post("/rpa-service/importBot",data);
     }
+
+
+    save_ui_path_env(data)
+    {
+      return this.http.post("/rpa-service/management/save-source-details",data)
+    }
 }

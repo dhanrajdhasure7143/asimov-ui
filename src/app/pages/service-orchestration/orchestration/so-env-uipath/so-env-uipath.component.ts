@@ -73,6 +73,7 @@ constructor(private api:RestApiService,
   // private hints:Rpa_Hints,
   private spinner: NgxSpinnerService
   ) {
+
     this.UipathForm = this.formBuilder.group({
       accountName: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
       tenantName: ["", Validators.compose([Validators.required,Validators.maxLength(50)])],
@@ -217,18 +218,20 @@ checkAllCheckBox(ev) {
 
 saveUiPath(){
   if(this.UipathForm.valid){
-    this.submitted = true
-    setTimeout(()=>{
+    let data=this.UipathForm.value;
+    data["sourceType"]="UiPath";
+    data["sourceAccId"]=0
+    this.spinner.show()
+    this.api.save_ui_path_env(data).subscribe(res=>{
+      let response:any=res;
+      if(response.errorMessage==undefined)
+        Swal.fire(response.status,"","success")
+      else
+        Swal.fire(response.errorMessage,"","warning")
       this.spinner.hide();
-      Swal.fire({
-        position: 'center',
-        icon: 'success',
-        title: "Successfully Saved",
-        showConfirmButton: false,
-        timer: 2000
-      });
-    }, 5000)
-    this.submitted = false;
+      this.getUiPath();
+    })
+
     document.getElementById("createUipath").style.display='none';
   }
   

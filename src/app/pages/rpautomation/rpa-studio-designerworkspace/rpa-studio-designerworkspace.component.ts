@@ -78,8 +78,11 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   svg:any;
   public insertForm:FormGroup;
   modalRef: BsModalRef;
+  public passwordtype1:Boolean;
+  public passwordtype2:Boolean;
 
   @ViewChild('template', { static: false }) template: TemplateRef<any>;
+  public nodedata: any;
 
   constructor(private rest: RestApiService,
     private notifier: NotifierService,
@@ -97,10 +100,17 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
         userName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         password: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         serverName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        inBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        inBoundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        outBoundAddress: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        outboundAddressPort: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+
     })
   }
 
   ngOnInit() {
+     this.passwordtype1=false;
+    this.passwordtype2=false;
     this.jsPlumbInstance = jsPlumb.getInstance();
     var self = this;
     this.jsPlumbInstance.importDefaults({
@@ -589,6 +599,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   }
 
   formNodeFunc(node) {
+    this.nodedata=node
     if (node.selectedNodeTask != "") {
       this.selectedTask = {
         name: node.selectedNodeTask,
@@ -1343,17 +1354,22 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
   resetCredForm(){
     this.insertForm.reset();
   }
+
+  back(){
+    document.getElementById("createcredentials").style.display="none";
+    this.resetCredForm();
+  }
   createcredentials()
   {
-    this.modalRef = this.modalService.show(this.template);
-   // document.getElementById("createcredentials").style.display='block';
+   // this.modalRef = this.modalService.show(this.template);
+    document.getElementById("createcredentials").style.display='block';
   }
 
   saveCredentials(){
     if(this.insertForm.valid)
    {
 
-    this.insertForm.value.createdBy="admin";
+   // this.insertForm.value.createdBy="admin";
    
     let Credentials = this.insertForm.value;
     this.rest.save_credentials(Credentials).subscribe( res =>{
@@ -1366,7 +1382,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
             showConfirmButton: false,
             timer: 2000
           })
-          this.modalRef.hide();
+        this.formNodeFunc(this.nodedata)
+         // this.modalRef.hide();
           document.getElementById('createcredentials').style.display= "none";
           this.resetCredForm();
     });
@@ -1376,6 +1393,7 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
     alert("Invalid Form");
   }
    }
+
 
 }
 

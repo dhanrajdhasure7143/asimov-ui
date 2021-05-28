@@ -428,7 +428,15 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
   getVersionlist() {
     this.rest.getBotVersion(this.savebotrespose.botId).subscribe(data => {
-      this.versionsList=data;
+      let response:any=[];
+      response=data;
+      let versions=[]
+      let sortedversions:any[]=response.sort((a, b) => (a.vId > b.vId) ? 1 : -1)
+      sortedversions.reverse().forEach((item ,index)=>{
+        if(index<3)
+          versions.push(item)
+      })
+      this.versionsList=versions;
     })
   }
 

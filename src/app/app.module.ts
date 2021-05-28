@@ -19,13 +19,14 @@ import { LoaderInterceptor } from './helpers/loader-interceptor.service';
 import { BackButtonDisableModule } from 'angular-disable-browser-back-button';
 import { UserIdleModule } from 'angular-user-idle';
 import { RedirectionComponent } from './rediraction/redirection.component';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RedirectionComponent
-
   ],
 
   imports: [
@@ -60,7 +61,10 @@ import { RedirectionComponent } from './rediraction/redirection.component';
     }),
 
     BackButtonDisableModule.forRoot(),
-    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740})
+    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740}),
+    NgxSpinnerModule,
+    ToastrModule.forRoot({timeOut: 5000,disableTimeOut : false,extendedTimeOut:3000,
+      positionClass: 'toast-top-full-width',maxOpened:1,autoDismiss:true}), // ToastrModule added
   ],
   providers: [
     { provide: APP_CONFIG, useValue: AppConfig },
