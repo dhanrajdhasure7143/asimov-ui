@@ -8,7 +8,7 @@ import {HttpClient,HttpHeaders} from "@angular/common/http";
 import 'rxjs/add/operator/filter';
 import Swal from 'sweetalert2';
 import { FormGroup, FormBuilder, Validators, Form } from '@angular/forms';
-import {sohints} from '../model/so-hints';
+import {sohints} from '../model/new-so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
 import { NgxSpinnerService } from "ngx-spinner";

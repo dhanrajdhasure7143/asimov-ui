@@ -111,49 +111,127 @@
                         </div>
                 </div>
         
-                    <div class="col-md-2">
-                        <div class="reports">
+                    <div class="col-md-2 apply-btn">
+                        <!-- <div class="reports">
                         <table>
                             <tbody>
                                 <tr>
                                     <td>cases</td>
                                     <td>:</td>
-                                    <!-- <td>{{reports[0].cases}}</td> -->
+                                    <td>{{reports[0].cases}}</td>
                                 </tr>
                                 <tr>
                                     <td>Activities</td>
                                     <td>:</td>
-                                    <!-- <td>{{reports[0].activities}}</td> -->
+                                    <td>{{reports[0].activities}}</td>
                                 </tr>
                                 <tr>
                                     <td>Roles</td>
                                     <td>:</td>
-                                    <!-- <td>{{reports[0].roles}}</td> -->
+                                    <td>{{reports[0].roles}}</td>
                                 </tr>
                                 <tr>
                                     <td>Resources</td>
                                     <td>:</td>
-                                    <!-- <td>{{reports[0].resources}}</td> -->
+                                    <td>{{reports[0].resources}}</td>
                                 </tr>
                                 <tr>
                                     <td>Started</td>
                                     <td>:</td>
-                                    <!-- <td>{{reports[0].started}}</td> -->
+                                    <td>{{reports[0].started}}</td>
                                 </tr>
                                 <tr>
                                     <td>Ended</td>
                                     <td>:</td>
-                                    <!-- <td>{{reports[0].ended}}</td> -->
+                                    <td>{{reports[0].ended}}</td>
                                 </tr>
                             </tbody>
                         </table>
-                        </div>
+                        </div> -->
                     <button  class="btn btn-primary eiap-btn" (click)="comboFilter()">Apply Filter</button>
                     <!-- <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" [disabled]='endptBt' (click)="applyEndpointFilter()">Apply Filter</button> -->
                     <!-- <button *ngIf="isVariantFilter" class="btn btn-primary eiap-btn" (click)="applyVariantFilter()">Apply Filter</button> -->
         
                     </div>
                 </div>
+            </div>
+
+            <div id="myModal" class="modal">
+                <div class="modal-content" style="bottom: 190px !important; height: 520px;">
+                  <div class="modal-header">
+                    <span class="close" (click)="closePerformancePopup();">&times;</span>
+                    <h4>Time stamp</h4>
+                  </div>
+                <div class="modal-body">
+                   
+                      <div class="col-md-12">
+                        <label for="performance_metrics"><b>Filter Case By:</b></label>
+                          <select name="pFilterType" class="border_bottom" [(ngModel)]="pFilterType" (change)="this.setselectedFilter(pFilterType)" required>
+                               <option value="noofcases">No of Cases</option>
+                               <option value="caseutilization">Case Utilization</option>
+                               <option value="caseduration">Case Duration</option>
+                               <option value="meanactivetime">Mean active time</option>
+                               <option value="medianactivetime">Median active time</option>
+                               <option value="meanwaitingtime">Mean waiting time</option>
+                               <option value="medianwaitingtime">Median waiting time</option>
+                          </select>
+                          <div class="barchart_graph">
+                           <ngx-charts-bar-vertical
+                           [view]="view"
+                           [scheme]="colorScheme"
+                           [results]="single"
+                           [gradient]="gradient"
+                          
+                           [xAxis]="showXAxis"
+                           [yAxis]="showYAxis"
+                           [legend]="showLegend"
+                           [showXAxisLabel]="showXAxisLabel"
+                           [showYAxisLabel]="showYAxisLabel"
+                           [xAxisLabel]="xAxisLabel"
+                           [yAxisLabel]="yAxisLabel"
+                           (select)="onSelect($event)">
+                         </ngx-charts-bar-vertical>
+                          </div>
+
+                          <div>
+                           <ng5-slider [(value)]="vaue" [(highValue)]="highValue" (valueChange)="startValue($event)" [manualRefresh]="manualRefresh" (highValueChange)="endValue($event)"  [options]="options1"  ></ng5-slider>
+                          </div>
+                          <div class="row col-md-12 drp_btns">
+                          <div class="col-md-4 min_time_select" >
+                            <input type="text" class="arrows" [value]="convertMS(minPerfValue)">
+                            <label for="timeStamp" style="display: inherit;"><b>Minimum Duration</b></label>
+                          </div>
+                          <div class="col-md-4 pp_chart">
+                           <div class="piechart_graph">
+                           <ngx-charts-pie-chart
+                           [view]="pieview"
+                           [scheme]="piecolorScheme"
+                           [results]="piesingle"
+                           [gradient]="piegradient"
+                           [legend]="pieshowLegend"
+                           [legendPosition]="legendPosition"
+                           [labels]="showLabels"
+                           [doughnut]="isDoughnut"
+                           >
+                           </ngx-charts-pie-chart>
+                           <span class="pie_label">{{casePercentage}}%<br>of cases</span>
+                       </div>
+                         </div>
+                          <div class="col-md-4 max_time_select">
+                            <input type="text" class="arrows" [value]="convertMS(maxPerfValue)">
+                            <label for="timeRange" style="display: inherit;"><b>Maximum Duration</b></label>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                       
+                          <button type="button" class="btn btn-primary eiap-btn pull-right" (click)="applyPerformanceFilter()">Apply Filter</button>
+                          <button type="button" class="btn btn-default btn-cancel eiap-btn pull-right" (click)="closePerformancePopup();">Cancel</button>
+                      </div>
+                         
+                      </div>
+                    
+                </div>
+              </div>
             </div>
 
 

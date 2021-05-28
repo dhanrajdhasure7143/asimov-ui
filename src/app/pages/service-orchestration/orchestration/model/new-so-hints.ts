@@ -1,7 +1,7 @@
 export class sohints{
     public sodashboard1 = [
         { selector:'#processgroup', description:'Search', showNext:true },
-        { selector:'#botsbyprocess', description:'Category Search', showNext:false },
+        { selector:'#botsbyprocesschart', description:'Category Search', showNext:false },
        
       ];
       public botmanagment=[

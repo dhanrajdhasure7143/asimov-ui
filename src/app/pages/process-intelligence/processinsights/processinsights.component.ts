@@ -293,21 +293,22 @@ robotValue:number;
             //let totalCost = (val*this.input1)/(1000 * 60 * 60);
             let roboCost = Math.round(this.getHours(val) * 60 / 100 * this.robotinput);
             let totalCost = Math.round(this.getHours(val) * this.input1);
-            return ((totalCost - roboCost));
+            return Number((totalCost - roboCost));
         } else {
-            return '-';
+            return 0;
         }
     }
 
     getHumanTotalCost(val) {
         if (val) {
-            return Math.round(Number(val))
+            let vv =  Math.round(Number(val))
+            return vv;
+            //return (vv).toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');  // 12,345.67
         }
     }
 
     getActivityTableData(data) {
         this.actual_activityData = data;
-        console.log(data);
         this.actual_activityData.sort(function (a, b) {
             return b.Duration_range - a.Duration_range;
         });

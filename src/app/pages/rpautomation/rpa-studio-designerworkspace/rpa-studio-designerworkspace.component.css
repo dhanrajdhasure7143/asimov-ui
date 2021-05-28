@@ -1,6 +1,6 @@
 
 .drag-area{
-  min-height:450px;
+  min-height:64vh;
   width:1500px;
   position: relative;
   float: left;
@@ -41,6 +41,7 @@
 .main{
   width:100%;
   overflow: auto;
+  height: 64vh;
 }
 
 

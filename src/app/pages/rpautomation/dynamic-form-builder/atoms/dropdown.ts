@@ -1,13 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { RpaStudioDesignerworkspaceComponent } from '../../rpa-studio-designerworkspace/rpa-studio-designerworkspace.component';
 
 @Component({
     selector: 'dropdown',
     template: `
       <div [formGroup]="form">
-        <select class="form-control" [value]="field.value" [id]="field.name" [formControlName]="field.name+'_'+field.id">
+        <select (change)="onChangeEmail($event)" class="form-control" [value]="field.value" [id]="field.name" [formControlName]="field.name+'_'+field.id">
         <option  value="" >--{{field.placeholder}}--</option>
         <option *ngFor="let opt of field.options" [value]="opt.key">{{opt.label}}</option>
+        <option  *ngIf="field.type=='restapi'" value="New">&nbsp;&nbsp;New</option>
         </select>
       </div>
     `,
@@ -26,7 +28,13 @@ export class DropDownComponent {
     @Input() field:any = {};
     @Input() form:FormGroup;
 
-    constructor() {
+    constructor(private designer:RpaStudioDesignerworkspaceComponent) {
 
+    }
+
+    onChangeEmail(event){
+     if(event.target.value=='New'){
+          this.designer.createcredentials();
+     }
     }
 }

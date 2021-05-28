@@ -4,7 +4,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {RestApiService} from '../../../services/rest-api.service';
 import { DataTransferService } from "../../../services/data-transfer.service";
-import{sohints} from '../model/so-hints';
+import{sohints} from '../model/new-so-hints';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
