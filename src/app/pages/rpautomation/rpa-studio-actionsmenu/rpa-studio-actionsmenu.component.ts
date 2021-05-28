@@ -431,7 +431,8 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
       let response:any=[];
       response=data;
       let versions=[]
-      response.sort((a, b) => (a.version > b.version) ? 1 : -1).reverse().forEach((item ,index)=>{
+      let sortedversions:any[]=response.sort((a, b) => (a.vId > b.vId) ? 1 : -1)
+      sortedversions.reverse().forEach((item ,index)=>{
         if(index<3)
           versions.push(item)
       })
