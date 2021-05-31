@@ -13,10 +13,10 @@ export class BackendURLInterceptor implements HttpInterceptor {
         //authentication service logic - post integration with AIOTAL
 
     var token=localStorage.getItem('accessToken');
-    //var aKey= localStorage.getItem('authKey');
-    /*if(aKey){
+    var aKey= localStorage.getItem('authKey');
+    if(aKey != null){
         var encryptedaKey=atob(aKey);
-    }*/
+    }
 
        let ipAddress = '192.168.0.1';
 
@@ -28,19 +28,19 @@ export class BackendURLInterceptor implements HttpInterceptor {
            } else {
              timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
            }     
-       /* if(aKey){
+        if(aKey){
         req = req.clone({
             url : this.getRequestUrl(req),
             body: req.body,
             headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress,'timezone':timezone,'authKey': encryptedaKey})
         });
-        } else {*/
+        } else {
             req = req.clone({
                 url : this.getRequestUrl(req),
                 body: req.body,
                 headers:  new HttpHeaders({'Authorization': 'Bearer '+token, 'ip-address': ipAddress,'timezone':timezone})
             });
-       // }
+        }
         return next.handle(req);
     }
 
