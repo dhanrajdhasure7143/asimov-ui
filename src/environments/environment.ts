@@ -22,6 +22,9 @@ export const environment = {
   redirectout_url: 'https://eiapclouddemo.epsoftinc.com:86/#/signout',
 // PI Connectors
   connector_topic: 'nodeq',
+  platform_home_url: 'https://eiapclouddemo.epsoftinc.com:86/#/',
+  pi_node_jobs: "http://172.16.0.67:5000",
+
 
 //BPMN Platform URL
  // bpmnplatformUrl : "http://10.11.0.127:8080",
