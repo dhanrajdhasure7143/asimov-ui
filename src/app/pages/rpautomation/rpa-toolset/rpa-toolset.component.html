@@ -6,7 +6,7 @@
         <div  *ngIf="search==true" >
           <span>
           <input type="text" *ngIf="search==true" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" [(ngModel)]="userFilter.name" name="node" placeholder="&#61442; Search"
-          class="form-control search fontAwesome" autocomplete="off"></span> <span (click)="search=false" class="toolset-search-close"><i class="fa fa-times"></i></span>
+          class="form-control search fontAwesome" autocomplete="off"></span> <span (click)="searchclear()" class="toolset-search-close"><i class="fa fa-times"></i></span>
         </div>
         <button  *ngIf="search==false" (click)="search=true" class="border toolset-search-button">
           <span  class="text-primary">

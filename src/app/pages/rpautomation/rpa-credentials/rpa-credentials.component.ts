@@ -100,6 +100,14 @@ export class RpaCredentialsComponent implements OnInit {
         })
   }
 
+inputNumberOnly(event){
+      let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+      let temp =numArray.includes(event.key); //gives true or false
+     if(!temp){
+      event.preventDefault();
+     } 
+    }
+
   async getallCredentials(){
     this.credentials= [];
     let role=localStorage.getItem('userRole')
