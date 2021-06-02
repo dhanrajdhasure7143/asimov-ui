@@ -73,6 +73,11 @@ export class RpaToolsetComponent implements OnInit {
         })
     }
 
+    searchclear(){
+      this.search=false
+      this.userFilter.name=""
+     // this.templateNodes=[]
+    }
 
     public scrolltop(){
       this.section.nativeElement.scrollTo({ top: (this.section.nativeElement.scrollTop - 40), behavior: 'smooth' });
