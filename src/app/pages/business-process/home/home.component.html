@@ -10,8 +10,17 @@
     </div>
     <div class="col-md-8 box-border myworkspace-style">
       <div class="row col-md-12">
-        <h4 class="col-md-7 box-heading">My Workspace</h4>
-        <div class="col-md-2"></div>
+        <h4 class="col-md-6 box-heading">My Workspace</h4>
+        <div class="col-md-3">
+          <mat-form-field>
+            <mat-label>Select Category</mat-label>
+            <mat-select  name="category" (selectionChange)="searchByCategory(categoryName)" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect">
+                    <mat-option value="allcategories">All Categories</mat-option>
+                    <mat-option *ngFor="let each_diag of categoryList.data;let i=index;trackBy:loopTrackBy" [value]="each_diag.categoryName">
+                    {{each_diag.categoryName}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        </div>
         <div class="col-md-3 ">
           <mat-form-field>
             <mat-label>Search Workspace</mat-label>
@@ -24,6 +33,7 @@
       <div class="row col-md-12 text-bold workspace-title">
         <span mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></span>
         <span><b>Type</b></span>
+        <span><b>Category</b></span>
         <span  (click)="sort('version',1)"><b>Version<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></span>
         <span  (click)="sort('modifiedTimestamp',2)"><b>Last Modified<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></span>
         <span  (click)="sort('approverName',3)"><b>Approver<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></span>
@@ -39,6 +49,7 @@
                 <div class="row col-md-12" id="bpmn_list_row">
                   <span [matTooltip]=each_diag.bpmnProcessName matTooltipClass="eiap_tooltip">{{each_diag.bpmnProcessName ? fitTableView(each_diag.bpmnProcessName): '-'}}</span>
                   <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
+                  <span>{{each_diag.category}}</span>
                   <span>{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</span>
                   <span>{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</span>
                   <span>{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</span>
