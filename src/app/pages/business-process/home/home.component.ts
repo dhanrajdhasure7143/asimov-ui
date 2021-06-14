@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, Inject } from '@angular/core';
+import { Component, OnInit, HostListener, ViewChild, Inject } from '@angular/core';
 import { Router } from '@angular/router';
 import * as BpmnJS from './../../../bpmn-modeler.development.js';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
@@ -10,8 +10,8 @@ import { RestApiService } from '../../services/rest-api.service';
 import { BpsHints } from '../model/bpmn-module-hints';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
-
-
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -29,6 +29,9 @@ export class BpsHomeComponent implements OnInit {
   isAdminUser:boolean = false;
   sortedData:any;
   data;
+  categoryName: any;
+  categoryList: any = [];
+  dataSource:MatTableDataSource<any>;
   orderAsc:boolean = true;
   sortIndex:number=2;
   index:number;
@@ -37,8 +40,9 @@ export class BpsHomeComponent implements OnInit {
   autosavedDiagramVersion = [];
   pendingStatus='PENDING APPROVAL';
   userRole;
+  savedDiagrams_list:any[]=[];
   isButtonVisible:boolean = false;
-
+  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
     ) { }
@@ -60,6 +64,7 @@ export class BpsHomeComponent implements OnInit {
     this.dt.changeHints(this.hints.bpsHomeHints);
     this.getBPMNList();
     this.getAutoSavedDiagrams();
+    this.getAllCategories();
   }
 
   async getBPMNList(){
@@ -68,6 +73,8 @@ export class BpsHomeComponent implements OnInit {
       this.saved_diagrams.map(item => {item.xpandStatus = false;return item;})
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
+      console.log(this.saved_diagrams);
+      this.savedDiagrams_list=this.saved_diagrams
     },
     
     (err) => {
@@ -176,7 +183,35 @@ export class BpsHomeComponent implements OnInit {
   loopTrackBy(index, term){
     return index;
   }
-
+  getAllCategories() {    // get all categories list for dropdown
+    this.rest.getCategoriesList().subscribe(res => {
+    this.categoryList = res
+    console.log(this.categoryList);
+    })
+  }
+  searchByCategory(category) {      // Filter table data based on selected categories
+    var filter_saved_diagrams= []
+    this.saved_diagrams=[]
+    if (category == "allcategories") {
+     this.saved_diagrams=this.savedDiagrams_list
+      // this.dataSource.filter = fulldata;
+    }
+    else{  
+      console.log(this.saved_diagrams);
+      filter_saved_diagrams=this.savedDiagrams_list;
+      
+      filter_saved_diagrams.forEach(e=>{
+        if(e.category===category){
+          this.saved_diagrams.push(e)
+        }
+      })
+      // this.dataSource.filterPredicate = (data: any, filter: string) => {
+      //   return data.categoryName === category;
+      //  };
+      //  this.dataSource.filter = category;
+      //  this.dataSource.paginator=this.paginator;
+    }
+  }
   sort(colKey,ind) { // if not asc, desc
     this.sortIndex=ind
     let asc=this.orderAsc
