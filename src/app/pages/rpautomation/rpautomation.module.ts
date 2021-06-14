@@ -54,6 +54,9 @@ import { RpaSchedulerComponent,ReverseRpa,EnvnameRpa } from './rpa-scheduler/rpa
 import { MatExpansionModule } from '@angular/material/expansion';
 import {Rpa_Hints} from './model/RPA-Hints';
 import { RpaCredentialsComponent } from './rpa-credentials/rpa-credentials.component';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { TaskPipe } from './custom-pipes/task.pipe';
+import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
 @NgModule({
   declarations: [
     RpautomationComponent,
@@ -78,7 +81,9 @@ import { RpaCredentialsComponent } from './rpa-credentials/rpa-credentials.compo
     Checkoutputbox,
     ReverseRpa,
     EnvnameRpa,
-	RpaCredentialsComponent
+	RpaCredentialsComponent,
+	TaskPipe,
+	TasksearchPipe
   ],
   imports: [
     NgxMaterialTimepickerModule,
@@ -108,7 +113,7 @@ import { RpaCredentialsComponent } from './rpa-credentials/rpa-credentials.compo
     MatSortModule,
     MatPaginatorModule,
     MatProgressSpinnerModule,
-    MatInputModule, MatIconModule, MatFormFieldModule,MatNativeDateModule,MatTooltipModule,MatSliderModule,MatDatepickerModule,
+    MatInputModule, MatIconModule, MatFormFieldModule,MatNativeDateModule,MatTooltipModule,MatSliderModule,MatDatepickerModule,MatSidenavModule,
     MatSelectModule,
     NgxSpinnerModule,
     MatSlideToggleModule,

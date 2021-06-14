@@ -1,20 +1,27 @@
 @import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
 .section {
-  overflow: scroll;
+  overflow-y: scroll;
   min-height: 65px;
-  max-height: 50vh;
+  max-height: 57vh;
   white-space: nowrap;
 }
 .nodes {
-  padding: 10px;
+  padding: 5px;
 }
 .con-img{
   width:32px;
   height:auto
 }
 
-.toolset{
+.search-content{
   padding:10px;
+  padding-right:35px;
+  padding-left:10px;
+}
+
+.toolset{
+   /* padding:10px;  */
+   width:300px !important;
 }
 
 .check{
@@ -22,28 +29,30 @@
   position: relative  !important;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
   color:white;
   height: 130px;
-  background: gray;
+  background: white;
   left: 5px !important;
 }
 
 
 .search{
   border-radius: 0px !important;
-  border-top: none !important;
+  /* border-top: none !important;
   border-left: none !important;
-  border-right: none !important;
+  border-right: none !important; */
+  width:100%;
   box-shadow: none !important;
-  padding: 0em !important;
-  height:25px !important;
-  border-bottom-color: lightgray !important;
+  padding: 7px !important;
+
+  /* height:25px !important; */
+  /* border-bottom-color: lightgray !important; */
 }
 
 ::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer{
@@ -128,3 +137,40 @@
   cursor: pointer;
 }
 
+::ng-deep .mat-drawer-container {
+background-color: white;
+}
+
+
+.nodename{
+  font-size: 20px;
+  color:black;
+  font-weight: 400;
+}
+
+
+.mat-drawer-content {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+.taskname{
+  padding:10px;
+  font-size: 18px;
+  color:black;
+  font-weight: 400;
+}
+
+.toolset mat-expansion-panel {
+  border-bottom:none !important;
+}
+ 
+
+
+::ng-deeep .mat-drawer.mat-drawer-side {
+  z-index: 0 !important;
+}

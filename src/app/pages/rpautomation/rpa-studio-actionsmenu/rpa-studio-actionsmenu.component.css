@@ -172,7 +172,7 @@ background-color: blue !important;
 
 
 .rpa-dropdown{
- top:-78px !important;
+ /*top:-78px !important;*/
  min-width:53px !important;
 
 }
@@ -191,4 +191,58 @@ background-color: blue !important;
   width:50px;
   /* overflow-y: scroll; */
   height:60vh;
+}
+
+
+
+.actionsmenu{
+  border-bottom: 1px solid lightgray;
+}
+
+
+.actionsmenu-right{
+  display:flex;
+  float:right
+}
+.actionsmenu-left{
+  display: flex;
+  float:left;
+}
+.action-item{
+  width:auto;
+  font-size: 18px;
+  padding:5px;
+  cursor: pointer;
+  
+}
+
+
+.action-item i{
+  color:#0062cf !important;
+  font-size:24px;
+  align-self: baseline;
+  vertical-align: middle;
+}
+
+
+.main-container{
+  padding-right:0px!important;
+  padding-left:0px !important;
+}
+
+
+.menu-icon{
+  font-size: 16px !important;
+}
+
+
+.action-item-data{
+  padding:10px;
+}
+
+
+.dropdown-action-item{
+  border-right: 1px solid gray;
+  padding-right:15px;
+  padding-left:15px;
 }
