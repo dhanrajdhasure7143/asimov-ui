@@ -93,17 +93,36 @@
       </div>
     </div>
   </div>
-  <div class="col-md-12 main-container" >
+  <div class="col-md-12 main-container" style="display:flex">
 
    
 
 
 
+    <div style="flex:1;width:97%">
+      <app-rpa-studio-designerworkspace [bot]="botState"></app-rpa-studio-designerworkspace>
+    </div>
 
-    <app-rpa-studio-designerworkspace [bot]="botState"></app-rpa-studio-designerworkspace>
-  
+    <div style="flex:1;width:3%"><br><br>
+    <div style="height:200px" class="rpa-custom-slider">
+      <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
 
-  
+    </div>
+  <br>
+  <button style="width: 45px;" tooltip="Reset" placement="bottom" (click)="childBotWorkspace.reset('');slider=0;"><i class="fa fa-sync-alt text-primary"></i></button><br>
+      
+  <br>
+    <div class="download">
+      <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img style="filter: none; width: 100%" src="../../../../assets/downloadimage.svg">
+      </button>
+      <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadJpeg()"><i class="fas fa-file-image"> </i>&nbsp;<span>JPEG</span></a></div>
+        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()"><i class="fas fa-file-image"></i>&nbsp;<span>PNG</span></a></div>
+        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()"><i class="fas fa-file-pdf"></i>&nbsp;<span>PDF</span></a></div>
+      </div>
+    </div>
+    </div>
 
   </div>
 
