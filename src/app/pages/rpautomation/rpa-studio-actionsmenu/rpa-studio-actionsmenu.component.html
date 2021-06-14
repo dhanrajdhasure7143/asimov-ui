@@ -1,24 +1,113 @@
 <div class="row col-md-12">
-  <div class="col-md-11">
+  <div class="actionsmenu row">
+    <div class="col-md-3">
+      <div class="actionsmenu-left">
+        <button class="action-item" (click)="rpa_toolset.sidenavbutton==false?rpa_toolset.sidenavbutton=true:rpa_toolset.sidenavbutton=false;">
+            <span><i class="ri-microsoft-fill"></i></span>&nbsp;Toolset
+        </button>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <div class="actionsmenu-right">
+        <div class="action-item "   dropdown   >
+            <button class=" dropdown-action-item clickable  text-primary dropdown-toggle" id="Versions" dropdownToggle type="button"
+              aria-controls="versions">
+              <span><i class="ri-stack-line"></i></span>
+              &nbsp;Version &nbsp;{{selectedversion}} &nbsp;<span class="caret"></span>
+          </button>
+          <ul id="versions" style="max-width:300px;max-height:250px;overflow:auto;left:auto;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li  role="menuitem" class="clickable"  (click)="selectedversion=version.vId;switchversion(version.vId)"  *ngFor="let version of versionsList" style="white-space: nowrap;" >
+              
+               Version&nbsp; {{version.vId}}
+            </li>
+          </ul>
+        </div>
+        <div class="action-item" dropdown  #dropdown="bs-dropdown"   [insideClick]="true" >
+          <button class= "dropdown-action-item clickable  text-primary dropdown-toggle" id="Environments" dropdownToggle type="button"
+          aria-controls="environments">
+            <span><i class="ri-terminal-box-line"></i></span>
+            &nbsp;
+            <span *ngIf="selectedEnvironments.length==0">Environment</span>
+            <span *ngIf="selectedEnvironments.length>=1">{{selectedEnvironments[0].environmentName}}<span *ngIf="selectedEnvironments.length>1">...({{selectedEnvironments.length}})</span></span>
+            &nbsp;<span class="caret"></span>
+          </button>
+          <ul id="environments" style="max-width:300px;max-height:250px;overflow:auto;left:auto;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <li  role="menuitem" class="clickable"  *ngFor="let env of environment" style="white-space: nowrap;" >
+              <input type="checkbox" [checked]="env.checked==true" (change)="checkuncheckenv(env.environmentId)" >
+              &nbsp; {{env.environmentName}}
+            </li>
+            <li role="menuitem" class="clickable"  >
+              <span class="clickable"  (click)="create_env();"><i class="fa  fa-plus"></i>&nbsp;&nbsp;New</span>
+            </li>
+          </ul>
+        </div>
+       
+        <div class="action-item" (click)="saveBotFunAct()">
+          <i class="ri-save-line"></i>
+        </div>
+        <!-- <div class="action-item" >
+            <i class="ri-play-line"></i>
+        </div> -->
 
-    <br>
+        <div class="action-item"   (click)="executionAct()">
+            <i class="ri-play-circle-line"></i>
+        </div>
+        <div class="action-item"  (click)="stopBot()">
+            <i class="ri-stop-circle-line"></i>
+        </div>
+      
+        <div class="action-item" >
+            <i class="ri-file-copy-line"></i>
+        </div>
+        <div class="action-item" (click)="viewlogdata()">
+            <i class="ri-clipboard-line"></i>
+        </div>
+        <div class="action-item" (click)="openschedule()">
+            <i class="ri-history-line"></i>
+        </div>
+        <div class="action-item" dropdown>
+            
+            <button class="clickable  text-primary dropdown-toggle" id="otherActions" dropdownToggle type="button"
+            aria-controls="other_actions">
+            <i class="ri-more-2-fill"></i>
+            </button>
+            <ul id="other_actions" style="max-width:300px;max-height:250px;overflow:auto;left:auto;right:0;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+              <li class="clickable" class="clickable action-item-data" >
+                  <button  placement="bottom"  [disabled]="savebotrespose == undefined" tooltip="Delete Bot" (click)="delete()">
+                      <i class="menu-icon fas fa-trash"></i>&nbsp;&nbsp;Delete
+                    </button>
+              </li>  
+              <li  role="menuitem" class="clickable action-item-data"  style="white-space: nowrap;" >
+                    <button  placement="top" tooltip="Reset Bot" (click)="reset()" >
+                        <i class="menu-icon fas fa-sync-alt "></i>&nbsp;&nbsp;Reset
+                      </button>
+              </li>
+              <li  role="menuitem" class="clickable action-item-data"   style="white-space: nowrap;" >
+                  <button  placement="top" tooltip="Export Bot" (click)="exportbot(botState)" >
+                      <i class="menu-icon fas fa-file-export "></i>&nbsp;&nbsp;Export 
+                    </button>
+              </li>
+           
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 main-container" >
+
+   
 
 
 
 
-  <app-rpa-studio-designerworkspace [bot]="botState"></app-rpa-studio-designerworkspace>
+    <app-rpa-studio-designerworkspace [bot]="botState"></app-rpa-studio-designerworkspace>
+  
 
-
-
+  
 
   </div>
 
-  <div class="col-md-1 " style="display:flex">
-
-    <div class="toolset text-left" >
-
-
-
+  
       <!--
         <div style="margin: 1px -2px 0px 0px;border: 1px solid lightgray;text-align:center; width:50px"id="dragicons">
           <!-- <button type="button"class="scroll top">
@@ -97,10 +186,8 @@
         </div>-->
 
 
-        <div id="menuicons" class="menuicons_rpa">
-    <!-- <button type="button"class="scroll top">
-            <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
-          </button> -->
+        <!-- <div id="menuicons" class="menuicons_rpa">
+    
 
 
           <div class="nodes ">
@@ -130,7 +217,7 @@
 
           </div>
           <div class="nodes" dropdown  #dropdown="bs-dropdown"   [insideClick]="true" >
-            <button class="clickable  text-primary" class="clickable  text-primary dropdown-toggle" id="Environments" dropdownToggle type="button"
+            <button class="clickable  text-primary dropdown-toggle" id="Environments" dropdownToggle type="button"
             aria-controls="environments" >
               <span placement="bottom" tooltip="Environments" >
                 <i class="fa fa-desktop"></i>
@@ -220,16 +307,13 @@
               </button>
             </div>
           </div>
-          <!-- <button (click)="scrollbottom()"type="button"class="scroll bottom">
-            <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\DownArrow.svg">
-          </button> -->
+       
 
 
-        </div>
+        </div> -->
 
 
-  </div>
-<div >
+    <!-- <div >
 
 
       <select class="form-control versions"  id="versions"  [(ngModel)]="selectedversion" (change)="switchversion($event.target.value)">
@@ -238,33 +322,25 @@
       </select>
       <br>
       <div style="height:200px" class="rpa-custom-slider">
-      <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
-<!--
-      <mat-slider
-      (mouseup)="sliderEvent()"
-      [max]="8"
-      [min]="-8"
-      [(ngModel)]="slider"
-      [vertical]="true">
-  </mat-slider> -->
+        <ng5-slider id="zoominzoomout" [value]="slider" [(ngModel)]="slider" [options]="options" (mouseup)="sliderEvent()"></ng5-slider>
+
       </div>
       <br>
       <button style="width: 45px;" tooltip="Reset" placement="bottom" (click)="childBotWorkspace.reset('');slider=0;"><i class="fa fa-sync-alt text-primary"></i></button><br>
       <br><br>
       <br><br><br>
       <div class="download">
-      <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <img style="filter: none; width: 30px;" src="../../../../assets/downloadimage.svg">
-      </button>
-      <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadJpeg()"><i class="fas fa-file-image"> </i>&nbsp;<span>JPEG</span></a></div>
-        <!-- <div><a class="dropdown-item clickable" (click)="childBotWorkspace.getsvg()"><i class="fas fa-file-image"> </i>&nbsp;<span>SVG</span></a></div> -->
-        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()"><i class="fas fa-file-image"></i>&nbsp;<span>PNG</span></a></div>
-        <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()"><i class="fas fa-file-pdf"></i>&nbsp;<span>PDF</span></a></div>
+        <button type="button" placement="bottom" id="dropdownMenuButton" class="downloadBtn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img style="filter: none; width: 30px;" src="../../../../assets/downloadimage.svg">
+        </button>
+        <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadJpeg()"><i class="fas fa-file-image"> </i>&nbsp;<span>JPEG</span></a></div>
+          <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()"><i class="fas fa-file-image"></i>&nbsp;<span>PNG</span></a></div>
+          <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()"><i class="fas fa-file-pdf"></i>&nbsp;<span>PDF</span></a></div>
+        </div>
       </div>
-      </div>
-    </div>
-</div>
+    </div> -->
+
 </div>
 
 
