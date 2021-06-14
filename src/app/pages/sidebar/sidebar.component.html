@@ -1,0 +1,151 @@
+<section class="sidebar-main">
+
+<mat-nav-list class="ep-nav-font">
+  <!-- <div class="profile-card">
+      <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Soufiane FADIL">
+      <br>
+  </div> -->
+
+  <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
+  <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"   >
+    <span class="side-icon">
+      <mat-icon  >grid_view</mat-icon>
+    </span>
+
+    <span class="side-menu-font">Dashboard</span>
+  </a>
+  <br>
+  <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')"  >
+    <span class="side-icon">
+      <mat-icon  >bookmark</mat-icon>
+    </span>
+
+    <span class="side-menu-font">Processes</span>
+  </a>
+  <br>
+  <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')" >
+    <span class="side-icon">
+      <mat-icon  >account_tree</mat-icon>
+    </span>
+
+    <span class="side-menu-font">Projects</span>
+  </a>
+  <br>
+  
+
+    <!-- <span class="side-menu-font">Workspace</span> -->
+    <!-- <button mat-icon-button #trigger=matMenuTrigger [matMenuTriggerFor]="workspacemenu">
+      <mat-icon>more_vert</mat-icon>
+   </button> -->
+   <mat-list-item (click)="showSubmenu = !showSubmenu" class="">
+    <span class="full-width" >Workspace</span>
+    <mat-icon mat-list-icon>work</mat-icon>
+    <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" >expand_more
+    </mat-icon>
+  </mat-list-item>
+  <div class="submenus" [ngClass]="{'expanded' : showSubmenu}">
+    <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
+      <span class="side-icon">
+        <mat-icon>device_hub</mat-icon>
+      </span>
+      <span class="side-menu-font">PI</span><h5 style="margin-left: -27px;">(Process Intelligence)</h5>
+    </a>
+    <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/businessProcess/home" >
+      <span class="side-icon">
+        <mat-icon  >monitor</mat-icon>
+      </span>
+      <span class="side-menu-font">BPS</span><h5 style="margin-left: -22px;">(Business Process Studio)</h5>
+    </a>
+    <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/rpautomation/home" >
+      <span class="side-icon">
+        <mat-icon  >monitor</mat-icon>
+      </span>
+      <span class="side-menu-font">RPA</span>
+    </a>
+  </div>
+
+
+  <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/serviceOrchestration/home" >
+    <span class="side-icon">
+      <mat-icon  >monitor</mat-icon>
+    </span>
+    <span class="side-menu-font">Orchestration</span>
+  </a>
+  <br>
+  <a mat-list-item class="link" id="eiap-home">
+    <span class="side-icon">
+      <mat-icon  >admin_panel_settings</mat-icon>
+    </span>
+
+    <span class="side-menu-font">Administration</span>
+    <button mat-icon-button #trigger=matMenuTrigger [matMenuTriggerFor]="adminemenu">
+      <mat-icon>more_vert</mat-icon>
+   </button>
+  </a>
+   <br><br><br><br><br>
+   <hr>
+    <div class="link">
+      <span class="side-menu-font">
+      <img class="header_icon" src="..\assets\images\poweredby-logo.png">
+    </span>
+    </div>
+
+  <!-- <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home"  >
+    <span class="side-icon">
+      <mat-icon  >home</mat-icon>
+    </span>
+
+    <span class="side-menu-font">Home</span>
+  </a>
+  <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
+    <span class="side-icon">
+      <mat-icon>device_hub</mat-icon>
+    </span>
+    <span class="side-menu-font">Process Intelligence</span>
+  </a>
+  <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/serviceOrchestration/home" >
+    <span class="side-icon">
+      <mat-icon  >monitor</mat-icon>
+    </span>
+    <span class="side-menu-font">Service Orchestration</span>
+  </a> -->
+  <mat-menu #workspacemenu="matMenu">
+    <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
+      <span class="side-icon">
+        <mat-icon>device_hub</mat-icon>
+      </span>
+      <span class="side-menu-font" style="padding: 18px;">Process Intelligence</span>
+    </a>
+    <a mat-list-item  class="link" id="bps" (click)="hightlight('bps')" routerLink="/pages/businessProcess/home"  >
+      <span class="side-icon">
+        <mat-icon>device_hub</mat-icon>
+      </span>
+      <span class="side-menu-font" style="
+      padding: 18px;
+  ">Business Process Studio</span>
+    </a>
+    <a mat-list-item  class="link" id="rpa" (click)="hightlight('rpa')" routerLink="/pages/rpautomation/home"  >
+      <span class="side-icon">
+        <mat-icon>device_hub</mat-icon>
+      </span>
+      <span class="side-menu-font" style="padding-left: 17px;">RPA</span>
+    </a>
+  </mat-menu>
+
+
+  <mat-menu #adminemenu="matMenu">
+    <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
+      <span class="side-icon">
+        <img class="header_icon" src="..\assets\icons\user_management_icon.svg">
+      </span>
+      <span class="side-menu-font">User Management</span>
+    </a>
+    <a mat-list-item  class="link" id="bps" (click)="hightlight('bps')" routerLink="/pages/businessProcess/home"  >
+      <span class="side-icon">
+        <mat-icon>device_hub</mat-icon>
+      </span>
+      <span class="side-menu-font">System Setting</span>
+    </a>
+  </mat-menu>
+</mat-nav-list>
+</section>

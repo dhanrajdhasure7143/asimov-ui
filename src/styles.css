@@ -778,3 +778,48 @@ font-size: 18px !important;
 .pisvg{
   width: 100% !important;
 }
+
+
+
+#sidenavContainer {
+  margin-top: 64px;
+}
+
+#sidenav {
+  width: 300px;
+  min-height: 100vh;
+}
+
+
+#sidenav.menu-close {
+  width: 70px;
+  min-height: 100vh;
+  transition: width 0.05s;
+}
+
+#sidenav.menu-open {
+  width: 300px;
+  min-height: 100vh;
+  transition: width 0.05s;
+}
+
+
+#sidenav.menu-close .side-icon {
+  text-align: center !important;
+}
+
+
+#sidenav.menu-close .side-icon {
+  text-align: center !important;
+}
+
+#sidenav.menu-close .side-menu-font
+{
+  display: none  !important;
+}
+
+
+#sidenav.menu-open .side-menu-font
+{
+  display: block !important;
+}

@@ -1,4 +1,4 @@
-.abrand_div img{
+/* .abrand_div img{
     width:190px;
 }
 .abrand_div{
@@ -69,4 +69,175 @@
     font-weight: bold;
     font-size: 11px;
      line-height: 16px;
+  } */
+
+
+
+  .example-spacer {
+    flex: 1 1 auto;
+  }
+  .txt-wh{
+    color:white !important;
+  }
+  .abrand_div img{
+      width:160px;
+  }
+  .main-header{
+      padding: 0px !important;
+  }
+  
+  .header{
+      background-color: #098DE6 !important;
+      /* color: white !important; */
+      height: 63px !important;
+  }
+  .abrand{
+      /* background-color: #0A8DE8!important; */
+      height: 80px;
+      color: white !important;
+  }
+  .abrand_div{
+      cursor: pointer;
+      outline: none !important;
+  }
+  .notification-icon{
+      margin-top: 0px !important;
+      margin-right: 20px;
+      cursor: pointer;
+  }
+  .icon_middle label{
+      margin-top: 5px;
+      line-height: 1.4 !important;
+  }
+  .drop_down a{
+      padding: 10px 4px !important;
+      color: #287ad6 !important;
+      font-size: 14px;
+      float: left;
+  }
+  .drop_down a:hover{
+      color: #287ad6 !important;
+      font-weight: bold !important;
+  }
+  .dropdown-menu{
+      /* padding:3px !important; */
+      border: 1px solid #287ad6;
+  }
+  .header_icon{
+      padding-right: 7px !important;
+  }
+  .hd_icon{
+      padding-right: 5px;
+  }
+  .dropdown-menu {
+      min-width: 170px !important;
+  }
+  .res-circle {
+      width: 40px;
+      border-radius: 100%;
+      /* text-align: center; */
+      height: 39px;
+      margin-top: 5px;
+      color: black;
+      font-size: 20px;
+      background:white;
+      /* line-height: 59px; */
+      margin-left: -5px;
+      font-weight: bold;
+      padding: 6px 6px;
+    }
+    .res-circle-img {
+      width: 42px;
+      border-radius: 100%;
+      height: 41px;
+      margin-top: 5px;
+      color: black;
+      margin-left: -5px;
+      padding: 2px 5px;
+      border: 1px solid black;
+  
+    }
+    .res-circle:after {
+      content: "";
+      display: block;
+      padding-bottom: 100%;
+    }
+  
+    .notification-count
+    {
+        margin-left: -46px;
+      /* height: 14px;
+         */
+  
+         padding:4px !important;
+        background: #ff6600;
+       color:white;
+       /* border: 2px solid #ff6600; */
+       text-align: center;
+       border-radius: 57px;
+      font-weight: bold;
+      font-size: 11px;
+       line-height: 11px;
+    }
+    .user-name .user-fName{
+      padding-left: 12px !important;
+      /* margin-top: -23px !important; */
+    }
+    .user-name h6{
+      padding-left: 12px !important;
+  
+    }
+    .user-info-dropdwn{
+        padding-left: 15px;
+        margin-top: 20px;
+    }
+    .header-bottom {
+      margin-top: 10px;
+    }
+    .nav-header-content{
+        padding:0px 15px !important;
+    }
+    .header-bottom .icon_middle{
+      text-align: center;
+    }
+  
+    .icon_middle:hover label{
+      color: white;
+      /* background-color: #0062cf !important; */
+    }
+    .icon_middle:hover img{
+      filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2);
+    }
+    .icon_middle:hover{
+      background-color: #0062cf !important;
+    }
+    .icon_middle{
+      padding: 5px;
+    }
+    .active p label{
+        color: white;
+    }
+    .notification-icon img{
+      filter: invert(0.5) sepia(1) hue-rotate(200deg) saturate(4) brightness(2) !important;
+    }
+    .abrand_div img{
+        margin-top: 3px;
+    }
+    .borderRight{
+        height: 30px !important;
+        border-right: 2px solid white;
+        margin-right: 20px;
+    }
+  
+  .breadcrumb-home{
+      padding-left: 3px;
+  }
+  .ep-pad{
+    padding:10px !important;
+  }
+  .bread-crumb span{
+   cursor: pointer;
+  }
+  .bread-crumb span:hover{
+    font-weight: 600 !important;
   }

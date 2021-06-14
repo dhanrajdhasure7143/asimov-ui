@@ -1,6 +1,61 @@
-<div class="container-fluid">
+<!-- <div class="container-fluid">
     <app-header></app-header>
     <router-outlet></router-outlet>
 </div>
 <app-footer></app-footer> 
-<app-my-loader></app-my-loader>
+<app-my-loader></app-my-loader> -->
+
+
+<section >
+
+
+    <app-header></app-header>
+    <mat-drawer-container class="main">
+  
+    <mat-drawer  mode="side" mode="side"
+    #sidenav
+    id="sidenav"
+    [class.menu-open]="sideBarOpen"
+    [class.menu-close]="!sideBarOpen"
+    opened>
+        <app-sidebar ></app-sidebar>
+    </mat-drawer>
+    <mat-drawer-content [ngStyle]="{ 'margin-left.px': contentMargin }">
+      <!-- <mat-toolbar color="primary">
+        <button mat-icon-button class="example-icon" (click)="(sideBarOpen==true?sideBarOpen=false:sideBarOpen=true)" aria-label="Example icon-button with menu icon">
+         <i class="fa fa-bars"></i>
+       </button>
+       <span>My App</span>
+       <span class="example-spacer"></span>
+       <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+        <i class="fa fa-bell"></i>
+       </button>
+  
+       <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <i style="font-size:20px" class="fa fa-ellipsis-v" aria-hidden="true"></i>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+  
+          <span>Redial</span>
+        </button>
+        <button mat-menu-item disabled>
+  
+          <span>Check voice mail</span>
+        </button>
+        <button mat-menu-item>
+  
+          <span>Disable alerts</span>
+        </button>
+      </mat-menu>
+  
+    </mat-toolbar> -->
+  
+    <div style="padding:3px">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+    </mat-drawer-container>
+    <app-footer></app-footer>
+  </section>
+  
