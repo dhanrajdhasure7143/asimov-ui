@@ -138,7 +138,10 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
   }
 
 
-
+  check()
+  {
+    alert(this.rpa_toolset.sidenavbutton)
+  }
   // deploybot() {
 
   //   this.rest.deployremotemachine(this.savebotrespose.botId).subscribe(data => {
@@ -393,6 +396,8 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
           {
             this.envflag=false;
           }
+          
+        this.selectedEnvironments=this.environment.filter(item=>item.checked==true);
         }
       }
       else
@@ -420,6 +425,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     {
       this.envflag=false;
     }
+    this.selectedEnvironments=this.environment.filter(item=>item.checked==true);
   }
 
   modify(){

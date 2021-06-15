@@ -28,10 +28,14 @@
         </select>
         <br>
         <h5>Browse file</h5>
-        <input class="form-control" (change)="importfile=$event.target.files[0]" type="file">
+        <div class="text-center">
+          <input  class="custom-file-input"  (change)="upload($event.target.files[0])" type="file">
+        </div>
+        <span style="color:red">{{file_error}}</span>
         <br>
         <div class="pull-right">
-          <button class="btn btn-primary"  (click)="importbotfile()">Import</button>&nbsp;<button (click)="modalRef.hide()" class="btn btn-primary">Cancel</button>
+          <button class="btn btn-primary" [disabled]="importfile=='' || importcat=='' || importenv=='' || (file_error!=''&& importbotfile!='')" (click)="importbotfile()">Import</button>
+          &nbsp;<button (click)="importfile='';importcat='';importenv='';file_error='';modalRef.hide()" class="btn btn-primary">Cancel</button>
         </div>
         <br> <br>
       </div>

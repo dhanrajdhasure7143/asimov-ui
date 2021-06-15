@@ -387,8 +387,8 @@ export class RpaStudioDesignerworkspaceComponent implements OnInit {
 
     const node = event.data;
     node.id = this.idGenerator();
-    node.selectedNodeTask = "";
-    node.selectedNodeId = "";
+    // node.selectedNodeTask = "";
+    // node.selectedNodeId = "";
     const nodeWithCoordinates = Object.assign({}, node, dropCoordinates);
     this.nodes.push(nodeWithCoordinates);
     setTimeout(() => {
