@@ -66,7 +66,7 @@ import { ScheduledBotsComponent } from './orchestration/scheduled-bots/scheduled
     Category,
     Reverse,
     Slicedate,
-    BotManagementComponent, ServiceOrchestrationComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent, NewSoDashboardComponent,
+    BotManagementComponent, ServiceOrchestrationComponent, SoDashboardComponent, SoSchedulerComponent, SoProcesslogComponent, BotlistbycatPipe, HumanlistbycatPipe, Envname, SoInboxComponent,
   NewSoBotsComponent,
   NewSoManagementComponent,
   NewSoAutomatedTasksComponent,

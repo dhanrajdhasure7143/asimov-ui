@@ -7,7 +7,7 @@
   </div> -->
 
   <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
-  <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"   >
+  <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home" >
     <span class="side-icon">
       <mat-icon  >grid_view</mat-icon>
     </span>
@@ -38,8 +38,13 @@
       <mat-icon>more_vert</mat-icon>
    </button> -->
    <mat-list-item (click)="showSubmenu = !showSubmenu" class="">
-    <span class="full-width" >Workspace</span>
-    <mat-icon mat-list-icon>work</mat-icon>
+    <!-- <span class="full-width" >Workspace</span>
+    <mat-icon mat-list-icon>work</mat-icon> -->
+    <span class="side-icon">
+      <mat-icon  >work</mat-icon>
+    </span>
+
+    <span class="side-menu-font">Workspace</span>
     <mat-icon class="menu-button" [ngClass]="{'rotated' : showSubmenu}" >expand_more
     </mat-icon>
   </mat-list-item>
@@ -50,15 +55,15 @@
       </span>
       <span class="side-menu-font">PI</span><h5 style="margin-left: -27px;">(Process Intelligence)</h5>
     </a>
-    <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/businessProcess/home" >
+    <a mat-list-item class="link" id='bps' (click)="hightlight('bps')" routerLink="/pages/businessProcess/home" >
       <span class="side-icon">
         <mat-icon  >monitor</mat-icon>
       </span>
       <span class="side-menu-font">BPS</span><h5 style="margin-left: -22px;">(Business Process Studio)</h5>
     </a>
-    <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/rpautomation/home" >
+    <a mat-list-item class="link" id='rpa' (click)="hightlight('rpa')" routerLink="/pages/rpautomation/home" >
       <span class="side-icon">
-        <mat-icon  >monitor</mat-icon>
+        <mat-icon  >smart_toy</mat-icon>
       </span>
       <span class="side-menu-font">RPA</span>
     </a>
@@ -136,13 +141,14 @@
   <mat-menu #adminemenu="matMenu">
     <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
       <span class="side-icon">
-        <img class="header_icon" src="..\assets\icons\user_management_icon.svg">
+        <!-- <img class="header_icon" src="..\assets\icons\user_management_icon.svg"> -->
+        <mat-icon>manage_accounts</mat-icon>
       </span>
       <span class="side-menu-font">User Management</span>
     </a>
     <a mat-list-item  class="link" id="bps" (click)="hightlight('bps')" routerLink="/pages/businessProcess/home"  >
       <span class="side-icon">
-        <mat-icon>device_hub</mat-icon>
+        <mat-icon>settings</mat-icon>
       </span>
       <span class="side-menu-font">System Setting</span>
     </a>
