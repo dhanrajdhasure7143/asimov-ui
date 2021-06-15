@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { SidebarComponent } from './sidebar/sidebar.component';
 
 @Component({
   selector: 'app-home',
@@ -48,13 +49,15 @@ export class PagesComponent{
 
   sideBarOpen:Boolean=false;
   contentMargin:any;
-  constructor() { }
+  @ViewChild(SidebarComponent, { static: false }) sidebar: SidebarComponent;
+  constructor( ) { }
 
   onToolbarMenuToggle() {
     console.log('On toolbar toggled', this.sideBarOpen);
     this.sideBarOpen = !this.sideBarOpen;
 
     if(!this.sideBarOpen) {
+      this.sidebar.showSubmenu=false
       this.contentMargin = 70;
     } else {
       this.contentMargin = 300;

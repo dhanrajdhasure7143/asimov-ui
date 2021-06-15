@@ -60,7 +60,7 @@
     </mat-tab> -->
 
 
-    <mat-tab>
+    <!-- <mat-tab>
       <ng-template mat-tab-label>
           <mat-icon>pie_chart</mat-icon>&nbsp;&nbsp;
           Dashboard
@@ -68,7 +68,7 @@
       <div *ngIf="check_tab==0">
         <app-new-so-dashboard></app-new-so-dashboard>
       </div>
-    </mat-tab>
+    </mat-tab> -->
     <mat-tab label="Bots">
 
       <ng-template mat-tab-label>
@@ -76,7 +76,7 @@
           &nbsp;&nbsp;
           Bots
         </ng-template>
-      <div *ngIf="check_tab==1">
+      <div *ngIf="check_tab==0">
         <app-new-so-bots></app-new-so-bots>
       </div>
     </mat-tab>
@@ -87,7 +87,7 @@
           &nbsp;&nbsp;
           Environments Management
         </ng-template>
-      <div *ngIf="check_tab==2">
+      <div *ngIf="check_tab==1">
         <app-so-environments></app-so-environments>
       </div>
     </mat-tab>
@@ -99,7 +99,7 @@
           &nbsp;&nbsp;
           Incident Management
       </ng-template>
-      <div *ngIf="check_tab==3">
+      <div *ngIf="check_tab==2">
         <app-new-so-management></app-new-so-management>
       </div>
     </mat-tab>
@@ -110,7 +110,7 @@
           &nbsp;&nbsp;
           Orchestration
       </ng-template>
-      <div *ngIf="check_tab==4">
+      <div *ngIf="check_tab==3">
         <app-new-so-automated-tasks [processid]="param"></app-new-so-automated-tasks>
       </div>
   </mat-tab>
@@ -121,7 +121,7 @@
         &nbsp;&nbsp;
         Bot Management
     </ng-template>
-    <div *ngIf="check_tab==5">
+    <div *ngIf="check_tab==4">
       <app-new-so-bot-management></app-new-so-bot-management>
     </div>
   </mat-tab>
@@ -144,7 +144,7 @@
         <button mat-menu-item (click)="option(1);selectedTab=6;check_Tab=6">Metrics</button>
       </mat-menu> -->
     </ng-template>
-    <div *ngIf="check_tab==6">
+    <div *ngIf="check_tab==5">
       <app-so-monitoring></app-so-monitoring>
     </div>
     <!-- <div *ngIf="options==0">
@@ -166,7 +166,7 @@
         &nbsp;&nbsp;
         Inbox
       </ng-template>
-    <div *ngIf="check_tab==7">
+    <div *ngIf="check_tab==6">
       <app-so-inbox></app-so-inbox>
     </div>
   </mat-tab>
@@ -179,7 +179,7 @@
         &nbsp;&nbsp;
         Scheduled Bots
     </ng-template>
-    <div *ngIf="check_tab==8">
+    <div *ngIf="check_tab==7">
       <app-scheduled-bots></app-scheduled-bots>
     </div>
   </mat-tab> 
