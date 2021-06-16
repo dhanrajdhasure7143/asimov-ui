@@ -32,6 +32,7 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { sohints } from './service-orchestration/orchestration/model/new-so-hints';
 
+
 @NgModule({
   declarations: [
     PagesComponent,
@@ -41,7 +42,8 @@ import { sohints } from './service-orchestration/orchestration/model/new-so-hint
     MyLoaderComponent,
     HeaderDropdownOverlayComponent,
     SidebarComponent,
-    NewSoDashboardComponent
+    NewSoDashboardComponent,
+    
   ],
   imports: [
     CommonModule,
