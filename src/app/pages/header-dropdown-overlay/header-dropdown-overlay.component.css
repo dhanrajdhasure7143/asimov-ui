@@ -44,6 +44,7 @@ table {
         border: none;
         background: white;
       width:30px;
+      line-height: 20px;
           height: 20px;
           font-size: 10px;
           margin-left: 25px;
@@ -94,7 +95,7 @@ table {
          }
     .notificationmessage
     {
-        padding-top: 0px;
+        padding-top: 38px;
         font-weight: bold;
         font-size: 15px;
         color: black;
@@ -102,7 +103,7 @@ table {
     }
     .notificationdate
      {
-      padding-top: 0px;
+      padding-top: 38px;
        font-weight: bold;
       color: black;
       font-size: 15px;
@@ -110,11 +111,12 @@ table {
      }
     .notificationaction
     {
-       padding-top: 0px;
-       font-weight: bold;
-       color: black;
-       font-size: 15px;
-       padding-left: 1px;
+        padding-top: 38px;
+        font-weight: bold;
+        color: black;
+        font-size: 15px;
+        padding-right: 119px;
+
     }
 .table_cell {
     padding: 13px 0px; 
@@ -386,4 +388,11 @@ button.tablinks.active {
 .form_alert_row {
     width: 30vw;
     margin: 20px;
+}
+
+.notification-alignments1{
+    padding: 10px 0px 0px 0px;
+}
+.notification-alignments1 .close{
+    margin-top: -22px;
 }

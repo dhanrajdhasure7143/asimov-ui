@@ -23,12 +23,12 @@
     <span class="side-menu-font">Processes</span>
   </a>
   <br>
-  <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')" >
+  <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')" routerLink="/pages/projects/listOfProjects">
     <span class="side-icon">
       <mat-icon  >account_tree</mat-icon>
     </span>
 
-    <span class="side-menu-font" routerLink="/pages/projects/listOfProjects">Projects</span>
+    <span class="side-menu-font">Projects</span>
   </a>
   <br>
   
@@ -89,11 +89,20 @@
   </a>
    <br><br><br><br><br>
    <hr>
-    <div class="link">
+    <!-- <div class="link">
       <span class="side-menu-font">
       <img class="header_icon" src="..\assets\images\poweredby-logo.png">
     </span>
-    </div>
+    </div> -->
+
+    <div class="epslogo">
+      <img src="..\assets\images\EPSoft.png" alt="" height="54">
+      <span class="poweredby">
+          <label class="poweredby-label">Powered By</label>
+          <label class="epsoft-label">EPSoft<sup>R</sup></label>
+      </span>
+  </div>
+
 
   <!-- <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home"  >
     <span class="side-icon">

@@ -115,3 +115,43 @@
 .full-width {
   width: 100%;
 }
+
+.epslogo {
+  position: absolute;
+  bottom: 144px;
+  left: 0px;
+  margin-left: 2px;
+  /* padding: 0px 5px; */
+  padding: 0px 8px;
+  height: 40px;
+  width: 260px;
+  display: flex;
+  align-items: center;
+}
+
+span.poweredby {
+  display: inline-block;
+  margin-left: 6px;
+}
+
+label.poweredby-label {
+  font-size: 10px;
+  display: block;
+}
+label.epsoft-label {
+  font-size: 21px;
+  font-weight: 500;
+  position: relative;
+}
+
+label.epsoft-label sup {
+  font-size: 6px;
+  border: 1px solid #001c47;
+  border-radius: 50%;
+  padding: 3px 1.0px;
+  height: 8px;
+  width: 8px;
+  position: absolute;
+  top: 0px;
+  right: -10px;
+}
