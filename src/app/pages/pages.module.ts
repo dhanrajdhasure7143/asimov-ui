@@ -31,6 +31,8 @@ import {MatIconModule} from '@angular/material';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { sohints } from './service-orchestration/orchestration/model/new-so-hints';
+import { ProgramComponent } from './program/programlandingpage.component';
+import { ProgramcreationComponent } from './programcreation/programcreation.component';
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import { sohints } from './service-orchestration/orchestration/model/new-so-hint
     HeaderDropdownOverlayComponent,
     SidebarComponent,
     NewSoDashboardComponent,
+    ProgramComponent,
+    ProgramcreationComponent,
     
   ],
   imports: [
