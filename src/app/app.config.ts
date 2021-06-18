@@ -26,6 +26,7 @@ export interface AsimovAppConfig {
     signoutRedirectionURL:any;
     piNodeJobsURL: string;
     platform_home_url:string;
+    projectendpoint_url:string;
 }
 
 export const AppConfig: AsimovAppConfig = {
@@ -50,5 +51,6 @@ export const AppConfig: AsimovAppConfig = {
     bpmPlatfromUrl:environment.bpmnplatformUrl,
     signoutRedirectionURL: environment.redirectout_url,
     piNodeJobsURL: environment.pi_node_jobs,
-    platform_home_url:environment.platform_home_url
+    platform_home_url:environment.platform_home_url,
+    projectendpoint_url:environment.projectendpoint_url
 };

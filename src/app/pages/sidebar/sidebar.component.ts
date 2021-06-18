@@ -9,8 +9,10 @@ import * as $ from 'jquery';
 export class SidebarComponent implements OnInit {
   isExpanded = true;
   showSubmenu: boolean = false;
+  showadminSubmenu: boolean = false;
   isShowing = false;
   showSubSubMenu: boolean = false;
+  showadminSubSubMenu: boolean = false;
   constructor(private obj:PagesComponent) { }
 
   ngOnInit() {

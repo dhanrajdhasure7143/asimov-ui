@@ -58,6 +58,7 @@ export class PagesComponent{
 
     if(!this.sideBarOpen) {
       this.sidebar.showSubmenu=false
+      this.sidebar.showadminSubmenu=false
       this.contentMargin = 70;
     } else {
       this.contentMargin = 300;
