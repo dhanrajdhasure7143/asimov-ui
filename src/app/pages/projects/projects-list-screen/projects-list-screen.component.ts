@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import {MatDialog, MatTabGroup} from '@angular/material';
 
 @Component({
   selector: 'app-projects-list-screen',
@@ -7,7 +8,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProjectsListScreenComponent implements OnInit {
 
-  constructor() { }
 
   ngOnInit() {
   }
