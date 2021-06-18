@@ -852,4 +852,16 @@ save_blueprism_config(data)
     {
       return this.http.post("/rpa-service/management/save-source-details",data)
     }
+
+    getAllProjects(){
+      return this.http.get("/platform-service/project/fetchAll")
+    }
+
+    update_project(data:any){
+      return this.http.post("/platform-service/project/updateproject", data)
+    }
+
+    delete_Project(data: any) {
+      return this.http.post("/platform-service/project/deleteproject", data)
+    }
 }

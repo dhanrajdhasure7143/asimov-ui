@@ -4,6 +4,12 @@ import { CommonModule } from '@angular/common';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
 import { ProjectsListScreenComponent } from './projects-list-screen/projects-list-screen.component';
+import { DataTablesModule } from 'angular-datatables';
+import { MatTableModule } from '@angular/material/table';  
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSortModule} from '@angular/material/sort';
+import {MatPaginatorModule} from '@angular/material/paginator';
+
 import {
   MatDialogModule,
   MatIconModule,
@@ -12,18 +18,13 @@ import {
   MatSelectModule,
   MatTabsModule,
   MatTooltipModule,
-  MatCardModule} from '@angular/material';
+  MatCardModule,
+  MatFormFieldModule,
+  MatButtonModule} from '@angular/material';
 
   const materialModules: any[] = [
     
-    MatDialogModule,
-    MatIconModule,
-    MatInputModule,
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatTabsModule,
-    MatCardModule,
-    MatTooltipModule
+    
   ];
 
 @NgModule({
@@ -32,7 +33,20 @@ import {
     CommonModule,
     ProjectsRoutingModule,
     materialModules,
-    ProjectsRoutingModule
+    ProjectsRoutingModule,
+    MatDialogModule,
+    MatIconModule,
+    MatInputModule,
+    MatProgressSpinnerModule,
+    MatSelectModule,
+    MatTabsModule,
+    MatCardModule,
+    MatTooltipModule,
+    DataTablesModule,MatTableModule,ReactiveFormsModule,FormsModule, MatSortModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    
   ]
 })
 export class ProjectsModule { }

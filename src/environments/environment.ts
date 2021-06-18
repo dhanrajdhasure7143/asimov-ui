@@ -32,6 +32,7 @@ export const environment = {
   logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation',
   redirectout_url: 'http://eiapclouddev.epsoftinc.in/#/signout',
   platform_home_url: 'http://eiapclouddev.epsoftinc.in/#/',
+  projectendpoint_url:'http://10.11.0.107:8282',
 
 // PI Connectors
   connector_topic: 'nodeDev',

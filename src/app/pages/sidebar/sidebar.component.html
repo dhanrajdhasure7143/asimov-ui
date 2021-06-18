@@ -14,7 +14,7 @@
 
     <span class="side-menu-font">Dashboard</span>
   </a>
-  <br>
+ 
   <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')"  >
     <span class="side-icon">
       <mat-icon  >bookmark</mat-icon>
@@ -22,7 +22,7 @@
 
     <span class="side-menu-font">Processes</span>
   </a>
-  <br>
+  
 
   <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')" routerLink="/pages/projects/listOfProjects">
     <span class="side-icon">
@@ -31,7 +31,7 @@
 
     <span class="side-menu-font" (click)="hightlight('listOfProjects')" routerLink="/pages/projects/listOfProjects">Projects</span>
   </a>
-  <br>
+  
   
 
     <!-- <span class="side-menu-font">Workspace</span> -->
@@ -77,8 +77,8 @@
     </span>
     <span class="side-menu-font">Orchestration</span>
   </a>
-  <br>
-  <a mat-list-item class="link" id="eiap-home">
+  
+  <!-- <a mat-list-item class="link" id="eiap-home">
     <span class="side-icon">
       <mat-icon  >admin_panel_settings</mat-icon>
     </span>
@@ -87,9 +87,34 @@
     <button mat-icon-button #trigger=matMenuTrigger [matMenuTriggerFor]="adminemenu">
       <mat-icon>more_vert</mat-icon>
    </button>
-  </a>
-   <br><br><br><br><br>
-   <hr>
+  </a> -->
+  <mat-list-item (click)="showadminSubmenu = !showadminSubmenu" class="">
+    <!-- <span class="full-width" >Workspace</span>
+    <mat-icon mat-list-icon>work</mat-icon> -->
+    <span class="side-icon">
+      <mat-icon  >admin_panel_settings</mat-icon>
+    </span>
+
+    <span class="side-menu-font">Administration</span>
+    <mat-icon class="menu-button" [ngClass]="{'rotated' : showadminSubmenu}" >expand_more
+    </mat-icon>
+  </mat-list-item>
+  <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
+    <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
+      <span class="side-icon">
+        <mat-icon>manage_accounts</mat-icon>
+      </span>
+      <span class="side-menu-font">User Management</span>
+    </a>
+    <a mat-list-item  class="link" id="bps" (click)="hightlight('bps')" routerLink="/pages/businessProcess/home"  >
+      <span class="side-icon">
+        <mat-icon>settings</mat-icon>
+      </span>
+      <span class="side-menu-font">System Setting</span>
+    </a>
+  </div>
+   <br><br><br><br><br><br>
+   
     <!-- <div class="link">
       <span class="side-menu-font">
       <img class="header_icon" src="..\assets\images\poweredby-logo.png">
@@ -124,7 +149,7 @@
     </span>
     <span class="side-menu-font">Service Orchestration</span>
   </a> -->
-  <mat-menu #workspacemenu="matMenu">
+  <!-- <mat-menu #workspacemenu="matMenu">
     <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
       <span class="side-icon">
         <mat-icon>device_hub</mat-icon>
@@ -151,7 +176,6 @@
   <mat-menu #adminemenu="matMenu">
     <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
       <span class="side-icon">
-        <!-- <img class="header_icon" src="..\assets\icons\user_management_icon.svg"> -->
         <mat-icon>manage_accounts</mat-icon>
       </span>
       <span class="side-menu-font">User Management</span>
@@ -162,6 +186,6 @@
       </span>
       <span class="side-menu-font">System Setting</span>
     </a>
-  </mat-menu>
+  </mat-menu> -->
 </mat-nav-list>
 </section>
