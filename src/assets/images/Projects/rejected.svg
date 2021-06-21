@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="50.98" height="30" viewBox="0 0 50.98 45.75">
+  <g id="rejected" transform="translate(0.375 0.375)">
+    <g id="rejected-2" data-name="rejected">
+      <rect id="Rectangle" width="50.23" height="8.488" transform="translate(0 11.506)" fill="#f1f2f6"/>
+      <rect id="Rectangle-2" data-name="Rectangle" width="50.23" height="45" rx="2" transform="translate(0)" fill="none" stroke="#19274a" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.75"/>
+      <path id="Rectangle-3" data-name="Rectangle" d="M2,0H48.23a2,2,0,0,1,2,2V13.807a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V2A2,2,0,0,1,2,0Z" transform="translate(0 0)" fill="#fff" stroke="#19274a" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.75"/>
+      <rect id="Rectangle-4" data-name="Rectangle" width="2" height="2" rx="1" transform="translate(12.602 5.753)" fill="#19274a"/>
+      <rect id="Rectangle-5" data-name="Rectangle" width="2" height="2" rx="1" transform="translate(3.602 5.753)" fill="#19274a"/>
+      <rect id="Rectangle-6" data-name="Rectangle" width="2" height="2" rx="1" transform="translate(8.102 5.753)" fill="#19274a"/>
+      <g id="Group_83" data-name="Group 83" transform="translate(16 20)">
+        <path id="Path" d="M9.716,0a9.716,9.716,0,1,0,9.716,9.716A9.727,9.727,0,0,0,9.716,0Z" fill="#de705f"/>
+        <path id="Path-2" data-name="Path" d="M7.89,0,0,7.89" transform="translate(5.771 5.771)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+        <path id="Path-3" data-name="Path" d="M0,0,7.89,7.89" transform="translate(5.771 5.771)" fill="none" stroke="#fff" stroke-linecap="round" stroke-miterlimit="10" stroke-width="1"/>
+      </g>
+    </g>
+  </g>
+</svg>

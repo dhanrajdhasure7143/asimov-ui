@@ -6,7 +6,7 @@
               <span class="tab-number">38</span>
               <span class="tab-text types2">Total Projects</span>
             </ng-template> -->
-            
+           
             <div class="rpa-env-search">
               <mat-form-field class="rpa-mat-form-field-search">
                   <mat-label>Search</mat-label>
@@ -48,7 +48,7 @@
               </div>
           </div>
             <div style="width:100%;overflow-x: scroll;">
-                  <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table"  id="listofcred">
+                  <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
                       <!-- <thead>
                         <tr>
                           <th scope="col" class="types2">ID</th>
@@ -482,11 +482,20 @@
       </td>
   </ng-container>
   
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <td mat-cell *matCellDef="let element"> 
+         <span *ngIf="element.id!=null">{{element.id}}</span> 
+        <span *ngIf="element.id==''">-</span>
+        <span *ngIf="element.id==null">-</span>
+    </td>
+</ng-container>
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
       <td mat-cell *matCellDef="let element"> 
            <span *ngIf="element.type!=null">{{element.type}}</span> 
           <span *ngIf="element.type==''">-</span>
+          <span *ngIf="element.type==null">-</span>
       </td>
   </ng-container>
   <ng-container matColumnDef="initiatives">
@@ -494,6 +503,7 @@
       <td mat-cell *matCellDef="let element"> 
         <span *ngIf="element.initiatives!=null">{{element.initiatives}}</span> 
           <span *ngIf="element.initiatives==''">-</span>
+          <span *ngIf="element.initiatives==null">-</span>
   </ng-container>
 
   <ng-container matColumnDef="process">
@@ -501,6 +511,7 @@
       <td mat-cell *matCellDef="let element"> 
           <span *ngIf="element.process!=null">{{element.process}}</span> 
           <span *ngIf="element.process==''">-</span> 
+          <span *ngIf=" element.process==null">-</span> 
       </td>
   </ng-container>
   
@@ -509,6 +520,7 @@
       <td mat-cell *matCellDef="let element"> 
           <span *ngIf="element.projectName!=null">{{element.projectName}}</span> 
           <span *ngIf="element.projectName==''">-</span> 
+          <span *ngIf=" element.projectName==null">-</span> 
       </td>
   </ng-container>
 
@@ -518,6 +530,7 @@
     <td mat-cell *matCellDef="let element"> 
         <span *ngIf="element.owner!=null">{{element.owner}}</span> 
         <span *ngIf="element.owner==''">-</span> 
+        <span *ngIf=" element.owner==null">-</span> 
     </td>
 </ng-container>
 
@@ -527,9 +540,24 @@
   <td mat-cell *matCellDef="let element"> 
       <span *ngIf="element.priority!=null">{{element.priority}}</span> 
       <span *ngIf="element.priority==''">-</span> 
+      <span *ngIf=" element.priority==null">-</span> 
   </td>
 </ng-container>
 
+<ng-container matColumnDef="access">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>Access</th>
+  <td mat-cell *matCellDef="let element"> 
+      <span *ngIf="element.access!=null">{{element.access}}</span> 
+      <span *ngIf="element.access==''" >-</span> 
+      <span *ngIf=" element.access==null">-</span> 
+  </td>
+</ng-container>
+
+<ng-container matColumnDef="noData">
+  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+      No Records Found
+  </td>
+</ng-container>
 <!-- <ng-container matColumnDef="action">
   <th mat-header-cell *matHeaderCellDef> Action </th>
   <td mat-cell *matCellDef="let id" class="action-link"> 
@@ -540,6 +568,7 @@
 
 <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+<tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(projectsdata==undefined ||  projectsdata=='No records found')}"></tr>
 </table>
 </div>
 <mat-paginator #paginator2 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>
@@ -555,7 +584,16 @@
           <div class="container">
               <form [formGroup]="updateForm" (ngSubmit)="projectupdate()">
                   <div class="row">
-                      <div class="col-md-3 formelement">
+                    <div class="col-md-3 formelement">
+                    <label for="type">Type<span style="color:red">*</span></label>
+                        <select class="form-control" formControlName="type">
+                            <option value="" [selected]="true">--Select Type --</option>
+                            <option value="Project">Project</option>
+                            <option value="Program">Program</option>              
+                          </select>
+                        <span *ngIf="updateForm.get('type').invalid && updateForm.get('type').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
+                     </div>
+                        <div class="col-md-3 formelement">
                           <label for="initiatives">Initiative<span style="color:red">*</span></label>
                           <input type="text" maxlength="51" class="form-control" formControlName="initiatives" value="" placeholder="Enter Initiative" >
                           <span *ngIf="(updateForm.get('initiatives').invalid && updateForm.get('initiatives').touched) && !updateForm.controls['initiatives'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Initiative Required*</span>
@@ -573,16 +611,20 @@
                         </div>  
                     </div>
                                  
-                      
-
-                      <div class="col-md-3 formelement">
-                          <label for="projectName">Name<span style="color:red">*</span></label>
-                          <input type="text" maxlength="51" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
-                          <span *ngIf="(updateForm.get('projectName').invalid && updateForm.get('projectName').touched) && !updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Name is required*</span>
-                          <div *ngIf="updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                              Maximum of 50 characters
-                          </div>
+                    <div class="col-md-3 formelement">
+                      <label for="projectName">Name<span style="color:red">*</span></label>
+                      <input type="text" maxlength="51" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
+                      <span *ngIf="(updateForm.get('projectName').invalid && updateForm.get('projectName').touched) && !updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Name is required*</span>
+                      <div *ngIf="updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                          Maximum of 50 characters
                       </div>
+                  </div>
+
+                      
+                      </div>
+
+                      <div class="row">
+                        
 
                       <div class="col-md-3 formelement">
                         <label for="owner">Owner<span style="color:red">*</span></label>
@@ -593,18 +635,25 @@
                         </div>
                     </div>
 
-                      </div>
-
-                      <div class="row">
-                      <div class="col-md-3 formelement">
-                        <label for="priority">Priority<span style="color:red">*</span></label>
-                        <select class="form-control" formControlName="priority">
-                            <option value="" [selected]="true">--Select Priority --</option>
-                            <option value="High">High</option>
-                            <option value="Low">Low</option>               
-                          </select>
-                        <span *ngIf="updateForm.get('priority').invalid && updateForm.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
+                    <div class="col-md-3 formelement">
+                      <label for="access">Access<span style="color:red">*</span></label>
+                    <input type="text" maxlength="51" class="form-control data" formControlName="access"  value="" placeholder="Enter Access">
+                    <span *ngIf="(updateForm.get('access').invalid && updateForm.get('access').touched) && !updateForm.controls['access'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Access is required*</span>
+                    <div *ngIf="updateForm.controls['access'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                        Maximum of 50 characters
                     </div>
+                  </div>
+
+                  <div class="col-md-3 formelement">
+                    <label for="priority">Priority<span style="color:red">*</span></label>
+                    <select class="form-control" formControlName="priority">
+                        <option value="" [selected]="true">--Select Priority --</option>
+                        <option value="high">High</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>               
+                      </select>
+                    <span *ngIf="updateForm.get('priority').invalid && updateForm.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
+                </div>
                       
                   </div>
                   <div class="row">
