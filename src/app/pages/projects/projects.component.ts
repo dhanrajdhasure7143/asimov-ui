@@ -13,30 +13,34 @@ import {MatSort} from '@angular/material/sort';
 })
 export class ProjectsComponent implements OnInit {
   public updateForm:FormGroup;
-  displayedColumns1: string[] = ["check","type","initiatives","process","projectName","owner","priority"];
+  displayedColumns1: string[] = ["check","id","type","initiatives","process","projectName","owner","priority","access"];
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   dataSource2:MatTableDataSource<any>;
   public prjupdatedata:any;
   public checkeddisabled:boolean =false;
   public Prjcheckeddisabled:boolean =false;
-  projectsdata: any;
+  projectsdata: any=[];
   dbupdateid: any;
   updateddata: any;
   public updateflag: boolean;
   public Credupdateflag:Boolean;
     public Creddeleteflag:Boolean;
     public Credcheckflag:boolean = false;
+  selectedprojectid: string;
+  selectedprojecttype: any;
+  projectmodifybody: any;
   constructor( private api:RestApiService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService,
     ) { 
 
     this.updateForm=this.formBuilder.group({
+      type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
       process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-
+      access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   })
   this.Credupdateflag=false;
       this.Creddeleteflag=false;
@@ -108,10 +112,12 @@ export class ProjectsComponent implements OnInit {
       if(data.id==this.dbupdateid)
       {
         this.prjupdatedata=data;
+        this.updateForm.get("type").setValue(this.prjupdatedata["type"]);
         this.updateForm.get("initiatives").setValue(this.prjupdatedata["initiatives"]);
         this.updateForm.get("process").setValue(this.prjupdatedata["process"]);
         this.updateForm.get("projectName").setValue(this.prjupdatedata["projectName"]);
         this.updateForm.get("owner").setValue(this.prjupdatedata["owner"]);
+        this.updateForm.get("access").setValue(this.prjupdatedata["access"]);
         this.updateForm.get("priority").setValue(this.prjupdatedata["priority"]);
         break;
       }
@@ -150,13 +156,16 @@ else
 }
 
 delete(){
-  let selectedprojectid = this.projectsdata.filter(product => product.checked==true).map(p => p.id);
-  let selectedprojecttype = this.projectsdata.filter(product => product.checked==true).map(p => p.type);
+  let selectedprojectid = this.projectsdata.filter(product => product.checked==true).map(p =>p.id);
+  var selectedprojecttype = this.projectsdata.filter(product => product.checked==true).map(p => p.type);
 
-  let body={
-    "id":selectedprojectid,
-    "type":"project"
-  }
+  
+  this.projectmodifybody = {
+    "id": selectedprojectid,
+    "type": selectedprojecttype,
+    
+}
+  
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -168,7 +177,7 @@ delete(){
   }).then((result) => {
     if (result.value) {
       this.spinner.show();
-      this.api.delete_Project(body).subscribe( res =>{ 
+      this.api.delete_Project(JSON.stringify(this.projectmodifybody)).subscribe( res =>{ 
         let status:any = res;
         Swal.fire({
           position: 'center',

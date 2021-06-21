@@ -5,7 +5,7 @@ import { ProjectsListScreenComponent } from './projects-list-screen/projects-lis
 
 
 const routes: Routes = [
-  {path:'', component:ProjectsComponent, children:[
+  {path:'', component:ProjectsListScreenComponent, children:[
     {path:'listOfProjects', component:ProjectsListScreenComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
   ]}
