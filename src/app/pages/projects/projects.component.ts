@@ -38,9 +38,11 @@ export class ProjectsComponent implements OnInit {
   submitted: boolean;
   insertForm: FormGroup;
   projDetials: {};
-  myprojDetials: { projectName: any; initiatives: string; resources: string; owner: string; };
+  myprojDetials:any;
   tablelist:any=[]
-  constructor( private api:RestApiService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService,  private modalService: BsModalService,
+  prog_projectArray: any=[];
+  myProgrambody: any;
+  constructor( private api:RestApiService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService, 
     ) { 
 
     this.updateForm=this.formBuilder.group({
@@ -85,7 +87,7 @@ export class ProjectsComponent implements OnInit {
 
   
   CredcheckAllCheckBox(ev) {
-    this.projectsdata.forEach(x =>
+    this.tablelist.forEach(x =>
        x.checked = ev.target.checked);
     this.Credchecktoupdate();
     this.checktodelete();
@@ -97,9 +99,40 @@ export class ProjectsComponent implements OnInit {
   }
 
  
-  async getallProjects(){
-    this.api.getAllProjects().subscribe(data1 => {
-        this.projectsdata = data1;
+   
+    getallProjects(){
+      this.spinner.show();
+      this.api.getAllProjects().subscribe(data1 => {
+          this.projectsdata = data1;
+          this.projectsdata[0].filter(data => {
+            this.tablelist.push({
+              id:data.id,
+              projectName:data.programName,
+              access:data.access,
+              initiatives:data.initiatives,
+              process:data.process,
+              type:data.type,
+              owner:data.owner,
+              priority:data.priority,
+            })
+           
+          })
+          this.projectsdata[1].filter(data => {
+            if(data.type==null){
+            this.tablelist.push({
+              id:data.id,
+              projectName:data.projectName,
+              access:data.access,
+              initiatives:data.initiatives,
+              process:data.process,
+              type:"Project",
+              owner:data.owner,
+              priority:data.priority,
+            })
+           
+          }
+        })
+  
         if(this.projectsdata.length>0)
          { 
            this.Prjcheckeddisabled = false;
@@ -113,7 +146,8 @@ export class ProjectsComponent implements OnInit {
          {
            this.Prjcheckeddisabled = true;
          }
-        this.dataSource2 = new MatTableDataSource(this.projectsdata);
+      
+        this.dataSource2 = new MatTableDataSource(this.tablelist);
         this.spinner.hide();
       });
       document.getElementById("filters").style.display='block'; 
@@ -143,7 +177,7 @@ export class ProjectsComponent implements OnInit {
     document.getElementById("filters").style.display='none';
     document.getElementById('UpdateProjects').style.display='block';
     let data:any;
-    for(data of this.projectsdata)
+    for(data of this.tablelist)
     {
       if(data.id==this.dbupdateid)
       {
@@ -160,26 +194,21 @@ export class ProjectsComponent implements OnInit {
     }
   }
   saveProject(){
-    // this.insertForm.get("type").setValue(this.prjupdatedata["type"]);
-    // this.insertForm.get("initiatives").setValue(this.prjupdatedata["initiatives"]);
-    // this.insertForm.get("process").setValue(this.prjupdatedata["process"]);
-    // this.insertForm.get("projectName").setValue(this.prjupdatedata["projectName"]);
-    // this.insertForm.get("owner").setValue(this.prjupdatedata["owner"]);
-    // this.insertForm.get("access").setValue(this.prjupdatedata["access"]);
-    // this.insertForm.get("priority").setValue(this.prjupdatedata["priority"]);
-    let projDetails = this.insertForm.value;
-   
-    this.myprojDetials=
-
+        let projDetails = this.insertForm.value;
+       this.myprojDetials=
       {
-        
-       
-        "projectName": projDetails.projectname,
+          "projectName": projDetails.projectname,
         "initiatives": projDetails.initiatives,
         "resources": projDetails.addresources,
-        "owner":projDetails.addresources
+        "owner":projDetails.addresources,
+        "priority": projDetails.priority,
+      "measurableMetrics":projDetails.measurablemetrics ,
+        "description": projDetails.description
               }
-  
+             this.prog_projectArray.push(this.myprojDetials);
+             console.log("project array is",this.prog_projectArray)
+             document.getElementById('addproj').style.display='none';
+             document.getElementById('prog-proj-tab').style.display='block';
 
 
   }
@@ -193,7 +222,17 @@ export class ProjectsComponent implements OnInit {
     this.submitted=true;
     let program = this.createprogram.value;
     console.log("my prog",program)
-    this.api.saveProgram(program).subscribe( res=>{​​​​​​​​
+ this.myProgrambody=   
+{"programname":program.programname,
+"initiatives":program.initiatives,
+"programpurpose":program.programpurpose,
+"prograpriority":program.prograpriority,
+"measurablemetrics":program.measurablemetrics,
+"description":program.description,
+"project":this.prog_projectArray
+}
+
+    this.api.saveProgram(this.myProgrambody).subscribe( res=>{​​​​​​​​
     this.spinner.hide();
     Swal.fire({​​​​​​​​
     position:'center',
@@ -247,10 +286,12 @@ export class ProjectsComponent implements OnInit {
         showConfirmButton: false,
         timer: 2000
       });
-     
+      this.tablelist=[];
+      this.removeallchecks();
+
       this.getallProjects();
       this.Credchecktoupdate();
-      
+      this.checktodelete(); 
       document.getElementById('UpdateProjects').style.display='none';   
       this.spinner.hide();
   });
@@ -263,13 +304,13 @@ else
 }
 
 delete(){
-  let selectedprojectid = this.projectsdata.filter(product => product.checked==true).map(p =>p.id);
-  var selectedprojecttype = this.projectsdata.filter(product => product.checked==true).map(p => p.type);
-
+  let selectedprojectid = this.tablelist.filter(product => product.checked==true).map(p =>p.id);
+  let selectedprojecttype = this.tablelist.filter(product => product.checked==true).map(p => p.type);
+ 
   
   this.projectmodifybody = [{
-    "id": selectedprojectid,
-    "type": selectedprojecttype,
+    "id":selectedprojectid[0],
+    "type": selectedprojecttype[0],
     
 }]
   
@@ -284,7 +325,7 @@ delete(){
   }).then((result) => {
     if (result.value) {
       this.spinner.show();
-      this.api.delete_Project(JSON.stringify(this.projectmodifybody)).subscribe( res =>{ 
+      this.api.delete_Project(this.projectmodifybody).subscribe( res =>{ 
         let status:any = res;
         Swal.fire({
           position: 'center',
@@ -308,7 +349,7 @@ delete(){
 
 Credchecktoupdate()
   {
-    const selectedprojectdetails = this.projectsdata.filter(product => product.checked==true);
+    const selectedprojectdetails = this.tablelist.filter(product => product.checked==true);
     if(selectedprojectdetails.length==1)
     {
       this.Credupdateflag=true;
@@ -321,8 +362,9 @@ Credchecktoupdate()
 
   CredcheckEnableDisableBtn(id, event)
   {
-    this.projectsdata.find(data=>data.id==id).checked=event.target.checked;
-    if(this.projectsdata.filter(data=>data.checked==true).length==this.projectsdata.length)
+    this.tablelist.find(data=>data.id==id).checked=event.target.checked;
+    if(this.tablelist.filter(data=>data.checked==true).length==this.tablelist.length)
+
     {
       this.updateflag=true;
     }else
@@ -335,7 +377,7 @@ Credchecktoupdate()
 
   checktodelete()
   {
-    const selectedprojectdata = this.projectsdata.filter(product => product.checked).map(p => p.id);
+    const selectedprojectdata = this.tablelist.filter(product => product.checked).map(p => p.id);
     if(selectedprojectdata.length>0)
     {
       this.Creddeleteflag=true;
@@ -354,9 +396,9 @@ Credchecktoupdate()
 
   removeallchecks()
   {
-    for(let i=0;i<this.projectsdata.length;i++)
+    for(let i=0;i<this.tablelist.length;i++)
     {
-      this.projectsdata[i].checked= false;
+      this.tablelist[i].checked= false;
     }
     this.Credcheckflag=false;
   }
