@@ -81,7 +81,6 @@ export class ProjectsComponent implements OnInit {
 
   ngOnInit() {
     this.getallProjects();
-    document.getElementById('projectmodal').style.display='none'
 
   }
 
@@ -136,7 +135,7 @@ export class ProjectsComponent implements OnInit {
         if(this.projectsdata.length>0)
          { 
            this.Prjcheckeddisabled = false;
-           this.projectsdata.sort((a,b) => a.id > b.id ? -1 : 1);
+           this.tablelist.sort((a,b) => a.id > b.id ? -1 : 1);
            setTimeout(() => {
             this.sortmethod(); 
           }, 80);
@@ -162,6 +161,20 @@ export class ProjectsComponent implements OnInit {
     document.getElementById("filters").style.display='block';
     document.getElementById('UpdateProjects').style.display='none';
     this.resetupdateForm();
+  }
+
+  closeprogram(){
+    document.getElementById("filters").style.display='block';
+    document.getElementById('prog-proj-tab').style.display='none';
+    this.resetcreateprogramForm();
+  }
+
+  resetcreateprogramForm(){
+      this.createprogram.reset();
+  }
+
+  resetProjForm(){
+  this.insertForm.reset();
   }
 
   resetupdateForm(){
@@ -193,6 +206,7 @@ export class ProjectsComponent implements OnInit {
       }
     }
   }
+
   saveProject(){
         let projDetails = this.insertForm.value;
        this.myprojDetials=
@@ -212,9 +226,7 @@ export class ProjectsComponent implements OnInit {
 
 
   }
-  resetProjForm(){
-    
-  }
+  
   saveProgram(){​​​​​​​​
     if(this.createprogram.valid)
        {​​​​​​​​
@@ -242,6 +254,10 @@ export class ProjectsComponent implements OnInit {
     timer:2000
               }​​​​​​​​)
     this.submitted=false; 
+    this.tablelist=[];
+    document.getElementById('prog-proj-tab').style.display='none';   
+    this.getallProjects();
+    
     this.spinner.hide();
         }​​​​​​​​);
     
@@ -250,11 +266,13 @@ export class ProjectsComponent implements OnInit {
     alert("Invalid Form");
       }​​​​​​​​
        }​​​​​​​​
+
   createprojects(){
     document.getElementById("filters").style.display='none';
     document.getElementById('prog-proj-tab').style.display='block';
   }
-  addProject(template: TemplateRef<any>)
+
+  addProject()
   {
     //this.modalRef = this.modalService.show(template);
     document.getElementById('addproj').style.display='block'
