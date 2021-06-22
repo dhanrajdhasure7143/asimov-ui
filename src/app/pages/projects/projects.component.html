@@ -1,3 +1,4 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='..\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
 <div>
     <!-- <mat-card>
         <mat-tab-group mat-stretch-tabs>
@@ -648,9 +649,9 @@
                     <label for="priority">Priority<span style="color:red">*</span></label>
                     <select class="form-control" formControlName="priority">
                         <option value="" [selected]="true">--Select Priority --</option>
-                        <option value="high">High</option>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>               
+                        <option value="High">High</option>
+                        <option value="Low">Low</option>
+                        <option value="Medium">Medium</option>               
                       </select>
                     <span *ngIf="updateForm.get('priority').invalid && updateForm.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
                 </div>

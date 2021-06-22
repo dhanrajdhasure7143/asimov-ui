@@ -785,10 +785,10 @@ font-size: 18px !important;
   margin-top: 64px;
 }
 
-#sidenav {
+/* #sidenav {
   width: 300px;
   min-height: 100vh;
-}
+} */
 
 
 #sidenav.menu-close {
