@@ -223,10 +223,10 @@ export class ProjectsComponent implements OnInit {
     let program = this.createprogram.value;
     console.log("my prog",program)
  this.myProgrambody=   
-{"programname":program.programname,
+{"programName":program.programname,
 "initiatives":program.initiatives,
-"programpurpose":program.programpurpose,
-"prograpriority":program.prograpriority,
+"purpose":program.programpurpose,
+"priority":program.programpriority,
 "measurablemetrics":program.measurablemetrics,
 "description":program.description,
 "project":this.prog_projectArray

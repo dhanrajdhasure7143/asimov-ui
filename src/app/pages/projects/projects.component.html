@@ -718,9 +718,9 @@
                   <label for="programpriority">Set Program Priority<span style="color:rgb(90, 92, 212)">*</span></label>
                   <div><select class="form-control" formControlName="programpriority">
                        <option value="" [selected]="true">Select Program Priority</option>
-                       <option value="test">High</option>
-                       <option value="test">Medium</option>
-                       <option value="test">Low</option>
+                       <option value="High">High</option>
+                       <option value="Medium">Medium</option>
+                       <option value="Low">Low</option>
                    </select></div>
                   <span *ngIf="(createprogram.get('programpriority').invalid && createprogram.get('programpriority').touched) && !createprogram.controls['programpriority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Owner is required*</span>
                   <div *ngIf="createprogram.controls['programpriority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
@@ -852,9 +852,9 @@
                     <label for="programpriority">Set Program Priority<span style="color:rgb(90, 92, 212)">*</span></label>
                  <select class="form-control" formControlName="programpriority">
                          <option value="" [selected]="true">Select</option>
-                         <option value="test">High</option>
-                 <option value="test">Medium</option>
-                 <option value="test">Low</option>
+                         <option value="High">High</option>
+                 <option value="Medium">Medium</option>
+                 <option value="Low">Low</option>
                      </select>
                       <!-- <span *ngIf="(insertForm.get('outboundAddressPort').invalid && insertForm.get('outboundAddressPort').touched) && !insertForm.controls['outboundAddressPort'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Out Bound Address Port is required*</span>
                       <div *ngIf="insertForm.controls['outboundAddressPort'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
