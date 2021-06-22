@@ -864,4 +864,8 @@ save_blueprism_config(data)
     delete_Project(data: any) {
       return this.http.post("/platform-service/project/deleteproject", data)
     }
+    saveProgram(program: any) {
+      return this.http.post("/platform-service/program/create",program)
+    }
+
 }
