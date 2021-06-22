@@ -6,6 +6,7 @@ import { RestApiService } from '../services/rest-api.service';
 import Swal from 'sweetalert2';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import { type } from 'jquery';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
@@ -30,6 +31,7 @@ export class ProjectsComponent implements OnInit {
   selectedprojectid: string;
   selectedprojecttype: any;
   projectmodifybody: any;
+  tablelist:any=[];
   constructor( private api:RestApiService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService,
     ) { 
 
@@ -47,12 +49,13 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.spinner.show();
     this.getallProjects();
   }
 
   
   CredcheckAllCheckBox(ev) {
-    this.projectsdata.forEach(x =>
+    this.tablelist.forEach(x =>
        x.checked = ev.target.checked);
     this.Credchecktoupdate();
     this.checktodelete();
@@ -64,23 +67,52 @@ export class ProjectsComponent implements OnInit {
   }
 
  
-  async getallProjects(){
+   getallProjects(){
+    this.spinner.show();
     this.api.getAllProjects().subscribe(data1 => {
         this.projectsdata = data1;
+        this.projectsdata[0].filter(data => {
+          this.tablelist.push({
+            id:data.id,
+            projectName:data.programName,
+            access:data.access,
+            initiatives:data.initiatives,
+            process:data.process,
+            type:data.type,
+            owner:data.owner,
+            priority:data.priority,
+          })
+         
+        })
+        this.projectsdata[1].filter(data => {
+          if(data.type==null){
+          this.tablelist.push({
+            id:data.id,
+            projectName:data.projectName,
+            access:data.access,
+            initiatives:data.initiatives,
+            process:data.process,
+            type:"Project",
+            owner:data.owner,
+            priority:data.priority,
+          })
+         
+        }
+      })
         if(this.projectsdata.length>0)
          { 
            this.Prjcheckeddisabled = false;
-           this.projectsdata.sort((a,b) => a.id > b.id ? -1 : 1);
+           this.tablelist.sort((a,b) => a.id < b.id ? -1 : 1);
            setTimeout(() => {
             this.sortmethod(); 
           }, 80);
-  
          }
          else
          {
            this.Prjcheckeddisabled = true;
          }
-        this.dataSource2 = new MatTableDataSource(this.projectsdata);
+         
+        this.dataSource2 = new MatTableDataSource(this.tablelist);
         this.spinner.hide();
       });
       document.getElementById("filters").style.display='block'; 
@@ -107,7 +139,7 @@ export class ProjectsComponent implements OnInit {
     document.getElementById("filters").style.display='none';
     document.getElementById('UpdateProjects').style.display='block';
     let data:any;
-    for(data of this.projectsdata)
+    for(data of this.tablelist)
     {
       if(data.id==this.dbupdateid)
       {
@@ -140,10 +172,11 @@ export class ProjectsComponent implements OnInit {
         showConfirmButton: false,
         timer: 2000
       });
-     
+      this.tablelist=[];
+      this.removeallchecks();
       this.getallProjects();
       this.Credchecktoupdate();
-      
+      this.checktodelete(); 
       document.getElementById('UpdateProjects').style.display='none';   
       this.spinner.hide();
   });
@@ -156,16 +189,15 @@ else
 }
 
 delete(){
-  let selectedprojectid = this.projectsdata.filter(product => product.checked==true).map(p =>p.id);
-  var selectedprojecttype = this.projectsdata.filter(product => product.checked==true).map(p => p.type);
+  let selectedprojectid = this.tablelist.filter(product => product.checked==true).map(p =>p.id);
+  let selectedprojecttype = this.tablelist.filter(product => product.checked==true).map(p => p.type);
 
   
   this.projectmodifybody = {
-    "id": selectedprojectid,
-    "type": selectedprojecttype,
+    "id":selectedprojectid[0],
+    "type": selectedprojecttype[0],
     
 }
-  
   Swal.fire({
     title: 'Are you sure?',
     text: "You won't be able to revert this!",
@@ -200,7 +232,7 @@ delete(){
 
 Credchecktoupdate()
   {
-    const selectedprojectdetails = this.projectsdata.filter(product => product.checked==true);
+    const selectedprojectdetails = this.tablelist.filter(product => product.checked==true);
     if(selectedprojectdetails.length==1)
     {
       this.Credupdateflag=true;
@@ -213,8 +245,8 @@ Credchecktoupdate()
 
   CredcheckEnableDisableBtn(id, event)
   {
-    this.projectsdata.find(data=>data.id==id).checked=event.target.checked;
-    if(this.projectsdata.filter(data=>data.checked==true).length==this.projectsdata.length)
+    this.tablelist.find(data=>data.id==id).checked=event.target.checked;
+    if(this.tablelist.filter(data=>data.checked==true).length==this.tablelist.length)
     {
       this.updateflag=true;
     }else
@@ -227,7 +259,7 @@ Credchecktoupdate()
 
   checktodelete()
   {
-    const selectedprojectdata = this.projectsdata.filter(product => product.checked).map(p => p.id);
+    const selectedprojectdata = this.tablelist.filter(product => product.checked).map(p => p.id);
     if(selectedprojectdata.length>0)
     {
       this.Creddeleteflag=true;
@@ -246,9 +278,9 @@ Credchecktoupdate()
 
   removeallchecks()
   {
-    for(let i=0;i<this.projectsdata.length;i++)
+    for(let i=0;i<this.tablelist.length;i++)
     {
-      this.projectsdata[i].checked= false;
+      this.tablelist[i].checked= false;
     }
     this.Credcheckflag=false;
   }

@@ -9,7 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-
+import { NgxSpinnerModule } from "ngx-spinner";
 import {
   MatDialogModule,
   MatIconModule,
@@ -45,7 +45,7 @@ import {
     DataTablesModule,MatTableModule,ReactiveFormsModule,FormsModule, MatSortModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatButtonModule,
+    MatButtonModule,NgxSpinnerModule
     
   ]
 })
