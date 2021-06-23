@@ -21,7 +21,7 @@ export class SidebarComponent implements OnInit {
   hightlight(element)
   {
   //   console.log(element)
-  //   $('.link').removeClass('active')
-  //   $('#'+element).addClass("active")
+     $('.link').removeClass('active')
+     $('#'+element).addClass("active")
   }
 }
