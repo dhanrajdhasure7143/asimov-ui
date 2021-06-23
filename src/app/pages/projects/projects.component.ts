@@ -37,6 +37,7 @@ export class ProjectsComponent implements OnInit {
   projectmodifybody: any;
   submitted: boolean;
   insertForm: FormGroup;
+  insertForm2:FormGroup;
   projDetials: {};
   myprojDetials:any;
   tablelist:any=[]
@@ -75,6 +76,21 @@ export class ProjectsComponent implements OnInit {
       description: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
   })
+  this.insertForm2=this.formBuilder.group({
+    projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    
+    owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    
+    mapchainvalue: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    enddate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    startdate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    projectpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    description: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+
+})
   this.Credupdateflag=false;
       this.Creddeleteflag=false;
   }
@@ -425,5 +441,21 @@ Credchecktoupdate()
       this.tablelist[i].checked= false;
     }
     this.Credcheckflag=false;
+  }
+
+
+  createproject()
+  {
+    this.api.createProject(this.insertForm2.value).subscribe(data=>{
+      let response:any=data;
+      if(response.errormessage==undefined)
+      {
+        Swal.fire(response.message,"","success");
+        this.getallProjects()
+      }
+      else
+        Swal.fire(response.errormessage,"","error");
+      
+    })
   }
 }

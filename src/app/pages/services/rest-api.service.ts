@@ -868,4 +868,9 @@ save_blueprism_config(data)
       return this.http.post("/platform-service/program/create",program)
     }
 
+    createProject(data)
+    {
+      return this.http.post("/platform-service/project/create",data)
+    }
+
 }
