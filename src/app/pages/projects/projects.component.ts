@@ -80,6 +80,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.getallProjects();
 
   }
@@ -322,15 +323,20 @@ else
 }
 
 delete(){
-  let selectedprojectid = this.tablelist.filter(product => product.checked==true).map(p =>p.id);
-  let selectedprojecttype = this.tablelist.filter(product => product.checked==true).map(p => p.type);
+  let selectedproject = this.tablelist.filter(product => product.checked==true).map(p =>{
+    return{
+      id:p.id,
+      type:p.type
+    }
+  });
+  // let selectedprojecttype = this.tablelist.filter(product => product.checked==true).map(p => p.type);
  
   
-  this.projectmodifybody = [{
-    "id":selectedprojectid[0],
-    "type": selectedprojecttype[0],
+//   this.projectmodifybody = [{
+//     "id":selectedprojectid[0],
+//     "type": selectedprojecttype[0],
     
-}]
+// }]
   
   Swal.fire({
     title: 'Are you sure?',
@@ -343,7 +349,7 @@ delete(){
   }).then((result) => {
     if (result.value) {
       this.spinner.show();
-      this.api.delete_Project(this.projectmodifybody).subscribe( res =>{ 
+      this.api.delete_Project(selectedproject).subscribe( res =>{ 
         let status:any = res;
         Swal.fire({
           position: 'center',
