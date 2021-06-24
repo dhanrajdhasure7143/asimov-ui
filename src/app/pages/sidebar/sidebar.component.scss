@@ -38,10 +38,20 @@
   }
 }
 
+
 .side-menu-font{
-  font-size: 18px;
+  font-size: 16px;
   padding:30px;
+  color: #6c757d;
+  font-weight: 500;
 }
+.side-menu-font:hover{
+  font-size: 16px;
+  padding:30px;
+  color: #001c47;
+  font-weight: 500;
+}
+
 .side-icon{
   font-size: 30px;
   color:rgb(128, 128, 128);
@@ -63,7 +73,7 @@
 //}
 
 ::ng-deep mat-nav-list a:active{
-  background-color:#098DE6 !important;
+  background-color:#00a0e3 !important;
   color :white!important;
 }
 
@@ -72,12 +82,12 @@
   .side-icon{
     color:#098DE6 !important;
   }
-  background-color :white!important;
+  background-color :#fdfdfd!important;
+  color :white!important;
 }
 .active
 {
-  background-color:  #098DE6 !important;
-  border-left:5px solid #098DE6 !important;
+  background-color:  #00a0e3 !important;
   color:white;
   .side-icon{
     color :white !important;
@@ -92,7 +102,7 @@
 }
 
 .nav-main{
-  height:calc(100vh - 64px);
+  height:calc(100vh - 60px);
    border-right:1px solid lightblue;
   //box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
@@ -127,8 +137,8 @@
   left: 0px;
   margin-left: 2px;
   /* padding: 0px 5px; */
-  padding: 0px 8px;
-  height: 40px;
+  padding: 0px 5px;
+  height: 80px;
   width: 260px;
   display: flex;
   align-items: center;
@@ -144,8 +154,7 @@ label.poweredby-label {
   display: block;
 }
 label.epsoft-label {
-  font-size: 21px;
-  font-weight: 500;
+  font-size: 16px;
   position: relative;
 }
 
@@ -170,3 +179,4 @@ label.epsoft-label sup {
 .active-img{
   display:none;
 }
+
