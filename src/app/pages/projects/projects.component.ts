@@ -269,21 +269,30 @@ export class ProjectsComponent implements OnInit {
 
     this.api.saveProgram(this.myProgrambody).subscribe( res=>{​​​​​​​​
     this.spinner.hide();
-    Swal.fire({​​​​​​​​
-    position:'center',
-    icon:'success',
-    title:"saved",
-    showConfirmButton:false,
-    timer:2000
-              }​​​​​​​​)
+    let status: any= res;
+    Swal.fire({
+      title: 'Success',
+      text: ""+status.message,
+      position: 'center',
+      icon: 'success',
+      showCancelButton: false,
+      confirmButtonColor: '#007bff',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Ok'
+    })
     this.submitted=false; 
     this.tablelist=[];
     document.getElementById('prog-proj-tab').style.display='none';   
     this.getallProjects();
     
     this.spinner.hide();
-        }​​​​​​​​);
-    
+  },err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Something went wrong!',
+      })
+  })
       }​​​​​​​​
     else{​​​​​​​​
     alert("Invalid Form");
