@@ -588,6 +588,7 @@
                     <div class="col-md-3 formelement">
                     <label for="type">Type<span style="color:red">*</span></label>
                         <select class="form-control" formControlName="type">
+                          <option  [value]="null" disabled hidden>--Select Type --</option>
                             <option value="" [selected]="true">--Select Type --</option>
                             <option value="Project">Project</option>
                             <option value="Program">Program</option>              
@@ -604,12 +605,20 @@
                       </div>
                      
                       <div class="col-md-3 formelement">
-                        <label for="process">Process<span style="color:red">*</span></label>
+                        <!-- <label for="process">Process<span style="color:red">*</span></label>
                         <input type="text" maxlength="51" class="form-control" formControlName="process" value="" placeholder="Enter Process" >
                         <span *ngIf="(updateForm.get('process').invalid && updateForm.get('process').touched) && !updateForm.controls['process'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
                         <div *ngIf="updateForm.controls['process'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                             Maximum of 50 characters
-                        </div>  
+                        </div>   -->
+
+                        <label for="process">Process<span style="color:red">*</span></label>
+                    <select class="form-control" formControlName="process">
+                      <option  [value]="null" disabled hidden>--Select Process --</option>
+                        <option value="" [selected]="true">--Select Process --</option>
+                        <option *ngFor="let process of selected_process_names" [value]="process.processName">{{process.processName}}</option>          
+                      </select>
+                    <span *ngIf="updateForm.get('process').invalid && updateForm.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
                     </div>
                                  
                     <div class="col-md-3 formelement">
@@ -648,6 +657,7 @@
                   <div class="col-md-3 formelement">
                     <label for="priority">Priority<span style="color:red">*</span></label>
                     <select class="form-control" formControlName="priority">
+                      <option  [value]="null" disabled hidden>--Select Priority --</option>
                         <option value="" [selected]="true">--Select Priority --</option>
                         <option value="High">High</option>
                         <option value="Low">Low</option>
@@ -697,6 +707,7 @@
                     <div class="col-md-3 formelement">
                       <label for="initiatives">Initiatives<span style="color:rgb(90, 92, 212)">*</span></label>
                       <select class="form-control" formControlName="initiatives">
+                        <option  [value]="null" disabled hidden>--Select Initiative --</option>
                            <option value="" [selected]="true">Select Initiative</option>
                            <option value="Process Improvement">Process Improvement</option>
                            <option value="Business Improvement">Business Improvement</option>
@@ -711,7 +722,7 @@
                     <label for="programpurpose">Add Program Purpose<span style="color:rgb(90, 92, 212)">*</span></label>
                     <input type="text" maxlength="51" class="form-control data" formControlName="programpurpose" value="" 
                     placeholder="Enter Program Purpose">
-                     <span *ngIf="(createprogram.get('programpurpose').invalid && createprogram.get('programpurpose').touched) && !createprogram.controls['programpurpose'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Name is required*</span>
+                     <span *ngIf="(createprogram.get('programpurpose').invalid && createprogram.get('programpurpose').touched) && !createprogram.controls['programpurpose'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Purpose required*</span>
                       <div *ngIf="createprogram.controls['programpurpose'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                           Maximum of 50 characters
                       </div>
@@ -720,12 +731,13 @@
                 <div class="col-md-3 formelement">
                   <label for="programpriority">Set Program Priority<span style="color:rgb(90, 92, 212)">*</span></label>
                   <div><select class="form-control" formControlName="programpriority">
+                    <option  [value]="null" disabled hidden>--Select Program Priority --</option>
                        <option value="" [selected]="true">Select Program Priority</option>
                        <option value="High">High</option>
                        <option value="Medium">Medium</option>
                        <option value="Low">Low</option>
                    </select></div>
-                  <span *ngIf="(createprogram.get('programpriority').invalid && createprogram.get('programpriority').touched) && !createprogram.controls['programpriority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Owner is required*</span>
+                  <span *ngIf="(createprogram.get('programpriority').invalid && createprogram.get('programpriority').touched) && !createprogram.controls['programpriority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Priority required*</span>
                   <div *ngIf="createprogram.controls['programpriority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                       Maximum of 50 characters
                   </div> 
@@ -738,10 +750,10 @@
                     
 
                   <div class="col-md-3 formelement">
-                    <label for="measurablemetrics">Identify measurable metrics<span style="color:rgb(90, 92, 212)">*</span></label>
+                    <label for="measurablemetrics">Identify Measurable Metrics<span style="color:rgb(90, 92, 212)">*</span></label>
                     <input type="text" maxlength="51" class="form-control data"  formControlName="measurablemetrics" value="" 
-                    placeholder="Enter metrics">
-                    <span *ngIf="createprogram.get('measurablemetrics').invalid && createprogram.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
+                    placeholder="Enter Identify Measurable Metrics">
+                    <span *ngIf="createprogram.get('measurablemetrics').invalid && createprogram.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identify Measurable Metrics Required*</span>
                     <div *ngIf="createprogram.controls['measurablemetrics'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                       Maximum of 50 characters
                   </div>
@@ -751,7 +763,7 @@
                   <label for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label>
                   <input type="text" maxlength="250" class="form-control data" formControlName="description" value="" 
                   placeholder="Enter Description">
-                  <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
+                  <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
                   <div *ngIf="createprogram.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                     Maximum of 50 characters
                 </div>

@@ -43,6 +43,7 @@ export class ProjectsComponent implements OnInit {
   tablelist:any=[]
   prog_projectArray: any=[];
   myProgrambody: any;
+  public selected_process_names:any=[];
   constructor( private api:RestApiService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService, 
     ) { 
 
@@ -206,6 +207,7 @@ export class ProjectsComponent implements OnInit {
   {    
     document.getElementById("filters").style.display='none';
     document.getElementById('UpdateProjects').style.display='block';
+    this.getprocessnames();
     let data:any;
     for(data of this.tablelist)
     {
@@ -222,6 +224,7 @@ export class ProjectsComponent implements OnInit {
         break;
       }
     }
+   
   }
 
   saveProject(){
@@ -315,12 +318,15 @@ export class ProjectsComponent implements OnInit {
       let status: any= res;
       this.spinner.hide();
       Swal.fire({
+        title: 'Success',
+        text: ""+status.message,
         position: 'center',
         icon: 'success',
-        title: status.message,
-        showConfirmButton: false,
-        timer: 2000
-      });
+        showCancelButton: false,
+        confirmButtonColor: '#007bff',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ok'
+      })
       this.tablelist=[];
       this.removeallchecks();
 
@@ -329,6 +335,13 @@ export class ProjectsComponent implements OnInit {
       this.checktodelete(); 
       document.getElementById('UpdateProjects').style.display='none';   
       this.spinner.hide();
+    },err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Something went wrong!',
+      })
+      
   });
 }
 else
@@ -337,6 +350,15 @@ else
 }
   
 }
+
+getprocessnames()
+{
+  this.api.getprocessnames().subscribe(processnames=>{
+    let resp:any=[]
+    resp=processnames
+    this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+  })
+  }
 
 delete(){
   let selectedproject = this.tablelist.filter(product => product.checked==true).map(p =>{
@@ -368,19 +390,29 @@ delete(){
       this.api.delete_Project(selectedproject).subscribe( res =>{ 
         let status:any = res;
         Swal.fire({
+          title: 'Success',
+          text: ""+status.message,
           position: 'center',
           icon: 'success',
-          title: status.message,
-          showConfirmButton: false,
-          timer: 2000    
-        });
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+        }) 
         this.tablelist=[]
         this.removeallchecks();
         this.getallProjects();
         this.spinner.hide();
         this.Credchecktoupdate();  
-        this.checktodelete();                 
-      });
+        this.checktodelete(); 
+        },err => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+          })
+                       
+        })
     }
   });
 
