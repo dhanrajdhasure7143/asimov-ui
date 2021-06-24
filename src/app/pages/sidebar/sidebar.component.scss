@@ -76,22 +76,27 @@
 }
 .active
 {
-  background-color:white   !important;
+  background-color:  #098DE6 !important;
   border-left:5px solid #098DE6 !important;
-
+  color:white;
   .side-icon{
-    color :#098DE6 !important;
+    color :white !important;
     padding: 3px;
   }
 }
 
 .sidebar-main{
-  height: 90vh;
+  height: calc(100vh - 147px);
   // overflow:scroll;
-  border-right:1px solid rgb(184, 184, 184);
+ // border-right:1px solid rgb(184, 184, 184);
 }
 
-
+.nav-main{
+  height:calc(100vh - 64px);
+   border-right:1px solid lightblue;
+  //box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
+}
 .menu-button {
   transition: 300ms ease-in-out;
   transform: rotate(0deg);
@@ -118,7 +123,7 @@
 
 .epslogo {
   position: relative;
-  bottom: 30px;
+  bottom: 0px;
   left: 0px;
   margin-left: 2px;
   /* padding: 0px 5px; */
@@ -154,4 +159,14 @@ label.epsoft-label sup {
   position: absolute;
   top: 0px;
   right: -10px;
+}
+
+
+
+.default-img{
+  display:block;
+}
+
+.active-img{
+  display:none;
 }

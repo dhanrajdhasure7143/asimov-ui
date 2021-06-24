@@ -73,11 +73,14 @@
 
 
 
+  .ep-header-white{
+    background-color: white !important;
+  }
   .example-spacer {
     flex: 1 1 auto;
   }
   .txt-wh{
-    color:white !important;
+    color: #6C757D !important;
   }
   .abrand_div img{
       width:160px;
@@ -87,14 +90,14 @@
   }
   
   .header{
-      background-color: #098DE6 !important;
-      /* color: white !important; */
+      /* background-color: #098DE6 !important;
+      color: white !important; */
       height: 60px !important;
   }
   .abrand{
       /* background-color: #0A8DE8!important; */
       height: 80px;
-      color: white !important;
+      color: #001c47 !important;
   }
   .abrand_div{
       cursor: pointer;
@@ -238,4 +241,9 @@
   }
   .bread-crumb span:hover{
     font-weight: 600 !important;
+  }
+
+
+  .ep-header-new{
+    border-bottom: 1px solid lightblue;
   }

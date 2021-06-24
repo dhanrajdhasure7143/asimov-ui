@@ -1,3 +1,5 @@
+
+<div class="nav-main">
 <section class="sidebar-main">
 
 <mat-nav-list class="ep-nav-font">
@@ -9,16 +11,24 @@
   <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
   <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home" data-toggle="tooltip" data-placement="right"  title="Dashboard">
     <span class="side-icon">
-      <mat-icon  >grid_view</mat-icon>
+      <span class="active-img" id="eiap-home-icon-white">
+          <img src="../../../assets/images/dashboard_icons/white-icons/dashboard.svg">
+      </span>
+      <span  class="default-img" id="eiap-home-icon-gray">
+          <img src="../../../assets/images/dashboard_icons/grey-icons/dashboard.svg">
+      </span>
     </span>
 
     <span class="side-menu-font">Dashboard</span>
   </a>
  
   <a mat-list-item class="link" id="process" (click)="hightlight('process')"  data-toggle="tooltip" data-placement="right"  title="Processes">
-    <span class="side-icon">
-      <mat-icon  >bookmark</mat-icon>
-    </span>
+      <span class="active-img" id="eiap-home-icon-white">
+          <img src="../../../assets/images/dashboard_icons/white-icons/Process -Graph.svg">
+      </span>
+      <span  class="default-img" id="eiap-home-icon-gray">
+          <img src="../../../assets/images/dashboard_icons/grey-icons/Process -Graph.svg">
+      </span>
 
     <span class="side-menu-font">Processes</span>
   </a>
@@ -114,7 +124,6 @@
       <span class="side-menu-font">System Setting</span>
     </a>
   </div>
-   <br><br><br><br><br><br>
    
     <!-- <div class="link">
       <span class="side-menu-font">
@@ -122,13 +131,7 @@
     </span>
     </div> -->
 
-    <div class="epslogo">
-      <img src="..\assets\images\EPSoft.png" alt="" height="54">
-      <span class="poweredby">
-          <label class="poweredby-label">Powered By</label>
-          <label class="epsoft-label">EPSoft<sup>R</sup></label>
-      </span>
-  </div>
+   
 
 
   <!-- <a mat-list-item class="link active" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home"  >
@@ -189,4 +192,14 @@
     </a>
   </mat-menu> -->
 </mat-nav-list>
+
 </section>
+<div class="epslogo">
+  <img src="..\assets\images\EPSoft.png" alt="" height="54">
+  <span class="poweredby">
+      <label class="poweredby-label">Powered By</label>
+      <label class="epsoft-label">EPSoft<sup>R</sup></label>
+  </span>
+</div>
+
+</div>
