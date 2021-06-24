@@ -89,7 +89,7 @@
   .header{
       background-color: #098DE6 !important;
       /* color: white !important; */
-      height: 63px !important;
+      height: 60px !important;
   }
   .abrand{
       /* background-color: #0A8DE8!important; */
@@ -146,10 +146,10 @@
 
     }
     .res-circle-img {
-      width: 48px;
+      width: 45px;
       border-radius: 100%;
-      height: 46px;
-      margin-top: 5px;
+      height: 45px;
+      margin-top: 0px;
       color: black;
       margin-left: -5px;
       /* padding: 2px 5px; */
