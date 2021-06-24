@@ -7,7 +7,7 @@
   </div> -->
 
   <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
-  <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home" >
+  <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home" data-toggle="tooltip" data-placement="right"  title="Dashboard">
     <span class="side-icon">
       <mat-icon  >grid_view</mat-icon>
     </span>
@@ -15,7 +15,7 @@
     <span class="side-menu-font">Dashboard</span>
   </a>
  
-  <a mat-list-item class="link" id="process" (click)="hightlight('process')"  >
+  <a mat-list-item class="link" id="process" (click)="hightlight('process')"  data-toggle="tooltip" data-placement="right"  title="Processes">
     <span class="side-icon">
       <mat-icon  >bookmark</mat-icon>
     </span>
@@ -24,7 +24,8 @@
   </a>
   
 
-  <a mat-list-item class="link" id="projects" (click)="hightlight('projects')" routerLink="/pages/projects/listOfProjects">
+  <a mat-list-item class="link" id="projects" (click)="hightlight('projects')" routerLink="/pages/projects/listOfProjects"
+  data-toggle="tooltip" data-placement="right"  title="Projects">
     <span class="side-icon">
       <mat-icon  >account_tree</mat-icon>
     </span>
@@ -38,7 +39,7 @@
     <!-- <button mat-icon-button #trigger=matMenuTrigger [matMenuTriggerFor]="workspacemenu">
       <mat-icon>more_vert</mat-icon>
    </button> -->
-   <mat-list-item (click)="showSubmenu = !showSubmenu" class="">
+   <mat-list-item (click)="showSubmenu = !showSubmenu" class=""  data-toggle="tooltip" data-placement="right"  title="Workspace">
     <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
     <span class="side-icon">
@@ -71,7 +72,7 @@
   </div>
 
 
-  <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/serviceOrchestration/home" >
+  <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/serviceOrchestration/home" data-toggle="tooltip" data-placement="right"  title="Orchestration">
     <span class="side-icon">
       <mat-icon  >monitor</mat-icon>
     </span>
@@ -88,7 +89,7 @@
       <mat-icon>more_vert</mat-icon>
    </button>
   </a> -->
-  <mat-list-item (click)="showadminSubmenu = !showadminSubmenu" class="">
+  <mat-list-item (click)="showadminSubmenu = !showadminSubmenu" class="" data-toggle="tooltip" data-placement="right"  title="Administration">
     <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
     <span class="side-icon">
@@ -100,13 +101,13 @@
     </mat-icon>
   </mat-list-item>
   <div class="submenus" [ngClass]="{'expanded' : showadminSubmenu}">
-    <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
+    <a mat-list-item  class="link" id="pi" (click)="hightlight('user')"  >
       <span class="side-icon">
         <mat-icon>manage_accounts</mat-icon>
       </span>
       <span class="side-menu-font">User Management</span>
     </a>
-    <a mat-list-item  class="link" id="bps" (click)="hightlight('bps')" routerLink="/pages/businessProcess/home"  >
+    <a mat-list-item  class="link" id="bps" (click)="hightlight('settings')"  >
       <span class="side-icon">
         <mat-icon>settings</mat-icon>
       </span>
