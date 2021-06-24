@@ -638,11 +638,17 @@
 
                       <div class="col-md-3 formelement">
                         <label for="owner">Owner<span style="color:red">*</span></label>
-                        <input type="text" maxlength="51" class="form-control data" formControlName="owner"  value="" placeholder="Enter Owmer">
+                        <!-- <input type="text" maxlength="51" class="form-control data" formControlName="owner"  value="" placeholder="Enter Owmer">
                         <span *ngIf="(updateForm.get('owner').invalid && updateForm.get('owner').touched) && !updateForm.controls['owner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Owner is required*</span>
                         <div *ngIf="updateForm.controls['owner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                             Maximum of 50 characters
-                        </div>
+                        </div> -->
+                        <select   formControlName="owner"  class="form-control data">
+                          <option  [value]="null" disabled hidden>--Select Owner --</option>
+                          <option value="" [selected]="true">--Select Owner --</option>
+                          <option *ngFor="let user of userslist" >{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                      </select>
+                      <span *ngIf="updateForm.get('owner').invalid && updateForm.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
                     </div>
 
                     <div class="col-md-3 formelement">
@@ -712,7 +718,7 @@
                           <label>Add Resources <span class="text-danger">*</span></label>
                           <select   formControlName="resources"  class="form-control data">
                               <option value="">Select Resources</option>
-                              <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                              <option *ngFor="let user of userslist" >{{user.userId.firstName}} {{user.userId.lastName}}</option>
                                 
                           </select>
                           <span *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
@@ -765,7 +771,7 @@
                               <label>Project Owner <span class="text-danger">*</span></label>
                               <select formControlName="owner"   class="form-control data">
                                       <option value="">Select Project Owner</option>
-                                      <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                      <option *ngFor="let user of userslist" >{{user.userId.firstName}} {{user.userId.lastName}}</option>
                                   </select>
                                   <span *ngIf="insertForm2.get('owner').invalid && insertForm2.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Project Owner Required*</span>
                              

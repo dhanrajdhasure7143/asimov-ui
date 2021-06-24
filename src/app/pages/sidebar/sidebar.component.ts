@@ -24,4 +24,9 @@ export class SidebarComponent implements OnInit {
      $('.link').removeClass('active')
      $('#'+element).addClass("active")
   }
+
+  selection(){
+     this.obj.sideBarOpen=true;
+     this.obj.contentMargin=300;
+   }
 }
