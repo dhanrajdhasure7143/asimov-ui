@@ -187,6 +187,7 @@ export class ProjectsComponent implements OnInit {
     document.getElementById("filters").style.display='block';
     document.getElementById('prog-proj-tab').style.display='none';
     this.resetcreateprogramForm();
+    this.resetcreateproject();
   }
 
   resetcreateprogramForm(){
