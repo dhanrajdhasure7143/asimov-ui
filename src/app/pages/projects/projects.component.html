@@ -761,9 +761,9 @@
 
                 <div class="col-md-3 formelement">
                   <label for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label>
-                  <input type="text" maxlength="250" class="form-control data" formControlName="description" value="" 
-                  placeholder="Enter Description">
-                  <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+                  <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
+                  placeholder="Enter Description"></textarea>
+                  <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
                   <div *ngIf="createprogram.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                     Maximum of 50 characters
                 </div>
@@ -830,8 +830,10 @@
                   <label>Map Chain Value</label>
                   <select  formControlName="mapchainvalue"  class="form-control data">
                         <option value="">Select</option>
-                        <option value="NA">NA</option>
-                    </select>
+                        <option value="invoiceManagement">invoice Management</option>
+                        <option value="AcmeManagement">Acme Management</option>
+                        <option value="Ecommerece">Ecommerece</option>
+                                          </select>
                     <span *ngIf="insertForm2.get('mapchainvalue').invalid && insertForm2.get('mapchainvalue').touched" style="color:red" class="fa fa-info-circle errspan">Map Chain Value Required*</span>
                         
                 </div>
@@ -1004,8 +1006,8 @@
                 <div class="col-md-3 formelement">
                 
                   <label for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label>
-                  <input type="text" maxlength="250" class="form-control data" formControlName="description" #description value="" 
-                  placeholder="Enter Description">
+                  <textarea maxlength="250" class="form-control data" formControlName="description" #description value="" 
+                  placeholder="Enter Description"></textarea>
                  <span *ngIf="(insertForm.get('description').invalid && insertForm.get('description').touched) && !insertForm.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">description required*</span>
                     <div *ngIf="insertForm.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                         Maximum of 50 characters
