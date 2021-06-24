@@ -44,6 +44,7 @@ export class ProjectsComponent implements OnInit {
   prog_projectArray: any=[];
   myProgrambody: any;
   public selected_process_names:any=[];
+  userslist:any;
   constructor( private api:RestApiService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService, 
     ) { 
 
@@ -89,7 +90,7 @@ export class ProjectsComponent implements OnInit {
     startdate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     projectpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    description: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+    description: ["", Validators.compose([Validators.maxLength(200)])],
 
 })
   this.Credupdateflag=false;
@@ -99,6 +100,7 @@ export class ProjectsComponent implements OnInit {
   ngOnInit() {
 
     this.getallProjects();
+    this.getallusers();
 
   }
 
@@ -478,16 +480,47 @@ Credchecktoupdate()
 
   createproject()
   {
+    this.spinner.show();
     this.api.createProject(this.insertForm2.value).subscribe(data=>{
       let response:any=data;
+      this.spinner.hide();
       if(response.errormessage==undefined)
       {
-        Swal.fire(response.message,"","success");
+        Swal.fire("Success",response.message,"success");
+        this.insertForm2.reset();
+        document.getElementById("prog-proj-tab").style.display="none"
         this.getallProjects()
+        this.insertForm2.get("mapchainvalue").setValue("");
+        this.insertForm2.get("resources").setValue("");
+        this.insertForm2.get("owner").setValue("");
+        this.insertForm2.get("initiatives").setValue("");
+        this.insertForm2.get("projectpriority").setValue("");
+        
       }
       else
         Swal.fire(response.errormessage,"","error");
       
+    })
+  }
+
+  resetcreateproject()
+  {
+        this.insertForm2.reset();
+        
+        this.insertForm2.get("resources").setValue("");
+        this.insertForm2.get("mapchainvalue").setValue("");
+        this.insertForm2.get("owner").setValue("");
+        this.insertForm2.get("initiatives").setValue("");
+        this.insertForm2.get("projectpriority").setValue("");
+        
+  }
+
+  getallusers()
+  {
+    let tenantid=localStorage.getItem("tenantName")
+    this.api.getuserslist(tenantid).subscribe(item=>{
+      let users:any=item
+      this.userslist=users;
     })
   }
 }
