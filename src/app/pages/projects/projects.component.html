@@ -580,7 +580,7 @@
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
               <span class="rpa-modal-close" (click)="closeproject()">&times;</span>
-              <h4>Update</h4>
+              <h4>Update Projects / Program</h4>
           </div>
           <div class="container">
               <form [formGroup]="updateForm" (ngSubmit)="projectupdate()">
@@ -725,20 +725,20 @@
                             
                         </div>
                         <div class="col-md-3">
-                          <label>Set Start Date <span class="text-danger">*</span></label>
+                          <label>Start Date <span class="text-danger">*</span></label>
                             <input type="date"  formControlName="startdate" class="form-control">
                             <span *ngIf="insertForm2.get('startdate').invalid && insertForm2.get('startdate').touched" style="color:red" class="fa fa-info-circle errspan">Start date Required*</span>
                              
                         </div>
                         <div class="col-md-3">
-                          <label>Set Project Priority <span class="text-danger">*</span></label>
+                          <label>Project Priority <span class="text-danger">*</span></label>
                           <select  formControlName="projectpriority" class="form-control data">
                                   <option value="">Select Project Priority</option>
                                   <option value="High">High</option>
                                   <option value="Medium">Medium</option>
                                   <option value="Low">Low</option>
                               </select>
-                              <span *ngIf="insertForm2.get('projectpriority').invalid && insertForm2.get('projectpriority').touched" style="color:red" class="fa fa-info-circle errspan">Project priority Required*</span>
+                              <span *ngIf="insertForm2.get('projectpriority').invalid && insertForm2.get('projectpriority').touched" style="color:red" class="fa fa-info-circle errspan">Project Priority Required*</span>
                              
                         </div>
                       </div>
@@ -777,7 +777,7 @@
                              
                             </div>
                             <div class="col-md-3">
-                              <label>Set End Date <span class="text-danger">*</span></label>
+                              <label>End Date <span class="text-danger">*</span></label>
                               <input type="date" formControlName="enddate"  class="form-control data">
                               <span *ngIf="insertForm2.get('owner').invalid && insertForm2.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
                              
@@ -848,7 +848,7 @@
                 </div>
                              
                 <div class="col-md-3 formelement">
-                  <label for="programpriority">Set Program Priority<span style="color:rgb(90, 92, 212)">*</span></label>
+                  <label for="programpriority">Program Priority<span style="color:rgb(90, 92, 212)">*</span></label>
                   <div><select class="form-control" formControlName="programpriority">
                     <option  [value]="null" disabled hidden>--Select Program Priority --</option>
                        <option value="" [selected]="true">Select Program Priority</option>
@@ -882,7 +882,7 @@
                   <label for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label>
                   <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
                   placeholder="Enter Description"></textarea>
-                  <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
+                  <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
                   <div *ngIf="createprogram.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                     Maximum of 50 characters
                 </div>
@@ -968,7 +968,7 @@
 
             <div class="row">
                   <div class="col-md-3 formelement">
-                    <label for="enddate">Set End Date<span style="color:rgb(0, 2, 139)">*</span></label>
+                    <label for="enddate">End Date<span style="color:rgb(0, 2, 139)">*</span></label>
                    <input type="text" maxlength="51" class="form-control data" formControlName="enddate" #enddate value="" 
                      placeholder="Enter End Date">
                       <!-- <span *ngIf="(insertForm.get('enddate').invalid && insertForm.get('enddate').touched) && !insertForm.controls['enddate'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">enddate Required*</span>
@@ -978,7 +978,7 @@
                   </div>
 
                   <div class="col-md-3 formelement">
-                    <label for="startdate">Set Start Date<span style="color:rgb(90, 92, 212)">*</span></label>
+                    <label for="startdate">Start Date<span style="color:rgb(90, 92, 212)">*</span></label>
                     <input type="text" maxlength="51" class="form-control data" formControlName="startdate" #startdate value="" 
                     placeholder="Enter Start Date">
                     <!-- <span *ngIf="(insertForm.get('outBoundAddress').invalid && insertForm.get('outBoundAddress').touched) && !insertForm.controls['outBoundAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Out Bound Address is required*</span>
@@ -988,7 +988,7 @@
                   </div>
 
                   <div class="col-md-3 formelement">
-                    <label for="programpriority">Set Program Priority<span style="color:rgb(90, 92, 212)">*</span></label>
+                    <label for="programpriority">Program Priority<span style="color:rgb(90, 92, 212)">*</span></label>
                  <select class="form-control" formControlName="programpriority">
                          <option value="" [selected]="true">Select</option>
                          <option value="High">High</option>
@@ -1008,10 +1008,10 @@
                   
                 <div class="col-md-3 formelement">
                 
-                  <label for="measurablemetrics">Identify measurable metrics<span style="color:rgb(90, 92, 212)">*</span></label>
+                  <label for="measurablemetrics">Identify Measurable Metrics<span style="color:rgb(90, 92, 212)">*</span></label>
                   <input type="text" maxlength="51" class="form-control data" formControlName="measurablemetrics" #measurablemetrics value="" 
                   placeholder="Enter metrics">
-                 <span *ngIf="(insertForm.get('measurablemetrics').invalid && insertForm.get('measurablemetrics').touched) && !insertForm.controls['measurablemetrics'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">measurablemetrics required*</span>
+                 <span *ngIf="(insertForm.get('measurablemetrics').invalid && insertForm.get('measurablemetrics').touched) && !insertForm.controls['measurablemetrics'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Identify Measurable Metrics required*</span>
                     <div *ngIf="insertForm.controls['measurablemetrics'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                         Maximum of 50 characters
                     </div>
@@ -1021,7 +1021,7 @@
                   <label for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label>
                   <textarea maxlength="250" class="form-control data" formControlName="description" #description value="" 
                   placeholder="Enter Description"></textarea>
-                 <span *ngIf="(insertForm.get('description').invalid && insertForm.get('description').touched) && !insertForm.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">description required*</span>
+                 <span *ngIf="(insertForm.get('description').invalid && insertForm.get('description').touched) && !insertForm.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Description required*</span>
                     <div *ngIf="insertForm.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                         Maximum of 50 characters
                     </div>
