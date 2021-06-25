@@ -6,7 +6,7 @@
   white-space: nowrap;
 }
 .nodes {
-  padding: 5px;
+  padding: 1px;
 }
 .con-img{
   width:32px;
@@ -143,8 +143,8 @@ background-color: white;
 
 
 .nodename{
-  font-size: 20px;
-  color:black;
+  font-size: 18px;
+  color:#001c47;
   font-weight: 400;
 }
 
@@ -160,8 +160,8 @@ background-color: white;
 
 .taskname{
   padding:10px;
-  font-size: 18px;
-  color:black;
+  font-size: 16px;
+  color:001c47;
   font-weight: 400;
 }
 
