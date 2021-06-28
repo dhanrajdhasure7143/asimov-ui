@@ -1,69 +1,136 @@
-<div style="background-color:#e3eaef">
-    <mat-card>
+
+    <mat-card id="projects_list_screen" *ngIf="projects_toggle==false">
+      <div class="projects-header">
+        <span class="projects-back-button">
+          <i class="fa fa-arrow-left"></i>
+        </span>
+        <span class="projects-header-title">
+          Projects / Programs
+        </span>
+        <span class="pull-right" style="font-size:20px;">
+          <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
+          <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
+          <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+        </span>
+      </div>
+      <br>
         <mat-tab-group mat-stretch-tabs>
           <mat-tab>
             <ng-template mat-tab-label>
-              <span class="">
-                <img src="..\assets\images\Projects\total projects.svg" alt="" style="margin-left: -105px;" >
-              </span>
-              
-              <span class="tab-number" style="font-size: 20px;margin-left: 33px;margin-top: -35px;">30</span>
-              <span class="tab-text" style="margin-left: 45px;">Total Projects</span>
+              <div class="status-tabs">
+                <div class="status-img">
+                  <img src="..\assets\images\Projects\total projects.svg" alt="" >
+                </div>
+                <div class="status-data">
+                  <span class="tab-number">30</span><br>
+                  <span class="tab-text" >Total Projects</span>
+                </div>
+              </div>
             </ng-template>
-            <div>
-              <app-projects></app-projects>
+            <div class="projects-table-body">
+              <app-projects-programs-table></app-projects-programs-table>
             </div>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <img src="..\assets\images\Projects\new.svg" alt="" style="margin-left: -35px;">
-              <span class="tab-number" style="font-size: 20px;">10</span>
-              <span class="tab-text">New</span>
+                <div class="status-tabs">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\new.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-number">30</span><br>
+                      <span class="tab-text" >New</span>
+                    </div>
+                  </div>
             </ng-template>
-            <div>
-             
-            </div>
+            <div class="projects-table-body">
+                <app-projects-programs-table></app-projects-programs-table>
+              </div>
           </mat-tab>  
           <mat-tab>
             <ng-template mat-tab-label>
-              <img src="..\assets\images\Projects\inprogress.svg" alt="" style="margin-left: -46px;">
-              <span class="tab-number" style="font-size: 20px;">2</span>
-              <span class="tab-text">In Progress</span>
+                <div class="status-tabs">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\inprogress.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-number">30</span><br>
+                      <span class="tab-text" >In Progress</span>
+                    </div>
+                  </div>
             </ng-template>
-            <div>
-              
-            </div>
+            <div class="projects-table-body">
+                <app-projects-programs-table></app-projects-programs-table>
+              </div>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <img src="..\assets\images\Projects\inreview.svg" alt="" style="margin-left: -46px;">
-              <span class="tab-number" style="font-size: 20px;">2</span>
-              <span class="tab-text">In review</span>
+                <div class="status-tabs">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\inreview.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-number">30</span><br>
+                      <span class="tab-text" >In Review</span>
+                    </div>
+                  </div>
+            
             </ng-template>
-            <div>
-             
-            </div>
+            <div class="projects-table-body">
+                <app-projects-programs-table></app-projects-programs-table>
+              </div>
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <img src="..\assets\images\Projects\approved.svg" alt="" style="margin-left: -46px;margin-top: 2px;">
-              <span class="tab-number" style="font-size: 20px;">5</span>
-              <span class="tab-text">Approved</span>
+                <div class="status-tabs">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\approved.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-number">30</span><br>
+                      <span class="tab-text" >Approved</span>
+                    </div>
+                  </div>
             </ng-template>
-            <div>
-              
-            </div>
+            <div class="projects-table-body">
+                <app-projects-programs-table></app-projects-programs-table>
+              </div>
+       
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-              <img src="..\assets\images\Projects\rejected.svg" alt="" style="margin-left: -62px;">
-              <span class="tab-number" style="font-size: 20px;">11</span>
-              <span class="tab-text">Rejected</span>
+                <div class="status-tabs">
+                    <div class="status-img">
+                      <img src="..\assets\images\Projects\rejected.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="tab-number">30</span><br>
+                      <span class="tab-text" >Rejected</span>
+                    </div>
+                  </div>
             </ng-template>
-            <div>
-             
-            </div>
+            <div class="projects-table-body">
+                <app-projects-programs-table></app-projects-programs-table>
+              </div>
+            
           </mat-tab>    
         </mat-tab-group>
     </mat-card>
-    </div>
+  
+    <mat-card *ngIf="projects_toggle==true">
+        <div class="projects-header">
+            <span class="projects-back-button" (click)="projects_toggle=false">
+              <i class="fa fa-arrow-left"></i>
+            </span>
+            <span class="projects-header-title">
+              Projects / Programs
+            </span>
+            <!-- <span class="pull-right" style="font-size:20px;">
+              <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
+              <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
+              <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+            </span> -->
+          </div>
+          <br>
+      <app-create-projects></app-create-projects>
+    </mat-card>

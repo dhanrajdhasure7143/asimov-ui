@@ -1,86 +1,346 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12 card-form">
-            <div class="card">
-                <div class="card-header text-dark">
-                <span><i class="fa fa-angle-right" aria-hidden="true"></i></span> Projects
-                </div>
-            
-                <div class="card-body">
-                    <h4>Create New</h4>
-                    <div>
+          
+            <div class="create-heading">Create New</div>
                         <mat-tab-group mat-align-tabs="end">
+                           
                             <mat-tab label="Project">
                                 <div class="container">
                                     <br>
-                                    <div class="row">
-                                        <div class="col-md-6">
-                                            <label>Project Name</label>
-                                                <input type="text" class="form-control" placeholder="Enter Name">
-                                            <br>
-                                            <label>Add Resources</label>
-                                                <select  class="form-control">
-                                                    <option>Select</option>
+                                    
+                                    <form [formGroup]="insertForm2" (ngSubmit)="createproject()">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Project Name <span class="text-danger">*</span></label>
+                                                <input type="text"  formControlName="projectName" class="form-control data" style="border:1px solid lightgray" placeholder="Enter Project Name">
+                                                <span *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched" style="color:red" class="fa fa-info-circle errspan">Project Name Required*</span>
+                                                <span *ngIf="insertForm2.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                    Maximum of 50 characters
+                                                </span>
+                                                <br>
+                                                <label>Add Resources<span class="text-danger">*</span></label>
+                                                <select   formControlName="resources"  class="form-control data">
+                                                    <option value="">Select Resources</option>
+                                                    <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                                                 </select>
-                                            <br>
-                                            <label>Set Start Date</label>
-                                                <input type="date" class="form-control">
-                                            <br>
-                                            <label>Set Project Priority</label>
-                                            <select  class="form-control">
-                                                    <option value="">Select</option>
+                                                <span *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
+                                                    
+                                                <br>
+                                                <label>Start Date <span class="text-danger">*</span></label>
+                                                <input type="date"  formControlName="startdate" class="form-control">
+                                                <span *ngIf="insertForm2.get('startdate').invalid && insertForm2.get('startdate').touched" style="color:red" class="fa fa-info-circle errspan">Start date Required*</span>
+                                                
+                                                <br>
+                                                <label>Set Project Priority <span class="text-danger">*</span></label>
+                                                <select  formControlName="projectpriority" class="form-control data">
+                                                <option value="">Select Project Priority</option>
+                                                <option value="High">High</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="Low">Low</option>
                                                 </select>
-                                            <label>Map Chain Value</label>
-                                            <select  class="form-control">
-                                                <option value="invoiceManagement">invoice Management</option>
-                                                <option value="AcmeManagement">Acme Management</option>
-                                                <option value="Ecommerece">Ecommerece</option>
+                                                <span *ngIf="insertForm2.get('projectpriority').invalid && insertForm2.get('projectpriority').touched" style="color:red" class="fa fa-info-circle errspan">Project priority Required*</span>
+                                                <br>
+                                                <label>Map Value Chain <span class="text-danger">*</span></label>
+                                                <select  formControlName="mapchainvalue"  class="form-control data">
+                                                    <option value="">Select Map Value Chain</option>
+                                                    <option value="Invoice Managment">Invoice Managment</option>
+                                                    <option value="Acme Managment">Acme Managment</option>
+                                                    <option value="E-Commerce">E-Commerce</option>
                                                 </select>
-                                        </div>
+                                                <span *ngIf="insertForm2.get('mapchainvalue').invalid && insertForm2.get('mapchainvalue').touched" style="color:red" class="fa fa-info-circle errspan">Map Value Chain Required*</span>
+                                            </div>     
+                                            <div class="col-md-6">
+                                                <label>Initiatives <span class="text-danger">*</span></label>
+                                                <select  formControlName="initiatives"   class="form-control data">
+                                                    <option value="">Select Initiatives</option>
+                                                    <option value="Process Improvement">Process Improvement</option>
+                                                    <option value="Business Improvement">Business Improvement</option>
+                                                </select>
+                                                <span *ngIf="insertForm2.get('initiatives').invalid && insertForm2.get('initiatives').touched" style="color:red" class="fa fa-info-circle errspan">Initiatives Required*</span>
+                                                        
+                                                <br>
+                                                <label>Project Owner <span class="text-danger">*</span></label>
+                                                <select formControlName="owner"   class="form-control data">
+                                                    <option value="">Select Project Owner</option>
+                                                    <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                                </select>
+                                                <span *ngIf="insertForm2.get('owner').invalid && insertForm2.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Project Owner Required*</span>
+                                            
+                                                <br>
+                                                <label>Set End Date <span class="text-danger">*</span></label>
+                                                <input type="date" formControlName="enddate"  class="form-control data">
+                                                <span *ngIf="insertForm2.get('enddate').invalid && insertForm2.get('enddate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
+                                            
+                                                <br>
+                                                <label>Identity Mesurable Metrics <span class="text-danger">*</span></label>
+                                                <input type="text"  style="border:1px solid lightgray" formControlName="measurablemetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
+                                                <span *ngIf="insertForm2.get('measurablemetrics').invalid && insertForm2.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity mesurable metrics Required*</span>
+                                                
+                                                <br>
+                                                <label>Select Process <span class="text-danger">*</span></label>
+                                                <select formControlName="process"   class="form-control data">
+                                                    <option value="">Select Process</option>
+                                                    <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                                </select>
+                                                <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Project Owner Required*</span>
+                                            
+                                            </div>
+                                            <div class="col-md-12">
+                                                <br>
+                                                <label>Description</label>
+                                                <textarea class="form-control" style="height:100px;">
 
-                                        <div class="col-md-6">
-                                            <label>Initiatives</label>
-                                            <select  class="form-control">
-                                                    <option>Select</option>
-                                                </select>
-                                            <br>
-                                            <label>Select Project Owner</label>
-                                            <select  class="form-control">
-                                                    <option>Select</option>
-                                                </select>
-                                            <br>
-                                            <label>Select End Date</label>
-                                                <input type="date" class="form-control">
-                                            <br>
-                                            <label>Identity mesurable metrics</label>
-                                                <input type="text" placeholder="Enter Name" class="form-control">
-                                            <label>Select Process</label>
-                                            <select  class="form-control">
-                                                    <option>Select</option>
-                                                </select>
-                                        </div>
-                                        <div class="col-md-12">
-                                            <br>
-                                            <label>Description</label>
-                                            <textarea class="form-control" style="height:100px;">
-
-                                            </textarea>
-                                            <br>
-                                            <div class="pull-right">
-                                                <button class="btn btn-primary">Cancel</button>
-                                                &nbsp;&nbsp;
-                                                <button class="btn btn-primary">Save</button>
+                                                </textarea>
+                                               
                                             </div>
                                         </div>
+                                    </form>
+                                    <br>
+                                    <div class="pull-right">
+                                        <button (click)="resetcreateproject()" class="btn btn-primary">Reset</button>
+                                        &nbsp;&nbsp;
+                                        <button [disabled]="insertForm2.invalid" class="btn btn-primary">Save</button>
                                     </div>
+                                    <br><br>
                                 </div>
                             </mat-tab>
-                            <mat-tab label="Program">Program</mat-tab>
+
+
+
+
+
+
+
+
+
+                            <mat-tab label="Program">
+                                    <div class="container">
+                                        <br><br>
+                                        <form [formGroup]="createprogram" (ngSubmit)="saveProgram()">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                        <label for="programname">Program Name<span style="color:rgb(90, 92, 212)">*</span></label>
+                                                        <input type="text" maxlength="51" class="form-control data"  style="border:1px solid lightgray" formControlName="programName" value="" placeholder="Enter Program Name">
+                                                        <span *ngIf="(createprogram.get('programName').invalid && createprogram.get('programName').touched) && !createprogram.controls['programName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Required*</span>
+                                                        <span *ngIf="createprogram.controls['programName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                            Maximum of 50 characters
+                                                        </span>   
+                                                        <br>
+                                                        <label for="initiatives">Initiatives<span style="color:rgb(90, 92, 212)">*</span></label>
+                                                        <select class="form-control" formControlName="initiatives">
+                                                            <option  [value]="null" disabled hidden>Select Initiative</option>
+                                                            <option value=""  >Select Initiative</option>
+                                                            <option value="Process Improvement">Process Improvement</option>
+                                                            <option value="Business Improvement">Business Improvement</option>
+                                                        </select>
+                                                        <span *ngIf="(createprogram.get('initiatives').invalid && createprogram.get('initiatives').touched) && !createprogram.controls['initiatives'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Initiative Required*</span>
+                                                        <span *ngIf="createprogram.controls['initiatives'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                            Maximum of 50 characters
+                                                        </span>  
+                                                        <br>
+                                                        <label for="programpurpose">Add Program Purpose<span style="color:rgb(90, 92, 212)">*</span></label>
+                                                        <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="purpose" value="" 
+                                                        placeholder="Enter Program Purpose">
+                                                        <span *ngIf="(createprogram.get('purpose').invalid && createprogram.get('purpose').touched) && !createprogram.controls['purpose'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Purpose required*</span>
+                                                        <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                            Maximum of 50 characters
+                                                        </span>
+                                                        <br>
+                                                </div>
+                                                <div class="col-md-6">
+                                                        <label for="priority">Set Program Priority<span style="color:rgb(90, 92, 212)">*</span></label>
+                                                        <select class="form-control" formControlName="priority">
+                                                          <option  [value]="null" disabled hidden>--Select Program Priority --</option>
+                                                             <option value=""  >Select Program Priority</option>
+                                                             <option value="High">High</option>
+                                                             <option value="Medium">Medium</option>
+                                                             <option value="Low">Low</option>
+                                                         </select>
+                                                        <span *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Priority required*</span>
+                                                        <span *ngIf="createprogram.controls['priority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                            Maximum of 50 characters
+                                                        </span>
+                                                        <br>
+                                                        <label for="measurablemetrics">Identify Measurable Metrics<span style="color:rgb(90, 92, 212)">*</span></label>
+                                                        <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data"  formControlName="measurablemetrics" value="" 
+                                                        placeholder="Enter Identify Measurable Metrics">
+                                                        <span *ngIf="createprogram.get('measurablemetrics').invalid && createprogram.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identify Measurable Metrics Required*</span>
+                                                        <span *ngIf="createprogram.controls['measurablemetrics'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                        Maximum of 50 characters
+                                                        </span>
+
+                                                        <br>
+                                                        <div style="display:flex">
+                                                            <div class="select-project">
+                                                                <label>Select Projects</label>
+                                                                <select class="form-control" (change)="selected_project=$event.target.value">
+                                                                    <option value="" >Select Project</option>
+                                                                    <option *ngFor="let project of projects_list" [value]="project.id">{{project.projectName}}</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="addproject-btn">
+                                                                <span (click)="add_to_selected_projects()"><i class="fa fa-plus"></i></span>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                        <label for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label>
+                                                        <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
+                                                        placeholder="Enter Description"></textarea>
+                                                        <span *ngIf="createprogram.get('description').invalid && createprogram.get('description').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
+                                                        <span *ngIf="createprogram.controls['description'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                          Maximum of 200 characters
+                                                        </span>
+
+                                                        <br>                                                        
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <br><br>
+                                        <div>
+                                            <span class="pull-left">
+                                                <button (click)="addproject(template)" class="btn btn-primary">Add Project</button>
+                                            </span>
+                                            <span class="pull-right">
+                                                <button (click)="resetcreateprogram()" class="btn btn-primary">Reset</button>
+                                                &nbsp;&nbsp;
+                                                <button [disabled]="createprogram.invalid" (click)="saveProgram()" class="btn btn-primary">Save</button>
+                                            </span>
+                                        </div>
+                                        <br><br>
+                                        <div *ngIf="selected_projects.length>0">
+                                            <h4>Selected Projects</h4>
+                                            <div class="col-md-4 " *ngFor="let project of selected_projects">
+                                                <div class="project-card" >
+                                                    {{project.projectName}}
+                                                    <span class="pull-right clickable" (click)="remove_project(project)"><i class="fa fa-trash"></i></span>
+                                                </div>
+                                            </div>
+
+                                            <br><br><br><br>
+                                        </div>
+                                    </div>
+                          
+
+
+
+</mat-tab>
                             
-                        </mat-tab-group>
+</mat-tab-group>
+
+</div>
+</div>
+</div>
+
+
+
+
+<ng-template class="modal-lg" #template>
+        <div class="modal-header">
+          <h4 class="modal-title pull-left">Add New Project</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <div class="container" style="width:100%">
+                    <br>
+                    
+                    <form [formGroup]="insertForm2" (ngSubmit)="createproject()">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Project Name <span class="text-danger">*</span></label>
+                                <input type="text"  formControlName="projectName" class="form-control data" style="border:1px solid lightgray" placeholder="Enter Project Name">
+                                <span *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched" style="color:red" class="fa fa-info-circle errspan">Project Name Required*</span>
+                                <span *ngIf="insertForm2.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </span>
+                                <br>
+                                <label>Add Resources<span class="text-danger">*</span></label>
+                                <select   formControlName="resources"  class="form-control data">
+                                    <option value="">Select Resources</option>
+                                    <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                                </select>
+                                <span *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
+                                    
+                                <br>
+                                <label>Start Date <span class="text-danger">*</span></label>
+                                <input type="date"  formControlName="startdate" class="form-control">
+                                <span *ngIf="insertForm2.get('startdate').invalid && insertForm2.get('startdate').touched" style="color:red" class="fa fa-info-circle errspan">Start date Required*</span>
+                                
+                                <br>
+                                <label>Set Project Priority <span class="text-danger">*</span></label>
+                                <select  formControlName="projectpriority" class="form-control data">
+                                <option value="">Select Project Priority</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                                </select>
+                                <span *ngIf="insertForm2.get('projectpriority').invalid && insertForm2.get('projectpriority').touched" style="color:red" class="fa fa-info-circle errspan">Project priority Required*</span>
+                                <br>
+                                <label>Map Value Chain <span class="text-danger">*</span></label>
+                                <select  formControlName="mapchainvalue"  class="form-control data">
+                                    <option value="">Select Map Value Chain</option>
+                                    <option value="Invoice Managment">Invoice Managment</option>
+                                    <option value="Acme Managment">Acme Managment</option>
+                                    <option value="E-Commerce">E-Commerce</option>
+                                </select>
+                                <span *ngIf="insertForm2.get('mapchainvalue').invalid && insertForm2.get('mapchainvalue').touched" style="color:red" class="fa fa-info-circle errspan">Map Value Chain Required*</span>
+                            </div>     
+                            <div class="col-md-6">
+                                <label>Initiatives <span class="text-danger">*</span></label>
+                                <select  formControlName="initiatives"   class="form-control data">
+                                    <option value="">Select Initiatives</option>
+                                    <option value="Process Improvement">Process Improvement</option>
+                                    <option value="Business Improvement">Business Improvement</option>
+                                </select>
+                                <span *ngIf="insertForm2.get('initiatives').invalid && insertForm2.get('initiatives').touched" style="color:red" class="fa fa-info-circle errspan">Initiatives Required*</span>
+                                        
+                                <br>
+                                <label>Project Owner <span class="text-danger">*</span></label>
+                                <select formControlName="owner"   class="form-control data">
+                                    <option value="">Select Project Owner</option>
+                                    <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                </select>
+                                <span *ngIf="insertForm2.get('owner').invalid && insertForm2.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Project Owner Required*</span>
+                            
+                                <br>
+                                <label>Set End Date <span class="text-danger">*</span></label>
+                                <input type="date" formControlName="enddate"  class="form-control data">
+                                <span *ngIf="insertForm2.get('enddate').invalid && insertForm2.get('enddate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
+                            
+                                <br>
+                                <label>Identity Mesurable Metrics <span class="text-danger">*</span></label>
+                                <input type="text"  style="border:1px solid lightgray" formControlName="measurablemetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
+                                <span *ngIf="insertForm2.get('measurablemetrics').invalid && insertForm2.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity mesurable metrics Required*</span>
+                                
+                                <br>
+                                <label>Select Process <span class="text-danger">*</span></label>
+                                <select formControlName="process"   class="form-control data">
+                                    <option value="">Select Process</option>
+                                    <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                </select>
+                                <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Project Owner Required*</span>
+                            
+                            </div>
+                            <div class="col-md-12">
+                                <br>
+                                <label>Description</label>
+                                <textarea class="form-control" style="height:100px;">
+
+                                </textarea>
+                            
+                            </div>
+                        </div>
+                    </form>
+                    <br>
+                    <div class="pull-right">
+                        <button (click)="resetcreateproject()" class="btn btn-primary">Reset</button>
+                        &nbsp;&nbsp;
+                        <button [disabled]="insertForm2.invalid" (click)="createproject()" class="btn btn-primary">Save</button>
                     </div>
-                </div>
+                    <br><br>
             </div>
         </div>
-    </div>
-</div>
+    </ng-template>

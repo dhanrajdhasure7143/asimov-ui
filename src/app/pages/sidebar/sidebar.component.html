@@ -59,7 +59,7 @@
     <!-- <button mat-icon-button #trigger=matMenuTrigger [matMenuTriggerFor]="workspacemenu">
       <mat-icon>more_vert</mat-icon>
    </button> -->
-   <mat-list-item (click)="showSubmenu = !showSubmenu" class=""  data-toggle="tooltip" data-placement="right"  title="Workspace">
+   <mat-list-item (click)="showSubmenu = !showSubmenu; selection()" class=""  data-toggle="tooltip" data-placement="right"  title="Workspace">
     <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
     <span class="side-icon">
@@ -134,7 +134,7 @@
       <mat-icon>more_vert</mat-icon>
    </button>
   </a> -->
-  <mat-list-item (click)="showadminSubmenu = !showadminSubmenu" class="" data-toggle="tooltip" data-placement="right"  title="Administration">
+  <mat-list-item (click)="showadminSubmenu = !showadminSubmenu; selection()" class="" data-toggle="tooltip" data-placement="right"  title="Administration">
     <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
     <span class="side-icon">

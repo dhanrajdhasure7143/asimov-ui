@@ -1,9 +1,64 @@
-::ng-deep.mat-tab-label .mat-tab-label-content {
-    flex-wrap: wrap!important;
+::ng-deep #projects_list_screen .mat-tab-label {
+    height:85px !important;
   }
   
-  ::ng-deep.mat-tab-label .mat-tab-label-content span{
-    display: flex!important;
-    flex: 1 0 100%!important;
-    justify-content: center!important;
+::ng-deep mat-card{
+  padding:0px !important;
+}
+
+  .projects-header{
+    width:100%;padding:10px;
+    background-color:rgba(212, 212, 212, 0.295);
+  }
+
+
+  .projects-back-button{
+    padding:5px;
+    padding-right:20px;
+    border-right:1px solid #4AB0F5 ;
+    color:#4AB0F5 ;
+    cursor: pointer;
+  }
+
+  .projects-header-title{
+    color:black ;
+    font-size:18px;
+    padding:5px;
+    padding-left:20px;
+  }
+
+
+  .projects-menu-item{
+    padding:5px;
+    font-size:22px;
+    color:#4AB0F5;
+    cursor: pointer;
+  }
+  .status-tabs{
+    display: flex;
+    padding:20px;
+    
+  }
+
+  .tab-number{
+    font-size: 30px !important;
+
+  }
+
+  .status-img > img{
+    height:60px !important;
+    padding-top:30px;
+  }
+
+  .status-data{
+    vertical-align: middle;
+    padding-top:15px;
+    padding-left:30px;
+    padding-bottom:15px;
+    color:black !important;
+  }
+
+
+  .projects-table-body{
+    padding:10px;
   }

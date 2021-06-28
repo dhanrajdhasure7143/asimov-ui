@@ -9,7 +9,7 @@
 <section >
 
 
-    <app-header></app-header>
+    <app-header class="shadow"></app-header>
     <mat-drawer-container class="main">
   
     <mat-drawer  mode="side" mode="side"
@@ -18,7 +18,7 @@
     [class.menu-open]="sideBarOpen"
     [class.menu-close]="!sideBarOpen"
     opened>
-        <app-sidebar ></app-sidebar>
+        <app-sidebar  ></app-sidebar>
     </mat-drawer>
     <mat-drawer-content [ngStyle]="{ 'margin-left.px': contentMargin }">
       <!-- <mat-toolbar color="primary">

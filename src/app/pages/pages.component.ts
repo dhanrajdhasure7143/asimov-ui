@@ -16,7 +16,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
   ::ng-deep .mat-drawer-side {
        border-right: none !important;
-
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
   }
 
   ::ng-deep .mat-drawer {
@@ -41,6 +41,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
   .eiap-main{
     min-height:100vh !important;
     overflow:scroll !important;
+  }
+
+
+  .shadow{
+    box-shadow: 0 3px 5px -1px rgb(0 0 0 / 20%), 0 6px 10px 0 rgb(0 0 0 / 14%), 0 1px 18px 0 !important;
   }
   `
 ]
