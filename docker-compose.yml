@@ -9,11 +9,11 @@ networks:
     name: host
 
 services:
-  asimov-ui:
-    image: nexus.epsoftinc.in/asimov-ui:${DOCKER_TAG}
+  asimov-uinew:
+    image: nexus.epsoftinc.in/asimov-uinew:${DOCKER_TAG}
     deploy:
       mode: global
     networks:
       - eps_net
     ports:
-      - '8080:80'
+      - '7070:80'
