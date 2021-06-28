@@ -16,7 +16,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
 
 
   public updateForm:FormGroup;
-  displayedColumns1: string[] = ["check","id","type","initiatives","process","projectName","owner","priority","access"];
+  displayedColumns1: string[] = ["id","type","initiatives","process","projectName","owner","priority","access","status","lastupdatedby","action"];
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
   public selectedTab=0;
