@@ -474,14 +474,14 @@
     </mat-card>
     </div> -->
    
-    <ng-container matColumnDef="check">
+    <!-- <ng-container matColumnDef="check">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
           <input [disabled]="Prjcheckeddisabled" type="checkbox" id="Credcheckall" [checked]="Credcheckflag" (change)="CredcheckAllCheckBox($event)">
       </th>
       <td mat-cell *matCellDef="let element; let i = index">
           <input type="checkbox" [checked]="element.checked" (change)="CredcheckEnableDisableBtn(element.id, $event)"> 
       </td>
-  </ng-container>
+  </ng-container> -->
   
   <ng-container matColumnDef="id">
     <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
@@ -554,18 +554,37 @@
   </td>
 </ng-container>
 
+<ng-container matColumnDef="lastupdatedby">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated by</th>
+  <td mat-cell *matCellDef="let element"> 
+      <span *ngIf="element.access!=null">Rachei M | 09th Nov, 12pm</span> 
+      <span *ngIf="element.access==''" >-</span> 
+      <span *ngIf=" element.access==null">-</span> 
+  </td>
+</ng-container>
+
+<ng-container matColumnDef="status">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+  <td mat-cell *matCellDef="let element"> 
+      <span *ngIf="element.access!=null">In Progress</span> 
+      <span *ngIf="element.access==''" >-</span> 
+      <span *ngIf=" element.access==null">-</span> 
+  </td>
+</ng-container>
+
+
 <ng-container matColumnDef="noData">
   <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
       No Records Found
   </td>
 </ng-container>
-<!-- <ng-container matColumnDef="action">
-  <th mat-header-cell *matHeaderCellDef> Action </th>
+<ng-container matColumnDef="action">
+  <th mat-header-cell *matHeaderCellDef> Actions</th>
   <td mat-cell *matCellDef="let id" class="action-link"> 
     <a (click)="openDialog('Update',id)">Edit</a> | 
-    <a (click)="openDialog('Delete',element)">Delete</a>  
+    <a (click)="openDialog('Delete',element)" style="color:red">Delete</a>  
   </td>
-</ng-container> -->
+</ng-container>
 
 <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>

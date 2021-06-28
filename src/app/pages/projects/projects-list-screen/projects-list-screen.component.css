@@ -1,5 +1,5 @@
 ::ng-deep #projects_list_screen .mat-tab-label {
-    height:85px !important;
+    height:80px !important;
   }
   
 ::ng-deep mat-card{
@@ -21,17 +21,17 @@
   }
 
   .projects-header-title{
-    color:black ;
-    font-size:18px;
+    color:#001c47 ;
+    font-size:16px;
     padding:5px;
-    padding-left:20px;
+    padding-left:10px;
   }
 
 
   .projects-menu-item{
     padding:5px;
     font-size:22px;
-    color:#4AB0F5;
+    color:#00a0e3;
     cursor: pointer;
   }
   .status-tabs{
@@ -42,18 +42,20 @@
 
   .tab-number{
     font-size: 30px !important;
+    font-weight: 300;
 
   }
+  
 
   .status-img > img{
-    height:60px !important;
+    height:75px !important;
     padding-top:30px;
   }
 
   .status-data{
     vertical-align: middle;
     padding-top:15px;
-    padding-left:30px;
+    padding-left:5px;
     padding-bottom:15px;
     color:black !important;
   }
@@ -62,3 +64,20 @@
   .projects-table-body{
     padding:10px;
   }
+
+  ::ng-deep .mat-tab-label.mat-tab-label-active {
+    
+    opacity: 1;
+  }
+  ::ng-deep .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {
+    flex-basis: 0;
+    flex-grow: 1;
+    opacity: 1;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+  }
+.mat-card-content>:first-child, .mat-card>:first-child {
+    margin-top: 0;
+    line-height: 16px;
+}

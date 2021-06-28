@@ -44,3 +44,49 @@
 .clickable{
     cursor: pointer;
 }
+
+label.label-control{
+    padding: 4px 0px;
+    border: 1px solid transparent;
+    border-bottom: medium none;
+    margin: 0px !important;
+    border-radius: 2px;
+    color: black;
+    font-weight: 500;
+    font-size: 14px;
+    height: 30px;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+}
+.btn {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-family: Avenir Next W02,Helvetica,Arial,sans-serif;
+    font-weight: 500;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.btn-primary, .btn-add, .btn-validat, .swal-button--confirm {
+    color: #FFF !important;
+    border-color: rgb(0, 161, 228) !important;
+    background: rgb(0, 161, 228)  !important;
+    min-width: 102px;
+    font-size: 14px;
+    line-height: 16px;
+    padding: 11px 24px;
+}
