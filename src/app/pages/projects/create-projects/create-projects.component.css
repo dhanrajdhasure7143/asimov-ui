@@ -1,0 +1,46 @@
+.create-heading{
+    margin-bottom:-37px !important;
+    font-size:20px;
+}
+
+
+::ng-deep .my-class .modal-dialog { 
+    max-width: 80%;
+    width: 80%;
+}
+
+
+::ng-deep .modal-lg .modal-content{
+    width:100%  !important;
+    margin-top:30px !important;
+}
+
+
+:ng-deep .custom-class .dropdown-list
+{
+    top:0px !important;
+}
+
+
+
+.addproject-btn{
+    position: relative;
+    vertical-align: middle;
+    margin-top: 30px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+.select-project{
+    width:90%;
+}
+
+.project-card{
+    background-color: rgba(255, 50, 50, 0.411);
+    padding:20px;
+    color:white;
+}
+
+.clickable{
+    cursor: pointer;
+}

@@ -9,6 +9,7 @@ import { DataTransferService } from '../../services/data-transfer.service';
 })
 export class ProjectsListScreenComponent implements OnInit {
 
+  projects_toggle:Boolean=false;
   constructor(private dt:DataTransferService){}
 
   ngOnInit() {

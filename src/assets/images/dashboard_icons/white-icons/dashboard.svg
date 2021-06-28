@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="29.833" height="29.833" viewBox="0 0 29.833 29.833">
+  <defs>
+    <filter id="Combined_Shape" x="0" y="0" width="29.833" height="29.833" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="1" result="blur"/>
+      <feFlood flood-opacity="0.302"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="inactive_dashboard" data-name="inactive/dashboard" transform="translate(3 2)">
+    <g id="Group_4" data-name="Group 4">
+      <g transform="matrix(1, 0, 0, 1, -3, -2)" filter="url(#Combined_Shape)">
+        <path id="Combined_Shape-2" data-name="Combined Shape" d="M14.167,23.833a1,1,0,0,1-1-1V14.167a1,1,0,0,1,1-1h8.666a1,1,0,0,1,1,1v8.666a1,1,0,0,1-1,1ZM1,23.833a1,1,0,0,1-1-1V14.167a1,1,0,0,1,1-1H9.667a1,1,0,0,1,1,1v8.666a1,1,0,0,1-1,1ZM14.167,10.667a1,1,0,0,1-1-1V1a1,1,0,0,1,1-1h8.666a1,1,0,0,1,1,1V9.667a1,1,0,0,1-1,1ZM1,10.667a1,1,0,0,1-1-1V1A1,1,0,0,1,1,0H9.667a1,1,0,0,1,1,1V9.667a1,1,0,0,1-1,1Z" transform="translate(3 2)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

@@ -38,10 +38,20 @@
   }
 }
 
+
 .side-menu-font{
-  font-size: 18px;
+  font-size: 16px;
   padding:30px;
+  color: #6c757d;
+  font-weight: 500;
 }
+.side-menu-font:hover{
+  font-size: 16px;
+  padding:30px;
+  color: #001c47;
+  font-weight: 500;
+}
+
 .side-icon{
   font-size: 30px;
   color:rgb(128, 128, 128);
@@ -63,7 +73,7 @@
 //}
 
 ::ng-deep mat-nav-list a:active{
-  background-color:#098DE6 !important;
+  background-color:#00a0e3 !important;
   color :white!important;
 }
 
@@ -72,26 +82,31 @@
   .side-icon{
     color:#098DE6 !important;
   }
-  background-color :white!important;
+  background-color :#fdfdfd!important;
+  color :white!important;
 }
 .active
 {
-  background-color:white   !important;
-  border-left:5px solid #098DE6 !important;
-
+  background-color:  #00a0e3 !important;
+  color:white;
   .side-icon{
-    color :#098DE6 !important;
+    color :white !important;
     padding: 3px;
   }
 }
 
 .sidebar-main{
-  height: 90vh;
+  height: calc(100vh - 147px);
   // overflow:scroll;
-  border-right:1px solid rgb(184, 184, 184);
+ // border-right:1px solid rgb(184, 184, 184);
 }
 
-
+.nav-main{
+  height:calc(100vh - 60px);
+  // border-right:1px solid lightblue;
+  //box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  //box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
+}
 .menu-button {
   transition: 300ms ease-in-out;
   transform: rotate(0deg);
@@ -118,12 +133,12 @@
 
 .epslogo {
   position: relative;
-  bottom: 30px;
+  bottom: 0px;
   left: 0px;
   margin-left: 2px;
   /* padding: 0px 5px; */
-  padding: 0px 8px;
-  height: 40px;
+  padding: 0px 5px;
+  height: 80px;
   width: 260px;
   display: flex;
   align-items: center;
@@ -139,8 +154,7 @@ label.poweredby-label {
   display: block;
 }
 label.epsoft-label {
-  font-size: 21px;
-  font-weight: 500;
+  font-size: 16px;
   position: relative;
 }
 
@@ -154,4 +168,20 @@ label.epsoft-label sup {
   position: absolute;
   top: 0px;
   right: -10px;
+}
+
+
+
+.default-img{
+  display:block;
+}
+
+.active-img{
+  display:none;
+}
+
+
+
+::ng-deep mat-toolbar{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
 }

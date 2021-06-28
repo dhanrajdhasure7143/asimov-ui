@@ -73,11 +73,17 @@
 
 
 
+  .ep-header-white{
+    background-color: white !important;
+  }
   .example-spacer {
     flex: 1 1 auto;
   }
   .txt-wh{
-    color:white !important;
+    color: #6C757D !important;
+  }
+  .txt-u{
+    color: #001c47!important;
   }
   .abrand_div img{
       width:160px;
@@ -87,14 +93,14 @@
   }
   
   .header{
-      background-color: #098DE6 !important;
-      /* color: white !important; */
+      /* background-color: #098DE6 !important;
+      color: white !important; */
       height: 60px !important;
   }
   .abrand{
       /* background-color: #0A8DE8!important; */
       height: 80px;
-      color: white !important;
+      color: #001c47 !important;
   }
   .abrand_div{
       cursor: pointer;
@@ -135,14 +141,14 @@
   .res-circle {
     width: 45px;
     border-radius: 100%;
-    height: 42px;
+    height: 45px;
     margin-top: 2px;
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 18px;
-    background: white;
+    background: rgb(0, 161, 228);
     margin-left: -5px;
     font-weight: bold;
-    padding: 6px 9px;
+    padding: 6px 11px;
 
     }
     .res-circle-img {
@@ -238,4 +244,9 @@
   }
   .bread-crumb span:hover{
     font-weight: 600 !important;
+  }
+
+
+  ::ng-deep mat-toolbar.ep-header-new{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
   }

@@ -60,7 +60,7 @@
 <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay> -->
 <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner> -->
 
-<mat-toolbar class="ep-primary-bg text-white">
+<mat-toolbar class="ep-header-white ep-header-new">
     <span>
       <button mat-icon-button class="example-icon txt-wh" (click)="page_obj.onToolbarMenuToggle()" aria-label="Example icon-button with menu icon">
      <i *ngIf="page_obj.sideBarOpen==false" class="fa fa-bars"></i>
@@ -70,7 +70,7 @@
   
   &nbsp;&nbsp;
   <span>
-    <img  style="height:40px" src="assets/images/EZFlow_all white.png">
+    <img  style="height:40px" src="assets/images/EZFlow_tagline_full_logo.png">
    </span>
   &nbsp;&nbsp;
    <span class="txt-wh bread-crumb">
@@ -88,11 +88,11 @@
    </button>
    <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
    &nbsp;&nbsp;
-  <span style="color:white">|</span>&nbsp;&nbsp;
+  <span class="txt-wh">|</span>&nbsp;&nbsp;
   &nbsp;&nbsp;
   <div style="line-height: 0.9;">
-    <span class="text-white" style="color:white;font-size: 14px;" >{{firstname}} &nbsp;{{lastname}}</span><br>
-    <span class="text-white" style="color:white;font-size: 12px;">{{userRole}}</span>
+    <span class="txt-u" style="font-size: 14px;" >{{firstname}} &nbsp;{{lastname}}</span><br>
+    <span class="txt-u" style="font-size: 12px;">{{userRole}}</span>
   </div>
   &nbsp;
   &nbsp;

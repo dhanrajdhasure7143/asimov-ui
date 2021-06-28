@@ -16,14 +16,15 @@ export class SidebarComponent implements OnInit {
   constructor(private obj:PagesComponent) { }
 
   ngOnInit() {
+    //this.disable();
   }
 
   hightlight(element)
   {
-  //   console.log(element)
      $('.link').removeClass('active')
      $('#'+element).addClass("active")
   }
+  
 
   selection(){
      this.obj.sideBarOpen=true;
