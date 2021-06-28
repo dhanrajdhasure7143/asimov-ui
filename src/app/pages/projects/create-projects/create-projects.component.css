@@ -26,8 +26,8 @@
 .addproject-btn{
     position: relative;
     vertical-align: middle;
-    margin-top: 30px;
-    padding-left: 20px;
+    margin-top: 25px;
+    padding-left: 15px;
     cursor: pointer;
 }
 
@@ -36,9 +36,32 @@
 }
 
 .project-card{
-    background-color: rgba(255, 50, 50, 0.411);
+    background-color: #FFFF99;
     padding:20px;
-    color:white;
+    padding-top:15px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cecece;
+    color:rgb(7, 7, 7);
+    transition: 0.3s;
+    border-radius: 5px;
+}
+.project-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+
+.card-placeholder{
+    flex-basis: 0;
+    flex-grow: 1;
+    opacity: 1;
+    font-family: Roboto,"Helvetica Neue",sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.projectname{
+    font-weight: 600;
+
 }
 
 .clickable{
@@ -89,4 +112,12 @@ label.label-control{
     font-size: 14px;
     line-height: 16px;
     padding: 11px 24px;
+}
+
+.mat-fab.mat-primary, .mat-flat-button.mat-primary, .mat-mini-fab.mat-primary, .mat-raised-button.mat-primary {
+    background-color: rgb(0, 161, 228) !important;
+}
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color:rgb(0, 161, 228) !important;
 }
