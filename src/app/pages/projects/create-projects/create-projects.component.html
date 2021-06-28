@@ -182,7 +182,8 @@
                                                                 </select>
                                                             </div>
                                                             <div class="addproject-btn">
-                                                                <span (click)="add_to_selected_projects()"><i class="fa fa-plus"></i></span>
+                                                                <button mat-mini-fab color="primary" (click)="add_to_selected_projects()" ><i class="fa fa-plus"></i> </button>
+                                                                <!-- <span (click)="add_to_selected_projects()"><i class="fa fa-plus"></i></span> -->
                                                             </div>
                                                         </div>
                                                 </div>
@@ -202,7 +203,7 @@
                                         <br><br>
                                         <div>
                                             <span class="pull-left">
-                                                <button (click)="addproject(template)" class="btn btn-primary">Add Project</button>
+                                                <button (click)="addproject(template)" class="btn btn-primary">Add New Project</button>
                                             </span>
                                             <span class="pull-right">
                                                 <button (click)="resetcreateprogram()" class="btn btn-primary">Reset</button>
@@ -215,15 +216,23 @@
                                         &nbsp;
                                         <div *ngIf="selected_projects.length>0">
                                             <h4>Selected Projects</h4>
+                                            <br>
+                                            &nbsp;
                                             <div class="col-md-4 " *ngFor="let project of selected_projects">
                                                 <div class="project-card" >
-                                                    {{project.projectName}}
+                                                    <span class="card-placeholder">Project Name</span>
+                                                    &nbsp;
+                                                    <br>
+                                                    <span class="projectname">{{project.projectName}}</span>
+                                                                                                      
                                                     <span class="pull-right clickable" (click)="remove_project(project)"><i class="fa fa-trash"></i></span>
                                                 </div>
                                             </div>
-
+                                            
                                             <br><br><br><br>
                                         </div>
+                                        &nbsp;
+                                        &nbsp;
                                     </div>
                           
 
