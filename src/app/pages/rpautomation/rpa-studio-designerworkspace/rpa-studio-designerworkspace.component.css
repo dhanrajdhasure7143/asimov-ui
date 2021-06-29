@@ -125,3 +125,15 @@
   max-height: 400px;
   overflow: auto;
 }
+
+
+.main::-webkit-scrollbar
+{
+  display:none !important;
+}
+
+
+.drag-area::-webkit-scrollbar
+{
+  display:none !important;
+}

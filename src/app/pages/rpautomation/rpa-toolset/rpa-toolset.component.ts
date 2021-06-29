@@ -2,6 +2,8 @@ import {ViewChild,Input, Component,Injectable, OnInit, ElementRef  } from '@angu
 import { RestApiService } from '../../services/rest-api.service';
 import { Options } from 'ng5-slider';
 import { DataTransferService } from '../../services/data-transfer.service';
+
+
 @Injectable()
 @Component({
   selector: 'app-rpa-toolset',
@@ -11,7 +13,8 @@ import { DataTransferService } from '../../services/data-transfer.service';
 export class RpaToolsetComponent implements OnInit {
 
   constructor(private rest:RestApiService,
-    public dt:DataTransferService
+    public dt:DataTransferService,
+  
     ) { }
 
   public userFilter:any={name:""};
@@ -22,6 +25,7 @@ export class RpaToolsetComponent implements OnInit {
   userRole:any;
   templateNodes:any=[];
   search:any=false;
+  sidenavbutton:Boolean=false;
   ngOnInit() {
 
     this.dt.changeParentModule({"route":"/pages/rpautomation/home", "title":"RPA Studio"});
@@ -52,7 +56,8 @@ export class RpaToolsetComponent implements OnInit {
             let temp:any = {
               name : element.name,
               path : 'data:' + 'image/png' + ';base64,' + element.icon,
-              tasks: element.taskList
+              tasks: element.taskList,
+              expanded:false,
             };
             if((this.userRole.includes('User') &&
                   (temp.name === 'Email' || temp.name === 'Excel' || temp.name === 'Database' || temp.name === 'Developer'))
@@ -65,11 +70,13 @@ export class RpaToolsetComponent implements OnInit {
               let temp:any = {
                 name : element.name,
                 path : 'data:' + 'image/png' + ';base64,' + element.icon,
-                tasks: element.taskList
+                tasks: element.taskList,
+                expanded:false,
               };
               this.templateNodes.push(temp)
             })
           }
+
         })
     }
 
@@ -86,6 +93,8 @@ export class RpaToolsetComponent implements OnInit {
     public scrollbottom() {
       this.section.nativeElement.scrollTo({ top: (this.section.nativeElement.scrollTop + 40), behavior: 'smooth' });
     }
+
+
 
   }
 

@@ -65,6 +65,8 @@ export class RpaHomeComponent implements OnInit {
  importenv:any="";
  importcat:any="";
  importfile:any="";
+
+  file_error:any="";
   @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort1",{static:false}) sort1: MatSort;
@@ -560,7 +562,17 @@ export class RpaHomeComponent implements OnInit {
 
     }
   }
-  
+  upload(file)
+  {
+    var extarr = file.name.split('.')
+    var ext=extarr.reverse()[0]
+    this.file_error="";
+    if(ext=="sql")
+      this.importfile=file
+    else
+      this.file_error="Invalid file format, only it allows .sql format"
+  }
+
 
   exportbot(bot)
   {
