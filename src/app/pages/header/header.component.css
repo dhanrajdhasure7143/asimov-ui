@@ -75,6 +75,8 @@
 
   .ep-header-white{
     background-color: white !important;
+    height: 52px;
+    box-shadow: 0px 1px 10px rgb(0 21 50 / 10%) !important;
   }
   .example-spacer {
     flex: 1 1 auto;
@@ -152,9 +154,11 @@
 
     }
     .res-circle-img {
-      width: 45px;
       border-radius: 100%;
-      height: 45px;
+      width: 32px;
+      height: 32px;
+      /* width: 45px;
+      height: 45px; */
       margin-top: 0px;
       color: black;
       margin-left: -5px;
@@ -249,4 +253,17 @@
 
   ::ng-deep mat-toolbar.ep-header-new{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
+  }
+
+  /* New Styles */
+
+  button.example-icon.txt-wh.mat-icon-button.mat-button-base {
+    font-size: 20px;
+  }
+  span.txt-wh.bread-crumb {
+    font-size: 15px;
+  }  
+  span.headerlogo img { 
+    height: 30px;  
+    margin: 0px 80px 0px 0px; 
   }
