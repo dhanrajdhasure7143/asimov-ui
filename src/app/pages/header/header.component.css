@@ -1,5 +1,6 @@
 .abrand_div img{
-    width:190px;
+    padding-top: 15px;
+    width:215px;
 }
 .abrand_div{
     cursor: pointer;
@@ -37,7 +38,7 @@
 
 
 .res-circle {
-    width: 62px;
+    width: 60px;
     border-radius: 100%;
     text-align: center;
     height: 60px;
@@ -48,7 +49,7 @@
     line-height: 59px;
     margin-left: -5px;
     font-weight: bold;
-    padding: 4px 3px;
+    padding: 0px 0px;
   }
   .res-circle:after {
     content: "";
