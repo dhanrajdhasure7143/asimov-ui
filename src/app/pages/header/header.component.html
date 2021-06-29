@@ -88,30 +88,32 @@
     <img src="../../../assets/images/plus-square.svg">
    </button>
    <button mat-icon-button class="txt-wh"  (click)='slideUp("notifications")' aria-label="Example icon-button with heart icon">
-    <i style="font-size: 20px;" class="fa fa-bell"></i>
+    <i style="font-size: 18px;opacity: 0.5;" class="fa fa-bell"></i>
     <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:66px; top:2px;">
       <span>{{notificationscount}}</span>
    </div>
    </button>
    <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
    &nbsp;&nbsp;
-  <span class="txt-wh">|</span>&nbsp;&nbsp;
+  <span class="txt-wh header-seperator">|</span>&nbsp;&nbsp;
   &nbsp;&nbsp;
-  <span>
+  <span class="header-demotxt">
     <img src="../../../assets/images/Demo.svg">
-    &nbsp;
-    <span class="txt-u" style="font-size: 15px;font-weight: 400;">Demo</span>
-    &nbsp;
+    <span class="txt-u" >Demo</span>
     <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
-      <i class="fa fa-caret-down text-white"></i>
+      <mat-icon class="menu-button header-dropicon">expand_more
+      </mat-icon>
      </button>
+    <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
+      <i class="fa fa-caret-down text-white"></i>
+     </button> -->
   </span>
   &nbsp;&nbsp;
-  <span class="txt-wh">|</span>&nbsp;&nbsp;
+  <span class="txt-wh header-seperator">|</span>&nbsp;&nbsp;
   &nbsp;&nbsp;
   <div style="line-height: 0.7;margin-right: 10px;">
-    <span class="txt-u" style="font-size: 15px;font-weight: 400;">{{firstname}} &nbsp;{{lastname}}</span><br>
-    <span class="txt-u" style="font-size: 10px;opacity: 0.75;">{{userRole}}</span>
+    <span class="txt-u header-rgttext">{{firstname}} &nbsp;{{lastname}}</span><br>
+    <span class="txt-u header-userrole">{{userRole}}</span>
   </div>
   &nbsp;
   &nbsp;
@@ -128,7 +130,8 @@
 
     <span class="text-white">
       <button mat-icon-button [matMenuTriggerFor]="menu" class="txt-wh" style="vertical-align: middle;" aria-label="Example icon-button with a menu">
-        <i class="fa fa-caret-down text-white"></i>
+        <mat-icon class="menu-button" style="opacity: 0.5;">expand_more
+        </mat-icon>
       </button>
     </span>
   <mat-menu #menu="matMenu" style="padding:5px">
