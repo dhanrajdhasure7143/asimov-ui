@@ -23,21 +23,7 @@
     
   </a>
  
-  <!-- <a mat-list-item class="link" id="process" (click)="hightlight('process')"  data-toggle="tooltip" data-placement="right"  title="Processes">
-    <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-white">
-          <img src="../../../assets/images/dashboard_icons/white-icons/Project-flow.svg">
-      </span>
-      <span  class="default-img" id="eiap-home-icon-gray">
-          <img src="../../../assets/images/dashboard_icons/grey-icons/Project-flow.svg">
-      </span>
-    </span>
-
-    <span class="side-menu-font">Processes</span>
-  </a> -->
-  
-
-  <a mat-list-item class="link" id="projects" (click)="hightlight('projects')" routerLink="/pages/projects/listOfProjects"
+    <a mat-list-item class="link" id="projects" (click)="hightlight('projects')" routerLink="/pages/projects/listOfProjects"
   data-toggle="tooltip" data-placement="right"  title="Projects">
   <span class="side-icon">
     <span class="active-img" id="eiap-home-icon-white">
@@ -51,8 +37,30 @@
     <span class="side-menu-font" (click)="hightlight('listOfProjects')" routerLink="/pages/projects/listOfProjects">Projects</span>
   </a>
 
+  <a mat-list-item class="link" id="process" (click)="hightlight('process')"  data-toggle="tooltip" data-placement="right"  title="Processes">
+    <span class="side-icon">
+      <span class="active-img" id="eiap-home-icon-white">
+          <img src="../../../assets/images/dashboard_icons/white-icons/Processes.svg">
+      </span>
+      <span  class="default-img" id="eiap-home-icon-gray">
+          <img src="../../../assets/images/dashboard_icons/grey-icons/Processes.svg">
+      </span>
+    </span>
+
+    <span class="side-menu-font">Processes</span>
+  </a>
   
-  
+  <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/serviceOrchestration/home" data-toggle="tooltip" data-placement="right"  title="Orchestration">
+    <span class="side-icon">
+      <span class="active-img" id="eiap-home-icon-white">
+          <img src="../../../assets/images/dashboard_icons/white-icons/BPMN-canvas.svg">
+      </span>
+      <span  class="default-img" id="eiap-home-icon-gray">
+          <img src="../../../assets/images/dashboard_icons/grey-icons/BPMN-canvas.svg">
+      </span>
+    </span>
+    <span class="side-menu-font">Orchestration</span>
+  </a>
   
 
     <!-- <span class="side-menu-font">Workspace</span> -->
@@ -111,18 +119,6 @@
     </a>
   </div>
 
-
-  <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/serviceOrchestration/home" data-toggle="tooltip" data-placement="right"  title="Orchestration">
-    <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-white">
-          <img src="../../../assets/images/dashboard_icons/white-icons/BPMN-canvas.svg">
-      </span>
-      <span  class="default-img" id="eiap-home-icon-gray">
-          <img src="../../../assets/images/dashboard_icons/grey-icons/BPMN-canvas.svg">
-      </span>
-    </span>
-    <span class="side-menu-font">Orchestration</span>
-  </a>
   
   <!-- <a mat-list-item class="link" id="eiap-home">
     <span class="side-icon">

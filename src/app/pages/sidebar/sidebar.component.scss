@@ -42,8 +42,8 @@
 .side-menu-font{
   font-size: 16px;
   padding:30px;
-  color: #6c757d;
-  font-weight: 500;
+  color: #33496c;
+  font-weight: 400;
 }
 .side-menu-font:hover{
   font-size: 16px;
@@ -180,8 +180,12 @@ label.epsoft-label sup {
   display:none;
 }
 
+.mat-list-item-content span img{
+  width: 22px;
+}
 
 
 ::ng-deep mat-toolbar{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)  !important;
 }
+
