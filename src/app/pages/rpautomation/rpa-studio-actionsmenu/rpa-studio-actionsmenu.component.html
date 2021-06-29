@@ -56,9 +56,22 @@
             <i class="ri-stop-circle-line"></i>
         </div>
       
-        <div class="action-item" placement="bottom" tooltip="Predefined Bots" >
+        <!-- <div class="action-item" placement="bottom" tooltip="Predefined Bots" >
             <i class="ri-file-copy-line"></i>
-        </div>
+        </div> -->
+
+        <div class="action-item "   dropdown  placement="bottom" tooltip="Predefined Bots" >
+          <button class="clickable  text-primary dropdown-toggle" id="predefinedbot" dropdownToggle type="button"
+            aria-controls="predefined">
+            <span><i class="ri-robot-line"></i></span>
+        
+        </button>
+        <ul id="predefined" style="max-width:300px;max-height:250px;overflow:auto;left:auto;right:0" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+          <li role="menuitem" class="clickable" style="white-space: nowrap;"  *ngFor="let bot of predefinedbotsData"  >
+            <a   class="clickable"  (click)="loadpredefinedbot(bot.botId)"> {{bot.botName}}</a>
+          </li>
+        </ul>
+      </div>
         <div class="action-item" placement="bottom" tooltip="View Logs"(click)="viewlogdata()">
             <i class="ri-clipboard-line"></i>
         </div>
