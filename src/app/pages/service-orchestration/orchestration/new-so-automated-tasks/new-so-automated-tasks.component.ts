@@ -719,11 +719,11 @@ resetsla(){
               {
                 data="<span matTooltip='"+statusdata.status+"' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
               }
-              else if(statusdata.status=="Success")
+              else if(statusdata.status=="Success" || statusdata.status=="Approved")
               {
                 data='<span  matTooltip="'+statusdata.status+'"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
               }
-              else if(statusdata.status=="Failed" || statusdata.status=="Failure")
+              else if(statusdata.status=="Failed" || statusdata.status=="Failure" || statusdata.status=="Rejected")
               {
                 data='<span  matTooltip="'+statusdata.status+'"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
               }
