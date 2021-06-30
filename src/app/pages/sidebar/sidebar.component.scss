@@ -181,11 +181,15 @@ span.poweredby {
 label.poweredby-label {
   font-size: 10px;
   display: block;
+  line-height: normal;
+  margin: 0px;
+  font-weight: 400;
 }
 
 label.epsoft-label {
   font-size: 16px;
   position: relative;
+  margin: 0px;
 }
 
 label.epsoft-label sup {
@@ -229,7 +233,7 @@ label.epsoft-label sup {
 }
 
 .mat-list-item:hover span.side-menu-font {
-  color: white;
+  color: white !important;
 }
 
 .epslogo img {
@@ -257,7 +261,9 @@ label.epsoft-label sup {
 
 .submenus.expanded {
   padding: 0px;
-  background: #00a0e309;
+  // background: #00a0e309;
+  margin-left: 30px;
+    border-left: 2px solid #00a0e3;
 }
 
 .submenus.expanded .mat-list-item {
@@ -265,9 +271,17 @@ label.epsoft-label sup {
 }
 
 .submenus.expanded .mat-list-item span.side-icon {
-  visibility: hidden;
+  // visibility: hidden;
+  display: none;
 }
 
+.submenus.expanded .mat-list-item span.side-menu-font {
+  padding: 0px;
+}
+
+mat-list-item.mat-list-item.activeMenu .side-menu-font, mat-list-item.mat-list-item.activeMenu {
+  color: #2196f3;
+}
 
 ::ng-deep mat-toolbar {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
