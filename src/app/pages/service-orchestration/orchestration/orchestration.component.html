@@ -15,7 +15,14 @@
     </ngb-tab>
 </ngb-tabset>-->
 <ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif' /></ngx-spinner>
-<mat-tab-group [selectedIndex]="selectedTab" id="Orchestration-tabs" (selectedTabChange)="onTabChanged($event)">
+<div class="main-content">
+  <div class="module-heading">
+    <div class="container-fluid">
+      <span class="module-heading-title">Service Orchestration</span>
+    </div>
+  </div>
+  <div class="row content-area">
+      <mat-tab-group [selectedIndex]="selectedTab" id="Orchestration-tabs" (selectedTabChange)="onTabChanged($event)">
     <!-- <mat-tab>
       <ng-template mat-tab-label>
           <mat-icon class="text-primary">pie_chart</mat-icon>&nbsp;&nbsp;
@@ -69,6 +76,7 @@
         <app-new-so-dashboard></app-new-so-dashboard>
       </div>
     </mat-tab> -->
+    
     <mat-tab label="Bots">
 
       <ng-template mat-tab-label>
@@ -184,7 +192,9 @@
     </div>
   </mat-tab> 
 
-</mat-tab-group>
+      </mat-tab-group>
+  </div>
+</div>
 <!--
 <mat-tab-group [selectedIndex]="selectedTab" class="secondary-tab-group has-header" [dynamicHeight]="true" mat-stretch-tabs>
     <mat-tab label="Dashboard">

@@ -42,7 +42,7 @@ export class NewSoBotsComponent implements OnInit {
   check_tab:any=0;
   onTabChanged(event)
   {
-    this.spinner.show();
+    // this.spinner.show();
     this.selectedTab=event.index;
     this.check_tab=event.index;
   }
