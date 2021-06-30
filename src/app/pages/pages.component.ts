@@ -33,9 +33,11 @@ import { SidebarComponent } from './sidebar/sidebar.component';
     overflow: hidden;
   }
   .main{
-    height: 90vh;
-    overflow-x:unset !important;
-    background-color:white !important;
+    height: calc(100% - 52px);
+    background-color: #d9dfe4 !important;
+    z-index: 1;
+    position: relative;
+    top: 52px;
   }
 
   .eiap-main{
@@ -64,9 +66,9 @@ export class PagesComponent{
     if(!this.sideBarOpen) {
       this.sidebar.showSubmenu=false
       this.sidebar.showadminSubmenu=false
-      this.contentMargin = 70;
+      this.contentMargin = 60;
     } else {
-      this.contentMargin = 300;
+      this.contentMargin = 260;
     }
   }
   // sidenavEvents(str) {

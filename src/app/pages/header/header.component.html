@@ -61,19 +61,17 @@
 <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner> -->
 
 <mat-toolbar class="ep-header-white ep-header-new">
+  <div class="header-logdiv">
     <span>
       <button mat-icon-button class="example-icon txt-wh" (click)="page_obj.onToolbarMenuToggle()" aria-label="Example icon-button with menu icon">
-     <i *ngIf="page_obj.sideBarOpen==false" class="fa fa-bars"></i>
-     <i *ngIf="page_obj.sideBarOpen==true" class="fa fa-bars"></i>
-     <!-- <i  *ngIf="page_obj.sideBarOpen==true" class="fa fa-arrow-left"></i> -->
+     <em *ngIf="page_obj.sideBarOpen==false" class="fa fa-bars"></em>
+     <em *ngIf="page_obj.sideBarOpen==true" class="fa fa-bars"></em>
    </button></span>
-   <!-- <span *ngIf="page_obj.sideBarOpen==false"> -->
-  
-  &nbsp;&nbsp;
   <span class="headerlogo">
-    <img src="assets/images/EZFlow_tagline_full_logo.png">
+    <img src="assets/images/EZFlow_tagline_full_logo.png" class="header-logo" alt="EZFlow Logo">
    </span>
-  &nbsp;&nbsp;
+  </div>
+
    <span class="txt-wh bread-crumb">
     <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" routerLink="/pages/home" (click)="selectedIndex=pages.length"></span>
     <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" class="breadcrumb-home" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
@@ -134,15 +132,11 @@
         </mat-icon>
       </button>
     </span>
-  <mat-menu #menu="matMenu" style="padding:5px">
+  <mat-menu #menu="matMenu">
       <button class="ep-pad" (click)='myAccount()'><i class="far fa-user text-primary hd_icon"></i> My Account</button>
-      <br>
       <button  class="ep-pad" *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</button>
-      <br>
       <button  class="ep-pad" *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configuration</button>
-      <br>
       <button  class="ep-pad" *ngIf="this.userRole.includes('Admin')" (click)='inviteUser()'><img class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</button>
-      <br>
       <button  class="ep-pad" (click)='logout()'><i class="fas fa-sign-out-alt  text-primary "></i>Signout</button>
   
     <!-- <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay> -->

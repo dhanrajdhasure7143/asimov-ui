@@ -77,6 +77,8 @@
     background-color: white !important;
     height: 52px;
     box-shadow: 0px 1px 10px rgb(0 21 50 / 10%) !important;
+    position: absolute;
+    z-index: 2;
   }
   .example-spacer {
     flex: 1 1 auto;
@@ -259,12 +261,16 @@
 
   button.example-icon.txt-wh.mat-icon-button.mat-button-base {
     font-size: 20px;
+    width: auto;
+    height: auto;
+    margin-right: 15px;
+    padding: 1px;
   }
   span.txt-wh.bread-crumb {
     font-size: 15px;
   }  
   span.headerlogo img { 
-    height: 30px;  
+    height: 32px;  
     margin: 0px 80px 0px 0px; 
   }
   .header-rgttext {
@@ -288,3 +294,50 @@
     font-weight: 400;
     margin-left: 10px;
   }
+
+  .header-logdiv {
+    display: flex;
+    align-items: center;
+}
+
+.mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+  padding: 0 15px;
+  justify-content: center;
+}
+
+button.example-icon.txt-wh.mat-icon-button.mat-button-base:hover {
+    color: #00a0e3 !important;
+}
+
+span.txt-wh.bread-crumb {
+  display: none;
+}
+.text-white button.txt-wh.mat-menu-trigger.mat-icon-button.mat-button-base {
+  width: auto;
+  height: auto;
+}
+
+.text-white button.txt-wh.mat-menu-trigger.mat-icon-button.mat-button-base mat-icon.menu-button.mat-icon.notranslate.material-icons.mat-icon-no-color {
+  width: auto;
+  height: auto;
+}
+
+
+button.ep-pad {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
+
+ button.ep-pad:hover {
+  color: white;
+  background: #00a0e3;
+}
+
+button.ep-pad:hover .hd_icon, button.ep-pad:hover .text-primary {
+  color: white;
+}
+
+button.ep-pad:hover img.header_icon {
+  filter: brightness(10) grayscale(1) brightness(10);
+}
