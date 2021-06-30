@@ -7,7 +7,7 @@ import { DataTransferService } from "../../../services/data-transfer.service";
 import{sohints} from '../model/new-so-hints';
 import { ActivatedRoute, Router } from '@angular/router';
 import Swal from 'sweetalert2';
-
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: 'app-so-inbox',
   templateUrl: './so-inbox.component.html',
@@ -28,12 +28,14 @@ export class SoInboxComponent implements OnInit {
       private rest:RestApiService,
       private hints: sohints,
       private dt:DataTransferService,
+      private spinner:NgxSpinnerService,
       )
     {}
 
   ngOnInit() {
     this.dt.changeHints(this.hints.soinboxhints);
     //document.getElementById("showaction").style.display = "none";
+    this.spinner.show();
     this.getallbots();
   }
 
@@ -58,7 +60,7 @@ export class SoInboxComponent implements OnInit {
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
       this.dataSource1.data = response;
-
+      this.spinner.hide(); 
     },(err)=>{
       //this.rpa_studio.spinner.hide();
     })
@@ -119,4 +121,9 @@ export class SoInboxComponent implements OnInit {
     this.searchinbox = '';
     this.applyFilter('');
    }
+
+   refresh(){
+    this.spinner.show();
+    this.getallbots();
+  }
 }
