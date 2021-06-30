@@ -263,11 +263,21 @@ label.epsoft-label sup {
   padding: 0px;
   // background: #00a0e309;
   margin-left: 30px;
-    border-left: 2px solid #00a0e3;
+    // border-left: 2px solid #00a0e3;
+}
+.submenus.expanded .mat-list-item.active {
+  border-left: 2px solid #00a0e3 !important;
+  background: transparent !important;
+  color: #00a0e3;
+}
+
+.submenus.expanded .mat-list-item.active span.side-menu-font {
+  color: #00a0e3 !important;
 }
 
 .submenus.expanded .mat-list-item {
-  padding-left: -5px !important;
+  // padding-left: -5px !important;
+  border-left: 2px solid #00a0e31c;
 }
 
 .submenus.expanded .mat-list-item span.side-icon {
