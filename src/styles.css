@@ -823,12 +823,14 @@ font-size: 18px !important;
 #sidenav.menu-open .side-menu-font
 {
   display: block !important;
+  position: relative;
+    top: 2px;
 }
 
 
 
 #sidenav .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
-  padding: 0 15px;
+  padding: 0 20px;
 /* justify-content: center; */
 }
 
@@ -858,6 +860,19 @@ font-size: 18px !important;
 
 .active .mat-list-item-content .side-menu-font {
   color: white !important;
+}
+#sidenav.menu-close .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
+justify-content: center;
+}
+#sidenav.menu-close .mat-list-item-content .menu-button.mat-icon.notranslate.material-icons.mat-icon-no-color {
+  /* position: relative; */
+  right: 50%;
+  bottom: -10px;
+  transform: translate(8px, 0px);
+}
+
+#sidenav.menu-close mat-list-item.mat-list-item {
+  padding-bottom: 55px !important;
 }
 
 app-home {

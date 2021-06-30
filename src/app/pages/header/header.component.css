@@ -341,3 +341,7 @@ button.ep-pad:hover .hd_icon, button.ep-pad:hover .text-primary {
 button.ep-pad:hover img.header_icon {
   filter: brightness(10) grayscale(1) brightness(10);
 }
+
+.sidebarclose, .sidebaropen {
+  padding: 0px 4px;
+}
