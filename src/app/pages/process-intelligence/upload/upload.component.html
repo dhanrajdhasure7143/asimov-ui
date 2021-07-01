@@ -1,8 +1,8 @@
-<div class="container">
+
         <div class="row">
-                <div class='col-md-6'>
+                <div class='col-md-12'>
                 <div class="row">
-                <h1>Connect Your Data</h1>
+                        <label class="maintitle">Connect Your Data</label>
                 <h4 class="subtitle">Select below options to get your data</h4>
                 <div class="col-sm-3 upload_zone" id="upload_xl" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
@@ -36,12 +36,13 @@
                         </div>
                         </div>
                 </div>
-                <div class="col-md-6 workspace-table" id="my_workspace">
-                                <div class='col-sm-4'>
-                                <h4>My Workspace</h4>
+                <div class="col-md-12 workspace-table" id="my_workspace">
+                                <div class='col-sm-4 p-0'>
+                                <h4 class="sub-maintitle">My Workspace</h4>
                                 </div>
-                                <form action="">
-                                        <div class="col-sm-4">
+                                <form action="" class="col-sm-8 tableControls">
+                                        <div class="row">
+                                        <div class="col-sm-4 offset-4">
                                                         <div class="select-cat">
                                                         <mat-form-field class="row col-md-12">
                                                                 <mat-label>Select Category</mat-label>
@@ -53,13 +54,14 @@
                                                             </mat-form-field>
                                                         </div>
                                                         </div>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-4">
                                                 <mat-form-field>
                                                         <mat-label>Search Workspace</mat-label>
                                                         <input (keyup)="applyFilter($event)" class="toolbar-search" type="text" matInput>
                                                         <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
                                                       </mat-form-field>
                                                 </div>
+                                        </div>
                                         
                                 </form>
                                 <div class="col-sm-12 graph_table">
@@ -99,7 +101,7 @@
                         </div>
                 </div>
         </div>
-</div>
+
 
      <div id="myModal1" class="modal">
         <div class="modal-content">

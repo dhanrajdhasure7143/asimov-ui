@@ -290,7 +290,11 @@ label.epsoft-label sup {
 }
 
 mat-list-item.mat-list-item.activeMenu .side-menu-font, mat-list-item.mat-list-item.activeMenu {
-  color: #2196f3;
+  color: #00a0e3;
+}
+
+.submenus.expanded .mat-list-item .mat-list-item-content {
+  padding: 0px 23px !important;
 }
 
 ::ng-deep mat-toolbar {

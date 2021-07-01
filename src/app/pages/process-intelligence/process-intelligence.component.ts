@@ -4,13 +4,16 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bussiness-process',
-  template: `<div class="module-heading">
-              <div class="container">
-                <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
-                <span class="module-heading-title">Process Intelligence</span>
-                <span class="insight-back-button" *ngIf="isShow"> <a href="javascript:void(0);" (click)="gotoProcessgraph()">Go Back</a> </span>
+  template: `<div class="main-content">
+              <div class="row content-area">
+                <div class="module-heading">
+                  <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
+                  <span class="module-heading-title">Process Intelligence</span>
+                  <span class="insight-back-button" *ngIf="isShow"> <a href="javascript:void(0);" (click)="gotoProcessgraph()">Go Back</a> </span>
+                </div>
+                <router-outlet></router-outlet>
               </div>
-            </div><router-outlet></router-outlet>`
+            </div>`
 })
 export class ProcessIntelligenceComponent implements OnInit {
  isShow:boolean  = false;

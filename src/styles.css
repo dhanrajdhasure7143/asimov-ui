@@ -21,6 +21,31 @@ body, html {
   font-family: 'Source Sans Pro', sans-serif  !important;
   user-select: none;
 }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li,
+ol,
+span,
+button,
+th,
+td,
+div {
+  margin: 0;
+  padding: 0;
+  /* font-size: 15px; */
+  text-decoration: none !important;
+  list-style: none;
+  color: inherit;
+}
+
 .breadcrumb{
     background-color: white !important;
     padding: 4px 22px;
@@ -875,6 +900,44 @@ justify-content: center;
   padding-bottom: 55px !important;
 }
 
-app-home {
+.pr-0{
+  padding-right:0px !important
+}
+.pl-0{
+  padding-left:0px !important
+}
+
+.main-content{
+  height: 100%;
+  padding: 16px;
+  overflow: auto;
+  position: relative;
+  background-color: #e3eaef;
+  box-shadow: 0px 0px 13px 0px rgb(236 236 241 / 44%);
+}
+
+.content-area{
+  background: #ffffff;
+    /* padding: 15px 15px; */
+    border-radius: 4px;
+    box-shadow: 0px 0px 13px 0px #ececf170;
+    height: 100%;
+    overflow: hidden;
+}
+
+.maintitle {
+  font-size: 20px;
+  font-weight: 400;
+  margin-bottom: 10px;
+  padding: 10px 0px;
+}
+
+.maintitle sub {
+  top: 0px;
+  margin-left: 5px;
+  font-size: 16px;
+}
+
+app-home, app-bussiness-process {
   height: 100%;
 }

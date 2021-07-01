@@ -189,10 +189,10 @@ input[type="text"]{
       padding-left: 0px !important;
       padding-right: 0px !important;
   }
-  .workspace-table{   
+  /* .workspace-table{   
     margin-left: -8%;
     width: 58%;
-  }
+  } */
   .pi-Name-wrap{
       word-wrap: break-word !important;
   }
