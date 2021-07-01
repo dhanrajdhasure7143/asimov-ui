@@ -110,7 +110,9 @@
     "tiny-svg": "^2.2.2",
     "tslib": "^1.10.0",
     "xlsx": "^0.15.6",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "@ng-select/ng-select": "^2.20.5",
+    "js-base64": "^3.6.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.29",

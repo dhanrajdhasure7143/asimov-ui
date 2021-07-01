@@ -872,4 +872,7 @@ save_blueprism_config(data)
       return this.http.post("/platform-service/project/create",data)
     }
 
+    getRole(userid){
+       return this.http.get("/authorizationservice/api/v1/user/role/userId/"+userid+"")
+    }
 }

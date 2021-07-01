@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { Base64 } from 'js-base64';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-projects-programs-table',
   templateUrl: './projects-programs-table.component.html',
@@ -47,7 +49,10 @@ export class ProjectsProgramsTableComponent implements OnInit {
   myProgrambody: any;
   public selected_process_names:any=[];
   userslist:any;
+  projectdetailsEncode: any;
+  project: { id: any; };
   constructor( private api:RestApiService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService, 
+     private router: Router
     ) { 
 
     this.updateForm=this.formBuilder.group({
@@ -106,6 +111,12 @@ export class ProjectsProgramsTableComponent implements OnInit {
 
   }
 
+  navigatetodetailspage(detials){
+    this.projectdetailsEncode=Base64.encode(JSON.stringify(detials));
+          this.project={id:this.projectdetailsEncode}
+          console.log("details",this.project)
+          this.router.navigate(['/pages/projects/projectdetails',this.project])
+  }
   
   CredcheckAllCheckBox(ev) {
     this.tablelist.forEach(x =>
@@ -169,6 +180,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
          }
       
         this.dataSource2 = new MatTableDataSource(this.tablelist);
+        console.log("tablelist",this.tablelist)
         this.spinner.hide();
       });
       document.getElementById("filters").style.display='block'; 
