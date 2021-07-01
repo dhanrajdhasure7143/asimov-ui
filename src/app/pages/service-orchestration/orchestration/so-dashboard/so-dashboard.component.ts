@@ -470,7 +470,7 @@ export class SoDashboardComponent implements OnInit {
   openbotstatfilter()
   {
     const dialogRef = this.dialog.open(FilterBy,{
-      width: '300px',
+      width: '260px',
       data: {type:"date"}
     });
 
@@ -518,7 +518,7 @@ export class SoDashboardComponent implements OnInit {
   openDialog(filterType)
   {
       const dialogRef = this.dialog.open(FilterBy,{
-        width: '300px',
+        width: '260px',
         data: {type:filterType}
       });
 

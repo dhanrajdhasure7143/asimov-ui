@@ -2,15 +2,18 @@
     <div class="container-fluid">
         <br>
         <div class="text-right">
-            <span style="padding:10px">
+            <span style="padding:18px">
               <mat-form-field class="example-full-width" id="inboxsearch">
                 <mat-label>Search</mat-label>
                 <input matInput placeholder="Search" [(ngModel)]="searchinbox" (keyup)="applyFilter($event.target.value)">
                 <mat-icon matSuffix>search</mat-icon>
               </mat-form-field>
             </span>
-          <span (click)="reset()"  style="cursor:pointer" id="inboxreset" matTooltip="Reset">
+          <span (click)="reset()"  style="cursor:pointer" id="inboxreset" matTooltip="Reset" style="padding: 12px;">
             <i  class="fa fa-undo"></i>
+          </span >
+          <span (click)="refresh()"  style="cursor:pointer" id="inboxrefresh" matTooltip="Refresh" style="padding: 2px;">
+            <i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i>
           </span >
         </div>
           <div class="row">

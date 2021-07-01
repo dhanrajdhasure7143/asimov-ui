@@ -1,0 +1,229 @@
+<div class="projects-header">
+    <span class="projects-back-button">
+     
+    </span>
+     <div class="container-fluid">
+         <div class="row">
+            <div class="project-info" style="margin-top: -31px;">
+                <div class="status-img">
+                  <img src="..\assets\images\Projects\project_icon.svg" alt="" >
+                </div>
+                <div class="project-data">
+                  <span class="tab-number">{{projectdata.projectName |uppercase}}</span><br>
+                  <span class="tab-text" style="font-size: 12px;" >{{projectdata.description}}</span>
+                </div>
+              </div>
+              <div class="col-md-6"></div>
+              <div class="col-md-2"></div>
+              <div class="col-md-1"></div>
+              <div class="col-md-2" style="font-size: 11px;margin-top: -35px;">
+                Start Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                End Date &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Status
+              </div>
+        
+             
+             <div class="col-md-2">
+                <div class="" style="font-size: 11px;">
+                   
+                </div>
+             </div>
+         </div>
+         <div class="row">
+            <div class="col-md-1"></div>
+             <div class="col-md-8">
+            
+            </div>
+            <div class="col-md-2"  style="font-size: 11px;margin-top: -15px;">
+                <b>{{projectdata.startdate | date}}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>{{projectdata.enddate | date}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
+                <b>New</b>
+            </div>
+         </div>
+     </div>
+  </div>
+
+  <hr>
+  
+  <table>
+      <tr>
+          <td>
+            <div class="status-tabs">
+                <div class="body-img">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div>
+                <div class="status-data">
+                  <span class="" style="font-size: 11px;white-space: nowrap;">Value Chain</span><br>
+                  <span class="tab-text" *ngIf="projectdata.mapchainvalue==null" style="font-size: 12px;"><b>-</b></span>
+                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.mapchainvalue}}</b></span>
+                </div>
+              </div>
+        </td>
+        
+            <td>
+              <div class="status-tabs">
+                <div class="body-img">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div>
+                <div class="status-data">
+                  <span class="" style="font-size: 11px;white-space: nowrap;">Initiative</span><br>
+                  <span class="tab-text" *ngIf="projectdata.initiatives==null" style="font-size: 12px;"><b>-</b></span>
+                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.initiatives}}</b></span>
+                </div>
+              </div>
+          </td>
+        
+          <td>
+            <div class="status-tabs">
+                <div class="body-img">
+                  <img src="..\assets\images\Projects\bot.svg" alt="" >
+                </div>
+                <div class="status-data">
+                  <span class="" style="font-size: 11px;white-space: nowrap;">Process</span><br>
+                  <span class="tab-text" *ngIf="projectdata.process==null" style="font-size: 12px;"><b>-</b></span>
+                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.process}}</b></span>
+                </div>
+              </div>
+          </td>
+        
+          <td>
+            <div class="status-tabs">
+                <div class="body-img">
+                  <img src="..\assets\images\Projects\document.svg" alt="" >
+                </div>
+                <div class="status-data">
+                  <span class="" style="font-size: 11px;white-space: nowrap;">Process Id</span><br>
+                  <span class="tab-text" style="font-size: 12px;"><b>1111134567</b></span>
+                </div>
+              </div>
+        </td>
+       
+
+        <td>
+            <div class="col-md-3 formelement">
+                <div class="status-tabs">
+                    <div class="body-img">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="" style="font-size: 11px;white-space: nowrap;">Project Purpose</span><br>
+                      <span class="tab-text" style="font-size: 12px;"><b>Improve ROI</b></span>
+                    </div>
+                  </div>
+            </div>
+        </td>
+
+
+      
+
+        <td>
+            <div class="col-md-3 formelement">
+                <div class="status-tabs">
+                    <div class="body-img">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="" style="font-size: 11px;white-space: nowrap;">Project Owner</span><br>
+                      <span class="tab-text" *ngIf="projectdata.owner==null" style="font-size: 12px;"><b>-</b></span>
+                      <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.owner}}</b></span>
+                    </div>
+                  </div>
+            </div>
+        </td>
+
+
+      </tr>
+
+      <tr>
+          <td>
+            <div class="col-md-3 formelement">
+                <div class="status-tabs">
+                    <div class="body-img">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="" style="font-size: 11px;white-space: nowrap;">Project Priority</span><br>
+                      <span class="tab-text" *ngIf="projectdata.projectpriority==null" style="font-size: 12px;"><b>-</b></span>
+                      <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.projectpriority}}</b></span>
+                    </div>
+                  </div>
+            </div>
+          </td>
+
+          <td>
+               <div class="col-md-3 formelement">
+            <div class="status-tabs">
+                <div class="body-img">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div>
+                <div class="status-data">
+                  <span class="" style="font-size: 11px;">Resources</span><br>
+                  <span class="tab-text" *ngIf="projectdata.resources==null" style="font-size: 12px;"><b>-</b></span>
+                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.resources}}</b></span>
+                </div>
+              </div>
+        </div>
+        </td>
+
+        <td>
+             
+                <div class="col-md-3 formelement">
+                    <div class="status-tabs">
+                        <div class="body-img">
+                          <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                        </div>
+                        <div class="status-data">
+                          <span class="" style="font-size: 11px;white-space: nowrap;">Project Health</span><br>
+                          <span class="tab-text" style="font-size: 12px;"><b>Good</b></span>
+                        </div>
+                      </div>
+                </div> 
+        </td>
+
+        <td>
+               <div class="col-md-3 formelement">
+                    <div class="status-tabs">
+                        <div class="body-img">
+                          <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                        </div>
+                        <div class="status-data">
+                          <span class="" style="font-size: 11px;white-space: nowrap;">Progress Percentage</span><br>
+                          <span class="tab-text" style="font-size: 12px;"><b>50%</b>
+                            <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
+                        </span>
+                        </div>
+                      </div>
+                </div>
+        </td>
+
+        <td>
+             <div class="col-md-3 formelement">
+                    <div class="status-tabs">
+                        <div class="body-img">
+                          <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                        </div>
+                        <div class="status-data">
+                          <span class="" style="font-size: 11px;white-space: nowrap;">Efforts Spent</span><br>
+                          <span class="tab-text" style="font-size: 12px;"><input type="text" size="10" placeholder="Enter Efforts Spent Value"/></span>
+                        </div>
+                      </div>
+                </div> 
+        </td>
+        <td>
+            <div class="col-md-3 formelement">
+                <div class="status-tabs">
+                    <div class="body-img">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div>
+                    <div class="status-data">
+                      <span class="" style="font-size: 11px;white-space: nowrap;">Butn Rate</span><br>
+                      <span class="tab-text" style="font-size: 12px;"><input type="text" size="10" placeholder="Enter Burnt Rate Value"/></span>
+                    </div>
+                  </div>
+            </div> 
+        </td>
+
+      </tr>
+  </table>
+
+ 

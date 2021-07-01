@@ -23,7 +23,25 @@
     
   </a>
  
+<<<<<<< HEAD
     <a mat-list-item class="link" id="projects" (click)="hightlight('projects')" routerLink="/pages/projects/listOfProjects"
+=======
+  <!-- <a mat-list-item class="link" id="process" (click)="hightlight('process')"  data-toggle="tooltip" data-placement="right"  title="Processes">
+    <span class="side-icon">
+      <span class="active-img" id="eiap-home-icon-white">
+          <img src="../../../assets/images/dashboard_icons/white-icons/Project-flow.svg">
+      </span>
+      <span  class="default-img" id="eiap-home-icon-gray">
+          <img src="../../../assets/images/dashboard_icons/grey-icons/Project-flow.svg">
+      </span>
+    </span>
+
+    <span class="side-menu-font">Processes</span>
+  </a> -->
+  
+
+  <a mat-list-item class="link" id="projects" (click)="hightlight('projects')" routerLink="/pages/projects/projectdashboard"
+>>>>>>> 9b1c271dfcbc99f0216c7e3e6599b54937ddd935
   data-toggle="tooltip" data-placement="right"  title="Projects">
   <span class="side-icon">
     <span class="active-img" id="eiap-home-icon-white">
@@ -34,7 +52,7 @@
     </span>
   </span>
 
-    <span class="side-menu-font" (click)="hightlight('listOfProjects')" routerLink="/pages/projects/listOfProjects">Projects</span>
+    <span class="side-menu-font" (click)="hightlight('listOfProjects')" >Projects</span>
   </a>
 
   <a mat-list-item class="link" id="process" (click)="hightlight('process')"  data-toggle="tooltip" data-placement="right"  title="Processes">
@@ -67,7 +85,7 @@
     <!-- <button mat-icon-button #trigger=matMenuTrigger [matMenuTriggerFor]="workspacemenu">
       <mat-icon>more_vert</mat-icon>
    </button> -->
-   <mat-list-item (click)="showSubmenu = !showSubmenu; selection()" class=""  data-toggle="tooltip" data-placement="right"  title="Workspace">
+   <mat-list-item (click)="showSubmenu = !showSubmenu; selection()" [ngClass]="{'activeMenu' : showSubmenu}" class=""  data-toggle="tooltip" data-placement="right"  title="Workspace">
     <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
     <span class="side-icon">

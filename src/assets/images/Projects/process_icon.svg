@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="27.935" height="26.5" viewBox="0 0 27.935 26.5">
+  <g id="process_icon" transform="translate(0.75)">
+    <g id="process_icon-2" data-name="process_icon">
+      <g id="Group_51" data-name="Group 51" transform="translate(0)">
+        <path id="Path" d="M6.28,0H2.415A2.418,2.418,0,0,0,0,2.415V6.28A2.418,2.418,0,0,0,2.415,8.7H6.28A2.418,2.418,0,0,0,8.7,6.28V2.415A2.418,2.418,0,0,0,6.28,0Z" transform="translate(8.696)" fill="#63b8f2"/>
+        <path id="Path-2" data-name="Path" d="M4.44,0H1.56A1.561,1.561,0,0,0,0,1.56V4.44A1.561,1.561,0,0,0,1.56,6H4.44A1.561,1.561,0,0,0,6,4.44V1.56A1.561,1.561,0,0,0,4.44,0Z" transform="translate(10.217 20)" fill="#63b8f2" stroke="#63b8f2" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1"/>
+        <path id="Path-3" data-name="Path" d="M4.022,0H1.413A1.414,1.414,0,0,0,0,1.413V4.022A1.414,1.414,0,0,0,1.413,5.435H4.022A1.414,1.414,0,0,0,5.435,4.022V1.413A1.414,1.414,0,0,0,4.022,0Z" transform="translate(21 20)" fill="none" stroke="#474747" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+        <path id="Path-4" data-name="Path" d="M4.022,0H1.413A1.414,1.414,0,0,0,0,1.413V4.022A1.414,1.414,0,0,0,1.413,5.435H4.022A1.414,1.414,0,0,0,5.435,4.022V1.413A1.414,1.414,0,0,0,4.022,0Z" transform="translate(0 20)" fill="none" stroke="#474747" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+        <path id="Path-5" data-name="Path" d="M17.735,3.261H11.442V.543a.573.573,0,0,0-1.144,0V3.261H4a3.913,3.913,0,0,0-4,3.8.559.559,0,0,0,.572.543.559.559,0,0,0,.572-.543A2.8,2.8,0,0,1,4,4.348H10.3V7.065a.573.573,0,0,0,1.144,0V4.348h6.293a2.8,2.8,0,0,1,2.86,2.717.573.573,0,0,0,1.144,0A3.913,3.913,0,0,0,17.735,3.261Z" transform="translate(2.174 10.87)" fill="#474747" stroke="#474747" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="0.3"/>
+      </g>
+    </g>
+  </g>
+</svg>

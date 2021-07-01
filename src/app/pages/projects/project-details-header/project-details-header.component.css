@@ -1,0 +1,47 @@
+.projects-header{
+    width:100%;padding:0px;
+  }
+
+
+
+  .status-tabs{
+    display: flex;
+    padding:20px;
+    
+  }
+
+  .tab-number{
+    font-size: 20px !important;
+
+  }
+
+  .status-img > img{
+    height: 85px !important;
+    padding-top: 42px;
+    margin-top: -8px;
+    margin-left: 8px;
+  }
+
+  .status-data{
+    vertical-align: middle;
+    padding-top:15px;
+    padding-left:30px;
+    padding-bottom:15px;
+    color:black !important;
+  }
+
+  .project-data{
+    padding-left: 63px;
+    margin-top: -46px;
+  }
+
+  .body-img> img{
+    height: 71px !important;
+    padding-top: 42px;
+    margin-top: -24px;
+  }
+/* 
+  table, th, td {
+    padding: 5px;
+  }
+   */

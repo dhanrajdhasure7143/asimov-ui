@@ -28,6 +28,6 @@ export class SidebarComponent implements OnInit {
 
   selection(){
      this.obj.sideBarOpen=true;
-     this.obj.contentMargin=300;
+     this.obj.contentMargin=260;
    }
 }
