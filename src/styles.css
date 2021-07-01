@@ -846,31 +846,6 @@ font-size: 18px !important;
   margin: 0px !important;
 }
 
-<<<<<<< HEAD
-.mat-list-item-content .menu-button {
-  position: absolute;
-  right: 0px;
-  text-align: center !important;
-  padding: 0px !important;
-}
-.menu-close .mat-icon {
-  display: none;
-}
-.bg-colour{
-    background-color: #e3eaef;
-    height: calc(100vh - 64px);
-    overflow: auto;
-    padding: 13px;
-}
-
-.mat-list-item-content span img{
-  width: 22px;
-}
-
-.active .side-menu-font, .active .side-menu-font:hover {
-  color: #fff !important;
-}
-=======
 #sidenav.menu-close span.poweredby {
   display: none;
 }
@@ -903,4 +878,3 @@ justify-content: center;
 app-home {
   height: 100%;
 }
->>>>>>> 9b1c271dfcbc99f0216c7e3e6599b54937ddd935
