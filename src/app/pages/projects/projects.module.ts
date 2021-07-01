@@ -27,13 +27,19 @@ import {
 import { ProjectsProgramsTableComponent } from './projects-list-screen/projects-programs-table/projects-programs-table.component';
 import { CreateProjectsComponent } from './create-projects/create-projects.component';
 
+import { ProjectDetailsScreenComponent } from './project-details-screen/project-details-screen.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { ProjectDetailsHeaderComponent } from './project-details-header/project-details-header.component';
+import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
+
   const materialModules: any[] = [
     
     
   ];
 
 @NgModule({
-  declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent],
+  declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent,
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
@@ -52,7 +58,7 @@ import { CreateProjectsComponent } from './create-projects/create-projects.compo
     MatFormFieldModule,
     MatButtonModule,NgxSpinnerModule,
     ModalModule.forRoot(),
-    
+    MatProgressBarModule,
     
   ],
   providers:[

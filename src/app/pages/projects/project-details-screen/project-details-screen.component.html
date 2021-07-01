@@ -1,0 +1,232 @@
+<div style="width:100%;overflow-x: scroll;">
+<mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
+    <div class="projects-header">
+      <span class="projects-back-button"  routerLink="/pages/projects/listOfProjects">
+        <i class="fa fa-arrow-left"></i>
+      </span>
+      <span class="projects-header-title">
+        Project Details
+      </span>
+      <span class="pull-right" style="font-size:20px;">
+        <span class="projects-menu-item"><i class="ri-file-line"></i></span>
+        <span class="projects-menu-item"><i class="ri-history-line"></i></span>
+        <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+      </span>
+    </div>
+    <br>
+    <div class="projects-table-body" style="padding:10px;">
+        <app-project-details-header></app-project-details-header>
+      </div>
+    
+  </mat-card>
+
+  <br>
+
+  <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
+    <div class="">
+      <span class="">
+        
+      </span>
+      <br>
+      <span class="projects-header-title">
+        Tasks
+      </span>
+      <span class="pull-right" style="font-size:20px;">
+        <span class="projects-menu-item"  ></span>
+        <span class="projects-menu-item"><button type="button" class="btn btn-primary">Create New</button></span>
+      </span>
+    </div>
+    <br>
+    <div class="tasks-body" style="text-align: center;">
+      <!-- <img src="..\assets\images\Projects\no_items.svg" height="190px" >
+      <figcaption>No items to display!</figcaption> -->
+      <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class="projecttable table" id="autotable">
+
+        <ng-container matColumnDef="processName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
+            <td mat-cell [matTooltip]="element.processName"  *matCellDef="let element">{{(element.processName.length > 15) ? ((element.processName).slice(0, 15) + '...') : element.processName}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="taskName">
+          <th mat-header-cell *matHeaderCellDef>Task</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.taskName!=null" [matTooltip]="element.taskName">{{(element.taskName.length > 15) ? ((element.taskName).slice(0, 15) + '...') : element.taskName}}</span>
+              <span *ngIf="element.taskName==null">---</span>
+          </td>
+      </ng-container>
+        <ng-container matColumnDef="taskType">
+            <th mat-header-cell *matHeaderCellDef>Task Type &nbsp;&nbsp;</th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.taskType!=null">{{element.taskType}}</span>
+                <span *ngIf="element.taskType==null">---</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category  &nbsp;&nbsp;</th>
+          <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.category!=null">{{element.category}}</span>
+              <span *ngIf="element.category==null">---</span>
+          </td>
+      </ng-container>
+       
+        <ng-container matColumnDef="processOwner">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Owner</th>
+          <td mat-cell *matCellDef="let element" >
+            {{element.createdBy}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="taskOwner">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Task Owner</th>
+          <td mat-cell *matCellDef="let element" >
+            {{element.taskOwner}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let element" align="center">
+            <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
+              <span [matTooltip]="element.status" *ngIf="element.status=='Pending'" class="text-warning" ><span><i class="fa fa-clock" style="filter: none; font-size:19px;width: 19px;"></i></span></span>
+            <span [matTooltip]="element.status" *ngIf="element.status=='Running' || element.status=='InProgress'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp; Running</span>
+            <span [matTooltip]="element.status" *ngIf="(element.status=='Success' || element.status=='Executed') " class="text-success"><span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
+            <span [matTooltip]="element.status" *ngIf="element.status=='Rejected' " class="text-danger"><span><li class="fa fa-times-circle"style="font-size:19px"></span>&nbsp;<span> </span></span>
+            <span [matTooltip]="element.status"  *ngIf="element.status=='Approved' " class="text-success"><span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
+            <span [matTooltip]="element.status" *ngIf="(element.status=='Failure' || element.status=='Failed')" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
+            <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+            <span [matTooltip]="element.status" *ngIf="element.status=='New'" class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style='filter:none;height:20px' ></span>&nbsp;<span> </span></span>
+            <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span> </span></span>-->
+            <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
+            <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
+            <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>--</span>
+            <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
+            <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span> </span></span>
+            <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span> </span></span>
+            <span *ngIf="element.status=='New'" class="text-primary"><span><img src="/assets/images/RPA/newicon.png" style="height:20px;"></span>&nbsp;<span> </span></span>
+            <span *ngIf="element.status=='Failed'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span> </span></span>
+            -->
+            </span>
+
+              <span *ngIf="element.status=='null'">---</span>
+          </td>
+      </ng-container>
+        <ng-container matColumnDef="Loading">
+          <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+              Loading
+          </td>
+      </ng-container>
+        <ng-container matColumnDef="noData">
+            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                No Records Found
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
+      </table>
+      </div>
+      <mat-paginator #paginator10 [pageSize]="5" [showFirstLastButtons]="true">
+      </mat-paginator>
+    <br>
+  </mat-card>
+
+
+  <br>
+
+
+  <div style="display:flex">
+    <div class="resources">
+      <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
+        <div class="">
+          <span class="">
+           
+          </span>
+          <br>
+          <span class="projects-header-title">
+            Resources
+          </span>
+          <span class="pull-right" style="font-size:20px;">
+            <span class="projects-menu-item" ></span>
+            <span class="projects-menu-item"><button type="button" class="btn btn-primary">Create New</button></span>
+          </span>
+        </div>
+        <br>
+        <div class="projects-table-body">
+          <table>
+            <tr class="separated">
+              <th></th>
+              <th style="text-align:center">Name</th>
+              <th style="text-align:center">Role</th>
+              <th style="text-align:center">Checkout Item</th>
+              <th style="text-align:center">Last Updated</th>
+            </tr>
+            <tr >
+              <td>
+                <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
+              </td>
+              <td style="text-align:center">{{resourcetablefirstname?resourcetablefirstname:'-' }} {{resourcetablelastname?resourcetablelastname:'-' }}</td>
+              <td style="text-align:center">{{roles?roles:'-'}}</td>
+              <td style="text-align:center">01</td>
+              <td style="text-align:center">09th Jan,2021</td>
+          </tr>
+          </table>
+          </div>
+        
+      </mat-card>
+    </div>
+    <div class="documents">
+      <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
+        <div class="">
+          <span class="">
+           
+          </span>
+          <br>
+          <span class="projects-header-title">
+            Recently Added Documents
+          </span>
+          <span class="pull-right" style="font-size:20px;">
+            <span class="projects-menu-item"  ></span>
+            <span class="projects-menu-item"><button type="button" class="btn btn-primary">Upload</button></span>
+          </span>
+        </div>
+        <br>
+        <div class="projects-table-body">
+          <table>
+            <tr class="separated">
+              <th>Document Name</th>
+              <th>Uploaded By</th>
+              <th>Uploaded Date</th>
+              <th>File Size</th>
+            </tr>
+            <tr >
+              <td>Task Mining Doc</td>
+              <td>Lakshmi Kadali</td>
+              <td>Jul 1st,2021</td>
+              <td>150kb</td>
+              </tr>
+              <tr >
+                <td>Design Doc</td>
+                <td>Karthik Peddinti</td>
+                <td>Jul 10th,2021</td>
+                <td>125MB</td>
+                </tr>
+                <tr >
+                  <td>Approval Email</td>
+                  <td>Siva Simhadri</td>
+                  <td>Jul 21st,2021</td>
+                  <td>10MB</td>
+                  </tr>
+          </table>
+          </div>
+        
+      </mat-card>
+    </div>
+    <br>
+    
+</div>
+
+<br><br>
+
+</div>

@@ -4,6 +4,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { RestApiService } from '../../services/rest-api.service';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
+import { Base64 } from 'js-base64';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-create-projects',
   templateUrl: './create-projects.component.html',
@@ -19,11 +22,20 @@ export class CreateProjectsComponent implements OnInit {
   projects_list:any;
   selected_project:any;
   modalRef: BsModalRef;
+  selected_process_names: any;
+  programdescription: string = '';
+  projectDetails: any;
+  projectcreatedata: any;
+  projectdetailsEncode: any;
+  project: { id: any; };
+  projectselection:any=[];
+  newproject: any=[];
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
     private spinner:NgxSpinnerService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private router: Router
     ) { }
 
   ngOnInit() {
@@ -43,8 +55,11 @@ export class CreateProjectsComponent implements OnInit {
     purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    project: ["", Validators.compose([Validators.maxLength(50)])],
-    description: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+   // project: ["", Validators.compose([Validators.maxLength(50)])],
+    owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    description: ["", Validators.compose([Validators.maxLength(200)])],
     })
 
   this.insertForm2=this.formBuilder.group({
@@ -59,15 +74,22 @@ export class CreateProjectsComponent implements OnInit {
     measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
+    access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
 })
     this.resetcreateproject();
     this.getallusers();
-    this.getallProjects();
+   // this.getallProjects();
+    this.getprocessnames();
   }
 
 
-  
+  linkcreateproject(){
+    alert("hi")
+  this.newproject.push(this.insertForm2.value)
+  console.log("link",this.newproject)
+  this.modalRef.hide();
+  }
    
   getallProjects(){
     this.spinner.show();
@@ -86,11 +108,28 @@ createproject()
     this.api.createProject(this.insertForm2.value).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
+      this.projectcreatedata=this.insertForm2.value
       if(response.errormessage==undefined)
       {
         Swal.fire("Success",response.message,"success");
         this.resetcreateproject();
         this.getallProjects();
+
+        this.projectDetails={
+          description: this.projectcreatedata.description,
+          enddate: this.projectcreatedata.enddate,
+          initiatives: this.projectcreatedata.initiatives,
+          mapchainvalue: this.projectcreatedata.mapchainvalue,
+          measurablemetrics: this.projectcreatedata.measurablemetrics,
+          owner: this.projectcreatedata.owner,
+          process: this.projectcreatedata.process,
+          projectName: this.projectcreatedata.projectName,
+          projectpriority: this.projectcreatedata.projectpriority,
+          resources: this.projectcreatedata.resources,
+          startdate: this.projectcreatedata.startdate
+
+        }
+        this.navigatetodetailspage(this.projectDetails);
         
       }
       else
@@ -99,12 +138,33 @@ createproject()
     })
   }
 
+  navigatetodetailspage(detials){
+    this.projectdetailsEncode=Base64.encode(JSON.stringify(detials));
+          this.project={id:this.projectdetailsEncode}
+          console.log("details",this.project)
+          this.router.navigate(['/pages/projects/projectdetails',this.project])
+  }
 
+  getprocessnames()
+{
+  this.api.getprocessnames().subscribe(processnames=>{
+    let resp:any=[]
+    resp=processnames
+    this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+  })
+  }
 
   saveProgram(){​​​​​​​​
-   
+    let data=this.createprogram.value;
+    data["project"]=this.newproject
+    data["existingprojects"]=this.selected_projects.map(item => {
+ return {
+   id:item.id
+ }
+    })
+    console.log("data",data)
       this.spinner.show()
-      this.api.saveProgram(this.createprogram.value).subscribe( res=>{​​​​​​​​
+      this.api.saveProgram(data).subscribe( res=>{​​​​​​​​
         this.spinner.hide();
         let response:any=res
         if(response.errormessage==undefined)

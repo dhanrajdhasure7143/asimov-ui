@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="23.5" height="29.5" viewBox="0 0 23.5 29.5">
+  <g id="doc" transform="translate(0.75 0.25)">
+    <g id="doc-2" data-name="doc">
+      <g id="Group_23" data-name="Group 23">
+        <path id="Path" d="M0,0V6.5a3,3,0,0,0,3,3H9Z" transform="translate(13)" fill="#63b8f2"/>
+        <path id="Path-2" data-name="Path" d="M13.75,0h-11A2.775,2.775,0,0,0,0,2.8V25.2A2.775,2.775,0,0,0,2.75,28h16.5A2.775,2.775,0,0,0,22,25.2V8.4Z" transform="translate(0 0.5)" fill="none" stroke="#474747" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+        <path id="Path-3" data-name="Path" d="M11,.5H0" transform="translate(5 18.5)" fill="none" stroke="#63b8f2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+        <path id="Path-4" data-name="Path" d="M3,.5H0" transform="translate(5 12.5)" fill="none" stroke="#474747" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="1.5"/>
+      </g>
+    </g>
+  </g>
+</svg>

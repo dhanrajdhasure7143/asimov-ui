@@ -1,0 +1,132 @@
+
+  
+::ng-deep mat-card{
+  padding:0px !important;
+}
+
+  .projects-header{
+    width:100%;padding:19px;
+    background-color:rgba(212, 212, 212, 0.295);
+  }
+
+
+  .projects-back-button{
+    padding:5px;
+    padding-right:20px;
+    border-right:1px solid #4AB0F5 ;
+    color:#4AB0F5 ;
+    cursor: pointer;
+  }
+
+  .projects-header-title{
+    color:black ;
+    font-size:18px;
+    padding:5px;
+    padding-left:20px;
+  }
+
+
+  .projects-menu-item{
+    padding:5px;
+    font-size:22px;
+    color:#4AB0F5;
+    cursor: pointer;
+  }
+  .status-tabs{
+    display: flex;
+    padding:11px;
+    
+  }
+
+  .tab-number{
+    font-size: 18px !important;
+
+  }
+
+  .status-img > img{
+    height: 60px !important;
+    padding-top: 16px;
+  }
+
+  .status-data{
+    vertical-align: middle;
+    padding-top:15px;
+    padding-left:30px;
+    padding-bottom:15px;
+    color:black !important;
+  }
+
+  #projects_dashboard_header{
+    width: 93%;
+    height: 102px;
+    margin-left: 14px;
+  }
+
+  .projects_by_department{
+    margin-left: 14px;
+    border: 1px solid rgb(221, 236, 248);
+    border-radius: 2px;
+    padding: 10px;
+    box-shadow: rgb(0 0 0 / 7%) 0px 4px 6px;
+  }
+
+  .projects_favourites{
+    margin-left: 14px;
+    border: 1px solid rgb(221, 236, 248);
+    border-radius: 2px;
+    padding: 10px;
+    box-shadow: rgb(0 0 0 / 7%) 0px 4px 6px;
+  }
+
+  #projectdashboard{
+    height:350px;
+  }
+
+  #projectattention{
+    height:293px;
+
+  }
+
+  #projectfavourites{
+    height:383px;
+  }
+
+  .status-tabs1{
+    display: flex;
+    padding:20px;
+    
+  }
+
+  .body-img> img{
+    height: 71px !important;
+    padding-top: 42px;
+    margin-top: -24px;
+  }
+
+  .status-data1{
+    vertical-align: middle;
+    padding-top:15px;
+    padding-left:30px;
+    padding-bottom:15px;
+    color:black !important;
+  }
+
+  /* .projecttable.table th{
+    
+    background-color:rgba(190, 229, 241, 0.616) !important;
+    vertical-align: middle !important;
+    color: #4AB0F5 !important;
+    font-size: 18px !important;
+  } */
+  table {
+    width: 100%;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+
+  .separated {
+    /* set border style for separated rows */
+    border-bottom: 1px solid skyblue;
+  }
