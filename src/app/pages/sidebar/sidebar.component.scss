@@ -108,8 +108,8 @@
 }
 
 .active {
-  background-color: #00a0e3 !important;
-  color: white;
+  background-color: #ffffff !important;
+  color: #072f41;
 
   .side-icon {
     color: white !important;
@@ -228,9 +228,9 @@ label.epsoft-label sup {
   display: none;
 }
 
-.mat-list-item:hover span.side-icon .active-img {
-  display: block !important;
-}
+// .mat-list-item:hover span.side-icon .active-img {
+//   display: block !important;
+// }
 
 .mat-list-item:hover span.side-menu-font {
   color: white !important;
@@ -263,8 +263,9 @@ label.epsoft-label sup {
   padding: 0px;
   // background: #00a0e309;
   margin-left: 30px;
-    // border-left: 2px solid #00a0e3;
+  // border-left: 2px solid #00a0e3;
 }
+
 .submenus.expanded .mat-list-item.active {
   border-left: 2px solid #00a0e3 !important;
   background: transparent !important;
@@ -289,12 +290,45 @@ label.epsoft-label sup {
   padding: 0px;
 }
 
-mat-list-item.mat-list-item.activeMenu .side-menu-font, mat-list-item.mat-list-item.activeMenu {
+mat-list-item.mat-list-item.activeMenu .side-menu-font,
+mat-list-item.mat-list-item.activeMenu {
   color: #00a0e3;
+  font-weight: 500;
 }
 
 .submenus.expanded .mat-list-item .mat-list-item-content {
   padding: 0px 23px !important;
+}
+
+.mat-list-item .default-img,
+.mat-list-item.active .active-img,
+.mat-list-item.active:hover .hover-img,
+.mat-list-item:hover .hover-img {
+  display: block;
+}
+
+.mat-list-item.active:hover .active-img,
+.mat-list-item .hover-img,
+.mat-list-item .active-img,
+.mat-list-item.active .default-img,
+.mat-list-item.active .hover-img,
+.mat-list-item.active:hover .active-img {
+  display: none;
+}
+
+mat-list-item.mat-list-item.activeMenu .active-img,
+mat-list-item.mat-list-item.activeMenu:hover .hover-img {
+  display: block !important;
+}
+
+mat-list-item.mat-list-item.activeMenu .default-img,
+mat-list-item.mat-list-item.activeMenu:hover .active-img {
+  display: none !important;
+}
+
+.submenus.expanded .mat-list-item {
+  height: 32px !important;
+  display: flex !important;
 }
 
 ::ng-deep mat-toolbar {

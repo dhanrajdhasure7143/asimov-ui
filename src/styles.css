@@ -884,7 +884,8 @@ font-size: 18px !important;
 }
 
 .active .mat-list-item-content .side-menu-font {
-  color: white !important;
+  color: #00a0e3 !important;
+  font-weight: 500;
 }
 #sidenav.menu-close .mat-list-base .mat-list-item .mat-list-item-content, .mat-list-base .mat-list-option .mat-list-item-content {
 justify-content: center;

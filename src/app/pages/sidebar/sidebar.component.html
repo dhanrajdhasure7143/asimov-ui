@@ -11,9 +11,12 @@
   <!-- <a mat-list-item ><i class="fa fa-area-chart"></i> &nbsp; &nbsp; Dashboard</a> -->
   <a mat-list-item class="link" id="eiap-home" (click)="hightlight('eiap-home')"  routerLink="/pages/home" data-toggle="tooltip" data-placement="right"  title="Dashboard">
     <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-white">
-          <img src="../../../assets/images/dashboard_icons/white-icons/dashboard.svg">
+      <span class="active-img" id="eiap-home-icon-active">
+          <img src="../../../assets/images/dashboard_icons/active-icons/dashboard.svg">
       </span>
+      <span class="hover-img" id="eiap-home-icon-white">
+        <img src="../../../assets/images/dashboard_icons/white-icons/dashboard.svg">
+    </span>
       <span  class="default-img" id="eiap-home-icon-gray">
           <img src="../../../assets/images/dashboard_icons/grey-icons/dashboard.svg">
       </span>
@@ -40,9 +43,12 @@
   <a mat-list-item class="link" id="projects" (click)="hightlight('projects')" routerLink="/pages/projects/projectdashboard"
   data-toggle="tooltip" data-placement="right"  title="Projects">
   <span class="side-icon">
-    <span class="active-img" id="eiap-home-icon-white">
-        <img src="../../../assets/images/dashboard_icons/white-icons/Project-flow.svg">
+    <span class="active-img" id="eiap-home-icon-active">
+        <img src="../../../assets/images/dashboard_icons/active-icons/Project-flow.svg">
     </span>
+    <span class="hover-img" id="eiap-home-icon-white">
+      <img src="../../../assets/images/dashboard_icons/white-icons/Project-flow.svg">
+  </span>
     <span  class="default-img" id="eiap-home-icon-gray">
         <img src="../../../assets/images/dashboard_icons/grey-icons/Project-flow.svg">
     </span>
@@ -53,9 +59,12 @@
 
   <a mat-list-item class="link" id="process" (click)="hightlight('process')"  data-toggle="tooltip" data-placement="right"  title="Processes">
     <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-white">
-          <img src="../../../assets/images/dashboard_icons/white-icons/Processes.svg">
+      <span class="active-img" id="eiap-home-icon-active">
+          <img src="../../../assets/images/dashboard_icons/active-icons/Processes.svg">
       </span>
+      <span class="hover-img" id="eiap-home-icon-white">
+        <img src="../../../assets/images/dashboard_icons/white-icons/Processes.svg">
+    </span>
       <span  class="default-img" id="eiap-home-icon-gray">
           <img src="../../../assets/images/dashboard_icons/grey-icons/Processes.svg">
       </span>
@@ -66,9 +75,12 @@
   
   <a mat-list-item class="link" id='so' (click)="hightlight('so')" routerLink="/pages/serviceOrchestration/home" data-toggle="tooltip" data-placement="right"  title="Orchestration">
     <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-white">
-          <img src="../../../assets/images/dashboard_icons/white-icons/BPMN-canvas.svg">
+      <span class="active-img" id="eiap-home-icon-active">
+          <img src="../../../assets/images/dashboard_icons/active-icons/BPMN-canvas.svg">
       </span>
+      <span class="hover-img" id="eiap-home-icon-white">
+        <img src="../../../assets/images/dashboard_icons/white-icons/BPMN-canvas.svg">
+    </span>
       <span  class="default-img" id="eiap-home-icon-gray">
           <img src="../../../assets/images/dashboard_icons/grey-icons/BPMN-canvas.svg">
       </span>
@@ -85,11 +97,14 @@
     <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
     <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-white">
-          <img src="../../../assets/images/dashboard_icons/white-icons/Draft.svg">
+      <span class="active-img" id="eiap-home-icon-active">
+          <img src="../../../assets/images/dashboard_icons/active-icons/Workspace.svg">
       </span>
+      <span class="hover-img" id="eiap-home-icon-white">
+        <img src="../../../assets/images/dashboard_icons/white-icons/Workspace.svg">
+    </span>
       <span  class="default-img" id="eiap-home-icon-gray">
-          <img src="../../../assets/images/dashboard_icons/grey-icons/Draft.svg">
+          <img src="../../../assets/images/dashboard_icons/grey-icons/Workspace.svg">
       </span>
     </span>
 
@@ -100,9 +115,12 @@
   <div class="submenus" [ngClass]="{'expanded' : showSubmenu}">
     <a mat-list-item  class="link" id="pi" (click)="hightlight('pi')" routerLink="/pages/processIntelligence/upload"  >
       <span class="side-icon">
-        <span class="active-img" id="eiap-home-icon-white">
-            <img src="../../../assets/images/dashboard_icons/white-icons/Process-intelligence.svg">
+        <span class="active-img" id="eiap-home-icon-active">
+            <img src="../../../assets/images/dashboard_icons/active-icons/Process-intelligence.svg">
         </span>
+        <span class="hover-img" id="eiap-home-icon-white">
+          <img src="../../../assets/images/dashboard_icons/white-icons/Process-intelligence.svg">
+      </span>
         <span  class="default-img" id="eiap-home-icon-gray">
             <img src="../../../assets/images/dashboard_icons/grey-icons/Process-intelligence.svg">
         </span>
@@ -111,9 +129,12 @@
     </a>
     <a mat-list-item class="link" id='bps' (click)="hightlight('bps')" routerLink="/pages/businessProcess/home" >
       <span class="side-icon">
-        <span class="active-img" id="eiap-home-icon-white">
-            <img src="../../../assets/images/dashboard_icons/white-icons/Document.svg">
+        <span class="active-img" id="eiap-home-icon-active">
+            <img src="../../../assets/images/dashboard_icons/active-icons/Document.svg">
         </span>
+        <span class="hover-img" id="eiap-home-icon-white">
+          <img src="../../../assets/images/dashboard_icons/white-icons/Document.svg">
+      </span>
         <span  class="default-img" id="eiap-home-icon-gray">
             <img src="../../../assets/images/dashboard_icons/grey-icons/Document.svg">
         </span>
@@ -122,9 +143,12 @@
     </a>
     <a mat-list-item class="link" id='rpa' (click)="hightlight('rpa')" routerLink="/pages/rpautomation/home" >
       <span class="side-icon">
-        <span class="active-img" id="eiap-home-icon-white">
-            <img src="../../../assets/images/dashboard_icons/white-icons/RPA-Canvas.svg">
+        <span class="active-img" id="eiap-home-icon-active">
+            <img src="../../../assets/images/dashboard_icons/active-icons/RPA-Canvas.svg">
         </span>
+        <span class="hover-img" id="eiap-home-icon-white">
+          <img src="../../../assets/images/dashboard_icons/white-icons/RPA-Canvas.svg">
+      </span>
         <span  class="default-img" id="eiap-home-icon-gray">
             <img src="../../../assets/images/dashboard_icons/grey-icons/RPA-Canvas.svg">
         </span>
@@ -148,9 +172,12 @@
     <!-- <span class="full-width" >Workspace</span>
     <mat-icon mat-list-icon>work</mat-icon> -->
     <span class="side-icon">
-      <span class="active-img" id="eiap-home-icon-white">
-          <img src="../../../assets/images/dashboard_icons/white-icons/User-Management.svg">
+      <span class="active-img" id="eiap-home-icon-active">
+          <img src="../../../assets/images/dashboard_icons/active-icons/User-Management.svg">
       </span>
+      <span class="hover-img" id="eiap-home-icon-white">
+        <img src="../../../assets/images/dashboard_icons/white-icons/User-Management.svg">
+    </span>
       <span  class="default-img" id="eiap-home-icon-gray">
           <img src="../../../assets/images/dashboard_icons/grey-icons/User-Management.svg">
       </span>
