@@ -1,0 +1,22 @@
+.new-bps-sample {
+    padding: 0px;
+}
+.new-cockpit {
+    display: none;
+    float: right !important;
+    width: 18%;
+}
+.box-border {
+    border: 1px solid #8080808c;
+    border-radius: 8px;
+    margin: 20px 0px;
+}
+.new-bps-layout {
+    overflow: auto;
+    height: calc(100% - 69px);
+}
+
+.workspace-title {
+    background-color: aliceblue;
+    padding: 12px 10px;
+}

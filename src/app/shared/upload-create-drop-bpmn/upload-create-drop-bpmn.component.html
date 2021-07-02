@@ -1,26 +1,29 @@
 <div class="box_area"><!-- [hidden]="bpmnupload" -->
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class='col-md-8 drop_box' id="upload_bpmn">
+        <div class='col-md-4 drop_box' id="upload_bpmn">
             <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
-                <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'>
+                <div class="model-img">
+                    <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'></ngx-dropzone-label>
+                </div>        
+                <div class="model-text">
                     <h3>Upload Process Model</h3>
-                    <h5>Drag and drop files here <br>
+                    <h5>Drag and drop files here
                         <span>{{'('+validNotationTypes+')'}}</span>
                     </h5>
-                    <button class="btn btn-primary eiap-btn">Select</button>
-                </ngx-dropzone-label>
+                    <button class="btn btn-primary eiap-btn">Upload</button>
+                </div>    
             </ngx-dropzone>
+        </div> 
+        <div class='col-md-4 drop_box create_box' id="create_bpmn-box">
+            <div class="model-img">
+                <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
+            </div>
+            <div class="model-text">
+                <h3>Define Your Own Process</h3>
+                <h5>Do process model from Scratch level</h5>
+                <button class="btn btn-primary eiap-btn" id="create_bpmn" (click)="slideUp()">Create New</button>
+            </div>      
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class='col-md-8 drop_box create_box' id="create_bpmn-box">
-            <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
-            <h3>Define Your Own Process</h3>
-            <h5>Do process model from Scratch level</h5>
-            <button class="btn btn-primary eiap-btn" id="create_bpmn" (click)="slideUp()">Create</button>
-        </div>
-    </div>
-</div>
+
 <process-category-overlay headerTitle="BPMN Details" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName"></process-category-overlay>

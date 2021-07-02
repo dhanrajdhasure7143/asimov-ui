@@ -1,14 +1,16 @@
-<div class="container-fluid">
+<div class="container-fluid new-bps-layout">
   <div class="header_addon row approval_workflow_properties">
     <div class="col-md-8"></div>
-    <a class="col-md-2" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" ><b>Approval Workflow</b></a>
-    <a class="col-md-2 text-center" href="javascript:void(0);" (click)="gotoBPMNPlatform()"><b>View Cockpit</b></a>
+    <div class="col-md-4 new-cockpit">
+      <a class="col-md-12" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" ><b>Approval Workflow</b></a>
+      <a class="col-md-6 text-center" href="javascript:void(0);" (click)="gotoBPMNPlatform()"><b>View Cockpit</b></a>
+    </div>
   </div>
   <div class="row">
-    <div class="col-md-4 offset-1">
+    <div class="col-md-12 offset-1 new-bps-sample">
       <app-upload-create-drop-bpmn isConfirmance="false"></app-upload-create-drop-bpmn>
     </div>
-    <div class="col-md-8 box-border myworkspace-style">
+    <div class="col-md-12 box-border myworkspace-style">
       <div class="row col-md-12">
         <h4 class="col-md-6 box-heading">My Workspace</h4>
         <div class="col-md-3">

@@ -1,0 +1,38 @@
+.module-heading.title {
+    background-color: #f8f8f8;
+    padding: 12px 6px !important;
+    margin-bottom: 0px;
+}
+.module-heading.title span {
+    padding-left: 10px;
+}
+
+.value {
+    color: #001C47;
+    font-weight: 300;
+    padding-top: 14px;
+}
+span.level3 {
+    padding-right: 10px !important;
+    border-right: 1px solid #ccc;
+}
+
+.new-bps-icons button {
+    padding: 10px 16px;
+}
+.bps-upload {
+    margin-left: 20px !important;
+}
+.bps-upload img {
+    padding-right: 10px;
+}
+.bps-save-icon {
+    margin-left: 6px;
+    border-left: 1px solid #ccc;
+}
+.col-md-6.new-bps-icons {
+    padding-left: 40px;
+}
+.new-bps-header-title {
+    padding: 0px;
+}
