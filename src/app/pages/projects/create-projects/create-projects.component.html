@@ -46,7 +46,7 @@
                                                 <br>
                                                 <label class="label-control" >Start Date <span  style="color:red">*</span></label>
                                                 <input type="date"  formControlName="startdate" class="form-control">
-                                                <span *ngIf="insertForm2.get('startdate').invalid && insertForm2.get('startdate').touched" style="color:red" class="fa fa-info-circle errspan">Start date Required*</span>
+                                                <span *ngIf="insertForm2.get('startdate').invalid && insertForm2.get('startdate').touched" style="color:red" class="fa fa-info-circle errspan">Start Date Required*</span>
                                                 
                                                 <br>
                                                 <label class="label-control" >Project Priority <span  style="color:red">*</span></label>
@@ -56,7 +56,7 @@
                                                 <option value="Medium">Medium</option>
                                                 <option value="Low">Low</option>
                                                 </select>
-                                                <span *ngIf="insertForm2.get('projectpriority').invalid && insertForm2.get('projectpriority').touched" style="color:red" class="fa fa-info-circle errspan">Project priority Required*</span>
+                                                <span *ngIf="insertForm2.get('projectpriority').invalid && insertForm2.get('projectpriority').touched" style="color:red" class="fa fa-info-circle errspan">Project Priority Required*</span>
                                                 <br>
                                                 <label class="label-control" >Map Value Chain <span  style="color:red">*</span></label>
                                                 <select  formControlName="mapchainvalue"  class="form-control data">
@@ -74,7 +74,7 @@
                                                   <option value="" [selected]="true">Select Process</option>
                                                   <option *ngFor="let process of selected_process_names" [value]="process.processName">{{process.processName}}</option>          
                                                 </select>
-                                            <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Project Owner Required*</span>
+                                            <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
                                         
                                             
                                             </div>     
@@ -103,7 +103,7 @@
                                                 <br>
                                                 <label class="label-control" >Identity Mesurable Metrics <span  style="color:red">*</span></label>
                                                 <input type="text"  style="border:1px solid lightgray" formControlName="measurablemetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
-                                                <span *ngIf="insertForm2.get('measurablemetrics').invalid && insertForm2.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity mesurable metrics Required*</span>
+                                                <span *ngIf="insertForm2.get('measurablemetrics').invalid && insertForm2.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Mesurable Metrics Required*</span>
                                                 <br>
 
                                                 <label class="label-control" >Access<span style="color:red">*</span></label>
@@ -177,7 +177,7 @@
                                                         <label  class="label-control"  for="programpurpose">Add Program Purpose<span  style="color:red">*</span></label>
                                                         <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="purpose" value="" 
                                                         placeholder="Enter Program Purpose">
-                                                        <span *ngIf="(createprogram.get('purpose').invalid && createprogram.get('purpose').touched) && !createprogram.controls['purpose'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Purpose required*</span>
+                                                        <span *ngIf="(createprogram.get('purpose').invalid && createprogram.get('purpose').touched) && !createprogram.controls['purpose'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Purpose Required*</span>
                                                         <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                                                             Maximum of 50 characters
                                                         </span>
@@ -202,7 +202,7 @@
                                                       <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" style="color:red" class="fa fa-info-circle errspan">Access Required*</span>
                                                 </div>
                                                 <div class="col-md-6">
-                                                        <label  class="label-control"   for="priority">Set Program Priority<span  style="color:red">*</span></label>
+                                                        <label  class="label-control"   for="priority">Program Priority<span  style="color:red">*</span></label>
                                                         <select class="form-control" formControlName="priority">
                                                           <option  [value]="null" disabled hidden>--Select Program Priority --</option>
                                                              <option value=""  >Select Program Priority</option>
@@ -210,7 +210,7 @@
                                                              <option value="Medium">Medium</option>
                                                              <option value="Low">Low</option>
                                                          </select>
-                                                        <span *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Priority required*</span>
+                                                        <span *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Priority Required*</span>
                                                         <span *ngIf="createprogram.controls['priority'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                                                             Maximum of 50 characters
                                                         </span>
@@ -235,14 +235,15 @@
                                                           <div style="display:flex">
                                                             <div class="select-project">
                                                                 <label class="label-control" >Select Projects</label>
-                                                                <select class="form-control" (change)="selected_project=$event.target.value">
-                                                                    <option value="" >Select Project</option>
+                                                                <select class="form-control" id="selectprojects" (change)="selected_project=$event.target.value">
+                                                                    <option  [value]="null" disabled hidden>Select Project</option>
+                                                                    <option value="" [selected]="true">Select Project</option>
                                                                     <option *ngFor="let project of projects_list" [value]="project.id">{{project.projectName}}</option>
                                                                 </select>
                                                             </div>
                                                             <div class="addproject-btn">
-                                                                <button mat-mini-fab color="primary" (click)="add_to_selected_projects()" ><i class="fa fa-plus"></i> </button>
-                                                                <!-- <span (click)="add_to_selected_projects()"><i class="fa fa-plus"></i></span> -->
+                                                                <!-- <button mat-mini-fab color="primary" (click)="add_to_selected_projects()" ><i class="fa fa-plus"></i> </button> -->
+                                                                <span mat-mini-fab color="primary" (click)="add_to_selected_projects()"><i class="fa fa-plus"></i></span>
                                                             </div>
                                                         </div>
                                                 </div>
@@ -352,7 +353,7 @@
                                 <span *ngIf="insertForm2.get('startdate').invalid && insertForm2.get('startdate').touched" style="color:red" class="fa fa-info-circle errspan">Start Date Required*</span>
                                 
                                 <br>
-                                <label>Set Project Priority <span  style="color:red">*</span></label>
+                                <label>Project Priority <span  style="color:red">*</span></label>
                                 <select  formControlName="projectpriority" class="form-control data">
                                 <option value="">Select Project Priority</option>
                                 <option value="High">High</option>
@@ -409,7 +410,7 @@
                                 
                                 <label>Identity Mesurable Metrics <span  style="color:red">*</span></label>
                                 <input type="text"  style="border:1px solid lightgray" formControlName="measurablemetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
-                                <span *ngIf="insertForm2.get('measurablemetrics').invalid && insertForm2.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity mesurable metrics Required*</span>
+                                <span *ngIf="insertForm2.get('measurablemetrics').invalid && insertForm2.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Mesurable Metrics Required*</span>
                                 
                                 <br>
                                 <label>Select Process <span  style="color:red">*</span></label>

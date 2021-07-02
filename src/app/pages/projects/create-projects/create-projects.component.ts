@@ -79,13 +79,12 @@ export class CreateProjectsComponent implements OnInit {
 })
     this.resetcreateproject();
     this.getallusers();
-   // this.getallProjects();
+    this.getallProjects();
     this.getprocessnames();
   }
 
 
   linkcreateproject(){
-    alert("hi")
   this.newproject.push(this.insertForm2.value)
   console.log("link",this.newproject)
   this.modalRef.hide();
@@ -197,7 +196,6 @@ createproject()
         this.createprogram.reset();
         this.createprogram.get("priority").setValue("");
         this.createprogram.get("initiatives").setValue("");
-        this.insertForm2.get("project").setValue("");
   }
   getallusers()
   {
