@@ -150,14 +150,14 @@ export class ProjectsProgramsTableComponent implements OnInit {
            
           })
           this.projectsdata[1].filter(data => {
-            if(data.type==null){
+            if(data.type=="Project"){
             this.tablelist.push({
               id:data.id,
               projectName:data.projectName,
               access:data.access,
               initiatives:data.initiatives,
               process:data.process,
-              type:"Project",
+              type:data.type,
               owner:data.owner,
               priority:data.priority,
             })
@@ -180,10 +180,10 @@ export class ProjectsProgramsTableComponent implements OnInit {
          }
       
         this.dataSource2 = new MatTableDataSource(this.tablelist);
-        console.log("tablelist",this.tablelist)
+       // console.log("tablelist",this.tablelist)
         this.spinner.hide();
       });
-      document.getElementById("filters").style.display='block'; 
+     // document.getElementById("filters").style.display='block'; 
   }
   sortmethod(){
     this.dataSource2.sort = this.sort2;   
