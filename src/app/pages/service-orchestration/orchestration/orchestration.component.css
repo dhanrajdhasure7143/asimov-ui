@@ -125,8 +125,13 @@ td{
 }
 
 /* newstyles */
-
-.main-content{
+.pr-0 {
+  padding-right: 0px;
+}
+.pl-0 {
+  padding-left: 0px;
+}
+.main-content.orches_new{
   height: 100%;
   padding: 16px;
   overflow: auto;
@@ -135,24 +140,36 @@ td{
   box-shadow: 0px 0px 13px 0px rgb(236 236 241 / 44%);
 }
 
-.content-area{
+.orches_new .content-area{
   background: #ffffff;
   padding: 5px;
   box-shadow: 0px 0px 13px 0px #ececf170;
-  height: 100%;
+  /* height: 100%; */
+  height: calc(100% - 50px);
   overflow-y: auto;
 }
-.module-heading {
+.orches_new .module-heading {
   background-color: #f8f8f8;
   padding: 12px 6px;
   margin-bottom: 0px;
 }
-.mat-ink-bar {
+.orches_new .mat-ink-bar {
   transition: unset;
 }
-.wrapper {
+.orches_new .wrapper {
   padding:0px;
 }
-.mat-tab-label {
+.orches_new .mat-tab-label {
   padding: 0px 15px !important;
+}
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: #0062cf;
+  font-size: 16px !important;
+}
+.mat-form-field.mat-focused .mat-form-field-ripple {
+ background-color: #0062cf;
+}
+.newexecbots_progress label {
+  font-size: 14px;
+  margin-bottom: 10px;
 }

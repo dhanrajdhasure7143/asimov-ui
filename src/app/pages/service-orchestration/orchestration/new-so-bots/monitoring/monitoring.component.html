@@ -1,7 +1,7 @@
 <div class="container-fluid" *ngIf="bots_list.length!=0">
         <br>
         <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4 p-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
                         <label>Status</label>
@@ -12,7 +12,11 @@
                                 <th><b>Failed Bots</b></th>
                                 <th><b>{{failedbots.length}} of  {{bots_list.length}}</b></th>
                             </thead>
-                            <tr *ngFor="let bot of failedbots  | paginate: { itemsPerPage: 5,currentPage: q }"><td>{{bot.botName}}</td><td>April 20th,2020 12:00 AM</td></tr>
+                            <tbody>
+                                <tr *ngFor="let bot of failedbots  | paginate: { itemsPerPage: 5,currentPage: q }">
+                                    <td>{{bot.botName}}</td><td>April 20th,2020 12:00 AM</td>
+                                </tr>
+                            </tbody>
                         </table>
                             <div class="text-right">
                                 <pagination-controls (pageChange)="q = $event"></pagination-controls>
@@ -46,7 +50,7 @@
                 </div>
             </div> -->
 
-            <div class="col-md-8">
+            <div class="col-md-8 pr-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
                         <label>Jobs History</label>
@@ -91,34 +95,33 @@
 
 
 
-            <div class="col-md-4">
+            <div class="col-md-4 p-0">
                 <div class="dbichart-block block chartinner" style="height: 380px">
                     <div class="dbichart-head">
                         <label>Executed Bots</label>
                     </div>
                     <br>
                     <div class="dbichart-body" >
-
-                        <div>
-                                Successfull<br><br>
-                            <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="executed.success"></mat-progress-bar><br>
+                        <div class="newexecbots_progress">
+                            <label>Successfull</label>
+                            <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="executed.success"></mat-progress-bar>
                         </div>
-                        <div>
-                              Stopped  <br><br>
-                            <mat-progress-bar class="progress-bar-warn" mode="determinate" [value]="executed.cancelled"></mat-progress-bar><br>
+                        <div class="newexecbots_progress">
+                            <label>Stopped</label> 
+                            <mat-progress-bar class="progress-bar-warn" mode="determinate" [value]="executed.cancelled"></mat-progress-bar>
         
                         </div>
                         
-                        <div>
-                                Failed<br><br>
-                            <mat-progress-bar class="progress-bar-red"  mode="determinate" [value]="executed.failure"></mat-progress-bar><br>
+                        <div class="newexecbots_progress">
+                            <label>Failed</label>
+                            <mat-progress-bar class="progress-bar-red"  mode="determinate" [value]="executed.failure"></mat-progress-bar>
                         </div>
                     </div>
                 </div>
             </div>
 
 
-            <div class="col-md-8">
+            <div class="col-md-8 pr-0">
                 <div class="dbichart-block block chartinner">
                     <div class="dbichart-head">
                         <label>Bot Transactions For Last 30 Days</label>
