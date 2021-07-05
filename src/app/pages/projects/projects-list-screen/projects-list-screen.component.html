@@ -1,14 +1,14 @@
 
     <mat-card id="projects_list_screen" *ngIf="projects_toggle==false">
-      <div class="projects-header">
+      <div class="projects-header maincreat nrema">
         <span class="projects-back-button">
-          <i class="fa fa-arrow-left"></i>
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
         </span>
         <span class="projects-header-title">
-          Projects / Programs
+          <span class="prmaincolo">Projects</span> <span class="baclsl">/</span> Programs
         </span>
-        <span class="pull-right" style="font-size:20px;">
-          <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-add-line"></i></span>
+        <span class="pull-right righsecp" style="font-size:20px;">
+          <span class="projects-menu-item vreatbu" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><span class="tett">+</span> Create New</span>
           <span class="projects-menu-item" ><i class="ri-filter-2-line"></i></span>
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span>
@@ -17,7 +17,7 @@
         <mat-tab-group mat-stretch-tabs>
           <mat-tab>
             <ng-template mat-tab-label>
-              <div class="status-tabs">
+              <div class="status-tabs newstatu">
                 <div class="status-img">
                   <img src="..\assets\images\Projects\total projects.svg" alt="" >
                 </div>
@@ -33,7 +33,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-                <div class="status-tabs">
+                <div class="status-tabs newstatu">
                     <div class="status-img">
                       <img src="..\assets\images\Projects\new.svg" alt="" >
                     </div>
@@ -49,7 +49,7 @@
           </mat-tab>  
           <mat-tab>
             <ng-template mat-tab-label>
-                <div class="status-tabs">
+                <div class="status-tabs newstatu">
                     <div class="status-img">
                       <img src="..\assets\images\Projects\inprogress.svg" alt="" >
                     </div>
@@ -65,7 +65,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-                <div class="status-tabs">
+                <div class="status-tabs newstatu">
                     <div class="status-img">
                       <img src="..\assets\images\Projects\inreview.svg" alt="" >
                     </div>
@@ -82,7 +82,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-                <div class="status-tabs">
+                <div class="status-tabs newstatu">
                     <div class="status-img">
                       <img src="..\assets\images\Projects\approved.svg" alt="" >
                     </div>
@@ -99,7 +99,7 @@
           </mat-tab>
           <mat-tab>
             <ng-template mat-tab-label>
-                <div class="status-tabs">
+                <div class="status-tabs newstatu">
                     <div class="status-img">
                       <img src="..\assets\images\Projects\rejected.svg" alt="" >
                     </div>

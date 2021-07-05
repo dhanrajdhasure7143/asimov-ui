@@ -942,3 +942,15 @@ justify-content: center;
 app-home, app-bussiness-process {
   height: 100%;
 }
+
+.main-content.prjmain {
+  height: unset !important;
+}
+
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
+  background-color: #00a0e3 !important;
+}
+
+.innersform .mat-tab-body.mat-tab-body-active, .innersform .mat-tab-body-content {
+  overflow: unset !important;
+}

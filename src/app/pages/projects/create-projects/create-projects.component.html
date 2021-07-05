@@ -1,10 +1,10 @@
 <mat-card >
-    <div class="projects-header">
+    <div class="projects-header maincreat">
         <span class="projects-back-button" routerLink="/pages/projects/listOfProjects">
-          <i class="fa fa-arrow-left"></i>
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
         </span>
         <span class="projects-header-title">
-          Projects / Programs
+          <span class="prmaincolo">Projects</span> <span class="baclsl">/</span> Programs
         </span>
         <!-- <span class="pull-right" style="font-size:20px;">
           <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
@@ -16,8 +16,8 @@
 
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-12 card-form">
+    <div class="maindivfoprm">
+        <div class="innersform card-form">
           
             <div class="create-heading">Create New</div>
                         <mat-tab-group mat-align-tabs="end">
@@ -265,7 +265,7 @@
                                         </form>
                                         <br><br>
                                         <div>
-                                            <span class="pull-left">
+                                            <span class="pull-left ml-2">
                                                 <button (click)="addproject(template)" class="btn btn-primary">Add New Project</button>
                                             </span>
                                             <span class="pull-right">

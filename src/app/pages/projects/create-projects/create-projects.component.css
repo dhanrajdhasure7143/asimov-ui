@@ -143,3 +143,70 @@ label.label-control{
     padding:5px;
     padding-left:20px;
   }
+
+  .projects-header.maincreat {
+    background-color: #f8f8f8;
+    padding: 12px;
+    border-bottom: 1px solid rgb(221 221 221 / 40%);
+    z-index: 999;
+    position: relative;
+}
+.projects-header.maincreat span.projects-back-button {
+    border: medium none;
+    padding-right: 10px;
+}
+.projects-header.maincreat i {
+    font-size: 16px;
+}
+.projects-header.maincreat span.projects-header-title {
+    padding-left: 0px;
+    font-size: 16px;
+}
+.projects-header.maincreat span.projects-header-title span.prmaincolo {
+    font-weight: 500;
+    margin-right: 6px;
+}
+.maindivfoprm .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0px;
+}
+.maindivfoprm {
+    width: 900px;
+    margin: 0px auto;
+    margin-top: 20px;
+}
+.maindivfoprm .mat-tab-label {
+    padding: 0px !important;
+    min-width: 78px;
+    opacity: 1;
+    margin-left: 20px;
+}
+.maindivfoprm .mat-tab-label-active {
+    border-bottom: 2px solid #01a0e4;
+}
+.maindivfoprm .create-heading {
+    font-weight: 500;
+    font-size: 26px;
+    margin-bottom: -30px !important;
+}
+.maindivfoprm .label-control {
+    color: #6d6d6d !important;
+    font-weight: normal !important;
+    font-size: 16px !important;
+}
+.maindivfoprm input, .maindivfoprm select, .maindivfoprm textarea {
+    background-color: #f6f6f6;
+    border: 1px solid #ddd !important;
+    box-shadow: unset !important;
+}
+.maindivfoprm .fa.fa-info-circle.errspan {
+    font-weight: normal;
+    font-size: 12px;
+}
+.maindivfoprm .btn.btn-primary:hover {
+    font-weight: normal !important;
+}
+.innersform .mat-tab-body.mat-tab-body-active, .innersform .mat-tab-body-content {
+    overflow: unset !important;
+  }

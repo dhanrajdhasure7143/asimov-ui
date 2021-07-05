@@ -5,8 +5,9 @@
 }
 
   .projects-header{
-    width:100%;padding:19px;
-    background-color:rgba(212, 212, 212, 0.295);
+    width:100%;
+    padding:12px 6px !important;
+    background-color:#f8f8f8;
   }
 
 
@@ -19,10 +20,8 @@
   }
 
   .projects-header-title{
-    color:black ;
     font-size:18px;
-    padding:5px;
-    padding-left:20px;
+    padding-left:10px;
   }
 
 
@@ -44,51 +43,48 @@
   }
 
   .status-img > img{
-    height: 60px !important;
-    padding-top: 16px;
+    height: 45px !important;
+    position: relative;
+    top: 50%;
+    transform: translateY(-54%);
   }
 
   .status-data{
     vertical-align: middle;
-    padding-top:15px;
-    padding-left:30px;
-    padding-bottom:15px;
+    padding-left:15px;
     color:black !important;
   }
 
   #projects_dashboard_header{
-    width: 93%;
+    width: 100%;
     height: 102px;
-    margin-left: 14px;
+    margin-left: 0px;
+    box-shadow: unset !important;
+  }
+  #projects_dashboard_header .status-tabs{
+    border: 1px solid rgb(221 221 221 / 70%) !important;
+    padding: 15px;
   }
 
-  .projects_by_department{
-    margin-left: 14px;
-    border: 1px solid rgb(221, 236, 248);
-    border-radius: 2px;
+  .projects_by_department ,.projects_favourites{
+    border: 1px solid rgb(221 221 221 / 70%);
     padding: 10px;
-    box-shadow: rgb(0 0 0 / 7%) 0px 4px 6px;
-  }
-
-  .projects_favourites{
-    margin-left: 14px;
-    border: 1px solid rgb(221, 236, 248);
-    border-radius: 2px;
-    padding: 10px;
-    box-shadow: rgb(0 0 0 / 7%) 0px 4px 6px;
   }
 
   #projectdashboard{
-    height:350px;
+    height:240px;
   }
 
   #projectattention{
-    height:293px;
+    height:240px;
 
   }
 
-  #projectfavourites{
-    height:383px;
+  #projectfavourites {
+    height:240px;
+  }
+  .projects_favourites{
+    height: 289px;
   }
 
   .status-tabs1{
@@ -105,9 +101,7 @@
 
   .status-data1{
     vertical-align: middle;
-    padding-top:15px;
-    padding-left:30px;
-    padding-bottom:15px;
+    padding-left:15px;
     color:black !important;
   }
 
@@ -130,3 +124,91 @@
     /* set border style for separated rows */
     border-bottom: 1px solid skyblue;
   }
+  .prjnewcl span.pull-right span button {
+    border-radius: 2px;
+    margin-right: 10px;
+    background-color: #00a0e3 !important;
+    border: medium none !important;
+    padding: 7px 15px;
+}
+.prjnewcl span.pull-right span button:hover {
+  font-weight: normal !important;
+}
+.status-data .tab-text {
+  font-size: 26px;
+  color: #00a0e3;
+}
+.status-data1 span.tab-text {
+  color: #a0a0a0 !important;
+}
+.row.gridsais {
+  margin-top: 6px !important;
+}
+.projects_by_department .dbichart-head label {
+  font-weight: normal !important;
+  font-size: 16px !important;
+  padding-left: 5px;
+}
+
+#projectattention .status-tabs1 {
+  padding: 12px !important;
+}
+#projectattention .status-tabs1 .body-img img {
+  position: relative;
+  padding: 0px;
+  margin: 0px;
+  height: 30px !important;
+  top: 50%;
+  transform: translateY(-50%);
+}
+#projectattention .status-tabs1 .status-data1 span.tab-text {
+  color: #a09f9f !important;
+}
+#projectattention td {
+  border-bottom: 1px solid rgb(221 221 221 / 70%);
+}
+#projectfavourites .ng-star-inserted .status-tabs1 {
+  padding: 10px 12px !important;
+}
+#projectfavourites .ng-star-inserted .status-tabs1 .body-img img {
+  position: relative;
+  top: 50%;
+  padding: 0px;
+  margin: 0px;
+  height: 27px !important;
+  transform: translateY(-50%);
+}
+#projectfavourites .ng-star-inserted .status-tabs1 .tab-text {
+  color: #a09f9f !important;
+}
+
+.prjtalvcl hr {
+  display: none !important;
+}
+.prjtalvcl tr.separated th {
+  font-size: 16px !important;
+  font-weight: 500;
+  padding: 10px 0px !important;
+}
+.prjtalvcl tr.separated td {
+  padding: 10px 0px;
+}
+.prjtalvcl tbody tr.separated {
+  border-bottom: 1px solid #dddddd8c;
+}
+.mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: #00a0e3 !important;
+}
+.text-success {
+  color: #63d21a;
+}
+.row.prjtalvcl {
+  margin-top: 30px !important;
+}
+.projects-header.prjnewcl span.pull-right {
+  position: relative;
+  top: -4px;
+}
+#projects_list_screen .mat-tab-label{
+  height: 40px !important;
+}
