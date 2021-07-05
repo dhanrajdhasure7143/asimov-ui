@@ -9,16 +9,17 @@
 
 .value {
     color: #001C47;
-    font-weight: 300;
-    padding-top: 14px;
+    font-weight: 400;
+    font-size: 12px;
+    padding-top: 10px;
 }
 span.level3 {
-    padding-right: 10px !important;
+    padding-right: 8px !important;
     border-right: 1px solid #ccc;
 }
 
 .new-bps-icons button {
-    padding: 10px 16px;
+    padding: 6px 8px;
 }
 .bps-upload {
     margin-left: 20px !important;
@@ -27,12 +28,11 @@ span.level3 {
     padding-right: 10px;
 }
 .bps-save-icon {
-    margin-left: 6px;
     border-left: 1px solid #ccc;
-}
-.col-md-6.new-bps-icons {
-    padding-left: 40px;
 }
 .new-bps-header-title {
     padding: 0px;
+}
+.new-bps-icons .bps-float {
+    float: right;
 }

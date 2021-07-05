@@ -48,7 +48,7 @@ export class BpsHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(){
-    document.getElementById("filters").style.display = "block";
+    
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     if(this.userRole.includes('SuperAdmin')){
@@ -65,6 +65,7 @@ export class BpsHomeComponent implements OnInit {
     this.getBPMNList();
     this.getAutoSavedDiagrams();
     this.getAllCategories();
+    document.getElementById("filters").style.display = "block";
   }
 
   async getBPMNList(){

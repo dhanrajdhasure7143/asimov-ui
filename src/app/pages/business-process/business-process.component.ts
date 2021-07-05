@@ -14,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                             </div> 
                     </div>
                     <div class="col-md-6 new-bps-icons">
-                      <div class="row">
+                      <div class="row bps-float">
                         <button><img src="../assets/images/BPMS/Edit.svg"></button>
                         <button><img src="../assets/images/BPMS/Approve.svg"></button>
                         <button><img src="../assets/images/BPMS/download.svg"></button>

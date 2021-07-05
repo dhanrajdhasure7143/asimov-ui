@@ -1,6 +1,6 @@
 <div class="box_area"><!-- [hidden]="bpmnupload" -->
     <div class="row">
-        <div class='col-md-4 drop_box' id="upload_bpmn">
+        <div class='col-md-5 drop_box' id="upload_bpmn">
             <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
                 <div class="model-img">
                     <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'></ngx-dropzone-label>
@@ -14,7 +14,7 @@
                 </div>    
             </ngx-dropzone>
         </div> 
-        <div class='col-md-4 drop_box create_box' id="create_bpmn-box">
+        <div class='col-md-5 drop_box create_box' id="create_bpmn-box">
             <div class="model-img">
                 <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
             </div>
