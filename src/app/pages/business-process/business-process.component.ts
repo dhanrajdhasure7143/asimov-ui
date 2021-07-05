@@ -15,8 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
                     </div>
                     <div class="col-md-6 new-bps-icons">
                       <div class="row bps-float">
-                        <button><img src="../assets/images/BPMS/Edit.svg"></button>
-                        <button><img src="../assets/images/BPMS/Approve.svg"></button>
+                        <button><img src="../assets/images/BPMS/Edit-hover.svg"></button>
                         <button><img src="../assets/images/BPMS/download.svg"></button>
                         <button><img src="../assets/images/BPMS/share.svg"></button>
                         <button><img src="../assets/images/BPMS/Forward.svg"></button>

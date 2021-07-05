@@ -10,6 +10,7 @@
     border: 1px solid #8080808c;
     border-radius: 8px;
     margin: 20px 0px;
+    padding: 0px;
 }
 .new-bps-layout {
     overflow: auto;
@@ -19,4 +20,33 @@
 .workspace-title {
     background-color: aliceblue;
     padding: 12px 10px;
+}
+
+.myworkspace-style .col-md-6 mat-form-field {
+    float: right;
+    width: 100%;
+}
+.workspace-title span {
+    text-align: left;
+    padding: 0px 15px;
+}
+.new-bps-grid-data mat-expansion-panel-header:hover {
+    background-color: #f2d12b33;
+}
+.new-bps-grid-data span {
+    text-align: left !important;
+    padding:8px 0px;
+}
+.new-bps-grid-data {
+    padding:15px 0px;
+}
+.bps_overlay div {
+    border-radius: 4px;
+}
+.bps_overlay span.info.ng-star-inserted {
+    border-radius: 4px;
+    padding: 8px 12px;
+}
+.bps_overlay .fit_button {
+    top:50px;
 }

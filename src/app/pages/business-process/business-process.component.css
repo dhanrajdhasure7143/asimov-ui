@@ -23,6 +23,8 @@ span.level3 {
 }
 .bps-upload {
     margin-left: 20px !important;
+    border-radius: 4px;
+    background-color: #00a0e3 !important;
 }
 .bps-upload img {
     padding-right: 10px;

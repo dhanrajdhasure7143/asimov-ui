@@ -11,27 +11,30 @@
       <app-upload-create-drop-bpmn isConfirmance="false"></app-upload-create-drop-bpmn>
     </div>
     <div class="col-md-12 box-border myworkspace-style">
-      <div class="row col-md-12">
-        <h4 class="col-md-6 box-heading">My Workspace</h4>
-        <div class="col-md-3">
-          <mat-form-field>
-            <mat-label>Select Category</mat-label>
-            <mat-select  name="category" (selectionChange)="searchByCategory(categoryName)" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect">
-                    <mat-option value="allcategories">All Categories</mat-option>
-                    <mat-option *ngFor="let each_diag of categoryList.data;let i=index;trackBy:loopTrackBy" [value]="each_diag.categoryName">
-                    {{each_diag.categoryName}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+      <div class="row">
+        <div class="col-md-7">
+          <h4 class="box-heading">My Workspace</h4>
         </div>
-        <div class="col-md-3 ">
-          <mat-form-field>
-            <mat-label>Search Workspace</mat-label>
-            <input class="toolbar-search" type="text" matInput [(ngModel)]="term">
-            <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
+        <div class="col-md-5 p-0">
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Select Category</mat-label>
+              <mat-select  name="category" (selectionChange)="searchByCategory(categoryName)" #category="ngModel" [(ngModel)]="categoryName" panelClass="overlayMatSelect">
+                      <mat-option value="allcategories">All Categories</mat-option>
+                      <mat-option *ngFor="let each_diag of categoryList.data;let i=index;trackBy:loopTrackBy" [value]="each_diag.categoryName">
+                      {{each_diag.categoryName}}</mat-option>
+              </mat-select>
           </mat-form-field>
-        </div>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Search Workspace</mat-label>
+              <input class="toolbar-search" type="text" matInput [(ngModel)]="term">
+              <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
+            </mat-form-field>
+          </div>
+        </div>       
       </div>
-
       <div class="row col-md-12 text-bold workspace-title">
         <span mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></span>
         <span><b>Type</b></span>
@@ -43,7 +46,7 @@
         <span  (click)="sort('reviewComments',5)"><b>Message<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></b></span>
         <span><b>Actions</b></span>
       </div>
-      <div class="row col-md-12"  id="bpmn_list">
+      <div class="row col-md-12 new-bps-grid-data"  id="bpmn_list">
         <mat-accordion>
           <mat-expansion-panel  [(expanded)]="each_diag.xpandStatus" *ngFor="let each_diag of saved_diagrams | filter: term | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
             <mat-expansion-panel-header class="dropdown_icon">
@@ -55,7 +58,7 @@
                   <span>{{each_diag.bpmnProcessName ? "  V1."+each_diag.version+" ": '-'}}</span>
                   <span>{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</span>
                   <span>{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</span>
-                  <span  [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"> <p [class.pending_value_properties]= "each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</p> </span>
+                  <span  [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"  [class.pending_value_properties]= "each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</span>
                   <span>
                     <span class="comment">
                       <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i>
