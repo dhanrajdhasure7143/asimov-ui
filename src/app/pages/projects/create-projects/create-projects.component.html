@@ -1,7 +1,7 @@
 <mat-card >
-    <div class="projects-header maincreat">
-        <span class="projects-back-button" routerLink="/pages/projects/listOfProjects">
-            <i class="fa fa-angle-left" aria-hidden="true"></i>
+    <div class="projects-header">
+        <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
+          <i class="fa fa-arrow-left"></i>
         </span>
         <span class="projects-header-title">
           <span class="prmaincolo">Projects</span> <span class="baclsl">/</span> Programs
@@ -45,27 +45,27 @@
                                                     
                                                 <br>
                                                 <label class="label-control" >Start Date <span  style="color:red">*</span></label>
-                                                <input type="date"  formControlName="startdate" class="form-control">
-                                                <span *ngIf="insertForm2.get('startdate').invalid && insertForm2.get('startdate').touched" style="color:red" class="fa fa-info-circle errspan">Start Date Required*</span>
+                                                <input type="date"  formControlName="startDate" class="form-control">
+                                                <span *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched" style="color:red" class="fa fa-info-circle errspan">Start date Required*</span>
                                                 
                                                 <br>
                                                 <label class="label-control" >Project Priority <span  style="color:red">*</span></label>
-                                                <select  formControlName="projectpriority" class="form-control data">
+                                                <select  formControlName="priority" class="form-control data">
                                                 <option value="">Select Project Priority</option>
                                                 <option value="High">High</option>
                                                 <option value="Medium">Medium</option>
                                                 <option value="Low">Low</option>
                                                 </select>
-                                                <span *ngIf="insertForm2.get('projectpriority').invalid && insertForm2.get('projectpriority').touched" style="color:red" class="fa fa-info-circle errspan">Project Priority Required*</span>
+                                                <span *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Project priority Required*</span>
                                                 <br>
                                                 <label class="label-control" >Map Value Chain <span  style="color:red">*</span></label>
-                                                <select  formControlName="mapchainvalue"  class="form-control data">
+                                                <select  formControlName="mapValueChain"  class="form-control data">
                                                     <option value="">Select Map Value Chain</option>
                                                     <option value="Invoice Managment">Invoice Managment</option>
                                                     <option value="Acme Managment">Acme Managment</option>
                                                     <option value="E-Commerce">E-Commerce</option>
                                                 </select>
-                                                <span *ngIf="insertForm2.get('mapchainvalue').invalid && insertForm2.get('mapchainvalue').touched" style="color:red" class="fa fa-info-circle errspan">Map Value Chain Required*</span>
+                                                <span *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched" style="color:red" class="fa fa-info-circle errspan">Map Value Chain Required*</span>
                                             <br>
 
                                             <label class="label-control" >Select Process <span style="color:red">*</span></label>
@@ -97,13 +97,13 @@
                                             
                                                 <br>
                                                 <label class="label-control" >End Date <span  style="color:red">*</span></label>
-                                                <input type="date" formControlName="enddate"  class="form-control data">
-                                                <span *ngIf="insertForm2.get('enddate').invalid && insertForm2.get('enddate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
+                                                <input type="date" formControlName="endDate"  class="form-control data">
+                                                <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
                                             
                                                 <br>
                                                 <label class="label-control" >Identity Mesurable Metrics <span  style="color:red">*</span></label>
-                                                <input type="text"  style="border:1px solid lightgray" formControlName="measurablemetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
-                                                <span *ngIf="insertForm2.get('measurablemetrics').invalid && insertForm2.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Mesurable Metrics Required*</span>
+                                                <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
+                                                <span *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity mesurable metrics Required*</span>
                                                 <br>
 
                                                 <label class="label-control" >Access<span style="color:red">*</span></label>
@@ -228,7 +228,7 @@
                                                             <select   formControlName="owner"  class="form-control data">
                                                               <option  [value]="null" disabled hidden>Select Owner</option>
                                                               <option value="" [selected]="true">Select Owner</option>
-                                                              <option *ngFor="let user of userslist" >{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                                              <option *ngFor="let user of userslist" [value]="user.userId.id" >{{user.userId.firstName}} {{user.userId.lastName}}</option>
                                                           </select>
                                                           <span *ngIf="createprogram.get('owner').invalid && createprogram.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
                                                       <br>
@@ -349,27 +349,27 @@
                                     
                                 <br>
                                 <label>Start Date <span  style="color:red">*</span></label>
-                                <input type="date"  formControlName="startdate" class="form-control">
-                                <span *ngIf="insertForm2.get('startdate').invalid && insertForm2.get('startdate').touched" style="color:red" class="fa fa-info-circle errspan">Start Date Required*</span>
+                                <input type="date"  formControlName="startDate" class="form-control">
+                                <span *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched" style="color:red" class="fa fa-info-circle errspan">Start Date Required*</span>
                                 
                                 <br>
-                                <label>Project Priority <span  style="color:red">*</span></label>
-                                <select  formControlName="projectpriority" class="form-control data">
+                                <label>Set Project Priority <span  style="color:red">*</span></label>
+                                <select  formControlName="priority" class="form-control data">
                                 <option value="">Select Project Priority</option>
                                 <option value="High">High</option>
                                 <option value="Medium">Medium</option>
                                 <option value="Low">Low</option>
                                 </select>
-                                <span *ngIf="insertForm2.get('projectpriority').invalid && insertForm2.get('projectpriority').touched" style="color:red" class="fa fa-info-circle errspan">Project Priority Required*</span>
+                                <span *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Project Priority Required*</span>
                                 <br>
                                 <label>Map Value Chain <span  style="color:red">*</span></label>
-                                <select  formControlName="mapchainvalue"  class="form-control data">
+                                <select  formControlName="mapValueChain"  class="form-control data">
                                     <option value="">Select Map Value Chain</option>
                                     <option value="Invoice Managment">Invoice Managment</option>
                                     <option value="Acme Managment">Acme Managment</option>
                                     <option value="E-Commerce">E-Commerce</option>
                                 </select>
-                                <span *ngIf="insertForm2.get('mapchainvalue').invalid && insertForm2.get('mapchainvalue').touched" style="color:red" class="fa fa-info-circle errspan">Map Value Chain Required*</span>
+                                <span *ngIf="insertForm2.get('mapValueChain').invalid && insertForm2.get('mapValueChain').touched" style="color:red" class="fa fa-info-circle errspan">Map Value Chain Required*</span>
                             <br>
 
                             <label for="access">Access<span style="color:red">*</span></label>
@@ -404,13 +404,13 @@
                                 <br>
                                 <label>End Date <span  style="color:red">*</span></label>
                                 <input type="date" formControlName="enddate"  class="form-control data">
-                                <span *ngIf="insertForm2.get('enddate').invalid && insertForm2.get('enddate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
+                                <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
                             
                                 <br>
                                 
                                 <label>Identity Mesurable Metrics <span  style="color:red">*</span></label>
-                                <input type="text"  style="border:1px solid lightgray" formControlName="measurablemetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
-                                <span *ngIf="insertForm2.get('measurablemetrics').invalid && insertForm2.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Mesurable Metrics Required*</span>
+                                <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
+                                <span *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity mesurable metrics Required*</span>
                                 
                                 <br>
                                 <label>Select Process <span  style="color:red">*</span></label>

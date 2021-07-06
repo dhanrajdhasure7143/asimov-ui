@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef,Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import {MatTableDataSource} from '@angular/material/table';
@@ -9,6 +9,8 @@ import {MatSort} from '@angular/material/sort';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
+import {ProjectsListScreenComponent} from '../projects-list-screen.component'
+
 @Component({
   selector: 'app-projects-programs-table',
   templateUrl: './projects-programs-table.component.html',
@@ -21,345 +23,360 @@ export class ProjectsProgramsTableComponent implements OnInit {
   displayedColumns1: string[] = ["id","type","initiatives","process","projectName","owner","priority","access","status","lastupdatedby","action"];
   @ViewChild("paginator2",{static:false}) paginator2: MatPaginator;
   @ViewChild("sort2",{static:false}) sort2: MatSort;
-  public selectedTab=0;
-  public check_tab=0;
+  
+  @Input('status') public status_data: any;
+  @Input('projects_list') public projects_list: any=[];
+  
+  @Input('users_list') public users_list: any=[];
+  
+  @Input('processes') public processes: any=[];
+  // public selectedTab=0;
+  // public check_tab=0;
   dataSource2:MatTableDataSource<any>;
-  public prjupdatedata:any;
-  public checkeddisabled:boolean =false;
-  public Prjcheckeddisabled:boolean =false;
-  projectsdata: any=[];
-  dbupdateid: any;
-  modalRef: BsModalRef;
-    public createprogram:FormGroup;
-  updateddata: any;
-  public updateflag: boolean;
-  public Credupdateflag:Boolean;
-    public Creddeleteflag:Boolean;
-    public Credcheckflag:boolean = false;
-  selectedprojectid: string;
-  selectedprojecttype: any;
-  projectmodifybody: any;
-  submitted: boolean;
-  insertForm: FormGroup;
-  insertForm2:FormGroup;
-  projDetials: {};
-  myprojDetials:any;
-  tablelist:any=[]
-  prog_projectArray: any=[];
-  myProgrambody: any;
-  public selected_process_names:any=[];
-  userslist:any;
-  projectdetailsEncode: any;
-  project: { id: any; };
-  constructor( private api:RestApiService,private formBuilder: FormBuilder,private spinner: NgxSpinnerService, 
-     private router: Router
+  selected_process_names:any;
+  project_id:any;
+  //public updatemodalRef
+  // public prjupdatedata:any;
+  // public checkeddisabled:boolean =false;
+  // public Prjcheckeddisabled:boolean =false;
+  // projectsdata: any=[];
+  // dbupdateid: any;
+   updatemodalref: BsModalRef;
+  //   public createprogram:FormGroup;
+  // updateddata: any;
+  // public updateflag: boolean;
+  // public Credupdateflag:Boolean;
+  //   public Creddeleteflag:Boolean;
+  //   public Credcheckflag:boolean = false;
+  // selectedprojectid: string;
+  // selectedprojecttype: any;
+  // projectmodifybody: any;
+  // submitted: boolean;
+  // insertForm: FormGroup;
+  // insertForm2:FormGroup;
+  // projDetials: {};
+  // myprojDetials:any;
+  // tablelist:any=[]
+  // prog_projectArray: any=[];
+  // myProgrambody: any;
+  // public selected_process_names:any=[];
+  // userslist:any;
+  // projectdetailsEncode: any;
+  // project: { id: any; };
+  constructor( 
+      private api:RestApiService,
+      private formBuilder: FormBuilder,
+      private spinner: NgxSpinnerService, 
+     private router: Router, 
+     private modalService: BsModalService,
+     private project_main:ProjectsListScreenComponent
     ) { 
 
-    this.updateForm=this.formBuilder.group({
-      type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-      initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-      process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-  })
-  this.createprogram=this.formBuilder.group({
-    programname: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    programpurpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    programpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    description: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    })
+        this.updateForm=this.formBuilder.group({
+          type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+          initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+          process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+          projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+          owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+          priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+          access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      })
+//   this.createprogram=this.formBuilder.group({
+//     programname: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     programpurpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     programpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     description: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     })
 
-    this.insertForm=this.formBuilder.group({
-      projectname: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      addresources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      addprojectpurpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      enddate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      startdate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      programpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      description: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     this.insertForm=this.formBuilder.group({
+//       projectname: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//       initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//       addresources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//       addprojectpurpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//       enddate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//       startdate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//       programpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//       measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//       description: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
-  })
-  this.insertForm2=this.formBuilder.group({
-    projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//   })
+//   this.insertForm2=this.formBuilder.group({
+//     projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     
-    owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     
-    mapchainvalue: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    enddate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    startdate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    projectpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    description: ["", Validators.compose([Validators.maxLength(200)])],
+//     mapchainvalue: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     enddate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     startdate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     projectpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+//     description: ["", Validators.compose([Validators.maxLength(200)])],
 
-})
-  this.Credupdateflag=false;
-      this.Creddeleteflag=false;
+// })
+//   this.Credupdateflag=false;
+//       this.Creddeleteflag=false;
   }
 
   ngOnInit() {
+    setTimeout(()=>{
+      this.getallProjects();
+    },100)
 
-    this.getallProjects();
-    this.getallusers();
 
   }
 
   navigatetodetailspage(detials){
-    this.projectdetailsEncode=Base64.encode(JSON.stringify(detials));
-          this.project={id:this.projectdetailsEncode}
-          console.log("details",this.project)
-          this.router.navigate(['/pages/projects/projectdetails',this.project])
+    let encoded=Base64.encode(JSON.stringify(detials));
+    let project={id:encoded}
+    this.router.navigate(['/pages/projects/projectdetails',project])
   }
   
-  CredcheckAllCheckBox(ev) {
-    this.tablelist.forEach(x =>
-       x.checked = ev.target.checked);
-    this.Credchecktoupdate();
-    this.checktodelete();
-  }
+  // CredcheckAllCheckBox(ev) {
+  //   this.tablelist.forEach(x =>
+  //      x.checked = ev.target.checked);
+  //   this.Credchecktoupdate();
+  //   this.checktodelete();
+  // }
 
-  Updatecredntials(){
-    document.getElementById("filters").style.display='none';
-    document.getElementById("UpdateProjects").style.display='block';
-  }
+  // Updatecredntials(){
+  //   document.getElementById("filters").style.display='none';
+  //   document.getElementById("UpdateProjects").style.display='block';
+  // }
 
  
    
     getallProjects(){
-      this.spinner.show();
-      this.api.getAllProjects().subscribe(data1 => {
-          this.projectsdata = data1;
-          this.projectsdata[0].filter(data => {
-            this.tablelist.push({
-              id:data.id,
-              projectName:data.programName,
-              access:data.access,
-              initiatives:data.initiatives,
-              process:data.process,
-              type:data.type,
-              owner:data.owner,
-              priority:data.priority,
-            })
-           
-          })
-          this.projectsdata[1].filter(data => {
-            if(data.type=="Project"){
-            this.tablelist.push({
-              id:data.id,
-              projectName:data.projectName,
-              access:data.access,
-              initiatives:data.initiatives,
-              process:data.process,
-              type:data.type,
-              owner:data.owner,
-              priority:data.priority,
-            })
-           
+      this.projects_list.sort((a,b) => a.id > b.id ? -1 : 1);
+      if(this.status_data=="All")
+        this.dataSource2 = new MatTableDataSource(this.projects_list);    
+      else if(this.status_data=="New")
+        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="New"));
+      else if(this.status_data=="In Progress") 
+        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="In Progress"));
+      else if(this.status_data=="In Review")
+        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="In Review"));
+      else if(this.status_data=="Approved")
+        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="Approved"));
+      else if(this.status_data=="Rejected")
+        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="Rejected"));
+      this.dataSource2.paginator=this.paginator2;
+      this.dataSource2.sort = this.sort2;    
+  }
+
+
+
+  deleteproject(project)
+  {
+    let delete_data=[{
+      id:project.id,
+      type:project.type
+    }]  
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.api.delete_Project(delete_data).subscribe( res =>{ 
+          this.spinner.hide();
+          let response:any=res
+          if(response.errorMessage==undefined)
+          {
+            Swal.fire("Success",response.message,"success")
+            this.getallProjectsdata();
+          }
+          else
+          {
+            Swal.fire("Error",response.errorMessage,"error")
           }
         })
-  
-        if(this.projectsdata.length>0)
-         { 
-           this.Prjcheckeddisabled = false;
-           this.tablelist.sort((a,b) => a.id > b.id ? -1 : 1);
-           setTimeout(() => {
-            this.sortmethod(); 
-          }, 80);
-  
-         }
-         else
-         {
-           this.Prjcheckeddisabled = true;
-         }
-      
-        this.dataSource2 = new MatTableDataSource(this.tablelist);
-       // console.log("tablelist",this.tablelist)
-        this.spinner.hide();
-      });
-     // document.getElementById("filters").style.display='block'; 
-  }
-  sortmethod(){
-    this.dataSource2.sort = this.sort2;   
-    this.dataSource2.paginator=this.paginator2; 
-  }
-
-  closeproject()
-  {     
-    document.getElementById("filters").style.display='block';
-    document.getElementById('UpdateProjects').style.display='none';
-    this.resetupdateForm();
-  }
-
-  closeprogram(){
-    document.getElementById("filters").style.display='block';
-    document.getElementById('prog-proj-tab').style.display='none';
-    this.resetcreateprogramForm();
-    this.resetcreateproject();
-  }
-
-  resetcreateprogramForm(){
-      this.createprogram.reset();
-  }
-
-  resetProjForm(){
-  this.insertForm.reset();
-  }
-
-  resetupdateForm(){
-    this.updateForm.reset();
-  }
-  onTabChanged(event)
-  {
-    this.check_tab=event.index;
-  }
-  
-  updatedata()
-  {    
-    document.getElementById("filters").style.display='none';
-    document.getElementById('UpdateProjects').style.display='block';
-    this.getprocessnames();
-    let data:any;
-    for(data of this.tablelist)
-    {
-      if(data.id==this.dbupdateid)
-      {
-        this.prjupdatedata=data;
-        this.updateForm.get("type").setValue(this.prjupdatedata["type"]);
-        this.updateForm.get("initiatives").setValue(this.prjupdatedata["initiatives"]);
-        this.updateForm.get("process").setValue(this.prjupdatedata["process"]);
-        this.updateForm.get("projectName").setValue(this.prjupdatedata["projectName"]);
-        this.updateForm.get("owner").setValue(this.prjupdatedata["owner"]);
-        this.updateForm.get("access").setValue(this.prjupdatedata["access"]);
-        this.updateForm.get("priority").setValue(this.prjupdatedata["priority"]);
-        break;
       }
-    }
-   
-  }
-
-  saveProject(){
-        let projDetails = this.insertForm.value;
-       this.myprojDetials=
-      {
-          "projectName": projDetails.projectname,
-        "initiatives": projDetails.initiatives,
-        "resources": projDetails.addresources,
-        "owner":projDetails.addresources,
-        "priority": projDetails.priority,
-      "measurableMetrics":projDetails.measurablemetrics ,
-        "description": projDetails.description
-              }
-             this.prog_projectArray.push(this.myprojDetials);
-             console.log("project array is",this.prog_projectArray)
-             document.getElementById('addproj').style.display='none';
-             document.getElementById('prog-proj-tab').style.display='block';
-
-
+      })
   }
   
-  saveProgram(){​​​​​​​​
-    if(this.createprogram.valid)
-       {​​​​​​​​
+
+
+  getallProjectsdata(){
     this.spinner.show();
-    this.submitted=true;
-    let program = this.createprogram.value;
-    console.log("my prog",program)
- this.myProgrambody=   
-{"programName":program.programname,
-"initiatives":program.initiatives,
-"purpose":program.programpurpose,
-"priority":program.programpriority,
-"measurablemetrics":program.measurablemetrics,
-"description":program.description,
-"project":this.prog_projectArray
+    this.api.getAllProjects().subscribe(res=>{
+      let response:any=res;
+      this.projects_list=[...response[0].map(data=>{
+      return {
+        id:data.id,
+        projectName:data.programName,
+        access:data.access,
+        initiatives:data.initiatives,
+        process:data.process,
+        type:(data.type.toUpperCase() + data.type.slice(1)),
+        owner:data.owner,
+        priority:data.priority,
+      }
+    }),...response[1].map(data=>{
+        return {
+          id:data.id,
+          projectName:data.projectName,
+          access:data.access,
+          initiatives:data.initiatives,
+          process:data.process,
+          type:(data.type.toUpperCase() + data.type.slice(1)),
+          owner:data.owner,
+          priority:data.priority,
+        }
+    })];
+    this.spinner.hide();
+    this.getallProjects();
+
+    });
+    
+    //document.getElementById("filters").style.display='block'; 
 }
 
-    this.api.saveProgram(this.myProgrambody).subscribe( res=>{​​​​​​​​
-    this.spinner.hide();
-    Swal.fire({​​​​​​​​
-    position:'center',
-    icon:'success',
-    title:"saved",
-    showConfirmButton:false,
-    timer:2000
-              }​​​​​​​​)
-    this.submitted=false; 
-    this.tablelist=[];
-    document.getElementById('prog-proj-tab').style.display='none';   
-    this.getallProjects();
-    
-    this.spinner.hide();
-        }​​​​​​​​);
-    
-      }​​​​​​​​
-    else{​​​​​​​​
-    alert("Invalid Form");
-      }​​​​​​​​
-       }​​​​​​​​
 
-  createprojects(){
-    document.getElementById("filters").style.display='none';
-    document.getElementById('prog-proj-tab').style.display='block';
-  }
 
-  addProject()
-  {
-    //this.modalRef = this.modalService.show(template);
-    document.getElementById('addproj').style.display='block'
 
-   }
+
+  // closeproject()
+  // {     
+  //   document.getElementById("filters").style.display='block';
+  //   document.getElementById('UpdateProjects').style.display='none';
+  //   this.resetupdateForm();
+  // }
+
+  // closeprogram(){
+  //   document.getElementById("filters").style.display='block';
+  //   document.getElementById('prog-proj-tab').style.display='none';
+  //   this.resetcreateprogramForm();
+  //   this.resetcreateproject();
+  // }
+
+  // resetcreateprogramForm(){
+  //     this.createprogram.reset();
+  // }
+
+  // resetProjForm(){
+  // this.insertForm.reset();
+  // }
+
+  // resetupdateForm(){
+  //   this.updateForm.reset();
+  // }
+  // onTabChanged(event)
+  // {
+  //   this.check_tab=event.index;
+  // }
   
-   back(){
-    document.getElementById("addproj").style.display="none";
-    this.resetCredForm();
-  }
+  updatedata(updatemodal,project)
+  {    
+    let data:any=this.projects_list.find(item=>item.id==project.id);
+    this.project_id=data.id;
+      if(data.id!=undefined)
+      {
+        this.updateForm.get("type").setValue(data["type"]);
+        this.updateForm.get("initiatives").setValue(data["initiatives"]);
+        this.updateForm.get("process").setValue(data["process"]);
+        this.updateForm.get("projectName").setValue(data["projectName"]);
+        this.updateForm.get("owner").setValue(data["owner"]);
+        this.updateForm.get("access").setValue(data["access"]);
+        this.updateForm.get("priority").setValue(data["priority"]);
+        this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
+      }
+    }
 
-  resetCredForm(){
-    this.insertForm.reset();
-  }
+
+  
+//   saveProgram(){​​​​​​​​
+//     if(this.createprogram.valid)
+//        {​​​​​​​​
+//     this.spinner.show();
+//     this.submitted=true;
+//     let program = this.createprogram.value;
+//     console.log("my prog",program)
+//  this.myProgrambody=   
+// {"programName":program.programname,
+// "initiatives":program.initiatives,
+// "purpose":program.programpurpose,
+// "priority":program.programpriority,
+// "measurablemetrics":program.measurablemetrics,
+// "description":program.description,
+// "project":this.prog_projectArray
+// }
+
+//     this.api.saveProgram(this.myProgrambody).subscribe( res=>{​​​​​​​​
+//     this.spinner.hide();
+//     Swal.fire({​​​​​​​​
+//     position:'center',
+//     icon:'success',
+//     title:"saved",
+//     showConfirmButton:false,
+//     timer:2000
+//               }​​​​​​​​)
+//     this.submitted=false; 
+//     this.tablelist=[];
+//     document.getElementById('prog-proj-tab').style.display='none';   
+//     this.getallProjects();
+    
+//     this.spinner.hide();
+//         }​​​​​​​​);
+    
+//       }​​​​​​​​
+//     else{​​​​​​​​
+//     alert("Invalid Form");
+//       }​​​​​​​​
+//        }​​​​​​​​
+
+//   createprojects(){
+//     document.getElementById("filters").style.display='none';
+//     document.getElementById('prog-proj-tab').style.display='block';
+//   }
+
+//   addProject()
+//   {
+//     //this.modalRef = this.modalService.show(template);
+//     document.getElementById('addproj').style.display='block'
+
+//    }
+  
+//    back(){
+//     document.getElementById("addproj").style.display="none";
+//     this.resetCredForm();
+//   }
+
+//   resetCredForm(){
+//     this.insertForm.reset();
+//   }
   
   projectupdate(){
     if(this.updateForm.valid)
     {
       this.spinner.show();
-    let credupdatFormValue =  this.updateForm.value;
-    credupdatFormValue["id"]= this.prjupdatedata.id;
-    this.api.update_project(credupdatFormValue).subscribe( res =>{
-      let status: any= res;
-      this.spinner.hide();
-      Swal.fire({
-        title: 'Success',
-        text: ""+status.message,
-        position: 'center',
-        icon: 'success',
-        showCancelButton: false,
-        confirmButtonColor: '#007bff',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Ok'
-      })
-      this.tablelist=[];
-      this.removeallchecks();
-
-      this.getallProjects();
-      this.Credchecktoupdate();
-      this.checktodelete(); 
-      document.getElementById('UpdateProjects').style.display='none';   
-      this.spinner.hide();
-    },err => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Something went wrong!',
-      })
-      
-  });
+      this.updatemodalref.hide();
+      let credupdatFormValue =  this.updateForm.value;
+      credupdatFormValue["id"]=this.project_id;
+      this.api.update_project(credupdatFormValue).subscribe( res =>{
+        let status: any= res;
+        if(status.errorMessage==undefined)
+        {
+          Swal.fire("Success",status.message,"success");
+          this.getallProjects();
+          this.spinner.hide();
+        }
+        else
+        {
+          Swal.fire("Error",status.errorMessage,"error");
+        }
+        
+      },err => {
+        Swal.fire("Error","Something Went Wrong","error");
+      });
 }
 else
 {
@@ -377,165 +394,158 @@ getprocessnames()
   })
   }
 
-delete(){
-  let selectedproject = this.tablelist.filter(product => product.checked==true).map(p =>{
-    return{
-      id:p.id,
-      type:p.type
-    }
-  });
-  // let selectedprojecttype = this.tablelist.filter(product => product.checked==true).map(p => p.type);
+// delete(){
+//   let selectedproject = this.tablelist.filter(product => product.checked==true).map(p =>{
+//     return{
+//       id:p.id,
+//       type:p.type
+//     }
+//   });
+//   // let selectedprojecttype = this.tablelist.filter(product => product.checked==true).map(p => p.type);
  
   
-//   this.projectmodifybody = [{
-//     "id":selectedprojectid[0],
-//     "type": selectedprojecttype[0],
+// //   this.projectmodifybody = [{
+// //     "id":selectedprojectid[0],
+// //     "type": selectedprojecttype[0],
     
-// }]
+// // }]
   
-  Swal.fire({
-    title: 'Are you sure?',
-    text: "You won't be able to revert this!",
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, delete it!'
-  }).then((result) => {
-    if (result.value) {
-      this.spinner.show();
-      this.api.delete_Project(selectedproject).subscribe( res =>{ 
-        let status:any = res;
-        Swal.fire({
-          title: 'Success',
-          text: ""+status.message,
-          position: 'center',
-          icon: 'success',
-          showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ok'
-        }) 
-        this.tablelist=[]
-        this.removeallchecks();
-        this.getallProjects();
-        this.spinner.hide();
-        this.Credchecktoupdate();  
-        this.checktodelete(); 
-        },err => {
-          Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Something went wrong!',
-          })
+//   Swal.fire({
+//     title: 'Are you sure?',
+//     text: "You won't be able to revert this!",
+//     icon: 'warning',
+//     showCancelButton: true,
+//     confirmButtonColor: '#3085d6',
+//     cancelButtonColor: '#d33',
+//     confirmButtonText: 'Yes, delete it!'
+//   }).then((result) => {
+//     if (result.value) {
+//       this.spinner.show();
+//       this.api.delete_Project(selectedproject).subscribe( res =>{ 
+//         let status:any = res;
+//         Swal.fire({
+//           title: 'Success',
+//           text: ""+status.message,
+//           position: 'center',
+//           icon: 'success',
+//           showCancelButton: false,
+//           confirmButtonColor: '#007bff',
+//           cancelButtonColor: '#d33',
+//           confirmButtonText: 'Ok'
+//         }) 
+//         this.tablelist=[]
+//         this.removeallchecks();
+//         this.getallProjects();
+//         this.spinner.hide();
+//         this.Credchecktoupdate();  
+//         this.checktodelete(); 
+//         },err => {
+//           Swal.fire({
+//             icon: 'error',
+//             title: 'Oops...',
+//             text: 'Something went wrong!',
+//           })
                        
-        })
-    }
-  });
+//         })
+//     }
+//   });
 
-}
+// }
 
 
-Credchecktoupdate()
-  {
-    const selectedprojectdetails = this.tablelist.filter(product => product.checked==true);
-    if(selectedprojectdetails.length==1)
-    {
-      this.Credupdateflag=true;
-      this.dbupdateid=selectedprojectdetails[0].id;
-    }else
-    {
-      this.Credupdateflag=false;
-    }
-  }
+// Credchecktoupdate()
+//   {
+//     const selectedprojectdetails = this.tablelist.filter(product => product.checked==true);
+//     if(selectedprojectdetails.length==1)
+//     {
+//       this.Credupdateflag=true;
+//       this.dbupdateid=selectedprojectdetails[0].id;
+//     }else
+//     {
+//       this.Credupdateflag=false;
+//     }
+//   }
 
-  CredcheckEnableDisableBtn(id, event)
-  {
-    this.tablelist.find(data=>data.id==id).checked=event.target.checked;
-    if(this.tablelist.filter(data=>data.checked==true).length==this.tablelist.length)
+//   CredcheckEnableDisableBtn(id, event)
+//   {
+//     this.tablelist.find(data=>data.id==id).checked=event.target.checked;
+//     if(this.tablelist.filter(data=>data.checked==true).length==this.tablelist.length)
 
-    {
-      this.updateflag=true;
-    }else
-    {
-      this.updateflag=false;  
-    }
-    this.Credchecktoupdate();
-    this.checktodelete();
-  }
+//     {
+//       this.updateflag=true;
+//     }else
+//     {
+//       this.updateflag=false;  
+//     }
+//     this.Credchecktoupdate();
+//     this.checktodelete();
+//   }
 
-  checktodelete()
-  {
-    const selectedprojectdata = this.tablelist.filter(product => product.checked).map(p => p.id);
-    if(selectedprojectdata.length>0)
-    {
-      this.Creddeleteflag=true;
-    }else
-    {
-      this.Creddeleteflag=false;
-    }
-  }
+//   checktodelete()
+//   {
+//     const selectedprojectdata = this.tablelist.filter(product => product.checked).map(p => p.id);
+//     if(selectedprojectdata.length>0)
+//     {
+//       this.Creddeleteflag=true;
+//     }else
+//     {
+//       this.Creddeleteflag=false;
+//     }
+//   }
 
-  applyFilter1(filterValue: string) {
+//   applyFilter1(filterValue: string) {
     
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-    this.dataSource2.filter = filterValue;
-  }
+//     filterValue = filterValue.trim(); // Remove whitespace
+//     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+//     this.dataSource2.filter = filterValue;
+//   }
 
-  removeallchecks()
-  {
-    for(let i=0;i<this.tablelist.length;i++)
-    {
-      this.tablelist[i].checked= false;
-    }
-    this.Credcheckflag=false;
-  }
+//   removeallchecks()
+//   {
+//     for(let i=0;i<this.tablelist.length;i++)
+//     {
+//       this.tablelist[i].checked= false;
+//     }
+//     this.Credcheckflag=false;
+//   }
 
 
-  createproject()
-  {
-    this.spinner.show();
-    this.api.createProject(this.insertForm2.value).subscribe(data=>{
-      let response:any=data;
-      this.spinner.hide();
-      if(response.errormessage==undefined)
-      {
-        Swal.fire("Success",response.message,"success");
-        this.insertForm2.reset();
-        document.getElementById("prog-proj-tab").style.display="none"
-        this.getallProjects()
-        this.insertForm2.get("mapchainvalue").setValue("");
-        this.insertForm2.get("resources").setValue("");
-        this.insertForm2.get("owner").setValue("");
-        this.insertForm2.get("initiatives").setValue("");
-        this.insertForm2.get("projectpriority").setValue("");
+//   createproject()
+//   {
+//     this.spinner.show();
+//     this.api.createProject(this.insertForm2.value).subscribe(data=>{
+//       let response:any=data;
+//       this.spinner.hide();
+//       if(response.errormessage==undefined)
+//       {
+//         Swal.fire("Success",response.message,"success");
+//         this.insertForm2.reset();
+//         document.getElementById("prog-proj-tab").style.display="none"
+//         this.getallProjects()
+//         this.insertForm2.get("mapchainvalue").setValue("");
+//         this.insertForm2.get("resources").setValue("");
+//         this.insertForm2.get("owner").setValue("");
+//         this.insertForm2.get("initiatives").setValue("");
+//         this.insertForm2.get("projectpriority").setValue("");
         
-      }
-      else
-        Swal.fire(response.errormessage,"","error");
+//       }
+//       else
+//         Swal.fire(response.errormessage,"","error");
       
-    })
-  }
+//     })
+//   }
 
-  resetcreateproject()
-  {
-        this.insertForm2.reset();
+//   resetcreateproject()
+//   {
+//         this.insertForm2.reset();
         
-        this.insertForm2.get("resources").setValue("");
-        this.insertForm2.get("mapchainvalue").setValue("");
-        this.insertForm2.get("owner").setValue("");
-        this.insertForm2.get("initiatives").setValue("");
-        this.insertForm2.get("projectpriority").setValue("");
+//         this.insertForm2.get("resources").setValue("");
+//         this.insertForm2.get("mapchainvalue").setValue("");
+//         this.insertForm2.get("owner").setValue("");
+//         this.insertForm2.get("initiatives").setValue("");
+//         this.insertForm2.get("projectpriority").setValue("");
         
-  }
+//   }
 
-  getallusers()
-  {
-    let tenantid=localStorage.getItem("tenantName")
-    this.api.getuserslist(tenantid).subscribe(item=>{
-      let users:any=item
-      this.userslist=users;
-    })
-  }
+  
 }

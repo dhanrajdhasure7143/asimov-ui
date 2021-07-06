@@ -67,11 +67,11 @@ export class CreateProjectsComponent implements OnInit {
     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    mapchainvalue: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    enddate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    startdate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    projectpriority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -116,16 +116,16 @@ createproject()
 
         this.projectDetails={
           description: this.projectcreatedata.description,
-          enddate: this.projectcreatedata.enddate,
+          enddate: this.projectcreatedata.endDate,
           initiatives: this.projectcreatedata.initiatives,
-          mapchainvalue: this.projectcreatedata.mapchainvalue,
-          measurablemetrics: this.projectcreatedata.measurablemetrics,
+          mapchainvalue: this.projectcreatedata.mapValueChain,
+          measurablemetrics: this.projectcreatedata.measurableMetrics,
           owner: this.projectcreatedata.owner,
           process: this.projectcreatedata.process,
           projectName: this.projectcreatedata.projectName,
-          projectpriority: this.projectcreatedata.projectpriority,
+          priority: this.projectcreatedata.priority,
           resources: this.projectcreatedata.resources,
-          startdate: this.projectcreatedata.startdate
+          startdate: this.projectcreatedata.startDate
 
         }
         this.navigatetodetailspage(this.projectDetails);
@@ -184,10 +184,10 @@ createproject()
         this.insertForm2.reset();
         
         this.insertForm2.get("resources").setValue("");
-        this.insertForm2.get("mapchainvalue").setValue("");
+        this.insertForm2.get("mapValueChain").setValue("");
         this.insertForm2.get("owner").setValue("");
         this.insertForm2.get("initiatives").setValue("");
-        this.insertForm2.get("projectpriority").setValue("");
+        this.insertForm2.get("priority").setValue("");
         this.insertForm2.get("process").setValue("");
         
   }
