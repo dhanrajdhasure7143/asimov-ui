@@ -142,6 +142,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       private dt:DataTransferService, private route:ActivatedRoute, private global:GlobalScript, private hints:BpsHints,public dialog:MatDialog,private shortcut:BpmnShortcut) { }
 
    ngOnInit() {
+    localStorage.setItem("isheader","true")
     this.randomNumber = UUID.UUID();
     this.dt.changeHints(this.hints.bpsUploadHints);
     this.bpmnservice.isConfNav.subscribe(res => this.isConfNavigation = res);

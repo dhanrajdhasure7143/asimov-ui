@@ -954,3 +954,9 @@ app-home, app-bussiness-process {
 .innersform .mat-tab-body.mat-tab-body-active, .innersform .mat-tab-body-content {
   overflow: unset !important;
 }
+
+.new-bps-grid-data span.mat-expansion-indicator {
+  position: absolute;
+  right: 15px;
+  top: 5px;
+}

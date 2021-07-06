@@ -48,7 +48,7 @@ export class BpsHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(){
-    
+    localStorage.setItem("isheader","false")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
     if(this.userRole.includes('SuperAdmin')){
