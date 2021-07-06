@@ -1,8 +1,11 @@
 .create_box h3 {
     /* padding-top: 10px; */
 }
-.create_box {
-    margin-left: 20px;
+.box_area .row {
+    display: flex;
+}
+.drop_box.create_box {
+    margin: 0px;
     display: flex;
     align-items: center;
     padding-top: 0px !important;
@@ -27,4 +30,5 @@
 }
 .drop_box {
     height: 186px;
+    margin: 0px 20px 0px 0px;
 }    
