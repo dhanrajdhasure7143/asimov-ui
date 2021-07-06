@@ -35,8 +35,8 @@
             
             </div>
             <div class="col-md-2"  style="font-size: 11px;margin-top: -15px;">
-                <b>{{projectdata.startdate | date}}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <b>{{projectdata.enddate | date}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
+                <b>{{projectdata.startDate | date}}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>{{projectdata.endDate | date}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
                 <b>New</b>
             </div>
          </div>
@@ -55,7 +55,7 @@
                 <div class="status-data">
                   <span class="" style="font-size: 11px;white-space: nowrap;">Value Chain</span><br>
                   <span class="tab-text" *ngIf="projectdata.mapchainvalue==null" style="font-size: 12px;"><b>-</b></span>
-                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.mapchainvalue}}</b></span>
+                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.mapValueChain}}</b></span>
                 </div>
               </div>
         </td>
@@ -144,7 +144,7 @@
                     <div class="status-data">
                       <span class="" style="font-size: 11px;white-space: nowrap;">Project Priority</span><br>
                       <span class="tab-text" *ngIf="projectdata.projectpriority==null" style="font-size: 12px;"><b>-</b></span>
-                      <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.projectpriority}}</b></span>
+                      <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.priority}}</b></span>
                     </div>
                   </div>
             </div>
