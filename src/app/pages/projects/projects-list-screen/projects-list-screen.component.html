@@ -1,4 +1,4 @@
-
+<div *ngIf="projects_list.length!=0 && processes.length!=0">
     <mat-card id="projects_list_screen" *ngIf="projects_toggle==false">
       <div class="projects-header maincreat nrema">
         <span class="projects-back-button">
@@ -7,8 +7,8 @@
         <span class="projects-header-title">
           <span class="prmaincolo">Projects</span> <span class="baclsl">/</span> Programs
         </span>
-        <span class="pull-right righsecp" style="font-size:20px;">
-          <span class="projects-menu-item vreatbu" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><span class="tett">+</span> Create New</span>
+        <span class="pull-right" style="font-size:20px;">
+          <span class="projects-menu-item" routerLink="/pages/projects/create-projects" ><i class="ri-file-add-line"></i></span>
           <span class="projects-menu-item" ><i class="ri-filter-2-line"></i></span>
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span>
@@ -28,7 +28,7 @@
               </div>
             </ng-template>
             <div class="projects-table-body">
-              <app-projects-programs-table></app-projects-programs-table>
+              <app-projects-programs-table [users_list]="users_list"  [processes]="processes"   status="All" [projects_list]="projects_list"></app-projects-programs-table>
             </div>
           </mat-tab>
           <mat-tab>
@@ -44,7 +44,7 @@
                   </div>
             </ng-template>
             <div class="projects-table-body">
-                <app-projects-programs-table></app-projects-programs-table>
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"   status="New" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>  
           <mat-tab>
@@ -60,7 +60,7 @@
                   </div>
             </ng-template>
             <div class="projects-table-body">
-                <app-projects-programs-table></app-projects-programs-table>
+                <app-projects-programs-table  [users_list]="users_list" [processes]="processes"  status="In Progress" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>
           <mat-tab>
@@ -77,7 +77,7 @@
             
             </ng-template>
             <div class="projects-table-body">
-                <app-projects-programs-table></app-projects-programs-table>
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="In Review" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>
           <mat-tab>
@@ -93,7 +93,7 @@
                   </div>
             </ng-template>
             <div class="projects-table-body">
-                <app-projects-programs-table></app-projects-programs-table>
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"   status="Approved" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
        
           </mat-tab>
@@ -110,7 +110,7 @@
                   </div>
             </ng-template>
             <div class="projects-table-body">
-                <app-projects-programs-table></app-projects-programs-table>
+                <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="Rejected" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
             
           </mat-tab>    
@@ -120,4 +120,4 @@
     <mat-card *ngIf="projects_toggle==true">
       <app-create-projects></app-create-projects>
     </mat-card>
-  
+  </div>
