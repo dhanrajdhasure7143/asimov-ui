@@ -366,6 +366,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         if(status.errorMessage==undefined)
         {
           Swal.fire("Success",status.message,"success");
+          this.projects_list=[];
           this.getallProjects();
           this.spinner.hide();
         }
@@ -547,5 +548,8 @@ getprocessnames()
         
 //   }
 
+resetupdateproject(){
+  this.updateForm.reset();
+}
   
 }

@@ -608,7 +608,7 @@
 
 <ng-template class="modal-lg" #updatemodal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Update Project</h4>
+    <h4 class="modal-title pull-left">Update Project/Program</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="updatemodalref.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -629,18 +629,20 @@
                           <br>
                          
                           <label for="initiatives">Initiative<span style="color:red">*</span></label>
-                          <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control" formControlName="initiatives" value="" placeholder="Enter Initiative" >
-                          <span *ngIf="(updateForm.get('initiatives').invalid && updateForm.get('initiatives').touched) && !updateForm.controls['initiatives'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Initiative Required*</span>
-                          <div *ngIf="updateForm.controls['initiatives'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                              Maximum of 50 characters
-                          </div>  
+                          <select  formControlName="initiatives"   class="form-control data">
+                            <option  [value]="null" disabled hidden>Select Initiatives</option>
+                            <option value="">Select Initiatives</option>
+                            <option value="Process Improvement">Process Improvement</option>
+                            <option value="Business Improvement">Business Improvement</option>
+                        </select>
+                        <span *ngIf="updateForm.get('initiatives').invalid && updateForm.get('initiatives').touched" style="color:red" class="fa fa-info-circle errspan">Initiatives Required*</span>
                           <br>
                           
                          
                           <label>Owner <span  style="color:red">*</span></label>
                           <select   formControlName="owner"  style="border:1px solid lightgray" [value]="updateForm.get('owner').getValue()"  class="form-control data">
-                              <option  [value]="null" disabled hidden>--Select Owner --</option>
-                              <option value="" [selected]="true">--Select Owner --</option>
+                            <option  [value]="null" disabled hidden>Select Owner</option>
+                              <option value="" [selected]="true">Select Owner</option>
                               <option *ngFor="let user of users_list" [ngValue]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
                           </select>
                           <span *ngIf="updateForm.get('owner').invalid && updateForm.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
@@ -699,7 +701,7 @@
               </form>
               <br>
               <div class="pull-right">
-                  <button (click)="resetcreateproject()" class="btn btn-primary">Reset</button>
+                  <button (click)="resetupdateproject()" class="btn btn-primary">Reset</button>
                   &nbsp;&nbsp;
                   <button [disabled]="insertForm2.invalid" (click)="projectupdate()" class="btn btn-primary">Update</button>
               </div>

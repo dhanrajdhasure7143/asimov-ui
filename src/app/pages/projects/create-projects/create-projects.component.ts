@@ -108,31 +108,40 @@ createproject()
       let response:any=data;
       this.spinner.hide();
       this.projectcreatedata=this.insertForm2.value
-      if(response.errormessage==undefined)
+      if(response.errorMessage==undefined)
       {
-        Swal.fire("Success",response.message,"success");
+        let status: any= response;
+        Swal.fire({
+          title: 'Success',
+          text: ""+status.message,
+          position: 'center',
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+      }).then((result) => {
         this.resetcreateproject();
         this.getallProjects();
-
         this.projectDetails={
           description: this.projectcreatedata.description,
-          enddate: this.projectcreatedata.endDate,
+          endDate: this.projectcreatedata.endDate,
           initiatives: this.projectcreatedata.initiatives,
-          mapchainvalue: this.projectcreatedata.mapValueChain,
-          measurablemetrics: this.projectcreatedata.measurableMetrics,
+          mapValueChain: this.projectcreatedata.mapValueChain,
+          measurableMetrics: this.projectcreatedata.measurableMetrics,
           owner: this.projectcreatedata.owner,
           process: this.projectcreatedata.process,
           projectName: this.projectcreatedata.projectName,
           priority: this.projectcreatedata.priority,
           resources: this.projectcreatedata.resources,
-          startdate: this.projectcreatedata.startDate
-
+          startDate: this.projectcreatedata.startDate
         }
         this.navigatetodetailspage(this.projectDetails);
+      }) 
         
       }
       else
-        Swal.fire(response.errormessage,"","error");
+      Swal.fire("Error",response.errorMessage,"error");
       
     })
   }
