@@ -261,13 +261,15 @@ label.epsoft-label sup {
 
 .submenus.expanded {
   padding: 0px;
-  // background: #00a0e309;
-  margin-left: 30px;
+  background: #00a0e309;
+  // margin-left: 30px;
+  padding-left: 30px;
+  padding-bottom: 15px;
   // border-left: 2px solid #00a0e3;
 }
 
 .submenus.expanded .mat-list-item.active {
-  border-left: 2px solid #00a0e3 !important;
+  border-left: 3px solid #00a0e3 !important;
   background: transparent !important;
   color: #00a0e3;
 }
@@ -278,7 +280,7 @@ label.epsoft-label sup {
 
 .submenus.expanded .mat-list-item {
   // padding-left: -5px !important;
-  border-left: 2px solid #00a0e31c;
+  border-left: 3px solid #00a0e31c;
 }
 
 .submenus.expanded .mat-list-item span.side-icon {
@@ -294,6 +296,7 @@ mat-list-item.mat-list-item.activeMenu .side-menu-font,
 mat-list-item.mat-list-item.activeMenu {
   color: #00a0e3;
   font-weight: 500;
+  background-color: #00a0e309;
 }
 
 .submenus.expanded .mat-list-item .mat-list-item-content {
