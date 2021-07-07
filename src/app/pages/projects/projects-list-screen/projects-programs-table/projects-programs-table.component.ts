@@ -42,6 +42,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
   // projectsdata: any=[];
   // dbupdateid: any;
    updatemodalref: BsModalRef;
+  projectdetailsbyid: Object;
   //   public createprogram:FormGroup;
   // updateddata: any;
   // public updateflag: boolean;
@@ -129,6 +130,16 @@ export class ProjectsProgramsTableComponent implements OnInit {
 
   }
 
+  projectDetailsbyId(id){
+
+    this.api.getProjectDetailsById(id).subscribe( res =>{
+    this.projectdetailsbyid=res;
+    console.log("project details",this.projectdetailsbyid)
+    this.navigatetodetailspage(this.projectdetailsbyid)
+    })
+  }
+
+
   navigatetodetailspage(detials){
     let encoded=Base64.encode(JSON.stringify(detials));
     let project={id:encoded}
@@ -191,6 +202,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           let response:any=res
           if(response.errorMessage==undefined)
           {
+            this.projects_list=[];
             Swal.fire("Success",response.message,"success")
             this.getallProjectsdata();
           }
@@ -219,6 +231,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
         type:(data.type.toUpperCase() + data.type.slice(1)),
         owner:data.owner,
         priority:data.priority,
+        createdBy:data.createdBy,
+        status:data.status
       }
     }),...response[1].map(data=>{
         return {
@@ -230,6 +244,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
           type:(data.type.toUpperCase() + data.type.slice(1)),
           owner:data.owner,
           priority:data.priority,
+          createdBy:data.createdBy,
+          status:data.status
         }
     })];
     this.spinner.hide();
@@ -365,9 +381,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
         let status: any= res;
         if(status.errorMessage==undefined)
         {
+          //this.projects_list=[];
           Swal.fire("Success",status.message,"success");
-          this.projects_list=[];
-          this.getallProjects();
+          this.project_main.getallProjects();
           this.spinner.hide();
         }
         else
@@ -550,6 +566,7 @@ getprocessnames()
 
 resetupdateproject(){
   this.updateForm.reset();
+  this.updateForm.get("owner").setValue("");
 }
   
 }

@@ -557,31 +557,31 @@
 <ng-container matColumnDef="lastupdatedby">
   <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated by</th>
   <td mat-cell *matCellDef="let element"> 
-      <span *ngIf="element.access!=null">Rachei M | 09th Nov, 12pm</span> 
-      <span *ngIf="element.access==''" >-</span> 
-      <span *ngIf=" element.access==null">-</span> 
+      <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> 
+      <span *ngIf="element.createdBy==''" >-</span> 
+      <span *ngIf=" element.createdBy==null">-</span> 
   </td>
 </ng-container>
 
 <ng-container matColumnDef="status">
   <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
   <td mat-cell *matCellDef="let element"> 
-      <span *ngIf="element.access!=null">In Progress</span> 
-      <span *ngIf="element.access==''" >-</span> 
-      <span *ngIf=" element.access==null">-</span> 
+      <span *ngIf="element.status!=null">{{element.status}}</span> 
+      <span *ngIf="element.status==''" >-</span> 
+      <span *ngIf=" element.status==null">-</span> 
   </td>
 </ng-container>
 
 
-<!-- <ng-container matColumnDef="noData">
+<ng-container matColumnDef="noData">
   <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
       No Records Found
   </td>
-</ng-container> -->
+</ng-container>
 <ng-container matColumnDef="action">
   <th mat-header-cell *matHeaderCellDef> Actions</th>
   <td mat-cell *matCellDef="let element" class="action-link"> 
-    <button  *ngIf="element.type=='Project'"  (click)="navigatetodetailspage(element)" matTooltip="Go To Project Detials">
+    <button  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Detials">
       <i class="fa fa-eye"></i></button>&nbsp;&nbsp;&nbsp;
     <a (click)="updatedata(updatemodal,element)"  style="cursor:pointer">Edit</a> | 
     <a (click)="deleteproject(element)" style="color:red;cursor:pointer">Delete</a>  
@@ -590,7 +590,7 @@
 
 <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
 <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-<tr class="row-highlight mat-footer" mat-footer-row  [ngClass]="{'hide':!(projectsdata==undefined ||  projectsdata=='No records found')}"></tr>
+<tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(projects_list==undefined ||  projects_list=='No records found')}"></tr>
                   </table>
                 </div>
 <mat-paginator #paginator2 [pageSize]="8" [showFirstLastButtons]="true"></mat-paginator>

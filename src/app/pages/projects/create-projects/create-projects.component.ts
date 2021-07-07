@@ -30,6 +30,8 @@ export class CreateProjectsComponent implements OnInit {
   project: { id: any; };
   projectselection:any=[];
   newproject: any=[];
+  selectedresources:any;
+  username: string;
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -60,6 +62,7 @@ export class CreateProjectsComponent implements OnInit {
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
+    status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
 
   this.insertForm2=this.formBuilder.group({
@@ -75,6 +78,7 @@ export class CreateProjectsComponent implements OnInit {
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
 })
     this.resetcreateproject();
@@ -104,6 +108,11 @@ export class CreateProjectsComponent implements OnInit {
 createproject()
   {
     this.spinner.show();
+    let userfirstname=localStorage.getItem("firstName")
+    let userlastname=localStorage.getItem("lastName")
+    this.username=userfirstname+" "+userlastname
+    this.insertForm2.value.createdBy=this.username;
+    let data=this.insertForm2.value;
     this.api.createProject(this.insertForm2.value).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
@@ -163,6 +172,10 @@ createproject()
   }
 
   saveProgram(){​​​​​​​​
+    let userfirstname=localStorage.getItem("firstName")
+    let userlastname=localStorage.getItem("lastName")
+    this.username=userfirstname+" "+userlastname
+    this.createprogram.value.createdBy=this.username;
     let data=this.createprogram.value;
     data["project"]=this.newproject
     data["existingprojects"]=this.selected_projects.map(item => {

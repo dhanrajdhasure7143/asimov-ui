@@ -14,6 +14,7 @@
 @import "~dmn-js-properties-panel/dist/assets/dmn-js-properties-panel.css";
 @import '@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import '~bpmn-js-bpmnlint/dist/assets/css/bpmn-js-bpmnlint.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
 /* @import '~highlight.js/styles/github.css'; */
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */

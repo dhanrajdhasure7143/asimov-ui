@@ -875,4 +875,9 @@ save_blueprism_config(data)
     getRole(userid){
        return this.http.get("/authorizationservice/api/v1/user/role/userId/"+userid+"")
     }
+
+
+    getProjectDetailsById(id){
+      return this.http.get("/platform-service/project/findProjectById?projectId="+id+"")
+    }
 }

@@ -41,6 +41,12 @@
                                                     <option value="">Select Resources</option>
                                                     <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                                                 </select>
+
+                                                <!-- <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
+                                                     [(ngModel)]="selectedresources"  required>
+                                                    <ng-option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
+                                                </ng-select> -->
+
                                                 <span *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
                                                     
                                                 <br>
@@ -56,7 +62,7 @@
                                                 <option value="Medium">Medium</option>
                                                 <option value="Low">Low</option>
                                                 </select>
-                                                <span *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Project priority Required*</span>
+                                                <span *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Project Priority Required*</span>
                                                 <br>
                                                 <label class="label-control" >Map Value Chain <span  style="color:red">*</span></label>
                                                 <select  formControlName="mapValueChain"  class="form-control data">
@@ -101,9 +107,9 @@
                                                 <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
                                             
                                                 <br>
-                                                <label class="label-control" >Identity Mesurable Metrics <span  style="color:red">*</span></label>
-                                                <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
-                                                <span *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity mesurable metrics Required*</span>
+                                                <label class="label-control" >Identity Measurable Metrics <span  style="color:red">*</span></label>
+                                                <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
+                                                <span *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Measurable Metrics Required*</span>
                                                 <br>
 
                                                 <label class="label-control" >Access<span style="color:red">*</span></label>
@@ -115,6 +121,21 @@
                                                               <option value="Viewer">Viewer</option>
                                                           </select>
                                                           <span *ngIf="insertForm2.get('access').invalid && insertForm2.get('access').touched" style="color:red" class="fa fa-info-circle errspan">Access Required*</span>
+                                            
+                                                <br>
+
+
+                                                <label class="label-control" >Status<span style="color:red">*</span></label>
+                                                            <select   formControlName="status"  class="form-control data">
+                                                              <option  [value]="null" disabled hidden>Select Status</option>
+                                                              <option value="" [selected]="true">Select Status</option>
+                                                              <option value="New">New</option>
+                                                              <option value="In Progress">In Progress</option>
+                                                              <option value="In Review">In Review</option>
+                                                              <option value="Approved">Approved</option>
+                                                              <option value="Rejected">Rejected</option>
+                                                          </select>
+                                                          <span *ngIf="insertForm2.get('status').invalid && insertForm2.get('status').touched" style="color:red" class="fa fa-info-circle errspan">Status Required*</span>
                                             
                                                 <br>
                                                
@@ -232,6 +253,19 @@
                                                           </select>
                                                           <span *ngIf="createprogram.get('owner').invalid && createprogram.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
                                                       <br>
+                                                      <label class="label-control" >Status<span style="color:red">*</span></label>
+                                                            <select   formControlName="status"  class="form-control data">
+                                                              <option  [value]="null" disabled hidden>Select Status</option>
+                                                              <option value="" [selected]="true">Select Status</option>
+                                                              <option value="New">New</option>
+                                                              <option value="In Progress">In Progress</option>
+                                                              <option value="In Review">In Review</option>
+                                                              <option value="Approved">Approved</option>
+                                                              <option value="Rejected">Rejected</option>
+                                                          </select>
+                                                          <span *ngIf="createprogram.get('status').invalid && createprogram.get('status').touched" style="color:red" class="fa fa-info-circle errspan">Status Required*</span>
+                                            
+                                                <br>
                                                           <div style="display:flex">
                                                             <div class="select-project">
                                                                 <label class="label-control" >Select Projects</label>
@@ -408,11 +442,27 @@
                             
                                 <br>
                                 
-                                <label>Identity Mesurable Metrics <span  style="color:red">*</span></label>
-                                <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Mesurable Metrics" class="form-control data">
-                                <span *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity mesurable metrics Required*</span>
+                                <label>Identity Measurable Metrics <span  style="color:red">*</span></label>
+                                <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
+                                <span *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Measurable Metrics Required*</span>
                                 
                                 <br>
+
+                                <label>Status<span style="color:red">*</span></label>
+                                <select formControlName="status" class="form-control data">
+                                    <option [value]="null" disabled hidden>Select Status</option>
+                                    <option value="" [selected]="true">Select Status</option>
+                                    <option value="New">New</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="In Review">In Review</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                                <span *ngIf="insertForm2.get('status').invalid && insertForm2.get('status').touched" style="color:red"
+                                    class="fa fa-info-circle errspan">Status Required*</span>
+                                <br>
+
+
                                 <label>Select Process <span  style="color:red">*</span></label>
                                 <select class="form-control" formControlName="process">
                                     <option  [value]="null" disabled hidden>Select Process</option>
