@@ -43,7 +43,8 @@ export class ProjectsListScreenComponent implements OnInit {
         type:data.type,
         owner:data.owner,
         priority:data.priority,
-        createdBy:data.createdBy
+        createdBy:data.createdBy,
+        status:data.status
       }
     }),...response[1].map(data=>{
         return {
@@ -55,7 +56,8 @@ export class ProjectsListScreenComponent implements OnInit {
           type:(data.type==null?"Project":data.type),
           owner:data.owner,
           priority:data.priority,
-          createdBy:data.createdBy
+          createdBy:data.createdBy,
+          status:data.status
         }
     })];
     this.spinner.hide();

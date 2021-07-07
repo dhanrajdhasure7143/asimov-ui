@@ -231,7 +231,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
         type:(data.type.toUpperCase() + data.type.slice(1)),
         owner:data.owner,
         priority:data.priority,
-        createdBy:data.createdBy
+        createdBy:data.createdBy,
+        status:data.status
       }
     }),...response[1].map(data=>{
         return {
@@ -243,7 +244,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
           type:(data.type.toUpperCase() + data.type.slice(1)),
           owner:data.owner,
           priority:data.priority,
-          createdBy:data.createdBy
+          createdBy:data.createdBy,
+          status:data.status
         }
     })];
     this.spinner.hide();
