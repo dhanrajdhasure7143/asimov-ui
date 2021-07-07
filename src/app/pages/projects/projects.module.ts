@@ -31,8 +31,9 @@ import { ProjectDetailsScreenComponent } from './project-details-screen/project-
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ProjectDetailsHeaderComponent } from './project-details-header/project-details-header.component';
 import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 
-  const materialModules: any[] = [
+const materialModules: any[] = [
     
     
   ];
@@ -58,7 +59,7 @@ import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashbo
     MatFormFieldModule,
     MatButtonModule,NgxSpinnerModule,
     ModalModule.forRoot(),
-    MatProgressBarModule,
+    MatProgressBarModule,NgSelectModule
     
   ],
   providers:[
