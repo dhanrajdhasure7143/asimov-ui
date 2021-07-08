@@ -112,10 +112,3 @@ div#bpmn_list {
     padding: 10px;
     float: right;
 }
-.mat-form-field.mat-focused .mat-form-field-label {
-    color: #0062cf;
-    font-size: 16px !important;
-  }
-  .mat-form-field.mat-focused .mat-form-field-ripple {
-   background-color: transparent !important;
-  }
