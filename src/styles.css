@@ -850,7 +850,8 @@ font-size: 18px !important;
 {
   display: block !important;
   position: relative;
-    top: 2px;
+  top: 2px;
+  background-color: transparent;
 }
 
 
@@ -960,4 +961,20 @@ app-home, app-bussiness-process {
   position: absolute;
   right: 15px;
   top: 5px;
+}
+.new-bps-grid-data .bps_overlay .djs-container {
+  top: 20px !important;
+  left: -8px !important;
+}
+.new-bps-grid-data .bps_overlay g.viewport {
+  position: absolute;
+  transform: translate(22%,9%);
+}
+.new-bps-layout h3 {
+  font-size:22px !important;
+  font-weight:500;
+  margin-top:0px !important;
+}
+.new-bps-layout h5 {
+  margin: 0px;
 }
