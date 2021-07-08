@@ -174,6 +174,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="Approved"));
       else if(this.status_data=="Rejected")
         this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="Rejected"));
+      console.log(this.dataSource2.data)
       this.dataSource2.paginator=this.paginator2;
       this.dataSource2.sort = this.sort2;    
   }

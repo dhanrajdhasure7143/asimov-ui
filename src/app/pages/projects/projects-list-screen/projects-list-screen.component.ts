@@ -16,6 +16,15 @@ export class ProjectsListScreenComponent implements OnInit {
   projects_list:any=[];
   users_list:any=[];
   processes:any=[];
+  count:any={
+    New:0,
+    Inprogress:0,
+    Inreview:0,
+    Rejected:0,
+    Approved:0,
+
+  }
+
   @ViewChild(ProjectsProgramsTableComponent,{static:false}) projecttable:ProjectsProgramsTableComponent;
   constructor(private dt:DataTransferService, private api:RestApiService, private spinner:NgxSpinnerService){}
 
@@ -44,7 +53,7 @@ export class ProjectsListScreenComponent implements OnInit {
         owner:data.owner,
         priority:data.priority,
         createdBy:data.createdBy,
-        status:data.status
+        status:data.status==null?"New":data.status,
       }
     }),...response[1].map(data=>{
         return {
@@ -55,13 +64,17 @@ export class ProjectsListScreenComponent implements OnInit {
           process:data.process,
           type:(data.type==null?"Project":data.type),
           owner:data.owner,
+          status:data.status==null?"New":data.status,
           priority:data.priority,
           createdBy:data.createdBy,
-          status:data.status
         }
     })];
     this.spinner.hide();
-    this.projecttable.getallProjects();
+    this.count.New=this.projects_list.filter(item=>item.status=="New").length
+    this.count.Inprogress=this.projects_list.filter(item=>item.status=="In Progress").length
+    this.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length
+    this.count.Approved=this.projects_list.filter(item=>item.status=="Approved").length
+    this.count.Inreview=this.projects_list.filter(item=>item.status=="In Review").length
     })
     //document.getElementById("filters").style.display='block'; 
 }
