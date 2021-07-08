@@ -328,12 +328,24 @@ margin-right: -85px;
 
  /*propeties panel */
  .propertiesContainer{
-  position: absolute;
-  /* width: 315px; */
+  /* position: absolute;
+  width: 315px;
   right: 0;
   height: 69vh;
   overflow: auto;
-  display: inline-flex;
+  display: inline-flex; */
+
+  position: absolute;
+  width: 320px;
+  right: 0;
+  height: 100%;
+  overflow: auto;
+  display: -webkit-inline-box;
+  display: inline-block;
+  z-index: 100;
+  box-shadow: 0px 1px 6px rgb(0 0 0 / 20%);
+  border-radius: 4px;
+  background: white;
 }
 
  .changesContainer{
@@ -355,17 +367,20 @@ margin-right: -85px;
   z-index: 9999;
 }
 .propertiesTitle{
-  padding: 10px 5px;
+  padding: 10px 10px;
   line-height: 12px;
   font-size: 12px;
   background-color: #ccc;
   cursor: pointer;
   border: 1px solid #ccc;
-  border-radius: 5px 0 0 5px;
-  height: 200px;
-  width: 25px;
-  position: relative;
-  top: 20vh;
+  /* border-radius: 5px 0 0 5px; */
+  /* height: 200px; */
+  /* width: 25px; */
+  width: auto;
+  right: 0px; 
+  position: absolute;
+  /* top: 20vh; */
+  top: 0%;
   overflow: hidden;
 }
 .propertiesTitle:hover, .changesTitle:hover{
@@ -374,13 +389,15 @@ margin-right: -85px;
 }
 .propertiesTitle div{
   position: relative;
-  top: 120px;
+  /* top: 120px;
   white-space: nowrap;
   height: 5px;
-  transform: rotate(-90deg)
+  transform: rotate(-90deg) */
 }
 #properties{
-  width: 415px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 #changes{
   height: 350px;
@@ -788,4 +805,55 @@ padding-top: 11px;
 }
 .djs-minimap:not(.open) .toggle {
   padding: 16px !important;
+}
+
+.as-split-area.show {
+  flex-basis: calc(100% - 0px) !important;
+}
+
+.djs-palette {
+  position: absolute;
+  left: 0px !important;
+  top: 0px !important;
+  border: medium none !important;
+  border-right: 1px solid #cccccc !important;
+}
+
+.propertiesContainer.propertiesContainerClosed {
+  width: 40px;
+  height: 36px;
+}
+
+mat-panel-title.mat-expansion-panel-header-title {
+  align-items: center;
+  padding: 5px 10px;
+  border-bottom: 1px solid #ccc;
+  margin: 0px;
+}
+.mat-expansion-panel-body {
+  padding: 0px !important;
+}
+
+.accordionHeaderToggle {
+  align-items: center;
+  display: flex;
+}
+
+.accordionHeaderToggle img.menuToggleIcon {
+  vertical-align: middle !important;
+}
+
+.propertiesTitle.hideTitle img.menuToggleIcon {
+  margin-right: 0px;
+}
+
+.module-body.bpms-canvas-body {
+  height: calc(100% - 78px);
+  overflow: auto;
+  padding: 0px 0px;
+}
+
+.djs-minimap {
+  top: 60px;
+  right: 10px;
 }

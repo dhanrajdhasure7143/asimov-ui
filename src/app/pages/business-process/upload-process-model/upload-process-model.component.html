@@ -1,3 +1,4 @@
+<div class="module-body bpms-canvas-body">
 <div class="row header_addon">
     <div class="col-md-4"></div>
     <div class="col-md-2">
@@ -58,7 +59,7 @@
         </div>
         <div class="canvas2" *ngIf="!isShowConformance" id="canvas2"></div>
     </as-split-area>
-    <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100">
+    <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" class="show">
         <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
         <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
         <div [class.bps_overlay]="isfromApprover">
@@ -67,9 +68,42 @@
                 <mat-tab-group class="canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
                     <mat-tab label="Notation">
                         <div class="row">
-                            <div class="canvas1 col-md-12" id="canvas1" [class.readOnly]="isfromApprover"></div>
-                            <div class="propertiesContainer">
-                                <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
+                            <div class="canvas1 col-md-12 p-0" id="canvas1" [class.readOnly]="isfromApprover"></div>
+                            <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer">
+                                <div [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="togglePosition()">
+                                    <div class="menuToggle">
+                                        <img src="./../../../../assets/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                        <label class="menuToggleTitle">Menu</label>
+                                    </div>
+                                </div>
+
+                                <div class="propertiesPanelBody slide-right" id="propertiesPanelBody">
+
+                                    <mat-accordion>
+                                        <mat-expansion-panel hideToggle>
+                                          <mat-expansion-panel-header>
+                                            <mat-panel-title [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="accordionHeaderMain">
+                                                <div class="accordionHeaderToggle">
+                                                    <img src="./../../../../assets/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <label class="accordionHeader">Properties</label>
+                                                </div>
+                                            </mat-panel-title>
+                                          </mat-expansion-panel-header>
+                                          <div id="properties" class=""></div>
+                                        </mat-expansion-panel>
+                                        <mat-expansion-panel hideToggle>
+                                          <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <label for="" class="accordionHeader">Content Header</label>
+                                            </mat-panel-title>
+                                            
+                                          </mat-expansion-panel-header>
+                                          <p>Content Here</p>
+                                        </mat-expansion-panel>
+                                      </mat-accordion>
+                                      
+                                    
+                                </div>
                                 <div id="properties" class="slide-right"></div>
                             </div>
                         </div>
@@ -125,6 +159,7 @@
     <div id="changes" class="slide-bottom">
         <app-list-of-changes (closeDiff)="clearDifferences()"></app-list-of-changes>
     </div>
+</div>
 </div>
 <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">
     <p style="color: white">Auto Saving... </p>

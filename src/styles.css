@@ -913,7 +913,7 @@ justify-content: center;
 .main-content{
   height: 100%;
   padding: 16px;
-  overflow: auto;
+  overflow: hidden;
   position: relative;
   background-color: #e3eaef;
   box-shadow: 0px 0px 13px 0px rgb(236 236 241 / 44%);
@@ -941,12 +941,12 @@ justify-content: center;
   font-size: 16px;
 }
 
-app-home, app-bussiness-process {
+app-home, app-bussiness-process, app-bpshome {
   height: 100%;
 }
 
 .main-content.prjmain {
-  height: unset !important;
+  /* height: unset !important; */
 }
 
 .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar{
@@ -977,4 +977,14 @@ app-home, app-bussiness-process {
 }
 .new-bps-layout h5 {
   margin: 0px;
+}
+
+.ml-auto{
+  margin-left: auto;
+}
+
+div#propertiesPanelBody .bpp-properties-panel {
+  height: 100%;
+  overflow: auto;
+  min-height: auto;
 }

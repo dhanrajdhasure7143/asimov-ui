@@ -1,22 +1,18 @@
-<mat-card id="projects_list_screen" *ngIf="projects_toggle==false">
-    <div class="projects-header prjnewcl">
-      <!-- <span class="projects-back-button">
-        <i class="fa fa-arrow-left"></i>
-      </span> -->
-      <span class="projects-header-title">
-        Projects
-      </span>
-      <span class="pull-right" style="font-size:20px;">
-        <span class="projects-menu-item" routerLink="/pages/projects/listOfProjects"><button type="button" class="btn btn-primary">Project List</button></span>
-        <span class="projects-menu-item" routerLink="/pages/projects/create-projects"><button type="button" class="btn btn-primary">+ Create New</button></span>
-        
-      </span>
-    </div>
-    <br>
+<div class="module-heading title">
+  <!-- <span class="projects-back-button">
+    <i class="fa fa-arrow-left"></i>
+  </span> -->
+  <span class="module-heading-title">Projects</span>
+  <span class="ml-auto module-heading-buttons">
+    <span class="projects-menu-item" routerLink="/pages/projects/listOfProjects"><button type="button" class="btn btn-primary">Project List</button></span>
+    <span class="projects-menu-item" routerLink="/pages/projects/create-projects"><button type="button" class="btn btn-primary">+ Create New</button></span>
+    
+  </span>
+</div>
 
-
+<div class="module-body">
+  <mat-card id="projects_list_screen" *ngIf="projects_toggle==false" class="h-100 p-0">
     <div class="row">
-
       <div class="col-sm-3 pr-0">
         <mat-card id="projects_dashboard_header">
           <div class="status-tabs">
@@ -24,7 +20,7 @@
               <img src="..\assets\images\Projects\Aicon.svg" alt="" >
             </div>
             <div class="status-data">
-              <span class="tab-number">Active</span><br>
+              <span class="tab-number">Active</span>
               <span class="tab-text" ><b>10</b></span>
             </div>
           </div>
@@ -39,7 +35,7 @@
               <img src="..\assets\images\Projects\PAicon.svg" alt="" >
             </div>
             <div class="status-data">
-              <span class="tab-number">Pending approval</span><br>
+              <span class="tab-number">Pending approval</span>
               <span class="tab-text" ><b>10</b></span>
             </div>
           </div>
@@ -54,7 +50,7 @@
               <img src="..\assets\images\Projects\CIicon.svg" alt="" >
             </div>
             <div class="status-data">
-              <span class="tab-number">Checkout items</span><br>
+              <span class="tab-number">Checkout items</span>
               <span class="tab-text" ><b>10</b></span>
             </div>
           </div>
@@ -69,7 +65,7 @@
               <img src="..\assets\images\Projects\DPicons.svg" alt="" >
             </div>
             <div class="status-data">
-              <span class="tab-number">Deployed processes</span><br>
+              <span class="tab-number">Deployed processes</span>
               <span class="tab-text" ><b>10</b></span>
             </div>
           </div>
@@ -108,7 +104,7 @@
                               <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                             </div>
                             <div class="status-data1">
-                              <span class="" style="font-size: 17px;">Extra Invoice</span><br>
+                              <span class="" style="font-size: 17px;">Extra Invoice</span>
                               <span class="tab-text" style="font-size: 10px;">IT | Account Payable | <span style="color: red;">High</span></span>
                             </div>
                           </div>
@@ -119,7 +115,7 @@
                             <div class="body-img">
                             </div>
                             <div class="status-data1">
-                              <span class="" style="font-size: 17px;">Review Pending</span><br>
+                              <span class="" style="font-size: 17px;">Review Pending</span>
                               <span class="tab-text" style="font-size: 10px;">Requested by Tom</span>
                             </div>
                           </div>
@@ -130,7 +126,7 @@
                           <div class="body-img">
                           </div>
                           <div class="status-data1">
-                            <span class="" style="font-size: 17px;">15 days ago</span><br>
+                            <span class="" style="font-size: 17px;">15 days ago</span>
                             <span class="tab-text" style="font-size: 10px;">10am,4th Sep 2020</span>
                           </div>
                         </div>
@@ -143,7 +139,7 @@
                             <img src="..\assets\images\Projects\bot.svg" alt="" >
                           </div>
                           <div class="status-data1">
-                            <span class="" style="font-size: 17px;">Extra Invoice</span><br>
+                            <span class="" style="font-size: 17px;">Extra Invoice</span>
                             <span class="tab-text" style="font-size: 10px;">IT | Account Payable | <span style="color: red;">Medium</span></span>
                           </div>
                         </div>
@@ -154,7 +150,7 @@
                         <div class="body-img">
                         </div>
                         <div class="status-data1">
-                          <span class="" style="font-size: 17px;">Process Rejected</span><br>
+                          <span class="" style="font-size: 17px;">Process Rejected</span>
                           <span class="tab-text" style="font-size: 10px;">Requested by Charles</span>
                         </div>
                       </div>
@@ -165,7 +161,7 @@
                       <div class="body-img">
                       </div>
                       <div class="status-data1">
-                        <span class="" style="font-size: 17px;">Process Rejected</span><br>
+                        <span class="" style="font-size: 17px;">Process Rejected</span>
                         <span class="tab-text" style="font-size: 10px;">10am,4th Sep 2020</span>
                       </div>
                     </div>
@@ -201,7 +197,7 @@
                                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                                   </div>
                                   <div class="status-data1">
-                                    <span class="" style="font-size: 17px;">Extra Invoice</span><br>
+                                    <span class="" style="font-size: 17px;">Extra Invoice</span>
                                     <span class="tab-text" style="font-size: 10px;">IT | Account Payable | <span style="color: green;">In Review</span></span>
                                   </div>
                                 </div>
@@ -214,7 +210,7 @@
                                     <img src="..\assets\images\Projects\document.svg" alt="" >
                                   </div>
                                   <div class="status-data1">
-                                    <span class="" style="font-size: 17px;">Accounts Payable</span><br>
+                                    <span class="" style="font-size: 17px;">Accounts Payable</span>
                                     <span class="tab-text" style="font-size: 10px;">IT | Account Payable | <span style="color: red;">In Progress</span></span>
                                   </div>
                                 </div>
@@ -227,7 +223,7 @@
                                   <img src="..\assets\images\Projects\bot.svg" alt="" >
                                 </div>
                                 <div class="status-data1">
-                                  <span class="" style="font-size: 17px;">Debit Account</span><br>
+                                  <span class="" style="font-size: 17px;">Debit Account</span>
                                   <span class="tab-text" style="font-size: 10px;">IT | Account Payable | <span style="color: green;">In Review</span></span>
                                 </div>
                               </div>
@@ -323,7 +319,9 @@
     
             
             </div>
-            <br><br>
+            
 
         </mat-card>
+</div>
+
    

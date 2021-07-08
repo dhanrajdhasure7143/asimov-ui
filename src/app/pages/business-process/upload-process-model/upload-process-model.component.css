@@ -192,3 +192,48 @@
     /* margin-top: 75px; */
     /* z-index: 999999; */
 }
+
+
+.hideTitle .menuToggleTitle{
+    display: none;
+}
+
+
+.propertiesTitle.showTitle {
+    width: 100%;
+}
+
+img.menuToggleIcon {
+    height: 14px;
+    vertical-align: bottom;
+    margin-right: 10px;
+}
+
+label.menuToggleTitle {
+    font-size: 15px;
+    margin: 0px;
+}
+
+.menuToggle {
+    display: flex;
+    align-items: center;
+}
+
+div#propertiesPanelBody {
+    height: calc(100% - 34px);
+    position: absolute;
+    top: 34px;
+    overflow: hidden;
+    width: 100%;
+}
+
+mat-expansion-panel.mat-expansion-panel {
+    border-radius: 0px !important;
+}
+
+label.accordionHeader {
+    margin: 0px;
+    font-size: 15px;
+    font-weight: 400;
+line-height: normal;
+}

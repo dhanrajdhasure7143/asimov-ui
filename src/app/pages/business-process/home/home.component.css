@@ -51,9 +51,9 @@
     text-align: left !important;
     padding: 8px 12px;
     width: 100% !important;
-    top: 50%;
+    /* top: 50%;
     position: relative;
-    transform: translateY(-50%);
+    transform: translateY(-50%); */
 }
 span.comment {
     padding: 0px !important;
