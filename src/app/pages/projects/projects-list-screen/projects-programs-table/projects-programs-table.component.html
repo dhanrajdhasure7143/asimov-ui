@@ -580,11 +580,13 @@
 </ng-container>
 <ng-container matColumnDef="action">
   <th mat-header-cell *matHeaderCellDef> Actions</th>
-  <td mat-cell *matCellDef="let element" class="action-link"> 
-    <button  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Detials">
-      <i class="fa fa-eye"></i></button>&nbsp;&nbsp;&nbsp;
-    <a (click)="updatedata(updatemodal,element)"  style="cursor:pointer">Edit</a> | 
-    <a (click)="deleteproject(element)" style="color:red;cursor:pointer">Delete</a>  
+  <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+    <div class="newinntalx">
+    <button  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
+      <i class="fa fa-eye"></i></button> 
+    <a (click)="updatedata(updatemodal,element)"  matTooltip="Edit Project Details"  style="cursor:pointer"><i class="fas fa-edit"></i></a>
+    <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>  
+  </div>
   </td>
 </ng-container>
 

@@ -1,7 +1,7 @@
 <mat-card >
-    <div class="projects-header">
+    <div class="projects-header maincreat">
         <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
-          <i class="fa fa-arrow-left"></i>
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
         </span>
         <span class="projects-header-title">
           <span class="prmaincolo">Projects</span> <span class="baclsl">/</span> Programs
@@ -13,7 +13,7 @@
         </span> -->
       </div>
       <br>
-
+ 
 
 <div class="container-fluid">
     <div class="maindivfoprm">
@@ -281,7 +281,7 @@
                                                             </div>
                                                         </div>
                                                 </div>
-                                                <div class="col-md-12">
+                                                <div class="col-md-12 martsascl">
                                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
                                                         <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
                                                         placeholder="Enter Description"></textarea>
@@ -299,6 +299,7 @@
                                         </form>
                                         <br><br>
                                         <div>
+                                            <div class="laemarleft">
                                             <span class="pull-left ml-2">
                                                 <button (click)="addproject(template)" class="btn btn-primary">Add New Project</button>
                                             </span>
@@ -306,7 +307,7 @@
                                                 <button (click)="resetcreateprogram()" class="btn btn-primary">Reset</button>
                                                 &nbsp;&nbsp;
                                                 <button [disabled]="createprogram.invalid" (click)="saveProgram()" class="btn btn-primary">Save</button>
-                                            </span>
+                                            </span></div>
                                         </div>
                                         <br>
                                         <br>
@@ -354,13 +355,13 @@
 
 
 <ng-template class="modal-lg" #template>
-        <div class="modal-header">
+        <div class="modal-header modelprhead">
           <h4 class="modal-title pull-left">Add New Project</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body modelprbody">
             <div class="container" style="width:100%">
                     <br>
                     
@@ -472,7 +473,7 @@
                                 <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
                             
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12 mt-2 maartop">
                                 <br>
                                 <label>Description</label>
                                 <textarea class="form-control" style="height:100px;">
@@ -483,7 +484,7 @@
                         </div>
                     </form>
                     <br>
-                    <div class="pull-right">
+                    <div class="pull-right footbutcl">
                         <button (click)="resetcreateproject()" class="btn btn-primary">Reset</button>
                         &nbsp;&nbsp;
                         <button [disabled]="insertForm2.invalid" (click)="linkcreateproject()" class="btn btn-primary">Save</button>

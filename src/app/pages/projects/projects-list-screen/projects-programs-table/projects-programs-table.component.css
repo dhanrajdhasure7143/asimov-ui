@@ -31,7 +31,7 @@
   
   .projecttable.table th{
     
-    background-color:rgb(190, 229, 241) !important;
+    background-color:rgb(215 239 246) !important;
     vertical-align: middle !important;
     color: #00a0e3 !important;
     font-size: 14px !important;
@@ -51,4 +51,9 @@
   margin-top:30px !important;
 }
 
-  
+.tablacs .newinntalx {
+  display: flex;
+}
+.tablacs button, .tablacs a {
+  margin: 0px 6px;
+}  

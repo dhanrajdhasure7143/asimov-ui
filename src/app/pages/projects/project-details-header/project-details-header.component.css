@@ -16,18 +16,15 @@
   }
 
   .status-img > img{
-    height: 85px !important;
-    padding-top: 42px;
-    margin-top: -8px;
-    margin-left: 8px;
+    height: 30px !important;
   }
 
   .status-data{
     vertical-align: middle;
-    padding-top:15px;
-    padding-left:30px;
-    padding-bottom:15px;
-    color:black !important;
+    padding-top: 0;
+    padding-left: 23px;
+    padding-bottom: 0;
+    color: black !important;
   }
 
   .project-data{
@@ -36,12 +33,60 @@
   }
 
   .body-img> img{
-    height: 71px !important;
-    padding-top: 42px;
-    margin-top: -24px;
+    height: 30px !important;
   }
 /* 
   table, th, td {
     padding: 5px;
   }
    */
+
+
+   .tablprdetails .status-tabs {
+    padding: 10px;
+    width: 100%;
+}
+.tablprdetails .status-tabs .status-data {
+  width: 100%;
+}
+.tablprdetails {
+  width: 100%;
+}
+.tablprdetails .body-img img {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.tablprdetails .formelement {
+  padding: 0px;
+}
+.tablprdetails tr td .status-tabs {
+  margin-bottom: 20px;
+}
+.tablprdetails input[type="text"] {
+  padding: 2px;
+}
+#projects_details_screen {
+  box-shadow: unset !important;
+  border-bottom: 1px solid #ddd !important;
+}
+.projects-header.newprhcl {
+  margin: 10px 0px 0px 0px;
+}
+.newprhcl .project-info {
+  margin-bottom: -30px;
+}
+.newprhcl .project-data {
+  margin-top: -30px;
+  padding-left: 38px;
+}
+.col-md-2.newclasd {
+  margin: -31px 0px 0px -89px;
+  font-size: 14px;
+}
+table.tablprdetails {
+  border-bottom: 1px solid #ddd;
+}
+#projects_details_screen {
+  box-shadow: unset;
+}
