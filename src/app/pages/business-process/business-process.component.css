@@ -38,3 +38,17 @@ span.level3 {
 .new-bps-icons .bps-float {
     float: right;
 }
+select.dowload-images {
+    background-image: url('../../../assets/images/BPMS/download.svg');
+    background-repeat: no-repeat;
+    border: unset;
+    outline: unset;
+    color: transparent;
+    width: 34px;
+    background-color: #f8f8f8;
+    padding: 10px 0px;
+    background-position: top 12px center;
+}
+select.dowload-images option {
+    color: #000;
+}

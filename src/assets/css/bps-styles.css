@@ -857,3 +857,7 @@ mat-panel-title.mat-expansion-panel-header-title {
   top: 60px;
   right: 10px;
 }
+
+.btn_row {
+  display: none;
+}
