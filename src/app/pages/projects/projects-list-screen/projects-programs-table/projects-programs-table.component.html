@@ -587,8 +587,9 @@
       <i class="fa fa-eye"></i>
     </a> 
     <a class="disable-bg text-dark" style="color:black" *ngIf="element.type=='Program'" ><i class="fa fa-eye-slash"></i></a>
-    <a (click)="updatedata(updatemodal,element)"  matTooltip="Edit Project Details"  style="cursor:pointer"><i class="fas fa-edit"></i></a>
-    <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>  
+    <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> 
+    <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a>
+     <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>  
   </div>
   </td>
 </ng-container>
