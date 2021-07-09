@@ -101,7 +101,7 @@
 
   .status-data1{
     vertical-align: middle;
-    padding-left:15px;
+    padding-left:14px;
     color:black !important;
   }
 
@@ -225,4 +225,36 @@ span.projects-menu-item.prj-lst-btn button {
 span.projects-menu-item button {
   background-color: #00a0e3 !important;
   border: none;
+}
+
+.status-data1 span {
+  display: block;
+}
+.status-data1 span.tab-text {
+  display: flex;
+}
+#projects_dashboard_header span.tab-text {
+  display: block;
+}
+.status-data1 span.tab-text span {
+  margin-left: 3px;
+}
+.status-tabs, .projects_by_department, .projects_favourites {
+  box-shadow: 0px 1px 6px rgb(0 0 0 / 20%);
+}
+
+.tab-number{
+  font-size: 15px !important;
+
+}
+
+.projects_by_department, .dbichart-head label {
+  color: #001c47;
+}
+.prj-body-content-title {
+  font-size: 14px !important;
+  color: #001c47 !important;
+}
+span.tab-text.fav-sub {
+  font-size: 12px !important;
 }
