@@ -253,7 +253,7 @@ button:disabled{
   background-color: grey;
 }
 .eiap-btn{
-  border-radius: 20px !important;
+  border-radius: 4px !important;
   margin-left: 13px;
   margin-top: 5px;
   min-width: 120px;
