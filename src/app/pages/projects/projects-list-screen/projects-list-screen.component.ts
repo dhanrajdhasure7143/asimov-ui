@@ -25,7 +25,6 @@ export class ProjectsListScreenComponent implements OnInit {
 
   }
 
-
   @ViewChild(ProjectsProgramsTableComponent,{static:false}) projecttable:ProjectsProgramsTableComponent;
   constructor(private dt:DataTransferService, private api:RestApiService, private spinner:NgxSpinnerService){}
 
@@ -69,9 +68,9 @@ export class ProjectsListScreenComponent implements OnInit {
           process:data.process,
           type:(data.type==null?"Project":data.type),
           owner:data.owner,
+          status:data.status==null?"New":data.status,
           priority:data.priority,
           createdBy:data.createdBy,
-          status:data.status==null?"New":data.status,
           resources:data.resources,
           mapValueChain:data.mapValueChain,
           measurableMetrics:data.measurableMetrics
@@ -83,7 +82,6 @@ export class ProjectsListScreenComponent implements OnInit {
     this.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length
     this.count.Approved=this.projects_list.filter(item=>item.status=="Approved").length
     this.count.Inreview=this.projects_list.filter(item=>item.status=="In Review").length
-
     })
     //document.getElementById("filters").style.display='block'; 
 }

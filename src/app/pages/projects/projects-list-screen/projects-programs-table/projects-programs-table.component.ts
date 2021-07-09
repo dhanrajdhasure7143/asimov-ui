@@ -183,17 +183,18 @@ export class ProjectsProgramsTableComponent implements OnInit {
     getallProjects(){
       this.projects_list.sort((a,b) => a.id > b.id ? -1 : 1);
       if(this.status_data=="All")
-        this.dataSource2 = new MatTableDataSource(this.projects_list);    
+      this.projects_list = this.projects_list
       else if(this.status_data=="New")
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="New"));
+      this.projects_list = this.projects_list.filter(item=>item.status=="New")
       else if(this.status_data=="In Progress") 
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="In Progress"));
+      this.projects_list = this.projects_list.filter(item=>item.status=="In Progress")
       else if(this.status_data=="In Review")
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="In Review"));
+      this.projects_list = this.projects_list.filter(item=>item.status=="In Review")
       else if(this.status_data=="Approved")
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="Approved"));
+      this.projects_list = this.projects_list.filter(item=>item.status=="Approved")
       else if(this.status_data=="Rejected")
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="Rejected"));
+        this.projects_list = this.projects_list.filter(item=>item.status=="Rejected")
+      this.dataSource2 = new MatTableDataSource(this.projects_list);
       this.dataSource2.paginator=this.paginator2;
       this.dataSource2.sort = this.sort2;    
   }
@@ -202,20 +203,24 @@ export class ProjectsProgramsTableComponent implements OnInit {
 
   deleteproject(project)
   {
+    var projectdata:any=project;
     let delete_data=[{
       id:project.id,
       type:project.type
     }]  
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
+      title: 'Enter Project Name',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Delete',
+      showLoaderOnConfirm: true,
     }).then((result) => {
-      if (result.value) {
+      let value:any=result.value
+      if(projectdata.projectName==value)
+      {
         this.spinner.show();
         this.api.delete_Project(delete_data).subscribe( res =>{ 
           this.spinner.hide();
@@ -231,8 +236,38 @@ export class ProjectsProgramsTableComponent implements OnInit {
             Swal.fire("Error",response.errorMessage,"error")
           }
         })
+      }else
+      {
+        Swal.fire("Error","Entered Project Name is Invalid","error")
       }
-      })
+    })
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then((result) => {
+    //   if (result.value) {
+    //     this.spinner.show();
+    //     this.api.delete_Project(delete_data).subscribe( res =>{ 
+    //       this.spinner.hide();
+    //       let response:any=res
+    //       if(response.errorMessage==undefined)
+    //       {
+    //         this.projects_list=[];
+    //         Swal.fire("Success",response.message,"success")
+    //         this.getallProjectsdata();
+    //       }
+    //       else
+    //       {
+    //         Swal.fire("Error",response.errorMessage,"error")
+    //       }
+    //     })
+    //   }
+    //   })
   }
   
 
@@ -241,6 +276,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
     this.spinner.show();
     this.api.getAllProjects().subscribe(res=>{
       let response:any=res;
+      this.projects_list=[];
       this.projects_list=[...response[0].map(data=>{
       return {
         id:data.id,
@@ -248,7 +284,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         access:data.access,
         initiatives:data.initiatives,
         process:data.process,
-        type:(data.type.toUpperCase() + data.type.slice(1)),
+        type:"Project",
         owner:data.owner,
         priority:data.priority,
         createdBy:data.createdBy,
@@ -265,7 +301,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           access:data.access,
           initiatives:data.initiatives,
           process:data.process,
-          type:(data.type.toUpperCase() + data.type.slice(1)),
+          type:"Program",
           owner:data.owner,
           priority:data.priority,
           createdBy:data.createdBy,

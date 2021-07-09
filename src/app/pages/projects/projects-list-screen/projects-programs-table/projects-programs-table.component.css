@@ -57,3 +57,12 @@
 .tablacs button, .tablacs a {
   margin: 0px 6px;
 }  
+.disable-bg{
+  background-color: gainsboro;
+  border-radius: 5px;
+}
+
+.no-item-img{
+  height:calc(100vh - 430px)
+
+}

@@ -1003,3 +1003,10 @@ div#propertiesPanelBody .bpp-properties-panel {
 .mat-form-field.mat-focused .mat-form-field-ripple {
  background-color: #0062cf !important;
 }
+.clickable{
+  cursor: pointer;
+}
+
+.swal2-input{
+  border:1px solid lightgray !important;
+}

@@ -226,3 +226,9 @@ label.label-control{
 .footbutcl button:hover{
     font-weight: normal !important;
 }
+
+
+.h-scroll{
+    height:calc(100vh - 153px);
+    overflow: auto;
+}

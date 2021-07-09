@@ -32,6 +32,8 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ProjectDetailsHeaderComponent } from './project-details-header/project-details-header.component';
 import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { ProcessNamePipe } from './pipes/process-name.pipe';
+import { UserPipePipe } from './pipes/user-pipe.pipe';
 
 const materialModules: any[] = [
     
@@ -40,7 +42,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent],
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
