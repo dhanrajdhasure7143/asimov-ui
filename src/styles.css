@@ -147,9 +147,10 @@ div {
 }
 .bjs-powered-by{
   position: absolute;
-  bottom: 50px !important;
+  bottom: 5px !important;
   right: 65px !important;
   z-index: 100;
+  opacity: 0.1;
 }
 .bpmn-icon-rpa::before{
   content: url('assets/images/robothand_icon.svg');
@@ -225,8 +226,9 @@ div[class^='diagram_container'] .djs-container svg{
   /* position: relative;
   top: -55px; */
   position: absolute !important;
-  top: 105px;
+  top: 100px;
   width: 100%;
+  right: 20px;
 }
 .btn{
   margin-right: 16px;
@@ -445,7 +447,7 @@ padding:10px;
 }
 
 /*RPA-Environments*/
-html, body { height: 100%; }
+html, body { height: 100%;overflow: hidden; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 

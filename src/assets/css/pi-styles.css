@@ -849,7 +849,7 @@ label{
     border-right:dotted 10px #d02525;
   }
   #canvas, #canvas1, #canvas2{
-    height: 68vh;
+    height: calc(100% - 30px);
     /* width: 100%; */
 }
 .overlay{

@@ -2,7 +2,8 @@
 @import "diagram-js-minimap/assets/diagram-js-minimap.css";
 .update_info{
   position: absolute;
-  right: 300px;
+  right: 25px;
+  bottom: 20px;
   color: #0062cf;
 }
 .drop__div{
@@ -336,6 +337,7 @@ margin-right: -85px;
   display: inline-flex; */
 
   position: absolute;
+  top: 5px;
   width: 320px;
   right: 0;
   height: 100%;
@@ -343,7 +345,7 @@ margin-right: -85px;
   display: -webkit-inline-box;
   display: inline-block;
   z-index: 100;
-  box-shadow: 0px 1px 6px rgb(0 0 0 / 20%);
+  box-shadow: 2px 0px 3px rgb(0 0 0 / 20%);
   border-radius: 4px;
   background: white;
 }
@@ -751,8 +753,9 @@ padding-top: 11px;
 }
 .functionality-icons{
   position: relative;
-  top: 21px;
+  top: 50%;
   display: inline;
+  transform: translate(0px, 50%);
 }
 .functionality-icons .fa:hover{
   background-color: #b6d3f5;
@@ -792,19 +795,26 @@ padding-top: 11px;
   position: absolute;
   width: 20px;
   height: 20px;
-  margin-left: -11px;
-  margin-top: -13px;
+  /* margin-left: -11px;
+  margin-top: -13px; */
+  top: 5px;
+  left: 5px;
   color: black;
+}
+
+.djs-minimap.open .toggle {
+  right: 10px;
 }
 .open .toggle:before {
   content: 'X' !important ;
-  font-size: 18px;
-  line-height: 40px;
+  font-size: 14px;
+  /* line-height: 40px; */
   color: black;
   background-image: none !important;
 }
 .djs-minimap:not(.open) .toggle {
-  padding: 16px !important;
+  padding: 15px !important;
+  background: white;
 }
 
 .as-split-area.show {
@@ -813,10 +823,11 @@ padding-top: 11px;
 
 .djs-palette {
   position: absolute;
-  left: 0px !important;
-  top: 0px !important;
-  border: medium none !important;
-  border-right: 1px solid #cccccc !important;
+  left: 0% !important;
+  top: 50% !important;
+  border-left: medium none !important;
+  /* border-right: 1px solid #cccccc !important; */
+  transform: translate(0%, -50%) !important;
 }
 
 .propertiesContainer.propertiesContainerClosed {
@@ -854,10 +865,28 @@ mat-panel-title.mat-expansion-panel-header-title {
 }
 
 .djs-minimap {
-  top: 60px;
+  top: auto;
   right: 10px;
+  bottom: 5px;
 }
 
 .btn_row {
   display: none;
+}
+
+.mat-tab-body-wrapper, .mat-tab-body {
+  height: 100% !important;
+}
+
+.bjsl-button {
+  bottom: 5px;
+  left: 50%;
+}
+
+.functionality-icons span {
+  margin-right: 15px;
+}
+
+.functionality-icons span:last-child {
+  margin: 0px;
 }

@@ -31,18 +31,18 @@
             </mat-select>
         </mat-form-field>
     </div>
-    <div class="functionality-icons">
-        <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>&nbsp;&nbsp;
+    <div class="col-md-1 functionality-icons p-0">
+        <span class="fa fa-upload" (click)="openDeployDialog()" *ngIf="rejectedOrApproved == 'APPROVED'"></span>
         <span class="start-instance">
-            <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>&nbsp;&nbsp;
+            <span class="fa fa-play" (click)="openVariableDialog()" *ngIf="isStartProcessBtn"></span>
         </span>
-        <span class="fa fa-keyboard" (click)="displayShortcut()"></span>&nbsp;&nbsp;
+        <span class="fa fa-keyboard" (click)="displayShortcut()"></span>
         <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
     </div>
 
 </div>
 <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
-<as-split class="ex-percent" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
+<as-split class="ex-percent h-100" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:100):0">
         <div class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</div>
         <div *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
@@ -62,13 +62,13 @@
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" class="show">
         <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
         <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
-        <div [class.bps_overlay]="isfromApprover">
-            <div class="canvas1 col-md-12" [class.readOnly]="isfromApprover" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
-            <div *ngIf="!isShowConformance">
-                <mat-tab-group class="canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
-                    <mat-tab label="Notation">
-                        <div class="row">
-                            <div class="canvas1 col-md-12 p-0" id="canvas1" [class.readOnly]="isfromApprover"></div>
+        <div [class.bps_overlay]="isfromApprover" class="h-100">
+            <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
+            <div *ngIf="!isShowConformance" class="h-100">
+                <mat-tab-group class="canvas-container h-100" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
+                    <mat-tab label="Notation" class="h-100">
+                        <div class="row h-100">
+                            <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover"></div>
                             <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer">
                                 <div [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="togglePosition()">
                                     <div class="menuToggle">
