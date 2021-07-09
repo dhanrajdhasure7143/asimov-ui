@@ -56,7 +56,7 @@ export class CreateProjectsComponent implements OnInit {
     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    measurablemetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
    // project: ["", Validators.compose([Validators.maxLength(50)])],
     owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -113,7 +113,7 @@ createproject()
     this.username=userfirstname+" "+userlastname
     this.insertForm2.value.createdBy=this.username;
     let data=this.insertForm2.value;
-    this.api.createProject(this.insertForm2.value).subscribe(data=>{
+    this.api.createProject(data).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
       this.projectcreatedata=this.insertForm2.value
@@ -143,7 +143,8 @@ createproject()
           projectName: this.projectcreatedata.projectName,
           priority: this.projectcreatedata.priority,
           resources: this.projectcreatedata.resources,
-          startDate: this.projectcreatedata.startDate
+          startDate: this.projectcreatedata.startDate,
+          status:this.projectcreatedata.status
         }
         this.navigatetodetailspage(this.projectDetails);
       }) 

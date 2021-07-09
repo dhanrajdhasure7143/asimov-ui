@@ -236,11 +236,11 @@
                                                             Maximum of 50 characters
                                                         </span>
                                                         <br>
-                                                        <label  class="label-control"  for="measurablemetrics">Identify Measurable Metrics<span  style="color:red">*</span></label>
-                                                        <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data"  formControlName="measurablemetrics" value="" 
+                                                        <label  class="label-control"  for="measurableMetrics">Identify Measurable Metrics<span  style="color:red">*</span></label>
+                                                        <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data"  formControlName="measurableMetrics" value="" 
                                                         placeholder="Enter Identify Measurable Metrics">
-                                                        <span *ngIf="createprogram.get('measurablemetrics').invalid && createprogram.get('measurablemetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identify Measurable Metrics Required*</span>
-                                                        <span *ngIf="createprogram.controls['measurablemetrics'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                                        <span *ngIf="createprogram.get('measurableMetrics').invalid && createprogram.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identify Measurable Metrics Required*</span>
+                                                        <span *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                                                         Maximum of 50 characters
                                                         </span>
 
@@ -378,7 +378,7 @@
                                 <label>Add Resources<span  style="color:red">*</span></label>
                                 <select   formControlName="resources"  class="form-control data">
                                     <option value="">Select Resources</option>
-                                    <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                                    <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                                 </select>
                                 <span *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
                                     

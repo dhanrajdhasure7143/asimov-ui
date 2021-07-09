@@ -18,9 +18,9 @@
               <div class="col-md-1"></div>
               <div class="col-md-4">
                 <div class="row">
-                    <div class="col-md-6"><p>Start Date</p></div> 
-                    <div class="col-md-6"><p>End Date </p></div>
-                    <div class="col-md-6"><p>Status</p></div>
+                    <div class="col-md-4"><p>Start Date</p></div> 
+                    <div class="col-md-3"><p>End Date </p></div>
+                    <div class="col-md-3"><p>Status</p></div>
               </div>
               </div>
         
@@ -32,14 +32,16 @@
              </div>
          </div>
          <div class="row">
-            <div class="col-md-1"></div>
              <div class="col-md-8">
             
             </div>
-            <div class="col-md-2 newclasd">
-                <b>{{projectdata.startDate | date}}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <b>{{projectdata.endDate | date}}</b> &nbsp;&nbsp;&nbsp;&nbsp;
-                <b>New</b>
+            <div class="col-md-4">
+              <div class="row">
+                <div class="col-md-4"><p><b>{{projectdata.startDate | date}}</b></p></div> 
+                <div class="col-md-3"><p><b>{{projectdata.endDate | date}}</b></p></div>
+                <div class="col-md-3"><p><b>{{projectdata.status}}</b></p></div>
+          </div>
+                
             </div>
          </div>
      </div>
