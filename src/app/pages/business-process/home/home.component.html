@@ -18,7 +18,7 @@
             <h4 class="box-heading">My Workspace</h4>
           </div>
           <div class="col-md-5 p-0">
-            <div class="col-md-6">
+            <div class="col-md-6 pr-0">
               <mat-form-field>
                 <mat-label>Select Category</mat-label>
                 <mat-select name="category" (selectionChange)="searchByCategory(categoryName)" #category="ngModel"
@@ -30,7 +30,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 pr-0">
               <mat-form-field>
                 <mat-label>Search Workspace</mat-label>
                 <input class="toolbar-search" type="text" matInput [(ngModel)]="term">

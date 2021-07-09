@@ -2,7 +2,7 @@
     <mat-card id="projects_list_screen" *ngIf="projects_toggle==false">
       <div class="projects-header maincreat nrema">
         <span class="projects-back-button">
-          <i class="fa fa-angle-left" aria-hidden="true"></i>
+          <i class="fas fa-arrow-left" aria-hidden="true"></i>
         </span>
         <span class="projects-header-title">
           <span class="prmaincolo">Projects</span> <span class="baclsl">/</span> Programs
@@ -13,7 +13,6 @@
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span>
       </div>
-      <br>
         <mat-tab-group mat-stretch-tabs>
           <mat-tab>
             <ng-template mat-tab-label>
@@ -22,7 +21,7 @@
                   <img src="..\assets\images\Projects\total projects.svg" alt="" >
                 </div>
                 <div class="status-data">
-                  <span class="tab-number"><span *ngIf="projects_list.length<10">0</span>{{projects_list.length}}</span><br>
+                  <span class="tab-number"><span *ngIf="projects_list.length<10">0</span>{{projects_list.length}}</span>
                   <span class="tab-text" >Total Projects</span>
                 </div>
               </div>
@@ -38,7 +37,7 @@
                       <img src="..\assets\images\Projects\new.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="tab-number">{{count.New}}</span><br>
+                      <span class="tab-number">{{count.New}}</span>
                       <span class="tab-text" ><span *ngIf="count.New<10">0</span>New</span>
                     </div>
                   </div>
@@ -54,7 +53,7 @@
                       <img src="..\assets\images\Projects\inprogress.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="tab-number"><span *ngIf="count.Inprogress<10">0</span>{{count.Inprogress}}</span><br>
+                      <span class="tab-number"><span *ngIf="count.Inprogress<10">0</span>{{count.Inprogress}}</span>
                       <span class="tab-text" >In Progress</span>
                     </div>
                   </div>
@@ -70,7 +69,7 @@
                       <img src="..\assets\images\Projects\inreview.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="tab-number"><span *ngIf="count.Inreview<10">0</span>{{count.Inreview}}</span><br>
+                      <span class="tab-number"><span *ngIf="count.Inreview<10">0</span>{{count.Inreview}}</span>
                       <span class="tab-text" >In Review</span>
                     </div>
                   </div>
@@ -87,7 +86,7 @@
                       <img src="..\assets\images\Projects\approved.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="tab-number"><span *ngIf="count.Approved<10">0</span>{{count.Approved}}</span><br>
+                      <span class="tab-number"><span *ngIf="count.Approved<10">0</span>{{count.Approved}}</span>
                       <span class="tab-text" >Approved</span>
                     </div>
                   </div>
@@ -104,7 +103,7 @@
                       <img src="..\assets\images\Projects\rejected.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="tab-number"><span *ngIf="count.Rejected<10">0</span>{{count.Rejected}}</span><br>
+                      <span class="tab-number"><span *ngIf="count.Rejected<10">0</span>{{count.Rejected}}</span>
                       <span class="tab-text" >Rejected</span>
                     </div>
                   </div>
