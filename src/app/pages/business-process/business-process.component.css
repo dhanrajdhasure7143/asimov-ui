@@ -1,6 +1,6 @@
 .module-heading.title {
     background-color: #f8f8f8;
-    padding: 12px 6px !important;
+    padding: 12px 0px !important;
     margin-bottom: 0px;
 }
 .module-heading.title span {
@@ -22,7 +22,7 @@ span.level3 {
     padding: 6px 8px;
 }
 .bps-upload {
-    margin-left: 20px !important;
+    margin-left: 10px !important;
     border-radius: 4px;
     background-color: #00a0e3 !important;
 }

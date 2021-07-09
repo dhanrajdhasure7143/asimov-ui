@@ -216,3 +216,13 @@
 mat-card#projects_list_screen {
   box-shadow: none;
 }
+
+span.projects-menu-item.prj-lst-btn button {
+  background-color: #f8f8f8 !important;
+  border: 1px solid #00a0e3;
+  color: #00a0e3;
+}
+span.projects-menu-item button {
+  background-color: #00a0e3 !important;
+  border: none;
+}

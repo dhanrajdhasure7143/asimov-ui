@@ -233,7 +233,19 @@ mat-expansion-panel.mat-expansion-panel {
 
 label.accordionHeader {
     margin: 0px;
+    color: #fff;
     font-size: 15px;
     font-weight: 400;
 line-height: normal;
+}
+
+.propertiesContainerOpened mat-expansion-panel {
+    background-color: #607088;
+    border-bottom: 1px solid #8694A9;
+}
+.propertiesContainerOpened mat-expansion-panel:hover {
+    background-color: #00a0e3;
+}
+.propertiesContainerOpened .mat-expansion-panel-header-title {
+    border: none;
 }
