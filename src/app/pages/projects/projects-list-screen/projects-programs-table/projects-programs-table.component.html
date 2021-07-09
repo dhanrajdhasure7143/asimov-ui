@@ -583,8 +583,9 @@
   <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
     <div class="newinntalx">
     <button  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
-      <i class="fa fa-eye"></i></button> 
-    <a (click)="updatedata(updatemodal,element)"  matTooltip="Edit Project Details"  style="cursor:pointer"><i class="fas fa-edit"></i></a>
+      <i class="fa fa-eye"></i></button>&nbsp;|
+      <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer">Edit</a> 
+      <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer">Edit</a>  |
     <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>  
   </div>
   </td>
@@ -608,9 +609,9 @@
 
  
 
-<ng-template class="modal-lg" #updatemodal>
+ <ng-template class="modal-lg" #updateprojectmodal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Update Project/Program</h4>
+    <h4 class="modal-title pull-left">Update Project</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="updatemodalref.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -622,9 +623,9 @@
               <form [formGroup]="updateForm" (ngSubmit)="projectupdate()">
                   <div class="row">
                       <div class="col-md-6">
-                          <label for="projectName">Name<span style="color:red">*</span></label>
+                          <label for="projectName">Project Name<span style="color:red">*</span></label>
                           <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
-                          <span *ngIf="(updateForm.get('projectName').invalid && updateForm.get('projectName').touched) && !updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Name is required*</span>
+                          <span *ngIf="(updateForm.get('projectName').invalid && updateForm.get('projectName').touched) && !updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Project Name Required*</span>
                           <div *ngIf="updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                               Maximum of 50 characters
                           </div>
@@ -640,8 +641,16 @@
                         <span *ngIf="updateForm.get('initiatives').invalid && updateForm.get('initiatives').touched" style="color:red" class="fa fa-info-circle errspan">Initiatives Required*</span>
                           <br>
                           
+
+                          <label class="label-control">Add Resources<span  style="color:red">*</span></label>
+                          <select   formControlName="resources" style="border:1px solid lightgray" [value]="updateForm.get('resources').getValue()" class="form-control data">
+                              <option value="">Select Resources</option>
+                              <option *ngFor="let user of userslist" [ngValue]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                          </select>
+                          <span *ngIf="updateForm.get('resources').invalid && updateForm.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
+                          <br>
                          
-                          <label>Owner <span  style="color:red">*</span></label>
+                          <label>Project Owner <span  style="color:red">*</span></label>
                           <select   formControlName="owner"  style="border:1px solid lightgray" [value]="updateForm.get('owner').getValue()"  class="form-control data">
                             <option  [value]="null" disabled hidden>Select Owner</option>
                               <option value="" [selected]="true">Select Owner</option>
@@ -665,17 +674,17 @@
                       <div class="col-md-6">
                           <label for="type">Type<span style="color:red">*</span></label>
                           <select class="form-control"  style="border:1px solid lightgray" formControlName="type">
-                            <option  [value]="null" disabled hidden>--Select Type --</option>
-                              <option value="" [selected]="true">--Select Type --</option>
+                            <option  [value]="null" disabled hidden>Select Type</option>
+                              <option value="" [selected]="true">Select Type</option>
                               <option ngValue="Project">Project</option>
                               <option ngValue="Program">Program</option>              
                             </select>
                           <span *ngIf="updateForm.get('type').invalid && updateForm.get('type').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
                           <br>
-                          <label for="priority">Priority<span style="color:red">*</span></label>
+                          <label for="priority">Project Priority<span style="color:red">*</span></label>
                           <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
-                            <option  [value]="null" disabled hidden>--Select Priority --</option>
-                              <option value="" [selected]="true">--Select Priority --</option>
+                            <option  [value]="null" disabled hidden>Select Priority</option>
+                              <option value="" [selected]="true">Select Priority</option>
                               <option ngValue="High">High</option>
                               <option ngValue="Low">Low</option>
                               <option ngValue="Medium">Medium</option>               
@@ -684,12 +693,27 @@
                           <br>
                           <label for="process">Process<span style="color:red">*</span></label>
                           <select class="form-control"  style="border:1px solid lightgray" formControlName="process">
-                            <option  [value]="null" disabled hidden>--Select Process --</option>
-                            <option value="" [selected]="true">--Select Process --</option>
+                            <option  [value]="null" disabled hidden>Select Process</option>
+                            <option value="" [selected]="true">Select Process</option>
                             <option *ngFor="let process of processes" [ngValue]="process.processName">{{process.processName}}</option>          
                           </select>
                           <span *ngIf="updateForm.get('process').invalid && updateForm.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
                           <br>
+
+                          <label class="label-control" >Map Value Chain <span  style="color:red">*</span></label>
+                                                <select  formControlName="mapValueChain"  class="form-control data">
+                                                    <option value="">Select Map Value Chain</option>
+                                                    <option value="Invoice Managment">Invoice Managment</option>
+                                                    <option value="Acme Managment">Acme Managment</option>
+                                                    <option value="E-Commerce">E-Commerce</option>
+                                                </select>
+                                                <span *ngIf="updateForm.get('mapValueChain').invalid && updateForm.get('mapValueChain').touched" style="color:red" class="fa fa-info-circle errspan">Map Value Chain Required*</span>
+                                            <br>
+
+                                            <label class="label-control" >Identity Measurable Metrics <span  style="color:red">*</span></label>
+                                            <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
+                                            <span *ngIf="updateForm.get('measurableMetrics').invalid && updateForm.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Measurable Metrics Required*</span>
+                                            <br>
                         </div>
                       <!-- <div class="col-md-12">
                           <br>
@@ -705,7 +729,126 @@
               <div class="pull-right">
                   <button (click)="resetupdateproject()" class="btn btn-primary">Reset</button>
                   &nbsp;&nbsp;
-                  <button [disabled]="insertForm2.invalid" (click)="projectupdate()" class="btn btn-primary">Update</button>
+                  <button [disabled]="updateForm.invalid" (click)="projectupdate()" class="btn btn-primary">Update</button>
+              </div>
+              <br><br>
+      </div>
+  </div>
+</ng-template>
+
+
+
+
+
+<ng-template class="modal-lg" #updateprogrammodal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Update Program</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="updatemodalref.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+      <div class="container" style="width:100%">
+              <br>
+              
+              <form [formGroup]="updateprogramForm" (ngSubmit)="programupdate()">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <label for="projectName">Program Name<span style="color:red">*</span></label>
+                          <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
+                          <span *ngIf="(updateprogramForm.get('projectName').invalid && updateprogramForm.get('projectName').touched) && !updateprogramForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Name Required*</span>
+                          <div *ngIf="updateprogramForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                              Maximum of 50 characters
+                          </div>
+                          <br>
+                         
+                          <label for="initiatives">Initiative<span style="color:red">*</span></label>
+                          <select  formControlName="initiatives" [value]="updateprogramForm.get('initiatives').getValue()"  class="form-control data">
+                            <option  [value]="null" disabled hidden>Select Initiatives</option>
+                            <option value=""  [selected]="true">Select Initiatives</option>
+                            <option value="Process Improvement">Process Improvement</option>
+                            <option value="Business Improvement">Business Improvement</option>
+                        </select>
+                        <span *ngIf="updateprogramForm.get('initiatives').invalid && updateprogramForm.get('initiatives').touched" style="color:red" class="fa fa-info-circle errspan">Initiatives Required*</span>
+                          <br>
+                          
+                         
+                          <label>Owner <span  style="color:red">*</span></label>
+                          <select   formControlName="owner"  style="border:1px solid lightgray" [value]="updateprogramForm.get('owner').getValue()"  class="form-control data">
+                            <option  [value]="null" disabled hidden>Select Owner</option>
+                              <option value="" [selected]="true">Select Owner</option>
+                              <option *ngFor="let user of users_list" [ngValue]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                          </select>
+                          <span *ngIf="updateprogramForm.get('owner').invalid && updateprogramForm.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
+                         <br>
+
+                      <label for="access">Access<span style="color:red">*</span></label>
+                      <select   formControlName="access" [value]="updateprogramForm.get('access').getValue()" style="border:1px solid lightgray"  class="form-control data">
+                        <option  [value]="null" disabled hidden>Select Access</option>
+                        <option value="" [selected]="true">Select Access</option>
+                        <option ngValue="Owner">Owner</option>
+                        <option ngValue="Co-Editor">Co-Editor</option>
+                        <option ngValue="Viewer">Viewer</option>
+                      </select>
+                      <span *ngIf="updateprogramForm.get('access').invalid && updateprogramForm.get('access').touched" style="color:red" class="fa fa-info-circle errspan">Access Required*</span>
+                      <br>
+                      <label class="label-control" >Program Purpose <span  style="color:red">*</span></label>
+                      <input type="text"  style="border:1px solid lightgray" formControlName="purpose" placeholder="Enter Program Purpose" class="form-control data">
+                      <span *ngIf="updateprogramForm.get('purpose').invalid && updateprogramForm.get('purpose').touched" style="color:red" class="fa fa-info-circle errspan">Program Purpose Required*</span>
+                      <br>
+                      </div>     
+                      <div class="col-md-6">
+                          <label for="type">Type<span style="color:red">*</span></label>
+                          <select class="form-control"  style="border:1px solid lightgray" formControlName="type">
+                            <option  [value]="null" disabled hidden>Select Type</option>
+                              <option value="" [selected]="true">Select Type</option>
+                              <option ngValue="Project">Project</option>
+                              <option ngValue="Program">Program</option>              
+                            </select>
+                          <span *ngIf="updateprogramForm.get('type').invalid && updateprogramForm.get('type').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
+                          <br>
+                          <label for="priority">Priority<span style="color:red">*</span></label>
+                          <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
+                            <option  [value]="null" disabled hidden>Select Priority</option>
+                              <option value="" [selected]="true">Select Priority</option>
+                              <option ngValue="High">High</option>
+                              <option ngValue="Low">Low</option>
+                              <option ngValue="Medium">Medium</option>               
+                            </select>
+                          <span *ngIf="updateprogramForm.get('priority').invalid && updateprogramForm.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
+                          <br>
+                          <label for="process">Process<span style="color:red">*</span></label>
+                          <select class="form-control"  style="border:1px solid lightgray" formControlName="process">
+                            <option  [value]="null" disabled hidden>Select Process</option>
+                            <option value="" [selected]="true">Select Process</option>
+                            <option *ngFor="let process of processes" [ngValue]="process.processName">{{process.processName}}</option>          
+                          </select>
+                          <span *ngIf="updateprogramForm.get('process').invalid && updateprogramForm.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
+                          <br>
+
+                          <label class="label-control" >Identity Measurable Metrics <span  style="color:red">*</span></label>
+                                            <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
+                                            <span *ngIf="updateprogramForm.get('measurableMetrics').invalid && updateprogramForm.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Measurable Metrics Required*</span>
+                                            <br>
+
+                                           
+
+                        </div>
+                      <!-- <div class="col-md-12">
+                          <br>
+                          <label>Description</label>
+                          <textarea class="form-control" style="height:100px;">
+
+                          </textarea>
+                      
+                      </div> -->
+                  </div>
+              </form>
+              <br>
+              <div class="pull-right">
+                  <button (click)="resetupdateprogram()" class="btn btn-primary">Reset</button>
+                  &nbsp;&nbsp;
+                  <button [disabled]="updateprogramForm.invalid" (click)="programupdate()" class="btn btn-primary">Update</button>
               </div>
               <br><br>
       </div>
