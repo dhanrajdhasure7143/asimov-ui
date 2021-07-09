@@ -146,8 +146,6 @@ export class ProjectsProgramsTableComponent implements OnInit {
     setTimeout(()=>{
       this.getallProjects();
     },100)
-
-    this.getallusers();
   }
 
   projectDetailsbyId(id){
@@ -216,7 +214,6 @@ export class ProjectsProgramsTableComponent implements OnInit {
       },
       showCancelButton: true,
       confirmButtonText: 'Delete',
-      showLoaderOnConfirm: true,
     }).then((result) => {
       let value:any=result.value
       if(projectdata.projectName==value)
@@ -227,9 +224,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
           let response:any=res
           if(response.errorMessage==undefined)
           {
-            this.project_main.projects_list=[];
+            this.projects_list=[];
             Swal.fire("Success",response.message,"success")
-            this.project_main.getallProjects();
+            this.getallProjectsdata();
           }
           else
           {
@@ -284,7 +281,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         access:data.access,
         initiatives:data.initiatives,
         process:data.process,
-        type:"Project",
+        type:"Program",
         owner:data.owner,
         priority:data.priority,
         createdBy:data.createdBy,
@@ -301,7 +298,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           access:data.access,
           initiatives:data.initiatives,
           process:data.process,
-          type:"Program",
+          type:"Project",
           owner:data.owner,
           priority:data.priority,
           createdBy:data.createdBy,
@@ -311,6 +308,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
           measurableMetrics:data.measurableMetrics
         }
     })];
+    
+    this.project_main.projects_list=this.projects_list;
     this.spinner.hide();
     this.getallProjects();
 
@@ -364,12 +363,13 @@ export class ProjectsProgramsTableComponent implements OnInit {
           this.updateForm.get("initiatives").setValue(data["initiatives"]);
           this.updateForm.get("process").setValue(data["process"]);
           this.updateForm.get("projectName").setValue(data["projectName"]);
-          this.updateForm.get("owner").setValue(data["owner"]);
+           this.updateForm.get("owner").setValue(parseInt(data["owner"]));
           this.updateForm.get("access").setValue(data["access"]);
           this.updateForm.get("priority").setValue(data["priority"]);
           this.updateForm.get("resources").setValue(data["resources"]);
           this.updateForm.get("mapValueChain").setValue(data["mapValueChain"]);
           this.updateForm.get("measurableMetrics").setValue(data["measurableMetrics"]);
+          
           this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
         }
       }
@@ -466,9 +466,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
         let status: any= res;
         if(status.errorMessage==undefined)
         {
-          this.project_main.projects_list=[];
           Swal.fire("Success",status.message,"success");
-          this.project_main.getallProjects();
+          this.getallProjectsdata();
           this.spinner.hide();
         }
         else
@@ -499,9 +498,8 @@ programupdate(){
       if(status.errorMessage==undefined)
       {
         //this.projects_list=[];
-        this.project_main.projects_list=[];
         Swal.fire("Success",status.message,"success");
-        this.project_main.getallProjects();
+        this.getallProjectsdata();
         this.spinner.hide();
       }
       else
@@ -682,25 +680,29 @@ getprocessnames()
         
 //   }
 
-getallusers()
-  {
-    let tenantid=localStorage.getItem("tenantName")
-    this.api.getuserslist(tenantid).subscribe(item=>{
-      let users:any=item
-      this.userslist=users;
-    })
-  }
 
 resetupdateproject(){
   this.updateForm.reset();
   this.updateForm.get("owner").setValue("");
   this.updateForm.get("resources").setValue("");
   this.updateForm.get("mapValueChain").setValue("");
+  this.updateForm.get("type").setValue("");
+  this.updateForm.get("initiatives").setValue("");
+  this.updateForm.get("process").setValue("");
+  this.updateForm.get("access").setValue("");
+  
+  this.updateForm.get("priority").setValue("");
 }
 
 resetupdateprogram(){
   this.updateprogramForm.reset();
   this.updateprogramForm.get("owner").setValue("");
+  this.updateprogramForm.get("access").setValue("");
+  this.updateprogramForm.get("priority").setValue("");
+  this.updateprogramForm.get("measurableMetrics").setValue("");
+  this.updateprogramForm.get("type").setValue("");
+  this.updateprogramForm.get("initiatives").setValue("");
+  this.updateprogramForm.get("process").setValue("");
 }
   
 }
