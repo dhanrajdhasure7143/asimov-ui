@@ -644,8 +644,8 @@
                           <br>
                          
                           <label for="initiatives">Initiative<span style="color:red">*</span></label>
-                          <select  formControlName="initiatives"   class="form-control data">
-                            <option  [value]="null" disabled hidden>Select Initiatives</option>
+                          <select  formControlName="initiatives"      class="form-control data">
+                          
                             <option value="">Select Initiatives</option>
                             <option value="Process Improvement">Process Improvement</option>
                             <option value="Business Improvement">Business Improvement</option>
@@ -655,29 +655,28 @@
                           
 
                           <label class="label-control">Add Resources<span  style="color:red">*</span></label>
-                          <select   formControlName="resources" style="border:1px solid lightgray" [value]="updateForm.get('resources').getValue()" class="form-control data">
+                          <select   formControlName="resources" style="border:1px solid lightgray"  class="form-control data">
                               <option value="">Select Resources</option>
-                              <option *ngFor="let user of userslist" [ngValue]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                              <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                           </select>
                           <span *ngIf="updateForm.get('resources').invalid && updateForm.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
                           <br>
                          
                           <label>Project Owner <span  style="color:red">*</span></label>
-                          <select   formControlName="owner"  style="border:1px solid lightgray" [value]="updateForm.get('owner').getValue()"  class="form-control data">
-                            <option  [value]="null" disabled hidden>Select Owner</option>
-                              <option value="" [selected]="true">Select Owner</option>
-                              <option *ngFor="let user of users_list" [ngValue]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                          <select   formControlName="owner"  style="border:1px solid lightgray"   class="form-control data">
+                              <option value="">Select Owner</option>
+                              <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
                           </select>
                           <span *ngIf="updateForm.get('owner').invalid && updateForm.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
                          <br>
 
                       <label for="access">Access<span style="color:red">*</span></label>
-                      <select   formControlName="access" [value]="updateForm.get('access').getValue()" style="border:1px solid lightgray"  class="form-control data">
-                        <option  [value]="null" disabled hidden>Select Access</option>
-                        <option value="" [selected]="true">Select Access</option>
-                        <option ngValue="Owner">Owner</option>
-                        <option ngValue="Co-Editor">Co-Editor</option>
-                        <option ngValue="Viewer">Viewer</option>
+                      <select   formControlName="access"  style="border:1px solid lightgray"  class="form-control data">
+                       
+                        <option value="" >Select Access</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Co-Editor">Co-Editor</option>
+                        <option value="Viewer">Viewer</option>
                       </select>
                       <span *ngIf="updateForm.get('access').invalid && updateForm.get('access').touched" style="color:red" class="fa fa-info-circle errspan">Access Required*</span>
                       <br>
@@ -685,35 +684,35 @@
                       </div>     
                       <div class="col-md-6">
                           <label for="type">Type<span style="color:red">*</span></label>
-                          <select class="form-control"  style="border:1px solid lightgray" formControlName="type">
-                            <option  [value]="null" disabled hidden>Select Type</option>
-                              <option value="" [selected]="true">Select Type</option>
-                              <option ngValue="Project">Project</option>
-                              <option ngValue="Program">Program</option>              
+                          <select class="form-control"   style="border:1px solid lightgray" formControlName="type">
+                            
+                              <option value="" >Select Type</option>
+                              <option value="Project">Project</option>
+                              <option value="Program">Program</option>              
                             </select>
                           <span *ngIf="updateForm.get('type').invalid && updateForm.get('type').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
                           <br>
                           <label for="priority">Project Priority<span style="color:red">*</span></label>
                           <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
-                            <option  [value]="null" disabled hidden>Select Priority</option>
-                              <option value="" [selected]="true">Select Priority</option>
-                              <option ngValue="High">High</option>
-                              <option ngValue="Low">Low</option>
-                              <option ngValue="Medium">Medium</option>               
+                           
+                              <option value="">Select Priority</option>
+                              <option value="High">High</option>
+                              <option value="Low">Low</option>
+                              <option value="Medium">Medium</option>               
                             </select>
                           <span *ngIf="updateForm.get('priority').invalid && updateForm.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
                           <br>
                           <label for="process">Process<span style="color:red">*</span></label>
-                          <select class="form-control"  style="border:1px solid lightgray" formControlName="process">
-                            <option  [value]="null" disabled hidden>Select Process</option>
-                            <option value="" [selected]="true">Select Process</option>
-                            <option *ngFor="let process of processes" [ngValue]="process.processName">{{process.processName}}</option>          
+                          <select class="form-control"   style="border:1px solid lightgray" formControlName="process">
+                           
+                            <option value="">Select Process</option>
+                            <option *ngFor="let process of processes" [value]="process.processName">{{process.processName}}</option>          
                           </select>
                           <span *ngIf="updateForm.get('process').invalid && updateForm.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
                           <br>
 
                           <label class="label-control" >Map Value Chain <span  style="color:red">*</span></label>
-                                                <select  formControlName="mapValueChain"  class="form-control data">
+                                                <select  formControlName="mapValueChain"   class="form-control data">
                                                     <option value="">Select Map Value Chain</option>
                                                     <option value="Invoice Managment">Invoice Managment</option>
                                                     <option value="Acme Managment">Acme Managment</option>
@@ -775,9 +774,9 @@
                           <br>
                          
                           <label for="initiatives">Initiative<span style="color:red">*</span></label>
-                          <select  formControlName="initiatives" [value]="updateprogramForm.get('initiatives').getValue()"  class="form-control data">
-                            <option  [value]="null" disabled hidden>Select Initiatives</option>
-                            <option value=""  [selected]="true">Select Initiatives</option>
+                          <select  formControlName="initiatives"  class="form-control data">
+                           
+                            <option value="" >Select Initiatives</option>
                             <option value="Process Improvement">Process Improvement</option>
                             <option value="Business Improvement">Business Improvement</option>
                         </select>
@@ -786,21 +785,21 @@
                           
                          
                           <label>Owner <span  style="color:red">*</span></label>
-                          <select   formControlName="owner"  style="border:1px solid lightgray" [value]="updateprogramForm.get('owner').getValue()"  class="form-control data">
-                            <option  [value]="null" disabled hidden>Select Owner</option>
-                              <option value="" [selected]="true">Select Owner</option>
-                              <option *ngFor="let user of users_list" [ngValue]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                          <select   formControlName="owner"  style="border:1px solid lightgray" class="form-control data">
+                          
+                              <option value="">Select Owner</option>
+                              <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
                           </select>
                           <span *ngIf="updateprogramForm.get('owner').invalid && updateprogramForm.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
                          <br>
 
                       <label for="access">Access<span style="color:red">*</span></label>
-                      <select   formControlName="access" [value]="updateprogramForm.get('access').getValue()" style="border:1px solid lightgray"  class="form-control data">
-                        <option  [value]="null" disabled hidden>Select Access</option>
-                        <option value="" [selected]="true">Select Access</option>
-                        <option ngValue="Owner">Owner</option>
-                        <option ngValue="Co-Editor">Co-Editor</option>
-                        <option ngValue="Viewer">Viewer</option>
+                      <select   formControlName="access" style="border:1px solid lightgray"  class="form-control data">
+                      
+                        <option value="">Select Access</option>
+                        <option value="Owner">Owner</option>
+                        <option value="Co-Editor">Co-Editor</option>
+                        <option value="Viewer">Viewer</option>
                       </select>
                       <span *ngIf="updateprogramForm.get('access').invalid && updateprogramForm.get('access').touched" style="color:red" class="fa fa-info-circle errspan">Access Required*</span>
                       <br>
@@ -812,28 +811,28 @@
                       <div class="col-md-6">
                           <label for="type">Type<span style="color:red">*</span></label>
                           <select class="form-control"  style="border:1px solid lightgray" formControlName="type">
-                            <option  [value]="null" disabled hidden>Select Type</option>
-                              <option value="" [selected]="true">Select Type</option>
-                              <option ngValue="Project">Project</option>
-                              <option ngValue="Program">Program</option>              
+                           
+                              <option value="" >Select Type</option>
+                              <option value="Project">Project</option>
+                              <option value="Program">Program</option>              
                             </select>
                           <span *ngIf="updateprogramForm.get('type').invalid && updateprogramForm.get('type').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
                           <br>
                           <label for="priority">Priority<span style="color:red">*</span></label>
                           <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
-                            <option  [value]="null" disabled hidden>Select Priority</option>
-                              <option value="" [selected]="true">Select Priority</option>
-                              <option ngValue="High">High</option>
-                              <option ngValue="Low">Low</option>
-                              <option ngValue="Medium">Medium</option>               
+                           
+                              <option value="" >Select Priority</option>
+                              <option value="High">High</option>
+                              <option value="Low">Low</option>
+                              <option value="Medium">Medium</option>               
                             </select>
                           <span *ngIf="updateprogramForm.get('priority').invalid && updateprogramForm.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
                           <br>
                           <label for="process">Process<span style="color:red">*</span></label>
                           <select class="form-control"  style="border:1px solid lightgray" formControlName="process">
-                            <option  [value]="null" disabled hidden>Select Process</option>
-                            <option value="" [selected]="true">Select Process</option>
-                            <option *ngFor="let process of processes" [ngValue]="process.processName">{{process.processName}}</option>          
+                          
+                            <option value="" >Select Process</option>
+                            <option *ngFor="let process of processes" [value]="process.processName">{{process.processName}}</option>          
                           </select>
                           <span *ngIf="updateprogramForm.get('process').invalid && updateprogramForm.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
                           <br>
