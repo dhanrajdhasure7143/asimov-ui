@@ -248,7 +248,7 @@ div[class^='diagram_container'] .djs-container svg{
   outline: none;
 }
 .btn:hover{
-  font-weight: 700 !important;
+  /* font-weight: 700 !important; */
 }
 button:disabled{
   cursor: no-drop;

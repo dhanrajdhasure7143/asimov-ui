@@ -218,7 +218,7 @@ mat-card#projects_list_screen {
 }
 
 span.projects-menu-item.prj-lst-btn button {
-  background-color: #f8f8f8 !important;
+  background-color: #fff !important;
   border: 1px solid #00a0e3;
   color: #00a0e3;
 }
@@ -257,4 +257,11 @@ span.projects-menu-item button {
 }
 span.tab-text.fav-sub {
   font-size: 12px !important;
+}
+
+span.projects-menu-item.prj-lst-btn button.btn:hover {	
+  background-color: #00a0e3 !important;    
+  color: #fff;    
+  font-weight: 400 !important;    
+  border: none;  
 }
