@@ -105,6 +105,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   xmlTabContent: string;
   errXMLcontent: string = '';
   modalRef: BsModalRef;
+  menuToggleTitle : boolean = false;
+  propertiesContainer : boolean = false;
+  panelOpenState = false;
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -388,7 +391,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   }
 
   togglePosition(){
-    let el = document.getElementById("properties");
+    this.menuToggleTitle = !this.menuToggleTitle;
+    this.propertiesContainer = !this.propertiesContainer;
+    let el = document.getElementById("propertiesPanelBody");
     if(el){
       el.classList.toggle("slide-left");
       el.classList.toggle("slide-right");

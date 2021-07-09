@@ -102,10 +102,22 @@ height:4px
 }
 
 :host ::ng-deep .table>thead>tr>th{
-  background-color: rgb(74, 176, 245) !important;
+  /* background-color: rgb(74, 176, 245) !important;
   color: white !important;
   font-size: 18px !important;
-  text-align: center !important;
+  text-align: center !important; 
+  background-color: #f6fcfe !important;
+    color: #333 !important;
+    font-size: 15px !important;
+    text-align: left !important;*/
+    background-color: #00a0e317 !important;
+    color: #00a0e3 !important;
+    font-size: 15px !important;
+    text-align: left !important;
+    border-top: none !important;
+    font-weight: 500;
+    border-bottom: 1px solid #4a4a4a33 !important;
+    padding: 8px 10px;
 }
 
 :host ::ng-deep .mat-cell, .mat-footer-cell {

@@ -1,11 +1,11 @@
-<div style="width:100%;overflow-x: scroll;">
+<div style="width:100%;overflow-x: auto;height:calc( 100vh - 160px)">
 <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
-    <div class="projects-header">
+    <div class="projects-header maincreat">
       <span class="projects-back-button"  routerLink="/pages/projects/listOfProjects">
-        <i class="fa fa-arrow-left"></i>
+        <i class="fa fa-angle-left" aria-hidden="true"></i>
       </span>
       <span class="projects-header-title">
-        Project Details
+        Project Details 
       </span>
       <span class="pull-right" style="font-size:20px;">
         <span class="projects-menu-item"><i class="ri-file-line"></i></span>
@@ -13,14 +13,14 @@
         <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
       </span>
     </div>
-    <br>
+  
     <div class="projects-table-body" style="padding:10px;">
         <app-project-details-header></app-project-details-header>
       </div>
     
   </mat-card>
 
-  <br>
+  
 
   <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
     <div class="">
@@ -135,7 +135,7 @@
   <br>
 
 
-  <div style="display:flex">
+  <div class="bortopsec" style="display:flex">
     <div class="resources">
       <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
         <div class="">

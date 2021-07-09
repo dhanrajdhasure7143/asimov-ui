@@ -16,7 +16,14 @@ import { Router, ActivatedRoute } from '@angular/router';
                     <div class="col-md-6 new-bps-icons" *ngIf="isHeaderShow == 'true'">
                       <div class="row bps-float">
                         <button><img src="../assets/images/BPMS/Edit-hover.svg"></button>
-                        <button><img src="../assets/images/BPMS/download.svg"></button>
+                        <select class="dowload-images">
+                          <option value="svg">SVG</option>
+                          <option value="png">PNG</option>
+                          <option value="jpg">JPG</option>
+                          <option value="bpmn">BPMN</option>
+                        </select>
+                        <button (click)="zoomIn()" class="btn btn1 zoom btn-primary" id="zoom_in"><i class="fas fa-search-plus"></i></button>
+                        <button (click)="zoomOut()" class="btn btn1 zoom-out btn-primary" id="zoom_out"><i class="fas fa-search-minus"></i></button>
                         <button><img src="../assets/images/BPMS/share.svg"></button>
                         <button><img src="../assets/images/BPMS/Forward.svg"></button>
                         <button><img src="../assets/images/BPMS/copy.svg"></button>

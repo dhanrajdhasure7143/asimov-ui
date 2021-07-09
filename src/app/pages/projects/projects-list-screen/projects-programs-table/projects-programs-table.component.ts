@@ -42,7 +42,10 @@ export class ProjectsProgramsTableComponent implements OnInit {
   // projectsdata: any=[];
   // dbupdateid: any;
    updatemodalref: BsModalRef;
-  projectdetailsbyid: Object;
+   projectdetailsbyid: any;
+   projectresources:any= [];
+   userslist:any;
+   updateprogramForm: FormGroup;
   //   public createprogram:FormGroup;
   // updateddata: any;
   // public updateflag: boolean;
@@ -73,15 +76,32 @@ export class ProjectsProgramsTableComponent implements OnInit {
      private project_main:ProjectsListScreenComponent
     ) { 
 
-        this.updateForm=this.formBuilder.group({
-          type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-          initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
-          process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-          projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-          owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-          priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-          access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      })
+      this.updateForm=this.formBuilder.group({
+        type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+        process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    })
+
+
+
+    this.updateprogramForm=this.formBuilder.group({
+      type: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+      initiatives: ["", Validators.compose([Validators.required , Validators.maxLength(50)])],
+      process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+  })
 //   this.createprogram=this.formBuilder.group({
 //     programname: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 //     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -127,7 +147,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
       this.getallProjects();
     },100)
 
-
+    this.getallusers();
   }
 
   projectDetailsbyId(id){
@@ -163,18 +183,18 @@ export class ProjectsProgramsTableComponent implements OnInit {
     getallProjects(){
       this.projects_list.sort((a,b) => a.id > b.id ? -1 : 1);
       if(this.status_data=="All")
-        this.dataSource2 = new MatTableDataSource(this.projects_list);    
+      this.projects_list = this.projects_list
       else if(this.status_data=="New")
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="New"));
+      this.projects_list = this.projects_list.filter(item=>item.status=="New")
       else if(this.status_data=="In Progress") 
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="In Progress"));
+      this.projects_list = this.projects_list.filter(item=>item.status=="In Progress")
       else if(this.status_data=="In Review")
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="In Review"));
+      this.projects_list = this.projects_list.filter(item=>item.status=="In Review")
       else if(this.status_data=="Approved")
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="Approved"));
+      this.projects_list = this.projects_list.filter(item=>item.status=="Approved")
       else if(this.status_data=="Rejected")
-        this.dataSource2 = new MatTableDataSource(this.projects_list.filter(item=>item.status=="Rejected"));
-      console.log(this.dataSource2.data)
+        this.projects_list = this.projects_list.filter(item=>item.status=="Rejected")
+      this.dataSource2 = new MatTableDataSource(this.projects_list);
       this.dataSource2.paginator=this.paginator2;
       this.dataSource2.sort = this.sort2;    
   }
@@ -183,37 +203,71 @@ export class ProjectsProgramsTableComponent implements OnInit {
 
   deleteproject(project)
   {
+    var projectdata:any=project;
     let delete_data=[{
       id:project.id,
       type:project.type
     }]  
     Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
+      title: 'Enter Project Name',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
       showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Delete',
+      showLoaderOnConfirm: true,
     }).then((result) => {
-      if (result.value) {
+      let value:any=result.value
+      if(projectdata.projectName==value)
+      {
         this.spinner.show();
         this.api.delete_Project(delete_data).subscribe( res =>{ 
           this.spinner.hide();
           let response:any=res
           if(response.errorMessage==undefined)
           {
-            this.projects_list=[];
+            this.project_main.projects_list=[];
             Swal.fire("Success",response.message,"success")
-            this.getallProjectsdata();
+            this.project_main.getallProjects();
           }
           else
           {
             Swal.fire("Error",response.errorMessage,"error")
           }
         })
+      }else
+      {
+        Swal.fire("Error","Entered Project Name is Invalid","error")
       }
-      })
+    })
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then((result) => {
+    //   if (result.value) {
+    //     this.spinner.show();
+    //     this.api.delete_Project(delete_data).subscribe( res =>{ 
+    //       this.spinner.hide();
+    //       let response:any=res
+    //       if(response.errorMessage==undefined)
+    //       {
+    //         this.projects_list=[];
+    //         Swal.fire("Success",response.message,"success")
+    //         this.getallProjectsdata();
+    //       }
+    //       else
+    //       {
+    //         Swal.fire("Error",response.errorMessage,"error")
+    //       }
+    //     })
+    //   }
+    //   })
   }
   
 
@@ -222,6 +276,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
     this.spinner.show();
     this.api.getAllProjects().subscribe(res=>{
       let response:any=res;
+      this.projects_list=[];
       this.projects_list=[...response[0].map(data=>{
       return {
         id:data.id,
@@ -229,11 +284,15 @@ export class ProjectsProgramsTableComponent implements OnInit {
         access:data.access,
         initiatives:data.initiatives,
         process:data.process,
-        type:(data.type.toUpperCase() + data.type.slice(1)),
+        type:"Project",
         owner:data.owner,
         priority:data.priority,
         createdBy:data.createdBy,
-        status:data.status
+        status:data.status,
+        resources:data.resources,
+        mapValueChain:data.mapValueChain,
+        measurableMetrics:data.measurableMetrics,
+        purpose:data.purpose
       }
     }),...response[1].map(data=>{
         return {
@@ -242,11 +301,14 @@ export class ProjectsProgramsTableComponent implements OnInit {
           access:data.access,
           initiatives:data.initiatives,
           process:data.process,
-          type:(data.type.toUpperCase() + data.type.slice(1)),
+          type:"Program",
           owner:data.owner,
           priority:data.priority,
           createdBy:data.createdBy,
-          status:data.status
+          status:data.status,
+          resources:data.resources,
+          mapValueChain:data.mapValueChain,
+          measurableMetrics:data.measurableMetrics
         }
     })];
     this.spinner.hide();
@@ -293,18 +355,40 @@ export class ProjectsProgramsTableComponent implements OnInit {
   
   updatedata(updatemodal,project)
   {    
-    let data:any=this.projects_list.find(item=>item.id==project.id);
-    this.project_id=data.id;
-      if(data.id!=undefined)
-      {
-        this.updateForm.get("type").setValue(data["type"]);
-        this.updateForm.get("initiatives").setValue(data["initiatives"]);
-        this.updateForm.get("process").setValue(data["process"]);
-        this.updateForm.get("projectName").setValue(data["projectName"]);
-        this.updateForm.get("owner").setValue(data["owner"]);
-        this.updateForm.get("access").setValue(data["access"]);
-        this.updateForm.get("priority").setValue(data["priority"]);
-        this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
+    if(project.type=="Project"){
+      let data:any=this.projects_list.find(item=>item.id==project.id);
+      this.project_id=data.id;
+        if(data.id!=undefined)
+        {
+          this.updateForm.get("type").setValue(data["type"]);
+          this.updateForm.get("initiatives").setValue(data["initiatives"]);
+          this.updateForm.get("process").setValue(data["process"]);
+          this.updateForm.get("projectName").setValue(data["projectName"]);
+          this.updateForm.get("owner").setValue(data["owner"]);
+          this.updateForm.get("access").setValue(data["access"]);
+          this.updateForm.get("priority").setValue(data["priority"]);
+          this.updateForm.get("resources").setValue(data["resources"]);
+          this.updateForm.get("mapValueChain").setValue(data["mapValueChain"]);
+          this.updateForm.get("measurableMetrics").setValue(data["measurableMetrics"]);
+          this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
+        }
+      }
+      else if(project.type=="Program"){
+        let data:any=this.projects_list.find(item=>item.id==project.id);
+        this.project_id=data.id;
+          if(data.id!=undefined)
+          {
+            this.updateprogramForm.get("type").setValue(data["type"]);
+            this.updateprogramForm.get("initiatives").setValue(data["initiatives"]);
+            this.updateprogramForm.get("process").setValue(data["process"]);
+            this.updateprogramForm.get("projectName").setValue(data["projectName"]);
+            this.updateprogramForm.get("owner").setValue(data["owner"]);
+            this.updateprogramForm.get("access").setValue(data["access"]);
+            this.updateprogramForm.get("priority").setValue(data["priority"]);
+            this.updateprogramForm.get("measurableMetrics").setValue(data["measurableMetrics"]);
+            this.updateprogramForm.get("purpose").setValue(data["purpose"]);
+            this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
+          }
       }
     }
 
@@ -382,7 +466,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         let status: any= res;
         if(status.errorMessage==undefined)
         {
-          //this.projects_list=[];
+          this.project_main.projects_list=[];
           Swal.fire("Success",status.message,"success");
           this.project_main.getallProjects();
           this.spinner.hide();
@@ -401,6 +485,39 @@ else
   alert("please fill all details");
 }
   
+}
+
+programupdate(){
+  if(this.updateprogramForm.valid)
+  {
+    this.spinner.show();
+    this.updatemodalref.hide();
+    let credupdatFormValue =  this.updateprogramForm.value;
+    credupdatFormValue["id"]=this.project_id;
+    this.api.update_project(credupdatFormValue).subscribe( res =>{
+      let status: any= res;
+      if(status.errorMessage==undefined)
+      {
+        //this.projects_list=[];
+        this.project_main.projects_list=[];
+        Swal.fire("Success",status.message,"success");
+        this.project_main.getallProjects();
+        this.spinner.hide();
+      }
+      else
+      {
+        Swal.fire("Error",status.errorMessage,"error");
+      }
+      
+    },err => {
+      Swal.fire("Error","Something Went Wrong","error");
+    });
+}
+else
+{
+alert("please fill all details");
+}
+
 }
 
 getprocessnames()
@@ -565,9 +682,25 @@ getprocessnames()
         
 //   }
 
+getallusers()
+  {
+    let tenantid=localStorage.getItem("tenantName")
+    this.api.getuserslist(tenantid).subscribe(item=>{
+      let users:any=item
+      this.userslist=users;
+    })
+  }
+
 resetupdateproject(){
   this.updateForm.reset();
   this.updateForm.get("owner").setValue("");
+  this.updateForm.get("resources").setValue("");
+  this.updateForm.get("mapValueChain").setValue("");
+}
+
+resetupdateprogram(){
+  this.updateprogramForm.reset();
+  this.updateprogramForm.get("owner").setValue("");
 }
   
 }

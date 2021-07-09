@@ -54,6 +54,10 @@ export class ProjectsListScreenComponent implements OnInit {
         priority:data.priority,
         createdBy:data.createdBy,
         status:data.status==null?"New":data.status,
+        resources:data.resources,
+        mapValueChain:data.mapValueChain,
+        measurableMetrics:data.measurableMetrics,
+        purpose:data.purpose
       }
     }),...response[1].map(data=>{
         return {
@@ -67,6 +71,9 @@ export class ProjectsListScreenComponent implements OnInit {
           status:data.status==null?"New":data.status,
           priority:data.priority,
           createdBy:data.createdBy,
+          resources:data.resources,
+          mapValueChain:data.mapValueChain,
+          measurableMetrics:data.measurableMetrics
         }
     })];
     this.spinner.hide();

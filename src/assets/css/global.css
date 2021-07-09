@@ -272,9 +272,23 @@ padding-right: 5px;
 /* Module title styles - Starts*/
 .module-heading{
   background-color: #f8f8f8;
-  padding: 6px;
-  margin-bottom: 10px;
+  padding: 6px 15px;
+  /* margin-bottom: 10px; */
+  min-height: 48px;
+  display: flex;
+  align-items: center;
 }
+
+.module-heading-buttons button.btn {
+  margin: 0px 0px 0px 10px;
+}
+
+.module-body {
+  height: calc(100% - 48px);
+  overflow: auto;
+  padding: 15px 0px;
+}
+
 .module-heading-image{
   width: 36px;
   height: 36px;

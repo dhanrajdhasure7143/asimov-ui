@@ -26,9 +26,14 @@
 .addproject-btn{
     position: relative;
     vertical-align: middle;
-    margin-top: 39px;
-    padding-left: 20px;
+    margin-top: 30px;
     cursor: pointer;
+    background-color: #12a6e5;
+    color: #fff;
+    text-align: center;
+    padding: 7px 14px;
+    margin-left: 7px;
+    border-radius: 2px;
 }
 
 .select-project{
@@ -190,12 +195,12 @@ label.label-control{
     font-size: 26px;
     margin-bottom: -30px !important;
 }
-.maindivfoprm .label-control {
+.maindivfoprm .label-control ,.modelprbody label{
     color: #6d6d6d !important;
     font-weight: normal !important;
     font-size: 16px !important;
 }
-.maindivfoprm input, .maindivfoprm select, .maindivfoprm textarea {
+.maindivfoprm input, .maindivfoprm select, .maindivfoprm textarea ,.modelprbody input, .modelprbody select, .modelprbody textarea{
     background-color: #f6f6f6;
     border: 1px solid #ddd !important;
     box-shadow: unset !important;
@@ -210,3 +215,20 @@ label.label-control{
 .innersform .mat-tab-body.mat-tab-body-active, .innersform .mat-tab-body-content {
     overflow: unset !important;
   }
+  .laemarleft {
+    display: inline-block;
+    width: 100%;
+    padding-left: 12px;
+}
+.col-md-12.martsascl {
+    margin-top: 15px;
+}
+.footbutcl button:hover{
+    font-weight: normal !important;
+}
+
+
+.h-scroll{
+    height:calc(100vh - 153px);
+    overflow: auto;
+}
