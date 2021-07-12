@@ -144,7 +144,8 @@ margin-right: -85px;
   margin-left: 3.1666%;
 } */
 #bpmn_list .row{
-  font-size: 11px;
+  /* font-size: 11px; */
+  font-size: 12px;
 }
 #bpmn_list{
   height: 59vh;

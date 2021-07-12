@@ -157,7 +157,7 @@
     }
 
     textarea{
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
     }
     .deploy-menu{
         display: none;

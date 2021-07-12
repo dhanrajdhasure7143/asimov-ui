@@ -116,7 +116,7 @@ td{
 
  #Orchestration-tabs  .mat-tab-label .mat-tab-label-content{
   color:black ;
-  font-family:noto-sans,Noto Sans,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif !important;
+  /* font-family:noto-sans,Noto Sans,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif !important; */
   font-weight: 700 !important;
   font-size: 15px !important;
 }
@@ -127,7 +127,7 @@ td{
 #Orchestration-tabs .mat-tab-label-active .mat-tab-label-content {
   background-color: white !important;
   color:rgb(0, 98, 207) !important ;
-  font-family:noto-sans,Noto Sans,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif !important;
+  /* font-family:noto-sans,Noto Sans,-apple-system,system-ui,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,sans-serif !important; */
   font-weight: 700 !important;
   font-size: 15px !important;
 }

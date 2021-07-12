@@ -87,7 +87,7 @@
     flex-basis: 0;
     flex-grow: 1;
     opacity: 1;
-    font-family: Roboto,"Helvetica Neue",sans-serif;
+    /* font-family: Roboto,"Helvetica Neue",sans-serif; */
     font-size: 12px;
     font-weight: 400;
   }

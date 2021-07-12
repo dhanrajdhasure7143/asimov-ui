@@ -96,7 +96,7 @@
           
           <div class="dbichart-body">
               <div id="projectattention">
-                <table>
+                <table class="table">
                   <tr>
                       <td>
                         <div class="status-tabs1">
@@ -176,9 +176,9 @@
 
         <div class="col-sm-3">
           <div class="projects_favourites">
-            <div class="dbichart-head">
+            <!-- <div class="dbichart-head">
                
-            </div>
+            </div> -->
             <div class="dbichart-body">
                 <div id="projectfavourites">
                   <mat-tab-group [selectedIndex]="selectedTab" id="Project-dashboard-tabs" (selectedTabChange)="onTabChanged($event)">
@@ -255,7 +255,7 @@
     
             
               <div class="projects-table-body">
-                <table>
+                <table class="table">
                   <thead>
                   <tr class="separated">
                     <th scope="col" class="types2">Item</th>
@@ -280,7 +280,11 @@
                       <span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;</span></td>
                     <td>1</td>
                     <td>2</td>
-                    <a class="link" id="eiap-home" ><td><span style="color: red;">Delete</span></td></a>
+                    <td>
+                      <a class="link" id="eiap-home" >
+                        <span style="color: red;"><i class="fa fa-trash" aria-hidden="true"></i></span>
+                      </a>
+                    </td>
                   </tr>
                   </tbody>
                   

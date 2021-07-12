@@ -180,6 +180,7 @@
 }
 #projectfavourites .ng-star-inserted .status-tabs1 .tab-text {
   color: #a09f9f !important;
+  display: inline-block;
 }
 
 .prjtalvcl hr {
@@ -188,10 +189,10 @@
 .prjtalvcl tr.separated th {
   font-size: 16px !important;
   font-weight: 500;
-  padding: 10px 0px !important;
+  /* padding: 10px 0px !important; */
 }
 .prjtalvcl tr.separated td {
-  padding: 10px 0px;
+  /* padding: 10px 0px; */
 }
 .prjtalvcl tbody tr.separated {
   border-bottom: 1px solid #dddddd8c;
@@ -203,7 +204,7 @@
   color: #63d21a;
 }
 .row.prjtalvcl {
-  margin-top: 30px !important;
+  margin-top: 15px !important;
 }
 .projects-header.prjnewcl span.pull-right {
   position: relative;

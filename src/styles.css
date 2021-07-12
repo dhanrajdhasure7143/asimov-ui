@@ -19,7 +19,8 @@
 /* @import "assets/css/global.css"; */
 /* You can add global styles to this file, and also import other style files */
 body, html {
-  font-family: 'Source Sans Pro', sans-serif  !important;
+  /* font-family: 'Source Sans Pro', sans-serif  !important; */
+  font-family: 'Open Sans', sans-serif !important;
   user-select: none;
 }
 
@@ -45,6 +46,8 @@ div {
   text-decoration: none !important;
   list-style: none;
   color: inherit;
+  font-family: 'Open Sans', sans-serif;
+
 }
 
 .breadcrumb{
@@ -307,7 +310,7 @@ button:disabled{
   padding-left: 50px !important;
 } */
 th {
-  color: #464646;
+  /* color: #464646; */
   font-size: 13px;
   font-weight: 700;
 }
@@ -448,7 +451,9 @@ padding:10px;
 
 /*RPA-Environments*/
 html, body { height: 100%;overflow: hidden; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body { 
+  margin: 0;
+   /* font-family: Roboto, "Helvetica Neue", sans-serif;  */}
 
 
 
@@ -465,7 +470,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
    #exportSVGtoPDF text {
         /* font-size: 14px; */
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+        /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serf; */
         transform: translate(5px, 0px);
         height: auto;
         width: auto;
@@ -718,8 +723,7 @@ foreignObject{
   position: relative;
 }
 .mat-tab-group{
-
-  font-family: 'Source Sans Pro', sans-serif  !important;
+  /* font-family: 'Source Sans Pro', sans-serif  !important; */
 }
 
 #piechart1 text,#piechart2 text {
@@ -751,7 +755,7 @@ foreignObject{
 }
 #pietooltip p,#pietooltip1 p {
   margin: 0;
-  font-family: sans-serif;
+  /* font-family: sans-serif; */
   font-size: 10px;
   line-height: 20px;
   text-align: center !important;
@@ -801,7 +805,7 @@ background-color:rgb(231, 151, 3) !important;
 background-color:#a94442 !important;
 }
 .dbichart-head>label{
-font-size: 18px !important;
+font-size: 16px !important;
 }
 .pisvg{
   width: 100% !important;
@@ -1029,5 +1033,26 @@ div#propertiesPanelBody .bpp-properties-panel {
   margin-left: -5px;
 }
 .table tbody tr:hover {
-  background: #f2d12b33;
+  background: #f2d12b33 !important;
+}
+.table thead {
+  background-color: #00a0e317 !important;
+    color: #00a0e3 !important;
+    font-size: 15px !important;
+    text-align: left !important;
+    border-top: none !important;
+    font-weight: 500;
+    border-bottom: 1px solid #4a4a4a33 !important;
+    padding: 8px 10px;
+}
+.mat-table tbody, .mat-table tfoot, .mat-table thead, .mat-table-sticky, [mat-footer-row], [mat-header-row], [mat-row], mat-footer-row, mat-header-row, mat-row {
+  background:transparent !important;
+}
+#projectfavourites .mat-tab-label {
+  height: 35px !important;
+  margin-left: 0px !important;
+  min-width: 100px;
+}
+#projectfavourites mat-tab-header.mat-tab-header {
+  margin: 0px;
 }

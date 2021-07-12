@@ -191,7 +191,7 @@
     padding: 0px;
 }
 body {
-    font-family: Montserrat, sans-serif;
+    /* font-family: Montserrat, sans-serif; */
     font-size: 15px;
 }
 /* h1,
@@ -301,15 +301,16 @@ button:focus {
     font-size: 14px;
 }
 .dbichart-block .dbichart-head .dbichart-dropdown select {
-    border-top: none;
+    /* border-top: none;
     border-right: none;
-    border-left: none;
+    border-left: none; */
     border-image: initial;
-    border-bottom: 1px solid rgba(51, 51, 51, 0.15);
+    border: 1px solid rgba(51, 51, 51, 0.15);
+    border-radius: 3px;
     color: rgb(51, 51, 51);
     font-weight: 600;
     background: transparent;
-    width: 110px;
+    width: 120px;
     padding: 0px 0px 6px;
 }
 .dbichart-block .dbichart-head .dbichart-dropdown select:focus {
