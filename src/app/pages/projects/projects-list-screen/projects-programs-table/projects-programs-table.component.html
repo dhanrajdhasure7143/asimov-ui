@@ -694,6 +694,16 @@
                                     class="fa fa-info-circle errspan">Status Required*</span>
 
                                     <br>
+
+                                    <label>End Date <span  style="color:red">*</span></label>
+                                            <input class="form-control" type="date"  name="daytime" [min]="mindate" formControlName="endDate"  class="form-control data">
+                                            <span *ngIf="updateForm.get('endDate').invalid && updateForm.get('endDate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
+                                        
+                                            <br>
+
+                                    
+
+                                   
                       </div>     
                       <div class="col-md-6">
                           <label for="type">Type<span style="color:red">*</span></label>
@@ -738,6 +748,12 @@
                                             <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
                                             <span *ngIf="updateForm.get('measurableMetrics').invalid && updateForm.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Measurable Metrics Required*</span>
                                             <br>
+
+                                            <label>Start Date <span  style="color:red">*</span></label>
+                                    <input class="form-control" type="date"  name="daytime" [min]="mindate"  formControlName="startDate" class="form-control">
+                                    <span *ngIf="updateForm.get('startDate').invalid && updateForm.get('startDate').touched" style="color:red" class="fa fa-info-circle errspan">Start Date Required*</span>
+                                    
+                                    <br>
                         </div>
                       <!-- <div class="col-md-12">
                           <br>

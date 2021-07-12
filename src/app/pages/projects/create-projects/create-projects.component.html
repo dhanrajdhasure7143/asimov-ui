@@ -54,7 +54,8 @@
                                                     
                                                 <br>
                                                 <label class="label-control" >Start Date <span  style="color:red">*</span></label>
-                                                <input type="date"  formControlName="startDate" class="form-control">
+                                                <!-- <input type="date"  formControlName="startDate" class="form-control"> -->
+                                                <input class="form-control" type="date"  name="daytime" [min]="mindate" formControlName="startDate">
                                                 <span *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched" style="color:red" class="fa fa-info-circle errspan">Start date Required*</span>
                                                 
                                                 <br>
@@ -106,7 +107,7 @@
                                             
                                                 <br>
                                                 <label class="label-control" >End Date <span  style="color:red">*</span></label>
-                                                <input type="date" formControlName="endDate"  class="form-control data">
+                                                <input class="form-control" type="date"  name="daytime" [min]="mindate" formControlName="endDate"  class="form-control data">
                                                 <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
                                             
                                                 <br>
@@ -387,7 +388,7 @@
                                     
                                 <br>
                                 <label>Start Date <span  style="color:red">*</span></label>
-                                <input type="date"  formControlName="startDate" class="form-control">
+                                <input class="form-control" type="date"  name="daytime" [min]="mindate"  formControlName="startDate" class="form-control">
                                 <span *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched" style="color:red" class="fa fa-info-circle errspan">Start Date Required*</span>
                                 
                                 <br>
@@ -441,7 +442,7 @@
                             
                                 <br>
                                 <label>End Date <span  style="color:red">*</span></label>
-                                <input type="date" formControlName="endDate"  class="form-control data">
+                                <input class="form-control" type="date"  name="daytime" [min]="mindate" formControlName="endDate"  class="form-control data">
                                 <span *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
                             
                                 <br>

@@ -6,6 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
+import moment from 'moment';
 
 @Component({
   selector: 'app-create-projects',
@@ -32,6 +33,8 @@ export class CreateProjectsComponent implements OnInit {
   newproject: any=[];
   selectedresources:any;
   username: string;
+  mindate: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -85,6 +88,8 @@ export class CreateProjectsComponent implements OnInit {
     this.getallusers();
     this.getallProjects();
     this.getprocessnames();
+
+    this.mindate= moment().format("YYYY-MM-DD");
   }
 
 
@@ -193,9 +198,22 @@ createproject()
         let response:any=res
         if(response.errormessage==undefined)
         {
-          Swal.fire("Success",response.message,"success")
+          let status: any= response;
+        Swal.fire({
+          title: 'Success',
+          text: ""+status.message,
+          position: 'center',
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+      }).then((result) => {
           this.resetcreateprogram();
           this.getallProjects();
+          this.router.navigate(['/pages/projects/listOfProjects'])
+
+        }) 
         }
         else
         {
