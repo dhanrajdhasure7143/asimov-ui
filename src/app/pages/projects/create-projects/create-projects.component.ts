@@ -62,7 +62,7 @@ export class CreateProjectsComponent implements OnInit {
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
-    status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+   // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
 
   this.insertForm2=this.formBuilder.group({
@@ -78,7 +78,7 @@ export class CreateProjectsComponent implements OnInit {
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+   // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
 })
     this.resetcreateproject();
@@ -111,6 +111,7 @@ createproject()
     let userfirstname=localStorage.getItem("firstName")
     let userlastname=localStorage.getItem("lastName")
     this.username=userfirstname+" "+userlastname
+    this.insertForm2.value.status="New";
     this.insertForm2.value.createdBy=this.username;
     let data=this.insertForm2.value;
     this.api.createProject(data).subscribe(data=>{
@@ -177,6 +178,7 @@ createproject()
     let userlastname=localStorage.getItem("lastName")
     this.username=userfirstname+" "+userlastname
     this.createprogram.value.createdBy=this.username;
+    this.createprogram.value.status="New";
     let data=this.createprogram.value;
     data["project"]=this.newproject
     data["existingprojects"]=this.selected_projects.map(item => {

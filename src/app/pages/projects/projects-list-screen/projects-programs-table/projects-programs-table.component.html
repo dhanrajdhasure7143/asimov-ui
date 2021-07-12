@@ -681,6 +681,19 @@
                       <span *ngIf="updateForm.get('access').invalid && updateForm.get('access').touched" style="color:red" class="fa fa-info-circle errspan">Access Required*</span>
                       <br>
                       
+                      <label>Status<span style="color:red">*</span></label>
+                                <select formControlName="status" class="form-control data">
+                                    <option value="" >Select Status</option>
+                                    <option value="New">New</option>
+                                    <option value="In Progress">In Progress</option>
+                                    <option value="In Review">In Review</option>
+                                    <option value="Approved">Approved</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                                <span *ngIf="updateForm.get('status').invalid && insertForm2.get('status').touched" style="color:red"
+                                    class="fa fa-info-circle errspan">Status Required*</span>
+
+                                    <br>
                       </div>     
                       <div class="col-md-6">
                           <label for="type">Type<span style="color:red">*</span></label>
@@ -843,7 +856,19 @@
                                             <br>
 
                                            
-
+                                            <label>Status<span style="color:red">*</span></label>
+                                            <select formControlName="status" class="form-control data">
+                                                <option value="" >Select Status</option>
+                                                <option value="New">New</option>
+                                                <option value="In Progress">In Progress</option>
+                                                <option value="In Review">In Review</option>
+                                                <option value="Approved">Approved</option>
+                                                <option value="Rejected">Rejected</option>
+                                            </select>
+                                            <span *ngIf="updateForm.get('status').invalid && insertForm2.get('status').touched" style="color:red"
+                                                class="fa fa-info-circle errspan">Status Required*</span>
+            
+                                                <br>
                         </div>
                       <!-- <div class="col-md-12">
                           <br>

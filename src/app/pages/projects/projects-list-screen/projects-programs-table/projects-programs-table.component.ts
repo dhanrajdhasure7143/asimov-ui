@@ -87,6 +87,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        status:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
 
 
@@ -101,6 +102,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
       access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      status:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   })
 //   this.createprogram=this.formBuilder.group({
 //     programname: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -368,6 +370,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           this.updateForm.get("priority").setValue(data["priority"]);
           this.updateForm.get("resources").setValue(data["resources"]);
           this.updateForm.get("mapValueChain").setValue(data["mapValueChain"]);
+          this.updateForm.get("status").setValue(data["status"]);
           this.updateForm.get("measurableMetrics").setValue(data["measurableMetrics"]);
           
           this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
@@ -387,6 +390,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
             this.updateprogramForm.get("priority").setValue(data["priority"]);
             this.updateprogramForm.get("measurableMetrics").setValue(data["measurableMetrics"]);
             this.updateprogramForm.get("purpose").setValue(data["purpose"]);
+            this.updateprogramForm.get("status").setValue(data["status"]);
             this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
           }
       }
