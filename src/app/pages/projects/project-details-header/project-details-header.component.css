@@ -90,3 +90,18 @@ table.tablprdetails {
 #projects_details_screen {
   box-shadow: unset;
 }
+
+
+.status-data {
+  padding-left: 14px !important;
+  color:#001c47 !important;
+}
+span.labeltit {
+  font-size: 14px !important;
+  color: #7D7D7D;
+}
+span.labelcont b {
+  font-size: 14px !important;
+  color: #001c47;
+  font-weight: 400;
+}

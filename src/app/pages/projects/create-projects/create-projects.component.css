@@ -177,7 +177,7 @@ label.label-control{
     padding: 0px;
 }
 .maindivfoprm {
-    width: 900px;
+    width: 800px;
     margin: 0px auto;
     margin-top: 20px;
 }
@@ -192,25 +192,27 @@ label.label-control{
 }
 .maindivfoprm .create-heading {
     font-weight: 500;
-    font-size: 26px;
-    margin-bottom: -30px !important;
+    font-size: 20px;
+    /* margin-bottom: -30px !important; */
 }
 .maindivfoprm .label-control ,.modelprbody label{
     color: #6d6d6d !important;
     font-weight: normal !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
 }
 .maindivfoprm input, .maindivfoprm select, .maindivfoprm textarea ,.modelprbody input, .modelprbody select, .modelprbody textarea{
     background-color: #f6f6f6;
     border: 1px solid #ddd !important;
     box-shadow: unset !important;
+    color: rgb(0 21 50 / 60%) !important;
+    font-weight: 600 !important;
 }
 .maindivfoprm .fa.fa-info-circle.errspan {
     font-weight: normal;
     font-size: 12px;
 }
 .maindivfoprm .btn.btn-primary:hover {
-    font-weight: normal !important;
+    /* font-weight: normal !important; */
 }
 .innersform .mat-tab-body.mat-tab-body-active, .innersform .mat-tab-body-content {
     overflow: unset !important;
@@ -232,3 +234,64 @@ label.label-control{
     height:calc(100vh - 153px);
     overflow: auto;
 }
+
+
+.modelprhead, .modelprbody {
+    background-color: #F1F1F1 !important;
+}
+.modelprhead {
+    border: none;
+}
+.modal-header.modelprhead h4 {
+    font-size: 24px;
+    padding: 15px 0px 0px 15px !important;
+}
+.modelprbody input, .modelprbody select, .modelprbody textarea {
+    background-color: #fff !important;
+}
+.modal-header.modelprhead button span {
+    font-size: 30px;    
+    color: black !important;
+}
+
+.maindivfoprm select, .modelprbody select {
+    appearance: none;
+    background-image: url('../../../../assets/images/Projects/project-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: center right 17px;
+}
+
+.prj-crt-form {
+    margin-right: -15px !important;
+    margin-left: -15px !important;
+}
+.laemarleft {
+    padding-left: 0px !important;
+}
+button.btn.btn-primary.prj-btn-save {
+    margin-right: 0px !important;
+}
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprbody button.btn.btn-primary.prj-form-btn-reset {
+    background-color: #fff !important;
+    border: 1px solid #00a0e3 !important;
+    color: #00a0e3 !important;
+}
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset:hover, .modelprbody button.btn.btn-primary.prj-form-btn-reset:hover {
+    background-color: #001c47 !important;
+    color: #fff !important;
+    border: none !important;
+}
+.maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprbody button.btn.btn-primary.prj-form-btn-hover:hover {
+    background-color: #001c47 !important;
+    color: #fff !important;
+    border-color: #001c47 !important;
+}
+
+.modal-header.modelprhead button {
+    margin-top: 10px !important;
+    margin-right: 15px !important;
+}
+.col-md-12.mt-2.maartop {
+    margin-top: -15px;
+}
+

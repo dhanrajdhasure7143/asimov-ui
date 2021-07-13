@@ -30,7 +30,7 @@
                                     <br>
                                     
                                     <form [formGroup]="insertForm2" (ngSubmit)="createproject()">
-                                        <div class="row">
+                                        <div class="row prj-crt-form">
                                             <div class="col-md-6">
                                                 <label class="label-control">Project Name <span  style="color:red">*</span></label>
                                                 <input type="text"  formControlName="projectName" class="form-control data" style="border:1px solid lightgray" placeholder="Enter Project Name">
@@ -156,9 +156,9 @@
                                     </form>
                                     <br>
                                     <div class="pull-right">
-                                        <button (click)="resetcreateproject()" class="btn btn-primary">Reset</button>
+                                        <button (click)="resetcreateproject()" class="btn btn-primary prj-form-btn-reset">Reset</button>
                                         &nbsp;&nbsp;
-                                        <button [disabled]="insertForm2.invalid" (click)="createproject()" class="btn btn-primary">Save</button>
+                                        <button [disabled]="insertForm2.invalid" (click)="createproject()" class="btn btn-primary prj-btn-save prj-form-btn-hover">Save</button>
                                     </div>
                                     <br>
                                     <br>
@@ -178,7 +178,7 @@
                                     <div class="container">
                                         <br><br>
                                         <form [formGroup]="createprogram" (ngSubmit)="saveProgram()">
-                                            <div class="row">
+                                            <div class="row prj-crt-form">
                                                 <div class="col-md-6">
                                                         <label  class="label-control"  for="programname">Program Name<span  style="color:red">*</span></label>
                                                         <input type="text" maxlength="51" class="form-control data"  style="border:1px solid lightgray" formControlName="programName" value="" placeholder="Enter Program Name">
@@ -305,12 +305,12 @@
                                         <div>
                                             <div class="laemarleft">
                                             <span class="pull-left ml-2">
-                                                <button (click)="addproject(template)" class="btn btn-primary">Add New Project</button>
+                                                <button (click)="addproject(template)" class="btn btn-primary prj-form-btn-hover">Add New Project</button>
                                             </span>
                                             <span class="pull-right">
-                                                <button (click)="resetcreateprogram()" class="btn btn-primary">Reset</button>
+                                                <button (click)="resetcreateprogram()" class="btn btn-primary prj-form-btn-reset">Reset</button>
                                                 &nbsp;&nbsp;
-                                                <button [disabled]="createprogram.invalid" (click)="saveProgram()" class="btn btn-primary">Save</button>
+                                                <button [disabled]="createprogram.invalid" (click)="saveProgram()" class="btn btn-primary prj-btn-save prj-form-btn-hover">Save</button>
                                             </span></div>
                                         </div>
                                         <br>
@@ -366,7 +366,7 @@
           </button>
         </div>
         <div class="modal-body modelprbody">
-            <div class="container" style="width:100%">
+            <div class="container p-0" style="width:100%">
                     <br>
                     
                     <form [formGroup]="insertForm2" (ngSubmit)="linkcreateproject()">
@@ -489,9 +489,9 @@
                     </form>
                     <br>
                     <div class="pull-right footbutcl">
-                        <button (click)="resetcreateproject()" class="btn btn-primary">Reset</button>
+                        <button (click)="resetcreateproject()" class="btn btn-primary prj-form-btn-reset">Reset</button>
                         &nbsp;&nbsp;
-                        <button [disabled]="insertForm2.invalid" (click)="linkcreateproject()" class="btn btn-primary">Save</button>
+                        <button [disabled]="insertForm2.invalid" (click)="linkcreateproject()" class="btn btn-primary prj-form-btn-hover">Save</button>
                     </div>
                     <br><br>
             </div>

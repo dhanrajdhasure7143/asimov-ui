@@ -191,3 +191,24 @@ span.tab-text {
   line-height: normal;
   color: #081D2A;
 }
+
+
+.projects-header.maincreat.nrema {
+  display: flex;
+  align-items: center;
+  padding: 12px 10px !important;
+}
+.projects-header.maincreat span.projects-back-button {
+  background-color: #e2e2e2 !important;
+}
+.prj-lstscr-btn button {
+  background-color: #00a0e3 !important;
+  border: none;
+  margin-right: 0px !important;
+}
+.prj-lstscr-btn button:hover {
+  background-color: #001c47 !important;
+    color: #fff;
+    font-weight: 400 !important;
+    border: none;
+}

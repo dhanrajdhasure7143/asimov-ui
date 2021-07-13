@@ -1056,3 +1056,14 @@ div#propertiesPanelBody .bpp-properties-panel {
 #projectfavourites mat-tab-header.mat-tab-header {
   margin: 0px;
 }
+
+.maindivfoprm .mat-tab-label {	
+  min-width: auto !important;        
+  padding: 0px 20px !important;
+}
+.maindivfoprm .mat-tab-label-active {
+  color: #00a0e3 !important;
+}
+.modal-lg {
+  width: 800px !important;
+}

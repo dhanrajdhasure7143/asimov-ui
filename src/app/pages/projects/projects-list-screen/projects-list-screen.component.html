@@ -1,17 +1,18 @@
 <div *ngIf="projects_list.length!=0 && processes.length!=0">
     <mat-card id="projects_list_screen" *ngIf="projects_toggle==false">
       <div class="projects-header maincreat nrema">
-        <span class="projects-back-button">
-          <i class="fas fa-arrow-left" aria-hidden="true"></i>
-        </span>
-        <span class="projects-header-title">
-          <span class="prmaincolo">Projects</span> <span class="baclsl">/</span> Programs
-        </span>
-        <span class="pull-right" style="font-size:20px;">
+        <div class="">
+          <span class="projects-back-button"><i class="fas fa-arrow-left" aria-hidden="true"></i></span>
+          <span class="projects-header-title"><span class="prmaincolo">Projects</span> <span class="baclsl">/</span> Programs</span>
+        </div>
+        <div class="ml-auto prj-lstscr-btn" routerLink="/pages/projects/create-projects">
+          <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">+ Create New</button>
+        </div>    
+        <!-- <span class="pull-right" style="font-size:20px;">
           <span class="projects-menu-item" routerLink="/pages/projects/create-projects" ><i class="ri-file-add-line"></i></span>
           <span class="projects-menu-item" ><i class="ri-filter-2-line"></i></span>
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
-        </span>
+        </span> -->
       </div>
       <br>
         <mat-tab-group mat-stretch-tabs (selectedTabChange)="selected_tab=$event.index">

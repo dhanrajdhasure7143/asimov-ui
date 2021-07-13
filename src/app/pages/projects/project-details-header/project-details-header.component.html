@@ -2,7 +2,7 @@
     <span class="projects-back-button">
      
     </span>
-     <div class="container-fluid">
+     <div class="container-fluid pr-0">
          <div class="row">
             <div class="project-info">
                 <div class="status-img">
@@ -16,11 +16,11 @@
               <div class="col-md-6"></div>
               <div class="col-md-1"></div>
               <div class="col-md-1"></div>
-              <div class="col-md-4">
+              <div class="col-md-4 pr-0">
                 <div class="row">
-                    <div class="col-md-4"><p>Start Date</p></div> 
-                    <div class="col-md-3"><p>End Date </p></div>
-                    <div class="col-md-3"><p>Status</p></div>
+                    <div class="col-md-4 pr-0"><p>Start Date</p></div> 
+                    <div class="col-md-4 pr-0"><p>End Date </p></div>
+                    <div class="col-md-4 pr-0"><p>Status</p></div>
               </div>
               </div>
         
@@ -35,11 +35,11 @@
              <div class="col-md-8">
             
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4 pr-0">
               <div class="row">
-                <div class="col-md-4"><p><b>{{projectdata.startDate | date}}</b></p></div> 
-                <div class="col-md-3"><p><b>{{projectdata.endDate | date}}</b></p></div>
-                <div class="col-md-3"><p><b>{{projectdata.status}}</b></p></div>
+                <div class="col-md-4 pr-0"><p><b>{{projectdata.startDate | date}}</b></p></div> 
+                <div class="col-md-4 pr-0"><p><b>{{projectdata.endDate | date}}</b></p></div>
+                <div class="col-md-4 pr-0"><p><b>{{projectdata.status}}</b></p></div>
           </div>
                 
             </div>
@@ -57,9 +57,9 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="status-data">
-                  <span class="" style="font-size: 11px;white-space: nowrap;">Value Chain</span><br>
+                  <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Value Chain</span><br>
                   <span class="tab-text" *ngIf="projectdata.mapchainvalue==null" style="font-size: 12px;"><b>-</b></span>
-                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.mapValueChain}}</b></span>
+                  <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.mapValueChain}}</b></span>
                 </div>
               </div>
         </td>
@@ -70,9 +70,9 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="status-data">
-                  <span class="" style="font-size: 11px;white-space: nowrap;">Initiative</span><br>
+                  <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Initiative</span><br>
                   <span class="tab-text" *ngIf="projectdata.initiatives==null" style="font-size: 12px;"><b>-</b></span>
-                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.initiatives}}</b></span>
+                  <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.initiatives}}</b></span>
                 </div>
               </div>
           </td>
@@ -83,9 +83,9 @@
                   <img src="..\assets\images\Projects\bot.svg" alt="" >
                 </div>
                 <div class="status-data">
-                  <span class="" style="font-size: 11px;white-space: nowrap;">Process</span><br>
+                  <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Process</span><br>
                   <span class="tab-text" *ngIf="projectdata.process==null" style="font-size: 12px;"><b>-</b></span>
-                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.process}}</b></span>
+                  <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.process}}</b></span>
                 </div>
               </div>
           </td>
@@ -96,8 +96,8 @@
                   <img src="..\assets\images\Projects\document.svg" alt="" >
                 </div>
                 <div class="status-data">
-                  <span class="" style="font-size: 11px;white-space: nowrap;">Process Id</span><br>
-                  <span class="tab-text" style="font-size: 12px;"><b>1111134567</b></span>
+                  <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Process Id</span><br>
+                  <span class="tab-text labelcont" style="font-size: 12px;"><b>1111134567</b></span>
                 </div>
               </div>
         </td>
@@ -110,8 +110,8 @@
                       <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="" style="font-size: 11px;white-space: nowrap;">Project Purpose</span><br>
-                      <span class="tab-text" style="font-size: 12px;"><b>Improve ROI</b></span>
+                      <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Project Purpose</span><br>
+                      <span class="tab-text labelcont" style="font-size: 12px;"><b>Improve ROI</b></span>
                     </div>
                   </div>
             </div>
@@ -127,9 +127,9 @@
                       <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="" style="font-size: 11px;white-space: nowrap;">Project Owner</span><br>
+                      <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Project Owner</span><br>
                       <span class="tab-text" *ngIf="projectdata.owner==null" style="font-size: 12px;"><b>-</b></span>
-                      <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.owner}}</b></span>
+                      <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.owner}}</b></span>
                     </div>
                   </div>
             </div>
@@ -146,9 +146,9 @@
                       <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="" style="font-size: 11px;white-space: nowrap;">Project Priority</span><br>
+                      <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Project Priority</span><br>
                       <span class="tab-text" *ngIf="projectdata.projectpriority==null" style="font-size: 12px;"><b>-</b></span>
-                      <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.priority}}</b></span>
+                      <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.priority}}</b></span>
                     </div>
                   </div>
             </div>
@@ -161,9 +161,9 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="status-data">
-                  <span class="" style="font-size: 11px;">Resources</span><br>
+                  <span class="labeltit" style="font-size: 11px;">Resources</span><br>
                   <span class="tab-text" *ngIf="projectdata.resources==null" style="font-size: 12px;"><b>-</b></span>
-                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.resources}}</b></span>
+                  <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.resources}}</b></span>
                 </div>
               </div>
         </div>
@@ -177,8 +177,8 @@
                           <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                         </div>
                         <div class="status-data">
-                          <span class="" style="font-size: 11px;white-space: nowrap;">Project Health</span><br>
-                          <span class="tab-text" style="font-size: 12px;"><b>Good</b></span>
+                          <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Project Health</span><br>
+                          <span class="tab-text labelcont" style="font-size: 12px;"><b>Good</b></span>
                         </div>
                       </div>
                 </div> 
@@ -191,8 +191,8 @@
                           <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                         </div>
                         <div class="status-data">
-                          <span class="" style="font-size: 11px;white-space: nowrap;">Progress Percentage</span><br>
-                          <span class="tab-text" style="font-size: 12px;"><b>50%</b>
+                          <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Progress Percentage</span><br>
+                          <span class="tab-text labelcont" style="font-size: 12px;"><b>50%</b>
                             <mat-progress-bar mode="determinate" value="40"></mat-progress-bar>
                         </span>
                         </div>
@@ -207,8 +207,8 @@
                           <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                         </div>
                         <div class="status-data">
-                          <span class="" style="font-size: 11px;white-space: nowrap;">Efforts Spent</span><br>
-                          <span class="tab-text" style="font-size: 12px;"><input type="text" size="10" placeholder="Enter Efforts Spent Value"/></span>
+                          <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Efforts Spent</span><br>
+                          <span class="tab-text labelcont" style="font-size: 12px;"><input type="text" size="10" placeholder="Enter Efforts Spent Value"/></span>
                         </div>
                       </div>
                 </div> 
@@ -220,8 +220,8 @@
                       <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="" style="font-size: 11px;white-space: nowrap;">Burn Rate</span><br>
-                      <span class="tab-text" style="font-size: 12px;"><input type="text" size="10" placeholder="Enter Burnt Rate Value"/></span>
+                      <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Burn Rate</span><br>
+                      <span class="tab-text labelcont" style="font-size: 12px;"><input type="text" size="10" placeholder="Enter Burnt Rate Value"/></span>
                     </div>
                   </div>
             </div> 
