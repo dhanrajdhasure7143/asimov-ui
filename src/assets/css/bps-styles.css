@@ -196,7 +196,7 @@ div[class^='diagram_container']{
   background-color: #f1f1f1;
 }
 mat-expansion-panel{
-  border-bottom: 1px solid #eee;
+  border-top: 1px solid #ccccccb5;
   box-shadow: none !important;
 }
 .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) mat-panel-title,
@@ -204,7 +204,7 @@ mat-expansion-panel{
   color: #0062cf !important;
 }
 .box-heading{
-  font-weight: bold;
+  /* font-weight: bold; */
   color: #5b5b5b;
   /* margin: 20px 0; */
   margin: 0px;
@@ -341,7 +341,7 @@ margin-right: -85px;
   display: inline-flex; */
 
   position: absolute;
-  top: 5px;
+  top: 0px;
   width: 320px;
   right: 0;
   height: 100%;
@@ -350,7 +350,7 @@ margin-right: -85px;
   display: inline-block;
   z-index: 100;
   box-shadow: 2px 0px 3px rgb(0 0 0 / 20%);
-  border-radius: 4px;
+  border: 1px solid rgb(0 0 0 / 20%);
   background: white;
 }
 
@@ -373,12 +373,13 @@ margin-right: -85px;
   z-index: 9999;
 }
 .propertiesTitle{
-  padding: 10px 10px;
+  padding: 14px 10px;
+  /* padding: 10px 10px; */
   line-height: 12px;
   font-size: 12px;
-  background-color: #ccc;
+  background-color: #607088;
   cursor: pointer;
-  border: 1px solid #ccc;
+  /* border: 1px solid #607088; */
   /* border-radius: 5px 0 0 5px; */
   /* height: 200px; */
   /* width: 25px; */
@@ -390,7 +391,7 @@ margin-right: -85px;
   overflow: hidden;
 }
 .propertiesTitle:hover, .changesTitle:hover{
-  background-color: grey;
+  background-color: #00a1e3;
   color: white;
 }
 .propertiesTitle div{
@@ -837,8 +838,10 @@ padding-top: 11px;
 }
 
 .propertiesContainer.propertiesContainerClosed {
-  width: 40px;
-  height: 36px;
+  /* width: 40px;
+  height: 36px; */
+  width: 42px;
+  height: 44px;
 }
 
 mat-panel-title.mat-expansion-panel-header-title {
@@ -895,4 +898,10 @@ mat-panel-title.mat-expansion-panel-header-title {
 
 .functionality-icons span:last-child {
   margin: 0px;
+}
+.mat-expansion-panel .mat-expansion-panel-header.cdk-keyboard-focused:not([aria-disabled=true]), .mat-expansion-panel .mat-expansion-panel-header.cdk-program-focused:not([aria-disabled=true]), .mat-expansion-panel:not(.mat-expanded) .mat-expansion-panel-header:hover:not([aria-disabled=true]) {
+  background:transparent !important;
+}
+.propertiesContainerOpened mat-expansion-panel-header {
+  height: 40px !important;
 }

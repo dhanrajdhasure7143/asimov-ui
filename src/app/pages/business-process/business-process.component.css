@@ -52,3 +52,7 @@ select.dowload-images {
 select.dowload-images option {
     color: #000;
 }
+button.editprimary {
+    background-color: #00a1e3;
+    border-radius: 4px;
+}
