@@ -188,9 +188,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
    
     getallProjects(){
       this.projects_list.sort((a,b) => a.id > b.id ? -1 : 1);
-      if(this.status_data=="All")
-      this.projects_list = this.projects_list
-      else if(this.status_data=="New")
+      if(this.status_data=="New")
       this.projects_list = this.projects_list.filter(item=>item.status=="New")
       else if(this.status_data=="In Progress") 
       this.projects_list = this.projects_list.filter(item=>item.status=="In Progress")
@@ -293,7 +291,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         owner:data.owner,
         priority:data.priority,
         createdBy:data.createdBy,
-        status:data.status,
+        status:data.status==null?"New":data.status,
         resources:data.resources,
         mapValueChain:data.mapValueChain,
         measurableMetrics:data.measurableMetrics,
@@ -310,7 +308,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
           owner:data.owner,
           priority:data.priority,
           createdBy:data.createdBy,
-          status:data.status,
+          status:data.status==null?"New":data.status,
           resources:data.resources,
           mapValueChain:data.mapValueChain,
           measurableMetrics:data.measurableMetrics,
@@ -320,6 +318,11 @@ export class ProjectsProgramsTableComponent implements OnInit {
     })];
     
     this.project_main.projects_list=this.projects_list;
+    this.project_main.count.New=this.projects_list.filter(item=>item.status=="New").length
+    this.project_main.count.Inprogress=this.projects_list.filter(item=>item.status=="In Progress").length
+    this.project_main.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length
+    this.project_main.count.Approved=this.projects_list.filter(item=>item.status=="Approved").length
+    this.project_main.count.Inreview=this.projects_list.filter(item=>item.status=="In Review").length
     this.spinner.hide();
     this.getallProjects();
 

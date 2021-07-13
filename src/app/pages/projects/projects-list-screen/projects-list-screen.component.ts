@@ -16,6 +16,7 @@ export class ProjectsListScreenComponent implements OnInit {
   projects_list:any=[];
   users_list:any=[];
   processes:any=[];
+  selected_tab:any=0;
   count:any={
     New:0,
     Inprogress:0,
