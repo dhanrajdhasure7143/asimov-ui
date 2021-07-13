@@ -211,9 +211,10 @@ mat-expansion-panel{
   line-height: 2;
 }
 #bpmn_list_row span{
-  display: inline-block;
+  display: inline-flex;
   width: 10.5%;
   text-align: center;
+  align-items: center;
 }
 .workspace-title{
   padding-right: 100px !important;
@@ -843,7 +844,7 @@ padding-top: 11px;
 mat-panel-title.mat-expansion-panel-header-title {
   align-items: center;
   padding: 5px 10px;
-  border-bottom: 1px solid #ccc;
+  /* border-bottom: 1px solid #ccc; */
   margin: 0px;
 }
 .mat-expansion-panel-body {

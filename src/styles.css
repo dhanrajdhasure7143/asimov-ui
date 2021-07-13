@@ -860,7 +860,7 @@ font-size: 16px !important;
 {
   display: block !important;
   position: relative;
-  top: 2px;
+  /* top: 2px; */
   background-color: transparent;
 }
 

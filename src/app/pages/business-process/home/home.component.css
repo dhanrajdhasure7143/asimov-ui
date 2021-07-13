@@ -23,6 +23,7 @@
     padding: 12px 8px !important;
     display: flex;
     width: 100%;
+    padding-right: 18px !important;
     align-items: center;
     font-size: 14px;
     color: #00a0e3;
@@ -49,7 +50,7 @@
 }
 .new-bps-grid-data span {
     text-align: left !important;
-    padding: 8px 12px;
+    padding: 0px 5px;
     width: 100% !important;
     /* top: 50%;
     position: relative;
