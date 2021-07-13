@@ -333,7 +333,7 @@ textarea.msgip {
     display: flex;
 }
 .shortcutslistdiv label {
-    width: 145px;
+    min-width: 142px;
     font-size: 12px;
     font-weight: 500;
     margin: 7px 0px;
@@ -358,8 +358,8 @@ textarea.msgip {
 }
 .favouriteslistdiv img {
     vertical-align: middle;
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
 }
 .favouriteslistdiv .favsh {
     position: absolute;
