@@ -1032,7 +1032,7 @@ div#propertiesPanelBody .bpp-properties-panel {
   margin: 0px 12px;
 }
 #projects_list_screen .mat-tab-label:first-child {
-  padding: 0px !important;
+  padding: 0px 18px !important;
   justify-content: left !important;
   margin-left: -5px;
 }
