@@ -72,7 +72,7 @@
                             <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer">
                                 <div [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="togglePosition()">
                                     <div class="menuToggle">
-                                        <img src="./../../../../assets/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                        <img src="../../../../assets/images/BPMS/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                         <label class="menuToggleTitle">Menu</label>
                                     </div>
                                 </div>
@@ -84,23 +84,148 @@
                                           <mat-expansion-panel-header>
                                             <mat-panel-title [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="accordionHeaderMain">
                                                 <div class="accordionHeaderToggle">
-                                                    <img src="./../../../../assets/Properties-icon.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                                     <label class="accordionHeader">Properties</label>
+                                                    <img src="../../../../assets/images/BPMS/maximize-2.svg" alt="propexpandIcon" class="propexpandIcon">
                                                 </div>
                                             </mat-panel-title>
                                           </mat-expansion-panel-header>
                                           <div id="properties" class=""></div>
                                         </mat-expansion-panel>
+
                                         <mat-expansion-panel hideToggle>
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
-                                                <label for="" class="accordionHeader">Content Header</label>
-                                            </mat-panel-title>
-                                            
+                                                <div class="accordionHeaderToggle">
+                                                    <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <label for="" class="accordionHeader">Discussions</label>
+                                                </div>                                                
+                                            </mat-panel-title>                                            
                                           </mat-expansion-panel-header>
-                                          <p>Content Here</p>
+                                          <mat-panel-description>
+                                            <div class="activecollaboration">
+                                                <div class="row collab">
+                                                    <div class="row lftusermsg">
+                                                        <img alt="" src="../../../../assets/images/BPMS/user1.png">
+                                                        <p>Lorem ipsum dolor sit amet.</p>
+                                                        <p>Rachel M | 09th Jan, 12 pm</p>
+                                                    </div>
+                                                    <div class="row rgtusermsg">
+                                                        <p>Lorem ipsum dolor sit amet.</p>
+                                                        <p class="rttime">09th Jan, 12 pm</p>
+                                                    </div>
+                                                    <div class="row lftusermsg">
+                                                        <img alt="" src="../../../../assets/images/BPMS/user2.png">
+                                                        <p>Lorem ipsum dolor sit amet.</p>
+                                                        <p><a href="#"><img alt="" src="../../../../assets/images/BPMS/attach-file.svg" width="16px" height="16px">Lorem ipsum.pdf</a></p>
+                                                        <p>Rick Johnson | 09th Jan, 12 pm</p>
+                                                    </div>
+                                                </div>
+                                                <div class="row collabottom">
+                                                    <textarea  class="msgip">Loreum ipsum dolor sit amet, consec</textarea>
+                                                    <button class="btn"><img alt="" src="../../../../assets/images/BPMS/attach.svg"></button>
+                                                    <button class="btn"><img alt="" src="../../../../assets/images/BPMS/Send.svg"></button>
+                                                </div>
+                                            </div>
+                                          </mat-panel-description>                                          
                                         </mat-expansion-panel>
-                                      </mat-accordion>
+                                        
+                                        <mat-expansion-panel hideToggle>
+                                          <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <div class="accordionHeaderToggle">
+                                                    <img src="../../../../assets/images/BPMS/Shortcuts.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <label for="" class="accordionHeader">Shortcuts</label>
+                                                </div>
+                                            </mat-panel-title>                                            
+                                          </mat-expansion-panel-header>
+                                          <mat-panel-description>
+                                            <div class="shortcutslistdiv">
+                                                <div class="row">
+                                                    <label for="">Undo</label>
+                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">Z</span></label>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="">Redo</label>
+                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">Shift</span> + <span class="bluetext">Z</span></label>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="">Select All</label>
+                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">A</span></label>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="">Scrolling(Vertical)</label>
+                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">Scrolling</span></label>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="">Scrolling(Horizontal)</label>
+                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">Shift</span> + <span class="bluetext">Scrolling</span></label>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="">Direct Editing</label>
+                                                    <label><span class="bluetext">E</span></label>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="">Hand Tool</label>
+                                                    <label><span class="bluetext">H</span></label>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="">Lasso Tool</label>
+                                                    <label><span class="bluetext">L</span></label>
+                                                </div>
+                                                <div class="row">
+                                                    <label for="">Space Tool</label>
+                                                    <label><span class="bluetext">S</span></label>
+                                                </div>
+                                            </div>
+                                          </mat-panel-description>                                         
+                                        </mat-expansion-panel>
+
+                                        <mat-expansion-panel hideToggle>
+                                          <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <div class="accordionHeaderToggle">
+                                                    <img src="../../../../assets/images/BPMS/Favourites.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <label for="" class="accordionHeader">Favourites</label>
+                                                </div>
+                                            </mat-panel-title>                                            
+                                          </mat-expansion-panel-header>
+                                          <mat-panel-description>
+                                            <div class="favouriteslistdiv">
+                                                <div class="row">
+                                                    <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <label for="">Business Process Studio</label>
+                                                    <label class="favsh">(BPM)</label>
+                                                </div>
+                                                <div class="row">
+                                                    <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <label for="">Robotic Process Automation</label>
+                                                    <label class="favsh">(RPA)</label>
+                                                </div>
+                                                <div class="row">
+                                                    <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <label for="">Process Intelligence</label>
+                                                    <label class="favsh">(PI)</label>
+                                                </div>
+                                            </div>
+                                          </mat-panel-description>
+                                        </mat-expansion-panel>
+
+                                        <mat-expansion-panel hideToggle>
+                                          <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <div class="accordionHeaderToggle">
+                                                    <img src="../../../../assets/images/BPMS/Activity.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                                    <label for="" class="accordionHeader">Activities</label>
+                                                </div> 
+                                            </mat-panel-title>                                            
+                                          </mat-expansion-panel-header>
+                                          <mat-panel-description>
+                                            <p>Activities list Here</p>
+                                          </mat-panel-description>
+                                        </mat-expansion-panel>
+
+                                    </mat-accordion>
                                       
                                     
                                 </div>
