@@ -6,6 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import Swal from 'sweetalert2';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
+import moment from 'moment';
 
 @Component({
   selector: 'app-create-projects',
@@ -32,6 +33,8 @@ export class CreateProjectsComponent implements OnInit {
   newproject: any=[];
   selectedresources:any;
   username: string;
+  mindate: any;
+
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -62,7 +65,7 @@ export class CreateProjectsComponent implements OnInit {
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
-    status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+   // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
 
   this.insertForm2=this.formBuilder.group({
@@ -78,13 +81,15 @@ export class CreateProjectsComponent implements OnInit {
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     description: ["", Validators.compose([Validators.maxLength(200)])],
     access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+   // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
 })
     this.resetcreateproject();
     this.getallusers();
     this.getallProjects();
     this.getprocessnames();
+
+    this.mindate= moment().format("YYYY-MM-DD");
   }
 
 
@@ -111,6 +116,7 @@ createproject()
     let userfirstname=localStorage.getItem("firstName")
     let userlastname=localStorage.getItem("lastName")
     this.username=userfirstname+" "+userlastname
+    this.insertForm2.value.status="New";
     this.insertForm2.value.createdBy=this.username;
     let data=this.insertForm2.value;
     this.api.createProject(data).subscribe(data=>{
@@ -177,6 +183,7 @@ createproject()
     let userlastname=localStorage.getItem("lastName")
     this.username=userfirstname+" "+userlastname
     this.createprogram.value.createdBy=this.username;
+    this.createprogram.value.status="New";
     let data=this.createprogram.value;
     data["project"]=this.newproject
     data["existingprojects"]=this.selected_projects.map(item => {
@@ -191,9 +198,22 @@ createproject()
         let response:any=res
         if(response.errormessage==undefined)
         {
-          Swal.fire("Success",response.message,"success")
+          let status: any= response;
+        Swal.fire({
+          title: 'Success',
+          text: ""+status.message,
+          position: 'center',
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+      }).then((result) => {
           this.resetcreateprogram();
           this.getallProjects();
+          this.router.navigate(['/pages/projects/listOfProjects'])
+
+        }) 
         }
         else
         {

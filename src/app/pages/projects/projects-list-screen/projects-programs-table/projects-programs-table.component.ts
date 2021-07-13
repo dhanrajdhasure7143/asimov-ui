@@ -10,6 +10,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { Base64 } from 'js-base64';
 import { Router } from '@angular/router';
 import {ProjectsListScreenComponent} from '../projects-list-screen.component'
+import moment from 'moment';
 
 @Component({
   selector: 'app-projects-programs-table',
@@ -46,6 +47,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
    projectresources:any= [];
    userslist:any;
    updateprogramForm: FormGroup;
+   mindate: any;
   //   public createprogram:FormGroup;
   // updateddata: any;
   // public updateflag: boolean;
@@ -87,6 +89,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
         resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
         measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        status:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+        endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+       startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     })
 
 
@@ -101,6 +106,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
       access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      status:["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   })
 //   this.createprogram=this.formBuilder.group({
 //     programname: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -146,6 +152,8 @@ export class ProjectsProgramsTableComponent implements OnInit {
     setTimeout(()=>{
       this.getallProjects();
     },100)
+
+    this.mindate= moment().format("YYYY-MM-DD");
   }
 
   projectDetailsbyId(id){
@@ -305,7 +313,9 @@ export class ProjectsProgramsTableComponent implements OnInit {
           status:data.status,
           resources:data.resources,
           mapValueChain:data.mapValueChain,
-          measurableMetrics:data.measurableMetrics
+          measurableMetrics:data.measurableMetrics,
+          startDate:data.startDate,
+          endDate:data.endDate
         }
     })];
     
@@ -368,8 +378,10 @@ export class ProjectsProgramsTableComponent implements OnInit {
           this.updateForm.get("priority").setValue(data["priority"]);
           this.updateForm.get("resources").setValue(data["resources"]);
           this.updateForm.get("mapValueChain").setValue(data["mapValueChain"]);
+          this.updateForm.get("status").setValue(data["status"]);
           this.updateForm.get("measurableMetrics").setValue(data["measurableMetrics"]);
-          
+          this.updateForm.get("endDate").setValue(moment(data["endDate"]).format("YYYY-MM-DD"));
+          this.updateForm.get("startDate").setValue(moment(data["startDate"]).format("YYYY-MM-DD"));
           this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
         }
       }
@@ -387,6 +399,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
             this.updateprogramForm.get("priority").setValue(data["priority"]);
             this.updateprogramForm.get("measurableMetrics").setValue(data["measurableMetrics"]);
             this.updateprogramForm.get("purpose").setValue(data["purpose"]);
+            this.updateprogramForm.get("status").setValue(data["status"]);
             this.updatemodalref=this.modalService.show(updatemodal,{class:"modal-lg"})
           }
       }
@@ -690,7 +703,7 @@ resetupdateproject(){
   this.updateForm.get("initiatives").setValue("");
   this.updateForm.get("process").setValue("");
   this.updateForm.get("access").setValue("");
-  
+  this.updateForm.get("status").setValue("");
   this.updateForm.get("priority").setValue("");
 }
 
@@ -703,6 +716,7 @@ resetupdateprogram(){
   this.updateprogramForm.get("type").setValue("");
   this.updateprogramForm.get("initiatives").setValue("");
   this.updateprogramForm.get("process").setValue("");
+  this.updateprogramForm.get("status").setValue("");
 }
   
 }

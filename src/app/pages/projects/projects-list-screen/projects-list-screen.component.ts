@@ -73,7 +73,9 @@ export class ProjectsListScreenComponent implements OnInit {
           createdBy:data.createdBy,
           resources:data.resources,
           mapValueChain:data.mapValueChain,
-          measurableMetrics:data.measurableMetrics
+          measurableMetrics:data.measurableMetrics,
+          startDate:data.startDate,
+          endDate:data.endDate
         }
     })];
     this.spinner.hide();

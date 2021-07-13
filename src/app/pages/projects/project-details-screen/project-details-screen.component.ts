@@ -56,8 +56,8 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.projectdetails();
 
     setTimeout(() => {
-      this.getImage();
-      this.profileName();
+     // this.getImage();
+     // this.profileName();
         },1000);
         this.getautomatedtasks(0);
         this.getUserRole();
@@ -181,11 +181,13 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
   getImage() {
     
-    const userid=this.projectDetails.resources;
-        this.rpa.getUserDetails(userid).subscribe(res => {
-              this.retrieveResonse = res;
-              this.resourcetablefirstname=this.retrieveResonse.firstName
-              this.resourcetablelastname=this.retrieveResonse.lastName
+    let userid=this.projectDetails.resources;
+    this.rpa.getUserDetails(userid).subscribe(res => {
+      this.retrieveResonse = res;
+      setTimeout(() => {
+                this.resourcetablefirstname=this.retrieveResonse.firstName
+                this.resourcetablelastname=this.retrieveResonse.lastName
+              }, 500);
               if(this.retrieveResonse.image==null||this.retrieveResonse.image==""){
                this.profileName();
                 this.profilePicture=false;
@@ -200,5 +202,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
              // console.log(this.retrievedImage);
             }
           );
+
+     
       }
 }
