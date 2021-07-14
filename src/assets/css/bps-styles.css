@@ -373,7 +373,7 @@ margin-right: -85px;
   z-index: 9999;
 }
 .propertiesTitle{
-  padding: 14px 10px;
+  padding: 12px 10px;
   /* padding: 10px 10px; */
   line-height: 12px;
   font-size: 12px;
@@ -841,7 +841,7 @@ padding-top: 11px;
   /* width: 40px;
   height: 36px; */
   width: 42px;
-  height: 44px;
+  height: 40px;
 }
 
 mat-panel-title.mat-expansion-panel-header-title {
@@ -903,5 +903,5 @@ mat-panel-title.mat-expansion-panel-header-title {
   background:transparent !important;
 }
 .propertiesContainerOpened mat-expansion-panel-header {
-  height: 40px !important;
+  height: 38px !important;
 }
