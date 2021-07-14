@@ -657,7 +657,7 @@
                           <label class="label-control">Add Resources<span  style="color:red">*</span></label>
                           <select   formControlName="resources" style="border:1px solid lightgray"  class="form-control data">
                               <option value="">Select Resources</option>
-                              <option *ngFor="let user of users_list" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                              <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option> 
                           </select>
                           <span *ngIf="updateForm.get('resources').invalid && updateForm.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
                           <br>
@@ -729,7 +729,7 @@
                           <select class="form-control"   style="border:1px solid lightgray" formControlName="process">
                            
                             <option value="">Select Process</option>
-                            <option *ngFor="let process of processes" [value]="process.processName">{{process.processName}}</option>          
+                            <option *ngFor="let process of processes" [value]="process.processId">{{process.processName}}</option>          
                           </select>
                           <span *ngIf="updateForm.get('process').invalid && updateForm.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
                           <br>
