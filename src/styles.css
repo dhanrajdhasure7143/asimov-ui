@@ -1036,9 +1036,9 @@ div#propertiesPanelBody .bpp-properties-panel {
   margin: 0px 12px;
 }
 #projects_list_screen .mat-tab-label:first-child {
-  padding: 0px 18px !important;
+  padding: 0px !important;
   justify-content: left !important;
-  margin-left: -5px;
+  margin-left: -13px;
 }
 .table tbody tr:hover {
   background: #f2d12b33 !important;
@@ -1074,4 +1074,49 @@ div#propertiesPanelBody .bpp-properties-panel {
 }
 .modal-lg {
   width: 800px !important;
+}
+
+@media (min-width: 768px){
+  .modal-dialog {
+  height: 100%;
+  margin: 0px auto !important;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+}
+
+.modal-lg .modal-content {
+  margin-top: 0px !important;
+  height: 90%;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  cursor: pointer;
+}
+::-webkit-scrollbar:hover {
+  width: 8px !important;
+  height: 8px !important;
+  cursor: pointer;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #0081B833;
+  border-radius: 10px;
+  cursor: pointer;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(73, 88, 145);
+  cursor: pointer;
+  width: 8px;
+  height: 8px;
+}
+
+mat-card#projects_list_screen {
+  box-shadow: none !important;
 }

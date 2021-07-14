@@ -1,72 +1,100 @@
 <div>
-    <!-- <mat-card>
-        <mat-tab-group mat-stretch-tabs>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <span class="tab-number">38</span>
-              <span class="tab-text types2">Total Projects</span>
-            </ng-template> -->
+  <!-- <mat-card>
+      <mat-tab-group mat-stretch-tabs>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-number">38</span>
+            <span class="tab-text types2">Total Projects</span>
+          </ng-template> -->
 <!--            
-            <div class="rpa-env-search">
-              <mat-form-field class="rpa-mat-form-field-search">
-                  <mat-label>Search</mat-label>
-                  <mat-icon matSuffix *ngIf="!isSearch" style="font-size: 1.2em">search</mat-icon>
-                  <input class="toolbar-search" *ngIf="!isSearch" matInput (keyup)="applyFilter1($event.target.value)">
-              </mat-form-field>
+          <div class="rpa-env-search">
+            <mat-form-field class="rpa-mat-form-field-search">
+                <mat-label>Search</mat-label>
+                <mat-icon matSuffix *ngIf="!isSearch" style="font-size: 1.2em">search</mat-icon>
+                <input class="toolbar-search" *ngIf="!isSearch" matInput (keyup)="applyFilter1($event.target.value)">
+            </mat-form-field>
 
-              
-          </div> -->
-            <!-- <div class="env-data-tool">
-              <div class="env-btn">
-                  <button value="Create" title="Create" id="addbtn" (click)="createprojects();resetcreateproject();">
-              <img  src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
-              <div>New</div>
-            </button>
-              </div>
-              <div *ngIf="Credupdateflag == true" class="env-btn">
-                  <button id="updatebtn" data-toggle="tooltip" data-placement="bottom" title="Modify" (click)="updatedata()">        
-              <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
-              <div>Modify</div>            
-                  </button>    
-              </div>   
-              <div *ngIf="Credupdateflag == false" class="env-btn">    
-                  <button data-toggle="tooltip" id="updatebtn" data-placement="top" title="Modify" disabled>            
-                   <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'>     
-                   <div>Modify</div>          
-                   </button>   
-              </div>
-              <div *ngIf="Creddeleteflag==true" class="env-btn">
-                  <button title="Delete" value="Delete" id="deletebtn" (click)="delete()">
-                      <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-                      <div>Delete</div>
-                      </button>
-              </div>       
-              <div *ngIf="Creddeleteflag==false" class="env-btn">
-                  <button data-toggle="tooltip" data-placement="top" id="deletebtn" title="Delete" disabled>
-                  <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-                  <div>Delete</div>
-                  </button>
-              </div>
-          </div> -->
-                <div style="width:100%;overflow-x: auto;height:calc( 100vh - 306px)">
-                  <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
-                      <!-- <thead>
-                        <tr>
-                          <th scope="col" class="types2">ID</th>
-                          <th scope="col" class="types2">Type</th>
-                          <th scope="col" class="types2">Initiative</th>
-                          <th scope="col" class="types2">Process</th>
-                          <th scope="col" class="types2">Name</th>
-                          <th scope="col" class="types2">Status</th>
-                          <th scope="col" class="types2">Health</th>
-                          <th scope="col" class="types2">Owner</th>
-                          <th scope="col" class="types2">Priority</th>
-                          <th scope="col" class="types2">Access</th>
-                          <th scope="col" class="types2">Last Updated Date</th>
-                          <th scope="col" class="types2">Action</th>
+            
+        </div> -->
+          <!-- <div class="env-data-tool">
+            <div class="env-btn">
+                <button value="Create" title="Create" id="addbtn" (click)="createprojects();resetcreateproject();">
+            <img  src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
+            <div>New</div>
+          </button>
+            </div>
+            <div *ngIf="Credupdateflag == true" class="env-btn">
+                <button id="updatebtn" data-toggle="tooltip" data-placement="bottom" title="Modify" (click)="updatedata()">        
+            <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
+            <div>Modify</div>            
+                </button>    
+            </div>   
+            <div *ngIf="Credupdateflag == false" class="env-btn">    
+                <button data-toggle="tooltip" id="updatebtn" data-placement="top" title="Modify" disabled>            
+                 <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'>     
+                 <div>Modify</div>          
+                 </button>   
+            </div>
+            <div *ngIf="Creddeleteflag==true" class="env-btn">
+                <button title="Delete" value="Delete" id="deletebtn" (click)="delete()">
+                    <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
+                    <div>Delete</div>
+                    </button>
+            </div>       
+            <div *ngIf="Creddeleteflag==false" class="env-btn">
+                <button data-toggle="tooltip" data-placement="top" id="deletebtn" title="Delete" disabled>
+                <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
+                <div>Delete</div>
+                </button>
+            </div>
+        </div> -->
+              <div style="width:100%;overflow-x: auto;height:calc( 100vh - 306px)">
+                <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
+                    <!-- <thead>
+                      <tr>
+                        <th scope="col" class="types2">ID</th>
+                        <th scope="col" class="types2">Type</th>
+                        <th scope="col" class="types2">Initiative</th>
+                        <th scope="col" class="types2">Process</th>
+                        <th scope="col" class="types2">Name</th>
+                        <th scope="col" class="types2">Status</th>
+                        <th scope="col" class="types2">Health</th>
+                        <th scope="col" class="types2">Owner</th>
+                        <th scope="col" class="types2">Priority</th>
+                        <th scope="col" class="types2">Access</th>
+                        <th scope="col" class="types2">Last Updated Date</th>
+                        <th scope="col" class="types2">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody class="" >
+                      <tr>
+                        <td>1</td>
+                        <td>Project</td>
+                        <td >Process Improvement</td>
+                        <td>Risk Assesment</td>
+                        <td>Project Name 1</td>
+                        <td>Inprogress</td>
+                        <td>good</td>
+                        <td >Pete</td>
+                        <td>High</td>
+                        <td>Owner</td>
+                        <td>05-june-2021</td>
+                        <a class="link" id="eiap-home" (click)="updatedata"><td>Edit</td></a>
+                      </tr>
+                      <tr>
+                          <td>1</td>
+                          <td>Project</td>
+                          <td >Process Improvement</td>
+                          <td>Risk Assesment</td>
+                          <td>Project Name 1</td>
+                          <td>Inprogress</td>
+                          <td>good</td>
+                          <td >Pete</td>
+                          <td>High</td>
+                          <td>Owner</td>
+                          <td>05-june-2021</td>
+                          <td>Edit</td>
                         </tr>
-                      </thead>
-                      <tbody class="" >
                         <tr>
                           <td>1</td>
                           <td>Project</td>
@@ -79,67 +107,53 @@
                           <td>High</td>
                           <td>Owner</td>
                           <td>05-june-2021</td>
-                          <a class="link" id="eiap-home" (click)="updatedata"><td>Edit</td></a>
+                          <td>Edit</td>
                         </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Project</td>
-                            <td >Process Improvement</td>
-                            <td>Risk Assesment</td>
-                            <td>Project Name 1</td>
-                            <td>Inprogress</td>
-                            <td>good</td>
-                            <td >Pete</td>
-                            <td>High</td>
-                            <td>Owner</td>
-                            <td>05-june-2021</td>
-                            <td>Edit</td>
-                          </tr>
-                          <tr>
-                            <td>1</td>
-                            <td>Project</td>
-                            <td >Process Improvement</td>
-                            <td>Risk Assesment</td>
-                            <td>Project Name 1</td>
-                            <td>Inprogress</td>
-                            <td>good</td>
-                            <td >Pete</td>
-                            <td>High</td>
-                            <td>Owner</td>
-                            <td>05-june-2021</td>
-                            <td>Edit</td>
-                          </tr>
-                      </tbody>
-                    </table>
-                    
-            </div>
-            
-          </mat-tab>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <span class="tab-number">10</span>
-              <span class="tab-text">New</span>
-            </ng-template>
-            <div class="">
-                <table class="table table-borderless col-md-12 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" class="types2">ID</th>
-                      <th scope="col" class="types2">Type</th>
-                      <th scope="col" class="types2">Initiative</th>
-                      <th scope="col" class="types2">Process</th>
-                      <th scope="col" class="types2">Name</th>
-                      <th scope="col" class="types2">Status</th>
-                      <th scope="col" class="types2">Health</th>
-                      <th scope="col" class="types2">Owner</th>
-                      <th scope="col" class="types2">Priority</th>
-                      <th scope="col" class="types2">Access</th>
-                      <th scope="col" class="types2">Last Updated Date</th>
-                      <th scope="col" class="types2">Action</th>
-                    </tr>
-                  </thead>
-                  <tbody class="" >
-                    <tr>
+                    </tbody>
+                  </table>
+                  
+          </div>
+          
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-number">10</span>
+            <span class="tab-text">New</span>
+          </ng-template>
+          <div class="">
+              <table class="table table-borderless col-md-12 table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" class="types2">ID</th>
+                    <th scope="col" class="types2">Type</th>
+                    <th scope="col" class="types2">Initiative</th>
+                    <th scope="col" class="types2">Process</th>
+                    <th scope="col" class="types2">Name</th>
+                    <th scope="col" class="types2">Status</th>
+                    <th scope="col" class="types2">Health</th>
+                    <th scope="col" class="types2">Owner</th>
+                    <th scope="col" class="types2">Priority</th>
+                    <th scope="col" class="types2">Access</th>
+                    <th scope="col" class="types2">Last Updated Date</th>
+                    <th scope="col" class="types2">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="" >
+                  <tr>
+                    <td>1</td>
+                    <td>Project</td>
+                    <td >Process Improvement</td>
+                    <td>Risk Assesment</td>
+                    <td>Project Name 1</td>
+                    <td>Inprogress</td>
+                    <td>good</td>
+                    <td >Pete</td>
+                    <td>High</td>
+                    <td>Owner</td>
+                    <td>05-june-2021</td>
+                    <td>Edit</td>
+                  </tr>
+                  <tr>
                       <td>1</td>
                       <td>Project</td>
                       <td >Process Improvement</td>
@@ -154,63 +168,63 @@
                       <td>Edit</td>
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                  </tbody>
-                </table>
-                
-        </div>
-          </mat-tab>  
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <span class="tab-number">08</span>
-              <span class="tab-text">Inprogress</span>
-            </ng-template>
-            <div class="">
-                <table class="table table-borderless col-md-12 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" class="types2">ID</th>
-                      <th scope="col" class="types2">Type</th>
-                      <th scope="col" class="types2">Initiative</th>
-                      <th scope="col" class="types2">Process</th>
-                      <th scope="col" class="types2">Name</th>
-                      <th scope="col" class="types2">Status</th>
-                      <th scope="col" class="types2">Health</th>
-                      <th scope="col" class="types2">Owner</th>
-                      <th scope="col" class="types2">Priority</th>
-                      <th scope="col" class="types2">Access</th>
-                      <th scope="col" class="types2">Last Updated Date</th>
-                      <th scope="col" class="types2">Action</th>
+                      <td>1</td>
+                      <td>Project</td>
+                      <td >Process Improvement</td>
+                      <td>Risk Assesment</td>
+                      <td>Project Name 1</td>
+                      <td>Inprogress</td>
+                      <td>good</td>
+                      <td >Pete</td>
+                      <td>High</td>
+                      <td>Owner</td>
+                      <td>05-june-2021</td>
+                      <td>Edit</td>
                     </tr>
-                  </thead>
-                  <tbody class="" >
-                    <tr>
+                </tbody>
+              </table>
+              
+      </div>
+        </mat-tab>  
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-number">08</span>
+            <span class="tab-text">Inprogress</span>
+          </ng-template>
+          <div class="">
+              <table class="table table-borderless col-md-12 table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" class="types2">ID</th>
+                    <th scope="col" class="types2">Type</th>
+                    <th scope="col" class="types2">Initiative</th>
+                    <th scope="col" class="types2">Process</th>
+                    <th scope="col" class="types2">Name</th>
+                    <th scope="col" class="types2">Status</th>
+                    <th scope="col" class="types2">Health</th>
+                    <th scope="col" class="types2">Owner</th>
+                    <th scope="col" class="types2">Priority</th>
+                    <th scope="col" class="types2">Access</th>
+                    <th scope="col" class="types2">Last Updated Date</th>
+                    <th scope="col" class="types2">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="" >
+                  <tr>
+                    <td>1</td>
+                    <td>Project</td>
+                    <td >Process Improvement</td>
+                    <td>Risk Assesment</td>
+                    <td>Project Name 1</td>
+                    <td>Inprogress</td>
+                    <td>good</td>
+                    <td >Pete</td>
+                    <td>High</td>
+                    <td>Owner</td>
+                    <td>05-june-2021</td>
+                    <td>Edit</td>
+                  </tr>
+                  <tr>
                       <td>1</td>
                       <td>Project</td>
                       <td >Process Improvement</td>
@@ -225,63 +239,63 @@
                       <td>Edit</td>
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                  </tbody>
-                </table>
-                
-        </div>
-          </mat-tab>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <span class="tab-number">10</span>
-              <span class="tab-text">In review</span>
-            </ng-template>
-            <div class="">
-                <table class="table table-borderless col-md-12 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" class="types2">ID</th>
-                      <th scope="col" class="types2">Type</th>
-                      <th scope="col" class="types2">Initiative</th>
-                      <th scope="col" class="types2">Process</th>
-                      <th scope="col" class="types2">Name</th>
-                      <th scope="col" class="types2">Status</th>
-                      <th scope="col" class="types2">Health</th>
-                      <th scope="col" class="types2">Owner</th>
-                      <th scope="col" class="types2">Priority</th>
-                      <th scope="col" class="types2">Access</th>
-                      <th scope="col" class="types2">Last Updated Date</th>
-                      <th scope="col" class="types2">Action</th>
+                      <td>1</td>
+                      <td>Project</td>
+                      <td >Process Improvement</td>
+                      <td>Risk Assesment</td>
+                      <td>Project Name 1</td>
+                      <td>Inprogress</td>
+                      <td>good</td>
+                      <td >Pete</td>
+                      <td>High</td>
+                      <td>Owner</td>
+                      <td>05-june-2021</td>
+                      <td>Edit</td>
                     </tr>
-                  </thead>
-                  <tbody class="" >
-                    <tr>
+                </tbody>
+              </table>
+              
+      </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-number">10</span>
+            <span class="tab-text">In review</span>
+          </ng-template>
+          <div class="">
+              <table class="table table-borderless col-md-12 table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" class="types2">ID</th>
+                    <th scope="col" class="types2">Type</th>
+                    <th scope="col" class="types2">Initiative</th>
+                    <th scope="col" class="types2">Process</th>
+                    <th scope="col" class="types2">Name</th>
+                    <th scope="col" class="types2">Status</th>
+                    <th scope="col" class="types2">Health</th>
+                    <th scope="col" class="types2">Owner</th>
+                    <th scope="col" class="types2">Priority</th>
+                    <th scope="col" class="types2">Access</th>
+                    <th scope="col" class="types2">Last Updated Date</th>
+                    <th scope="col" class="types2">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="" >
+                  <tr>
+                    <td>1</td>
+                    <td>Project</td>
+                    <td >Process Improvement</td>
+                    <td>Risk Assesment</td>
+                    <td>Project Name 1</td>
+                    <td>Inprogress</td>
+                    <td>good</td>
+                    <td >Pete</td>
+                    <td>High</td>
+                    <td>Owner</td>
+                    <td>05-june-2021</td>
+                    <td>Edit</td>
+                  </tr>
+                  <tr>
                       <td>1</td>
                       <td>Project</td>
                       <td >Process Improvement</td>
@@ -296,63 +310,63 @@
                       <td>Edit</td>
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                  </tbody>
-                </table>
-                
-        </div>
-          </mat-tab>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <span class="tab-number">06</span>
-              <span class="tab-text">Approved</span>
-            </ng-template>
-            <div class="">
-                <table class="table table-borderless col-md-12 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" class="types2">ID</th>
-                      <th scope="col" class="types2">Type</th>
-                      <th scope="col" class="types2">Initiative</th>
-                      <th scope="col" class="types2">Process</th>
-                      <th scope="col" class="types2">Name</th>
-                      <th scope="col" class="types2">Status</th>
-                      <th scope="col" class="types2">Health</th>
-                      <th scope="col" class="types2">Owner</th>
-                      <th scope="col" class="types2">Priority</th>
-                      <th scope="col" class="types2">Access</th>
-                      <th scope="col" class="types2">Last Updated Date</th>
-                      <th scope="col" class="types2">Action</th>
+                      <td>1</td>
+                      <td>Project</td>
+                      <td >Process Improvement</td>
+                      <td>Risk Assesment</td>
+                      <td>Project Name 1</td>
+                      <td>Inprogress</td>
+                      <td>good</td>
+                      <td >Pete</td>
+                      <td>High</td>
+                      <td>Owner</td>
+                      <td>05-june-2021</td>
+                      <td>Edit</td>
                     </tr>
-                  </thead>
-                  <tbody class="" >
-                    <tr>
+                </tbody>
+              </table>
+              
+      </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-number">06</span>
+            <span class="tab-text">Approved</span>
+          </ng-template>
+          <div class="">
+              <table class="table table-borderless col-md-12 table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" class="types2">ID</th>
+                    <th scope="col" class="types2">Type</th>
+                    <th scope="col" class="types2">Initiative</th>
+                    <th scope="col" class="types2">Process</th>
+                    <th scope="col" class="types2">Name</th>
+                    <th scope="col" class="types2">Status</th>
+                    <th scope="col" class="types2">Health</th>
+                    <th scope="col" class="types2">Owner</th>
+                    <th scope="col" class="types2">Priority</th>
+                    <th scope="col" class="types2">Access</th>
+                    <th scope="col" class="types2">Last Updated Date</th>
+                    <th scope="col" class="types2">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="" >
+                  <tr>
+                    <td>1</td>
+                    <td>Project</td>
+                    <td >Process Improvement</td>
+                    <td>Risk Assesment</td>
+                    <td>Project Name 1</td>
+                    <td>Inprogress</td>
+                    <td>good</td>
+                    <td >Pete</td>
+                    <td>High</td>
+                    <td>Owner</td>
+                    <td>05-june-2021</td>
+                    <td>Edit</td>
+                  </tr>
+                  <tr>
                       <td>1</td>
                       <td>Project</td>
                       <td >Process Improvement</td>
@@ -367,63 +381,63 @@
                       <td>Edit</td>
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                  </tbody>
-                </table>
-                
-        </div>
-          </mat-tab>
-          <mat-tab>
-            <ng-template mat-tab-label>
-              <span class="tab-number">04</span>
-              <span class="tab-text">Rejected</span>
-            </ng-template>
-            <div class="">
-                <table class="table table-borderless col-md-12 table-hover">
-                  <thead>
-                    <tr>
-                      <th scope="col" class="types2">ID</th>
-                      <th scope="col" class="types2">Type</th>
-                      <th scope="col" class="types2">Initiative</th>
-                      <th scope="col" class="types2">Process</th>
-                      <th scope="col" class="types2">Name</th>
-                      <th scope="col" class="types2">Status</th>
-                      <th scope="col" class="types2">Health</th>
-                      <th scope="col" class="types2">Owner</th>
-                      <th scope="col" class="types2">Priority</th>
-                      <th scope="col" class="types2">Access</th>
-                      <th scope="col" class="types2">Last Updated Date</th>
-                      <th scope="col" class="types2">Action</th>
+                      <td>1</td>
+                      <td>Project</td>
+                      <td >Process Improvement</td>
+                      <td>Risk Assesment</td>
+                      <td>Project Name 1</td>
+                      <td>Inprogress</td>
+                      <td>good</td>
+                      <td >Pete</td>
+                      <td>High</td>
+                      <td>Owner</td>
+                      <td>05-june-2021</td>
+                      <td>Edit</td>
                     </tr>
-                  </thead>
-                  <tbody class="" >
-                    <tr>
+                </tbody>
+              </table>
+              
+      </div>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="tab-number">04</span>
+            <span class="tab-text">Rejected</span>
+          </ng-template>
+          <div class="">
+              <table class="table table-borderless col-md-12 table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col" class="types2">ID</th>
+                    <th scope="col" class="types2">Type</th>
+                    <th scope="col" class="types2">Initiative</th>
+                    <th scope="col" class="types2">Process</th>
+                    <th scope="col" class="types2">Name</th>
+                    <th scope="col" class="types2">Status</th>
+                    <th scope="col" class="types2">Health</th>
+                    <th scope="col" class="types2">Owner</th>
+                    <th scope="col" class="types2">Priority</th>
+                    <th scope="col" class="types2">Access</th>
+                    <th scope="col" class="types2">Last Updated Date</th>
+                    <th scope="col" class="types2">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="" >
+                  <tr>
+                    <td>1</td>
+                    <td>Project</td>
+                    <td >Process Improvement</td>
+                    <td>Risk Assesment</td>
+                    <td>Project Name 1</td>
+                    <td>Inprogress</td>
+                    <td>good</td>
+                    <td >Pete</td>
+                    <td>High</td>
+                    <td>Owner</td>
+                    <td>05-june-2021</td>
+                    <td>Edit</td>
+                  </tr>
+                  <tr>
                       <td>1</td>
                       <td>Project</td>
                       <td >Process Improvement</td>
@@ -438,160 +452,146 @@
                       <td>Edit</td>
                     </tr>
                     <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                      <tr>
-                        <td>1</td>
-                        <td>Project</td>
-                        <td >Process Improvement</td>
-                        <td>Risk Assesment</td>
-                        <td>Project Name 1</td>
-                        <td>Inprogress</td>
-                        <td>good</td>
-                        <td >Pete</td>
-                        <td>High</td>
-                        <td>Owner</td>
-                        <td>05-june-2021</td>
-                        <td>Edit</td>
-                      </tr>
-                  </tbody>
-                </table>
-                
-        </div>
-          </mat-tab>    
-        </mat-tab-group>
-    </mat-card>
-    </div> -->
-   
-    <!-- <ng-container matColumnDef="check">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-          <input [disabled]="Prjcheckeddisabled" type="checkbox" id="Credcheckall" [checked]="Credcheckflag" (change)="CredcheckAllCheckBox($event)">
-      </th>
-      <td mat-cell *matCellDef="let element; let i = index">
-          <input type="checkbox" [checked]="element.checked" (change)="CredcheckEnableDisableBtn(element.id, $event)"> 
-      </td>
-  </ng-container> -->
-  
-  <ng-container matColumnDef="id">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+                      <td>1</td>
+                      <td>Project</td>
+                      <td >Process Improvement</td>
+                      <td>Risk Assesment</td>
+                      <td>Project Name 1</td>
+                      <td>Inprogress</td>
+                      <td>good</td>
+                      <td >Pete</td>
+                      <td>High</td>
+                      <td>Owner</td>
+                      <td>05-june-2021</td>
+                      <td>Edit</td>
+                    </tr>
+                </tbody>
+              </table>
+              
+      </div>
+        </mat-tab>    
+      </mat-tab-group>
+  </mat-card>
+  </div> -->
+ 
+  <!-- <ng-container matColumnDef="check">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        <input [disabled]="Prjcheckeddisabled" type="checkbox" id="Credcheckall" [checked]="Credcheckflag" (change)="CredcheckAllCheckBox($event)">
+    </th>
+    <td mat-cell *matCellDef="let element; let i = index">
+        <input type="checkbox" [checked]="element.checked" (change)="CredcheckEnableDisableBtn(element.id, $event)"> 
+    </td>
+</ng-container> -->
+
+<ng-container matColumnDef="id">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+  <td mat-cell *matCellDef="let element"> 
+       <span *ngIf="element.id!=null">{{element.id}}</span> 
+      <span *ngIf="element.id==''">-</span>
+      <span *ngIf="element.id==null">-</span>
+  </td>
+</ng-container>
+  <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
     <td mat-cell *matCellDef="let element"> 
-         <span *ngIf="element.id!=null">{{element.id}}</span> 
-        <span *ngIf="element.id==''">-</span>
-        <span *ngIf="element.id==null">-</span>
+         <span *ngIf="element.type!=null">{{element.type}}</span> 
+        <span *ngIf="element.type==''">-</span>
+        <span *ngIf="element.type==null">-</span>
     </td>
 </ng-container>
-    <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-      <td mat-cell *matCellDef="let element"> 
-           <span *ngIf="element.type!=null">{{element.type}}</span> 
-          <span *ngIf="element.type==''">-</span>
-          <span *ngIf="element.type==null">-</span>
-      </td>
-  </ng-container>
-  <ng-container matColumnDef="initiatives">
-      <th mat-header-cell *matHeaderCellDef >Initiative</th>
-      <td mat-cell *matCellDef="let element"> 
-        <span *ngIf="element.initiatives!=null">{{element.initiatives}}</span> 
-          <span *ngIf="element.initiatives==''">-</span>
-          <span *ngIf="element.initiatives==null">-</span>
-  </ng-container>
-
-  <ng-container matColumnDef="process">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Process</th>
-      <td mat-cell *matCellDef="let element"> 
-          <span *ngIf="element.process!=null">{{element.process | processName : processes}}</span> 
-          <span *ngIf="element.process==''">-</span> 
-          <span *ngIf=" element.process==null">-</span> 
-      </td>
-  </ng-container>
-  
-  <ng-container matColumnDef="projectName">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let element"> 
-          <span *ngIf="element.projectName!=null">{{element.projectName}}</span> 
-          <span *ngIf="element.projectName==''">-</span> 
-          <span *ngIf=" element.projectName==null">-</span> 
-      </td>
-  </ng-container>
-
-
-  <ng-container matColumnDef="owner">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+<ng-container matColumnDef="initiatives">
+    <th mat-header-cell *matHeaderCellDef >Initiative</th>
     <td mat-cell *matCellDef="let element"> 
-        <span *ngIf="element.owner!=null">{{element.owner| userPipe : users_list}}</span> 
-        <span *ngIf="element.owner==''">-</span> 
-        <span *ngIf=" element.owner==null">-</span> 
+      <span *ngIf="element.initiatives!=null">{{element.initiatives}}</span> 
+        <span *ngIf="element.initiatives==''">-</span>
+        <span *ngIf="element.initiatives==null">-</span>
+</ng-container>
+
+<ng-container matColumnDef="process">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Process</th>
+    <td mat-cell *matCellDef="let element"> 
+        <span *ngIf="element.process!=null">{{element.process | processName : processes}}</span> 
+        <span *ngIf="element.process==''">-</span> 
+        <span *ngIf=" element.process==null">-</span> 
     </td>
+</ng-container>
+
+<ng-container matColumnDef="projectName">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let element"> 
+        <span *ngIf="element.projectName!=null">{{element.projectName}}</span> 
+        <span *ngIf="element.projectName==''">-</span> 
+        <span *ngIf=" element.projectName==null">-</span> 
+    </td>
+</ng-container>
+
+
+<ng-container matColumnDef="owner">
+  <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+  <td mat-cell *matCellDef="let element"> 
+      <span *ngIf="element.owner!=null">{{element.owner| userPipe : users_list}}</span> 
+      <span *ngIf="element.owner==''">-</span> 
+      <span *ngIf=" element.owner==null">-</span> 
+  </td>
 </ng-container>
 
 
 <ng-container matColumnDef="priority">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
-  <td mat-cell *matCellDef="let element"> 
-      <span *ngIf="element.priority!=null">{{element.priority}}</span> 
-      <span *ngIf="element.priority==''">-</span> 
-      <span *ngIf=" element.priority==null">-</span> 
-  </td>
+<th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+<td mat-cell *matCellDef="let element"> 
+    <span *ngIf="element.priority!=null">{{element.priority}}</span> 
+    <span *ngIf="element.priority==''">-</span> 
+    <span *ngIf=" element.priority==null">-</span> 
+</td>
 </ng-container>
 
 <ng-container matColumnDef="access">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>Access</th>
-  <td mat-cell *matCellDef="let element"> 
-      <span *ngIf="element.access!=null">{{element.access}}</span> 
-      <span *ngIf="element.access==''" >-</span> 
-      <span *ngIf=" element.access==null">-</span> 
-  </td>
+<th mat-header-cell *matHeaderCellDef mat-sort-header>Access</th>
+<td mat-cell *matCellDef="let element"> 
+    <span *ngIf="element.access!=null">{{element.access}}</span> 
+    <span *ngIf="element.access==''" >-</span> 
+    <span *ngIf=" element.access==null">-</span> 
+</td>
 </ng-container>
 
 <ng-container matColumnDef="lastupdatedby">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated by</th>
-  <td mat-cell *matCellDef="let element"> 
-      <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> 
-      <span *ngIf="element.createdBy==''" >-</span> 
-      <span *ngIf=" element.createdBy==null">-</span> 
-  </td>
+<th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated by</th>
+<td mat-cell *matCellDef="let element"> 
+    <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> 
+    <span *ngIf="element.createdBy==''" >-</span> 
+    <span *ngIf=" element.createdBy==null">-</span> 
+</td>
 </ng-container>
 
 <ng-container matColumnDef="status">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-  <td mat-cell *matCellDef="let element"> 
-      <span *ngIf="element.status!=null">{{element.status}}</span> 
-      <span *ngIf="element.status==''" >-</span> 
-      <span *ngIf=" element.status==null">-</span> 
-  </td>
+<th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+<td mat-cell *matCellDef="let element"> 
+    <span *ngIf="element.status!=null">{{element.status}}</span> 
+    <span *ngIf="element.status==''" >-</span> 
+    <span *ngIf=" element.status==null">-</span> 
+</td>
 </ng-container>
 
 
 <ng-container matColumnDef="noData">
-  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
-    
+<td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
+  
 
-  </td>
+</td>
 </ng-container>
 <ng-container matColumnDef="action">
-  <th mat-header-cell *matHeaderCellDef> Actions</th>
-  <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-    <div class="newinntalx">
-    <a class="clickable text-dark" style="color:black"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
-      <i class="fa fa-eye"></i>
-    </a> 
-    <a class="disable-bg text-dark" style="color:black" *ngIf="element.type=='Program'" ><i class="fa fa-eye-slash"></i></a>
-    <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> 
-    <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a>
-     <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>  
-  </div>
-  </td>
+<th mat-header-cell *matHeaderCellDef> Actions</th>
+<td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+  <div class="newinntalx">
+  <a class="clickable text-dark" style="color:black"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
+    <i class="fa fa-eye"></i>
+  </a> 
+  <a class="disable-bg text-dark" style="color:black" *ngIf="element.type=='Program'" ><i class="fa fa-eye-slash"></i></a>
+  <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> 
+  <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a>
+   <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>  
+</div>
+</td>
 </ng-container>
 
 <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
@@ -600,180 +600,167 @@
 </table>
 
 <div>
-  <div *ngIf="projects_list.length==0" class="text-center">
-    <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
-    <h3 class="text-center">No Items to display</h3>
-  </div>
+<div *ngIf="projects_list.length==0" class="text-center">
+  <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+  <h3 class="text-center">No Items to display</h3>
+</div>
 </div>
 
 
 </div>
 <mat-paginator #paginator2 [pageSize]="20" [showFirstLastButtons]="true"></mat-paginator>
-  
-
-
- </div>
 
 
 
+</div>
 
 
 
- 
 
- <ng-template class="modal-lg" #updateprojectmodal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Update Project</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="updatemodalref.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-      <div class="container" style="width:100%">
-              <br>
-              
-              <form [formGroup]="updateForm" (ngSubmit)="projectupdate()">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <label for="projectName">Project Name<span style="color:red">*</span></label>
-                          <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
-                          <span *ngIf="(updateForm.get('projectName').invalid && updateForm.get('projectName').touched) && !updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Project Name Required*</span>
-                          <div *ngIf="updateForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                              Maximum of 50 characters
-                          </div>
-                          <br>
-                         
-                          <label for="initiatives">Initiative<span style="color:red">*</span></label>
-                          <select  formControlName="initiatives"      class="form-control data">
-                          
-                            <option value="">Select Initiatives</option>
-                            <option value="Process Improvement">Process Improvement</option>
-                            <option value="Business Improvement">Business Improvement</option>
+
+
+
+
+<ng-template class="modal-lg" #updateprojectmodal>
+<div class="modal-header modelprhead">
+  <h4 class="modal-title pull-left">Update Project</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="updatemodalref.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body modelprbody">
+    <div class="container" style="width:100%">
+            <form [formGroup]="updateForm" (ngSubmit)="projectupdate()">
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-fileds">
+                        <label for="projectName">Project Name<span style="color:red">*</span></label>
+                        <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
+                        <span *ngIf="(updateForm.get('projectName').invalid && updateForm.get('projectName').touched) && !updateForm.controls['projectName'].hasError('maxlength')" class="fa fa-info-circle errspan required">Project Name Required*</span>
+                        <div *ngIf="updateForm.controls['projectName'].hasError('maxlength')" class="fa fa-info-circle errspan required">
+                            Maximum of 50 characters
+                        </div>
+                      </div>
+                      <div class="form-fileds">                         
+                        <label for="initiatives">Initiative<span style="color:red">*</span></label>
+                        <select  formControlName="initiatives" class="form-control data">                          
+                          <option value="">Select Initiatives</option>
+                          <option value="Process Improvement">Process Improvement</option>
+                          <option value="Business Improvement">Business Improvement</option>
                         </select>
-                        <span *ngIf="updateForm.get('initiatives').invalid && updateForm.get('initiatives').touched" style="color:red" class="fa fa-info-circle errspan">Initiatives Required*</span>
-                          <br>
-                          
-
-                          <label class="label-control">Add Resources<span  style="color:red">*</span></label>
-                          <select   formControlName="resources" style="border:1px solid lightgray"  class="form-control data">
-                              <option value="">Select Resources</option>
-                              <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option> 
+                        <span *ngIf="updateForm.get('initiatives').invalid && updateForm.get('initiatives').touched" class="fa fa-info-circle errspan required">Initiatives Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label class="label-control">Add Resources<span  style="color:red">*</span></label>
+                        <select   formControlName="resources" style="border:1px solid lightgray"  class="form-control data">
+                            <option value="">Select Resources</option>
+                            <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                        </select>
+                        <span *ngIf="updateForm.get('resources').invalid && updateForm.get('resources').touched" class="fa fa-info-circle errspan required">Resources Required*</span>
+                      </div>
+                      <div class="form-fileds">                         
+                        <label>Project Owner <span  style="color:red">*</span></label>
+                        <select   formControlName="owner"  style="border:1px solid lightgray"   class="form-control data">
+                            <option value="">Select Owner</option>
+                            <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                        </select>
+                        <span *ngIf="updateForm.get('owner').invalid && updateForm.get('owner').touched" class="fa fa-info-circle errspan required">Owner Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label for="access">Access<span style="color:red">*</span></label>
+                        <select   formControlName="access"  style="border:1px solid lightgray"  class="form-control data">
+                            <option value="" >Select Access</option>
+                            <option value="Owner">Owner</option>
+                            <option value="Co-Editor">Co-Editor</option>
+                            <option value="Viewer">Viewer</option>
+                        </select>
+                        <span *ngIf="updateForm.get('access').invalid && updateForm.get('access').touched" class="fa fa-info-circle errspan required">Access Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label>Status<span style="color:red">*</span></label>
+                        <select formControlName="status" class="form-control data">
+                            <option value="" >Select Status</option>
+                            <option value="New">New</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="In Review">In Review</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                        <span *ngIf="updateForm.get('status').invalid && insertForm2.get('status').touched" class="fa fa-info-circle errspan required">Status Required*</span>
+                      </div>  
+                      <div class="form-fileds">
+                        <label>End Date <span  style="color:red">*</span></label>
+                        <input class="form-control" type="date"  name="daytime" [min]="mindate" formControlName="endDate"  class="form-control data">
+                        <span *ngIf="updateForm.get('endDate').invalid && updateForm.get('endDate').touched" class="fa fa-info-circle errspan required">End Date Required*</span>
+                      </div>  
+                    </div>     
+                    <div class="col-md-6">
+                      <div class="form-fileds">
+                        <label for="type">Type<span style="color:red">*</span></label>
+                        <select class="form-control"   style="border:1px solid lightgray" formControlName="type">
+                            <option value="" >Select Type</option>
+                            <option value="Project">Project</option>
+                            <option value="Program">Program</option>              
                           </select>
-                          <span *ngIf="updateForm.get('resources').invalid && updateForm.get('resources').touched" style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
-                          <br>
-                         
-                          <label>Project Owner <span  style="color:red">*</span></label>
-                          <select   formControlName="owner"  style="border:1px solid lightgray"   class="form-control data">
-                              <option value="">Select Owner</option>
-                              <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
-                          </select>
-                          <span *ngIf="updateForm.get('owner').invalid && updateForm.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
-                         <br>
-
-                      <label for="access">Access<span style="color:red">*</span></label>
-                      <select   formControlName="access"  style="border:1px solid lightgray"  class="form-control data">
-                       
-                        <option value="" >Select Access</option>
-                        <option value="Owner">Owner</option>
-                        <option value="Co-Editor">Co-Editor</option>
-                        <option value="Viewer">Viewer</option>
-                      </select>
-                      <span *ngIf="updateForm.get('access').invalid && updateForm.get('access').touched" style="color:red" class="fa fa-info-circle errspan">Access Required*</span>
-                      <br>
-                      
-                      <label>Status<span style="color:red">*</span></label>
-                                <select formControlName="status" class="form-control data">
-                                    <option value="" >Select Status</option>
-                                    <option value="New">New</option>
-                                    <option value="In Progress">In Progress</option>
-                                    <option value="In Review">In Review</option>
-                                    <option value="Approved">Approved</option>
-                                    <option value="Rejected">Rejected</option>
-                                </select>
-                                <span *ngIf="updateForm.get('status').invalid && insertForm2.get('status').touched" style="color:red"
-                                    class="fa fa-info-circle errspan">Status Required*</span>
-
-                                    <br>
-
-                                    <label>End Date <span  style="color:red">*</span></label>
-                                            <input class="form-control" type="date"  name="daytime" [min]="mindate" formControlName="endDate"  class="form-control data">
-                                            <span *ngIf="updateForm.get('endDate').invalid && updateForm.get('endDate').touched" style="color:red" class="fa fa-info-circle errspan">End Date Required*</span>
-                                        
-                                            <br>
-
-                                    
-
-                                   
-                      </div>     
-                      <div class="col-md-6">
-                          <label for="type">Type<span style="color:red">*</span></label>
-                          <select class="form-control"   style="border:1px solid lightgray" formControlName="type">
-                            
-                              <option value="" >Select Type</option>
-                              <option value="Project">Project</option>
-                              <option value="Program">Program</option>              
-                            </select>
-                          <span *ngIf="updateForm.get('type').invalid && updateForm.get('type').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
-                          <br>
-                          <label for="priority">Project Priority<span style="color:red">*</span></label>
-                          <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
-                           
-                              <option value="">Select Priority</option>
-                              <option value="High">High</option>
-                              <option value="Low">Low</option>
-                              <option value="Medium">Medium</option>               
-                            </select>
-                          <span *ngIf="updateForm.get('priority').invalid && updateForm.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
-                          <br>
-                          <label for="process">Process<span style="color:red">*</span></label>
-                          <select class="form-control"   style="border:1px solid lightgray" formControlName="process">
-                           
+                        <span *ngIf="updateForm.get('type').invalid && updateForm.get('type').touched" class="fa fa-info-circle errspan required">Type Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label for="priority">Project Priority<span style="color:red">*</span></label>
+                        <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
+                            <option value="">Select Priority</option>
+                            <option value="High">High</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>               
+                        </select>
+                        <span *ngIf="updateForm.get('priority').invalid && updateForm.get('priority').touched" class="fa fa-info-circle errspan required">Priority Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label for="process">Process<span style="color:red">*</span></label>
+                        <select class="form-control"   style="border:1px solid lightgray" formControlName="process">
                             <option value="">Select Process</option>
                             <option *ngFor="let process of processes" [value]="process.processId">{{process.processName}}</option>          
-                          </select>
-                          <span *ngIf="updateForm.get('process').invalid && updateForm.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
-                          <br>
+                        </select>
+                        <span *ngIf="updateForm.get('process').invalid && updateForm.get('process').touched" class="fa fa-info-circle errspan required">Process Required*</span>
+                      </div>>
+                      <div class="form-fileds">
+                        <label class="label-control" >Map Value Chain <span  style="color:red">*</span></label>
+                        <select  formControlName="mapValueChain"   class="form-control data">
+                            <option value="">Select Map Value Chain</option>
+                            <option value="Invoice Managment">Invoice Managment</option>
+                            <option value="Acme Managment">Acme Managment</option>
+                            <option value="E-Commerce">E-Commerce</option>
+                        </select>
+                        <span *ngIf="updateForm.get('mapValueChain').invalid && updateForm.get('mapValueChain').touched" class="fa fa-info-circle errspan required">Map Value Chain Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label class="label-control" >Identity Measurable Metrics <span  style="color:red">*</span></label>
+                        <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
+                        <span *ngIf="updateForm.get('measurableMetrics').invalid && updateForm.get('measurableMetrics').touched" class="fa fa-info-circle errspan required">Identity Measurable Metrics Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label>Start Date <span  style="color:red">*</span></label>
+                        <input class="form-control" type="date"  name="daytime" [min]="mindate"  formControlName="startDate" class="form-control">
+                        <span *ngIf="updateForm.get('startDate').invalid && updateForm.get('startDate').touched" class="fa fa-info-circle errspan required">Start Date Required*</span>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-12">
+                        
+                        <label>Description</label>
+                        <textarea class="form-control" style="height:100px;">
 
-                          <label class="label-control" >Map Value Chain <span  style="color:red">*</span></label>
-                                                <select  formControlName="mapValueChain"   class="form-control data">
-                                                    <option value="">Select Map Value Chain</option>
-                                                    <option value="Invoice Managment">Invoice Managment</option>
-                                                    <option value="Acme Managment">Acme Managment</option>
-                                                    <option value="E-Commerce">E-Commerce</option>
-                                                </select>
-                                                <span *ngIf="updateForm.get('mapValueChain').invalid && updateForm.get('mapValueChain').touched" style="color:red" class="fa fa-info-circle errspan">Map Value Chain Required*</span>
-                                            <br>
-
-                                            <label class="label-control" >Identity Measurable Metrics <span  style="color:red">*</span></label>
-                                            <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
-                                            <span *ngIf="updateForm.get('measurableMetrics').invalid && updateForm.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Measurable Metrics Required*</span>
-                                            <br>
-
-                                            <label>Start Date <span  style="color:red">*</span></label>
-                                    <input class="form-control" type="date"  name="daytime" [min]="mindate"  formControlName="startDate" class="form-control">
-                                    <span *ngIf="updateForm.get('startDate').invalid && updateForm.get('startDate').touched" style="color:red" class="fa fa-info-circle errspan">Start Date Required*</span>
-                                    
-                                    <br>
-                        </div>
-                      <!-- <div class="col-md-12">
-                          <br>
-                          <label>Description</label>
-                          <textarea class="form-control" style="height:100px;">
-
-                          </textarea>
-                      
-                      </div> -->
-                  </div>
-              </form>
-              <br>
-              <div class="pull-right">
-                  <button (click)="resetupdateproject()" class="btn btn-primary">Reset</button>
-                  &nbsp;&nbsp;
-                  <button [disabled]="updateForm.invalid" (click)="projectupdate()" class="btn btn-primary">Update</button>
-              </div>
-              <br><br>
-      </div>
+                        </textarea>
+                    
+                    </div> -->
+                </div>
+            </form>
+    </div>
+</div>          
+<div class="modal-footer modelprfooter">
+  <div class="pull-right">
+    <button (click)="resetupdateproject()" class="btn btn-primary">Reset</button>
+    <button [disabled]="updateForm.invalid" (click)="projectupdate()" class="btn btn-primary">Update</button>
   </div>
+</div>
 </ng-template>
 
 
@@ -781,128 +768,120 @@
 
 
 <ng-template class="modal-lg" #updateprogrammodal>
-  <div class="modal-header">
-    <h4 class="modal-title pull-left">Update Program</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="updatemodalref.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-      <div class="container" style="width:100%">
-              <br>
-              
-              <form [formGroup]="updateprogramForm" (ngSubmit)="programupdate()">
-                  <div class="row">
-                      <div class="col-md-6">
-                          <label for="projectName">Program Name<span style="color:red">*</span></label>
-                          <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
-                          <span *ngIf="(updateprogramForm.get('projectName').invalid && updateprogramForm.get('projectName').touched) && !updateprogramForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Program Name Required*</span>
-                          <div *ngIf="updateprogramForm.controls['projectName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                              Maximum of 50 characters
-                          </div>
-                          <br>
-                         
-                          <label for="initiatives">Initiative<span style="color:red">*</span></label>
-                          <select  formControlName="initiatives"  class="form-control data">
-                           
+<div class="modal-header modelprhead">
+  <h4 class="modal-title pull-left">Update Program</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="updatemodalref.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body modelprbody">
+    <div class="container" style="width:100%">
+            <form [formGroup]="updateprogramForm" (ngSubmit)="programupdate()">
+                <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-fileds">
+                        <label for="projectName">Program Name<span style="color:red">*</span></label>
+                        <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
+                        <span *ngIf="(updateprogramForm.get('projectName').invalid && updateprogramForm.get('projectName').touched) && !updateprogramForm.controls['projectName'].hasError('maxlength')" class="fa fa-info-circle errspan required">Program Name Required*</span>
+                        <div *ngIf="updateprogramForm.controls['projectName'].hasError('maxlength')" class="fa fa-info-circle errspan required">
+                            Maximum of 50 characters
+                        </div>
+                      </div>
+                      <div class="form-fileds">                         
+                        <label for="initiatives">Initiative<span style="color:red">*</span></label>
+                        <select  formControlName="initiatives"  class="form-control data">
                             <option value="" >Select Initiatives</option>
                             <option value="Process Improvement">Process Improvement</option>
                             <option value="Business Improvement">Business Improvement</option>
                         </select>
-                        <span *ngIf="updateprogramForm.get('initiatives').invalid && updateprogramForm.get('initiatives').touched" style="color:red" class="fa fa-info-circle errspan">Initiatives Required*</span>
-                          <br>
-                          
-                         
-                          <label>Owner <span  style="color:red">*</span></label>
-                          <select   formControlName="owner"  style="border:1px solid lightgray" class="form-control data">
-                          
-                              <option value="">Select Owner</option>
-                              <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
-                          </select>
-                          <span *ngIf="updateprogramForm.get('owner').invalid && updateprogramForm.get('owner').touched" style="color:red" class="fa fa-info-circle errspan">Owner Required*</span>
-                         <br>
-
-                      <label for="access">Access<span style="color:red">*</span></label>
-                      <select   formControlName="access" style="border:1px solid lightgray"  class="form-control data">
-                      
-                        <option value="">Select Access</option>
-                        <option value="Owner">Owner</option>
-                        <option value="Co-Editor">Co-Editor</option>
-                        <option value="Viewer">Viewer</option>
-                      </select>
-                      <span *ngIf="updateprogramForm.get('access').invalid && updateprogramForm.get('access').touched" style="color:red" class="fa fa-info-circle errspan">Access Required*</span>
-                      <br>
-                      <label class="label-control" >Program Purpose <span  style="color:red">*</span></label>
-                      <input type="text"  style="border:1px solid lightgray" formControlName="purpose" placeholder="Enter Program Purpose" class="form-control data">
-                      <span *ngIf="updateprogramForm.get('purpose').invalid && updateprogramForm.get('purpose').touched" style="color:red" class="fa fa-info-circle errspan">Program Purpose Required*</span>
-                      <br>
-                      </div>     
-                      <div class="col-md-6">
-                          <label for="type">Type<span style="color:red">*</span></label>
-                          <select class="form-control"  style="border:1px solid lightgray" formControlName="type">
-                           
-                              <option value="" >Select Type</option>
-                              <option value="Project">Project</option>
-                              <option value="Program">Program</option>              
-                            </select>
-                          <span *ngIf="updateprogramForm.get('type').invalid && updateprogramForm.get('type').touched" style="color:red" class="fa fa-info-circle errspan">Type Required*</span>
-                          <br>
-                          <label for="priority">Priority<span style="color:red">*</span></label>
-                          <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
-                           
-                              <option value="" >Select Priority</option>
-                              <option value="High">High</option>
-                              <option value="Low">Low</option>
-                              <option value="Medium">Medium</option>               
-                            </select>
-                          <span *ngIf="updateprogramForm.get('priority').invalid && updateprogramForm.get('priority').touched" style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
-                          <br>
-                          <label for="process">Process<span style="color:red">*</span></label>
-                          <select class="form-control"  style="border:1px solid lightgray" formControlName="process">
-                          
+                        <span *ngIf="updateprogramForm.get('initiatives').invalid && updateprogramForm.get('initiatives').touched" class="fa fa-info-circle errspan required">Initiatives Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label>Owner <span  style="color:red">*</span></label>
+                        <select   formControlName="owner"  style="border:1px solid lightgray" class="form-control data">
+                            <option value="">Select Owner</option>
+                            <option *ngFor="let user of users_list" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                        </select>
+                        <span *ngIf="updateprogramForm.get('owner').invalid && updateprogramForm.get('owner').touched" class="fa fa-info-circle errspan required">Owner Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label for="access">Access<span style="color:red">*</span></label>
+                        <select   formControlName="access" style="border:1px solid lightgray"  class="form-control data">
+                            <option value="">Select Access</option>
+                            <option value="Owner">Owner</option>
+                            <option value="Co-Editor">Co-Editor</option>
+                            <option value="Viewer">Viewer</option>
+                        </select>
+                        <span *ngIf="updateprogramForm.get('access').invalid && updateprogramForm.get('access').touched" class="fa fa-info-circle errspan required">Access Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label class="label-control" >Program Purpose <span  style="color:red">*</span></label>
+                        <input type="text"  style="border:1px solid lightgray" formControlName="purpose" placeholder="Enter Program Purpose" class="form-control data">
+                        <span *ngIf="updateprogramForm.get('purpose').invalid && updateprogramForm.get('purpose').touched" class="fa fa-info-circle errspan required">Program Purpose Required*</span>
+                      </div>
+                    </div>     
+                    <div class="col-md-6">
+                      <div class="form-fileds">
+                        <label for="type">Type<span style="color:red">*</span></label>
+                        <select class="form-control"  style="border:1px solid lightgray" formControlName="type">
+                            <option value="" >Select Type</option>
+                            <option value="Project">Project</option>
+                            <option value="Program">Program</option>              
+                        </select>
+                        <span *ngIf="updateprogramForm.get('type').invalid && updateprogramForm.get('type').touched" class="fa fa-info-circle errspan required">Type Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label for="priority">Priority<span style="color:red">*</span></label>
+                        <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
+                            <option value="" >Select Priority</option>
+                            <option value="High">High</option>
+                            <option value="Low">Low</option>
+                            <option value="Medium">Medium</option>               
+                        </select>
+                        <span *ngIf="updateprogramForm.get('priority').invalid && updateprogramForm.get('priority').touched" class="fa fa-info-circle errspan required">Priority Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label for="process">Process<span style="color:red">*</span></label>
+                        <select class="form-control"  style="border:1px solid lightgray" formControlName="process">
                             <option value="" >Select Process</option>
                             <option *ngFor="let process of processes" [value]="process.processName">{{process.processName}}</option>          
-                          </select>
-                          <span *ngIf="updateprogramForm.get('process').invalid && updateprogramForm.get('process').touched" style="color:red" class="fa fa-info-circle errspan">Process Required*</span>
-                          <br>
+                        </select>
+                        <span *ngIf="updateprogramForm.get('process').invalid && updateprogramForm.get('process').touched" class="fa fa-info-circle errspan required">Process Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label class="label-control" >Identity Measurable Metrics <span  style="color:red">*</span></label>
+                        <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
+                        <span *ngIf="updateprogramForm.get('measurableMetrics').invalid && updateprogramForm.get('measurableMetrics').touched" class="fa fa-info-circle errspan required">Identity Measurable Metrics Required*</span>
+                      </div>
+                      <div class="form-fileds">
+                        <label>Status<span style="color:red">*</span></label>
+                        <select formControlName="status" class="form-control data">
+                            <option value="" >Select Status</option>
+                            <option value="New">New</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="In Review">In Review</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                        <span *ngIf="updateForm.get('status').invalid && insertForm2.get('status').touched" class="fa fa-info-circle errspan required">Status Required*</span>
+                      </div>
+                    </div>
+                    <!-- <div class="col-md-12">
+                        
+                        <label>Description</label>
+                        <textarea class="form-control" style="height:100px;">
 
-                          <label class="label-control" >Identity Measurable Metrics <span  style="color:red">*</span></label>
-                                            <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
-                                            <span *ngIf="updateprogramForm.get('measurableMetrics').invalid && updateprogramForm.get('measurableMetrics').touched" style="color:red" class="fa fa-info-circle errspan">Identity Measurable Metrics Required*</span>
-                                            <br>
-
-                                           
-                                            <label>Status<span style="color:red">*</span></label>
-                                            <select formControlName="status" class="form-control data">
-                                                <option value="" >Select Status</option>
-                                                <option value="New">New</option>
-                                                <option value="In Progress">In Progress</option>
-                                                <option value="In Review">In Review</option>
-                                                <option value="Approved">Approved</option>
-                                                <option value="Rejected">Rejected</option>
-                                            </select>
-                                            <span *ngIf="updateForm.get('status').invalid && insertForm2.get('status').touched" style="color:red"
-                                                class="fa fa-info-circle errspan">Status Required*</span>
-            
-                                                <br>
-                        </div>
-                      <!-- <div class="col-md-12">
-                          <br>
-                          <label>Description</label>
-                          <textarea class="form-control" style="height:100px;">
-
-                          </textarea>
-                      
-                      </div> -->
-                  </div>
-              </form>
-              <br>
-              <div class="pull-right">
-                  <button (click)="resetupdateprogram()" class="btn btn-primary">Reset</button>
-                  &nbsp;&nbsp;
-                  <button [disabled]="updateprogramForm.invalid" (click)="programupdate()" class="btn btn-primary">Update</button>
-              </div>
-              <br><br>
-      </div>
+                        </textarea>
+                    
+                    </div> -->
+                </div>
+            </form>
+    </div>
+</div>    
+<div class="modal-footer modelprfooter">
+  <div class="pull-right">
+    <button (click)="resetupdateprogram()" class="btn btn-primary">Reset</button>
+    <button [disabled]="updateprogramForm.invalid" (click)="programupdate()" class="btn btn-primary">Update</button>
   </div>
+</div>  
 </ng-template>
