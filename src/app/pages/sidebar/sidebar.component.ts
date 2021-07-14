@@ -21,8 +21,12 @@ export class SidebarComponent implements OnInit {
 
   hightlight(element)
   {
-     $('.link').removeClass('active')
-     $('#'+element).addClass("active")
+     $('.link').removeClass('active');
+     $('#'+element).addClass("active");
+     this.obj.sideBarOpen=false;
+     this.obj.sidebar.showSubmenu=false;
+      this.obj.sidebar.showadminSubmenu=false;
+      this.obj.contentMargin = 60;
   }
   
 

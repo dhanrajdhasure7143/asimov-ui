@@ -257,6 +257,7 @@ label.epsoft-label sup {
   -webkit-tap-highlight-color: transparent;
   width: 100%;
   padding: 0;
+  position: relative;
 }
 
 .submenus.expanded {
@@ -337,3 +338,23 @@ mat-list-item.mat-list-item.activeMenu:hover .active-img {
 ::ng-deep mat-toolbar {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
 }
+
+
+::ng-deep .sidebarTooltip{
+  color:#ffffff !important;
+  background-color: #001c47 !important;
+  font-size: 15px;
+  position: absolute;
+  top: -30px;
+  left: 0px;
+  width: auto;
+  white-space: nowrap;
+  transform: translateX(-50%) scale(1);
+}
+
+#sidenav.menu-open{
+  ::ng-deep .sidebarTooltip{
+    opacity: 0;
+  }
+}
+

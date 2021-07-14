@@ -33,7 +33,7 @@ import {MatSidenavModule} from '@angular/material/sidenav';
 import { sohints } from './service-orchestration/orchestration/model/new-so-hints';
 import { ProgramComponent } from './program/programlandingpage.component';
 import { ProgramcreationComponent } from './programcreation/programcreation.component';
-
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -61,7 +61,7 @@ import { ProgramcreationComponent } from './programcreation/programcreation.comp
     NgxSpinnerModule,
     NgxPaginationModule,
     MatExpansionModule,
-    MatListModule,MatMenuModule,MatButtonModule,MatIconModule,MatToolbarModule,MatSidenavModule
+    MatListModule,MatMenuModule,MatButtonModule,MatIconModule,MatToolbarModule,MatSidenavModule,MatTooltipModule
   ],
   providers: [SharebpmndiagramService, PagesHints,sohints
   //  LoaderService,
