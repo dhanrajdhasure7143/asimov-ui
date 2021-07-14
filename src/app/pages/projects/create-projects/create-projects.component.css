@@ -13,6 +13,8 @@
 ::ng-deep .modal-lg .modal-content{
     width:100%  !important;
     margin-top:30px !important;
+    padding: 10px !important;
+    background-color: #f1f1f1 !important;
 }
 
 
@@ -31,9 +33,9 @@
     background-color: #12a6e5;
     color: #fff;
     text-align: center;
-    padding: 7px 14px;
-    margin-left: 7px;
-    border-radius: 2px;
+    padding: 7px 10px;
+    margin-left: 7px;   
+    border-radius: 4px;
 }
 
 .select-project{
@@ -41,12 +43,11 @@
 }
 
 .project-card{
-    background-color: #FFFF99;
-    padding:20px;
-    padding-top:15px;
+    background-color: #FFFFD5;
+    padding:10px;
     border-style: solid;
     border-width: 1px;
-    border-color: #cecece;
+    border-color: #D6D6D6;
     color:rgb(7, 7, 7);
     transition: 0.3s;
     border-radius: 5px;
@@ -179,7 +180,8 @@ label.label-control{
 .maindivfoprm {
     width: 800px;
     margin: 0px auto;
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-bottom: 60px;
 }
 .maindivfoprm .mat-tab-label {
     padding: 0px !important;
@@ -223,7 +225,7 @@ label.label-control{
     padding-left: 12px;
 }
 .col-md-12.martsascl {
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }
 .footbutcl button:hover{
     font-weight: normal !important;
@@ -231,32 +233,32 @@ label.label-control{
 
 
 .h-scroll{
-    height:calc(100vh - 153px);
+    height:calc(100vh - 130px);
     overflow: auto;
 }
 
 
-.modelprhead, .modelprbody {
+.modelprhead, .modelprbody, .modelprfooter {
     background-color: #F1F1F1 !important;
 }
 .modelprhead {
     border: none;
 }
 .modal-header.modelprhead h4 {
-    font-size: 24px;
+    font-size: 18px;
     padding: 15px 0px 0px 15px !important;
 }
 .modelprbody input, .modelprbody select, .modelprbody textarea {
     background-color: #fff !important;
 }
 .modal-header.modelprhead button span {
-    font-size: 30px;    
+    font-size: 24px;    
     color: black !important;
 }
 
 .maindivfoprm select, .modelprbody select {
     appearance: none;
-    background-image: url('../../../../assets/images/Projects/project-arrow.svg');
+    background-image: url('../../../../assets/images/Projects/down-arrow.svg');
     background-repeat: no-repeat;
     background-position: center right 17px;
 }
@@ -271,27 +273,62 @@ label.label-control{
 button.btn.btn-primary.prj-btn-save {
     margin-right: 0px !important;
 }
-.maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprbody button.btn.btn-primary.prj-form-btn-reset {
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
     background-color: #fff !important;
     border: 1px solid #00a0e3 !important;
     color: #00a0e3 !important;
 }
-.maindivfoprm button.btn.btn-primary.prj-form-btn-reset:hover, .modelprbody button.btn.btn-primary.prj-form-btn-reset:hover {
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-reset:hover {
     background-color: #001c47 !important;
     color: #fff !important;
     border: none !important;
 }
-.maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprbody button.btn.btn-primary.prj-form-btn-hover:hover {
+.maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-hover:hover {
     background-color: #001c47 !important;
     color: #fff !important;
     border-color: #001c47 !important;
 }
 
 .modal-header.modelprhead button {
-    margin-top: 10px !important;
+    margin-top: 15px !important;
     margin-right: 15px !important;
 }
 .col-md-12.mt-2.maartop {
     margin-top: -15px;
 }
 
+.form-fileds {
+    margin: 20px 0px;
+}
+.form-footer {
+    margin-top: 50px;
+}
+
+.project-card span {
+    font-size: 14px !important;
+    color: rgb(0 21 50 / 50%) !important;
+    font-weight: 600;
+}
+.project-card h3.projectname {
+    font-size: 18px;
+    margin: 10px 0px !important;
+    color: #001532 !important;
+}
+.prj-slt {
+    margin-top: 30px !important;
+}
+
+.modal-footer.modelprfooter {
+    padding: 10px 0px;
+    border: none !important;
+}
+.modal-lg .modal-content {
+    
+}
+.modelprhead, .modelprbody {
+    padding: 0px !important;
+}
+.required {
+    color: rgb(253 75 75);
+    font-size: 12px;
+}
