@@ -1,4 +1,4 @@
-<div class="projects-header newprhcl">
+<!-- <div class="projects-header newprhcl">
     <span class="projects-back-button">
      
     </span>
@@ -45,9 +45,40 @@
             </div>
          </div>
      </div>
-  </div>
+  </div> -->
 
-  <hr>
+<div class="projects-header newprhcl">
+  <div class="container-fluid p-0">
+    <div class="row">
+      <div class="col-md-8 p-0 project-info">
+          <div class="status-img">
+              <img src="..\assets\images\Projects\project_icon.svg" alt="" >
+          </div>
+          <div class="project-data">
+            <span class="tab-number">{{projectdata.projectName |uppercase}}</span>
+            <span class="tab-text" style="font-size: 12px;" >{{projectdata.description}}</span>
+          </div>
+      </div>
+      <div class="col-md-4 p-0">
+        <div class="row newprjdates">
+          <div class="col-sm-4">
+            <label class="labeltit">Start Date</label>
+            <label class="labelcont">{{projectdata.startDate | date}}</label>
+          </div>
+          <div class="col-sm-4">
+            <label class="labeltit">End Date</label>
+            <label class="labelcont">{{projectdata.endDate | date}}</label>
+          </div>
+          <div class="col-sm-4">
+            <label class="labeltit">Status</label>
+            <p class="labelcont">{{projectdata.status}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
   
   <table class="tablprdetails">
       <tr>
