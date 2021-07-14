@@ -42,7 +42,7 @@
                                                     <label class="label-control">Add Resources<span  style="color:red">*</span></label>
                                                     <select   formControlName="resources"  class="form-control data">
                                                         <option value="">Select Resources</option>
-                                                        <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                                                        <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>  
                                                     </select>
 
                                                 <!-- <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
@@ -84,7 +84,7 @@
                                                     <select class="form-control" formControlName="process">
                                                         <option  [value]="null" disabled hidden>Select Process</option>
                                                         <option value="" [selected]="true">Select Process</option>
-                                                        <option *ngFor="let process of selected_process_names" [value]="process.processName">{{process.processName}}</option>          
+                                                        <option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}</option>         
                                                     </select>
                                                     <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" class="fa fa-info-circle errspan required">Process Required*</span>
                                                 </div>
@@ -383,7 +383,7 @@
                                     <label>Add Resources<span  style="color:red">*</span></label>
                                     <select   formControlName="resources"  class="form-control data">
                                         <option value="">Select Resources</option>
-                                        <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                                        <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                                     </select>
                                     <span *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched" class="fa fa-info-circle errspan required">Resources Required*</span>
                                 </div>    
@@ -473,7 +473,7 @@
                                     <select class="form-control" formControlName="process">
                                         <option  [value]="null" disabled hidden>Select Process</option>
                                         <option value="" [selected]="true">Select Process</option>
-                                        <option *ngFor="let process of selected_process_names" [value]="process.processName">{{process.processName}}</option>          
+                                        <option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}</option>         
                                     </select>
                                     <span *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched" class="fa fa-info-circle errspan required">Process Required*</span>
                                 </div>

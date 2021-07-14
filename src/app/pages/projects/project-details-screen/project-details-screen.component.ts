@@ -47,6 +47,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
   userrole: any=[];
   public rolename: any;
   roles: any;
+  public users_list:any=[];
+  useremail: any;
+  processes: any;
+
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService) { }
 
   ngOnInit() {
@@ -55,12 +59,21 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
     this.projectdetails();
 
+    this.getautomatedtasks(0);
+    this.getUserRole();
+
+
+    this.getallusers();
+    this.getallprocesses();
+
     setTimeout(() => {
      // this.getImage();
      // this.profileName();
+    //  this.profileName();
         },1000);
         this.getautomatedtasks(0);
         this.getUserRole();
+
   }
 
 
@@ -205,4 +218,27 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
      
       }
+
+
+      getallusers()
+      {
+        let tenantid=localStorage.getItem("tenantName")
+        this.rpa.getuserslist(tenantid).subscribe(item=>{
+          let users:any=item
+          this.users_list=users;
+
+          this.useremail=this.users_list.find(item=>item.userId.id==this.projectDetails.resources);
+          return this.useremail!=undefined?(this.useremail.userId.userId):this.projectDetails.resources;
+        })
+      }
+
+      getallprocesses()
+      {
+        this.rpa.getprocessnames().subscribe(processnames=>{
+          let resp:any=[]
+          resp=processnames
+          this.processes=resp.filter(item=>item.status=="APPROVED");
+        })
+      }
+
 }

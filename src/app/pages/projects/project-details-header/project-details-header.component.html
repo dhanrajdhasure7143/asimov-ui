@@ -85,7 +85,7 @@
                 <div class="status-data">
                   <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Process</span><br>
                   <span class="tab-text" *ngIf="projectdata.process==null" style="font-size: 12px;"><b>-</b></span>
-                  <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.process}}</b></span>
+                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.process | processName : processes}}</b></span>
                 </div>
               </div>
           </td>
@@ -97,7 +97,7 @@
                 </div>
                 <div class="status-data">
                   <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Process Id</span><br>
-                  <span class="tab-text labelcont" style="font-size: 12px;"><b>1111134567</b></span>
+                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.process }}</b></span>
                 </div>
               </div>
         </td>
@@ -129,7 +129,7 @@
                     <div class="status-data">
                       <span class="labeltit" style="font-size: 11px;white-space: nowrap;">Project Owner</span><br>
                       <span class="tab-text" *ngIf="projectdata.owner==null" style="font-size: 12px;"><b>-</b></span>
-                      <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.owner}}</b></span>
+                      <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.owner| userPipe : users_list}}</b></span>
                     </div>
                   </div>
             </div>
@@ -163,7 +163,7 @@
                 <div class="status-data">
                   <span class="labeltit" style="font-size: 11px;">Resources</span><br>
                   <span class="tab-text" *ngIf="projectdata.resources==null" style="font-size: 12px;"><b>-</b></span>
-                  <span class="tab-text labelcont" style="font-size: 12px;"><b>{{projectdata.resources}}</b></span>
+                  <span class="tab-text" style="font-size: 12px;"><b>{{projectdata.resources| userPipe : users_list}}</b></span>
                 </div>
               </div>
         </div>
