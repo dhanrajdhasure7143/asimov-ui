@@ -6,19 +6,21 @@ import { ProjectsProgramsTableComponent } from './projects-list-screen/projects-
 import { CreateProjectsComponent } from './create-projects/create-projects.component';
 import { ProjectDetailsScreenComponent } from './project-details-screen/project-details-screen.component';
 import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
+import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-screen.component';
 
 
 const routes: Routes = [
   {path:'', component:ProjectsComponent, children:[
     
     {path:'listOfProjects', component:ProjectsListScreenComponent},
-    
+    {path: "projectreposcreen", component:ProjectRepoScreenComponent},
     {path:'createprojects', component:CreateProjectsComponent},
     {path:'projectdetails', component:ProjectDetailsScreenComponent},
     {path:'projectdashboard', component:ProjectsDashboardComponent},
     {path:'create-projects', component:CreateProjectsComponent},
     {path:"", component:ProjectsProgramsTableComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
+    
   ]}
 ];
 

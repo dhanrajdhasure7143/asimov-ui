@@ -34,6 +34,7 @@ import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashbo
 import { NgSelectModule } from '@ng-select/ng-select';
 import { ProcessNamePipe } from './pipes/process-name.pipe';
 import { UserPipePipe } from './pipes/user-pipe.pipe';
+import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-screen.component';
 
 const materialModules: any[] = [
     
@@ -42,7 +43,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe],
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

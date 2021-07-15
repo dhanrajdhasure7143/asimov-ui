@@ -1,0 +1,191 @@
+<div style="width:100%;overflow-x: auto;height:calc( 100vh - 160px)">
+    <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
+        <div class="projects-header maincreat">
+          <span class="projects-back-button">
+            <i class="fa fa-angle-left" aria-hidden="true"></i>
+          </span>
+          <span class="projects-header-title">
+            Project Repo 
+          </span>
+          <span class="pull-right serve1" style="font-size:20px;">
+            <span class="ml-auto prj-lstscr-btn">
+                <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">Request File</button>
+              </span> 
+              <span class="ml-auto prj-lstscr-btn">
+                <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">Upload File <i class="fa fa-upload"></i></button>
+              </span> 
+              <span class="projects-menu-item"><i class="fa fa-download"></i></span>
+            <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
+            <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+          </span>
+        </div>
+        <br>
+        <div class="documents1">
+            <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
+              <!-- <div class="">
+                <span class="">
+                 
+                </span>
+                <br>
+                <span class="projects-header-title">
+                  Recently Added Documents
+                </span>
+                <span class="pull-right" style="font-size:20px;">
+                  <span class="projects-menu-item"  ></span>
+                  <span class="projects-menu-item"><button type="button" class="btn btn-primary">Upload</button></span>
+                </span>
+              </div>
+              <br> -->
+              <div class="projects-table-body">
+                <table>
+                  <tr class="separated">
+                    <th>Category</th>
+                    <th>Full Name</th>
+                    <th>Uploaded</th>
+                    <th>Uploaded by</th>
+                    <th>File Size</th>
+                    <th>Comments</th>
+                    <th>Actions</th>
+                  </tr>
+                  <tr >
+                    <td>Analysis</td>
+                    <td>Process change analysis doc</td>
+                    <td>16-Jan-2021</td>
+                    <td>Peter</td>
+                    <td>130mb</td>
+                    <td>Reviewed</td>
+                    <td>
+                        <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
+                        <span class="projects-menu-item"><i class="fa fa-download"></i></span>
+                    </td>
+                    </tr>
+                    <tr >
+                      <td>Design</td>
+                      <td>BPM design BPMN</td>
+                      <td>28-June-2021</td>
+                      <td>James</td>
+                      <td>100kb</td>
+                      <td>Reviewed</td>
+                      <td>
+                        <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
+                        <span class="projects-menu-item"><i class="fa fa-download"></i></span>
+                    </td>
+                      </tr>
+                      <tr >
+                        <td>Analysis</td>
+                        <td>Process change analysis doc</td>
+                        <td>16-Jan-2021</td>
+                        <td>Peter</td>
+                        <td>130mb</td>
+                        <td>Reviewed</td>
+                        <td>
+                            <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
+                            <span class="projects-menu-item"><i class="fa fa-download"></i></span>
+                        </td>
+                        </tr>
+                        <tr >
+                            <td>Design</td>
+                            <td>BPM design BPMN</td>
+                            <td>28-June-2021</td>
+                            <td>James</td>
+                            <td>100kb</td>
+                            <td>Reviewed</td>
+                            <td>
+                                <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
+                                <span class="projects-menu-item"><i class="fa fa-download"></i></span>
+                            </td>
+                            </tr>
+                </table>
+                </div>
+                <br>
+                <div class="">
+                <span class="">
+                 
+                </span>
+                <br>
+                <span class="projects-header-title">
+                  Pending Requests
+                </span>
+              
+              </div>
+              <mat-tab-group mat-align-tabs="Start">
+                <mat-tab label="All"></mat-tab>
+                <mat-tab label="My Requests"></mat-tab>
+              </mat-tab-group>
+              <div class="projects-table-body">
+                <table>
+                  <tr class="separated">
+                    <th>File Category</th>
+                    <th>Request From</th>
+                    <th>Request To</th>
+                    <th>Description</th>
+                    <th>Requested Date</th>
+                    <th>Actions</th>
+                    
+                  </tr>
+                  <tr >
+                    <td>Design</td>
+                    <td>Peter</td>
+                    <td>James</td>
+                    <td>now use LoremIpsum as their default moal text</td>
+                    <td>16-Jan-2021</td>
+                    
+                    <td>
+                        <span class="remove-action">×</span>
+                    </td>
+                    </tr>
+                    <tr >
+                      <td>Analysis</td>
+                     
+                      <td>James</td>
+                      <td>Peter</td>
+                      <td>now use LoremIpsum as their default moal text</td>
+                      <td>12-Jun-2021</td>
+                      <td>
+                        <span class="remove-action">×</span>
+                    </td>
+                      </tr>
+                      <tr >
+                        <td>Design</td>
+                        <td>Peter</td>
+                        <td>James</td>
+                        <td>now use LoremIpsum as their default moal text</td>
+                        <td>16-Jan-2021</td>
+                        
+                        <td>
+                            <!-- <span class="projects-menu-item"><i class="fa fa-trash"></i></span> -->
+                        </td>
+                        </tr>
+                        <tr >
+                            <td>Analysis</td>
+                     
+                            <td>James</td>
+                            <td>Peter</td>
+                            <td>now use LoremIpsum as their default moal text</td>
+                            <td>12-Jun-2021</td>
+                            <td>
+                              <!-- <span class="projects-menu-item"><i class="fa fa-trash"></i></span> -->
+                          </td>
+                            </tr>
+                </table>
+                </div>
+              <br>
+            </mat-card>
+          </div>
+        <div class="projects-table-body" style="padding:10px;">
+            <!-- <app-project-details-header></app-project-details-header> -->
+          </div>
+        
+      </mat-card>
+    
+      
+    
+   
+    
+    
+      <br>
+    
+ 
+   
+    
+    </div>
