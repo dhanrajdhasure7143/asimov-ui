@@ -19,18 +19,19 @@ span.level3 {
 }
 
 .new-bps-icons button {
-    padding: 6px 8px;
+    padding: 5px;
 }
 .bps-upload {
     margin-left: 10px !important;
     border-radius: 4px;
     background-color: #00a0e3 !important;
+    padding: 6px 8px !important;
 }
 .bps-upload img {
     padding-right: 10px;
 }
 .bps-save-icon {
-    border-left: 1px solid #ccc;
+    /* border-left: 1px solid #ccc; */
 }
 .new-bps-header-title {
     padding: 0px;
@@ -55,4 +56,10 @@ select.dowload-images option {
 button.editprimary {
     background-color: #00a1e3;
     border-radius: 4px;
+}
+.bpsbtnsep {
+    color:#ddd;
+    font-size: 20px;
+    margin: 10px;
+    padding: 0px !important;
 }

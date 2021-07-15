@@ -1,5 +1,5 @@
 import { ProjectDetailsScreenComponent } from '../project-details-screen/project-details-screen.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-project-details-header',
@@ -9,6 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class ProjectDetailsHeaderComponent implements OnInit {
 
   projectdata:any;
+  @Input('users_list') public users_list: any=[];
+  @Input('processes') public processes: any=[];
+
   constructor(private projectscreen:ProjectDetailsScreenComponent) { }
 
   ngOnInit() {

@@ -373,7 +373,7 @@ margin-right: -85px;
   z-index: 9999;
 }
 .propertiesTitle{
-  padding: 14px 10px;
+  padding: 12px 10px;
   /* padding: 10px 10px; */
   line-height: 12px;
   font-size: 12px;
@@ -788,8 +788,17 @@ padding-top: 11px;
   opacity: 1 !important;
 }
 .djs-minimap{
-  background-color: rgba(255, 255, 255, 0) !important;
+  background-color: rgb(255 255 255) !important;
+  box-shadow: 0px 1px 6px rgb(0 0 0 / 20%);
+  border:medium none !important;
+  border-radius: 4px;
 }
+
+.djs-minimap .viewport-dom {
+  border: solid 1px #a0a0a0;
+  border-radius: 4px;
+}
+
 .djs-minimap svg{
   z-index: 0 !important;
   background-color: white;
@@ -812,12 +821,18 @@ padding-top: 11px;
 .djs-minimap.open .toggle {
   right: 10px;
 }
+
+.djs-minimap .map {
+  width: 220px;
+  height: 120px;
+}
+
 .open .toggle:before {
-  content: 'X' !important ;
-  font-size: 14px;
-  /* line-height: 40px; */
-  color: black;
+  content: 'x' !important;
+  font-size: 15px;
+  color: #607088;
   background-image: none !important;
+  font-weight: 600;
 }
 .djs-minimap:not(.open) .toggle {
   padding: 15px !important;
@@ -841,7 +856,7 @@ padding-top: 11px;
   /* width: 40px;
   height: 36px; */
   width: 42px;
-  height: 44px;
+  height: 40px;
 }
 
 mat-panel-title.mat-expansion-panel-header-title {
@@ -903,5 +918,5 @@ mat-panel-title.mat-expansion-panel-header-title {
   background:transparent !important;
 }
 .propertiesContainerOpened mat-expansion-panel-header {
-  height: 40px !important;
+  height: 38px !important;
 }

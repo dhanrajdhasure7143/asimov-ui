@@ -74,7 +74,7 @@
   margin: 10px 0px 0px 0px;
 }
 .newprhcl .project-info {
-  margin-bottom: -30px;
+  /* margin-bottom: -30px; */
 }
 .newprhcl .project-data {
   margin-top: -30px;
@@ -85,7 +85,7 @@
   font-size: 14px;
 }
 table.tablprdetails {
-  border-bottom: 1px solid #ddd;
+  /* border-bottom: 1px solid #ddd; */
 }
 #projects_details_screen {
   box-shadow: unset;
@@ -96,12 +96,23 @@ table.tablprdetails {
   padding-left: 14px !important;
   color:#001c47 !important;
 }
-span.labeltit {
+span.labeltit, label.labeltit {
   font-size: 14px !important;
   color: #7D7D7D;
+  font-weight: 400;
+  /* display: block; */
 }
 span.labelcont b {
   font-size: 14px !important;
   color: #001c47;
   font-weight: 400;
+}
+
+.row.newprjdates {
+  float: right;
+}
+.labelcont {
+  font-size: 12px;
+  font-weight: 700;
+  color: #001c47;
 }

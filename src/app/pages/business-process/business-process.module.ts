@@ -18,6 +18,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule} from '@angular/material';
+import {MatMenuModule} from '@angular/material/menu';
+
 import{FilterPipe} from './custom_filter.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 // import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
@@ -45,7 +47,7 @@ import 'highlightjs-line-numbers.js';
     Ng2SearchPipeModule,
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
-    MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule,
+    MatOptionModule, MatSelectModule, MatTooltipModule, MatDialogModule, MatTabsModule, MatMenuModule,
     ModalModule.forRoot()
     // HighlightModule
   ],

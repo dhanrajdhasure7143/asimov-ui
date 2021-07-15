@@ -12,7 +12,9 @@
 
 ::ng-deep .modal-lg .modal-content{
     width:100%  !important;
-    margin-top:30px !important;
+    /* margin-top:30px !important; */
+    /* padding: 10px !important; */
+    background-color: #f1f1f1 !important;
 }
 
 
@@ -31,9 +33,9 @@
     background-color: #12a6e5;
     color: #fff;
     text-align: center;
-    padding: 7px 14px;
-    margin-left: 7px;
-    border-radius: 2px;
+    padding: 7px 11px;
+    margin-left: 7px;   
+    border-radius: 4px;
 }
 
 .select-project{
@@ -41,12 +43,11 @@
 }
 
 .project-card{
-    background-color: #FFFF99;
-    padding:20px;
-    padding-top:15px;
+    background-color: #FFFFD5;
+    padding:10px;
     border-style: solid;
     border-width: 1px;
-    border-color: #cecece;
+    border-color: #D6D6D6;
     color:rgb(7, 7, 7);
     transition: 0.3s;
     border-radius: 5px;
@@ -74,7 +75,7 @@
 }
 
 label.label-control{
-    padding: 4px 0px;
+    /* padding: 4px 0px; */
     border: 1px solid transparent;
     border-bottom: medium none;
     margin: 0px !important;
@@ -179,7 +180,8 @@ label.label-control{
 .maindivfoprm {
     width: 800px;
     margin: 0px auto;
-    margin-top: 20px;
+    margin-top: 30px;
+    margin-bottom: 60px;
 }
 .maindivfoprm .mat-tab-label {
     padding: 0px !important;
@@ -196,13 +198,20 @@ label.label-control{
     /* margin-bottom: -30px !important; */
 }
 .maindivfoprm .label-control ,.modelprbody label{
-    color: #6d6d6d !important;
+    color: #3F4D67 !important;
     font-weight: normal !important;
     font-size: 15px !important;
 }
 .maindivfoprm input, .maindivfoprm select, .maindivfoprm textarea ,.modelprbody input, .modelprbody select, .modelprbody textarea{
     background-color: #f6f6f6;
-    border: 1px solid #ddd !important;
+    border: 1px solid #D1D1D1 !important;
+    box-shadow: unset !important;
+    color: rgb(0 21 50 / 60%) !important;
+    font-weight: 600 !important;
+}
+.modelprbody input, .modelprbody select, .modelprbody textarea{
+    background-color: #f6f6f6;
+    border: 1px solid #d6ddf2 !important;
     box-shadow: unset !important;
     color: rgb(0 21 50 / 60%) !important;
     font-weight: 600 !important;
@@ -223,7 +232,7 @@ label.label-control{
     padding-left: 12px;
 }
 .col-md-12.martsascl {
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }
 .footbutcl button:hover{
     font-weight: normal !important;
@@ -231,39 +240,72 @@ label.label-control{
 
 
 .h-scroll{
-    height:calc(100vh - 153px);
+    height:calc(100vh - 130px);
     overflow: auto;
 }
 
 
-.modelprhead, .modelprbody {
-    background-color: #F1F1F1 !important;
+.modelprhead, .modelprbody, .modelprfooter {
+    background-color: #FFF !important;
 }
 .modelprhead {
     border: none;
 }
 .modal-header.modelprhead h4 {
-    font-size: 24px;
-    padding: 15px 0px 0px 15px !important;
+    font-size: 18px;    
+    font-weight: normal;
+    /* padding: 0px 0px 0px 15px !important; */
 }
 .modelprbody input, .modelprbody select, .modelprbody textarea {
     background-color: #fff !important;
 }
 .modal-header.modelprhead button span {
-    font-size: 30px;    
+    font-size: 24px;    
     color: black !important;
 }
 
-.maindivfoprm select, .modelprbody select {
+.maindivfoprm select {
     appearance: none;
-    background-image: url('../../../../assets/images/Projects/project-arrow.svg');
+    background-image: url('../../../../assets/images/Projects/down-arrow.svg');
     background-repeat: no-repeat;
-    background-position: center right 17px;
+    background-position: center right 12px;
+}
+.modelprbody select {
+    appearance: none;
+    background-image: url('../../../../assets/images/Projects/small-down.svg');
+    background-repeat: no-repeat;
+    background-position: center right 12px;
+}
+
+.maindivfoprm input[type="date"], .modelprbody input[type="date"] {
+    background-image: url('../../../../assets/images/Projects/calendar.svg');
+    background-position: calc(100% - 10px) center;
+    /* background-size: 12px; */
+    background-repeat: no-repeat;
+    cursor: pointer;
+}
+   
+.maindivfoprm input[type="date"]::-webkit-calendar-picker-indicator, .modelprbody input[type="date"]::-webkit-calendar-picker-indicator  {
+    width: 16px;
+    height: 16px;
+    -webkit-appearance: none;
+    background-position: calc(100% + 5px) center;
+    background-size: 12px;
+    background-repeat: no-repeat;
+    color: rgba(204, 204, 204, 0);
+    opacity: 0.1;
+    text-align: center;
+    cursor: pointer;
+}
+   
+.maindivfoprm input[type="date"]::-webkit-calendar-picker-indicator:hover, .modelprbody input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    background-color: transparent;
 }
 
 .prj-crt-form {
     margin-right: -15px !important;
     margin-left: -15px !important;
+    padding-top: 20px !important;
 }
 .laemarleft {
     padding-left: 0px !important;
@@ -271,27 +313,87 @@ label.label-control{
 button.btn.btn-primary.prj-btn-save {
     margin-right: 0px !important;
 }
-.maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprbody button.btn.btn-primary.prj-form-btn-reset {
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
     background-color: #fff !important;
     border: 1px solid #00a0e3 !important;
     color: #00a0e3 !important;
 }
-.maindivfoprm button.btn.btn-primary.prj-form-btn-reset:hover, .modelprbody button.btn.btn-primary.prj-form-btn-reset:hover {
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-reset:hover {
     background-color: #001c47 !important;
     color: #fff !important;
     border: none !important;
 }
-.maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprbody button.btn.btn-primary.prj-form-btn-hover:hover {
+.maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-hover:hover {
     background-color: #001c47 !important;
     color: #fff !important;
     border-color: #001c47 !important;
 }
 
 .modal-header.modelprhead button {
-    margin-top: 10px !important;
-    margin-right: 15px !important;
+    margin-right: 5px;    
+    opacity: 1 !important;
+    /* margin-right: 10px !important; */
 }
 .col-md-12.mt-2.maartop {
-    margin-top: -15px;
+    /* margin-top: -15px; */
 }
 
+.form-fileds {
+    margin: 0px 0px 15px !important;
+}
+.form-footer {
+    margin-top: 50px;
+}
+
+.project-card span {
+    font-size: 14px !important;
+    color: rgb(0 21 50 / 50%) !important;
+    font-weight: 600;
+}
+.project-card h3.projectname {
+    font-size: 18px;
+    margin: 10px 0px !important;
+    color: #001532 !important;
+}
+.prj-slt {
+    margin-top: 30px !important;
+}
+
+.modal-footer.modelprfooter {
+    padding: 10px 0px;
+    border: none !important;
+}
+.modal-lg .modal-content {
+    
+}
+.modelprhead, .modelprbody {
+    padding: 10px !important;
+}
+.required, .star {
+    color: rgb(253 75 75) !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+}
+.modal-header.modelprhead {
+    padding: 15px 25px 10px 25px!important;
+    background-color: #f0f8ff!important;
+}
+
+.modal-body.modelprbody {
+    height: calc(100% - 106px);
+    overflow: auto;
+}
+
+.addproject-btn span i {
+    color: #fff !important;
+}
+.slt-prjts {
+    display: flex;
+}
+.form-footer button, .footbutcl button {
+    padding: 6px 12px !important;
+    line-height: 18px;
+}
+.footbutcl button.btn.btn-primary.prj-form-btn-hover {
+    margin-right: 30px !important;
+}
