@@ -1068,6 +1068,7 @@ div#propertiesPanelBody .bpp-properties-panel {
 .maindivfoprm .mat-tab-label {	
   min-width: auto !important;        
   padding: 0px 20px !important;
+  font-size: 16px !important;
 }
 .maindivfoprm .mat-tab-label-active {
   color: #00a0e3 !important;
