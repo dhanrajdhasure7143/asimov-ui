@@ -284,7 +284,7 @@ padding-right: 5px;
 }
 
 .module-body {
-  height: calc(100% - 48px);
+  height: calc(100% - 46px);
   overflow: auto;
   padding: 15px 0px;
 }

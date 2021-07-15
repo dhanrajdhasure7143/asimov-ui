@@ -269,13 +269,13 @@ mat-panel-description.mat-expansion-panel-header-description {
     width: 100%;
 }
 .collab {
-    padding: 20px;
+    padding: 16px;
     height: 480px;
 }
 .row.lftusermsg {
     background: aliceblue;
     border-radius: 0px 15px 15px 15px;
-    padding: 15px 0px 10px 40px;
+    padding: 10px 0px 10px 40px;
     color: #001c47;
     margin: 10px 0px 20px !important;
     position: relative;
@@ -284,7 +284,7 @@ mat-panel-description.mat-expansion-panel-header-description {
 .row.rgtusermsg {
     background: #00a1e3;
     border-radius: 15px 0px 15px 15px;
-    padding: 15px 10px;
+    padding: 10px;
     margin: 10px 0px 20px !important;
     color: #fff;
 }
@@ -329,7 +329,7 @@ textarea.msgip {
     min-width: 15px !important;
     margin-right: 10px;
 }
-.shortcutslistdiv {
+.shortcutslistdiv, .activitieslistdiv {
     padding: 10px;
     width:100%;
 }

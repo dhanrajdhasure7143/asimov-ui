@@ -3,7 +3,8 @@
 .update_info{
   position: absolute;
   right: 25px;
-  bottom: 20px;
+  /* bottom: 20px; */
+  bottom: 10px;
   color: #0062cf;
 }
 .drop__div{
@@ -806,7 +807,8 @@ padding-top: 11px;
 }
 .djs-minimap .toggle:before {
   content: '' !important;
-  background: url(./../../assets/images/icons/map-marked-alt-solid.svg);
+  /* background: url(./../../assets/images/icons/map-marked-alt-solid.svg); */
+  background: url(./../../assets/images/BPMS/map-marked-blue.svg);
   background-size: cover;
   position: absolute;
   width: 20px;

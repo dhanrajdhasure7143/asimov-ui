@@ -203,12 +203,16 @@ label.label-control{
     font-size: 15px !important;
 }
 
-.maindivfoprm input, .maindivfoprm select, .maindivfoprm textarea {
-    background-color: #F6F6F6 !important;
-    border: 1px solid #D1D1D1 !important;
+.maindivfoprm input, .maindivfoprm select, .maindivfoprm textarea ,.modelprbody input, .modelprbody select, .modelprbody textarea{
+    background-color: #f6f6f6 !important;
+    border: 1px solid #D1D1D1;
     box-shadow: unset !important;
     color: rgb(0 21 50 / 60%) !important;
     font-weight: 600 !important;
+}
+.maindivfoprm input:focus,
+.maindivfoprm select:focus, .maindivfoprm textarea:focus ,.modelprbody input:focus, .modelprbody select:focus, .modelprbody textarea:focus {
+    border-color: #00a0e3 !important; 
 }
 .modelprbody input, .modelprbody select, .modelprbody textarea{
     background-color: #fff !important;

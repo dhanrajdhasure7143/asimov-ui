@@ -310,9 +310,13 @@ button:disabled{
   padding-left: 50px !important;
 } */
 th {
-  /* color: #464646; */
-  font-size: 13px;
-  font-weight: 700;
+  border-top: none !important;
+  font-weight: 500;
+  color: #00a0e3;
+  border-bottom: 1px solid #4a4a4a33 !important;
+  padding: 8px 12px;
+  background: #e8f7fd;
+  font-size: 14px !important;
 }
 ul.nav.nav-tabs.justify-content-start li {
   height: 38px !important;
@@ -714,7 +718,8 @@ foreignObject{
 }
 .canvas-container .mat-tab-label{
   min-width: 90px !important;
-  height: 25px !important;
+  /* height: 25px !important; */
+  height: 40px !important;
   padding: 5px;
   font-weight: normal !important;
 }
@@ -1044,9 +1049,9 @@ div#propertiesPanelBody .bpp-properties-panel {
   background: #f2d12b33 !important;
 }
 .table thead {
-  background-color: #00a0e317 !important;
-    color: #00a0e3 !important;
-    font-size: 15px !important;
+  background-color: #e8f7fd !important;
+  color: #00a0e3 !important;
+  font-size: 14px !important;
     text-align: left !important;
     border-top: none !important;
     font-weight: 500;
@@ -1057,9 +1062,10 @@ div#propertiesPanelBody .bpp-properties-panel {
   background:transparent !important;
 }
 #projectfavourites .mat-tab-label {
-  height: 35px !important;
+  height: 30px !important;
   margin-left: 0px !important;
-  min-width: 100px;
+  min-width: 125px;
+  padding: 0px;
 }
 #projectfavourites mat-tab-header.mat-tab-header {
   margin: 0px;
@@ -1118,6 +1124,6 @@ div#propertiesPanelBody .bpp-properties-panel {
   height: 8px;
 }
 
-mat-card#projects_list_screen {
+mat-card#projects_list_screen, mat-card#projects_dashboard_screen {
   box-shadow: none !important;
 }

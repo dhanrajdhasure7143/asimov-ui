@@ -3,6 +3,17 @@
     padding: 12px 0px !important;
     margin-bottom: 0px;
 }
+.main-content1 .module-heading.title {
+    background-color: #F3F3F3;
+}
+.main-content1 .module-heading-title {
+    font-weight: bold;
+    font-size: 22px;
+    color: #001c47;
+}
+.main-content1 .module-heading.title .value span {
+    color: #001c47;
+}
 .module-heading.title span {
     padding-left: 10px;
 }
@@ -19,7 +30,7 @@ span.level3 {
 }
 
 .new-bps-icons button {
-    padding: 5px;
+    padding: 5px 8px;
 }
 .bps-upload {
     margin-left: 10px !important;

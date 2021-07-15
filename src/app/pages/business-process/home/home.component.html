@@ -40,27 +40,27 @@
           </div>
         </div>
         <div class="row col-md-12 text-bold workspace-title">
-          <span mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)"><b>Process Name<span class="asc"
+          <span mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name<span class="asc"
                 *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></span>
-          <span><b>Type</b></span>
-          <span><b>Category</b></span>
-          <span (click)="sort('version',1)"><b>Version<span class="asc"
+                *ngIf="!orderAsc && sortIndex==0">&#8593;</span></span>
+          <span>Type</span>
+          <span>Category</span>
+          <span (click)="sort('version',1)">Version<span class="asc"
                 *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></span>
-          <span (click)="sort('modifiedTimestamp',2)"><b>Last Modified<span class="asc"
+                *ngIf="!orderAsc && sortIndex==1">&#8593;</span></span>
+          <span (click)="sort('modifiedTimestamp',2)">Last Modified<span class="asc"
                 *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></span>
-          <span (click)="sort('approverName',3)"><b>Approver<span class="asc"
+                *ngIf="!orderAsc && sortIndex==2">&#8593;</span></span>
+          <span (click)="sort('approverName',3)">Approver<span class="asc"
                 *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></span>
-          <span (click)="sort('bpmnProcessStatus',4)"><b>Status<span class="asc"
+                *ngIf="!orderAsc && sortIndex==3">&#8593;</span></span>
+          <span (click)="sort('bpmnProcessStatus',4)">Status<span class="asc"
                 *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></span>
-          <span (click)="sort('reviewComments',5)"><b>Message<span class="asc"
+                *ngIf="!orderAsc && sortIndex==4">&#8593;</span></span>
+          <span (click)="sort('reviewComments',5)">Message<span class="asc"
                 *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==5">&#8593;</span></b></span>
-          <span><b>Actions</b></span>
+                *ngIf="!orderAsc && sortIndex==5">&#8593;</span></span>
+          <span>Actions</span>
         </div>
         <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
           <mat-accordion>
