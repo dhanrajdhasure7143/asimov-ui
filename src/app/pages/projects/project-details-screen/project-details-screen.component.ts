@@ -7,6 +7,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Base64 } from 'js-base64';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Options } from '@angular-slider/ngx-slider';
 
 @Component({
   selector: 'app-project-details-screen',
@@ -35,10 +37,33 @@ export class ProjectDetailsScreenComponent implements OnInit {
   dataSource2:MatTableDataSource<any>;
   categaoriesList: any;
   selected_process_names: any;
-  displayedColumns: string[] = ["processName","taskName","processOwner","taskOwner","taskType", "category","status"];
+  displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage", "createdBy","action"];
   responsedata: any;
   bot_list: any=[];
   automatedtask: any;
+  createtaskmodalref: BsModalRef;
+  project_id: any;
+  tasks: any=[];
+  public users_list:any=[];
+
+  value: number = 15;
+  options: Options = {
+    floor: 0,
+    ceil: 100,
+    showSelectionBar: true,
+    getSelectionBarColor: (value: number): string => {
+      if (value <= 3) {
+          return 'red';
+      }
+      if (value <= 6) {
+          return 'orange';
+      }
+      if (value <= 9) {
+          return 'yellow';
+      }
+      return '#2AE02A';
+    }
+  };
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   userid: any;
@@ -47,11 +72,12 @@ export class ProjectDetailsScreenComponent implements OnInit {
   userrole: any=[];
   public rolename: any;
   roles: any;
-  public users_list:any=[];
+  
   useremail: any;
   processes: any;
 
-  constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService) { }
+  constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
+   private modalService: BsModalService,) { }
 
   ngOnInit() {
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
@@ -59,7 +85,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
     this.projectdetails();
 
-    this.getautomatedtasks(0);
+    
     this.getUserRole();
 
 
@@ -71,9 +97,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
      // this.profileName();
     //  this.profileName();
         },1000);
-        this.getautomatedtasks(0);
+       
         this.getUserRole();
-
+        this.getallusers();
   }
 
 
@@ -93,72 +119,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
     })
   }
 
-  getautomatedtasks(process)
-  {
-    let response:any=[];
-    this.rpa.getautomatedtasks(process).subscribe(automatedtasks=>{
-      response=automatedtasks;
-
-      if(response.automationTasks != undefined)
-      {
-        this.responsedata=response.automationTasks.map(item=>{
-            if(item.sourceType=="UiPath")
-              item["taskOwner"]="Karthik Peddinti";
-            else if(item.sourceType=="EPSoft")
-            {
-
-              this.rpa.getAllActiveBots().subscribe(botlist =>
-                {
-                  this.bot_list=botlist;
-                  item["taskOwner"]=this.bot_list.find(bot=>bot.botId==item.botId).createdBy;
-                });
-            }
-            else{
-              item["taskOwner"]="---"
-            }
-            return item;
-        });
-        this.automatedtask= response.automationTasks;
-        this.dataSource2= new MatTableDataSource(response.automationTasks);
-        this.dataSource2.sort=this.sort10;
-        this.dataSource2.paginator=this.paginator10;
-        if(process==0)
-        {
-          this.getprocessnames(undefined);
-
-        }else
-        {
-          this.getprocessnames(process);
-        }
-      }
-     // this.spinner.hide();
-    },(err)=>{
-    //  this.spinner.hide();
-    })
-  }
-
-  getprocessnames(processId)
-  {
-    this.rpa.getprocessnames().subscribe(processnames=>{
-      let resp:any=[]
-      resp=processnames
-      this.process_names=resp.filter(item=>item.status=="APPROVED");
-      this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
-      let processnamebyid;
-      if(processId != undefined)
-      {
-        processnamebyid=this.process_names.find(data=>data.processId==processId);
-        this.applyFilter(processnamebyid.processId);
-      }
-      else
-      {
-        this.selectedvalue="";
-      }
-      //this.spinner.hide();
-    },(err)=>{
-     // this.spinner.hide();
-    })
-  }
+  
 
   applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
@@ -176,7 +137,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
     this.route.params.subscribe(data=>{this.projectData=data
 
       this.projectDetails=JSON.parse(Base64.decode(this.projectData.id));
-
+      this.project_id=this.projectDetails.id
+      this.tasks=this.projectDetails.tasks
+      this.dataSource2= new MatTableDataSource(this.tasks);
       console.log("project details",this.projectDetails)
         });
   }
@@ -241,4 +204,11 @@ export class ProjectDetailsScreenComponent implements OnInit {
         })
       }
 
+
+      createtask(createmodal){
+        this.createtaskmodalref=this.modalService.show(createmodal,{class:"modal-lg"})
+      }
+
+
+  
 }

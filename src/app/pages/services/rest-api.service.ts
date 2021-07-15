@@ -880,4 +880,8 @@ save_blueprism_config(data)
     getProjectDetailsById(id){
       return this.http.get("/platform-service/project/findProjectById?projectId="+id+"")
     }
+
+  createTask(data) {
+    return this.http.post("/platform-service/task/create", data)
+  }
 }
