@@ -35,7 +35,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { ProcessNamePipe } from './pipes/process-name.pipe';
 import { UserPipePipe } from './pipes/user-pipe.pipe';
 import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-screen.component';
-
+import { CreateTasksComponent } from './create-tasks/create-tasks.component';
+import { NgxSliderModule } from '@angular-slider/ngx-slider';
 const materialModules: any[] = [
     
     
@@ -43,7 +44,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent],
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
@@ -62,7 +63,7 @@ const materialModules: any[] = [
     MatFormFieldModule,
     MatButtonModule,NgxSpinnerModule,
     ModalModule.forRoot(),
-    MatProgressBarModule,NgSelectModule
+    MatProgressBarModule,NgSelectModule,NgxSliderModule
     
   ],
   providers:[
