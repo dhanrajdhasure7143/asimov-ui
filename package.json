@@ -114,8 +114,8 @@
     "tslib": "^1.10.0",
     "xlsx": "^0.15.6",
     "zone.js": "~0.9.1",
-    "@ng-select/ng-select": "^2.20.5",
-    "@angular-slider/ngx-slider": "^2.0.3"
+    "@ng-select/ng-select": "^2.20.5"
+  
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.29",
