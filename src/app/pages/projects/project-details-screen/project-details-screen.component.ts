@@ -42,6 +42,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   bot_list: any=[];
   automatedtask: any;
   createtaskmodalref: BsModalRef;
+  addresourcemodalref: BsModalRef;
   project_id: any;
   tasks: any=[];
   public users_list:any=[];
@@ -190,6 +191,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
 
       createtask(createmodal){
         this.createtaskmodalref=this.modalService.show(createmodal,{class:"modal-lg"})
+      }
+
+      addresource(createmodal){
+        this.addresourcemodalref=this.modalService.show(createmodal,{class:"modal-md"})
       }
 
 

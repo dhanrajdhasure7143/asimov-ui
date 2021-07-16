@@ -36,6 +36,7 @@ import { ProcessNamePipe } from './pipes/process-name.pipe';
 import { UserPipePipe } from './pipes/user-pipe.pipe';
 import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-screen.component';
 import { CreateTasksComponent } from './create-tasks/create-tasks.component';
+import { AddResourcesComponent } from './forms/add-resources/add-resources.component';
 
 const materialModules: any[] = [
     
@@ -44,7 +45,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent],
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

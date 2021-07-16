@@ -127,7 +127,7 @@
           <div class="col-md-6 pr-0">
             <span class="pull-right">
               <span class="projects-menu-item">
-                <button type="button" class="btn btn-primary">Create New</button>
+                <button type="button" class="btn btn-add"(click)="addresource(addresourcemodal)"><i class="fa fa-plus"></i> Add New</button>
               </span>
             </span>
           </div>
@@ -252,4 +252,12 @@
 
 <ng-template class="modal-lg" #createtaskmodal>
   <app-create-tasks [createtaskmodalref]="createtaskmodalref" [project_id]="project_id"></app-create-tasks>
+</ng-template>
+
+
+<ng-template  #addresourcemodal>
+  <div>
+    <app-add-resources [addresourcemodalref]="addresourcemodalref"></app-add-resources>
+  </div>
+  
 </ng-template>
