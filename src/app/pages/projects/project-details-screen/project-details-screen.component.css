@@ -228,13 +228,11 @@ mat-card#projects_details_screen {
   .btn-add{
     background: #00a0e3 !important;
     color: #FFF !important;
+    
    
   }
   .btn-add:hover{
     background-color: #001c47 !important;
   }
-  .maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-hover:hover {
-    background-color: #001c47 !important;
-    color: #fff !important;
-    border-color: #001c47 !important;
-  }
+  
+  
