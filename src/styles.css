@@ -1098,6 +1098,11 @@ div#propertiesPanelBody .bpp-properties-panel {
   height: 90%;
   overflow: hidden;
 }
+.modal-md .modal-content {
+  margin-top: 0px !important;
+  max-height: 90%;
+  overflow: hidden;
+}
 
 ::-webkit-scrollbar {
   width: 6px;

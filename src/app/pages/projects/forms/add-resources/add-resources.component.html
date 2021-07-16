@@ -1,0 +1,48 @@
+<div class="modal-header modelprhead">
+    <h4 class="modal-title pull-left">Add Resources</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="addresouceref.hide()">
+        <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container" style="width:100%">
+        <br>
+        <form [formGroup]="addresourcesForm" >
+            <div class="row">
+                <div class="col-md-12" *ngIf="userslist.length!=0">
+                    <div class="form-fileds col-md-12 pl-0">
+                        <label for="resources">Select Resources<span style="color:red">*</span></label>
+                        <!-- <select formControlName="resources" class="form-control data"style="width:100%;">
+                            <option value="">Select Resources</option>
+                            <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                        </select> -->
+    
+                         <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
+                                 [(ngModel)]="selectedresources"  required>
+                                <ng-option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
+                            </ng-select> 
+    
+                        <span *ngIf="addresourcesForm.get('resources').invalid && addresourcesForm.get('resources').touched"
+                            style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
+                        <br>
+
+                    </div>
+                    
+
+                   
+
+
+                </div>
+               
+                
+            </div>
+        </form>
+        <br>
+        <div class="pull-right">
+            <button (click)="resettask()" class="btn btn-reset">Reset</button>
+            &nbsp;&nbsp;
+            <button [disabled]="addresourcesForm.invalid"  class="btn btn-save">Save</button>
+        </div>
+        <br><br>
+    </div>
+</div>

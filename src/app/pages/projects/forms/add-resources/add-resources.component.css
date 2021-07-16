@@ -1,0 +1,18 @@
+::ng-deep .ng-select-container {
+    height: auto !important;
+    font-size: 1.0em!important;
+    font-family:sans-serif;
+  }
+  .modal-header.modelprhead {
+    padding: 15px 25px 10px 25px!important;
+    background-color: #f0f8ff!important;
+}
+
+.btn-reset,.btn-save{
+  background: #00a0e3 !important;
+  color: #FFF !important;
+ 
+}
+.btn-reset:hover,.btn-save:hover{
+  background-color: #001c47 !important;
+}
