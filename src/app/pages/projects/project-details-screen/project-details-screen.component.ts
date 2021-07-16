@@ -8,7 +8,7 @@ import { Base64 } from 'js-base64';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { RestApiService } from '../../services/rest-api.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Options } from '@angular-slider/ngx-slider';
+
 
 @Component({
   selector: 'app-project-details-screen',
@@ -46,24 +46,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   tasks: any=[];
   public users_list:any=[];
 
-  value: number = 15;
-  options: Options = {
-    floor: 0,
-    ceil: 100,
-    showSelectionBar: true,
-    getSelectionBarColor: (value: number): string => {
-      if (value <= 3) {
-          return 'red';
-      }
-      if (value <= 6) {
-          return 'orange';
-      }
-      if (value <= 9) {
-          return 'yellow';
-      }
-      return '#2AE02A';
-    }
-  };
+  
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
   userid: any;

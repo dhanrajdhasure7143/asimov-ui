@@ -36,7 +36,7 @@ import { ProcessNamePipe } from './pipes/process-name.pipe';
 import { UserPipePipe } from './pipes/user-pipe.pipe';
 import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-screen.component';
 import { CreateTasksComponent } from './create-tasks/create-tasks.component';
-import { NgxSliderModule } from '@angular-slider/ngx-slider';
+
 const materialModules: any[] = [
     
     
@@ -63,7 +63,7 @@ const materialModules: any[] = [
     MatFormFieldModule,
     MatButtonModule,NgxSpinnerModule,
     ModalModule.forRoot(),
-    MatProgressBarModule,NgSelectModule,NgxSliderModule
+    MatProgressBarModule,NgSelectModule
     
   ],
   providers:[
