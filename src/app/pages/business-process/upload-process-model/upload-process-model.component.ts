@@ -134,7 +134,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   isStartProcessBtn:boolean=false;
   definationId:any;
   businessKey:any;
-  selected_bpmn_list:any
+  selected_bpmn_list:any  
+  isEdit:boolean=false;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -189,7 +190,30 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
        ngAfterViewInit(){
         if(this.isShowConformance)
           this.getAutoSavedDiagrams()
-       }
+        this.dt.download_notation.subscribe(res=>{
+          this.fileType=res
+          if(this.fileType != null){
+            this.downloadBpmn();
+          }
+        })
+        this.dt.header_value.subscribe(res=>{
+          let headerValue=res
+          console.log(res);
+          let result = headerValue instanceof Object;
+          console.log(result);
+          if(!result){
+          if(headerValue == 'zoom_in'){
+            this.zoomIn();
+          }else if(headerValue == 'zoom_out'){
+            this.zoomOut();
+          }else if(headerValue == 'save_process'){
+            this.saveprocess(null)
+          }
+        }else if(result){
+          this.slideUp(headerValue)
+        }
+        })
+      }
        ngOnDestroy() {
         // this.subscription.unsubscribe();
       }
@@ -348,6 +372,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     else
       this.selected_approver = null;
+      let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,"isShowConformance":this.isShowConformance}
+      this.dt.bpsNotationaScreenValues(obj)
    }
 
   getAutoSavedDiagrams(){
@@ -765,6 +791,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         });
       }
     }
+    setTimeout(() => {
+      this.dt.downloadNotationValue(null)
+    }, 3000);
   }
 
   uploadAgainBpmn(e){

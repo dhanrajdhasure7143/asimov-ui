@@ -463,8 +463,8 @@ margin-right: -85px;
   margin: 0 !important;
 }
 .upload_again_btn button{
-  margin: 5px 8px 5px 10px;
-  float: right;
+  /* margin: 5px 8px 5px 10px;
+  float: right; */
 }
 .kpis-and-submit-button-div{
   bottom: 0;

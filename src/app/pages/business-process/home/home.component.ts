@@ -65,7 +65,7 @@ export class BpsHomeComponent implements OnInit {
     this.getBPMNList();
     this.getAutoSavedDiagrams();
     this.getAllCategories();
-    document.getElementById("filters").style.display = "block";
+    // document.getElementById("filters").style.display = "block";
   }
 
   async getBPMNList(){

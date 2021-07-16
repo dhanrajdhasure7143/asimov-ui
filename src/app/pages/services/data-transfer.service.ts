@@ -47,5 +47,25 @@ export class DataTransferService {
   deployNotationValue(notation_startprocess:any){
     this.notation_startprocess.next(notation_startprocess);
   }
+  private downloadNotation:BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  download_notation = this.downloadNotation.asObservable();
+  
+  downloadNotationValue(download_Notation:any){
+    this.downloadNotation.next(download_Notation);
+  }
+ 
+  private headerButton_value:BehaviorSubject<any> =new BehaviorSubject<any>(null);
+  header_value =this.headerButton_value.asObservable();
+ 
+  bpsHeaderValues(buttonValue:any){
+    this.headerButton_value.next(buttonValue)
+  }
+ 
+  private notationScreenValues:BehaviorSubject<any>=new BehaviorSubject<any>(null);
+  notation_ScreenValues=this.notationScreenValues.asObservable();
+ 
+  bpsNotationaScreenValues(values:any){
+    this.notationScreenValues.next(values)
+  }
 
 }

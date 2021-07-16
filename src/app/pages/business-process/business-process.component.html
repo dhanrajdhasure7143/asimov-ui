@@ -3,38 +3,50 @@
       <div class=" row module-heading title">
           <div class="col-md-6 new-bps-header-title">
               <span class="module-heading-title">Business Process Studio</span>
-                  <div class="value" *ngIf="isHeaderShow == 'true'">
-                      <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span>
-                      <span class="level3">Last Modified By: Peter James</span>
-                      <span>Auto Save: April-09-2021</span>
-                  </div> 
+              <span class="" *ngIf="isHeaderShow == 'true'">
+                <span *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon inpro-label" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
+                  {{rejectedOrApproved}}
+                </span>
+                <span *ngIf="isfromApprover" class="label_icon inpro-label">{{rejectedOrApproved}}</span>
+              </span>  
+              <div class="value" *ngIf="isHeaderShow == 'true'">
+                <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span>
+                <span class="level3">Last Modified By: Peter James</span>
+                <span>Auto Save: April-09-2021</span>
+              </div> 
           </div>
           <div class="col-md-6 new-bps-icons pl-0" *ngIf="isHeaderShow == 'true'">
             <div class="row bps-float">
-              <button class="editprimary"><img src="../../../assets/images/BPMS/Edit-white.svg"></button>
+              <button class="editprimary" (click)="editNotation()"><img src="../../../assets/images/BPMS/Edit-white.svg"></button>
               <!-- <select class="dowload-images">
                 <option value="svg">SVG</option>
                 <option value="png">PNG</option>
                 <option value="jpg">JPG</option>
                 <option value="bpmn">BPMN</option>
               </select> -->
-              <button mat-button [matMenuTriggerFor]="download"><img src="../../../assets/images/BPMS/download.svg"></button>
-<mat-menu #download="matMenu">
-  <button mat-menu-item>SVG</button>
-  <button mat-menu-item>PNG</button>
-  <button mat-menu-item>JPG</button>
-  <button mat-menu-item>BPMN</button>
-</mat-menu>
+              <button mat-button [matMenuTriggerFor]="download" matTooltip="download" matTooltipClass="sidebarTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/download.svg"></button>
+                <mat-menu #download="matMenu">
+                  <button mat-menu-item (click)="downloadNotaton('svg')">SVG</button>
+                  <button mat-menu-item (click)="downloadNotaton('png')">PNG</button>
+                  <button mat-menu-item (click)="downloadNotaton('jpg')">JPG</button>
+                  <button mat-menu-item (click)="downloadNotaton(selectedNotationType)">{{selectedNotationType | uppercase}}</button>
+                </mat-menu>
               <button><img src="../../../assets/images/BPMS/share.svg"></button>
               <button><img src="../../../assets/images/BPMS/Forward.svg"></button>
               <button><img src="../../../assets/images/BPMS/copy.svg"></button>
-              <button><img src="../../../assets/images/BPMS/zoom-in.svg"></button>
-              <button><img src="../../../assets/images/BPMS/zoom-out.svg"></button>
+              <button class="" (click)="zoomIn()"><img src="../../../assets/images/BPMS/zoom-in.svg"></button>
+              <button class="" (click)="zoomOut()"><img src="../../../assets/images/BPMS/zoom-out.svg"></button>
               <span class="bpsbtnsep">|</span>
-              <button class="bps-save-icon"><img src="../../../assets/images/BPMS/save.svg"></button>
+              <button class="bps-save-icon" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true"><img src="../../../assets/images/BPMS/save.svg"></button>
               <button><img src="../../../assets/images/BPMS/refresh.svg"></button>
-              <button><img src="../../../assets/images/BPMS/Delete.svg"></button>
-              <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button>
+              <button matTooltip="Delete" matTooltipClass="sidebarTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button>
+              <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->
+              <ngx-dropzone class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
+                <ngx-dropzone-label>
+                  <button class="upload-btn bps-upload" *ngIf="!isfromApprover"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
+                  <!-- <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button> -->
+                </ngx-dropzone-label>
+              </ngx-dropzone>
             </div>  
           </div>
       </div>    

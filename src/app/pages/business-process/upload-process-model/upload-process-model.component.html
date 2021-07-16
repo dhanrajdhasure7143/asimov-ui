@@ -5,11 +5,11 @@
         <button class="btn btn-primary eiap-btn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">Show Conformance</button>
         <button class="btn btn-primary eiap-btn" (click)="getBpmnDifferences()" *ngIf="isShowConformance && (hasConformance || reSize)">Show Differences</button>
     </div>
-    <div class="col-md-1">
+    <!-- <div class="col-md-1">
         <div *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
             {{rejectedOrApproved}}</div>
         <div *ngIf="isfromApprover" class="label_icon">{{rejectedOrApproved}}</div>
-    </div>
+    </div> -->
     <div class="col-md-2">
         <mat-form-field id="bpmnNotationList">
             <mat-label>BPMN Notation</mat-label>
