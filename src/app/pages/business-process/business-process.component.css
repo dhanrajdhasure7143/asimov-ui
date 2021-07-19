@@ -7,7 +7,7 @@
     background-color: #F3F3F3;
 }
 .main-content1 .module-heading-title {
-    font-weight: bold;
+    font-weight: 600;
     font-size: 22px;
     color: #001c47;
 }
@@ -36,10 +36,10 @@ span.level3 {
     margin: 0px 0px 0px 10px !important;
     border-radius: 4px;
     background-color: #00a0e3 !important;
-    padding: 6px 8px !important;
+    padding: 10px 12px !important;
 }
 .bps-upload img {
-    padding-right: 10px;
+    padding-right: 8px;
 }
 .bps-save-icon {
     /* border-left: 1px solid #ccc; */
@@ -67,6 +67,7 @@ select.dowload-images option {
 button.editprimary {
     background-color: #00a1e3;
     border-radius: 4px;
+    margin-right: 3px;
 }
 .bpsbtnsep {
     color:#ddd;
@@ -75,18 +76,16 @@ button.editprimary {
     padding: 0px !important;
 }
 
-span.btnTooltip {
+::ng-deep .BPSHedaerTooltip {
+    color:#ffffff !important;
+    background-color: #001c47 !important;
+    font-size: 15px;
     position: absolute;
-    bottom: -30px;
-    right: 0px;
-    z-index: 2;
-    background: #001c47;
-    color: white;
-    padding: 3px 5px;
-    border-radius: 4px;
-    font-size: 12px !important;
+    top: -30px;
+    left: 0px;
+    width: auto;
     white-space: nowrap;
-    display: none;
+    transform: translateX(-50%) scale(1);
 }
 
 span.label_icon.inpro-label {
@@ -94,4 +93,31 @@ span.label_icon.inpro-label {
 }
 .upload_again_btn {
     background-color: #f3f3f3 !important;
+}
+.bps-float button:hover {
+    background-color: #00a0e3;
+    border-radius: 4px;
+}
+.bps-float button:hover img {
+    filter: invert(1);
+}
+.bps-float .clr-hvr:hover img {
+    filter: brightness(10) !important;
+}
+button.upload-btn.bps-upload:hover img, button.editprimary:hover img {
+    filter: unset !important;
+}
+
+.bps-float span.label_icon {
+    text-transform: capitalize;
+    border-radius: 4px !important;
+    letter-spacing: 0.25px;
+}
+
+button.editprimary {
+    padding: 8px 10px !important;
+}
+.bps-float button img {
+    height: 18px;
+    width: auto;
 }
