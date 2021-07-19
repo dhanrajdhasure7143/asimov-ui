@@ -62,14 +62,14 @@
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" class="show">
         <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
         <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
-        <div [class.bps_overlay]="isfromApprover" class="h-100">
-            <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
+        <div [class.bps_overlay]="isfromApprover || (!isEdit && rejectedOrApproved=='APPROVED') ||(!isEdit && rejectedOrApproved=='REJECTED')" class="h-100">
+            <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover || (!isEdit && rejectedOrApproved=='APPROVED') ||(!isEdit && rejectedOrApproved=='REJECTED')" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
             <div *ngIf="!isShowConformance" class="h-100">
                 <mat-tab-group class="canvas-container h-100" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
                     <mat-tab label="Notation" class="h-100">
                         <div class="row h-100">
-                            <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover"></div>
-                            <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer">
+                            <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover || (!isEdit && rejectedOrApproved=='APPROVED') ||(!isEdit && rejectedOrApproved=='REJECTED')"></div>
+                            <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
                                 <div [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="togglePosition()">
                                     <div class="menuToggle">
                                         <img src="../../../../assets/images/BPMS/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon">
@@ -80,8 +80,8 @@
                                 <div class="propertiesPanelBody slide-right" id="propertiesPanelBody">
 
                                     <mat-accordion>
-                                        <mat-expansion-panel hideToggle>
-                                          <mat-expansion-panel-header>
+                                        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle >
+                                          <mat-expansion-panel-header (click)="setStep(0)">
                                             <mat-panel-title [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="accordionHeaderMain">
                                                 <div class="accordionHeaderToggle">
                                                     <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
@@ -93,7 +93,7 @@
                                           <div id="properties" class=""></div>
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel hideToggle>
+                                        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle (click)="setStep(1)">
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <div class="accordionHeaderToggle">
@@ -130,7 +130,7 @@
                                           </mat-panel-description>                                          
                                         </mat-expansion-panel>
                                         
-                                        <mat-expansion-panel hideToggle>
+                                        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle (click)="setStep(2)">
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <div class="accordionHeaderToggle">
@@ -181,7 +181,7 @@
                                           </mat-panel-description>                                         
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel hideToggle>
+                                        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle (click)="setStep(3)">
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <div class="accordionHeaderToggle">
@@ -211,7 +211,7 @@
                                           </mat-panel-description>
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel hideToggle>
+                                        <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle (click)="setStep(4)">
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <div class="accordionHeaderToggle">

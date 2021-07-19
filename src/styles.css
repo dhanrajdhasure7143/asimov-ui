@@ -64,7 +64,7 @@ div {
   color:blue;
 }
 /* Scroll bar styles :: starts */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
@@ -78,7 +78,7 @@ div {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(241, 238, 238);
-}
+} */
 /* Scroll bar styles :: ends */
 /* Top Nav :: starts */
 /* ul.nav.nav-tabs.justify-content-start {

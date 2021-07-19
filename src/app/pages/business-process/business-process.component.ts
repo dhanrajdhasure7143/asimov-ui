@@ -13,7 +13,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   selectedNotationType:any;
   rejectedOrApproved:any;
   isfromApprover:any;
-
+  isEditbutton: boolean = true;
 
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService ) { }
@@ -58,13 +58,17 @@ export class BusinessProcessComponent implements AfterViewChecked {
  
   saveProcess(){​​​​​​​​
   this.dt.bpsHeaderValues("save_process");
+  this.isEditbutton=true;
   }​​​​​​​​
  
   UploadFile(e){​​​​​​​​
   this.dt.bpsHeaderValues(e);
   }​​​​​​​​
 
-
+  editNotation(){
+    this.dt.bpsHeaderValues("edit");
+    this.isEditbutton=false;
+  }
 
 
 

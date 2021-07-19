@@ -212,7 +212,7 @@ padding-bottom: 70px;
     
   }
   /* /* To style the document scrollbar, remove `.custom-scrollbar` */
-  .rpa-custom-scrollbar::-webkit-scrollbar {
+  /* .rpa-custom-scrollbar::-webkit-scrollbar {
     width: 3px;
   }
   .rpa-custom-scrollbar::-webkit-scrollbar-track {
@@ -222,7 +222,7 @@ padding-bottom: 70px;
   .rpa-custom-scrollbar::-webkit-scrollbar-thumb {
     background : rgb(209, 209, 209);
     border-radius: 10px;
-  } 
+  }  */
 
  
   /* The  rpa-modal (background) */

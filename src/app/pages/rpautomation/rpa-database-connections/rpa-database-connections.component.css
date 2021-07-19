@@ -95,7 +95,7 @@
     white-space:nowrap;
   }
 
-  ::-webkit-scrollbar-track {
+  /* ::-webkit-scrollbar-track {
     display:none;
 }
 
@@ -106,7 +106,7 @@
 ::-webkit-scrollbar {
   width: 10px;
   height:4px
-}
+} */
 
 
 input[type="text"]:not(.mat-input-element), input[type="password"] {

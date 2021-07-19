@@ -38,10 +38,10 @@
     overflow: scroll;
     height: 210px;   
 }
-::-webkit-scrollbar{
+/* ::-webkit-scrollbar{
     width:10px !important;
     height: 0px !important;
-}
+} */
 .data_values{
     background: #f4f4f4;
     font-size: 13px;

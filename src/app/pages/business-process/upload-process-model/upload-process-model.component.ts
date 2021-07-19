@@ -108,6 +108,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   menuToggleTitle : boolean = false;
   propertiesContainer : boolean = false;
   panelOpenState = false;
+  step = 0;
+  isEdit:boolean=false;
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -208,6 +210,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
             this.zoomOut();
           }else if(headerValue == 'save_process'){
             this.saveprocess(null)
+          }
+          else if(headerValue=='edit'){
+            this.isEdit=true;
           }
         }else if(result){
           this.slideUp(headerValue)
@@ -1391,5 +1396,28 @@ this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
 this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
     }
 }
+
+
+setStep(index: number) {
+  this.step = index;
+
+  // let el = document.getElementById("propertiesContainer");
+  // let ppb = document.getElementById("propertiesPanelBody");
+  // if(el.classList.contains("propertiesContainerClosed")) {
+  //   this.menuToggleTitle = !this.menuToggleTitle;
+  //   this.propertiesContainer = !this.propertiesContainer;
+  //   console.log('properties Container Closed');
+  //   ppb.classList.remove("slide-right");
+  //   ppb.classList.add("slide-left");
+  // } else {
+  //   // this.menuToggleTitle = !this.menuToggleTitle;
+  //   el.classList.toggle("propertiesContainerClosed");
+  //   el.classList.toggle("propertiesContainerOpened");
+  //   console.log('properties Container Opened');
+  //   ppb.classList.remove("slide-right");
+  //   ppb.classList.add("slide-left");
+  // }
+}
+
 
 }

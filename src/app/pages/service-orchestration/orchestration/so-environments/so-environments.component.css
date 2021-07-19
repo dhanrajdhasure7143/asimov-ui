@@ -88,7 +88,7 @@ th{
   white-space:nowrap;
 }
 
-::-webkit-scrollbar-track {
+/* ::-webkit-scrollbar-track {
   display:none;
 }
 
@@ -99,7 +99,7 @@ background:lightgray;
 ::-webkit-scrollbar {
 width: 10px;
 height:4px
-}
+} */
 
 :host ::ng-deep .table>thead>tr>th{
   /* background-color: rgb(74, 176, 245) !important;

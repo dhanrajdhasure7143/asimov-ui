@@ -194,7 +194,7 @@ div[class^='diagram_container']{
   opacity: 0.9;
 }
 .bps_overlay:hover{
-  background-color: #f1f1f1;
+  background-color: #fdfdfd;
 }
 mat-expansion-panel{
   border-top: 1px solid #ccccccb5;
@@ -352,7 +352,7 @@ margin-right: -85px;
   z-index: 100;
   box-shadow: 2px 0px 3px rgb(0 0 0 / 20%);
   border: 1px solid rgb(0 0 0 / 20%);
-  background: white;
+  background: #607088;
 }
 
  .changesContainer{
@@ -858,7 +858,7 @@ padding-top: 11px;
   /* width: 40px;
   height: 36px; */
   width: 42px;
-  height: 40px;
+  height: 100%;
 }
 
 mat-panel-title.mat-expansion-panel-header-title {
@@ -921,4 +921,13 @@ mat-panel-title.mat-expansion-panel-header-title {
 }
 .propertiesContainerOpened mat-expansion-panel-header {
   height: 38px !important;
+}
+
+
+.propertiesContainer.propertiesContainerClosed div#propertiesPanelBody.slide-right {
+  max-width: 50px;
+}
+
+.propertiesContainer.propertiesContainerClosed div#propertiesPanelBody.slide-right .mat-expansion-panel-content, .propertiesContainer.propertiesContainerClosed div#propertiesPanelBody.slide-right  img.propexpandIcon , .propertiesContainer.propertiesContainerClosed div#propertiesPanelBody.slide-right  label.accordionHeader {
+  display: none;
 }

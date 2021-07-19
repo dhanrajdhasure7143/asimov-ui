@@ -83,7 +83,7 @@
   th{
     white-space:nowrap;
   }
-
+/* 
   ::-webkit-scrollbar-track {
     display:none;
 }
@@ -95,7 +95,7 @@
 ::-webkit-scrollbar {
   width: 10px;
   height:4px
-}
+} */
 ::ng-deep .mat-tab-label{
   height :50px !important;
   padding: 0 10px !important;

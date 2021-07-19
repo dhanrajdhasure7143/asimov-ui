@@ -92,10 +92,10 @@
   overflow:visible !important;
   position: relative  !important;
 }
-
+/* 
 ::-webkit-scrollbar {
   display: none;
-}
+} */
 
 
 .dropdown-menu::-webkit-scrollbar {
