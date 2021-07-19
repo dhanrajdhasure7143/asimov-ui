@@ -219,7 +219,7 @@ label.fontSize = 18;
       categoryAxis.renderer.grid.template.location = 0;
       categoryAxis.renderer.minGridDistance = 30;
       categoryAxis.title.text="Weeks"
-      categoryAxis.title.fontWeight="bold"
+      //categoryAxis.title.fontWeight="bold"
       // categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
       //   if (target.dataItem && target.dataItem.index && 2 == 2) {
       //     return dy + 25;
@@ -228,8 +228,8 @@ label.fontSize = 18;
       // });
       
       var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-      valueAxis.title.text = "No of Cases";
-      valueAxis.title.fontWeight="bold"
+      valueAxis.title.text = "No.of.Cases";
+      //valueAxis.title.fontWeight="bold"
       // Create series
       var series = chart.series.push(new am4charts.ColumnSeries());
       series.dataFields.valueY = "visits";
