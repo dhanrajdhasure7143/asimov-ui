@@ -37,6 +37,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
 import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/combo-series-vertical.component';
+import { BusinessInsightsComponent } from './business-insights/business-insights.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,7 @@ import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/comb
     D3flowchartComponent,
     ProcessinsightsComponent,
     ComboChartComponent, 
-    ComboSeriesVerticalComponent
+    ComboSeriesVerticalComponent, BusinessInsightsComponent
   ],
   imports: [
     CommonModule,

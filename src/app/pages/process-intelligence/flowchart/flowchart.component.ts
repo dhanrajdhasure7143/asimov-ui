@@ -1696,7 +1696,10 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     
   }
 
- 
+  viewbusinessinsights()
+  {
+    this.router.navigate(["/pages/processIntelligence/business-insights"])
+  }
 
   readselectedNodes1(activies){    
     this.filterdNodes=[]
