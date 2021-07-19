@@ -1,3 +1,8 @@
+.prj-prg-tablelist {
+  width:100%;
+  overflow-x: auto;
+  height:calc( 100vh - 280px);
+}
 .types2{
     color:#0062cf  !important;
     width:15%;

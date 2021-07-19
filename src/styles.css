@@ -186,6 +186,7 @@ div[class^='diagram_container'] .djs-palette{
 }
 .djs-palette.two-column.open{
   width: 48px !important;
+  height: 100%;
 }
 div[class^='diagram_container'] .djs-container svg{
   margin-left: 5px;
@@ -1025,10 +1026,24 @@ div#propertiesPanelBody .bpp-properties-panel {
 .mat-form-field.mat-focused .mat-form-field-label {
   color: #0062cf;
   font-size: 16px !important;
+  background: white;
+  position: relative;
+  top: 10px;
+  display: inline-block;
+  width: auto !important;
+  line-height: normal;
 }
 .mat-form-field.mat-focused .mat-form-field-ripple {
- background-color: #0062cf !important;
-}
+  background-color: transparent !important;
+ }
+ .mat-form-field-appearance-legacy .mat-form-field-label {
+   margin: 0px !important;
+ }
+ .mat-form-field-prefix .mat-icon, .mat-form-field-suffix .mat-icon {
+   vertical-align: middle;
+   line-height: 1.5 !important;
+ }
+ 
 .clickable{
   cursor: pointer;
 }
@@ -1046,7 +1061,7 @@ div#propertiesPanelBody .bpp-properties-panel {
   margin-left: -13px;
 }
 .table tbody tr:hover {
-  background: #f2d12b33 !important;
+  background: #fdf6d4 !important;
 }
 .table thead {
   background-color: #e8f7fd !important;
@@ -1131,4 +1146,9 @@ div#propertiesPanelBody .bpp-properties-panel {
 
 mat-card#projects_list_screen, mat-card#projects_dashboard_screen {
   box-shadow: none !important;
+}
+.testplus img {
+  width: 18px;
+  height: 18px;
+  margin-right: 5px;
 }

@@ -194,7 +194,7 @@ div[class^='diagram_container']{
   opacity: 0.9;
 }
 .bps_overlay:hover{
-  background-color: #fdfdfd;
+  /* background-color: #fdfdfd; */
 }
 mat-expansion-panel{
   border-top: 1px solid #ccccccb5;
@@ -530,7 +530,7 @@ margin-right: -85px;
   overflow: hidden;
   display: inline-block;
 }
-.upload-btn {
+/* .upload-btn {
 
   color: white;
     background-color: #0162cb;
@@ -541,7 +541,7 @@ margin-right: -85px;
     border: none;
     margin-left: 132px;
 
-}
+} */
 .upload-btn-wrapper input[type=file] {
   font-size: 100px;
   position: absolute;
@@ -848,7 +848,7 @@ padding-top: 11px;
 .djs-palette {
   position: absolute;
   left: 0% !important;
-  top: 47% !important;
+  top: 50% !important;
   border-left: medium none !important;
   /* border-right: 1px solid #cccccc !important; */
   transform: translate(0%, -50%) !important;
@@ -922,7 +922,6 @@ mat-panel-title.mat-expansion-panel-header-title {
 .propertiesContainerOpened mat-expansion-panel-header {
   height: 38px !important;
 }
-
 
 .propertiesContainer.propertiesContainerClosed div#propertiesPanelBody.slide-right {
   max-width: 50px;

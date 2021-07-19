@@ -150,7 +150,7 @@
     color: rgb(255, 255, 255);
     font-size: 18px;
     background: rgb(0, 161, 228);
-    margin-left: -5px;
+    margin-left: 5px;
     font-weight: bold;
     padding: 6px 11px;
 
@@ -283,6 +283,7 @@
   }
   .header-seperator {
     color: #ddd !important;
+    margin: 0px 10px;
   }
   .mat-icon.header-dropicon {
     position: relative;
@@ -322,7 +323,6 @@ span.txt-wh.bread-crumb {
   height: auto;
 }
 
-
 button.ep-pad {
   display: block;
   width: 100%;
@@ -344,4 +344,52 @@ button.ep-pad:hover img.header_icon {
 
 .sidebarclose, .sidebaropen {
   padding: 0px 4px;
+}
+
+.header-demotxt button.mat-menu-trigger.mat-button.mat-button-base {
+  padding: 0px;
+}
+.header-demotxt button.mat-menu-trigger.mat-button.mat-button-base:hover {
+  background-color: transparent;
+}
+
+.levelsubblock {
+  display: flex;
+  padding: 10px 15px;
+  width: 100%;
+  overflow: hidden;
+  align-items: center;
+}
+.levelsubblock-img {
+  width: 24px;
+  text-align: center;
+  margin-right: 10px;
+}
+.levelsubblock img {
+  /* margin-bottom: 10px; */
+  /* margin-right: 10px; */
+  height: 24px;
+  width: auto;
+}
+.levelcont {
+  flex: auto;
+  display: inline-block;
+  padding: 0px 5px !important;
+  white-space: nowrap;
+}
+.label-title {
+  display: block;
+  font-weight: 400;
+  line-height: normal;
+  color: #001c47 !important;
+}
+.label-content {
+  font-size: 12px !important;
+  margin-bottom: 0px;
+  color: #7d7d7d;
+}
+.levelsubblock span {
+  margin: 0px;
+  line-height: normal;
+  /* color: #001c47; */
 }

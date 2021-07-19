@@ -13,6 +13,7 @@
 }
 .main-content1 .module-heading.title .value span {
     color: #001c47;
+    font-weight: 100;
 }
 .module-heading.title span {
     padding-left: 10px;
@@ -30,13 +31,16 @@ span.level3 {
 }
 
 .new-bps-icons button {
-    padding: 5px 8px;
+    /* padding: 5px 8px; */
+    padding: 8px 10px;
 }
 .bps-upload {
     margin: 0px 0px 0px 10px !important;
     border-radius: 4px;
     background-color: #00a0e3 !important;
-    padding: 10px 12px !important;
+    padding: 10px 12px !important;    
+    color: #fff;
+    /* font-size: 14px; */
 }
 .bps-upload img {
     padding-right: 8px;
@@ -50,7 +54,7 @@ span.level3 {
 .new-bps-icons .bps-float {
     float: right;
 }
-select.dowload-images {
+/* select.dowload-images {
     background-image: url('../../../assets/images/BPMS/download.svg');
     background-repeat: no-repeat;
     border: unset;
@@ -63,7 +67,7 @@ select.dowload-images {
 }
 select.dowload-images option {
     color: #000;
-}
+} */
 button.editprimary {
     background-color: #00a1e3;
     border-radius: 4px;
@@ -76,20 +80,20 @@ button.editprimary {
     padding: 0px !important;
 }
 
-::ng-deep .BPSHedaerTooltip {
+::ng-deep .bpsHeaderTooltip {
     color:#ffffff !important;
     background-color: #001c47 !important;
     font-size: 15px;
     position: absolute;
-    top: -30px;
-    left: 0px;
+    top: 0px;
+    left: -40px;
     width: auto;
     white-space: nowrap;
-    transform: translateX(-50%) scale(1);
 }
 
 span.label_icon.inpro-label {
     padding: 6px !important;
+    border-radius: 4px;
 }
 .upload_again_btn {
     background-color: #f3f3f3 !important;

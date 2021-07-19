@@ -213,6 +213,8 @@ label.label-control{
 .maindivfoprm input:focus,
 .maindivfoprm select:focus, .maindivfoprm textarea:focus ,.modelprbody input:focus, .modelprbody select:focus, .modelprbody textarea:focus {
     border-color: #00a0e3 !important; 
+    color: #001c47 !important;
+    background-color: #fff !important;
 }
 .modelprbody input, .modelprbody select, .modelprbody textarea{
     background-color: #fff !important;

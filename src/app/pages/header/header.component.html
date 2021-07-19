@@ -92,29 +92,70 @@
    </div>
    </button>
    <app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
-   &nbsp;&nbsp;
-  <span class="txt-wh header-seperator">|</span>&nbsp;&nbsp;
-  &nbsp;&nbsp;
-  <span class="header-demotxt">
+  
+  <span class="txt-wh header-seperator">|</span>
+ 
+  <!-- <span class="header-demotxt">
     <img src="../../../assets/images/Demo.svg">
     <span class="txt-u" >Demo</span>
     <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
       <mat-icon class="menu-button header-dropicon">expand_more
       </mat-icon>
      </button>
+  </span> -->
     <!-- <button mat-icon-button class="txt-wh" aria-label="Example icon-button with heart icon">
       <i class="fa fa-caret-down text-white"></i>
      </button> -->
-  </span>
-  &nbsp;&nbsp;
-  <span class="txt-wh header-seperator">|</span>&nbsp;&nbsp;
-  &nbsp;&nbsp;
+
+  <span class="header-demotxt">
+    <button mat-button [matMenuTriggerFor]="demo" >
+      <img src="../../../assets/images/Demo.svg">
+      <span class="txt-u" >Demo</span>
+      <mat-icon class="menu-button header-dropicon">expand_more</mat-icon>
+    </button>
+  </span> 
+  <mat-menu #demo="matMenu">
+   
+    <div class="levelsubblock">
+        <div class="levelsubblock-img">
+            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+        </div>
+        <div class="p-0 levelcont">
+            <label class="label-title">Extract Invoice</label>
+            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+        </div>
+    </div>
+    
+    <div class="levelsubblock">
+        <div class="levelsubblock-img">
+            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+        </div>
+        <div class="p-0 levelcont">
+            <label class="label-title">Extract Invoice</label>
+            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+        </div>
+    </div>
+   
+    <div class="levelsubblock">
+        <div class="levelsubblock-img">
+            <img alt="" src="../../../assets/images/Projects/process_icon.svg">
+        </div>
+        <div class="p-0 levelcont">
+            <label class="label-title">Extract Invoice</label>
+            <span class="label-content">IT | Account Payable | <span class="greentxt">Inreview</span></span>
+        </div>
+    </div>
+    
+  </mat-menu>
+
+  <span class="txt-wh header-seperator">|</span>
+ 
   <div style="line-height: 0.7;margin-right: 10px;">
-    <span class="txt-u header-rgttext">{{firstname}} &nbsp;{{lastname}}</span><br>
+    <span class="txt-u header-rgttext">{{firstname}} {{lastname}}</span><br>
     <span class="txt-u header-userrole">{{userRole}}</span>
   </div>
-  &nbsp;
-  &nbsp;
+  
+  
   
   <span>
   
