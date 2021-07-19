@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-12" *ngIf="userslist.length!=0">
                     <div class="form-fileds col-md-12 pl-0">
-                        <label for="resources">Select Resources<span style="color:red">*</span></label>
+                        <label for="resources"class="modal-label">Select Resources</label>
                         <!-- <select formControlName="resources" class="form-control data"style="width:100%;">
                             <option value="">Select Resources</option>
                             <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
@@ -22,8 +22,8 @@
                                 <ng-option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
                             </ng-select> 
     
-                        <span *ngIf="addresourcesForm.get('resources').invalid && addresourcesForm.get('resources').touched"
-                            style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
+                        <!-- <span *ngIf="addresourcesForm.get('resources').invalid && addresourcesForm.get('resources').touched"
+                            style="color:red" class="fa fa-info-circle errspan">Resources Required*</span> -->
                         <br>
 
                     </div>
