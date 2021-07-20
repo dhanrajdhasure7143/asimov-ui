@@ -37,7 +37,7 @@
               <button class="" (click)="zoomIn()" matTooltip="Zoom in" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/zoom-in.svg"></button>
               <button class="" (click)="zoomOut()" matTooltip="Zoom out" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/zoom-out.svg"></button>
               <span class="bpsbtnsep">|</span>
-              <button class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg"></button>
+              <button class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg"></button>
               <button class="clr-hvr" matTooltip="Orchestration" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
                 <img src="../../../assets/images/BPMS/orchestration1.svg">
               </button>
