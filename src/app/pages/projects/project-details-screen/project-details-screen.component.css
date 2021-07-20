@@ -96,15 +96,16 @@ tr:nth-child(even) {
   /* border-bottom: 1px solid black; */
 }
 .res-circle {
-  width: 52px;
+  width: 51px;
   border-radius: 55%;
   text-align: center;
-  height: 51px;
-  font-size: 20px;
+  height: 46px;
+  font-size: 22px;
   background: #b3dff9;
-  line-height: 44px;
+  line-height: 36px;
   font-weight: bold;
   padding: 4px 3px;
+  margin-top: 1px;
 }
 .res-circle:after {
   content: "";
@@ -235,4 +236,89 @@ mat-card#projects_details_screen {
     background-color: #001c47 !important;
   }
   
-  
+  .t-comments-box {
+    padding: 0.5rem;
+  }
+    
+    .add-comment {
+      display: flex;
+    }
+      .comment-input {
+        position: relative;
+        width: 100%;
+        max-width: 600px;
+      }
+        input {
+          height: 86%;
+          width: 100%;
+          padding-right: 2.5rem;
+          
+        }
+        .comment-send {
+          font-size: 2.5rem;
+          padding-left: 1.5rem;
+          padding-right: 1.5rem;
+          width: 35px;
+          height: 100%;
+          border-radius: 0.2rem;
+          color: #FFCC80;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          position: absolute;
+          top: 0;
+          right: 0;
+    }
+    #sendcomment:hover {
+      color: #FF9800;
+    }
+    .comment {
+      display: flex;
+      font-size: 0.8rem;
+      margin-top: 1rem;
+    }
+      .comment-label {
+        line-height: 1;
+      }
+        .comment-name {
+          font-weight: bold;
+          font-size: 0.95rem;
+          color: #292929;
+        }
+        .comment-time {
+          font-weight: 100;
+          color: #768791;
+        }
+      
+      .comment-content {
+        color: #768791;
+        margin-top: 0.1rem;
+        font-size: 2rem;
+      }
+      .comment-action {
+        color: #c3ccd3;
+        line-height: 1.2;
+        
+      }
+      .comment-level-1 {
+        margin-left: calc(50px + 1rem);
+      }
+
+      .modal-header.modelprhead {
+        background-color: #f0f8ff!important;
+    }
+
+    .addresource-btn{
+      position: relative;
+      vertical-align: middle;
+      margin-top: -17px;
+      cursor: pointer;
+      background-color: #12a6e5;
+      color: #fff;
+      text-align: center;
+      padding: 0px -17px;
+      margin-left: 109px;
+      width: 20px;
+      border-radius: 46px;
+  }

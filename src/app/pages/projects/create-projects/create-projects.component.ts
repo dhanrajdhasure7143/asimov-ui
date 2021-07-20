@@ -150,7 +150,8 @@ createproject()
           priority: this.projectcreatedata.priority,
           resources: this.projectcreatedata.resources,
           startDate: this.projectcreatedata.startDate,
-          status:this.projectcreatedata.status
+          status:this.projectcreatedata.status,
+          id:response.project.id
         }
         this.navigatetodetailspage(this.projectDetails);
       }) 

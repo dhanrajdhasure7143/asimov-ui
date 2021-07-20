@@ -884,4 +884,9 @@ save_blueprism_config(data)
   createTask(data) {
     return this.http.post("/platform-service/task/create", data)
   }
+
+  deleteTask(id){
+    return this.http.post("/platform-service/task/delete", id)
+  }
+
 }
