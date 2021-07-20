@@ -58,6 +58,8 @@ export class CreateTasksComponent implements OnInit {
   savetasks()
   {
     this.spinner.show();
+    this.createtaskForm.value.status="New";
+    this.createtaskForm.value.percentageComplete=0;
     this.createtaskForm.value.projectId=this.project_id;
     let data=this.createtaskForm.value;
     this.api.createTask(data).subscribe(data=>{

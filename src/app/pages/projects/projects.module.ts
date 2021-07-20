@@ -37,7 +37,7 @@ import { UserPipePipe } from './pipes/user-pipe.pipe';
 import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-screen.component';
 import { CreateTasksComponent } from './create-tasks/create-tasks.component';
 import { AddResourcesComponent } from './forms/add-resources/add-resources.component';
-
+import { Ng5SliderModule } from 'ng5-slider';
 const materialModules: any[] = [
     
     
@@ -64,7 +64,7 @@ const materialModules: any[] = [
     MatFormFieldModule,
     MatButtonModule,NgxSpinnerModule,
     ModalModule.forRoot(),
-    MatProgressBarModule,NgSelectModule
+    MatProgressBarModule,NgSelectModule,Ng5SliderModule
     
   ],
   providers:[

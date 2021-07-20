@@ -3,3 +3,7 @@
     font-size: 1.0em!important;
     font-family:sans-serif;
   }
+  .modal-header.modelprhead {
+    padding: 15px 25px 10px 25px!important;
+    background-color: #f0f8ff!important;
+}
