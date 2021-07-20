@@ -237,6 +237,7 @@ span.projects-menu-item button {
 }
 #projects_dashboard_header span.tab-text {
   display: block;
+  font-weight: bold;
 }
 .status-data1 span.tab-text span {
   margin-left: 3px;

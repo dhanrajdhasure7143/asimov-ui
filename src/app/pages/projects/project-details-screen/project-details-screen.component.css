@@ -1,14 +1,10 @@
 ::ng-deep #projects_details_screen .mat-tab-label {
     height:85px !important;
   }
-  
-  
+    
   ::ng-deep #projects_resources_screen .mat-tab-label {
     height:85px !important;
   }
-  
-
-
   
 ::ng-deep mat-card{
   padding:0px !important;
@@ -18,8 +14,6 @@
     width:100%;padding:10px;
     background-color:rgba(212, 212, 212, 0.295);
   }
-
-
   .projects-back-button{
     padding:5px;
     padding-right:20px;
@@ -44,12 +38,10 @@
   .status-tabs{
     display: flex;
     padding:20px;
-    
   }
 
   .tab-number{
     font-size: 30px !important;
-
   }
 
   .status-img > img{
@@ -65,20 +57,11 @@
     color:black !important;
   }
 
-  .documents{
-    margin-top: 1px;
-    width: 50%;
-    padding-left: 20px;
-}
-
-.resources{
-    width:50%;
-}
-
-table {
+  table {
   /* font-family: arial, sans-serif; */
   border-collapse: collapse;
   width: 100%;
+  margin-bottom: 0px;
 }
 
 td, th {
@@ -130,7 +113,10 @@ tr:nth-child(even) {
 }
 .projects-header.maincreat span.projects-back-button {
   border: medium none;
-  padding-right: 10px;
+  /* padding-right: 10px; */
+  padding: 3px 5px;
+  background-color: #e1e7ec;
+  border-radius: 50%;
 }
 .projects-header.maincreat i {
   /* font-size: 16px; */
@@ -169,6 +155,10 @@ tr:nth-child(even) {
   /* border-bottom: 1px solid rgb(221 221 221 / 59%); */
   text-align: left !important;
   padding: 8px 12px;
+  vertical-align: middle;
+}
+.new-prj-details .projects-table-body td img {
+  height: 30px;
 }
 
 .new-prj-details {

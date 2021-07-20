@@ -1147,8 +1147,13 @@ div#propertiesPanelBody .bpp-properties-panel {
 mat-card#projects_list_screen, mat-card#projects_dashboard_screen {
   box-shadow: none !important;
 }
-.testplus img {
+img.testplus{
+  width: 16px;
+  height: 16px;
+  margin-right: 5px;
+}
+.newinntalx a img {
   width: 18px;
   height: 18px;
-  margin-right: 5px;
+  cursor: pointer;
 }

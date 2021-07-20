@@ -32,7 +32,11 @@
             <!-- <button type="button" class="btn btn-default new-attach-btn">Attachments</button> -->
           </span>
           <span class="projects-menu-item">
-            <span class="projects-menu-item"><button type="button" class="btn btn-primary" (click)="createtask(createtaskmodal)">+ Create New</button></span>
+            <span class="projects-menu-item">
+              <button type="button" class="btn btn-primary" (click)="createtask(createtaskmodal)">
+                <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Create New
+              </button>
+            </span>
           </span>
         </span>
       </div>
@@ -60,7 +64,7 @@
         </td>
     </ng-container>
       <ng-container matColumnDef="resources">
-          <th mat-header-cell *matHeaderCellDef>Resource &nbsp;&nbsp;</th>
+          <th mat-header-cell *matHeaderCellDef>Resource </th>
           <td mat-cell *matCellDef="let element">
               <span *ngIf="element.resources!=null">{{element.resources| userPipe : users_list}}</span>
               <span *ngIf="element.resources==null">---</span>
@@ -71,7 +75,7 @@
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status  &nbsp;&nbsp;</th>
+        <th mat-header-cell *matHeaderCellDef>Status  </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element.status!=null">{{element.status}}</span>
           <span *ngIf="element.status==null">---</span>
@@ -113,9 +117,15 @@
         <th mat-header-cell *matHeaderCellDef> Actions</th>
         <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
           <div class="newinntalx">
-            <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task"  style="cursor:pointer"><i class="fa fa-edit"></i></a> |
-            <a (click)="deletetask(element)" matTooltip="Delete Task" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a> |
-            <a  matTooltip="Model" style="color:red;cursor:pointer"><i class="fa fa-tasks" aria-hidden="true"></i></a>   
+            <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
+              <img src="../../../../assets/images/Projects/edit.svg">
+            </a> |
+            <a (click)="deletetask(element)" matTooltip="Delete Task" >
+              <img src="../../../../assets/images/Projects/delete-red.svg">
+            </a> |
+            <a  matTooltip="Model" style="color:red;cursor:pointer">
+              <i class="fa fa-tasks" aria-hidden="true"></i>
+            </a>   
         </div>
         </td>
       </ng-container>
@@ -154,7 +164,9 @@
           <div class="col-md-6 pr-0">
             <span class="pull-right">
               <span class="projects-menu-item">
-                <button type="button" class="btn btn-add"(click)="addresource(addresourcemodal)">+ Add New</button>
+                <button type="button" class="btn btn-add"(click)="addresource(addresourcemodal)">
+                  <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Add New
+                </button>
               </span>
             </span>
           </div>
@@ -177,7 +189,7 @@
           <table class="table">
             <thead>
               <tr class="separated">
-                <!-- <th></th> -->
+                <th></th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>Checkout Item</th>
@@ -191,11 +203,26 @@
                   <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
                 </td> -->
                 <!-- <td style="text-align:center">{{resourcetablefirstname?resourcetablefirstname:'-' }} {{resourcetablelastname?resourcetablelastname:'-' }}</td> -->
+                <td><img src="../../../../assets/images/BPMS/user1.png" /></td>
                 <td >Lakshmi Kadali</td>
                 <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
                 <td >Admin</td>
                 <td >01</td>
                 <td >09th Jan,2021</td>
+              </tr>
+              <tr >
+                <td><img src="../../../../assets/images/BPMS/user2.png" /></td>
+                <td >Srikanth Pothina</td>
+                <td >Designer</td>
+                <td >06</td>
+                <td >20th July,2021</td>
+              </tr>
+              <tr >
+                <td><img src="../../../../assets/images/BPMS/user1.png" /></td>
+                <td >Karthik Peddinti</td>
+                <td >Process Architect</td>
+                <td >05</td>
+                <td >15th Mar,2021</td>
               </tr>
             </tbody>
             
@@ -215,7 +242,7 @@
           <div class="col-md-6 pr-0">
             <span class="pull-right">
               <span class="projects-menu-item">
-                <button type="button" class="btn btn-primary">Upload</button>
+                <button type="button" class="btn btn-primary">Upload New</button>
               </span>
             </span>
           </div>
@@ -372,7 +399,7 @@
                                 <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
                                 <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
                                 <div>
-                                  &nbsp;&nbsp;&nbsp;
+                                  &nbsp;
                                 </div>
                                 <div class="comment-input">
                                   <input
@@ -386,7 +413,7 @@
                               <div class="comment comment-level-1" *ngIf="postcomment!=0">
                                 <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
                                 <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
-                                &nbsp;&nbsp;&nbsp;
+                                &nbsp;
                                 <div>
                                   <div class="comment-label">
                                     <span class="comment-name">

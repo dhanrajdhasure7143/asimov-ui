@@ -583,13 +583,28 @@
 <th mat-header-cell *matHeaderCellDef> Actions</th>
 <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
   <div class="newinntalx">
-  <a class="clickable text-dark" style="color:black"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
+    <a class="clickable text-dark"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
+      <img src="../../../../../assets/images/Projects/eye-show.svg" />
+    </a> 
+    <a class="disable-bg text-dark"*ngIf="element.type=='Program'" >
+      <img src="../../../../../assets/images/Projects/eye-hide.svg" />
+    </a>
+    <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)" >
+      <img src="../../../../../assets/images/Projects/edit.svg" />
+    </a> 
+    <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)" >
+      <img src="../../../../../assets/images/Projects/edit.svg" />
+    </a>
+    <a (click)="deleteproject(element)" matTooltip="Delete Project Details" >
+      <img src="../../../../../assets/images/Projects/delete-red.svg" />
+    </a> 
+  <!-- <a class="clickable text-dark" style="color:black"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
     <i class="fa fa-eye"></i>
   </a> 
   <a class="disable-bg text-dark" style="color:black" *ngIf="element.type=='Program'" ><i class="fa fa-eye-slash"></i></a>
   <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> 
   <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a>
-   <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>  
+   <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>   -->
 </div>
 </td>
 </ng-container>

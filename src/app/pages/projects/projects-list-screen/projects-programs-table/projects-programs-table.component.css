@@ -55,7 +55,7 @@
 
 .projecttable.table td {
   font-size: 13px !important;
-  padding: 8px 12px !important;
+  padding: 5px 12px !important;
   vertical-align: middle;
 }
 
@@ -71,8 +71,8 @@
   margin: 0px 6px;
 }  
 .disable-bg{
-  background-color: gainsboro;
-  border-radius: 5px;
+  /* background-color: gainsboro;
+  border-radius: 5px; */
 }
 
 .no-item-img{

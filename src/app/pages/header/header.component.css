@@ -393,3 +393,8 @@ button.ep-pad:hover img.header_icon {
   line-height: normal;
   /* color: #001c47; */
 }
+.demodp {
+  display: block;
+  width: 100%;
+  text-align: left;
+}
