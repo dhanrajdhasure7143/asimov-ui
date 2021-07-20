@@ -109,7 +109,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   propertiesContainer : boolean = false;
   panelOpenState = false;
   step = 0;
-  isEdit:boolean=false;
+  // isEdit:boolean=false;
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
