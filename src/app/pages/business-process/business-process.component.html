@@ -38,10 +38,10 @@
               <button class="" (click)="zoomOut()" matTooltip="Zoom out" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/zoom-out.svg"></button>
               <span class="bpsbtnsep">|</span>
               <button class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg"></button>
-              <button class="clr-hvr" matTooltip="Orchestration" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">
+              <button class="clr-hvr" matTooltip="Orchestration" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
                 <img src="../../../assets/images/BPMS/orchestration1.svg">
               </button>
-              <button class="clr-hvr" matTooltip="Save & Submit for approval" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">
+              <button class="clr-hvr" matTooltip="Save & Submit for approval" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
               </button>
               <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>

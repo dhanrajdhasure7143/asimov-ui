@@ -70,19 +70,24 @@
                         <div class="row h-100">
                             <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover || (!isEdit && rejectedOrApproved=='APPROVED') ||(!isEdit && rejectedOrApproved=='REJECTED')"></div>
                             <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
-                                <div [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="togglePosition()">
+                                <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
                                     <div class="menuToggle">
-                                        <img src="../../../../assets/images/BPMS/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                        <img src="../../../../assets/images/BPMS/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                                    </div>
+                                </div>
+                                <div *ngIf="menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleClosed()">
+                                    <div class="menuToggle" >
+                                        <img src="../../../../assets/images/BPMS/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon" >
                                         <label class="menuToggleTitle">Menu</label>
                                     </div>
                                 </div>
 
-                                <div class="propertiesPanelBody slide-right" id="propertiesPanelBody">
+                                <div class="propertiesPanelBody slide-right" id="propertiesPanelBody" [class.slide-left]='isopen'>
 
                                     <mat-accordion>
-                                        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle >
-                                          <mat-expansion-panel-header (click)="setStep(0)">
-                                            <mat-panel-title [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="accordionHeaderMain">
+                                        <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                                          <mat-expansion-panel-header>
+                                            <mat-panel-title class="accordionHeaderMain">
                                                 <div class="accordionHeaderToggle">
                                                     <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                                     <label class="accordionHeader">Properties</label>
@@ -93,7 +98,7 @@
                                           <div id="properties" class=""></div>
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle (click)="setStep(1)">
+                                        <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2">
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <div class="accordionHeaderToggle">
@@ -130,7 +135,7 @@
                                           </mat-panel-description>                                          
                                         </mat-expansion-panel>
                                         
-                                        <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle (click)="setStep(2)">
+                                        <mat-expansion-panel (opened)="onExpansionClik('3')" hideToggle [expanded]="isOpenedState==3">
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <div class="accordionHeaderToggle">
@@ -181,7 +186,7 @@
                                           </mat-panel-description>                                         
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle (click)="setStep(3)">
+                                        <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4">
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <div class="accordionHeaderToggle">
@@ -211,7 +216,7 @@
                                           </mat-panel-description>
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle (click)="setStep(4)">
+                                        <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5">
                                           <mat-expansion-panel-header>
                                             <mat-panel-title>
                                                 <div class="accordionHeaderToggle">
@@ -228,10 +233,9 @@
                                         </mat-expansion-panel>
 
                                     </mat-accordion>
-                                      
                                     
                                 </div>
-                                <div id="properties" class="slide-right"></div>
+                                <!-- <div id="properties" class="slide-right"></div> -->
                             </div>
                         </div>
                         <ng-template #wrongXMLcontent>

@@ -69,7 +69,12 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.dt.bpsHeaderValues("edit");
     this.isEditbutton=false;
   }
-
+  saveandSubmitApproval(){
+    this.dt.bpsHeaderValues("save&approval");
+  }
+  orchestartion(){
+    this.dt.bpsHeaderValues("orchestartion");
+  }
 
 
 }

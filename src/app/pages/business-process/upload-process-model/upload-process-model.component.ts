@@ -109,6 +109,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   propertiesContainer : boolean = false;
   panelOpenState = false;
   step = 0;
+  isOpenedState:number=0;
   // isEdit:boolean=false;
   rpaJson = {
     "name": "RPA",
@@ -213,6 +214,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           }
           else if(headerValue=='edit'){
             this.isEdit=true;
+          }
+          else if(headerValue == 'save&approval'){
+            this.submitDiagramForApproval()
+          }else if(headerValue == 'orchestartion'){
+            this.orchestrate()
           }
         }else if(result){
           this.slideUp(headerValue)
@@ -419,16 +425,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     else
       msg = "Notation"
     this.global.notify(msg+" is fit to view port", "success")
-  }
-
-  togglePosition(){
-    this.menuToggleTitle = !this.menuToggleTitle;
-    this.propertiesContainer = !this.propertiesContainer;
-    let el = document.getElementById("propertiesPanelBody");
-    if(el){
-      el.classList.toggle("slide-left");
-      el.classList.toggle("slide-right");
-    }
   }
 
   toggleChanges(){
@@ -1396,28 +1392,34 @@ this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
 this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
     }
 }
-
-
-setStep(index: number) {
-  this.step = index;
-
-  // let el = document.getElementById("propertiesContainer");
-  // let ppb = document.getElementById("propertiesPanelBody");
-  // if(el.classList.contains("propertiesContainerClosed")) {
-  //   this.menuToggleTitle = !this.menuToggleTitle;
-  //   this.propertiesContainer = !this.propertiesContainer;
-  //   console.log('properties Container Closed');
-  //   ppb.classList.remove("slide-right");
-  //   ppb.classList.add("slide-left");
-  // } else {
-  //   // this.menuToggleTitle = !this.menuToggleTitle;
-  //   el.classList.toggle("propertiesContainerClosed");
-  //   el.classList.toggle("propertiesContainerOpened");
-  //   console.log('properties Container Opened');
-  //   ppb.classList.remove("slide-right");
-  //   ppb.classList.add("slide-left");
-  // }
+toggleOpen(){
+  this.menuToggleTitle = true;
+  this.propertiesContainer = true;
+  let el = document.getElementById("propertiesPanelBody");
+  if(el){
+    el.classList.remove("slide-right");
+    el.classList.add("slide-left");
+  }
+  
 }
-
-
+toggleClosed(){
+  this.menuToggleTitle = false;
+  this.propertiesContainer = false;
+  let el = document.getElementById("propertiesPanelBody");
+  if(el){
+    el.classList.remove("slide-left");
+    el.classList.add("slide-right");
+  }
+  this.isOpenedState=0;
+}
+onExpansionClik(i){
+  this.isOpenedState=i;
+  this.menuToggleTitle = true;
+  this.propertiesContainer = true;
+  let el = document.getElementById("propertiesPanelBody");
+  if(el){
+    el.classList.remove("slide-right");
+    el.classList.add("slide-left");
+  }
+}
 }
