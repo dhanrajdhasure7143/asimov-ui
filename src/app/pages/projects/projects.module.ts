@@ -26,7 +26,7 @@ import {
   MatButtonModule} from '@angular/material';
 import { ProjectsProgramsTableComponent } from './projects-list-screen/projects-programs-table/projects-programs-table.component';
 import { CreateProjectsComponent } from './create-projects/create-projects.component';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { ProjectDetailsScreenComponent } from './project-details-screen/project-details-screen.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { ProjectDetailsHeaderComponent } from './project-details-header/project-details-header.component';
@@ -38,6 +38,9 @@ import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-s
 import { CreateTasksComponent } from './create-tasks/create-tasks.component';
 import { AddResourcesComponent } from './forms/add-resources/add-resources.component';
 import { Ng5SliderModule } from 'ng5-slider';
+import { ProgramDetailsComponent } from './program-details/program-details.component';
+import {MatSliderModule} from '@angular/material/slider';
+import {NgxPaginationModule} from 'ngx-pagination';
 const materialModules: any[] = [
     
     
@@ -45,7 +48,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent],
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
@@ -59,10 +62,11 @@ const materialModules: any[] = [
     MatTabsModule,
     MatCardModule,
     MatTooltipModule,
-    DataTablesModule,MatTableModule,ReactiveFormsModule,FormsModule, MatSortModule,
+    MatSlideToggleModule,
+    DataTablesModule,MatTableModule,ReactiveFormsModule,FormsModule, MatSortModule,MatSliderModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatButtonModule,NgxSpinnerModule,
+    MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
     ModalModule.forRoot(),
     MatProgressBarModule,NgSelectModule,Ng5SliderModule
     

@@ -401,3 +401,9 @@ button.btn.btn-primary.prj-btn-save {
 .footbutcl button.btn.btn-primary.prj-form-btn-hover {
     margin-right: 30px !important;
 }
+
+
+.status-good{
+    color:green;
+    font-size: 30px;
+}

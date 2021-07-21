@@ -166,6 +166,15 @@ export class ProjectsProgramsTableComponent implements OnInit {
   }
 
 
+
+
+  
+  programDetailsbyId(program){
+    this.router.navigate(['/pages/projects/programdetails/'+program.id])
+    }
+
+
+
   navigatetodetailspage(detials){
     let encoded=Base64.encode(JSON.stringify(detials));
     let project={id:encoded}
@@ -213,7 +222,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
       type:project.type
     }]  
     Swal.fire({
-      title: 'Enter Project Name',
+      title: 'Enter '+projectdata.type+' Name',
       input: 'text',
       inputAttributes: {
         autocapitalize: 'off'
@@ -222,6 +231,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
       confirmButtonText: 'Delete',
     }).then((result) => {
       let value:any=result.value
+      if(value!=undefined)
       if(projectdata.projectName==value)
       {
         this.spinner.show();
@@ -241,7 +251,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         })
       }else
       {
-        Swal.fire("Error","Entered Project Name is Invalid","error")
+        Swal.fire("Error","Entered "+projectdata.type+" Name is Invalid","error")
       }
     })
     // Swal.fire({

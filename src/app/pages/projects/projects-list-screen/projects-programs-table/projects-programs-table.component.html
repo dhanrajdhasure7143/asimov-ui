@@ -1,4 +1,4 @@
-<div>
+
   <!-- <mat-card>
       <mat-tab-group mat-stretch-tabs>
         <mat-tab>
@@ -48,8 +48,7 @@
                 </button>
             </div>
         </div> -->
-              <div class="prj-prg-tablelist">
-                <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
+              
                     <!-- <thead>
                       <tr>
                         <th scope="col" class="types2">ID</th>
@@ -482,160 +481,164 @@
         <input type="checkbox" [checked]="element.checked" (change)="CredcheckEnableDisableBtn(element.id, $event)"> 
     </td>
 </ng-container> -->
+  <div>
+    <div class="prj-prg-tablelist">
+      <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+            <td mat-cell *matCellDef="let element"> 
+                <span *ngIf="element.id!=null">{{element.id}}</span> 
+                <span *ngIf="element.id==''">-</span>
+                <span *ngIf="element.id==null">-</span>
+            </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
+              <td mat-cell *matCellDef="let element"> 
+                  <span *ngIf="element.type!=null">{{element.type}}</span> 
+                  <span *ngIf="element.type==''">-</span>
+                  <span *ngIf="element.type==null">-</span>
+              </td>
+          </ng-container>
+          
+          <ng-container matColumnDef="initiatives">
+              <th mat-header-cell *matHeaderCellDef >Initiative</th>
+              <td mat-cell *matCellDef="let element"> 
+                <span *ngIf="element.initiatives!=null">{{element.initiatives}}</span> 
+                  <span *ngIf="element.initiatives==''">-</span>
+                  <span *ngIf="element.initiatives==null">-</span>
+          </ng-container>
 
-<ng-container matColumnDef="id">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
-  <td mat-cell *matCellDef="let element"> 
-       <span *ngIf="element.id!=null">{{element.id}}</span> 
-      <span *ngIf="element.id==''">-</span>
-      <span *ngIf="element.id==null">-</span>
-  </td>
-</ng-container>
-  <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Type</th>
-    <td mat-cell *matCellDef="let element"> 
-         <span *ngIf="element.type!=null">{{element.type}}</span> 
-        <span *ngIf="element.type==''">-</span>
-        <span *ngIf="element.type==null">-</span>
-    </td>
-</ng-container>
-<ng-container matColumnDef="initiatives">
-    <th mat-header-cell *matHeaderCellDef >Initiative</th>
-    <td mat-cell *matCellDef="let element"> 
-      <span *ngIf="element.initiatives!=null">{{element.initiatives}}</span> 
-        <span *ngIf="element.initiatives==''">-</span>
-        <span *ngIf="element.initiatives==null">-</span>
-</ng-container>
+          <ng-container matColumnDef="process">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Process</th>
+              <td mat-cell *matCellDef="let element"> 
+                  <span *ngIf="element.process!=null">{{element.process | processName : processes}}</span> 
+                  <span *ngIf="element.process==''">-</span> 
+                  <span *ngIf=" element.process==null">-</span> 
+              </td>
+          </ng-container>
 
-<ng-container matColumnDef="process">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Process</th>
-    <td mat-cell *matCellDef="let element"> 
-        <span *ngIf="element.process!=null">{{element.process | processName : processes}}</span> 
-        <span *ngIf="element.process==''">-</span> 
-        <span *ngIf=" element.process==null">-</span> 
-    </td>
-</ng-container>
-
-<ng-container matColumnDef="projectName">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-    <td mat-cell *matCellDef="let element"> 
-        <span *ngIf="element.projectName!=null">{{element.projectName}}</span> 
-        <span *ngIf="element.projectName==''">-</span> 
-        <span *ngIf=" element.projectName==null">-</span> 
-    </td>
-</ng-container>
-
-
-<ng-container matColumnDef="owner">
-  <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
-  <td mat-cell *matCellDef="let element"> 
-      <span *ngIf="element.owner!=null">{{element.owner| userPipe : users_list}}</span> 
-      <span *ngIf="element.owner==''">-</span> 
-      <span *ngIf=" element.owner==null">-</span> 
-  </td>
-</ng-container>
+          <ng-container matColumnDef="projectName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+              <td mat-cell *matCellDef="let element"> 
+                  <span *ngIf="element.projectName!=null">{{element.projectName}}</span> 
+                  <span *ngIf="element.projectName==''">-</span> 
+                  <span *ngIf=" element.projectName==null">-</span> 
+              </td>
+          </ng-container>
 
 
-<ng-container matColumnDef="priority">
-<th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
-<td mat-cell *matCellDef="let element"> 
-    <span *ngIf="element.priority!=null">{{element.priority}}</span> 
-    <span *ngIf="element.priority==''">-</span> 
-    <span *ngIf=" element.priority==null">-</span> 
-</td>
-</ng-container>
-
-<ng-container matColumnDef="access">
-<th mat-header-cell *matHeaderCellDef mat-sort-header>Access</th>
-<td mat-cell *matCellDef="let element"> 
-    <span *ngIf="element.access!=null">{{element.access}}</span> 
-    <span *ngIf="element.access==''" >-</span> 
-    <span *ngIf=" element.access==null">-</span> 
-</td>
-</ng-container>
-
-<ng-container matColumnDef="lastupdatedby">
-<th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated by</th>
-<td mat-cell *matCellDef="let element"> 
-    <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> 
-    <span *ngIf="element.createdBy==''" >-</span> 
-    <span *ngIf=" element.createdBy==null">-</span> 
-</td>
-</ng-container>
-
-<ng-container matColumnDef="status">
-<th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
-<td mat-cell *matCellDef="let element"> 
-    <span *ngIf="element.status!=null">{{element.status}}</span> 
-    <span *ngIf="element.status==''" >-</span> 
-    <span *ngIf=" element.status==null">-</span> 
-</td>
-</ng-container>
+          <ng-container matColumnDef="owner">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+            <td mat-cell *matCellDef="let element"> 
+                <span *ngIf="element.owner!=null">{{element.owner| userPipe : users_list}}</span> 
+                <span *ngIf="element.owner==''">-</span> 
+                <span *ngIf=" element.owner==null">-</span> 
+            </td>
+          </ng-container>
 
 
-<ng-container matColumnDef="noData">
-<td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
-  
+          <ng-container matColumnDef="priority">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Priority</th>
+          <td mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.priority!=null">{{element.priority}}</span> 
+              <span *ngIf="element.priority==''">-</span> 
+              <span *ngIf=" element.priority==null">-</span> 
+          </td>
+          </ng-container>
 
-</td>
-</ng-container>
-<ng-container matColumnDef="action">
-<th mat-header-cell *matHeaderCellDef> Actions</th>
-<td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-  <div class="newinntalx">
-    <a class="clickable text-dark"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
-      <img src="../../../../../assets/images/Projects/eye-show.svg" />
-    </a> 
-    <a class="disable-bg text-dark"*ngIf="element.type=='Program'" >
-      <img src="../../../../../assets/images/Projects/eye-hide.svg" />
-    </a>
-    <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)" >
-      <img src="../../../../../assets/images/Projects/edit.svg" />
-    </a> 
-    <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)" >
-      <img src="../../../../../assets/images/Projects/edit.svg" />
-    </a>
-    <a (click)="deleteproject(element)" matTooltip="Delete Project Details" >
-      <img src="../../../../../assets/images/Projects/delete-red.svg" />
-    </a> 
-  <!-- <a class="clickable text-dark" style="color:black"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
-    <i class="fa fa-eye"></i>
-  </a> 
-  <a class="disable-bg text-dark" style="color:black" *ngIf="element.type=='Program'" ><i class="fa fa-eye-slash"></i></a>
-  <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> 
-  <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a>
-   <a (click)="deleteproject(element)" matTooltip="Delete Project Details" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>   -->
-</div>
-</td>
-</ng-container>
+          <ng-container matColumnDef="access">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Access</th>
+          <td mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.access!=null">{{element.access}}</span> 
+              <span *ngIf="element.access==''" >-</span> 
+              <span *ngIf=" element.access==null">-</span> 
+          </td>
+          </ng-container>
 
-<tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-<tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-<tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(projects_list==undefined ||  projects_list=='No records found')}"></tr>
-</table>
+          <ng-container matColumnDef="lastupdatedby">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated by</th>
+          <td mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> 
+              <span *ngIf="element.createdBy==''" >-</span> 
+              <span *ngIf=" element.createdBy==null">-</span> 
+          </td>
+          </ng-container>
 
-<div>
-<div *ngIf="projects_list.length==0" class="text-center">
-  <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
-  <h3 class="text-center">No Items to display</h3>
-</div>
-</div>
+          <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+          <td mat-cell *matCellDef="let element"> 
+              <span *ngIf="element.status!=null">{{element.status}}</span> 
+              <span *ngIf="element.status==''" >-</span> 
+              <span *ngIf=" element.status==null">-</span> 
+          </td>
+          </ng-container>
 
 
-</div>
-<mat-paginator #paginator2 [pageSize]="20" [showFirstLastButtons]="true"></mat-paginator>
+          <ng-container matColumnDef="noData">
+          <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
+            
 
+          </td>
+          </ng-container>
 
+          <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> Actions</th>
+          <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+            <div class="newinntalx">
+              <a class="clickable text-dark"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
+                <img src="../../../../../assets/images/Projects/eye-show.svg" />
+              </a> 
+              <a class="disable-bg text-dark"*ngIf="element.type=='Program'" (click)="programDetailsbyId(element)"  matTooltip="Go To Program Details">
+                <img src="../../../../../assets/images/Projects/eye-show.svg" />
+              </a>
+              <!-- <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)" >
+                <img src="../../../../../assets/images/Projects/edit.svg" />
+              </a> 
+              <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)" >
+                <img src="../../../../../assets/images/Projects/edit.svg" />
+              </a> -->
+              <a (click)="deleteproject(element)" matTooltip="Delete Project Details" >
+                <img src="../../../../../assets/images/Projects/delete-red.svg" />
+              </a> 
+            <!-- <a class="clickable text-dark" style="color:black"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
+              <i class="fa fa-eye"></i>
+            </a> 
+            <a class=" clickable text-dark"  matTooltip="Go To Program Details" (click)="programDetailsbyId(element)" style="color:black" *ngIf="element.type=='Program'" ><i class="fa fa-eye"></i></a>
+            <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> 
+            <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)"  style="cursor:pointer"><i class="fa fa-edit"></i></a> -->
+            <!-- <a (click)="deleteproject(element)" [matTooltip]="'Delete '+element.type+' Details'" style="color:red;cursor:pointer"><i class="fa fa-trash" aria-hidden="true"></i></a>   -->
+            </div>
+          </td>
+          </ng-container>
 
-</div>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+          <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+          <tr class="row-highlight mat-footer" mat-footer-row  *matFooterRowDef="['noData']" [ngClass]="{'hide':!(projects_list==undefined ||  projects_list=='No records found')}"></tr>
+        </table>
 
-
+      <div>
+        <div *ngIf="projects_list.length==0" class="text-center">
+          <img  src="../../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+          <h3 class="text-center">No Items to display</h3>
+        </div>
+      </div>
+    
+    </div>
+    <mat-paginator #paginator2 [pageSize]="20" [showFirstLastButtons]="true"></mat-paginator>
 
 
 
+  </div>
 
 
 
+
+
+
+
+<!-- 
 <ng-template class="modal-lg" #updateprojectmodal>
 <div class="modal-header modelprhead">
   <h4 class="modal-title pull-left">Update Project</h4>
@@ -770,7 +773,7 @@
                         <label>Description</label>
                         <textarea class="form-control" style="height:100px;"></textarea>                    
                       </div> -->
-                    </div>  
+                    <!-- </div>  
                 </div>
             </form>
     </div>
@@ -781,13 +784,13 @@
     <button [disabled]="updateForm.invalid" (click)="projectupdate()" class="btn btn-primary btn-update">Update</button>
   </div>
 </div>
-</ng-template>
+</ng-template> -->
 
 
 
 
 
-<ng-template class="modal-lg" #updateprogrammodal>
+<!-- <ng-template class="modal-lg" #updateprogrammodal>
 <div class="modal-header modelprhead">
   <h4 class="modal-title pull-left">Update Program</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="updatemodalref.hide()">
@@ -891,11 +894,11 @@
                         </select>
                         <span *ngIf="updateForm.get('status').invalid && insertForm2.get('status').touched" class="fa fa-info-circle errspan required">Status Required*</span>
                       </div>
-                      <!-- <div class="col-md-12">                        
+                      <div class="col-md-12">                        
                         <label>Description</label>
                         <textarea class="form-control" style="height:100px;"></textarea>                    
                       </div> -->
-                    </div>      
+                    <!-- </div>      
                 </div>
             </form>
     </div>
@@ -906,4 +909,4 @@
     <button [disabled]="updateprogramForm.invalid" (click)="programupdate()" class="btn btn-primary btn-update">Update</button>
   </div>
 </div>  
-</ng-template>
+</ng-template>  -->

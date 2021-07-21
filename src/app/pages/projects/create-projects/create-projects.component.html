@@ -288,12 +288,67 @@
                                                                 <option *ngFor="let project of projects_list" [value]="project.id">{{project.projectName}}</option>
                                                             </select>
                                                         </div>
-                                                        <div class="addproject-btn">
+                                                        <div class="addproject-btn"  (click)="add_to_selected_projects()">
                                                             <!-- <button mat-mini-fab color="primary" (click)="add_to_selected_projects()" ><i class="fa fa-plus"></i> </button> -->
-                                                            <span mat-mini-fab color="primary" (click)="add_to_selected_projects()"><i class="fa fa-plus"></i></span>
+                                                            <span mat-mini-fab color="primary"><i class="fa fa-plus"></i></span>
                                                         </div>
                                                     </div>
-                                                </div>                                              
+                                                    
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-fileds">
+                                                        <label class="label-control" for="access">Access<span class="star">*</span></label>
+                                                        <select   formControlName="access"  class="form-control data">
+                                                          <option  [value]="null" disabled hidden>Select Access</option>
+                                                          <option value="" [selected]="true">Select Access</option>
+                                                          <option value="Owner">Owner</option>
+                                                          <option value="Co-Editor">Co-Editor</option>
+                                                          <option value="Viewer">Viewer</option>
+                                                      </select>
+                                                      <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" class="fa fa-info-circle errspan required">Access Required*</span>
+                                                    </div>
+                                                </div>       
+                                                <div class="col-md-6">
+                                                    <div class="form-fileds">
+                                                        <label class="label-control" for="programHealth">Program Health<span class="star">*</span></label>
+                                                        <!-- <select   formControlName="programHealth"  class="form-control data">
+                                                          <option  [value]="null" disabled hidden>Select Program Health</option>
+                                                          <option value="" [selected]="true">Select Program Health</option>
+                                                          <option value="Good">Good</option>
+                                                          <option value="Need Attention"><span class="status-ember"></span>Need Attention</option>
+                                                          <option value="Risk"> <span class="status-risk"></span>Risk</option>
+                                                      </select> -->
+                                                      <div class="btn-group" dropdown>
+                                                        <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
+                                                                aria-controls="program-health">
+                                                          Button dropdown <span class="caret"></span>
+                                                        </button>
+                                                        <ul id="program-health" *dropdownMenu class="dropdown-menu"
+                                                            role="menu" aria-labelledby="button-basic">
+                                                          <li role="menuitem"><a class="dropdown-item" href="#">Action</a></li>
+                                                          <li role="menuitem"><a class="dropdown-item" href="#">Another action</a></li>
+                                                          <li role="menuitem"><a class="dropdown-item" href="#">Something else here</a></li>
+                                                          <li class="divider dropdown-divider"></li>
+                                                          <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
+                                                          </li>
+                                                        </ul>
+                                                      </div>
+                                                      <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" class="fa fa-info-circle errspan required">Access Required*</span>
+                                                    </div>
+                                                </div> 
+                                                <div class="col-md-6">
+                                                    <div class="form-fileds">
+                                                        <label class="label-control" for="programValueChain">Map Value Chain<span class="star">*</span></label>
+                                                        <select   formControlName="programValueChain" value="" class="form-control data">
+                                                            <option  [value]="null" disabled hidden>Select Map Value Chain</option>
+                                                            <option value="" [selected]="true">Select Map Value Chain</option>
+                                                            <option value="Invoice Managment">Invoice Managment</option>
+                                                            <option value="Acme Managment">Acme Managment</option>
+                                                            <option value="E-Commerce">E-Commerce</option>
+                                                      </select>
+                                                      <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" class="fa fa-info-circle errspan required">Access Required*</span>
+                                                    </div>
+                                                </div>                                                
                                                 <div class="col-md-12 martsascl">
                                                         <!-- <label  class="label-control"  for="description">Description<span style="color:rgb(90, 92, 212)">*</span></label> -->
                                                         <!-- <textarea maxlength="250" class="form-control data" formControlName="description" value="" 
@@ -327,17 +382,21 @@
                                                         <span class="card-placeholder">Project Name</span>
                                                         <h3 class="projectname">{{project.projectName}}</h3>
                                                         <div class="prj-slt-lst">
-                                                            <span>Oct-20-2020</span><span class="pull-right clickable" (click)="remove_project(project)"><i class="fa fa-trash"></i></span>
+                                                            <span>Oct-20-2020</span><span class="pull-right clickable" (click)="remove_project(project,'selected')"><i class="fa fa-trash"></i></span>
                                                         </div>    
                                                     </div>
+                                                    <br>
                                                 </div>
-                                                <!-- <div class="col-md-4 " *ngFor="let project of newproject">
+                                                <div class="col-md-4 pl-0 " *ngFor="let project of newproject">
                                                     <div class="project-card" >
                                                         <span class="card-placeholder">Project Name</span>
-                                                        <span class="projectname">{{project.projectName}}</span>
-                                                        <span class="pull-right clickable" (click)="remove_project(project)"><i class="fa fa-trash"></i></span>
+                                                        <h3 class="projectname">{{project.projectName}}</h3>
+                                                        <div class="prj-slt-lst">
+                                                            <span>Not Saved</span> <span class="pull-right clickable" (click)="remove_project(project,'new')"><i class="fa fa-trash"></i></span>
+                                                        </div>
                                                     </div>
-                                                </div> -->
+                                                    <br>
+                                                </div>
                                             </div>
                                         </div>   
                                     </div>

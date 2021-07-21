@@ -1,0 +1,95 @@
+.projects-header{
+    width:100%;padding:10px;
+    background-color:rgba(212, 212, 212, 0.295);
+  }
+  .projects-back-button{
+    padding:5px;
+    padding-right:20px;
+    border-right:1px solid #4AB0F5 ;
+    color:#4AB0F5 ;
+    cursor: pointer;
+  }
+
+  .projects-header-title{
+    color:black ;
+    font-size:18px;
+    padding: 5px;
+    /* padding-left: 20px; */
+    line-height: 2;
+  }
+.projects-menu-item{
+    padding:5px;
+    font-size:22px;
+    color:#4AB0F5;
+    cursor: pointer;
+  }
+
+
+  .item-data{
+    padding:5px;
+    color: #4AB0F5;
+    font-size: 18px;
+  }
+
+
+  .d-flex{
+    display:flex;
+  
+  }
+
+
+  .w-100{
+    width:100%;
+  }
+
+
+  .status-img{
+    padding:10px;
+  }
+
+  .program-data{
+    padding:10px;
+  }
+
+
+  .border-bottom{
+    border-bottom: 1px solid lightgray;
+  }
+
+
+  .py-10{
+    padding:10px;
+  }
+
+  .py-5{
+    padding:5px;
+  }
+
+
+  ::ng-deep .content-area{
+    overflow:auto !important;
+    background-color: transparent !important;
+  }
+
+
+
+  .card{
+    background-color: white !important;
+    border:none !important;
+  }
+
+
+
+  .program-graph{
+    height:400px;
+
+  }
+
+
+
+  .margin-none{
+    margin-right:0px !important;
+    margin-left:0px !important;
+    padding-right:0px !important;
+    padding-left:0px !important;
+  }
