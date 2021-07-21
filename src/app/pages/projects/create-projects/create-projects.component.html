@@ -311,14 +311,14 @@
                                                 <div class="col-md-6">
                                                     <div class="form-fileds">
                                                         <label class="label-control" for="programHealth">Program Health<span class="star">*</span></label>
-                                                        <!-- <select   formControlName="programHealth"  class="form-control data">
+                                                        <select   formControlName="programHealth"  class="form-control data">
                                                           <option  [value]="null" disabled hidden>Select Program Health</option>
                                                           <option value="" [selected]="true">Select Program Health</option>
                                                           <option value="Good">Good</option>
                                                           <option value="Need Attention"><span class="status-ember"></span>Need Attention</option>
                                                           <option value="Risk"> <span class="status-risk"></span>Risk</option>
-                                                      </select> -->
-                                                      <div class="btn-group" dropdown>
+                                                      </select>
+                                                      <!-- <div class="btn-group" dropdown>
                                                         <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
                                                                 aria-controls="program-health">
                                                           Button dropdown <span class="caret"></span>
@@ -332,7 +332,7 @@
                                                           <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
                                                           </li>
                                                         </ul>
-                                                      </div>
+                                                      </div> -->
                                                       <span *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched" class="fa fa-info-circle errspan required">Access Required*</span>
                                                     </div>
                                                 </div> 
