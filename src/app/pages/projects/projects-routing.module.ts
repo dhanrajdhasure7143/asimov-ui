@@ -7,6 +7,7 @@ import { CreateProjectsComponent } from './create-projects/create-projects.compo
 import { ProjectDetailsScreenComponent } from './project-details-screen/project-details-screen.component';
 import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
 import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-screen.component';
+import { ProgramDetailsComponent } from './program-details/program-details.component';
 
 
 const routes: Routes = [
@@ -17,6 +18,7 @@ const routes: Routes = [
     {path:'createprojects', component:CreateProjectsComponent},
     {path:'projectdetails', component:ProjectDetailsScreenComponent},
     {path:'projectdashboard', component:ProjectsDashboardComponent},
+    {path:'programdetails/:id', component:ProgramDetailsComponent},
     {path:'create-projects', component:CreateProjectsComponent},
     {path:"", component:ProjectsProgramsTableComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}

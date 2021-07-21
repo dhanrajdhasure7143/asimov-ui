@@ -1,0 +1,231 @@
+<div class="projects-header maincreat nrema">
+      <span class="projects-back-button"  routerLink="/pages/projects/listOfProjects" ><i class="fas fa-arrow-left" aria-hidden="true"></i></span>
+      <span class="projects-header-title">Programs</span>
+    
+   <span class="pull-right menu-items">
+     <span>
+       Summary
+     </span>
+     <span>
+      <mat-slide-toggle></mat-slide-toggle>
+     </span>
+     
+     <span>
+       Detials
+     </span>
+
+
+     
+     <span class="item-data">
+        <i class="fa fa-file"></i>
+      </span>
+      
+     <span class="item-data">
+      <i class="fa fa-history"></i>
+      </span>
+      
+     <span class="item-data">
+      <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+      </span>
+    </span> 
+    
+</div>
+
+
+<div class="container-fluid card">
+    <div class="row  ">
+        <div class="col-md-12 row border-bottom">
+          <div class="col-md-10 d-flex ">
+            <div class="status-img">
+                <img src="..\assets\images\Projects\project_icon.svg" alt="" >
+            </div>
+            <div class="program-data">
+              <span class="h3">{{program_detials.programName |uppercase}}</span>
+              <span class="" style="font-size: 12px;" >{{program_detials.description}}</span>
+            </div>
+          </div>
+          <div class="col-md-1 p-0">
+            <label class="">Start Date</label>
+            <p class="">{{program_detials.createdTimestamp| date}}</p>
+          </div>
+          <div class="col-sm-1">
+            <label class="">Status</label>
+            <p class="">{{program_detials.status}}</p>
+          </div>
+        </div>
+        <div class="col-md-12 py-10 " *ngIf="program_detials!= undefined">
+          <div class="d-flex">
+            <div class="item1 d-flex  w-100 py-10">
+              <div class="process-img py-5">
+                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+              </div>
+              <div class="value py-5">
+                <p>Value Chain</p>
+                <div *ngIf="program_detials.programValueChain!=undefined" class="h6">{{program_detials.programValueChain}}</div>
+              </div>
+            </div>
+            <div class="item1 d-flex w-100 py-10">
+              <div class="process-img py-5">
+                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+              </div>
+              <div class="value py-5">
+                <p>Program Health</p>
+                <div class="h6">{{program_detials.programHealth}}</div>
+              </div>
+            </div>
+            <div class="item1 d-flex w-100  py-10">
+              <div class="process-img py-5">
+                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+              </div>
+              <div class="value py-5">
+                <p>Program ID</p>
+                <div class="h6">{{program_detials.id}}</div>
+              </div>
+            </div>
+            <div class="item1 d-flex  w-100 py-10">
+              <div class="process-img py-5">
+                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+              </div>
+              <div class="value py-5">
+                <p>Program Purpose</p>
+                <div class="h6">{{program_detials.purpose}}</div>
+              </div>
+            </div>
+            <div class="item1 d-flex w-100  py-10">
+              <div class="process-img py-5">
+                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+              </div>
+              <div class="value py-5">
+                <p>Projects</p>
+                <div class="h6">{{program_detials.project.length}}</div>
+              </div>
+            </div>
+            <div class="item1 d-flex w-100  py-10">
+              <div class="process-img py-5">
+                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+              </div>
+              <div class="value py-5">
+                <p>Program Priority</p>
+                <div class="h6">{{program_detials.priority}}</div>
+              </div>
+            </div>
+            <div class="item1 d-flex w-100  py-10">
+              <div class="process-img py-5">
+                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+              </div>
+              <div class="value py-5">
+                <p>Effort Spent</p>
+                <div class="h6">{{program_detials.effortsSpent}}</div>
+              </div>
+            </div>
+            <div class="item1 d-flex  w-100 py-10">
+              <div class="process-img py-5">
+                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+              </div>
+              <div class="value py-5">
+                <p>Program Sponser</p>
+                <div class="h6">{{program_detials.owner | userPipe : users_list}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+<br>
+  <div class="container-fluid card  py-10" style="overflow:auto" *ngIf="program_detials!=undefined">
+        
+       
+        <div class="row ">
+          <div class="col-md-12  py-10">
+            <div class="d-flex  py-10">
+              <div class="h4 w-100">Projects</div>
+              <div class="w-100">
+                <span  class="pull-right">
+            
+                <span>
+                  <button class="btn btn-primary">Create Projects</button>
+                </span>
+              </span>
+
+              </div>
+            </div>
+              <div style="height:300px;">
+              <table  class="table">
+                <thead >
+                  <th class="py-10">Initiative</th>
+                  <th class="py-10">Project Name</th>
+                  <th class="py-10">Project Owner</th>
+                  <th class="py-10">Status</th>
+                  <th class="py-10">Percentage Complete</th>
+                  <th class="py-10">Last Updated</th>
+                  <th class="py-10">Last Updated by</th>
+                  <th class="py-10">Created By</th>
+                  <th class="py-10">Action</th>
+                </thead>
+                <tbody>
+                  <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 10, currentPage: p } ">
+                    <td>{{project.initiatives}}</td>
+                    <td>{{project.projectName}}</td>
+                    <td>{{project.owner  | userPipe : users_list}}</td>
+                    <td>New</td>
+                    
+                    <td>
+                        15%
+                        <mat-progress-bar mode="determinate" value="15"></mat-progress-bar>
+                      </td>
+                    <td>{{project.lastModifiedTimestamp | date}}</td>
+                    <td>{{project.lastModifiedBy}}</td>
+                    <td>{{project.createdBy}}</td>
+                    <td>
+                      <span class="clickable text-primary py-5">View</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+              
+
+            <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+          </div>
+        </div>
+       
+    </div>
+    <br>
+
+    <div class="container-fluid margin-none">
+
+        
+        <div class="row">
+          <div class="col-md-4 card">
+          
+              <div class=" program-graph py-10">
+                <div class="h4">Project Cost</div>
+                <div style="height:300px" id="project-cost"></div>
+              </div>
+            
+          </div>
+
+
+          <div class="col-md-4 ">
+            <div class="card program-graph py-10">
+              <div class="h4">Project Duration</div>
+              <div style="height:300px" id="project-duration"></div>
+            </div>
+          </div>
+
+
+
+          <div class="col-md-4 card">
+            <div class="card program-graph py-10">
+              <div style="height:300px"  id="line-chart"></div>
+            </div>
+          </div>
+
+        </div>
+    </div>
+ 
+
+
+
+
+

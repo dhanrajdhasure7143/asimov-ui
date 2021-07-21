@@ -60,6 +60,9 @@ export class CreateProjectsComponent implements OnInit {
     purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    programValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    
    // project: ["", Validators.compose([Validators.maxLength(50)])],
     owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -278,11 +281,14 @@ createproject()
      }
   }
 
-  remove_project(project)
+  remove_project(project,status)
   {
    if(project!=undefined)
     {
-      this.selected_projects.splice(this.selected_projects.indexOf(project),1)
+      if(status=='selected')
+        this.selected_projects.splice(this.selected_projects.indexOf(project),1)
+      else if(status=='new')
+        this.newproject.splice(this.selected_projects.indexOf(project),1)
     }
   }
   
