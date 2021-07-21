@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RestApiService} from '../../services/rest-api.service'
 import { NgxSpinnerService} from 'ngx-spinner'
-import {  ActivatedRoute } from '@angular/router';
-
-
+import {  ActivatedRoute, Router } from '@angular/router';
+import { Base64 } from 'js-base64';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -17,7 +16,8 @@ export class ProgramDetailsComponent implements OnInit {
   constructor(
     private rest:RestApiService,
     private spinner:NgxSpinnerService,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private router:Router
     ) { }
 
     projects_and_programs_list:any=[];
@@ -303,6 +303,22 @@ export class ProgramDetailsComponent implements OnInit {
     this.rest.getuserslist(tenantid).subscribe(data=>{
        this.users_list=data;
     })
+  }
+
+  
+  projectDetailsbyId(id){
+
+    this.rest.getProjectDetailsById(id).subscribe( res =>{
+      let project=res;
+      this.navigatetodetailspage(project)
+    })
+  }
+
+
+  navigatetodetailspage(detials){
+    let encoded=Base64.encode(JSON.stringify(detials));
+    let project={id:encoded}
+    this.router.navigate(['/pages/projects/projectdetails',project])
   }
 
 }

@@ -75,7 +75,7 @@
             </div>
             <div class="item1 d-flex w-100  py-10">
               <div class="process-img py-5">
-                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                  <img src="..\assets\images\Projects\document.svg" alt="" >
               </div>
               <div class="value py-5">
                 <p>Program ID</p>
@@ -120,7 +120,7 @@
             </div>
             <div class="item1 d-flex  w-100 py-10">
               <div class="process-img py-5">
-                <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                  <img src="..\assets\images\Projects\bot.svg" alt="" >
               </div>
               <div class="value py-5">
                 <p>Program Sponser</p>
@@ -177,11 +177,15 @@
                     <td>{{project.lastModifiedBy}}</td>
                     <td>{{project.createdBy}}</td>
                     <td>
-                      <span class="clickable text-primary py-5">View</span>
+                      <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <div *ngIf="linked_projects.length==0" class="text-center">
+                  <img  src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                  <h3 class="text-center">No Items to display</h3>
+              </div>
             </div>
               
 
