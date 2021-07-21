@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="18" height="22" viewBox="0 0 18 22">
+  <g id="Project-Repo" transform="translate(1 1)">
+    <path id="Path" d="M10,0H2A2,2,0,0,0,0,2V18a2,2,0,0,0,2,2H14a2,2,0,0,0,2-2V6Z" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-2" data-name="Path" d="M0,0V6H6" transform="translate(10)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-3" data-name="Path" d="M8,.5H0" transform="translate(4 10.5)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-4" data-name="Path" d="M8,.5H0" transform="translate(4 14.5)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+    <path id="Path-5" data-name="Path" d="M2,.5H0" transform="translate(4 6.5)" fill="none" stroke="#098de6" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>

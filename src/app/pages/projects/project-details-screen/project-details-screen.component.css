@@ -208,10 +208,7 @@ mat-card#projects_details_screen {
 .resources .projects-table-body , .documents .projects-table-body {
   padding: 0px;
 }
-::ng-deep .modal-lg .modal-content{
-   width:100%  !important;
-    margin-top:30px !important;
-  }
+
   .tablacs .newinntalx {
     display: flex;
   }
@@ -219,8 +216,7 @@ mat-card#projects_details_screen {
   .btn-add{
     background: #00a0e3 !important;
     color: #FFF !important;
-    
-   
+    margin-right: 0px;   
   }
   .btn-add:hover{
     background-color: #001c47 !important;
@@ -294,10 +290,6 @@ mat-card#projects_details_screen {
       .comment-level-1 {
         margin-left: calc(50px + 1rem);
       }
-
-      .modal-header.modelprhead {
-        background-color: #f0f8ff!important;
-    }
 
     .addresource-btn{
       position: relative;

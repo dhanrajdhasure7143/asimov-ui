@@ -1,16 +1,14 @@
 <div class="modal-header modelprhead">
     <h4 class="modal-title pull-left">Add Resources</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="addresouceref.hide()">
-        <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
+      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
     </button>
 </div>
-<div class="modal-body">
-    <div class="container" style="width:100%">
-        <br>
-        <form [formGroup]="addresourcesForm" >
+<div class="modal-body modelprbody addrespopupbody">
+    <div class="container p-0" style="width:100%">
+        <form [formGroup]="addresourcesForm">
             <div class="row">
-                <div class="col-md-12" *ngIf="userslist.length!=0">
-                    <div class="form-fileds col-md-12 pl-0">
+                <div class="form-fileds col-md-12 addrespopup" *ngIf="userslist.length!=0">
                         <label for="resources"class="modal-label">Select Resources</label>
                         <!-- <select formControlName="resources" class="form-control data"style="width:100%;">
                             <option value="">Select Resources</option>
@@ -24,25 +22,14 @@
     
                         <!-- <span *ngIf="addresourcesForm.get('resources').invalid && addresourcesForm.get('resources').touched"
                             style="color:red" class="fa fa-info-circle errspan">Resources Required*</span> -->
-                        <br>
-
-                    </div>
-                    
-
-                   
-
-
                 </div>
-               
-                
             </div>
         </form>
-        <br>
-        <div class="pull-right">
-            <button (click)="resettask()" class="btn btn-reset">Reset</button>
-            &nbsp;&nbsp;
-            <button [disabled]="addresourcesForm.invalid"  class="btn btn-save">Save</button>
-        </div>
-        <br><br>
+    </div>
+</div>          
+<div class="modal-footer modelprfooter">
+    <div class="pull-right">
+        <button (click)="resettask()" class="btn btn-primary">Reset</button>
+        <button [disabled]="addresourcesForm.invalid"  class="btn btn-primary btn-update">Save</button>
     </div>
 </div>

@@ -32,7 +32,7 @@
                                             <div class="col-md-12">
                                                 <div class="form-fileds col-md-6 pl-0">
                                                     <label class="label-control">Project Name <span class="star">*</span></label>
-                                                    <input type="text"  formControlName="projectName" class="form-control data" style="border:1px solid lightgray" placeholder="Enter Project Name">
+                                                    <input type="text"  formControlName="projectName" class="form-control data"  placeholder="Enter Project Name">
                                                     <span *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched" class="errspan required">Project Name Required*</span>
                                                     <span *ngIf="insertForm2.controls['projectName'].hasError('maxlength')" class="errspan required">
                                                         Maximum of 50 characters
@@ -75,7 +75,7 @@
                                             <div class="col-md-12">                                                
                                                 <div class="form-fileds col-md-6 pl-0">                                              
                                                     <label class="label-control" >Identity Measurable Metrics <span class="star">*</span></label>
-                                                    <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
+                                                    <input type="text"   formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
                                                     <span *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched" class="errspan required">Identity Measurable Metrics Required*</span>
                                                 </div>
                                                 <div class="form-fileds col-md-6 pr-0">
@@ -182,7 +182,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-fileds col-md-6 pl-0">
                                                         <label  class="label-control"  for="programname">Program Name<span class="star">*</span></label>
-                                                        <input type="text" maxlength="51" class="form-control data"  style="border:1px solid lightgray" formControlName="programName" value="" placeholder="Enter Program Name">
+                                                        <input type="text" maxlength="51" class="form-control data"   formControlName="programName" value="" placeholder="Enter Program Name">
                                                         <span *ngIf="(createprogram.get('programName').invalid && createprogram.get('programName').touched) && !createprogram.controls['programName'].hasError('maxlength')" class="errspan required">Program Required*</span>
                                                         <span *ngIf="createprogram.controls['programName'].hasError('maxlength')" class="errspan required">
                                                             Maximum of 50 characters
@@ -205,7 +205,7 @@
                                                 <div class="col-md-12">
                                                     <div class="form-fileds col-md-6 pl-0">
                                                         <label  class="label-control"  for="programpurpose">Add Program Purpose<span class="star">*</span></label>
-                                                        <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="purpose" value="" 
+                                                        <input type="text" maxlength="51"   class="form-control data" formControlName="purpose" value="" 
                                                         placeholder="Enter Program Purpose">
                                                         <span *ngIf="(createprogram.get('purpose').invalid && createprogram.get('purpose').touched) && !createprogram.controls['purpose'].hasError('maxlength')"  class="errspan required">Program Purpose Required*</span>
                                                         <span *ngIf="createprogram.controls['purpose'].hasError('maxlength')" class="errspan required">
@@ -261,7 +261,7 @@
                                                 <div class="col-md-12">                                                    
                                                     <div class="form-fileds col-md-3 pl-0">
                                                         <label  class="label-control"  for="measurableMetrics">Identify Measurable Metrics<span class="star">*</span></label>
-                                                        <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data"  formControlName="measurableMetrics" value="" 
+                                                        <input type="text" maxlength="51"   class="form-control data"  formControlName="measurableMetrics" value="" 
                                                         placeholder="Enter Identify Measurable Metrics">
                                                         <span *ngIf="createprogram.get('measurableMetrics').invalid && createprogram.get('measurableMetrics').touched" class="errspan required">Identify Measurable Metrics Required*</span>
                                                         <span *ngIf="createprogram.controls['measurableMetrics'].hasError('maxlength')" class="errspan required">
@@ -429,7 +429,7 @@
                             <div class="col-md-12">
                                 <div class="form-fileds col-md-6 pl-0">
                                     <label>Project Name <span class="star">*</span></label>
-                                    <input type="text"  formControlName="projectName" class="form-control data" style="border:1px solid lightgray" placeholder="Enter Project Name">
+                                    <input type="text"  formControlName="projectName" class="form-control data"  placeholder="Enter Project Name">
                                     <span *ngIf="insertForm2.get('projectName').invalid && insertForm2.get('projectName').touched" class="errspan required">Project Name Required*</span>
                                     <span *ngIf="insertForm2.controls['projectName'].hasError('maxlength')" class="errspan required">
                                         Maximum of 50 characters
@@ -466,7 +466,7 @@
                             <div class="col-md-12">                                
                                 <div class="form-fileds col-md-6 pl-0">                                
                                     <label>Identity Measurable Metrics <span class="star">*</span></label>
-                                    <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
+                                    <input type="text"   formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
                                     <span *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched" class="errspan required">Identity Measurable Metrics Required*</span>
                                 </div>
 

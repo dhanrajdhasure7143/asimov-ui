@@ -7,10 +7,15 @@
       <span class="projects-header-title">
         Project Details 
       </span>
-      <span class="pull-right" style="font-size:20px;">
-        <span class="projects-menu-item" routerLink="/pages/projects/projectreposcreen"><i class="ri-file-line"></i></span>
-        <span class="projects-menu-item"><i class="ri-history-line"></i></span>
-        <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+      <span class="pull-right">
+        <span class="projects-menu-item" routerLink="/pages/projects/projectreposcreen">
+          <img src="../../../../assets/images/Projects/Project-Repo.svg">
+        </span>
+        <button class="btn btn-primary">
+          <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
+        </button>
+        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
+        <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
       </span>
     </div>
   
@@ -123,8 +128,8 @@
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
               <img src="../../../../assets/images/Projects/delete-red.svg">
             </a> |
-            <a  matTooltip="Model" style="color:red;cursor:pointer">
-              <i class="fa fa-tasks" aria-hidden="true"></i>
+            <a  matTooltip="Model">
+              <img src="../../../../assets/images/Projects/Model.svg">
             </a>   
         </div>
         </td>
@@ -242,7 +247,8 @@
           <div class="col-md-6 pr-0">
             <span class="pull-right">
               <span class="projects-menu-item">
-                <button type="button" class="btn btn-primary">Upload New</button>
+                <button type="button" class="btn btn-primary">
+                  <img src="../../../../assets/images/BPMS/upload.svg" class="testplus">Upload New</button>
               </span>
             </span>
           </div>

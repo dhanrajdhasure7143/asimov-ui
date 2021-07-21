@@ -35,10 +35,6 @@
   } 
   
   .projecttable.table th{    
-    /* background-color:rgb(215 239 246) !important;
-    
-    color: #00a0e3 !important;
-    font-size: 14px !important; */
     vertical-align: middle !important;
     background-color: #e8f7fd !important;
     color: #00a0e3 !important;
@@ -58,12 +54,6 @@
   padding: 5px 12px !important;
   vertical-align: middle;
 }
-
-::ng-deep .modal-lg .modal-content{
-  width:100%  !important;
-  /* margin-top:30px !important; */
-}
-
 .tablacs .newinntalx {
   display: flex;
 }
@@ -74,112 +64,6 @@
   /* background-color: gainsboro;
   border-radius: 5px; */
 }
-
 .no-item-img{
   height:calc(100vh - 430px)
-
-}
-
-
-.modal-lg .modal-content {
-  width: 100% !important;
-  background-color: #f1f1f1 !important;
-}
-.modal-header.modelprhead {
-  padding: 15px 25px 10px 25px!important;
-  background-color: #f0f8ff!important;
-  border: none;
-}
-.modal-body.modelprbody {
-  height: calc(100% - 106px);
-  overflow: auto;
-}
-.modelprhead, .modelprbody {
-  padding: 10px !important;
-}
-.modelprbody, .modelprfooter {
-  background-color: #FFF !important;
-}
-.modal-footer.modelprfooter {
-  padding: 10px 0px;
-  border: none !important;
-}
-.modal-header.modelprhead h4 {
-  font-size: 18px;
-  font-weight: normal;
-}
-.modal-header.modelprhead button {
-  margin-right: 5px;
-  opacity: 1 !important;
-}
-.form-fileds {
-  margin-bottom: 15px !important;
-}
-.modelprbody label {
-  color: #3F4D67 !important;
-  font-weight: normal !important;
-  font-size: 15px !important;
-}
-.modelprbody input, .modelprbody select, .modelprbody textarea {
-  background-color: #fff !important;
-  border: 1px solid #d6ddf2 !important;
-  box-shadow: unset !important;
-  color: rgb(0 21 50 / 60%) !important;
-  font-weight: 600 !important;
-}
-.modelprbody select {
-  appearance: none;
-  background-image: url('../../../../../assets/images/Projects/small-down.svg');
-  background-repeat: no-repeat;
-  background-position: center right 12px;
-}
-
-.mmodelprbody input[type="date"], .modelprbody input[type="date"] {
-  background-image: url('../../../../../assets/images/Projects/calendar.svg');
-  background-position: calc(100% - 10px) center;
-  /* background-size: 12px; */
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-.modelprbody input[type="date"]::-webkit-calendar-picker-indicator  {
-  width: 16px;
-  height: 16px;
-  -webkit-appearance: none;
-  background-position: calc(100% + 5px) center;
-  background-size: 12px;
-  background-repeat: no-repeat;
-  color: rgba(204, 204, 204, 0);
-  opacity: 0.1;
-  text-align: center;
-  cursor: pointer;
-}
- 
-.modelprbody input[type="date"]::-webkit-calendar-picker-indicator:hover {
-  background-color: transparent;
-}
-.modelprfooter button {
-  background-color: #fff !important;
-  border: 1px solid #00a0e3 !important;
-  color: #00a0e3 !important;
-  padding: 6px 32px !important;
-  line-height: 18px;
-}
-.modelprfooter button:hover, .modelprfooter button.btn.btn-primary.btn-update:hover {
-  background-color: #001c47 !important;
-  color: #fff !important;
-  border: 1px solid #001c47 !important;
-  /* padding: 6px 32px !important;
-  line-height: 18px; */
-}
-.modelprfooter button.btn.btn-primary.btn-update {
-  background-color: #00a0e3 !important;
-  color: #fff !important;
-  margin-right: 30px !important;
-}
-
-
-.required, .star {
-  color: rgb(253 75 75) !important;
-  font-size: 12px !important;
-  font-weight: normal !important;
 }

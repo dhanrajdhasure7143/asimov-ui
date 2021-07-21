@@ -97,23 +97,17 @@
 }
 span.labeltit, label.labeltit {
   font-size: 14px !important;
-  color: #7D7D7D;
+  color: #32486B;
   font-weight: 400;
   display: block;
 }
-span.labelcont b {
-  font-size: 14px !important;
-  color: #001c47;
-  font-weight: 400;
-}
-
 .row.newprjdates {
   float: right;
 }
 .labelcont {
   font-size: 14px;
   font-weight: 500;
-  color: #001c47;
+  color: #32486B;
 }
 span.tab-text {
   word-break: break-all;
