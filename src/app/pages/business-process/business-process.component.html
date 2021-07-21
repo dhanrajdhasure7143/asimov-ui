@@ -39,7 +39,7 @@
               <span class="bpsbtnsep">|</span>
               <button class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg"></button>
               <button class="clr-hvr" matTooltip="Orchestration" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
-                <img src="../../../assets/images/BPMS/orchestration1.svg">
+                <img src="../../../assets/images/BPMS/Orchestrate.svg">
               </button>
               <button class="clr-hvr" matTooltip="Save & Submit for approval" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
