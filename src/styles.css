@@ -1346,3 +1346,11 @@ img.testplus{
 }
 
 /* Modal popup New Styles */
+  /* margin-right: 5px;
+} */
+::ng-deep .modal-lr .modal-content {
+  margin-top: 0px !important;
+  height: 60%;
+  width: 100%;
+  overflow: hidden;
+}

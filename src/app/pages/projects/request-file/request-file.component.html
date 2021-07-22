@@ -1,0 +1,67 @@
+<div class="modal-header">
+    <h4 class="modal-title pull-left">Request File</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="createRequestmodalref.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container" style="width:100%">
+        <br>
+
+        <form [formGroup]="requestFileForm" (ngSubmit)="saveRequestedfile()">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="fileCategory">File Category<span style="color:red">*</span></label>
+                    <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory">
+                        <option value="">Select Category</option>
+                        <option value="Analysis">PDF</option>
+                        <option value="Analysis">EXCEL</option>
+                        <option value="Analysis">DOC</option>
+                        <option value="Analysis">JPEG</option>
+                        <option value="Analysis">PNG</option>
+                    </select>
+                    <span
+                        *ngIf="requestFileForm.get('fileCategory').invalid && requestFileForm.get('fileCategory').touched"
+                        style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
+                    <br>
+                </div>
+                <div class="col-md-6">
+                    <label for="resources">Request To<span style="color:red">*</span></label>
+                    <select formControlName="resources" class="form-control data">
+                        <option value="">Select Resources</option>
+                        <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                    </select>
+
+
+                    <!-- <span *ngIf="requestFileForm.get('resources').invalid && requestFileForm.get('resources').touched"
+                        style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
+                    <br> -->
+                </div>
+
+                </div>
+               
+                
+                <br>
+                <div class="col-md-12">
+                    <br>
+                    <label>Description<span style="color:red">*</span></label>
+                    <textarea class="form-control" formControlName="description" placeholder="Enter Description..." style="height:100px;">
+
+                    </textarea>
+                    <span *ngIf="requestFileForm.get('description').invalid && requestFileForm.get('description').touched"
+                        style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+
+                </div>
+            
+        </form>
+        <br>
+        <div class="pull-right">
+            <!-- <button (click)="resettask()" class="btn btn-primary">Reset</button>
+            -->
+                &nbsp;&nbsp;
+            <button [disabled]="requestFileForm.invalid" (click)="saveRequestedfile()" class="btn btn-primary">Submit</button>
+        </div>
+    
+    </div>
+    </div>
+

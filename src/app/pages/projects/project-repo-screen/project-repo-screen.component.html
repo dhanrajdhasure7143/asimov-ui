@@ -1,7 +1,7 @@
 <div style="width:100%;overflow-x: auto;height:calc( 100vh - 160px)">
     <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
         <div class="projects-header maincreat">
-          <span class="projects-back-button">
+          <span class="projects-back-button" routerLink="/pages/projects/projectdetails">
             <i class="fa fa-angle-left" aria-hidden="true"></i>
           </span>
           <span class="projects-header-title">
@@ -9,7 +9,7 @@
           </span>
           <span class="pull-right serve1" style="font-size:20px;">
             <span class="ml-auto prj-lstscr-btn">
-                <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">Request File</button>
+                <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
               </span> 
               <span class="ml-auto prj-lstscr-btn">
                 <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">Upload File <i class="fa fa-upload"></i></button>
@@ -22,20 +22,7 @@
         <br>
         <div class="documents1">
             <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
-              <!-- <div class="">
-                <span class="">
-                 
-                </span>
-                <br>
-                <span class="projects-header-title">
-                  Recently Added Documents
-                </span>
-                <span class="pull-right" style="font-size:20px;">
-                  <span class="projects-menu-item"  ></span>
-                  <span class="projects-menu-item"><button type="button" class="btn btn-primary">Upload</button></span>
-                </span>
-              </div>
-              <br> -->
+           
               <div class="projects-table-body">
                 <table>
                   <tr class="separated">
@@ -47,19 +34,20 @@
                     <th>Comments</th>
                     <th>Actions</th>
                   </tr>
-                  <tr >
-                    <td>Analysis</td>
-                    <td>Process change analysis doc</td>
-                    <td>16-Jan-2021</td>
-                    <td>Peter</td>
-                    <td>130mb</td>
-                    <td>Reviewed</td>
+                  <tr *ngFor="let element of projectList">
+                    <td>{{element.category}}</td>
+                    <td>{{element.fullname}}</td>
+                    <td>{{element.uploaded}}</td>
+                    <td>{{element.uploadedby}}</td>
+                    <td>{{element.filesize}}</td>
+                    <td>{{element.comments}}</td>
+                    <!-- <td>{{element.actions}}</td> -->
                     <td>
-                        <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
+                        <span class="projects-menu-item" (click)="onDeleteItem()"><i class="fa fa-trash"></i></span>
                         <span class="projects-menu-item"><i class="fa fa-download"></i></span>
                     </td>
                     </tr>
-                    <tr >
+                    <!-- <tr >
                       <td>Design</td>
                       <td>BPM design BPMN</td>
                       <td>28-June-2021</td>
@@ -94,7 +82,7 @@
                                 <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
                                 <span class="projects-menu-item"><i class="fa fa-download"></i></span>
                             </td>
-                            </tr>
+                            </tr> -->
                 </table>
                 </div>
                 <br>
@@ -123,18 +111,21 @@
                     <th>Actions</th>
                     
                   </tr>
-                  <tr >
-                    <td>Design</td>
-                    <td>Peter</td>
-                    <td>James</td>
-                    <td>now use LoremIpsum as their default moal text</td>
-                    <td>16-Jan-2021</td>
+                  <tr *ngFor="let element of pendingList">
+                    <td>{{element.filecategory}}</td>
+                    <td>{{element.requestfrom}}</td>
+                    <td>{{element.requestto}}</td>
+                    <td>{{element.description}}</td>
+                    <td>{{element.requestdate}}</td>
                     
                     <td>
+                        <span class="remove-action">
+                          <button (click)="denyFileRequest(denyFileRequestmodal)" type="button">×</button>
+                        </span>
                         <span class="remove-action">×</span>
                     </td>
                     </tr>
-                    <tr >
+                    <!-- <tr >
                       <td>Analysis</td>
                      
                       <td>James</td>
@@ -153,7 +144,7 @@
                         <td>16-Jan-2021</td>
                         
                         <td>
-                            <!-- <span class="projects-menu-item"><i class="fa fa-trash"></i></span> -->
+                          
                         </td>
                         </tr>
                         <tr >
@@ -164,16 +155,16 @@
                             <td>now use LoremIpsum as their default moal text</td>
                             <td>12-Jun-2021</td>
                             <td>
-                              <!-- <span class="projects-menu-item"><i class="fa fa-trash"></i></span> -->
+                              
                           </td>
-                            </tr>
+                            </tr> -->
                 </table>
                 </div>
               <br>
             </mat-card>
           </div>
         <div class="projects-table-body" style="padding:10px;">
-            <!-- <app-project-details-header></app-project-details-header> -->
+            
           </div>
         
       </mat-card>
@@ -189,3 +180,42 @@
    
     
     </div>
+    
+<ng-template class="modal-lr" #createRequestmodal>
+  <app-request-file [createRequestmodalref]="createRequestmodalref" [project_id]="project_id"></app-request-file>
+</ng-template>
+
+<ng-template #denyFileRequestmodal>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Reason to deny file request</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="container" style="width:100%">
+
+        <form [formGroup]="denyFileRequestForm" (ngSubmit)="sendDenyFileReq()">
+                <div class="col-md-12">
+                    <br>
+                    <label>Message<span style="color:red">*</span></label>
+                    <textarea class="form-control" formControlName="description" placeholder="Enter Message..." style="height:100px;">
+
+                    </textarea>
+                    <span *ngIf="denyFileRequestForm.get('description').invalid && denyFileRequestForm.get('description').touched"
+                        style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+
+                </div>
+            
+        </form>
+        <br>
+        <div class="pull-right">
+            <button (click)="clearMsg()" class="btn btn-primary">Clear</button>
+          
+                &nbsp;&nbsp;
+            <button [disabled]="denyFileRequestForm.invalid" (click)="sendDenyFileReq()" class="btn btn-primary">Send</button>
+        </div>
+    
+    </div>
+    </div>
+</ng-template>

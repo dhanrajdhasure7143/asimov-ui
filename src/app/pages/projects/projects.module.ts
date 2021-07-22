@@ -41,6 +41,8 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { ProgramDetailsComponent } from './program-details/program-details.component';
 import {MatSliderModule} from '@angular/material/slider';
 import {NgxPaginationModule} from 'ngx-pagination';
+import { RequestFileComponent } from './request-file/request-file.component';
+
 const materialModules: any[] = [
     
     
@@ -48,7 +50,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent],
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, RequestFileComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,
