@@ -164,3 +164,10 @@ tr:nth-child(even) {
 .serve1{
     margin-top: -6px;
 }
+
+::ng-deep .modal-lr .modal-content {
+  margin-top: 0px !important;
+  height: 60%;
+  width: 100%;
+  overflow: hidden;
+}
