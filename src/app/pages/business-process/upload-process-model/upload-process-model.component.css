@@ -222,9 +222,9 @@ label.menuToggleTitle {
 }
 
 div#propertiesPanelBody {
-    height: calc(100% - 34px);
+    height: calc(100% - 40px);
     position: absolute;
-    top: 34px;
+    top: 40px;
     /* top: 40px; */
     overflow: auto;
     width: 100%;

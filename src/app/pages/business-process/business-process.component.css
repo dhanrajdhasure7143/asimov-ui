@@ -32,7 +32,7 @@ span.level3 {
 
 .new-bps-icons button {
     padding: 10px;
-    line-height: 14px;
+    line-height: 22px;
 }
 .bps-upload {
     margin: 0px 0px 0px 10px !important;
@@ -103,7 +103,7 @@ span.label_icon.inpro-label {
     border-radius: 4px;
 }
 .bps-float button:hover img {
-    filter: invert(1);
+    filter: brightness(2.5);
 }
 .bps-float .clr-hvr:hover img {
     filter: brightness(10) !important;

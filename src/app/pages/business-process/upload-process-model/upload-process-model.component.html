@@ -73,12 +73,12 @@
                             <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
                                 <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
                                     <div class="menuToggle">
-                                        <img src="../../../../assets/images/BPMS/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                                        <img src="../../../../assets/images/BPMS/expand-left.svg" alt="menuToggleIcon" class="menuToggleIcon" >
                                     </div>
                                 </div>
                                 <div *ngIf="menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleClosed()">
                                     <div class="menuToggle" >
-                                        <img src="../../../../assets/images/BPMS/Menu.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                                        <img src="../../../../assets/images/BPMS/expand-right.svg" alt="menuToggleIcon" class="menuToggleIcon" >
                                         <label class="menuToggleTitle">Menu</label>
                                     </div>
                                 </div>

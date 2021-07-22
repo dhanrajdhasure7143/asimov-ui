@@ -1,1 +1,8 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><defs><style>.cls-1{stroke:#000;stroke-miterlimit:10;}</style></defs><g id="Path_698" data-name="Path 698"><path class="cls-1" d="M14.16,1.75A12.42,12.42,0,1,0,26.58,14.16,12.43,12.43,0,0,0,14.16,1.75Zm0,23.32A10.91,10.91,0,1,1,25.07,14.16,10.91,10.91,0,0,1,14.16,25.07Z"/></g><g id="Path_699" data-name="Path 699"><path class="cls-1" d="M30.25,31.05a.83.83,0,0,1-.57-.23l-7.12-7.13a.8.8,0,0,1,1.13-1.13l7.13,7.13a.8.8,0,0,1,0,1.13A.83.83,0,0,1,30.25,31.05Z"/></g><g id="Path_701" data-name="Path 701"><path class="cls-1" d="M19.13,15H9.3a.8.8,0,0,1,0-1.6h9.83a.8.8,0,1,1,0,1.6Z"/></g></svg>
+<svg id="zoom-out" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path id="Path_827" data-name="Path 827" d="M0,0H24V24H0Z" fill="none"/>
+  <g id="zoom-out-2" data-name="zoom-out">
+    <circle id="Ellipse_431" data-name="Ellipse 431" cx="8" cy="8" r="8" transform="translate(3 3)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_84" data-name="Line 84" x1="4.35" y1="4.35" transform="translate(16.65 16.65)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_85" data-name="Line 85" x2="6" transform="translate(8 11)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
