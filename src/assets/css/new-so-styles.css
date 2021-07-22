@@ -277,12 +277,13 @@ button:focus {
     display: none;
 }
 .dbichart-block {
-    border: 1px solid rgb(221, 236, 248);
-    border-radius: 2px;
+    /* border: 1px solid rgb(221, 236, 248); */
+    border: 1px solid #e1e7ec;
+    border-radius: 4px;
     padding: 10px;
     width: 100%;
     /* box-shadow: rgba(0, 0, 0, 0.07) 0px 4px 6px; */
-    box-shadow: 0px 0px 4px rgb(0 0 0 / 10%);
+    /* box-shadow: 0px 0px 4px rgb(0 0 0 / 10%); */
 }
 .dbichart-block .dbichart-head label {
     font-weight: 500;

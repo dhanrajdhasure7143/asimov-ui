@@ -20,6 +20,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule} from '@angular/material';
 import {MatMenuModule} from '@angular/material/menu';
 
+import {MatPaginatorModule} from '@angular/material/paginator';
 import{FilterPipe} from './custom_filter.pipe';
 import { ModalModule } from 'ngx-bootstrap/modal';
 // import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
@@ -48,7 +49,8 @@ import 'highlightjs-line-numbers.js';
     MatProgressSpinnerModule,
     MatInputModule, MatIconModule, MatFormFieldModule,
     MatOptionModule, MatSelectModule, MatTooltipModule, MatDialogModule, MatTabsModule, MatMenuModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    MatPaginatorModule
     // HighlightModule
   ],
   providers: [

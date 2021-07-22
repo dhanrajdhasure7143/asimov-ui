@@ -103,7 +103,7 @@ label.label-control{
     background: rgb(0, 161, 228)  !important;
     min-width: 102px;
     font-size: 14px;
-    line-height: 16px;
+    line-height: 18px;
     padding: 11px 24px;
 }
 
@@ -121,15 +121,6 @@ label.label-control{
     background-color:rgba(212, 212, 212, 0.295);
   }
 
-
-  .projects-back-button{
-    padding:5px;
-    padding-right:20px;
-    border-right:1px solid #4AB0F5 ;
-    color:#4AB0F5 ;
-    cursor: pointer;
-  }
-
   .projects-header-title{
     color:black ;
     font-size:18px;
@@ -144,10 +135,7 @@ label.label-control{
     z-index: 999;
     position: relative;
 }
-.projects-header.maincreat span.projects-back-button {
-    border: medium none;
-    padding-right: 10px;
-}
+
 .projects-header.maincreat i {
     font-size: 16px;
 }
@@ -216,6 +204,11 @@ button.btn.btn-primary.prj-btn-save {
     box-shadow: unset !important;
     color: rgb(0 21 50 / 60%) !important;
     font-weight: 600 !important;
+}
+.maindivfoprm input:focus, .maindivfoprm select:focus, .maindivfoprm textarea:focus {
+    border-color: #00a0e3 !important;
+    color: #001c47 !important;
+    background-color: #fff !important;
 }
 .status-good{
     color:green;

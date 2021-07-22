@@ -11,7 +11,12 @@ import { BpsHints } from '../model/bpmn-module-hints';
 import Swal from 'sweetalert2';
 import { GlobalScript } from 'src/app/shared/global-script';
 import {MatTableDataSource} from '@angular/material/table';
-import {MatPaginator} from '@angular/material/paginator';
+
+import { MatPaginator, PageEvent } from '@angular/material';
+import { fromMatPaginator, paginateRows } from './../model/datasource-utils';
+import { Observable  } from 'rxjs/Observable';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-bpshome',
   templateUrl: './home.component.html',
@@ -42,6 +47,10 @@ export class BpsHomeComponent implements OnInit {
   userRole;
   savedDiagrams_list:any[]=[];
   isButtonVisible:boolean = false;
+
+  displayedRows$: Observable<any[]>;
+  totalRows$: Observable<number>;
+
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   constructor(private router:Router, private bpmnservice:SharebpmndiagramService, private dt:DataTransferService,
      private rest:RestApiService, private hints:BpsHints, private global:GlobalScript,
@@ -75,7 +84,8 @@ export class BpsHomeComponent implements OnInit {
       this.bkp_saved_diagrams = res; 
       this.isLoading = false;
       console.log(this.saved_diagrams);
-      this.savedDiagrams_list=this.saved_diagrams
+      this.savedDiagrams_list=this.saved_diagrams;
+      this.assignPagenation(this.saved_diagrams);
     },
     
     (err) => {
@@ -194,7 +204,8 @@ export class BpsHomeComponent implements OnInit {
     var filter_saved_diagrams= []
     this.saved_diagrams=[]
     if (category == "allcategories") {
-     this.saved_diagrams=this.savedDiagrams_list
+     this.saved_diagrams=this.savedDiagrams_list;
+     this.assignPagenation(this.saved_diagrams);
       // this.dataSource.filter = fulldata;
     }
     else{  
@@ -205,12 +216,8 @@ export class BpsHomeComponent implements OnInit {
         if(e.category===category){
           this.saved_diagrams.push(e)
         }
-      })
-      // this.dataSource.filterPredicate = (data: any, filter: string) => {
-      //   return data.categoryName === category;
-      //  };
-      //  this.dataSource.filter = category;
-      //  this.dataSource.paginator=this.paginator;
+      });
+      this.assignPagenation(this.saved_diagrams);
     }
   }
   sort(colKey,ind) { // if not asc, desc
@@ -223,6 +230,7 @@ export class BpsHomeComponent implements OnInit {
       else 
        return (a[colKey] < b[colKey]) ? 1 : -1;
     });
+    this.assignPagenation(this.saved_diagrams);
   }
 
   sendReminderMail(e, bpmNotation){
@@ -294,6 +302,39 @@ export class BpsHomeComponent implements OnInit {
        splitTenant = selecetedTenant.split('-')[0];
     }
     window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+  }
+
+
+  
+  searchList(event: Event) {       // search entered process ids from search input
+    const filterValue = (event.target as HTMLInputElement).value;
+    let test:any=[]
+    
+    this.saved_diagrams.filter(item =>{
+      Object.keys(item).some(k =>{ 
+        if(item[k] != null &&item[k].toString().toLowerCase().includes(filterValue.toLowerCase())){
+              test.push(item)
+        }
+      })
+      });
+ 
+var filtered = test.reduce((filtered, item) => {
+  if( !filtered.some(filteredItem => JSON.stringify(filteredItem.bpmnModelId) == JSON.stringify(item.bpmnModelId)) )
+    filtered.push(item)
+  return filtered
+}, [])
+this.assignPagenation(filtered)
+// const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+//     const rows$ = of(filtered);
+//     this.totalRows$ = rows$.pipe(map(rows => rows.length));
+//     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
+  }
+ 
+  assignPagenation(data){
+    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
   }
  
 }

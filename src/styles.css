@@ -242,11 +242,11 @@ div[class^='diagram_container'] .djs-container svg{
   height: 25px;
   padding: 2px 20px !important;
   font-size: 12px !important;
-  border-color:#0062cf !important;
+  border-color:#00a0e3 !important;
 }
 .btn-primary{
-  background-color:#0062cf !important;
-  border-color:#0062cf !important;
+  background-color: #00a0e3 !important;
+  border-color: #00a0e3 !important;
   outline: none;
 }
 .btn:focus, .btn:active{
@@ -1006,7 +1006,7 @@ app-home, app-bussiness-process, app-bpshome {
 
 div#propertiesPanelBody .bpp-properties-panel {
   height: 100%;
-  overflow: auto;
+  /* overflow: auto; */
   min-height: auto;
 }
 .mat-form-field-appearance-legacy .mat-form-field-underline {
@@ -1078,10 +1078,14 @@ div#propertiesPanelBody .bpp-properties-panel {
   background:transparent !important;
 }
 #projectfavourites .mat-tab-label {
-  height: 30px !important;
+  /* height: 30px !important; */
+  height: 38px !important;
   margin-left: 0px !important;
   min-width: 125px;
   padding: 0px;
+}
+.projects_favourites {
+  padding-top: 0px !important;
 }
 #projectfavourites mat-tab-header.mat-tab-header {
   margin: 0px;
@@ -1177,7 +1181,7 @@ img.testplus{
 }
 
 .maindivfoprm .mat-tab-label-active {
-  border-bottom: 2px solid #01a0e4;
+  /* border-bottom: 2px solid #01a0e4; */
 }
 .maindivfoprm .create-heading {
   font-weight: 500;
@@ -1263,7 +1267,7 @@ img.testplus{
 }
 
 .modal-header.modelprhead button {
-  margin-right: 5px;    
+  margin-right: 2px;    
   opacity: 1 !important;
 }
 
@@ -1320,7 +1324,7 @@ img.testplus{
   background-color: #fff !important;
   border: 1px solid #00a0e3 !important;
   color: #00a0e3 !important;
-  padding: 6px 32px !important;
+  padding: 8px 32px !important;
   line-height: 18px;
 }
 .modelprfooter button:hover, .modelprfooter button.btn.btn-primary.btn-update:hover {
@@ -1346,11 +1350,60 @@ img.testplus{
 }
 
 /* Modal popup New Styles */
-  /* margin-right: 5px;
-} */
+ 
 ::ng-deep .modal-lr .modal-content {
   margin-top: 0px !important;
   height: 60%;
   width: 100%;
   overflow: hidden;
+}
+
+
+.bpspaginationdiv .mat-paginator-outer-container {
+  width: 100%;
+}
+.bpspaginationdiv .mat-form-field-wrapper, .newpaginationdiv .mat-form-field-wrapper {
+  padding-bottom: 0px !important;
+}
+.bpspaginationdiv .mat-form-field-flex, .newpaginationdiv .mat-form-field-flex {
+  height: 25px !important;
+}
+
+span.actions-seperator {
+  margin: 0px 3px;
+  font-size: 15px;
+}
+.ng5-slider .ng5-slider-pointer {
+  cursor: pointer;
+  width: 18px !important;
+  height: 18px !important;
+  top: -7px !important;
+  background-color: #00a0e3 !important;
+  z-index: 3;
+  border-radius: 16px;
+}
+
+.ng5-slider .ng5-slider-pointer:after {
+  content: '';
+  width: 6px !important;
+  height: 6px !important;
+  position: absolute;
+  top: 6px !important;
+  left: 6px !important;
+  border-radius: 4px;
+  background: #fff;
+}
+img.testplusupload {
+  width: 20px;
+  margin-right: 5px;
+  height: auto;
+}
+.modal-body.modelprbody.editmodelprbody .mat-tab-label {
+  padding: 0px 10px !important;
+  min-width: 115px !important;
+  height: 35px !important;
+}
+
+.modal-body.modelprbody.editmodelprbody .mat-tab-label:first-child {
+  justify-content: left !important;
 }

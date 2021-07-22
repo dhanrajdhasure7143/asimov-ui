@@ -8,12 +8,19 @@
         Project Details 
       </span>
       <span class="pull-right">
-        <span class="projects-menu-item" routerLink="/pages/projects/projectreposcreen">
-          <img src="../../../../assets/images/Projects/Project-Repo.svg">
+        <span  routerLink="/pages/projects/projectreposcreen">
+          <button class="btn btn-primary prj-lst-btn">
+            <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
+             Project Repo
+          </button>
         </span>
-        <button class="btn btn-primary">
-          <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
-        </button>
+        <span >
+          <button class="btn btn-primary prj-crt-btn">
+            <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
+          </button>
+        </span>
+        
         <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
         <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
       </span>
@@ -33,15 +40,13 @@
       </div>
       <div class="col-md-8 pr-0">
         <span class="pull-right">
-          <span class="projects-menu-item">
-            <!-- <button type="button" class="btn btn-default new-attach-btn">Attachments</button> -->
-          </span>
-          <span class="projects-menu-item">
-            <span class="projects-menu-item">
+          <!--<span class="projects-menu-item">
+             <button type="button" class="btn btn-default new-attach-btn">Attachments</button> 
+          </span>-->
+          <span class="">
               <button type="button" class="btn btn-primary" (click)="createtask(createtaskmodal)">
                 <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Create New
               </button>
-            </span>
           </span>
         </span>
       </div>
@@ -124,10 +129,12 @@
           <div class="newinntalx">
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
               <img src="../../../../assets/images/Projects/edit.svg">
-            </a> |
+            </a>
+            <span class="actions-seperator">|</span>
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
               <img src="../../../../assets/images/Projects/delete-red.svg">
-            </a> |
+            </a>
+            <span class="actions-seperator">|</span>
             <a  matTooltip="Model">
               <img src="../../../../assets/images/Projects/Model.svg">
             </a>   
@@ -151,7 +158,7 @@
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
       </table>
       </div>
-      <mat-paginator #paginator101 [pageSize]="5" [showFirstLastButtons]="true">
+      <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
       </mat-paginator>
     
   </mat-card>
@@ -168,11 +175,9 @@
           </div>
           <div class="col-md-6 pr-0">
             <span class="pull-right">
-              <span class="projects-menu-item">
                 <button type="button" class="btn btn-add"(click)="addresource(addresourcemodal)">
                   <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Add New
                 </button>
-              </span>
             </span>
           </div>
         </div>
@@ -246,10 +251,8 @@
           </div>
           <div class="col-md-6 pr-0">
             <span class="pull-right">
-              <span class="projects-menu-item">
                 <button type="button" class="btn btn-primary">
-                  <img src="../../../../assets/images/BPMS/upload.svg" class="testplus">Upload New</button>
-              </span>
+                  <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload">Upload New</button>
             </span>
           </div>
         </div>
@@ -323,142 +326,147 @@
 </ng-template>
 
 <ng-template class="modal-lg" #updatetaskmodal>
+
   <div class="modal-header modelprhead">
-    <h3><b> {{selectedtaskdata.id}} / {{selectedtaskdata.taskCategory}} / {{selectedtaskdata.taskName}}</b></h3>
-    <p>Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp | date}}</p>
-     <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updatetaskmodalref.hide()">
-      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
-    </button>  -->
+    <h4 class="modal-title pull-left">
+      <b> {{selectedtaskdata.id}} / {{selectedtaskdata.taskCategory}} / {{selectedtaskdata.taskName}}</b>
+      <p>Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp | date}}</p>
+    </h4>
+       <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updatetaskmodalref.hide()">
+        <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+      </button>  -->
   </div>
-  <div class="modal-body" style="width:100%;overflow-x: auto;height:calc( 68vh - 10px)">
+  <div class="modal-body modelprbody editmodelprbody">
       <div class="container p-0" style="width:100%">
-              <form [formGroup]="updatetaskForm" (ngSubmit)="btn_add()">
-              
-                  <div class="row">
-                      <div class="col-md-12">
-                        <div class="form-fileds col-md-3 pl-0">
-                          <label for="assignee">Assignee</label>
-                          <p>{{selectedtaskdata.resources| userPipe : users_list}}</p>
-                        </div>  
-                        <div class="form-fileds col-md-3 pr-0">
-                          <label for="startDate">Start Date</label>
-                          <p>{{selectedtaskdata.startDate | date}}</p>
-                        </div>
-                        <div class="form-fileds col-md-3 pr-0">
-                          <label for="endDate">End Date</label>
-                          <p>{{selectedtaskdata.endDate | date}}</p>
-                        </div>
-                        <div class="form-fileds col-md-3 pr-0">
-                          <label for="percentage">Percentage Completed</label>
-                        <ng5-slider [(value)]="slider"  [options]="options" ></ng5-slider>
-                        </div>
-                      </div>
-                      <div class="col-md-12">
-                        <div class="form-fileds col-md-6 pl-0">                         
-                          <label for="status">Status<span style="color:red">*</span></label>
-                          <select   formControlName="status"  class="form-control data">
-                            <option value="">Select Status</option>
-                            <option value="New">New</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="In Review">In Review</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                        <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" style="color:red" class="fa fa-info-circle errspan">Status Required*</span>
-                        </div>
-                        <div class="form-fileds col-md-6 pr-0">
-                          <label for="priority">Priority <span style="color:red">*</span></label>
-                          <select formControlName="priority" class="form-control data">
-                              <option value="">Select Priority</option>
-                              <option value="High">High</option>
-                              <option value="Medium">Medium</option>
-                              <option value="Low">Low</option>
-                          </select>
-                          <span
-                              *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
-                              style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
-                        </div>
-                       
-                      </div>
-                      <br> <br>
-                      <div class="col-md-12">
-                        <label class="label-control" >Summary</label>
-                        <textarea class="form-control" formControlName="summary"  style="height:40px;" placeholder="Enter Summary">
-                        </textarea>
-                        <br>
-                      </div>
-                     
-                      <div class="col-md-12">
-                        <label class="label-control" >Description</label>
-                                                    <textarea class="form-control" formControlName="description" style="height:70px;" placeholder="Enter Description">
-                                                    </textarea>
-                      </div>
-                      <div class="col-md-12">
-                        <label class="label-control" ><h4><b>Activity</b></h4></label>
-                      </div>
-                      <div class="col-md-12">
-                        <mat-tab-group [selectedIndex]="selectedTab" id="Project-dashboard-tabs" (selectedTabChange)="onTabChanged($event)">
-                          <mat-tab label="Comment">
-                            <br>
-                            <div class="t-comments-box">
-                              <div class="add-comment">
-                                <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-                                <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
-                                <div>
-                                  &nbsp;
-                                </div>
-                                <div class="comment-input">
-                                  <input
-                                    class=" form-control-sm"
-                                    type="text" #commentInput id="addcomment"
-                                    placeholder="Add a comment.."
-                                  />
-                                  <div class="comment-send"><i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i></div>
-                                </div>
-                              </div>
-                              <div class="comment comment-level-1" *ngIf="postcomment!=0">
-                                <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-                                <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
-                                &nbsp;
-                                <div>
-                                  <div class="comment-label">
-                                    <span class="comment-name">
-                                      {{firstname}} &nbsp;{{lastname}}&nbsp; {{currentdate | date}}
-                                    </span>
-                                    <!-- <span class="comment-time"> - 5 days ago</span> -->
-                                  </div>
-                                  <div class="comment-content" *ngFor="let comments of postcomment;"> 
-                                    {{comments}}
-                                  </div>
-                                  <div class="comment-action">
-                                    <!-- <span> <i class="far fa-heart"></i> Like (0)</span>
-                                    <span> <i class="far fa-comment-alt"></i> Comment (0)</span> -->
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            
-                          </mat-tab>  
-                          <mat-tab label="History">
+          <form [formGroup]="updatetaskForm" (ngSubmit)="btn_add()">
+              <div class="row">
+                <div class="col-md-12">
+                    <div class="form-fileds col-md-3 pl-0">
+                      <label for="assignee">Assignee</label>
+                      <p>{{selectedtaskdata.resources| userPipe : users_list}}</p>
+                    </div>  
+                    <div class="form-fileds col-md-3 pr-0">
+                      <label for="startDate">Start Date</label>
+                      <p>{{selectedtaskdata.startDate | date}}</p>
+                    </div>
+                    <div class="form-fileds col-md-3 pr-0">
+                      <label for="endDate">End Date</label>
+                      <p>{{selectedtaskdata.endDate | date}}</p>
+                    </div>
+                    <div class="form-fileds col-md-3 pr-0">
+                      <label for="percentage">Percentage Completed</label>
+                    <ng5-slider [(value)]="slider"  [options]="options" ></ng5-slider>
+                    </div>
+                </div>
 
-                          </mat-tab>
-                          <mat-tab label="Attachments">
-
-                          </mat-tab>
-                          <mat-tab label="Resources">
-
-                          </mat-tab>
-                        </mat-tab-group>
-                      </div>  
+                <div class="col-md-12">
+                  <div class="form-fileds col-md-6 pl-0">
+                      <label for="status">Status <span class="star">*</span></label>
+                      <select   formControlName="status"  class="form-control data">
+                          <option value="">Select Status</option>
+                          <option value="New">New</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="In Review">In Review</option>
+                          <option value="Approved">Approved</option>
+                          <option value="Rejected">Rejected</option>
+                      </select>
+                      <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" class="errspan required">
+                        Status Required*</span>
                   </div>
-              </form>
+                  <div class="form-fileds col-md-6 pr-0">
+                    <label for="priority">Priority <span class="star">*</span></label>
+                    <select formControlName="priority" class="form-control data">
+                        <option value="">Select Priority</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                    <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
+                        class="errspan required">Priority Required*</span>
+                  </div>
+                </div>
+
+                <div class="form-fileds col-md-12">
+                  <label class="label-control" >Summary</label>
+                  <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
+                  </textarea>
+                </div>
+
+                <div class="form-fileds col-md-12">
+                  <label class="label-control" >Description</label>
+                  <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
+                  </textarea>
+                </div>
+                                    
+                <div class="col-md-12">
+                  <h4><b>Activity</b></h4>
+                  <mat-tab-group [selectedIndex]="selectedTab" id="Project-dashboard-tabs" (selectedTabChange)="onTabChanged($event)">
+                    <mat-tab label="Comment">
+                      
+                      <div class="t-comments-box">
+                        <div class="add-comment">
+                          <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                          <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
+                          <div class="comment-input">
+                            <textarea class="form-control" formControlName="comment" 
+                                  rows="2" placeholder="Add a comment.."
+                                  #commentInput id="addcomment" style="resize:none">
+                            </textarea>
+                            <!-- <input
+                              class=" form-control"
+                              type="text" #commentInput id="addcomment"
+                              placeholder="Add a comment.."
+                            /> -->
+                            <div class="comment-send">
+                              <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="comment comment-level-1" *ngIf="postcomment!=0">
+                          <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                          <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
+                         
+                          <div>
+                            <div class="comment-label">
+                              <span class="comment-name">
+                                {{firstname}} {{lastname}}&nbsp; {{currentdate | date}}
+                              </span>
+                              <!-- <span class="comment-time"> - 5 days ago</span> -->
+                            </div>
+                            <div class="comment-content" *ngFor="let comments of postcomment;"> 
+                              {{comments}}
+                            </div>
+                            <div class="comment-action">
+                              <!-- <span> <i class="far fa-heart"></i> Like (0)</span>
+                              <span> <i class="far fa-comment-alt"></i> Comment (0)</span> -->
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </mat-tab>  
+                    <mat-tab label="History">
+
+                    </mat-tab>
+                    <mat-tab label="Attachments">
+
+                    </mat-tab>
+                    <mat-tab label="Resources">
+
+                    </mat-tab>
+                  </mat-tab-group>
+                </div>
+
+                
+              </div>
+          </form>
       </div>
   </div>          
   <div class="modal-footer modelprfooter">
     <div class="pull-right">
-      <button (click)="resetupdatetaskproject()" class="btn btn-primary">Reset</button>
-      <button (click)="updatetaskmodalref.hide()" class="btn btn-primary">Cancel</button>
-      <button [disabled]="updatetaskForm.invalid" (click)="btn_add()" class="btn btn-primary btn-update">Update</button>
+        <button (click)="resetupdatetaskproject()" class="btn btn-primary">Reset</button>
+        <button (click)="updatetaskmodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button [disabled]="updatetaskForm.invalid" (click)="btn_add()" class="btn btn-primary btn-update">Update</button>
     </div>
   </div>
 </ng-template>

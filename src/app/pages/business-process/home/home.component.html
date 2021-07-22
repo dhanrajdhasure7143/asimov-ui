@@ -33,7 +33,7 @@
             <div class="col-md-6 pr-0">
               <mat-form-field>
                 <mat-label>Search Workspace</mat-label>
-                <input class="toolbar-search" type="text" matInput [(ngModel)]="term">
+                <input class="toolbar-search" type="text" matInput (keyup)="searchList($event)">
                 <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
               </mat-form-field>
             </div>
@@ -65,7 +65,7 @@
         <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
           <mat-accordion>
             <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
-              *ngFor="let each_diag of saved_diagrams | filter: term | paginate: { itemsPerPage: 12, currentPage: p } ;let i=index;trackBy:loopTrackBy"
+              *ngFor="let each_diag of displayedRows$ | async ;let i=index;trackBy:loopTrackBy"
               [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
               <mat-expansion-panel-header class="dropdown_icon">
                 <mat-panel-title>
@@ -112,8 +112,17 @@
             </mat-expansion-panel>
           </mat-accordion>
         </div>
-        <div *ngIf='saved_diagrams.length>0'>
+        <!-- <div *ngIf='saved_diagrams.length>0'>
           <pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>
+        </div> -->
+        <div class="bpspaginationdiv">
+          <mat-paginator #paginator
+            [length]="totalRows$ | async"
+            [pageIndex]="0"
+            [pageSize]="10"
+            [showFirstLastButtons]="true"
+            [pageSizeOptions]="[5, 10, 25, 50]"
+          ></mat-paginator>
         </div>
       </div>
     </div>
