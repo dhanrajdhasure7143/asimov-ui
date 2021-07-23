@@ -82,17 +82,19 @@
                       [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</span>
                     <span>
                       <span class="comment">
-                        <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right"
-                          matTooltipClass="eiap_tooltip"></i>
+                        <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip">
+                        <!-- <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i> -->
                       </span>
                     </span>
                     <span>
-                      <i (click)="sendReminderMail($event, each_diag)"
+                      <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" title="Click to send reminder mail to Approver" class="testplus">
+                      <!-- <i (click)="sendReminderMail($event, each_diag)"
                         *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'"
-                        title="Click to send reminder mail to Approver" class="fa fa-envelope"></i>
-                      <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
-                        title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i>
-                      <i
+                        title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
+                      <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
+                        title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
+                      <img (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" title="Delete BPMNotation" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus">
+                      <i 
                         *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
                     </span>
                   </div>
