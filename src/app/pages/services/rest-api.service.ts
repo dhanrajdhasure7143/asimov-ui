@@ -887,7 +887,7 @@ save_blueprism_config(data)
     }
 
 
-    addresourcesbyprogramid(data)
+    addresourcebyid(data:any)
     {
       return this.http.post("/platform-service/project/addResources",data)
     }
