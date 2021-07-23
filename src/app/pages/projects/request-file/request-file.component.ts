@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -18,9 +18,11 @@ export class RequestFileComponent implements OnInit {
   requestFileForm:FormGroup;
   mindate: string;
   @Input('createRequestmodalref') public createRequestmodalref: BsModalRef;
-  @Input('project_id') public project_id: BsModalRef;
+  @Input('projectid') public projectid: BsModalRef;
   userslist: any;
   projectdetails: Object;
+  onupdate: any;
+  @Output() onrequest=new EventEmitter<boolean>();
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router,) { }
 
@@ -52,35 +54,41 @@ export class RequestFileComponent implements OnInit {
 
   saveRequestedfile()
   {
-    this.spinner.show();
-    this.requestFileForm.value.projectId=this.project_id;
-    let data=this.requestFileForm.value;
-    this.api.createTask(data).subscribe(data=>{
-      let response:any=data;
-      this.spinner.hide();
-      if(response.message!=undefined)
-      {
-        let status: any= response;
-        Swal.fire({
-          title: 'Success',
-          text: ""+status.message,
-          position: 'center',
-          icon: 'success',
-          showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ok'
-      }).then((result) => {
-       // this.resettask();
-        this.projectDetailsbyId(this.project_id);
-        this.createRequestmodalref.hide();
-      }) 
-        
-      }
-      else
-      Swal.fire("Error",response.message,"error");
-      
-    })
+    
+    console.log(this.requestFileForm.get("resources").value);
+    
+    var body={
+      "category": this.requestFileForm.get("fileCategory").value,
+      "comments": this.requestFileForm.get("description").value,
+      "projectId": this.projectid,
+      "requestFrom": localStorage.getItem("ProfileuserId"),
+      "requestTo": this.requestFileForm.get("resources").value,
+        }
+        this.api.requestFile(body).subscribe(data=>{
+          this.onrequest.emit(true);
+          this.createRequestmodalref.hide();
+          let response:any=data;
+          //this.onupdate.emit(true);
+          if(response.message!=undefined)
+          {
+            let status: any= response;
+            Swal.fire({
+              title: 'Success',
+              text: ""+status.message,
+              position: 'center',
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ok'
+          }).then((result) => {
+          }) 
+            
+          }
+          else
+          Swal.fire("Error",response.message,"error");
+          
+        })
   }
 
 
