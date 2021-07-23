@@ -71,17 +71,16 @@ tr:nth-child(even) {
   /* border-bottom: 1px solid black; */
 }
 .res-circle {
-  width: 45px;
-  border-radius: 50%;
-  padding: 4px 3px;
-  height: 45px;
-  margin-right: 5px;
-  /* font-size: 22px; 
+  width: 51px;
+  border-radius: 55%;
   text-align: center;
-  margin-top: 1px;
-   background: #b3dff9; 
-   line-height: 36px; 
-  font-weight: bold;*/  
+  height: 46px;
+  font-size: 22px;
+  background: #b3dff9;
+  line-height: 36px;
+  font-weight: bold;
+  padding: 4px 3px;
+  margin-top: 1px; 
 }
 .res-circle:after {
   content: "";
