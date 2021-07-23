@@ -31,7 +31,7 @@ span.level3 {
 }
 
 .new-bps-icons button {
-    padding: 10px;
+    padding: 5px 8px;
     line-height: 22px;
 }
 .bps-upload {
@@ -40,7 +40,7 @@ span.level3 {
     background-color: #00a0e3 !important;
     padding: 10px 12px !important;    
     color: #fff;
-    /* font-size: 14px; */
+    font-size: 15px !important;
 }
 .bps-upload img {
     padding-right: 8px;
