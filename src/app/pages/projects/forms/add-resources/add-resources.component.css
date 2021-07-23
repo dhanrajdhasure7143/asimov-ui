@@ -1,0 +1,6 @@
+
+
+::ng-deep.ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-placeholder  {
+    position: revert;
+    z-index: 1;
+}
