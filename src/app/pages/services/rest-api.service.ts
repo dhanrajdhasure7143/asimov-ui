@@ -888,5 +888,19 @@ save_blueprism_config(data)
   deleteTask(id){
     return this.http.post("/platform-service/task/delete", id)
   }
-
+  updateTask(data){
+    return this.http.post("/platform-service/task/update", data)
+  }
+  gettaskandComments(id){
+    return this.http.get("/platform-service/task/fetchTasksByProjectId?projectId="+id+"")
+  }
+  getTaskCategories(){
+    return this.http.get("/platform-service/task/fetchTaskCategories")
+  }
+  getTaskAttachments(projectid,taskid){
+    return this.http.get("/platform-service/document/tasksAttachments/"+projectid+"/"+taskid+"")
+  }
+  uploadTaskfile(data){
+    return this.http.post("/platform-service/document/uploadResource", data);
+  }
 }

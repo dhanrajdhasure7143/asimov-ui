@@ -12,14 +12,12 @@
                     <div class="form-fileds col-md-6 pl-0">
                         <label for="taskCategory">Task Category<span class="star">*</span></label>
                         <select class="form-control"  formControlName="taskCategory">
-                            <option value="">Select Category</option>
-                            <option value="RPA Implementation">RPA Implementation</option>
-                            <option value="Analysis">Analysis</option>
-                            <option value="BPMN Design">BPMN Design</option>
-                            <option value="Task Mining">Task Mining</option>
-                        </select>
-                        <span *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
-                         class="errspan required">Task Category Required*</span>
+                            <option  [value]="null" disabled hidden>Select Category</option>
+                            <option value="" [selected]="true">Select Category</option>
+                            <option *ngFor="let categories of taskcategories" >{{categories.category}}</option>
+                            </select>
+                            <span *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
+                             class="errspan required">Task Category Required*</span>
                     </div>  
                     <div class="form-fileds col-md-6 pr-0">
                         <label for="taskName">Task Name<span class="star">*</span></label>

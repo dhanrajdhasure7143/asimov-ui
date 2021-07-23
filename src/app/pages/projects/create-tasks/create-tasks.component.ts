@@ -8,7 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { ProjectsProgramsTableComponent } from '../projects-list-screen/projects-programs-table/projects-programs-table.component';
-
+import { ProjectDetailsScreenComponent } from '../project-details-screen/project-details-screen.component';
 @Component({
   selector: 'app-create-tasks',
   templateUrl: './create-tasks.component.html',
@@ -22,8 +22,9 @@ export class CreateTasksComponent implements OnInit {
   @Input('project_id') public project_id: BsModalRef;
   userslist: any;
   projectdetails: Object;
+  taskcategories: Object;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
-    private router: Router,) { }
+    private router: Router,private projectdetailscreen:ProjectDetailsScreenComponent) { }
 
   ngOnInit() {
 
@@ -45,6 +46,7 @@ export class CreateTasksComponent implements OnInit {
 
 
       this.getallusers();
+      this.getTaskCategories();
   }
 
   inputNumberOnly(event){
@@ -79,7 +81,7 @@ export class CreateTasksComponent implements OnInit {
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resettask();
-        this.projectDetailsbyId(this.project_id);
+        this.projectdetailscreen.getTaskandCommentsData();
         this.createtaskmodalref.hide();
       }) 
         
@@ -92,20 +94,10 @@ export class CreateTasksComponent implements OnInit {
 
 
 
-  projectDetailsbyId(id){
-
-    this.api.getProjectDetailsById(id).subscribe( res =>{
-    this.projectdetails=res;
-    console.log("project details",this.projectdetails)
-    this.navigatetodetailspage(this.projectdetails)
+  getTaskCategories(){
+    this.api.getTaskCategories().subscribe(data =>{
+      this.taskcategories=data
     })
-  }
-
-
-  navigatetodetailspage(detials){
-    let encoded=Base64.encode(JSON.stringify(detials));
-    let project={id:encoded}
-    this.router.navigate(['/pages/projects/projectdetails',project])
   }
 
   getallusers()
