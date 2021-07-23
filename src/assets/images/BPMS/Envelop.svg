@@ -1,0 +1,7 @@
+<svg id="Envelop" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path id="Path_827" data-name="Path 827" d="M0,0H24V24H0Z" fill="none"/>
+  <g id="mail" transform="translate(1 1)">
+    <path id="Path_848" data-name="Path 848" d="M3.8,4H18.2A1.781,1.781,0,0,1,20,5.75v10.5A1.781,1.781,0,0,1,18.2,18H3.8A1.781,1.781,0,0,1,2,16.25V5.75A1.781,1.781,0,0,1,3.8,4Z" fill="none" stroke="#f99d1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_849" data-name="Path 849" d="M20,6l-9,7L2,6" fill="none" stroke="#f99d1c" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>
