@@ -424,7 +424,8 @@ percentageComplete: number;
      }
      this.spinner.show();
      this.addresourcemodalref.hide();
-     this.rpa.addresourcesbyprogramid(item_data).subscribe(data=>{
+     console.log("-------------",item_data);
+     this.rpa.addresourcebyid(item_data).subscribe(data=>{
         let response:any=data;
         if(response.errorMessage==undefined)
         {
