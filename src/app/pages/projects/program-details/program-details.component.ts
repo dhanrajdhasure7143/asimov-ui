@@ -389,7 +389,7 @@ export class ProgramDetailsComponent implements OnInit {
       type:"Project"
     }]  
     Swal.fire({
-      title: 'Enter '+projectdata.type+' Name',
+      title: 'Enter Project Name',
       input: 'text',
       inputAttributes: {
         autocapitalize: 'off'
