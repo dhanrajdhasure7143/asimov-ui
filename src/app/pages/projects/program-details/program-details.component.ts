@@ -6,6 +6,10 @@ import { Base64 } from 'js-base64';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-program-details',
   templateUrl: './program-details.component.html',
@@ -17,17 +21,44 @@ export class ProgramDetailsComponent implements OnInit {
     private rest:RestApiService,
     private spinner:NgxSpinnerService,
     private route:ActivatedRoute,
-    private router:Router
+    private router:Router,
+    private formBuilder:FormBuilder,
+    private modalservice:BsModalService,
     ) { }
 
     projects_and_programs_list:any=[];
     program_detials:any;
     linked_projects:any=[];
     users_list:any=[];
+    insertForm2:FormGroup;
+    modalref:BsModalRef;
+    selected_process_names:any=[];
 
   ngOnInit() {
     this.getprojects_and_programs();
     this.getallusers();
+    this.getprocessnames();
+    setTimeout(()=>{
+      this.getpiechart();
+      this.get_project_duration_chart();
+      this.getlinechart();
+    },500)
+    this.insertForm2=this.formBuilder.group({
+      projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      process: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      description: ["", Validators.compose([Validators.maxLength(200)])],
+      access: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+     // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+  
+  })
   }
 
   getprojects_and_programs()
@@ -41,31 +72,33 @@ export class ProgramDetailsComponent implements OnInit {
   }
 
 
+
+  getprocessnames()
+  {
+    this.rest.getprocessnames().subscribe(processnames=>{
+      let resp:any=[]
+      resp=processnames
+      this.selected_process_names=resp.filter(item=>item.status=="APPROVED");
+    })
+  }
+
+
   getprogramdetails(){
     
     this.route.params.subscribe(data=>{
       let program_id=data.id;
+      this.get_linked_projects(program_id);
       this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
-      console.log("program details",this.program_detials)
-      this.get_linked_projects();
+
     });
   }
 
 
-  get_linked_projects()
+  get_linked_projects(id)
   {
-    let linked_projects=this.program_detials.project;
-    this.linked_projects=linked_projects.map(item=>{
-      return this.projects_and_programs_list[1].find(item2=>item2.id==item.id);
+    this.rest.getProjectsByProgramId(id).subscribe(list=>{
+      this.linked_projects=list;
     })
-    setTimeout(()=>{
-
-      this.getpiechart();
-      this.get_project_duration_chart();
-      this.getlinechart();
-
-    },500)
-    console.log("linked projects list", this.linked_projects)
   }
 
 
@@ -319,6 +352,115 @@ export class ProgramDetailsComponent implements OnInit {
     let encoded=Base64.encode(JSON.stringify(detials));
     let project={id:encoded}
     this.router.navigate(['/pages/projects/projectdetails',project])
+  }
+
+
+  createproject(template)
+  {
+    this.resetcreateproject()
+    this.modalref = this.modalservice.show(template,{class:"modal-lg"});
+  }
+
+
+  linkcreateproject()
+  {
+    let data=this.insertForm2.value;
+    data.resources=[data.resources];
+    this.spinner.show();
+    this.rest.saveProjectByProgramId(this.program_detials.id,data).subscribe(res=>{
+      let response:any=res;
+      this.spinner.hide();
+      this.modalref.hide();
+      if(response.errorMessage==undefined)
+      {
+        
+        Swal.fire("",response.status,"success");
+        this.get_linked_projects(this.program_detials.id);
+      }
+    })
+  }
+
+
+  deleteproject(project)
+  {
+    var projectdata:any=project;
+    let delete_data=[{
+      id:project.id,
+      type:"Project"
+    }]  
+    Swal.fire({
+      title: 'Enter '+projectdata.type+' Name',
+      input: 'text',
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+    }).then((result) => {
+      let value:any=result.value
+      if(value!=undefined)
+      if(projectdata.projectName==value)
+      {
+        this.spinner.show();
+        this.rest.delete_Project(delete_data).subscribe( res =>{ 
+          this.spinner.hide();
+          let response:any=res
+          if(response.errorMessage==undefined)
+          {
+            
+            Swal.fire("Success",response.message,"success")
+            this.get_linked_projects(this.program_detials.id);
+          }
+          else
+          {
+            Swal.fire("Error",response.errorMessage,"error")
+          }
+        })
+      }else
+      {
+        Swal.fire("Error","Entered Project Name is Invalid","error")
+      }
+    })
+    // Swal.fire({
+    //   title: 'Are you sure?',
+    //   text: "You won't be able to revert this!",
+    //   icon: 'warning',
+    //   showCancelButton: true,
+    //   confirmButtonColor: '#3085d6',
+    //   cancelButtonColor: '#d33',
+    //   confirmButtonText: 'Yes, delete it!'
+    // }).then((result) => {
+    //   if (result.value) {
+    //     this.spinner.show();
+    //     this.api.delete_Project(delete_data).subscribe( res =>{ 
+    //       this.spinner.hide();
+    //       let response:any=res
+    //       if(response.errorMessage==undefined)
+    //       {
+    //         this.projects_list=[];
+    //         Swal.fire("Success",response.message,"success")
+    //         this.getallProjectsdata();
+    //       }
+    //       else
+    //       {
+    //         Swal.fire("Error",response.errorMessage,"error")
+    //       }
+    //     })
+    //   }
+    //   })
+  }
+
+  resetcreateproject()
+  {
+        this.insertForm2.reset();
+        
+        this.insertForm2.get("resources").setValue("");
+        this.insertForm2.get("mapValueChain").setValue("");
+        this.insertForm2.get("owner").setValue("");
+        this.insertForm2.get("initiatives").setValue("");
+        this.insertForm2.get("priority").setValue("");
+        this.insertForm2.get("process").setValue("");
+        
   }
 
 }

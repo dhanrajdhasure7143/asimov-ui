@@ -34,7 +34,7 @@ export class CreateProjectsComponent implements OnInit {
   selectedresources:any;
   username: string;
   mindate: any;
-
+  unassigned_projects:any=[];
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -91,6 +91,7 @@ export class CreateProjectsComponent implements OnInit {
     this.getallusers();
     this.getallProjects();
     this.getprocessnames();
+    this.getunassignedprojectslist();
 
     this.mindate= moment().format("YYYY-MM-DD");
   }
@@ -112,7 +113,12 @@ export class CreateProjectsComponent implements OnInit {
 
 
 
-
+getunassignedprojectslist()
+{
+  this.api.getunassignedprojects().subscribe(data=>{
+    this.unassigned_projects=data;
+  })
+}
 createproject()
   {
     this.spinner.show();

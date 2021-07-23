@@ -1,4 +1,4 @@
-import { Component, Input,OnInit } from '@angular/core';
+import { Component, Output, EventEmitter, Input,OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Base64 } from 'js-base64';
@@ -19,9 +19,10 @@ export class AddResourcesComponent implements OnInit {
   addresourcesForm:FormGroup;
   mindate: string;
   @Input('addresourcemodalref') public addresouceref: BsModalRef;
-
+  @Output() newItemEvent = new EventEmitter<String>();
   userslist: any = [];
   projectdetails: Object;
+  selectedresources:any=[];
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router,) { }
   ngOnInit() {
@@ -57,4 +58,8 @@ export class AddResourcesComponent implements OnInit {
     })
   }
 
+
+  save() {
+    this.newItemEvent.emit(JSON.stringify(this.selectedresources));
+  }
 }

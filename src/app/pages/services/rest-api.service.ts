@@ -871,15 +871,40 @@ save_blueprism_config(data)
     {
       return this.http.post("/platform-service/project/create",data)
     }
+    
+    saveProjectByProgramId(programid, data)
+    {
+      return this.http.post("/platform-service/project/addProjectbyProgramId?programId="+programid,data);
+    }
+
+    getunassignedprojects()
+    {
+      return this.http.get("/platform-service/project/getUnassignedProjects");
+    }
 
     getRole(userid){
        return this.http.get("/authorizationservice/api/v1/user/role/userId/"+userid+"")
     }
 
 
+    addresourcesbyprogramid(data)
+    {
+      return this.http.post("/platform-service/project/addResources",data)
+    }
+
+
     getProjectDetailsById(id){
       return this.http.get("/platform-service/project/findProjectById?projectId="+id+"")
     }
+
+
+    getProjectsByProgramId(id)
+    {
+      return this.http.get("/platform-service/project/findByProgramId?programId="+id);
+    }
+
+
+
 
   createTask(data) {
     return this.http.post("/platform-service/task/create", data)

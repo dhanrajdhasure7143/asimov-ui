@@ -115,3 +115,9 @@ span.tab-text {
 td.testing {
   width: 175px;
 }
+
+
+.focus-data{
+  border:1px solid lightgray;
+  
+}

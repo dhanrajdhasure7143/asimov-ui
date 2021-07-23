@@ -171,7 +171,11 @@ percentageComplete: number;
     })
   }
 
-  
+  navigatetorepopage(){
+    let encoded=Base64.encode(JSON.stringify(this.projectDetails));
+    let project={id:encoded}
+    this.router.navigate(['/pages/projects/projectreposcreen',project])
+  }
 
   applyFilter(filterValue:any) {
     let processnamebyid=this.process_names.find(data=>filterValue==data.processId);
@@ -400,6 +404,31 @@ percentageComplete: number;
                   }
                 });
       }
+
+
+  addresources(event)
+  {
+     let data={
+       id:this.projectDetails.id,
+       resources:JSON.parse(event),
+     }
+     this.spinner.show();
+     this.addresourcemodalref.hide();
+    this.rpa.addresourcesbyprogramid(data).subscribe(data=>{
+       let response:any=data;
+       if(response.errorMessage==undefined)
+       {
+         this.spinner.hide();
+          this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
+          Swal.fire("Success",response.status,"success");
+       }
+       else
+       {
+          Swal.fire("Error",response.errorMessage,"error");
+       }
+
+    })
+  }
 
   projectDetailsbyId(id){
 

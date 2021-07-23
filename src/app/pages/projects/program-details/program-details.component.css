@@ -1,6 +1,6 @@
 .projects-header{
     width:100%;padding:10px;
-    background-color:rgba(212, 212, 212, 0.295);
+    background-color:#f8f8f8;
   }
 
   .projects-header-title{
@@ -59,11 +59,17 @@
   }
 
 
-  ::ng-deep .content-area{
+/* ::ng-deep .content-area {
     overflow:auto !important;
     background-color: transparent !important;
-  }
+  } */
 
+
+  .program-details-main{
+    overflow: auto !important;
+    height:100%;
+    background-color:#e3eaef !important;
+  }
 
 
   .card{
@@ -91,4 +97,96 @@
 .no-item-img{
   height:200px;
 
+}
+
+
+
+.modelprbody, .modelprfooter {
+  background-color: #FFF !important;
+}
+.modelprhead {
+  border: none;
+}
+.modal-header.modelprhead h4 {
+  font-size: 18px;    
+  font-weight: normal;
+  /* padding: 0px 0px 0px 15px !important; */
+}
+.modal-header.modelprhead {
+  padding: 15px 25px 10px 25px!important;
+  background-color: #f0f8ff!important;
+}
+
+.modal-body.modelprbody {
+  height: calc(100% - 106px);
+  overflow: auto;
+}
+
+.modal-footer.modelprfooter {
+  padding: 10px 0px;
+  border: none !important;
+}
+
+
+.maindivfoprm .fa.fa-info-circle.errspan {
+  font-weight: normal;
+  font-size: 12px;
+}
+.required, .star {
+  color: rgb(253 75 75) !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+}
+
+
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
+  background-color: #fff !important;
+  border: 1px solid #00a0e3 !important;
+  color: #00a0e3 !important;
+}
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-reset:hover {
+  background-color: #001c47 !important;
+  color: #fff !important;
+  border: none !important;
+}
+.maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-hover:hover {
+  background-color: #001c47 !important;
+  color: #fff !important;
+  border-color: #001c47 !important;
+}
+
+
+.slider {
+  -webkit-appearance: none;
+  width: 120px;
+  height: 13px;
+  border-radius: 5px;
+  background: linear-gradient(to right,red, orange, yellow, green);
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  
+  background: #ffffff;
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  border:1px solid gray;
+}
+
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+  
+  height: 12px;
+  width: 12px;
+  border-radius: 100%;
+  background: #ffffff;
+  cursor: pointer;
+  border:1px solid gray;
 }

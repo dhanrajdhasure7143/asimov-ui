@@ -8,7 +8,7 @@
         Project Details 
       </span>
       <span class="pull-right">
-        <span  routerLink="/pages/projects/projectreposcreen">
+        <span  (click)="navigatetorepopage()">
           <button class="btn btn-primary prj-lst-btn">
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
@@ -200,45 +200,31 @@
           </span>
         </div> -->
         
-        <div class="projects-table-body">
+        <div class="projects-table-body profile-table">
           <table class="table">
             <thead>
               <tr class="separated">
                 <th></th>
                 <th>Name</th>
                 <th>Role</th>
-                <th>Checkout Item</th>
+                <th>Email</th>
                 <th>Last Updated</th>
               </tr>
             </thead>
-            <tbody>
-              <tr >
-                <!-- <td>
-                  <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-                  <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
-                </td> -->
-                <!-- <td style="text-align:center">{{resourcetablefirstname?resourcetablefirstname:'-' }} {{resourcetablelastname?resourcetablelastname:'-' }}</td> -->
-                <td><img src="../../../../assets/images/BPMS/user1.png" /></td>
-                <td >Lakshmi Kadali</td>
-                <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                <td >Admin</td>
-                <td >01</td>
-                <td >09th Jan,2021</td>
+            <tbody *ngIf="users_list.lenght!=0">
+              <tr *ngFor="let user of (projectDetails.resources | userDetials : users_list)">
+                <td>
+                  <span *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
+                  <span  class="letter-image" *ngIf="user.userId.profilePic==null">
+                    <span class="letter">{{user.userId.firstName | slice:0:1}}{{user.userId.lastName | slice:0:1}}</span>
+                  </span>
+                </td>
+                <td >{{user.userId.firstName+" "+ user.userId.lastName}}</td>
+                <td >{{user.roleID.displayName}}</td>
+                <td >{{user.userId.userId}}</td>
+                <td >{{user.userId.created_at | date}}</td>
               </tr>
-              <tr >
-                <td><img src="../../../../assets/images/BPMS/user2.png" /></td>
-                <td >Srikanth Pothina</td>
-                <td >Designer</td>
-                <td >06</td>
-                <td >20th July,2021</td>
-              </tr>
-              <tr >
-                <td><img src="../../../../assets/images/BPMS/user1.png" /></td>
-                <td >Karthik Peddinti</td>
-                <td >Process Architect</td>
-                <td >05</td>
-                <td >15th Mar,2021</td>
-              </tr>
+
             </tbody>
             
           </table>
@@ -325,7 +311,7 @@
 
 <ng-template  #addresourcemodal>
   <div>
-    <app-add-resources [addresourcemodalref]="addresourcemodalref"></app-add-resources>
+    <app-add-resources (newItemEvent)="addresources($event)" [addresourcemodalref]="addresourcemodalref"></app-add-resources>
   </div>
   
 </ng-template>
