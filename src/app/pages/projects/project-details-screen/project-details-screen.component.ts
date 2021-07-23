@@ -418,26 +418,39 @@ percentageComplete: number;
 
   addresources(event)
   {
-     let data={
+     let item_data={
        id:this.projectDetails.id,
        resources:JSON.parse(event),
      }
      this.spinner.show();
      this.addresourcemodalref.hide();
-    this.rpa.addresourcesbyprogramid(data).subscribe(data=>{
-       let response:any=data;
-       if(response.errorMessage==undefined)
-       {
-         this.spinner.hide();
+     this.rpa.addresourcesbyprogramid(item_data).subscribe(data=>{
+        let response:any=data;
+        if(response.errorMessage==undefined)
+        {
+          this.spinner.hide();
           this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
           Swal.fire("Success",response.status,"success");
-       }
-       else
-       {
+        }
+        else
+        {
           Swal.fire("Error",response.errorMessage,"error");
-       }
+        }
+     })
+    //   this.rpa.addresourcesbyprogramid(item_data).subscribe(data=>{
+    //    let response:any=data;
+    //    if(response.errorMessage==undefined)
+    //    {
+    //      this.spinner.hide();
+    //       this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
+    //       Swal.fire("Success",response.status,"success");
+    //    }
+    //    else
+    //    {
+    //       Swal.fire("Error",response.errorMessage,"error");
+    //    }
 
-    })
+    // })
   }
 
   projectDetailsbyId(id){
