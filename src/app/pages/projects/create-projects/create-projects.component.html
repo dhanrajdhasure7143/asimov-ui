@@ -53,7 +53,7 @@
                                                     <label class="label-control">Add Resources<span class="star">*</span></label>
                                                     <select   formControlName="resources"  class="form-control data">
                                                         <option value="">Select Resources</option>
-                                                        <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                                                        <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                                                     </select>
 
                                                 <!-- <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
@@ -67,7 +67,7 @@
                                                     <label class="label-control" >Project Owner <span class="star">*</span></label>
                                                     <select formControlName="owner"   class="form-control data">
                                                         <option value="">Select Project Owner</option>
-                                                        <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>
+                                                        <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>
                                                     </select>
                                                     <span *ngIf="insertForm2.get('owner').invalid && insertForm2.get('owner').touched" class="errspan required">Project Owner Required*</span>
                                                 </div>
@@ -285,7 +285,7 @@
                                                             <select class="form-control" id="selectprojects" (change)="selected_project=$event.target.value">
                                                                 <option  [value]="null" disabled hidden>Select Project</option>
                                                                 <option value="" [selected]="true">Select Project</option>
-                                                                <option *ngFor="let project of projects_list" [value]="project.id">{{project.projectName}}</option>
+                                                                <option *ngFor="let project of unassigned_projects" [value]="project.id">{{project.projectName}}</option>
                                                             </select>
                                                         </div>
                                                         <div class="addproject-btn"  (click)="add_to_selected_projects()">
@@ -450,7 +450,7 @@
                                     <label>Add Resources<span class="star">*</span></label>
                                     <select   formControlName="resources"  class="form-control data">
                                         <option value="">Select Resources</option>
-                                        <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                                        <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                                     </select>
                                     <span *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched" class="errspan required">Resources Required*</span>
                                 </div>

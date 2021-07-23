@@ -47,7 +47,7 @@
      </div>
   </div> -->
 
-<div class="projects-header newprhcl">
+<div class="projects-header newprhcl" >
   <!-- <div class="container-fluid p-0"> -->
     <div class="row">
       <div class="col-md-8 p-0 project-info">
@@ -55,8 +55,12 @@
               <img src="..\assets\images\Projects\project_icon.svg" alt="" >
           <!-- </div> -->
           <div class="project-data">
-            <span class="tab-number">{{projectdata.projectName |uppercase}}</span>
-            <span class="tab-text" >{{projectdata.description}}</span>
+           
+            <span (click)="editdata.projectName=true"  (change)="projectdata.projectName=$event.target.value" [attr.contenteditable]="editdata.projectName" [class]="'h3  clickable '+(editdata.projectName==true?'focus-data':'')">{{projectdata.projectName |uppercase}}</span>
+            <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span>
+            <br>
+            <span (dblclick)="editdata.description=true" (change)="projectdata.description=$event.target.value" [attr.contenteditable]="editdata.description" [class]=" 'clickable '+(editdata.description==true?'focus-data':'')" >{{projectdata.description}}</span>
+            <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span>
           </div>
       </div>
       <div class="col-md-4 pl-0">
@@ -100,7 +104,8 @@
                 <div class="status-data">
                   <span class="labeltit">Initiative</span>
                   <span class="tab-text" *ngIf="projectdata.initiatives==null" >-</span>
-                  <span class="tab-text labelcont" >{{projectdata.initiatives}}</span>
+                  <span (dblclick)="editdata.initiatives=true" (change)="projectdata.initiatives=$event.target.value" [attr.contenteditable]="editdata.initiatives"  [class]="' labelcont clickable '+(editdata.initiatives==true?'focus-data':'')" >{{projectdata.initiatives}}</span>
+                  <span class="clickable text-success " *ngIf="editdata.initiatives==true" (click)="editdata.initiatives=false">&nbsp;<i class="fa fa-check"></i></span>
                 </div>
               </div>
           </td>

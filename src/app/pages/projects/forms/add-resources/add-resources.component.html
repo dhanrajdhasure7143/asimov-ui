@@ -17,7 +17,7 @@
     
                          <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
                                  [(ngModel)]="selectedresources"  required>
-                                <ng-option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
+                                <ng-option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
                             </ng-select> 
     
                         <!-- <span *ngIf="addresourcesForm.get('resources').invalid && addresourcesForm.get('resources').touched"
@@ -30,6 +30,6 @@
 <div class="modal-footer modelprfooter">
     <div class="pull-right">
         <button (click)="resettask()" class="btn btn-primary">Reset</button>
-        <button [disabled]="addresourcesForm.invalid"  class="btn btn-primary btn-update">Save</button>
+        <button [disabled]="addresourcesForm.invalid" (click)="save()" class="btn btn-primary btn-update">Save</button>
     </div>
 </div>

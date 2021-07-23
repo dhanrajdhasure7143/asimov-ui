@@ -14,7 +14,7 @@ const routes: Routes = [
   {path:'', component:ProjectsComponent, children:[
     
     {path:'listOfProjects', component:ProjectsListScreenComponent},
-    {path: "projectreposcreen", component:ProjectRepoScreenComponent},
+    {path: "projectreposcreen/:id", component:ProjectRepoScreenComponent},
     {path:'createprojects', component:CreateProjectsComponent},
     {path:'projectdetails', component:ProjectDetailsScreenComponent},
     {path:'projectdashboard', component:ProjectsDashboardComponent},

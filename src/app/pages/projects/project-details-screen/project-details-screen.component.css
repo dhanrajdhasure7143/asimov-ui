@@ -328,3 +328,20 @@ span.labelcont b {
   color: #001c47;
   font-weight: 400;
 }
+
+  .letter-image{
+    background-color: #00a0e3;
+    border-radius:5%;
+  }
+
+  .letter{
+    padding:10px;
+    color:black;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+
+  .profile-table td{
+    
+  }
