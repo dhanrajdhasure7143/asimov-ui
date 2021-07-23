@@ -263,7 +263,7 @@ button:disabled{
   border-radius: 4px !important;
   margin-left: 13px;
   margin-top: 5px;
-  min-width: 120px;
+  min-width: 90px;
 }
 .action-btn{
   width: 30px;
@@ -1078,11 +1078,11 @@ div#propertiesPanelBody .bpp-properties-panel {
   background:transparent !important;
 }
 #projectfavourites .mat-tab-label {
-  /* height: 30px !important; */
-  height: 38px !important;
+  height: 36px !important;
   margin-left: 0px !important;
-  min-width: 125px;
-  padding: 0px;
+  min-width: 50%;
+  padding: 5px 10px;
+  justify-content: end;
 }
 .projects_favourites {
   padding-top: 0px !important;
@@ -1406,4 +1406,19 @@ img.testplusupload {
 
 .modal-body.modelprbody.editmodelprbody .mat-tab-label:first-child {
   justify-content: left !important;
+}
+
+.projects-back-button i {
+  cursor: pointer;
+  padding: 3px 4px;
+  border-radius: 50%;
+  background: #eef2f5;
+  color: #0081B8;
+  margin-right: 8px;
+}
+
+.projects-back-button:hover i {
+    border-radius: 50%;
+    background: rgb(0 161 227) !important;
+    color: #fff;
 }

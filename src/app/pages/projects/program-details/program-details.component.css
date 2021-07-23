@@ -2,13 +2,6 @@
     width:100%;padding:10px;
     background-color:rgba(212, 212, 212, 0.295);
   }
-  .projects-back-button{
-    padding:5px;
-    padding-right:20px;
-    border-right:1px solid #4AB0F5 ;
-    color:#4AB0F5 ;
-    cursor: pointer;
-  }
 
   .projects-header-title{
     color:black ;
