@@ -8,7 +8,7 @@
         Project Details 
       </span>
       <span class="pull-right">
-        <span  (click)="navigatetorepopage()">
+        <span  (click)="navigateToProjectRepo()">
           <button class="btn btn-primary prj-lst-btn">
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
@@ -417,13 +417,13 @@
                                 <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div> -->
                                 &nbsp;
                                 <div>
-                                <div class="comment-content" *ngFor="let c of taskcomments;let i=index"> 
+                                <div class="comment-content" *ngFor="let c of taskcomments;let i=index">
                                   <div> 
-                                    <div class="userimage" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
-                                      <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
-                                      <div  *ngIf="result.length>3"><img class="res-circle " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
-                                    </div>
+                                  <div class="userimage" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
+                                    <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
+                                    <div  *ngIf="result.length>3"><img class="res-circle " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
                                   </div>
+                                </div>
                                   <div class="comment-name">
                                     {{c.createdBy}} &nbsp; {{c.createdTimestamp | date}}
                                   </div>
@@ -434,13 +434,13 @@
                                  <input type="text" name="comment" formControlName="editcomment" placeholder="Add Comment..."/>
                                  
                                  <div class="row">
-                                  <div class="col-md-3" id="updatesavecomment">
-                                    <br>
-                                   <button type="button" class="btn btn-primary"  (click)="updatecomment(c.id)">Save</button>
-                                   </div>
-                                   <div class="col-md-3" id="updatecancelcomment">
-                                   <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
-                                  </div>
+                                 <div class="col-md-3" id="updatesavecomment">
+                                  <br>
+                                 <button type="button" class="btn btn-primary"  (click)="updatecomment(c.id)">Save</button>
+                                 </div>
+                                 <div class="col-md-3" id="updatecancelcomment">
+                                 <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
+                                </div>
                                 <!-- <div class="col-md-6" >
                                   <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
                                 </div> -->
@@ -450,8 +450,9 @@
                                   <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" style="color:red;cursor:pointer" >
                                    Edit
                                  </button> 
-                                
+                               
                                </div>
+                               <br>
                                 </div>
                                 </div>
                               </div>

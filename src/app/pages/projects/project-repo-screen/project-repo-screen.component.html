@@ -12,7 +12,7 @@
                 <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
               </span> 
               <span class="ml-auto prj-lstscr-btn">
-                <button _ngcontent-svr-c17="" class="btn btn-primary" type="button">Upload File <i class="fa fa-upload"></i></button>
+                <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="uploadFile(uploadFilemodal)" type="button">Upload File <i class="fa fa-upload"></i></button>
               </span> 
               <span class="projects-menu-item"><i class="fa fa-download"></i></span>
             <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
@@ -27,19 +27,19 @@
                 <table>
                   <tr class="separated">
                     <th>Category</th>
-                    <th>Full Name</th>
+                    <th>File Name</th>
                     <th>Uploaded</th>
                     <th>Uploaded by</th>
                     <th>File Size</th>
                     <th>Comments</th>
                     <th>Actions</th>
                   </tr>
-                  <tr *ngFor="let element of projectList">
+                  <tr *ngFor="let element of uploadedFiledata">
                     <td>{{element.category}}</td>
-                    <td>{{element.fullname}}</td>
-                    <td>{{element.uploaded}}</td>
-                    <td>{{element.uploadedby}}</td>
-                    <td>{{element.filesize}}</td>
+                    <td>{{element.fileName}}</td>
+                    <td>{{element.uploadedDate}}</td>
+                    <td>{{getUserName(element.uploadedBy)}}</td>
+                    <td>{{element.fileSize}}</td>
                     <td>{{element.comments}}</td>
                     <!-- <td>{{element.actions}}</td> -->
                     <td>
@@ -111,18 +111,22 @@
                     <th>Actions</th>
                     
                   </tr>
-                  <tr *ngFor="let element of pendingList">
-                    <td>{{element.filecategory}}</td>
-                    <td>{{element.requestfrom}}</td>
-                    <td>{{element.requestto}}</td>
-                    <td>{{element.description}}</td>
-                    <td>{{element.requestdate}}</td>
+                  <tr *ngFor="let element of requestedFiledata">
+                    <td>{{element.category}}</td>
+                    <td>{{getUserName(element.requestFrom)}}</td>
+                    <td>{{getUserName(element.requestTo)}}</td>
+                    <td>{{element.comments}}</td>
+                    <td>{{element.uploadedDate}}</td>
                     
                     <td>
+                      
                         <span class="remove-action">
-                          <button (click)="denyFileRequest(denyFileRequestmodal)" type="button">×</button>
+                          <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" type="button"><i class="fas fa-times"></i></button>
                         </span>
-                        <span class="remove-action">×</span>
+                        <span class="upload-action" *ngIf="loggedUser == element.requestTo">
+                          <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
+                          <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
+                      </span>
                     </td>
                     </tr>
                     <!-- <tr >
@@ -182,12 +186,13 @@
     </div>
     
 <ng-template class="modal-lr" #createRequestmodal>
-  <app-request-file [createRequestmodalref]="createRequestmodalref" [project_id]="project_id"></app-request-file>
+  <app-request-file [createRequestmodalref]="createRequestmodalref" [projectid]="projectid" (onrequest)="onrequestFileData($event)"></app-request-file>
 </ng-template>
 
 <ng-template #denyFileRequestmodal>
   <div class="modal-header">
-    <h4 class="modal-title pull-left">Reason to deny file request</h4>
+    <h4 class="modal-title pull-left" *ngIf="isDeny">Reason to deny file request</h4>
+    <h4 class="modal-title pull-left" *ngIf="!isDeny">Reason to revoke file request</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -205,7 +210,10 @@
                     <span *ngIf="denyFileRequestForm.get('description').invalid && denyFileRequestForm.get('description').touched"
                         style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
 
+                        
+                        <h5>This message will be notified to {{getUserName(revokeorDenyValue)}}</h5>
                 </div>
+                
             
         </form>
         <br>
@@ -219,3 +227,62 @@
     </div>
     </div>
 </ng-template>
+
+<ng-template class="modal-up" #uploadFilemodal>
+<div class="modal-header">
+  <h4 class="modal-title pull-left">Upload File</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+      <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="container" style="width:100%">
+      <form [formGroup]="uploadFileForm" (ngSubmit)="submitUploadFileForm()">
+          <div class="row">
+              <div class="col-md-6">
+                  <label for="fileCategory">File Category<span style="color:red">*</span></label>
+                  <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory">
+                      <option value="">Select Category</option>
+                      <option value="Analysis">Analysis</option>
+                      <option value="Design">Design</option>
+                      
+                  </select>
+                  <span
+                      *ngIf="uploadFileForm.get('fileCategory').invalid && uploadFileForm.get('fileCategory').touched"
+                      style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
+              </div>
+              </div>
+              <div class="col-md-12">
+                  
+                  <label>Description<span style="color:red">*</span></label>
+                  <textarea class="form-control" formControlName="description" placeholder="Enter Description..." style="height:100px;">
+
+                  </textarea>
+                  <span *ngIf="uploadFileForm.get('description').invalid && uploadFileForm.get('description').touched"
+                      style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+
+              </div>
+              <div class="col-md-12">
+                  
+                <label>Upload<span style="color:red">*</span></label>
+                <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" name="Upload-File" formControlName="uploadFile" placeholder="choose file">
+
+                
+                <span *ngIf="uploadFileForm.get('uploadFile').invalid && uploadFileForm.get('uploadFile').touched"
+                    style="color:red" class="fa fa-info-circle errspan"></span>
+
+            </div>
+          
+      </form>
+  </div>
+  </div>
+  <div class="modal-footer modelprfooter">
+    <div class="pull-right">
+        <button (click)="uploadFilemodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button [disabled]="uploadFileForm.invalid" (click)="submitUploadFileForm()" class="btn btn-primary">Submit</button>
+        </div>
+  </div>
+</ng-template>
+
+
+

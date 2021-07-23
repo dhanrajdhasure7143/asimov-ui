@@ -271,7 +271,9 @@ mat-card#projects_details_screen {
         color: #768791;
         margin-top: 0.1rem;
         font-size: 2rem;
+        margin-top: 35px;
       }
+      
       .comment-action {
         color: #c3ccd3;
         line-height: 1.2;

@@ -14,11 +14,9 @@
                     <label for="fileCategory">File Category<span style="color:red">*</span></label>
                     <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory">
                         <option value="">Select Category</option>
-                        <option value="Analysis">PDF</option>
-                        <option value="Analysis">EXCEL</option>
-                        <option value="Analysis">DOC</option>
-                        <option value="Analysis">JPEG</option>
-                        <option value="Analysis">PNG</option>
+                        <option value="Analysis">Analysis</option>
+                        <option value="Design">Design</option>
+                        
                     </select>
                     <span
                         *ngIf="requestFileForm.get('fileCategory').invalid && requestFileForm.get('fileCategory').touched"
@@ -29,7 +27,7 @@
                     <label for="resources">Request To<span style="color:red">*</span></label>
                     <select formControlName="resources" class="form-control data">
                         <option value="">Select Resources</option>
-                        <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                        <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                     </select>
 
 

@@ -702,7 +702,7 @@ foreignObject{
 }
 
 .modal-content {
-  margin-top: 250px !important;
+  /* margin-top: 250px !important; */
   width: 500px;
   min-height: 200px;
 }
