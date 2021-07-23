@@ -416,21 +416,29 @@
                                 &nbsp;
                                 <div>
                                 <div class="comment-content" *ngFor="let c of taskcomments;let i=index"> 
+                                  <div> 
+                                    <div class="userimage" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
+                                      <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
+                                      <div  *ngIf="result.length>3"><img class="res-circle " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
+                                    </div>
+                                  </div>
                                   <div class="comment-name">
                                     {{c.createdBy}} &nbsp; {{c.createdTimestamp | date}}
                                   </div>
-                                  <div *ngIf="i!=commentnumber">
+                                  <div class="commentsadded" *ngIf="i!=commentnumber">
                                  <b>{{c.comments}}</b> 
                                 </div>
-                                <div  *ngIf="(showeditcomment && i==commentnumber)">
+                                <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
                                  <input type="text" name="comment" formControlName="editcomment" placeholder="Add Comment..."/>
                                  
                                  <div class="row">
-                                 <div class="col-md-3" >
-                                  <br>
-                                 <button type="button" class="btn btn-primary"  (click)="updatecomment(c.id)">Save</button>
-                                 <!-- <button type="button" (click)="posteditcancelcomment()">Cancel</button> -->
-                                </div>
+                                  <div class="col-md-3" id="updatesavecomment">
+                                    <br>
+                                   <button type="button" class="btn btn-primary"  (click)="updatecomment(c.id)">Save</button>
+                                   </div>
+                                   <div class="col-md-3" id="updatecancelcomment">
+                                   <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
+                                  </div>
                                 <!-- <div class="col-md-6" >
                                   <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
                                 </div> -->
@@ -473,13 +481,13 @@
                                   <!-- <span class="comment-time"> - 5 days ago</span> -->
                                 </div>
                                 <div class="comment-content" *ngFor="let attachments of taskattacments"> 
-                                  <div class="comment-name">
+                                  <div class="attachment-name">
                                     <!-- {{firstname}} &nbsp;{{lastname}}&nbsp; {{currentdate | date}} -->
                                   </div>
                                   <div>
                                     File Name : <b>{{attachments.fileName}}</b>
                                 </div>
-                                 <div class="comment-action">
+                                <div class="attachment-action">
                                   File Size :<b>{{attachments.fileSize | fileSizePipe}}</b>
                                 
                                </div>
@@ -491,7 +499,26 @@
                             
                           </mat-tab>
                           <mat-tab label="Resources">
-
+                            <div class="projects-table-body">
+                              <table class="table">
+                                <thead>
+                                  <tr class="separated">
+                                    <th>Name</th>
+                                    <th>Role</th>
+                                    <th>Last Updated</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <td >{{selectedtaskdata.resources| userPipe : users_list}}</td>
+                                    <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
+                                    <td >{{roles?roles:'-'}}</td>
+                                    <td >{{selectedtaskdata.lastModifiedTimestamp | date}}</td>
+                                  </tr>
+                                </tbody>
+                                
+                              </table>
+                            </div>
                           </mat-tab>
                         </mat-tab-group>
                       </div>  
@@ -502,7 +529,7 @@
   <div class="modal-footer modelprfooter">
     <div class="pull-right">
       <button (click)="resetupdatetaskproject()" class="btn btn-primary">Reset</button>
-      <button (click)="updatetaskmodalref.hide()" class="btn btn-primary">Cancel</button>
+      <button (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
       <button [disabled]="updatetaskForm.invalid" (click)="updatetask()" class="btn btn-primary btn-update">Update</button>
     </div>
   </div>
