@@ -119,7 +119,7 @@ percentageComplete: number;
     this.projectdetails();
 
     
-    this.getUserRole();
+ 
 
 
     this.getallusers();
@@ -130,7 +130,7 @@ percentageComplete: number;
       this.profileName();
         },1000);
        
-        this.getUserRole();
+      
         this.getallusers();
         this.getTaskandCommentsData();
   }
@@ -156,7 +156,8 @@ percentageComplete: number;
   }
 
   getUserRole(){
-    this.userid=this.projectDetails.resources
+    let user=this.users_list.find(item=>item.userId.id==this.selectedtaskdata.resources);
+    this.userid=user.userId.userId
     this.rpa.getRole(this.userid).subscribe(data =>{
       this.userrole=data
       for (let index = 0; index <= this.userrole.message.length; index++) {
@@ -267,6 +268,7 @@ percentageComplete: number;
       {  
         this.taskcomments=[];
         this.taskhistory=[];
+        this.rolelist=[];
        this.selectedtaskdata=data
        // this.updatetaskForm.get("taskCategory").setValue(data["taskCategory"]);
         this.updatetaskForm.get("priority").setValue(data["priority"]);
@@ -294,6 +296,7 @@ percentageComplete: number;
         
         console.log("taskcomment",this.taskcomments,this.taskcomments_list)
         this.getTaskAttachments();
+        this.getUserRole();
         this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
       }
   
@@ -316,9 +319,16 @@ percentageComplete: number;
         this.updatetaskForm.get("priority").setValue("");
         this.updatetaskForm.get("status").setValue("");
        (<HTMLInputElement>document.getElementById("addcomment")).value = '';
+       this.commentnumber=null
+        this.updatetaskForm.get("editcomment").setValue("");
        this.taskcomments=this.taskcomments_list;
       }
-    
+      canceltaskform(){
+        this.commentnumber=null
+        this.updatetaskForm.get("editcomment").setValue("");
+        this.updatetaskmodalref.hide();
+       
+      }
       postcomments(comments: string) {
         if (comments!= "") {
           let now = new Date().getTime();
@@ -453,7 +463,8 @@ percentageComplete: number;
 
 
       posteditcancelcomment(){
-        this.showeditcomment=false;
+        this.commentnumber=null
+        this.updatetaskForm.get("editcomment").setValue("");
       }
   
       editComments(comments,i){

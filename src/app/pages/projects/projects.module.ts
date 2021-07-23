@@ -45,13 +45,14 @@ import { RequestFileComponent } from './request-file/request-file.component';
 import { FileSizePipe } from './pipes/file-size-pipe.pipe';
 
 import { UserDetialsPipe } from './pipes/user-detials.pipe';
+import { UserImagePipe } from './pipes/user-image-pipe';
 const materialModules: any[] = [
     
     
   ];
 
 @NgModule({
-  declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent, FileSizePipe,
+  declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent, FileSizePipe,UserImagePipe,
     ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, UserDetialsPipe,RequestFileComponent],
   imports: [
     CommonModule,
