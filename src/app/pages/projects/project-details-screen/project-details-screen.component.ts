@@ -479,6 +479,9 @@ percentageComplete: number;
         this.commentnumber=null
         this.updatetaskForm.get("editcomment").setValue("");
       }
+      navigateToProjectRepo(){
+        this.router.navigate(["/pages/projects/projectreposcreen"], {queryParams:{"id":this.projectDetails.id}})
+      }
   
       editComments(comments,i){
         this.updatetaskForm.get("editcomment").setValue(comments);

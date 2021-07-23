@@ -928,4 +928,17 @@ save_blueprism_config(data)
   uploadTaskfile(data){
     return this.http.post("/platform-service/document/uploadResource", data);
   }
+  uploadProjectFile(body):Observable<any>{
+    return this.http.post("/platform-service/document/uploadResource", body)
+  }
+  getFileDetails(projectId):Observable<any>{
+    return this.http.get("/platform-service/document/uploadedFilesInfo/"+projectId)
+  }
+  revokeOrDenyFileRequest(body):Observable<any>{
+    return this.http.post("/platform-service/document/revokeorDenyFileRequest", body)
+  }
+  requestFile(projectId):Observable<any>{
+    return this.http.post("/platform-service/document/requestFileToUpload",projectId)
+  }
+
 }
