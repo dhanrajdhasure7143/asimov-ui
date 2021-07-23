@@ -274,7 +274,8 @@ mat-card#projects_details_screen {
       .comment-action {
         color: #c3ccd3;
         line-height: 1.2;
-        
+        font-size: 13px;
+        font-weight: bold; 
       }
       .comment-level-1 {
         margin-left: calc(50px + 1rem);
@@ -321,4 +322,10 @@ button.btn.btn-primary:hover {
 }
 .modal-body.modelprbody.editmodelprbody {
   height: calc(100% - 120px);
+}
+
+span.labelcont b {
+  font-size: 14px !important;
+  color: #001c47;
+  font-weight: 400;
 }

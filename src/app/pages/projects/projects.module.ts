@@ -42,7 +42,7 @@ import { ProgramDetailsComponent } from './program-details/program-details.compo
 import {MatSliderModule} from '@angular/material/slider';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { RequestFileComponent } from './request-file/request-file.component';
-
+import { FileSizePipe } from './pipes/file-size-pipe.pipe';
 const materialModules: any[] = [
     
     
@@ -50,7 +50,7 @@ const materialModules: any[] = [
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectsListScreenComponent, ProjectsProgramsTableComponent, CreateProjectsComponent,
-    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, RequestFileComponent],
+    ProjectDetailsScreenComponent,ProjectDetailsHeaderComponent, ProjectsDashboardComponent, FileSizePipe,ProcessNamePipe, UserPipePipe, ProjectRepoScreenComponent,CreateTasksComponent, AddResourcesComponent,ProgramDetailsComponent, RequestFileComponent],
   imports: [
     CommonModule,
     ProjectsRoutingModule,

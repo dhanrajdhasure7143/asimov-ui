@@ -61,9 +61,10 @@ percentageComplete: number;
  updatetaskForm: FormGroup;
  updatetaskmodalref: BsModalRef;
  selectedtaskdata: any;
- postcomment:any=[];
  currentdate: number;
-
+ editcomment:any;
+ showeditcomment:boolean=false;
+ commentnumber:number;
 
 
   
@@ -80,6 +81,12 @@ percentageComplete: number;
   processes: any;
   taskdata: any;
   project: Object;
+  modeldisable: boolean=false;
+  public taskcomments: any=[];
+  multicomments: any[];
+  taskattacments: Object;
+  taskcomments_list:any[]=[];
+  taskhistory: any=[];
 
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -89,19 +96,20 @@ percentageComplete: number;
   ngOnInit() {
 
     this.updatetaskForm=this.formBuilder.group({
-      taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      startDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-      approvers: ["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      status:["",Validators.compose([Validators.required, Validators.maxLength(50)])],
-      description: ["", Validators.compose([Validators.maxLength(200)])],
-      comment: ['',Validators.compose([Validators.maxLength(200)])],
-      summary: ['', Validators.compose([Validators.maxLength(200)])],
-      percentageComplete: ['', Validators.compose([Validators.maxLength(200)])],
+     // taskCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+     startDate: ['', Validators.compose([Validators.maxLength(200)])],
+     resources: ['', Validators.compose([Validators.maxLength(200)])],
+    // taskName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    // timeEstimate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+     endDate: ['', Validators.compose([Validators.maxLength(200)])],
+     approvers: ['', Validators.compose([Validators.maxLength(200)])],
+     status:["",Validators.compose([Validators.required, Validators.maxLength(50)])],
+     description: ["", Validators.compose([Validators.maxLength(200)])],
+     comments: ['',Validators.compose([Validators.maxLength(200)])],
+     summary: ['', Validators.compose([Validators.maxLength(200)])],
+     percentageComplete: ['', Validators.compose([Validators.maxLength(200)])],
+     editcomment: ['', Validators.compose([Validators.maxLength(200)])],
       })
 
 
@@ -124,12 +132,27 @@ percentageComplete: number;
        
         this.getUserRole();
         this.getallusers();
-
+        this.getTaskandCommentsData();
   }
 
   onTabChanged(event)
   {
     this.check_tab=event.index;
+  }
+
+  getTaskandCommentsData(){
+    this.rpa.gettaskandComments(this.project_id).subscribe(data =>{
+      this.tasks=data
+      this.dataSource2= new MatTableDataSource(this.tasks);
+      this.dataSource2.sort=this.sort10;
+      this.dataSource2.paginator=this.paginator101;
+    })
+  }
+
+  getTaskAttachments(){
+    this.rpa.getTaskAttachments(this.selectedtaskdata.projectId,this.selectedtaskdata.id).subscribe(data =>{
+      this.taskattacments=data
+    })
   }
 
   getUserRole(){
@@ -167,10 +190,6 @@ percentageComplete: number;
 
       this.projectDetails=JSON.parse(Base64.decode(this.projectData.id));
       this.project_id=this.projectDetails.id
-      this.tasks=this.projectDetails.tasks
-      this.dataSource2= new MatTableDataSource(this.tasks);
-      this.dataSource2.sort=this.sort10;
-      this.dataSource2.paginator=this.paginator101;
       console.log("project details",this.projectDetails)
         });
   }
@@ -240,79 +259,147 @@ percentageComplete: number;
         this.createtaskmodalref=this.modalService.show(createmodal,{class:"modal-lg"})
       }
 
-updatetaskdata(updatetaskmodal,data)
-  {  
-   this.selectedtaskdata=data
-    this.updatetaskForm.get("taskCategory").setValue(data["taskCategory"]);
-    this.updatetaskForm.get("priority").setValue(data["priority"]);
-    this.updatetaskForm.get("startDate").setValue(data["startDate"]);
-    this.updatetaskForm.get("resources").setValue(data["resources"]);
-     this.updatetaskForm.get("taskName").setValue(parseInt(data["taskName"]));
-    this.updatetaskForm.get("timeEstimate").setValue(data["timeEstimate"]);
-    this.updatetaskForm.get("endDate").setValue(data["endDate"]);
-    this.updatetaskForm.get("approvers").setValue(data["approvers"]);
-    this.updatetaskForm.get("status").setValue(data["status"]);
-    this.slider=data["percentageComplete"];
-    this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
-  }
+      updatetaskdata(updatetaskmodal,data)
+      {  
+        this.taskcomments=[];
+        this.taskhistory=[];
+       this.selectedtaskdata=data
+       // this.updatetaskForm.get("taskCategory").setValue(data["taskCategory"]);
+        this.updatetaskForm.get("priority").setValue(data["priority"]);
+        this.updatetaskForm.get("startDate").setValue(data["startDate"]);
+        this.updatetaskForm.get("resources").setValue(data["resources"]);
+       //  this.updatetaskForm.get("taskName").setValue(data["taskName"]);
+      //  this.updatetaskForm.get("timeEstimate").setValue(data["timeEstimate"]);
+        this.updatetaskForm.get("endDate").setValue(data["endDate"]);
+        this.updatetaskForm.get("approvers").setValue(data["approvers"]);
+        this.updatetaskForm.get("status").setValue(data["status"]);
+        this.updatetaskForm.get("description").setValue(data["description"]);
+        this.updatetaskForm.get("summary").setValue(data["summary"]);
+        this.slider=data["percentageComplete"];
+        this.updatetaskForm.get("percentageComplete").setValue(this.slider);
+        this.updatetaskForm.get("comments").setValue(data["comments"]);
+        for (let index = 0; index < this.selectedtaskdata.comments.length; index++) {
+          const element = this.selectedtaskdata.comments[index];
+          this.taskcomments.push(element)
+          this.taskcomments_list.push(element)
+        }
+        for (let index = 0; index < this.selectedtaskdata.history.length; index++) {
+          const element = this.selectedtaskdata.history[index];
+          this.taskhistory.push(element)
+        }
+        
+        console.log("taskcomment",this.taskcomments,this.taskcomments_list)
+        this.getTaskAttachments();
+        this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
+      }
   
-  resetupdatetaskproject(){
-    this.updatetaskForm.reset();
-    this.updatetaskForm.get("priority").setValue("");
-    this.updatetaskForm.get("status").setValue("");
-    this.postcomment=[];
-   (<HTMLInputElement>document.getElementById("addcomment")).value = '';
-  }
+      navigateToWorkspace(data){
 
-  postcomments(comments: string) {
-    if (comments != "") {
-      let now = new Date().getTime();
-      this.currentdate = now;
-      this.postcomment.push(comments);
+        if(data.taskCategory=="RPA Implementation"){
+          this.router.navigate(['/pages/rpautomation/home'])
+        }
+        if(data.taskCategory=="BPMN Design"){
+          this.router.navigate(['/pages/businessProcess/home'])
+        }
+        else{
+          this.modeldisable==true
+        }
+      }
+    
+      resetupdatetaskproject(){
+        this.taskcomments=[];
+        this.updatetaskForm.reset();
+        this.updatetaskForm.get("priority").setValue("");
+        this.updatetaskForm.get("status").setValue("");
+       (<HTMLInputElement>document.getElementById("addcomment")).value = '';
+       this.taskcomments=this.taskcomments_list;
+      }
+    
+      postcomments(comments: string) {
+        if (comments!= "") {
+          let now = new Date().getTime();
+          this.currentdate = now;
+          let idnumber=this.taskcomments.length+1
+          this.taskcomments.push({
+            "id":idnumber,
+            "comments":comments
+          });
+      }
+      }
+      updatetask(){
+        if(this.updatetaskForm.valid)
+        {
+          this.spinner.show();
+          this.updatetaskmodalref.hide();
+          let taskupdatFormValue =  this.updatetaskForm.value;
+          taskupdatFormValue["id"]=this.selectedtaskdata.id
+          taskupdatFormValue["percentageComplete"]=this.slider
+          taskupdatFormValue["comments"]=this.taskcomments
+         // taskupdatFormValue["history"]=this.taskhistory
+          this.rpa.updateTask(taskupdatFormValue).subscribe( res =>{
+            let status: any= res;
+            if(status.errorMessage==undefined)
+            {
+              Swal.fire("Success",status.message,"success");
+              this.getTaskandCommentsData();
+              this.spinner.hide();
+            }
+            else
+            {
+              Swal.fire("Error",status.errorMessage,"error");
+            }
+            
+          },err => {
+            Swal.fire("Error","Something Went Wrong","error");
+          });
     }
-  }
-
-  deletetask(data){
-    let deletetask =[{
-            "id":data.id
-        }];
-
-           Swal.fire({
-              title: 'Are you sure?',
-              text: "You won't be able to revert this!",
-              icon: 'warning',
-              showCancelButton: true,
-              confirmButtonColor: '#3085d6',
-              cancelButtonColor: '#d33',
-              confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-              if (result.value) {
-                this.spinner.show();
-                this.rpa.deleteTask(deletetask).subscribe( res =>{ 
-                  let status:any = res;
-                  Swal.fire({
-                    title: 'Success',
-                    text: ""+status.message,
-                    position: 'center',
-                    icon: 'success',
-                    showCancelButton: false,
-                    confirmButtonColor: '#007bff',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Ok'
-                  }) 
-                  this.projectDetailsbyId(this.project_id);
-                  this.spinner.hide();
-                  },err => {
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'Oops...',
-                      text: 'Something went wrong!',
-                    })
-                                 
-                  })
-              }
-            });
-  }
+    else
+    {
+      alert("please fill all details");
+    }
+      }
+    
+      deletetask(data){
+        let deletetask =[{
+                "id":data.id
+            }];
+    
+               Swal.fire({
+                  title: 'Are you sure?',
+                  text: "You won't be able to revert this!",
+                  icon: 'warning',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                  if (result.value) {
+                    this.spinner.show();
+                    this.rpa.deleteTask(deletetask).subscribe( res =>{ 
+                      let status:any = res;
+                      Swal.fire({
+                        title: 'Success',
+                        text: ""+status.message,
+                        position: 'center',
+                        icon: 'success',
+                        showCancelButton: false,
+                        confirmButtonColor: '#007bff',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Ok'
+                      }) 
+                      this.getTaskandCommentsData();
+                      this.spinner.hide();
+                      },err => {
+                        Swal.fire({
+                          icon: 'error',
+                          title: 'Oops...',
+                          text: 'Something went wrong!',
+                        })
+                                     
+                      })
+                  }
+                });
+      }
 
   projectDetailsbyId(id){
 
@@ -336,5 +423,25 @@ updatetaskdata(updatetaskmodal,data)
       }
 
 
+      posteditcancelcomment(){
+        this.showeditcomment=false;
+      }
   
+      editComments(comments,i){
+        this.updatetaskForm.get("editcomment").setValue(comments);
+        this.showeditcomment=true;
+        this.commentnumber=i
+        
+      }
+      updatecomment(id){
+        this.commentnumber=null
+        for (let i = 0; i < this.taskcomments.length; i++) {
+        if(this.taskcomments[i].id==id){
+          this.taskcomments[i].comments=this.updatetaskForm.get("editcomment").value
+        
+        }
+        }
+
+        console.log("taskc",this.taskcomments)
+      }
 }
