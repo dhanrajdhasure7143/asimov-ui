@@ -506,6 +506,7 @@ resetsla(){
               return item;
           });
         });
+        
         this.automatedtask= response.automationTasks;
         this.dataSource2= new MatTableDataSource(response.automationTasks);
         this.dataSource2.sort=this.sort10;
