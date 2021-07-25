@@ -22,9 +22,118 @@ export class BusinessInsightsComponent implements OnInit {
 
   sales_distribution_chart()
   {
-    am4core.ready(function() {
         
-      // Themes begin
+    
+  
+     let data = [
+        
+        
+          {
+              "Activity": "Perform callback",
+              "Duration":"23692457695"
+          },
+          {
+              "Activity": "Share proposal to customer",
+              "Duration": "1646852790"
+          },
+          {
+              "Activity": "Initiate sales",
+              "Duration": "115167289960"
+          },
+          {
+              "Activity": "Perform customer profiling",
+              "Duration": "33963703952"
+          },
+          {
+              "Activity": "Request advisor for proposal",
+              "Duration": "1308233816"
+          },
+          {
+              "Activity": "Prepare proposal",
+              "Duration": "58887650764"
+          },
+          {
+              "Activity": "Prepare documentation",
+              "Duration": "74189354852"
+          },
+          {
+              "Activity": "Verify documents",
+              "Duration": "21415770932"
+          },
+          {
+              "Activity": "Review documents",
+              "Duration": "2650806972"
+          },
+          {
+              "Activity": "Send to dealer for execution",
+              "Duration": "3486911962"
+          },
+          {
+              "Activity": "Trade executed and order settlement",
+              "Duration": "22566490892"
+          },
+          {
+              "Activity": "Send trade contract",
+              "Duration": "8287641976"
+          },
+          {
+              "Activity": "Order allotment performed",
+              "Duration": "8668382979"
+          },
+          {
+              "Activity": "Order entered",
+              "Duration": "888236964"
+          },
+          {
+              "Activity": "Trade amendment requested",
+              "Duration": "8382770880"
+          },
+          {
+              "Activity": "Trade Amended",
+              "Duration": "2386391964"
+          },
+          {
+              "Activity": "Check if trade is as per profile",
+              "Duration": "649131912"
+          },
+          {
+              "Activity": "Check if product is in recommended list",
+              "Duration": "640592901"
+          },
+          {
+              "Activity": "Request proposal amendment",
+              "Duration": "11080437972"
+          },
+          {
+              "Activity": "Amend proposal",
+              "Duration": "17840208940"
+          },
+          {
+              "Activity": "Order rejected",
+              "Duration": "3610611970"
+          },
+          {
+              "Activity": "Order cancelled",
+              "Duration": "285758000"
+          },
+          {
+              "Activity": "Request exception approval",
+              "Duration": "4431088000"
+          },
+          {
+              "Activity": "Perform exception",
+              "Duration": "2296879000"
+          }
+      
+        
+      ];
+
+
+      // let data2=[...data.map(item=>{
+      //    let duration=parseInt(item["Duration"]);
+      //    item["Duration"]=(this.parseMillisecondsIntoReadableTime(duration)).toString();
+      //     return item;
+      // })]
       am4core.useTheme(am4themes_animated);
       // Themes end
       
@@ -39,94 +148,13 @@ export class BusinessInsightsComponent implements OnInit {
       marker.stroke = am4core.color("#ccc");
       chart.legend.scrollable = true;
       chart.legend.fontSize = 12;
+      
+      chart.data=data;
+
+
   
-      chart.data = [
-        {
-          country: "Perform Callback with customer",
-          litres: 22.41
-        },
-        {
-          country: "Initiate sales",
-          litres: 12.48
-        },
-        {
-          country: "Perform Customer profiling",
-          litres: 59.16
-        },
-        {
-          country: "Request advisor for proposal",
-          litres: 2.13
-        },
-        {
-          country: "Prepare proposal",
-          litres: 71.27
-        },
-        {
-          country: "Share proposal to customer",
-          litres: 2.11
-        },
-        {
-          country: "Request Instructions and Documents",
-          litres: 70.36
-        },
-        {
-          country: "Verify documents",
-          litres: 35.94
-        },
-        {
-          country: "Review Dcouments",
-          litres: 3
-        },
-        {
-          country: "Check if trade is as per profile",
-          litres: 1.54
-        },
-        {
-          country: "Check if product is in recommended list",
-          litres: 1.52
-        },
-        {
-          country: "Order entered",
-          litres: 1.97
-        },
-        {
-          country: "send it to dealer for execution",
-          litres: 5.54
-        },
-        {
-          country: "Trade executed",
-          litres: 24.06
-        },
-        {
-          country: "Trade settlement",
-          litres: 4.51
-        },
-        {
-          country: "Order allotment performed",
-          litres: 3.32
-        },
-        {
-          country: "Send Trade contract",
-          litres: 2.95
-        },
-        {
-          country: "Order Rejected",
-          litres: 14.33
-        },
-        {
-          country: "Order Cancelled",
-          litres: 1.98
-        },
-        {
-          country: "Request exception approval",
-          litres: 61.54
-        },
-        {
-          country: "Perform exception",
-          litres: 31.9
-        }
-        
-      ];
+
+      // console.log(data2)
       
       chart.legend.position = "right";
       chart.legend.valign = "middle";
@@ -137,8 +165,8 @@ label.horizontalCenter = "middle";
 label.verticalCenter = "middle";
 label.fontSize = 18;
       var series = chart.series.push(new am4charts.PieSeries());
-      series.dataFields.value = "litres";
-      series.dataFields.category = "country";
+      series.dataFields.value = "Duration";
+      series.dataFields.category = "Activity";
       series.labels.template.disabled = true;
       series.slices.template.cornerRadius = 0;
       series.colors.list = [
@@ -164,7 +192,7 @@ label.fontSize = 18;
           am4core.color("rgba(243, 132, 0, 0.9)"),
           am4core.color("rgba(143, 13, 20, 0.9)"),
       ];
-      }); // end am4core.ready()
+   
   }
 
 
@@ -180,53 +208,53 @@ label.fontSize = 18;
       var chart = am4core.create("chartdiv2", am4charts.XYChart);
       
       // Add data
+      
       chart.data = [{
-        "country": "1",
-        "visits": 5
-      }, {
-        "country": "2",
-        "visits": 8
-      }, {
-        "country": "3",
-        "visits": 11
-      }, {
-        "country": "4",
-        "visits": 14
-      }, {
-        "country": "5",
-        "visits": 17
-      }, {
-        "country": "6",
-        "visits": 20
-      }, {
-        "country": "7",
-        "visits": 23
-      }, {
-        "country": "8",
+        "country": "10-16",
         "visits": 26
       }, {
-        "country": "9",
-        "visits": 29
+        "country": "16-21",
+        "visits": 108
       }, {
-        "country": "10",
-        "visits": 56
+        "country": "21-27",
+        "visits": 40
+      }, {
+        "country": "27-32",
+        "visits": 20
+      }, {
+        "country": "32-38",
+        "visits": 14
+      }, {
+        "country": "38-43",
+        "visits": 21
+      }, {
+        "country": "43-49",
+        "visits": 10
+      }, {
+        "country": "49-54",
+        "visits": 3
+      }, {
+        "country": "54-60",
+        "visits": 2
       }];
       
       // Create axes
-      
+  
       var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
       categoryAxis.dataFields.category = "country";
       categoryAxis.renderer.grid.template.location = 0;
       categoryAxis.renderer.minGridDistance = 30;
-      categoryAxis.title.text="Weeks"
-      //categoryAxis.title.fontWeight="bold"
+      categoryAxis.title.text="Days"
+      // categoryAxis.title.fontWeight="bold"
       // categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
       //   if (target.dataItem && target.dataItem.index && 2 == 2) {
       //     return dy + 25;
       //   }
       //   return dy;
       // });
-      
+
+
+    
       var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       valueAxis.title.text = "No.of.Cases";
       //valueAxis.title.fontWeight="bold"
@@ -235,14 +263,44 @@ label.fontSize = 18;
       series.dataFields.valueY = "visits";
       series.dataFields.categoryX = "country";
       series.name = "Visits";
-      series.columns.template.tooltipText = "{categoryX}: [bold]{valueY}[/]";
+      series.columns.template.tooltipText = " Duration : {categoryX} Days\n  Cases : {valueY}[/] ";
       series.columns.template.fillOpacity = 1;
+      series.columns.template.adapter.add("fill", function(fill, target) {
+          return am4core.color("#4d72be");
+        });
+      
+      // chart.colors.list = [
+        
+      //   am4core.color("rgba(85, 216, 254, 0.9)"),
+      // ];
+      
       var columnTemplate = series.columns.template;
-      columnTemplate.strokeWidth = 2;
+      columnTemplate.strokeWidth = 0;
       columnTemplate.strokeOpacity = 1;
       
       }); // end am4core.ready()
     
   }
+  parseMillisecondsIntoReadableTime(milliseconds){
+    //Get hours from milliseconds
+    var hours = milliseconds / (1000*60*60);
+    var absoluteHours = Math.floor(hours);
+    var h = absoluteHours > 9 ? absoluteHours : '0' + absoluteHours;
+  
+    //Get remainder from hours and convert to minutes
+    var minutes = (hours - absoluteHours) * 60;
+    var absoluteMinutes = Math.floor(minutes);
+    var m = absoluteMinutes > 9 ? absoluteMinutes : '0' +  absoluteMinutes;
+  
+    //Get remainder from minutes and convert to seconds
+    var seconds = (minutes - absoluteMinutes) * 60;
+    var absoluteSeconds = Math.floor(seconds);
+    var s = absoluteSeconds > 9 ? absoluteSeconds : '0' + absoluteSeconds;
+  
+  
+    return h + '.' + m + '.' + s;
+  }
+  
+
 
 }
