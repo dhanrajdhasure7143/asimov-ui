@@ -18,7 +18,7 @@
             <h4 class="box-heading">My Workspace</h4>
           </div>
           <div class="col-md-5 p-0">
-            <div class="col-md-6 pr-0">
+            <div class="col-md-6 pr-0 bps-labcls">
               <mat-form-field>
                 <mat-label>Select Category</mat-label>
                 <mat-select name="category" (selectionChange)="searchByCategory(categoryName)" #category="ngModel"
@@ -82,18 +82,18 @@
                       [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</span>
                     <span>
                       <span class="comment">
-                        <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip">
+                        <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus1" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip">
                         <!-- <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i> -->
                       </span>
                     </span>
                     <span>
-                      <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" title="Click to send reminder mail to Approver" class="testplus">
+                      <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" title="Click to send reminder mail to Approver" class="testplus1">
                       <!-- <i (click)="sendReminderMail($event, each_diag)"
                         *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'"
                         title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
                       <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
                         title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
-                      <img (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" title="Delete BPMNotation" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus">
+                      <img (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" title="Delete BPMNotation" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus1">
                       <i 
                         *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
                     </span>

@@ -139,13 +139,14 @@ span.tab-text {
   display: flex;
   align-items: center;
   /* padding: 9px 10px !important; */
-  padding: 6px 15px;
+  padding: 6px 8px;
 }
 
 .prj-lstscr-btn button {
   background-color: #00a0e3 !important;
   border: none;
   margin-right: 0px !important;
+  border-radius: 3px !important;
 }
 
 .prj-lstscr-btn button:hover {
