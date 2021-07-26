@@ -120,8 +120,7 @@ getunassignedprojectslist()
   })
 }
 createproject()
-{
-  
+  {
     this.spinner.show();
     let userfirstname=localStorage.getItem("firstName")
     let userlastname=localStorage.getItem("lastName")
@@ -129,7 +128,6 @@ createproject()
     this.insertForm2.value.status="New";
     this.insertForm2.value.createdBy=this.username;
     let data=this.insertForm2.value;
-    data["projectPercentage"]=0;
     this.api.createProject(data).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
