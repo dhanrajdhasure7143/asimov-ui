@@ -13,25 +13,8 @@ export class ProjectDetailsHeaderComponent implements OnInit {
   @Input('processes') public processes: any=[];
 
   constructor(private projectscreen:ProjectDetailsScreenComponent) { }
-  editdata:any;
+  editdata:Boolean=false
   ngOnInit() {
-    this.editdata={
-      
-        access: false,
-        createdBy: false,
-        createdTimestamp:false,
-        endDate: false,
-        initiatives:false,
-        lastModifiedBy: false,
-        lastModifiedTimestamp: false,
-        mapValueChain: false,
-        measurableMetrics: false,
-        owner:false,
-        priority: false,
-        process:false,
-        projectName: false,
-      
-    }
     this.projectdata=this.projectscreen.projectDetails
     console.log("project details component",this.projectscreen.projectDetails)
   }
@@ -39,23 +22,5 @@ export class ProjectDetailsHeaderComponent implements OnInit {
 
 
 
-  reset()
-  {
-    this.editdata={
-      access: false,
-      createdBy: false,
-      createdTimestamp:false,
-      endDate: false,
-      initiatives:false,
-      lastModifiedBy: false,
-      lastModifiedTimestamp: false,
-      mapValueChain: false,
-      measurableMetrics: false,
-      owner:false,
-      priority: false,
-      process:false,
-      projectName: false,
-    }
-  }
 
 }

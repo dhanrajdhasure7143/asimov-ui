@@ -505,7 +505,7 @@
           <ng-container matColumnDef="initiatives">
               <th mat-header-cell *matHeaderCellDef >Initiative</th>
               <td mat-cell *matCellDef="let element"> 
-                <span *ngIf="element.initiatives!=null" [matTooltip]="element.initiatives" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">{{getreducedValue(element.initiatives)}}</span> 
+                <span *ngIf="element.initiatives!=null">{{element.initiatives}}</span> 
                   <span *ngIf="element.initiatives==''">-</span>
                   <span *ngIf="element.initiatives==null">-</span>
           </ng-container>
@@ -513,7 +513,7 @@
           <ng-container matColumnDef="process">
               <th mat-header-cell *matHeaderCellDef mat-sort-header>Process</th>
               <td mat-cell *matCellDef="let element"> 
-                  <span *ngIf="element.process!=null"  [matTooltip]="element.process | processName : processes" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below">{{getreducedValue(element.process | processName : processes)}}</span> 
+                  <span *ngIf="element.process!=null">{{element.process | processName : processes}}</span> 
                   <span *ngIf="element.process==''">-</span> 
                   <span *ngIf=" element.process==null">-</span> 
               </td>
@@ -587,10 +587,10 @@
           <th mat-header-cell *matHeaderCellDef> Actions</th>
           <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
             <div class="newinntalx">
-              <a class="clickable text-dark"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element.id)" matTooltip="Go To Project Details">
+              <a class="clickable text-dark"  *ngIf="element.type=='Project'"  (click)="projectDetailsbyId(element)" matTooltip="Go To Project Details">
                 <img src="../../../../../assets/images/Projects/eye-show.svg" />
               </a> 
-              <a class="disable-bg text-dark"*ngIf="element.type=='Program'" (click)="programDetailsbyId(element)"  matTooltip="Go To Program Details">
+              <a class="disable-bg text-dark"*ngIf="element.type=='Program'" (click)="projectDetailsbyId(element)"  matTooltip="Go To Program Details">
                 <img src="../../../../../assets/images/Projects/eye-show.svg" />
               </a>
               <!-- <a  *ngIf="element.type=='Project'" (click)="updatedata(updateprojectmodal,element)" >

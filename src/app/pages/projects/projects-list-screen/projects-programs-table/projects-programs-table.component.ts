@@ -156,29 +156,21 @@ export class ProjectsProgramsTableComponent implements OnInit {
     this.mindate= moment().format("YYYY-MM-DD");
   }
 
-  projectDetailsbyId(id){
-
-    this.api.getProjectDetailsById(id).subscribe( res =>{
-    this.projectdetailsbyid=res;
-    console.log("project details",this.projectdetailsbyid)
-    this.navigatetodetailspage(this.projectdetailsbyid)
-    })
-  }
+  
 
 
 
 
   
   programDetailsbyId(program){
-    this.router.navigate(['/pages/projects/programdetails/'+program.id])
+    this.router.navigate(['/pages/projects/programdetails'],{queryParams:{ id: program.id } })
     }
 
 
 
-  navigatetodetailspage(detials){
-    let encoded=Base64.encode(JSON.stringify(detials));
-    let project={id:encoded}
-    this.router.navigate(['/pages/projects/projectdetails',project])
+  projectDetailsbyId(project){
+   
+    this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{ id: project.id }})
   }
   
   // CredcheckAllCheckBox(ev) {

@@ -41,8 +41,10 @@
                 <img src="..\assets\images\Projects\project_icon.svg" alt="" >
             </div>
             <div class="program-data">
-              <span class="h3">{{program_detials.programName |uppercase}}</span>
+              <span class="h3">{{program_detials.programName |uppercase}}</span><br>
               <span class="" style="font-size: 12px;" >{{program_detials.description}}</span>
+              <div *ngIf="program_detials.description==undefined || program_detials.description==null || program_detials.description=='' " class="h6">-</div>
+         
             </div>
           </div>
           <div class="col-md-1 p-0">
@@ -63,6 +65,7 @@
               <div class="value py-5">
                 <p>Value Chain</p>
                 <div *ngIf="program_detials.programValueChain!=undefined" class="h6">{{program_detials.programValueChain}}</div>
+                <div *ngIf="program_detials.programValueChain==undefined || program_detials.programValueChain==null || program_detials.programValueChain=='' " class="h6">-</div>
               </div>
             </div>
             <div class="item1 d-flex w-100 py-10">
@@ -72,6 +75,8 @@
               <div class="value py-5">
                 <p>Program Health</p>
                 <div class="h6">{{program_detials.programHealth}}</div>
+                <div *ngIf="program_detials.programHealth==undefined || program_detials.programHealth==null || program_detials.programHealth=='' " class="h6">-</div>
+            
               </div>
             </div>
             <div class="item1 d-flex w-100  py-10">
@@ -81,6 +86,8 @@
               <div class="value py-5">
                 <p>Program ID</p>
                 <div class="h6">{{program_detials.id}}</div>
+                <div *ngIf="program_detials.id==undefined || program_detials.id==null || program_detials.id=='' " class="h6">-</div>
+            
               </div>
             </div>
             <div class="item1 d-flex  w-100 py-10">
@@ -90,6 +97,8 @@
               <div class="value py-5">
                 <p>Program Purpose</p>
                 <div class="h6">{{program_detials.purpose}}</div>
+                <div *ngIf="program_detials.purpose==undefined || program_detials.purpose==null || program_detials.purpose=='' " class="h6">-</div>
+            
               </div>
             </div>
             <div class="item1 d-flex w-100  py-10">
@@ -108,6 +117,8 @@
               <div class="value py-5">
                 <p>Program Priority</p>
                 <div class="h6">{{program_detials.priority}}</div>
+                <div *ngIf="program_detials.priority==undefined || program_detials.priority==null || program_detials.priority=='' " class="h6">-</div>
+            
               </div>
             </div>
             <div class="item1 d-flex w-100  py-10">
@@ -116,7 +127,8 @@
               </div>
               <div class="value py-5">
                 <p>Effort Spent</p>
-                <div class="h6">{{program_detials.effortsSpent}}</div>
+                <input class="small-input" type="text"[value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled>
+
               </div>
             </div>
             <div class="item1 d-flex  w-100 py-10">
@@ -126,6 +138,8 @@
               <div class="value py-5">
                 <p>Program Sponser</p>
                 <div class="h6">{{program_detials.owner | userPipe : users_list}}</div>
+                <div *ngIf="program_detials.owner==undefined || program_detials.owner==null || program_detials.owner=='' " class="h6">-</div>
+            
               </div>
             </div>
           </div>
@@ -165,7 +179,7 @@
                   <th class="py-10">Action</th>
                 </thead>
                 <tbody>
-                  <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 10, currentPage: p } ">
+                  <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 5, currentPage: p } ">
                     <td>{{project.initiatives}}</td>
                     <td>{{project.projectName}}</td>
                     <td>{{project.owner  | userPipe : users_list}}</td>
@@ -174,7 +188,7 @@
                     <td>
                       <div class="d-flex">
                         
-                        <div  class="py-5"><input type="range" min="1" class="slider" max="100"  value="0"></div>
+                        <div  class="py-5"><input type="range" min="1" class="slider" max="100" disabled value="0"></div>
                         <div>0%</div>
                       </div>
                         <!-- <mat-progress-bar mode="determinate" value="15"></mat-progress-bar> -->
