@@ -42,7 +42,7 @@
     </div> -->
 
 </div>
-<span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
+<!-- <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span> -->
 <as-split class="ex-percent h-100" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:100):0">
         <div class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</div>
@@ -63,13 +63,13 @@
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" class="show">
         <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
         <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
-        <div [class.bps_overlay]="isfromApprover || (!isEdit && rejectedOrApproved=='APPROVED') ||(!isEdit && rejectedOrApproved=='REJECTED')" class="h-100">
-            <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover || (!isEdit && rejectedOrApproved=='APPROVED') ||(!isEdit && rejectedOrApproved=='REJECTED')" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
+        <div [class.bps_overlay]="isfromApprover || !isEdit" class="h-100">
+            <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover || !isEdit" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
             <div *ngIf="!isShowConformance" class="h-100">
                 <mat-tab-group class="canvas-container h-100" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
                     <mat-tab label="Notation" class="h-100">
                         <div class="row h-100">
-                            <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover || (!isEdit && rejectedOrApproved=='APPROVED') ||(!isEdit && rejectedOrApproved=='REJECTED')"></div>
+                            <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover || !isEdit"></div>
                             <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
                                 <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
                                     <div class="menuToggle">
@@ -146,43 +146,16 @@
                                             </mat-panel-title>                                            
                                           </mat-expansion-panel-header>
                                           <mat-panel-description>
-                                            <div class="shortcutslistdiv">
-                                                <div class="row">
-                                                    <label for="">Undo</label>
-                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">Z</span></label>
-                                                </div>
-                                                <div class="row">
-                                                    <label for="">Redo</label>
-                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">Shift</span> + <span class="bluetext">Z</span></label>
-                                                </div>
-                                                <div class="row">
-                                                    <label for="">Select All</label>
-                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">A</span></label>
-                                                </div>
-                                                <div class="row">
-                                                    <label for="">Scrolling(Vertical)</label>
-                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">Scrolling</span></label>
-                                                </div>
-                                                <div class="row">
-                                                    <label for="">Scrolling(Horizontal)</label>
-                                                    <label><span class="bluetext">Ctrl</span> + <span class="bluetext">Shift</span> + <span class="bluetext">Scrolling</span></label>
-                                                </div>
-                                                <div class="row">
-                                                    <label for="">Direct Editing</label>
-                                                    <label><span class="bluetext">E</span></label>
-                                                </div>
-                                                <div class="row">
-                                                    <label for="">Hand Tool</label>
-                                                    <label><span class="bluetext">H</span></label>
-                                                </div>
-                                                <div class="row">
-                                                    <label for="">Lasso Tool</label>
-                                                    <label><span class="bluetext">L</span></label>
-                                                </div>
-                                                <div class="row">
-                                                    <label for="">Space Tool</label>
-                                                    <label><span class="bluetext">S</span></label>
-                                                </div>
+                                            <div class="container">
+                                                <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+                                                <table>
+                                                    <tr *ngFor="let keyboardLabels of keyboardLabels">
+                                                        <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+                                                        <td>
+                                                            <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
+                                                        </td>
+                                                    </tr>
+                                                </table>
                                             </div>
                                           </mat-panel-description>                                         
                                         </mat-expansion-panel>
@@ -263,7 +236,7 @@
         </div>
     </as-split-area>
 </as-split>
-<div class="row btn_row">
+<!-- <div class="row btn_row">
 <button class="right btn btn-primary eiap-btn"  id="approvalSubmit" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" (click)="submitDiagramForApproval()">Save & Submit for Approval</button>
 <ngx-dropzone class="upload_again_btn" (change)="slideUp($event)" [multiple]=false [accept]="'.'+selectedNotationType"  *ngIf="!isShowConformance||(isShowConformance && ((reSize && isConfNavigation)||hasConformance)) && rejectedOrApproved !='PENDING'">
   <ngx-dropzone-label>
@@ -285,7 +258,7 @@
     <button (click)="zoomIn()" class="btn btn1 zoom btn-primary" id="zoom_in"><i class="fas fa-search-plus"></i></button>
     <button (click)="zoomOut()" class="btn btn1 zoom-out btn-primary" id="zoom_out"><i class="fas fa-search-minus"></i></button>
 </div>
-</div>
+</div> -->
 <div class="changesContainer" [class.hidden]="!isUploaded">
     <div class="changesTitle" (click)="toggleChanges()">List of Changes</div>
     <div id="changes" class="slide-bottom">

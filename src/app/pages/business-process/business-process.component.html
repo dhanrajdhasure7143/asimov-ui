@@ -12,18 +12,13 @@
               <div class="value" *ngIf="isHeaderShow == 'true'">
                 <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span>
                 <span class="level3">Last Modified By: Peter James</span>
-                <span>Auto Save: April-09-2021</span>
+                <span *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
+
               </div> 
           </div>
           <div class="col-md-6 new-bps-icons pl-0" *ngIf="isHeaderShow == 'true'">
             <div class="row bps-float">
-              <button class="editprimary" matTooltip="Edit" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" [disabled]="(rejectedOrApproved =='INPROGRESS' && isEditbutton )" (click)="editNotation()"><img src="../../../assets/images/BPMS/Edit-white.svg"></button>
-              <!-- <select class="dowload-images">
-                <option value="svg">SVG</option>
-                <option value="png">PNG</option>
-                <option value="jpg">JPG</option>
-                <option value="bpmn">BPMN</option>
-              </select> -->
+              <button class="editprimary" matTooltip="Edit" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" [disabled]="(isEditMode)" (click)="editNotation()"><img src="../../../assets/images/BPMS/Edit-white.svg"></button>
               <button mat-button [matMenuTriggerFor]="download" matTooltip="Download" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/download.svg"></button>
                 <mat-menu #download="matMenu">
                   <button mat-menu-item (click)="downloadNotaton('svg')">SVG</button>

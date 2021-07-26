@@ -110,7 +110,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   panelOpenState = false;
   step = 0;
   isOpenedState:number=0;
-  // isEdit:boolean=false;
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -138,7 +137,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   definationId:any;
   businessKey:any;
   selected_bpmn_list:any  
-  isEdit:boolean=false;
+  isEdit:boolean=true;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -203,22 +202,27 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           let headerValue=res
           console.log(res);
           let result = headerValue instanceof Object;
-          console.log(result);
           if(!result){
           if(headerValue == 'zoom_in'){
             this.zoomIn();
           }else if(headerValue == 'zoom_out'){
             this.zoomOut();
           }else if(headerValue == 'save_process'){
-            this.saveprocess(null)
-          }
-          else if(headerValue=='edit'){
+            this.saveprocess(null);
+            this.isEdit=false;
+          }else if(headerValue=='edit'){
             this.isEdit=true;
-          }
-          else if(headerValue == 'save&approval'){
-            this.submitDiagramForApproval()
+          }else if(headerValue == 'save&approval'){
+            this.submitDiagramForApproval();
+            this.isEdit=false;
           }else if(headerValue == 'orchestartion'){
             this.orchestrate()
+          }else if(headerValue == 'deploy'){
+            this.openDeployDialog();
+          }else if(headerValue == 'startProcess'){
+            this.openVariableDialog();
+          }else if(headerValue == 'fitNotation'){
+            this.fitNotationView();
           }
         }else if(result){
           this.slideUp(headerValue)
@@ -383,8 +387,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     else
       this.selected_approver = null;
-      let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,"isShowConformance":this.isShowConformance}
-      this.dt.bpsNotationaScreenValues(obj)
+      let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+      this.dt.bpsNotationaScreenValues(obj);
    }
 
   getAutoSavedDiagrams(){
@@ -500,6 +505,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
       }
     }
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+      this.dt.bpsNotationaScreenValues(obj)
   }
 
   setUrlParam(name, value) {
@@ -555,6 +563,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+          let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+      this.dt.bpsNotationaScreenValues(obj)
         }
         this.initModeler();
         setTimeout(()=> {
@@ -610,6 +621,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+        let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+      this.dt.bpsNotationaScreenValues(obj)
       }
     this.initModeler();
     setTimeout(()=> {
@@ -715,6 +729,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.autosaveObj=data
         this.updated_date_time = new Date();
         this.spinner.hide();
+        let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+      this.dt.bpsNotationaScreenValues(obj)
       },
       err => {
         this.spinner.hide();

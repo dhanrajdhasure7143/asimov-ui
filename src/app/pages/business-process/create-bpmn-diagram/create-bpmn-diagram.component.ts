@@ -99,6 +99,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
 
   ngOnInit(){
+    localStorage.setItem("isheader","true")
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
     this.dt.changeHints(this.hints.bpsCreateHints);
@@ -111,6 +112,39 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.setRPAData();
     this.getApproverList();
     this.getUserBpmnList();
+  }
+  ngAfterViewInit(){
+    this.dt.download_notation.subscribe(res=>{
+      this.fileType=res
+      if(this.fileType != null){
+        this.downloadBpmn(false);
+      }
+    })
+    this.dt.header_value.subscribe(res=>{
+      let headerValue=res
+      console.log(res);
+      let result = headerValue instanceof Object;
+      if(!result){
+      if(headerValue == 'zoom_in'){
+        this.zoomIn();
+      }else if(headerValue == 'zoom_out'){
+        this.zoomOut();
+      }else if(headerValue == 'save_process'){
+        this.saveprocess(null)
+      }else if(headerValue == 'save&approval'){
+        this.submitDiagramForApproval()
+      }else if(headerValue == 'orchestartion'){
+        this.orchestrate()
+      }else if(headerValue == 'deploy'){
+        this.openDeployDialog();
+      }else if(headerValue == 'startProcess'){
+        this.openVariableDialog();
+      }
+      
+    }else if(result){
+      this.slideUp(headerValue)
+    }
+    })
   }
 
   getUserBpmnList(){
