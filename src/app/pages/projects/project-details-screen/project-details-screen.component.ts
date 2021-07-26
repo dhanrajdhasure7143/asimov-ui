@@ -59,13 +59,16 @@ percentageComplete: number;
    horizontal: true
  };
  updatetaskForm: FormGroup;
+ uploadtaskFileForm: FormGroup;
  updatetaskmodalref: BsModalRef;
+ uploadtaskFilemodalref: BsModalRef;
  selectedtaskdata: any;
  currentdate: number;
  editcomment:any;
  showeditcomment:boolean=false;
  commentnumber:number;
-
+ fileUploadData: any;
+ selectedtaskfileupload: any;
 
   
   @ViewChild("sort10",{static:false}) sort10: MatSort;
@@ -112,6 +115,10 @@ percentageComplete: number;
      editcomment: ['', Validators.compose([Validators.maxLength(200)])],
       })
 
+      this.uploadtaskFileForm=this.formBuilder.group({
+        category: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+        filePath: ["", Validators.compose([Validators.required])],
+       })
 
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
@@ -339,6 +346,7 @@ percentageComplete: number;
             "comments":comments
           });
       }
+      (<HTMLInputElement>document.getElementById("addcomment")).value = '';
       }
       updatetask(){
         if(this.updatetaskForm.valid)
@@ -500,5 +508,53 @@ percentageComplete: number;
         }
 
         console.log("taskc",this.taskcomments)
+      }
+
+      onFileSelected(e){
+
+        this.fileUploadData = <File> e.target.files[0]
+        console.log(this.fileUploadData.name);
+        
+      }
+      uploadtaskfile(createmodal,data){
+        this.selectedtaskfileupload=data
+        this.uploadtaskFilemodalref=this.modalService.show(createmodal,{class:"modal-lr"})
+      }
+
+      submitUploadFileForm(){
+       
+        var fileData = new FormData();
+    
+    fileData.append("category", this.uploadtaskFileForm.get("category").value)
+     fileData.append("filePath", this.fileUploadData)
+     fileData.append("projectId", this.selectedtaskfileupload.projectId)
+     fileData.append("taskId", this.selectedtaskfileupload.id)
+
+     this.rpa.uploadProjectFile(fileData).subscribe(res => {
+      let message: any= res;
+       this.uploadtaskFilemodalref.hide();
+       //if(res.message!=undefined)
+       //{
+        this.getTaskandCommentsData();
+         Swal.fire({
+           title: 'Success',
+           text: "File Uploaded Successfully",
+           position: 'center',
+           icon: 'success',
+           showCancelButton: false,
+           confirmButtonColor: '#007bff',
+           cancelButtonColor: '#d33',
+           confirmButtonText: 'Ok'
+       }).then((result) => {
+        // this.resettask();
+         
+         this.uploadtaskFileForm.reset();
+       }) 
+         
+     //  }
+      //  else
+      //  Swal.fire("Error",res.message,"error");
+       
+     })
       }
 }
