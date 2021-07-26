@@ -6,13 +6,8 @@
     height:85px !important;
   }
   
-::ng-deep mat-card{
-  padding:0px !important;
-}
-
   .projects-header{
-    width:100%;padding:10px;
-    background-color:rgba(212, 212, 212, 0.295);
+    width:100%;
   }
   .projects-header-title{
     color:black ;
@@ -91,7 +86,7 @@ tr:nth-child(even) {
   background-color: #e8f7fd !important;
   vertical-align: middle !important;
   font-size: 14px !important;
-  padding: 8px 12px;
+  padding: 8px 10px;
   font-weight: 400;
   border-bottom: 1px solid #4a4a4a33;
 }
@@ -139,14 +134,15 @@ button.btn.btn-primary {
   font-weight: 400;
   font-size: 14px;
   text-align: left !important;
-  padding: 8px 12px;
+  padding: 8px 10px;
   border-bottom: 1px solid #4a4a4a33;
 }
 .projects-table-body td {
   /* border-bottom: 1px solid rgb(221 221 221 / 59%); */
   text-align: left !important;
-  padding: 5px 12px;
+  padding: 5px 10px;
   vertical-align: middle;
+  font-size: 13px !important;
 }
 .new-prj-details .projects-table-body td img {
   height: 30px;
@@ -171,7 +167,7 @@ mat-card#projects_details_screen {
 .new-prj-tasklist .tasks-body , .projects-table-body{
   margin-top: 8px;
 }
-.new-prj-tasklist .tasks-body tr.mat-header-row {
+.new-prj-tasklist .tasks-body tr.mat-header-row, .projects-table-body th, td{
   height: 40px;
 }
 .new-attach-btn {
@@ -185,8 +181,9 @@ mat-card#projects_details_screen {
   border-radius: 3px;
 }
 .new-prj-tasklist .tasks-body td {
-  padding: 8px 12px !important;
+  padding: 5px 10px !important;
   vertical-align: middle;
+  font-size: 13px !important
 }
 .documents .new-docdiv, .resources .new-resourcediv {
   padding: 8px 12px !important;
@@ -387,6 +384,10 @@ span.labelcont b {
       height:100%;
       background-color:#e3eaef !important;
     }
+
+ 	.projects-table-body.profile-table table {
+    margin-bottom: 12px;
+}       
 
 
 

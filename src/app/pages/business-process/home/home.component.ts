@@ -119,13 +119,13 @@ export class BpsHomeComponent implements OnInit {
   getColor(status) {
     switch (status) {
       case 'PENDING':
-        return 'orange';
+        return '#F99D1C';
       case 'REJECTED':
         return 'red';
       case 'APPROVED':
         return 'green';
       case 'INPROGRESS':
-        return 'orange';
+        return '#F99D1C';
     }
   }
 
