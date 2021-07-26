@@ -381,3 +381,9 @@ span.labelcont b {
     table tbody tr {
       height: 40px;
     } 
+
+    .project-details-main{
+      overflow: auto !important;
+      height:100%;
+      background-color:#e3eaef !important;
+    }

@@ -88,7 +88,7 @@ export class ProgramDetailsComponent implements OnInit {
 
   getprogramdetails(){
     
-    this.route.params.subscribe(data=>{
+    this.route.queryParams.subscribe(data=>{
       let program_id=data.id;
       this.get_linked_projects(program_id);
       this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
@@ -351,10 +351,8 @@ export class ProgramDetailsComponent implements OnInit {
   }
 
 
-  navigatetodetailspage(detials){
-    let encoded=Base64.encode(JSON.stringify(detials));
-    let project={id:encoded}
-    this.router.navigate(['/pages/projects/projectdetails',project])
+  navigatetodetailspage(project){
+    this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:project.id,programId:this.program_detials.id}})
   }
 
 

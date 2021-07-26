@@ -19,6 +19,8 @@ export class AddResourcesComponent implements OnInit {
   addresourcesForm:FormGroup;
   mindate: string;
   @Input('addresourcemodalref') public addresouceref: BsModalRef;
+  
+  @Input('resources') public resources:any[];
   @Output() newItemEvent = new EventEmitter<String>();
   userslist: any = [];
   projectdetails: Object;
@@ -59,7 +61,13 @@ export class AddResourcesComponent implements OnInit {
   }
 
 
+  getresource(userId)
+  {
+   return (this.resources.find(data=>data==userId) ==undefined)?false:true;
+  }
   save() {
-    this.newItemEvent.emit(JSON.stringify(this.selectedresources));
+    let resources=this.addresourcesForm.get('resources').value
+    console.log(resources)
+    this.newItemEvent.emit(JSON.stringify(resources));
   }
 }

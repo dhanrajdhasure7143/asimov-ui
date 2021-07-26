@@ -1702,3 +1702,33 @@ span.projects-back-button {
   z-index: 999;
   position: relative;
 }
+
+
+.d-flex{
+  display:flex;
+}
+
+
+.py-5{
+  padding:5px;
+}
+
+
+.text-strong{
+  font-weight:600;
+}
+
+.w-100{
+  width:100%;
+}
+
+.small-input{
+  border-right:none;
+  border-left:none;
+  border-top:none;
+  border-bottom:1px solid black;
+  font-size: 12px;
+  width:150px;
+  height:22px !important;
+  padding:0px !important;
+}

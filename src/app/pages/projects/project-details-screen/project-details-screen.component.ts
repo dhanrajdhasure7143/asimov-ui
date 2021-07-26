@@ -69,6 +69,7 @@ percentageComplete: number;
  commentnumber:number;
  fileUploadData: any;
  selectedtaskfileupload: any;
+ editdata:Boolean=false;
 
   
   @ViewChild("sort10",{static:false}) sort10: MatSort;
@@ -91,6 +92,7 @@ percentageComplete: number;
   taskcomments_list:any[]=[];
   taskhistory: any=[];
   filecategories: any;
+  programId:any;
 
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -140,7 +142,6 @@ percentageComplete: number;
        
       
         this.getallusers();
-        this.getTaskandCommentsData();
   }
 
   onTabChanged(event)
@@ -198,13 +199,20 @@ percentageComplete: number;
   }
 
   projectdetails(){
-
-    this.route.params.subscribe(data=>{this.projectData=data
-
-      this.projectDetails=JSON.parse(Base64.decode(this.projectData.id));
-      this.project_id=this.projectDetails.id
-      console.log("project details",this.projectDetails)
-        });
+    this.spinner.show()
+    this.route.queryParams.subscribe(data=>{
+        let paramsdata:any=data
+        console.log(paramsdata)
+        paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
+        this.editdata=false;
+        this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res =>{
+          this.spinner.hide();
+          this.projectDetails=res
+          this.project_id=this.projectDetails.id
+          this.getTaskandCommentsData();
+            
+        })
+    });
   }
 
 
@@ -433,7 +441,6 @@ percentageComplete: number;
      }
      this.spinner.show();
      this.addresourcemodalref.hide();
-     console.log("-------------",item_data);
      this.rpa.addresourcebyid(item_data).subscribe(data=>{
         let response:any=data;
         if(response.errorMessage==undefined)
@@ -463,20 +470,20 @@ percentageComplete: number;
     // })
   }
 
-  projectDetailsbyId(id){
+  // projectDetailsbyId(id){
 
-    this.rpa.getProjectDetailsById(id).subscribe( res =>{
-    this.project=res;
-    this.navigatetodetailspage(this.project)
-    })
-  }
+  //   this.rpa.getProjectDetailsById(id).subscribe( res =>{
+  //   this.project=res;
+  //   this.navigatetodetailspage(this.project)
+  //   })
+  // }
 
 
-  navigatetodetailspage(detials){
-    let encoded=Base64.encode(JSON.stringify(detials));
-    let project={id:encoded}
-    this.router.navigate(['/pages/projects/projectdetails',project])
-  }
+  // navigatetodetailspage(detials){
+  //   let encoded=Base64.encode(JSON.stringify(detials));
+  //   let project={id:encoded}
+  //   this.router.navigate(['/pages/projects/projectdetails',project])
+  // }
 
 
 
@@ -564,4 +571,20 @@ percentageComplete: number;
        
      })
       }
+      updateprojectDetails()
+      {
+        this.spinner.show()
+        this.projectDetails["type"]="Project";
+        this.rpa.update_project(this.projectDetails).subscribe(res=>{
+          this.spinner.hide()
+          let response:any=res;
+          if(response.errorMessage == undefined)
+            Swal.fire("Success",response.message,"success")
+          else
+            Swal.fire("Error",response.errorMessage,"error");
+          this.projectdetails()
+          this.editdata=false;
+        });
+      }
+
 }

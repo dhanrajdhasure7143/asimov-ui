@@ -199,3 +199,9 @@ input[type=range]::-moz-range-thumb {
   cursor: pointer;
   border:1px solid gray;
 }
+
+
+.small-input{
+  height:10px;
+  width:100px;
+}

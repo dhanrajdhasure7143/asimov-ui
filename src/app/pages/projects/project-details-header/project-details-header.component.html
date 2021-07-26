@@ -56,11 +56,11 @@
           <!-- </div> -->
           <div class="project-data">
            
-            <span (click)="editdata.projectName=true"  (change)="projectdata.projectName=$event.target.value" [attr.contenteditable]="editdata.projectName" [class]="'h3  clickable '+(editdata.projectName==true?'focus-data':'')">{{projectdata.projectName |uppercase}}</span>
-            <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span>
+            <span   (change)="projectdata.projectName=$event.target.value" [attr.contenteditable]="editdata" class="h3  clickable '+(editdata==true?'focus-data':'')">{{projectdata.projectName |uppercase}}</span>
+            <!-- <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span> -->
             <br>
-            <span (dblclick)="editdata.description=true" (change)="projectdata.description=$event.target.value" [attr.contenteditable]="editdata.description" [class]=" 'clickable '+(editdata.description==true?'focus-data':'')" >{{projectdata.description}}</span>
-            <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span>
+            <span  (change)="projectdata.description=$event.target.value" [attr.contenteditable]="editdata" [class]=" 'clickable '+(editdata.description==true?'focus-data':'')" >{{projectdata.description}}</span>
+            <!-- <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span> -->
           </div>
       </div>
       <div class="col-md-4 pl-0">
@@ -103,9 +103,17 @@
                 </div>
                 <div class="status-data">
                   <span class="labeltit">Initiative</span>
-                  <span class="tab-text" *ngIf="projectdata.initiatives==null" >-</span>
-                  <span (dblclick)="editdata.initiatives=true" (change)="projectdata.initiatives=$event.target.value" [attr.contenteditable]="editdata.initiatives"  [class]="' labelcont clickable '+(editdata.initiatives==true?'focus-data':'')" >{{projectdata.initiatives}}</span>
-                  <span class="clickable text-success " *ngIf="editdata.initiatives==true" (click)="editdata.initiatives=false">&nbsp;<i class="fa fa-check"></i></span>
+                  <span class="tab-text" *ngIf="projectdata.initiatives==undefined ||  projectdata.initiatives==null" >-</span>
+                  <span   *ngIf="projectdata.initiatives!=undefined ||  projectdata.initiatives!=null"   >{{projectdata.initiatives}}</span>
+                  <!-- <span *ngIf="editdata==true">
+                    <select (change)="projectdata.initiatives=$event.target.value">
+                      <option>Select Initiatives</option>
+                      <option>Process Improvement</option>
+                      <option>Business Improvement</option>
+                    </select>
+
+                  </span> -->
+                  <!-- <span class="clickable text-success " *ngIf="editdata.initiatives==true" (click)="editdata.initiatives=false">&nbsp;<i class="fa fa-check"></i></span> -->
                 </div>
               </div>
           </td>
@@ -117,8 +125,18 @@
                 </div>
                 <div class="status-data">
                   <span class="labeltit">Value Chain</span>
-                  <span class="tab-text" *ngIf="projectdata.mapchainvalue==null" >-</span>
-                  <span class="tab-text labelcont" >{{projectdata.mapValueChain}}</span>
+                  <span  class="tab-text" *ngIf="projectdata.mapValueChain==undefined ||  projectdata.mapValueChain==null" >-</span>
+                  <span  *ngIf="projectdata.mapValueChain!=undefined ||  projectdata.mapValueChain!=null" class="tab-text labelcont clickable" >{{projectdata.mapValueChain}}</span>
+                  
+                  <!-- <span *ngIf="editdata==true">
+                    <select (change)="projectdata.mapValueChain=$event.target.value" [value]="projectdata.mapValueChain">
+                      <option>Select Value Chain</option>
+                      <option>Invoice Managment</option>
+                      <option>Acme Managment</option>
+                      <option>E-Commerce</option>
+                    </select>
+                  </span> -->
+                  <!-- <span *ngIf="editdata==true"  class="text-success clickable"><i class="fa fa-check"></i></span> -->
                 </div>
               </div>
           </td>
@@ -128,10 +146,17 @@
                 <div class="body-img">
                   <img src="..\assets\images\Projects\bot.svg" alt="" >
                 </div>
-                <div class="status-data">
+                <div  class="status-data">
                   <span class="labeltit">Process</span>
-                  <span class="tab-text" *ngIf="projectdata.process==null" >-</span>
-                  <span class="tab-text labelcont" >{{projectdata.process | processName : processes}}</span>
+                  <span class="tab-text" *ngIf="projectdata.process==undefined ||  projectdata.process==null"  >-</span>
+                  <span *ngIf="projectdata.process!=undefined ||  projectdata.process!=null"   class="tab-text clickable labelcont" >{{projectdata.process | processName : processes}}</span>
+                  <!-- <span *ngIf="editdata==true" class="tab-text labelcont clickable" >
+                    <select (change)="projectdata.process=$event.target.value" [value]="projectdata.process">
+                      <option value="">Select Process</option>
+                      <option *ngFor="let process of processes" [value]="process.processId">{{process.processName}}</option>
+                    </select>
+                  </span>
+                  <span *ngIf="editdata.process==true" class="text-sucess clickable" (click)="editdata.process=false"><i class="fa fa-check"></i></span> -->
                 </div>
               </div>
           </td>
@@ -179,7 +204,7 @@
                 <div class="status-data">
                   <span class="labeltit" >Resources</span>
                   <span class="tab-text" *ngIf="projectdata.resources==null" >-</span>
-                  <span class="tab-text labelcont" >{{projectdata.resources| userPipe : users_list}}</span>
+                  <span class="tab-text labelcont" >{{projectdata.resources.length}}</span>
                 </div>
               </div>
             </div>
@@ -209,7 +234,7 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="status-data">
-                  <span class="labeltit">Project Health</span>
+                  <span  class="labeltit">Project Health</span>
                   <span class="tab-text labelcont" >Good</span>
                 </div>
             </div>
