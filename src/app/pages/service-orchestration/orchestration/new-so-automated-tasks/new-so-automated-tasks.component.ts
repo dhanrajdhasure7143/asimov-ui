@@ -51,6 +51,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   public userRole:any = [];
   public isButtonVisible = false;
   public bot_list:any=[];
+  public Active_bots_list:any=[];
   public humans_list:any=[];
   public process_names:any=[];
   public selected_process_names:any=[];
@@ -136,7 +137,9 @@ export class NewSoAutomatedTasksComponent implements OnInit {
       this.isButtonVisible = false;
     }
     this.getenvironments();
-    this.getCategoryList(this.processId);
+    setTimeout(()=>{
+      this.getCategoryList(this.processId);
+    },400)
     this.getallbots();
     this.gethumanslist();
     this.getuipathbots();
@@ -476,6 +479,7 @@ resetsla(){
     {
       this.bot_list=botlist;
     });
+    
   }
 
 
@@ -486,25 +490,23 @@ resetsla(){
     this.rest.getautomatedtasks(process).subscribe(automatedtasks=>{
       response=automatedtasks;
 
+      
       if(response.automationTasks != undefined)
       {
-        this.responsedata=response.automationTasks.map(item=>{
-            if(item.sourceType=="UiPath")
-              item["taskOwner"]="Karthik Peddinti";
-            else if(item.sourceType=="EPSoft")
-            {
-
-              this.rest.getAllActiveBots().subscribe(botlist =>
-                {
-                  this.bot_list=botlist;
-                  item["taskOwner"]=this.bot_list.find(bot=>bot.botId==item.botId).createdBy;
-                });
-            }
-            else{
-              item["taskOwner"]="---"
-            }
-            return item;
+        this.rest.getAllActiveBots().subscribe(bots=>{
+          this.Active_bots_list=bots;
+          this.responsedata=response.automationTasks.map(item=>{
+              if(item.sourceType=="UiPath")
+                item["taskOwner"]="Karthik Peddinti";
+              else if(item.sourceType=="EPSoft")
+                item["taskOwner"]=this.Active_bots_list.find(bot=>bot.botId==item.botId)==undefined?"---":this.Active_bots_list.find(bot=>bot.botId==item.botId).createdBy;
+              else{
+                item["taskOwner"]="---"
+              }
+              return item;
+          });
         });
+        
         this.automatedtask= response.automationTasks;
         this.dataSource2= new MatTableDataSource(response.automationTasks);
         this.dataSource2.sort=this.sort10;
@@ -519,6 +521,7 @@ resetsla(){
         }
         this.update_task_status();
       }
+      
       this.spinner.hide();
     },(err)=>{
       this.spinner.hide();
