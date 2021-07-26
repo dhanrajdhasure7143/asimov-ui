@@ -1,7 +1,7 @@
 <div style="width:100%;overflow-x: auto;height:calc( 100vh - 160px)">
     <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
         <div class="projects-header maincreat">
-          <span class="projects-back-button" routerLink="/pages/projects/projectdetails">
+          <span class="projects-back-button" [routerLink]="['/pages/projects/projectdetails']" [queryParams]="{id:projectid}">
             <i class="fa fa-angle-left" aria-hidden="true"></i>
           </span>
           <span class="projects-header-title">
@@ -114,7 +114,14 @@
                     <td>{{element.category}}</td>
                     <td>{{getUserName(element.requestFrom)}}</td>
                     <td>{{getUserName(element.requestTo)}}</td>
-                    <td>{{element.comments}}</td>
+                    <td>
+                      <span *ngIf="element.comments==undefined || element.comments=='' || elements.comments==null">
+                          -
+                      </span > 
+                      <span *ngIf="element.comments!=undefined && element.comments!='' && elements.comments!=null">
+                          {{element.comments}}
+                      </span> 
+                    </td>
                     <td>{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</td>
                     
                     <td>

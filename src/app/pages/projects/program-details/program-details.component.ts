@@ -41,11 +41,7 @@ export class ProgramDetailsComponent implements OnInit {
     this.mindate= moment().format("YYYY-MM-DD");
     this.getallusers();
     this.getprocessnames();
-    setTimeout(()=>{
-      this.getpiechart();
-      this.get_project_duration_chart();
-      this.getlinechart();
-    },500)
+  
     this.insertForm2=this.formBuilder.group({
       projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -71,6 +67,11 @@ export class ProgramDetailsComponent implements OnInit {
       this.spinner.hide()
       this.projects_and_programs_list=data;
       this.getprogramdetails();
+      setTimeout(()=>{
+        this.getpiechart();
+        this.get_project_duration_chart();
+        this.getlinechart();
+      },500)
     })
   }
 
