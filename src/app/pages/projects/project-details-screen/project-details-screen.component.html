@@ -555,9 +555,9 @@
                 <div class="col-md-6">
                     <label for="category">File Category<span style="color:red">*</span></label>
                     <select class="form-control" style="border:1px solid lightgray" formControlName="category">
-                        <option value="">Select Category</option>
-                        <option value="Analysis">Analysis</option>
-                        <option value="Design">Design</option>
+                      <option [value]="null" disabled hidden>Select File Category</option>
+                      <option value="" [selected]="true">Select File Category</option>
+                      <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
                         
                     </select>
                     <span

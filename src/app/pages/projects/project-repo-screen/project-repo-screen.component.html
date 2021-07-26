@@ -14,8 +14,8 @@
               <span class="ml-auto prj-lstscr-btn">
                 <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="uploadFile(uploadFilemodal)" type="button">Upload File <i class="fa fa-upload"></i></button>
               </span> 
-              <span class="projects-menu-item"><i class="fa fa-download"></i></span>
             <span class="projects-menu-item"><i class="fa fa-trash"></i></span>
+            <span class="projects-menu-item"><i class="fa fa-download"></i></span>
             <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
           </span>
         </div>
@@ -28,7 +28,7 @@
                   <tr class="separated">
                     <th>Category</th>
                     <th>File Name</th>
-                    <th>Uploaded</th>
+                    <th>Uploaded Date</th>
                     <th>Uploaded by</th>
                     <th>File Size</th>
                     <th>Comments</th>
@@ -37,9 +37,9 @@
                   <tr *ngFor="let element of uploadedFiledata">
                     <td>{{element.category}}</td>
                     <td>{{element.fileName}}</td>
-                    <td>{{element.uploadedDate|date:'MMM dd, y, HH:mm:ss'}}</td>
+                    <td>{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</td>
                     <td>{{getUserName(element.uploadedBy)}}</td>
-                    <td>{{element.fileSize}}</td>
+                    <td>{{element.fileSize | fileSizePipe}}</td>
                     <td>{{element.comments}}</td>
                     <!-- <td>{{element.actions}}</td> -->
                     <td>
@@ -92,14 +92,13 @@
                 </span>
                 <br>
                 <span class="projects-header-title">
-                  Pending Requests
+                 <b>Pending Requests</b>
                 </span>
               
               </div>
               <mat-tab-group mat-align-tabs="Start">
-                <mat-tab label="All"></mat-tab>
-                <mat-tab label="My Requests"></mat-tab>
-              </mat-tab-group>
+                <mat-tab label="All">
+                
               <div class="projects-table-body">
                 <table>
                   <tr class="separated">
@@ -116,7 +115,7 @@
                     <td>{{getUserName(element.requestFrom)}}</td>
                     <td>{{getUserName(element.requestTo)}}</td>
                     <td>{{element.comments}}</td>
-                    <td>{{element.uploadedDate|date:'MMM dd, y, HH:mm:ss'}}</td>
+                    <td>{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</td>
                     
                     <td>
                       
@@ -127,63 +126,62 @@
                           <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
                           <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
                       </span>
+                      <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
+
                     </td>
                     </tr>
-                    <!-- <tr >
-                      <td>Analysis</td>
-                     
-                      <td>James</td>
-                      <td>Peter</td>
-                      <td>now use LoremIpsum as their default moal text</td>
-                      <td>12-Jun-2021</td>
-                      <td>
-                        <span class="remove-action">×</span>
-                    </td>
-                      </tr>
-                      <tr >
-                        <td>Design</td>
-                        <td>Peter</td>
-                        <td>James</td>
-                        <td>now use LoremIpsum as their default moal text</td>
-                        <td>16-Jan-2021</td>
-                        
-                        <td>
-                          
-                        </td>
-                        </tr>
-                        <tr >
-                            <td>Analysis</td>
-                     
-                            <td>James</td>
-                            <td>Peter</td>
-                            <td>now use LoremIpsum as their default moal text</td>
-                            <td>12-Jun-2021</td>
-                            <td>
-                              
-                          </td>
-                            </tr> -->
+                    
                 </table>
                 </div>
               <br>
-            </mat-card>
-          </div>
+            <!-- </mat-card> -->
+          <!-- </div> -->
+        </mat-tab>
+          <mat-tab label="My Requests">
         <div class="projects-table-body" style="padding:10px;">
-            
+            <table>
+                  <tr class="separated">
+                    <th>File Category</th>
+                    <th>Request From</th>
+                    <th>Request To</th>
+                    <th>Description</th>
+                    <th>Requested Date</th>
+                    <th>Actions</th>
+                    
+                  </tr>
+                  <tr *ngFor="let element of filterdArray">
+                    <td>{{element.category}}</td>
+                    <td>{{getUserName(element.requestFrom)}}</td>
+                    <td>{{getUserName(element.requestTo)}}</td>
+                    <td>{{element.comments}}</td>
+                    <td>{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</td>
+                    
+                    <td>
+                      
+                        <span class="remove-action">
+                          <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" type="button"><i class="fas fa-times"></i></button>
+                        </span>
+                        <span class="upload-action" *ngIf="loggedUser == element.requestTo">
+                          <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
+                          <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
+                      </span>
+                      <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
+
+                    </td>
+                    </tr>
+                    
+                </table>
+              
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+              <br>
+            </mat-card>
+
           </div>
         
-      </mat-card>
-    
-      
-    
-   
-    
-    
-      <br>
-    
- 
-   
-    
-    </div>
+        <br>
+  
     
 <ng-template class="modal-lr" #createRequestmodal>
   <app-request-file [createRequestmodalref]="createRequestmodalref" [projectid]="projectid" (onrequest)="onrequestFileData($event)"></app-request-file>
@@ -242,10 +240,9 @@
               <div class="col-md-6">
                   <label for="fileCategory">File Category<span style="color:red">*</span></label>
                   <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory">
-                      <option value="">Select Category</option>
-                      <option value="Analysis">Analysis</option>
-                      <option value="Design">Design</option>
-                      
+                    <option  [value]="null" disabled hidden>Select Category</option>
+                    <option value="" [selected]="true">Select Category</option>
+                    <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
                   </select>
                   <span
                       *ngIf="uploadFileForm.get('fileCategory').invalid && uploadFileForm.get('fileCategory').touched"
@@ -269,7 +266,7 @@
 
                 
                 <span *ngIf="uploadFileForm.get('uploadFile').invalid && uploadFileForm.get('uploadFile').touched"
-                    style="color:red" class="fa fa-info-circle errspan"></span>
+                    style="color:red" class="fa fa-info-circle errspan">File Required*</span>
 
             </div>
           

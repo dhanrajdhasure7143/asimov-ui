@@ -23,6 +23,7 @@ export class RequestFileComponent implements OnInit {
   projectdetails: Object;
   onupdate: any;
   @Output() onrequest=new EventEmitter<boolean>();
+  filecategories: any;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router,) { }
 
@@ -32,12 +33,12 @@ export class RequestFileComponent implements OnInit {
     this.requestFileForm=this.formBuilder.group({
       fileCategory: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       
-      resources: ["", Validators.compose([Validators.maxLength(50)])],
+      resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
       
       description: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
       })
 
-
+    this.getFileCategories();
       
 
 
@@ -118,13 +119,18 @@ export class RequestFileComponent implements OnInit {
     })
   }
   
-  // resettask(){
-  //   this.requestFileForm.reset();
-  //   this.requestFileForm.get("taskCategory").setValue("");
+   resettask(){
+    this.requestFileForm.reset();
+    this.requestFileForm.get("taskCategory").setValue("");
   
-  // this.requestFileForm.get("resources").setValue("");
+    this.requestFileForm.get("resources").setValue("");
   
-  // }
-  // }
+   }
+   getFileCategories(){
+    this.api.getFileCategories().subscribe(data =>{
+      this.filecategories=data;
+  })
+  }
+   }
 
-}
+
