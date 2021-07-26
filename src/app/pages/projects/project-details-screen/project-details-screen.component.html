@@ -216,13 +216,13 @@
                 <td>
                   <span *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
                   <span  class="letter-image" *ngIf="user.userId.profilePic==null">
-                    <span class="letter">{{user.userId.firstName | slice:0:1}}{{user.userId.lastName | slice:0:1}}</span>
+                    <span class="letter">{{user.userId.firstName|uppercase| slice:0:1}}{{user.userId.lastName| uppercase|slice:0:1}}</span>
                   </span>
                 </td>
                 <td >{{user.userId.firstName+" "+ user.userId.lastName}}</td>
                 <td >{{user.roleID.displayName}}</td>
                 <td >{{user.userId.userId}}</td>
-                <td >{{user.userId.created_at | date}}</td>
+                <td >{{user.userId.created_at | date:'MMM d, y, HH:mm:ss'}}</td>
               </tr>
 
             </tbody>

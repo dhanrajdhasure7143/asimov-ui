@@ -38,7 +38,7 @@
 
   .projects-menu-item{
     padding:5px;
-    font-size:22px;
+    font-size:15px;
     color:#4AB0F5;
     cursor: pointer;
   }
@@ -147,12 +147,24 @@ tr:nth-child(even) {
   background-color: #d7eff6;
   color: #00a0e3;
 }
+
+.maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
+  background-color: #fff !important;
+  border: 1px solid #00a0e3 !important;
+  color: #00a0e3 !important;
+}
+
+.maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover, .modelprfooter button.btn.btn-primary.prj-form-btn-hover:hover {
+  background-color: #001c47 !important;
+  color: #fff !important;
+  border-color: #001c47 !important;
+}
 .projects-table-body td {
   border-bottom: 1px solid rgb(221 221 221 / 59%);
 }
 .remove-action{
     color: red;
-    font-size: 20px;
+    font-size: 15px;
 }
 .serve1{
     margin-top: -6px;

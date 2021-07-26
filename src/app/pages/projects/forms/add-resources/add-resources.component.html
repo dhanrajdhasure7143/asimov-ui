@@ -9,7 +9,7 @@
         <form [formGroup]="addresourcesForm">
             <div class="row">
                 <div class="form-fileds col-md-12 addrespopup" *ngIf="userslist.length!=0">
-                        <label for="resources"class="modal-label">Select Resources</label>
+                        <label for="resources"class="modal-label">Resources</label>
                         <!-- <select formControlName="resources" class="form-control data"style="width:100%;">
                             <option value="">Select Resources</option>
                             <option *ngFor="let user of userslist" [value]="user.userId.id">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
@@ -17,7 +17,8 @@
     
                          <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
                                  [(ngModel)]="selectedresources"  required>
-                                <ng-option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
+                                 <ng-option value="">Select Resources</ng-option>
+                                <ng-option *ngFor="let user of userslist" [value]="user.userId.userId" >{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
                             </ng-select> 
     
                         <!-- <span *ngIf="addresourcesForm.get('resources').invalid && addresourcesForm.get('resources').touched"

@@ -30,7 +30,7 @@ export class AddResourcesComponent implements OnInit {
 
     this.addresourcesForm=this.formBuilder.group({
       
-      resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+      resources: [null, Validators.compose([Validators.required, Validators.maxLength(50)])],
       
       })
 

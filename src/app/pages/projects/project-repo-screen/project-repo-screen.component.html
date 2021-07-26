@@ -37,7 +37,7 @@
                   <tr *ngFor="let element of uploadedFiledata">
                     <td>{{element.category}}</td>
                     <td>{{element.fileName}}</td>
-                    <td>{{element.uploadedDate}}</td>
+                    <td>{{element.uploadedDate|date:'MMM dd, y, HH:mm:ss'}}</td>
                     <td>{{getUserName(element.uploadedBy)}}</td>
                     <td>{{element.fileSize}}</td>
                     <td>{{element.comments}}</td>
@@ -116,7 +116,7 @@
                     <td>{{getUserName(element.requestFrom)}}</td>
                     <td>{{getUserName(element.requestTo)}}</td>
                     <td>{{element.comments}}</td>
-                    <td>{{element.uploadedDate}}</td>
+                    <td>{{element.uploadedDate|date:'MMM dd, y, HH:mm:ss'}}</td>
                     
                     <td>
                       
