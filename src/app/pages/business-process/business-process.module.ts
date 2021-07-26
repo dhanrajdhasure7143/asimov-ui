@@ -19,6 +19,8 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule, MatTooltipModule,MatDialogModule, MatTabsModule} from '@angular/material';
 import {MatMenuModule} from '@angular/material/menu';
+import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
+import {MatPaginatorIntl} from '@angular/material';
 
 import {MatPaginatorModule} from '@angular/material/paginator';
 import{FilterPipe} from './custom_filter.pipe';
@@ -63,7 +65,11 @@ import 'highlightjs-line-numbers.js';
     //       xml: () => import('highlight.js/lib/languages/xml')}
     //   }
     // },
-    BpsHints
+    BpsHints, 
+    {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }
   ]
 })
 export class BusinessProcessModule { }
