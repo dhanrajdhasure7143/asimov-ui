@@ -1,51 +1,54 @@
 ::ng-deep #projects_list_screen .mat-tab-label {
-    height:80px !important;
-  }
-  
-::ng-deep mat-card{
-  padding:0px !important;
+  height: 80px !important;
 }
 
-  .projects-header{
-    width:100%;padding:10px;
-    background-color:rgba(212, 212, 212, 0.295);
-  }
- 
-  .projects-header-title{
-    color:#001c47 ;
-    font-size:16px;
-    padding:5px;
-    padding-left:10px;
-  }
+::ng-deep mat-card {
+  padding: 0px !important;
+}
+
+.projects-header {
+  width: 100%;
+  padding: 10px;
+  background-color: rgba(212, 212, 212, 0.295);
+}
+
+.projects-header-title {
+  color: #001c47;
+  font-size: 16px;
+  padding: 5px;
+  padding-left: 10px;
+}
 
 
-  .projects-menu-item{
-    padding:5px;
-    font-size:22px;
-    color:#00a0e3;
-    cursor: pointer;
-  }
-  .status-tabs{
-    display: flex;
-    padding: 0px;
-    
-  }
+.projects-menu-item {
+  padding: 5px;
+  font-size: 22px;
+  color: #00a0e3;
+  cursor: pointer;
+}
 
-  .tab-number{
-    /* font-size: 30px !important;
+.status-tabs {
+  display: flex;
+  padding: 0px;
+
+}
+
+.tab-number {
+  /* font-size: 30px !important;
     font-weight: 300; */
-    font-size: 36px;
-    font-weight: 300;
-    line-height: 32px;
-  }
-  
+  font-size: 36px;
+  font-weight: 300;
+  line-height: 32px;
+}
 
-  .status-img > img{
-    /* height:40px !important; */
-    height: 48px !important;
-  }
-  .newstatu .status-img img {
-   /*  position: relative;
+
+.status-img>img {
+  /* height:40px !important; */
+  height: 40px !important;
+}
+
+.newstatu .status-img img {
+  /*  position: relative;
     top: 50%;
     transform: translateY(-50%);
     padding: 0px !important;*/
@@ -54,59 +57,62 @@
   align-items: center;
   /* margin-right: 15px; */
 }
+
 .newstatu .status-data {
   text-align: left;
   /* padding-left: 3px; */
 }
-  .status-data{
-    vertical-align: middle;
-    /* padding-top:15px;
+
+.status-data {
+  vertical-align: middle;
+  /* padding-top:15px;
     padding-left:5px;
     padding-bottom:15px; */
-    color:black !important;
-  }
+  color: black !important;
+}
 
 
-  .projects-table-body{
-    padding: 0px 12px;
-  }
+.projects-table-body {
+  padding: 0px 12px;
+}
 
-  ::ng-deep .mat-tab-label.mat-tab-label-active {
-    
-    opacity: 1;
-  }
-  ::ng-deep .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {
-    flex-basis: 0;
-    flex-grow: 1;
-    opacity: 1;
-    /* font-family: Roboto,"Helvetica Neue",sans-serif; */
-    font-size: 12px;
-    font-weight: 400;
-  }
-.mat-card-content>:first-child, .mat-card>:first-child {
-    margin-top: 0;
-    line-height: 16px;
+::ng-deep .mat-tab-label.mat-tab-label-active {
+
+  opacity: 1;
 }
-::ng-deep .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
-  background-color:rgb(0, 161, 228) !important;
+
+::ng-deep .mat-tab-group[mat-stretch-tabs]>.mat-tab-header .mat-tab-label {
+  flex-basis: 0;
+  flex-grow: 1;
+  opacity: 1;
+  /* font-family: Roboto,"Helvetica Neue",sans-serif; */
+  font-size: 12px;
+  font-weight: 400;
 }
-.projects-header.maincreat {
-  background-color: #f8f8f8;
-  padding: 12px;
-  border-bottom: 1px solid rgb(221 221 221 / 40%);
-  z-index: 999;
-  position: relative;
+
+.mat-card-content>:first-child,
+.mat-card>:first-child {
+  margin-top: 0;
+  line-height: 16px;
 }
+
+::ng-deep .mat-tab-group.mat-primary .mat-ink-bar,
+.mat-tab-nav-bar.mat-primary .mat-ink-bar {
+  background-color: rgb(0, 161, 228) !important;
+}
+
 
 .projects-header.maincreat i {
   font-size: 16px;
 }
+
 .projects-header.maincreat span.projects-header-title {
   padding-left: 0px;
   font-size: 16px;
 }
+
 .projects-header.maincreat span.projects-header-title span.prmaincolo {
-  font-weight: 500;
+  font-weight: 400;
   margin-right: 6px;
 }
 
@@ -123,7 +129,7 @@ span.projects-menu-item.vreatbu {
   top: -5px;
 }
 
-.projects-header.nrema{
+.projects-header.nrema {
   padding: 15px ​12px !important;
 }
 
@@ -138,7 +144,7 @@ span.tab-text {
 .projects-header.maincreat.nrema {
   display: flex;
   align-items: center;
-  padding: 12px 10px !important;
+  padding: 9px 10px !important;
 }
 
 .prj-lstscr-btn button {
@@ -146,9 +152,10 @@ span.tab-text {
   border: none;
   margin-right: 0px !important;
 }
+
 .prj-lstscr-btn button:hover {
   background-color: #001c47 !important;
-    color: #fff;
-    font-weight: 400 !important;
-    border: none;
+  color: #fff;
+  font-weight: 400 !important;
+  border: none;
 }

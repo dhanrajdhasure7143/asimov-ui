@@ -119,13 +119,6 @@ tr:nth-child(even) {
   font-size: 15px !important;
 }
 
-.projects-header.maincreat {
-  background-color: #f8f8f8;
-  padding: 12px;
-  border-bottom: 1px solid rgb(221 221 221 / 40%);
-  z-index: 999;
-  position: relative;
-}
 /* .projects-header.maincreat span.projects-back-button {
   border: medium none;
   padding-right: 10px;
@@ -170,4 +163,45 @@ tr:nth-child(even) {
   height: 60%;
   width: 100%;
   overflow: hidden;
+}
+::ng-deep .modal-up .modal-content {
+  margin-top: 0px !important;
+  height: 60%;
+  width: 100%;
+  overflow: hidden;
+}
+.upload-action{
+  color:#4AB0F5;
+  font-size: 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  
+}
+.align1{
+  margin-top: 15px;
+}
+.inputfile + label {
+  cursor: pointer; /* "hand" cursor */
+}
+.inputfile + label {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #00a0e3;
+  /* background-color: black; */
+  display: inline-block;
+}
+.inputfile {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+  color: #00a0e3;
+  fill: #00a0e3;
+  /* background-color: #00a0e3; */
 }
