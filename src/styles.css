@@ -1761,9 +1761,10 @@ span.projects-back-button {
 }
 
 .group-header .group-label {
-  font-size: 15px !important;
+  font-size: 12px !important;
   font-weight: 400 !important;
   color: #00a0e3;
+  text-transform: uppercase;;
 }
 
 .bpp-properties-group > .bpp-properties-entry label {
@@ -1783,21 +1784,21 @@ span.projects-back-button {
 }
 
 .bpp-properties-group .group-header {
-  padding: 5px 10px;
-  background: #f8f8f8;
-  border-bottom: 1px solid #dddddd;
+  padding: 0px;
+  /* background: #f8f8f8;
+  border-bottom: 1px solid #dddddd; */
 }
 
 .bpp-properties-group {
-  border-radius: 4px;
+  /* border-radius: 4px; */
   overflow: hidden;
   margin-bottom: 10px;
-  border: 1px solid #dddddd !important;
+  /* border: 1px solid #dddddd !important; */
   padding: 0px !important;
 }
 
 .bpp-properties-entry {
-  padding: 5px 10px !important;
+  padding: 2px 0px !important;
 }
 
 .bpp-properties-panel input, .bpp-properties-panel select, .bpp-properties-panel textarea, .bpp-properties-panel [contenteditable] {
@@ -1805,8 +1806,6 @@ span.projects-back-button {
   padding: 6px 20px 6px 10px !important;
   border-radius: 4px;
 }
-
-input#camunda-id {}
 
 .bpp-properties-group > .group-toggle {
   width: 0px;
@@ -1818,6 +1817,7 @@ input#camunda-id {}
 
 .bpp-properties-group:last-child {
   padding-bottom: 0px !important;
+  border: medium none;
 }
 
 .mat-expansion-panel-body {
