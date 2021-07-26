@@ -205,7 +205,7 @@ div[class^='diagram_container'] .djs-palette {
   /* width: 48px !important; */
   width: 60px !important;
   height: 100%;
-  margin-left: 5px !important;
+  /* margin-left: 5px !important; */
 }
 
 .djs-palette .entry,
@@ -349,7 +349,7 @@ button:disabled {
 }
 
 .bg-orange {
-  background-color: orange;
+  background-color: #f99d1c;
 }
 
 .invisible {
@@ -1373,6 +1373,10 @@ img.testplus {
   height: 14px;
   margin-right: 5px;
 }
+img.testplus1 {
+  width: 16px;
+  height: 16px;
+}
 
 .newinntalx a img {
   width: 16px;
@@ -1738,17 +1742,20 @@ span.projects-back-button {
   left: 15px !important;
   position: absolute;
 }
-.mat-paginator-range-label {
+/* .mat-paginator-range-label {
   margin: 0 32px 0 12px !important;
   position: absolute;
   left: 185px !important;
   bottom: 20px;
-}
+} */
 .mat-paginator-container {
-  min-height: 65px !important;
+  min-height: 25px !important;
+  padding: 0px !important;
 }
-
-
+.mat-paginator {
+  border-top: 1px solid #cccccc;
+  min-height: 25px;
+}
 
 /* bpmn canvas properties panel */
 
@@ -1874,4 +1881,7 @@ button.action-button.clear {
 
 .bpp-properties-entry {
   margin-bottom: 0px !important;
+}
+.bps-labcls span.mat-form-field-label-wrapper label {
+  display: inline-block !important;
 }
