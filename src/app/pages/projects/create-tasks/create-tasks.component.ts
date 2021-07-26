@@ -23,6 +23,7 @@ export class CreateTasksComponent implements OnInit {
   userslist: any;
   projectdetails: Object;
   taskcategories: Object;
+  approverslist: any=[];
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
     private router: Router,private projectdetailscreen:ProjectDetailsScreenComponent) { }
 
@@ -70,6 +71,7 @@ export class CreateTasksComponent implements OnInit {
       if(response.message!=undefined)
       {
         let status: any= response;
+        this.createtaskmodalref.hide();
         Swal.fire({
           title: 'Success',
           text: ""+status.message,
@@ -82,7 +84,6 @@ export class CreateTasksComponent implements OnInit {
       }).then((result) => {
         this.resettask();
         this.projectdetailscreen.getTaskandCommentsData();
-        this.createtaskmodalref.hide();
       }) 
         
       }
@@ -106,6 +107,14 @@ export class CreateTasksComponent implements OnInit {
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;
+
+      for (let index = 0; index < this.userslist.length; index++) {
+        let user=this.userslist[index]
+        if(user.roleID.displayName==="Process Architect"){
+        const element = user;
+        this.approverslist.push(element)
+      }
+      }
     })
   }
   
