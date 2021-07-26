@@ -61,7 +61,7 @@ import { ToastrModule } from 'ngx-toastr';
     }),
 
     BackButtonDisableModule.forRoot(),
-    UserIdleModule.forRoot({idle: 1800, timeout: 1, ping: 1740}),
+    UserIdleModule.forRoot({idle: 3600, timeout: 1, ping: 1740}),
     NgxSpinnerModule,
     ToastrModule.forRoot({timeOut: 5000,disableTimeOut : false,extendedTimeOut:3000,
       positionClass: 'toast-top-full-width',maxOpened:1,autoDismiss:true}), // ToastrModule added
