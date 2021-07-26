@@ -1,6 +1,5 @@
 .module-heading.title {
-    background-color: #f8f8f8;
-    padding: 12px 0px !important;
+    padding: 6px 15px !important;
     margin-bottom: 0px;
 }
 .main-content1 .module-heading.title {
@@ -15,9 +14,9 @@
     color: #001c47;
     font-weight: 100;
 }
-.module-heading.title span {
+/* .module-heading.title span {
     padding-left: 10px;
-}
+} */
 
 .value {
     color: #001C47;

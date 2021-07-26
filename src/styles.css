@@ -713,11 +713,11 @@ div.tipsy.tipsy-e {
   }
 
 }
-
+/* 
 .label {
   color: black !important;
   font-size: 14px !important;
-}
+} */
 
 /* .edgePath path.path {
   stroke: #4c4c4c;
@@ -1099,6 +1099,7 @@ foreignObject {
 .main-content {
   height: 100%;
   padding: 16px;
+  padding-bottom: 6px;
   overflow: hidden;
   position: relative;
   background-color: #e3eaef;
@@ -1240,7 +1241,7 @@ div#propertiesPanelBody .bpp-properties-panel {
 }
 
 #projects_list_screen mat-tab-header.mat-tab-header {
-  margin: 0px 12px;
+  margin: 0px 15px;
 }
 
 #projects_list_screen .mat-tab-label:first-child {
@@ -1363,11 +1364,10 @@ mat-row {
   height: 8px;
 }
 
-mat-card#projects_list_screen,
-mat-card#projects_dashboard_screen {
+mat-card {
+  padding: 0px !important;
   box-shadow: none !important;
 }
-
 img.testplus {
   width: 14px;
   height: 14px;
@@ -1375,8 +1375,8 @@ img.testplus {
 }
 
 .newinntalx a img {
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
 }
 
@@ -1505,7 +1505,7 @@ img.testplus {
 }
 
 .modal-header.modelprhead button {
-  margin-right: 2px;
+  margin-right: 0px;
   opacity: 1 !important;
 }
 
@@ -1554,6 +1554,7 @@ img.testplus {
   font-size: 18px;
   font-weight: normal;
   color: #001c47;
+  line-height: 22px;
 }
 
 .footbutcl button:hover {
@@ -1731,4 +1732,18 @@ span.projects-back-button {
   width:150px;
   height:22px !important;
   padding:0px !important;
+}
+
+.mat-paginator-page-size {
+  left: 15px !important;
+  position: absolute;
+}
+.mat-paginator-range-label {
+  margin: 0 32px 0 12px !important;
+  position: absolute;
+  left: 185px !important;
+  bottom: 20px;
+}
+.mat-paginator-container {
+  min-height: 65px !important;
 }

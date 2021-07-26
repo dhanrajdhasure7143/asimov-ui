@@ -8,6 +8,7 @@
   
   .projects-header{
     width:100%;
+    padding: 6px 15px;
   }
   .projects-header-title{
     color:black ;
@@ -119,6 +120,7 @@ button.btn.btn-primary {
   margin: 0px 0px 0px 10px;
   padding: 6px 12px;
   border-radius: 3px;
+  border: none;
 }
 /* #projects_details_screen button.btn.btn-primary {
   background-color: #00a0e3 !important;
@@ -154,7 +156,7 @@ button.btn.btn-primary {
   background-color: #e3eaee;
 }
 .new-prj-details .projects-table-body {
-  padding: 10px 12px;
+  padding: 10px 15px;
 }
 mat-card#projects_details_screen {
   box-shadow: none !important;
@@ -162,7 +164,7 @@ mat-card#projects_details_screen {
   border-radius: 2px;
 }
 .new-prj-tasklist {
-  padding: 8px 12px !important;
+  padding: 8px 15px !important;
 }
 .new-prj-tasklist .tasks-body , .projects-table-body{
   margin-top: 8px;
@@ -186,7 +188,7 @@ mat-card#projects_details_screen {
   font-size: 13px !important
 }
 .documents .new-docdiv, .resources .new-resourcediv {
-  padding: 8px 12px !important;
+  padding: 8px 15px !important;
   margin-bottom: 0px !important;
   min-height: 300px;
 }
@@ -299,6 +301,7 @@ mat-card#projects_details_screen {
     background-color: #fff !important;
     border: 1px solid #00a0e3 !important;
     color: #00a0e3;
+    line-height: 18px;
   }
  .prj-lst-btn:hover, .prj-crt-btn:hover {	
     background-color: #001c47 !important;    
