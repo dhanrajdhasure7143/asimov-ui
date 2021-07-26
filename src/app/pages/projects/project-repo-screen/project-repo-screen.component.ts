@@ -29,6 +29,8 @@ export class ProjectRepoScreenComponent implements OnInit {
   loggedUser: any;
   revokeorDenyValue: any;
   denyOrrevokeData: any;
+  filecategories: any;
+  filterdArray: any[];
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute) { 
     
 this.route.queryParams.subscribe(data=>{​​​​​​​​
@@ -141,6 +143,7 @@ this.getFileDetails();
   }
   uploadFile(template: TemplateRef<any>){
 
+    this.getFileCategories();
     this.uploadFilemodalref = this.modalService.show(template);
   }
   submitUploadFileForm(){
@@ -191,8 +194,17 @@ this.getFileDetails();
   }
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
-      this.uploadedFiledata=data.uploadedFiles;
-      this.requestedFiledata=data.requestedFiles;
+      this.uploadedFiledata=data.uploadedFiles.reverse();
+      this.requestedFiledata=data.requestedFiles.reverse();
+      let loggedUser=localStorage.getItem("ProfileuserId")
+      let responseArray=this.requestedFiledata
+      this.filterdArray=[]
+      responseArray.forEach(e=>{
+        if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
+          this.filterdArray.push(e)
+          
+        }
+      })
       console.log("req-Data",this.requestedFiledata);
       console.log("upload-Data",this.uploadedFiledata);
       
@@ -268,5 +280,9 @@ this.getFileDetails();
     }
 
   }
-
+  getFileCategories(){
+    this.api.getFileCategories().subscribe(data =>{
+      this.filecategories=data;
+  })
+  }
 }

@@ -12,8 +12,8 @@
                     <div class="form-fileds col-md-6 pl-0">
                         <label for="taskCategory">Task Category<span class="star">*</span></label>
                         <select class="form-control"  formControlName="taskCategory">
-                            <option  [value]="null" disabled hidden>Select Category</option>
-                            <option value="" [selected]="true">Select Category</option>
+                            <option  [value]="null" disabled hidden>Select Task Category</option>
+                            <option value="" [selected]="true">Select Task Category</option>
                             <option *ngFor="let categories of taskcategories" >{{categories.category}}</option>
                             </select>
                             <span *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
@@ -45,7 +45,7 @@
                     <div class="form-fileds col-md-6 pr-0">
                         <label for="timeEstimate">Time Estimate<span class="star">*</span></label>
                         <input type="text" (keydown)="inputNumberOnly($event)" maxlength="6" formControlName="timeEstimate" class="form-control data"
-                             placeholder="Enter Time  Estimate">
+                             placeholder="Enter Time Estimate">
                         <span
                             *ngIf="createtaskForm.get('timeEstimate').invalid && createtaskForm.get('timeEstimate').touched"
                              class="errspan required">Time Estimate Required*</span>
@@ -91,8 +91,8 @@
                         <label for="approvers">Select Approvers<span class="star">*</span></label>
                         <select class="form-control"  formControlName="approvers">
                             <option value="">Select Approvers</option>
-                            <option *ngFor="let user of userslist" [value]="user.userId.id">
-                                {{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                            <option *ngFor="let user of approverslist" [value]="user.userId.id">
+                                {{user.userId.firstName}} {{user.userId.lastName}}</option>    
                         </select>
                          <!-- <ng-select  formControlName="approvers" [multiple]="true"  placeholder="Select Approvers"
                              [(ngModel)]="selectedapprovers"  required>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="col-md-12">
                     <label>Task Description</label>
-                    <textarea rows="4" class="form-control" formControlName="description" placeholder="Enter Description...">
+                    <textarea rows="4" class="form-control" formControlName="description" placeholder="Enter Task Description...">
                     </textarea>
                 </div> 
             </div>

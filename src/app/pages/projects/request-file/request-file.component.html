@@ -13,9 +13,9 @@
                 <div class="col-md-6">
                     <label for="fileCategory">File Category<span style="color:red">*</span></label>
                     <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory">
-                        <option value="">Select Category</option>
-                        <option value="Analysis">Analysis</option>
-                        <option value="Design">Design</option>
+                        <option  [value]="null" disabled hidden>Select Category</option>
+                    <option value="" [selected]="true">Select Category</option>
+                    <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
                         
                     </select>
                     <span
@@ -29,11 +29,10 @@
                         <option value="">Select Resources</option>
                         <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
                     </select>
-
-
-                    <!-- <span *ngIf="requestFileForm.get('resources').invalid && requestFileForm.get('resources').touched"
-                        style="color:red" class="fa fa-info-circle errspan">Resources Required*</span>
-                    <br> -->
+                    <span
+                    *ngIf="requestFileForm.get('resources').invalid && requestFileForm.get('resources').touched"
+                    style="color:red" class="fa fa-info-circle errspan">Request to Required*</span>
+                    <br> 
                 </div>
 
                 </div>
@@ -54,8 +53,8 @@
         </form>
         <br>
         <div class="pull-right">
-            <!-- <button (click)="resettask()" class="btn btn-primary">Reset</button>
-            -->
+            <!-- <button (click)="resettask()" class="btn btn-primary">Reset</button> -->
+            <button (click)="createRequestmodalref.hide()" class="btn btn-primary">Cancel</button>
                 &nbsp;&nbsp;
             <button [disabled]="requestFileForm.invalid" (click)="saveRequestedfile()" class="btn btn-primary">Submit</button>
         </div>

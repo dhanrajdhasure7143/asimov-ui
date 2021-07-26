@@ -8,6 +8,7 @@ import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import moment from 'moment';
 
 import Swal from 'sweetalert2';
 @Component({
@@ -32,10 +33,12 @@ export class ProgramDetailsComponent implements OnInit {
     users_list:any=[];
     insertForm2:FormGroup;
     modalref:BsModalRef;
+    mindate:any;
     selected_process_names:any=[];
 
   ngOnInit() {
     this.getprojects_and_programs();
+    this.mindate= moment().format("YYYY-MM-DD");
     this.getallusers();
     this.getprocessnames();
     setTimeout(()=>{
@@ -373,10 +376,20 @@ export class ProgramDetailsComponent implements OnInit {
       this.modalref.hide();
       if(response.errorMessage==undefined)
       {
-        
-        Swal.fire("",response.status,"success");
+        Swal.fire({
+          title: 'Success',
+          text: ""+response.status,
+          position: 'center',
+          icon: 'success',
+          showCancelButton: false,
+          confirmButtonColor: '#007bff',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Ok'
+        });
         this.get_linked_projects(this.program_detials.id);
       }
+      else
+      Swal.fire("Error",response.errorMessage,"error");
     })
   }
 

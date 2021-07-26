@@ -731,5 +731,12 @@ resetupdateprogram(){
   this.updateprogramForm.get("process").setValue("");
   this.updateprogramForm.get("status").setValue("");
 }
+getreducedValue(value) {​​​​​​​​
+  if (value.length > 15)
+  return value.substring(0,16) + '...';
+  else
+  return value;
+}​​​​​​​​
+
   
 }

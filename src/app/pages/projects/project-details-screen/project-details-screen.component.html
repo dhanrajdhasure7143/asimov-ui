@@ -67,7 +67,7 @@
       </ng-container>
 
       <ng-container matColumnDef="taskName">
-        <th mat-header-cell *matHeaderCellDef>Task Name</th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Task Name</th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element.taskName!=null" [matTooltip]="element.taskName">{{element.taskName}}</span>
             <span *ngIf="element.taskName==null">---</span>
@@ -104,7 +104,7 @@
       <ng-container matColumnDef="lastModifiedTimestamp">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</th>
         <td mat-cell *matCellDef="let element" >
-          <span *ngIf="element.lastModifiedTimestamp!=null">{{element.lastModifiedTimestamp | date}} {{element.lastModifiedTimestamp.split("T")[1].split(".")[0]}}</span>
+          <span *ngIf="element.lastModifiedTimestamp!=null">{{element.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</span>
           <span *ngIf="element.lastModifiedTimestamp==null">---</span>
         </td>
       </ng-container>
@@ -129,6 +129,9 @@
         <th mat-header-cell *matHeaderCellDef> Actions</th>
         <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
           <div class="newinntalx">
+            <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
+              <i class="fas fa-file-upload"></i>
+            </a>|
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
               <img src="../../../../assets/images/Projects/edit.svg">
             </a> |
@@ -216,13 +219,13 @@
                 <td>
                   <span *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
                   <span  class="letter-image" *ngIf="user.userId.profilePic==null">
-                    <span class="letter">{{user.userId.firstName | slice:0:1}}{{user.userId.lastName | slice:0:1}}</span>
+                    <span class="letter">{{user.userId.firstName|uppercase| slice:0:1}}{{user.userId.lastName| uppercase|slice:0:1}}</span>
                   </span>
                 </td>
                 <td >{{user.userId.firstName+" "+ user.userId.lastName}}</td>
                 <td >{{user.roleID.displayName}}</td>
                 <td >{{user.userId.userId}}</td>
-                <td >{{user.userId.created_at | date}}</td>
+                <td >{{user.userId.created_at | date:'MMM d, y, HH:mm:ss'}}</td>
               </tr>
 
             </tbody>
@@ -425,7 +428,7 @@
                                   </div>
                                 </div>
                                   <div class="comment-name">
-                                    {{c.createdBy}} &nbsp; {{c.createdTimestamp | date}}
+                                    {{c.createdBy}} &nbsp; {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
                                   </div>
                                   <div class="commentsadded" *ngIf="i!=commentnumber">
                                  <b>{{c.comments}}</b> 
@@ -516,7 +519,7 @@
                                     <td >{{selectedtaskdata.resources| userPipe : users_list}}</td>
                                     <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
                                     <td >{{roles?roles:'-'}}</td>
-                                    <td >{{selectedtaskdata.lastModifiedTimestamp | date}}</td>
+                                    <td >{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
                                   </tr>
                                 </tbody>
                                 
@@ -537,3 +540,50 @@
     </div>
   </div>
 </ng-template>
+
+<ng-template class="modal-up" #uploadtaskfilemodal>
+  <div class="modal-header modelprhead">
+    <h4 class="modal-title pull-left">Upload File</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="uploadtaskFilemodalref.hide()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="container" style="width:100%">
+        <form [formGroup]="uploadtaskFileForm" (ngSubmit)="submitUploadFileForm()">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="category">File Category<span style="color:red">*</span></label>
+                    <select class="form-control" style="border:1px solid lightgray" formControlName="category">
+                      <option [value]="null" disabled hidden>Select File Category</option>
+                      <option value="" [selected]="true">Select File Category</option>
+                      <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                        
+                    </select>
+                    <span
+                        *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched"
+                        style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
+                </div>
+                </div>
+
+                <div class="col-md-12">
+                    
+                  <label>Upload<span style="color:red">*</span></label>
+                  <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File" formControlName="filePath" placeholder="choose file">
+  
+                  
+                  <span *ngIf="uploadtaskFileForm.get('filePath').invalid && uploadtaskFileForm.get('filePath').touched"
+                      style="color:red" class="fa fa-info-circle errspan"></span>
+  
+              </div>
+            
+        </form>
+    </div>
+    </div>
+    <div class="modal-footer modelprfooter">
+      <div class="pull-right">
+          <button (click)="uploadtaskFilemodalref.hide()" class="btn btn-primary">Cancel</button>
+          <button [disabled]="uploadtaskFileForm.invalid" (click)="submitUploadFileForm()" class="btn btn-primary">Submit</button>
+          </div>
+    </div>
+  </ng-template>

@@ -37,6 +37,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
 import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/combo-series-vertical.component';
+import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
+import {MatPaginatorIntl} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -82,7 +84,11 @@ import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/comb
     NgbModule,
     NgxMaterialTimepickerModule
   ],
-  providers:[PiHints],
+  providers:[PiHints, 
+    {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }]
 
 })
 export class ProcessIntelligenceModule {
