@@ -374,20 +374,11 @@ export class ProgramDetailsComponent implements OnInit {
       this.modalref.hide();
       if(response.errorMessage==undefined)
       {
-        Swal.fire({
-          title: 'Success',
-          text: ""+response.status,
-          position: 'center',
-          icon: 'success',
-          showCancelButton: false,
-          confirmButtonColor: '#007bff',
-          cancelButtonColor: '#d33',
-          confirmButtonText: 'Ok'
-        });
+        Swal.fire("Success",response.status,"success");
         this.get_linked_projects(this.program_detials.id);
       }
       else
-      Swal.fire("Error",response.errorMessage,"error");
+        Swal.fire("Error",response.errorMessage,"error");
     })
   }
 
