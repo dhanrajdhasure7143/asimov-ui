@@ -180,22 +180,54 @@
                 </thead>
                 <tbody>
                   <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 5, currentPage: p } ">
-                    <td>{{project.initiatives}}</td>
-                    <td>{{project.projectName}}</td>
-                    <td>{{project.owner  | userPipe : users_list}}</td>
-                    <td>New</td>
+                    <td>
+                      <span *ngIf="project.initiatives!=undefined && project.initiatives!=null && project.initiatives!=''  ">{{project.initiatives}}</span>
+                      <span *ngIf="project.initiatives==undefined || project.initiatives==null || project.initiatives==''  ">-</span>
+                    </td>
+                    <td>
+                        <span *ngIf="project.projectName!=undefined && project.projectName!=null && project.projectName!=''  ">{{project.projectName}}</span>
+                      <span *ngIf="project.projectName==undefined || project.projectName==null || project.projectName==''  ">-</span>
+                   
+                    </td>
+                    <td>
+                        <span *ngIf="project.owner!=undefined && project.owner!=null && project.owner!=''  "> {{project.owner  | userPipe : users_list}}</span>
+                        <span *ngIf="project.owner==undefined || project.owner==null || project.owner==''  ">-</span>
+                  
+                      
+                     </td>
+                    <td>
+                        <span *ngIf="project.status!=undefined && project.status!=null && project.status!=''  "> {{project.status}}</span>
+                        <span *ngIf="project.status==undefined || project.status==null || project.status==''  ">-</span>
+                  
+                    </td>
                     
                     <td>
                       <div class="d-flex">
                         
-                        <div  class="py-5"><input type="range" min="1" class="slider" max="100" disabled value="0"></div>
-                        <div>0%</div>
+                        <div  class="py-5"><input type="range" min="1" class="slider" max="100" [value]="(project.projectPercentage==undefined || project.projectPercentage==null || project.projectPercentage=='')?0:project.projectPercentage " disabled ></div>
+                        <div>{{(project.projectPercentage==undefined || project.projectPercentage==null || project.projectPercentage=='')?0:project.projectPercentage}}%</div>
                       </div>
                         <!-- <mat-progress-bar mode="determinate" value="15"></mat-progress-bar> -->
                       </td>
-                    <td>{{project.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
-                    <td>{{project.lastModifiedBy}}</td>
-                    <td>{{project.createdBy}}</td>
+                    <td>
+                        <span *ngIf="project.lastModifiedTimestamp!=undefined && project.lastModifiedTimestamp!=null && project.lastModifiedTimestamp!=''  "> {{project.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</span>
+                        <span *ngIf="project.lastModifiedTimestamp==undefined || project.lastModifiedTimestamp==null || project.lastModifiedTimestamp==''  ">-</span>
+                  
+                      </td>
+                    <td>
+                    
+                      <span *ngIf="project.lastModifiedBy!=undefined && project.lastModifiedBy!=null && project.lastModifiedBy!=''  ">   {{project.lastModifiedBy}}</span>
+                        <span *ngIf="project.lastModifiedBy==undefined || project.lastModifiedBy==null || project.lastModifiedBy==''  ">-</span>
+                  
+                    
+                    </td>
+                    <td>
+                        <span *ngIf="project.createdBy!=undefined && project.createdBy!=null && project.createdBy!=''  ">   {{project.createdBy}}</span>
+                        <span *ngIf="project.createdBy==undefined || project.createdBy==null || project.createdBy==''  ">-</span>
+                  
+                    
+                     
+                    </td>
                     <td>
                       <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span>|<span class="clickable text-danger py-5 clickable" (click)="deleteproject(project)">Delete</span>
                     </td>
