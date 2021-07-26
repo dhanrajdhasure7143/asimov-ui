@@ -46,6 +46,8 @@ import { FileSizePipe } from './pipes/file-size-pipe.pipe';
 
 import { UserDetialsPipe } from './pipes/user-detials.pipe';
 import { UserImagePipe } from './pipes/user-image-pipe';
+import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
+import {MatPaginatorIntl} from '@angular/material';
 const materialModules: any[] = [
     
     
@@ -77,7 +79,12 @@ const materialModules: any[] = [
     
   ],
   providers:[
-    BsModalRef,
+    BsModalRef, 
+  {
+      provide: MatPaginatorIntl, 
+      useClass: CustomMatPaginatorIntl
+    }
+
   ]
 })
 export class ProjectsModule { }
