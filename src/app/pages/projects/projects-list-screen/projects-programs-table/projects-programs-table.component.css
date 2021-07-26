@@ -1,7 +1,8 @@
 .prj-prg-tablelist {
   width:100%;
   overflow-x: auto;
-  height:calc( 100vh - 280px);
+  height:calc( 100vh - 250px);
+  /* margin-top: 5px; */
 }
 .types2{
     color:#0062cf  !important;
@@ -66,4 +67,15 @@
 }
 .no-item-img{
   height:calc(100vh - 430px)
+}
+   
+img.hover-img {
+  display: none;
+}
+.newinntalx a:hover img.default-img {
+  display: none;
+}
+
+.newinntalx a:hover img.hover-img {
+  display: initial;
 }

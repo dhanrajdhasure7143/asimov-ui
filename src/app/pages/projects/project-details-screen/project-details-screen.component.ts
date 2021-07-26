@@ -69,7 +69,8 @@ percentageComplete: number;
  commentnumber:number;
  fileUploadData: any;
  selectedtaskfileupload: any;
-
+ editdata:Boolean=false;
+ resources:any=[];
   
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
@@ -90,6 +91,8 @@ percentageComplete: number;
   taskattacments: Object;
   taskcomments_list:any[]=[];
   taskhistory: any=[];
+  filecategories: any;
+  programId:any;
 
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -139,7 +142,6 @@ percentageComplete: number;
        
       
         this.getallusers();
-        this.getTaskandCommentsData();
   }
 
   onTabChanged(event)
@@ -197,13 +199,22 @@ percentageComplete: number;
   }
 
   projectdetails(){
+    this.spinner.show()
+    this.route.queryParams.subscribe(data=>{
+        let paramsdata:any=data
+        console.log(paramsdata)
+        paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
+        this.editdata=false;
 
-    this.route.params.subscribe(data=>{this.projectData=data
-
-      this.projectDetails=JSON.parse(Base64.decode(this.projectData.id));
-      this.project_id=this.projectDetails.id
-      console.log("project details",this.projectDetails)
-        });
+        this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res =>{
+          this.spinner.hide();
+          this.projectDetails=res
+          this.project_id=this.projectDetails.id
+          this.resources=this.projectDetails.resources
+          this.getTaskandCommentsData();
+            
+        })
+    });
   }
 
 
@@ -432,13 +443,13 @@ percentageComplete: number;
      }
      this.spinner.show();
      this.addresourcemodalref.hide();
-     console.log("-------------",item_data);
      this.rpa.addresourcebyid(item_data).subscribe(data=>{
         let response:any=data;
         if(response.errorMessage==undefined)
         {
           this.spinner.hide();
           this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
+          this.resources=this.projectDetails.resources
           Swal.fire("Success",response.status,"success");
         }
         else
@@ -462,20 +473,20 @@ percentageComplete: number;
     // })
   }
 
-  projectDetailsbyId(id){
+  // projectDetailsbyId(id){
 
-    this.rpa.getProjectDetailsById(id).subscribe( res =>{
-    this.project=res;
-    this.navigatetodetailspage(this.project)
-    })
-  }
+  //   this.rpa.getProjectDetailsById(id).subscribe( res =>{
+  //   this.project=res;
+  //   this.navigatetodetailspage(this.project)
+  //   })
+  // }
 
 
-  navigatetodetailspage(detials){
-    let encoded=Base64.encode(JSON.stringify(detials));
-    let project={id:encoded}
-    this.router.navigate(['/pages/projects/projectdetails',project])
-  }
+  // navigatetodetailspage(detials){
+  //   let encoded=Base64.encode(JSON.stringify(detials));
+  //   let project={id:encoded}
+  //   this.router.navigate(['/pages/projects/projectdetails',project])
+  // }
 
 
 
@@ -517,8 +528,14 @@ percentageComplete: number;
         
       }
       uploadtaskfile(createmodal,data){
+        this.getFileCategories();
         this.selectedtaskfileupload=data
         this.uploadtaskFilemodalref=this.modalService.show(createmodal,{class:"modal-lr"})
+      }
+      getFileCategories(){
+        this.rpa.getFileCategories().subscribe(data =>{
+          this.filecategories=data;
+      })
       }
 
       submitUploadFileForm(){
@@ -557,4 +574,20 @@ percentageComplete: number;
        
      })
       }
+      updateprojectDetails()
+      {
+        this.spinner.show()
+        this.projectDetails["type"]="Project";
+        this.rpa.update_project(this.projectDetails).subscribe(res=>{
+          this.spinner.hide()
+          let response:any=res;
+          if(response.errorMessage == undefined)
+            Swal.fire("Success",response.message,"success")
+          else
+            Swal.fire("Error",response.errorMessage,"error");
+          this.projectdetails()
+          this.editdata=false;
+        });
+      }
+
 }

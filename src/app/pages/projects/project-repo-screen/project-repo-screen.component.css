@@ -6,17 +6,9 @@
   ::ng-deep #projects_resources_screen .mat-tab-label {
     height:40px !important;
   }
-  
-
-
-  
-::ng-deep mat-card{
-  padding:0px !important;
-}
-
+ 
   .projects-header{
-    width:100%;padding:10px;
-    background-color:rgba(212, 212, 212, 0.295);
+    width:100%;
   }
 
 

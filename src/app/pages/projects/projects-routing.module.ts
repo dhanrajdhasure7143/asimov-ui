@@ -18,7 +18,7 @@ const routes: Routes = [
     {path:'createprojects', component:CreateProjectsComponent},
     {path:'projectdetails', component:ProjectDetailsScreenComponent},
     {path:'projectdashboard', component:ProjectsDashboardComponent},
-    {path:'programdetails/:id', component:ProgramDetailsComponent},
+    {path:'programdetails', component:ProgramDetailsComponent},
     {path:'create-projects', component:CreateProjectsComponent},
     {path:"", component:ProjectsProgramsTableComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
