@@ -940,5 +940,8 @@ save_blueprism_config(data)
   requestFile(projectId):Observable<any>{
     return this.http.post("/platform-service/document/requestFileToUpload",projectId)
   }
+  getFileCategories():Observable<any>{
+    return this.http.get("/platform-service/document/fileCategories")
+  }
 
 }

@@ -90,6 +90,7 @@ percentageComplete: number;
   taskattacments: Object;
   taskcomments_list:any[]=[];
   taskhistory: any=[];
+  filecategories: any;
 
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -517,8 +518,14 @@ percentageComplete: number;
         
       }
       uploadtaskfile(createmodal,data){
+        this.getFileCategories();
         this.selectedtaskfileupload=data
         this.uploadtaskFilemodalref=this.modalService.show(createmodal,{class:"modal-lr"})
+      }
+      getFileCategories(){
+        this.rpa.getFileCategories().subscribe(data =>{
+          this.filecategories=data;
+      })
       }
 
       submitUploadFileForm(){
