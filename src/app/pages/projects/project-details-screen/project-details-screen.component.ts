@@ -70,7 +70,7 @@ percentageComplete: number;
  fileUploadData: any;
  selectedtaskfileupload: any;
  editdata:Boolean=false;
-
+ resources:any=[];
   
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
@@ -205,10 +205,12 @@ percentageComplete: number;
         console.log(paramsdata)
         paramsdata.programId==undefined?this.programId=undefined:this.programId=paramsdata.programId;
         this.editdata=false;
+
         this.rpa.getProjectDetailsById(paramsdata.id).subscribe( res =>{
           this.spinner.hide();
           this.projectDetails=res
           this.project_id=this.projectDetails.id
+          this.resources=this.projectDetails.resources
           this.getTaskandCommentsData();
             
         })
@@ -447,6 +449,7 @@ percentageComplete: number;
         {
           this.spinner.hide();
           this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
+          this.resources=this.projectDetails.resources
           Swal.fire("Success",response.status,"success");
         }
         else
