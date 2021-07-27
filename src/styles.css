@@ -1882,6 +1882,50 @@ button.action-button.clear {
 .bpp-properties-entry {
   margin-bottom: 0px !important;
 }
+
+.bpp-properties-entry.bpp-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.bpp-properties-entry.bpp-checkbox input[type=checkbox] {
+  margin: 0px 5px 0px 0px;
+}
+
 .bps-labcls span.mat-form-field-label-wrapper label {
   display: inline-block !important;
+}
+
+.bpmnCreate .modal-content {
+  top: 51px;
+  width: 400px !important;
+  right: 0px;
+  border-radius: 0px;
+  height: 100%;
+}
+
+.bpmnCreate .container.m-contanier {
+  width: 100%;
+  padding: 0px;
+}
+
+.form-footer {
+  margin-top: auto !important;
+  text-align: end;
+}
+
+.bpmnCreate .container.m-contanier.form-body {
+  height: calc(100%  - 38px);
+}
+
+.bpmnCreate form {
+  height: 100%;
+}
+
+.bpmnCreate form button.btn.btn-primary.eiap-btn {
+  margin: 0px;
+}
+
+.bpmnCreate .modal-body {
+  height: calc(100% - 102px);
 }
