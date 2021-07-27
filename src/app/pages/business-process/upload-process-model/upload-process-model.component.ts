@@ -137,7 +137,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   definationId:any;
   businessKey:any;
   selected_bpmn_list:any  
-  isEdit:boolean=true;
+  isEdit:boolean=false;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -389,7 +389,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.selected_approver = null;
       let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
-      this.dt.bpsNotationaScreenValues(obj);
+      setTimeout(() => {
+        this.dt.bpsNotationaScreenValues(obj);
+      }, 4000);
    }
 
   getAutoSavedDiagrams(){
@@ -506,8 +508,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       }
     }
     let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
-      this.dt.bpsNotationaScreenValues(obj)
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
+    setTimeout(() => {
+      this.dt.bpsNotationaScreenValues(obj);
+    }, 3000);  
   }
 
   setUrlParam(name, value) {
@@ -564,7 +568,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
           let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
       this.dt.bpsNotationaScreenValues(obj)
         }
         this.initModeler();
@@ -622,7 +626,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
       this.dt.bpsNotationaScreenValues(obj)
       }
     this.initModeler();
@@ -730,7 +734,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.updated_date_time = new Date();
         this.spinner.hide();
         let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
       this.dt.bpsNotationaScreenValues(obj)
       },
       err => {
@@ -942,10 +946,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         _self.last_updated_time = now;
       }
     })
-
     if(this.isShowConformance){
       setTimeout(() => {
-        this.fitNotationViewfromPI()
+        this.fitNotationViewfromPI();
         }, 4000);
     }
   }

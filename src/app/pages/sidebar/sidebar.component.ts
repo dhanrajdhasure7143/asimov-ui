@@ -17,10 +17,15 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     //this.disable();
+    let selectedId=localStorage.getItem('selectedModule')
+    if(selectedId){
+     $('.link').removeClass('active');
+     $('#'+selectedId).addClass("active");
+    }
   }
 
-  hightlight(element)
-  {
+  hightlight(element){
+    localStorage.setItem('selectedModule',element)
      $('.link').removeClass('active');
      $('#'+element).addClass("active");
      this.obj.sideBarOpen=false;
@@ -29,7 +34,6 @@ export class SidebarComponent implements OnInit {
       this.obj.contentMargin = 60;
   }
   
-
   selection(){
      this.obj.sideBarOpen=true;
      this.obj.contentMargin=260;

@@ -362,6 +362,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
             this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+            let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+            "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+                this.dt.bpsNotationaScreenValues(obj);
           }
           this.initModeler();
           this.bpmnModeler.importXML(selected_xml, function(err){
@@ -385,6 +388,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+        let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+        this.dt.bpsNotationaScreenValues(obj);
       }
       this.initModeler();
       this.bpmnModeler.importXML(selected_xml, function(err){
