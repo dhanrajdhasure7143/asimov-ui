@@ -71,7 +71,7 @@
                 <mat-panel-title>
                   <div class="row col-md-12" id="bpmn_list_row">
                     <span [matTooltip]=each_diag.bpmnProcessName
-                      matTooltipClass="eiap_tooltip">{{each_diag.bpmnProcessName ?
+                      matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?
                       fitTableView(each_diag.bpmnProcessName): '-'}}</span>
                     <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
                     <span>{{each_diag.category}}</span>
@@ -82,7 +82,7 @@
                       [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</span>
                     <span>
                       <span class="comment">
-                        <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus1" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip">
+                        <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="bpsHeaderTooltip">
                         <!-- <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i> -->
                       </span>
                     </span>
