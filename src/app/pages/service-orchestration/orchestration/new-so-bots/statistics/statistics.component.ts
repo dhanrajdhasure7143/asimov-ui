@@ -319,7 +319,20 @@ chart.cursor = new am4charts.XYCursor();
         // Add a legend
         
         
-        chart.data = data
+        //chart.data = data
+        chart.data=[{
+          "country": "UiPath",
+          "litres": 122,
+          "color": "#ffda83"
+        },{
+          "country": "BluePrism",
+          "litres":  225,
+          "color": "#55d8fe"
+        },{
+          "country": "EPSoft",
+          "litres":369,
+          "color": "#fa4616"
+        }];
         });  
 
   }
@@ -513,8 +526,8 @@ pieSeries.labels.template.fontSize = 18;
     
     var dateAxis = chart.xAxes.push(new am4charts.DateAxis());
     dateAxis.renderer.grid.template.strokeOpacity = 0;
-    dateAxis.renderer.minGridDistance = 10;
-    dateAxis.dateFormats.setKey("day", "d");
+    dateAxis.renderer.minGridDistance = 15;
+    dateAxis.dateFormats.setKey("day", "dd");
     dateAxis.tooltip.hiddenState.properties.opacity = 1;
     dateAxis.tooltip.hiddenState.properties.visible = true;
     
@@ -530,6 +543,7 @@ pieSeries.labels.template.fontSize = 18;
     valueAxis.min = 0;
     valueAxis.cursorTooltipEnabled = false;
     valueAxis.renderer.labels.template.fontSize = 11;
+    valueAxis.title.text="Number of Exceptions"
     // goal guides
     var axisRange = valueAxis.axisRanges.create();
     axisRange.value = 3;

@@ -49,7 +49,7 @@ export class MonitoringComponent implements OnInit {
         failure:this.bots_list.filter(item=>item.botStatus=="Failure").length,
         cancelled:this.bots_list.filter(item=>item.botStatus=="cancelled").lenght,
       }
-      this.failedbots=this.bots_list.filter(item=>item.botStatus=="Failed"||item.botStatus=="Failure");
+      this.failedbots=this.bots_list.filter(item=>item.botStatus=="Failed"||item.botStatus=="Failure").reverse();
       
       this.status1();
       this.status2();

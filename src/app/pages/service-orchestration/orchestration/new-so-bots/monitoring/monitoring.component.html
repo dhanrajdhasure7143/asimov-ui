@@ -12,7 +12,7 @@
                                 <th><b>Failed Bots</b></th>
                                 <th><b>{{failedbots.length}} of  {{bots_list.length}}</b></th>
                             </thead>
-                            <tr *ngFor="let bot of failedbots  | paginate: { itemsPerPage: 5,currentPage: q }"><td>{{bot.botName}}</td><td>April 20th,2020 12:00 AM</td></tr>
+                            <tr *ngFor="let bot of failedbots  | paginate: { itemsPerPage: 5,currentPage: q }"><td>{{bot.botName}}</td><td>{{bot.createdAt | date : "medium" }}</td></tr>
                         </table>
                             <div class="text-right">
                                 <pagination-controls (pageChange)="q = $event"></pagination-controls>
