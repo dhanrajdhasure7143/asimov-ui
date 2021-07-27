@@ -139,7 +139,7 @@ span.tab-text {
   display: flex;
   align-items: center;
   /* padding: 9px 10px !important; */
-  padding: 6px 8px;
+  padding: 6px 15px;
 }
 
 .prj-lstscr-btn button {
