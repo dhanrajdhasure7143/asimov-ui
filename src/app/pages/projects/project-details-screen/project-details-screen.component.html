@@ -1,7 +1,7 @@
 <div class="project-details-main" *ngIf="projectDetails!=undefined">
-<div class="new-prj-details">
-  <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
-    <div class="projects-header maincreat">
+  <div class="new-prj-details">
+      <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
+        <div class="projects-header maincreat">
       <span class="projects-back-button" *ngIf="programId==undefined" routerLink="/pages/projects/listOfProjects">
         <i aria-hidden="true" class="fas fa-arrow-left"></i>
       </span>
@@ -42,9 +42,9 @@
         <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
         <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
       </span>
-    </div>
+        </div>
   
-    <div class="projects-table-body">
+        <div class="projects-table-body">
       <div class="newprhcl" >
         <!-- <div class="container-fluid p-0"> -->
           <div class="row">
@@ -378,10 +378,10 @@
                   </div>
               </div>
           </div>
-    </div>    
-  </mat-card>  
-  
-  <mat-card class="new-prj-tasklist" id="projects_details_screen" *ngIf="projects_toggle==false">
+        </div>    
+      </mat-card>  
+
+      <mat-card class="new-prj-tasklist" id="projects_details_screen" *ngIf="projects_toggle==false">
     <div class="row">
       <div class="col-md-4 p-0">
         <span class="projects-header-title">
@@ -476,18 +476,21 @@
       </ng-container>
 
       <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Actions</th>
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
         <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
           <div class="newinntalx">
             <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
               <i class="fas fa-file-upload"></i>
-            </a>|
+            </a>
+            <span class="actions-seperator">|</span>
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
               <img src="../../../../assets/images/Projects/edit.svg">
-            </a> |
+            </a> 
+            <span class="actions-seperator">|</span>
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
               <img src="../../../../assets/images/Projects/delete-red.svg">
-            </a> |
+            </a> 
+            <span class="actions-seperator">|</span>
             <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
             (click)="navigateToWorkspace(element)" matTooltip="Model">
               <img src="../../../../../assets/images/Projects/eye-show.svg" />
@@ -515,14 +518,14 @@
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
       </table>
-      </div>
+    </div>
       <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
       </mat-paginator>
     
-  </mat-card>
-
-
-  <div class="row bortopsec">
+      </mat-card>
+    
+    
+      <div class="row bortopsec">
     <div class="col-md-6 pl-0 resources">
       <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
         <div class="row">
@@ -651,290 +654,278 @@
         
       </mat-card>
     </div>   
+      </div>
+
+
+
   </div>
 
 
 
-</div>
+  <ng-template class="modal-lg" #createtaskmodal>
+    <app-create-tasks [createtaskmodalref]="createtaskmodalref" [project_id]="project_id"></app-create-tasks>
+  </ng-template>
 
 
+  <ng-template  #addresourcemodal>
+    <div>
+      <app-add-resources (newItemEvent)="addresources($event)"  [resources]="resources" [addresourcemodalref]="addresourcemodalref"></app-add-resources>
+    </div>  
+  </ng-template>
 
-<ng-template class="modal-lg" #createtaskmodal>
-  <app-create-tasks [createtaskmodalref]="createtaskmodalref" [project_id]="project_id"></app-create-tasks>
-</ng-template>
-
-
-<ng-template  #addresourcemodal>
-  <div>
-    <app-add-resources (newItemEvent)="addresources($event)"  [resources]="resources" [addresourcemodalref]="addresourcemodalref"></app-add-resources>
-  </div>
-  
-</ng-template>
-
-<ng-template class="modal-lg" #updatetaskmodal>
-  <div class="modal-header modelprhead">
-    <h3><b> {{selectedtaskdata.id}} / {{selectedtaskdata.taskCategory}} / {{selectedtaskdata.taskName}}</b></h3>
-    <p>Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp | date}}</p>
-     <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="updatetaskmodalref.hide()">
-      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
-    </button>  -->
-  </div>
-  <div class="modal-body" style="width:100%;overflow-x: auto;height:calc( 68vh - 10px)">
-      <div class="container p-0" style="width:100%">
-              <form [formGroup]="updatetaskForm"  (ngSubmit)="updatetask()">
-              
-                  <div class="row">
-                      <div class="col-md-12">
+  <ng-template class="modal-lg" #updatetaskmodal>
+    <div class="modal-header modelprhead">
+      <h4 class="modal-title pull-left">
+        {{selectedtaskdata.id}} / {{selectedtaskdata.taskCategory}} / {{selectedtaskdata.taskName}}
+      </h4>
+      <span class="pull-right">Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp | date}}</span>
+    </div>
+    <div class="modal-body modelprbody editmodelprbody">
+        <div class="container p-0" style="width:100%">
+            <form [formGroup]="createtaskForm" (ngSubmit)="savetasks()">
+                <div class="row">
+                    <div class="col-md-12">
                         <div class="form-fileds col-md-3 pl-0">
-                          <label id="assignee" for="assignee">Assignee</label>
-                          <p>{{selectedtaskdata.resources| userPipe : users_list}}</p>
+                            <label id="assignee" for="assignee">Assignee</label>
+                            <span class="labelcont">{{selectedtaskdata.resources| userPipe : users_list}}</span>
                         </div>  
                         <div class="form-fileds col-md-3 pr-0">
-                          <label id="startdate" for="startDate">Start Date</label>
-                          <p>{{selectedtaskdata.startDate | date}}</p>
+                            <label id="startdate" for="startDate">Start Date</label>
+                            <span class="labelcont">{{selectedtaskdata.startDate | date}}</span>
                         </div>
                         <div class="form-fileds col-md-3 pr-0">
-                          <label id="enddate" for="endDate">End Date</label>
-                          <p>{{selectedtaskdata.endDate | date}}</p>
+                            <label id="enddate" for="endDate">End Date</label>
+                            <span class="labelcont">{{selectedtaskdata.endDate | date}}</span>
                         </div>
                         <div class="form-fileds col-md-3 pr-0">
-                          <label id="percentage" for="percentage">Percentage Completed</label>
-                        <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options" ></ng5-slider>
+                            <label id="percentage" for="percentage">Percentage Completed</label>
+                            <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options" ></ng5-slider>
                         </div>
-                      </div>
-                      <div class="col-md-12">
+                    </div>
+                    <div class="col-md-12">
                         <div class="form-fileds col-md-6 pl-0">                         
-                          <label id="status" for="status">Status<span style="color:red">*</span></label>
-                          <select   formControlName="status"  class="form-control data">
-                            <option value="">Select Status</option>
-                            <option value="New">New</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="In Review">In Review</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                        <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" style="color:red" class="fa fa-info-circle errspan">Status Required*</span>
-                        </div>
-                        <div class="form-fileds col-md-6 pr-0">
-                          <label id="priority" for="priority">Priority <span style="color:red">*</span></label>
-                          <select formControlName="priority" class="form-control data">
-                              <option value="">Select Priority</option>
-                              <option value="High">High</option>
-                              <option value="Medium">Medium</option>
-                              <option value="Low">Low</option>
+                            <label id="status" for="status">Status<span class="star">*</span></label>
+                            <select   formControlName="status"  class="form-control data">
+                              <option value="">Select Status</option>
+                              <option value="New">New</option>
+                              <option value="In Progress">In Progress</option>
+                              <option value="In Review">In Review</option>
+                              <option value="Approved">Approved</option>
+                              <option value="Rejected">Rejected</option>
                           </select>
-                          <span
-                              *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
-                              style="color:red" class="fa fa-info-circle errspan">Priority Required*</span>
-                        </div>
-                       
-                      </div>
-                      <br> <br>
-                      <div class="col-md-12">
+                          <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" 
+                                class="errspan required">Status Required*</span>
+                          </div>
+                          <div class="form-fileds col-md-6 pr-0">
+                            <label id="priority" for="priority">Priority<span  class="star">*</span></label>
+                            <select formControlName="priority" class="form-control data">
+                                <option value="">Select Priority</option>
+                                <option value="High">High</option>
+                                <option value="Medium">Medium</option>
+                                <option value="Low">Low</option>
+                            </select>
+                            <span
+                                *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
+                                class="errspan required">Priority Required*</span>
+                          </div>
+                    </div>
+                    <div class="form-fileds col-md-12">
                         <label id="summary" class="label-control" >Summary</label>
-                        <textarea class="form-control" formControlName="summary"  style="height:40px;" placeholder="Enter Summary">
+                        <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
                         </textarea>
-                        <br>
-                      </div>
-                     
-                      <div class="col-md-12">
+                    </div>
+                    <div class="form-fileds col-md-12">
                         <label id="description" class="label-control" >Description</label>
-                                                    <textarea class="form-control" formControlName="description" style="height:70px;" placeholder="Enter Description">
-                                                    </textarea>
-                      </div>
-                      <div class="col-md-12">
-                        <label class="label-control" ><h4><b>Activity</b></h4></label>
-                      </div>
-                      <div class="col-md-12">
+                        <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
+                        </textarea>
+                    </div>
+                    <div class="col-md-12">
+                        <h4><b>Activity</b></h4>
                         <mat-tab-group [selectedIndex]="selectedTab" id="Project-dashboard-tabs" (selectedTabChange)="onTabChanged($event)">
-                          <mat-tab label="Comment">
-                            <br>
-                            <div class="t-comments-box">
-                              <div class="add-comment">
-                                <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-                                <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
-                                <div>
-                                  &nbsp;
+                            <mat-tab label="Comment">
+                              <div class="t-comments-box">
+                                <div class="add-comment">
+                                  <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                                  <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
+                                  <div>
+                                  </div>
+                                  <div class="comment-input">
+                                    <input
+                                      class=" form-control-sm" 
+                                      type="text" #commentInput id="addcomment" 
+                                      placeholder="Add a comment.."
+                                    />
+                                    <div class="comment-send"><i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i></div>
+                                  </div>
                                 </div>
-                                <div class="comment-input">
-                                  <input
-                                    class=" form-control-sm" 
-                                    type="text" #commentInput id="addcomment" 
-                                    placeholder="Add a comment.."
-                                  />
-                                  <div class="comment-send"><i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i></div>
+                                <div class="comment comment-level-1" *ngIf="taskcomments!=0">
+                                  <!-- <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                                  <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div> -->
+                                  
+                                  <div>
+                                  <div class="comment-content" *ngFor="let c of taskcomments;let i=index">
+                                    <div> 
+                                    <div class="userimage" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
+                                      <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
+                                      <div  *ngIf="result.length>3"><img class="res-circle " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
+                                    </div>
+                                  </div>
+                                    <div class="comment-name">
+                                      {{c.createdBy}} &nbsp; {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
+                                    </div>
+                                    <div class="commentsadded" *ngIf="i!=commentnumber">
+                                   <b>{{c.comments}}</b> 
+                                  </div>
+                                  <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
+                                   <input type="text" name="comment" formControlName="editcomment" placeholder="Add Comment..."/>
+                                  
+                                   <div class="row">
+                                   <div class="col-md-3" id="updatesavecomment">
+
+                                   <button type="button" class="btn btn-primary"  (click)="updatecomment(c.id)">Save</button>
+                                   </div>
+                                   <div class="col-md-3" id="updatecancelcomment">
+                                   <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
+                                  </div>
+                                  <!-- <div class="col-md-6" >
+                                    <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
+                                  </div> -->
                                 </div>
+                                  </div>
+                                   <div class="comment-action" *ngIf="i!=commentnumber">
+                                    <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" 
+                                    style="color:red;cursor:pointer" >
+                                     Edit
+                                   </button> 
+                                 
+                                 </div>
+                                  </div>
+                                  </div>
+                                </div>
+                              
                               </div>
-                              <div class="comment comment-level-1" *ngIf="taskcomments!=0">
+
+                            </mat-tab>  
+                            <mat-tab label="History">
+                            
+                              <ul>
+                                <li *ngFor="let history of taskhistory">
+                                  {{history.message}}
+                                  <hr>
+                                </li>
+                              </ul>
+                              <!-- <div class="comment-content" > 
+                              
+                                </div> -->
+                            </mat-tab>
+                            <mat-tab label="Attachments">
+                            
+                              <div class="comment comment-level-1">
                                 <!-- <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
                                 <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div> -->
-                                &nbsp;
+                                
                                 <div>
-                                <div class="comment-content" *ngFor="let c of taskcomments;let i=index">
-                                  <div> 
-                                  <div class="userimage" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
-                                    <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
-                                    <div  *ngIf="result.length>3"><img class="res-circle " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
+                                  <div class="comment-label">
+                                  
+                                    <!-- <span class="comment-time"> - 5 days ago</span> -->
                                   </div>
-                                </div>
-                                  <div class="comment-name">
-                                    {{c.createdBy}} &nbsp; {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
+                                  <div class="comment-content" *ngFor="let attachments of taskattacments"> 
+                                    <div class="attachment-name">
+                                      <!-- {{firstname}} &nbsp;{{lastname}}&nbsp; {{currentdate | date}} -->
+                                    </div>
+                                    <div>
+                                      File Name : <b>{{attachments.fileName}}</b>
                                   </div>
-                                  <div class="commentsadded" *ngIf="i!=commentnumber">
-                                 <b>{{c.comments}}</b> 
-                                </div>
-                                <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
-                                 <input type="text" name="comment" formControlName="editcomment" placeholder="Add Comment..."/>
-                                 
-                                 <div class="row">
-                                 <div class="col-md-3" id="updatesavecomment">
-                                  <br>
-                                 <button type="button" class="btn btn-primary"  (click)="updatecomment(c.id)">Save</button>
+                                  <div class="attachment-action">
+                                    File Size :<b>{{attachments.fileSize | fileSizePipe}}</b>
+                                  
                                  </div>
-                                 <div class="col-md-3" id="updatecancelcomment">
-                                 <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
-                                </div>
-                                <!-- <div class="col-md-6" >
-                                  <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
-                                </div> -->
-                              </div>
-                                </div>
-                                 <div class="comment-action" *ngIf="i!=commentnumber">
-                                  <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" style="color:red;cursor:pointer" >
-                                   Edit
-                                 </button> 
-                               
-                               </div>
-                               <br>
-                                </div>
-                                </div>
-                              </div>
-                            
-                            </div>
-                            
-                          </mat-tab>  
-                          <mat-tab label="History">
-                            <br>
-                            <ul>
-                              <li *ngFor="let history of taskhistory">
-                                {{history.message}}
-                                <hr>
-                              </li>
-                            </ul>
-                            <!-- <div class="comment-content" > 
-                             
-                              </div> -->
-                          </mat-tab>
-                          <mat-tab label="Attachments">
-                            <br>
-                            <div class="comment comment-level-1">
-                              <!-- <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-                              <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div> -->
-                              &nbsp;
-                              <div>
-                                <div class="comment-label">
-                                 
-                                  <!-- <span class="comment-time"> - 5 days ago</span> -->
-                                </div>
-                                <div class="comment-content" *ngFor="let attachments of taskattacments"> 
-                                  <div class="attachment-name">
-                                    <!-- {{firstname}} &nbsp;{{lastname}}&nbsp; {{currentdate | date}} -->
                                   </div>
-                                  <div>
-                                    File Name : <b>{{attachments.fileName}}</b>
-                                </div>
-                                <div class="attachment-action">
-                                  File Size :<b>{{attachments.fileSize | fileSizePipe}}</b>
                                 
-                               </div>
+                                
                                 </div>
-
-                               
                               </div>
-                            </div>
-                            
-                          </mat-tab>
-                          <mat-tab label="Resources">
-                            <div class="projects-table-body">
-                              <table class="table">
-                                <thead>
-                                  <tr class="separated">
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>Last Updated</th>
-                                  </tr>
-                                </thead>
-                                <tbody>
-                                  <tr>
-                                    <td >{{selectedtaskdata.resources| userPipe : users_list}}</td>
-                                    <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                                    <td >{{roles?roles:'-'}}</td>
-                                    <td >{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
-                                  </tr>
-                                </tbody>
-                                
-                              </table>
-                            </div>
-                          </mat-tab>
-                        </mat-tab-group>
-                      </div>  
-                  </div>
-              </form>
-      </div>
-  </div>          
-  <div class="modal-footer modelprfooter">
-    <div class="pull-right">
-      <button (click)="resetupdatetaskproject()" class="btn btn-primary">Reset</button>
-      <button (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
-      <button [disabled]="updatetaskForm.invalid" (click)="updatetask()" class="btn btn-primary btn-update">Update</button>
-    </div>
-  </div>
-</ng-template>
 
-<ng-template class="modal-up" #uploadtaskfilemodal>
-  <div class="modal-header modelprhead">
-    <h4 class="modal-title pull-left">Upload File</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="uploadtaskFilemodalref.hide()">
-        <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <div class="container" style="width:100%">
-        <form [formGroup]="uploadtaskFileForm" (ngSubmit)="submitUploadFileForm()">
-            <div class="row">
-                <div class="col-md-6">
-                    <label for="category">File Category<span style="color:red">*</span></label>
-                    <select class="form-control" style="border:1px solid lightgray" formControlName="category">
-                      <option [value]="null" disabled hidden>Select File Category</option>
-                      <option value="" [selected]="true">Select File Category</option>
-                      <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
-                        
-                    </select>
-                    <span
-                        *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched"
-                        style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
-                </div>
-                </div>
+                            </mat-tab>
+                            <mat-tab label="Resources">
+                              <div class="projects-table-body">
+                                <table class="table">
+                                  <thead>
+                                    <tr class="separated">
+                                      <th>Name</th>
+                                      <th>Role</th>
+                                      <th>Last Updated</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr>
+                                      <td >{{selectedtaskdata.resources| userPipe : users_list}}</td>
+                                      <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
+                                      <td >{{roles?roles:'-'}}</td>
+                                      <td >{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
+                                    </tr>
+                                  </tbody>
 
-                <div class="col-md-12">
-                    
-                  <label>Upload<span style="color:red">*</span></label>
-                  <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File" formControlName="filePath" placeholder="choose file">
-  
-                  
-                  <span *ngIf="uploadtaskFileForm.get('filePath').invalid && uploadtaskFileForm.get('filePath').touched"
-                      style="color:red" class="fa fa-info-circle errspan"></span>
-  
-              </div>
-            
-        </form>
-    </div>
-    </div>
+                                </table>
+                              </div>
+                            </mat-tab>
+                          </mat-tab-group>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>          
     <div class="modal-footer modelprfooter">
-      <div class="pull-right">
-          <button (click)="uploadtaskFilemodalref.hide()" class="btn btn-primary">Cancel</button>
-          <button [disabled]="uploadtaskFileForm.invalid" (click)="submitUploadFileForm()" class="btn btn-primary">Submit</button>
-          </div>
+        <div class="pull-right">
+            <button (click)="resetupdatetaskproject()" class="btn btn-primary">Reset</button>
+            <button (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
+            <button [disabled]="updatetaskForm.invalid" (click)="updatetask()" class="btn btn-primary btn-update">Update</button>
+        </div>
+    </div>
+  
+  </ng-template>
+
+  <ng-template class="modal-up" #uploadtaskfilemodal>
+    <div class="modal-header modelprhead">
+      <h4 class="modal-title pull-left">Upload File</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="uploadtaskFilemodalref.hide()">
+        <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+      </button>
+    </div>
+    <div class="modal-body modelprbody">
+        <div class="container p-0" style="width:100%">
+            <form [formGroup]="uploadtaskFileForm" (ngSubmit)="submitUploadFileForm()">
+                <div class="row">
+                    <div class="form-fileds col-md-12">
+                        <label for="category">File Category<span class="star">*</span></label>
+                        <select class="form-control"formControlName="category">
+                          <option [value]="null" disabled hidden>Select File Category</option>
+                          <option value="" [selected]="true">Select File Category</option>
+                          <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                            
+                        </select>
+                        <span
+                            *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched"
+                            class="errspan required">File Category Required*</span>
+                    </div>           
+                  
+                    <div class="form-fileds col-md-12">
+                        <label>Upload<span class="star">*</span></label>
+                        <input type="file" class="form-control" (change)="onFileSelected($event)" 
+                               name="Upload-File" formControlName="filePath" placeholder="choose file">                  
+                        <span *ngIf="uploadtaskFileForm.get('filePath').invalid && uploadtaskFileForm.get('filePath').touched"
+                          class="errspan required"></span>
+                    </div> 
+                </div>
+            </form>
+        </div>
+    </div> 
+    <div class="modal-footer modelprfooter">
+        <div class="pull-right">
+            <button (click)="uploadtaskFilemodalref.hide()" class="btn btn-primary">Cancel</button>
+            <button [disabled]="uploadtaskFileForm.invalid" (click)="submitUploadFileForm()" class="btn btn-primary btn-update">Submit</button>
+        </div>
     </div>
   </ng-template>
+
 </div>

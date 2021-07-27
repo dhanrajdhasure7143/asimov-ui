@@ -354,6 +354,7 @@ padding-bottom: 70px;
   .mat-paginator > div > div > div.mat-paginator-range-actions > button:disabled{
 
     background-color: transparent !important;    
+    color: rgba(0,0,0,.26) !important;
   }
 
 

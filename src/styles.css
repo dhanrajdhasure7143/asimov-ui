@@ -1610,9 +1610,9 @@ img.testplus1 {
 
 /* Modal popup New Styles */
 
-::ng-deep .modal-lr .modal-content {
+.modal-lr .modal-content {
   margin-top: 0px !important;
-  height: 60%;
+  /* height: 60%; */
   width: 100%;
   overflow: hidden;
 }
@@ -1754,7 +1754,8 @@ span.projects-back-button {
 }
 .mat-paginator {
   border-top: 1px solid #cccccc;
-  min-height: 25px;
+  min-height: 40px;
+  padding-top:5px;
 }
 
 /* bpmn canvas properties panel */
@@ -1928,4 +1929,22 @@ button.action-button.clear {
 
 .bpmnCreate .modal-body {
   height: calc(100% - 102px);
+}
+.prjmain .mat-tab-body-content {
+  overflow: hidden;
+}
+.mat-paginator .mat-icon-button:hover {
+  background-color: #00a0e4;
+  color: #fff;
+}
+.mat-paginator .mat-icon-button {
+  width: 30px !important;
+  height: 30px !important;
+  line-height: 30px !important;
+}
+span.star {
+  margin-left: 4px;
+}
+.bpspaginationdiv .mat-paginator-page-size {
+  left: 5px !important;
 }

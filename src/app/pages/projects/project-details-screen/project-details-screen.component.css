@@ -120,7 +120,7 @@ button.btn.btn-primary {
   margin: 0px 0px 0px 10px;
   padding: 6px 12px;
   border-radius: 3px;
-  border: none;
+  /* border: none; */
 }
 /* #projects_details_screen button.btn.btn-primary {
   background-color: #00a0e3 !important;
@@ -392,7 +392,9 @@ span.labelcont b {
     margin-bottom: 12px;
 }       
 
-
-
-
-    
+.labelcont {
+  font-size: 14px;
+  font-weight: 500;
+  color: #001c47;
+  display: block;
+}

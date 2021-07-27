@@ -177,7 +177,7 @@ mat-tab-body {
 }
 
 #bpmn_list {
-  height: 59vh;
+  height: 62vh;
   overflow: hidden auto;
 }
 
@@ -256,6 +256,7 @@ mat-expansion-panel {
   width: 10.5%;
   text-align: center;
   align-items: center;
+  padding-right: 3px;
 }
 
 .workspace-title {
