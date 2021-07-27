@@ -64,6 +64,11 @@ export class CreateBpmnDiagramComponent implements OnInit {
   xmlTabContent: string;
   errXMLcontent: string = '';
   modalRef: BsModalRef;
+  menuToggleTitle : boolean = false;
+  propertiesContainer : boolean = false;
+  panelOpenState = false;
+  step = 0;
+  isOpenedState:number=0;
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -99,6 +104,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
     private router:Router, private route:ActivatedRoute, private bpmnservice:SharebpmndiagramService, private global:GlobalScript, private hints:BpsHints, public dialog:MatDialog,private shortcut:BpmnShortcut) {}
 
   ngOnInit(){
+    localStorage.setItem("isheader","true")
     this.dt.changeParentModule({"route":"/pages/businessProcess/home", "title":"Business Process Studio"});
     this.dt.changeChildModule({"route":"/pages/businessProcess/createDiagram", "title":"Studio"});
     this.dt.changeHints(this.hints.bpsCreateHints);
@@ -111,6 +117,42 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.setRPAData();
     this.getApproverList();
     this.getUserBpmnList();
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+        this.dt.bpsNotationaScreenValues(obj);
+  }
+  ngAfterViewInit(){
+    this.dt.download_notation.subscribe(res=>{
+      this.fileType=res
+      if(this.fileType != null){
+        this.downloadBpmn(false);
+      }
+    })
+    this.dt.header_value.subscribe(res=>{
+      let headerValue=res
+      console.log(res);
+      let result = headerValue instanceof Object;
+      if(!result){
+      if(headerValue == 'zoom_in'){
+        this.zoomIn();
+      }else if(headerValue == 'zoom_out'){
+        this.zoomOut();
+      }else if(headerValue == 'save_process'){
+        this.saveprocess(null)
+      }else if(headerValue == 'save&approval'){
+        this.submitDiagramForApproval()
+      }else if(headerValue == 'orchestartion'){
+        this.orchestrate()
+      }else if(headerValue == 'deploy'){
+        this.openDeployDialog();
+      }else if(headerValue == 'startProcess'){
+        this.openVariableDialog();
+      }
+      
+    }else if(result){
+      this.slideUp(headerValue)
+    }
+    })
   }
 
   getUserBpmnList(){
@@ -217,6 +259,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype':current_bpmn_info["ntype"]}
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
+    this.updated_date_time = current_bpmn_info["modifiedTimestamp"];
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+      this.dt.bpsNotationaScreenValues(obj);
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
       for(var s=0; s<this.approver_list.length; s++){
         let each = this.approver_list[s];
@@ -230,7 +276,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     }
     else
-      this.selected_approver = null;
+      this.selected_approver = null;   
    }
 
   getAutoSavedDiagrams(){
@@ -249,6 +295,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   filterAutoSavedDiagrams(){
      let sel_not = this.saved_bpmn_list[this.selected_notation]
+     this.rejectedOrApproved=sel_not['bpmnProcessStatus'];
+     this.updated_date_time=sel_not['modifiedTimestamp'];
+     let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+       this.dt.bpsNotationaScreenValues(obj);
+
       this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
         return sel_not["bpmnProcessStatus"] != "APPROVED" && sel_not["bpmnProcessStatus"] != "REJECTED" && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
       })
@@ -328,6 +380,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
             this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+            let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+            "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+                this.dt.bpsNotationaScreenValues(obj);
           }
           this.initModeler();
           this.bpmnModeler.importXML(selected_xml, function(err){
@@ -351,6 +406,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
+        let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+        this.dt.bpsNotationaScreenValues(obj);
       }
       this.initModeler();
       this.bpmnModeler.importXML(selected_xml, function(err){
@@ -695,6 +753,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
           )
         })
     });
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+        this.dt.bpsNotationaScreenValues(obj);
   }
 
   slideUp(e){
@@ -785,6 +846,36 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
   zoomOut() {
     this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
+  }
+  toggleOpen(){
+    this.menuToggleTitle = true;
+    this.propertiesContainer = true;
+    let el = document.getElementById("propertiesPanelBody");
+    if(el){
+      el.classList.remove("slide-right");
+      el.classList.add("slide-left");
+    }
+    
+  }
+  toggleClosed(){
+    this.menuToggleTitle = false;
+    this.propertiesContainer = false;
+    let el = document.getElementById("propertiesPanelBody");
+    if(el){
+      el.classList.remove("slide-left");
+      el.classList.add("slide-right");
+    }
+    this.isOpenedState=0;
+  }
+  onExpansionClik(i){
+    this.isOpenedState=i;
+    this.menuToggleTitle = true;
+    this.propertiesContainer = true;
+    let el = document.getElementById("propertiesPanelBody");
+    if(el){
+      el.classList.remove("slide-right");
+      el.classList.add("slide-left");
+    }
   }
 
 }

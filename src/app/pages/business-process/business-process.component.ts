@@ -14,6 +14,11 @@ export class BusinessProcessComponent implements AfterViewChecked {
   rejectedOrApproved:any;
   isfromApprover:any;
   isEditbutton: boolean = true;
+  isEditMode:boolean=false;
+  updated_date_time:any;
+  isSave_disabled:boolean=true;
+  iscreate_notation:boolean;
+  isStartProcessBtn:boolean=false;
 
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService ) { }
@@ -37,6 +42,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
       if(notationValues_obj){
         this.rejectedOrApproved=notationValues_obj['rejectedOrApproved'];
         this.isfromApprover=notationValues_obj['isfromApprover'];
+        this.updated_date_time=notationValues_obj['autosaveTime'];
+        this.iscreate_notation=notationValues_obj['isFromcreateScreen'];
+        this.isStartProcessBtn=notationValues_obj['isStartProcessBtn'];
       }
     });
   }
@@ -59,6 +67,8 @@ export class BusinessProcessComponent implements AfterViewChecked {
   saveProcess(){​​​​​​​​
   this.dt.bpsHeaderValues("save_process");
   this.isEditbutton=true;
+  this.isEditMode=false;
+  this.isSave_disabled=true;
   }​​​​​​​​
  
   UploadFile(e){​​​​​​​​
@@ -68,16 +78,25 @@ export class BusinessProcessComponent implements AfterViewChecked {
   editNotation(){
     this.dt.bpsHeaderValues("edit");
     this.isEditbutton=false;
+    this.isEditMode=true;
+    this.isSave_disabled=false;
   }
   saveandSubmitApproval(){
     this.dt.bpsHeaderValues("save&approval");
+    this.isEditMode=false;
+    this.isSave_disabled=true;
   }
   orchestartion(){
     this.dt.bpsHeaderValues("orchestartion");
   }
-
+ deployNotation(){
+    this.dt.bpsHeaderValues("deploy");
+  }
+  startProcess(){
+    this.dt.bpsHeaderValues("startProcess");
+  }
+  fitNotation(){
+    this.dt.bpsHeaderValues("fitNotation");
+  }
 
 }
-// <i class="fa fa-arrow-left" aria-hidden="true" (click)="route()"></i>&nbsp;&nbsp;&nbsp;
-//                   <span class="module-heading-title">Business Process Studio</span>
-//                   

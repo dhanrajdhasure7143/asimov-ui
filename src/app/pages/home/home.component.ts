@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    document.getElementById("filters").style.display = "block";
+    // document.getElementById("filters").style.display = "block";
     var tkn = localStorage.getItem("accessToken")
     this.dt.changeParentModule(undefined);
     this.dt.changeChildModule(undefined);
