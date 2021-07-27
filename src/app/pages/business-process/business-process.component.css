@@ -36,11 +36,14 @@ span.level3 {
 }
 .bps-upload {
     margin: 0px 0px 0px 10px !important;
-    border-radius: 4px;
+    border-radius: 3px;
     background-color: #00a0e3 !important;
-    padding: 10px 12px !important;    
+    padding: 8px 12px !important;
     color: #fff;
     font-size: 15px !important;
+}
+.bps-upload:hover {
+    background-color: #001c47 !important;
 }
 .bps-upload img {
     padding-right: 8px;

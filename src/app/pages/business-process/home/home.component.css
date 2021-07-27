@@ -11,6 +11,7 @@
     border-radius: 0px;
     margin: 10px 0px;
     padding: 0px;
+    margin-bottom: 0px;
 }
 .new-bps-layout {
     overflow: auto;
@@ -107,7 +108,7 @@ div#bpmn_list {
 .new-bps-grid-data mat-expansion-panel {
     width: 100%;
     position: relative;
-    padding: 8px 0px !important;
+    padding: 2px 0px !important;
     border-top: 1px solid #dee2e6 !important;
     border: none;
 }
