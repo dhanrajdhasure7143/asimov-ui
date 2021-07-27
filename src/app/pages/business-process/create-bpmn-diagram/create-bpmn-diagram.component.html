@@ -31,14 +31,14 @@
         <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
         </div> -->
 </div>
-<div class="container-fluid h-100">
+<div class="canvas-container-main">
     <!-- <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span> -->
     <div class='h-100'>
         <span class="err-msg"></span>
         <mat-tab-group class="h-100 canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
             <mat-tab label="Notation">
                 <div class="row h-100">
-                    <div id="canvas" class="col-md-12 h-100"></div>
+                    <div id="canvas" class="col-md-12 h-100 p-0"></div>
 
                     <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
                         <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
