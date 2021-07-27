@@ -18,41 +18,75 @@
           </div>
           <div class="col-md-6 new-bps-icons pl-0" *ngIf="isHeaderShow == 'true'">
             <div class="row bps-float">
-              <button *ngIf='!iscreate_notation' class="editprimary" matTooltip="Edit" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" [disabled]="(isEditMode)" (click)="editNotation()"><img src="../../../assets/images/BPMS/Edit-white.svg"></button>
-              <button mat-button [matMenuTriggerFor]="download" matTooltip="Download" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/download.svg"></button>
+              <button *ngIf='!iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="(isEditMode)" (click)="editNotation()">
+                <img src="../../../assets/images/BPMS/Edit-white.svg">
+                <span class="testtooltip">Edit</span>
+              </button>
+              <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
+                <img src="../../../assets/images/BPMS/download.svg">
+                <span class="testtooltip">Download</span>
+              </button>
                 <mat-menu #download="matMenu">
                   <button mat-menu-item (click)="downloadNotaton('svg')">SVG</button>
                   <button mat-menu-item (click)="downloadNotaton('png')">PNG</button>
                   <button mat-menu-item (click)="downloadNotaton('jpg')">JPG</button>
                   <button mat-menu-item (click)="downloadNotaton(selectedNotationType)">{{selectedNotationType | uppercase}}</button>
                 </mat-menu>
-              <button><img src="../../../assets/images/BPMS/share.svg" matTooltip="Share" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button>
+              <button class="tsttooltipbtn">
+                <img src="../../../assets/images/BPMS/share.svg" >
+                <span class="testtooltip">Share</span>
+              </button>
               <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
-              <button><img src="../../../assets/images/BPMS/copy.svg" matTooltip="Copy" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button>
-              <button class="" (click)="zoomIn()" matTooltip="Zoom in" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/zoom-in.svg"></button>
-              <button class="" (click)="zoomOut()" matTooltip="Zoom out" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/zoom-out.svg"></button>
-              <button class="" (click)="fitNotation()" matTooltip="Fit to screen" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Fit to screen.svg"></button>
+              <button class="tsttooltipbtn">
+                <img src="../../../assets/images/BPMS/copy.svg" >
+                <span class="testtooltip">Copy</span>
+              </button>
+              <button class="tsttooltipbtn" (click)="zoomIn()" >
+                <img src="../../../assets/images/BPMS/zoom-in.svg">
+                <span class="testtooltip">Zoom in</span>
+              </button>
+              <button class="tsttooltipbtn" (click)="zoomOut()">
+                <img src="../../../assets/images/BPMS/zoom-out.svg">
+                <span class="testtooltip">Zoom out</span>
+              </button>
+              <button class="tsttooltipbtn" (click)="fitNotation()" >
+                <img src="../../../assets/images/BPMS/Fit to screen.svg">
+                <span class="testtooltip">Fit to screen</span>
+              </button>
               <span class="bpsbtnsep">|</span>
-              <button class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg"></button>
-              <button class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="iscreate_notation" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg"></button>
-              <button class='icon-disabled' *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation" ><img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg"></button>
-              <button class="clr-hvr" matTooltip="Orchestration" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
+              <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" >
+                <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
+                <span class="testtooltip">Save</span>
+              </button>
+              <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcess()" *ngIf="iscreate_notation" >
+                <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
+                <span class="testtooltip">Save</span>
+              </button>
+              <button class='icon-disabled' *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation" >
+                <img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg">
+              </button>
+              <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
                 <img src="../../../assets/images/BPMS/Orchestrate.svg">
+                <span class="testtooltip">Orchestration</span>
               </button>
-              <button class="clr-hvr" matTooltip="Save & Submit for approval" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && iscreate_notation">
+              <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
+                <span class="testtooltip">Save & Submit for approval</span>
               </button>
-              <button class="clr-hvr" *ngIf="iscreate_notation" matTooltip="Save & Submit for approval" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="saveandSubmitApproval()">
+              <button class="clr-hvr tsttooltipbtn" *ngIf="iscreate_notation" (click)="saveandSubmitApproval()">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
+                <span class="testtooltip">Save & Submit for approval</span>
               </button>
               <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
-              <button class="clr-hvr" *ngIf="rejectedOrApproved == 'APPROVED'" matTooltip="Deploy Notation" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="deployNotation()">
+              <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
                 <img src="../../../assets/images/BPMS/Deploy.svg">
+                <span class="testtooltip">Deploy Notation</span>
               </button>
-              <button class="clr-hvr" *ngIf="isStartProcessBtn" (click)="startProcess()" matTooltip="Start Process" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" >
+              <button class="clr-hvr tsttooltipbtn" *ngIf="isStartProcessBtn" (click)="startProcess()"  >
                 <img src="../../../assets/images/BPMS/Play.svg">
+                <span class="testtooltip">Start Process</span>
               </button>
               <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
               <button class="clr-hvr" matTooltip="Delete" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button> -->

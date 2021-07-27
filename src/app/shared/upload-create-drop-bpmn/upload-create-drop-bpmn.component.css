@@ -17,12 +17,12 @@
 }
 .model-text button{
     margin-left: 0px;
-    border-radius: 4px !important;
+    border-radius: 3px !important;
     margin-top: 14px;
     background-color: #00a0e3 !important;
     outline: none;
     border: none;
-    padding: 8px 12px;
+    /* padding: 8px 12px; */
 }
 
 .drop_box ngx-dropzone {
