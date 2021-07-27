@@ -64,6 +64,11 @@ export class CreateBpmnDiagramComponent implements OnInit {
   xmlTabContent: string;
   errXMLcontent: string = '';
   modalRef: BsModalRef;
+  menuToggleTitle : boolean = false;
+  propertiesContainer : boolean = false;
+  panelOpenState = false;
+  step = 0;
+  isOpenedState:number=0;
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -112,6 +117,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.setRPAData();
     this.getApproverList();
     this.getUserBpmnList();
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+        this.dt.bpsNotationaScreenValues(obj);
   }
   ngAfterViewInit(){
     this.dt.download_notation.subscribe(res=>{
@@ -251,6 +259,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
     let params:Params = {'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype':current_bpmn_info["ntype"]}
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
+    this.updated_date_time = current_bpmn_info["modifiedTimestamp"];
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+      this.dt.bpsNotationaScreenValues(obj);
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
       for(var s=0; s<this.approver_list.length; s++){
         let each = this.approver_list[s];
@@ -264,7 +276,7 @@ export class CreateBpmnDiagramComponent implements OnInit {
       }
     }
     else
-      this.selected_approver = null;
+      this.selected_approver = null;   
    }
 
   getAutoSavedDiagrams(){
@@ -283,6 +295,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
 
   filterAutoSavedDiagrams(){
      let sel_not = this.saved_bpmn_list[this.selected_notation]
+     this.rejectedOrApproved=sel_not['bpmnProcessStatus'];
+     this.updated_date_time=sel_not['modifiedTimestamp'];
+     let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+       this.dt.bpsNotationaScreenValues(obj);
+
       this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
         return sel_not["bpmnProcessStatus"] != "APPROVED" && sel_not["bpmnProcessStatus"] != "REJECTED" && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
       })
@@ -735,6 +753,9 @@ export class CreateBpmnDiagramComponent implements OnInit {
           )
         })
     });
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
+        this.dt.bpsNotationaScreenValues(obj);
   }
 
   slideUp(e){
@@ -825,6 +846,36 @@ export class CreateBpmnDiagramComponent implements OnInit {
   }
   zoomOut() {
     this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
+  }
+  toggleOpen(){
+    this.menuToggleTitle = true;
+    this.propertiesContainer = true;
+    let el = document.getElementById("propertiesPanelBody");
+    if(el){
+      el.classList.remove("slide-right");
+      el.classList.add("slide-left");
+    }
+    
+  }
+  toggleClosed(){
+    this.menuToggleTitle = false;
+    this.propertiesContainer = false;
+    let el = document.getElementById("propertiesPanelBody");
+    if(el){
+      el.classList.remove("slide-left");
+      el.classList.add("slide-right");
+    }
+    this.isOpenedState=0;
+  }
+  onExpansionClik(i){
+    this.isOpenedState=i;
+    this.menuToggleTitle = true;
+    this.propertiesContainer = true;
+    let el = document.getElementById("propertiesPanelBody");
+    if(el){
+      el.classList.remove("slide-right");
+      el.classList.add("slide-left");
+    }
   }
 
 }

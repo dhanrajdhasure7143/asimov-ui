@@ -359,6 +359,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
     }else{
       current_bpmn_info = this.saved_bpmn_list[this.selected_notation];
+      console.log("current_bpmn_info",current_bpmn_info)
     }
 
     if(current_bpmn_info){
@@ -388,7 +389,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     else
       this.selected_approver = null;
       let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time}
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
       setTimeout(() => {
         this.dt.bpsNotationaScreenValues(obj);
       }, 4000);
@@ -511,7 +512,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
     setTimeout(() => {
       this.dt.bpsNotationaScreenValues(obj);
-    }, 3000);  
+    }, 5000);
   }
 
   setUrlParam(name, value) {
@@ -1032,6 +1033,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           )
         })
     })
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
+      this.dt.bpsNotationaScreenValues(obj);
   }
 
   saveprocess(newVal){
@@ -1148,6 +1152,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           )
         })
     })
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
+      this.dt.bpsNotationaScreenValues(obj)
   }
 
   uploadConfBpmn(confBpmnData){
@@ -1343,6 +1350,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           this.isStartProcessBtn=deployResponse.startprocess
       }
     })
+    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
+      this.dt.bpsNotationaScreenValues(obj);
   }
 
   openVariableDialog(){
@@ -1391,6 +1401,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
       this.cancelProcess();
       this.isStartProcessBtn=false;
+      let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+      "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
+        this.dt.bpsNotationaScreenValues(obj);
     })    
   }
 

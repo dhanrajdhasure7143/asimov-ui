@@ -31,18 +31,159 @@
         <span class="fa fa-crosshairs" (click)="fitNotationView()"></span>
         </div> -->
 </div>
-<div class="container-fluid">
+<div class="container-fluid h-100">
     <!-- <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span> -->
-    <div>
+    <div class='h-100'>
         <span class="err-msg"></span>
-        <mat-tab-group class="canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
+        <mat-tab-group class="h-100 canvas-container" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
             <mat-tab label="Notation">
-                <div class="row">
-                    <div id="canvas" class="col-md-12"></div>
-                    <div class="propertiesContainer">
+                <div class="row h-100">
+                    <div id="canvas" class="col-md-12 h-100"></div>
+
+                    <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
+                        <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
+                            <div class="menuToggle">
+                                <img src="../../../../assets/images/BPMS/expand-left.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                            </div>
+                        </div>
+                        <div *ngIf="menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleClosed()">
+                            <div class="menuToggle" >
+                                <img src="../../../../assets/images/BPMS/expand-right.svg" alt="menuToggleIcon" class="menuToggleIcon" >
+                                <label class="menuToggleTitle">Menu</label>
+                            </div>
+                        </div>
+
+                        <div class="propertiesPanelBody slide-right" id="propertiesPanelBody" [class.slide-left]='isopen'>
+
+                            <mat-accordion>
+                                <mat-expansion-panel (opened)="onExpansionClik('1')" hideToggle [expanded]="isOpenedState==1">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title class="accordionHeaderMain">
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Properties.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label class="accordionHeader">Properties</label>
+                                            <img src="../../../../assets/images/BPMS/maximize-2.svg" alt="propexpandIcon" class="propexpandIcon">
+                                        </div>
+                                    </mat-panel-title>
+                                  </mat-expansion-panel-header>
+                                  <div id="properties" class=""></div>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Discussions</label>
+                                        </div>                                                
+                                    </mat-panel-title>                                            
+                                  </mat-expansion-panel-header>
+                                  <mat-panel-description>
+                                    <div class="activecollaboration">
+                                        <div class="row collab">
+                                            <div class="row lftusermsg">
+                                                <img alt="" src="../../../../assets/images/BPMS/user1.png">
+                                                <p>Lorem ipsum dolor sit amet.</p>
+                                                <p>Rachel M | 09th Jan, 12 pm</p>
+                                            </div>
+                                            <div class="row rgtusermsg">
+                                                <p>Lorem ipsum dolor sit amet.</p>
+                                                <p class="rttime">09th Jan, 12 pm</p>
+                                            </div>
+                                            <div class="row lftusermsg">
+                                                <img alt="" src="../../../../assets/images/BPMS/user2.png">
+                                                <p>Lorem ipsum dolor sit amet.</p>
+                                                <p><a href="#"><img alt="" src="../../../../assets/images/BPMS/attach-file.svg" width="16px" height="16px">Lorem ipsum.pdf</a></p>
+                                                <p>Rick Johnson | 09th Jan, 12 pm</p>
+                                            </div>
+                                        </div>
+                                        <div class="row collabottom">
+                                            <textarea  rows="3" class="msgip">Loreum ipsum dolor sit amet, consec</textarea>
+                                            <button class="btn"><img alt="" src="../../../../assets/images/BPMS/attach.svg"></button>
+                                            <button class="btn"><img alt="" src="../../../../assets/images/BPMS/Send.svg"></button>
+                                        </div>
+                                    </div>
+                                  </mat-panel-description>                                          
+                                </mat-expansion-panel>
+                                
+                                <mat-expansion-panel (opened)="onExpansionClik('3')" hideToggle [expanded]="isOpenedState==3">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Shortcuts.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Shortcuts</label>
+                                        </div>
+                                    </mat-panel-title>                                            
+                                  </mat-expansion-panel-header>
+                                  <mat-panel-description>
+                                    <div class="container">
+                                        <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+                                        <table>
+                                            <tr *ngFor="let keyboardLabels of keyboardLabels">
+                                                <td><span class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
+                                                <td>
+                                                    <div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                  </mat-panel-description>                                         
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/star.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Favourites</label>
+                                        </div>
+                                    </mat-panel-title>                                            
+                                  </mat-expansion-panel-header>
+                                  <mat-panel-description>
+                                    <div class="favouriteslistdiv">
+                                        <div class="row">
+                                            <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="">Business Process Studio</label>
+                                            <label class="favsh">(BPM)</label>
+                                        </div>
+                                        <div class="row">
+                                            <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="">Robotic Process Automation</label>
+                                            <label class="favsh">(RPA)</label>
+                                        </div>
+                                        <div class="row">
+                                            <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="">Process Intelligence</label>
+                                            <label class="favsh">(PI)</label>
+                                        </div>
+                                    </div>
+                                  </mat-panel-description>
+                                </mat-expansion-panel>
+
+                                <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5">
+                                  <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <div class="accordionHeaderToggle">
+                                            <img src="../../../../assets/images/BPMS/Activities.svg" alt="menuToggleIcon" class="menuToggleIcon">
+                                            <label for="" class="accordionHeader">Activities</label>
+                                        </div> 
+                                    </mat-panel-title>                                            
+                                  </mat-expansion-panel-header>
+                                  <mat-panel-description>
+                                    <div class="activitieslistdiv">
+                                        <p>Activities list Here</p>
+                                    </div>
+                                  </mat-panel-description>
+                                </mat-expansion-panel>
+
+                            </mat-accordion>
+                            
+                        </div>
+                    </div>
+                    <!-- <div class="propertiesContainer">
                         <div class="propertiesTitle" (click)="togglePosition()"><div>Properties Panel</div></div>
                         <div id="properties" class="slide-right"></div>
-                    </div>
+                    </div> -->
                     <div #dmnTabs id="dmn-tabs" *ngIf="selectedNotationType=='dmn'"></div>
                 </div>
                 <ng-template #wrongXMLcontent>
@@ -94,13 +235,13 @@
     </div>
 </div>
 <ng-template #keyboardShortcut>
- <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
+ <!-- <div><label for="" class="keyboard_header_shortcuts">Keyboard Shortcuts</label></div>
  <table>
         <tr *ngFor="let keyboardLabels of keyboardLabels" >
             <td><span  class="keyboard_label_style">{{keyboardLabels.labelName}}</span></td>
              <td><div [innerHtml]="keyboardLabels.labelValue" class="keyboard_label_style"></div></td>
         </tr>
-    </table>
+    </table> -->
 </ng-template>
 
 

@@ -33,12 +33,26 @@
               <button class="" (click)="zoomOut()" matTooltip="Zoom out" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/zoom-out.svg"></button>
               <button class="" (click)="fitNotation()" matTooltip="Fit to screen" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Fit to screen.svg"></button>
               <span class="bpsbtnsep">|</span>
-              <button [disabled]='isSave_disabled && !iscreate_notation' class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg"></button>
+              <button class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg"></button>
+              <button class="bps-save-icon clr-hvr" (click)="saveProcess()" *ngIf="iscreate_notation" matTooltip="Save" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg"></button>
+              <button class='icon-disabled' *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation" ><img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg"></button>
               <button class="clr-hvr" matTooltip="Orchestration" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
                 <img src="../../../assets/images/BPMS/Orchestrate.svg">
               </button>
-              <button class="clr-hvr" [disabled]='isSave_disabled && !iscreate_notation' matTooltip="Save & Submit for approval" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true">
+              <button class="clr-hvr" matTooltip="Save & Submit for approval" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
+              </button>
+              <button class="clr-hvr" *ngIf="iscreate_notation" matTooltip="Save & Submit for approval" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="saveandSubmitApproval()">
+                <img src="../../../assets/images/BPMS/submit-for-approval.svg">
+              </button>
+              <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
+                <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
+              </button>
+              <button class="clr-hvr" *ngIf="rejectedOrApproved == 'APPROVED'" matTooltip="Deploy Notation" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" (click)="deployNotation()">
+                <img src="../../../assets/images/BPMS/Deploy.svg">
+              </button>
+              <button class="clr-hvr" *ngIf="isStartProcessBtn" (click)="startProcess()" matTooltip="Start Process" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" >
+                <img src="../../../assets/images/BPMS/Play.svg">
               </button>
               <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
               <button class="clr-hvr" matTooltip="Delete" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button> -->

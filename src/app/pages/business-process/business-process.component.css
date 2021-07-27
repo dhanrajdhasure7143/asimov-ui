@@ -124,3 +124,6 @@ button.upload-btn.bps-upload:hover img, button.editprimary:hover img {
     height: 18px;
     width: auto;
 }
+.icon-disabled{
+    cursor: no-drop !important;
+}
