@@ -159,3 +159,10 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
 }
+span.projects-back-button {
+    border: none !important;
+    margin: 0px !important;
+}
+.projects-back-button i {
+    margin-right: 3px !important;
+}

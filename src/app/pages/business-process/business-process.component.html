@@ -10,6 +10,7 @@
                 <span *ngIf="isfromApprover" class="label_icon inpro-label">{{rejectedOrApproved}}</span>
               </span>  
               <div class="value" *ngIf="isHeaderShow == 'true'">
+                <span class="projects-back-button" routerlink="/pages/businessProcess/home" tabindex="0"><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span>
                 <span class="level3">Last Modified By: Peter James</span>
                 <span *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
