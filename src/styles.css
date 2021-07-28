@@ -1617,8 +1617,9 @@ img.testplus1 {
   overflow: hidden;
 }
 
-
-.bpspaginationdiv .mat-paginator-outer-container {
+.bpspaginationdiv {
+  position: absolute;
+  bottom: 0px;
   width: 100%;
 }
 

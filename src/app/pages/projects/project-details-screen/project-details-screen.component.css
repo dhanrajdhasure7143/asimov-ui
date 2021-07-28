@@ -28,20 +28,17 @@
   }
 
   .tab-number{
-    font-size: 30px !important;
+    font-size: 20px !important;
+    display: block;
   }
-
   .status-img > img{
     height:60px !important;
     padding-top:30px;
   }
 
-  .status-data{
-    vertical-align: middle;
-    padding-top:15px;
-    padding-left:30px;
-    padding-bottom:15px;
-    color:black !important;
+  .status-data {
+    padding-left: 14px !important;
+    color:#001c47 !important;
   }
 
   table {
@@ -162,7 +159,7 @@ mat-card#projects_details_screen {
 .documents .new-docdiv, .resources .new-resourcediv {
   padding: 8px 15px !important;
   margin-bottom: 0px !important;
-  min-height: 300px;
+  min-height: 325px;
 }
 .resources .projects-table-body , .documents .projects-table-body {
   padding: 0px;
@@ -240,7 +237,7 @@ mat-card#projects_details_screen {
       }
       .comment-content {
         width: 100%;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
     }
     .comment-content-subdiv {
       display: inline-flex;
@@ -308,7 +305,11 @@ span.labelcont b {
     font-weight: 600;
   }
 
-
+  .commentsadded {
+    font-weight: 500;
+    color: #001c47;
+    /* font-size: 18px; */
+  }
   .userimage{
     margin-right: 10px;
   }
@@ -326,11 +327,21 @@ span.labelcont b {
       font-size: 0.95rem;
       color: #292929;
     }
-    .attachment-action{
-      color: #c3ccd3;
-      line-height: 1.2;
-      font-size: 13px;
-      font-weight: bold; 
+
+    .attachmentdiv, ul.historydiv  {
+      padding: 15px 10px;
+    }
+    .attachmentdiv label.label-content {
+      margin-left: 10px;
+      font-weight: 500 !important;
+      color: #001c47 !important;
+    }
+    .row.attachment-content {
+      margin-bottom: 10px !important;
+    }
+    ul.historydiv li {
+      border-bottom: 1px solid #e5e5e5;
+      padding: 8px 0px;
     }
 
     table tbody tr {
@@ -338,7 +349,7 @@ span.labelcont b {
     } 
 
     .project-details-main{
-      overflow: auto !important;
+      /* overflow: auto !important; */
       height:100%;
       background-color:#e3eaef !important;
     }
@@ -352,4 +363,33 @@ span.labelcont b {
   font-weight: 500;
   color: #001c47;
   display: block;
+}
+
+.row.newprhcl {
+  margin-bottom: 15px !important;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.newprhcl .project-info img {
+  margin-right: 15px;
+  text-align: center;
+  width: 40px;
+    height: auto;
+}
+.newprhcl .project-info {
+  display: flex;
+}
+span.labeltit, label.labeltit {
+  font-size: 14px !important;
+  color: #32486B;
+  font-weight: 400;
+  display: block;
+}
+.row.newprjdates {
+  float: right;
+}
+span.labelcont {
+  font-size: 14px;
+  font-weight: 500;
+  color: #32486B;
 }

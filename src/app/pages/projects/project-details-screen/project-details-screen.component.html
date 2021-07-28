@@ -1,25 +1,23 @@
 <div class="project-details-main" *ngIf="projectDetails!=undefined">
-  <div class="new-prj-details">
-      <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
-        <div class="projects-header maincreat">
-      <span class="projects-back-button" *ngIf="programId==undefined" routerLink="/pages/projects/listOfProjects">
-        <i aria-hidden="true" class="fas fa-arrow-left"></i>
-      </span>
-      <span class="projects-back-button" *ngIf="programId!=undefined" [routerLink]="['/pages/projects/programdetails']" [queryParams]="{id:programId}">
-        <i aria-hidden="true" class="fas fa-arrow-left"></i>
-      </span>
-      <span class="projects-header-title">
-        Project Details 
-      </span>
-      <span class="pull-right">
-        <span  (click)="navigateToProjectRepo()">
-          <button class="btn btn-primary prj-lst-btn">
-            <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
-            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
-             Project Repo
-          </button>
+  <div class="projects-header maincreat">
+        <span class="projects-back-button" *ngIf="programId==undefined" routerLink="/pages/projects/listOfProjects">
+            <i aria-hidden="true" class="fas fa-arrow-left"></i>
         </span>
-        <span *ngIf="editdata==true" (click)="updateprojectDetails()">
+        <span class="projects-back-button" *ngIf="programId!=undefined" [routerLink]="['/pages/projects/programdetails']" [queryParams]="   {id:programId}">
+          <i aria-hidden="true" class="fas fa-arrow-left"></i>
+        </span>
+        <span class="projects-header-title">
+            Project Details 
+        </span>
+        <span class="pull-right">
+          <span  (click)="navigateToProjectRepo()">
+            <button class="btn btn-primary prj-lst-btn">
+              <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+              <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
+               Project Repo
+            </button>
+          </span>
+          <span *ngIf="editdata==true" (click)="updateprojectDetails()">
             <button class="btn btn-primary ">
               <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
               <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
@@ -27,53 +25,58 @@
             </button>
           </span>
           <span *ngIf="editdata==true" (click)="projectdetails()">
-              <button class="btn btn-primary prj-lst-btn">
-                <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
-                <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
-                 Reset
-              </button>
-            </span>
-        <span *ngIf="editdata==false" >
-          <button  class="btn btn-primary prj-crt-btn" (click)="editdata=true">
-            <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
-          </button>
+            <button class="btn btn-primary prj-lst-btn">
+              <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+              <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
+               Reset
+            </button>
+          </span>
+          <span *ngIf="editdata==false" >
+            <button  class="btn btn-primary prj-crt-btn" (click)="editdata=true">
+              <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
+            </button>
+          </span>
+      
+          <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
+          <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
         </span>
-        
-        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
-        <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
-      </span>
-        </div>
+  </div>
+  <div class="new-prj-details">
+      <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
   
         <div class="projects-table-body">
-      <div class="newprhcl" >
-        <!-- <div class="container-fluid p-0"> -->
-          <div class="row">
-            <div class="col-md-10 p-0 project-info d-flex">
-              <!-- <div class="status-img"> -->
-                <div class="py-5">
-                  <img src="..\assets\images\Projects\project_icon.svg" alt="" >
-                </div>
-              <!-- </div> -->
-                <div class="project-data py-5">
+          <div class="row newprhcl" >
+            <div class="col-md-8 p-0 project-info">            
+                <img src="..\assets\images\Projects\project_icon.svg" alt="" >
+             
+                <div class="project-data">           
                 
-                  <span   (change)="projectDetails.projectName=$event.target.value" [attr.contenteditable]="editdata" class="h3  clickable  '+(editdata==true?'focus-data':'')">{{projectDetails.projectName |uppercase}}</span>
+                  <span  (change)="projectDetails.projectName=$event.target.value" [attr.contenteditable]="editdata" 
+                        class="tab-number h3  clickable  '+(editdata==true?'focus-data':'')">
+                    {{projectDetails.projectName |uppercase}}
+                  </span>
                   <!-- <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span> -->
                   
-                  <span  (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata" [class]=" 'clickable '+(editdata.description==true?'focus-data':'')" >{{projectDetails.description}}</span>
+                  <span  (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata"
+                         [class]=" 'clickable '+(editdata.description==true?'focus-data':'')" >
+                      {{projectDetails.description}}
+                  </span>
                   <!-- <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span> -->
                 </div>
             </div>
-            <div class="col-md-2 d-flex pl-0">
-                
-                    <div class=" py-5">
-                      <img src="../../../../assets/images/Projects/user3.svg" alt="" >
-                    </div>
-                    <div class="py-5">
-                      <span class="h4">Project Owner</span>
-                      <span class="tab-text" *ngIf="projectDetails.owner==null" >-</span>
-                      <span class="tab-text" >{{projectDetails.owner| userPipe : users_list}}</span>
-                    </div>
-                  
+            <div class="col-md-4 pl-0">
+              <div class="row newprjdates">
+                <div class="status-tabs">
+                  <div class="">
+                    <img src="../../../../assets/images/Projects/user3.svg" alt="" >
+                  </div>
+                  <div class="status-data">
+                    <span class="labeltit">Project Owner</span>
+                    <span class="tab-text" *ngIf="projectDetails.owner==null" >-</span>
+                    <span class="tab-text" >{{projectDetails.owner| userPipe : users_list}}</span>
+                  </div>
+                </div>
+              </div>
                 
                 <!-- <div class="col-sm-4">
                   <label class="labeltit">Start Date</label>
@@ -89,21 +92,21 @@
                 </div> -->
               
             </div>
-          </div>
-        <!-- </div> -->
-      </div>
-        <!-- <hr> -->
-        <div class="d-flex w-100">
+          </div>        
+        
+          <div class="d-flex w-100">
                 <div class="py-5 w-100">
                     <div  class="d-flex">
                       <div class="py-5">
                         <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                       </div>
                       <div class="py-5">
-                        <span class="text-strong">Initiative</span>
+                        <span class="labeltit">Initiative</span>
                         
                         <span class="tab-text" *ngIf="projectDetails.initiatives==undefined ||  projectDetails.initiatives==null" >-</span>
-                        <span *ngIf="projectDetails.initiatives!=undefined &&  projectDetails.initiatives!=null">{{projectDetails.initiatives}}</span>
+                        <span class="tab-text labelcont" *ngIf="projectDetails.initiatives!=undefined &&  projectDetails.initiatives!=null">
+                          {{projectDetails.initiatives}}
+                        </span>
                      
                         <!-- <span *ngIf="editdata==true">
                           <select class="small-input" (change)="projectDetails.initiatives=$event.target.value" [value]="(projectDetails.initiatives==undefined||projectDetails.initiatives==null)?'':projectDetails.initiatives">
@@ -123,7 +126,7 @@
                         <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                       </div>
                       <div class="py-5">
-                        <span class="text-strong">Value Chain</span>
+                        <span class="labeltit">Value Chain</span>
                         
                         <span  class="tab-text" *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined" >-</span>
                         <span   *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"  class="tab-text labelcont clickable" >{{projectDetails.mapValueChain}}</span>
@@ -147,7 +150,7 @@
                         <img src="..\assets\images\Projects\bot.svg" alt="" >
                       </div>
                       <div  class="py-5">
-                        <span class="text-strong">Process</span>
+                        <span class="labeltit">Process</span>
                         
                         <span class="tab-text" *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''" >-</span>
                         <span  *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"    class="tab-text clickable labelcont" >{{projectDetails.process | processName : processes}}</span>
@@ -168,7 +171,7 @@
                         <img src="..\assets\images\Projects\document.svg" alt="" >
                       </div>
                       <div class="py-5">
-                        <span class="text-strong">Process Id</span>
+                        <span class="labeltit">Process Id</span>
                         
                         <span class="tab-text labelcont" >{{projectDetails.process }}</span>
                       </div>
@@ -181,7 +184,7 @@
                         <img src="..\assets\images\Projects\document.svg" alt="" >
                       </div>
                       <div class="py-5">
-                        <span class="text-strong">Start Date</span>
+                        <span class="labeltit">Start Date</span>
                         
                         <div >
                           <span  *ngIf="projectDetails.startDate != null && projectDetails.startDate != undefined && projectDetails.startDate !='' "  class="tab-text labelcont" >{{projectDetails.startDate | date }}</span>
@@ -199,7 +202,7 @@
                         <img src="..\assets\images\Projects\document.svg" alt="" >
                       </div>
                       <div class="py-5">
-                        <span class="text-strong">End Date</span>
+                        <span class="labeltit">End Date</span>
                         
                         <div >
                             <span  *ngIf="projectDetails.endDate != null && projectDetails.endDate != undefined && projectDetails.endDate !='' "  class="tab-text labelcont" >{{projectDetails.endDate | date }}</span>
@@ -218,7 +221,7 @@
                         <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                       </div>
                       <div class="py-5">
-                        <span class="text-strong" >Resources</span>
+                        <span class="labeltit" >Resources</span>
                         
                         
                         <span class="tab-text labelcont" >{{projectDetails.resources.length}}</span>
@@ -240,15 +243,15 @@
                   </div>
               </td> -->
       
-            </div>
+          </div>
             
-            <div class="d-flex w-100">
+          <div class="d-flex w-100">
               <div class="d-flex w-100">
                   <div class="py-5">
                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                   </div>
                   <div class="py-5">
-                    <span  class="text-strong">Project Health</span>
+                    <span  class="labeltit">Project Health</span>
                     
                     <div *ngIf="editdata==false">
                       <span  *ngIf="projectDetails.projectHealth != null && projectDetails.projectHealth != undefined && projectDetails.projectHealth !='' "  class="tab-text labelcont" >{{projectDetails.projectHealth }}</span>
@@ -273,7 +276,7 @@
                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                   </div>
                   <div class="py-5">
-                    <span class="text-strong">Progress Percentage</span>
+                    <span class="labeltit">Progress Percentage</span>
                     
                     <span *ngIf="editdata==false"class="tab-text labelcont" >{{projectDetails.projectPercentage}}%
                       <mat-progress-bar mode="determinate" value={{projectDetails.projectPercentage}}></mat-progress-bar>
@@ -294,7 +297,7 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="py-5">
-                  <span class="text-strong">Efforts Spent</span>
+                  <span class="labeltit">Efforts Spent</span>
                   <div *ngIf="editdata==false">
                       <span  *ngIf="projectDetails.effortsSpent != null && projectDetails.effortsSpent != undefined && projectDetails.effortsSpent !='' "  class="tab-text labelcont" >{{projectDetails.effortsSpent }}</span>
                       <span  *ngIf="projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='' "  class="tab-text labelcont" >-</span>
@@ -313,7 +316,7 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="py-5">
-                  <span class="text-strong">Project Priority</span>
+                  <span class="labeltit">Project Priority</span>
                 
                   <div *ngIf="editdata==false">
                     <span class="tab-text" *ngIf="projectDetails.priority==null || projectDetails.priority==undefined" >-</span>
@@ -335,7 +338,7 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="py-5">
-                  <span class="text-strong">Project Purpose</span>
+                  <span class="labeltit">Project Purpose</span>
                   
                   <div *ngIf="editdata==false">
                     <span class="tab-text labelcont" >Improve ROI</span>
@@ -350,7 +353,7 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="py-5">
-                  <span class="text-strong">Status</span>
+                  <span class="labeltit">Status</span>
                   
                   <div *ngIf="editdata==false">
                     <span class="tab-text labelcont" >{{projectDetails.status}}</span>
@@ -372,17 +375,17 @@
                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                   </div>
                   <div class="py-5">
-                    <span class="text-strong">Burnt Rate</span>
+                    <span class="labeltit">Burnt Rate</span>
                     
                     <span><input type="text" class="small-input" placeholder="Enter Burnt Rate Value"/></span>
                   </div>
               </div>
           </div>
-        </div>    
+        </div> 
       </mat-card>  
 
       <mat-card class="new-prj-tasklist" id="projects_details_screen" *ngIf="projects_toggle==false">
-    <div class="row">
+        <div class="row">
       <div class="col-md-4 p-0">
         <span class="projects-header-title">
           Tasks
@@ -400,9 +403,9 @@
           </span>
         </span>
       </div>
-    </div>
+        </div>
     
-    <div class="tasks-body">
+        <div class="tasks-body">
       <!-- <img src="..\assets\images\Projects\no_items.svg" height="190px" >
       <figcaption>No items to display!</figcaption> -->
       <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class="projecttable table" id="autotable">
@@ -518,15 +521,15 @@
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
         <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
       </table>
-    </div>
-      <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
-      </mat-paginator>
+        </div>
+        <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
+        </mat-paginator>
     
       </mat-card>
     
     
       <div class="row bortopsec">
-    <div class="col-md-6 pl-0 resources">
+         <div class="col-md-6 pl-0 resources">
       <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
         <div class="row">
           <div class="col-md-6 p-0">
@@ -589,8 +592,8 @@
         </div>
         
       </mat-card>
-    </div>
-    <div class="col-md-6 p-0 documents">
+         </div>
+          <div class="col-md-6 p-0 documents">
       <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
         <div class="row">
           <div class="col-md-6 p-0">
@@ -653,10 +656,8 @@
         </div>
         
       </mat-card>
-    </div>   
+          </div>   
       </div>
-
-
 
   </div>
 
@@ -755,7 +756,9 @@
                                       type="text" #commentInput id="addcomment" 
                                       placeholder="Add a comment.."
                                     />
-                                    <div class="comment-send"><i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i></div>
+                                    <div class="comment-send">
+                                      <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i>
+                                    </div>
                                   </div>
                                 </div>
                                 <div class="comment comment-level-1" *ngIf="taskcomments!=0">
@@ -773,7 +776,7 @@
                                           {{c.createdBy}}  {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
                                         </div>
                                         <div class="commentsadded" *ngIf="i!=commentnumber">
-                                            <b>{{c.comments}}</b> 
+                                            {{c.comments}} 
                                         </div>
                                       </div>
                                     </div>
@@ -810,10 +813,9 @@
                             </mat-tab>  
                             <mat-tab label="History">
                             
-                              <ul>
+                              <ul class="historydiv">
                                 <li *ngFor="let history of taskhistory">
                                   {{history.message}}
-                                  <hr>
                                 </li>
                               </ul>
                               <!-- <div class="comment-content" > 
@@ -822,30 +824,26 @@
                             </mat-tab>
                             <mat-tab label="Attachments">
                             
-                              <div class="comment comment-level-1">
-                                <!-- <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-                                <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div> -->
+                              <div class="attachmentdiv">
+                                  <!-- <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
+                                  <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div> -->
                                 
-                                <div>
-                                  <div class="comment-label">
-                                  
+                                  <div class="comment-label">                                  
                                     <!-- <span class="comment-time"> - 5 days ago</span> -->
                                   </div>
-                                  <div class="comment-content" *ngFor="let attachments of taskattacments"> 
-                                    <div class="attachment-name">
-                                      <!-- {{firstname}} &nbsp;{{lastname}}&nbsp; {{currentdate | date}} -->
-                                    </div>
-                                    <div>
-                                      File Name : <b>{{attachments.fileName}}</b>
-                                  </div>
-                                  <div class="attachment-action">
-                                    File Size :<b>{{attachments.fileSize | fileSizePipe}}</b>
-                                  
-                                 </div>
-                                  </div>
-                                
-                                
-                                </div>
+                                  <div class="row attachment-content" *ngFor="let attachments of taskattacments"> 
+                                      <div class="attachment-name">
+                                        <!-- {{firstname}} &nbsp;{{lastname}}&nbsp; {{currentdate | date}} -->
+                                      </div>
+                                      <div class="col-md-6 pl-0">
+                                        <label class="label-control">File Name :</label>
+                                        <label class="label-content">{{attachments.fileName}}</label>
+                                      </div>
+                                      <div class="col-md-6 pr-0 attachment-action">
+                                        <label class="label-control">File Size :</label>
+                                        <label class="label-content">{{attachments.fileSize | fileSizePipe}}</label>                                  
+                                      </div>
+                                  </div>                    
                               </div>
 
                             </mat-tab>
