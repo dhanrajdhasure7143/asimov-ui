@@ -110,6 +110,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   panelOpenState = false;
   step = 0;
   isOpenedState:number=0;
+  currentNotation_name:any;
+  push_Obj:any
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -365,6 +367,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(current_bpmn_info){
       this.isApprovedNotation = current_bpmn_info["bpmnProcessStatus"] == "APPROVED";
       this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
+      this.updated_date_time = current_bpmn_info["modifiedTimestamp"];
+      this.currentNotation_name = current_bpmn_info["bpmnProcessName"];
     }
     if(!this.isShowConformance){
       let params:Params ={'bpsId':current_bpmn_info["bpmnModelId"], 'ver': current_bpmn_info["version"], 'ntype': current_bpmn_info["ntype"]};
@@ -388,10 +392,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     else
       this.selected_approver = null;
-      let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
+      this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
       setTimeout(() => {
-        this.dt.bpsNotationaScreenValues(obj);
+        this.dt.bpsNotationaScreenValues(this.push_Obj);
       }, 4000);
    }
 
@@ -508,11 +513,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }
       }
     }
-    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
     setTimeout(() => {
-      this.dt.bpsNotationaScreenValues(obj);
-    }, 5000);
+      this.dt.bpsNotationaScreenValues(this.push_Obj);
+    }, 3000);
   }
 
   setUrlParam(name, value) {
@@ -568,9 +574,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
-          let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
-      this.dt.bpsNotationaScreenValues(obj)
+          this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+      this.dt.bpsNotationaScreenValues(this.push_Obj)
         }
         this.initModeler();
         setTimeout(()=> {
@@ -626,9 +633,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
-        let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
-      this.dt.bpsNotationaScreenValues(obj)
+        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+        "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+      this.dt.bpsNotationaScreenValues(this.push_Obj)
       }
     this.initModeler();
     setTimeout(()=> {
@@ -734,9 +742,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.autosaveObj=data
         this.updated_date_time = new Date();
         this.spinner.hide();
-        let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
-      this.dt.bpsNotationaScreenValues(obj)
+        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+        "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+      this.dt.bpsNotationaScreenValues(this.push_Obj)
       },
       err => {
         this.spinner.hide();
@@ -1033,9 +1042,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           )
         })
     })
-    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
-      this.dt.bpsNotationaScreenValues(obj);
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+    this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
   saveprocess(newVal){
@@ -1152,9 +1162,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           )
         })
     })
-    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
-      this.dt.bpsNotationaScreenValues(obj)
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+      this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   uploadConfBpmn(confBpmnData){
@@ -1350,9 +1361,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           this.isStartProcessBtn=deployResponse.startprocess
       }
     })
-    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
-      this.dt.bpsNotationaScreenValues(obj);
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+      this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
   openVariableDialog(){
@@ -1401,9 +1413,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       
       this.cancelProcess();
       this.isStartProcessBtn=false;
-      let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-      "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":false}
-        this.dt.bpsNotationaScreenValues(obj);
+      this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+      "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+      "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+        this.dt.bpsNotationaScreenValues(this.push_Obj);
     })    
   }
 

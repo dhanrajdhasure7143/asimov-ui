@@ -7,38 +7,48 @@
         <div class="modal-body">
             <form autocomplete="off" #processCategoryForm="ngForm">
                 <div class="container m-contanier form-body">
-
                     <div class="col-md-12 p-0 form-group">
-                        <label class="label-control">Select Category</label>
-                        <select  name="category" (selectionChange)="onchangeCategories(categoryName)" #category="ngModel" [(ngModel)]="categoryName" required panelClass="overlayMatSelect" [disabled]="data" class="form-control">
+                        <label class="label-control">Select Category<span class="star">*</span></label>
+                        <select  name="category" (change)="onchangeCategories(categoryName)" #category="ngModel" [(ngModel)]="categoryName" required class="form-control">
+                            <option value="" disabled hidden>Select Category</option>
+                            <option value="null" disabled hidden>Select Category</option>
+                            <option value="undefined" disabled hidden>Select Category</option>
                             <option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
                                 {{categories.categoryName}}</option>
                             <option value="other">Other</option>
                         </select>
+                        <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
+                        class='fa fa-info-circle errspan'> Please select a category </span>
                     </div>
-                    <span class="error_msg" [class.show]="category.dirty && category.invalid">Please select a category</span>
                     <div *ngIf='isotherCategory'>
                         <div class="col-md-12 p-0 from-group">
-                            <label>Enter Category</label>
-                            <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required class="form-group">
-                        </div>
-                        <span class="error_msg" [class.show]="other_category.dirty && other_category.invalid">Alphanumerics with _- are allowed</span>
+                           <label>Enter Category<span class="star">*</span></label>
+                            <input type="text" name="other_category" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required class="form-group" placeholder="Enter Category" class="form-control">
+                            <span *ngIf="((other_category.invalid && processCategoryForm.submitted) || (other_category.errors && other_category.touched) )" 
+                            class='fa fa-info-circle errspan'> Please enter category </span>
+                        </div>                         
                     </div>
                     <div *ngIf='isBpmnModule'>
                         <div class="col-md-12 p-0 form-group">
-                            <label class="label-control">Select Notation Type</label>
-                            <select name="notation" #notation="ngModel" [(ngModel)]="notationType" required [disabled]="uploadedFileExtension" class="form-control">
+                            <label class="label-control">Select Notation Type<span class="star">*</span></label>
+                            <select name="notation" #notation="ngModel" [(ngModel)]="notationType" required class="form-control" [disabled]="uploadedFileExtension">
+                                <option value="" disabled hidden>Select Notation Type</option>
+                                <option value="null" disabled hidden>Select Notation Type</option>
+                                <option value="" disabled hidden>Select Notation Type</option>
                                 <option value="bpmn">BPMN</option>
                                 <option value="cmmn">CMMN</option>
                                 <option value="dmn">DMN</option>
                             </select>
+                            <span *ngIf="((notation.invalid && processCategoryForm.submitted) || (notation.errors && notation.touched) )" 
+                            class='fa fa-info-circle errspan'> Please select notation type </span>
                         </div>
                     </div>
                     <div class="col-md-12 p-0 form-group">
-                        <label class="label-control">Enter Process Name</label>
-                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9 _-]{4,25}$" required  [disabled]="data" class="form-control">
+                        <label class="label-control">Enter Process Name<span class="star">*</span></label>
+                        <input type="text" name="process_name" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9 _-]{4,25}$" class="form-control" placeholder="Enter Process Name" required>
+                        <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )" 
+                        class='fa fa-info-circle errspan'> Please Enter process name</span>
                     </div>
-                    <span class="error_msg" [class.show]="process_name.dirty && process_name.invalid">Alphanumerics with _- are allowed having 4 - 25 characters</span>
 <!-- previous Code -->
                     <!-- <mat-form-field class="col-md-12 p-0">
                         <mat-label>Select Category</mat-label>

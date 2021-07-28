@@ -72,7 +72,7 @@
                   <div class="row col-md-12" id="bpmn_list_row">
                     <span [matTooltip]=each_diag.bpmnProcessName
                       matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?
-                      fitTableView(each_diag.bpmnProcessName): '-'}}</span>
+                      fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</span>
                     <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
                     <span>{{each_diag.category}}</span>
                     <span>{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</span>
