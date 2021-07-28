@@ -136,7 +136,7 @@ mat-card#projects_details_screen {
   padding: 8px 15px !important;
 }
 .new-prj-tasklist .tasks-body , .projects-table-body{
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 .new-prj-tasklist .tasks-body tr.mat-header-row, .projects-table-body th, td{
   height: 40px;
