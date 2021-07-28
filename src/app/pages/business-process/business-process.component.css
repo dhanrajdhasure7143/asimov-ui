@@ -13,7 +13,7 @@
 }
 .main-content1 .module-heading.title .value span {
     color: #001c47;
-    font-weight: 300;
+    /* font-weight: 300; */
 }
 /* .module-heading.title span {
     padding-left: 10px;
@@ -34,6 +34,7 @@ span.level3 {
 .new-bps-icons button {
     padding: 5px 8px;
     line-height: 22px;
+    position: relative;
 }
 .bps-upload {
     margin: 0px 0px 0px 10px !important;
@@ -74,7 +75,7 @@ select.dowload-images option {
 } */
 button.editprimary {
     background-color: #00a1e3;
-    border-radius: 4px;
+    border-radius: 3px;
     margin-right: 3px;
 }
 .bpsbtnsep {
@@ -141,4 +142,32 @@ button.upload-btn.bps-upload:hover img, button.editprimary:hover img {
     font-weight: 500;
     background: #f99d1c;
     color: #ffffff;
+}
+
+span.testtooltip {
+    position: absolute;
+    top: 45px;
+    right: 0px;
+    background-color: #001c47;
+    color: #fff;
+    width: max-content;
+    padding: 3px 10px;
+    border-radius: 4px;
+    display: none;
+}
+
+span.testtooltip:before {
+    content: '';
+    border: 2px solid #001c47;
+    border-width: 0px 0px 2px 2px;
+    position: absolute;
+    padding: 4px;
+    right: 13px;
+    top:  -5px;
+    background: #001c47;
+    transform: rotate(45deg);
+}
+
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
 }

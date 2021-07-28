@@ -869,7 +869,7 @@ foreignObject {
 .canvas-container .mat-tab-label {
   min-width: 90px !important;
   /* height: 25px !important; */
-  height: 40px !important;
+  height: 36px !important;
   padding: 5px;
   font-weight: normal !important;
 }
