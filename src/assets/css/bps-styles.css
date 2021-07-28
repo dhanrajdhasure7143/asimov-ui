@@ -1046,7 +1046,7 @@ mat-panel-title.mat-expansion-panel-header-title {
 }
 
 .module-body.bpms-canvas-body {
-  height: calc(100% - 75px);
+  height: calc(100% - 71px);
   overflow: auto;
   padding: 0px 0px;
 }
