@@ -56,10 +56,10 @@
               <!-- </div> -->
                 <div class="project-data py-5">
                 
-                  &nbsp;<span   (change)="projectDetails.projectName=$event.target.value" [attr.contenteditable]="editdata" class="h3  clickable  '+(editdata==true?'focus-data':'')">{{projectDetails.projectName |uppercase}}</span>
+                  <span   (change)="projectDetails.projectName=$event.target.value" [attr.contenteditable]="editdata" class="h3  clickable  '+(editdata==true?'focus-data':'')">{{projectDetails.projectName |uppercase}}</span>
                   <!-- <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span> -->
-                  <br>
-                  &nbsp;<span  (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata" [class]=" 'clickable '+(editdata.description==true?'focus-data':'')" >{{projectDetails.description}}</span>
+                  
+                  <span  (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata" [class]=" 'clickable '+(editdata.description==true?'focus-data':'')" >{{projectDetails.description}}</span>
                   <!-- <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span> -->
                 </div>
             </div>
@@ -70,7 +70,7 @@
                     </div>
                     <div class="py-5">
                       <span class="h4">Project Owner</span>
-                      <span class="tab-text" *ngIf="projectDetails.owner==null" >-</span><br>
+                      <span class="tab-text" *ngIf="projectDetails.owner==null" >-</span>
                       <span class="tab-text" >{{projectDetails.owner| userPipe : users_list}}</span>
                     </div>
                   
@@ -101,7 +101,7 @@
                       </div>
                       <div class="py-5">
                         <span class="text-strong">Initiative</span>
-                        <br>
+                        
                         <span class="tab-text" *ngIf="projectDetails.initiatives==undefined ||  projectDetails.initiatives==null" >-</span>
                         <span *ngIf="projectDetails.initiatives!=undefined &&  projectDetails.initiatives!=null">{{projectDetails.initiatives}}</span>
                      
@@ -124,7 +124,7 @@
                       </div>
                       <div class="py-5">
                         <span class="text-strong">Value Chain</span>
-                        <br>
+                        
                         <span  class="tab-text" *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined" >-</span>
                         <span   *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"  class="tab-text labelcont clickable" >{{projectDetails.mapValueChain}}</span>
                         
@@ -148,7 +148,7 @@
                       </div>
                       <div  class="py-5">
                         <span class="text-strong">Process</span>
-                        <br>
+                        
                         <span class="tab-text" *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''" >-</span>
                         <span  *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"    class="tab-text clickable labelcont" >{{projectDetails.process | processName : processes}}</span>
                         <!-- <span *ngIf="editdata==true" class="tab-text labelcont clickable" >
@@ -169,7 +169,7 @@
                       </div>
                       <div class="py-5">
                         <span class="text-strong">Process Id</span>
-                        <br>
+                        
                         <span class="tab-text labelcont" >{{projectDetails.process }}</span>
                       </div>
                     </div>
@@ -182,7 +182,7 @@
                       </div>
                       <div class="py-5">
                         <span class="text-strong">Start Date</span>
-                        <br>
+                        
                         <div >
                           <span  *ngIf="projectDetails.startDate != null && projectDetails.startDate != undefined && projectDetails.startDate !='' "  class="tab-text labelcont" >{{projectDetails.startDate | date }}</span>
                           <span  *ngIf="projectDetails.startDate == null || projectDetails.startDate == undefined || projectDetails.startDate =='' "  class="tab-text labelcont" >-</span>
@@ -200,7 +200,7 @@
                       </div>
                       <div class="py-5">
                         <span class="text-strong">End Date</span>
-                        <br>
+                        
                         <div >
                             <span  *ngIf="projectDetails.endDate != null && projectDetails.endDate != undefined && projectDetails.endDate !='' "  class="tab-text labelcont" >{{projectDetails.endDate | date }}</span>
                           <span  *ngIf="projectDetails.endDate == null || projectDetails.endDate == undefined || projectDetails.endDate =='' "  class="tab-text labelcont" >-</span>
@@ -219,7 +219,7 @@
                       </div>
                       <div class="py-5">
                         <span class="text-strong" >Resources</span>
-                        <br>
+                        
                         
                         <span class="tab-text labelcont" >{{projectDetails.resources.length}}</span>
                       </div>
@@ -241,7 +241,7 @@
               </td> -->
       
             </div>
-            <br>
+            
             <div class="d-flex w-100">
               <div class="d-flex w-100">
                   <div class="py-5">
@@ -249,7 +249,7 @@
                   </div>
                   <div class="py-5">
                     <span  class="text-strong">Project Health</span>
-                    <br>
+                    
                     <div *ngIf="editdata==false">
                       <span  *ngIf="projectDetails.projectHealth != null && projectDetails.projectHealth != undefined && projectDetails.projectHealth !='' "  class="tab-text labelcont" >{{projectDetails.projectHealth }}</span>
                       <span  *ngIf="projectDetails.projectHealth == null || projectDetails.projectHealth == undefined || projectDetails.projectHealth =='' "  class="tab-text labelcont" >-</span>
@@ -274,7 +274,7 @@
                   </div>
                   <div class="py-5">
                     <span class="text-strong">Progress Percentage</span>
-                    <br>
+                    
                     <span *ngIf="editdata==false"class="tab-text labelcont" >{{projectDetails.projectPercentage}}%
                       <mat-progress-bar mode="determinate" value={{projectDetails.projectPercentage}}></mat-progress-bar>
                     </span>
@@ -294,7 +294,7 @@
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
                 <div class="py-5">
-                  <span class="text-strong">Efforts Spent</span><br>
+                  <span class="text-strong">Efforts Spent</span>
                   <div *ngIf="editdata==false">
                       <span  *ngIf="projectDetails.effortsSpent != null && projectDetails.effortsSpent != undefined && projectDetails.effortsSpent !='' "  class="tab-text labelcont" >{{projectDetails.effortsSpent }}</span>
                       <span  *ngIf="projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='' "  class="tab-text labelcont" >-</span>
@@ -336,7 +336,7 @@
                 </div>
                 <div class="py-5">
                   <span class="text-strong">Project Purpose</span>
-                  <br>
+                  
                   <div *ngIf="editdata==false">
                     <span class="tab-text labelcont" >Improve ROI</span>
                   </div>
@@ -351,7 +351,7 @@
                 </div>
                 <div class="py-5">
                   <span class="text-strong">Status</span>
-                  <br>
+                  
                   <div *ngIf="editdata==false">
                     <span class="tab-text labelcont" >{{projectDetails.status}}</span>
                   </div>
@@ -373,7 +373,7 @@
                   </div>
                   <div class="py-5">
                     <span class="text-strong">Burnt Rate</span>
-                    <br>
+                    
                     <span><input type="text" class="small-input" placeholder="Enter Burnt Rate Value"/></span>
                   </div>
               </div>
@@ -746,7 +746,7 @@
                               <div class="t-comments-box">
                                 <div class="add-comment">
                                   <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-                                  <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
+                                  <div   *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage" ></div>
                                   <div>
                                   </div>
                                   <div class="comment-input">
@@ -762,45 +762,47 @@
                                   <!-- <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
                                   <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div> -->
                                   
-                                  <div>
                                   <div class="comment-content" *ngFor="let c of taskcomments;let i=index">
-                                    <div> 
-                                    <div class="userimage" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
-                                      <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
-                                      <div  *ngIf="result.length>3"><img class="res-circle " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
+                                    <div class="comment-content-subdiv">
+                                      <div class="userimage" *ngIf="(c.createdUserEmail|userImagePipe: users_list)as result">
+                                        <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
+                                        <div  *ngIf="result.length>3"><img class="res-circle-img " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
+                                      </div>
+                                      <div>
+                                        <div class="comment-name">
+                                          {{c.createdBy}}  {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
+                                        </div>
+                                        <div class="commentsadded" *ngIf="i!=commentnumber">
+                                            <b>{{c.comments}}</b> 
+                                        </div>
+                                      </div>
                                     </div>
-                                  </div>
-                                    <div class="comment-name">
-                                      {{c.createdBy}} &nbsp; {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
-                                    </div>
-                                    <div class="commentsadded" *ngIf="i!=commentnumber">
-                                   <b>{{c.comments}}</b> 
-                                  </div>
-                                  <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
-                                   <input type="text" name="comment" formControlName="editcomment" placeholder="Add Comment..."/>
-                                  
-                                   <div class="row">
-                                   <div class="col-md-3" id="updatesavecomment">
+                                   
 
-                                   <button type="button" class="btn btn-primary"  (click)="updatecomment(c.id)">Save</button>
-                                   </div>
-                                   <div class="col-md-3" id="updatecancelcomment">
-                                   <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
+                                    <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
+                                      <input type="text" name="comment" class="form-control" formControlName="editcomment" placeholder="Add Comment..."/>
+                                      <div class="modal-footer modelprfooter">
+                                        <div class="pull-right">
+                                            <button id="updatecancelcomment" type="button" class="btn btn-primary" (click)="posteditcancelcomment()">
+                                              Cancel
+                                            </button>
+                                            <button id="updatesavecomment"  type="button" class="btn btn-primary btn-update"  (click)="updatecomment(c.id)">
+                                              Save
+                                            </button>
+                                            <!-- <div class="col-md-6" >
+                                          <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
+                                        </div> -->
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="comment-action" *ngIf="i!=commentnumber">
+                                        <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" 
+                                            style="color:red;cursor:pointer" >
+                                            Edit
+                                        </button>
+                                    </div>
                                   </div>
-                                  <!-- <div class="col-md-6" >
-                                    <button type="button" class="btn btn-primary" (click)="posteditcancelcomment()">Cancel</button>
-                                  </div> -->
-                                </div>
-                                  </div>
-                                   <div class="comment-action" *ngIf="i!=commentnumber">
-                                    <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" 
-                                    style="color:red;cursor:pointer" >
-                                     Edit
-                                   </button> 
-                                 
-                                 </div>
-                                  </div>
-                                  </div>
+                                  
                                 </div>
                               
                               </div>
