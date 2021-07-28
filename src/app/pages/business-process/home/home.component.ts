@@ -75,6 +75,8 @@ export class BpsHomeComponent implements OnInit {
     this.getAutoSavedDiagrams();
     this.getAllCategories();
     // document.getElementById("filters").style.display = "block";
+    let obj={}
+    this.dt.bpsNotationaScreenValues(obj);
   }
 
   async getBPMNList(){
