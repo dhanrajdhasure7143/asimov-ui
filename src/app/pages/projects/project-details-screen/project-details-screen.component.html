@@ -682,7 +682,7 @@
     </div>
     <div class="modal-body modelprbody editmodelprbody">
         <div class="container p-0" style="width:100%">
-            <form [formGroup]="createtaskForm" (ngSubmit)="savetasks()">
+            <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-fileds col-md-3 pl-0">
@@ -810,7 +810,28 @@
                             
                               <ul>
                                 <li *ngFor="let history of taskhistory">
-                                  {{history.message}}
+                                  <div class="container-fluid">
+                                  <div class="row">
+                                    <br>
+                                    <div class="col-sm-1" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
+                                      <div  class="res-circle " *ngIf="result.length==3">{{history.lastModifiedUserEmail|userImagePipe: users_list}}</div> 
+                                      <div  *ngIf="result.length>3"><img class="res-circle " src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" ></div>
+                                    </div>
+                                    <div class="col-sm-9">
+                                      {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
+                                    </div>
+                                  </div>
+                                </div>
+                                    <!-- <div> 
+                                      <div class="usertaskimage" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
+                                        <div  class="res-circle " *ngIf="result.length==3">{{history.lastModifiedUserEmail|userImagePipe: users_list}}</div> 
+                                        <div  *ngIf="result.length>3"><img class="res-circle " src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" ></div>
+                                      </div>
+                                    </div>
+                                  <br>
+                                  <div>
+                                  {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
+                                </div> -->
                                   <hr>
                                 </li>
                               </ul>
@@ -819,50 +840,55 @@
                                 </div> -->
                             </mat-tab>
                             <mat-tab label="Attachments">
-                            
-                              <div class="comment comment-level-1">
-                                <!-- <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div> 
-                                <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div> -->
-                                
-                                <div>
-                                  <div class="comment-label">
-                                  
-                                    <!-- <span class="comment-time"> - 5 days ago</span> -->
-                                  </div>
-                                  <div class="comment-content" *ngFor="let attachments of taskattacments"> 
-                                    <div class="attachment-name">
-                                      <!-- {{firstname}} &nbsp;{{lastname}}&nbsp; {{currentdate | date}} -->
-                                    </div>
-                                    <div>
-                                      File Name : <b>{{attachments.fileName}}</b>
-                                  </div>
-                                  <div class="attachment-action">
-                                    File Size :<b>{{attachments.fileSize | fileSizePipe}}</b>
-                                  
-                                 </div>
-                                  </div>
-                                
-                                
-                                </div>
+                              <br>
+                            <div class="row">
+                              <div class="col-md-12">
+                                <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
+                                  <thead>
+                                    <tr>
+                                      <th class="text-left">File Name</th>
+                                      <th class="text-right">File Size (MB)</th>
+                                      <th class="text-right">Actions</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let attachments of taskattacments | paginate: { itemsPerPage: 2, currentPage: att } ">
+                                      <td><b>{{attachments.fileName}}</b></td>
+                                      <td class="text-right"><b>{{attachments.fileSize | fileSizePipe}}</b></td>
+                                      <td class="text-right">
+                                        <a matTooltip="Download File">
+                                          <i class="fa fa-download"></i>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <pagination-controls *ngIf="(taskattacments!=null && taskattacments.length!=0)" class="pull-right" (pageChange)="att = $event"></pagination-controls>
                               </div>
-
+                            </div>
+                             
                             </mat-tab>
                             <mat-tab label="Resources">
                               <div class="projects-table-body">
                                 <table class="table">
                                   <thead>
-                                    <tr class="separated">
-                                      <th>Name</th>
-                                      <th>Role</th>
-                                      <th>Last Updated</th>
+                                    <tr>
+                                      <th></th>
+                                      <th class="text-left">Name</th>
+                                      <th class="text-right">Role</th>
+                                      <th class="text-right">Last Updated</th>
                                     </tr>
                                   </thead>
                                   <tbody>
                                     <tr>
-                                      <td >{{selectedtaskdata.resources| userPipe : users_list}}</td>
+                                      <span *ngIf="(taskresourceemail|userImagePipe: users_list)as result">
+                                        <div  class="res-circle " *ngIf="result.length==3">{{taskresourceemail|userImagePipe: users_list}}</div> 
+                                        <div  *ngIf="result.length>3"><img class="res-circle " src="{{taskresourceemail|userImagePipe: users_list}}" ></div>
+                                      </span>
+                                      <td ><b>{{selectedtaskdata.resources| userPipe : users_list}}</b></td>
                                       <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                                      <td >{{roles?roles:'-'}}</td>
-                                      <td >{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
+                                      <td ><b>{{roles?roles:'-'}}</b></td>
+                                      <td ><b>{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</b></td>
                                     </tr>
                                   </tbody>
 
