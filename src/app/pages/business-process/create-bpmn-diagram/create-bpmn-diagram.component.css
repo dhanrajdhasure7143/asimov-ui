@@ -398,3 +398,12 @@
         width: 18px;
         height: 18px;
     }
+
+    .canvas-container-main {
+        height: 100%;
+        padding: 0px !important;
+    }
+    
+    .canvas-container {
+        height: calc(100% - 70px) !important;
+    }

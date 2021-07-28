@@ -216,6 +216,7 @@ span.projects-menu-item.prj-lst-btn button {
 span.projects-menu-item button {
   background-color: #00a0e3 !important;
   border: none;
+  border-radius: 3px !important;
 }
 
 .status-data1 span {
