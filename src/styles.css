@@ -1910,7 +1910,7 @@ button.action-button.clear {
   padding: 0px;
 }
 
-.form-footer {
+.bpmnCreate .form-footer {
   margin-top: auto !important;
   text-align: end;
 }
