@@ -214,7 +214,7 @@ div[class^='diagram_container'] {
   /* overflow: hidden auto; */
   padding: 5px;
   position: relative;
-  top: -20px;
+  /* top: -20px; */
 }
 
 .readOnly svg {
@@ -868,7 +868,7 @@ label {
 .box_area {
   /* margin-top: 20px; */
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
 }
 
 .keyboard_style_upload {
@@ -889,13 +889,13 @@ label {
 .keyboard_label_style {
   font-size: 15px;
   padding-right: 20px;
+  padding-bottom: 10px;
 }
 
 .keyboard_header_shortcuts {
-  font-size: 25px;
-  font-weight: 100;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 10px 0px;
 
 }
 

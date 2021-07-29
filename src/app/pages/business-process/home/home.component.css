@@ -17,13 +17,15 @@
     margin:0px;
 }
 .myworkspace-style h4.box-heading {
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 
 .new-bps-layout {
     overflow: auto;
     height: calc(100% - 50px);
     position:relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .workspace-title {
@@ -85,13 +87,13 @@ span.comment {
 .new-bps-grid-data .bps_overlay span.info.ng-star-inserted {
     border-radius: 4px;
     padding: 8px 12px;
-    top: 20px !important;
+    top: 40px !important;
     left: 15px;
 }
 .bps_overlay .fit_button {
-    top: 50px;
-    transform: unset;
-    position: unset;
+    top: 70px;
+    right: 15px;
+    position: absolute;
 }
 .header_addon {
     position: absolute;
@@ -118,6 +120,7 @@ div#bpmn_list {
     padding: 2px 0px !important;
     border-top: 1px solid #dee2e6 !important;
     border: none;
+    margin: 0px;
 }
 .pagination {   
     padding: 10px;

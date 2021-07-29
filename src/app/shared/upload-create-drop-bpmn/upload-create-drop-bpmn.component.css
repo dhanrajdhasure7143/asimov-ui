@@ -26,10 +26,10 @@
 }
 
 .drop_box ngx-dropzone {
-    height: 180px !important;
+    height: 160px !important;
 }
 .drop_box {
-    height: 185px;
+    height: 165px;
     margin: 0px 20px 0px 0px;
     border: 1px solid #e1e7ec;
     /* box-shadow: 0px 1px 6px rgb(0 0 0 / 10%); */

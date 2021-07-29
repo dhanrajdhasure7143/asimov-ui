@@ -22,7 +22,7 @@
 .value {
     color: #001C47;
     font-weight: 400;
-    font-size: 12px;
+    font-size: 13px;
     padding-top: 12px;
 }
 span.level3 {
@@ -33,6 +33,7 @@ span.level3 {
 
 .new-bps-icons button {
     padding: 6px;
+    margin-right: 3px;
     line-height: 18px;
     position: relative;
 }
@@ -76,7 +77,6 @@ select.dowload-images option {
 button.editprimary {
     background-color: #00a1e3;
     border-radius: 3px;
-    margin-right: 3px;
 }
 .bpsbtnsep {
     color:#ddd;
@@ -177,4 +177,7 @@ span.projects-back-button {
 }
 .projects-back-button i {
     margin-right: 3px !important;
+}
+.value strong, .value b {
+    font-weight: 500;
 }
