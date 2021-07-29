@@ -531,8 +531,8 @@
 
           <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
-            <td mat-cell *matCellDef="let element"> 
-                <span *ngIf="element.owner!=null">{{element.owner| userPipe : users_list}}</span> 
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.owner| userPipe : users_list" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"> 
+                <span *ngIf="element.owner!=null">{{getreducedValue(element.owner| userPipe : users_list)}}</span> 
                 <span *ngIf="element.owner==''">-</span> 
                 <span *ngIf=" element.owner==null">-</span> 
             </td>

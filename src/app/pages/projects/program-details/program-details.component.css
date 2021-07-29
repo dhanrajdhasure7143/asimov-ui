@@ -130,12 +130,6 @@
   font-weight: normal;
   font-size: 12px;
 }
-.required, .star {
-  color: rgb(253 75 75) !important;
-  font-size: 12px !important;
-  font-weight: normal !important;
-}
-
 
 .maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
   background-color: #fff !important;
