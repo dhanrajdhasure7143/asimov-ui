@@ -257,6 +257,7 @@ mat-expansion-panel {
   text-align: center;
   align-items: center;
   padding-right: 4px;
+  white-space: nowrap;
 }
 
 .workspace-title {
