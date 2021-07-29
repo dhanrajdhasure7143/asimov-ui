@@ -69,6 +69,8 @@ export class CreateBpmnDiagramComponent implements OnInit {
   panelOpenState = false;
   step = 0;
   isOpenedState:number=0;
+  currentNotation_name:any;
+  push_Obj:any;
   rpaJson = {
     "name": "RPA",
     "uri": "https://www.omg.org/spec/BPMN/20100524/DI",
@@ -117,9 +119,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.setRPAData();
     this.getApproverList();
     this.getUserBpmnList();
-    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
-    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
-        this.dt.bpsNotationaScreenValues(obj);
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+                    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+                    "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+        this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
   ngAfterViewInit(){
     this.dt.download_notation.subscribe(res=>{
@@ -260,9 +263,12 @@ export class CreateBpmnDiagramComponent implements OnInit {
     this.router.navigate([],{ relativeTo:this.route, queryParams:params });
     this.rejectedOrApproved = current_bpmn_info["bpmnProcessStatus"];
     this.updated_date_time = current_bpmn_info["modifiedTimestamp"];
-    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
-    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
-      this.dt.bpsNotationaScreenValues(obj);
+    this.currentNotation_name = current_bpmn_info["bpmnProcessName"];
+
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+                    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+                    "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+      this.dt.bpsNotationaScreenValues(this.push_Obj);
     if(['APPROVED','REJECTED'].indexOf(this.rejectedOrApproved) != -1){
       for(var s=0; s<this.approver_list.length; s++){
         let each = this.approver_list[s];
@@ -297,9 +303,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
      let sel_not = this.saved_bpmn_list[this.selected_notation]
      this.rejectedOrApproved=sel_not['bpmnProcessStatus'];
      this.updated_date_time=sel_not['modifiedTimestamp'];
-     let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
-     "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
-       this.dt.bpsNotationaScreenValues(obj);
+     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+                    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+                    "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+     this.dt.bpsNotationaScreenValues(this.push_Obj);
 
       this.autosavedDiagramVersion = this.autosavedDiagramList.filter(each_asDiag => {
         return sel_not["bpmnProcessStatus"] != "APPROVED" && sel_not["bpmnProcessStatus"] != "REJECTED" && each_asDiag.bpmnModelId == sel_not["bpmnModelId"];
@@ -380,9 +387,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
           if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
             selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
             this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
-            let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
-            "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
-                this.dt.bpsNotationaScreenValues(obj);
+            this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+                          "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+                          "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+            this.dt.bpsNotationaScreenValues(this.push_Obj);
           }
           this.initModeler();
           this.bpmnModeler.importXML(selected_xml, function(err){
@@ -406,9 +414,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
       if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
         selected_xml = atob(unescape(encodeURIComponent(this.autosavedDiagramVersion[0]["bpmnProcessMeta"])));
         this.updated_date_time = this.autosavedDiagramVersion[0]["bpmnModelModifiedTime"];
-        let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
-    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
-        this.dt.bpsNotationaScreenValues(obj);
+        this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+                        "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+                        "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+        this.dt.bpsNotationaScreenValues(this.push_Obj);
       }
       this.initModeler();
       this.bpmnModeler.importXML(selected_xml, function(err){
@@ -753,9 +762,10 @@ export class CreateBpmnDiagramComponent implements OnInit {
           )
         })
     });
-    let obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
-    "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,"isFromcreateScreen":true}
-        this.dt.bpsNotationaScreenValues(obj);
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":false,
+                  "isShowConformance":false,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+                  "isFromcreateScreen":true,'process_name':this.currentNotation_name}
+    this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
   slideUp(e){

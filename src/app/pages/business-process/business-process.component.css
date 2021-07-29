@@ -1,5 +1,5 @@
 .module-heading.title {
-    padding: 6px 15px !important;
+    padding: 10px 15px !important;
     margin-bottom: 0px;
 }
 .main-content1 .module-heading.title {
@@ -9,6 +9,7 @@
     font-weight: 600;
     font-size: 22px;
     color: #001c47;
+    line-height: 0px !important;
 }
 .main-content1 .module-heading.title .value span {
     color: #001c47;
@@ -22,7 +23,7 @@
     color: #001C47;
     font-weight: 400;
     font-size: 12px;
-    padding-top: 10px;
+    padding-top: 12px;
 }
 span.level3 {
     padding-right: 8px !important;
@@ -31,8 +32,8 @@ span.level3 {
 }
 
 .new-bps-icons button {
-    padding: 5px 8px;
-    line-height: 22px;
+    padding: 6px;
+    line-height: 18px;
     position: relative;
 }
 .bps-upload {
@@ -96,7 +97,7 @@ button.editprimary {
 }
 
 span.label_icon.inpro-label {
-    padding: 6px !important;
+    padding: 3px 6px !important;
     border-radius: 3px;
     margin-left: 8px;
 }
@@ -105,7 +106,7 @@ span.label_icon.inpro-label {
 }
 .bps-float button:hover {
     background-color: #00a0e3;
-    border-radius: 4px;
+    border-radius: 3px;
 }
 .bps-float button:hover img {
     filter: brightness(2.5);
@@ -130,6 +131,17 @@ button.upload-btn.bps-upload:hover img, button.editprimary:hover img {
 }
 .icon-disabled{
     cursor: no-drop !important;
+}
+
+.bps-header-title{
+    display: flex;
+    align-items: center;
+}
+
+.bg-orange {
+    font-weight: 500;
+    background: #f99d1c;
+    color: #ffffff;
 }
 
 span.testtooltip {
@@ -158,4 +170,11 @@ span.testtooltip:before {
 
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
+}
+span.projects-back-button {
+    border: none !important;
+    margin: 0px !important;
+}
+.projects-back-button i {
+    margin-right: 3px !important;
 }

@@ -19,7 +19,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   isSave_disabled:boolean=true;
   iscreate_notation:boolean;
   isStartProcessBtn:boolean=false;
-
+  currentNotation_name:any;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService ) { }
 
@@ -45,6 +45,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
         this.updated_date_time=notationValues_obj['autosaveTime'];
         this.iscreate_notation=notationValues_obj['isFromcreateScreen'];
         this.isStartProcessBtn=notationValues_obj['isStartProcessBtn'];
+        this.currentNotation_name=notationValues_obj['process_name'];
       }
     });
   }
@@ -70,6 +71,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
   this.isEditMode=false;
   this.isSave_disabled=true;
   }​​​​​​​​
+  saveProcessCreate(){​​​​​​​​
+    this.dt.bpsHeaderValues("save_process");
+    }
  
   UploadFile(e){​​​​​​​​
   this.dt.bpsHeaderValues(e);
@@ -86,6 +90,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.isEditMode=false;
     this.isSave_disabled=true;
   }
+  saveandSubmitApprovalCreat(){
+    this.dt.bpsHeaderValues("save&approval");
+  }
   orchestartion(){
     this.dt.bpsHeaderValues("orchestartion");
   }
@@ -97,6 +104,10 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   fitNotation(){
     this.dt.bpsHeaderValues("fitNotation");
+  }
+  backtoNavigate(){
+    this.router.navigate(['/pages/businessProcess/home'])
+  // routerlink="/pages/businessProcess/home"
   }
 
 }
