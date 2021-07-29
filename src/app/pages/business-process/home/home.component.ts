@@ -75,6 +75,8 @@ export class BpsHomeComponent implements OnInit {
     this.getAutoSavedDiagrams();
     this.getAllCategories();
     // document.getElementById("filters").style.display = "block";
+    let obj={}
+    this.dt.bpsNotationaScreenValues(obj);
   }
 
   async getBPMNList(){
@@ -132,6 +134,12 @@ export class BpsHomeComponent implements OnInit {
   fitTableView(processName){
     if(processName && processName.length > 10)
       return processName.substr(0,15)+'..';
+    return processName;
+  }
+
+  fitTableViewTime(processName){
+    if(processName && processName.length > 10)
+      return processName.substr(0,12)+'...';
     return processName;
   }
 

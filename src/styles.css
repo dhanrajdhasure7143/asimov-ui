@@ -1619,8 +1619,9 @@ img.testplus1 {
   overflow: hidden;
 }
 
-
-.bpspaginationdiv .mat-paginator-outer-container {
+.bpspaginationdiv {
+  position: absolute;
+  bottom: 0px;
   width: 100%;
 }
 
@@ -1983,4 +1984,14 @@ select.form-control{
 
 .modal-header .close {
   margin-top: 0px;
+}
+  
+.errspan {
+  position: relative;
+  z-index: 2;
+  color: #dc3545;
+  font-size: 12px;
+  letter-spacing: 0.2px;
+  padding-right: 10px;
+  line-height: 12px;
 }

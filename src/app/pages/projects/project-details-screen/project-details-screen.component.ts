@@ -93,6 +93,7 @@ percentageComplete: number;
   taskhistory: any=[];
   filecategories: any;
   programId:any;
+  taskresourceemail: any;
 
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -262,9 +263,6 @@ percentageComplete: number;
         this.rpa.getuserslist(tenantid).subscribe(item=>{
           let users:any=item
           this.users_list=users;
-
-          this.useremail=this.users_list.find(item=>item.userId.id==this.projectDetails.resources);
-          return this.useremail!=undefined?(this.useremail.userId.userId):this.projectDetails.resources;
         })
       }
 
@@ -311,10 +309,12 @@ percentageComplete: number;
           const element = this.selectedtaskdata.history[index];
           this.taskhistory.push(element)
         }
-        
+        console.log("taskhistory",this.taskhistory)
         console.log("taskcomment",this.taskcomments,this.taskcomments_list)
         this.getTaskAttachments();
         this.getUserRole();
+        let user=this.users_list.find(item=>item.userId.id==this.selectedtaskdata.resources);
+        this.taskresourceemail=user.userId.userId
         this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
       }
   
@@ -332,14 +332,14 @@ percentageComplete: number;
       }
     
       resetupdatetaskproject(){
-        this.taskcomments=[];
+       // this.taskcomments=[];
         this.updatetaskForm.reset();
         this.updatetaskForm.get("priority").setValue("");
         this.updatetaskForm.get("status").setValue("");
        (<HTMLInputElement>document.getElementById("addcomment")).value = '';
        this.commentnumber=null
         this.updatetaskForm.get("editcomment").setValue("");
-       this.taskcomments=this.taskcomments_list;
+     //  this.taskcomments=this.taskcomments;
       }
       canceltaskform(){
         this.commentnumber=null
@@ -368,7 +368,7 @@ percentageComplete: number;
           taskupdatFormValue["id"]=this.selectedtaskdata.id
           taskupdatFormValue["percentageComplete"]=this.slider
           taskupdatFormValue["comments"]=this.taskcomments
-         // taskupdatFormValue["history"]=this.taskhistory
+          taskupdatFormValue["history"]=this.taskhistory
           this.rpa.updateTask(taskupdatFormValue).subscribe( res =>{
             let status: any= res;
             if(status.errorMessage==undefined)

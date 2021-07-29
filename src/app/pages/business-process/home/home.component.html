@@ -18,24 +18,25 @@
             <h4 class="box-heading">My Workspace</h4>
           </div>
           <div class="col-md-5 p-0">
-            <div class="col-md-6 pr-0 bps-labcls">
-              <mat-form-field>
-                <mat-label>Select Category</mat-label>
-                <mat-select name="category" (selectionChange)="searchByCategory(categoryName)" #category="ngModel"
-                  [(ngModel)]="categoryName" panelClass="overlayMatSelect">
-                  <mat-option value="allcategories">All Categories</mat-option>
-                  <mat-option *ngFor="let each_diag of categoryList.data;let i=index;trackBy:loopTrackBy"
+            <div class="col-md-6 form-group pr-0 bps-labcls">
+                <label class="label-control">Select Category</label>
+                <select name="category" (change)="searchByCategory(categoryName)" #category="ngModel"
+                  [(ngModel)]="categoryName" class="form-control">
+                  <option value="" disabled hidden >Select Category</option>
+                  <option value="null" disabled hidden >Select Category</option>
+                  <option value="undefined" disabled hidden >Select Category</option>
+                  <option value="allcategories">All Categories</option>
+                  <option *ngFor="let each_diag of categoryList.data;let i=index;trackBy:loopTrackBy"
                     [value]="each_diag.categoryName">
-                    {{each_diag.categoryName}}</mat-option>
-                </mat-select>
-              </mat-form-field>
+                    {{each_diag.categoryName}}</option>
+                </select>
+              
             </div>
-            <div class="col-md-6 pr-0">
-              <mat-form-field>
-                <mat-label>Search Workspace</mat-label>
-                <input class="toolbar-search" type="text" matInput (keyup)="searchList($event)">
-                <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
-              </mat-form-field>
+            <div class="col-md-6 form-group pr-0">
+             
+                <label class="label-control">Search Workspace</label>
+                <input class="form-control toolbar-search" placeholder="Search Workspace" type="text"  (keyup)="searchList($event)">
+              
             </div>
           </div>
         </div>
@@ -72,11 +73,12 @@
                   <div class="row col-md-12" id="bpmn_list_row">
                     <span [matTooltip]=each_diag.bpmnProcessName
                       matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?
-                      fitTableView(each_diag.bpmnProcessName): '-'}}</span>
+                      fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</span>
                     <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
                     <span>{{each_diag.category}}</span>
                     <span>{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</span>
-                    <span>{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</span>
+                    <span [matTooltip]="each_diag.convertedModifiedTime*1000 | date:'medium'"
+                    matTooltipClass="bpsHeaderTooltip">{{fitTableViewTime(each_diag.convertedModifiedTime*1000 | date:'medium')}}</span>
                     <span>{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</span>
                     <span [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
                       [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</span>

@@ -3,7 +3,7 @@
       <div class=" row module-heading title">
           <div class="col-md-6 new-bps-header-title">
             <span class="bps-header-title">
-              <span class="module-heading-title">Business Process Studio</span>
+              <span class="module-heading-title">Business Process Studio <span *ngIf="isHeaderShow == 'true'"> / {{currentNotation_name | titlecase}}</span></span>
               <span class="" *ngIf="isHeaderShow == 'true'">
                 <span *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon inpro-label" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
                   {{rejectedOrApproved}}
@@ -12,7 +12,7 @@
               </span>
             </span>
               <div class="value" *ngIf="isHeaderShow == 'true'">
-                <span class="projects-back-button" routerlink="/pages/businessProcess/home" tabindex="0"><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+                <span class="projects-back-button" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span>
                 <span class="level3">Last Modified By: Peter James</span>
                 <span *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
@@ -61,7 +61,7 @@
                 <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
                 <span class="testtooltip">Save</span>
               </button>
-              <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcess()" *ngIf="iscreate_notation" >
+              <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcessCreate()" *ngIf="iscreate_notation" >
                 <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
                 <span class="testtooltip">Save</span>
               </button>
@@ -72,11 +72,11 @@
                 <img src="../../../assets/images/BPMS/Orchestrate.svg">
                 <span class="testtooltip">Orchestration</span>
               </button>
-              <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && iscreate_notation">
+              <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
-              <button class="clr-hvr tsttooltipbtn" *ngIf="iscreate_notation" (click)="saveandSubmitApproval()">
+              <button class="clr-hvr tsttooltipbtn" *ngIf="iscreate_notation" (click)="saveandSubmitApprovalCreat()">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
@@ -96,7 +96,8 @@
               <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->
               <ngx-dropzone class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
                 <ngx-dropzone-label>
-                  <button class="upload-btn bps-upload" *ngIf="!isfromApprover"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
+                  <button class="upload-btn bps-upload" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
+                  <button class="upload-btn bps-upload" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload</button>  
                   <!-- <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button> -->
                 </ngx-dropzone-label>
               </ngx-dropzone>
