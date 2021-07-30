@@ -1673,8 +1673,11 @@ img.testplusupload {
   height: 35px !important;
 }
 
-.modal-body.modelprbody.editmodelprbody .mat-tab-label:first-child {
+.modal-body.modelprbody.editmodelprbody .mat-tab-label {
   justify-content: left !important;
+  min-width: max-content !important;
+  padding-left: 0px !important;
+  padding-right: 15px !important;
 }
 
 .projects-back-button i {
@@ -1947,6 +1950,8 @@ button.action-button.clear {
 }
 span.star {
   margin-left: 4px;
+  position: relative;
+  top: -3px;
 }
 .bpspaginationdiv .mat-paginator-page-size {
   left: 5px !important;
@@ -1984,4 +1989,16 @@ select.form-control{
   letter-spacing: 0.2px;
   padding-right: 10px;
   line-height: 12px;
+}
+.editmodelprbody .mat-tab-body-wrapper {
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  border-radius: 3px;
+}
+.addrespopup .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
+  padding-top: 0px !important;
+  padding-left: 6px !important;
+}
+.addrespopup {
+  
 }

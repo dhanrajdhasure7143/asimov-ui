@@ -1,50 +1,55 @@
 <div class="project-details-main" *ngIf="projectDetails!=undefined">
-  <div class="projects-header maincreat">
+  <div class="module-heading title">
+    <div>
         <span class="projects-back-button" *ngIf="programId==undefined" routerLink="/pages/projects/listOfProjects">
-            <i aria-hidden="true" class="fas fa-arrow-left"></i>
+          <i aria-hidden="true" class="fas fa-arrow-left"></i>
         </span>
-        <span class="projects-back-button" *ngIf="programId!=undefined" [routerLink]="['/pages/projects/programdetails']" [queryParams]="   {id:programId}">
+        <span class="projects-back-button" *ngIf="programId!=undefined" [routerLink]="['/pages/projects/programdetails']" [queryParams]="       {id:programId}">
           <i aria-hidden="true" class="fas fa-arrow-left"></i>
         </span>
         <span class="projects-header-title">
             Project Details 
         </span>
-        <span class="pull-right">
-          <span  (click)="navigateToProjectRepo()">
-            <button class="btn btn-primary prj-lst-btn">
-              <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
-              <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
-               Project Repo
-            </button>
-          </span>
-          <span *ngIf="editdata==true" (click)="updateprojectDetails()">
-            <button class="btn btn-primary ">
-              <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
-              <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
-               Save
-            </button>
-          </span>
-          <span *ngIf="editdata==true" (click)="projectdetails()">
-            <button class="btn btn-primary prj-lst-btn">
-              <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
-              <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
-               Reset
-            </button>
-          </span>
-          <span *ngIf="editdata==false" >
-            <button  class="btn btn-primary prj-crt-btn" (click)="editdata=true">
-              <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
-            </button>
-          </span>
-      
-          <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
-          <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
+    </div>
+    <div class="ml-auto module-heading-buttons">
+      <span class="pull-right">
+        <span  (click)="navigateToProjectRepo()">
+          <button class="btn btn-primary prj-lst-btn">
+            <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
+             Project Repo
+          </button>
         </span>
+        <span *ngIf="editdata==true" (click)="updateprojectDetails()">
+          <button class="btn btn-primary ">
+            <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
+             Save
+          </button>
+        </span>
+        <span *ngIf="editdata==true" (click)="projectdetails()">
+          <button class="btn btn-primary prj-lst-btn">
+            <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
+             Reset
+          </button>
+        </span>
+        <span *ngIf="editdata==false" >
+          <button  class="btn btn-primary prj-crt-btn" (click)="editdata=true">
+            <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
+          </button>
+        </span>
+    
+        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
+        <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
+      </span>
+    </div>
+      
   </div>
   <div class="new-prj-details">
       <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
   
-        <div class="projects-table-body">
+        <div class="project-details-div">
           <div class="row newprhcl" >
             <div class="col-md-8 p-0 project-info">            
                 <img src="..\assets\images\Projects\project_icon.svg" alt="" >
@@ -64,7 +69,7 @@
                   <!-- <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span> -->
                 </div>
             </div>
-            <div class="col-md-4 pl-0">
+            <div class="col-md-4 pr-0">
               <div class="row newprjdates">
                 <div class="status-tabs">
                   <div class="">
@@ -679,7 +684,7 @@
       <h4 class="modal-title pull-left">
         {{selectedtaskdata.id}} / {{selectedtaskdata.taskCategory}} / {{selectedtaskdata.taskName}}
       </h4>
-      <span class="pull-right">Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp | date}}</span>
+      <span class="pull-right lastedit-date">Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp | date}}</span>
     </div>
     <div class="modal-body modelprbody editmodelprbody">
         <div class="container p-0" style="width:100%">
@@ -750,7 +755,7 @@
                                   <div   *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage" ></div>
                                   <div>
                                   </div>
-                                  <div class="comment-input">
+                                  <div class="form-fields col-md-12 pr-0 comment-input">
                                     <input
                                       class=" form-control" 
                                       type="text" #commentInput id="addcomment" 
@@ -771,9 +776,22 @@
                                         <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
                                         <div  *ngIf="result.length>3"><img class="res-circle-img " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
                                       </div>
+<<<<<<< HEAD
                                       <div>
                                         <div class="comment-name">
                                           {{c.createdBy}}   {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
+=======
+                                      <div class="w-100">
+                                        <div class="row d-flex">
+                                          <div class="col-md-10 pl-0 comment-name">
+                                            {{c.createdBy}}  {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
+                                          </div>
+                                          <div class="col-md-2 pr-0 comment-action" *ngIf="i!=commentnumber">
+                                              <button type="button" (click)="editComments(c.comments,i)" >
+                                                  Edit
+                                              </button>
+                                          </div>
+>>>>>>> origin/feature/project-module-ui-changes
                                         </div>
                                         <div class="commentsadded" *ngIf="i!=commentnumber">
                                             {{c.comments}} 
@@ -798,12 +816,12 @@
                                         </div>
                                       </div>
                                     </div>
-                                    <div class="comment-action" *ngIf="i!=commentnumber">
+                                    <!-- <div class="comment-action" *ngIf="i!=commentnumber">
                                         <button type="button" (click)="editComments(c.comments,i)" matTooltip="Edit Comment" 
                                             style="color:red;cursor:pointer" >
                                             Edit
                                         </button>
-                                    </div>
+                                    </div> -->
                                   </div>
                                   
                                 </div>
@@ -815,18 +833,21 @@
                             
                               <ul class="historydiv">
                                 <li *ngFor="let history of taskhistory">
-                                  <div class="container-fluid">
+                                 
                                   <div class="row">
-                                    <br>
                                     <div class="col-sm-1" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
-                                      <div  class="res-circle " *ngIf="result.length==3">{{history.lastModifiedUserEmail|userImagePipe: users_list}}</div> 
-                                      <div  *ngIf="result.length>3"><img class="res-circle " src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" ></div>
+                                      <div  class="res-circle " *ngIf="result.length==3">
+                                        {{history.lastModifiedUserEmail|userImagePipe: users_list}}
+                                      </div> 
+                                      <div  *ngIf="result.length>3">
+                                        <img class="res-circle-img" src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" >
+                                      </div>
                                     </div>
                                     <div class="col-sm-9">
                                       {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
                                     </div>
                                   </div>
-                                </div>
+                               
                                     <!-- <div> 
                                       <div class="usertaskimage" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
                                         <div  class="res-circle " *ngIf="result.length==3">{{history.lastModifiedUserEmail|userImagePipe: users_list}}</div> 
@@ -837,7 +858,7 @@
                                   <div>
                                   {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
                                 </div> -->
-                                  <hr>
+                                  
                                 </li>
                               </ul>
                               <!-- <div class="comment-content" > 
@@ -845,36 +866,33 @@
                                 </div> -->
                             </mat-tab>
                             <mat-tab label="Attachments">
-                              <br>
-                            <div class="row">
-                              <div class="col-md-12">
-                                <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
-                                  <thead>
-                                    <tr>
-                                      <th class="text-left">File Name</th>
-                                      <th class="text-right">File Size (MB)</th>
-                                      <th class="text-right">Actions</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr *ngFor="let attachments of taskattacments | paginate: { itemsPerPage: 2, currentPage: att } ">
-                                      <td><b>{{attachments.fileName}}</b></td>
-                                      <td class="text-right"><b>{{attachments.fileSize | fileSizePipe}}</b></td>
-                                      <td class="text-right">
-                                        <a matTooltip="Download File">
-                                          <i class="fa fa-download"></i>
-                                        </a>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                                <pagination-controls *ngIf="(taskattacments!=null && taskattacments.length!=0)" class="pull-right" (pageChange)="att = $event"></pagination-controls>
-                              </div>
-                            </div>
+                                <div class="row attachmentdiv">
+                                  <div class="col-md-12 p-0">
+                                    <table class="table" *ngIf="(taskattacments!=null && taskattacments.length!=0)">
+                                      <thead>
+                                        <tr>
+                                          <th class="text-left">File Name</th>
+                                          <th class="text-right">File Size (MB)</th>
+                                          <th class="text-right">Actions</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>
+                                        <tr *ngFor="let attachments of taskattacments | paginate: { itemsPerPage: 2, currentPage: att } ">
+                                          <td>{{attachments.fileName}}</td>
+                                          <td class="text-right">{{attachments.fileSize | fileSizePipe}}</td>
+                                          <td class="text-right">
+                                            <img src="../../../../assets/images/Projects/Download.svg" class="testplus"/>
+                                          </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                    <pagination-controls *ngIf="(taskattacments!=null && taskattacments.length!=0)" class="pull-right" (pageChange)="att = $event"></pagination-controls>
+                                  </div>
+                                </div>
                              
                             </mat-tab>
                             <mat-tab label="Resources">
-                              <div class="projects-table-body">
+                              <div class="edit-resourcesdiv">
                                 <table class="table">
                                   <thead>
                                     <tr>
@@ -886,14 +904,20 @@
                                   </thead>
                                   <tbody>
                                     <tr>
-                                      <span *ngIf="(taskresourceemail|userImagePipe: users_list)as result">
-                                        <div  class="res-circle " *ngIf="result.length==3">{{taskresourceemail|userImagePipe: users_list}}</div> 
-                                        <div  *ngIf="result.length>3"><img class="res-circle " src="{{taskresourceemail|userImagePipe: users_list}}" ></div>
-                                      </span>
-                                      <td ><b>{{selectedtaskdata.resources| userPipe : users_list}}</b></td>
+                                      <td>
+                                        <span *ngIf="(taskresourceemail|userImagePipe: users_list)as result">
+                                          <div class="res-circle" *ngIf="result.length==3">
+                                            {{taskresourceemail|userImagePipe: users_list}}
+                                          </div> 
+                                          <div  *ngIf="result.length>3">
+                                            <img class="res-circle-img" src="{{taskresourceemail|userImagePipe: users_list}}" >
+                                          </div>
+                                        </span>
+                                      </td>
+                                      <td >{{selectedtaskdata.resources| userPipe : users_list}}</td>
                                       <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                                      <td ><b>{{roles?roles:'-'}}</b></td>
-                                      <td ><b>{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</b></td>
+                                      <td >{{roles?roles:'-'}}</td>
+                                      <td >{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
                                     </tr>
                                   </tbody>
 
