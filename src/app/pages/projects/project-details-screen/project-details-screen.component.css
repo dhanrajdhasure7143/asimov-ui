@@ -14,7 +14,6 @@
     color:black ;
     font-size:18px;
     padding: 5px;
-    /* padding-left: 20px; */
     line-height: 2;
   }
 .projects-menu-item{
@@ -29,54 +28,44 @@
   }
 
   .tab-number{
-    font-size: 30px !important;
+    font-size: 20px !important;
+    display: block;
   }
-
   .status-img > img{
     height:60px !important;
     padding-top:30px;
   }
 
-  .status-data{
-    vertical-align: middle;
-    padding-top:15px;
-    padding-left:30px;
-    padding-bottom:15px;
-    color:black !important;
+  .status-data {
+    padding-left: 14px !important;
+    color:#001c47 !important;
   }
 
   table {
-  /* font-family: arial, sans-serif; */
   border-collapse: collapse;
   width: 100%;
   margin-bottom: 0px;
 }
 
-td, th {
-  
+td, th {  
   text-align: left;
-  /* padding: 8px; */
 }
 
-tr:nth-child(even) {
-  background-color:white;
-}
-
-.separated {
-  /* set border style for separated rows */
-  /* border-bottom: 1px solid black; */
-}
 .res-circle {
-  width: 51px;
-  border-radius: 55%;
+  width: 40px;
+  border-radius: 100%;
+  height: 40px;
+  color: #ffffff;
+  background: #00a0e3;
+  font-weight: 500;
+  padding: 3px;
   text-align: center;
-  height: 46px;
-  font-size: 22px;
-  background: #b3dff9;
-  line-height: 36px;
-  font-weight: bold;
-  padding: 4px 3px;
-  margin-top: 1px; 
+  line-height: 35px;
+}
+.res-circle-img {
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
 }
 .res-circle:after {
   content: "";
@@ -92,17 +81,6 @@ tr:nth-child(even) {
   border-bottom: 1px solid #4a4a4a33;
 }
 
-/* .projects-header.maincreat {
-  background-color: #ffffff;
-  padding: 12px;
-  border-bottom: 1px solid #e5e5e5;
-  z-index: 999;
-  position: relative;
-} */
-
-.projects-header.maincreat i {
-  /* font-size: 16px; */
-}
 .projects-header.maincreat span.projects-header-title {
   padding-left: 0px;
   font-size: 16px;
@@ -120,16 +98,8 @@ button.btn.btn-primary {
   margin: 0px 0px 0px 10px;
   padding: 6px 12px;
   border-radius: 3px;
-  /* border: none; */
 }
-/* #projects_details_screen button.btn.btn-primary {
-  background-color: #00a0e3 !important;
-  border-color: #00a0e3 !important;
-  margin-left: 10px;
-  margin: 0px;
-  padding: 6px 12px;
-  border-radius: 3px;
-} */
+
 .projects-table-body tr.separated th {
   background-color: #e8f7fd;
   color: #00a0e3;
@@ -140,7 +110,6 @@ button.btn.btn-primary {
   border-bottom: 1px solid #4a4a4a33;
 }
 .projects-table-body td {
-  /* border-bottom: 1px solid rgb(221 221 221 / 59%); */
   text-align: left !important;
   padding: 5px 10px;
   vertical-align: middle;
@@ -167,7 +136,7 @@ mat-card#projects_details_screen {
   padding: 8px 15px !important;
 }
 .new-prj-tasklist .tasks-body , .projects-table-body{
-  margin-top: 8px;
+  /* margin-top: 8px; */
 }
 .new-prj-tasklist .tasks-body tr.mat-header-row, .projects-table-body th, td{
   height: 40px;
@@ -190,7 +159,7 @@ mat-card#projects_details_screen {
 .documents .new-docdiv, .resources .new-resourcediv {
   padding: 8px 15px !important;
   margin-bottom: 0px !important;
-  min-height: 300px;
+  min-height: 325px;
 }
 .resources .projects-table-body , .documents .projects-table-body {
   padding: 0px;
@@ -215,11 +184,12 @@ mat-card#projects_details_screen {
     
     .add-comment {
       display: flex;
+      margin-top: 10px;
     }
       .comment-input {
         position: relative;
         width: 100%;
-        max-width: 600px;
+        margin-left: 10px;
       }
         input {
           height: 86%;
@@ -244,44 +214,34 @@ mat-card#projects_details_screen {
           right: 0;
     }
     #sendcomment:hover {
-      color: #FF9800;
+      color: #f99d1c;
     }
-    .comment {
-      display: flex;
-      font-size: 0.8rem;
-      margin-top: 1rem;
-    }
+
       .comment-label {
         line-height: 1;
       }
-        .comment-name {
-          font-weight: bold;
-          font-size: 0.98rem;
-          color: #292929;
-          margin-top: -50px;
-          margin-left: 31px;
-        }
+     
         .comment-time {
           font-weight: 100;
           color: #768791;
         }
       
-      .comment-content {
-        margin-top: 0.1rem;
-        font-size: 2rem;
-        margin-top: 35px;
-      }
-      
       .comment-action {
-        color: #c3ccd3;
-        line-height: 1.2;
-        font-size: 13px;
-        font-weight: bold; 
-        margin-left: 32px;
+        margin-right: 40%;
+        float: right;
+        color:red;
       }
       .comment-level-1 {
-        margin-left: calc(50px + 1rem);
+        margin-left: 50px;
+        margin-top: 15px;
       }
+      .comment-content {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    .comment-content-subdiv {
+      display: inline-flex;
+    }
 
     .addresource-btn{
       position: relative;
@@ -343,37 +303,45 @@ span.labelcont b {
   .letter{
     font-size: 12px;
     font-weight: 600;
-    font-family: 'Open Sans', sans-serif;
   }
 
-
+  .commentsadded {
+    font-weight: 500;
+    color: #001c47;
+    /* font-size: 18px; */
+  }
   .userimage{
-    margin-left: -26px;
+    margin-right: 10px;
   }
-  
-  .commentsadded{
-  margin-left: 31px;
-  }
+
   .updatecomments{
-    margin-left: 36px;
+    margin-left: 50px;
+    margin-bottom: 20px;
   }
   #updatesavecomment{
-    margin-top: -56px;
-      left: 292px;
+    margin-right: 0px !important;
   }
-  #updatecancelcomment{
-  margin-top: -56px;
-      left: 365px;
-    }
+
     .attachment-name{
       font-weight: bold;
       font-size: 0.95rem;
       color: #292929;
     }
-    .attachment-action{
-      line-height: 1.2;
-      font-size: 13px;
-      font-weight: bold; 
+
+    .attachmentdiv, ul.historydiv  {
+      padding: 15px 10px;
+    }
+    .attachmentdiv label.label-content {
+      margin-left: 10px;
+      font-weight: 500 !important;
+      color: #001c47 !important;
+    }
+    .row.attachment-content {
+      margin-bottom: 10px !important;
+    }
+    ul.historydiv li {
+      border-bottom: 1px solid #e5e5e5;
+      padding: 8px 0px;
     }
 
     table tbody tr {
@@ -381,7 +349,7 @@ span.labelcont b {
     } 
 
     .project-details-main{
-      overflow: auto !important;
+      /* overflow: auto !important; */
       height:100%;
       background-color:#e3eaef !important;
     }
@@ -395,4 +363,33 @@ span.labelcont b {
   font-weight: 500;
   color: #001c47;
   display: block;
+}
+
+.row.newprhcl {
+  margin-bottom: 15px !important;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 10px;
+}
+.newprhcl .project-info img {
+  margin-right: 15px;
+  text-align: center;
+  width: 40px;
+    height: auto;
+}
+.newprhcl .project-info {
+  display: flex;
+}
+span.labeltit, label.labeltit {
+  font-size: 14px !important;
+  color: #32486B;
+  font-weight: 400;
+  display: block;
+}
+.row.newprjdates {
+  float: right;
+}
+span.labelcont {
+  font-size: 14px;
+  font-weight: 500;
+  color: #32486B;
 }

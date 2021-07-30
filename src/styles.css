@@ -269,6 +269,8 @@ div[class^='diagram_container'] .djs-container svg {
 
 .btn {
   margin-right: 16px;
+  border-radius: 3px;
+  font-size: 15px;
 }
 
 .btn-thin {
@@ -1617,8 +1619,9 @@ img.testplus1 {
   overflow: hidden;
 }
 
-
-.bpspaginationdiv .mat-paginator-outer-container {
+.bpspaginationdiv {
+  position: absolute;
+  bottom: 0px;
   width: 100%;
 }
 
