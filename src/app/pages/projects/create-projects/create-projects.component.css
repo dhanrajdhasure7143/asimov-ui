@@ -125,28 +125,6 @@ label.label-control {
   background-color: rgb(0, 161, 228) !important;
 }
 
-.projects-header-title {
-  color: black;
-  font-size: 18px;
-  padding: 5px;
-  padding-left: 20px;
-}
-
-
-.projects-header.maincreat i {
-  font-size: 16px;
-}
-
-.projects-header.maincreat span.projects-header-title {
-  padding-left: 0px;
-  font-size: 16px;
-}
-
-.projects-header.maincreat span.projects-header-title span.prmaincolo {
-  font-weight: 400;
-  margin-right: 6px;
-}
-
 .innersform .mat-tab-body.mat-tab-body-active,
 .innersform .mat-tab-body-content {
   overflow: unset !important;

@@ -171,10 +171,10 @@ span.testtooltip:before {
 .tsttooltipbtn:hover span.testtooltip {
     display: block;
 }
-span.projects-back-button {
+span.module-back-button {
     border: none !important;
     margin: 0px !important;
 }
-.projects-back-button i {
+.module-back-button i {
     margin-right: 3px !important;
 }

@@ -24,6 +24,7 @@ html {
   /* font-family: 'Source Sans Pro', sans-serif  !important; */
   font-family: 'Open Sans', sans-serif !important;
   user-select: none;
+  color: #001c47;
 }
 
 h1,
@@ -44,7 +45,8 @@ td,
 div {
   margin: 0;
   padding: 0;
-  /* font-size: 15px; */
+  font-size: 15px;
+  font-weight: 400;
   text-decoration: none !important;
   list-style: none;
   color: inherit;
@@ -270,7 +272,7 @@ div[class^='diagram_container'] .djs-container svg {
 .btn {
   margin-right: 16px;
   border-radius: 3px;
-  font-size: 15px;
+  font-size: 15px !important;
 }
 
 .btn-thin {
@@ -367,9 +369,9 @@ th {
   font-weight: 500;
   color: #00a0e3;
   border-bottom: 1px solid #4a4a4a33 !important;
-  padding: 8px 12px;
+  padding: 5px 10px;
   background: #e8f7fd;
-  font-size: 14px !important;
+  font-size: 13px !important;
 }
 
 ul.nav.nav-tabs.justify-content-start li {
@@ -1515,7 +1517,7 @@ img.testplus1 {
   opacity: 1 !important;
 }
 
-.form-fileds {
+.form-fields {
   margin-bottom: 18px !important;
 }
 
@@ -1543,6 +1545,7 @@ img.testplus1 {
   color: rgb(253 75 75) !important;
   font-size: 12px !important;
   font-weight: normal !important;
+  letter-spacing: 0.2px;
 }
 
 .modal-header.modelprhead {
@@ -1677,10 +1680,11 @@ img.testplusupload {
   justify-content: left !important;
   min-width: max-content !important;
   padding-left: 0px !important;
-  padding-right: 15px !important;
+  padding-right: 0px !important;
+  margin-right: 20px !important;
 }
 
-.projects-back-button i {
+.module-back-button i {
   cursor: pointer;
   padding: 3px 4px;
   border-radius: 50%;
@@ -1689,7 +1693,7 @@ img.testplusupload {
   margin-right: 8px;
 }
 
-.projects-back-button:hover i {
+.module-back-button:hover i {
   border-radius: 50%;
   background: rgb(0 161 227) !important;
   color: #fff;
@@ -1700,20 +1704,10 @@ tr.mat-row {
   height: 40px !important;
 }
 
-span.projects-back-button {
+.module-back-button {
   border-right: 1px solid #dcdcdc;
   margin-right: 10px;
 }
-
-
-.projects-header.maincreat {
-  background-color: #ffffff;
-  padding: 12px;
-  border-bottom: 1px solid #e5e5e5;
-  z-index: 999;
-  position: relative;
-}
-
 
 .d-flex{
   display:flex;
@@ -1981,24 +1975,42 @@ select.form-control{
   background-repeat: no-repeat;
   background-position: center right 12px;
 }
-.errspan{
-  position: relative;
-  z-index: 2;
-  color: #dc3545;
-  font-size: 12px;
-  letter-spacing: 0.2px;
-  padding-right: 10px;
-  line-height: 12px;
-}
 .editmodelprbody .mat-tab-body-wrapper {
   border: 1px solid #e0e0e0;
   border-top: none;
   border-radius: 3px;
 }
 .addrespopup .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
-  padding-top: 0px !important;
   padding-left: 6px !important;
 }
-.addrespopup {
-  
+.addrespopup .ng-placeholder {
+  padding-left: 3px !important;
+  position: absolute;
+  left: 6px !important;
+  z-index: 99 !important;
+  padding-bottom: 0px !important;
+}
+.addrespopup .ng-dropdown-panel {
+  border: none !important;
+  box-shadow: none !important;
+}
+.addrespopup .ng-dropdown-panel .ng-dropdown-panel-items {
+  display: block;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #b3b3b3;
+  padding: 5px 0px 10px;
+  margin: 0px !important;
+  border-top: none;
+  border-radius: 3px;
+}
+.backslash {
+  margin: 0px 2px;
+}
+.module-header-title {
+  font-weight: 500;
+}
+.projecttable.table th button {
+  font-size: 14px !important;
+  font-weight: 500;
 }

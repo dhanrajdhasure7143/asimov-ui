@@ -2,12 +2,12 @@
   height: 80px !important;
 }
 
-.projects-header-title {
+/* .projects-header-title {
   color: #001c47;
   font-size: 16px;
   padding: 5px;
   padding-left: 10px;
-}
+} */
 
 .projects-menu-item {
   padding: 5px;
@@ -22,11 +22,13 @@
 
 }
 
-.tab-number {
+.tab-count, .tab-count span {
 
   font-size: 36px;
   font-weight: 300;
   line-height: 32px;
+  color: #26272C;
+;
 }
 
 
@@ -98,14 +100,8 @@ span.tab-text {
   font-weight: 400;
   font-size: 12px;
   line-height: normal;
-  color: #081D2A;
+  color: #535353;
 }
-
-/* .projects-header.maincreat.nrema {
-  display: flex;
-  align-items: center;
-  padding: 6px 15px;
-} */
 
 .prj-lstscr-btn button {
   background-color: #00a0e3 !important;

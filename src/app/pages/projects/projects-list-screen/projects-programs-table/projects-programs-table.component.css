@@ -44,7 +44,7 @@
     border-top: none !important;
     font-weight: 500;
     border-bottom: 1px solid #4a4a4a33 !important;
-    padding: 8px 10px;
+    padding: 5px 10px;
   }
   tr.mat-header-row {
     height: 40px;
@@ -55,6 +55,9 @@
   padding: 5px 10px !important;
   vertical-align: middle;
   white-space: nowrap;
+}
+.projecttable.table td span {
+  font-size: 13px !important;
 }
 .tablacs .newinntalx {
   display: flex;
