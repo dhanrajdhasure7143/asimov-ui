@@ -21,7 +21,7 @@
   </div><br/>
   <div class="row col-md-12"  id="bpmn_list">
   <mat-accordion>
-    <mat-expansion-panel  #matExpansionPanel *ngFor="let each_diag of griddata | filter: searchTerm | paginate: { itemsPerPage: 14, currentPage: p };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
+    <mat-expansion-panel  #matExpansionPanel *ngFor="let each_diag of displayedRows$ | async | filter: searchTerm | paginate: { itemsPerPage: 14, currentPage: p };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
     [(expanded)]="each_diag.xpandStatus"
     (click)="clicked(i)"
     [class.activePanel]="i==selectedrow"
@@ -89,9 +89,19 @@
       </div>
     </mat-expansion-panel>
   </mat-accordion>
+  <div>
+    <mat-paginator #paginator
+            [length]="totalRows$ | async"
+            [pageIndex]="0"
+            [pageSize]="10"
+            [showFirstLastButtons]="true"
+            [pageSizeOptions]="[5, 10, 25, 50]"
+          ></mat-paginator>
+  </div>
 </div>
+
   <div *ngIf="griddata.length>0">
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
   </div>
 </div>
 <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">

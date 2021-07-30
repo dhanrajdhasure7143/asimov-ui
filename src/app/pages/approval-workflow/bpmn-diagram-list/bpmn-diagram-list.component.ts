@@ -9,6 +9,11 @@ import { ApprovalHomeHints } from './model/bpmn_approval_workflow';
 import { GlobalScript } from 'src/app/shared/global-script';
 import * as CmmnJS from 'cmmn-js/dist/cmmn-modeler.production.min.js';
 import * as DmnJS from 'dmn-js/dist/dmn-modeler.development.js';
+import { MatPaginator, PageEvent } from '@angular/material';
+import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
+import { Observable  } from 'rxjs/Observable';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bpmn-diagram-list',
@@ -35,11 +40,15 @@ export class BpmnDiagramListComponent implements OnInit {
   sortIndex:number=2;
   approval_msg: string="";
   selected_processInfo;
-  pendingStatus="PENDING APPROVAL"
+  pendingStatus="PENDING APPROVAL";
+  displayedRows$: Observable<any[]>;
+  totalRows$: Observable<number>;
+  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   constructor(private dt: DataTransferService,private hints:ApprovalHomeHints,private bpmnservice:SharebpmndiagramService,private global:GlobalScript, private model: DiagListData, private rest_Api: RestApiService,private router: Router) { }
 
   ngOnInit() {
     this.isLoading= true;
+    localStorage.setItem("isheader","false")
     this.dt.changeParentModule({ "route": "/pages/approvalWorkflow/home", "title": "Approval Workflow" });
     this.dt.changeChildModule(undefined);
     this.bpmnlist();
@@ -97,10 +106,16 @@ export class BpmnDiagramListComponent implements OnInit {
     let bpmnModelId = this.selected_processInfo["bpmnModelId"];
     let bpmnType = this.selected_processInfo["ntype"];
     let bpmnProcessStatus = this.selected_processInfo["bpmnProcessStatus"];
+    let bpmnProcessName = this.selected_processInfo["bpmnProcessName"];
+    let bpmnProcessTime = this.selected_processInfo["modifiedTimestamp"]
     if(binaryXMLContent && bpmnModelId && bpmnProcessStatus != "PENDING"){
       let bpmnVersion = this.selected_processInfo["version"];
       let fromApprover=true;
       this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
+      let push_Obj={"rejectedOrApproved":bpmnProcessStatus,"isfromApprover":fromApprover,
+                    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnProcessTime,
+                    "isFromcreateScreen":false,'process_name':bpmnProcessName}
+        this.dt.bpsNotationaScreenValues(push_Obj);
       this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId, ver: bpmnVersion, isfromApprover: fromApprover, ntype:bpmnType }});
     }
   }
@@ -159,6 +174,7 @@ this.selectedrow =i;
      this.rest_Api.bpmnlist().subscribe(data => {
       this.isLoading = false;
       this.griddata = data;
+      this.assignPagenation(this.griddata);
       this.griddata.map(item => {item.xpandStatus = false;return item;})
       this.disable_panels();
      
@@ -313,6 +329,23 @@ this.selectedrow =i;
         }
       }
     });
+  }
+
+  gotoBPMNPlatform() {
+    var token = localStorage.getItem('accessToken');
+    let selecetedTenant =  localStorage.getItem("tenantName");
+    let userId = localStorage.getItem("ProfileuserId");
+    let splitTenant:any;
+    if(selecetedTenant){
+       splitTenant = selecetedTenant.split('-')[0];
+    }
+    window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+  }
+  assignPagenation(data){
+    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
   }
 }
 

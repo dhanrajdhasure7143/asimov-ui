@@ -17,17 +17,27 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     //this.disable();
-    let selectedId=localStorage.getItem('selectedModule')
-    if(selectedId){
-     $('.link').removeClass('active');
-     $('#'+selectedId).addClass("active");
+    let active_module=localStorage.getItem('selectedModule')
+    if(active_module){
+    let selected_module=active_module.split('&')
+        $('.link').removeClass('active');
+        $('#'+selected_module[0]).addClass("active");
+        if(selected_module[1]){
+          $('#'+selected_module[1]).addClass("active");
+        }
+    }else{
+      localStorage.setItem('selectedModule','eiap-home&'+ null);
+      $('#eiap-home').addClass("active");
     }
   }
 
-  hightlight(element){
-    localStorage.setItem('selectedModule',element)
+  hightlight(element,name){
+    localStorage.setItem('selectedModule',element+'&'+name)
      $('.link').removeClass('active');
      $('#'+element).addClass("active");
+     if(name){
+      $('#'+name).addClass("active");
+     }
      this.obj.sideBarOpen=false;
      this.obj.sidebar.showSubmenu=false;
       this.obj.sidebar.showadminSubmenu=false;
@@ -38,4 +48,5 @@ export class SidebarComponent implements OnInit {
      this.obj.sideBarOpen=true;
      this.obj.contentMargin=260;
    }
+
 }
