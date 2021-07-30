@@ -25,7 +25,7 @@ input[type="password"] {
   border: none;
   border-bottom: 1px solid gray;
   text-align: left;
-  padding: 1em;
+  /* padding: 1em; */
   /* margin:15px 0px; */
 }
 
