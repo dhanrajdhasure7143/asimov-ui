@@ -166,7 +166,7 @@ percentageComplete: number;
   }
 
   getUserRole(){
-    let user=this.users_list.find(item=>item.userId.id==this.selectedtaskdata.resources);
+    let user=this.users_list.find(item=>item.userId.userId==this.selectedtaskdata.resources);
     this.userid=user.userId.userId
     this.rpa.getRole(this.userid).subscribe(data =>{
       this.userrole=data
@@ -313,7 +313,7 @@ percentageComplete: number;
         console.log("taskcomment",this.taskcomments,this.taskcomments_list)
         this.getTaskAttachments();
         this.getUserRole();
-        let user=this.users_list.find(item=>item.userId.id==this.selectedtaskdata.resources);
+        let user=this.users_list.find(item=>item.userId.userId==this.selectedtaskdata.resources);
         this.taskresourceemail=user.userId.userId
         this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
       }
