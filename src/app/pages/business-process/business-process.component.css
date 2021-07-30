@@ -36,6 +36,7 @@ span.level3 {
     margin-right: 3px;
     line-height: 18px;
     position: relative;
+    z-index: 2;
 }
 .bps-upload {
     margin: 0px 0px 0px 10px !important;

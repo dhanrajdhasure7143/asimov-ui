@@ -414,6 +414,10 @@ ul.bpp-properties-tabs-links {
 .bpp-properties-header>.label {
   color: black;
 }
+.bpp-field-description {
+  font-size: 12px;
+  line-height: 15px;
+}
 
 #tabform input[type="checkbox"] {
   width: 35%;
@@ -1164,7 +1168,7 @@ app-bpshome {
 
 .new-bps-grid-data .bps_overlay .djs-container {
   /* top: 20px !important; */
-  left: -8px !important;
+  /* left: -8px !important; */
 }
 
 .new-bps-grid-data .bps_overlay g.viewport {
@@ -1818,6 +1822,7 @@ tr.mat-row {
   border-color: #00a0e3 !important;
   color: #001c47 !important;
   background-color: #fff !important;
+  box-shadow: none;
 }
 
 .bpp-properties-group > .group-toggle {

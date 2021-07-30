@@ -87,11 +87,14 @@ span.comment {
 .new-bps-grid-data .bps_overlay span.info.ng-star-inserted {
     border-radius: 4px;
     padding: 8px 12px;
-    top: 40px !important;
+    top: 50px !important;
     left: 15px;
+    width: 100px !important;
+    position: absolute;
+    text-align: center !important;
 }
 .bps_overlay .fit_button {
-    top: 70px;
+    top: 50px;
     right: 15px;
     position: absolute;
 }
