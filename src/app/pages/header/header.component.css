@@ -395,7 +395,7 @@ button.ep-pad:hover img.header_icon {
   line-height: normal;
   color: #001c47 !important;
 }
-.label-content {
+.label-content, .label-content span.greentxt {
   font-size: 12px !important;
   margin-bottom: 0px;
   color: #7d7d7d;

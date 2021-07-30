@@ -1,25 +1,21 @@
 <div class="module-body bpms-canvas-body">
 <div class="row header_addon bpm-notation-fields">
-    <div class="col-md-2 pl-0">
-        <mat-form-field id="bpmnNotationList">
-            <mat-label>BPMN Notation</mat-label>
-            <mat-select *ngIf="!isfromApprover" [(ngModel)]="selected_notation" (selectionChange)="displayBPMN()" panelClass="myPanelDownClass" disableOptionCentering>
-                <mat-option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
-                    {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</mat-option>
-            </mat-select>
-            <mat-select *ngIf="isfromApprover">
-                <mat-option> </mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="col-md-2 pl-0" id="bpmnNotationList">
+            <label class="label-control">BPMN Notation</label>
+            <select *ngIf="!isfromApprover" [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
+                <option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
+                    {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</option>
+            </select>
+            <select *ngIf="isfromApprover">
+                <option> </option>
+            </select>
     </div>
-    <div class="col-md-2 pl-0" *ngIf="!isfromApprover">
-        <mat-form-field id="approversList">
-            <mat-label>Approver List</mat-label>
-            <mat-select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" panelClass="myPanelDownClass" disableOptionCentering>
-                <mat-option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
-                    {{each_approver.firstName+" "+each_approver.lastName}}</mat-option>
-            </mat-select>
-        </mat-form-field>
+    <div class="col-md-2 pl-0" *ngIf="!isfromApprover" id="approversList">
+            <label class="label-control">Approver List</label>
+            <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" disableOptionCentering class="form-control">
+                <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
+                    {{each_approver.firstName+" "+each_approver.lastName}}</option>
+            </select>
     </div>
     
     <!-- <div class="col-md-2">

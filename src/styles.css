@@ -270,7 +270,7 @@ div[class^='diagram_container'] .djs-container svg {
 .btn {
   margin-right: 16px;
   border-radius: 3px;
-  font-size: 15px;
+  font-size: 15px !important;
 }
 
 .btn-thin {
@@ -1161,7 +1161,7 @@ app-bpshome {
 }
 
 .new-bps-grid-data .bps_overlay .djs-container {
-  top: 20px !important;
+  /* top: 20px !important; */
   left: -8px !important;
 }
 
@@ -1425,7 +1425,7 @@ img.testplus1 {
   border: 1px solid #d6ddf2 !important;
   box-shadow: unset !important;
   color: rgb(0 21 50 / 60%) !important;
-  font-weight: 600 !important;
+  font-weight: 400 !important;
 }
 
 .maindivfoprm input:focus,
@@ -1820,6 +1820,11 @@ span.projects-back-button {
   padding: 6px 20px 6px 10px !important;
   border-radius: 4px;
 }
+.bpp-properties-panel input:focus, .bpp-properties-panel select:focus, .bpp-properties-panel textarea:focus, .bpp-properties-panel [contenteditable]:focus {
+  border-color: #00a0e3 !important;
+  color: #001c47 !important;
+  background-color: #fff !important;
+}
 
 .bpp-properties-group > .group-toggle {
   width: 0px;
@@ -1835,7 +1840,7 @@ span.projects-back-button {
 }
 
 .mat-expansion-panel-body {
-  max-height: 400px;
+  max-height: 300px;
   overflow: auto;
 }
 
@@ -1981,7 +1986,17 @@ select.form-control{
   background-repeat: no-repeat;
   background-position: center right 12px;
 }
-.errspan{
+
+#projectfavourites .mat-tab-label-content {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.modal-header .close {
+  margin-top: 0px;
+}
+
+.errspan {
   position: relative;
   z-index: 2;
   color: #dc3545;
@@ -1999,6 +2014,12 @@ select.form-control{
   padding-top: 0px !important;
   padding-left: 6px !important;
 }
-.addrespopup {
   
+select.bps-home-fileds, input.bps-home-fileds {
+  display: inline-block;
+  width: 260px;
+  margin-left: 8px;
+}
+.main-content .module-body {
+  padding: 0px !important;
 }

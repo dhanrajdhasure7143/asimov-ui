@@ -14,14 +14,14 @@
       </div>
       <div class="col-md-12 box-border myworkspace-style">
         <div class="row">
-          <div class="col-md-7 pl-0">
+          <div class="col-md-4 pl-0">
             <h4 class="box-heading">My Workspace</h4>
           </div>
-          <div class="col-md-5 p-0">
+          <div class="col-md-8 p-0">
             <div class="col-md-6 form-group pr-0 bps-labcls">
                 <label class="label-control">Select Category</label>
                 <select name="category" (change)="searchByCategory(categoryName)" #category="ngModel"
-                  [(ngModel)]="categoryName" class="form-control">
+                  [(ngModel)]="categoryName" class="form-control bps-home-fileds">
                   <option value="" disabled hidden >Select Category</option>
                   <option value="null" disabled hidden >Select Category</option>
                   <option value="undefined" disabled hidden >Select Category</option>
@@ -35,7 +35,7 @@
             <div class="col-md-6 form-group pr-0">
              
                 <label class="label-control">Search Workspace</label>
-                <input class="form-control toolbar-search" placeholder="Search Workspace" type="text"  (keyup)="searchList($event)">
+                <input class="form-control toolbar-search bps-home-fileds" placeholder="Search Workspace" type="text"  (keyup)="searchList($event)">
               
             </div>
           </div>
