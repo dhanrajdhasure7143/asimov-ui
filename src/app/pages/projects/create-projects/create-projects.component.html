@@ -60,17 +60,17 @@
                                         <div class="form-fileds col-md-6 pl-0">
                                             <label class="label-control">Add Resources<span
                                                     class="star">*</span></label>
-                                            <select formControlName="resources" class="form-control data"
+                                            <!-- <select formControlName="resources" class="form-control data"
                                                 [ngClass]="insertForm2.get('resources').valid?'enteredfield-color':'inputfield-color'">
                                                 <option value="">Select Resources</option>
                                                 <option *ngFor="let user of userslist" [value]="user.userId.userId">
                                                     {{user.userId.firstName}} {{user.userId.lastName}}</option>
-                                            </select>
+                                            </select> -->
 
-                                            <!-- <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
+                                            <ng-select  formControlName="resources"  [multiple]="true"  placeholder="Select Resources"
                                                      [(ngModel)]="selectedresources"  required>
                                                     <ng-option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
-                                                </ng-select> -->
+                                                </ng-select>
 
                                             <span
                                                 *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched"

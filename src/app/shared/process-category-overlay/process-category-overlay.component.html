@@ -18,14 +18,16 @@
                             <option value="other">Other</option>
                         </select>
                         <span *ngIf="((category.invalid && processCategoryForm.submitted) || (category.errors && category.touched) )" 
-                        class='fa fa-info-circle errspan'> Please select a category </span>
+                        class='errspan required'> Please select a category </span>
                     </div>
                     <div *ngIf='isotherCategory'>
                         <div class="col-md-12 p-0 from-group">
                            <label>Enter Category<span class="star">*</span></label>
                             <input type="text" name="other_category" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required class="form-group" placeholder="Enter Category" class="form-control">
-                            <span *ngIf="((other_category.invalid && processCategoryForm.submitted) || (other_category.errors && other_category.touched) )" 
-                            class='fa fa-info-circle errspan'> Please enter category </span>
+                            <span *ngIf="((other_category.invalid && processCategoryForm.submitted) || (other_category.errors && other_category.touched) )">
+                                <span class='errspan required' *ngIf="other_category.errors.required"> Please Enter category</span>
+                                <span class='errspan required' *ngIf="other_category.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span>
+                            </span>
                         </div>                         
                     </div>
                     <div *ngIf='isBpmnModule'>
@@ -40,14 +42,16 @@
                                 <option value="dmn">DMN</option>
                             </select>
                             <span *ngIf="((notation.invalid && processCategoryForm.submitted) || (notation.errors && notation.touched) )" 
-                            class='fa fa-info-circle errspan'> Please select notation type </span>
+                            class='errspan required'> Please select notation type </span>
                         </div>
                     </div>
                     <div class="col-md-12 p-0 form-group">
                         <label class="label-control">Enter Process Name<span class="star">*</span></label>
                         <input type="text" name="process_name" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9 _-]{4,25}$" class="form-control" placeholder="Enter Process Name" required>
-                        <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )" 
-                        class='fa fa-info-circle errspan'> Please Enter process name</span>
+                        <span *ngIf="((process_name.invalid && processCategoryForm.submitted) || (process_name.errors && process_name.touched) )">
+                            <span class='errspan required' *ngIf="process_name.errors.required"> Please Enter process name</span>
+                            <span class='errspan required' *ngIf="process_name.errors.pattern"> Alphanumerics with _- are allowed having 4 - 25 characters</span>
+                        </span>
                     </div>
 <!-- previous Code -->
                     <!-- <mat-form-field class="col-md-12 p-0">

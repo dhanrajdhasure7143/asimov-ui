@@ -13,6 +13,13 @@
     padding: 0px;
     margin-bottom: 0px;
 }
+.box-border.myworkspace-style {
+    margin:0px;
+}
+.myworkspace-style h4.box-heading {
+    margin-top: 20px;
+}
+
 .new-bps-layout {
     overflow: auto;
     height: calc(100% - 50px);
