@@ -776,11 +776,6 @@
                                         <div  class="res-circle " *ngIf="result.length==3">{{c.createdUserEmail|userImagePipe: users_list}}</div> 
                                         <div  *ngIf="result.length>3"><img class="res-circle-img " src="{{c.createdUserEmail|userImagePipe: users_list}}" ></div>
                                       </div>
-<<<<<<< HEAD
-                                      <div>
-                                        <div class="comment-name">
-                                          {{c.createdBy}}   {{c.createdTimestamp | date :'MMM dd, y, HH:mm:ss'}}
-=======
                                       <div class="w-100">
                                         <div class="row d-flex">
                                           <div class="col-md-10 pl-0 comment-name">
@@ -791,7 +786,6 @@
                                                   Edit
                                               </button>
                                           </div>
->>>>>>> origin/feature/project-module-ui-changes
                                         </div>
                                         <div class="commentsadded" *ngIf="i!=commentnumber">
                                             {{c.comments}} 
