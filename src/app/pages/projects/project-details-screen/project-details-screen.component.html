@@ -1,13 +1,13 @@
 <div class="project-details-main" *ngIf="projectDetails!=undefined">
   <div class="module-heading title">
     <div>
-        <span class="projects-back-button" *ngIf="programId==undefined" routerLink="/pages/projects/listOfProjects">
+        <span class="module-back-button" *ngIf="programId==undefined" routerLink="/pages/projects/listOfProjects">
           <i aria-hidden="true" class="fas fa-arrow-left"></i>
         </span>
-        <span class="projects-back-button" *ngIf="programId!=undefined" [routerLink]="['/pages/projects/programdetails']" [queryParams]="       {id:programId}">
+        <span class="module-back-button" *ngIf="programId!=undefined" [routerLink]="['/pages/projects/programdetails']" [queryParams]="       {id:programId}">
           <i aria-hidden="true" class="fas fa-arrow-left"></i>
         </span>
-        <span class="projects-header-title">
+        <span class="module-header-title">
             Project Details 
         </span>
     </div>
@@ -488,7 +488,8 @@
         <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
           <div class="newinntalx">
             <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
-              <i class="fas fa-file-upload"></i>
+              <img src="../../../../assets/images/Projects/upload-task.svg"  class="default-img" />
+              <img src="../../../../assets/images/Projects/upload-task-blue.svg" class="hover-img" />
             </a>
             <span class="actions-seperator">|</span>
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
@@ -496,12 +497,14 @@
             </a> 
             <span class="actions-seperator">|</span>
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
-              <img src="../../../../assets/images/Projects/delete-red.svg">
+              <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img" />
+              <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img" />
             </a> 
             <span class="actions-seperator">|</span>
             <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
             (click)="navigateToWorkspace(element)" matTooltip="Model">
-              <img src="../../../../../assets/images/Projects/eye-show.svg" />
+              <img src="../../../../assets/images/Projects/eye-show.svg" class="default-img" />
+              <img src="../../../../assets/images/Projects/eye-show-blue.svg"  class="hover-img" />
             </a> 
 
             <a class="disable-bg text-dark" *ngIf="element.taskCategory =='Analysis'|| element.taskCategory =='Task Mining'" >
@@ -691,25 +694,25 @@
             <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
                 <div class="row">
                     <div class="col-md-12">
-                        <div class="form-fileds col-md-3 pl-0">
+                        <div class="form-fields col-md-3 pl-0">
                             <label id="assignee" for="assignee">Assignee</label>
                             <span class="labelcont">{{selectedtaskdata.resources| userPipe : users_list}}</span>
                         </div>  
-                        <div class="form-fileds col-md-3 pr-0">
+                        <div class="form-fields col-md-3 pr-0">
                             <label id="startdate" for="startDate">Start Date</label>
                             <span class="labelcont">{{selectedtaskdata.startDate | date}}</span>
                         </div>
-                        <div class="form-fileds col-md-3 pr-0">
+                        <div class="form-fields col-md-3 pr-0">
                             <label id="enddate" for="endDate">End Date</label>
                             <span class="labelcont">{{selectedtaskdata.endDate | date}}</span>
                         </div>
-                        <div class="form-fileds col-md-3 pr-0">
+                        <div class="form-fields col-md-3 pr-0">
                             <label id="percentage" for="percentage">Percentage Completed</label>
                             <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options" ></ng5-slider>
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="form-fileds col-md-6 pl-0">                         
+                        <div class="form-fields col-md-6 pl-0">                         
                             <label id="status" for="status">Status<span class="star">*</span></label>
                             <select   formControlName="status"  class="form-control data">
                               <option value="">Select Status</option>
@@ -722,7 +725,7 @@
                           <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched" 
                                 class="errspan required">Status Required*</span>
                           </div>
-                          <div class="form-fileds col-md-6 pr-0">
+                          <div class="form-fields col-md-6 pr-0">
                             <label id="priority" for="priority">Priority<span  class="star">*</span></label>
                             <select formControlName="priority" class="form-control data">
                                 <option value="">Select Priority</option>
@@ -735,12 +738,12 @@
                                 class="errspan required">Priority Required*</span>
                           </div>
                     </div>
-                    <div class="form-fileds col-md-12">
+                    <div class="form-fields col-md-12">
                         <label id="summary" class="label-control" >Summary</label>
                         <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
                         </textarea>
                     </div>
-                    <div class="form-fileds col-md-12">
+                    <div class="form-fields col-md-12">
                         <label id="description" class="label-control" >Description</label>
                         <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
                         </textarea>
@@ -795,7 +798,9 @@
                                    
 
                                     <div class="updatecomments" *ngIf="(showeditcomment && i==commentnumber)">
-                                      <input type="text" name="comment" class="form-control" formControlName="editcomment" placeholder="Add Comment..."/>
+                                      <div class="form-fields col-md-12 p-0">
+                                        <input type="text" name="comment" class="form-control" formControlName="editcomment" placeholder="Add Comment..."/>
+                                      </div>                                      
                                       <div class="modal-footer modelprfooter">
                                         <div class="pull-right">
                                             <button id="updatecancelcomment" type="button" class="btn btn-primary" (click)="posteditcancelcomment()">
@@ -837,7 +842,7 @@
                                         <img class="res-circle-img" src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" >
                                       </div>
                                     </div>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-11 histcontent">
                                       {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
                                     </div>
                                   </div>
@@ -945,7 +950,7 @@
         <div class="container p-0" style="width:100%">
             <form [formGroup]="uploadtaskFileForm" (ngSubmit)="submitUploadFileForm()">
                 <div class="row">
-                    <div class="form-fileds col-md-12">
+                    <div class="form-fields col-md-12">
                         <label for="category">File Category<span class="star">*</span></label>
                         <select class="form-control"formControlName="category">
                           <option [value]="null" disabled hidden>Select File Category</option>
@@ -958,7 +963,7 @@
                             class="errspan required">File Category Required*</span>
                     </div>           
                   
-                    <div class="form-fileds col-md-12">
+                    <div class="form-fields col-md-12">
                         <label>Upload<span class="star">*</span></label>
                         <input type="file" class="form-control" (change)="onFileSelected($event)" 
                                name="Upload-File" formControlName="filePath" placeholder="choose file">                  
