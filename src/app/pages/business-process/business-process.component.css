@@ -140,7 +140,7 @@ button.upload-btn.bps-upload:hover img, button.editprimary:hover img {
 }
 
 .bg-orange {
-    font-weight: 500;
+    font-weight: 600;
     background: #f99d1c;
     color: #ffffff;
 }
@@ -180,5 +180,5 @@ span.module-back-button {
     margin-right: 3px !important;
 }
 .value strong, .value b {
-    font-weight: 500;
+    font-weight: 600;
 }

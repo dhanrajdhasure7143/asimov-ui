@@ -1,5 +1,5 @@
-<div *ngIf="projects_list.length!=0 && processes.length!=0">
-    <mat-card id="projects_list_screen" *ngIf="projects_toggle==false">
+<div *ngIf="projects_list.length!=0 && processes.length!=0" class="h-100">
+    <mat-card id="projects_list_screen" *ngIf="projects_toggle==false" class="h-100">
       <div class="module-heading title">
         <div class="">
           <span class="module-back-button" routerLink="/pages/projects/projectdashboard"><i class="fas fa-arrow-left" aria-hidden="true"></i></span>
@@ -28,7 +28,7 @@
                 </div>
               </div>
             </ng-template>
-            <div class="projects-table-body" *ngIf="selected_tab==0">
+            <div class="projects-table-body h-100" *ngIf="selected_tab==0">
               <app-projects-programs-table [users_list]="users_list"  [processes]="processes"   status="All" [projects_list]="projects_list"></app-projects-programs-table>
             </div>
           </mat-tab>
@@ -44,7 +44,7 @@
                     </div>
                   </div>
             </ng-template>
-            <div class="projects-table-body"  *ngIf="selected_tab==1">
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==1">
                 <app-projects-programs-table [users_list]="users_list" [processes]="processes"   status="New" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>  
@@ -60,7 +60,7 @@
                     </div>
                   </div>
             </ng-template>
-            <div class="projects-table-body"  *ngIf="selected_tab==2">
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==2">
                 <app-projects-programs-table  [users_list]="users_list" [processes]="processes"  status="In Progress" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>
@@ -77,7 +77,7 @@
                   </div>
             
             </ng-template>
-            <div class="projects-table-body"  *ngIf="selected_tab==3">
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==3">
                 <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="In Review" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
           </mat-tab>
@@ -93,7 +93,7 @@
                     </div>
                   </div>
             </ng-template>
-            <div class="projects-table-body"  *ngIf="selected_tab==4">
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==4">
                 <app-projects-programs-table [users_list]="users_list" [processes]="processes"   status="Approved" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
        
@@ -110,7 +110,7 @@
                     </div>
                   </div>
             </ng-template>
-            <div class="projects-table-body"  *ngIf="selected_tab==5">
+            <div class="projects-table-body h-100"  *ngIf="selected_tab==5">
                 <app-projects-programs-table [users_list]="users_list" [processes]="processes"  status="Rejected" [projects_list]="projects_list"></app-projects-programs-table>
               </div>
             

@@ -45,7 +45,7 @@ span.user_name::before {
   font-style: normal;
   font-variant: normal;
   text-rendering: auto;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .brand {
@@ -352,9 +352,7 @@ i.fas.fa-chevron-down {
   margin-right: 5px;
 }
 
-.module-heading-title {
-  font-size: 18px;
-}
+
 
 /* Module title styles - Ends*/
 /* Common styles - Starts*/

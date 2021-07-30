@@ -340,7 +340,7 @@ textarea.msgip {
 .shortcutslistdiv label {
     min-width: 142px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     margin: 7px 0px;
 }
 .shortcutslistdiv span.bluetext {
@@ -359,7 +359,7 @@ textarea.msgip {
 }
 .favouriteslistdiv label  {  
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
 }
 .favouriteslistdiv img {
     vertical-align: middle;

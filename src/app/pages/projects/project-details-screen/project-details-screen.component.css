@@ -23,7 +23,8 @@
   }
 
   .tab-number{
-    font-size: 20px !important;
+    font-size: 15px !important;
+    font-weight: 600;
     display: block;
     margin:0px;
   }
@@ -57,7 +58,7 @@ td, th {
   height: 32px;
   color: #00a0e3;
   background: #e6f2fd;
-  /* font-weight: 500; */
+  /* font-weight: 600; */
   padding: 3px;
   text-align: center;
   line-height: 25px;
@@ -88,11 +89,11 @@ td, th {
   opacity: 1 !important;
   color: #00a0e4;
 }
-button.btn.btn-primary { 
+/* button.btn.btn-primary { 
   margin: 0px 0px 0px 10px;
   padding: 6px 12px;
   border-radius: 3px;
-}
+} */
 
 .projects-table-body tr.separated th {
   background-color: #e8f7fd;
@@ -153,7 +154,7 @@ mat-card#projects_details_screen {
 .documents .new-docdiv, .resources .new-resourcediv {
   padding: 8px 15px !important;
   margin-bottom: 0px !important;
-  min-height: 325px;
+  min-height: 300px;
 }
 .resources .projects-table-body , .documents .projects-table-body {
   padding: 0px;
@@ -262,10 +263,10 @@ button.btn.btn-primary.prj-lst-btn:hover img.testplus.default-img{
 button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
     display: initial;
 }
-button.btn.btn-primary:hover {
+/* button.btn.btn-primary:hover {
   background-color: #001c47 !important;
   border: 1px solid #001c47 !important;
-}
+} */
 .modelprhead h4 p {
   font-size: 12px;
   margin: 0px;
@@ -291,7 +292,7 @@ span.labelcont b {
   }
   
   .commentsadded {
-    /* font-weight: 500; */
+    /* font-weight: 600; */
     color: #001c47;
     background-color: #f8f8f8;
     padding: 10px;
@@ -355,7 +356,7 @@ span.labelcont b {
 
 .labelcont {
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   color: #001c47;
   display: block;
 }
@@ -368,24 +369,24 @@ span.labelcont b {
 .newprhcl .project-info img {
   margin-right: 15px;
   text-align: center;
-  width: 40px;
+  width: 32px;
     height: auto;
 }
 .newprhcl .project-info {
   display: flex;
 }
 span.labeltit, label.labeltit {
-  font-size: 14px !important;
-  color: #32486B;
-  font-weight: 400;
+  font-size: 12px !important;
+  /* color: #32486B; */
+  font-weight: 500;
   display: block;
 }
 .row.newprjdates {
   float: right;
 }
 span.labelcont {
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 13px;
+  font-weight: 600;
   color: #32486B;
 }
 span.tab-number.h3.clickable {
@@ -413,4 +414,16 @@ img.hover-img {
 }
 .histcontent {
   line-height: 30px;
+}
+
+.project-details-set .py-5 {
+  padding: 5px 5px 5px 0px;
+}
+
+.project-details-set .py-5 img {
+  width: 20px;
+}
+
+.d-flex.w-100.project-details-set {
+  width: calc(100% / 7);
 }

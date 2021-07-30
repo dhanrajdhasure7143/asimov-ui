@@ -14,28 +14,29 @@
     <div class="ml-auto module-heading-buttons">
       <span class="pull-right">
         <span  (click)="navigateToProjectRepo()">
-          <button class="btn btn-primary prj-lst-btn">
+          <button class="btn btn-default">
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
              Project Repo
           </button>
         </span>
-        <span *ngIf="editdata==true" (click)="updateprojectDetails()">
-          <button class="btn btn-primary ">
-            <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
-            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
-             Save
-          </button>
-        </span>
         <span *ngIf="editdata==true" (click)="projectdetails()">
-          <button class="btn btn-primary prj-lst-btn">
+          <button class="btn btn-default">
             <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
              Reset
           </button>
         </span>
+        <span *ngIf="editdata==true" (click)="updateprojectDetails()">
+          <button class="btn btn-primary">
+            <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
+             Save
+          </button>
+        </span>
+
         <span *ngIf="editdata==false" >
-          <button  class="btn btn-primary prj-crt-btn" (click)="editdata=true">
+          <button  class="btn btn-primary" (click)="editdata=true">
             <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
           </button>
         </span>
@@ -99,8 +100,8 @@
             </div>
           </div>        
         
-          <div class="d-flex w-100">
-                <div class="py-5 w-100">
+          <div class="d-flex w-100 project-details-setOne">
+                <div class="d-flex w-100 project-details-set">
                     <div  class="d-flex">
                       <div class="py-5">
                         <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -125,7 +126,7 @@
                       </div>
                     </div>
                 </div>
-                <div class="py-5 w-100">
+                <div class="d-flex w-100 project-details-set">
                   <div class="d-flex">
                       <div class="py-5">
                         <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -149,7 +150,7 @@
                     </div>
                 </div>
       
-                <div class="py-5 w-100">
+                <div class="d-flex w-100 project-details-set">
                   <div class="d-flex">
                       <div class="py-5">
                         <img src="..\assets\images\Projects\bot.svg" alt="" >
@@ -170,7 +171,7 @@
                     </div>
                 </div>
               
-                <div class="py-5 w-100">
+                <div class="d-flex w-100 project-details-set">
                   <div class="d-flex">
                       <div class="py-5">
                         <img src="..\assets\images\Projects\document.svg" alt="" >
@@ -183,7 +184,7 @@
                     </div>
                   </div>
       
-                <div class="py-5 w-100">
+                <div class="d-flex w-100 project-details-set">
                   <div class="d-flex">
                       <div class="py-5">
                         <img src="..\assets\images\Projects\document.svg" alt="" >
@@ -201,7 +202,7 @@
                       </div>
                     </div>
                 </div>
-                <div class="py-5 w-100">
+                <div class="d-flex w-100 project-details-set">
                   <div class="d-flex">
                       <div class="py-5">
                         <img src="..\assets\images\Projects\document.svg" alt="" >
@@ -220,7 +221,7 @@
                       </div>
                     </div>
                 </div>
-                <div class="py-5 w-100">
+                <div class="d-flex w-100 project-details-set">
                   <div class="d-flex">
                       <div class="py-5">
                         <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -251,7 +252,7 @@
           </div>
             
           <div class="d-flex w-100">
-              <div class="d-flex w-100">
+              <div class="d-flex w-100 project-details-set">
                   <div class="py-5">
                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                   </div>
@@ -275,7 +276,7 @@
                   </div>
               </div>
       
-              <div class="d-flex w-100">
+              <div class="d-flex w-100 project-details-set">
                 
                   <div class="py-5">
                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -296,7 +297,7 @@
                   </div>
               </div>
       
-              <div class="d-flex w-100">
+              <div class="d-flex w-100 project-details-set">
                   
                 <div class="py-5">
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -315,7 +316,7 @@
                         
                 </div>
       
-              <div class="d-flex w-100">
+              <div class="d-flex w-100 project-details-set">
                   
                 <div class="py-5">
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
@@ -338,7 +339,7 @@
                 </div>     
               </div>
       
-              <div class="d-flex w-100">
+              <div class="d-flex w-100 project-details-set">
                 <div class="py-5">
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
@@ -353,7 +354,7 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex w-100">
+              <div class="d-flex w-100 project-details-set">
                 <div class="py-5">
                   <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                 </div>
@@ -375,7 +376,7 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex w-100">
+              <div class="d-flex w-100 project-details-set">
                   <div class="py-5">
                     <img src="..\assets\images\Projects\process_icon.svg" alt="" >
                   </div>
@@ -390,7 +391,7 @@
       </mat-card>  
 
       <mat-card class="new-prj-tasklist" id="projects_details_screen" *ngIf="projects_toggle==false">
-        <div class="row">
+        <div class="row module-subheader-title">
       <div class="col-md-4 p-0">
         <span class="projects-header-title">
           Tasks
@@ -491,16 +492,16 @@
               <img src="../../../../assets/images/Projects/upload-task.svg"  class="default-img" />
               <img src="../../../../assets/images/Projects/upload-task-blue.svg" class="hover-img" />
             </a>
-            <span class="actions-seperator">|</span>
+            <!-- <span class="actions-seperator">|</span> -->
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
               <img src="../../../../assets/images/Projects/edit.svg">
             </a> 
-            <span class="actions-seperator">|</span>
+            <!-- <span class="actions-seperator">|</span> -->
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
               <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img" />
               <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img" />
             </a> 
-            <span class="actions-seperator">|</span>
+            <!-- <span class="actions-seperator">|</span> -->
             <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
             (click)="navigateToWorkspace(element)" matTooltip="Model">
               <img src="../../../../assets/images/Projects/eye-show.svg" class="default-img" />
@@ -539,7 +540,7 @@
       <div class="row bortopsec">
          <div class="col-md-6 pl-0 resources">
       <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
-        <div class="row">
+        <div class="row module-subheader-title">
           <div class="col-md-6 p-0">
             <span class="projects-header-title">
               Resources
@@ -603,7 +604,7 @@
          </div>
           <div class="col-md-6 p-0 documents">
       <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
-        <div class="row">
+        <div class="row module-subheader-title">
           <div class="col-md-6 p-0">
             <span class="projects-header-title">
               Recently Added Documents

@@ -116,3 +116,8 @@ span.tab-text {
   font-weight: 400 !important;
   border: none;
 }
+
+
+mat-tab-group.mat-tab-group.mat-primary {
+  height: calc(100% - 49px);
+}

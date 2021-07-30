@@ -168,7 +168,7 @@
 }
 .prjtalvcl tr.separated th {
   /* font-size: 16px !important;
-  font-weight: 500; */
+  font-weight: 600; */
   /* padding: 10px 0px !important; */
 }
 .prjtalvcl tr.separated td {
@@ -200,9 +200,9 @@ span.projects-menu-item.prj-lst-btn button {
   line-height: 18px;
 }
 span.projects-menu-item button {
-  background-color: #00a0e3 !important;
+  /* background-color: #00a0e3 !important;
   border: none;
-  border-radius: 3px !important;
+  border-radius: 3px !important; */
 }
 
 .status-data1 span {

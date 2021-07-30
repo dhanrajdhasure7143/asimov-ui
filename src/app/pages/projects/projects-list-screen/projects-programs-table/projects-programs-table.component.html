@@ -481,7 +481,7 @@
         <input type="checkbox" [checked]="element.checked" (change)="CredcheckEnableDisableBtn(element.id, $event)"> 
     </td>
 </ng-container> -->
-  <div>
+  <div class="project-list-table h-100">
     <div class="prj-prg-tablelist">
       <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
           <ng-container matColumnDef="id">

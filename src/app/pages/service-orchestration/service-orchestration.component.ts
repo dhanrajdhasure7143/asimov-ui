@@ -14,7 +14,7 @@ import { Component } from '@angular/core';
       }
       ::ng-deep.mat-tab-label.mat-tab-label-active:not(.mat-tab-disabled),
       ::ng-deep.mat-tab-label.mat-tab-label-active.cdk-keyboard-focused:not(.mat-tab-disabled) {
-        font-weight: 500;
+        font-weight: 600;
         color: black;
         opacity: 1;
       }
