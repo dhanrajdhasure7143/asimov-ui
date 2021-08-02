@@ -1,54 +1,7 @@
 ::ng-deep #projects_details_screen .mat-tab-label {
     height: 40px !important;
-  }
-  
-  
-  ::ng-deep #projects_resources_screen .mat-tab-label {
-    height:40px !important;
-  }
- 
-  .projects-header{
-    width:100%;
-  }
-
-  .projects-menu-item{
-    padding:5px;
-    font-size:15px;
-    color:#4AB0F5;
-    cursor: pointer;
-  }
-  .status-tabs{
-    display: flex;
-    padding:20px;
-    
-  }
-
-  .tab-number{
-    font-size: 30px !important;
-
-  }
-
-  .status-img > img{
-    height:60px !important;
-    padding-top:30px;
-  }
-
-  .status-data{
-    vertical-align: middle;
-    padding-top:15px;
-    padding-left:30px;
-    padding-bottom:15px;
-    color:black !important;
-  }
-
-  .documents1{
-    margin-top: 1px;
-    width: 100%;
-    padding-left: 20px;
-}
-
-.resources{
-    width:50%;
+    justify-content: left !important;
+    min-width: 100px !important;
 }
 
 table {
@@ -56,55 +9,14 @@ table {
   width: 100%;
 }
 
-td, th {
-  
+td, th {  
   text-align: left;
   padding: 8px;
 }
 
-tr:nth-child(even) {
-  background-color:white;
-}
-
-.separated {
-  /* set border style for separated rows */
-  border-bottom: 1px solid black;
-}
-.res-circle {
-  width: 52px;
-  border-radius: 55%;
-  text-align: center;
-  height: 51px;
-  font-size: 20px;
-  background: #b3dff9;
-  line-height: 44px;
-  font-weight: bold;
-  padding: 4px 3px;
-}
-.res-circle:after {
-  content: "";
-  display: block;
-  padding-bottom: 100%;
-}
-.projecttable.table th{
-  background-color:  rgb(215 239 246) !important;
-  vertical-align: middle !important;
-  /* color: #4AB0F5 !important; */
-  font-size: 15px !important;
-}
-
-.tasks-body th {
-  font-weight: 600;
-  opacity: 1 !important;
-  color: #00a0e4;
-}
 #projects_details_screen button.btn.btn-primary {
   background-color: #00a0e3 !important;
   border-color: #00a0e3 !important;
-}
-.projects-table-body tr.separated th {
-  background-color: #d7eff6;
-  color: #00a0e3;
 }
 
 .maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
@@ -118,15 +30,10 @@ tr:nth-child(even) {
   color: #fff !important;
   border-color: #001c47 !important;
 }
-.projects-table-body td {
-  border-bottom: 1px solid rgb(221 221 221 / 59%);
-}
+
 .remove-action{
     color: red;
     font-size: 15px;
-}
-.serve1{
-    margin-top: -6px;
 }
 
 ::ng-deep .modal-lr .modal-content {
@@ -175,4 +82,24 @@ tr:nth-child(even) {
   color: #00a0e3;
   fill: #00a0e3;
   /* background-color: #00a0e3; */
+}
+
+/* new styles */
+img.testplus.hover-img ,
+td span:hover img.testplus.default-img{
+    display: none;
+}
+td span:hover img.testplus.hover-img {
+    display: initial;
+}
+.projectrepo-body {
+  height: calc(100% - 48px);
+  overflow: auto;
+  padding: 10px;
+}
+span.projects-menu-item {
+  margin-left: 10px;
+}
+.projects-table-body {
+  margin-top:5px;
 }

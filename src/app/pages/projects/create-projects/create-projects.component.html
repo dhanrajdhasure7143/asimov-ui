@@ -477,31 +477,54 @@
                             </div>
 
                             <div *ngIf="selected_projects.length>0 || newproject.length>0" class="prj-slt">
-                                <h4>Selected Projects</h4>
+                                <h4>
+                                    Selected Projects
+                                    <span class="removeallprjcts">Remove All</span>
+                                </h4>
                                 <div class="row">
                                     <div class="col-md-4 pl-0" *ngFor="let project of selected_projects">
                                         <div class="project-card">
-                                            <span class="card-placeholder">Project Name</span>
-                                            <h3 class="projectname">{{project.projectName}}</h3>
+                                            <span class="card-placeholder">
+                                                Project Name
+                                                <span class="pull-right clickable"
+                                                    (click)="remove_project(project,'selected')">
+                                                    <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                                                    <!-- <i class="fa fa-trash"></i> -->
+                                                </span>
+                                            </span>
+                                            <h3 class="projectname">
+                                                {{project.projectName}}                                               
+                                            </h3>
                                             <div class="prj-slt-lst">
-                                                <span>Oct-20-2020</span><span class="pull-right clickable"
+                                                <span>Oct-20-2020</span>
+                                                 <!-- <span class="pull-right clickable"
                                                     (click)="remove_project(project,'selected')"><i
-                                                        class="fa fa-trash"></i></span>
+                                                        class="fa fa-trash"></i></span>-->
                                             </div>
                                         </div>
-                                        <br>
+                                       
                                     </div>
                                     <div class="col-md-4 pl-0 " *ngFor="let project of newproject">
                                         <div class="project-card">
-                                            <span class="card-placeholder">Project Name</span>
-                                            <h3 class="projectname">{{project.projectName}}</h3>
+                                            <span class="card-placeholder">
+                                                Project Name
+                                                <span class="pull-right clickable"
+                                                    (click)="remove_project(project,'new')">
+                                                    <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                                                    <!-- <i class="fa fa-trash"></i> -->
+                                                </span>
+                                            </span>
+                                            <h3 class="projectname">
+                                                {{project.projectName}}                                                
+                                            </h3>
                                             <div class="prj-slt-lst">
-                                                <span>Not Saved</span> <span class="pull-right clickable"
+                                                <span>Not Saved</span> 
+                                                <!-- <span class="pull-right clickable"
                                                     (click)="remove_project(project,'new')"><i
-                                                        class="fa fa-trash"></i></span>
+                                                        class="fa fa-trash"></i></span> -->
                                             </div>
                                         </div>
-                                        <br>
+                                       
                                     </div>
                                 </div>
                             </div>
