@@ -245,3 +245,6 @@ button.btn.btn-primary.prj-btn-save {
   border: 1px solid #D1D1D1;
   color: #001c47 !important;
 }
+.add_projects{
+  cursor: not-allowed;
+}
