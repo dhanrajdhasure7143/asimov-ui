@@ -105,10 +105,10 @@
               </ngx-dropzone>
             </div>  
           </div>
-          <div class="col-md-6" *ngIf="isHeaderShow == 'false'">
+          <div class="col-md-6 module-heading-buttons" *ngIf="isHeaderShow == 'false'">
             <span>
-              <a  routerLink="/pages/approvalWorkflow/home"><b>Approval Workflow</b></a>
-              <a (click)="gotoBPMNPlatform()"><b>View Cockpit</b></a>
+              <a  routerLink="/pages/approvalWorkflow/home" class="btn btn-primary">Approval Workflow</a>
+              <a (click)="gotoBPMNPlatform()" class="btn btn-primary">View Cockpit</a>
             </span>
           </div>
       </div>    

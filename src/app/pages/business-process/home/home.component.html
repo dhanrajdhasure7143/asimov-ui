@@ -2,10 +2,10 @@
   <div class="container-fluid new-bps-layout h-100">
     <div class="header_addon row approval_workflow_properties">
       <div class="col-md-8"></div>
-      <div class="col-md-4 new-cockpit">
-        <a class="col-md-12" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home"><b>Approval
-            Workflow</b></a>
-        <a class="col-md-6 text-center" href="javascript:void(0);" (click)="gotoBPMNPlatform()"><b>View Cockpit</b></a>
+      <div class="col-md-4 new-cockpit module-heading-buttons">
+        <a class="btn btn-primary" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home">Approval
+            Workflow</a>
+        <a class="btn btn-primary" href="javascript:void(0);" (click)="gotoBPMNPlatform()">View Cockpit</a>
       </div>
     </div>
     <div class="row">

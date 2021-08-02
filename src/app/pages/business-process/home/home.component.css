@@ -129,3 +129,13 @@ div#bpmn_list {
     padding: 10px;
     float: right;
 }
+
+
+.module-heading-buttons {
+    text-align: end;
+    padding: 0px;
+}
+
+.module-heading-buttons .btn {
+    margin-left: 10px;
+}
