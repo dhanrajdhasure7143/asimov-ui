@@ -390,7 +390,7 @@ span.labelcont {
   color: #32486B;
 }
 span.tab-number.h3.clickable {
-  margin: 10px 0px;
+  /* margin: 10px 0px; */
 }
 .comment-name {
   margin-left: 8px;
@@ -405,12 +405,18 @@ span.pull-right.lastedit-date {
 img.hover-img {
   display: none;
 }
-.newinntalx a:hover img.default-img {
+.newinntalx a:hover img.default-img,
+.comment-send:hover img.default-img {
   display: none;
 }
 
-.newinntalx a:hover img.hover-img {
+.newinntalx a:hover img.hover-img,
+.comment-send:hover img.hover-img {
   display: initial;
+}
+.comment-send img {
+  width: 18px;
+  height: 18px;
 }
 .histcontent {
   line-height: 30px;

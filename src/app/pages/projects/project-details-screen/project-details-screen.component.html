@@ -393,7 +393,7 @@
       <mat-card class="new-prj-tasklist" id="projects_details_screen" *ngIf="projects_toggle==false">
         <div class="row module-subheader-title">
       <div class="col-md-4 p-0">
-        <span class="projects-header-title">
+        <span class="module-sub-header-title">
           Tasks
         </span>
       </div>
@@ -494,7 +494,8 @@
             </a>
             <!-- <span class="actions-seperator">|</span> -->
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
-              <img src="../../../../assets/images/Projects/edit.svg">
+              <img src="../../../../assets/images/Projects/edit.svg" class="default-img" />
+              <img src="../../../../assets/images/Projects/Edit-blue.svg" class="hover-img" />
             </a> 
             <!-- <span class="actions-seperator">|</span> -->
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
@@ -542,7 +543,7 @@
       <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
         <div class="row module-subheader-title">
           <div class="col-md-6 p-0">
-            <span class="projects-header-title">
+            <span class="module-sub-header-title">
               Resources
             </span>
           </div>
@@ -559,7 +560,7 @@
            
           </span>
           
-          <span class="projects-header-title">
+          <span class="module-sub-header-title">
             Resources
           </span>
           <span class="pull-right" style="font-size:20px;">
@@ -606,7 +607,7 @@
       <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
         <div class="row module-subheader-title">
           <div class="col-md-6 p-0">
-            <span class="projects-header-title">
+            <span class="module-sub-header-title">
               Recently Added Documents
             </span>
           </div>
@@ -622,7 +623,7 @@
            
           </span>
           
-          <span class="projects-header-title">
+          <span class="module-sub-header-title">
             Recently Added Documents
           </span>
           <span class="pull-right" style="font-size:20px;">
@@ -750,7 +751,7 @@
                         </textarea>
                     </div>
                     <div class="col-md-12">
-                        <h4><b>Activity</b></h4>
+                        <h4 class="module-sub-header-title">Activity</h4>
                         <mat-tab-group [selectedIndex]="selectedTab" id="Project-dashboard-tabs" (selectedTabChange)="onTabChanged($event)">
                             <mat-tab label="Comment">
                               <div class="t-comments-box">
@@ -765,8 +766,10 @@
                                       type="text" #commentInput id="addcomment" 
                                       placeholder="Add a comment.."
                                     />
-                                    <div class="comment-send">
-                                      <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i>
+                                    <div class="comment-send" id="sendcomment" (click)="postcomments(commentInput.value)">
+                                      <img src="../../../../assets/images/Projects/send.svg" class="default-img"/>
+                                      <img src="../../../../assets/images/Projects/send-blue.svg" class="hover-img"/>
+                                      <!-- <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i> -->
                                     </div>
                                   </div>
                                 </div>
@@ -835,7 +838,7 @@
                                 <li *ngFor="let history of taskhistory">
                                  
                                   <div class="row">
-                                    <div class="col-sm-1" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
+                                    <div class="col-sm-1 pr-0" *ngIf="(history.lastModifiedUserEmail|userImagePipe: users_list)as result">
                                       <div  class="res-circle " *ngIf="result.length==3">
                                         {{history.lastModifiedUserEmail|userImagePipe: users_list}}
                                       </div> 
@@ -843,7 +846,7 @@
                                         <img class="res-circle-img" src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" >
                                       </div>
                                     </div>
-                                    <div class="col-sm-11 histcontent">
+                                    <div class="col-sm-11 p-0 histcontent">
                                       {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
                                     </div>
                                   </div>

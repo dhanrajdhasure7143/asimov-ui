@@ -69,7 +69,7 @@
                                                     {{user.userId.firstName}} {{user.userId.lastName}}</option>
                                             </select> -->
 
-                                            <ng-select  formControlName="resources"  [multiple]="true"  placeholder="Select Resources"
+                                            <ng-select  class="ngselectfield" formControlName="resources"  [multiple]="true"  placeholder="Select Resources"  [ngClass]="insertForm2.get('resources').valid?'enteredfield-color':'inputfield-color'"
                                                      [(ngModel)]="selectedresources"  required>
                                                     <ng-option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
                                                 </ng-select>
