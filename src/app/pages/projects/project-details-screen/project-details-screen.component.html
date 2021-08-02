@@ -567,7 +567,7 @@
                 <th>Name</th>
                 <th>Role</th>
                 <th>Email</th>
-                <th>Last Updated</th>
+                <th>Last Active</th>
               </tr>
             </thead>
             <tbody *ngIf="users_list.lenght!=0">
@@ -581,7 +581,7 @@
                 <td >{{user.userId.firstName+" "+ user.userId.lastName}}</td>
                 <td >{{user.roleID.displayName}}</td>
                 <td >{{user.userId.userId}}</td>
-                <td >{{user.userId.created_at | date:'MMM d, y, HH:mm:ss'}}</td>
+                <td >{{user.last_active | date:'MMM d, y, HH:mm:ss'}}</td>
               </tr>
 
             </tbody>
