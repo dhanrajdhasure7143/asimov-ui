@@ -1740,7 +1740,7 @@ tr.mat-row {
   width: 100%;
 }
 
-.small-input {
+/* .small-input {
   border-right: none;
   border-left: none;
   border-top: none;
@@ -1749,6 +1749,23 @@ tr.mat-row {
   width: 150px;
   height: 22px !important;
   padding: 0px !important;
+} */
+
+.small-input {
+  background-color: #ffffff !important;
+  border: 1px solid #d6ddf2 !important;
+  box-shadow: unset !important;
+  width: 100%;
+  color: rgb(0 21 50 / 60%) !important;
+  font-weight: 400 !important;
+  padding: 6px 10px !important;
+  border-radius: 4px;
+}
+select.small-input {
+  appearance: none;
+  background-image: url('assets/images/Projects/down-arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center right 12px;
 }
 
 .mat-paginator-page-size {
@@ -2099,7 +2116,7 @@ button.btn {
   line-height: normal !important;
   border: medium none !important;
   font-size: 15px;
-  margin-left: 10px !important;
+  margin-right: 10px !important;
   border-radius: 3px;
   color: #001c47;
   min-width: 100px;
@@ -2189,4 +2206,8 @@ span.projects-header-title {
 
 button.btn:first-child {
   margin-left: 0px !important;
+}
+
+button.btn.btn-primary:first-child {
+  margin-right: 0px !important;
 }
