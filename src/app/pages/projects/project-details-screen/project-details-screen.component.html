@@ -571,7 +571,7 @@
               </tr>
             </thead>
             <tbody *ngIf="users_list.lenght!=0">
-              <tr *ngFor="let user of (projectDetails.resources | userDetials : users_list)  | paginate: { itemsPerPage: 3, currentPage: p } ">
+              <tr *ngFor="let user of (projectDetails.resource | userDetials : users_list)  | paginate: { itemsPerPage: 3, currentPage: p } ">
                 <td>
                   <span *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
                   <span  class="letter-image" *ngIf="user.userId.profilePic==null">
