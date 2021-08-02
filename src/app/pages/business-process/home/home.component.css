@@ -38,7 +38,7 @@
     font-size: 14px;
     color: #00a0e3;
     font-weight: 600;
-    border-bottom: 1px solid #4a4a4a33 !important;
+    /* border-bottom: 1px solid #4a4a4a33 !important; */
     border: none;
 }
 
@@ -138,4 +138,9 @@ div#bpmn_list {
 
 .module-heading-buttons .btn {
     margin-left: 10px;
+}
+.bps-serwksp img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }

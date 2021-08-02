@@ -21,6 +21,7 @@
       font-weight: 600;
       border-bottom: 1px solid #4a4a4a33 !important;
       border: none;
+      height: 40px;
   }
   .list_header {
     text-align: left;
