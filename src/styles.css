@@ -1531,12 +1531,13 @@ select.form-control {
 }
 
 .modal-footer.modelprfooter {
-  padding: 10px 0px;
+  /* padding: 10px 0px; */
   border: none !important;
 }
 
 .modelprbody,
 .modelprfooter {
+  padding: 15px 25px;
   background-color: #FFF !important;
 }
 
@@ -1560,7 +1561,7 @@ select.form-control {
 }
 
 .modal-body.modelprbody {
-  height: calc(100% - 106px);
+  height: calc(100% - 114px);
   overflow: auto;
 }
 
@@ -2184,4 +2185,8 @@ span.projects-header-title {
   font-size: 16px;
   line-height: 35px;
   margin: 0px;
+}
+
+button.btn:first-child {
+  margin-left: 0px !important;
 }
