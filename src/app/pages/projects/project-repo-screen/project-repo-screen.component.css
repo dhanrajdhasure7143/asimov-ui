@@ -176,3 +176,21 @@ tr:nth-child(even) {
   fill: #00a0e3;
   /* background-color: #00a0e3; */
 }
+.testplus{
+  width: 14px;
+  height: 14px;
+  margin-right: 10px;
+}
+img.testplus1 {
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+  margin-bottom: 5px;
+}
+img.testplus2 {
+  width: 16px;
+  height: 16px;
+}
+.projects-menu-item1{
+  font-size: 16px;
+}
