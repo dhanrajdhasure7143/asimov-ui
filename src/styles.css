@@ -1163,7 +1163,7 @@ app-projects-programs-table {
   overflow: unset !important;
 }
 
-.new-bps-grid-data span.mat-expansion-indicator {
+.new-bps-grid-data span.mat-expansion-indicator, .aprwkfl-grid-data span.mat-expansion-indicator {
   position: absolute;
   right: 15px;
   top: 5px;

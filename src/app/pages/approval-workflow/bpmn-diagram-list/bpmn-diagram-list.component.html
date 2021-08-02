@@ -1,17 +1,15 @@
-<div class="row header_addon">
+<div class="row">
   <div class="col-md-12">
-    <div class="col-md-10"></div>
-    <div class="col-md-2">
-        <mat-form-field>
-            <mat-label>Search Workspace</mat-label>
-            <input class="toolbar-search" type="text" matInput [(ngModel)]="searchTerm">
-            <mat-icon matSuffix style="font-size: 1.2em">search</mat-icon>
-          </mat-form-field>
-    </div>
+    <div class="col-md-4 aprwkfl_search">
+            <label class="label-control">Search Workspace</label>
+            <div class="searchinputar">
+            <input class="form-control toolbar-search" type="text" matInput [(ngModel)]="searchTerm">
+            <mat-icon matSuffix style="font-size: 1.2em"><img src="../../../../assets/images/search.svg" alt=""></mat-icon>
+    </div></div>
   </div>
 </div>
 <div class="container-fluid bpmn_list text-bold">
-  <div class="row col-md-12 approve_bpmn_list_header">
+  <div class="row col-md-12 aprwkfl_bpmn_list_header">
     <div class="list_header" (click)="sort('processIntelligenceId',0)"><b>Process ID<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
     <div class="list_header" (click)="sort('bpmnProcessName',1)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>
     <div class="list_header" (click)="sort('createdTimestamp',2)"><b>Modified Time<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></div>
@@ -19,7 +17,7 @@
     <div class="list_header" (click)="sort('role',4)"><b>Role<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></div>
     <div class="list_header" (click)="sort('approvalStatus',5)"><b>Actions<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></b></div>
   </div><br/>
-  <div class="row col-md-12"  id="bpmn_list">
+  <div class="row col-md-12 p-0 aprwkfl-grid-data"  id="bpmn_list">
   <mat-accordion>
     <mat-expansion-panel  #matExpansionPanel *ngFor="let each_diag of displayedRows$ | async | filter: searchTerm | paginate: { itemsPerPage: 14, currentPage: p };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
     [(expanded)]="each_diag.xpandStatus"
@@ -29,7 +27,7 @@
     (afterExpand)="expandPanel(i, each_diag.bpmnProcessInfo[0])">
   <mat-expansion-panel-header>
         <mat-panel-title>
-          <div class="row col-md-12">
+          <div class="row col-md-12" id="bpmn_list_row">
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].processIntelligenceId ? each_diag.bpmnProcessInfo[0].processIntelligenceId : '-' }}</div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].bpmnProcessName ? each_diag.bpmnProcessInfo[0].bpmnProcessName : '-'}}</div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].convertedModifiedTime*1000 | date:'medium'}}</div>
@@ -40,9 +38,8 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <div class="row col-md-12">
-        <div class="col-md-7">
+        <div class="col-md-7 aprwkfl_table">
           <h4 class="child_list_header">{{each_diag.bpmnProcessInfo[0].bpmnProcessName}}</h4>
-          <br>
           <table class="full_width account_pay_details_table">
             <thead>
               <tr>
@@ -61,10 +58,13 @@
                 <td>{{"V 1."+each_past_process.version}}</td>
                 <td [ngStyle]="{'color':getColor(each_past_process.bpmnProcessStatus)}"><div *ngIf="each_past_process.bpmnProcessStatus=='PENDING';else status"><span>{{pendingStatus}}</span></div> <ng-template #status>{{each_past_process.bpmnProcessStatus}}</ng-template></td>
                 <td [matTooltip]="each_past_process.reviewComments"><input type="text"  [value]="each_past_process.reviewComments" name="reviewComments{{j}}" [(ngModel)]="each_past_process.reviewComments"  [attr.disabled]="checkStatus(each_past_process) || each_past_process.isDisabled" placeholder="Enter your Message"  required/></td><!-- [(ngModel)]="approval_msg" -->
-                <td>
-                  <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">Approve</button><!-- approval_msg.length==0 ||  -->
-                  <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_past_process, each_diag)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)">Deny</button><!-- approval_msg.length==0 || -->
-                  <i class="fa fa-eye" (click)="expandPanel(i, each_past_process)"></i>
+                <td class="aprwkfl_actions">
+                  <div class="aprwkfl_actions_icons">
+                    <button  class="btn btn-success" id="btn_app" (click)="approveDiagram(each_past_process)"[disabled]="checkStatus(each_past_process) || each_past_process.isDisabled || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)"><img src="../../../../assets/images/BPMS/approve-black.svg" alt="" class="testplus1"></button><!-- approval_msg.length==0 ||  -->
+                    <button  class="btn btn-danger" id="btn_deny" (click)="denyDiagram(each_past_process, each_diag)" [disabled]="checkStatus(each_past_process) || each_past_process.isDisabled  || ((each_past_process.reviewComments && each_past_process.reviewComments.length == 0) || !each_past_process.reviewComments)"><img src="../../../../assets/images/BPMS/deny-black.svg" alt="" class="testplus1"></button><!-- approval_msg.length==0 || -->
+                    <img src="../../../../assets/images/BPMS/eye-show.svg" alt="" class="testplus1" (click)="expandPanel(i, each_past_process)">
+                    <!-- <i class="fa fa-eye" (click)="expandPanel(i, each_past_process)"></i> -->
+                  </div>  
                 </td>
               </tr>
             </tbody>
