@@ -277,7 +277,7 @@
                                                 [ngClass]="createprogram.get('owner').valid?'enteredfield-color':'inputfield-color'">
                                                 <option [value]="null" disabled hidden>Select Owner</option>
                                                 <option value="" [selected]="true">Select Owner</option>
-                                                <option *ngFor="let user of userslist" [value]="user.userId.id">
+                                                <option *ngFor="let user of userslist" [value]="user.userId.userId">
                                                     {{user.userId.firstName}} {{user.userId.lastName}}</option>
                                             </select>
                                             <span
@@ -371,9 +371,9 @@
                                                         [value]="project.id">{{project.projectName}}</option>
                                                 </select>
                                             </div>
-                                            <div class="addproject-btn" (click)="add_to_selected_projects()">
+                                            <div class="addproject-btn" [ngClass]="selected_project==null ?'add_projects':'undefined'" (click)="add_to_selected_projects()">
                                                 <!-- <button mat-mini-fab color="primary" (click)="add_to_selected_projects()" ><i class="fa fa-plus"></i> </button> -->
-                                                <span mat-mini-fab color="primary"><i class="fa fa-plus"></i></span>
+                                                <span [ngClass]="selected_project==null ?'add_projects':'undefined'" mat-mini-fab color="primary"><i class="fa fa-plus"></i></span>
                                             </div>
                                         </div>
 

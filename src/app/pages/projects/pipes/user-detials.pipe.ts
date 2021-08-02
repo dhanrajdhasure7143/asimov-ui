@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class UserDetialsPipe implements PipeTransform {
 
   transform(resourses:any[],users_list:any[]): any {
-    console.log("resourses", resourses)
+    console.log("resourses", resourses, users)
     var users:any=[];
     let data= resourses.forEach(item=>{
        if(users_list.find(item2=>item2.userId.userId==item)!=undefined)
