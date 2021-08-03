@@ -41,6 +41,10 @@ export class ProjectDetailsScreenComponent implements OnInit {
   categaoriesList: any;
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
+  dataSource6:MatTableDataSource<any>;
+  displayedColumns6: string[] = ["profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
+  @ViewChild("sort14",{static:false}) sort14: MatSort;
+  @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
   responsedata: any;
   bot_list: any=[];
   automatedtask: any;
@@ -260,9 +264,17 @@ percentageComplete: number;
       getallusers()
       {
         let tenantid=localStorage.getItem("tenantName")
-        this.rpa.getuserslist(tenantid).subscribe(item=>{
-          let users:any=item
-          this.users_list=users;
+        this.rpa.getuserslist(tenantid).subscribe(response=>{
+        
+          this.users_list=response;
+          let users:any=[]
+          this.projectDetails.resource.forEach(item=>{
+              if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+                users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+         })
+          this.dataSource6= new MatTableDataSource(users);
+          this.dataSource6.sort=this.sort14;
+          this.dataSource6.paginator=this.paginator104;
         })
       }
 

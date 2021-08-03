@@ -69,13 +69,13 @@
                                                     {{user.userId.firstName}} {{user.userId.lastName}}</option>
                                             </select> -->
 
-                                            <ng-select  formControlName="resources"  [multiple]="true"  placeholder="Select Resources"
+                                            <ng-select  formControlName="resource"  [multiple]="true"  placeholder="Select Resources"
                                                      [(ngModel)]="selectedresources"  required>
                                                     <ng-option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
                                                 </ng-select>
 
                                             <span
-                                                *ngIf="insertForm2.get('resources').invalid && insertForm2.get('resources').touched"
+                                                *ngIf="insertForm2.get('resource').invalid && insertForm2.get('resource').touched"
                                                 class="errspan required">Resources Required*</span>
                                         </div>
                                         <div class="form-fields col-md-6 pr-0">
@@ -278,7 +278,7 @@
                                                 [ngClass]="createprogram.get('owner').valid?'enteredfield-color':'inputfield-color'">
                                                 <option [value]="null" disabled hidden>Select Owner</option>
                                                 <option value="" [selected]="true">Select Owner</option>
-                                                <option *ngFor="let user of userslist" [value]="user.userId.id">
+                                                <option *ngFor="let user of userslist" [value]="user.userId.userId">
                                                     {{user.userId.firstName}} {{user.userId.lastName}}</option>
                                             </select>
                                             <span
@@ -372,9 +372,9 @@
                                                         [value]="project.id">{{project.projectName}}</option>
                                                 </select>
                                             </div>
-                                            <div class="addproject-btn" (click)="add_to_selected_projects()">
+                                            <div class="addproject-btn" [ngClass]="selected_project==null ?'add_projects':'undefined'" (click)="add_to_selected_projects()">
                                                 <!-- <button mat-mini-fab color="primary" (click)="add_to_selected_projects()" ><i class="fa fa-plus"></i> </button> -->
-                                                <span mat-mini-fab color="primary"><i class="fa fa-plus"></i></span>
+                                                <span [ngClass]="selected_project==null ?'add_projects':'undefined'" mat-mini-fab color="primary"><i class="fa fa-plus"></i></span>
                                             </div>
                                         </div>
 
@@ -560,7 +560,7 @@
                         <div class="col-md-12">
                             <div class="form-fields col-md-6 pl-0">
                                 <label>Add Resources<span class="star">*</span></label>
-                                <select formControlName="resources" class="form-control data">
+                                <select formControlName="resource" class="form-control data">
                                     <option value="">Select Resources</option>
                                     <option *ngFor="let user of userslist" [value]="user.userId.userId">
                                         {{user.userId.firstName}} {{user.userId.lastName}}</option>

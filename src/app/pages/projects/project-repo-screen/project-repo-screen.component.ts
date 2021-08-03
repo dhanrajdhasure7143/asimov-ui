@@ -1,6 +1,9 @@
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { MatPaginator } from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { RestApiService } from '../../services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -31,6 +34,16 @@ export class ProjectRepoScreenComponent implements OnInit {
   denyOrrevokeData: any;
   filecategories: any;
   filterdArray: any[];
+  dataSource3:MatTableDataSource<any>;
+  displayedColumns3: string[] = ["category","fileName","uploadedDate","uploadedBy","fileSize","comments","action"];
+  dataSource4:MatTableDataSource<any>;
+  displayedColumns4: string[] = ["category","requestFrom","requestTo","comments","uploadedDate","action"];
+  @ViewChild("sort12",{static:false}) sort12: MatSort;
+  dataSource5:MatTableDataSource<any>;
+  displayedColumns5: string[] = ["category","requestFrom","requestTo","comments","uploadedDate","action"];
+  @ViewChild("sort13",{static:false}) sort13: MatSort;
+  @ViewChild("sort11",{static:false}) sort11: MatSort;
+  @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute) { 
     
 this.route.queryParams.subscribe(data=>{​​​​​​​​
@@ -195,7 +208,14 @@ this.getFileDetails();
   getFileDetails(){
     this.api.getFileDetails(this.projectid).subscribe(data =>{
       this.uploadedFiledata=data.uploadedFiles.reverse();
+      console.log(this.uploadedFiledata);
+      this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
+      this.dataSource3.sort=this.sort11;
+      this.dataSource3.paginator=this.paginator101;
       this.requestedFiledata=data.requestedFiles.reverse();
+      console.log(this.requestedFiledata);
+      this.dataSource4= new MatTableDataSource(this.requestedFiledata);
+      this.dataSource4.sort=this.sort12;
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
@@ -204,6 +224,9 @@ this.getFileDetails();
           this.filterdArray.push(e)
           
         }
+        console.log(this.filterdArray);
+        this.dataSource5= new MatTableDataSource(this.filterdArray);
+        this.dataSource5.sort=this.sort13;
       })
       console.log("req-Data",this.requestedFiledata);
       console.log("upload-Data",this.uploadedFiledata);

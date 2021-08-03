@@ -5,14 +5,13 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class UserDetialsPipe implements PipeTransform {
 
-  transform(resourses:any[],users_list:any[]): any {
-    console.log("resourses", resourses)
+  transform(resources:any[],users_list:any[]): any {
+    console.log("resourses", resources)
     var users:any=[];
-    let data= resourses.forEach(item=>{
-       if(users_list.find(item2=>item2.userId.userId==item)!=undefined)
-        users.push(users_list.find(item2=>item2.userId.userId==item))
+    let data= resources.forEach(item=>{
+       if(users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+        users.push(users_list.find(item2=>item2.userId.userId==item.resource))
     })
-    console.log("---------------------------------------------------------",data);
     return users;
   }
 

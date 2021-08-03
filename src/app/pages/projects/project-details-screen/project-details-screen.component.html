@@ -569,18 +569,18 @@
         </div> -->
         
         <div class="projects-table-body profile-table">
-          <table class="table">
+          <!-- <table class="table">
             <thead>
               <tr class="separated">
                 <th></th>
                 <th>Name</th>
                 <th>Role</th>
                 <th>Email</th>
-                <th>Last Updated</th>
+                <th>Last Active</th>
               </tr>
             </thead>
             <tbody *ngIf="users_list.lenght!=0">
-              <tr *ngFor="let user of (projectDetails.resources | userDetials : users_list)  | paginate: { itemsPerPage: 3, currentPage: p } ">
+              <tr *ngFor="let user of (projectDetails.resource | userDetials : users_list)  | paginate: { itemsPerPage: 3, currentPage: p } ">
                 <td>
                   <span *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
                   <span  class="letter-image" *ngIf="user.userId.profilePic==null">
@@ -590,14 +590,79 @@
                 <td >{{user.userId.firstName+" "+ user.userId.lastName}}</td>
                 <td >{{user.roleID.displayName}}</td>
                 <td >{{user.userId.userId}}</td>
-                <td >{{user.userId.created_at | date:'MMM d, y, HH:mm:ss'}}</td>
+                <td >{{user.last_active | date:'MMM d, y, HH:mm:ss'}}</td>
               </tr>
 
             </tbody>
             
           </table>
 
-          <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
+          <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls> -->
+          <table mat-table #sort14="matSort" [dataSource]="dataSource6" matSort class="projecttable table" id="autotable">
+            
+            <ng-container matColumnDef="profilePic">
+              <th mat-header-cell *matHeaderCellDef></th>
+              <td mat-cell *matCellDef="let user" class="action-link tablacs"> 
+                <span *ngIf="user.userId.profilePic!=null"><img src="../../../../assets/images/BPMS/user1.png" /></span>
+                <span  class="letter-image" *ngIf="user.userId.profilePic==null">
+                  <span class="letter">{{user.userId.firstName|uppercase| slice:0:1}}{{user.userId.lastName| uppercase|slice:0:1}}</span>
+                </span>
+              
+              </td>
+            </ng-container>
+    
+              <ng-container matColumnDef="userId.firstName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+                <td mat-cell   *matCellDef="let user">
+                  <span *ngIf="user.userId.firstName!=null" [matTooltip]="user.userId.firstName">{{user.userId.firstName+" "+ user.userId.lastName}}</span>
+                  <span *ngIf="user.userId.firstName==null">---</span>
+                </td>
+      
+            </ng-container>
+      
+            <ng-container matColumnDef="roleID.displayName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Role</th>
+              <td mat-cell *matCellDef="let user">
+                <span *ngIf="user.roleID.displayName!=null" [matTooltip]="user.roleID.displayName">{{user.roleID.displayName}}</span>
+                  <span *ngIf="user.roleID.displayName==null">---</span>
+              </td>
+          </ng-container>
+          <ng-container matColumnDef="userId.userId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+            <td mat-cell *matCellDef="let user">
+              <span *ngIf="user.userId.userId!=null" [matTooltip]="user.userId.userId">{{user.userId.userId}}</span>
+                <span *ngIf="user.userId.userId==null">---</span>
+            </td>
+        </ng-container>
+        
+            <ng-container matColumnDef="uploadedDate">
+                <th mat-header-cell *matHeaderCellDef>Last Active</th>
+                <td mat-cell *matCellDef="let user">
+                    <span *ngIf="user.userId.created_at!=null">{{user.last_active | date:'MMM d, y, HH:mm:ss'}}</span>
+                    <span *ngIf="user.userId.created_at==null">---</span>
+                   
+                </td>
+            </ng-container>
+      
+          
+      
+              <ng-container matColumnDef="Loading">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                    Loading
+                </td>
+            </ng-container>
+              <ng-container matColumnDef="noData">
+                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                      No Records Found
+                  </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns6; sticky: true"></tr>
+              <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
+              <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource6!=null}"></tr>
+              <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource6!=null && dataSource6.data.length==0)}"></tr>
+            </table>
+            <mat-paginator class="newpaginationdiv" #paginator104 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+            </mat-paginator>
         </div>
         
       </mat-card>
