@@ -158,31 +158,24 @@
                       class="tab-text labelcont">-</span>
                   </div>
                 </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">End Date</span>
 
-                  <div>
-                    <span
-                      *ngIf="projectDetails.endDate != null && projectDetails.endDate != undefined && projectDetails.endDate !='' "
-                      class="tab-text labelcont">{{projectDetails.endDate | date }}</span>
-                    <span
-                      *ngIf="projectDetails.endDate == null || projectDetails.endDate == undefined || projectDetails.endDate =='' "
-                      class="tab-text labelcont">-</span>
-  
+                <div class="col-sm-3 p-0">
+                  <div class="mainset">
+                    <span class="labeltit">End Date</span>
+                    <div >
+                        <span  *ngIf="projectDetails.endDate != null && projectDetails.endDate != undefined && projectDetails.endDate !='' "  class="tab-text labelcont" >{{projectDetails.endDate | date }}</span>
+                      <span  *ngIf="projectDetails.endDate == null || projectDetails.endDate == undefined || projectDetails.endDate =='' "  class="tab-text labelcont" >-</span>
+                     
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Resources</span>
 
-
-                  <span class="tab-text labelcont">{{projectDetails.resources.length}}</span>
+                <div class="col-sm-3 p-0">
+                  <div class="mainset">
+                    <span class="labeltit" >Resources</span>
+                    <span class="tab-text labelcont" >{{resourceslength}}</span>
+                  </div>
                 </div>
-              </div>
-
           </div>
         </div>
 
@@ -708,25 +701,77 @@
               <!-- <div class="addresource-btn">
                 <span mat-mini-fab color="primary" matTooltip="Add Resources" (click)="addresource(addresourcemodal)"><i class="fa fa-plus"></i></span>
             </div> -->
-            </td>
-          </ng-container>
+          </td>
+      </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status </th>
-            <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.status!=null">{{element.status}}</span>
-              <span *ngIf="element.status==null">---</span>
-            </td>
-          </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status  </th>
+        <td mat-cell *matCellDef="let element">
+          <span *ngIf="element.status!=null">{{element.status}}</span>
+          <span *ngIf="element.status==null">---</span>
+        </td>
+    </ng-container>
+     
+      <ng-container matColumnDef="percentage">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Percentage Complete</th>
+        <td mat-cell *matCellDef="let element" >
+          <span class="tab-text labelcont" >{{element.percentageComplete}}%
+            <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar>
+        </span>
+        </td>
+      </ng-container>
 
-          <ng-container matColumnDef="percentage">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Percentage Complete</th>
-            <td mat-cell *matCellDef="let element">
-              <span class="tab-text labelcont">{{element.percentageComplete}}%
-                <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar>
-              </span>
-            </td>
-          </ng-container>
+      <ng-container matColumnDef="lastModifiedTimestamp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</th>
+        <td mat-cell *matCellDef="let element" >
+          <span *ngIf="element.lastModifiedTimestamp!=null">{{element.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</span>
+          <span *ngIf="element.lastModifiedTimestamp==null">---</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="lastModifiedBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</th>
+        <td mat-cell *matCellDef="let element" >
+          <span *ngIf="element.lastModifiedBy!=null">{{element.lastModifiedBy}}</span>
+          <span *ngIf="element.lastModifiedBy==null">---</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdBy">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+        <td mat-cell *matCellDef="let element" >
+          <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span>
+          <span *ngIf="element.createdBy==null">---</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+          <div class="newinntalx">
+            <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
+              <img src="../../../../assets/images/Projects/fileupload.svg">
+            </a>
+            <span class="actions-seperator">|</span>
+            <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
+              <img src="../../../../assets/images/Projects/edit.svg">
+            </a> 
+            <span class="actions-seperator">|</span>
+            <a (click)="deletetask(element)" matTooltip="Delete Task" >
+              <img src="../../../../assets/images/Projects/delete-red.svg">
+            </a> 
+            <span class="actions-seperator">|</span>
+            <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
+            (click)="navigateToWorkspace(element)" matTooltip="View Task">
+              <img src="../../../../../assets/images/Projects/eye-show.svg" />
+            </a> 
+
+            <a class="disable-bg text-dark" *ngIf="element.taskCategory =='Analysis'|| element.taskCategory =='Task Mining'" >
+              <img src="../../../../../assets/images/Projects/eye-hide.svg" />
+            </a>
+        </div>
+        </td>
+      </ng-container>
 
           <ng-container matColumnDef="lastModifiedTimestamp">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</th>
@@ -919,7 +964,16 @@
                 </td>
             </ng-container>
       
-          
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                <div class="newinntalx">
+                  <a (click)="deleteresource(element)" matTooltip="Delete Resource" >
+                    <img src="../../../../assets/images/Projects/delete-red.svg">
+                  </a> 
+              </div>
+              </td>
+            </ng-container>
       
               <ng-container matColumnDef="Loading">
                 <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
