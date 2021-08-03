@@ -130,11 +130,11 @@
                   <th mat-header-cell *matHeaderCellDef> Actions</th>
                   <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
                     <span class="" (click)="onDeleteItem()">
-                      <img src="../../../../assets/images/Projects/delete-black.svg" class="testplus1 default-img">
-                      <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus1 hover-img">
+                      <img src="../../../../assets/images/Projects/delete-black.svg" class="testplus default-img">
+                      <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img">
                     </span>
                     <span class="">
-                      <img src="../../../../assets/images/Projects/Download.svg" class="testplus1 default-img">
+                      <img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img">
                     </span>
                     <!-- <div class="newinntalx">
                       <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
@@ -175,14 +175,10 @@
                 </table>
                 <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
                 </mat-paginator>
-                <br>
+                </div>
                 <div class="">
-                <span class="">
-                 
-                </span>
-                <br>
-                <span class="projects-header-title">
-                 <b>Pending Requests</b>
+                <span class="module-sub-header-title">
+                 Pending Requests
                 </span>
               
               </div>

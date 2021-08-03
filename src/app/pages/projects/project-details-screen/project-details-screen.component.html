@@ -752,15 +752,15 @@
             <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
               <img src="../../../../assets/images/Projects/fileupload.svg">
             </a>
-            <span class="actions-seperator">|</span>
+            
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
               <img src="../../../../assets/images/Projects/edit.svg">
             </a> 
-            <span class="actions-seperator">|</span>
+            
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
               <img src="../../../../assets/images/Projects/delete-red.svg">
             </a> 
-            <span class="actions-seperator">|</span>
+            <!-- <span class="actions-seperator">|</span> -->
             <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
             (click)="navigateToWorkspace(element)" matTooltip="View Task">
               <img src="../../../../../assets/images/Projects/eye-show.svg" />
