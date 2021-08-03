@@ -45,8 +45,9 @@ export class ProjectRepoScreenComponent implements OnInit {
   @ViewChild("sort13",{static:false}) sort13: MatSort;
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
-  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, 
-    private route: ActivatedRoute,private spinner:NgxSpinnerService) { 
+  multiFilesArray: any[] = [];
+  fileId: any;
+  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute, private spinner:NgxSpinnerService) { 
     
 this.route.queryParams.subscribe(data=>{​​​​​​​​
   console.log(data);
@@ -110,7 +111,9 @@ this.getFileDetails();
     this.denyFileRequestmodalref = this.modalService.show(template,{class:"modal-lr"});
 
   }
-  onDeleteItem(){
+  onDeleteItem(event){
+    console.log("came to onDelete");
+    
     
   }
   sendDenyFileReq(){
@@ -155,6 +158,7 @@ this.getFileDetails();
   }
   clearMsg(){
 
+    this.denyFileRequestForm.get("description").setValue("");
   }
   uploadFile(template: TemplateRef<any>){
 
@@ -166,7 +170,7 @@ this.getFileDetails();
     var fileData = new FormData();
     
     fileData.append("category", this.uploadFileForm.get("fileCategory").value)
-     fileData.append("comments", this.uploadFileForm.get("fileCategory").value)
+     fileData.append("comments", this.uploadFileForm.get("description").value)
      fileData.append("filePath", this.fileUploadData)
      fileData.append("projectId", this.projectid)
    console.log("fileDattaa--- "+fileData);
@@ -175,6 +179,8 @@ this.getFileDetails();
  this.api.uploadProjectFile(fileData).subscribe(res => {
    //message: "Resource Added Successfully
    this.uploadFilemodalref.hide();
+   this.uploadFileForm.get("fileCategory").setValue("");
+   this.uploadFileForm.get("description").setValue("");
    if(res.message!=undefined)
    {
     this.spinner.show();
@@ -204,8 +210,17 @@ this.getFileDetails();
 
   chnagefileUploadForm(e){
 
+    
+
+    console.log(<File> e.target.files);
+
+    
     this.fileUploadData = <File> e.target.files[0]
     console.log(this.fileUploadData);
+    this.multiFilesArray.push(
+      e.target.files[0]
+    )
+    console.log("array",this.multiFilesArray);
     
     
   }
@@ -320,4 +335,33 @@ this.getFileDetails();
     else
     return value;
   }​​​​​​​​
+  onDownloadItem(element){
+
+    // this.fileId = element.id;
+    // this.api.downloadFiles(this.fileId).subscribe(res => {
+    //   const urlCreator = window.URL;
+    //   const blob = new Blob([res], {
+    //     type: 'PNG',
+    //   });
+    //   const url = urlCreator.createObjectURL(blob);
+    //   const a: any = document.createElement('a');
+    //   document.body.appendChild(a);
+    //   a.style = 'display: none';
+    //   a.href = url;
+    //   a.download = element.fileName;
+    //   a.click();
+    //   window.URL.revokeObjectURL(url);
+    //   // this.notifier.show({
+    //   //   type: "success",
+    //   //   message: "Downloading....",
+    //   //   id: "123"
+    //   // });
+    // }, err => {
+    //   Swal.fire("Error", "Error in file download","error");
+    // }
+    // )
+
+    console.log("came to domwload file");
+    
+  }
 }
