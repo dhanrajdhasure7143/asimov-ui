@@ -6,9 +6,6 @@
                 <option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
                     {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</option>
             </select>
-            <select *ngIf="isfromApprover">
-                <option> </option>
-            </select>
     </div>
     <!-- <div class="col-md-2 pl-0" *ngIf="!isfromApprover" id="approversList">
             <label class="label-control">Approver List</label>
