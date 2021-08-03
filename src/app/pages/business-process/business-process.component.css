@@ -183,3 +183,12 @@ span.module-back-button {
 .value strong, .value b {
     font-weight: 600;
 }
+
+.module-heading-buttons {
+    text-align: end;
+    padding: 0px;
+}
+
+.module-heading-buttons .btn {
+    margin-left: 10px;
+}

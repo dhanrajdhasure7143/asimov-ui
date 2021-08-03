@@ -1165,7 +1165,7 @@ app-projects-programs-table {
   overflow: unset !important;
 }
 
-.new-bps-grid-data span.mat-expansion-indicator {
+.new-bps-grid-data span.mat-expansion-indicator, .aprwkfl-grid-data span.mat-expansion-indicator {
   position: absolute;
   right: 15px;
   top: 5px;
@@ -2061,7 +2061,7 @@ select.form-control {
 select.bps-home-fileds,
 input.bps-home-fileds {
   display: inline-block;
-  width: 260px;
+  width: 286px;
   margin-left: 8px;
 }
 

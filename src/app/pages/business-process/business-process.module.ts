@@ -32,6 +32,7 @@ import 'highlightjs-line-numbers.js';
 // hljs.registerLanguage('xml', xml);
 // import hljs from '../../../../node_modules/highlight.js/lib/core';
 // document.defaultView['hljs'] = hljs;
+import { PopoverModule } from 'ngx-bootstrap/popover'
 
 @NgModule({
   declarations: [BusinessProcessComponent, CreateBpmnDiagramComponent, BpsHomeComponent, UploadProcessModelComponent, ListOfChangesComponent,FilterPipe],
@@ -52,7 +53,8 @@ import 'highlightjs-line-numbers.js';
     MatInputModule, MatIconModule, MatFormFieldModule,
     MatOptionModule, MatSelectModule, MatTooltipModule, MatDialogModule, MatTabsModule, MatMenuModule,
     ModalModule.forRoot(),
-    MatPaginatorModule
+    MatPaginatorModule,
+    PopoverModule.forRoot(),
     // HighlightModule
   ],
   providers: [
