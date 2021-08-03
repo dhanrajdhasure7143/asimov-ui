@@ -208,3 +208,6 @@ span.removeallprjcts {
 span.removeallprjcts:hover {
   color: red;
 }
+.add_projects{
+  cursor: not-allowed;
+}
