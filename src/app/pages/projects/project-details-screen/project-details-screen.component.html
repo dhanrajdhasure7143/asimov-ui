@@ -224,7 +224,7 @@
                         <span class="labeltit" >Resources</span>
                         
                         
-                        <span class="tab-text labelcont" >{{projectDetails.resources.length}}</span>
+                        <span class="tab-text labelcont" >{{resourceslength}}</span>
                       </div>
                   </div>
                 </div>
@@ -635,7 +635,16 @@
                 </td>
             </ng-container>
       
-          
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                <div class="newinntalx">
+                  <a (click)="deleteresource(element)" matTooltip="Delete Resource" >
+                    <img src="../../../../assets/images/Projects/delete-red.svg">
+                  </a> 
+              </div>
+              </td>
+            </ng-container>
       
               <ng-container matColumnDef="Loading">
                 <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
