@@ -1,6 +1,7 @@
 import { Component, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../services/data-transfer.service';
+import { RestApiService } from '../services/rest-api.service';
 @Component({
   selector: 'app-bussiness-process',
   templateUrl: './business-process.component.html' ,
@@ -23,16 +24,20 @@ export class BusinessProcessComponent implements AfterViewChecked {
   userRole;
   isApproverUser:boolean = false;
   logged_User:any;
+  approver_list:any[] = [];
+  selected_approver:any
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService ) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService ) { }
 
   ngOnInit(){
     localStorage.setItem("isheader","false");
     this.logged_User=localStorage.getItem("firstName")+' '+localStorage.getItem("lastName")
     this.userRole = localStorage.getItem("userRole")
     this.userRole = this.userRole.split(',');
-    this.isApproverUser = this.userRole.includes('Process Architect')
+    this.isApproverUser = this.userRole.includes('Process Architect');
+    this.getApproverList();
   }
+
   ngAfterViewChecked() {
     this.activatedRoute.queryParams.subscribe(params => {
       this.isShowConformance = params['isShowConformance'] == 'true';
@@ -58,7 +63,12 @@ export class BusinessProcessComponent implements AfterViewChecked {
       }
     });
   }
-
+   async getApproverList(){
+    await this.rest.getApproverforuser('Process Architect').subscribe( res =>  {//Process Architect
+     if(Array.isArray(res))
+       this.approver_list = res;
+   });
+  }
   route() {
     this.router.navigate(['/pages/home']);
   }
@@ -127,6 +137,11 @@ export class BusinessProcessComponent implements AfterViewChecked {
        splitTenant = selecetedTenant.split('-')[0];
     }
     window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+  }
+  onchange(){
+    // console.log(e);
+    let obj={id:"submit",selectedApprovar:this.selected_approver}
+    this.dt.submitForApproval(obj)
   }
 
 }

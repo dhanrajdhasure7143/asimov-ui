@@ -215,7 +215,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           }else if(headerValue=='edit'){
             this.isEdit=true;
           }else if(headerValue == 'save&approval'){
-            this.submitDiagramForApproval();
+            // this.submitDiagramForApproval();
             this.isEdit=false;
           }else if(headerValue == 'orchestartion'){
             this.orchestrate()
@@ -229,6 +229,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         }else if(result){
           this.slideUp(headerValue)
         }
+        })
+        this.dt.subMitApprovalValues.subscribe(res=>{
+          console.log(res)
+          if(res){
+            this.submitDiagramForApproval(res.selectedApprovar);
+          }
         })
       }
        ngOnDestroy() {
@@ -964,7 +970,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
   }
 
-  submitDiagramForApproval(){
+  submitDiagramForApproval(e){
     let yesProceed = true;
     this.isStartProcessBtn=false;
     if(this.isShowConformance && this.isUploaded && this.bpmnModeler){
@@ -972,6 +978,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     if(!yesProceed) return;
     let bpmnModel:BpmnModel = new BpmnModel();
+    this.selected_approver=e
     if((!this.selected_approver && this.selected_approver != 0) || this.selected_approver <= -1){
       Swal.fire("No approver", "Please select approver from the list given above", "error");
       return;

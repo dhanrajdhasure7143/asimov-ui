@@ -74,26 +74,34 @@
                 <img src="../../../assets/images/BPMS/Orchestrate.svg">
                 <span class="testtooltip">Orchestration</span>
               </button>
-              <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
+              <!-- <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
-              </button>
+              </button> -->
               <button class="clr-hvr tsttooltipbtn" *ngIf="iscreate_notation" (click)="saveandSubmitApprovalCreat()">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
-              <button mat-button [matMenuTriggerFor]="menu" class="clr-hvr tsttooltipbtn"><img alt=""
+              <!-- <button mat-button [matMenuTriggerFor]="menu" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"><img alt=""
                 src="../../../assets/images/BPMS/submit-for-approval.svg"><span class="testtooltip">Save & Submit for
-                approval</span></button>
-            <mat-menu #menu="matMenu" class="custom-content">
+                approval</span></button> -->
+                <button type="button" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"
+        [popover]="popTemplate">
+        <img alt="" src="../../../assets/images/BPMS/submit-for-approval.svg">
+        <span class="testtooltip">Save & Submit for
+          approval</span>
+</button>
+            <!-- <mat-menu #menu="matMenu" class="custom-content">
               <div class="form-group">
                 <label for="" class="label-control">Approval</label>
-                <select name="" id="" class="form-control">
-                  <option value=""></option>
-                </select>
+                <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
+                  <option value="undefined" disabled hidden>Select Approver</option>
+                  <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
+                      {{each_approver.firstName+" "+each_approver.lastName}}</option>
+              </select>
               </div>
-              <button class="btn btn-primary">Save & Submit for Approval</button>
-            </mat-menu>
+              <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
+            </mat-menu> -->
               <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
@@ -127,3 +135,16 @@
       <router-outlet></router-outlet>
   </div>
 </div>
+<ng-template #popTemplate>
+  <div class="custom-content">
+    <div class="form-group">
+      <label for="" class="label-control">Approval</label>
+      <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
+        <option value="undefined" disabled hidden>Select Approver</option>
+        <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
+            {{each_approver.firstName+" "+each_approver.lastName}}</option>
+    </select>
+    </div>
+    <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
+  </div>
+</ng-template>
