@@ -363,12 +363,11 @@ export class ProgramDetailsComponent implements OnInit {
   }
 
 
-  linkcreateproject()
+  linkcreateproject(event)
   {
-    let data=this.insertForm2.value;
-    data.resources=[data.resources];
+    let data=(JSON.parse(event));
     this.spinner.show();
-    this.rest.saveProjectByProgramId(this.program_detials.id,data).subscribe(res=>{
+    this.rest.saveProjectByProgramId(this.program_detials.id, data).subscribe(res=>{
       let response:any=res;
       this.spinner.hide();
       this.modalref.hide();
