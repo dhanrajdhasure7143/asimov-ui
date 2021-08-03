@@ -601,7 +601,11 @@
               <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)" >
                 <img src="../../../../../assets/images/Projects/edit.svg" />
               </a> -->
-              <a (click)="deleteproject(element)" matTooltip="Delete Project Details" >
+              <a (click)="deleteproject(element)"  *ngIf="element.type=='Project'" matTooltip="Delete Project" >
+                <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+              </a> 
+              <a (click)="deleteproject(element)"  *ngIf="element.type=='Program'" matTooltip="Delete Program" >
                 <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
                 <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
               </a> 
