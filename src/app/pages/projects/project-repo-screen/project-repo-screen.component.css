@@ -4,16 +4,6 @@
     min-width: 100px !important;
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {  
-  text-align: left;
-  padding: 8px;
-}
-
 #projects_details_screen button.btn.btn-primary {
   background-color: #00a0e3 !important;
   border-color: #00a0e3 !important;
@@ -103,21 +93,6 @@ span.projects-menu-item {
 .projects-table-body {
   margin-top:5px;
 }
-.testplus{
-  width: 14px;
-  height: 14px;
-  margin-right: 10px;
-}
-img.testplus1 {
-  width: 16px;
-  height: 16px;
-  margin-left: 8px;
-  margin-bottom: 5px;
-}
-img.testplus2 {
-  width: 16px;
-  height: 16px;
-}
-.projects-menu-item1{
-  font-size: 16px;
+.projects-table-body td>span {
+  font-size: 13px !important;
 }
