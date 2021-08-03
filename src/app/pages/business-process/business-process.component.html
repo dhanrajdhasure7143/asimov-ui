@@ -86,7 +86,7 @@
                 src="../../../assets/images/BPMS/submit-for-approval.svg"><span class="testtooltip">Save & Submit for
                 approval</span></button> -->
                 <button type="button" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"
-        [popover]="popTemplate">
+        [popover]="popTemplate" placement="bottom">
         <img alt="" src="../../../assets/images/BPMS/submit-for-approval.svg">
         <span class="testtooltip">Save & Submit for
           approval</span>
