@@ -943,5 +943,7 @@ save_blueprism_config(data)
   getFileCategories():Observable<any>{
     return this.http.get("/platform-service/document/fileCategories")
   }
-
+  deleteResource(projectid,resourceemail){
+    return this.http.get("/platform-service/project/deleteResource?projectId="+projectid+"&resource="+resourceemail+"")
+  }
 }
