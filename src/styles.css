@@ -2229,3 +2229,13 @@ button.btn.btn-primary:first-child {
 .djs-container svg {
   padding-left: 44px;
 }
+
+
+.custom-content .mat-menu-content{
+  padding: 15px;
+}
+
+.custom-content .mat-menu-content button.btn.btn-primary {
+  margin-left: auto;
+  margin-right: 0px !important;
+}
