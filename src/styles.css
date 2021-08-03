@@ -857,12 +857,6 @@ foreignObject {
   color: white !important;
 }
 
-.modal-content {
-  /* margin-top: 250px !important; */
-  width: 500px;
-  min-height: 200px;
-}
-
 .modal-header {
   padding: 11px 15px 1px !important;
   background-color: #fff !important;
@@ -1334,15 +1328,7 @@ mat-row {
   }
 }
 
-.modal-lg .modal-content {
-  margin-top: 0px !important;
-  height: 90%;
-  overflow: hidden;
-  width: 100%;
-
-}
-
-.modal-md .modal-content {
+.modal-content {
   margin-top: 0px !important;
   max-height: 90%;
   overflow: hidden;
@@ -1627,12 +1613,6 @@ select.form-control {
 
 /* Modal popup New Styles */
 
-.modal-lr .modal-content {
-  margin-top: 0px !important;
-  /* height: 60%; */
-  width: 100%;
-  overflow: hidden;
-}
 
 .bpspaginationdiv {
   position: absolute;
