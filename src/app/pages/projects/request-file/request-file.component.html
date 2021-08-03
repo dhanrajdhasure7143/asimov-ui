@@ -1,64 +1,48 @@
-<div class="modal-header">
+<div class="modal-header modelprhead">
     <h4 class="modal-title pull-left">Request File</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="createRequestmodalref.hide()">
-        <span aria-hidden="true">&times;</span>
+      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
     </button>
 </div>
-<div class="modal-body">
-    <div class="container" style="width:100%">
-        <br>
-
+<div class="modal-body modelprbody">
+    <div class="container p-0" style="width:100%">
         <form [formGroup]="requestFileForm" (ngSubmit)="saveRequestedfile()">
             <div class="row">
-                <div class="col-md-6">
-                    <label for="fileCategory">File Category<span style="color:red">*</span></label>
-                    <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory">
-                        <option  [value]="null" disabled hidden>Select Category</option>
-                    <option value="" [selected]="true">Select Category</option>
-                    <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
-                        
-                    </select>
-                    <span
-                        *ngIf="requestFileForm.get('fileCategory').invalid && requestFileForm.get('fileCategory').touched"
-                        style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
-                    <br>
-                </div>
-                <div class="col-md-6">
-                    <label for="resources">Request To<span style="color:red">*</span></label>
-                    <select formControlName="resources" class="form-control data">
-                        <option value="">Select Resources</option>
-                        <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
-                    </select>
-                    <span
-                    *ngIf="requestFileForm.get('resources').invalid && requestFileForm.get('resources').touched"
-                    style="color:red" class="fa fa-info-circle errspan">Request to Required*</span>
-                    <br> 
-                </div>
-
-                </div>
-               
-                
-                <br>
                 <div class="col-md-12">
-                    <br>
-                    <label>Description<span style="color:red">*</span></label>
-                    <textarea class="form-control" formControlName="description" placeholder="Enter Description..." style="height:100px;">
-
+                    <div class="form-fields col-md-6 pl-0">
+                        <label for="fileCategory">File Category<span class="star">*</span></label>
+                        <select class="form-control"  formControlName="fileCategory">
+                            <option  [value]="null" disabled hidden>Select Category</option>
+                            <option value="" [selected]="true">Select Category</option>
+                            <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                            </select>
+                            <span *ngIf="requestFileForm.get('fileCategory').invalid && requestFileForm.get('fileCategory').touched"
+                             class="errspan required">File Category Required*</span>
+                    </div>  
+                    <div class="form-fields col-md-6 pr-0">
+                        <label for="taskName">Request To<span class="star">*</span></label>
+                        <select formControlName="resources" class="form-control data">
+                            <option value="">Select Resources</option>
+                            <option *ngFor="let user of userslist" [value]="user.userId.userId">{{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                        </select>
+                        <span *ngIf="requestFileForm.get('resources').invalid && requestFileForm.get('resources').touched"
+                        class="errspan required">Request to Required*</span>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <label>Description<span class="star">*</span></label>
+                    <textarea class="form-control" formControlName="description" placeholder="Enter Description..." rows="4">
                     </textarea>
                     <span *ngIf="requestFileForm.get('description').invalid && requestFileForm.get('description').touched"
-                        style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
-
-                </div>
-            
+                         class="errspan required">Description Required*</span>
+                </div> 
+            </div>
         </form>
-        <br>
-        <div class="pull-right">
-            <!-- <button (click)="resettask()" class="btn btn-primary">Reset</button> -->
-            <button (click)="createRequestmodalref.hide()" class="btn btn-primary">Cancel</button>
-                &nbsp;&nbsp;
-            <button [disabled]="requestFileForm.invalid" (click)="saveRequestedfile()" class="btn btn-primary">Submit</button>
-        </div>
-    
     </div>
+</div>          
+<div class="modal-footer modelprfooter">
+    <div class="pull-right">
+        <button (click)="createRequestmodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button [disabled]="requestFileForm.invalid" (click)="saveRequestedfile()" class="btn btn-primary btn-update">Submit</button>
     </div>
-
+</div>

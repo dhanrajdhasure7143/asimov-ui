@@ -38,20 +38,6 @@
     color:#001c47 !important;
   }
 
-  table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 0px;
-  font-size: 14px;
-}
-
-td, th {  
-  text-align: left;
-  vertical-align: middle !important;
-  padding: 5px 10px !important;
-  font-size:14px;
-}
-
 .res-circle {
   width: 32px;
   border-radius: 100%;
@@ -75,41 +61,7 @@ td, th {
   display: block;
   padding-bottom: 100%;
 }
-.projecttable.table th{
-  background-color: #e8f7fd !important;
-  vertical-align: middle !important;
-  font-size: 14px !important;
-  padding: 8px 10px;
-  font-weight: 400;
-  border-bottom: 1px solid #4a4a4a33;
-}
 
-.tasks-body th {
-  font-weight: 600;
-  opacity: 1 !important;
-  color: #00a0e4;
-}
-/* button.btn.btn-primary { 
-  margin: 0px 0px 0px 10px;
-  padding: 6px 12px;
-  border-radius: 3px;
-} */
-
-.projects-table-body tr.separated th {
-  background-color: #e8f7fd;
-  color: #00a0e3;
-  font-weight: 400;
-  font-size: 14px;
-  text-align: left !important;
-  padding: 8px 10px;
-  border-bottom: 1px solid #4a4a4a33;
-}
-.projects-table-body td {
-  text-align: left !important;
-  padding: 5px 10px;
-  vertical-align: middle;
-  font-size: 13px !important;
-}
 .new-prj-details .projects-table-body td img {
   height: 30px;
 }
@@ -127,14 +79,15 @@ mat-card#projects_details_screen {
   margin-bottom: 16px;
   border-radius: 2px;
 }
-.new-prj-tasklist {
+.new-prj-tasklist , .resources .new-resourcediv{
   padding: 8px 15px !important;
 }
 .projecttable.table, .projects-table-body{
   margin-top: 8px;
 }
-.new-prj-tasklist .tasks-body tr.mat-header-row, .projects-table-body th, td{
-  height: 40px;
+.new-prj-tasklist .tasks-body tr.mat-header-row, .projects-table-body th, td , tr.mat-header-row{
+  height: 40px !important;
+  border-bottom: none !important;
 }
 .new-attach-btn {
   background-color: #fff !important;
@@ -151,7 +104,7 @@ mat-card#projects_details_screen {
   vertical-align: middle;
   font-size: 13px !important
 }
-.documents .new-docdiv, .resources .new-resourcediv {
+.documents .new-docdiv {
   padding: 8px 15px !important;
   margin-bottom: 0px !important;
   min-height: 300px;

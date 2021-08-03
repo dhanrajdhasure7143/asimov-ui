@@ -335,7 +335,7 @@ i.fas.fa-chevron-down {
 }
 
 .module-heading-buttons button.btn {
-  margin: 0px 0px 0px 10px;
+  /* margin: 0px 0px 0px 10px; */
   display: inline-flex;
   align-items: center;
 }

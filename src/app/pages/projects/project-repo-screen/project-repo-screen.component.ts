@@ -107,7 +107,7 @@ this.getFileDetails();
     }else{
       
     }
-    this.denyFileRequestmodalref = this.modalService.show(template);
+    this.denyFileRequestmodalref = this.modalService.show(template,{class:"modal-lr"});
 
   }
   onDeleteItem(){
@@ -159,7 +159,7 @@ this.getFileDetails();
   uploadFile(template: TemplateRef<any>){
 
     this.getFileCategories();
-    this.uploadFilemodalref = this.modalService.show(template);
+    this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
   }
   submitUploadFileForm(){
 
