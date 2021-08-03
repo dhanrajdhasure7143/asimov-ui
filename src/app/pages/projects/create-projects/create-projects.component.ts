@@ -74,7 +74,7 @@ export class CreateProjectsComponent implements OnInit {
   this.insertForm2=this.formBuilder.group({
     projectName: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     initiatives: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    resources: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    resource: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     owner: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     mapValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     endDate: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
@@ -98,7 +98,9 @@ export class CreateProjectsComponent implements OnInit {
 
 
   linkcreateproject(){
-  this.newproject.push(this.insertForm2.value)
+  let data=this.insertForm2.value;
+  data["resource"]=data.resource.map(item=>{ return {resource:item}})
+  this.newproject.push(data)
   console.log("link",this.newproject)
   this.modalRef.hide();
   }
@@ -127,7 +129,9 @@ createproject()
     this.username=userfirstname+" "+userlastname
     this.insertForm2.value.status="New";
     this.insertForm2.value.createdBy=this.username;
+  
     let data=this.insertForm2.value;
+    data["resource"]=data.resource.map(item=>{ return {resource:item}})
     this.api.createProject(data).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
@@ -147,22 +151,24 @@ createproject()
       }).then((result) => {
         this.resetcreateproject();
         this.getallProjects();
-        this.projectDetails={
-          description: this.projectcreatedata.description,
-          endDate: this.projectcreatedata.endDate,
-          initiatives: this.projectcreatedata.initiatives,
-          mapValueChain: this.projectcreatedata.mapValueChain,
-          measurableMetrics: this.projectcreatedata.measurableMetrics,
-          owner: this.projectcreatedata.owner,
-          process: this.projectcreatedata.process,
-          projectName: this.projectcreatedata.projectName,
-          priority: this.projectcreatedata.priority,
-          resources: this.projectcreatedata.resources,
-          startDate: this.projectcreatedata.startDate,
-          status:this.projectcreatedata.status,
-          id:response.project.id
-        }
-        this.navigatetodetailspage(this.projectDetails);
+        // this.projectDetails={
+        //   description: this.projectcreatedata.description,
+        //   endDate: this.projectcreatedata.endDate,
+        //   initiatives: this.projectcreatedata.initiatives,
+        //   mapValueChain: this.projectcreatedata.mapValueChain,
+        //   measurableMetrics: this.projectcreatedata.measurableMetrics,
+        //   owner: this.projectcreatedata.owner,
+        //   process: this.projectcreatedata.process,
+        //   projectName: this.projectcreatedata.projectName,
+        //   priority: this.projectcreatedata.priority,
+        //   resource: this.projectcreatedata.resources,
+        //   startDate: this.projectcreatedata.startDate,
+        //   status:this.projectcreatedata.status,
+        //   id:response.project.id
+        // }
+        // this.navigatetodetailspage(this.projectDetails);
+        
+        this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:response.project.id}})
       }) 
         
       }
@@ -172,11 +178,8 @@ createproject()
     })
   }
 
-  navigatetodetailspage(detials){
-    this.projectdetailsEncode=Base64.encode(JSON.stringify(detials));
-          this.project={id:this.projectdetailsEncode}
-          console.log("details",this.project)
-          this.router.navigate(['/pages/projects/projectdetails',this.project])
+  navigatetodetailspage(){
+    
   }
 
   getprocessnames()
@@ -236,7 +239,7 @@ createproject()
   {
         this.insertForm2.reset();
         
-        this.insertForm2.get("resources").setValue("");
+        this.insertForm2.get("resource").setValue("");
         this.insertForm2.get("mapValueChain").setValue("");
         this.insertForm2.get("owner").setValue("");
         this.insertForm2.get("initiatives").setValue("");
