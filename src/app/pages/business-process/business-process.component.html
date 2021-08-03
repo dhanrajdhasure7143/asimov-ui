@@ -1,109 +1,135 @@
 <div class="main-content" [class.main-content1]="isHeaderShow == 'true'">
-    <div class="row content-area">
-      <div class=" row module-heading title">
-          <div class="col-md-6 new-bps-header-title">
-            <span class="bps-header-title">
-              <span class="module-heading-title">Business Process Studio <span *ngIf="isHeaderShow == 'true'"> / {{currentNotation_name | titlecase}}</span></span>
-              <span class="" *ngIf="isHeaderShow == 'true'">
-                <span *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon inpro-label" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
-                  {{rejectedOrApproved}}
-                </span>
-                <span *ngIf="isfromApprover" class="label_icon inpro-label">{{rejectedOrApproved}}</span>
-              </span>
+  <div class="row content-area">
+    <div class=" row module-heading title">
+      <div class="col-md-6 new-bps-header-title">
+        <span class="bps-header-title">
+          <span class="module-heading-title">Business Process Studio <span *ngIf="isHeaderShow == 'true'"> /
+              {{currentNotation_name | titlecase}}</span></span>
+          <span class="" *ngIf="isHeaderShow == 'true'">
+            <span *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon inpro-label"
+              [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'"
+              [class.bg-green]="rejectedOrApproved=='APPROVED'">
+              {{rejectedOrApproved}}
             </span>
-              <div class="value" *ngIf="isHeaderShow == 'true'">
-                <span class="module-back-button" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
-                <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span>
-                <span class="level3">Last Modified By: Peter James</span>
-                <span *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
+            <span *ngIf="isfromApprover" class="label_icon inpro-label">{{rejectedOrApproved}}</span>
+          </span>
+        </span>
+        <div class="value" *ngIf="isHeaderShow == 'true'">
+          <span class="module-back-button" (click)='backtoNavigate()'><i aria-hidden="true"
+              class="fas fa-arrow-left"></i></span>
+          <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span>
+          <span class="level3">Last Modified By: Peter James</span>
+          <span *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
 
-              </div> 
-          </div>
-          <div class="col-md-6 new-bps-icons p-0" *ngIf="isHeaderShow == 'true'">
-            <div class="row bps-float">
-              <button *ngIf='!iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="(isEditMode)" (click)="editNotation()">
-                <img src="../../../assets/images/BPMS/Edit-white.svg">
-                <span class="testtooltip">Edit</span>
-              </button>
-              <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
-                <img src="../../../assets/images/BPMS/download.svg">
-                <span class="testtooltip">Download</span>
-              </button>
-                <mat-menu #download="matMenu">
-                  <button mat-menu-item (click)="downloadNotaton('svg')">SVG</button>
-                  <button mat-menu-item (click)="downloadNotaton('png')">PNG</button>
-                  <button mat-menu-item (click)="downloadNotaton('jpg')">JPG</button>
-                  <button mat-menu-item (click)="downloadNotaton(selectedNotationType)">{{selectedNotationType | uppercase}}</button>
-                </mat-menu>
-              <button class="tsttooltipbtn">
-                <img src="../../../assets/images/BPMS/share.svg" >
-                <span class="testtooltip">Share</span>
-              </button>
-              <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
-              <button class="tsttooltipbtn">
-                <img src="../../../assets/images/BPMS/copy.svg" >
-                <span class="testtooltip">Copy</span>
-              </button>
-              <button class="tsttooltipbtn" (click)="zoomIn()" >
-                <img src="../../../assets/images/BPMS/zoom-in.svg">
-                <span class="testtooltip">Zoom in</span>
-              </button>
-              <button class="tsttooltipbtn" (click)="zoomOut()">
-                <img src="../../../assets/images/BPMS/zoom-out.svg">
-                <span class="testtooltip">Zoom out</span>
-              </button>
-              <button class="tsttooltipbtn" (click)="fitNotation()" >
-                <img src="../../../assets/images/BPMS/Fit to screen.svg">
-                <span class="testtooltip">Fit to screen</span>
-              </button>
-              <span class="bpsbtnsep">|</span>
-              <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcess()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" >
-                <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
-                <span class="testtooltip">Save</span>
-              </button>
-              <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcessCreate()" *ngIf="iscreate_notation" >
-                <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
-                <span class="testtooltip">Save</span>
-              </button>
-              <button class='icon-disabled' *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation" >
-                <img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg">
-              </button>
-              <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
-                <img src="../../../assets/images/BPMS/Orchestrate.svg">
-                <span class="testtooltip">Orchestration</span>
-              </button>
-              <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
-                <img src="../../../assets/images/BPMS/submit-for-approval.svg">
-                <span class="testtooltip">Save & Submit for approval</span>
-              </button>
-              <button class="clr-hvr tsttooltipbtn" *ngIf="iscreate_notation" (click)="saveandSubmitApprovalCreat()">
-                <img src="../../../assets/images/BPMS/submit-for-approval.svg">
-                <span class="testtooltip">Save & Submit for approval</span>
-              </button>
-              <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
-                <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
-              </button>
-              <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
-                <img src="../../../assets/images/BPMS/Deploy.svg">
-                <span class="testtooltip">Deploy Notation</span>
-              </button>
-              <button class="clr-hvr tsttooltipbtn" *ngIf="isStartProcessBtn" (click)="startProcess()"  >
-                <img src="../../../assets/images/BPMS/Play.svg">
-                <span class="testtooltip">Start Process</span>
-              </button>
-              <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
+        </div>
+      </div>
+      <div class="col-md-6 new-bps-icons p-0" *ngIf="isHeaderShow == 'true'">
+        <div class="row bps-float">
+          <button *ngIf='!iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="(isEditMode)"
+            (click)="editNotation()">
+            <img src="../../../assets/images/BPMS/Edit-white.svg">
+            <span class="testtooltip">Edit</span>
+          </button>
+          <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
+            <img src="../../../assets/images/BPMS/download.svg">
+            <span class="testtooltip">Download</span>
+          </button>
+          <mat-menu #download="matMenu">
+            <button mat-menu-item (click)="downloadNotaton('svg')">SVG</button>
+            <button mat-menu-item (click)="downloadNotaton('png')">PNG</button>
+            <button mat-menu-item (click)="downloadNotaton('jpg')">JPG</button>
+            <button mat-menu-item (click)="downloadNotaton(selectedNotationType)">{{selectedNotationType |
+              uppercase}}</button>
+          </mat-menu>
+          <button class="tsttooltipbtn">
+            <img src="../../../assets/images/BPMS/share.svg">
+            <span class="testtooltip">Share</span>
+          </button>
+          <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
+          <button class="tsttooltipbtn">
+            <img src="../../../assets/images/BPMS/Favorite.svg">
+            <span class="testtooltip">Favorite</span>
+          </button>
+          <button class="tsttooltipbtn" (click)="zoomIn()">
+            <img src="../../../assets/images/BPMS/zoom-in.svg">
+            <span class="testtooltip">Zoom in</span>
+          </button>
+          <button class="tsttooltipbtn" (click)="zoomOut()">
+            <img src="../../../assets/images/BPMS/zoom-out.svg">
+            <span class="testtooltip">Zoom out</span>
+          </button>
+          <button class="tsttooltipbtn" (click)="fitNotation()">
+            <img src="../../../assets/images/BPMS/Fit to screen.svg">
+            <span class="testtooltip">Fit to screen</span>
+          </button>
+          <span class="bpsbtnsep">|</span>
+          <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcess()"
+            *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
+            <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
+            <span class="testtooltip">Save</span>
+          </button>
+          <button class="bps-save-icon clr-hvr tsttooltipbtn" (click)="saveProcessCreate()" *ngIf="iscreate_notation">
+            <img src="../../../assets/images/BPMS/Save.svg" alt="" class="defaultimg">
+            <span class="testtooltip">Save</span>
+          </button>
+          <button class='icon-disabled'
+            *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
+            <img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg">
+          </button>
+          <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
+            <img src="../../../assets/images/BPMS/Orchestrate.svg">
+            <span class="testtooltip">Orchestration</span>
+          </button>
+          <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()"
+            *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
+            <img src="../../../assets/images/BPMS/submit-for-approval.svg">
+            <span class="testtooltip">Save & Submit for approval</span>
+          </button>
+          <button class="clr-hvr tsttooltipbtn" *ngIf="iscreate_notation" (click)="saveandSubmitApprovalCreat()">
+            <img src="../../../assets/images/BPMS/submit-for-approval.svg">
+            <span class="testtooltip">Save & Submit for approval</span>
+          </button>
+          <button mat-button [matMenuTriggerFor]="menu" class="clr-hvr tsttooltipbtn"><img alt=""
+              src="../../../assets/images/BPMS/submit-for-approval.svg"><span class="testtooltip">Save & Submit for
+              approval</span></button>
+          <mat-menu #menu="matMenu" class="custom-content">
+            <div class="form-group">
+              <label for="" class="label-control">Approval</label>
+              <select name="" id="" class="form-control">
+                <option value=""></option>
+              </select>
+            </div>
+            <button class="btn btn-primary">Save & Submit for Approval</button>
+          </mat-menu>
+
+          <button class="icon-disabled"
+            *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
+            <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
+          </button>
+          <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'" (click)="deployNotation()">
+            <img src="../../../assets/images/BPMS/Deploy.svg">
+            <span class="testtooltip">Deploy Notation</span>
+          </button>
+          <button class="clr-hvr tsttooltipbtn" *ngIf="isStartProcessBtn" (click)="startProcess()">
+            <img src="../../../assets/images/BPMS/Play.svg">
+            <span class="testtooltip">Start Process</span>
+          </button>
+          <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
               <button class="clr-hvr" matTooltip="Delete" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button> -->
-              <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->
-              <ngx-dropzone class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false [accept]="'.'+selectedNotationType">
-                <ngx-dropzone-label>
-                  <button class="upload-btn bps-upload" *ngIf="!isfromApprover && !iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>  
-                  <button class="upload-btn bps-upload" *ngIf="!isfromApprover && iscreate_notation"><img src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload</button>  
-                  <!-- <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button> -->
-                </ngx-dropzone-label>
-              </ngx-dropzone>
-            </div>  
-          </div>
-      </div>    
-      <router-outlet></router-outlet>
+          <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->
+          <ngx-dropzone class="upload_again_btn" (change)="UploadFile($event)" [multiple]=false
+            [accept]="'.'+selectedNotationType">
+            <ngx-dropzone-label>
+              <button class="upload-btn bps-upload" *ngIf="!isfromApprover && !iscreate_notation"><img
+                  src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload Again</button>
+              <button class="upload-btn bps-upload" *ngIf="!isfromApprover && iscreate_notation"><img
+                  src="../../../assets/images/BPMS/upload.svg" *ngIf="!isfromApprover">Upload</button>
+              <!-- <button class="btn btn-primary eiap-btn"  *ngIf="!isfromApprover">Upload Again</button> -->
+            </ngx-dropzone-label>
+          </ngx-dropzone>
+        </div>
+      </div>
     </div>
+    <router-outlet></router-outlet>
   </div>
+</div>

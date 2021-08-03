@@ -13,6 +13,7 @@
 }
 .main-content1 .module-heading.title .value span {
     color: #001c47;
+    font-size: 12px;
     /* font-weight: 300; */
 }
 /* .module-heading.title span {
@@ -181,4 +182,8 @@ span.module-back-button {
 }
 .value strong, .value b {
     font-weight: 600;
+}
+
+.custom-content {
+    padding: 15px;
 }

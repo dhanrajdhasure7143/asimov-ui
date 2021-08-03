@@ -269,6 +269,8 @@ div[class^='diagram_container'] .djs-container svg {
   right: 20px;
 }
 
+
+
 .btn {
   /* margin-right: 16px;
   border-radius: 3px;
@@ -2210,4 +2212,20 @@ button.btn:first-child {
 
 button.btn.btn-primary:first-child {
   margin-right: 0px !important;
+}
+
+.bpm-notation-fields {
+  /* position: relative;
+  top: -55px; */
+  position: absolute !important;
+  bottom: 5px;
+  width: 100%;
+  right: 15px;
+  width: auto;
+  top: auto;
+  z-index: 100;
+}
+
+.djs-container svg {
+  padding-left: 44px;
 }

@@ -1,6 +1,6 @@
 <div class="module-body bpms-canvas-body">
 <div class="row header_addon bpm-notation-fields">
-    <div class="col-md-2 pl-0" id="bpmnNotationList">
+    <div class="col-md-12 p-0" id="bpmnNotationList">
             <label class="label-control">BPMN Notation</label>
             <select *ngIf="!isfromApprover" [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
                 <option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
@@ -10,13 +10,13 @@
                 <option> </option>
             </select>
     </div>
-    <div class="col-md-2 pl-0" *ngIf="!isfromApprover" id="approversList">
+    <!-- <div class="col-md-2 pl-0" *ngIf="!isfromApprover" id="approversList">
             <label class="label-control">Approver List</label>
             <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" disableOptionCentering class="form-control">
                 <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
                     {{each_approver.firstName+" "+each_approver.lastName}}</option>
             </select>
-    </div>
+    </div> -->
     
     <!-- <div class="col-md-2">
         <button class="btn btn-primary eiap-btn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">Show Conformance</button>
