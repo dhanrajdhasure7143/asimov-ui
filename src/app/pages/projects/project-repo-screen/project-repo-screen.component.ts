@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { RestApiService } from '../../services/rest-api.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-project-repo-screen',
@@ -44,7 +45,8 @@ export class ProjectRepoScreenComponent implements OnInit {
   @ViewChild("sort13",{static:false}) sort13: MatSort;
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
-  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute) { 
+  constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, 
+    private route: ActivatedRoute,private spinner:NgxSpinnerService) { 
     
 this.route.queryParams.subscribe(data=>{​​​​​​​​
   console.log(data);
@@ -60,7 +62,7 @@ this.route.queryParams.subscribe(data=>{​​​​​​​​
 
 console.log(this.projectid);
 
- 
+ this.spinner.show();
 this.getFileDetails();
 
 
@@ -175,7 +177,9 @@ this.getFileDetails();
    this.uploadFilemodalref.hide();
    if(res.message!=undefined)
    {
+    this.spinner.show();
     this.getFileDetails();
+    this.spinner.hide();
      Swal.fire({
        title: 'Success',
        text: "File Uploaded Successfully",
@@ -187,7 +191,7 @@ this.getFileDetails();
        confirmButtonText: 'Ok'
    }).then((result) => {
     // this.resettask();
-     
+    
      
    }) 
      
@@ -232,6 +236,7 @@ this.getFileDetails();
       console.log("upload-Data",this.uploadedFiledata);
       
     })
+    this.spinner.hide();
   }
   getallusers()
   {
@@ -308,4 +313,11 @@ this.getFileDetails();
       this.filecategories=data;
   })
   }
+
+  getreducedValue(value) {​​​​​​​​
+    if (value.length > 15)
+    return value.substring(0,16) + '...';
+    else
+    return value;
+  }​​​​​​​​
 }
