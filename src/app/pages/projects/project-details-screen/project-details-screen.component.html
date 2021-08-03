@@ -751,15 +751,15 @@
             <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
               <img src="../../../../assets/images/Projects/fileupload.svg">
             </a>
-            <span class="actions-seperator">|</span>
+            
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
               <img src="../../../../assets/images/Projects/edit.svg">
             </a> 
-            <span class="actions-seperator">|</span>
+            
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
               <img src="../../../../assets/images/Projects/delete-red.svg">
             </a> 
-            <span class="actions-seperator">|</span>
+            <!-- <span class="actions-seperator">|</span> -->
             <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
             (click)="navigateToWorkspace(element)" matTooltip="View Task">
               <img src="../../../../../assets/images/Projects/eye-show.svg" />
@@ -771,65 +771,6 @@
         </div>
         </td>
       </ng-container>
-
-          <ng-container matColumnDef="lastModifiedTimestamp">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</th>
-            <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.lastModifiedTimestamp!=null">{{element.lastModifiedTimestamp | date:'MMM dd, y,
-                HH:mm:ss'}}</span>
-              <span *ngIf="element.lastModifiedTimestamp==null">---</span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="lastModifiedBy">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated By</th>
-            <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.lastModifiedBy!=null">{{element.lastModifiedBy}}</span>
-              <span *ngIf="element.lastModifiedBy==null">---</span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="createdBy">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
-            <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span>
-              <span *ngIf="element.createdBy==null">---</span>
-            </td>
-          </ng-container>
-
-          <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef>Actions</th>
-            <td mat-cell *matCellDef="let element" class="action-link tablacs">
-              <div class="newinntalx">
-                <a (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
-                  <img src="../../../../assets/images/Projects/upload-task.svg" class="default-img" />
-                  <img src="../../../../assets/images/Projects/upload-task-blue.svg" class="hover-img" />
-                </a>
-                <!-- <span class="actions-seperator">|</span> -->
-                <a (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
-                  <img src="../../../../assets/images/Projects/edit.svg" class="default-img" />
-                  <img src="../../../../assets/images/Projects/Edit-blue.svg" class="hover-img" />
-                </a>
-                <!-- <span class="actions-seperator">|</span> -->
-                <a (click)="deletetask(element)" matTooltip="Delete Task">
-                  <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img" />
-                  <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img" />
-                </a>
-                <!-- <span class="actions-seperator">|</span> -->
-                <a class="clickable text-dark"
-                  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
-                  (click)="navigateToWorkspace(element)" matTooltip="Model">
-                  <img src="../../../../assets/images/Projects/eye-show.svg" class="default-img" />
-                  <img src="../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img" />
-                </a>
-
-                <a class="disable-bg text-dark"
-                  *ngIf="element.taskCategory =='Analysis'|| element.taskCategory =='Task Mining'">
-                  <img src="../../../../../assets/images/Projects/eye-hide.svg" />
-                </a>
-              </div>
-            </td>
-          </ng-container>
 
           <ng-container matColumnDef="Loading">
             <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
@@ -857,7 +798,7 @@
 
 
     <div class="row bortopsec">
-      <div class="col-md-6 pl-0 resources">
+      <div class="col-md-12 p-0 resources">
         <mat-card id="projects_details_screen" class="new-resourcediv" *ngIf="projects_toggle==false">
           <div class="row module-subheader-title">
             <div class="col-md-6 p-0">
@@ -887,7 +828,7 @@
           </span>
         </div> -->
         
-        <div class="projects-table-body profile-table">
+          <div class="projects-table-body profile-table">
           <!-- <table class="table">
             <thead>
               <tr class="separated">
@@ -945,14 +886,14 @@
                 <span *ngIf="user.roleID.displayName!=null" [matTooltip]="user.roleID.displayName">{{user.roleID.displayName}}</span>
                   <span *ngIf="user.roleID.displayName==null">---</span>
               </td>
-          </ng-container>
-          <ng-container matColumnDef="userId.userId">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
-            <td mat-cell *matCellDef="let user">
-              <span *ngIf="user.userId.userId!=null" [matTooltip]="user.userId.userId">{{user.userId.userId}}</span>
+            </ng-container>
+            <ng-container matColumnDef="userId.userId">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
+              <td mat-cell *matCellDef="let user">
+                <span *ngIf="user.userId.userId!=null" [matTooltip]="user.userId.userId">{{user.userId.userId}}</span>
                 <span *ngIf="user.userId.userId==null">---</span>
-            </td>
-        </ng-container>
+              </td>
+            </ng-container>
         
             <ng-container matColumnDef="uploadedDate">
                 <th mat-header-cell *matHeaderCellDef>Last Active</th>
@@ -978,7 +919,7 @@
                 <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                     Loading
                 </td>
-            </ng-container>
+              </ng-container>
               <ng-container matColumnDef="noData">
                   <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                       No Records Found
@@ -988,25 +929,14 @@
               <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
               <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource6!=null}"></tr>
               <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource6!=null && dataSource6.data.length==0)}"></tr>
-            </table>
+          </table>
             <mat-paginator class="newpaginationdiv" #paginator104 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
             </mat-paginator>
-        </div>
-        
-      </mat-card>
-         </div>
-          <div class="col-md-6 p-0 documents">
-      <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
-        <div class="row">
-          <div class="col-md-6 p-0">
-            <span class="projects-header-title">
-              Recently Added Documents
-            </span>
           </div>
-        </div>
+        
         </mat-card>
       </div>
-      <div class="col-md-6 p-0 documents">
+      <div class="col-md-12 p-0 documents">
         <mat-card id="projects_details_screen" class="new-docdiv" *ngIf="projects_toggle==false">
           <div class="row module-subheader-title">
             <div class="col-md-6 p-0">
