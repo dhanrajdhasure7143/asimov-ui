@@ -70,119 +70,123 @@
        <div class="projects-table-body">
           <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
 
-          <ng-container matColumnDef="category">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
-            <td mat-cell   *matCellDef="let element">
-              <span *ngIf="element.category!=null" [matTooltip]="element.category">{{element.category}}</span>
-              <span *ngIf="element.category==null">---</span>
-            </td>
-  
-        </ng-container>
-  
-        <ng-container matColumnDef="fileName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
-          <td mat-cell *matCellDef="let element">
-            <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
-              <span *ngIf="element.fileName==null">---</span>
-          </td>
-      </ng-container>
-        <ng-container matColumnDef="uploadedDate">
-            <th mat-header-cell *matHeaderCellDef>Uploaded Date </th>
-            <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.uploadedDate!=null">{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</span>
-                <span *ngIf="element.uploadedDate==null">---</span>
-                <!-- <div class="addresource-btn">
-                  <span mat-mini-fab color="primary" matTooltip="Add Resources" (click)="addresource(addresourcemodal)"><i class="fa fa-plus"></i></span>
-              </div> -->
-            </td>
-        </ng-container>
-  
-        <ng-container matColumnDef="uploadedBy">
-          <th mat-header-cell *matHeaderCellDef>Uploaded by  </th>
-          <td mat-cell *matCellDef="let element">
-            <span *ngIf="element.uploadedBy!=null">{{element.uploadedBy}}</span>
-            <span *ngIf="element.uploadedBy==null">---</span>
-          </td>
-      </ng-container>
-       
-        <ng-container matColumnDef="fileSize">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size</th>
-          <td mat-cell *matCellDef="let element" >
-            <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}
-              <!-- <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar> -->
-          </span>
-          </td>
-        </ng-container>
-  
-  
-        <ng-container matColumnDef="comments">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments</th>
-          <td mat-cell *matCellDef="let element" >
-            <span *ngIf="element.comments!=null">{{element.comments}}</span>
-            <span *ngIf="element.comments==null">---</span>
-          </td>
-        </ng-container>
-  
-      
-  
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef> Actions</th>
-          <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-            <span class="" (click)="onDeleteItem()">
-              <img src="../../../../assets/images/Projects/delete-black.svg" class="testplus default-img" />
-              <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img" />
-            </span>
-            <span class="">
-              <img src="../../../../assets/images/Projects/Download.svg" class="testplus">
-            </span>
-            <!-- <div class="newinntalx">
-              <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
-                <i class="fas fa-file-upload"></i>
-              </a>|
-              <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
-                <img src="../../../../assets/images/Projects/edit.svg">
-              </a> |
-              <a (click)="deletetask(element)" matTooltip="Delete Task" >
-                <img src="../../../../assets/images/Projects/delete-red.svg">
-              </a> |
-              <a class="clickable text-dark"  *ngIf="element.category =='RPA Implementation'|| element.category =='BPMN Design'"
-              (click)="navigateToWorkspace(element)" matTooltip="Model">
-                <img src="../../../../../assets/images/Projects/eye-show.svg" />
-              </a> 
-  
-              <a class="disable-bg text-dark" *ngIf="element.category =='Analysis'|| element.category =='Task Mining'" >
-                <img src="../../../../../assets/images/Projects/eye-hide.svg" />
-              </a>
-          </div> -->
-          </td>
-        </ng-container>
-  
-          <ng-container matColumnDef="Loading">
-            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                Loading
-            </td>
-        </ng-container>
-          <ng-container matColumnDef="noData">
-              <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                  No Records Found
-              </td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
-          <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
-          <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
-          <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
-          </table>
-          <mat-paginator class="newpaginationdiv" #paginator101 
-            [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
-          </mat-paginator>
-       </div> 
-        <div class="">                               
-          <span class="module-sub-header-title">
-            Pending Requests
-          </span>              
-        </div>
-
-        <!-- <mat-tab-group mat-align-tabs="Start">
+                  <ng-container matColumnDef="category">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
+                    <td mat-cell   *matCellDef="let element">
+                      <span *ngIf="element.category!=null" [matTooltip]="element.category">{{element.category}}</span>
+                      <span *ngIf="element.category==null">---</span>
+                    </td>
+          
+                </ng-container>
+          
+                <ng-container matColumnDef="fileName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName" 
+                    matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below" >{{getreducedValue(element.fileName)}}</span>
+                      <span *ngIf="element.fileName==null">---</span>
+                  </td>
+              </ng-container>
+                <ng-container matColumnDef="uploadedDate">
+                    <th mat-header-cell *matHeaderCellDef>Uploaded Date </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.uploadedDate!=null">{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</span>
+                        <span *ngIf="element.uploadedDate==null">---</span>
+                        <!-- <div class="addresource-btn">
+                          <span mat-mini-fab color="primary" matTooltip="Add Resources" (click)="addresource(addresourcemodal)"><i class="fa fa-plus"></i></span>
+                      </div> -->
+                    </td>
+                </ng-container>
+          
+                <ng-container matColumnDef="uploadedBy">
+                  <th mat-header-cell *matHeaderCellDef>Uploaded by  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.uploadedBy!=null">{{element.uploadedBy}}</span>
+                    <span *ngIf="element.uploadedBy==null">---</span>
+                  </td>
+              </ng-container>
+               
+                <ng-container matColumnDef="fileSize">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size</th>
+                  <td mat-cell *matCellDef="let element" >
+                    <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}
+                      <!-- <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar> -->
+                  </span>
+                  </td>
+                </ng-container>
+          
+          
+                <ng-container matColumnDef="comments">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments</th>
+                  <td mat-cell *matCellDef="let element" >
+                    <span *ngIf="element.comments!=null">{{element.comments}}</span>
+                    <span *ngIf="element.comments==null">---</span>
+                  </td>
+                </ng-container>
+          
+              
+          
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Actions</th>
+                  <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                    <span class="" (click)="onDeleteItem()">
+                      <img src="../../../../assets/images/Projects/delete-black.svg" class="testplus1 default-img">
+                      <img src="../../../../assets/images/Projects/delete-red.svg" class="testplus1 hover-img">
+                    </span>
+                    <span class="">
+                      <img src="../../../../assets/images/Projects/Download.svg" class="testplus1 default-img">
+                    </span>
+                    <!-- <div class="newinntalx">
+                      <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
+                        <i class="fas fa-file-upload"></i>
+                      </a>|
+                      <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
+                        <img src="../../../../assets/images/Projects/edit.svg">
+                      </a> |
+                      <a (click)="deletetask(element)" matTooltip="Delete Task" >
+                        <img src="../../../../assets/images/Projects/delete-red.svg">
+                      </a> |
+                      <a class="clickable text-dark"  *ngIf="element.category =='RPA Implementation'|| element.category =='BPMN Design'"
+                      (click)="navigateToWorkspace(element)" matTooltip="Model">
+                        <img src="../../../../../assets/images/Projects/eye-show.svg" />
+                      </a> 
+          
+                      <a class="disable-bg text-dark" *ngIf="element.category =='Analysis'|| element.category =='Task Mining'" >
+                        <img src="../../../../../assets/images/Projects/eye-hide.svg" />
+                      </a>
+                  </div> -->
+                  </td>
+                </ng-container>
+          
+                  <ng-container matColumnDef="Loading">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                        Loading
+                    </td>
+                </ng-container>
+                  <ng-container matColumnDef="noData">
+                      <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                          No Records Found
+                      </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns3; sticky: true"></tr>
+                  <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns3;"></tr>
+                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
+                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
+                </table>
+                <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
+                </mat-paginator>
+                <br>
+                <div class="">
+                <span class="">
+                 
+                </span>
+                <br>
+                <span class="projects-header-title">
+                 <b>Pending Requests</b>
+                </span>
+              
+              </div>
+              <!-- <mat-tab-group mat-align-tabs="Start">
                 <mat-tab label="All">
                 
               <div class="projects-table-body">

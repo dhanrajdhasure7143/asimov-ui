@@ -224,7 +224,8 @@ createproject()
       }).then((result) => {
           this.resetcreateprogram();
           this.getallProjects();
-          this.router.navigate(['/pages/projects/listOfProjects'])
+          
+          this.router.navigate(['/pages/projects/programdetails'],{queryParams:{id:response.program.id}})
 
         }) 
         }
