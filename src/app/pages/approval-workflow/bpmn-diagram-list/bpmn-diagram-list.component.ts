@@ -341,11 +341,38 @@ this.selectedrow =i;
     }
     window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
   }
+  
   assignPagenation(data){
     const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
     const rows$ = of(data);
     this.totalRows$ = rows$.pipe(map(rows => rows.length));
     this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
+  }
+  
+  searchList(event: Event) {       // search entered process ids from search input
+    const filterValue = (event.target as HTMLInputElement).value;
+    let listArray:any=[];
+    if(!filterValue){
+      this.assignPagenation(this.griddata);
+      return;
+    }
+    this.griddata.filter(item =>{
+      item['bpmnProcessInfo'].filter(x=>{
+        Object.keys(x).some(k =>{ 
+          if(x != null && x[k].toString().toLowerCase().includes(filterValue.toLowerCase()) && !x['bpmnXmlNotation'].toString().toLowerCase().includes(filterValue.toLowerCase())){
+            listArray.push(item);
+          }
+        })
+      })
+      
+      });
+
+    var filtered = listArray.reduce((filtered, item) => {
+      if( !filtered.some(filteredItem => JSON.stringify(filteredItem.bpmnModelId) == JSON.stringify(item.bpmnModelId)) )
+        filtered.push(item)
+      return filtered
+    }, [])
+    this.assignPagenation(filtered);
   }
 }
 

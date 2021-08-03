@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { FormsModule } from '@angular/forms';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule,MatDialogModule} from '@angular/material';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatOptionModule, MatSelectModule,MatDialogModule,MatTooltipModule} from '@angular/material';
 
 import { UploadCreateDropBpmnComponent } from '../shared/upload-create-drop-bpmn/upload-create-drop-bpmn.component';
 import { BpmnDiagramComponent } from './bpmn-diagram/bpmn-diagram.component';
@@ -20,7 +20,8 @@ import { DeployNotationComponent } from './deploy-notation/deploy-notation.compo
     CronEditorModule,
     FormsModule,
     MatInputModule, MatIconModule, MatFormFieldModule,MatDialogModule,
-    MatOptionModule, MatSelectModule
+    MatOptionModule, MatSelectModule,
+    MatTooltipModule
   ],
   providers: [],
   exports: [UploadCreateDropBpmnComponent, BpmnDiagramComponent, ProcessCategoryOverlayComponent,  SearchPipe, DeployNotationComponent],

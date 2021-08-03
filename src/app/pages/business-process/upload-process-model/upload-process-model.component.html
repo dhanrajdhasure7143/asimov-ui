@@ -1,7 +1,7 @@
 <div class="module-body bpms-canvas-body">
 <div class="row header_addon bpm-notation-fields">
     <div class="col-md-2 pl-0" id="bpmnNotationList">
-            <label class="label-control">BPMN Notation</label>
+            <label class="label-control">Notations</label>
             <select *ngIf="!isfromApprover" [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
                 <option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
                     {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</option>
@@ -12,7 +12,7 @@
     </div>
     <div class="col-md-2 pl-0" *ngIf="!isfromApprover" id="approversList">
             <label class="label-control">Approver List</label>
-            <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" disableOptionCentering class="form-control">
+            <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
                 <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
                     {{each_approver.firstName+" "+each_approver.lastName}}</option>
             </select>
@@ -222,7 +222,7 @@
                     </mat-tab>
                     <mat-tab label="XML">
                         <div class="text-area">
-                            <textarea [(ngModel)]="xmlTabContent" rows="22" cols="150">
+                            <textarea readonly [(ngModel)]="xmlTabContent" rows="22" cols="150">
                                 {{xmlTabContent}}
                             </textarea>
                         </div>

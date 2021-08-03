@@ -383,8 +383,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         let each = this.approver_list[s];
         if(each.userId){
           let userId = each.userId.split("@")[0];
+          this.selected_approver = s['selected_approver'];
           if(userId == current_bpmn_info["approverName"]){
-            this.selected_approver = s;
+            this.selected_approver = s['selected_approver'];
             break;
           }
         }

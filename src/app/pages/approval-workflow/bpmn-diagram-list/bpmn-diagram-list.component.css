@@ -122,3 +122,6 @@
 .account_pay_details_table thead tr, .account_pay_details_table tbody tr {
   height: 40px;
 }
+mat-expansion-panel-header {
+  position: relative;
+}

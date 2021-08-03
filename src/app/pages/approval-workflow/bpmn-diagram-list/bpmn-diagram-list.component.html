@@ -3,7 +3,7 @@
     <div class="col-md-4 aprwkfl_search">
             <label class="label-control">Search Workspace</label>
             <div class="searchinputar">
-            <input class="form-control toolbar-search" type="text" matInput [(ngModel)]="searchTerm">
+            <input class="form-control toolbar-search" type="text" (keyup)="searchList($event)" matInput [(ngModel)]="searchTerm">
             <mat-icon matSuffix style="font-size: 1.2em"><img src="../../../../assets/images/search.svg" alt=""></mat-icon>
           </div>
         </div>

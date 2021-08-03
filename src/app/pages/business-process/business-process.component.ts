@@ -20,10 +20,19 @@ export class BusinessProcessComponent implements AfterViewChecked {
   iscreate_notation:boolean;
   isStartProcessBtn:boolean=false;
   currentNotation_name:any;
+  userRole;
+  isApproverUser:boolean = false;
+  logged_User:any;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService ) { }
 
-
+  ngOnInit(){
+    localStorage.setItem("isheader","false");
+    this.logged_User=localStorage.getItem("firstName")+' '+localStorage.getItem("lastName")
+    this.userRole = localStorage.getItem("userRole")
+    this.userRole = this.userRole.split(',');
+    this.isApproverUser = this.userRole.includes('Process Architect')
+  }
   ngAfterViewChecked() {
     this.activatedRoute.queryParams.subscribe(params => {
       this.isShowConformance = params['isShowConformance'] == 'true';
@@ -107,7 +116,17 @@ export class BusinessProcessComponent implements AfterViewChecked {
   }
   backtoNavigate(){
     this.router.navigate(['/pages/businessProcess/home'])
-  // routerlink="/pages/businessProcess/home"
+  }
+
+  gotoBPMNPlatform() {
+    var token = localStorage.getItem('accessToken');
+    let selecetedTenant =  localStorage.getItem("tenantName");
+    let userId = localStorage.getItem("ProfileuserId");
+    let splitTenant:any;
+    if(selecetedTenant){
+       splitTenant = selecetedTenant.split('-')[0];
+    }
+    window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
   }
 
 }
