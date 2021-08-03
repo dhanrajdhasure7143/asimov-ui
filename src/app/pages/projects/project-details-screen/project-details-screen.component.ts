@@ -264,11 +264,15 @@ percentageComplete: number;
       getallusers()
       {
         let tenantid=localStorage.getItem("tenantName")
-        this.rpa.getuserslist(tenantid).subscribe(item=>{
-          let users:any=item
-          this.users_list=users;
-          console.log(this.users_list);
-          this.dataSource6= new MatTableDataSource(this.users_list);
+        this.rpa.getuserslist(tenantid).subscribe(response=>{
+        
+          this.users_list=response;
+          let users:any=[]
+          this.projectDetails.resource.forEach(item=>{
+              if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
+                users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
+         })
+          this.dataSource6= new MatTableDataSource(users);
           this.dataSource6.sort=this.sort14;
           this.dataSource6.paginator=this.paginator104;
         })

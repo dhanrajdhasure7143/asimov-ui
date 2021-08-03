@@ -911,9 +911,9 @@
         </ng-container>
         
             <ng-container matColumnDef="uploadedDate">
-                <th mat-header-cell *matHeaderCellDef>Last Updated</th>
+                <th mat-header-cell *matHeaderCellDef>Last Active</th>
                 <td mat-cell *matCellDef="let user">
-                    <span *ngIf="user.userId.created_at!=null">{{user.userId.created_at | date:'MMM d, y, HH:mm:ss'}}</span>
+                    <span *ngIf="user.userId.created_at!=null">{{user.last_active | date:'MMM d, y, HH:mm:ss'}}</span>
                     <span *ngIf="user.userId.created_at==null">---</span>
                    
                 </td>
