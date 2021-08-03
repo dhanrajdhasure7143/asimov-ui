@@ -386,11 +386,23 @@ textarea.msgip {
     }
 }
 
-.bpm-notation-fields {
-    right: 0px !important;
-    left: 60px;
-}
 
 .bpm-notation-fields mat-form-field {
     width: 100%;
 }
+
+.bpm-notation-fields select.form-control {
+    display: inline-block;
+    width: 200px;
+    padding: 0px 12px !important;
+    height: 24px;
+}
+
+.bpm-notation-fields label.label-control {
+    display: inline-block;
+    margin: 0px !important;
+    margin-right: 5px !important;
+}
+
+
+

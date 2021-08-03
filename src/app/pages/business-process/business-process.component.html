@@ -82,6 +82,18 @@
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
+              <button mat-button [matMenuTriggerFor]="menu" class="clr-hvr tsttooltipbtn"><img alt=""
+                src="../../../assets/images/BPMS/submit-for-approval.svg"><span class="testtooltip">Save & Submit for
+                approval</span></button>
+            <mat-menu #menu="matMenu" class="custom-content">
+              <div class="form-group">
+                <label for="" class="label-control">Approval</label>
+                <select name="" id="" class="form-control">
+                  <option value=""></option>
+                </select>
+              </div>
+              <button class="btn btn-primary">Save & Submit for Approval</button>
+            </mat-menu>
               <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
@@ -114,4 +126,6 @@
       </div>    
       <router-outlet></router-outlet>
     </div>
+    <router-outlet></router-outlet>
   </div>
+</div>
