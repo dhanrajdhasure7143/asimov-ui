@@ -465,9 +465,8 @@ percentageComplete: number;
         let response:any=data;
         if(response.errorMessage==undefined)
         {
+          this.projectdetails();
           this.spinner.hide();
-          this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
-          this.resources=this.projectDetails.resources
           Swal.fire("Success",response.status,"success");
         }
         else
