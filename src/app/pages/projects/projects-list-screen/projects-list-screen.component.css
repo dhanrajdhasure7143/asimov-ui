@@ -2,17 +2,12 @@
   height: 80px !important;
 }
 
-.projects-header {
-  width: 100%;
-}
-
-.projects-header-title {
+/* .projects-header-title {
   color: #001c47;
   font-size: 16px;
   padding: 5px;
   padding-left: 10px;
-}
-
+} */
 
 .projects-menu-item {
   padding: 5px;
@@ -27,29 +22,24 @@
 
 }
 
-.tab-number {
-  /* font-size: 30px !important;
-    font-weight: 300; */
+.tab-count, .tab-count span {
+
   font-size: 36px;
   font-weight: 300;
   line-height: 32px;
+  color: #26272C;
+;
 }
 
 
 .status-img>img {
-  /* height:40px !important; */
   height: 40px !important;
 }
 
 .newstatu .status-img img {
-  /*  position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    padding: 0px !important;*/
   padding: 0px;
   display: inline-flex;
   align-items: center;
-  /* margin-right: 15px; */
 }
 
 .newstatu .status-data {
@@ -59,9 +49,6 @@
 
 .status-data {
   vertical-align: middle;
-  /* padding-top:15px;
-    padding-left:5px;
-    padding-bottom:15px; */
   color: black !important;
 }
 
@@ -79,7 +66,6 @@
   flex-basis: 0;
   flex-grow: 1;
   opacity: 1;
-  /* font-family: Roboto,"Helvetica Neue",sans-serif; */
   font-size: 12px;
   font-weight: 400;
 }
@@ -96,20 +82,6 @@
 }
 
 
-.projects-header.maincreat i {
-  font-size: 16px;
-}
-
-.projects-header.maincreat span.projects-header-title {
-  padding-left: 0px;
-  font-size: 16px;
-}
-
-.projects-header.maincreat span.projects-header-title span.prmaincolo {
-  font-weight: 400;
-  margin-right: 6px;
-}
-
 span.projects-menu-item.vreatbu {
   background-color: #00a0e4;
   color: #fff;
@@ -122,24 +94,13 @@ span.projects-menu-item.vreatbu {
   position: relative;
   top: -5px;
 }
-/* 
-.projects-header.nrema {
-  padding: 15px ​12px !important;
-} */
 
 span.tab-text {
   display: block;
   font-weight: 400;
   font-size: 12px;
   line-height: normal;
-  color: #081D2A;
-}
-
-.projects-header.maincreat.nrema {
-  display: flex;
-  align-items: center;
-  /* padding: 9px 10px !important; */
-  padding: 6px 15px;
+  color: #535353;
 }
 
 .prj-lstscr-btn button {
@@ -154,4 +115,9 @@ span.tab-text {
   color: #fff;
   font-weight: 400 !important;
   border: none;
+}
+
+
+mat-tab-group.mat-tab-group.mat-primary {
+  height: calc(100% - 49px);
 }

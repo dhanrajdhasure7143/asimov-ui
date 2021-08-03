@@ -17,13 +17,15 @@
     margin:0px;
 }
 .myworkspace-style h4.box-heading {
-    margin-top: 20px;
+    /* margin-top: 20px; */
 }
 
 .new-bps-layout {
     overflow: auto;
     height: calc(100% - 50px);
     position:relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 
 .workspace-title {
@@ -35,8 +37,8 @@
     align-items: center;
     font-size: 14px;
     color: #00a0e3;
-    font-weight: 500;
-    border-bottom: 1px solid #4a4a4a33 !important;
+    font-weight: 600;
+    /* border-bottom: 1px solid #4a4a4a33 !important; */
     border: none;
 }
 
@@ -49,7 +51,7 @@
     /* padding: 0px 5px; */
     width: 100%;
     display: inline;
-    font-weight: 500;
+    font-weight: 600;
     font-size: 14px;
 }
 .new-bps-grid-data mat-expansion-panel-header:hover {
@@ -85,13 +87,16 @@ span.comment {
 .new-bps-grid-data .bps_overlay span.info.ng-star-inserted {
     border-radius: 4px;
     padding: 8px 12px;
-    top: 20px !important;
+    top: 50px !important;
     left: 15px;
+    width: 100px !important;
+    position: absolute;
+    text-align: center !important;
 }
 .bps_overlay .fit_button {
     top: 50px;
-    transform: unset;
-    position: unset;
+    right: 15px;
+    position: absolute;
 }
 .header_addon {
     position: absolute;
@@ -118,8 +123,24 @@ div#bpmn_list {
     padding: 2px 0px !important;
     border-top: 1px solid #dee2e6 !important;
     border: none;
+    margin: 0px;
 }
 .pagination {   
     padding: 10px;
     float: right;
+}
+
+
+.module-heading-buttons {
+    text-align: end;
+    padding: 0px;
+}
+
+.module-heading-buttons .btn {
+    margin-left: 10px;
+}
+.bps-serwksp img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
 }

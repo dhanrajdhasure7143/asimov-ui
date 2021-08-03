@@ -1,0 +1,9 @@
+<svg id="upload-task" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path id="Path_827" data-name="Path 827" d="M0,0H24V24H0Z" fill="none"/>
+  <g id="upload-cloud_1_" data-name="upload-cloud (1)" transform="translate(1.005 0.998)">
+    <path id="Path_871" data-name="Path 871" d="M15.277,15.639,11.639,12,8,15.639" transform="translate(-0.64 -0.813)" fill="none" stroke="#00a0e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_87" data-name="Line 87" y2="8" transform="translate(10.989 11.001)" fill="none" stroke="#00a0e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_872" data-name="Path 872" d="M18.625,17a4.549,4.549,0,0,0-2.172-8.542H15.307A7.273,7.273,0,1,0,2.817,15.1" transform="translate(0 0)" fill="none" stroke="#00a0e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <path id="Path_873" data-name="Path 873" d="M15.277,15.639,11.639,12,8,15.639" transform="translate(-0.64 -0.813)" fill="none" stroke="#00a0e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

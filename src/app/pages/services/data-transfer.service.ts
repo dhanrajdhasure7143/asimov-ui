@@ -67,5 +67,11 @@ export class DataTransferService {
   bpsNotationaScreenValues(values:any){
     this.notationScreenValues.next(values)
   }
+  private submitApproval:BehaviorSubject<any>=new BehaviorSubject<any>(null);
+  subMitApprovalValues=this.submitApproval.asObservable();
+ 
+  submitForApproval(values:any){
+    this.submitApproval.next(values)
+  }
 
 }

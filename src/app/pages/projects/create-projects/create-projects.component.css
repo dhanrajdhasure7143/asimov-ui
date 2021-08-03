@@ -1,7 +1,6 @@
 .create-heading {
-  margin-bottom: -37px !important;
+  margin-bottom: -35px !important;
 }
-
 
 ::ng-deep .my-class .modal-dialog {
   max-width: 80%;
@@ -48,7 +47,6 @@
   flex-basis: 0;
   flex-grow: 1;
   opacity: 1;
-  /* font-family: Roboto,"Helvetica Neue",sans-serif; */
   font-size: 12px;
   font-weight: 400;
 }
@@ -68,7 +66,7 @@ label.label-control {
   margin: 0px !important;
   border-radius: 2px;
   color: black;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
   /* height: 30px; */
   margin-bottom: 3px !important;
@@ -77,40 +75,17 @@ label.label-control {
   text-overflow: ellipsis;
 }
 
-.btn {
-  display: inline-block;
-  padding: 6px 12px;
-  margin-bottom: 0;
-  font-size: 14px;
-  /* font-family: Avenir Next W02,Helvetica,Arial,sans-serif; */
-  font-weight: 500;
-  line-height: 1.42857143;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  -ms-touch-action: manipulation;
-  touch-action: manipulation;
-  cursor: pointer;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  background-image: none;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
-
 .btn-primary,
 .btn-add,
 .btn-validat,
 .swal-button--confirm {
-  color: #FFF !important;
+  /* color: #FFF !important;
   border-color: rgb(0, 161, 228) !important;
   background: rgb(0, 161, 228) !important;
   min-width: 102px;
   font-size: 14px;
   line-height: 18px;
-  padding: 11px 24px;
+  padding: 11px 24px; */
 }
 
 .mat-fab.mat-primary,
@@ -125,28 +100,6 @@ label.label-control {
   background-color: rgb(0, 161, 228) !important;
 }
 
-.projects-header-title {
-  color: black;
-  font-size: 18px;
-  padding: 5px;
-  padding-left: 20px;
-}
-
-
-.projects-header.maincreat i {
-  font-size: 16px;
-}
-
-.projects-header.maincreat span.projects-header-title {
-  padding-left: 0px;
-  font-size: 16px;
-}
-
-.projects-header.maincreat span.projects-header-title span.prmaincolo {
-  font-weight: 400;
-  margin-right: 6px;
-}
-
 .innersform .mat-tab-body.mat-tab-body-active,
 .innersform .mat-tab-body-content {
   overflow: unset !important;
@@ -159,14 +112,14 @@ label.label-control {
 }
 
 .h-scroll {
-  height: calc(100vh - 130px);
+  height: calc(100% - 48px);
   overflow: auto;
 }
 
 .prj-crt-form {
   margin-right: -15px !important;
   margin-left: -15px !important;
-  padding-top: 20px !important;
+  padding-top: 15px !important;
 }
 
 .laemarleft {

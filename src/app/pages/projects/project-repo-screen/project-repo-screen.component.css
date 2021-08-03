@@ -11,23 +11,6 @@
     width:100%;
   }
 
-
-  /* .projects-back-button{
-    padding:5px;
-    padding-right:20px;
-    border-right:1px solid #4AB0F5 ;
-    color:#4AB0F5 ;
-    cursor: pointer;
-  } */
-
-  .projects-header-title{
-    color:black ;
-    font-size:18px;
-    padding:5px;
-    padding-left:20px;
-  }
-
-
   .projects-menu-item{
     padding:5px;
     font-size:15px;
@@ -69,7 +52,6 @@
 }
 
 table {
-  /* font-family: arial, sans-serif; */
   border-collapse: collapse;
   width: 100%;
 }
@@ -111,21 +93,6 @@ tr:nth-child(even) {
   font-size: 15px !important;
 }
 
-/* .projects-header.maincreat span.projects-back-button {
-  border: medium none;
-  padding-right: 10px;
-} */
-.projects-header.maincreat i {
-  font-size: 16px;
-}
-.projects-header.maincreat span.projects-header-title {
-  padding-left: 0px;
-  font-size: 16px;
-}
-.projects-header.maincreat span.projects-header-title span.prmaincolo {
-  font-weight: 500;
-  margin-right: 6px;
-}
 .tasks-body th {
   font-weight: 600;
   opacity: 1 !important;
@@ -142,7 +109,7 @@ tr:nth-child(even) {
 
 .maindivfoprm button.btn.btn-primary.prj-form-btn-reset, .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
   background-color: #fff !important;
-  border: 1px solid #00a0e3 !important;
+  /* border: 1px solid #00a0e3 !important; */
   color: #00a0e3 !important;
 }
 

@@ -2,14 +2,3 @@
         position: relative !important;
 }
 
-
-.modal-body.modelprbody.resourcescreen {
-    max-height: 325px !important;
-    overflow: hidden !important;
-}
-
-
-::ng-deep .ng-placeholder {
-    position: relative !important;
-    z-index: 1;
-  }

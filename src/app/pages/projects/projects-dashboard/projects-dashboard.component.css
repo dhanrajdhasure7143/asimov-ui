@@ -5,20 +5,6 @@
   }
 
 
-  /* .projects-back-button{
-    padding:5px;
-    padding-right:20px;
-    border-right:1px solid #4AB0F5 ;
-    color:#4AB0F5 ;
-    cursor: pointer;
-  } */
-
-  .projects-header-title{
-    font-size:18px;
-    padding-left:10px;
-  }
-
-
   .projects-menu-item{
     /* padding:5px;
     font-size:22px;
@@ -140,7 +126,7 @@
 }
 .projects_by_department .dbichart-head label {
   font-weight: normal !important;
-  font-size: 16px !important;
+  font-size: 15px !important;
   padding-left: 5px;
 }
 
@@ -182,7 +168,7 @@
 }
 .prjtalvcl tr.separated th {
   /* font-size: 16px !important;
-  font-weight: 500; */
+  font-weight: 600; */
   /* padding: 10px 0px !important; */
 }
 .prjtalvcl tr.separated td {
@@ -214,9 +200,9 @@ span.projects-menu-item.prj-lst-btn button {
   line-height: 18px;
 }
 span.projects-menu-item button {
-  background-color: #00a0e3 !important;
+  /* background-color: #00a0e3 !important;
   border: none;
-  border-radius: 3px !important;
+  border-radius: 3px !important; */
 }
 
 .status-data1 span {
@@ -250,7 +236,7 @@ span.projects-menu-item button {
   color: #001c47;
 }
 .prj-body-content-title {
-  font-size: 14px !important;
+  font-size: 15px !important;
   color: #001c47 !important;
 }
 span.tab-text.fav-sub {
