@@ -1026,7 +1026,7 @@
       <span class="pull-right lastedit-date">Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp |
         date}}</span>
     </div>
-    <div class="modal-body modelprbody editmodelprbody">
+    <div class="modal-body modelprbody editmodelprbody" style="width:100%;overflow-x: auto;height:calc( 100vh - 260px)">
       <div class="container p-0" style="width:100%">
         <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
           <div class="row">
