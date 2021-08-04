@@ -56,13 +56,13 @@
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" class="show">
         <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
         <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
-        <div [class.bps_overlay]="isfromApprover || !isEdit" class="h-100">
-            <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover || !isEdit" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
+        <div [class.bps_overlay]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'" class="h-100">
+            <div class="h-100 canvas1 col-md-12" [class.readOnly]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'" id="canvas1" *ngIf="(hasConformance || isUploaded) && isShowConformance"></div>
             <div *ngIf="!isShowConformance" class="h-100">
                 <mat-tab-group class="canvas-container h-100" headerPosition="below" (selectedTabChange)="displayXML($event)" #notationXMLTab>
                     <mat-tab label="Notation" class="h-100">
                         <div class="row h-100">
-                            <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover || !isEdit"></div>
+                            <div class="canvas1 col-md-12 p-0 h-100" id="canvas1" [class.readOnly]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'"></div>
                             <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
                                 <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
                                     <div class="menuToggle">
