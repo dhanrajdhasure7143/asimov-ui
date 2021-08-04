@@ -61,6 +61,7 @@ export const environment = {
     logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
     redirectout_url: 'http://eiapcloudqa.epsoftinc.in/#/signout',
     platform_home_url: 'http://eiapcloudqa.epsoftinc.in/#/',
+    projectendpoint_url:'http://10.11.0.108:8282',
 
     // PI Connectors
     connector_topic: 'nodeq',
