@@ -217,10 +217,15 @@ percentageComplete: number;
           this.projectDetails=res
           this.project_id=this.projectDetails.id
           let users:any=[]
-          this.projectDetails.resource.forEach(item=>{
-              users.push(item.resource)
-       })
-       this.resources=users
+          if(this.projectDetails.resource.length!=0){
+            this.projectDetails.resource.forEach(item=>{
+                users.push(item.resource)
+         })
+         this.resources=users
+        }
+        else{
+          this.resources=this.users_list
+        }  
           this.getTaskandCommentsData();
             
         })
@@ -466,6 +471,8 @@ percentageComplete: number;
         if(response.errorMessage==undefined)
         {
           this.projectdetails();
+          this.getallusers();
+          this.getTaskandCommentsData();
           this.spinner.hide();
           Swal.fire("Success",response.status,"success");
         }
@@ -530,6 +537,7 @@ percentageComplete: number;
               cancelButtonColor: '#d33',
               confirmButtonText: 'Ok'
             }) 
+            this.projectdetails();
             this.getallusers();
             this.getTaskandCommentsData();
             this.spinner.hide();
@@ -547,6 +555,8 @@ percentageComplete: number;
 
       addresource(createmodal){
         this.addresourcemodalref=this.modalService.show(createmodal,{class:"modal-md"})
+        this.getallusers();
+        this.projectdetails();
       }
 
 

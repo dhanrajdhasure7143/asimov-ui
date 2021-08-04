@@ -16,7 +16,7 @@ export class ProjectsListScreenComponent implements OnInit {
   projects_list:any=[];
   users_list:any=[];
   processes:any=[];
-  selected_tab:any=0;
+  selected_tab:any;
   count:any={
     New:0,
     Inprogress:0,
@@ -85,6 +85,9 @@ export class ProjectsListScreenComponent implements OnInit {
     this.count.Rejected=this.projects_list.filter(item=>item.status=="Rejected").length
     this.count.Approved=this.projects_list.filter(item=>item.status=="Approved").length
     this.count.Inreview=this.projects_list.filter(item=>item.status=="In Review").length
+    setTimeout(()=>{
+     this.selected_tab=0;
+    },100)
     })
     //document.getElementById("filters").style.display='block'; 
 }
