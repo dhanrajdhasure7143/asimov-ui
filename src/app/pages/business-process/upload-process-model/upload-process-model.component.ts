@@ -1035,6 +1035,11 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
               'error'
             );
           }else{
+            _self.rejectedOrApproved="PENDING";
+            _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":_self.isfromApprover,
+            "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
+            "isFromcreateScreen":false,'process_name':_self.currentNotation_name}
+            _self.dt.bpsNotationaScreenValues(_self.push_Obj);
             Swal.fire(
               'Saved!',
               'Your changes has been saved and submitted for approval successfully.',
@@ -1050,10 +1055,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           )
         })
     })
-    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
-    this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
   saveprocess(newVal){
