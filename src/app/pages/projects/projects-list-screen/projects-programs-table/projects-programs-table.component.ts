@@ -229,6 +229,7 @@ export class ProjectsProgramsTableComponent implements OnInit {
         this.spinner.show();
         this.api.delete_Project(delete_data).subscribe( res =>{ 
           this.spinner.hide();
+          this.getallProjects();
           let response:any=res
           if(response.errorMessage==undefined)
           {

@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import moment from 'moment';
 @Component({
   selector: 'app-create-project-form',
   templateUrl: './create-project-form.component.html',
@@ -11,6 +12,7 @@ export class CreateProjectFormComponent implements OnInit {
   constructor(private formBuilder:FormBuilder, private spinner:NgxSpinnerService ) { }
   insertForm2:FormGroup;
   selectedresources:any=[];
+  mindate: any;
   @Input('users_list') public users_list: any[];
   @Input('processes') public processes:any[];
   @Output() oncreate = new EventEmitter<String>();
@@ -34,6 +36,7 @@ export class CreateProjectFormComponent implements OnInit {
    // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
 })
+this.mindate= moment().format("YYYY-MM-DD");
   }
 
 
