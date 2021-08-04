@@ -97,10 +97,8 @@ export class CreateProjectsComponent implements OnInit {
   }
 
 
-  linkcreateproject(){
-  let data=this.insertForm2.value;
-  data["resource"]=data.resource.map(item=>{ return {resource:item}})
-  this.newproject.push(data)
+  linkcreateproject(event){
+  this.newproject.push(JSON.parse(event))
   console.log("link",this.newproject)
   this.modalRef.hide();
   }
@@ -121,21 +119,14 @@ getunassignedprojectslist()
     this.unassigned_projects=data;
   })
 }
-createproject()
+createproject(event)
   {
+    console.log(event)
     this.spinner.show();
-    let userfirstname=localStorage.getItem("firstName")
-    let userlastname=localStorage.getItem("lastName")
-    this.username=userfirstname+" "+userlastname
-    this.insertForm2.value.status="New";
-    this.insertForm2.value.createdBy=this.username;
-  
-    let data=this.insertForm2.value;
-    data["resource"]=data.resource.map(item=>{ return {resource:item}})
+    let data=JSON.parse(event);
     this.api.createProject(data).subscribe(data=>{
       let response:any=data;
       this.spinner.hide();
-      this.projectcreatedata=this.insertForm2.value
       if(response.errorMessage==undefined)
       {
         let status: any= response;
