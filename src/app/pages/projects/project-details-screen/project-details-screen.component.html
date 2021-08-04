@@ -1214,16 +1214,16 @@
                         <thead>
                           <tr>
                             <th class="text-left">File Name</th>
-                            <th class="text-right">File Size (MB)</th>
-                            <th class="text-right">Actions</th>
+                            <th class="text-left">File Size (MB)</th>
+                            <th class="text-left">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr
                             *ngFor="let attachments of taskattacments | paginate: { itemsPerPage: 2, currentPage: att } ">
                             <td>{{attachments.fileName}}</td>
-                            <td class="text-right">{{attachments.fileSize | fileSizePipe}}</td>
-                            <td class="text-right">
+                            <td class="text-left">{{attachments.fileSize | fileSizePipe}}</td>
+                            <td class="text-left">
                               <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
                             </td>
                           </tr>
@@ -1260,8 +1260,8 @@
                           </td>
                           <td>{{selectedtaskdata.resources| userPipe : users_list}}</td>
                           <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                          <td>{{roles?roles:'-'}}</td>
-                          <td>{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
+                          <td class="text-right">{{roles?roles:'-'}}</td>
+                          <td class="text-right">{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
                         </tr>
                       </tbody>
 
