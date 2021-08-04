@@ -925,6 +925,9 @@ save_blueprism_config(data)
   getTaskAttachments(projectid,taskid){
     return this.http.get("/platform-service/document/tasksAttachments/"+projectid+"/"+taskid+"")
   }
+  getLatestfiveAttachments(projectid,timezone){
+    return this.http.get("/platform-service/document/uploadedFilespaged/"+projectid,timezone)
+  }
   uploadTaskfile(data){
     return this.http.post("/platform-service/document/uploadResource", data);
   }
