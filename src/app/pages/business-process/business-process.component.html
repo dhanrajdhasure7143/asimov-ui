@@ -17,7 +17,7 @@
                 <span class="module-back-button" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->
                 <span class="level3">Last Modified By: {{logged_User}}</span>
-                <span *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span>
+                <span *ngIf="updated_date_time">Autosaved @ {{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</span>
 
               </div> 
           </div>
@@ -37,14 +37,14 @@
                   <button mat-menu-item (click)="downloadNotaton('jpg')">JPG</button>
                   <button mat-menu-item (click)="downloadNotaton(selectedNotationType)">{{selectedNotationType | uppercase}}</button>
                 </mat-menu>
-              <button class="tsttooltipbtn">
+                <button type="button" class="clr-hvr tsttooltipbtn" [popover]="shareTemplate" placement="bottom">
                 <img src="../../../assets/images/BPMS/share.svg" >
                 <span class="testtooltip">Share</span>
               </button>
               <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
               <button class="tsttooltipbtn">
-                <img src="../../../assets/images/BPMS/copy.svg" >
-                <span class="testtooltip">Copy</span>
+                <img src="../../../assets/images/BPMS/Favorite.svg" >
+                <span class="testtooltip">Favorite</span>
               </button>
               <button class="tsttooltipbtn" (click)="zoomIn()" >
                 <img src="../../../assets/images/BPMS/zoom-in.svg">
@@ -146,5 +146,17 @@
     </select>
     </div>
     <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
+  </div>
+</ng-template>
+
+<ng-template #shareTemplate>
+  <div class="custom-content">
+    <div class="form-group">
+      <label for="" class="label-control">Invite People</label>
+      <select class="form-control">
+        <option >Select</option>
+    </select>
+    </div>
+    <button class="btn btn-primary">Share</button>
   </div>
 </ng-template>
