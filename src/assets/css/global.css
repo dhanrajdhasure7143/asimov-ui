@@ -25,7 +25,7 @@ input[type="password"] {
   border: none;
   border-bottom: 1px solid gray;
   text-align: left;
-  padding: 1em;
+  /* padding: 1em; */
   /* margin:15px 0px; */
 }
 
@@ -45,7 +45,7 @@ span.user_name::before {
   font-style: normal;
   font-variant: normal;
   text-rendering: auto;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .brand {
@@ -327,7 +327,7 @@ i.fas.fa-chevron-down {
 .module-heading {
   background-color: #ffffff;
   border-bottom: 1px solid #e5e5e5;
-  padding: 6px 15px;
+  padding: 6px 10px;
   /* margin-bottom: 10px; */
   min-height: 48px;
   display: flex;
@@ -335,7 +335,7 @@ i.fas.fa-chevron-down {
 }
 
 .module-heading-buttons button.btn {
-  margin: 0px 0px 0px 10px;
+  /* margin: 0px 0px 0px 10px; */
   display: inline-flex;
   align-items: center;
 }
@@ -352,9 +352,7 @@ i.fas.fa-chevron-down {
   margin-right: 5px;
 }
 
-.module-heading-title {
-  font-size: 18px;
-}
+
 
 /* Module title styles - Ends*/
 /* Common styles - Starts*/

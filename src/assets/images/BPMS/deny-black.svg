@@ -1,0 +1,7 @@
+<svg id="deny" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+  <path id="Path_827" data-name="Path 827" d="M0,0H24V24H0Z" fill="none"/>
+  <g id="deny-2" data-name="deny" transform="translate(-2 -2)">
+    <line id="Line_88" data-name="Line 88" x1="16" y2="16" transform="translate(6 6)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    <line id="Line_89" data-name="Line 89" x2="16" y2="16" transform="translate(6 6)" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  </g>
+</svg>

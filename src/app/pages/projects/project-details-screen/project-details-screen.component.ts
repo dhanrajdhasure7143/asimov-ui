@@ -42,7 +42,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
-  displayedColumns6: string[] = ["profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
+  displayedColumns6: string[] = ["profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate","action"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
   responsedata: any;
@@ -98,6 +98,7 @@ percentageComplete: number;
   filecategories: any;
   programId:any;
   taskresourceemail: any;
+  resourceslength: any;
 
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -130,14 +131,14 @@ percentageComplete: number;
 
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
-
+    this.getallusers();
     this.projectdetails();
 
     
  
 
 
-    this.getallusers();
+    
     this.getallprocesses();
 
     setTimeout(() => {
@@ -215,7 +216,11 @@ percentageComplete: number;
           this.spinner.hide();
           this.projectDetails=res
           this.project_id=this.projectDetails.id
-          this.resources=this.projectDetails.resources
+          let users:any=[]
+          this.projectDetails.resource.forEach(item=>{
+              users.push(item.resource)
+       })
+       this.resources=users
           this.getTaskandCommentsData();
             
         })
@@ -272,6 +277,7 @@ percentageComplete: number;
               if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
                 users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
          })
+         this.resourceslength=users.length
           this.dataSource6= new MatTableDataSource(users);
           this.dataSource6.sort=this.sort14;
           this.dataSource6.paginator=this.paginator104;
@@ -459,9 +465,8 @@ percentageComplete: number;
         let response:any=data;
         if(response.errorMessage==undefined)
         {
+          this.projectdetails();
           this.spinner.hide();
-          this.projectDetails.resources=[...this.projectDetails.resources,...(JSON.parse(event))];
-          this.resources=this.projectDetails.resources
           Swal.fire("Success",response.status,"success");
         }
         else
@@ -500,7 +505,45 @@ percentageComplete: number;
   //   this.router.navigate(['/pages/projects/projectdetails',project])
   // }
 
-
+  deleteresource(data){
+    console.log("sdf")
+     Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          this.spinner.show();
+          this.rpa.deleteResource(this.project_id,data.userId.userId).subscribe( res =>{ 
+            let status:any = res;
+            Swal.fire({
+              title: 'Success',
+              text: ""+status.message,
+              position: 'center',
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ok'
+            }) 
+            this.getallusers();
+            this.getTaskandCommentsData();
+            this.spinner.hide();
+            },err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+              })
+                           
+            })
+        }
+      });
+  }
 
       addresource(createmodal){
         this.addresourcemodalref=this.modalService.show(createmodal,{class:"modal-md"})

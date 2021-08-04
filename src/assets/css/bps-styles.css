@@ -214,7 +214,7 @@ div[class^='diagram_container'] {
   /* overflow: hidden auto; */
   padding: 5px;
   position: relative;
-  top: -20px;
+  /* top: -20px; */
 }
 
 .readOnly svg {
@@ -251,12 +251,13 @@ mat-expansion-panel {
   line-height: 2;
 }
 
-#bpmn_list_row span {
+#bpmn_list_row span, #bpmn_list_row div {
   display: inline-flex;
   width: 10.5%;
   text-align: center;
   align-items: center;
   padding-right: 4px;
+  white-space: nowrap;
 }
 
 .workspace-title {
@@ -744,7 +745,7 @@ label {
   width: 100%;
 }
 
-.approve_bpmn_list_header {
+.aprwkfl_bpmn_list_header {
   width: 100%;
   margin: 10px 20px;
 }
@@ -764,21 +765,17 @@ label {
 /* shared bpmn-diagram component styles - Ends*/
 /* bpmn-diagram-list component styles - Starts*/
 .account_pay_details_table tr {
-  border-bottom: 1px solid #ccc;
-  cursor: pointer;
+  /* border-bottom: 1px solid #ccc;
+  cursor: pointer; */
 }
 
-.account_pay_details_table tr:hover {
-  color: blue;
-}
-
-.account_pay_details_table tr,
-.account_pay_details_table td {
-  padding: 10px 0;
-}
 
 .account_pay_details_table input {
-  height: 20px;
+  /* height: 20px; */
+  padding: 0px !important;
+  border: none !important;
+  background-color: unset;
+  width: 75px;
 }
 
 .account_pay_details_table button {
@@ -795,16 +792,7 @@ label {
   cursor: pointer;
 }
 
-.list_header {
-  color: #737373;
-  font-size: 15px;
-  text-align: center;
-}
 
-.account_pay_details_table {
-  color: #737373;
-  font-size: 11px;
-}
 
 .account_pay_details_table td,
 .account_pay_details_table th {
@@ -812,7 +800,7 @@ label {
 }
 
 .bpmn_list {
-  width: 90%;
+  width: 100%;
   margin: auto;
 }
 
@@ -826,11 +814,11 @@ label {
 }
 
 #btn_app {
-  background-color: #3ea307 !important;
+  /* background-color: #3ea307 !important; */
 }
 
 #btn_deny {
-  background-color: #dd1818 !important;
+  /* background-color: #dd1818 !important; */
 }
 
 .list_diag {
@@ -846,14 +834,15 @@ label {
   float: right !important;
 }
 
-.text-cell {
-  text-align: center;
-  padding-left: 63px !important;
+.text-cell, .text-cell-last {
+  text-align: left !important;
+  width: 100% !important;
+  /* padding-left: 63px !important; */
 }
 
 .text-cell-last {
   text-align-last: center;
-  padding-left: 109px !important;
+  /* padding-left: 109px !important; */
 }
 
 .box-border {
@@ -867,7 +856,7 @@ label {
 .box_area {
   /* margin-top: 20px; */
   margin-top: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 24px;
 }
 
 .keyboard_style_upload {
@@ -888,13 +877,13 @@ label {
 .keyboard_label_style {
   font-size: 15px;
   padding-right: 20px;
+  padding-bottom: 10px;
 }
 
 .keyboard_header_shortcuts {
-  font-size: 25px;
-  font-weight: 100;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 10px 0px;
 
 }
 
@@ -907,7 +896,7 @@ label {
 }
 
 .approver_fit_btn {
-  height: 46px;
+  /* height: 46px; */
   right: 0px;
 }
 

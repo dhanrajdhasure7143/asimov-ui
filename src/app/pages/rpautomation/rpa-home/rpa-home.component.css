@@ -23,7 +23,6 @@
 
 .rpa-home-block:hover .rpa-home-btn-title {
   /* font-size: 14px; */
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
   /* color: white;
         font-weight: bold; */
 }
@@ -102,7 +101,6 @@ tr.mat-row {
 }
 
 .classfont {
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
 }
 
 .rpa-home-bots {
@@ -146,13 +144,11 @@ tr.mat-row {
 
 .rpa-home-btn-title {
   font-size: 14px;
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
   color: white;
   margin: 0px !important;
 }
 
 .title-font {
-  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; */
 }
 
 .rpa-mat-form-field-category {
@@ -293,7 +289,7 @@ th {
 
 label.main-subtitle {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   display: inline-block;
   /* display: block; */
 
@@ -328,7 +324,7 @@ label.subtitle-tag {
 
 span.gridHeader {
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 .mat-form-field-wrapper {
@@ -343,7 +339,7 @@ span.gridHeader {
   font-size: 14px !important;
   text-align: left !important;
   border-top: none !important;
-  font-weight: 500;
+  font-weight: 600;
   /* border-bottom: 1px solid #4a4a4a33 !important; */
   padding: 8px 10px;
   display: inline-block;

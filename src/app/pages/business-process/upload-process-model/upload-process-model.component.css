@@ -248,7 +248,7 @@ label.accordionHeader {
     /* border-bottom: 1px solid #8c94a0; */
     margin: 0px;
 }
-.propertiesContainer mat-expansion-panel:hover {
+.propertiesContainer mat-expansion-panel-header:hover {
     background-color: #00a0e3;
 }
 .propertiesContainer .mat-expansion-panel-header-title {
@@ -340,7 +340,7 @@ textarea.msgip {
 .shortcutslistdiv label {
     min-width: 142px;
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     margin: 7px 0px;
 }
 .shortcutslistdiv span.bluetext {
@@ -359,7 +359,7 @@ textarea.msgip {
 }
 .favouriteslistdiv label  {  
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
 }
 .favouriteslistdiv img {
     vertical-align: middle;
@@ -386,11 +386,23 @@ textarea.msgip {
     }
 }
 
-.bpm-notation-fields {
-    right: 0px !important;
-    left: 60px;
-}
 
 .bpm-notation-fields mat-form-field {
     width: 100%;
 }
+
+.bpm-notation-fields select.form-control {
+    display: inline-block;
+    width: 200px;
+    padding: 0px 12px !important;
+    height: 24px;
+}
+
+.bpm-notation-fields label.label-control {
+    display: inline-block;
+    margin: 0px !important;
+    margin-right: 5px !important;
+}
+
+
+

@@ -28,6 +28,7 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
     "@fortawesome/free-solid-svg-icons": "^5.12.1",
     "@ng-bootstrap/ng-bootstrap": "^5.2.1",
+    "@ng-select/ng-select": "^2.20.5",
     "@swimlane/ngx-charts": "^12.1.0",
     "angular-datatables": "^8.1.0",
     "angular-disable-browser-back-button": "^1.0.1",
@@ -112,10 +113,8 @@
     "sweetalert2": "^9.14.4",
     "tiny-svg": "^2.2.2",
     "tslib": "^1.10.0",
-    "xlsx": "^0.15.6",
-    "zone.js": "~0.9.1",
-    "@ng-select/ng-select": "^2.20.5"
-  
+    "xlsx": "^0.17.0",
+    "zone.js": "~0.9.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.29",

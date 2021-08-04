@@ -13986,7 +13986,7 @@
 	  'padding: 10px',
 	  'background: white',
 	  'box-shadow: 0 1px 4px rgba(0,0,0,0.3)',
-	  'font-family: Helvetica, Arial, sans-serif',
+	  'font-family: Open Sans, sans-serif',
 	  'font-size: 14px',
 	  'display: flex',
 	  'line-height: 1.3'

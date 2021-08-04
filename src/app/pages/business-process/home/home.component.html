@@ -2,11 +2,11 @@
   <div class="container-fluid new-bps-layout h-100">
     <div class="header_addon row approval_workflow_properties">
       <div class="col-md-8"></div>
-      <div class="col-md-4 new-cockpit">
-        <a class="col-md-12" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home"><b>Approval
-            Workflow</b></a>
-        <a class="col-md-6 text-center" href="javascript:void(0);" (click)="gotoBPMNPlatform()"><b>View Cockpit</b></a>
-      </div>
+      <!-- <div class="col-md-4 new-cockpit module-heading-buttons">
+        <a class="btn btn-primary" *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home">Approval
+            Workflow</a>
+        <a class="btn btn-primary" href="javascript:void(0);" (click)="gotoBPMNPlatform()">View Cockpit</a>
+      </div> -->
     </div>
     <div class="row">
       <div class="col-md-12 offset-1 new-bps-sample">
@@ -14,14 +14,14 @@
       </div>
       <div class="col-md-12 box-border myworkspace-style">
         <div class="row">
-          <div class="col-md-7 pl-0">
+          <div class="col-md-6 pl-0">
             <h4 class="box-heading">My Workspace</h4>
           </div>
-          <div class="col-md-5 p-0">
+          <div class="col-md-6 p-0">
             <div class="col-md-6 form-group pr-0 bps-labcls">
-                <label class="label-control">Select Category</label>
+                <!-- <label class="label-control">Select Category</label> -->
                 <select name="category" (change)="searchByCategory(categoryName)" #category="ngModel"
-                  [(ngModel)]="categoryName" class="form-control">
+                  [(ngModel)]="categoryName" class="form-control bps-home-fileds">
                   <option value="" disabled hidden >Select Category</option>
                   <option value="null" disabled hidden >Select Category</option>
                   <option value="undefined" disabled hidden >Select Category</option>
@@ -32,10 +32,11 @@
                 </select>
               
             </div>
-            <div class="col-md-6 form-group pr-0">
+            <div class="col-md-6 form-group pr-0 bps-serwksp">
              
-                <label class="label-control">Search Workspace</label>
-                <input class="form-control toolbar-search" placeholder="Search Workspace" type="text"  (keyup)="searchList($event)">
+                <!-- <label class="label-control">Search Workspace</label> -->
+                <input class="form-control toolbar-search bps-home-fileds" placeholder="Search Workspace" type="text"  (keyup)="searchList($event)">
+                <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
               
             </div>
           </div>

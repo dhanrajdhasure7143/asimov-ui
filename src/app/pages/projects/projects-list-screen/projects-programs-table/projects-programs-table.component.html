@@ -481,7 +481,7 @@
         <input type="checkbox" [checked]="element.checked" (change)="CredcheckEnableDisableBtn(element.id, $event)"> 
     </td>
 </ng-container> -->
-  <div>
+  <div class="project-list-table h-100">
     <div class="prj-prg-tablelist">
       <table mat-table #sort2="matSort"  [dataSource]="dataSource2" matSort class="projecttable table"  id="listofcred">
           <ng-container matColumnDef="id">
@@ -531,8 +531,8 @@
 
           <ng-container matColumnDef="owner">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
-            <td mat-cell *matCellDef="let element"> 
-                <span *ngIf="element.owner!=null">{{element.owner| userPipe : users_list}}</span> 
+            <td mat-cell *matCellDef="let element" [matTooltip]="element.owner| userPipe : users_list" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"> 
+                <span *ngIf="element.owner!=null">{{getreducedValue(element.owner| userPipe : users_list)}}</span> 
                 <span *ngIf="element.owner==''">-</span> 
                 <span *ngIf=" element.owner==null">-</span> 
             </td>
@@ -601,7 +601,11 @@
               <a *ngIf="element.type=='Program'" (click)="updatedata(updateprogrammodal,element)" >
                 <img src="../../../../../assets/images/Projects/edit.svg" />
               </a> -->
-              <a (click)="deleteproject(element)" matTooltip="Delete Project Details" >
+              <a (click)="deleteproject(element)"  *ngIf="element.type=='Project'" matTooltip="Delete Project" >
+                <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+              </a> 
+              <a (click)="deleteproject(element)"  *ngIf="element.type=='Program'" matTooltip="Delete Program" >
                 <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
                 <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
               </a> 
@@ -654,7 +658,7 @@
             <form [formGroup]="updateForm" (ngSubmit)="projectupdate()">
                 <div class="row">
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">
+                      <div class="form-fields col-md-6 pl-0">
                         <label for="projectName">Project Name<span class="star">*</span></label>
                         <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
                         <span *ngIf="(updateForm.get('projectName').invalid && updateForm.get('projectName').touched) && !updateForm.controls['projectName'].hasError('maxlength')" class="fa fa-info-circle errspan required">Project Name Required*</span>
@@ -662,7 +666,7 @@
                             Maximum of 50 characters
                         </div>
                       </div>  
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label for="type">Type<span class="star">*</span></label>
                         <select class="form-control"   style="border:1px solid lightgray" formControlName="type">
                             <option value="" >Select Type</option>
@@ -673,7 +677,7 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">                         
+                      <div class="form-fields col-md-6 pl-0">                         
                         <label for="initiatives">Initiative<span class="star">*</span></label>
                         <select  formControlName="initiatives" class="form-control data">                          
                           <option value="">Select Initiatives</option>
@@ -682,7 +686,7 @@
                         </select>
                         <span *ngIf="updateForm.get('initiatives').invalid && updateForm.get('initiatives').touched" class="fa fa-info-circle errspan required">Initiatives Required*</span>
                       </div>
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label for="priority">Project Priority<span class="star">*</span></label>
                         <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
                             <option value="">Select Priority</option>
@@ -694,7 +698,7 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">
+                      <div class="form-fields col-md-6 pl-0">
                         <label class="label-control">Add Resources<span  class="star">*</span></label>
                         <select   formControlName="resources" style="border:1px solid lightgray"  class="form-control data">
                             <option value="">Select Resources</option>
@@ -702,7 +706,7 @@
                         </select>
                         <span *ngIf="updateForm.get('resources').invalid && updateForm.get('resources').touched" class="fa fa-info-circle errspan required">Resources Required*</span>
                       </div>
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label for="process">Process<span class="star">*</span></label>
                         <select class="form-control"   style="border:1px solid lightgray" formControlName="process">
                             <option value="">Select Process</option>
@@ -712,7 +716,7 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">                         
+                      <div class="form-fields col-md-6 pl-0">                         
                         <label>Project Owner <span  class="star">*</span></label>
                         <select   formControlName="owner"  style="border:1px solid lightgray"   class="form-control data">
                             <option value="">Select Owner</option>
@@ -720,7 +724,7 @@
                         </select>
                         <span *ngIf="updateForm.get('owner').invalid && updateForm.get('owner').touched" class="fa fa-info-circle errspan required">Owner Required*</span>
                       </div>
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label class="label-control" >Map Value Chain <span  class="star">*</span></label>
                         <select  formControlName="mapValueChain"   class="form-control data">
                             <option value="">Select Map Value Chain</option>
@@ -732,7 +736,7 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">
+                      <div class="form-fields col-md-6 pl-0">
                         <label for="access">Access<span class="star">*</span></label>
                         <select   formControlName="access"  style="border:1px solid lightgray"  class="form-control data">
                             <option value="" >Select Access</option>
@@ -742,14 +746,14 @@
                         </select>
                         <span *ngIf="updateForm.get('access').invalid && updateForm.get('access').touched" class="fa fa-info-circle errspan required">Access Required*</span>
                       </div>
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label class="label-control" >Identity Measurable Metrics <span  class="star">*</span></label>
                         <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
                         <span *ngIf="updateForm.get('measurableMetrics').invalid && updateForm.get('measurableMetrics').touched" class="fa fa-info-circle errspan required">Identity Measurable Metrics Required*</span>
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">
+                      <div class="form-fields col-md-6 pl-0">
                         <label>Status<span class="star">*</span></label>
                         <select formControlName="status" class="form-control data">
                             <option value="" >Select Status</option>
@@ -761,12 +765,12 @@
                         </select>
                         <span *ngIf="updateForm.get('status').invalid && insertForm2.get('status').touched" class="fa fa-info-circle errspan required">Status Required*</span>
                       </div>
-                      <div class="form-fileds col-md-3">
+                      <div class="form-fields col-md-3">
                         <label>Start Date <span  class="star">*</span></label>
                         <input class="form-control" type="date"  name="daytime" [min]="mindate"  formControlName="startDate" class="form-control">
                         <span *ngIf="updateForm.get('startDate').invalid && updateForm.get('startDate').touched" class="fa fa-info-circle errspan required">Start Date Required*</span>
                       </div>
-                      <div class="form-fileds col-md-3 pr-0">
+                      <div class="form-fields col-md-3 pr-0">
                         <label>End Date <span  class="star">*</span></label>
                         <input class="form-control" type="date"  name="daytime" [min]="mindate" formControlName="endDate"  class="form-control data">
                         <span *ngIf="updateForm.get('endDate').invalid && updateForm.get('endDate').touched" class="fa fa-info-circle errspan required">End Date Required*</span>
@@ -805,7 +809,7 @@
             <form [formGroup]="updateprogramForm" (ngSubmit)="programupdate()">
                 <div class="row">
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">
+                      <div class="form-fields col-md-6 pl-0">
                         <label for="projectName">Program Name<span class="star">*</span></label>
                         <input type="text" maxlength="51"  style="border:1px solid lightgray" class="form-control data" formControlName="projectName"  value="" placeholder="Enter Name">
                         <span *ngIf="(updateprogramForm.get('projectName').invalid && updateprogramForm.get('projectName').touched) && !updateprogramForm.controls['projectName'].hasError('maxlength')" class="fa fa-info-circle errspan required">Program Name Required*</span>
@@ -813,7 +817,7 @@
                             Maximum of 50 characters
                         </div>
                       </div>  
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label for="type">Type<span class="star">*</span></label>
                         <select class="form-control"  style="border:1px solid lightgray" formControlName="type">
                             <option value="" >Select Type</option>
@@ -824,7 +828,7 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">                         
+                      <div class="form-fields col-md-6 pl-0">                         
                         <label for="initiatives">Initiative<span class="star">*</span></label>
                         <select  formControlName="initiatives"  class="form-control data">
                             <option value="" >Select Initiatives</option>
@@ -833,7 +837,7 @@
                         </select>
                         <span *ngIf="updateprogramForm.get('initiatives').invalid && updateprogramForm.get('initiatives').touched" class="fa fa-info-circle errspan required">Initiatives Required*</span>
                       </div>
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label for="priority">Priority<span class="star">*</span></label>
                         <select class="form-control"  style="border:1px solid lightgray" formControlName="priority">
                             <option value="" >Select Priority</option>
@@ -845,7 +849,7 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">
+                      <div class="form-fields col-md-6 pl-0">
                         <label>Owner <span  class="star">*</span></label>
                         <select   formControlName="owner"  style="border:1px solid lightgray" class="form-control data">
                             <option value="">Select Owner</option>
@@ -853,7 +857,7 @@
                         </select>
                         <span *ngIf="updateprogramForm.get('owner').invalid && updateprogramForm.get('owner').touched" class="fa fa-info-circle errspan required">Owner Required*</span>
                       </div>
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label for="process">Process<span class="star">*</span></label>
                         <select class="form-control"  style="border:1px solid lightgray" formControlName="process">
                             <option value="" >Select Process</option>
@@ -863,7 +867,7 @@
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">
+                      <div class="form-fields col-md-6 pl-0">
                         <label for="access">Access<span class="star">*</span></label>
                         <select   formControlName="access" style="border:1px solid lightgray"  class="form-control data">
                             <option value="">Select Access</option>
@@ -873,19 +877,19 @@
                         </select>
                         <span *ngIf="updateprogramForm.get('access').invalid && updateprogramForm.get('access').touched" class="fa fa-info-circle errspan required">Access Required*</span>
                       </div>
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label class="label-control" >Identity Measurable Metrics <span  class="star">*</span></label>
                         <input type="text"  style="border:1px solid lightgray" formControlName="measurableMetrics" placeholder="Enter Identity Measurable Metrics" class="form-control data">
                         <span *ngIf="updateprogramForm.get('measurableMetrics').invalid && updateprogramForm.get('measurableMetrics').touched" class="fa fa-info-circle errspan required">Identity Measurable Metrics Required*</span>
                       </div>
                     </div>
                     <div class="col-md-12">
-                      <div class="form-fileds col-md-6 pl-0">
+                      <div class="form-fields col-md-6 pl-0">
                         <label class="label-control" >Program Purpose <span  class="star">*</span></label>
                         <input type="text"  style="border:1px solid lightgray" formControlName="purpose" placeholder="Enter Program Purpose" class="form-control data">
                         <span *ngIf="updateprogramForm.get('purpose').invalid && updateprogramForm.get('purpose').touched" class="fa fa-info-circle errspan required">Program Purpose Required*</span>
                       </div>
-                      <div class="form-fileds col-md-6 pr-0">
+                      <div class="form-fields col-md-6 pr-0">
                         <label>Status<span class="star">*</span></label>
                         <select formControlName="status" class="form-control data">
                             <option value="" >Select Status</option>

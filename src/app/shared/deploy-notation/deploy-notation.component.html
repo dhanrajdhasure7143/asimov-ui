@@ -4,20 +4,20 @@
         <a href="javascript:void(0);" (click)=gotoBPMNPlatform()>Click here</a> to verify.</i></p>
 </div>
 <form>
-    <mat-form-field class="row col-md-12">
-        <mat-label>Deployment Name</mat-label>
-        <input type="text" matInput name="depName" [(ngModel)]="depName" #dep_name="ngModel" required >
-    </mat-form-field>
-    <mat-form-field class="row col-md-12">
-        <mat-label>Tenant Id</mat-label>
-        <input type="text" matInput name="tenantId" [(ngModel)]="tenantId" #tenant_id="ngModel" >
-    </mat-form-field>
-    <div><b>Endpoint Configuration</b></div>
-    <mat-form-field class="row col-md-12">
-        <mat-label>REST Endpoint</mat-label>
-        <input type="text" matInput name="endPoint" [(ngModel)]="endPoint" #end_point="ngModel" required  disabled>
-        <mat-icon class="info" matTooltip="Should point to a running Camunda Engine REST API endpoint" matSuffix>info</mat-icon>
-    </mat-form-field>
+    <div class="form-fields col-md-12">
+        <label>Deployment Name<span class="star">*</span></label>
+        <input type="text" name="depName" class="form-control" [(ngModel)]="depName" #dep_name="ngModel" required >
+    </div>
+    <div class="form-fields col-md-12">
+        <label>Tenant Id</label>
+        <input type="text" name="tenantId" class="form-control" [(ngModel)]="tenantId" #tenant_id="ngModel" >
+    </div>
+    <div class="endpoit-heading"><b>Endpoint Configuration</b></div>
+    <div class="form-fields col-md-12">
+        <label>REST Endpoint </label><span class="fa fa-info-circle info" matTooltip="Should point to a running Camunda Engine REST API endpoint"></span>
+        <input type="text" name="endPoint"  class="form-control" [(ngModel)]="endPoint" #end_point="ngModel" required  disabled>
+        <!-- <mat-icon class="info" matTooltip="Should point to a running Camunda Engine REST API endpoint" matSuffix>info</mat-icon> -->
+    </div>
     <br/><br/>
     <div class="row col-md-12">
         <button class="btn btn-danger eiap-btn" (click)="closedeplyNonation()" >Cancel</button>

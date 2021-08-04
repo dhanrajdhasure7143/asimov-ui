@@ -21,9 +21,10 @@
 /* You can add global styles to this file, and also import other style files */
 body,
 html {
-  /* font-family: 'Source Sans Pro', sans-serif  !important; */
+
   font-family: 'Open Sans', sans-serif !important;
   user-select: none;
+  color: #001c47;
 }
 
 h1,
@@ -44,7 +45,8 @@ td,
 div {
   margin: 0;
   padding: 0;
-  /* font-size: 15px; */
+  font-size: 15px;
+  font-weight: 500;
   text-decoration: none !important;
   list-style: none;
   color: inherit;
@@ -267,10 +269,12 @@ div[class^='diagram_container'] .djs-container svg {
   right: 20px;
 }
 
+
+
 .btn {
-  margin-right: 16px;
+  /* margin-right: 16px;
   border-radius: 3px;
-  font-size: 15px;
+  font-size: 15px !important; */
 }
 
 .btn-thin {
@@ -364,12 +368,12 @@ button:disabled {
 } */
 th {
   border-top: none !important;
-  font-weight: 500;
   color: #00a0e3;
   border-bottom: 1px solid #4a4a4a33 !important;
-  padding: 8px 12px;
+  padding: 5px 10px !important;
   background: #e8f7fd;
   font-size: 14px !important;
+  vertical-align: middle !important;
 }
 
 ul.nav.nav-tabs.justify-content-start li {
@@ -411,6 +415,11 @@ ul.bpp-properties-tabs-links {
 
 .bpp-properties-header>.label {
   color: black;
+}
+
+.bpp-field-description {
+  font-size: 12px;
+  line-height: 15px;
 }
 
 #tabform input[type="checkbox"] {
@@ -537,7 +546,7 @@ body {
 
 body {
   margin: 0;
-  /* font-family: Roboto, "Helvetica Neue", sans-serif;  */
+  /*   */
 }
 
 
@@ -556,7 +565,7 @@ body {
 
 #exportSVGtoPDF text {
   /* font-size: 14px; */
-  /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serf; */
+
   transform: translate(5px, 0px);
   height: auto;
   width: auto;
@@ -715,7 +724,8 @@ div.tipsy.tipsy-e {
   }
 
 }
-/* 
+
+/*
 .label {
   color: black !important;
   font-size: 14px !important;
@@ -881,9 +891,7 @@ foreignObject {
   position: relative;
 }
 
-.mat-tab-group {
-  /* font-family: 'Source Sans Pro', sans-serif  !important; */
-}
+.mat-tab-group {}
 
 #piechart1 text,
 #piechart2 text {
@@ -921,7 +929,7 @@ foreignObject {
 #pietooltip p,
 #pietooltip1 p {
   margin: 0;
-  /* font-family: sans-serif; */
+
   font-size: 10px;
   line-height: 20px;
   text-align: center !important;
@@ -1071,7 +1079,7 @@ foreignObject {
 
 .active .mat-list-item-content .side-menu-font {
   color: #00a0e3 !important;
-  font-weight: 500;
+  font-weight: 600;
 }
 
 #sidenav.menu-close .mat-list-base .mat-list-item .mat-list-item-content,
@@ -1122,8 +1130,8 @@ foreignObject {
 }
 
 .maintitle {
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 18px;
+  font-weight: 500;
   margin-bottom: 10px;
   padding: 10px 0px;
 }
@@ -1136,7 +1144,10 @@ foreignObject {
 
 app-home,
 app-bussiness-process,
-app-bpshome {
+app-bpshome,
+app-create-projects,
+app-projects-list-screen,
+app-projects-programs-table {
   height: 100%;
 }
 
@@ -1154,15 +1165,15 @@ app-bpshome {
   overflow: unset !important;
 }
 
-.new-bps-grid-data span.mat-expansion-indicator {
+.new-bps-grid-data span.mat-expansion-indicator, .aprwkfl-grid-data span.mat-expansion-indicator {
   position: absolute;
   right: 15px;
   top: 5px;
 }
 
 .new-bps-grid-data .bps_overlay .djs-container {
-  top: 20px !important;
-  left: -8px !important;
+  /* top: 20px !important; */
+  /* left: -8px !important; */
 }
 
 .new-bps-grid-data .bps_overlay g.viewport {
@@ -1172,7 +1183,7 @@ app-bpshome {
 
 .new-bps-layout h3 {
   font-size: 22px !important;
-  font-weight: 500;
+  font-weight: 600;
   margin-top: 0px !important;
 }
 
@@ -1262,7 +1273,7 @@ div#propertiesPanelBody .bpp-properties-panel {
   font-size: 14px !important;
   text-align: left !important;
   border-top: none !important;
-  font-weight: 500;
+  font-weight: 600;
   border-bottom: 1px solid #4a4a4a33 !important;
   padding: 8px 10px;
 }
@@ -1298,10 +1309,11 @@ mat-row {
 
 .maindivfoprm .mat-tab-label {
   min-width: auto !important;
-  padding: 0px 10px !important;
+  padding: 10px 10px !important;
   font-size: 15px !important;
   margin-left: 15px;
   opacity: unset;
+  height: auto;
 }
 
 .maindivfoprm .mat-tab-label-active {
@@ -1370,11 +1382,13 @@ mat-card {
   padding: 0px !important;
   box-shadow: none !important;
 }
+
 img.testplus {
   width: 14px;
   height: 14px;
   margin-right: 5px;
 }
+
 img.testplus1 {
   width: 16px;
   height: 16px;
@@ -1397,8 +1411,8 @@ img.testplus1 {
 .maindivfoprm {
   width: 800px;
   margin: 0px auto;
-  margin-top: 20px;
-  margin-bottom: 60px;
+  margin-top: 15px;
+  margin-bottom: 15px;
 }
 
 .maindivfoprm .mat-tab-label-active {
@@ -1406,13 +1420,13 @@ img.testplus1 {
 }
 
 .maindivfoprm .create-heading {
-  font-weight: 500;
-  font-size: 24px;
+  font-weight: 600;
+  font-size: 18px;
 }
 
 .maindivfoprm .label-control,
 .modelprbody label {
-  color: #525e76 !important;
+  color: #001c47 !important;
   font-weight: normal !important;
   font-size: 15px !important;
   margin-bottom: 5px;
@@ -1425,7 +1439,7 @@ img.testplus1 {
   border: 1px solid #d6ddf2 !important;
   box-shadow: unset !important;
   color: rgb(0 21 50 / 60%) !important;
-  font-weight: 600 !important;
+  font-weight: 400 !important;
 }
 
 .maindivfoprm input:focus,
@@ -1448,14 +1462,9 @@ img.testplus1 {
   background-color: #fff !important;
 }
 
-.maindivfoprm select {
-  appearance: none;
-  background-image: url('assets/images/Projects/down-arrow.svg');
-  background-repeat: no-repeat;
-  background-position: center right 12px;
-}
-
-.modelprbody select {
+.maindivfoprm select,
+.modelprbody select ,
+select.form-control {
   appearance: none;
   background-image: url('assets/images/Projects/down-arrow.svg');
   background-repeat: no-repeat;
@@ -1491,23 +1500,23 @@ img.testplus1 {
 
 .maindivfoprm button.btn.btn-primary.prj-form-btn-reset,
 .modelprfooter button.btn.btn-primary.prj-form-btn-reset {
-  background-color: #fff !important;
-  border: 1px solid #00a0e3 !important;
-  color: #00a0e3 !important;
+  /* background-color: #fff !important; */
+  /* border: 1px solid #00a0e3 !important; */
+  /* color: #00a0e3 !important; */
 }
 
 .maindivfoprm button.btn.btn-primary.prj-form-btn-reset:hover,
 .modelprfooter button.btn.btn-primary.prj-form-btn-reset:hover {
-  background-color: #001c47 !important;
+  /* background-color: #001c47 !important;
   color: #fff !important;
-  border: none !important;
+  border: none !important; */
 }
 
 .maindivfoprm button.btn.btn-primary.prj-form-btn-hover:hover,
 .modelprfooter button.btn.btn-primary.prj-form-btn-hover:hover {
-  background-color: #001c47 !important;
+  /* background-color: #001c47 !important;
   color: #fff !important;
-  border-color: #001c47 !important;
+  border-color: #001c47 !important; */
 }
 
 .modal-header.modelprhead button {
@@ -1515,21 +1524,22 @@ img.testplus1 {
   opacity: 1 !important;
 }
 
-.form-fileds {
+.form-fields {
   margin-bottom: 18px !important;
 }
 
 .form-footer {
-  margin-top: 50px;
+  margin-top: 15px;
 }
 
 .modal-footer.modelprfooter {
-  padding: 10px 0px;
+  /* padding: 10px 0px; */
   border: none !important;
 }
 
 .modelprbody,
 .modelprfooter {
+  padding: 15px 25px;
   background-color: #FFF !important;
 }
 
@@ -1543,6 +1553,7 @@ img.testplus1 {
   color: rgb(253 75 75) !important;
   font-size: 12px !important;
   font-weight: normal !important;
+  letter-spacing: 0.2px;
 }
 
 .modal-header.modelprhead {
@@ -1552,14 +1563,18 @@ img.testplus1 {
 }
 
 .modal-body.modelprbody {
-  height: calc(100% - 106px);
+  height: calc(100% - 114px);
   overflow: auto;
 }
 
 .modal-header.modelprhead h4 {
-  font-size: 18px;
+  /* font-size: 18px;
   font-weight: normal;
   color: #001c47;
+  line-height: 22px; */
+  font-size: 16px;
+  color: #001c47;
+  font-weight: 600;
   line-height: 22px;
 }
 
@@ -1578,26 +1593,26 @@ img.testplus1 {
 }
 
 .modelprfooter button {
-  background-color: #fff !important;
+  /* background-color: #fff !important;
   border: 1px solid #00a0e3 !important;
   color: #00a0e3 !important;
   padding: 8px 32px !important;
-  line-height: 18px;
+  line-height: 18px; */
 }
 
 .modelprfooter button:hover,
 .modelprfooter button.btn.btn-primary.btn-update:hover {
-  background-color: #001c47 !important;
+  /* background-color: #001c47 !important;
   color: #fff !important;
-  border: 1px solid #001c47 !important;
+  border: 1px solid #001c47 !important; */
   /* padding: 6px 32px !important;
   line-height: 18px; */
 }
 
 .modelprfooter button.btn.btn-primary.btn-update {
-  background-color: #00a0e3 !important;
+  /* background-color: #00a0e3 !important;
   color: #fff !important;
-  margin-right: 25px !important;
+  margin-right: 25px !important; */
 }
 
 .addrespopup input[type="text"] {
@@ -1632,12 +1647,15 @@ img.testplus1 {
 
 .bpspaginationdiv .mat-form-field-flex,
 .newpaginationdiv .mat-form-field-flex {
-  height: 25px !important;
+  height: 20px !important;
 }
 
-span.actions-seperator {
+/* span.actions-seperator {
   margin: 0px 3px;
   font-size: 15px;
+} */
+.newinntalx a {
+  margin-right: 15px;
 }
 
 .ng5-slider .ng5-slider-pointer {
@@ -1673,11 +1691,15 @@ img.testplusupload {
   height: 35px !important;
 }
 
-.modal-body.modelprbody.editmodelprbody .mat-tab-label:first-child {
+.modal-body.modelprbody.editmodelprbody .mat-tab-label {
   justify-content: left !important;
+  min-width: max-content !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+  margin-right: 20px !important;
 }
 
-.projects-back-button i {
+.module-back-button i {
   cursor: pointer;
   padding: 3px 4px;
   border-radius: 50%;
@@ -1686,65 +1708,79 @@ img.testplusupload {
   margin-right: 8px;
 }
 
-.projects-back-button:hover i {
+.module-back-button:hover i {
   border-radius: 50%;
   background: rgb(0 161 227) !important;
   color: #fff;
 }
 
 tr.mat-footer-row,
-tr.mat-row {
+tr.mat-row,
+tr.mat-header-row {
   height: 40px !important;
 }
 
-span.projects-back-button {
+.module-back-button {
   border-right: 1px solid #dcdcdc;
   margin-right: 10px;
 }
 
-
-.projects-header.maincreat {
-  background-color: #ffffff;
-  padding: 12px;
-  border-bottom: 1px solid #e5e5e5;
-  z-index: 999;
-  position: relative;
+.d-flex {
+  display: flex;
 }
 
 
-.d-flex{
-  display:flex;
+.py-5 {
+  padding: 5px;
 }
 
 
-.py-5{
-  padding:5px;
+.text-strong {
+  font-weight: 600;
 }
 
-
-.text-strong{
-  font-weight:600;
+.w-100 {
+  width: 100%;
 }
 
-.w-100{
-  width:100%;
-}
-
-.small-input{
-  border-right:none;
-  border-left:none;
-  border-top:none;
-  border-bottom:1px solid black;
+/* .small-input {
+  border-right: none;
+  border-left: none;
+  border-top: none;
+  border-bottom: 1px solid black;
   font-size: 12px;
-  width:150px;
-  height:22px !important;
-  padding:0px !important;
+  width: 150px;
+  height: 22px !important;
+  padding: 0px !important;
+} */
+
+.small-input {
+  background-color: #ffffff !important;
+  border: 1px solid #d6ddf2 !important;
+  box-shadow: unset !important;
+  width: 100%;
+  color: rgb(0 21 50 / 60%) !important;
+  font-weight: 400 !important;
+  padding: 6px 10px !important;
+  border-radius: 4px;
+}
+select.small-input {
+  appearance: none;
+  background-image: url('assets/images/Projects/down-arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center right 12px;
 }
 
 .mat-paginator-page-size {
   left: 15px !important;
   position: absolute;
 }
+
+/* .mat-paginator-page-size-label {
+  margin: 0 4px;
+    position: relative;
+    top: -4px;
+} */
 /* .mat-paginator-range-label {
   margin: 0 32px 0 12px !important;
   position: absolute;
@@ -1755,17 +1791,20 @@ span.projects-back-button {
   min-height: 25px !important;
   padding: 0px !important;
 }
+
 .mat-paginator {
   border-top: 1px solid #cccccc;
-  min-height: 40px;
-  padding-top:5px;
+  min-height: 30px;
+  padding-top: 5px;
+  /* min-height: 50px;
+  padding-top:5px; */
 }
 
 /* bpmn canvas properties panel */
 
 .bpp-properties-header .label {
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 600;
   word-break: break-all;
   white-space: normal;
   padding: 0px;
@@ -1775,10 +1814,11 @@ span.projects-back-button {
   font-size: 12px !important;
   font-weight: 400 !important;
   color: #00a0e3;
-  text-transform: uppercase;;
+  text-transform: uppercase;
+  ;
 }
 
-.bpp-properties-group > .bpp-properties-entry label {
+.bpp-properties-group>.bpp-properties-entry label {
   font-size: 14px;
   font-weight: 400;
   color: #001c57;
@@ -1812,17 +1852,31 @@ span.projects-back-button {
   padding: 2px 0px !important;
 }
 
-.bpp-properties-panel input, .bpp-properties-panel select, .bpp-properties-panel textarea, .bpp-properties-panel [contenteditable] {
+.bpp-properties-panel input,
+.bpp-properties-panel select,
+.bpp-properties-panel textarea,
+.bpp-properties-panel [contenteditable] {
   border: 1px solid #ddd !important;
   padding: 6px 20px 6px 10px !important;
   border-radius: 4px;
 }
 
-.bpp-properties-group > .group-toggle {
+.bpp-properties-panel input:focus,
+.bpp-properties-panel select:focus,
+.bpp-properties-panel textarea:focus,
+.bpp-properties-panel [contenteditable]:focus {
+  border-color: #00a0e3 !important;
+  color: #001c47 !important;
+  background-color: #fff !important;
+  box-shadow: none;
+}
+
+.bpp-properties-group>.group-toggle {
   width: 0px;
 }
 
-.bpp-properties-panel textarea, .bpp-properties-panel [contenteditable] {
+.bpp-properties-panel textarea,
+.bpp-properties-panel [contenteditable] {
   min-height: 50px !important;
 }
 
@@ -1832,11 +1886,11 @@ span.projects-back-button {
 }
 
 .mat-expansion-panel-body {
-  max-height: 400px;
+  max-height: 300px;
   overflow: auto;
 }
 
-.bpp-table-add-row > .action-button {
+.bpp-table-add-row>.action-button {
   margin-left: auto;
   float: right;
   background: #00a0e3;
@@ -1870,12 +1924,14 @@ button.action-button.clear {
   transform: translate(0px, -20%);
 }
 
-.bpp-table-row > label.bpp-table-row-columns-2.bpp-table-row-removable, .bpp-table-row > input.bpp-table-row-columns-2.bpp-table-row-removable {
+.bpp-table-row>label.bpp-table-row-columns-2.bpp-table-row-removable,
+.bpp-table-row>input.bpp-table-row-columns-2.bpp-table-row-removable {
   margin-right: 5px;
   width: calc(50% - 22px);
 }
 
-.bpp-table-row > label.bpp-table-row-columns-2, .bpp-table-row > input.bpp-table-row-columns-2 {
+.bpp-table-row>label.bpp-table-row-columns-2,
+.bpp-table-row>input.bpp-table-row-columns-2 {
   width: calc(50% - 18px) !important;
 }
 
@@ -1919,7 +1975,7 @@ button.action-button.clear {
 }
 
 .bpmnCreate .container.m-contanier.form-body {
-  height: calc(100%  - 38px);
+  height: calc(100% - 38px);
 }
 
 .bpmnCreate form {
@@ -1933,21 +1989,28 @@ button.action-button.clear {
 .bpmnCreate .modal-body {
   height: calc(100% - 102px);
 }
+
 .prjmain .mat-tab-body-content {
   overflow: hidden;
 }
+
 .mat-paginator .mat-icon-button:hover {
   background-color: #00a0e4;
   color: #fff;
 }
+
 .mat-paginator .mat-icon-button {
   width: 30px !important;
   height: 30px !important;
   line-height: 30px !important;
 }
+
 span.star {
   margin-left: 4px;
+  position: relative;
+  top: -3px;
 }
+
 .bpspaginationdiv .mat-paginator-page-size {
   left: 5px !important;
 }
@@ -1962,7 +2025,7 @@ span.star {
   margin-bottom: 15px !important;
 }
 
-.form-control{
+.form-control {
   border: 1px solid #D1D1D1 !important;
   box-shadow: unset !important;
   color: #7B8694 !important;
@@ -1970,18 +2033,224 @@ span.star {
   padding: 6px 10px !important;
 }
 
-select.form-control{
+select.form-control {
   appearance: none;
   background-image: url('assets/images/Projects/down-arrow.svg');
   background-repeat: no-repeat;
   background-position: center right 12px;
 }
-.errspan{
-  position: relative;
-  z-index: 2;
-  color: #dc3545;
+
+#projectfavourites .mat-tab-label-content {
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.modal-header .close {
+  margin-top: 0px;
+}
+
+.editmodelprbody .mat-tab-body-wrapper {
+  border: 1px solid #e0e0e0;
+  border-top: none;
+  border-radius: 3px;
+}
+.addrespopup .ng-select.ng-select-multiple .ng-select-container .ng-value-container,
+.ngselectfield .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
+  padding-left: 6px !important;
+}
+
+select.bps-home-fileds,
+input.bps-home-fileds {
+  display: inline-block;
+  width: 286px;
+  margin-left: 8px;
+}
+
+.main-content .module-body {
+  padding: 0px !important;
+}
+.addrespopup .ng-placeholder, .ngselectfield .ng-placeholder{
+  padding-left: 3px !important;
+  position: absolute;
+  left: 6px !important;
+  z-index: 99 !important;
+  padding-bottom: 0px !important;
+}
+.addrespopup .ng-dropdown-panel, .ngselectfield .ng-dropdown-panel{
+  border: none !important;
+  box-shadow: none !important;
+}
+.addrespopup .ng-dropdown-panel .ng-dropdown-panel-items,
+.ngselectfield .ng-dropdown-panel .ng-dropdown-panel-items {
+  display: block;
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #b3b3b3;
+  padding: 5px 0px 10px;
+  margin: 0px !important;
+  border-top: none;
+  border-radius: 3px;
+}
+
+.backslash {
+  margin: 0px 3px;
+}
+
+.module-header-title,
+.module-header-title * {
+  font-weight: 600;
+}
+
+.projecttable.table th button {
+  font-size: 14px !important;
+  /* font-weight: 600; */
+}
+
+.toprow {
+  padding-top: 15px;
+}
+
+.maindivfoprm .mat-tab-label-content {
+  font-weight: 600;
+}
+
+button.btn {
+  padding: 8px 12px !important;
+  line-height: normal !important;
+  border: medium none !important;
+  font-size: 15px;
+  margin-right: 10px !important;
+  border-radius: 3px;
+  color: #001c47;
+  min-width: 100px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button.btn.btn-default {
+  background: #eeeeee;
+
+}
+
+button.btn.btn-primary,
+button.btn.btn-primary[disabled] {
+  background: #00a0e3;
+  color: #fff;
+}
+
+button.btn:hover {
+  background: #001c47 !important;
+  color: #fff !important;
+}
+
+.newpaginationdiv mat-form-field {
+  margin: 0px 0px 0px 5px;
+  width: 50px;
+}
+
+.mat-paginator-page-size {
+  align-items: center;
+}
+
+.mat-form-field-infix {
+  padding: 0px 0px !important;
+}
+
+.mat-paginator-page-size-label,
+.mat-paginator-range-label {
   font-size: 12px;
-  letter-spacing: 0.2px;
-  padding-right: 10px;
-  line-height: 12px;
+  margin: 0px 8px 0px 0px !important;
+}
+
+.table {
+  margin-bottom: 0px !important;
+}
+
+span.projects-header-title {
+  font-weight: 600;
+}
+.module-subheader-title{
+  display: flex;
+  align-items: center;
+}
+.project-details-setOne{
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+.ngselectfield span.ng-arrow ,
+.addrespopup span.ng-arrow {
+  display: none !important;
+}
+.ngselectfield .ng-select, 
+.addrespopup .ng-select, .addrespopup .ng-select-container {
+  /* height: 34px !important; */
+  min-height: 34px !important;
+}
+.ngselectfield .ng-select-container {
+  min-height: 34px !important;
+  background-color: #f6f6f6 !important;
+  border-radius: 2px !important;
+  border: 1px solid #d1d1d1 !important;
+}
+.ngselectfield span.ng-arrow-wrapper,
+.addrespopup span.ng-arrow-wrapper {
+  height: 15px;
+  background-image: url('assets/images/Projects/down-arrow.svg');
+  background-repeat: no-repeat;
+  background-position: center right 12px;
+}
+.module-sub-header-title {
+  color: #001c47;
+  line-height: 35px;
+  margin: 0px;
+}
+
+button.btn.btn-primary:first-child {
+  margin-right: 0px !important;
+}
+
+.bpm-notation-fields {
+  /* position: relative;
+  top: -55px; */
+  position: absolute !important;
+  bottom: 5px;
+  width: 100%;
+  right: 15px;
+  width: auto;
+  top: auto;
+  z-index: 100;
+}
+
+.djs-container svg {
+  padding-left: 44px;
+}
+
+
+.custom-content .mat-menu-content{
+  padding: 15px;
+}
+
+.custom-content .mat-menu-content button.btn.btn-primary {
+  margin-left: auto;
+  margin-right: 0px !important;
+}
+
+.projecttable.table th{
+  background-color: #e8f7fd !important;
+  vertical-align: middle !important;
+  font-size: 14px !important;
+  padding: 5px 10px !important;
+  font-weight: 400;
+  border-bottom: 1px solid #4a4a4a33;
+  color: #00a0e3 !important;
+}
+.projects-table-body td {
+  padding: 5px 10px !important;
+  vertical-align: middle !important;
+  font-size: 13px !important;
+}
+td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+  padding: 5px 10px !important;
+  border-bottom: none !important;
 }
