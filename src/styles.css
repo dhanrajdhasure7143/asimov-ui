@@ -857,12 +857,6 @@ foreignObject {
   color: white !important;
 }
 
-.modal-content {
-  /* margin-top: 250px !important; */
-  width: 500px;
-  min-height: 200px;
-}
-
 .modal-header {
   padding: 11px 15px 1px !important;
   background-color: #fff !important;
@@ -1165,7 +1159,8 @@ app-projects-programs-table {
   overflow: unset !important;
 }
 
-.new-bps-grid-data span.mat-expansion-indicator, .aprwkfl-grid-data span.mat-expansion-indicator {
+.new-bps-grid-data span.mat-expansion-indicator,
+.aprwkfl-grid-data span.mat-expansion-indicator {
   position: absolute;
   right: 15px;
   top: 5px;
@@ -1334,15 +1329,7 @@ mat-row {
   }
 }
 
-.modal-lg .modal-content {
-  margin-top: 0px !important;
-  height: 90%;
-  overflow: hidden;
-  width: 100%;
-
-}
-
-.modal-md .modal-content {
+.modal-content {
   margin-top: 0px !important;
   max-height: 90%;
   overflow: hidden;
@@ -1463,7 +1450,7 @@ img.testplus1 {
 }
 
 .maindivfoprm select,
-.modelprbody select ,
+.modelprbody select,
 select.form-control {
   appearance: none;
   background-image: url('assets/images/Projects/down-arrow.svg');
@@ -1627,12 +1614,6 @@ select.form-control {
 
 /* Modal popup New Styles */
 
-.modal-lr .modal-content {
-  margin-top: 0px !important;
-  /* height: 60%; */
-  width: 100%;
-  overflow: hidden;
-}
 
 .bpspaginationdiv {
   position: absolute;
@@ -1764,6 +1745,7 @@ tr.mat-header-row {
   padding: 6px 10px !important;
   border-radius: 4px;
 }
+
 select.small-input {
   appearance: none;
   background-image: url('assets/images/Projects/down-arrow.svg');
@@ -1961,6 +1943,7 @@ button.action-button.clear {
   width: 400px !important;
   right: 0px;
   border-radius: 0px;
+  max-height: 100% !important;
   height: 100%;
 }
 
@@ -2054,6 +2037,7 @@ select.form-control {
   border-top: none;
   border-radius: 3px;
 }
+
 .addrespopup .ng-select.ng-select-multiple .ng-select-container .ng-value-container,
 .ngselectfield .ng-select.ng-select-multiple .ng-select-container .ng-value-container {
   padding-left: 6px !important;
@@ -2069,17 +2053,22 @@ input.bps-home-fileds {
 .main-content .module-body {
   padding: 0px !important;
 }
-.addrespopup .ng-placeholder, .ngselectfield .ng-placeholder{
+
+.addrespopup .ng-placeholder,
+.ngselectfield .ng-placeholder {
   padding-left: 3px !important;
   position: absolute;
   left: 6px !important;
   z-index: 99 !important;
   padding-bottom: 0px !important;
 }
-.addrespopup .ng-dropdown-panel, .ngselectfield .ng-dropdown-panel{
+
+.addrespopup .ng-dropdown-panel,
+.ngselectfield .ng-dropdown-panel {
   border: none !important;
   box-shadow: none !important;
 }
+
 .addrespopup .ng-dropdown-panel .ng-dropdown-panel-items,
 .ngselectfield .ng-dropdown-panel .ng-dropdown-panel-items {
   display: block;
@@ -2170,29 +2159,36 @@ button.btn:hover {
 span.projects-header-title {
   font-weight: 600;
 }
-.module-subheader-title{
+
+.module-subheader-title {
   display: flex;
   align-items: center;
 }
-.project-details-setOne{
+
+.project-details-setOne {
   margin-bottom: 15px;
   font-weight: 500;
 }
-.ngselectfield span.ng-arrow ,
+
+.ngselectfield span.ng-arrow,
 .addrespopup span.ng-arrow {
   display: none !important;
 }
-.ngselectfield .ng-select, 
-.addrespopup .ng-select, .addrespopup .ng-select-container {
+
+.ngselectfield .ng-select,
+.addrespopup .ng-select,
+.addrespopup .ng-select-container {
   /* height: 34px !important; */
   min-height: 34px !important;
 }
+
 .ngselectfield .ng-select-container {
   min-height: 34px !important;
   background-color: #f6f6f6 !important;
   border-radius: 2px !important;
   border: 1px solid #d1d1d1 !important;
 }
+
 .ngselectfield span.ng-arrow-wrapper,
 .addrespopup span.ng-arrow-wrapper {
   height: 15px;
@@ -2200,6 +2196,7 @@ span.projects-header-title {
   background-repeat: no-repeat;
   background-position: center right 12px;
 }
+
 .module-sub-header-title {
   color: #001c47;
   line-height: 35px;
@@ -2214,7 +2211,7 @@ button.btn.btn-primary:first-child {
   /* position: relative;
   top: -55px; */
   position: absolute !important;
-  bottom: 5px;
+  bottom: 3px;
   width: 100%;
   right: 15px;
   width: auto;
@@ -2227,7 +2224,7 @@ button.btn.btn-primary:first-child {
 }
 
 
-.custom-content .mat-menu-content{
+.custom-content .mat-menu-content {
   padding: 15px;
 }
 
@@ -2236,7 +2233,7 @@ button.btn.btn-primary:first-child {
   margin-right: 0px !important;
 }
 
-.projecttable.table th{
+.projecttable.table th {
   background-color: #e8f7fd !important;
   vertical-align: middle !important;
   font-size: 14px !important;
@@ -2245,12 +2242,25 @@ button.btn.btn-primary:first-child {
   border-bottom: 1px solid #4a4a4a33;
   color: #00a0e3 !important;
 }
+
 .projects-table-body td {
   padding: 5px 10px !important;
   vertical-align: middle !important;
   font-size: 13px !important;
 }
-td.mat-cell, td.mat-footer-cell, th.mat-header-cell {
+
+td.mat-cell,
+td.mat-footer-cell,
+th.mat-header-cell {
   padding: 5px 10px !important;
   border-bottom: none !important;
+}
+
+.custom-content {
+  min-width: 250px;
+}
+
+.custom-content button.btn.btn-primary {
+  margin: 0px 0px 15px !important;
+  float: right;
 }
