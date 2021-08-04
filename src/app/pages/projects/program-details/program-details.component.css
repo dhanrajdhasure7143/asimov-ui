@@ -160,7 +160,6 @@ input[type=range]::-webkit-slider-thumb {
   -webkit-appearance: none;
   
   background: #ffffff;
-  cursor: pointer;
   height: 12px;
   width: 12px;
   border-radius: 100%;
