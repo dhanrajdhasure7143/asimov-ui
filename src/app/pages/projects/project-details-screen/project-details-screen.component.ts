@@ -42,7 +42,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
-  displayedColumns6: string[] = ["profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate","action"];
+  displayedColumns6: string[] = ["profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
   responsedata: any;
@@ -99,6 +99,7 @@ percentageComplete: number;
   programId:any;
   taskresourceemail: any;
   resourceslength: any;
+  latestFiveDocs: any;
 
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -136,7 +137,7 @@ percentageComplete: number;
 
     
  
-
+  // this.getLatestFiveAttachments();
 
     
     this.getallprocesses();
@@ -162,6 +163,12 @@ percentageComplete: number;
       this.dataSource2.sort=this.sort10;
       this.dataSource2.paginator=this.paginator101;
     })
+  }
+  getLatestFiveAttachments(projID){
+    this.rpa.getLatestfiveAttachments(projID,"UTC").subscribe(data =>{
+      this.latestFiveDocs=data;
+      })
+
   }
 
   getTaskAttachments(){
@@ -227,6 +234,7 @@ percentageComplete: number;
           this.resources=this.users_list
         }  
           this.getTaskandCommentsData();
+          this.getLatestFiveAttachments(this.project_id);
             
         })
     });
