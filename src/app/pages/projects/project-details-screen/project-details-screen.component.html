@@ -735,26 +735,82 @@
       </h4>
       <span class="pull-right">Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp | date}}</span>
     </div>
-    <div class="modal-body modelprbody editmodelprbody">
-        <div class="container p-0" style="width:100%">
-            <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-fileds col-md-3 pl-0">
-                            <label id="assignee" for="assignee">Assignee</label>
-                            <span class="labelcont">{{selectedtaskdata.resources| userPipe : users_list}}</span>
-                        </div>  
-                        <div class="form-fileds col-md-3 pr-0">
-                            <label id="startdate" for="startDate">Start Date</label>
-                            <span class="labelcont">{{selectedtaskdata.startDate | date}}</span>
-                        </div>
-                        <div class="form-fileds col-md-3 pr-0">
-                            <label id="enddate" for="endDate">End Date</label>
-                            <span class="labelcont">{{selectedtaskdata.endDate | date}}</span>
-                        </div>
-                        <div class="form-fileds col-md-3 pr-0">
-                            <label id="percentage" for="percentage">Percentage Completed</label>
-                            <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options" ></ng5-slider>
+    <div class="modal-body modelprbody editmodelprbody" style="width:100%;overflow-x: auto;height:calc( 100vh - 260px)">
+      <div class="container p-0" style="width:100%">
+        <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-fields col-md-3 pl-0">
+                <label id="assignee" for="assignee">Assignee</label>
+                <span class="labelcont">{{selectedtaskdata.resources| userPipe : users_list}}</span>
+              </div>
+              <div class="form-fields col-md-3 pr-0">
+                <label id="startdate" for="startDate">Start Date</label>
+                <span class="labelcont">{{selectedtaskdata.startDate | date}}</span>
+              </div>
+              <div class="form-fields col-md-3 pr-0">
+                <label id="enddate" for="endDate">End Date</label>
+                <span class="labelcont">{{selectedtaskdata.endDate | date}}</span>
+              </div>
+              <div class="form-fields col-md-3 pr-0">
+                <label id="percentage" for="percentage">Percentage Completed</label>
+                <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-fields col-md-6 pl-0">
+                <label id="status" for="status">Status<span class="star">*</span></label>
+                <select formControlName="status" class="form-control data">
+                  <option value="">Select Status</option>
+                  <option value="New">New</option>
+                  <option value="In Progress">In Progress</option>
+                  <option value="In Review">In Review</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+                <span *ngIf="updatetaskForm.get('status').invalid && updatetaskForm.get('status').touched"
+                  class="errspan required">Status Required*</span>
+              </div>
+              <div class="form-fields col-md-6 pr-0">
+                <label id="priority" for="priority">Priority<span class="star">*</span></label>
+                <select formControlName="priority" class="form-control data">
+                  <option value="">Select Priority</option>
+                  <option value="High">High</option>
+                  <option value="Medium">Medium</option>
+                  <option value="Low">Low</option>
+                </select>
+                <span *ngIf="updatetaskForm.get('priority').invalid && updatetaskForm.get('priority').touched"
+                  class="errspan required">Priority Required*</span>
+              </div>
+            </div>
+            <div class="form-fields col-md-12">
+              <label id="summary" class="label-control">Summary</label>
+              <textarea class="form-control" formControlName="summary" rows="3" placeholder="Enter Summary">
+                        </textarea>
+            </div>
+            <div class="form-fields col-md-12">
+              <label id="description" class="label-control">Description</label>
+              <textarea class="form-control" formControlName="description" rows="3" placeholder="Enter Description">
+                        </textarea>
+            </div>
+            <div class="col-md-12">
+              <h4 class="module-sub-header-title">Activity</h4>
+              <mat-tab-group [selectedIndex]="selectedTab" id="Project-dashboard-tabs"
+                (selectedTabChange)="onTabChanged($event)">
+                <mat-tab label="Comment">
+                  <div class="t-comments-box">
+                    <div class="add-comment">
+                      <div class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
+                      <div *ngIf="profilePicture==true"><img class="res-circle-img " [src]="retrievedImage"></div>
+                      <div>
+                      </div>
+                      <div class="form-fields col-md-12 pr-0 comment-input">
+                        <input class=" form-control" type="text" #commentInput id="addcomment"
+                          placeholder="Add a comment.." />
+                        <div class="comment-send" id="sendcomment" (click)="postcomments(commentInput.value)">
+                          <img src="../../../../assets/images/Projects/send.svg" class="default-img" />
+                          <img src="../../../../assets/images/Projects/send-blue.svg" class="hover-img" />
+                          <!-- <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i> -->
                         </div>
                     </div>
                     <div class="col-md-12">
