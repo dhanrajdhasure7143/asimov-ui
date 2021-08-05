@@ -24,7 +24,7 @@
           <div class="col-md-6 new-bps-icons p-0" *ngIf="isHeaderShow == 'true'">
             <div class="row bps-float">
               <button *ngIf='!isfromApprover && !iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode || rejectedOrApproved=='PENDING'" (click)="editNotation()">
-                <img src="../../../assets/images/BPMS/Edit-white.svg">
+                <img src="../../../assets/images/BPMS/Edit-blue.svg">
                 <span class="testtooltip">Edit</span>
               </button>
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
@@ -125,10 +125,17 @@
               </ngx-dropzone>
             </div>  
           </div>
-          <div class="col-md-6 module-heading-buttons" *ngIf="isHeaderShow == 'false'">
+          <div class="col-md-6 module-heading-buttons bps-aprwkfl" *ngIf="isHeaderShow == 'false'">
             <span>
-              <a *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn btn-primary">Approval Workflow</a>
-              <a (click)="gotoBPMNPlatform()" class="btn btn-primary">View Cockpit</a>
+              <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn btn-default">
+                <img class="testplus default-img" src="../../../assets/images/BPMS/Workflow.svg">
+                <img class="testplus hover-img" src="../../../assets/images/BPMS/White-Workflow.svg">
+                Approval Workflow
+              </button>
+              <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
+                <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
+                View Cockpit
+              </button>
             </span>
           </div>
       </div>    

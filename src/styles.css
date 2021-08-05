@@ -1371,8 +1371,8 @@ mat-card {
 }
 
 img.testplus {
-  width: 14px;
-  height: 14px;
+  width: 16px;
+  height: 16px;
   margin-right: 5px;
 }
 
@@ -1805,11 +1805,12 @@ select.small-input {
   font-weight: 400;
   color: #001c57;
   margin: 0px !important;
+  padding-top: 10px;
 }
 
 .bpp-properties-tabs-container {
   background: white;
-  padding: 15px;
+  padding: 10px 15px;
 }
 
 .bpp-properties {
@@ -1820,6 +1821,7 @@ select.small-input {
   padding: 0px;
   /* background: #f8f8f8;
   border-bottom: 1px solid #dddddd; */
+  margin-top: 10px;
 }
 
 .bpp-properties-group {
@@ -2211,7 +2213,7 @@ button.btn.btn-primary:first-child {
   /* position: relative;
   top: -55px; */
   position: absolute !important;
-  bottom: 3px;
+  bottom: 6px;
   width: 100%;
   right: 15px;
   width: auto;
@@ -2263,4 +2265,8 @@ th.mat-header-cell {
 .custom-content button.btn.btn-primary {
   margin: 0px 0px 15px !important;
   float: right;
+}
+
+.bpp-checkbox label {
+  padding: 0px !important;
 }
