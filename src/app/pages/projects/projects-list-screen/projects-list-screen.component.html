@@ -39,8 +39,8 @@
                       <img src="..\assets\images\Projects\new.svg" alt="" >
                     </div>
                     <div class="status-data">
-                      <span class="tab-count">{{count.New}}</span>
-                      <span class="tab-text" ><span *ngIf="count.New<10">0</span>New</span>
+                      <span class="tab-count"><span *ngIf="count.New<10">0</span>{{count.New}}</span>
+                      <span class="tab-text" >New</span>
                     </div>
                   </div>
             </ng-template>
