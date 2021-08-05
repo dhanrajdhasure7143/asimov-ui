@@ -949,5 +949,8 @@ save_blueprism_config(data)
   downloadFiles(id):Observable<any>{
     return this.http.get("/platform-service/document/fileCategories")
   }
+  getLatestfiveAttachments(projectid,timezone){
+    return this.http.get("/platform-service/document/uploadedFilespaged/"+projectid,timezone)
+  }
 
 }
