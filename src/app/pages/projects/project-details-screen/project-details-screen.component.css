@@ -404,3 +404,24 @@ span.tab-text.labelcont {
   padding: 0px 0px !important;
   border-radius: 4px;
 }
+
+.env-btn > button > img{
+  color:black !important;
+  width:25px;
+  background-color: white !important;
+}
+
+.env-btn > button:disabled > img{
+  color:rgb(116, 116, 116) !important;
+  background-color:white!important;
+}
+.env-btn > button:disabled{
+  background-color:white;
+}
+.env-btn > button > div{
+  color:black !important;
+}
+
+.env-btn > button:disabled > div{
+  color:lightgrey !important;
+}
