@@ -267,7 +267,7 @@
                   <span class="labeltit">Project Purpose</span>
 
                   <div *ngIf="editdata==false">
-                    <span class="tab-text labelcont">Improve ROI</span>
+                    <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
                   </div>
                   <div *ngIf="editdata==true">
                     <input type="text"
@@ -966,7 +966,7 @@
         </div> -->
 
           <div class="projects-table-body">
-            <table class="table">
+            <!-- <table class="table">
               <thead>
                 <tr class="separated">
                   <th>Document Name</th>
@@ -995,7 +995,62 @@
                   <td>10MB</td>
                 </tr>
               </tbody>
+            </table> -->
+
+
+            <table mat-table #sort16="matSort" [dataSource]="dataSource9" matSort class="projecttable table" id="autotable">
+          
+      
+                <ng-container matColumnDef="fileName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</th>
+                  <td mat-cell   *matCellDef="let element">
+                    <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
+                    <span *ngIf="element.fileName==null">---</span>
+                  </td>
+        
+              </ng-container>
+        
+              <ng-container matColumnDef="uploadedBy">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded By</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.uploadedBy!=null" [matTooltip]="element.uploadedBy">{{element.uploadedBy| userPipe : users_list}}</span>
+                    <span *ngIf="element.uploadedBy==null">---</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="uploadedDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded Date</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.uploadedDate!=null" [matTooltip]="element.uploadedDate">{{element.uploadedDate| date:'MMM dd, y, HH:mm:ss'}}</span>
+                  <span *ngIf="element.uploadedDate==null">---</span>
+                </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="fileSize">
+                  <th mat-header-cell *matHeaderCellDef>File Size</th>
+                  <td mat-cell *matCellDef="let element">
+                      <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}</span>
+                      <span *ngIf="element.fileSize==null">---</span>
+                     
+                  </td>
+              </ng-container>
+        
+                <ng-container matColumnDef="Loading">
+                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                      Loading
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                        No Records Found
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns9; sticky: true"></tr>
+                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns9;"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource9!=null}"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource9!=null && dataSource9.data.length==0)}"></tr>
             </table>
+              <mat-paginator class="newpaginationdiv" #paginator109 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+              </mat-paginator>
           </div>
 
         </mat-card>
@@ -1242,8 +1297,8 @@
                         <tr>
                           <th></th>
                           <th class="text-left">Name</th>
-                          <th class="text-right">Role</th>
-                          <th class="text-right">Last Updated</th>
+                          <th class="text-left">Role</th>
+                          <th class="text-left">Last Updated</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1260,8 +1315,8 @@
                           </td>
                           <td>{{selectedtaskdata.resources| userPipe : users_list}}</td>
                           <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                          <td class="text-right">{{roles?roles:'-'}}</td>
-                          <td class="text-right">{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
+                          <td class="text-left">{{roles?roles:'-'}}</td>
+                          <td class="text-left">{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
                         </tr>
                       </tbody>
 
