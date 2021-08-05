@@ -186,7 +186,8 @@ mat-tab-body {
 }
 
 .djs-palette {
-  zoom: 0.7
+  zoom: 0.7;
+  height: 100%;
 }
 
 .bps_overlay .info {
