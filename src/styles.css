@@ -351,7 +351,7 @@ button:disabled {
 }
 
 .bg-green {
-  background-color: green;
+  background-color: #62BC27;
 }
 
 .bg-orange {
@@ -1703,7 +1703,7 @@ tr.mat-header-row {
 
 .module-back-button {
   border-right: 1px solid #dcdcdc;
-  margin-right: 10px;
+  margin-right: 8px;
 }
 
 .d-flex {
@@ -2220,7 +2220,7 @@ button.btn.btn-primary:first-child {
 }
 
 .djs-container svg {
-  padding-left: 44px;
+  /* padding-left: 44px; */
 }
 
 
