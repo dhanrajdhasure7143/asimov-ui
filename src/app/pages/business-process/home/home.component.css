@@ -30,10 +30,10 @@
 
 .workspace-title {
     background-color: #e8f7fd;
-    padding: 12px 8px !important;
+    padding: 12px 10px !important;
     display: flex;
     width: 100%;
-    padding-right: 18px !important;
+    /* padding-right: 18px !important; */
     align-items: center;
     font-size: 14px;
     color: #00a0e3;

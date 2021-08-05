@@ -256,8 +256,9 @@ mat-expansion-panel {
   width: 10.5%;
   text-align: center;
   align-items: center;
-  padding-right: 4px;
+  /* padding-right: 4px; */
   white-space: nowrap;
+  font-size: 13px;
 }
 
 .workspace-title {
@@ -996,11 +997,13 @@ label {
 .djs-palette {
   position: absolute;
   left: 0% !important;
-  top: 50% !important;
+  
   border-top: medium none !important;
   border-left: medium none !important;
   /* border-right: 1px solid #cccccc !important; */
-  transform: translate(0%, -50%) !important;
+  /* top: 50% !important;
+  transform: translate(0%, -50%) !important; */
+  top: 0px !important;
 }
 
 .propertiesContainer.propertiesContainerClosed {
