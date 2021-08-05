@@ -1,25 +1,13 @@
-
-  mat-expansion-panel.activePanel{
-      /* background-color: #fcfcfc;
-      border:2px solid #e8e8e8; */
-  }
-   /* .mat-expansion-indicator::after, .mat-expansion-panel-header-description {
-      padding-right:10px;
-    } */
-
-    .aprwkfl_bpmn_list_header {
+  .aprwkfl_bpmn_list_header {
       background-color: #e8f7fd;
-      padding: 12px 10px !important;
+      padding: 6px 10px !important;
       display: -webkit-box;
       display: flex;
       width: 100%;
-      padding-right: 18px !important;
       -webkit-box-align: center;
       align-items: center;
       font-size: 14px;
-      color: #00a0e3; 
-      font-weight: 600;
-      border-bottom: 1px solid #4a4a4a33 !important;
+      color: #00a0e3;
       border: none;
       height: 40px;
   }
@@ -27,12 +15,9 @@
     text-align: left;
     width: 100%;
     display: inline;
-    font-weight: 600;
     font-size: 14px !important;
 }
-.aprwkfl-grid-data mat-panel-title.mat-expansion-panel-header-title {
-  margin: 0px;
-}
+
 #bpmn_list .row {
   font-size: 12px;
   font-weight: 400;
@@ -42,14 +27,14 @@
   color: #212529;
 }
 .aprwkfl-grid-data div {
-  text-align: left !important;
-  width: 100% !important;
+  /* text-align: left !important;
+  width: 100% !important; */
 }
 .aprwkfl_search {
   float: right;
   display: flex;
-  padding-right: 0px;
-  margin: 20px 0px 10px 0px;
+  /* padding-right: 0px;
+  margin: 20px 0px 10px 0px; */
 }
 .aprwkfl_search .label-control {
   font-size: 15px;
@@ -97,7 +82,6 @@
   text-align: left !important;
   padding: 5px 8px;
   font-size: 15px !important;  
-  font-weight: 600;
   border-bottom: 1px solid #4a4a4a33;
 }
 .aprwkfl_table tbody td {
@@ -124,4 +108,22 @@
 }
 mat-expansion-panel-header {
   position: relative;
+}
+.row.grid-header {
+  padding: 0px 0px 10px;
+}
+.new-bps-layout {
+  overflow: hidden auto;
+  height: calc(100% - 50px);
+  position: relative;
+  padding: 10px 12px;
+}
+.box-border {
+  border: none;
+  border-radius: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+.aprwkfl-grid-data {
+  height: 65vh !important;
 }

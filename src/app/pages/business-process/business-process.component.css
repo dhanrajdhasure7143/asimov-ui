@@ -1,9 +1,9 @@
 .module-heading.title {
-    /* padding: 12px 15px !important; */
     margin-bottom: 0px;
 }
 .main-content1 .module-heading.title {
     background-color: #F3F3F3;
+    padding: 12px 15px 8px !important;
 }
 .main-content1 .module-heading-title {
     font-weight: 600;
@@ -24,7 +24,7 @@
     color: #001C47;
     font-weight: 400;
     font-size: 13px;
-    padding-top: 12px;
+    padding-top: 8px;
 }
 span.level3 {
     padding-right: 8px !important;

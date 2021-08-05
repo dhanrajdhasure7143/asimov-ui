@@ -38,6 +38,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selectedcategory: number;
   selectedvalue: any;
   dataSource2:MatTableDataSource<any>;
+  dataSource9:MatTableDataSource<any>;
   categaoriesList: any;
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
@@ -45,6 +46,9 @@ export class ProjectDetailsScreenComponent implements OnInit {
   displayedColumns6: string[] = ["profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate","action"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
+  displayedColumns9: string[] = ["fileName","uploadedBy","uploadedDate","fileSize"];
+  @ViewChild("sort16",{static:false}) sort16: MatSort;
+  @ViewChild("paginator109",{static:false}) paginator109: MatPaginator;
   responsedata: any;
   bot_list: any=[];
   automatedtask: any;
@@ -99,7 +103,7 @@ percentageComplete: number;
   programId:any;
   taskresourceemail: any;
   resourceslength: any;
-
+  latestFiveDocs: any;
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -170,7 +174,16 @@ percentageComplete: number;
     })
   }
 
-  getUserRole(){
+  getLatestFiveAttachments(projectid){
+    this.rpa.getLatestfiveAttachments(projectid,"UTC").subscribe(data =>{
+      this.latestFiveDocs=data;
+      this.dataSource9= new MatTableDataSource(this.latestFiveDocs);
+      this.dataSource9.sort=this.sort16;
+      this.dataSource9.paginator=this.paginator109;
+      })
+    }
+
+      getUserRole(){
     let user=this.users_list.find(item=>item.userId.userId==this.selectedtaskdata.resources);
     this.userid=user.userId.userId
     this.rpa.getRole(this.userid).subscribe(data =>{
@@ -227,7 +240,7 @@ percentageComplete: number;
           this.resources=this.users_list
         }  
           this.getTaskandCommentsData();
-            
+          this.getLatestFiveAttachments(this.project_id)
         })
     });
   }
@@ -618,6 +631,7 @@ percentageComplete: number;
        //if(res.message!=undefined)
        //{
         this.getTaskandCommentsData();
+        this.getLatestFiveAttachments(this.selectedtaskfileupload.projectId)
          Swal.fire({
            title: 'Success',
            text: "File Uploaded Successfully",
