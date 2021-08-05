@@ -24,7 +24,7 @@
           <div class="col-md-6 new-bps-icons p-0" *ngIf="isHeaderShow == 'true'">
             <div class="row bps-float">
               <button *ngIf='!isfromApprover && !iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode || rejectedOrApproved=='PENDING'" (click)="editNotation()">
-                <img src="../../../assets/images/BPMS/Edit-blue.svg">
+                <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
                 <span class="testtooltip">Edit</span>
               </button>
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
@@ -88,8 +88,7 @@
                 <button type="button" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"
         [popover]="popTemplate" placement="bottom">
         <img alt="" src="../../../assets/images/BPMS/submit-for-approval.svg">
-        <span class="testtooltip">Save & Submit for
-          approval</span>
+        <span class="testtooltip">Save & Submit for approval</span>
 </button>
             <!-- <mat-menu #menu="matMenu" class="custom-content">
               <div class="form-group">
@@ -143,7 +142,7 @@
   </div>
 </div>
 <ng-template #popTemplate>
-  <div class="custom-content">
+  <div class="custom-content Apr-cnt">
     <div class="form-group">
       <label for="" class="label-control">Approval</label>
       <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
@@ -152,7 +151,10 @@
             {{each_approver.firstName+" "+each_approver.lastName}}</option>
     </select>
     </div>
-    <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
+    <div class="custom-footer-content">
+      <button class="btn btn-default">Cancel</button>
+      <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
+    </div>  
   </div>
 </ng-template>
 
@@ -164,6 +166,9 @@
         <option >Select</option>
     </select>
     </div>
-    <button class="btn btn-primary">Share</button>
+    <div class="custom-footer-content">
+      <button class="btn btn-default">Cancel</button>
+      <button class="btn btn-primary">Share</button>
+    </div>  
   </div>
 </ng-template>

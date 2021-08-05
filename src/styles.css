@@ -2288,3 +2288,6 @@ th.mat-header-cell {
 .dpp-properties-header{
   padding: 0px;
 }
+.popover {
+  max-width: 360px !important;
+}

@@ -106,12 +106,12 @@ span.label_icon.inpro-label {
 .upload_again_btn {
     background-color: #f3f3f3 !important;
 }
-.bps-float button:hover {
+.bps-float button:hover, button.editprimary:disabled {
     background-color: #00a0e3;
     border-radius: 3px;
 }
-.bps-float button:hover img {
-    filter: brightness(2.5);
+.bps-float button:hover img, button.editprimary:disabled img {
+    filter: brightness(2.5) !important;
 }
 .bps-float .clr-hvr:hover img {
     filter: brightness(10) !important;
@@ -206,4 +206,7 @@ img.hover-img {
 }
 .bps-aprwkfl button.btn.btn-primary {
     margin-left: 10px !important;
+}
+.custom-footer-content {
+    float: right;
 }
