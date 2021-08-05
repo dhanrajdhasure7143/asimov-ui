@@ -209,8 +209,8 @@
                 <p>Effort Spent</p>
                 <div *ngIf="editdata==false">
                   <span class="tab-text"
-                    *ngIf="program_detials.effortsSpent!=null || program_detials.priority!=undefined">-</span>
-                  <!-- <span class="tab-text labelcont">0</span> -->
+                    *ngIf="program_detials.effortsSpent==null || program_detials.effortsSpent==undefined">-</span>
+                  <span class="tab-text labelcont">{{program_detials.effortsSpent}}</span>
 
                   <!-- <input class="small-input" type="text"  [value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled> -->
                 </div>

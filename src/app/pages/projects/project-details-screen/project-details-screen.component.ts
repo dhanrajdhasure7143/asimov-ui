@@ -43,7 +43,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
-  displayedColumns6: string[] = ["profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate","action"];
+  displayedColumns6: string[] = ["check","profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
   displayedColumns9: string[] = ["fileName","uploadedBy","uploadedDate","fileSize"];
@@ -104,6 +104,12 @@ percentageComplete: number;
   taskresourceemail: any;
   resourceslength: any;
   latestFiveDocs: any;
+
+  public Resourcedeleteflag:Boolean;
+  public Resourcecheckeddisabled:boolean =false;
+  public Resourcecheckflag:boolean = false;
+  resources_list: any=[];
+
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -157,6 +163,39 @@ percentageComplete: number;
   onTabChanged(event)
   {
     this.check_tab=event.index;
+  }
+
+  ResourcecheckAllCheckBox(ev) {
+    this.resources_list.forEach(x =>
+       x.checked = ev.target.checked);
+    this.checktodelete();
+  }
+
+  checktodelete()
+  {
+    const selectedresourcedata = this.resources_list.filter(product => product.checked).map(p => p.id);
+    if(selectedresourcedata.length>0)
+    {
+      this.Resourcedeleteflag=true;
+    }else
+    {
+      this.Resourcedeleteflag=false;
+    }
+  }
+
+  removeallchecks()
+  {
+    for(let i=0;i<this.resources_list.length;i++)
+    {
+      this.resources_list[i].checked= false;
+    }
+    this.Resourcecheckflag=false;
+  }
+
+  ResourcecheckEnableDisableBtn(id, event)
+  {
+    this.resources_list.find(data=>data.id==id).checked=event.target.checked;
+    this.checktodelete();
   }
 
   getTaskandCommentsData(){
@@ -295,6 +334,7 @@ percentageComplete: number;
               if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
                 users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
          })
+         this.resources_list=users
          this.resourceslength=users.length
           this.dataSource6= new MatTableDataSource(users);
           this.dataSource6.sort=this.sort14;
@@ -526,7 +566,12 @@ percentageComplete: number;
   // }
 
   deleteresource(data){
-    console.log("sdf")
+    const selectedresource = this.resources_list.filter(product => product.checked==true).map(p=>{
+      return{
+        "projectId": this.project_id,
+        "resource": p.userId.userId
+      }
+      });
      Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -538,7 +583,7 @@ percentageComplete: number;
       }).then((result) => {
         if (result.value) {
           this.spinner.show();
-          this.rpa.deleteResource(this.project_id,data.userId.userId).subscribe( res =>{ 
+          this.rpa.deleteResource(selectedresource).subscribe( res =>{ 
             let status:any = res;
             Swal.fire({
               title: 'Success',
@@ -553,6 +598,7 @@ percentageComplete: number;
             this.projectdetails();
             this.getallusers();
             this.getTaskandCommentsData();
+            this.removeallchecks();
             this.spinner.hide();
             },err => {
               Swal.fire({
