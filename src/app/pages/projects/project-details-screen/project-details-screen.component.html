@@ -236,7 +236,7 @@
     
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="text" (keypress)="projectDetails.effortsSpent=$event.target.value" class="small-input"
+                    <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" class="small-input"
                       placeholder="Efforts Spent"
                       [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
                   </div>
@@ -270,7 +270,7 @@
                     <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="text"
+                    <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
                       [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
                       class="small-input" placeholder="Enter Project Purpose">
                   </div>
@@ -313,14 +313,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Burnt Rate</span>
-
-                  <span><input type="text" class="small-input" placeholder="Enter Burnt Rate Value" /></span>
-                </div>
-              </div>
-
+     
           </div>
         </div>
       </div>
@@ -1299,7 +1292,9 @@
                             <td>{{attachments.fileName}}</td>
                             <td class="text-left">{{attachments.fileSize | fileSizePipe}}</td>
                             <td class="text-left">
-                              <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                              <span class="clickable" (click)="downloadTaskAttachment(attachments)">
+                                <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                              </span>
                             </td>
                           </tr>
                         </tbody>
