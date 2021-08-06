@@ -958,9 +958,9 @@
               </span>
             </div>
             <div class="col-md-6 pr-0">
-              <span class="pull-right">
-                <button type="button" class="btn btn-primary">
-                  <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload">Upload New</button>
+              <span class="pull-right" >
+                <button type="button"  (click)="uploadFile(uploadFilemodal)"  class="btn btn-primary">
+                  <img src="../../../../assets/images/BPMS/upload.svg"  class="testplusupload">Upload New</button>
               </span>
             </div>
           </div>
@@ -1399,3 +1399,58 @@
   </ng-template>
 
 </div>
+<ng-template class="modal-up" #uploadFilemodal>
+
+  <div class="modal-header modelprhead">
+    <h4 class="modal-title pull-left">Upload File</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  <div class="container" style="width:100%">
+      <form [formGroup]="uploadFileFormDetails" (ngSubmit)="submitUploadFileFormattachment()">
+          <div class="row">
+              <div class="col-md-6">
+                  <label for="fileCategory">File Category<span style="color:red">*</span></label>
+                  <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory" required>
+                    <option  [value]="null" disabled hidden>Select Category</option>
+                    <option value="" [selected]="true">Select Category</option>
+                    <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                  </select>
+                  <span
+                      *ngIf="uploadFileFormDetails.get('fileCategory').invalid && uploadFileFormDetails.get('fileCategory').touched"
+                      style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
+              </div>
+              </div>
+              <div class="col-md-12">
+                  
+                  <label>Description<span style="color:red">*</span></label>
+                  <textarea name= "desc" class="form-control" formControlName="description" placeholder="Enter Description..." style="height:100px;" required>
+  
+                  </textarea>
+                  <span *ngIf="uploadFileFormDetails.get('description').invalid && uploadFileFormDetails.get('description').touched"
+                      style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+  
+              </div>
+              <div class="col-md-12">
+                  
+                <label>Upload<span style="color:red">*</span></label>
+                <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required>
+  
+                
+                <span *ngIf="uploadFileFormDetails.get('uploadFile').invalid && uploadFileFormDetails.get('uploadFile').touched"
+                    style="color:red" class="fa fa-info-circle errspan">File Required*</span>
+  
+            </div>
+          
+      </form>
+  </div>
+  </div>
+  <div class="modal-footer modelprfooter">
+    <div class="pull-right">
+        <button (click)="uploadFilemodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button [disabled]="uploadFileFormDetails.invalid" (click)="submitUploadFileFormattachment()" class="btn btn-primary btn-update">Submit</button>
+        </div>
+  </div>
+  </ng-template>
