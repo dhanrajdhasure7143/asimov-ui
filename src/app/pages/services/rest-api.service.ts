@@ -958,5 +958,8 @@ save_blueprism_config(data)
   getLatestfiveAttachments(projectid,timezone){
     return this.http.get("/platform-service/document/uploadedFilespaged/"+projectid,timezone)
   }
+  deleteFiles(input){
+    return this.http.post("/platform-service/document/deleteUploadedFile",input)
+  }
 
 }

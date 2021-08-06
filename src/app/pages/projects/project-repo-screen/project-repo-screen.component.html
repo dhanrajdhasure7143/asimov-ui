@@ -45,8 +45,8 @@
             <span>
               <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="uploadFile(uploadFilemodal)" type="button"><img src="../../../../assets/images/BPMS/upload.svg" class="testplus2 default-img"> Upload File</button>
             </span>
-            <span class="projects-menu-item" type="button" (click)="onDeleteItem($event)"><i class="fa fa-trash"></i></span>
-            <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadItem($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span>
+            <span class="projects-menu-item" type="button" (click)="onDeleteSelectedItems($event)"><i class="fa fa-trash"></i></span>
+            <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadSelectedItems($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span>
             <!-- <span class="projects-menu-item"><i class="fa fa-download"></i></span> -->
             <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
           </span>
@@ -97,6 +97,16 @@
               </div> -->
               <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
 
+                <ng-container matColumnDef="check">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      <input [disabled]="filecheckeddisabled" type="checkbox" id="Credcheckall" [checked]="filecheckflag" (change)="filecheckAll($event)">
+                  </th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                      <input type="checkbox" [checked]="element.checked" (change)="filechecktoggle(element.id, $event)"> 
+                  </td>
+              </ng-container>
+    
+                
                 <ng-container matColumnDef="category">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
                   <td mat-cell *matCellDef="let element">
@@ -157,8 +167,8 @@
               <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Actions</th>
                 <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-                  <span class="projects-menu-item" (click)="onDeleteItem()"><i class="fa fa-trash"></i></span>
-                        <span class="projects-menu-item projects-menu-item1"><img src="../../../../assets/images/Projects/Download.svg" class="testplus1 default-img"></span>
+                  <span class="projects-menu-item" (click)="onDeleteItem(element.id,element.fileName)"><i class="fa fa-trash"></i></span>
+                        <span class="projects-menu-item projects-menu-item1" (click)="onDownloadItem(element.fileName)"> <img src="../../../../assets/images/Projects/Download.svg" class="testplus1 default-img"></span>
                   <!-- <div class="newinntalx">
                     <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
                       <i class="fas fa-file-upload"></i>
