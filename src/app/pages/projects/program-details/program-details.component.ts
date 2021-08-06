@@ -35,7 +35,7 @@ export class ProgramDetailsComponent implements OnInit {
     modalref:BsModalRef;
     mindate:any;
     selected_process_names:any=[];
-
+    editdata:Boolean=false;
   ngOnInit() {
     this.getprojects_and_programs();
     this.mindate= moment().format("YYYY-MM-DD");
@@ -92,7 +92,7 @@ export class ProgramDetailsComponent implements OnInit {
       let program_id=data.id;
       this.get_linked_projects(program_id);
       this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
-
+      this.editdata=false;
     });
   }
 
@@ -464,4 +464,27 @@ export class ProgramDetailsComponent implements OnInit {
         
   }
 
+  inputNumberOnly(event){
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+    let temp =numArray.includes(event.key); //gives true or false
+   if(!temp){
+    event.preventDefault();
+   } 
+  }
+
+  updateprogramDetails()
+  {
+    this.spinner.show()
+    this.program_detials["type"]="Program";
+    this.rest.update_project(this.program_detials).subscribe(res=>{
+      this.spinner.hide()
+      let response:any=res;
+      if(response.errorMessage == undefined)
+        Swal.fire("Success",response.message,"success")
+      else
+        Swal.fire("Error",response.errorMessage,"error");
+      this.getprogramdetails();
+      this.editdata=false;
+    });
+  }
 }
