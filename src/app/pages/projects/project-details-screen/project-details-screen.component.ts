@@ -715,6 +715,7 @@ percentageComplete: number;
       {
         this.spinner.show()
         this.projectDetails["type"]="Project";
+        this.projectDetails.effortsSpent=parseInt(this.projectDetails.effortsSpent)
         this.rpa.update_project(this.projectDetails).subscribe(res=>{
           this.spinner.hide()
           let response:any=res;
