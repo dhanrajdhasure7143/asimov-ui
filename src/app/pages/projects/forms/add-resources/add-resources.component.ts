@@ -70,4 +70,9 @@ export class AddResourcesComponent implements OnInit {
    
     this.newItemEvent.emit(JSON.stringify(resources));
   }
+  resetresources(){
+    this.addresourcesForm.reset();
+    this.addresourcesForm.get("resources").setValue("");
+  
+  }
 }

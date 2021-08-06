@@ -515,6 +515,7 @@ percentageComplete: number;
   {
      let item_data={
        id:this.projectDetails.id,
+       access:"Project",
        resources:JSON.parse(event),
      }
      this.spinner.show();
