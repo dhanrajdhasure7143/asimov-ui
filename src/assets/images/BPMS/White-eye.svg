@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24.021" height="24" viewBox="0 0 24.021 24">
+  <g id="eye-show" transform="translate(0.01)">
+    <path id="Path_836" data-name="Path 836" d="M0,0H24V24H0Z" fill="none"/>
+    <g id="eye" transform="translate(-0.01 0.293)">
+      <path id="Path_853" data-name="Path 853" d="M1,11.707S5,4,12.01,4s11.01,7.707,11.01,7.707-4,7.707-11.01,7.707S1,11.707,1,11.707Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <circle id="Ellipse_432" data-name="Ellipse 432" cx="3" cy="3" r="3" transform="translate(9.01 8.707)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

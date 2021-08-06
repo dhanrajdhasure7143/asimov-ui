@@ -1,12 +1,17 @@
 .info{
-    color: orange;
+    color: #f99d1c;
+    font-size: 14px;
+    margin-left: 6px;
 }
 .success-info{
-    color: rgb(67, 160, 67);
+    color: #62BC27;
+    font-size: 20px;
+    margin-left: 12px;
 }
 i{
-    font-size: 13px;
-    margin-left: 6px;
+    font-size: 14px;
+    /* margin-top: 6px; */
+    font-style: inherit;
 }
 .successful-deploy{
     display: flex;
