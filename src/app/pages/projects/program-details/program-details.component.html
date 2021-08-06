@@ -297,7 +297,21 @@
                     </td>
                     <td>{{project.createdBy}}</td>
                     <td>
-                      <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span>|<span class="clickable text-danger py-5 clickable" (click)="deleteproject(project)">Delete</span>
+                      <div calss="newinntalx">
+                        <a class="view"    (click)="projectDetailsbyId(project.id)" matTooltip="Go To Project Details">
+                          <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+                          <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                        </a> 
+                        &nbsp;
+                        <!-- <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span> -->
+                        <!-- <span class="clickable text-danger py-5 clickable" (click)="deleteproject(project)">Delete</span> -->
+                        <a class="delete" (click)="deleteproject(project)"   matTooltip="Delete Project" >
+                          <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                          <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                        </a> 
+
+                      </div>
+                      
                     </td>
                   </tr>
                 </tbody>
