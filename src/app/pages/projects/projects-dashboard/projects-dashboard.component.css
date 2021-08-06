@@ -249,12 +249,16 @@ span.projects-menu-item.prj-lst-btn button.btn:hover, span.projects-menu-item.pr
   font-weight: 400 !important;    
   border: none !important;  
 }
-img.testplus.hover-img, button.btn.btn-primary.prj-lst-btn:hover img.testplus.default-img {
+img.hover-img {
   display: none;
 }
-button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
+.prj-db-btn button:hover img.default-img {
+  display: none;
+}
+.prj-db-btn button:hover img.hover-img {
   display: initial;
 }
+
 .prj-lst-btn {
   background-color: #fff !important;
   border: 1px solid #00a0e3 !important;

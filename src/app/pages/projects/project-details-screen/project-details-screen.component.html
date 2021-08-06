@@ -816,16 +816,10 @@
                 </span>
                 <span>
                   <div *ngIf="Resourcedeleteflag==true" class="env-btn">
-                    <button title="Delete Resource" value="Delete" id="deletebtn" (click)="deleteresource()">
-                        <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-                        <div>Delete</div>
-                        </button>
+                    <button title="Delete Resource" value="Delete" id="deletebtn" class="btn btn-primary" (click)="deleteresource()">Delete</button>
                 </div>       
                 <div *ngIf="Resourcedeleteflag==false" class="env-btn">
-                    <button data-toggle="tooltip" data-placement="top" id="deletebtn" title="Delete Resource" disabled>
-                    <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-                    <div>Delete</div>
-                    </button>
+                    <button data-toggle="tooltip" data-placement="top" id="deletebtn" class="btn btn-primary" title="Delete Resource" disabled>Delete</button>
                 </div>
                 </span>
               </span>

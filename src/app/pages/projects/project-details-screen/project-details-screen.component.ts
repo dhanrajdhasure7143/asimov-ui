@@ -165,7 +165,10 @@ percentageComplete: number;
       this.getImage();
       this.profileName();
         },1000);
-     this.getallusers();
+       
+      
+        this.getallusers();
+        this.Resourcedeleteflag=false;
   }
 
   onTabChanged(event)
@@ -433,6 +436,13 @@ percentageComplete: number;
                 users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
          })
          this.resources_list=users
+         if(this.resources_list.length>0){
+          this.Resourcecheckeddisabled= false;
+        }
+        else
+        {
+          this.Resourcecheckeddisabled = true;
+        }
          this.resourceslength=users.length
           this.dataSource6= new MatTableDataSource(users);
           this.dataSource6.sort=this.sort14;
@@ -613,6 +623,7 @@ percentageComplete: number;
   {
      let item_data={
        id:this.projectDetails.id,
+       access:"Project",
        resources:JSON.parse(event),
      }
      this.spinner.show();
@@ -624,6 +635,8 @@ percentageComplete: number;
           this.projectdetails();
           this.getallusers();
           this.getTaskandCommentsData();
+          this.removeallchecks();
+          this.checktodelete();
           this.spinner.hide();
           Swal.fire("Success",response.status,"success");
         }
@@ -697,6 +710,7 @@ percentageComplete: number;
             this.getallusers();
             this.getTaskandCommentsData();
             this.removeallchecks();
+            this.checktodelete();
             this.spinner.hide();
             },err => {
               Swal.fire({
