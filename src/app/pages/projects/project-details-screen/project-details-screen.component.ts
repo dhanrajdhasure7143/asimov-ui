@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -45,10 +45,14 @@ export class ProjectDetailsScreenComponent implements OnInit {
   dataSource6:MatTableDataSource<any>;
   displayedColumns6: string[] = ["check","profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
+  @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
   displayedColumns9: string[] = ["fileName","uploadedBy","uploadedDate","fileSize"];
   @ViewChild("sort16",{static:false}) sort16: MatSort;
   @ViewChild("paginator109",{static:false}) paginator109: MatPaginator;
+  @ViewChild("sort12",{static:false}) sort12: MatSort;
+  dataSource5:MatTableDataSource<any>;
+  @ViewChild("sort13",{static:false}) sort13: MatSort;
   responsedata: any;
   bot_list: any=[];
   automatedtask: any;
@@ -56,6 +60,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   addresourcemodalref: BsModalRef;
   project_id: any;
   public tasks: any=[];
+  multiFilesArray: any[] = [];
   public users_list:any=[];
   public selectedTab=0;
  public check_tab=0;
@@ -104,12 +109,20 @@ percentageComplete: number;
   taskresourceemail: any;
   resourceslength: any;
   latestFiveDocs: any;
-
+  uploadFilemodalref: BsModalRef;
+  uploadFileForm:FormGroup;
+  uploadFileFormDetails:FormGroup;
   public Resourcedeleteflag:Boolean;
   public Resourcecheckeddisabled:boolean =false;
   public Resourcecheckflag:boolean = false;
   resources_list: any=[];
-
+  projectid:any;
+  uploadedFiledata: any;
+  dataSource3:MatTableDataSource<any>;
+  dataSource4: any;
+  filterdArray: any[];
+  requestedFiledata: any;
+  
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -138,26 +151,21 @@ percentageComplete: number;
         category: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
         filePath: ["", Validators.compose([Validators.required])],
        })
-
+       this.uploadFileFormDetails=this.formBuilder.group({
+        fileCategory: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+        description: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+        uploadFile: ["", Validators.compose([Validators.required])],
+       })
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
     this.getallusers();
     this.projectdetails();
-
-    
- 
-
-
-    
     this.getallprocesses();
-
     setTimeout(() => {
       this.getImage();
       this.profileName();
         },1000);
-       
-      
-        this.getallusers();
+     this.getallusers();
   }
 
   onTabChanged(event)
@@ -170,7 +178,97 @@ percentageComplete: number;
        x.checked = ev.target.checked);
     this.checktodelete();
   }
+  uploadFile(template: TemplateRef<any>){
+   
+    this.getFileCategories();
+    this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
+  }
+  
+  submitUploadFileFormattachment(){
 
+    var fileData = new FormData();
+    
+    fileData.append("category", this.uploadFileFormDetails.get("fileCategory").value)
+     fileData.append("comments", this.uploadFileFormDetails.get("description").value)
+     fileData.append("filePath", this.fileUploadData)
+     fileData.append("projectId", this.project_id)
+
+    
+ this.rpa.uploadProjectFile(fileData).subscribe(res => {
+   //message: "Resource Added Successfully
+   this.uploadFilemodalref.hide();
+   this.uploadFileFormDetails.get("fileCategory").setValue("");
+   this.uploadFileFormDetails.get("description").setValue("");
+   if(res.message!=undefined)
+   {
+    this.spinner.show();
+    this.spinner.hide();
+    this.getLatestFiveAttachments(this.project_id)
+
+     Swal.fire({
+       title: 'Success',
+       text: "File Uploaded Successfully",
+       position: 'center',
+       icon: 'success',
+       showCancelButton: false,
+       confirmButtonColor: '#007bff',
+       cancelButtonColor: '#d33',
+       confirmButtonText: 'Ok'
+   }).then((result) => {
+    // this.resettask();
+    this.resetdocform();
+     
+   }) 
+     
+   }
+   else
+   Swal.fire("Error",res.message,"error");
+   
+ })
+  }
+  resetdocform() {
+    
+
+    this.uploadFileFormDetails.reset();
+    this.uploadFileFormDetails.get("category").setValue("");
+    this.uploadFileFormDetails.get("comments").setValue("");
+
+    
+      }
+  chnagefileUploadForm(e){
+    this.fileUploadData = <File> e.target.files[0]
+    this.multiFilesArray.push(
+      e.target.files[0]
+    )
+    
+    
+  }
+  getFileDetails(){
+    this.rpa.getFileDetails(this.projectid).subscribe(data =>{
+      this.uploadedFiledata=data.uploadedFiles.reverse();
+      console.log(this.uploadedFiledata);
+      this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
+      this.dataSource3.sort=this.sort11;
+      this.dataSource3.paginator=this.paginator101;
+      this.requestedFiledata=data.requestedFiles.reverse();
+      this.dataSource4= new MatTableDataSource(this.requestedFiledata);
+      this.dataSource4.sort=this.sort12;
+      let loggedUser=localStorage.getItem("ProfileuserId")
+      let responseArray=this.requestedFiledata
+      this.filterdArray=[]
+      responseArray.forEach(e=>{
+        if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
+          this.filterdArray.push(e)
+          
+        }
+        this.dataSource5= new MatTableDataSource(this.filterdArray);
+        this.dataSource5.sort=this.sort13;
+      })
+    
+      
+    })
+    this.spinner.hide();
+  }
   checktodelete()
   {
     const selectedresourcedata = this.resources_list.filter(product => product.checked).map(p => p.id);
