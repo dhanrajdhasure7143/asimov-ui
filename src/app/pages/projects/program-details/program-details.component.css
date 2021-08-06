@@ -12,13 +12,30 @@
     color: #4AB0F5;
     font-size: 18px;
   }
-
-
+  img.hover-img {
+    display: none;
+  }
+  .view:hover img.default-img {
+    display: none;
+  }
+  .view:hover img.hover-img {
+    display: initial;
+  }
+  .delete:hover img.default-img {
+    display: none;
+  }
+  .delete:hover img.hover-img {
+    display: initial;
+  }
   .d-flex{
     display:flex;
   
   }
-
+  .default-img,.hover-img{
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
 
   .w-100{
     width:100%;

@@ -186,7 +186,8 @@ mat-tab-body {
 }
 
 .djs-palette {
-  zoom: 0.7
+  zoom: 0.7;
+  height: 100%;
 }
 
 .bps_overlay .info {
@@ -256,8 +257,9 @@ mat-expansion-panel {
   width: 10.5%;
   text-align: center;
   align-items: center;
-  padding-right: 4px;
+  /* padding-right: 4px; */
   white-space: nowrap;
+  font-size: 13px;
 }
 
 .workspace-title {
@@ -875,9 +877,9 @@ label {
 }
 
 .keyboard_label_style {
-  font-size: 15px;
-  padding-right: 20px;
-  padding-bottom: 10px;
+  font-size: 14px;
+  /* padding-right: 20px;
+  padding-bottom: 10px; */
 }
 
 .keyboard_header_shortcuts {
@@ -996,11 +998,13 @@ label {
 .djs-palette {
   position: absolute;
   left: 0% !important;
-  top: 50% !important;
+  
   border-top: medium none !important;
   border-left: medium none !important;
   /* border-right: 1px solid #cccccc !important; */
-  transform: translate(0%, -50%) !important;
+  /* top: 50% !important;
+  transform: translate(0%, -50%) !important; */
+  top: 0px !important;
 }
 
 .propertiesContainer.propertiesContainerClosed {
@@ -1086,4 +1090,8 @@ mat-panel-title.mat-expansion-panel-header-title {
 
 .propertiesPanelBody mat-expansion-panel-header {
   height: 40px !important;
+}
+.propertiesPanelBody table td {
+  padding-top: 10px;
+  line-height: 16px;
 }
