@@ -5,7 +5,7 @@
 
       <div class="ml-auto module-heading-buttons">
    <span class="pull-right">
-     <span>
+     <!-- <span>
        Summary
      </span>
      <span>
@@ -24,7 +24,7 @@
       
      <span class="item-data">
       <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-      </span>
+      </span> -->
 
       <span *ngIf="editdata==true" (click)="getprogramdetails()">
         <button class="btn btn-default">
@@ -96,7 +96,7 @@
                 <span *ngIf="editdata==true" class="tab-text labelcont">
                   <select class="small-input" (change)="program_detials.programValueChain=$event.target.value"
                     [value]="(program_detials.programValueChain==undefined||program_detials.programValueChain==null)?'':program_detials.programValueChain">
-                    <option value="" >Select Map Value Chain</option>
+                    <!-- <option value="" >Select Map Value Chain</option> -->
                     <option value="Invoice Managment">Invoice Managment</option>
                     <option value="Acme Managment">Acme Managment</option>
                     <option value="E-Commerce">E-Commerce</option>
@@ -129,7 +129,7 @@
                 <span *ngIf="editdata==true" class="tab-text labelcont">
                   <select class="small-input" (change)="program_detials.programHealth=$event.target.value"
                     [value]="(program_detials.programHealth==undefined||program_detials.programHealth==null)?'':program_detials.programHealth">
-                  <option value="">Select Program Health</option>
+                  <!-- <option value="">Select Program Health</option> -->
                   <option value="Good">Good</option>
                   <option value="Need Attention"><span class="status-ember"></span>Need Attention</option>
                   <option value="Risk"> <span class="status-risk"></span>Risk</option>
@@ -186,13 +186,13 @@
 
                 <div *ngIf="editdata==false">
                   <span class="tab-text"
-                    *ngIf="program_detials.priority!=null || program_detials.priority!=undefined">-</span>
+                    *ngIf="program_detials.priority==null || program_detials.priority==undefined">-</span>
                   <span class="tab-text labelcont">{{program_detials.priority}}</span>
                 </div>
                 <div *ngIf="editdata==true">
                   <select class="small-input" (change)="program_detials.priority=$event.target.value"
                     [value]="(program_detials.priority==undefined||program_detials.priority==null)?'':program_detials.priority">
-                    <option value="">Select Program Priority</option>
+                    <!-- <option value="">Select Program Priority</option> -->
                     <option value="High">High</option>
                     <option value="Medium">Medium</option>
                     <option value="Low">Low</option>
@@ -297,7 +297,21 @@
                     </td>
                     <td>{{project.createdBy}}</td>
                     <td>
-                      <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span>|<span class="clickable text-danger py-5 clickable" (click)="deleteproject(project)">Delete</span>
+                      <div calss="newinntalx">
+                        <a class="view"    (click)="projectDetailsbyId(project.id)" matTooltip="Go To Project Details">
+                          <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+                          <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                        </a> 
+                        &nbsp;
+                        <!-- <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span> -->
+                        <!-- <span class="clickable text-danger py-5 clickable" (click)="deleteproject(project)">Delete</span> -->
+                        <a class="delete" (click)="deleteproject(project)"   matTooltip="Delete Project" >
+                          <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                          <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                        </a> 
+
+                      </div>
+                      
                     </td>
                   </tr>
                 </tbody>
@@ -316,7 +330,7 @@
     </div>
     <br>
 
-    <div class="container-fluid margin-none">
+    <!-- <div class="container-fluid margin-none">
 
         
         <div class="row">
@@ -346,7 +360,7 @@
           </div>
 
         </div>
-    </div>
+    </div> -->
  
 
 

@@ -240,22 +240,22 @@ export class ProgramDetailsComponent implements OnInit {
 
     // Add data
     chart.data = [{
-      "year": "Catrgory 1",
+      "year": "Category 1",
       "italy": 1,
       "germany": 5,
       "uk": 3
     }, {
-      "year": "categorty 2",
+      "year": "Categorty 2",
       "italy": 1,
       "germany": 2,
       "uk": 6
     }, {
-      "year": "category 3",
+      "year": "Category 3",
       "italy": 2,
       "germany": 3,
       "uk": 1
     }, {
-      "year": "category 4",
+      "year": "Category 4",
       "italy": 3,
       "germany": 4,
       "uk": 1
