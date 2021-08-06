@@ -60,7 +60,18 @@
                 <img src="..\assets\images\Projects\project_icon.svg" alt="" >
             </div>
             <div class="program-data">
-              <span class="h3">{{program_detials.programName |uppercase}}</span><br>
+              <!-- <span class="h3">{{program_detials.programName |uppercase}}</span><br> -->
+              <div *ngIf="editdata==false">
+                <span class="tab-text"
+                  *ngIf="program_detials.programName==null || program_detials.programName==undefined">-</span>
+                <span class="tab-text labelcont">{{program_detials.programName}}</span>
+              </div>
+              <div *ngIf="editdata==true">
+                <input type="text" (change)="program_detials.programName=$event.target.value" 
+                  [value]="(program_detials.programName==undefined||program_detials.programName==null)?'':program_detials.programName"
+                  class="small-input" placeholder="Enter Program Name">
+              </div>
+  
               <span class="" style="font-size: 12px;" >{{program_detials.description}}</span>
               <div *ngIf="program_detials.description==undefined || program_detials.description==null || program_detials.description=='' " class="h6">-</div>
          
