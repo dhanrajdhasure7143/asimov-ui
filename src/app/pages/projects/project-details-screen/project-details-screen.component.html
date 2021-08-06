@@ -1305,7 +1305,9 @@
                             <td>{{attachments.fileName}}</td>
                             <td class="text-left">{{attachments.fileSize | fileSizePipe}}</td>
                             <td class="text-left">
-                              <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                              <span class="clickable" (click)="downloadTaskAttachment(attachments)">
+                                <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                              </span>
                             </td>
                           </tr>
                         </tbody>

@@ -925,6 +925,12 @@ save_blueprism_config(data)
   getTaskAttachments(projectid,taskid){
     return this.http.get("/platform-service/document/tasksAttachments/"+projectid+"/"+taskid+"")
   }
+
+
+  downloadTaskAttachment(attachment)
+  {
+    return this.http.post("/platform-service/document/downloadFile",attachment);
+  }
   uploadTaskfile(data){
     return this.http.post("/platform-service/document/uploadResource", data);
   }
