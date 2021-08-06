@@ -815,6 +815,7 @@ percentageComplete: number;
       {
         this.spinner.show()
         this.projectDetails["type"]="Project";
+        this.projectDetails.effortsSpent=parseInt(this.projectDetails.effortsSpent)
         this.rpa.update_project(this.projectDetails).subscribe(res=>{
           this.spinner.hide()
           let response:any=res;
@@ -825,6 +826,20 @@ percentageComplete: number;
           this.projectdetails()
           this.editdata=false;
         });
+      }
+
+
+      downloadTaskAttachment(attachment)
+      {
+        let data=[attachment.fileName]
+        this.rpa.downloadTaskAttachment(data).subscribe(data=>{
+          let response:any=data
+          var link = document.createElement('a');
+          let extension=((((attachment.fileName.toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+          link.download = attachment.fileName;
+          link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[0]}`:`data:application/${extension};charset=utf-8,${response[0]}`) ;
+          link.click();
+        })
       }
 
 }
