@@ -35,7 +35,7 @@
             <div class="col-md-6 form-group pr-0 bps-serwksp">
              
                 <!-- <label class="label-control">Search Workspace</label> -->
-                <input class="form-control toolbar-search bps-home-fileds" placeholder="Search Workspace" type="text"  (keyup)="searchList($event)">
+                <input class="form-control toolbar-search bps-home-fileds" placeholder="Search Workspace" type="text" [(ngModel)]="term">
                 <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
               
             </div>
@@ -67,7 +67,7 @@
         <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
           <mat-accordion>
             <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
-              *ngFor="let each_diag of displayedRows$ | async ;let i=index;trackBy:loopTrackBy"
+              *ngFor="let each_diag of displayedRows$ | async | filter: term;let i=index;trackBy:loopTrackBy"
               [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
               <mat-expansion-panel-header class="dropdown_icon">
                 <mat-panel-title>
