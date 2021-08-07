@@ -1380,8 +1380,16 @@
 
             <div class="form-fields col-md-12">
               <label>Upload<span class="star">*</span></label>
-              <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File"
-                formControlName="filePath" placeholder="choose file">
+              <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" />
+              <label for="file" (change)="chnagefileUploadForm($event)"><i class="fas fa-file-upload"></i></label>
+              <div *ngFor="let selected of listOfFiles;let index = index">
+                {{selected}}
+                <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <!-- <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File"
+                formControlName="filePath" placeholder="choose file"> -->
               <span *ngIf="uploadtaskFileForm.get('filePath').invalid && uploadtaskFileForm.get('filePath').touched"
                 class="errspan required"></span>
             </div>
@@ -1436,8 +1444,15 @@
               <div class="col-md-12">
                   
                 <label>Upload<span style="color:red">*</span></label>
-                <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required>
-  
+                <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required> -->
+                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" />
+              <label for="file" (change)="chnagefileUploadForm($event)"><i class="fas fa-file-upload"></i></label>
+              <div *ngFor="let selected of listOfFiles;let index = index">
+                {{selected}}
+                <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
                 
                 <span *ngIf="uploadFileFormDetails.get('uploadFile').invalid && uploadFileFormDetails.get('uploadFile').touched"
                     style="color:red" class="fa fa-info-circle errspan">File Required*</span>
