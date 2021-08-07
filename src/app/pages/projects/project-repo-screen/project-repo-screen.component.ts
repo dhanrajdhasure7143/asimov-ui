@@ -51,6 +51,8 @@ export class ProjectRepoScreenComponent implements OnInit {
   filecheckeddisabled:boolean =false;
   filecheckflag:boolean = false;
   selectedFiles: any=[];
+  fileList: File[] = [];
+  listOfFiles: any[] = [];
   // resources_list: any=[];
 
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute, private spinner:NgxSpinnerService) { 
@@ -212,13 +214,16 @@ this.getFileDetails();
     this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
   }
   submitUploadFileForm(){
-
-    var fileData = new FormData();
-    
-    fileData.append("category", this.uploadFileForm.get("fileCategory").value)
+     var fileData = new FormData();
+     const files = this.fileList;
+  for(var i=0;i< files.length;i++){
+    fileData.append("filePath",files[i]);
+  }
+     fileData.append("category", this.uploadFileForm.get("fileCategory").value)
      fileData.append("comments", this.uploadFileForm.get("description").value)
-     fileData.append("filePath", this.fileUploadData)
+    //  fileData.append("filePath", this.fileList)
      fileData.append("projectId", this.projectid)
+     
    console.log("fileDattaa--- "+fileData);
 
     
@@ -234,7 +239,7 @@ this.getFileDetails();
     this.spinner.hide();
      Swal.fire({
        title: 'Success',
-       text: "File Uploaded Successfully",
+       text: "File/Files Uploaded Successfully",
        position: 'center',
        icon: 'success',
        showCancelButton: false,
@@ -256,17 +261,21 @@ this.getFileDetails();
 
   chnagefileUploadForm(e){
 
-    
+    for (var i = 0; i <= e.target.files.length - 1; i++) {
+      var selectedFile = e.target.files[i];
+      this.fileList.push(selectedFile);
+      this.listOfFiles.push(selectedFile.name)
+    }
+    this.uploadFileForm.get("uploadFile").setValue(this.fileList);
+     // console.log(<File> e.target.files);
 
-    console.log(<File> e.target.files);
-
     
-    this.fileUploadData = <File> e.target.files[0]
-    console.log(this.fileUploadData);
-    this.multiFilesArray.push(
-      e.target.files[0]
-    )
-    console.log("array",this.multiFilesArray);
+    // this.fileUploadData = <File> e.target.files[0]
+    // console.log(this.fileUploadData);
+    // this.multiFilesArray.push(
+    //   e.target.files[0]
+    // )
+    // console.log("array",this.multiFilesArray);
     
     
   }
@@ -516,5 +525,12 @@ this.getFileDetails();
       });
       
   }
+
+  removeSelectedFile(index) {
+    // Delete the item from fileNames list
+    this.listOfFiles.splice(index, 1);
+    // delete file from FileList
+    this.fileList.splice(index, 1);
+   }
 
 }

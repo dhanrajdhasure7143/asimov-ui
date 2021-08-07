@@ -122,6 +122,8 @@ percentageComplete: number;
   dataSource4: any;
   filterdArray: any[];
   requestedFiledata: any;
+  fileList: File[] = [];
+  listOfFiles: any[] = [];
   
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
@@ -190,10 +192,13 @@ percentageComplete: number;
   submitUploadFileFormattachment(){
 
     var fileData = new FormData();
-    
+    const files = this.fileList;
+    for(var i=0;i< files.length;i++){
+      fileData.append("filePath",files[i]);
+    }
     fileData.append("category", this.uploadFileFormDetails.get("fileCategory").value)
      fileData.append("comments", this.uploadFileFormDetails.get("description").value)
-     fileData.append("filePath", this.fileUploadData)
+    //  fileData.append("filePath", this.fileUploadData)
      fileData.append("projectId", this.project_id)
 
     
@@ -239,13 +244,26 @@ percentageComplete: number;
     
       }
   chnagefileUploadForm(e){
-    this.fileUploadData = <File> e.target.files[0]
-    this.multiFilesArray.push(
-      e.target.files[0]
-    )
+    for (var i = 0; i <= e.target.files.length - 1; i++) {
+      var selectedFile = e.target.files[i];
+      this.fileList.push(selectedFile);
+      this.listOfFiles.push(selectedFile.name)
+    }
+    this.uploadtaskFileForm.get("filePath").setValue(this.fileList);
+    this.uploadFileFormDetails.get("uploadFile").setValue(this.fileList);
+    // this.fileUploadData = <File> e.target.files[0]
+    // this.multiFilesArray.push(
+    //   e.target.files[0]
+    // )
     
     
   }
+  removeSelectedFile(index) {
+    // Delete the item from fileNames list
+    this.listOfFiles.splice(index, 1);
+    // delete file from FileList
+    this.fileList.splice(index, 1);
+   }
   getFileDetails(){
     this.rpa.getFileDetails(this.projectid).subscribe(data =>{
       this.uploadedFiledata=data.uploadedFiles.reverse();
@@ -777,9 +795,12 @@ percentageComplete: number;
       submitUploadFileForm(){
        
         var fileData = new FormData();
-    
+        const files = this.fileList;
+        for(var i=0;i< files.length;i++){
+          fileData.append("filePath",files[i]);
+        }
     fileData.append("category", this.uploadtaskFileForm.get("category").value)
-     fileData.append("filePath", this.fileUploadData)
+    //  fileData.append("filePath", this.fileUploadData)
      fileData.append("projectId", this.selectedtaskfileupload.projectId)
      fileData.append("taskId", this.selectedtaskfileupload.id)
 
