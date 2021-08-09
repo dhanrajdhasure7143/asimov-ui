@@ -2127,7 +2127,7 @@ button.btn {
   margin-right: 10px !important;
   border-radius: 3px;
   color: #001c47;
-  min-width: 100px;
+  min-width: 75px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
