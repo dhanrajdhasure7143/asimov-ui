@@ -56,8 +56,8 @@ export class BusinessInsightsComponent implements OnInit {
    async getThroughputTimeData(){
      let res_data:any
     await this.rest.getBIThroughputTime(this.processId).subscribe(res=>{res_data=res
-      this.throughtime_data=res_data
-      console.log(res_data)
+      this.throughtime_data=res_data.data
+      console.log(this.throughtime_data)
       this.thoughtputTimeChart();
     });
   }
@@ -163,7 +163,7 @@ export class BusinessInsightsComponent implements OnInit {
 
 
   thoughtputTimeChart(){
-    
+    let _me=this
     am4core.ready(function() {
       // Themes begin
       am4core.useTheme(am4themes_animated);
@@ -171,49 +171,46 @@ export class BusinessInsightsComponent implements OnInit {
       // Create chart instance
       var chart = am4core.create("chartdiv2", am4charts.XYChart);
       // Add data
-      chart.data=[{caseId: "164", medianActivityDuration: 360000, convertDuration: "6.0 Min"},
-                {caseId: "84", medianActivityDuration: 420000, convertDuration: "7.0 Min"},
-                {caseId: "122", medianActivityDuration: 420000, convertDuration: "7.0 Min"},
-                {caseId: "94", medianActivityDuration: 420000, convertDuration: "7.0 Min"}]
 
-      chart.data = [{
-        "range": "10-16",
-        "count": 26
-      }, {
-        "country": "16-21",
-        "visits": 108
-      }, {
-        "country": "21-27",
-        "visits": 40
-      }, {
-        "country": "27-32",
-        "visits": 20
-      }, {
-        "country": "32-38",
-        "visits": 14
-      }, {
-        "country": "38-43",
-        "visits": 21
-      }, {
-        "country": "43-49",
-        "visits": 10
-      }, {
-        "country": "49-54",
-        "visits": 3
-      }, {
-        "country": "54-60",
-        "visits": 2
-      }];
+      // chart.data = [{
+      //   "range": "10-16",
+      //   "count": 26
+      // }, {
+      //   "country": "16-21",
+      //   "visits": 108
+      // }, {
+      //   "country": "21-27",
+      //   "visits": 40
+      // }, {
+      //   "country": "27-32",
+      //   "visits": 20
+      // }, {
+      //   "country": "32-38",
+      //   "visits": 14
+      // }, {
+      //   "country": "38-43",
+      //   "visits": 21
+      // }, {
+      //   "country": "43-49",
+      //   "visits": 10
+      // }, {
+      //   "country": "49-54",
+      //   "visits": 3
+      // }, {
+      //   "country": "54-60",
+      //   "visits": 2
+      // }];
+      chart.data=_me.throughtime_data
       
       // Create axes
   
       var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
       // categoryAxis.dataFields.category = "country";
-      categoryAxis.dataFields.category = "country";
+      categoryAxis.dataFields.category = "param";
       categoryAxis.renderer.grid.template.location = 0;
       categoryAxis.renderer.minGridDistance = 30;
       // categoryAxis.title.text="Days"
-      categoryAxis.title.text="Case Id"
+      categoryAxis.title.text="Median Activity Duration"
       // categoryAxis.title.fontWeight="bold"
       // categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
       //   if (target.dataItem && target.dataItem.index && 2 == 2) {
@@ -226,16 +223,16 @@ export class BusinessInsightsComponent implements OnInit {
     
       var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       // valueAxis.title.text = "No.of.Cases";
-      valueAxis.title.text = "Median Activity Duration";
+      valueAxis.title.text = "CaseIds";
       //valueAxis.title.fontWeight="bold"
       // Create series
       var series = chart.series.push(new am4charts.ColumnSeries());
-      series.dataFields.valueY = "visits";
-      series.dataFields.categoryX = "country";
+      series.dataFields.valueY = "value";
+      series.dataFields.categoryX = "param";
       // series.dataFields.valueY = "medianActivityDuration";
       // series.dataFields.categoryX = "caseId";
-      series.name = "Visits";
-      series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
+      series.name = "value";
+      series.columns.template.tooltipText = " Duration : {categoryX} \n  CaseIds : {valueY}[/] ";
       series.columns.template.fillOpacity = 1;
       series.columns.template.adapter.add("fill", function(fill, target) {
           return am4core.color("#4d72be");

@@ -150,3 +150,6 @@ span.smalfon {
 .heading{
     font-weight:600;
 }
+.chartinnsec g[aria-labelledby*="-title"] {
+    display: none;
+}
