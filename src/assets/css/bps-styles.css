@@ -1095,3 +1095,6 @@ mat-panel-title.mat-expansion-panel-header-title {
   padding-top: 10px;
   line-height: 16px;
 }
+.chartinnsec g[aria-labelledby*="-title"] {
+  display: none !important;
+}

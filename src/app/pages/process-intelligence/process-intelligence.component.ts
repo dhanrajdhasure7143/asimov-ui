@@ -11,7 +11,9 @@ import { Router } from '@angular/router';
                   <span class="module-heading-title">Process Intelligence</span>
                   <span class="insight-back-button" *ngIf="isShow"> <a href="javascript:void(0);" (click)="gotoProcessgraph()">Go Back</a> </span>
                 </div>
+                <div class="module-body">
                 <router-outlet></router-outlet>
+                </div>
               </div>
             </div>`
 })
