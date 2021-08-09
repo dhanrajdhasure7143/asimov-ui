@@ -264,7 +264,14 @@ this.getFileDetails();
     for (var i = 0; i <= e.target.files.length - 1; i++) {
       var selectedFile = e.target.files[i];
       this.fileList.push(selectedFile);
-      this.listOfFiles.push(selectedFile.name)
+      var value = {
+        // File Name 
+         name: selectedFile.name,
+         //File Size 
+         size: selectedFile.size,
+         
+     };
+      this.listOfFiles.push(value)
     }
     this.uploadFileForm.get("uploadFile").setValue(this.fileList);
      // console.log(<File> e.target.files);
