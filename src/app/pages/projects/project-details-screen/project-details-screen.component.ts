@@ -1,5 +1,5 @@
 import { formatDate } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -38,13 +38,21 @@ export class ProjectDetailsScreenComponent implements OnInit {
   selectedcategory: number;
   selectedvalue: any;
   dataSource2:MatTableDataSource<any>;
+  dataSource9:MatTableDataSource<any>;
   categaoriesList: any;
   selected_process_names: any;
   displayedColumns: string[] = ["taskCategory","taskName","resources","status","percentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
   dataSource6:MatTableDataSource<any>;
-  displayedColumns6: string[] = ["profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate","action"];
+  displayedColumns6: string[] = ["check","profilePic","userId.firstName","roleID.displayName","userId.userId","uploadedDate"];
   @ViewChild("sort14",{static:false}) sort14: MatSort;
+  @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
+  displayedColumns9: string[] = ["fileName","uploadedBy","uploadedDate","fileSize"];
+  @ViewChild("sort16",{static:false}) sort16: MatSort;
+  @ViewChild("paginator109",{static:false}) paginator109: MatPaginator;
+  @ViewChild("sort12",{static:false}) sort12: MatSort;
+  dataSource5:MatTableDataSource<any>;
+  @ViewChild("sort13",{static:false}) sort13: MatSort;
   responsedata: any;
   bot_list: any=[];
   automatedtask: any;
@@ -52,6 +60,7 @@ export class ProjectDetailsScreenComponent implements OnInit {
   addresourcemodalref: BsModalRef;
   project_id: any;
   public tasks: any=[];
+  multiFilesArray: any[] = [];
   public users_list:any=[];
   public selectedTab=0;
  public check_tab=0;
@@ -99,7 +108,23 @@ percentageComplete: number;
   programId:any;
   taskresourceemail: any;
   resourceslength: any;
-
+  latestFiveDocs: any;
+  uploadFilemodalref: BsModalRef;
+  uploadFileForm:FormGroup;
+  uploadFileFormDetails:FormGroup;
+  public Resourcedeleteflag:Boolean;
+  public Resourcecheckeddisabled:boolean =false;
+  public Resourcecheckflag:boolean = false;
+  resources_list: any=[];
+  projectid:any;
+  uploadedFiledata: any;
+  dataSource3:MatTableDataSource<any>;
+  dataSource4: any;
+  filterdArray: any[];
+  requestedFiledata: any;
+  fileList: File[] = [];
+  listOfFiles: any[] = [];
+  
   constructor(private dt:DataTransferService,private route:ActivatedRoute, private rpa:RestApiService,
     private modalService: BsModalService,private formBuilder: FormBuilder,private router: Router,
     private spinner:NgxSpinnerService) { }
@@ -128,19 +153,16 @@ percentageComplete: number;
         category: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
         filePath: ["", Validators.compose([Validators.required])],
        })
-
+       this.uploadFileFormDetails=this.formBuilder.group({
+        fileCategory: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+        description: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+        uploadFile: ["", Validators.compose([Validators.required])],
+       })
     this.dt.changeParentModule({"route":"/pages/projects/projects-list-screen", "title":"Projects"});
     this.dt.changeChildModule(undefined);
     this.getallusers();
     this.projectdetails();
-
-    
- 
-
-
-    
     this.getallprocesses();
-
     setTimeout(() => {
       this.getImage();
       this.profileName();
@@ -148,11 +170,151 @@ percentageComplete: number;
        
       
         this.getallusers();
+        this.Resourcedeleteflag=false;
   }
 
   onTabChanged(event)
   {
     this.check_tab=event.index;
+  }
+
+  ResourcecheckAllCheckBox(ev) {
+    this.resources_list.forEach(x =>
+       x.checked = ev.target.checked);
+    this.checktodelete();
+  }
+  uploadFile(template: TemplateRef<any>){
+   
+    this.getFileCategories();
+    this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
+  }
+  
+  submitUploadFileFormattachment(){
+
+    var fileData = new FormData();
+    const files = this.fileList;
+    for(var i=0;i< files.length;i++){
+      fileData.append("filePath",files[i]);
+    }
+    fileData.append("category", this.uploadFileFormDetails.get("fileCategory").value)
+     fileData.append("comments", this.uploadFileFormDetails.get("description").value)
+    //  fileData.append("filePath", this.fileUploadData)
+     fileData.append("projectId", this.project_id)
+
+    
+ this.rpa.uploadProjectFile(fileData).subscribe(res => {
+   //message: "Resource Added Successfully
+   this.uploadFilemodalref.hide();
+   this.uploadFileFormDetails.get("fileCategory").setValue("");
+   this.uploadFileFormDetails.get("description").setValue("");
+   if(res.message!=undefined)
+   {
+    this.spinner.show();
+    this.spinner.hide();
+    this.getLatestFiveAttachments(this.project_id)
+
+     Swal.fire({
+       title: 'Success',
+       text: "File Uploaded Successfully",
+       position: 'center',
+       icon: 'success',
+       showCancelButton: false,
+       confirmButtonColor: '#007bff',
+       cancelButtonColor: '#d33',
+       confirmButtonText: 'Ok'
+   }).then((result) => {
+    // this.resettask();
+    this.resetdocform();
+     
+   }) 
+     
+   }
+   else
+   Swal.fire("Error",res.message,"error");
+   
+ })
+  }
+  resetdocform() {
+    
+
+    this.uploadFileFormDetails.reset();
+    this.uploadFileFormDetails.get("category").setValue("");
+    this.uploadFileFormDetails.get("comments").setValue("");
+
+    
+      }
+  chnagefileUploadForm(e){
+    for (var i = 0; i <= e.target.files.length - 1; i++) {
+      var selectedFile = e.target.files[i];
+      this.fileList.push(selectedFile);
+      this.listOfFiles.push(selectedFile.name)
+    }
+    this.uploadtaskFileForm.get("filePath").setValue(this.fileList);
+    this.uploadFileFormDetails.get("uploadFile").setValue(this.fileList);
+    // this.fileUploadData = <File> e.target.files[0]
+    // this.multiFilesArray.push(
+    //   e.target.files[0]
+    // )
+    
+    
+  }
+  removeSelectedFile(index) {
+    // Delete the item from fileNames list
+    this.listOfFiles.splice(index, 1);
+    // delete file from FileList
+    this.fileList.splice(index, 1);
+   }
+  getFileDetails(){
+    this.rpa.getFileDetails(this.projectid).subscribe(data =>{
+      this.uploadedFiledata=data.uploadedFiles.reverse();
+      console.log(this.uploadedFiledata);
+      this.dataSource3= new MatTableDataSource(this.uploadedFiledata);
+      this.dataSource3.sort=this.sort11;
+      this.dataSource3.paginator=this.paginator101;
+      this.requestedFiledata=data.requestedFiles.reverse();
+      this.dataSource4= new MatTableDataSource(this.requestedFiledata);
+      this.dataSource4.sort=this.sort12;
+      let loggedUser=localStorage.getItem("ProfileuserId")
+      let responseArray=this.requestedFiledata
+      this.filterdArray=[]
+      responseArray.forEach(e=>{
+        if(e.requestTo==loggedUser || e.requestFrom==loggedUser){
+          this.filterdArray.push(e)
+          
+        }
+        this.dataSource5= new MatTableDataSource(this.filterdArray);
+        this.dataSource5.sort=this.sort13;
+      })
+    
+      
+    })
+    this.spinner.hide();
+  }
+  checktodelete()
+  {
+    const selectedresourcedata = this.resources_list.filter(product => product.checked).map(p => p.id);
+    if(selectedresourcedata.length>0)
+    {
+      this.Resourcedeleteflag=true;
+    }else
+    {
+      this.Resourcedeleteflag=false;
+    }
+  }
+
+  removeallchecks()
+  {
+    for(let i=0;i<this.resources_list.length;i++)
+    {
+      this.resources_list[i].checked= false;
+    }
+    this.Resourcecheckflag=false;
+  }
+
+  ResourcecheckEnableDisableBtn(id, event)
+  {
+    this.resources_list.find(data=>data.id==id).checked=event.target.checked;
+    this.checktodelete();
   }
 
   getTaskandCommentsData(){
@@ -170,7 +332,16 @@ percentageComplete: number;
     })
   }
 
-  getUserRole(){
+  getLatestFiveAttachments(projectid){
+    this.rpa.getLatestfiveAttachments(projectid,"UTC").subscribe(data =>{
+      this.latestFiveDocs=data;
+      this.dataSource9= new MatTableDataSource(this.latestFiveDocs);
+      this.dataSource9.sort=this.sort16;
+      this.dataSource9.paginator=this.paginator109;
+      })
+    }
+
+      getUserRole(){
     let user=this.users_list.find(item=>item.userId.userId==this.selectedtaskdata.resources);
     this.userid=user.userId.userId
     this.rpa.getRole(this.userid).subscribe(data =>{
@@ -227,7 +398,7 @@ percentageComplete: number;
           this.resources=this.users_list
         }  
           this.getTaskandCommentsData();
-            
+          this.getLatestFiveAttachments(this.project_id)
         })
     });
   }
@@ -282,6 +453,14 @@ percentageComplete: number;
               if(this.users_list.find(item2=>item2.userId.userId==item.resource)!=undefined)
                 users.push(this.users_list.find(item2=>item2.userId.userId==item.resource))
          })
+         this.resources_list=users
+         if(this.resources_list.length>0){
+          this.Resourcecheckeddisabled= false;
+        }
+        else
+        {
+          this.Resourcecheckeddisabled = true;
+        }
          this.resourceslength=users.length
           this.dataSource6= new MatTableDataSource(users);
           this.dataSource6.sort=this.sort14;
@@ -462,6 +641,7 @@ percentageComplete: number;
   {
      let item_data={
        id:this.projectDetails.id,
+       access:"Project",
        resources:JSON.parse(event),
      }
      this.spinner.show();
@@ -473,6 +653,8 @@ percentageComplete: number;
           this.projectdetails();
           this.getallusers();
           this.getTaskandCommentsData();
+          this.removeallchecks();
+          this.checktodelete();
           this.spinner.hide();
           Swal.fire("Success",response.status,"success");
         }
@@ -513,7 +695,12 @@ percentageComplete: number;
   // }
 
   deleteresource(data){
-    console.log("sdf")
+    const selectedresource = this.resources_list.filter(product => product.checked==true).map(p=>{
+      return{
+        "projectId": this.project_id,
+        "resource": p.userId.userId
+      }
+      });
      Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -525,7 +712,7 @@ percentageComplete: number;
       }).then((result) => {
         if (result.value) {
           this.spinner.show();
-          this.rpa.deleteResource(this.project_id,data.userId.userId).subscribe( res =>{ 
+          this.rpa.deleteResource(selectedresource).subscribe( res =>{ 
             let status:any = res;
             Swal.fire({
               title: 'Success',
@@ -540,6 +727,8 @@ percentageComplete: number;
             this.projectdetails();
             this.getallusers();
             this.getTaskandCommentsData();
+            this.removeallchecks();
+            this.checktodelete();
             this.spinner.hide();
             },err => {
               Swal.fire({
@@ -606,9 +795,12 @@ percentageComplete: number;
       submitUploadFileForm(){
        
         var fileData = new FormData();
-    
+        const files = this.fileList;
+        for(var i=0;i< files.length;i++){
+          fileData.append("filePath",files[i]);
+        }
     fileData.append("category", this.uploadtaskFileForm.get("category").value)
-     fileData.append("filePath", this.fileUploadData)
+    //  fileData.append("filePath", this.fileUploadData)
      fileData.append("projectId", this.selectedtaskfileupload.projectId)
      fileData.append("taskId", this.selectedtaskfileupload.id)
 
@@ -618,6 +810,7 @@ percentageComplete: number;
        //if(res.message!=undefined)
        //{
         this.getTaskandCommentsData();
+        this.getLatestFiveAttachments(this.selectedtaskfileupload.projectId)
          Swal.fire({
            title: 'Success',
            text: "File Uploaded Successfully",
@@ -643,6 +836,7 @@ percentageComplete: number;
       {
         this.spinner.show()
         this.projectDetails["type"]="Project";
+        this.projectDetails.effortsSpent=parseInt(this.projectDetails.effortsSpent)
         this.rpa.update_project(this.projectDetails).subscribe(res=>{
           this.spinner.hide()
           let response:any=res;
@@ -653,6 +847,20 @@ percentageComplete: number;
           this.projectdetails()
           this.editdata=false;
         });
+      }
+
+
+      downloadTaskAttachment(attachment)
+      {
+        let data=[attachment.fileName]
+        this.rpa.downloadTaskAttachment(data).subscribe(data=>{
+          let response:any=data
+          var link = document.createElement('a');
+          let extension=((((attachment.fileName.toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+          link.download = attachment.fileName;
+          link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[0]}`:`data:application/${extension};charset=utf-8,${response[0]}`) ;
+          link.click();
+        })
       }
 
 }

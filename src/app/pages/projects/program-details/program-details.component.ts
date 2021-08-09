@@ -35,7 +35,7 @@ export class ProgramDetailsComponent implements OnInit {
     modalref:BsModalRef;
     mindate:any;
     selected_process_names:any=[];
-
+    editdata:Boolean=false;
   ngOnInit() {
     this.getprojects_and_programs();
     this.mindate= moment().format("YYYY-MM-DD");
@@ -92,7 +92,7 @@ export class ProgramDetailsComponent implements OnInit {
       let program_id=data.id;
       this.get_linked_projects(program_id);
       this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
-
+      this.editdata=false;
     });
   }
 
@@ -240,22 +240,22 @@ export class ProgramDetailsComponent implements OnInit {
 
     // Add data
     chart.data = [{
-      "year": "Catrgory 1",
+      "year": "Category 1",
       "italy": 1,
       "germany": 5,
       "uk": 3
     }, {
-      "year": "categorty 2",
+      "year": "Categorty 2",
       "italy": 1,
       "germany": 2,
       "uk": 6
     }, {
-      "year": "category 3",
+      "year": "Category 3",
       "italy": 2,
       "germany": 3,
       "uk": 1
     }, {
-      "year": "category 4",
+      "year": "Category 4",
       "italy": 3,
       "germany": 4,
       "uk": 1
@@ -464,4 +464,27 @@ export class ProgramDetailsComponent implements OnInit {
         
   }
 
+  inputNumberOnly(event){
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+    let temp =numArray.includes(event.key); //gives true or false
+   if(!temp){
+    event.preventDefault();
+   } 
+  }
+
+  updateprogramDetails()
+  {
+    this.spinner.show()
+    this.program_detials["type"]="Program";
+    this.rest.update_project(this.program_detials).subscribe(res=>{
+      this.spinner.hide()
+      let response:any=res;
+      if(response.errorMessage == undefined)
+        Swal.fire("Success",response.message,"success")
+      else
+        Swal.fire("Error",response.errorMessage,"error");
+      this.getprogramdetails();
+      this.editdata=false;
+    });
+  }
 }

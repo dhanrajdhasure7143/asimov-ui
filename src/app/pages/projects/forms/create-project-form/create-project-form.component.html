@@ -3,7 +3,7 @@
     <form [formGroup]="insertForm2" (ngSubmit)="createproject()" class="prj-form">
         <div class="row prj-crt-form">
             <div class="col-md-12">
-                <div class="form-fileds col-md-6 pl-0">
+                <div class="form-fields col-md-6 pl-0">
                     <label class="label-control">Project Name<span class="star">*</span></label>
                     <input type="text" formControlName="projectName" class="form-control data"
                         placeholder="Enter Project Name"
@@ -16,7 +16,7 @@
                         Maximum of 50 characters
                     </span>
                 </div>
-                <div class="form-fileds col-md-6 pr-0">
+                <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Initiatives<span class="star">*</span></label>
                     <select formControlName="initiatives" class="form-control data"
                         [ngClass]="insertForm2.get('initiatives').valid?'enteredfield-color':'inputfield-color'">
@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-fileds col-md-6 pl-0">
+                <div class="form-fields col-md-6 pl-0 ngselectfield">
                     <label class="label-control">Add Resources<span
                             class="star">*</span></label>
                     <!-- <select formControlName="resources" class="form-control data"
@@ -49,7 +49,7 @@
                         *ngIf="insertForm2.get('resource').invalid && insertForm2.get('resource').touched"
                         class="errspan required">Resources Required*</span>
                 </div>
-                <div class="form-fileds col-md-6 pr-0">
+                <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Project Owner<span
                             class="star">*</span></label>
                     <select formControlName="owner" class="form-control data"
@@ -64,7 +64,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-fileds col-md-6 pl-0">
+                <div class="form-fields col-md-6 pl-0">
                     <label class="label-control">Identity Measurable Metrics<span
                             class="star">*</span></label>
                     <input type="text" formControlName="measurableMetrics"
@@ -75,7 +75,7 @@
                         *ngIf="insertForm2.get('measurableMetrics').invalid && insertForm2.get('measurableMetrics').touched"
                         class="errspan required">Identity Measurable Metrics Required*</span>
                 </div>
-                <div class="form-fileds col-md-6 pr-0">
+                <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Map Value Chain<span
                             class="star">*</span></label>
                     <select formControlName="mapValueChain" class="form-control data"
@@ -91,7 +91,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <div class="form-fileds col-md-6 pl-0">
+                <div class="form-fields col-md-6 pl-0">
                     <label class="label-control">Select Process<span
                             class="star">*</span></label>
                     <select class="form-control" formControlName="process"
@@ -105,7 +105,7 @@
                         *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched"
                         class="errspan required">Process Required*</span>
                 </div>
-                <div class="form-fileds col-md-6 pr-0">
+                <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Access<span class="star">*</span></label>
                     <select formControlName="access" class="form-control data"
                         [ngClass]="insertForm2.get('access').valid?'enteredfield-color':'inputfield-color'">
@@ -133,7 +133,7 @@
                             -->
             </div>
             <div class="col-md-12">
-                <div class="form-fileds col-md-3 pl-0">
+                <div class="form-fields col-md-3 pl-0">
                     <label class="label-control">Start Date<span class="star">*</span></label>
                     <!-- <input type="date"  formControlName="startDate" class="form-control"> -->
                     <input class="form-control" type="date" name="daytime" [min]="mindate"
@@ -143,7 +143,7 @@
                         *ngIf="insertForm2.get('startDate').invalid && insertForm2.get('startDate').touched"
                         class="errspan required">Start date Required*</span>
                 </div>
-                <div class="form-fileds col-md-3">
+                <div class="form-fields col-md-3 pl-0">
                     <label class="label-control">End Date<span class="star">*</span></label>
                     <input class="form-control" type="date" name="daytime" [min]="mindate"
                         formControlName="endDate" class="form-control data"
@@ -152,7 +152,7 @@
                         *ngIf="insertForm2.get('endDate').invalid && insertForm2.get('endDate').touched"
                         class="errspan required">End Date Required*</span>
                 </div>
-                <div class="form-fileds col-md-6 pr-0">
+                <div class="form-fields col-md-6 pr-0">
                     <label class="label-control">Project Priority<span
                             class="star">*</span></label>
                     <select formControlName="priority" class="form-control data"
@@ -166,7 +166,9 @@
                         *ngIf="insertForm2.get('priority').invalid && insertForm2.get('priority').touched"
                         class="errspan required">Project Priority Required*</span>
                 </div>
-                <div class="form-fileds col-md-6 pl-0">
+            </div>
+            <div class="col-md-12">
+                <div class="form-fields col-md-6 pl-0">
                     <label class="label-control">Project Purpose<span
                             class="star">*</span></label>
                     <input type="text" formControlName="projectPurpose" class="form-control data" placeholder="Enter Project Purpose"
@@ -174,7 +176,7 @@
                    
                     <span
                         *ngIf="insertForm2.get('projectPurpose').invalid && insertForm2.get('projectPurpose').touched"
-                        class="errspan required">Project Priority Required*</span>
+                        class="errspan required">Project Purpose Required*</span>
                 </div>
             </div>
             <div class="col-md-12">

@@ -236,7 +236,7 @@
     
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="text" (keypress)="projectDetails.effortsSpent=$event.target.value" class="small-input"
+                    <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" class="small-input"
                       placeholder="Efforts Spent"
                       [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
                   </div>
@@ -267,10 +267,10 @@
                   <span class="labeltit">Project Purpose</span>
 
                   <div *ngIf="editdata==false">
-                    <span class="tab-text labelcont">Improve ROI</span>
+                    <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="text"
+                    <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
                       [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
                       class="small-input" placeholder="Enter Project Purpose">
                   </div>
@@ -306,6 +306,7 @@
                       <option value="">Select Status</option>
                       <option value="New">New</option>
                       <option value="In Progress">In Progress</option>
+                      <option value="Pipeline">Pipeline</option>
                       <option value="On Hold">On Hold</option>
                       <option value="In Review">In Review</option>
                       <option value="Deployed">Deployed</option>
@@ -313,14 +314,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Burnt Rate</span>
-
-                  <span><input type="text" class="small-input" placeholder="Enter Burnt Rate Value" /></span>
-                </div>
-              </div>
-
+     
           </div>
         </div>
       </div>
@@ -811,6 +805,17 @@
                 <button type="button" class="btn btn-primary" (click)="addresource(addresourcemodal)">
                   <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Add New
                 </button>
+                <span>
+                  &nbsp;
+                </span>
+                <span>
+                  <div *ngIf="Resourcedeleteflag==true" class="env-btn">
+                    <button title="Delete Resource" value="Delete" id="deletebtn" class="btn btn-primary" (click)="deleteresource()">Delete</button>
+                </div>       
+                <div *ngIf="Resourcedeleteflag==false" class="env-btn">
+                    <button data-toggle="tooltip" data-placement="top" id="deletebtn" class="btn btn-primary" title="Delete Resource" disabled>Delete</button>
+                </div>
+                </span>
               </span>
             </div>
           </div>
@@ -860,6 +865,15 @@
           <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls> -->
           <table mat-table #sort14="matSort" [dataSource]="dataSource6" matSort class="projecttable table" id="autotable">
             
+            <ng-container matColumnDef="check">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <input [disabled]="Resourcecheckeddisabled" type="checkbox" id="Credcheckall" [checked]="Resourcecheckflag" (change)="ResourcecheckAllCheckBox($event)">
+              </th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                  <input type="checkbox" [checked]="element.checked" (change)="ResourcecheckEnableDisableBtn(element.id, $event)"> 
+              </td>
+          </ng-container>
+
             <ng-container matColumnDef="profilePic">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let user" class="action-link tablacs"> 
@@ -904,7 +918,7 @@
                 </td>
             </ng-container>
       
-            <ng-container matColumnDef="action">
+            <!-- <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef>Actions</th>
               <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
                 <div class="newinntalx">
@@ -913,7 +927,7 @@
                   </a> 
               </div>
               </td>
-            </ng-container>
+            </ng-container> -->
       
               <ng-container matColumnDef="Loading">
                 <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
@@ -945,9 +959,9 @@
               </span>
             </div>
             <div class="col-md-6 pr-0">
-              <span class="pull-right">
-                <button type="button" class="btn btn-primary">
-                  <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload">Upload New</button>
+              <span class="pull-right" >
+                <button type="button"  (click)="uploadFile(uploadFilemodal)"  class="btn btn-primary">
+                  <img src="../../../../assets/images/BPMS/upload.svg"  class="testplusupload">Upload New</button>
               </span>
             </div>
           </div>
@@ -966,7 +980,7 @@
         </div> -->
 
           <div class="projects-table-body">
-            <table class="table">
+            <!-- <table class="table">
               <thead>
                 <tr class="separated">
                   <th>Document Name</th>
@@ -995,7 +1009,62 @@
                   <td>10MB</td>
                 </tr>
               </tbody>
+            </table> -->
+
+
+            <table mat-table #sort16="matSort" [dataSource]="dataSource9" matSort class="projecttable table" id="autotable">
+          
+      
+                <ng-container matColumnDef="fileName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</th>
+                  <td mat-cell   *matCellDef="let element">
+                    <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
+                    <span *ngIf="element.fileName==null">---</span>
+                  </td>
+        
+              </ng-container>
+        
+              <ng-container matColumnDef="uploadedBy">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded By</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.uploadedBy!=null" [matTooltip]="element.uploadedBy">{{element.uploadedBy| userPipe : users_list}}</span>
+                    <span *ngIf="element.uploadedBy==null">---</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="uploadedDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded Date</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.uploadedDate!=null" [matTooltip]="element.uploadedDate">{{element.uploadedDate| date:'MMM dd, y, HH:mm:ss'}}</span>
+                  <span *ngIf="element.uploadedDate==null">---</span>
+                </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="fileSize">
+                  <th mat-header-cell *matHeaderCellDef>File Size</th>
+                  <td mat-cell *matCellDef="let element">
+                      <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}</span>
+                      <span *ngIf="element.fileSize==null">---</span>
+                     
+                  </td>
+              </ng-container>
+        
+                <ng-container matColumnDef="Loading">
+                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                      Loading
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                        No Records Found
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns9; sticky: true"></tr>
+                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns9;"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource9!=null}"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource9!=null && dataSource9.data.length==0)}"></tr>
             </table>
+              <mat-paginator class="newpaginationdiv" #paginator109 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+              </mat-paginator>
           </div>
 
         </mat-card>
@@ -1026,7 +1095,7 @@
       <span class="pull-right lastedit-date">Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp |
         date}}</span>
     </div>
-    <div class="modal-body modelprbody editmodelprbody">
+    <div class="modal-body modelprbody editmodelprbody" style="width:100%;overflow-x: auto;height:calc( 100vh - 260px)">
       <div class="container p-0" style="width:100%">
         <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
           <div class="row">
@@ -1224,7 +1293,9 @@
                             <td>{{attachments.fileName}}</td>
                             <td class="text-left">{{attachments.fileSize | fileSizePipe}}</td>
                             <td class="text-left">
-                              <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                              <span class="clickable" (click)="downloadTaskAttachment(attachments)">
+                                <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                              </span>
                             </td>
                           </tr>
                         </tbody>
@@ -1242,8 +1313,8 @@
                         <tr>
                           <th></th>
                           <th class="text-left">Name</th>
-                          <th class="text-right">Role</th>
-                          <th class="text-right">Last Updated</th>
+                          <th class="text-left">Role</th>
+                          <th class="text-left">Last Updated</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1260,8 +1331,8 @@
                           </td>
                           <td>{{selectedtaskdata.resources| userPipe : users_list}}</td>
                           <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                          <td class="text-right">{{roles?roles:'-'}}</td>
-                          <td class="text-right">{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
+                          <td class="text-left">{{roles?roles:'-'}}</td>
+                          <td class="text-left">{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
                         </tr>
                       </tbody>
 
@@ -1310,8 +1381,16 @@
 
             <div class="form-fields col-md-12">
               <label>Upload<span class="star">*</span></label>
-              <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File"
-                formControlName="filePath" placeholder="choose file">
+              <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" />
+              <label for="file" (change)="chnagefileUploadForm($event)"><i class="fas fa-file-upload"></i></label>
+              <div *ngFor="let selected of listOfFiles;let index = index">
+                {{selected}}
+                <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+              <!-- <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File"
+                formControlName="filePath" placeholder="choose file"> -->
               <span *ngIf="uploadtaskFileForm.get('filePath').invalid && uploadtaskFileForm.get('filePath').touched"
                 class="errspan required"></span>
             </div>
@@ -1329,3 +1408,65 @@
   </ng-template>
 
 </div>
+<ng-template class="modal-up" #uploadFilemodal>
+
+  <div class="modal-header modelprhead">
+    <h4 class="modal-title pull-left">Upload File</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+  <div class="container" style="width:100%">
+      <form [formGroup]="uploadFileFormDetails" (ngSubmit)="submitUploadFileFormattachment()">
+          <div class="row">
+              <div class="col-md-6">
+                  <label for="fileCategory">File Category<span style="color:red">*</span></label>
+                  <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory" required>
+                    <option  [value]="null" disabled hidden>Select Category</option>
+                    <option value="" [selected]="true">Select Category</option>
+                    <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                  </select>
+                  <span
+                      *ngIf="uploadFileFormDetails.get('fileCategory').invalid && uploadFileFormDetails.get('fileCategory').touched"
+                      style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
+              </div>
+              </div>
+              <div class="col-md-12">
+                  
+                  <label>Description<span style="color:red">*</span></label>
+                  <textarea name= "desc" class="form-control" formControlName="description" placeholder="Enter Description..." style="height:100px;" required>
+  
+                  </textarea>
+                  <span *ngIf="uploadFileFormDetails.get('description').invalid && uploadFileFormDetails.get('description').touched"
+                      style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+  
+              </div>
+              <div class="col-md-12">
+                  
+                <label>Upload<span style="color:red">*</span></label>
+                <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required> -->
+                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" />
+              <label for="file" (change)="chnagefileUploadForm($event)"><i class="fas fa-file-upload"></i></label>
+              <div *ngFor="let selected of listOfFiles;let index = index">
+                {{selected}}
+                <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+              </div>
+                
+                <span *ngIf="uploadFileFormDetails.get('uploadFile').invalid && uploadFileFormDetails.get('uploadFile').touched"
+                    style="color:red" class="fa fa-info-circle errspan">File Required*</span>
+  
+            </div>
+          
+      </form>
+  </div>
+  </div>
+  <div class="modal-footer modelprfooter">
+    <div class="pull-right">
+        <button (click)="uploadFilemodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button [disabled]="uploadFileFormDetails.invalid" (click)="submitUploadFileFormattachment()" class="btn btn-primary btn-update">Submit</button>
+        </div>
+  </div>
+  </ng-template>
