@@ -194,6 +194,7 @@ span.programdesc {
   background-color: #62BC27;
     color: #fff !important;
     padding: 2px 5px;
+    width:fit-content;
 }
 img.testplus.hover-img ,
 td a:hover img.testplus.default-img{

@@ -55,7 +55,7 @@
   <div class="new-program-contents">
     <div class="program-details-div">
       <div class="row newprhcl">
-        <div class="col-md-8 p-0 program-info">
+        <div class="col-md-12 p-0 program-info">
           <div><img src="..\assets\images\Projects\project_icon.svg" alt="" ></div>
           <div class="program-data">
             <!-- <span class="h3">{{program_detials.programName |uppercase}}</span> -->
@@ -75,20 +75,7 @@
   
           </div>
         </div>
-        <div class="col-md-4 pr-0">
-          <div class="row newprjdates">
-            <div class="status-tabs">
-              <div class="">
-                <img src="../../../../assets/images/Projects/user3.svg" alt="">
-              </div>
-              <div class="status-data">
-                <span class="labeltit">Program Sponsor</span>
-                <span class="labelcont">{{program_detials.owner | userPipe : users_list}}</span>
-                <div *ngIf="program_detials.owner==undefined || program_detials.owner==null || program_detials.owner=='' " class="h6">-</div>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <!-- <div class="col-md-4 pr-0">
           <div class="row newprjdates">
             <div class="col-md-6 p-0">
@@ -119,7 +106,18 @@
                 </div>
               </div>
             </div>
-  
+            <div class="col-md-3 p-0">
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\document.svg" alt="" >
+                </div> -->
+                  <div class="mainset">
+                    <span class="labeltit">Program Sponsor</span>
+                    <span class="labelcont">{{program_detials.owner | userPipe : users_list}}</span>
+                    <div *ngIf="program_detials.owner==undefined || program_detials.owner==null || program_detials.owner=='' " class="h6">-</div>
+                  </div>
+              </div>
+            </div>
             <div class="col-sm-3 p-0">
               <div class="programdetmain">
                 <!-- <div class="process-img ">
@@ -143,19 +141,7 @@
                 </div>
               </div>
             </div>
-  
-            <div class="col-sm-3 p-0">
-              <div class="programdetmain">
-                <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                  <span class="labeltit">Status</span>
-                  <span class="labelcont newstatus">{{program_detials.status}}</span>
-                </div>
-              </div>
-            </div>
-  
+    
             <div class="col-sm-3 p-0">
   
               <div class="programdetmain">
@@ -268,9 +254,9 @@
                       </select>
                     </div>
                 </div>
-              </div>
-  
+              </div>  
             </div>
+
             <div class="col-sm-3 p-0">
   
               <div class="programdetmain">
@@ -294,6 +280,31 @@
                 </div>
               </div>
   
+            </div>
+
+            <div class="col-sm-3 p-0">
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                  <span class="labeltit">Status</span>
+                  <div *ngIf="editdata==false" class="newstatus">{{program_detials.status}}</div>
+            
+                  <div *ngIf="editdata==true" class="">
+                    <select class="small-input" (change)="program_detials.status=$event.target.value"
+                    [value]="(program_detials.status==undefined||program_detials.status==null)?'':program_detials.status">
+                      <option value="">Select Status</option>
+                      <option value="New">New</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="On Hold">On Hold</option>
+                      <option value="In Review">In Review</option>
+                      <option value="Deployed">Deployed</option>
+                      <option value="Pipeline">Pipeline</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
             </div>
            
           </div>
