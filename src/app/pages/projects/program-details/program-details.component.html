@@ -416,9 +416,22 @@
             <label class="">Start Date</label>
             <p class="">{{program_detials.createdTimestamp| date}}</p>
           </div>
-          <div class="col-sm-1">
+          <div  class="col-sm-1">
             <label class="">Status</label>
-            <p class="">{{program_detials.status}}</p>
+            <div *ngIf="editdata==false" class="">{{program_detials.status}}</div>
+            
+            <div *ngIf="editdata==true" class="">
+              <select class="small-input" (change)="program_detials.status=$event.target.value"
+              [value]="(program_detials.status==undefined||program_detials.status==null)?'':program_detials.status">
+              <option value="">Select Status</option>
+              <option value="New">New</option>
+              <option value="In Progress">In Progress</option>
+              <option value="On Hold">On Hold</option>
+              <option value="In Review">In Review</option>
+              <option value="Deployed">Deployed</option>
+              <option value="Pipeline">Pipeline</option>
+            </select>
+            </div>
           </div>
         </div>
         <div class="col-md-12 py-10 " *ngIf="program_detials!= undefined">

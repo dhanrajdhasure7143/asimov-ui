@@ -60,7 +60,7 @@ export class CreateProjectsComponent implements OnInit {
     purpose: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     priority: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     measurableMetrics: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
-    programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
+    //programHealth: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     programValueChain: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
     
    // project: ["", Validators.compose([Validators.maxLength(50)])],
@@ -188,6 +188,7 @@ createproject(event)
     this.username=userfirstname+" "+userlastname
     this.createprogram.value.createdBy=this.username;
     this.createprogram.value.status="New";
+    this.createprogram.value.programHealth="Good";
     let data=this.createprogram.value;
     data["project"]=this.newproject
     data["existingprojects"]=this.selected_projects.map(item => {
