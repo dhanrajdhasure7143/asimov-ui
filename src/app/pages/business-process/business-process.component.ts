@@ -60,6 +60,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
         this.iscreate_notation=notationValues_obj['isFromcreateScreen'];
         this.isStartProcessBtn=notationValues_obj['isStartProcessBtn'];
         this.currentNotation_name=notationValues_obj['process_name'];
+        // if(notationValues_obj['isEditbtn'])
+        this.isEditMode=notationValues_obj['isEditbtn'];
+        this.isSave_disabled=notationValues_obj['isSavebtn'];
       }
     });
   }
