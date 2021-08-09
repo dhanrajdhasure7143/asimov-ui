@@ -1460,6 +1460,7 @@ select.form-control {
 }
 
 .maindivfoprm input[type="date"],
+.createform input[type="date"],
 .modelprbody input[type="date"] {
   background-image: url('assets/images/Projects/calendar.svg');
   background-position: calc(100% - 10px) center;
@@ -2296,4 +2297,10 @@ th.mat-header-cell {
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
   background-color: #f6f6f6 !important;
+}
+.prj-db-btn button:hover img.default-img {
+  display: none;
+}
+.prj-db-btn button:hover img.hover-img {
+  display: initial;
 }
