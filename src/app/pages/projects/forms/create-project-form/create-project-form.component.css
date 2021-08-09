@@ -29,9 +29,9 @@
   background-color: #f6f6f6 !important;
 }
 
-.createform input.enteredfield-color.ng-touched,
-.createform select.enteredfield-color.ng-touched,
-.createform textarea.enteredfield-color.ng-touched {
+.createform input.enteredfield-color,
+.createform select.enteredfield-color,
+.createform textarea.enteredfield-color {
   background-color: #ffffff !important;
   border: 1px solid #D1D1D1;
   color: #001c47 !important;

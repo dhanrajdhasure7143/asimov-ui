@@ -28,7 +28,6 @@
 
                     <mat-tab label="Project">
                         <div class="container">
-                            <br>
                             <app-create-project-form [users_list]="userslist" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
                         </div>
                     </mat-tab>
@@ -180,7 +179,7 @@
                                         <div class="form-fields col-md-6 pr-0 slt-prjts">
                                             <div class="select-project">
                                                 <label class="label-control">Select Projects</label>
-                                                <select class="form-control" id="selectprojects"
+                                                <select class="form-control inputfield-color" id="selectprojects"
                                                     (change)="selected_project=$event.target.value">
                                                     <option [value]="null" disabled hidden>Select Project</option>
                                                     <option value="" [selected]="true">Select Project</option>
@@ -367,10 +366,8 @@
                 <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
             </button>
         </div>
-        <br>
         <div class="h-scroll">
             <app-create-project-form [users_list]="userslist" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
-           <br><br><br><br><br><br>
         </div>
     </ng-template>
 </mat-card>
