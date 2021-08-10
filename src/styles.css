@@ -2304,3 +2304,8 @@ th.mat-header-cell {
 .prj-db-btn button:hover img.hover-img {
   display: initial;
 }
+
+.loader-test {
+  position: relative;
+  top: 0px;  
+}
