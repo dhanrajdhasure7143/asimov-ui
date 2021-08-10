@@ -1,4 +1,10 @@
-<svg id="projectlist" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-  <path id="Path_858" data-name="Path 858" d="M0,0H24V24H0Z" fill="none"/>
-  <path id="Path_859" data-name="Path 859" d="M8.556,4.062H23V6.311H8.556ZM4.667,6.873A1.687,1.687,0,1,1,6.333,5.186,1.677,1.677,0,0,1,4.667,6.873Zm0,7.87a1.687,1.687,0,1,1,1.667-1.686A1.677,1.677,0,0,1,4.667,14.743Zm0,7.757a1.687,1.687,0,1,1,1.667-1.686A1.677,1.677,0,0,1,4.667,22.5ZM8.556,11.932H23V14.18H8.556Zm0,7.87H23V22.05H8.556Z" transform="translate(-1 -0.5)" fill="#00a0e3"/>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-projectlist">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="projectlist" clip-path="url(#clip-projectlist)">
+    <path id="Path_859" data-name="Path 859" d="M8.6,4.067H23.164V6.334H8.6ZM4.68,6.9a1.7,1.7,0,1,1,1.68-1.7A1.69,1.69,0,0,1,4.68,6.9Zm0,7.934a1.7,1.7,0,1,1,1.68-1.7A1.69,1.69,0,0,1,4.68,14.835Zm0,7.821a1.7,1.7,0,1,1,1.68-1.7,1.69,1.69,0,0,1-1.68,1.7ZM8.6,12H23.164v2.267H8.6Zm0,7.934H23.164V22.2H8.6Z" transform="translate(-1 -1.5)" fill="#00a0e3"/>
+  </g>
 </svg>
