@@ -14,7 +14,7 @@
     </div>
     <div class="ml-auto module-heading-buttons">
       <span class="pull-right">
-        <span (click)="navigateToProjectRepo()">
+        <span (click)="navigateToProjectRepo()" class="prj-db-btn">
           <button class="btn btn-default">
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
@@ -38,7 +38,7 @@
 
         <span *ngIf="editdata==false">
           <button class="btn btn-primary" (click)="editdata=true">
-            <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
+            <img class="testplus" src="../../../../assets/images/Projects/edit.svg"> Edit
           </button>
         </span>
 
@@ -65,7 +65,7 @@
               <!-- <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span> -->
 
               <span (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata"
-                [class]=" 'clickable '+(editdata.description==true?'focus-data':'')">
+                [class]=" 'projdesc clickable '+(editdata.description==true?'focus-data':'')">
                 {{projectDetails.description}}
               </span>
               <!-- <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span> -->
@@ -747,7 +747,7 @@
             </a>
             
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
-              <img src="../../../../assets/images/Projects/edit.svg">
+              <img src="../../../../assets/images/Projects/edit-black.svg">
             </a> 
             
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
@@ -1211,7 +1211,7 @@
                           </div>
                           <div class="modal-footer modelprfooter">
                             <div class="pull-right">
-                              <button id="updatecancelcomment" type="button" class="btn btn-primary"
+                              <button id="updatecancelcomment" type="button" class="btn btn-default"
                                 (click)="posteditcancelcomment()">
                                 Cancel
                               </button>
@@ -1347,7 +1347,7 @@
     </div>
     <div class="modal-footer modelprfooter">
       <div class="pull-right">
-        <button (click)="resetupdatetaskproject()" class="btn btn-primary">Reset</button>
+        <button (click)="resetupdatetaskproject()" class="btn btn-default">Reset</button>
         <button (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
         <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
           class="btn btn-primary btn-update">Update</button>
@@ -1400,7 +1400,7 @@
     </div>
     <div class="modal-footer modelprfooter">
       <div class="pull-right">
-        <button (click)="uploadtaskFilemodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button (click)="uploadtaskFilemodalref.hide()" class="btn btn-default">Cancel</button>
         <button [disabled]="uploadtaskFileForm.invalid" (click)="submitUploadFileForm()"
           class="btn btn-primary btn-update">Submit</button>
       </div>
@@ -1465,7 +1465,7 @@
   </div>
   <div class="modal-footer modelprfooter">
     <div class="pull-right">
-        <button (click)="uploadFilemodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button (click)="uploadFilemodalref.hide()" class="btn btn-default">Cancel</button>
         <button [disabled]="uploadFileFormDetails.invalid" (click)="submitUploadFileFormattachment()" class="btn btn-primary btn-update">Submit</button>
         </div>
   </div>

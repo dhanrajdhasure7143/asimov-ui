@@ -252,12 +252,6 @@ span.projects-menu-item.prj-lst-btn button.btn:hover, span.projects-menu-item.pr
 img.hover-img {
   display: none;
 }
-.prj-db-btn button:hover img.default-img {
-  display: none;
-}
-.prj-db-btn button:hover img.hover-img {
-  display: initial;
-}
 
 .prj-lst-btn {
   background-color: #fff !important;
