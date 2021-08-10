@@ -65,7 +65,7 @@
               <!-- <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span> -->
 
               <span (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata"
-                [class]=" 'clickable '+(editdata.description==true?'focus-data':'')">
+                [class]=" 'projdesc clickable '+(editdata.description==true?'focus-data':'')">
                 {{projectDetails.description}}
               </span>
               <!-- <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span> -->

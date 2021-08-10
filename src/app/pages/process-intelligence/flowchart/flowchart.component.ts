@@ -1981,4 +1981,7 @@ addWorkingHours(){
        console.log(err);
      }));
   }
+   viewbusinessinsights(){
+    this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
+  }
 }
