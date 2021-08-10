@@ -955,6 +955,20 @@ save_blueprism_config(data)
   downloadFiles(id):Observable<any>{
     return this.http.get("/platform-service/document/fileCategories")
   }
+  // Business Insights API's Start
+  getBIActivityTime(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getActivityTimeData/"+processId);
+  }
+  getBIThroughputTime(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeData/"+processId);
+  }
+  getBusinessMetrics(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getBusinessMetricsData/"+processId);
+  }
+  getBIVariantsData(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getVariantAnalysisData/"+processId);
+  }// BI Insighs apis End
+  
   getLatestfiveAttachments(projectid,timezone){
     return this.http.get("/platform-service/document/uploadedFilespaged/"+projectid,timezone)
   }

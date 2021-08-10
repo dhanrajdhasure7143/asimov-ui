@@ -39,6 +39,7 @@ import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.c
 import { ComboSeriesVerticalComponent } from './processinsights/combo-chart/combo-series-vertical.component';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
+import { BusinessInsightsComponent } from './business-insights/business-insights.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import {MatPaginatorIntl} from '@angular/material';
     D3flowchartComponent,
     ProcessinsightsComponent,
     ComboChartComponent, 
-    ComboSeriesVerticalComponent
+    ComboSeriesVerticalComponent,
+    BusinessInsightsComponent
   ],
   imports: [
     CommonModule,

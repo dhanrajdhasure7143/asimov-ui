@@ -87,6 +87,7 @@ export class UploadComponent implements OnInit {
     @Inject(APP_CONFIG) private config) {  }
 
   ngOnInit() {
+    if(document.getElementById("filters"))
     document.getElementById("filters").style.display = "block";
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
     this.dt.changeChildModule("");
