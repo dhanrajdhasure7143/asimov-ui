@@ -2306,6 +2306,6 @@ th.mat-header-cell {
 }
 
 .loader-test {
-  position: relative;
-  top: 0px;  
+  position : relative;
+  transform: translateY(-70%)  
 }
