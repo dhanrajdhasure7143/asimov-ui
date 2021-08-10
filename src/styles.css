@@ -196,7 +196,7 @@ ngx-dropzone {
   margin-left: 85px;
 } */
 .bps_overlay .djs-container svg {
-  margin-left: 5px;
+  /* margin-left: 5px; */
 }
 
 div[class^='diagram_container'] .djs-palette {
@@ -2063,7 +2063,8 @@ select.bps-home-fileds,
 input.bps-home-fileds {
   display: inline-block;
   width: 286px;
-  margin-left: 8px;
+  /* margin-left: 8px; */
+  width: 100%;
 }
 
 .main-content .module-body {
@@ -2296,4 +2297,11 @@ th.mat-header-cell {
 
 .form-control[disabled], .form-control[readonly], fieldset[disabled] .form-control {
   background-color: #f6f6f6 !important;
+}
+
+.ezflow-loader{
+  height: 60px;
+  /* background: white; */
+  padding: 1px;
+  border-radius: 50%;
 }
