@@ -69,9 +69,23 @@
                 [value]="(program_detials.programName==undefined||program_detials.programName==null)?'':program_detials.programName"
                 class="small-input" placeholder="Enter Program Name">
             </div>
+
+            <div *ngIf="editdata==false">
+              <span class="programdesc"
+                *ngIf="program_detials.description==undefined || program_detials.description==null || program_detials.description=='' " class="h6">-</span>
+                <span class="programdesc">{{program_detials.description}}</span>
+            </div>
+
+            <div *ngIf="editdata==true">
+              <br>
+              <textarea (change)="program_detials.description=$event.target.value"
+              [value]="(program_detials.description==undefined||program_detials.description==null)?'':program_detials.description"
+              class="small-input" placeholder="Enter Program Description"></textarea>
+                  
+            </div>
   
-            <span class="programdesc">{{program_detials.description}}</span>
-            <div *ngIf="program_detials.description==undefined || program_detials.description==null || program_detials.description=='' " class="h6">-</div>
+            
+            <!-- <div *ngIf="program_detials.description==undefined || program_detials.description==null || program_detials.description=='' " class="h6">-</div> -->
   
           </div>
         </div>
@@ -150,7 +164,7 @@
                 </div> -->
                 <div class="mainset">
                   <span class="labeltit">Value Chain</span>
-                  <div *ngIf="editdata==false">
+                  <div >
                     <span
                       *ngIf="program_detials.programValueChain != null && program_detials.programValueChain != undefined && program_detials.programValueChain !='' "
                       class="labelcont">{{program_detials.programValueChain }}</span>
@@ -159,15 +173,15 @@
                       class="labelcont">-</span>
                   </div>
     
-                  <span *ngIf="editdata==true" class="tab-text labelcont">
+                  <!-- <span *ngIf="editdata==true" class="tab-text labelcont">
                     <select class="small-input" (change)="program_detials.programValueChain=$event.target.value"
                       [value]="(program_detials.programValueChain==undefined||program_detials.programValueChain==null)?'':program_detials.programValueChain">
-                      <!-- <option value="" >Select Map Value Chain</option> -->
+                      
                       <option value="Invoice Managment">Invoice Managment</option>
                       <option value="Acme Managment">Acme Managment</option>
                       <option value="E-Commerce">E-Commerce</option>
                     </select>
-                  </span>
+                  </span> -->
                 </div>
               </div>
   
@@ -219,10 +233,13 @@
   
                   <div *ngIf="editdata==false">
                     <span class="labelcont">{{program_detials.purpose}}</span>
+                    <span
+                      *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
+                      class="labelcont">-</span>
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="text" (change)="program_detials.purpose=$event.target.value"
-                      [value]="(program_detials.purpose==undefined||program_detials.purpose==null)?'':program_detials.purpose"
+                    <input type="text" (change)="program_detials.programPurpose=$event.target.value"
+                      [value]="(program_detials.programPurpose==undefined||program_detials.programPurpose==null)?'':program_detials.programPurpose"
                       class="small-input" placeholder="Enter Program Purpose">
                   </div>
                   </div>
@@ -275,7 +292,7 @@
                     <div *ngIf="editdata==true">
                       <input type="text" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
                         [value]="(program_detials.effortsSpent==undefined||program_detials.effortsSpent==null)?'':program_detials.effortsSpent"
-                        class="small-input" placeholder="Enter Program Purpose">
+                        class="small-input" placeholder="Enter Efforts Spent">
                     </div>
                 </div>
               </div>
@@ -339,7 +356,7 @@
             <th class="py-10">Last Updated</th>
             <th class="py-10">Last Updated by</th>
             <th class="py-10">Created By</th>
-            <th class="py-10">Action</th>
+            <th class="py-10">Actions</th>
           </thead>
           <tbody>
             <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 5, currentPage: p } ">
@@ -367,14 +384,17 @@
                 <div *ngIf="project.lastModifiedBy==undefined || project.lastModifiedBy==null || project.lastModifiedBy=='' " class="h6">--</div>
                 <div>{{project.lastModifiedBy}}</div>
               </td>
-              <td>{{project.createdBy}}</td>
+              <td>
+                <div *ngIf="project.createdBy==undefined || project.createdBy==null || project.createdBy=='' " class="h6">--</div>
+                <div>{{project.createdBy}}</div>
+              </td>
               <td>
                 <div calss="newinntalx">
                   <a class="view"    (click)="projectDetailsbyId(project.id)" matTooltip="Go To Project Details">
                     <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus default-img">
                     <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="testplus hover-img">
                   </a>
-                  
+                
                   <!-- <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span> -->
                   <!-- <span class="clickable text-danger py-5 clickable" (click)="deleteproject(project)">Delete</span> -->
                   <a class="delete" (click)="deleteproject(project)"   matTooltip="Delete Project" >
@@ -528,7 +548,9 @@
                 <p>Program Purpose</p>
 
                 <div *ngIf="editdata==false">
+                  
                   <span class="tab-text labelcont">{{program_detials.purpose}}</span>
+                  <div *ngIf="program_detials.purpose==undefined || program_detials.purpose==null || program_detials.purpose=='' " class="h6">-</div>
                 </div>
                 <div *ngIf="editdata==true">
                   <input type="text" (change)="program_detials.purpose=$event.target.value"
@@ -587,7 +609,7 @@
                 <div *ngIf="editdata==true">
                   <input type="text" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
                     [value]="(program_detials.effortsSpent==undefined||program_detials.effortsSpent==null)?'':program_detials.effortsSpent"
-                    class="small-input" placeholder="Enter Program Purpose">
+                    class="small-input" placeholder="Enter Efforts Spent">
                 </div>
 
               </div>
@@ -636,7 +658,7 @@
                   <th class="py-10">Last Updated</th>
                   <th class="py-10">Last Updated by</th>
                   <th class="py-10">Created By</th>
-                  <th class="py-10">Action</th>
+                  <th class="py-10">Actions</th>
                 </thead>
                 <tbody>
                   <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 5, currentPage: p } ">
