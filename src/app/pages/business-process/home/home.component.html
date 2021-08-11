@@ -42,6 +42,7 @@
           </div>
         </div>
         <div class="row col-md-12 text-bold workspace-title">
+          <div></div>
           <span mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name<span class="asc"
                 *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc"
                 *ngIf="!orderAsc && sortIndex==0">&#8593;</span></span>
@@ -68,10 +69,14 @@
           <mat-accordion>
             <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
               *ngFor="let each_diag of displayedRows$ | async | filter: term;let i=index;trackBy:loopTrackBy"
-              [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
+              [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)" hideToggle>
               <mat-expansion-panel-header class="dropdown_icon">
                 <mat-panel-title>
                   <div class="row col-md-12" id="bpmn_list_row">
+                    <div>
+                      <i class="material-icons expand-open">chevron_right</i>
+                      <i class="material-icons expand-close">expand_less</i>
+                    </div>
                     <span [matTooltip]=each_diag.bpmnProcessName
                       matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?
                       fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</span>
@@ -112,7 +117,7 @@
                 <span class="info"
                   *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process
                   Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)"></div>
+                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)" [id]="'_diagram'+i"></div>
               </div>
             </mat-expansion-panel>
           </mat-accordion>

@@ -143,3 +143,16 @@ div#bpmn_list {
     top: 10px;
     right: 10px;
 }
+
+    i.material-icons.expand-close {
+        display: none;
+    }
+    .mat-expanded i.material-icons.expand-close {
+        display: block !important;
+    }
+    i.material-icons.expand-open {
+        display: block;
+    }
+    .mat-expanded i.material-icons.expand-open {
+        display: none !important;
+    }
