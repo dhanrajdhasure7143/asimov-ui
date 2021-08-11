@@ -111,7 +111,11 @@ img.hover-img {
   height: 16px;
   cursor: pointer;
 }
-
+.img-upload{
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
 /* .box-fileupload {
   background: #d3e7ff;
   width: 100%;
