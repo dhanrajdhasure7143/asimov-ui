@@ -2,7 +2,7 @@
     <div class="d-flex PI-srh-graph">
             <div class="form-group pr-0 PI-serwksp">
                 <input class="form-control toolbar-search bps-home-fileds" type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm">
-                <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+                <!-- <img src="../../../../assets/images/search.svg" alt="" class="testplus1"> -->
             </div>
             <div class="form-group pr-0">
                 <button class="btn btn-primary" id="generateGraph" (click)="slideUp()">
@@ -43,7 +43,7 @@
                     </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let data of xesData |filter:searchTerm | paginate: { itemsPerPage: 50, currentPage: p };trackBy:loopTrackBy;let i=index">
+                <tr *ngFor="let data of displayedRows$|async |filter:searchTerm ;trackBy:loopTrackBy;let i=index">
                     <td>{{data[0]}}</td>
                     <td>{{dataResource(data)}}</td>
                     <td>{{dataName}}</td>
@@ -53,10 +53,17 @@
                 </tr>
             </tbody>
         </table>
-        <div class="pull-right">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+        <div>
+            <mat-paginator #paginator
+            [length]="totalRows$ | async"
+            [pageIndex]="0"
+            [pageSize]="10"
+            [showFirstLastButtons]="true"
+            [pageSizeOptions]="[5, 10, 25, 50]"
+          ></mat-paginator>
+        <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls></div> -->
         </div>
     </div>
 </div>
 
-<process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)"></process-category-overlay>
+<process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>

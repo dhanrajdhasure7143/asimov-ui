@@ -130,7 +130,7 @@
                   </tr>
             </thead>
             <tbody #container id="uploaded_data">
-                <tr *ngFor="let row of fileData|filter:searchTerm| paginate: { itemsPerPage: 100, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
+                <tr *ngFor="let row of displayedRows$|async | filter:searchTerm;trackBy:loopTrackBy;let i=index;" class="tableRow">
                   <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val)"
                     [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1" 
                     [class.invalid]="invalidCells['row'+i] && invalidCells['row'+i].indexOf('cell'+j)>-1"> 
@@ -140,8 +140,17 @@
             </tbody>
         </table>
       </form>
-        <div class="col-sm-8"></div>
-      <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+      <div>
+        <mat-paginator #paginator
+            [length]="totalRows$ | async"
+            [pageIndex]="0"
+            [pageSize]="10"
+            [showFirstLastButtons]="true"
+            [pageSizeOptions]="[5, 10, 25, 50]"
+          ></mat-paginator>
+      </div>
+        <!-- <div class="col-sm-8"></div>
+      <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div> -->
     </div>
 </div>
 
