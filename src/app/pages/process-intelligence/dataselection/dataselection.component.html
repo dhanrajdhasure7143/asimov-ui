@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
       <div class="col-md-12 col-sm-12" id="title">
           <button class="btn btn-warning eiap-btn" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
@@ -132,7 +132,7 @@
         <mat-paginator #paginator
         [length]="totalRows$ | async"
         [pageIndex]="0"
-        [pageSize]="10"
+        [pageSize]="100"
         [showFirstLastButtons]="true"
         [pageSizeOptions]="[5, 10, 25, 50]"
       ></mat-paginator>
