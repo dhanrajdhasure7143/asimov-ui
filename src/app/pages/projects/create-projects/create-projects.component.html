@@ -258,7 +258,7 @@
                                                 <option value="E-Commerce">E-Commerce</option>
                                             </select>
                                             <span
-                                                *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched"
+                                                *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
                                                 class=" errspan required">Map Value Chain Required*</span>
                                         </div>
                                     </div>
@@ -271,8 +271,10 @@
                                                           Maximum of 200 characters
                                                         </span> -->
                                         <label class="label-control">Description</label>
-                                        <textarea class="form-control" row="3"
-                                            placeholder="Enter Description"></textarea>
+                                        <textarea class="form-control" formControlName="description" row="3"
+                                            placeholder="Enter Description"
+                                            [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
+                                            
                                     </div>
                                 </div>
                             </form>
@@ -311,7 +313,7 @@
                                                 {{project.projectName}}                                               
                                             </h3>
                                             <div class="prj-slt-lst">
-                                                <span>Oct-20-2020</span>
+                                                <span>{{project.createdTimestamp | date:'MMM-d-y'}} </span>
                                                  <!-- <span class="pull-right clickable"
                                                     (click)="remove_project(project,'selected')"><i
                                                         class="fa fa-trash"></i></span>-->

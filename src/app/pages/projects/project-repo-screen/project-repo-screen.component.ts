@@ -274,15 +274,6 @@ this.getFileDetails();
       this.listOfFiles.push(value)
     }
     this.uploadFileForm.get("uploadFile").setValue(this.fileList);
-     // console.log(<File> e.target.files);
-
-    
-    // this.fileUploadData = <File> e.target.files[0]
-    // console.log(this.fileUploadData);
-    // this.multiFilesArray.push(
-    //   e.target.files[0]
-    // )
-    // console.log("array",this.multiFilesArray);
     
     
   }

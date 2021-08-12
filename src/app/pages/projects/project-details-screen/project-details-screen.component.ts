@@ -151,6 +151,7 @@ percentageComplete: number;
 
       this.uploadtaskFileForm=this.formBuilder.group({
         category: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
+        description: ["", Validators.compose([Validators.required, Validators.maxLength(200)])],
         filePath: ["", Validators.compose([Validators.required])],
        })
        this.uploadFileFormDetails=this.formBuilder.group({
@@ -247,7 +248,13 @@ percentageComplete: number;
     for (var i = 0; i <= e.target.files.length - 1; i++) {
       var selectedFile = e.target.files[i];
       this.fileList.push(selectedFile);
-      this.listOfFiles.push(selectedFile.name)
+      var value = {
+        // File Name 
+         name: selectedFile.name,
+         //File Size 
+         size: selectedFile.size,
+      }
+      this.listOfFiles.push(value)
     }
     this.uploadtaskFileForm.get("filePath").setValue(this.fileList);
     this.uploadFileFormDetails.get("uploadFile").setValue(this.fileList);
@@ -805,10 +812,13 @@ percentageComplete: number;
      fileData.append("taskId", this.selectedtaskfileupload.id)
 
      this.rpa.uploadProjectFile(fileData).subscribe(res => {
+      this.spinner.show();
+      this.spinner.hide();
       let message: any= res;
        this.uploadtaskFilemodalref.hide();
        //if(res.message!=undefined)
        //{
+      
         this.getTaskandCommentsData();
         this.getLatestFiveAttachments(this.selectedtaskfileupload.projectId)
          Swal.fire({
