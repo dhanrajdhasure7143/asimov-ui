@@ -6,9 +6,8 @@ import { Router } from '@angular/router';
   selector: 'app-bussiness-process',
   template: `<div class="main-content">
               <div class="row content-area">
-                <div class="module-heading">
-                  <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
-                  <span class="module-heading-title">Process Intelligence</span>
+                <div class="module-heading title">                  
+                  <span class="module-header-title">Process Intelligence</span>
                   <span class="insight-back-button" *ngIf="isShow"> <a href="javascript:void(0);" (click)="gotoProcessgraph()">Go Back</a> </span>
                 </div>
                 <div class="module-body">
@@ -53,3 +52,5 @@ export class ProcessIntelligenceComponent implements OnInit {
 }
 
 }
+
+// <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>

@@ -1,18 +1,15 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-4 col-sm-4" id="title">
-          <!-- <button class="btn btn-warning eiap-btn" *ngIf="!headerName" (click)="resetColMap()">Reset Mapping</button> -->
+<div class="container-fluid new-PI-layout">
+    <div class="d-flex PI-srh-graph">
+      <!-- <div class="col-md-4 col-sm-4" id="title">
+          <button class="btn btn-warning eiap-btn" *ngIf="!headerName" (click)="resetColMap()">Reset Mapping</button>
+      </div> -->
+      <div class="form-group pr-0 PI-serwksp">
+        <input class="form-control toolbar-search bps-home-fileds" type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm">
+        <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
       </div>
-      <div class="col-md-6">
-        <div class='col-sm-8'></div>
-          <div class=" col-sm-4 inner-addon right-addon">
-            <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
-            <input type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm">
-          </div>
-      </div>
-      <div class="col-md-2 col-sm-12">
-          <button class="btn btn-primary eiap-btn right" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData || (step_id != headerData.length)">
-              <img src="assets/images/Group 77.svg">&nbsp;&nbsp;&nbsp;Next</button>
+      <div class="form-group pr-0">
+        <button class="btn btn-primary" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData || (step_id != headerData.length)">
+        <img src="assets/images/Group 77.svg" class="testplus">Next</button>
       </div>
     </div>
     <div class="row" *ngIf="headerName" class="columnSelection">
@@ -28,9 +25,9 @@
         </svg> Error Mapping
       </div>
     </div>
-    <div class="">
+    <div class="row">
       <form id="DataDocTableForm">
-        <table class="table" id="process_data">
+        <table class="PI table" id="process_data">
             <thead #header >
                 <tr>
                     <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader" (click)= "sort(headValue)">

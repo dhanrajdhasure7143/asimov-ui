@@ -1,23 +1,23 @@
-<div class="container">
+<div class="container-fluid new-PI-layout">
+    <div class="d-flex PI-srh-graph">
+            <div class="form-group pr-0 PI-serwksp">
+                <input class="form-control toolbar-search bps-home-fileds" type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm">
+                <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+            </div>
+            <div class="form-group pr-0">
+                <button class="btn btn-primary" id="generateGraph" (click)="slideUp()">
+                <img src="assets/images/Group 77.svg" class="testplus">Generate Process Graph</button>
+            </div>  
+    </div>
     <div class="row">
-        <div class="col-md-6"></div>
-        <div class=" col-md-3 inner-addon right-addon">
-                <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
-                <input type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm">
-              </div>
-        <div class="col-md-3">
-                <button class="btn btn-primary eiap-btn pull-right" id="generateGraph" (click)="slideUp()">
-                        <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
-        </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
-            <table class="table table-hover text-center">
+        <div class="col-md-12 p-0">
+            <table class="PI table table-hover">
                 <thead  class="text-center">
                     <tr>
-                        <th class="text-center">CaseID</th>
-                        <th class="text-center">Activity</th>
-                        <th class="text-center">Resource</th>
-                        <th class="text-center">Complete Timestamp</th>
+                        <th>CaseID</th>
+                        <th>Activity</th>
+                        <th>Resource</th>
+                        <th >Complete Timestamp</th>
                     </tr>
                     <tr>
                         <th class="tableHeader">
@@ -56,7 +56,6 @@
         <div class="pull-right">
         <pagination-controls (pageChange)="p = $event"></pagination-controls></div>
         </div>
-        <div class="col-md-2"></div>
     </div>
 </div>
 
