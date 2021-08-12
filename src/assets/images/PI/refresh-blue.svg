@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-refresh-blue">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="refresh-blue" clip-path="url(#clip-refresh-blue)">
+    <g id="refresh-cw">
+      <path id="Path_908" data-name="Path 908" d="M23,4v6H17" fill="none" stroke="#00a0e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_909" data-name="Path 909" d="M1,20V14H7" fill="none" stroke="#00a0e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_910" data-name="Path 910" d="M3.51,9A9,9,0,0,1,18.36,5.64L23,10M1,14l4.64,4.36A9,9,0,0,0,20.49,15" fill="none" stroke="#00a0e3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

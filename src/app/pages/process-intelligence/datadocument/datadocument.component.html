@@ -12,19 +12,20 @@
         <img src="assets/images/Group 77.svg" class="testplus">Next</button>
       </div>
     </div>
-    <div class="row" *ngIf="headerName" class="columnSelection">
-      <div class="col-md-4"><b>Select Column - Step {{step_id}}/{{headerData.length}}:"{{headerName}}"</b></div>
-      <div class="col-md-4"><small>(Click on the {{headerName}} Value Column for Data Validation)</small></div>
-      <div class="col-md-2"> <svg width="12" height="12" class="svg">
-          <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
-        </svg> Success Mapping
-      </div>
-      <div class="col-md-2">
-        <svg width="12" height="12" class="svg">
-          <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
-        </svg> Error Mapping
-      </div>
-    </div>
+    <div class="row" *ngIf="headerName" class="columnSelection PI-select-data">
+        <div class="resur-value-data d-flex">
+          <h5>Select Column - Step {{step_id}}/{{headerData.length}}:"{{headerName}}"</h5>
+          <small>(Click on the {{headerName}} Value Column for Data Validation)</small>
+        </div>
+        <div class="err-mapping">
+          <svg width="12" height="12" class="svg">
+            <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
+          </svg> Success Mapping
+          <svg width="12" height="12" class="svg">
+            <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
+          </svg> Error Mapping
+        </div>
+    </div>  
     <div class="row">
       <form id="DataDocTableForm">
         <table class="PI table" id="process_data">

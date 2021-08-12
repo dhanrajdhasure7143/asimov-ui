@@ -78,7 +78,7 @@
     }
     
 .databaseForm{
-    margin-top: 15px;
+    /* margin-top: 15px; */
 }
 .databaseForm label{
     font-size: 12px;
@@ -265,9 +265,12 @@ tr.mat-header-row {
 img.hover-img {
     display: none;
 }
-.upload_zone ngx-dropzone-label:hover img.default-img {
+.upload_zone ngx-dropzone-label:hover img.default-img, .graph_table span:hover img.default-img {
     display: none;
 }
-.upload_zone ngx-dropzone-label:hover img.hover-img {
+.upload_zone ngx-dropzone-label:hover img.hover-img, .graph_table span:hover img.hover-img {
     display: initial;
+}
+.PI-workspace-table .PI-serwksp {
+    margin-right: 0px !important;
 }
