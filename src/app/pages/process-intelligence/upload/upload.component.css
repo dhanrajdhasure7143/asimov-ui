@@ -111,14 +111,7 @@
     height: 300px;
     overflow:scroll; 
 }
-.pList{
-    box-shadow: 0px 3px 13px -6px rgba(0,0,0,.50) !important;
-    /* cursor: pointer; */
-}
-.pList:hover{
-    box-shadow: 3px 3px 16px -3px rgba(0,0,0,.50) !important;
-    background-color: rgb(233, 233, 233);
-}
+
 .pilist_table{
 }
 .process_view span{
@@ -214,9 +207,6 @@ input[type="text"]{
     .process-header{
     width: 120px;
     }
-    .select-cat{
-        margin-top: 5px;
-    }
     .table_header{
         font-size: 16px;
         color: #fff;
@@ -224,4 +214,60 @@ input[type="text"]{
     }
 tr.mat-header-row {
     background-color: #4AB0F5;
+}
+
+.box-heading {
+    /* font-weight: bold; */
+    color: #5b5b5b;
+    /* margin: 20px 0; */
+    margin: 0px;
+    line-height: 2;
+}
+.PI-heading label {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 0px !important;
+    color: #00a0e3;
+}
+.PI-heading h4 {
+    font-size: 13px;
+    font-weight: 400;
+    padding: 0px !important;
+    color: #001c47;
+    margin-top: 5px;
+    margin-bottom: 0px !important;
+}
+.PI-uploadgrid {
+    border-right: 1px solid #e5e5e5;
+    width: 20.7% !important;
+    padding: 10px;
+    height: 100vh;
+}
+.PI-uploadgrid ngx-dropzone{
+    height: 140px;
+}
+.PI-uploadgrid h5{
+    margin-bottom: 0px !important;
+    margin-top: 6px !important;
+}
+.PI-uploadgrid label{
+    margin-bottom: 0px !important;
+}
+.download_link a{
+    font-size: 13px !important;
+    color:#00a0e3 !important;
+    font-weight: 500 !important;
+}
+.PI-workspace-table {
+    width: 79.3% !important;
+    padding: 15px;
+}
+img.hover-img {
+    display: none;
+}
+.upload_zone ngx-dropzone-label:hover img.default-img {
+    display: none;
+}
+.upload_zone ngx-dropzone-label:hover img.hover-img {
+    display: initial;
 }
