@@ -15,14 +15,31 @@ input[type="text"]{
     /* overflow: hidden auto;
     height: calc(100% - 50px);
     position: relative; */
-    padding: 15px 15px 10px 15px;
+    padding: 15px 10px 10px;
 }
-.row.PI-srh-graph {
-    float: right;
-}
+
 .PI-serwksp input {
     height: 36px;
 } 
-.PI-serwksp {
-    width: 100%;
-} 
+.PI-srh-graph {
+    width: 24%;
+    float: right;
+}
+.resur-value-data h5 {
+    color: #00a0e3;
+    font-weight: 600;
+    margin: 0px;
+}
+.resur-value-data small {
+    float: right;
+    margin-left: 30px;
+}
+.err-mapping {
+    font-size: 13px;
+    margin-top: 6px;
+}
+.PI-select-data {
+    color: unset !important;
+    margin: 0px !important;
+    width: 70%;
+}

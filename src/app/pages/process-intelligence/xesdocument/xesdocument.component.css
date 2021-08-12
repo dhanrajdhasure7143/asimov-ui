@@ -14,16 +14,13 @@ input[type="text"]{
     /* overflow: hidden auto;
     height: calc(100% - 50px);
     position: relative; */
-    padding: 15px 15px 10px 15px;
+    padding: 15px 10px 10px;
 }
-.PI-srh-graph {
-    width: 400px;
-    float: right;
-}
+
 .PI-serwksp input {
     height: 36px;
 }
-.PI-serwksp {
-    width: 100%;
-    margin-right: 15px;
-}
+.PI-srh-graph {
+    width: 35%;
+    float: right;
+  }
