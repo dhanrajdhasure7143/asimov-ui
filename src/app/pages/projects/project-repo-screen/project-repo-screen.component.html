@@ -367,11 +367,13 @@
                   <th mat-header-cell *matHeaderCellDef> Actions</th>
                   <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
                     <span class="remove-action">
-                      <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" type="button"><i class="fas fa-times"></i></button>
+                      <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny File Request" type="button"><i class="fas fa-times"></i></button>
                     </span>
                     <span class="upload-action" *ngIf="loggedUser == element.requestTo">
                       <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
-                      <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
+                      <label for="file" (change)="uploadRequetedFile($event, element)">
+                        <img src="../../../../assets/images/Projects/fileupload.svg"class="img-upload" matTooltip="Upload">
+                      </label>
                   </span>
                   <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
                   
@@ -444,11 +446,13 @@
               <th mat-header-cell *matHeaderCellDef> Actions</th>
               <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
                 <span class="remove-action">
-                  <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" type="button"><i class="fas fa-times"></i></button>
+                  <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny File Request"type="button"><i class="fas fa-times"></i></button>
                 </span>
                 <span class="upload-action" *ngIf="loggedUser == element.requestTo">
                   <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
-                  <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
+                  <label for="file" (change)="uploadRequetedFile($event, element)">
+                    <img src="../../../../assets/images/Projects/fileupload.svg"class="img-upload">
+                  </label>
               </span>
               <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
               
@@ -572,7 +576,7 @@
               <label>Upload<span style="color:red">*</span></label><br>
               <div class="box-fileupload">
                 <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
-              <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+              <label for="file" (change)="chnagefileUploadForm($event)">
                 <img src="../../../../assets/images/Projects/fileupload.svg" class="upload-img">
                 &nbsp;
                 <span>Select File</span>

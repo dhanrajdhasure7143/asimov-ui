@@ -228,14 +228,16 @@ export class ProjectsProgramsTableComponent implements OnInit {
           this.spinner.hide();
           this.getallProjects();
           let response:any=res
-          if(response.errorMessage==undefined)
+          if(response.errorMessage==undefined && response.warningMessage==undefined)
           {
             this.projects_list=[];
             Swal.fire("Success",response.message,"success")
             this.getallProjectsdata();
           }
-          else
+          else if(response.errorMessage==undefined && response.message==undefined)
           {
+            Swal.fire("Error..!!",response.warningMessage,"error")
+          }else{
             Swal.fire("Error",response.errorMessage,"error")
           }
         })

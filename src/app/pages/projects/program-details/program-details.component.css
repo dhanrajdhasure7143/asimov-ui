@@ -66,6 +66,7 @@
 
 button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
   display: initial;
+  cursor: pointer;
 }
 
 
@@ -199,7 +200,9 @@ span.programdesc {
 img.testplus.hover-img ,
 td a:hover img.testplus.default-img{
     display: none;
+    cursor: pointer;
 }
 td a:hover img.testplus.hover-img {
     display: initial;
+    cursor: pointer;
 }

@@ -64,6 +64,7 @@
               </span>
               <!-- <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span> -->
 
+              
               <span (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata"
                 [class]=" 'projdesc clickable '+(editdata.description==true?'focus-data':'')">
                 {{projectDetails.description}}
@@ -267,7 +268,12 @@
                   <span class="labeltit">Project Purpose</span>
 
                   <div *ngIf="editdata==false">
+                    
                     <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
+                    <span
+                    *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
+                    class="tab-text labelcont">-</span>
+  
                   </div>
                   <div *ngIf="editdata==true">
                     <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
@@ -1378,16 +1384,52 @@
               <span *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched"
                 class="errspan required">File Category Required*</span>
             </div>
+            <div class="col-md-12">
+                
+              <label>Description<span style="color:red">*</span></label>
+              <textarea name= "desc" class="form-control" rows="2" formControlName="description" placeholder="Enter Description...">
 
-            <div class="form-fields col-md-12">
+              </textarea>
+              <span *ngIf="uploadtaskFileForm.get('description').invalid && uploadtaskFileForm.get('description').touched"
+                  style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+
+            </div>
+         
+            <div class="col-md-12">
               <label>Upload<span class="star">*</span></label>
-              <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" />
-              <label for="file" (change)="chnagefileUploadForm($event)"><i class="fas fa-file-upload"></i></label>
-              <div *ngFor="let selected of listOfFiles;let index = index">
-                {{selected}}
+              <div class="box-fileupload">
+                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+                <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+                <img src="../../../../assets/images/Projects/fileupload.svg" class="upload-img">
+                &nbsp;
+                <span>Select File</span>
+              </label>
+              </div>
+              &nbsp;
+              <div >
+                <div class="row">
+                  <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
+                    <div class ="project-card">
+                        <span class="pull-right clickable" matTooltip="Remove"
+                        (click)="removeSelectedFile(index)">
+                            <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                            <!-- <i class="fa fa-trash"></i> -->
+                        </span>
+                     <span class="card-placeholder">
+                          File Name : {{selected.name}}     
+                    </span>
+                    <br>
+                      <span class="file-size">
+                        Size : {{selected.size | fileSizePipe}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- {{selected}}
                 <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
                   <span aria-hidden="true">&times;</span>
-              </button>
+              </button> -->
+                <!-- <button mat-icon-button (click)="removeSelectedFile(index)">delete</button> -->
               </div>
               <!-- <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File"
                 formControlName="filePath" placeholder="choose file"> -->
@@ -1413,14 +1455,14 @@
   <div class="modal-header modelprhead">
     <h4 class="modal-title pull-left">Upload File</h4>
     <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
-      <span aria-hidden="true">&times;</span>
+      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
     </button>
   </div>
   <div class="modal-body">
   <div class="container" style="width:100%">
       <form [formGroup]="uploadFileFormDetails" (ngSubmit)="submitUploadFileFormattachment()">
           <div class="row">
-              <div class="col-md-6">
+              <div class="col-md-12">
                   <label for="fileCategory">File Category<span style="color:red">*</span></label>
                   <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory" required>
                     <option  [value]="null" disabled hidden>Select Category</option>
@@ -1435,7 +1477,7 @@
               <div class="col-md-12">
                   
                   <label>Description<span style="color:red">*</span></label>
-                  <textarea name= "desc" class="form-control" formControlName="description" placeholder="Enter Description..." style="height:100px;" required>
+                  <textarea name= "desc" class="form-control" rows="2" formControlName="description" placeholder="Enter Description...">
   
                   </textarea>
                   <span *ngIf="uploadFileFormDetails.get('description').invalid && uploadFileFormDetails.get('description').touched"
@@ -1445,15 +1487,40 @@
               <div class="col-md-12">
                   
                 <label>Upload<span style="color:red">*</span></label>
-                <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required> -->
-                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" />
-              <label for="file" (change)="chnagefileUploadForm($event)"><i class="fas fa-file-upload"></i></label>
-              <div *ngFor="let selected of listOfFiles;let index = index">
-                {{selected}}
-                <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
-                  <span aria-hidden="true">&times;</span>
-              </button>
-              </div>
+                <div class="box-fileupload">
+                  <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+                  <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+                  <img src="../../../../assets/images/Projects/fileupload.svg" class="upload-img">
+                  &nbsp;
+                  <span>Select File</span>
+                </label>
+                </div>
+                &nbsp;
+                <div >
+                  <div class="row">
+                    <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
+                      <div class ="project-card">
+                          <span class="pull-right clickable" matTooltip="Remove"
+                          (click)="removeSelectedFile(index)">
+                              <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                              <!-- <i class="fa fa-trash"></i> -->
+                          </span>
+                       <span class="card-placeholder">
+                            File Name : {{selected.name}}     
+                      </span>
+                      <br>
+                        <span class="file-size">
+                          Size : {{selected.size | fileSizePipe}}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- {{selected}}
+                  <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+                  <!-- <button mat-icon-button (click)="removeSelectedFile(index)">delete</button> -->
+                </div>
                 
                 <span *ngIf="uploadFileFormDetails.get('uploadFile').invalid && uploadFileFormDetails.get('uploadFile').touched"
                     style="color:red" class="fa fa-info-circle errspan">File Required*</span>

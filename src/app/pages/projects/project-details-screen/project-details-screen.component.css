@@ -458,3 +458,47 @@ span.clickable.projdesc {
   opacity: 0.6;
   /* margin-top: 35px; */
 }
+.box-fileupload {
+  background: #ffffff;
+  width: 100%;
+  padding: 5px;
+  border: 2px dashed #00a0e3;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
+}
+.box-fileupload:hover{
+  background: #e3eaee !important; ;
+
+}
+.project-card {
+  background-color: #FFFFD5;
+  padding: 10px;
+  border: 1px solid #d7d7d7;
+  color: rgb(7, 7, 7);
+  transition: 0.3s;
+  border-radius: 2px;
+  margin-bottom: 15px;
+}
+
+.project-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+
+.card-placeholder {
+  flex-basis: 0;
+  flex-grow: 1;
+  opacity: 1;
+  font-size: 12px;
+  font-weight: 400;
+}
+.clickable {
+  cursor: pointer;
+}
+span.file-size {
+	color: #999;
+  font-size: 12px;
+  font-weight: 400;
+}
