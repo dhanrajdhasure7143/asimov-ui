@@ -874,18 +874,16 @@ label{
 /*pi bpmn component styles - Ends*/
 /*upload component styles - Starts*/
 .download_link{
-  top:104px;
   text-align: center;
-  color:#0061cf !important;
-  font-weight: 550;
   cursor: pointer;
+  margin-top: 20px;
 }
 
 .upload_zone{
-    border:1px solid rgb(212, 179, 179);
+    /* border:1px solid rgb(212, 179, 179);
     padding: 0;
     text-align: center;
-    margin: 2px 5px;
+    margin: 2px 5px; */
 }
 .upload_btn{
     margin-left:-10px;
