@@ -127,3 +127,19 @@ mat-expansion-panel-header {
 .aprwkfl-grid-data {
   height: 65vh !important;
 }
+
+i.material-icons.expand-close {
+  display: none;
+}
+.mat-expanded i.material-icons.expand-close {
+  display: block !important;
+}
+i.material-icons.expand-open {
+  display: block;
+}
+.mat-expanded i.material-icons.expand-open {
+  display: none !important;
+}
+.expan-icon{
+  width: 15%;
+}
