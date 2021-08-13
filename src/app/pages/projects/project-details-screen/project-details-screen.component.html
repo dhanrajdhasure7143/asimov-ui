@@ -42,8 +42,18 @@
           </button>
         </span>
 
-        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
-        <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
+        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span> -->
+        <span>
+          <button  [matMenuTriggerFor]="menu">
+            <img class="more" src="../../../../assets/images/Projects/more.svg" matTooltip="More">
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="downloadExcel()">Download as Excel</button>
+          </mat-menu>
+        
+        </span>
+          
+       
       </span>
     </div>
 

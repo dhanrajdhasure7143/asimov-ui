@@ -376,9 +376,9 @@
       <ng-container matColumnDef="new">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
         <td mat-cell   *matCellDef="let project">
-          New
-          <!-- <span *ngIf="project.new!=null" [matTooltip]="project.new">{{project.new}}</span>
-          <span *ngIf="project.new==null">---</span> -->
+         
+          <span *ngIf="project.status!=null" [matTooltip]="project.status">{{project.status}}</span>
+          <span *ngIf="project.status==null">---</span>
         </td>
 
     </ng-container>
@@ -425,8 +425,7 @@
                   <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus default-img">
                   <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="testplus hover-img">
                 </a>
-              
-                
+
                 <a class="delete" (click)="deleteproject(project)"   matTooltip="Delete Project" >
                   <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus default-img">
                   <img src="../../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img">
