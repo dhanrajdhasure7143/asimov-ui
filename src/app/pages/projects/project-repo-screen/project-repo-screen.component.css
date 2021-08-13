@@ -30,7 +30,7 @@
   margin-top: 0px !important;
   height: 60%;
   width: 100%;
-  overflow: hidden;
+  overflow: overlay;
 }
 ::ng-deep .modal-up .modal-content {
   margin-top: 0px !important;
@@ -167,4 +167,10 @@ span.file-size {
 	color: #999;
   font-size: 12px;
   font-weight: 400;
+}
+.documents1{
+  padding: 0px 15px
+}
+.deny-serve{
+  opacity: 1;
 }
