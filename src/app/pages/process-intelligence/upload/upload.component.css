@@ -81,15 +81,15 @@
     /* margin-top: 15px; */
 }
 .databaseForm label{
-    font-size: 12px;
+    /* font-size: 12px; */
 }
 .databaseForm input,.databaseForm select{
-    border-left: 0px;
+    /* border-left: 0px;
     border-right: 0px;
     border-top: 0px !important;
     box-shadow: none;
     border-radius: 0px;
-    border-bottom: 1px solid rgb(121, 118, 118);
+    border-bottom: 1px solid rgb(121, 118, 118); */
 }
 .errspan{
     position: relative;
@@ -194,10 +194,10 @@ input[type="text"]{
       height: 118px;
   }
   .connection_btn{
-      margin-top: 10px;
+      margin-top: 15px;
   }
   .featchTbale-btn{
-      margin-top: 20px;
+      /* margin-top: 20px; */
   }
     .asc, .desc{
         font-size: 23px;
@@ -273,4 +273,11 @@ img.hover-img {
 }
 .PI-workspace-table .PI-serwksp {
     margin-right: 0px !important;
+}
+.db-gpg-btn {
+    margin-left: 15px;
+    margin-right: 0px !important;
+}
+.bpmnCreate .container.m-contanier.form-body {
+    height: calc(100% - 90px) !important;
 }
