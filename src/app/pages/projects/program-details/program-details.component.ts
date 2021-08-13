@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RestApiService} from '../../services/rest-api.service'
 import { NgxSpinnerService} from 'ngx-spinner'
 import {  ActivatedRoute, Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Base64 } from 'js-base64';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -36,6 +39,10 @@ export class ProgramDetailsComponent implements OnInit {
     mindate:any;
     selected_process_names:any=[];
     editdata:Boolean=false;
+    displayedColumns8: string[] = ["initiatives","projectName","owner","new","projectPercentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
+    dataSource8:MatTableDataSource<any>;
+    @ViewChild("sort104",{static:false}) sort104: MatSort;
+    @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
   ngOnInit() {
     this.getprojects_and_programs();
     this.mindate= moment().format("YYYY-MM-DD");
@@ -101,6 +108,10 @@ export class ProgramDetailsComponent implements OnInit {
   {
     this.rest.getProjectsByProgramId(id).subscribe(list=>{
       this.linked_projects=list;
+      console.log(this.linked_projects);
+      this.dataSource8= new MatTableDataSource(this.linked_projects);
+      this.dataSource8.sort=this.sort104;
+      this.dataSource8.paginator=this.paginator104;
     })
   }
 

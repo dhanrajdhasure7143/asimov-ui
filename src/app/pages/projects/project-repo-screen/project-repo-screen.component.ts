@@ -45,6 +45,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   @ViewChild("sort13",{static:false}) sort13: MatSort;
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
+  @ViewChild("paginator102",{static:false}) paginator102: MatPaginator;
   multiFilesArray: any[] = [];
   fileId: any;
   filedeleteflag:Boolean;
@@ -288,6 +289,7 @@ this.getFileDetails();
       console.log(this.requestedFiledata);
       this.dataSource4= new MatTableDataSource(this.requestedFiledata);
       this.dataSource4.sort=this.sort12;
+      this.dataSource4.paginator=this.paginator102;
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
