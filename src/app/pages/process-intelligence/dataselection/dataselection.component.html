@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <div class="row">
       <div class="col-md-12 col-sm-12" id="title">
           <button class="btn btn-warning eiap-btn" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
@@ -118,7 +118,7 @@
                         <div *ngIf='selected==val' [ngClass]="selected==val?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==val" class='reset_btn' (click)='resetcaseId()'><i class='fa fa-times'></i></button> </div>
                     </td>
                   </tr>
-                <tr *ngFor="let row of fileData| paginate: { itemsPerPage: 100, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
+                <tr *ngFor="let row of displayedRows$|async;trackBy:loopTrackBy;let i=index;" class="tableRow">
                   <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val, row)"
                     [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1"> 
                     {{getDateFormat(row[j],headerData[j]) || ' '}}
@@ -128,8 +128,17 @@
             </tbody>
         </table>
       </form>
-      <div class="col-sm-8"></div>
-        <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+      <div>
+        <mat-paginator #paginator
+        [length]="totalRows$ | async"
+        [pageIndex]="0"
+        [pageSize]="100"
+        [showFirstLastButtons]="true"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+      ></mat-paginator>
+      </div>
+      <!-- <div class="col-sm-8"></div> -->
+        <!-- <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div> -->
     </div>
 </div>
-<process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)"></process-category-overlay>
+<process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>

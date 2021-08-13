@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="95" height="95" viewBox="0 0 95 95">
+  <g id="pi-upload-hover" transform="translate(-8240 -6421)">
+    <g id="Group_279" data-name="Group 279" transform="translate(8240 6421)">
+      <circle id="Ellipse_19" data-name="Ellipse 19" cx="47.5" cy="47.5" r="47.5" transform="translate(0 0)" fill="#0692e2"/>
+    </g>
+    <g id="Icon_feather-upload-cloud" data-name="Icon feather-upload-cloud" transform="translate(8268.508 6449.497)">
+      <path id="Path_904" data-name="Path 904" d="M24.7,24.35,18.35,18,12,24.35" transform="translate(0.613 0.787)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Path_905" data-name="Path 905" d="M18,18V32.288" transform="translate(0.963 0.787)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Path_906" data-name="Path 906" d="M32.282,28.932a7.938,7.938,0,0,0-3.794-14.907h-2A12.7,12.7,0,1,0,4.676,25.614" transform="translate(0 0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <path id="Path_907" data-name="Path 907" d="M24.7,24.35,18.35,18,12,24.35" transform="translate(0.613 0.787)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+  </g>
+</svg>

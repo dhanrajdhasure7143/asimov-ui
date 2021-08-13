@@ -41,66 +41,78 @@
             </div>
           </div>
         </div>
-        <div class="row col-md-12 text-bold workspace-title">
-          <span mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name<span class="asc"
-                *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==0">&#8593;</span></span>
-          <span>Type</span>
-          <span>Category</span>
-          <span (click)="sort('version',1)">Version<span class="asc"
-                *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==1">&#8593;</span></span>
-          <span (click)="sort('modifiedTimestamp',2)">Last Modified<span class="asc"
-                *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==2">&#8593;</span></span>
-          <span (click)="sort('approverName',3)">Approver<span class="asc"
-                *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==3">&#8593;</span></span>
-          <span (click)="sort('bpmnProcessStatus',4)">Status<span class="asc"
-                *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==4">&#8593;</span></span>
-          <span (click)="sort('reviewComments',5)">Message<span class="asc"
-                *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc"
-                *ngIf="!orderAsc && sortIndex==5">&#8593;</span></span>
-          <span>Actions</span>
+        <div class="col-md-12 text-bold workspace-title table">
+            <div class="header">
+            <div class="cell cell1"></div>
+            <div class="cell cell2" mat-sort-header="bpmnProcessName" (click)="sort('bpmnProcessName',0)">Process Name
+              <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span>
+              <span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span>
+            </div>
+            <div class="cell cell3">Type</div>
+            <div class="cell cell4">Category</div>
+            <div class="cell cell5" (click)="sort('version',1)">Version
+              <span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span>
+              <span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span>
+            </div>
+            <div class="cell cell6" (click)="sort('modifiedTimestamp',2)">Last Modified
+                  <span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span>
+                  <span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span>
+            </div>
+            <div class="cell cell7" (click)="sort('approverName',3)">Approver
+                  <span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span>
+                  <span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span>
+            </div>
+            <div class="cell cell8" (click)="sort('bpmnProcessStatus',4)">Status
+                  <span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span>
+                  <span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span>
+            </div>
+            <div class="cell cell9" (click)="sort('reviewComments',5)">Message
+                  <span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span>
+                  <span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span>
+            </div>
+            <div class="cell cell10">Actions</div>
+          </div>
+          
         </div>
         <div class="row col-md-12 new-bps-grid-data" id="bpmn_list">
           <mat-accordion>
             <mat-expansion-panel [(expanded)]="each_diag.xpandStatus"
               *ngFor="let each_diag of displayedRows$ | async | filter: term;let i=index;trackBy:loopTrackBy"
-              [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)">
+              [id]="'bpmn_list_item'+i" (afterExpand)="getDiagram(each_diag,i)" hideToggle>
               <mat-expansion-panel-header class="dropdown_icon">
                 <mat-panel-title>
-                  <div class="row col-md-12" id="bpmn_list_row">
-                    <span [matTooltip]=each_diag.bpmnProcessName
-                      matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?
-                      fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</span>
-                    <span>{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</span>
-                    <span>{{each_diag.category}}</span>
-                    <span>{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</span>
-                    <span [matTooltip]="each_diag.convertedModifiedTime*1000 | date:'medium'"
-                    matTooltipClass="bpsHeaderTooltip">{{fitTableViewTime(each_diag.convertedModifiedTime*1000 | date:'medium')}}</span>
-                    <span>{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</span>
-                    <span [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
-                      [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</span>
-                    <span>
-                      <span class="comment">
-                        <img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="bpsHeaderTooltip">
-                        <!-- <i class="fa fa-comment" [matTooltip]=each_diag.reviewComments matTooltipPosition="right" matTooltipClass="eiap_tooltip"></i> -->
-                      </span>
-                    </span>
-                    <span>
-                      <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" title="Click to send reminder mail to Approver" class="testplus1">
-                      <!-- <i (click)="sendReminderMail($event, each_diag)"
-                        *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'"
-                        title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
-                      <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
-                        title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
-                      <img (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" title="Delete BPMNotation" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus1">
-                      <i 
-                        *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
-                    </span>
+                        <!-- id="bpmn_list_row" -->
+                  <div class="table">
+                    <div class="rowGroup">
+                      <div class="row">
+                        <div class="cell cell1">
+                          <i class="material-icons expand-open">chevron_right</i>
+                          <i class="material-icons expand-close">expand_less</i>
+                        </div>
+                        <div class="cell cell2"  [matTooltip]=each_diag.bpmnProcessName
+                        matTooltipClass="bpsHeaderTooltip">{{each_diag.bpmnProcessName ?fitTableView(each_diag.bpmnProcessName |titlecase): '-'}}</div>
+                        <div class="cell cell3">{{each_diag.ntype ? each_diag.ntype.toUpperCase(): '-' }}</div>
+                        <div class="cell cell4">{{each_diag.category}}</div>
+                        <div class="cell cell5">{{each_diag.bpmnProcessName ? " V1."+each_diag.version+" ": '-'}}</div>
+                        <div class="cell cell6" >{{each_diag.convertedModifiedTime*1000 | date:'medium'}}</div>
+                        <div class="cell cell7">{{each_diag.approverName ? formatApproverName(each_diag.approverName): '-'}}</div>
+                        <div class="cell cell8" [ngStyle]="{'color':getColor(each_diag.bpmnProcessStatus)}"
+                        [class.pending_value_properties]="each_diag.bpmnProcessStatus=='PENDING'">{{each_diag.bpmnProcessStatus=='PENDING'?pendingStatus:each_diag.bpmnProcessStatus}}</div>
+                        <div class="cell cell9"><img src="../../../../assets/images/BPMS/Msg.svg" class="testplus" [matTooltip]=each_diag.reviewComments matTooltipClass="bpsHeaderTooltip" matTooltipPosition="right"></div>
+                        <div class="cell cell10">
+                          <img src="../../../../assets/images/BPMS/Envelop.svg" (click)="sendReminderMail($event, each_diag)" *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'" matTooltip="Click to send reminder mail to Approver" matTooltipPosition="left" class="testplus1">
+                          <!-- <i (click)="sendReminderMail($event, each_diag)"
+                            *ngIf="isAdminUser && each_diag.bpmnProcessStatus=='PENDING'"
+                            title="Click to send reminder mail to Approver" class="fa fa-envelope"></i> -->
+                          <!-- <i (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'"
+                            title="Delete BPMNotation" class="glyphicon glyphicon-trash"></i> -->
+                          <img (click)="deleteProcess($event, each_diag)" *ngIf="each_diag.bpmnProcessStatus=='INPROGRESS'" matTooltip="Delete BPMNotation" matTooltipPosition="left" src="../../../../assets/images/BPMS/delete-red.svg" class="testplus1">
+                          <i *ngIf="each_diag.bpmnProcessStatus!='INPROGRESS' && (each_diag.bpmnProcessStatus=='APPROVED' || each_diag.bpmnProcessStatus=='REJECTED' || !isAdminUser)">-</i>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                 
                 </mat-panel-title>
               </mat-expansion-panel-header>
               <div class="bps_overlay">
@@ -112,7 +124,7 @@
                 <span class="info"
                   *ngIf="each_diag.bpmnProcessStatus && each_diag.bpmnProcessStatus == 'PENDING'">Business Process
                   Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)"></div>
+                <div [class]="'diagram_container'+i" (click)="openDiagram(each_diag)" [id]="'_diagram'+i"></div>
               </div>
             </mat-expansion-panel>
           </mat-accordion>

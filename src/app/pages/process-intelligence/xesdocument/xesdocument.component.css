@@ -1,4 +1,4 @@
-.inner-addon i{
+/* .inner-addon i{
     position: absolute;
     padding-left: 60%;
     pointer-events: none;
@@ -8,4 +8,19 @@
 .right-addon input{ padding-right: 20px !important; }
 input[type="text"]{
     padding:4px !important;
+  } */
+
+.new-PI-layout {
+    /* overflow: hidden auto;
+    height: calc(100% - 50px);
+    position: relative; */
+    padding: 15px 10px 10px;
+}
+
+.PI-serwksp input {
+    height: 36px;
+}
+.PI-srh-graph {
+    width: 35%;
+    float: right;
   }
