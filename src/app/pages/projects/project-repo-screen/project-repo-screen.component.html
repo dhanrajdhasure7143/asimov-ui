@@ -374,7 +374,11 @@
                     <span class="upload-action" *ngIf="loggedUser == element.requestTo">
                       <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
                       <label for="file" (change)="uploadRequetedFile($event, element)">
-                        <img src="../../../../assets/images/Projects/fileupload.svg"class="img-upload" matTooltip="Upload">
+                        <span class="gridicon">
+                          <img src="../../../../assets/images/Projects/upload.svg" class="default-img" matTooltip="Upload">
+                          <img src="../../../../assets/images/Projects/upload-blue.svg" class="hover-img" matTooltip="Upload"> 
+                        </span>
+                        
                       </label>
                   </span>
                   <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
