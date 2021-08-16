@@ -32,7 +32,7 @@ import { ProcessinsightsComponent } from './processinsights/processinsights.comp
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule} from '@angular/material';
+import {MatInputModule, MatIconModule, MatFormFieldModule, MatTooltipModule,MatDialogModule, MatTabsModule,MatMenuModule} from '@angular/material';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ComboChartComponent } from './processinsights/combo-chart/combo-chart.component';
@@ -57,7 +57,7 @@ import { BusinessInsightsComponent } from './business-insights/business-insights
     ProcessinsightsComponent,
     ComboChartComponent, 
     ComboSeriesVerticalComponent,
-    BusinessInsightsComponent
+    BusinessInsightsComponent,
   ],
   imports: [
     CommonModule,
@@ -84,7 +84,9 @@ import { BusinessInsightsComponent } from './business-insights/business-insights
     MatInputModule, MatIconModule, MatFormFieldModule,
     MatTooltipModule,MatDialogModule,
     NgbModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    MatTabsModule,
+    MatMenuModule
   ],
   providers:[PiHints, 
     {

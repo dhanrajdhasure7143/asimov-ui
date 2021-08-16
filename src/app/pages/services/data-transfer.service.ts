@@ -74,4 +74,11 @@ export class DataTransferService {
     this.submitApproval.next(values)
   }
 
+  private pi_headerValues:BehaviorSubject<any>=new BehaviorSubject<any>(null);
+  pi_headerChanges=this.pi_headerValues.asObservable();
+ 
+  piHeaderValues(values:any){
+    this.pi_headerValues.next(values);
+  }
+
 }
