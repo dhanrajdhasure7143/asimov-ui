@@ -239,7 +239,7 @@ span.labelcont b {
     border-radius: 100%;
     color: #001c47;
     background-color: #ddd;
-    padding: 5px;
+    padding: 7px;
     text-align: center;
     letter-spacing: 0.5px;
     font-size: 15px;
@@ -502,3 +502,13 @@ span.file-size {
   font-size: 12px;
   font-weight: 400;
 }
+img.more{
+  width:20px;
+  height: 20px;
+  cursor: pointer;
+  margin-left: 5px;
+}
+.icon-disabled{
+  cursor: no-drop !important;
+}
+

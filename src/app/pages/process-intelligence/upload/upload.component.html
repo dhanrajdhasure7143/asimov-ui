@@ -1,50 +1,65 @@
 
-<div class="row">
-                <div class='col-md-2 PI-uploadgrid'>
+<div class="row new-PI-layout">
+                <div class='col-md-12 PI-uploadgrid p-0'>
                   <div class="row">
                    <div class="PI-heading">
                         <label class="maintitle PI-heading">Connect Your Data</label>
                         <h4 class="subtitle">Choose below options to get your data</h4>
                    </div>     
-                   <div class="upload_zone" id="upload_xl" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 upload_zone" id="upload_xl" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone (change)="onUpload($event,0)" [multiple]=false [accept]="xlsx_csv_mime" >
+                           <div class="model-img">       
                                 <ngx-dropzone-label>
-                                        <img src ="assets/images/Group 279.svg" class="default-img">
-                                        <img src ="../../../../assets/images/PI/pi-upload-hover.svg" class="hover-img">
-                                        <h5 style="color:#006ed5;font-weight: 300">
-                                                <label>XLSX/CSV</label>
-                                        </h5>
+                                        <img src ="../../../../assets/images/PI/CSV.svg">
                                 </ngx-dropzone-label>
+                           </div>
+                           <div class="model-text">         
+                                <h3>XLSX/CSV</h3>
+                                <h5>Upload</h5>
+                           </div>
+                           <div class="model-uploadhvr">
+                                <img src="../../../../assets/images/PI/upload.svg">
+                           </div>
                         </ngx-dropzone>
                    </div>
-                   <div class="upload_zone" id="upload_xes" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 upload_zone" id="upload_xes" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone (change)="onUpload($event,3)" [multiple]=false accept=".xes, .gzip, .gz" >
+                           <div class="model-img">
                                 <ngx-dropzone-label>
-                                        <img src ="assets/images/XES.svg" class="default-img">
-                                        <img src ="../../../../assets/images/PI/pi-upload-hover.svg" class="hover-img">
-                                        <h5 style="color:#006ed5;font-weight: 300">
-                                                <label>XES</label>
-                                        </h5>
+                                        <img src ="../../../../assets/images/PI/XES.svg">
                                 </ngx-dropzone-label>
+                           </div>
+                           <div class="model-text">
+                                <h3>XES</h3>
+                                <h5>Upload</h5>
+                           </div>
+                           <div class="model-uploadhvr">
+                                   <img src="../../../../assets/images/PI/upload.svg">
+                           </div>                        
                         </ngx-dropzone>
                    </div>
-                   <div class="upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="this.isButtonVisible || enableuploadbuttons">
+                   <div class="col-md-3 upload_zone" id="upload_db" (click)="onDbSelect()" *ngIf="this.isButtonVisible || enableuploadbuttons">
                         <ngx-dropzone [multiple]=false [accept]="db_mime" [disableClick]=true >
+                           <div class="model-img">
                                 <ngx-dropzone-label>
-                                        <img src ="assets/images/DataBase.svg" class="default-img">
-                                        <img src ="../../../../assets/images/PI/pi-plus-hover.svg" class="hover-img"> 
-                                        <h5 style="color:#006ed5;font-weight: 300">
-                                                <label>DB File</label>
-                                        </h5>
+                                        <img src ="../../../../assets/images/PI/DB.svg">
                                 </ngx-dropzone-label>
+                           </div>
+                           <div class="model-text">
+                                <h3>DB File</h3>
+                                <h5>Create New</h5>
+                           </div>
+                           <div class="model-uploadhvr">
+                                <img src="../../../../assets/images/PI/db-plus.svg">
+                           </div>
                         </ngx-dropzone>
                    </div>
-                   <div class="download_link" id="download_template">
+                   <div class="col-md-2 download_link" id="download_template">
                         <a (click)="downloadCSV()">Download Sample Template</a>
                    </div>
                   </div>
                 </div>
-                <div class="col-md-10 PI-workspace-table" id="my_workspace">
+                <div class="col-md-12 PI-workspace-table p-0" id="my_workspace">
                     <div class="row">
                         <div class='col-md-6 pl-0'>
                                 <h4 class="box-heading">My Workspace</h4>

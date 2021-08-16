@@ -1,22 +1,26 @@
-<div class="container-fluid">
-    <div class="row">
-      <div class="col-md-12 col-sm-12" id="title">
-          <button class="btn btn-warning eiap-btn" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
+<div class="container-fluid new-PI-layout">
+  <div class="col-md-12 p-0">
+    <div class="d-flex PI-srh-graph">
+      <div class="form-group" id="title">
+          <button class="btn btn-default" *ngIf="headerName" (click)="resetcaseId()">Reset Mapping</button>
       </div>
-      <div class="col-md-12 col-sm-12">
-          <button class="btn btn-primary eiap-btn pull-right" [disabled]="!isgenerate" id="generateGraph1" (click)="slideUp()">
-              <img src="assets/images/Group 77.svg" style="padding-right: 10px">Generate Process Graph</button>
+      <div class="form-group">
+          <button class="btn btn-primary" [disabled]="!isgenerate" id="generateGraph1" (click)="slideUp()">
+              <img src="../.././../../assets/images/PI/generate graph.svg" class="testplus">Generate Process Graph</button>
       </div>
     </div>
-    <div class="row" *ngIf="headerName" class="columnSelection">
-      <div class="col-md-4"><b>Select Column - Step {{step_id}}/{{headerData.length-1}}:"{{getCaseName(headerName)}}"</b></div>
-      <div class="col-md-4" *ngIf="content_no == 1"><small>(Click on the column that contains your Case IDs. The Case ID usually is a numeric value that is unique and identifies each case in your process.)</small></div>
-      <div class="col-md-4" *ngIf="content_no == 2"><small>(Click on the column that contains your activities. Activities are the actions that take place in your process. For example, if your process is Purchasing then ”Create Purchase Order” is an activity in that process.)</small></div>
-      <div class="col-md-4" *ngIf="content_no == 3 || content_no == 4"><small>(Click on the columns that contains the timestamp for each activity. Timestamps usually look something like “2016-02-01 14:24:30” although the exact format of the timestamp may differ.)</small></div>  
+    <div *ngIf="headerName" class="columnSelection PI-select-data">
+      <div class="resur-value-data">
+        <h5>Select Column - Step {{step_id}}/{{headerData.length-1}}:"{{getCaseName(headerName)}}"</h5>
+        <small *ngIf="content_no == 1">(Click on the column that contains your Case IDs. The Case ID usually is a numeric value that is unique and identifies each case in your process.)</small>
+        <small *ngIf="content_no == 2">(Click on the column that contains your activities. Activities are the actions that take place in your process. For example, if your process is Purchasing then ”Create Purchase Order” is an activity in that process.)</small>
+        <small *ngIf="content_no == 3 || content_no == 4">(Click on the columns that contains the timestamp for each activity. Timestamps usually look something like “2016-02-01 14:24:30” although the exact format of the timestamp may differ.)</small>  
+      </div>
     </div>
-    <div class="">
+  </div>    
+  <div class="col-md-12 p-0">
       <form id="DataDocTableForm">
-        <table class="table" id="process_data">
+        <table class="PI table" id="process_data">
             <thead #header>
                 <tr>
                     <th *ngFor="let headValue of headerData;trackBy:loopTrackBy;let i=index" class="tableHeader" (click)= "sort(i,headValue)">
@@ -115,7 +119,7 @@
             <tbody #container>
                 <tr>
                     <td *ngFor="let val of headerData;trackBy:loopTrackBy;">
-                        <div *ngIf='selected==val' [ngClass]="selected==val?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==val" class='reset_btn' (click)='resetcaseId()'><i class='fa fa-times'></i></button> </div>
+                        <div *ngIf='selected==val' [ngClass]="selected==val?'activetag':''" class='select_tag'>{{headerName}} <button *ngIf="selected==val" class='reset_btn' (click)='resetcaseId()'><img src="../../../../assets/images/PI/x.svg" alt="" class="sltrst-xclose"></button> </div>
                     </td>
                   </tr>
                 <tr *ngFor="let row of displayedRows$|async;trackBy:loopTrackBy;let i=index;" class="tableRow">
@@ -127,18 +131,12 @@
                
             </tbody>
         </table>
+        <div class="bpspaginationdiv">
+          <mat-paginator class="newpaginationdiv mat-paginator" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="50" [showFirstLastButtons]="true" [pageSizeOptions]="[50, 100, 200, 500]"></mat-paginator>
+        </div>
       </form>
-      <div>
-        <mat-paginator #paginator
-        [length]="totalRows$ | async"
-        [pageIndex]="0"
-        [pageSize]="100"
-        [showFirstLastButtons]="true"
-        [pageSizeOptions]="[50, 100, 200, 500]"
-      ></mat-paginator>
-      </div>
       <!-- <div class="col-sm-8"></div> -->
         <!-- <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div> -->
-    </div>
+  </div>
 </div>
 <process-category-overlay headerTitle="Save Process" buttonName="Save & Generate" (proceed)="generateGraph($event)" class="bpmnCreate"></process-category-overlay>

@@ -42,8 +42,18 @@
           </button>
         </span>
 
-        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
-        <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
+        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span> -->
+        <span>
+          <button  [matMenuTriggerFor]="menu">
+            <img class="more" src="../../../../assets/images/Projects/more.svg" matTooltip="More">
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="downloadExcel()">Download as Excel</button>
+          </mat-menu>
+        
+        </span>
+          
+       
       </span>
     </div>
 
@@ -753,20 +763,27 @@
             </a>
             
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
-              <img src="../../../../assets/images/Projects/edit-black.svg">
+              <!-- <img src="../../../../assets/images/Projects/edit-black.svg"> -->
+              <img src="../../../../../assets/images/Projects/edit-black.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
             </a> 
             
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
-              <img src="../../../../assets/images/Projects/delete-red.svg">
+              <!-- <img src="../../../../assets/images/Projects/delete-black.svg"> -->
+              <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
             </a> 
             <!-- <span class="actions-seperator">|</span> -->
             <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
             (click)="navigateToWorkspace(element)" matTooltip="View Task">
-              <img src="../../../../../assets/images/Projects/eye-show.svg" />
+              <!-- <img src="../../../../../assets/images/Projects/eye-show.svg" /> -->
+              <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
             </a> 
 
-            <a class="disable-bg text-dark" *ngIf="element.taskCategory =='Analysis'|| element.taskCategory =='Task Mining'" >
-              <img src="../../../../../assets/images/Projects/eye-hide.svg" />
+            <a *ngIf="element.taskCategory =='Analysis'|| element.taskCategory =='Task Mining'" >
+              <img src="../../../../../assets/images/Projects/eye-hide.svg" class="icon-disabled" >
+              
             </a>
         </div>
         </td>

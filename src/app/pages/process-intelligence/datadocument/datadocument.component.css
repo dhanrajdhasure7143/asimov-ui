@@ -30,16 +30,26 @@ input[type="text"]{
     font-weight: 600;
     margin: 0px;
 }
-.resur-value-data small {
-    float: right;
-    margin-left: 30px;
+.err-mapping small {
+    padding-right: 15px;
+    font-size: 13px;
+}
+.err-mapping span {
+    padding-right: 10px;
+    font-size: 13px;
+}
+.err-mapping img {
+    padding-right: 5px;
+    height: 13px;
 }
 .err-mapping {
-    font-size: 13px;
     margin-top: 6px;
 }
 .PI-select-data {
     color: unset !important;
     margin: 0px !important;
     width: 70%;
+}
+.PI.table th {
+    border-bottom: unset !important;
 }

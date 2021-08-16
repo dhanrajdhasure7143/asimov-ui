@@ -11,6 +11,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { MatMenuModule, MatButtonModule } from '@angular/material'; 
 
 
 @Component({
@@ -296,6 +297,21 @@ percentageComplete: number;
       
     })
     this.spinner.hide();
+  }
+
+  downloadExcel(){
+    this.spinner.show();
+    this.spinner.hide();
+    Swal.fire({
+      title: 'Oops...',
+      text: "Functionality is In Progress..!",
+      position: 'center',
+      icon: 'info',
+      showCancelButton: false,
+      confirmButtonColor: '#007bff',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'OK'
+  })
   }
   checktodelete()
   {

@@ -24,9 +24,10 @@
 }
 
 #process_data .tableRow .tableCell.valid{
-  background-color:rgb(84, 168, 236) !important;
+  background-color: #00a0e3 !important;
   cursor: no-drop;
   pointer-events:none;
+  color: #fff;
 }
 #process_data .tableRow .tableCell.invalid{
   background-color:rgb(212, 105, 105) !important;
@@ -876,7 +877,7 @@ label{
 .download_link{
   text-align: center;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .upload_zone{
