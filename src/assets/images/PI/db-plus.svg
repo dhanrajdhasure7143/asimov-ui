@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="33" height="33" viewBox="0 0 33 33">
+  <g id="db-plus" transform="translate(1.5 1.5)">
+    <path id="Path_823" data-name="Path 823" d="M0,0H30V30H0Z" fill="none"/>
+    <g id="plus">
+      <line id="Line_86" data-name="Line 86" y2="30" transform="translate(15)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+      <line id="Line_87" data-name="Line 87" x2="30" transform="translate(0 15)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+    </g>
+  </g>
+</svg>
