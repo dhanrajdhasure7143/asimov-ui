@@ -37,13 +37,15 @@
         <div class="ml-auto module-heading-buttons">
           <span class="pull-right">
             <span>
-              <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
+              <button class="btn btn-primary" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
             </span>
             <span>
               &nbsp;
             </span>
             <span>
-              <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="uploadFile(uploadFilemodal)" type="button"><img src="../../../../assets/images/BPMS/upload.svg" class="testplus2 default-img"> Upload File</button>
+              <button  class="btn btn-primary" (click)="uploadFile(uploadFilemodal)">
+                <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload"> Upload File
+              </button>
             </span>
             &nbsp;
             <span class="gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >

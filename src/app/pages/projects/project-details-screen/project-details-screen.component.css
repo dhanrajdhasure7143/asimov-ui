@@ -508,3 +508,7 @@ img.more{
   cursor: pointer;
   margin-left: 5px;
 }
+.icon-disabled{
+  cursor: no-drop !important;
+}
+
