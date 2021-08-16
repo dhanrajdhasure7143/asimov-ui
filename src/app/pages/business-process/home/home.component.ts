@@ -242,10 +242,18 @@ this.dt.bpsHeaderValues('');
     let asc=this.orderAsc
     this.orderAsc=!this.orderAsc
     this.saved_diagrams= this.saved_diagrams.sort(function(a,b){
-      if (asc) 
-       return (a[colKey] > b[colKey]) ? 1 : -1;
-      else 
-       return (a[colKey] < b[colKey]) ? 1 : -1;
+      if(ind!=1){
+        if (asc) 
+        return (a[colKey].toLowerCase() > b[colKey].toLowerCase()) ? 1 : -1;
+       else 
+        return (a[colKey].toLowerCase() < b[colKey].toLowerCase()) ? 1 : -1;
+      }else{
+        if (asc) 
+        return (a[colKey] > b[colKey]) ? 1 : -1;
+       else 
+        return (a[colKey] < b[colKey]) ? 1 : -1;
+      }
+      
     });
     this.assignPagenation(this.saved_diagrams);
   }

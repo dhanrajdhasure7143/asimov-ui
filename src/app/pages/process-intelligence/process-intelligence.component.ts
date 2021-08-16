@@ -21,6 +21,7 @@ export class ProcessIntelligenceComponent implements OnInit {
   shiftStartTime:"00:00",
   shiftEndTime:"23:59"
 };
+isBackbutton:boolean=false;
 
   constructor(private changeDetectorRef:ChangeDetectorRef,
     private router:Router,
@@ -46,6 +47,11 @@ export class ProcessIntelligenceComponent implements OnInit {
     this.isPIHeaderShow=false;
   } else{
     this.isPIHeaderShow=true;
+}
+if(windowUrl.indexOf('processIntelligence/insights') != -1||windowUrl.indexOf('business-insights') !=-1){
+  this.isBackbutton=true;
+} else{
+  this.isBackbutton=false;
 }
   this.route.queryParams.subscribe(params => {
     if(params['wpid']!=undefined){

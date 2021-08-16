@@ -15,6 +15,7 @@
       <div class=" row module-heading title">
           <div class="col-md-5 new-bps-header-title">
             <span class="bps-header-title">
+              <span *ngIf="isBackbutton" class="module-back-button" (click)='gotoProcessgraph()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
               <span class="module-header-title">Process Intelligence
                 <!-- <span *ngIf="isHeaderShow == 'true'"> / {{currentNotation_name | titlecase}}</span> -->
               </span>

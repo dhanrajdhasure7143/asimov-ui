@@ -200,3 +200,6 @@ div#bpmn_list {
     .cell10 {
         width:4%;
     }
+    .cell span{
+        cursor: pointer;
+    }
