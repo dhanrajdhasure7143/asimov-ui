@@ -48,8 +48,14 @@
               <span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span>
               <span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span>
             </div>
-            <div class="cell cell3">Type</div>
-            <div class="cell cell4">Category</div>
+            <div class="cell cell3"  mat-sort-header="ntype" (click)="sort('ntype',6)">Type
+              <span class="asc" *ngIf="orderAsc && sortIndex==6">&#8595;</span>
+              <span class="desc" *ngIf="!orderAsc && sortIndex==6">&#8593;</span>
+            </div>
+            <div class="cell cell4" mat-sort-header="category" (click)="sort('category',7)">Category
+              <span class="asc" *ngIf="orderAsc && sortIndex==7">&#8595;</span>
+              <span class="desc" *ngIf="!orderAsc && sortIndex==7">&#8593;</span>
+            </div>
             <div class="cell cell5" (click)="sort('version',1)">Version
               <span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span>
               <span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span>

@@ -126,24 +126,53 @@
     #select_tagOne{
         display: none;
     }
-    .activetag{
+    .activetag {
         display: block;
         position: absolute;
         z-index: 1000;
-        border: 1px solid black;
         color: white;
-        background-color: green;
-        padding: 10px;
-        margin-top: 150px !important;
+        background-color: #18a318;
+        padding: 8px 10px;
+        margin: 100px 20px !important;
         text-align: center;
         border-radius: 20px;
         cursor: default;
+        font-size: 14px;
     }
-    .reset_btn{
-        color: white;
-        font-weight: 600;
-    }
-    .reset_btn:hover{
-        font-weight: bold !important;
-        /* font-size: 14px; */
-    }
+
+    
+.new-PI-layout {
+    /* overflow: hidden auto;
+    height: calc(100% - 50px);
+    position: relative; */
+    padding: 15px 10px 10px;
+}
+
+.PI-serwksp input {
+    height: 36px;
+} 
+.PI-srh-graph {
+    float: right;
+    width: 28.4%;
+}
+.resur-value-data h5 {
+    color: #00a0e3;
+    font-weight: 600;
+    margin: 0px 0px 6px 0px;
+}
+.resur-value-data small {
+    font-size: 13px;
+}
+.PI-select-data {
+    color: unset !important;
+    margin: 0px 0px 10px 0px!important;
+    width: 71.6%;
+
+}
+.sltrst-xclose {
+    height: 12px;
+    margin-left: 4px;
+}
+.PI.table th {
+    border-bottom: unset !important;
+}
