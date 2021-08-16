@@ -759,8 +759,9 @@
         <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
           <div class="newinntalx">
             <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
-              <img src="../../../../assets/images/Projects/upload.svg">
-            </a>
+              <img src="../../../../assets/images/Projects/upload.svg" class="default-img">
+              <img src="../../../../assets/images/Projects/upload-blue.svg" class="hover-img">
+            </a> 
             
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
               <!-- <img src="../../../../assets/images/Projects/edit-black.svg"> -->
