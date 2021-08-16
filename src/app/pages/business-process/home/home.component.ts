@@ -168,6 +168,8 @@ this.dt.bpsHeaderValues('');
    }
 
   getDiagram(eachBPMN,i){
+      var element = document.getElementById('_diagram'+i);
+    element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
     let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;

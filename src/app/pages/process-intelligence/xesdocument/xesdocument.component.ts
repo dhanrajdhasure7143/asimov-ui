@@ -1,10 +1,17 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { RestApiService } from '../../services/rest-api.service';
 import * as moment from 'moment';
 import { APP_CONFIG } from 'src/app/app.config';
+import {MatTableDataSource} from '@angular/material/table';
+
+import { MatPaginator, PageEvent } from '@angular/material';
+import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
+import { Observable  } from 'rxjs/Observable';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-xesdocument',
@@ -19,6 +26,10 @@ export class XesdocumentComponent implements OnInit {
   processId: any;
   isUploadFileName: any;
   searchTerm: any;
+  displayedRows$: Observable<any[]>;
+  totalRows$: Observable<number>;
+
+  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
 
 
   constructor(private router: Router,
@@ -32,6 +43,9 @@ export class XesdocumentComponent implements OnInit {
     this.dt.changeChildModule({ "route": "/pages/processIntelligence/xesdocument", "title": "XES Document" });
     this.dt.changeHints(this.hints.dataDocumentHints);
     this.dt.current_piData.subscribe(res => { this.xesData = res })
+    setTimeout(() => {
+      this.assignPagenation(this.xesData)
+    }, 500);
   }
 
   dataResource(dataArray) {
@@ -90,5 +104,11 @@ export class XesdocumentComponent implements OnInit {
 
     })
 
+  }
+  assignPagenation(data){
+    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
   }
 }

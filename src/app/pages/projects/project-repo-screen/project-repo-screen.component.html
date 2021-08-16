@@ -1,4 +1,4 @@
-<div style="width:100%;overflow-x: auto;height:calc( 100vh - 160px)">
+<div style="width:100%;overflow-x: auto;height:calc( 100vh - 80px)">
   <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
       <!-- <div class="projects-header maincreat">
         <span class="projects-back-button" routerLink="/pages/projects/projectdetails" [queryParams]="{id: projectid}">
@@ -226,7 +226,7 @@
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
               </table>
-              <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
+              <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
               </mat-paginator>
               <br>
               <div class="">
@@ -396,6 +396,8 @@
                   <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource4!=null && dataSource4.data.length==0)}"></tr>
                 </table>
                 </div>
+                <mat-paginator class="newpaginationdiv" #paginator102 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+                </mat-paginator>
          
         </mat-tab>
         <mat-tab label="My Requests">
@@ -494,8 +496,9 @@
 <div class="modal-header">
   <h4 class="modal-title pull-left" *ngIf="isDeny">Reason to deny file request</h4>
   <h4 class="modal-title pull-left" *ngIf="!isDeny">Reason to revoke file request</h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
-      <span aria-hidden="true">&times;</span>
+  <button type="button" class="close pull-right deny-serve" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
+      <!-- <span aria-hidden="true">&times;</span> -->
+      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
   </button>
 </div>
 <div class="modal-body">

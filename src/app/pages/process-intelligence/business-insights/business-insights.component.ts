@@ -172,34 +172,6 @@ export class BusinessInsightsComponent implements OnInit {
       var chart = am4core.create("chartdiv2", am4charts.XYChart);
       // Add data
 
-      // chart.data = [{
-      //   "range": "10-16",
-      //   "count": 26
-      // }, {
-      //   "country": "16-21",
-      //   "visits": 108
-      // }, {
-      //   "country": "21-27",
-      //   "visits": 40
-      // }, {
-      //   "country": "27-32",
-      //   "visits": 20
-      // }, {
-      //   "country": "32-38",
-      //   "visits": 14
-      // }, {
-      //   "country": "38-43",
-      //   "visits": 21
-      // }, {
-      //   "country": "43-49",
-      //   "visits": 10
-      // }, {
-      //   "country": "49-54",
-      //   "visits": 3
-      // }, {
-      //   "country": "54-60",
-      //   "visits": 2
-      // }];
       chart.data=_me.throughtime_data
       
       // Create axes
@@ -210,7 +182,7 @@ export class BusinessInsightsComponent implements OnInit {
       categoryAxis.renderer.grid.template.location = 0;
       categoryAxis.renderer.minGridDistance = 30;
       // categoryAxis.title.text="Days"
-      categoryAxis.title.text="Median Activity Duration"
+      // categoryAxis.title.text="Median Activity Duration"
       // categoryAxis.title.fontWeight="bold"
       // categoryAxis.renderer.labels.template.adapter.add("dy", function(dy, target) {
       //   if (target.dataItem && target.dataItem.index && 2 == 2) {
@@ -223,7 +195,7 @@ export class BusinessInsightsComponent implements OnInit {
     
       var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
       // valueAxis.title.text = "No.of.Cases";
-      valueAxis.title.text = "CaseIds";
+      valueAxis.title.text = "No of Cases";
       //valueAxis.title.fontWeight="bold"
       // Create series
       var series = chart.series.push(new am4charts.ColumnSeries());
@@ -232,7 +204,7 @@ export class BusinessInsightsComponent implements OnInit {
       // series.dataFields.valueY = "medianActivityDuration";
       // series.dataFields.categoryX = "caseId";
       series.name = "value";
-      series.columns.template.tooltipText = " Duration : {categoryX} \n  CaseIds : {valueY}[/] ";
+      series.columns.template.tooltipText = " Duration : {categoryX} \n  No of Cases : {valueY}[/] ";
       series.columns.template.fillOpacity = 1;
       series.columns.template.adapter.add("fill", function(fill, target) {
           return am4core.color("#4d72be");

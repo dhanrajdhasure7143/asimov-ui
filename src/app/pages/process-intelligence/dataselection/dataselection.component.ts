@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { formatDate } from '@angular/common';
 import { Router } from '@angular/router';
 import { DataTransferService } from "../../services/data-transfer.service";
@@ -7,6 +7,11 @@ import { GlobalScript } from '../../../shared/global-script';
 import Swal from 'sweetalert2';
 import { RestApiService } from '../../services/rest-api.service';
 import { APP_CONFIG } from 'src/app/app.config';
+import { MatPaginator, PageEvent } from '@angular/material';
+import { fromMatPaginator, paginateRows } from './../../business-process/model/datasource-utils';
+import { Observable  } from 'rxjs/Observable';
+import { of  } from 'rxjs/observable/of';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dataselection',
@@ -54,6 +59,10 @@ export class DataselectionComponent implements OnInit {
   count=0;
   dateformat:any;
   content_no:number=1;
+  displayedRows$: Observable<any[]>;
+  totalRows$: Observable<number>;
+
+  @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
 
   constructor(private router:Router, 
                 private dt:DataTransferService, 
@@ -94,6 +103,9 @@ export class DataselectionComponent implements OnInit {
         this.headerData = res[0];
         this.bkp_headerData = res[0];
         this.fileData = this.fileData.slice(1);
+      setTimeout(() => {
+        this.assignPagenation(this.fileData)
+      }, 500);
   }
 
   getDataTypeChange(a,b){
@@ -613,6 +625,12 @@ export class DataselectionComponent implements OnInit {
     }
     var inputDateformat=fullDateFormat+' '+timeFormat
        this.isDateformat=inputDateformat
+  }
+  assignPagenation(data){
+    const pageEvents$: Observable<PageEvent> = fromMatPaginator(this.paginator);
+    const rows$ = of(data);
+    this.totalRows$ = rows$.pipe(map(rows => rows.length));
+    this.displayedRows$ = rows$.pipe(paginateRows(pageEvents$));
   }
 
 }
