@@ -37,6 +37,7 @@ export class AddResourcesComponent implements OnInit {
       })
 
       this.getallusers();
+      
   }
 
   inputNumberOnly(event){
@@ -54,9 +55,11 @@ export class AddResourcesComponent implements OnInit {
   getallusers()
   {
     let tenantid=localStorage.getItem("tenantName")
+    this.spinner.show();
     this.api.getuserslist(tenantid).subscribe(item=>{
       let users:any=item
       this.userslist=users;
+      this.spinner.hide();
     })
   }
 
