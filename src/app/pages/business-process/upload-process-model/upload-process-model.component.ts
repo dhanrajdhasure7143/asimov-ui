@@ -1368,12 +1368,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       deployResponse=res
           this.definationId=deployResponse.definationId
           this.isStartProcessBtn=deployResponse.startprocess
+          this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
+            this.dt.bpsNotationaScreenValues(this.push_Obj);
       }
     })
-    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
-      this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
   openVariableDialog(){

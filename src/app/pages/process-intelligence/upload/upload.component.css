@@ -81,15 +81,15 @@
     /* margin-top: 15px; */
 }
 .databaseForm label{
-    font-size: 12px;
+    /* font-size: 12px; */
 }
 .databaseForm input,.databaseForm select{
-    border-left: 0px;
+    /* border-left: 0px;
     border-right: 0px;
     border-top: 0px !important;
     box-shadow: none;
     border-radius: 0px;
-    border-bottom: 1px solid rgb(121, 118, 118);
+    border-bottom: 1px solid rgb(121, 118, 118); */
 }
 .errspan{
     position: relative;
@@ -194,10 +194,10 @@ input[type="text"]{
       height: 118px;
   }
   .connection_btn{
-      margin-top: 10px;
+      margin-top: 15px;
   }
   .featchTbale-btn{
-      margin-top: 20px;
+      /* margin-top: 20px; */
   }
     .asc, .desc{
         font-size: 23px;
@@ -223,6 +223,9 @@ tr.mat-header-row {
     margin: 0px;
     line-height: 2;
 }
+.PI-heading {
+    margin-bottom: 15px;
+}
 .PI-heading label {
     font-size: 18px;
     font-weight: 600;
@@ -238,13 +241,14 @@ tr.mat-header-row {
     margin-bottom: 0px !important;
 }
 .PI-uploadgrid {
-    border-right: 1px solid #e5e5e5;
+    margin-bottom: 24px;
+    /* border-right: 1px solid #e5e5e5;
     width: 20.7% !important;
     padding: 10px;
-    height: 100vh;
+    height: 100vh; */
 }
 .PI-uploadgrid ngx-dropzone{
-    height: 140px;
+    height: 90px;
 }
 .PI-uploadgrid h5{
     margin-bottom: 0px !important;
@@ -258,19 +262,69 @@ tr.mat-header-row {
     color:#00a0e3 !important;
     font-weight: 500 !important;
 }
-.PI-workspace-table {
+/* .PI-workspace-table {
     width: 79.3% !important;
     padding: 15px;
-}
+} */
 img.hover-img {
     display: none;
 }
-.upload_zone ngx-dropzone-label:hover img.default-img, .graph_table span:hover img.default-img {
+.graph_table span:hover img.default-img {
     display: none;
 }
-.upload_zone ngx-dropzone-label:hover img.hover-img, .graph_table span:hover img.hover-img {
+.graph_table span:hover img.hover-img {
     display: initial;
 }
 .PI-workspace-table .PI-serwksp {
     margin-right: 0px !important;
+}
+.db-gpg-btn {
+    margin-left: 15px;
+    margin-right: 0px !important;
+}
+.bpmnCreate .container.m-contanier.form-body {
+    height: calc(100% - 90px) !important;
+}
+.new-PI-layout {
+    /* overflow: hidden auto;
+    height: calc(100% - 50px);
+    position: relative; */
+    padding: 15px 10px 10px;
+}
+.upload_zone {
+    margin: 0px 20px 0px 0px;
+    border: 1px solid #00a0e3;
+    border-radius: 4px;
+}
+.upload_zone ngx-dropzone-label {
+    margin: 0px !important;
+    display: flex;
+    align-items: center;
+}
+.model-text {
+    text-align: left;
+    padding-left: 22px;
+    color: #717386;
+}
+.model-text h3 {
+    font-size: 22px;
+    margin-bottom: 6px !important;
+    margin-top: 0px;
+    font-weight: 600;
+}
+.model-text h5 {
+    margin: 0px !important;
+}
+.upload_zone ngx-dropzone:hover .model-img, .upload_zone ngx-dropzone:hover .model-text, .upload_zone ngx-dropzone:hover .model-uploadhvr {
+    display: none;
+}
+.upload_zone ngx-dropzone:hover .model-uploadhvr {
+    display: initial;
+    margin: auto;
+}
+.upload_zone:hover, .upload_zone ngx-dropzone:hover {
+    background-color:#00a0e3;
+}
+.model-uploadhvr {
+    display: none;
 }

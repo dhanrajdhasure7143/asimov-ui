@@ -1641,7 +1641,7 @@ select.form-control {
   margin-right: 15px;
 }
 
-.ng5-slider .ng5-slider-pointer {
+.editmodelprbody .ng5-slider .ng5-slider-pointer {
   cursor: pointer;
   width: 18px !important;
   height: 18px !important;
@@ -1651,7 +1651,7 @@ select.form-control {
   border-radius: 16px;
 }
 
-.ng5-slider .ng5-slider-pointer:after {
+.editmodelprbody .ng5-slider .ng5-slider-pointer:after {
   content: '';
   width: 6px !important;
   height: 6px !important;

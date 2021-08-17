@@ -44,6 +44,9 @@ export const environment = {
   dbConnectorHost: "10.11.0.113",
   dbName: "asimov_aiotal",
 
+//camunda navigation 
+camunda_url : "http://10.11.0.127:8080",
+
   //  * QA ENV URl's
   //   pi_url: 'http://piqa.epsoftinc.in',
   //   bps_url: 'http://bpsqa.epsoftinc.in',
@@ -70,8 +73,11 @@ export const environment = {
   //  dbConnectorHost: "10.11.0.104",
   //  dbName: 'eiap_qa',
 
-  // // BPMN Platform URL
-  //   bpmnplatformUrl : "http://10.11.0.127:8080",
+  // // BPMN Platform(camunda) URL
+  //   bpmnplatformUrl : "http://10.11.0.128:8080",
+
+  //camunda navigation 
+  // camunda_url : "http://10.11.0.128:8080",
 };
 
 /*

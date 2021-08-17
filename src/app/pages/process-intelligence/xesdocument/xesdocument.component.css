@@ -23,4 +23,7 @@ input[type="text"]{
 .PI-srh-graph {
     width: 35%;
     float: right;
-  }
+}
+.PI.table th {
+    border-bottom: unset !important;
+}

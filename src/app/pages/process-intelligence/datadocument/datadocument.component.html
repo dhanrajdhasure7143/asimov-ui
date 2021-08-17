@@ -1,32 +1,36 @@
 <div class="container-fluid new-PI-layout">
-    <div class="d-flex PI-srh-graph">
-      <!-- <div class="col-md-4 col-sm-4" id="title">
+    <div class="col-md-12 p-0">
+      <div class="d-flex PI-srh-graph">
+        <!-- <div class="col-md-4 col-sm-4" id="title">
           <button class="btn btn-warning eiap-btn" *ngIf="!headerName" (click)="resetColMap()">Reset Mapping</button>
-      </div> -->
-      <div class="form-group pr-0 PI-serwksp">
-        <input class="form-control toolbar-search bps-home-fileds" type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm">
-        <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+        </div> -->
+        <div class="form-group PI-serwksp">
+          <input class="form-control toolbar-search bps-home-fileds" type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm">
+          <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-primary" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData || (step_id != headerData.length)">
+          <img src="../../../../assets/images/PI/next.svg" class="testplus">Next</button>
+        </div>
       </div>
-      <div class="form-group pr-0">
-        <button class="btn btn-primary" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData || (step_id != headerData.length)">
-        <img src="assets/images/Group 77.svg" class="testplus">Next</button>
-      </div>
-    </div>
-    <div class="row" *ngIf="headerName" class="columnSelection PI-select-data">
+      <div *ngIf="headerName" class="columnSelection PI-select-data">
         <div class="resur-value-data d-flex">
-          <h5>Select Column - Step {{step_id}}/{{headerData.length}}:"{{headerName}}"</h5>
-          <small>(Click on the {{headerName}} Value Column for Data Validation)</small>
+          <h5>Select Column - Step {{step_id}}/{{headerData.length}}:"{{headerName}}"</h5>          
         </div>
         <div class="err-mapping">
-          <svg width="12" height="12" class="svg">
-            <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
-          </svg> Success Mapping
-          <svg width="12" height="12" class="svg">
-            <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
-          </svg> Error Mapping
+          <small>(Click on the {{headerName}} Value Column for Data Validation)</small>
+          <span><img src="../../../../assets/images/PI/ErMap1.svg">Success Mapping</span>
+          <span><img src="../../../../assets/images/PI/ErMap2.svg">Error Mapping</span>
+          <!-- <svg width="10" height="10" class="svg">
+            <rect width="10" height="10" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
+          </svg>Success Mapping
+          <svg width="10" height="10" class="svg">
+            <rect width="10" height="10" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
+          </svg>Error Mapping -->
         </div>
+      </div>  
     </div>  
-    <div class="row">
+    <div class="col-md-12 p-0">
       <form id="DataDocTableForm">
         <table class="PI table" id="process_data">
             <thead #header >
@@ -140,18 +144,11 @@
                 </tr>
             </tbody>
         </table>
-      </form>
-      <div>
-        <mat-paginator #paginator
-            [length]="totalRows$ | async"
-            [pageIndex]="0"
-            [pageSize]="100"
-            [showFirstLastButtons]="true"
-            [pageSizeOptions]="[5, 10, 25, 50]"
-          ></mat-paginator>
-      </div>
-        <!-- <div class="col-sm-8"></div>
-      <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div> -->
+        <div class="bpspaginationdiv">
+          <mat-paginator class="newpaginationdiv mat-paginator" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="50" [showFirstLastButtons]="true" [pageSizeOptions]="[50, 100, 200, 500]"></mat-paginator>
+        </div>
+        <!-- <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div> -->
+      </form>      
     </div>
 </div>
 
