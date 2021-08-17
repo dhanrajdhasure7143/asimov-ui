@@ -474,3 +474,6 @@ button.closebtn:hover {
   color: #00a0e3;
 }
 
+.edgemetrics_spinner span{
+  font-size: 13px !important;
+}

@@ -22,7 +22,7 @@ export class BusinessInsightsComponent implements OnInit {
   variant_list:any[]=[];
   displayedRows$: Observable<any[]>;
   totalRows$: Observable<number>;
-
+  isLoading:boolean=false;
   @ViewChild(MatPaginator,{static:false}) paginator: MatPaginator;
   constructor(private rest:RestApiService,private route:ActivatedRoute) { 
     let queryParamsResp
@@ -41,6 +41,7 @@ export class BusinessInsightsComponent implements OnInit {
 
   getActivityData(){
     let res_data:any
+    this.isLoading=true;
     this.rest.getBIActivityTime(this.processId)
               .subscribe(res=>{
                     res_data=res
@@ -50,44 +51,43 @@ export class BusinessInsightsComponent implements OnInit {
                     });
                     // console.log(this.activitytime_data);
                   this.ActivityTimeChart();
+                  this.isLoading=false;
                   });
   }
 
    async getThroughputTimeData(){
      let res_data:any
+     this.isLoading=true;
     await this.rest.getBIThroughputTime(this.processId).subscribe(res=>{res_data=res
       this.throughtime_data=res_data.data
-      console.log(this.throughtime_data)
       this.thoughtputTimeChart();
+      this.isLoading=false;
     });
   }
 
   async getBusinessMetricsData(){
-    let res_data:any
+    let res_data:any;
+    this.isLoading=true;
     await this.rest.getBusinessMetrics(this.processId).subscribe(res=>{res_data=res
-      // console.log(this.b_metrics);
       this.b_metrics=res_data.data[0];
+      this.isLoading=false;
     });
   }
 
   async getVariantsData(){
     let res_data:any
+    this.isLoading=true;
     await this.rest.getBIVariantsData(this.processId).subscribe(res=>{res_data=res
       for(var i=0; i<res_data.data.length; i++){
         res_data.data[i]['variantNumber']=i+1
         this.variant_list.push(res_data.data[i])
       }
-      // console.log(this.variant_list)
       this.assignPagenation(this.variant_list);
+      this.isLoading=false;
     });
   }
 
   ActivityTimeChart(){
-      // let data2=[...data.map(item=>{
-      //    let duration=parseInt(item["Duration"]);
-      //    item["totalDuration"]=(this.parseMillisecondsIntoReadableTime(duration)).toString();
-      //     return item;
-      // })]
       am4core.useTheme(am4themes_animated);
       // Themes end
       
