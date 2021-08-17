@@ -27,7 +27,7 @@ span.testtooltip:before {
 }
 #dropdownForm2{
     top: 2px; 
-    left: 30%; 
+    /* left: 30%;  */
     will-change: transform; 
     position: absolute; 
     transform: translate(-340px, 39px);
@@ -38,7 +38,7 @@ span.testtooltip:before {
     z-index: 1000;
     float: left;
     padding: 5px 0;
-    margin: 2px 0 0;
+    /* margin: 2px 0 0; */
     font-size: 14px;
     text-align: left;
     list-style: none;
@@ -53,7 +53,7 @@ span.testtooltip:before {
     content: "";
     position: absolute;
     bottom: 100%;
-    left: 90%;
+    left: 96%;
     margin-left: -5px;
     border-width: 8px;
     border-style: solid;
