@@ -42,7 +42,7 @@ export const environment = {
 
 
 //camunda navigation 
-camunda_url : "http://10.11.0.127:8080",
+camunda_url : "http://10.11.0.128:8080",
 
   //  * QA ENV URl's
 <<<<<<< HEAD
