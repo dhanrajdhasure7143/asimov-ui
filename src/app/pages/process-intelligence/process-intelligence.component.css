@@ -92,3 +92,34 @@ span.testtooltip:before {
   #dropdownForm2{
     padding: 20px !important;
   }
+
+.main-content1 .module-heading.title {
+  background-color: #F3F3F3;
+  padding: 12px 15px 8px !important;
+}
+.main-content1 .module-header-title {
+  font-weight: 600;
+  font-size: 18px;
+  color: #001c47;
+  /* line-height: 0px !important; */
+}
+.new-bps-icons .bps-float {
+  float: right;
+}
+.new-bps-icons button {
+  padding: 6px 8px;
+  position: relative;
+  z-index: 2;
+}
+.bps-float button img {
+  height: 16px;
+  width: auto;
+}
+.bps-float button:hover {
+  background-color: #00a0e3;
+  border-radius: 3px;
+}
+.bps-float button:hover img {
+  -webkit-filter: brightness(10) !important;
+  filter: brightness(10) !important;
+}
