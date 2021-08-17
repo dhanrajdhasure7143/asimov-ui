@@ -141,12 +141,8 @@ export class BusinessProcessComponent implements AfterViewChecked {
     if(selecetedTenant){
        splitTenant = selecetedTenant.split('-')[0];
     }
-<<<<<<< HEAD
-    window.location.href = "http://10.11.0.128:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
-=======
     window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
     // window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
->>>>>>> 88e3803667ac586191cae2fe22ccd8275d8136c6
   }
   onchange(){
     // console.log(e);
