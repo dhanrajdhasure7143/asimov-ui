@@ -830,9 +830,6 @@
                   <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Add New
                 </button>
                 <span>
-                  &nbsp;
-                </span>
-                <span>
                   <div *ngIf="Resourcedeleteflag==true" class="env-btn">
                     <button title="Delete Resource" value="Delete" id="deletebtn" class="btn btn-primary" (click)="deleteresource()">Delete</button>
                 </div>       
@@ -1119,7 +1116,7 @@
       <span class="pull-right lastedit-date">Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp |
         date}}</span>
     </div>
-    <div class="modal-body modelprbody editmodelprbody" style="width:100%;overflow-x: auto;height:calc( 100vh - 260px)">
+    <div class="modal-body modelprbody editmodelprbody">
       <div class="container p-0" style="width:100%">
         <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
           <div class="row">
@@ -1289,7 +1286,7 @@
                                         <div  *ngIf="result.length>3"><img class="res-circle " src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" ></div>
                                       </div>
                                     </div>
-                                  <br>
+                                  
                                   <div>
                                   {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
                                 </div> -->
@@ -1387,7 +1384,7 @@
         <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
       </button>
     </div>
-    <div class="modal-body modelprbody">
+    <div class="modal-body modelprbody uploadfilebdiv">
       <div class="container p-0" style="width:100%">
         <form [formGroup]="uploadtaskFileForm" (ngSubmit)="submitUploadFileForm()">
           <div class="row">
@@ -1402,29 +1399,29 @@
               <span *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched"
                 class="errspan required">File Category Required*</span>
             </div>
-            <div class="col-md-12">
+            <div class="form-fields col-md-12">
                 
-              <label>Description<span style="color:red">*</span></label>
+              <label>Description<span class="star">*</span></label>
               <textarea name= "desc" class="form-control" rows="2" formControlName="description" placeholder="Enter Description...">
 
               </textarea>
               <span *ngIf="uploadtaskFileForm.get('description').invalid && uploadtaskFileForm.get('description').touched"
-                  style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+                   class="errspan required">Description Required*</span>
 
             </div>
          
-            <div class="col-md-12">
+            <div class="form-fields col-md-12">
               <label>Upload<span class="star">*</span></label>
               <div class="box-fileupload">
                 <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
                 <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
-                <img src="../../../../assets/images/Projects/fileupload.svg" class="upload-img">
-                &nbsp;
+                <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
+                
                 <span>Select File</span>
               </label>
               </div>
-              &nbsp;
-              <div >
+          
+              <div class="upload-filesdiv">
                 <div class="row">
                   <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
                     <div class ="project-card">
@@ -1436,7 +1433,7 @@
                      <span class="card-placeholder">
                           File Name : {{selected.name}}     
                     </span>
-                    <br>
+                    
                       <span class="file-size">
                         Size : {{selected.size | fileSizePipe}}
                       </span>
@@ -1476,12 +1473,12 @@
       <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
     </button>
   </div>
-  <div class="modal-body">
-  <div class="container" style="width:100%">
+  <div class="modal-body modelprbody uploadfilebdiv">
+  <div class="container p-0" style="width:100%">
       <form [formGroup]="uploadFileFormDetails" (ngSubmit)="submitUploadFileFormattachment()">
           <div class="row">
-              <div class="col-md-12">
-                  <label for="fileCategory">File Category<span style="color:red">*</span></label>
+              <div class="form-fields col-md-12">
+                  <label for="fileCategory">File Category<span class="star">*</span></label>
                   <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory" required>
                     <option  [value]="null" disabled hidden>Select Category</option>
                     <option value="" [selected]="true">Select Category</option>
@@ -1489,32 +1486,32 @@
                   </select>
                   <span
                       *ngIf="uploadFileFormDetails.get('fileCategory').invalid && uploadFileFormDetails.get('fileCategory').touched"
-                      style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
+                       class="errspan required">File Category Required*</span>
               </div>
               </div>
-              <div class="col-md-12">
+              <div class="form-fields col-md-12">
                   
-                  <label>Description<span style="color:red">*</span></label>
+                  <label>Description<span class="star">*</span></label>
                   <textarea name= "desc" class="form-control" rows="2" formControlName="description" placeholder="Enter Description...">
   
                   </textarea>
                   <span *ngIf="uploadFileFormDetails.get('description').invalid && uploadFileFormDetails.get('description').touched"
-                      style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
+                       class="errspan required">Description Required*</span>
   
               </div>
-              <div class="col-md-12">
+              <div class="form-fields col-md-12">
                   
-                <label>Upload<span style="color:red">*</span></label>
+                <label>Upload<span class="star">*</span></label>
                 <div class="box-fileupload">
                   <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
                   <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
-                  <img src="../../../../assets/images/Projects/fileupload.svg" class="upload-img">
-                  &nbsp;
+                  <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
+                  
                   <span>Select File</span>
                 </label>
                 </div>
-                &nbsp;
-                <div >
+               
+                <div class="upload-filesdiv">
                   <div class="row">
                     <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
                       <div class ="project-card">
@@ -1526,7 +1523,7 @@
                        <span class="card-placeholder">
                             File Name : {{selected.name}}     
                       </span>
-                      <br>
+                      
                         <span class="file-size">
                           Size : {{selected.size | fileSizePipe}}
                         </span>
@@ -1541,7 +1538,7 @@
                 </div>
                 
                 <span *ngIf="uploadFileFormDetails.get('uploadFile').invalid && uploadFileFormDetails.get('uploadFile').touched"
-                    style="color:red" class="fa fa-info-circle errspan">File Required*</span>
+                     class="errspan required">File Required*</span>
   
             </div>
           

@@ -225,8 +225,9 @@ button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
   font-size: 12px;
   margin: 0px;
 }
-.modal-body.modelprbody.editmodelprbody {
-  height: calc(100% - 120px);
+.modal-body.modelprbody.editmodelprbody,
+.uploadfilebdiv {
+  height: calc(100vh - 260px);
 }
 
 span.labelcont b {
@@ -418,6 +419,7 @@ span.tab-text.labelcont {
 }
 .env-btn > button:disabled{
   background-color:white;
+  margin-left: 10px;
 }
 .env-btn > button > div{
   color:black !important;
@@ -501,6 +503,7 @@ span.file-size {
 	color: #999;
   font-size: 12px;
   font-weight: 400;
+  display: block;
 }
 img.more{
   width:20px;
@@ -512,3 +515,6 @@ img.more{
   cursor: no-drop !important;
 }
 
+.upload-filesdiv {
+  margin-top: 15px;
+}
