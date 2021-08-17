@@ -38,18 +38,18 @@
 <!-- <span class="update_info" *ngIf="updated_date_time">Autosaved @ <b>{{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</b></span> -->
 <as-split class="ex-percent h-100" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:100):0">
-        <div class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</div>
-        <div *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
+        <span class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</span>
+        <div class="h-100" *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
             <span class="info" *ngIf="rejectedOrApproved == 'PENDING' && !reSize">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
-            <div class="row">
-                <div class="canvas2 col-md-12" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'" id="canvas2"></div>
+            <div class="row h-100">
+                <div class="canvas2 col-md-12 p-0 h-100" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'" id="canvas2"></div>
                 <!-- <div class="propertiesContainer" [class.hidden]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
                     <div class="propertiesTitle" (click)="togglePosition()">
                         <div>Properties Panel</div>
                     </div>
                     <div id="properties" class="slide-right"></div>
                 </div> -->
-                <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer" id="propertiesContainer">
+                <div [ngClass]="{propertiesContainerClosed: !propertiesContainer, propertiesContainerOpened: propertiesContainer}" class="propertiesContainer canvas2propcontainer" id="propertiesContainer">
                     <div *ngIf="!menuToggleTitle" [ngClass]="{hideTitle: !menuToggleTitle, showTitle: menuToggleTitle}" class="propertiesTitle" (click)="toggleOpen()">
                         <div class="menuToggle">
                             <img src="../../../../assets/images/BPMS/expand-left.svg" alt="menuToggleIcon" class="menuToggleIcon" >
@@ -192,7 +192,7 @@
                 </div>
             </div>
         </div>
-        <div class="canvas2" *ngIf="!isShowConformance" id="canvas2"></div>
+        <div class="canvas2 col-md-12 h-100" *ngIf="!isShowConformance" id="canvas2"></div>
     </as-split-area>
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" class="show">
         <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
