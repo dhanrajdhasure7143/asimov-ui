@@ -925,6 +925,12 @@ save_blueprism_config(data)
   getTaskAttachments(projectid,taskid){
     return this.http.get("/platform-service/document/tasksAttachments/"+projectid+"/"+taskid+"")
   }
+
+
+  downloadTaskAttachment(attachment)
+  {
+    return this.http.post("/platform-service/document/downloadFile",attachment);
+  }
   uploadTaskfile(data){
     return this.http.post("/platform-service/document/uploadResource", data);
   }
@@ -943,11 +949,31 @@ save_blueprism_config(data)
   getFileCategories():Observable<any>{
     return this.http.get("/platform-service/document/fileCategories")
   }
-  deleteResource(projectid,resourceemail){
-    return this.http.get("/platform-service/project/deleteResource?projectId="+projectid+"&resource="+resourceemail+"")
+  deleteResource(body){
+    return this.http.post("/platform-service/project/deleteResources",body)
   }
   downloadFiles(id):Observable<any>{
     return this.http.get("/platform-service/document/fileCategories")
+  }
+  // Business Insights API's Start
+  getBIActivityTime(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getActivityTimeData/"+processId);
+  }
+  getBIThroughputTime(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getThroughputTimeData/"+processId);
+  }
+  getBusinessMetrics(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getBusinessMetricsData/"+processId);
+  }
+  getBIVariantsData(processId){
+    return this.http.get("/processintelligence/v1/processgraph/getVariantAnalysisData/"+processId);
+  }// BI Insighs apis End
+  
+  getLatestfiveAttachments(projectid,timezone){
+    return this.http.get("/platform-service/document/uploadedFilespaged/"+projectid,timezone)
+  }
+  deleteFiles(input){
+    return this.http.post("/platform-service/document/deleteUploadedFile",input)
   }
 
 }

@@ -179,6 +179,34 @@ performanceFilterInput:any ={};
   readOutputValueEmitted(val){
     this.startLinkvalue = val;
   }
+
+  ngAfterViewInit(){
+    let res_data
+    this.dt.pi_headerChanges.subscribe(res=>{res_data=res
+      console.log(res);
+      if(res_data=='svg'){
+        this.downloadSvg();
+      }else if(res_data=='png'){
+        this.downloadpng();
+      }else if(res_data=='jpg'){
+        this.downloadjpeg();
+      }else if(res_data=='pdf'){
+        this.downloadPdf();
+      }else if(res_data=='working_hrs'){
+        this.openHersOverLay();
+      }else if(res_data=='play_graph'){
+        this.playAnimation();
+      }else if(res_data=='bpmn'){
+        this.generateBpmn();
+      }else if(res_data=='variant_list'){
+        this.openVariantListNav()
+      }else if(res_data instanceof Object){
+        this.workingHours=res_data
+        // console.log(res_data)
+        this.addWorkingHours();
+      }
+    });
+  }
   
   ngOnInit() {   
     this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -1980,5 +2008,8 @@ addWorkingHours(){
       this.spinner.hide();
        console.log(err);
      }));
+  }
+   viewbusinessinsights(){
+    this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.graphIds}})
   }
 }

@@ -28,7 +28,6 @@
 
                     <mat-tab label="Project">
                         <div class="container">
-                            <br>
                             <app-create-project-form [users_list]="userslist" (oncreate)="createproject($event)" [processes]="selected_process_names"></app-create-project-form>
                         </div>
                     </mat-tab>
@@ -47,7 +46,7 @@
                                                 [ngClass]="createprogram.get('programName').valid?'enteredfield-color':'inputfield-color'">
                                             <span
                                                 *ngIf="(createprogram.get('programName').invalid && createprogram.get('programName').touched) && !createprogram.controls['programName'].hasError('maxlength')"
-                                                class="errspan required">Program Required*</span>
+                                                class="errspan required">Program Name Required*</span>
                                             <span *ngIf="createprogram.controls['programName'].hasError('maxlength')"
                                                 class="errspan required">
                                                 Maximum of 50 characters
@@ -180,7 +179,7 @@
                                         <div class="form-fields col-md-6 pr-0 slt-prjts">
                                             <div class="select-project">
                                                 <label class="label-control">Select Projects</label>
-                                                <select class="form-control" id="selectprojects"
+                                                <select class="form-control inputfield-color" id="selectprojects"
                                                     (change)="selected_project=$event.target.value">
                                                     <option [value]="null" disabled hidden>Select Project</option>
                                                     <option value="" [selected]="true">Select Project</option>
@@ -212,7 +211,7 @@
                                                 class=" errspan required">Access Required*</span>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="form-fields">
                                             <label class="label-control" for="programHealth">Program Health<span
                                                     class="star">*</span></label>
@@ -225,7 +224,7 @@
                                                     Attention</option>
                                                 <option value="Risk"> <span class="status-risk"></span>Risk</option>
                                             </select>
-                                            <!-- <div class="btn-group" dropdown>
+                                            <div class="btn-group" dropdown>
                                                         <button id="button-basic" dropdownToggle type="button" class="btn btn-primary dropdown-toggle"
                                                                 aria-controls="program-health">
                                                           Button dropdown <span class="caret"></span>
@@ -239,12 +238,12 @@
                                                           <li role="menuitem"><a class="dropdown-item" href="#">Separated link</a>
                                                           </li>
                                                         </ul>
-                                                      </div> -->
+                                                      </div>
                                             <span
                                                 *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched"
                                                 class=" errspan required">Access Required*</span>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-md-6">
                                         <div class="form-fields">
                                             <label class="label-control" for="programValueChain">Map Value Chain<span
@@ -259,8 +258,8 @@
                                                 <option value="E-Commerce">E-Commerce</option>
                                             </select>
                                             <span
-                                                *ngIf="createprogram.get('access').invalid && createprogram.get('access').touched"
-                                                class=" errspan required">Access Required*</span>
+                                                *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
+                                                class=" errspan required">Map Value Chain Required*</span>
                                         </div>
                                     </div>
                                     <div class="col-md-12 martsascl">
@@ -272,8 +271,10 @@
                                                           Maximum of 200 characters
                                                         </span> -->
                                         <label class="label-control">Description</label>
-                                        <textarea class="form-control" row="3"
-                                            placeholder="Enter Description"></textarea>
+                                        <textarea class="form-control" formControlName="description" row="3"
+                                            placeholder="Enter Description"
+                                            [ngClass]="createprogram.get('description').valid?'enteredfield-color':'inputfield-color'">></textarea>
+                                            
                                     </div>
                                 </div>
                             </form>
@@ -312,7 +313,7 @@
                                                 {{project.projectName}}                                               
                                             </h3>
                                             <div class="prj-slt-lst">
-                                                <span>Oct-20-2020</span>
+                                                <span>{{project.createdTimestamp | date:'MMM-d-y'}} </span>
                                                  <!-- <span class="pull-right clickable"
                                                     (click)="remove_project(project,'selected')"><i
                                                         class="fa fa-trash"></i></span>-->
@@ -367,10 +368,8 @@
                 <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
             </button>
         </div>
-        <br>
         <div class="h-scroll">
             <app-create-project-form [users_list]="userslist" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
-           <br><br><br><br><br><br>
         </div>
     </ng-template>
 </mat-card>

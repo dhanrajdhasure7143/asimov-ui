@@ -1,34 +1,42 @@
-<div class="row">
-  <div class="col-md-12">
-    <div class="col-md-4 aprwkfl_search">
-            <label class="label-control">Search Workspace</label>
-            <div class="searchinputar">
-            <input class="form-control toolbar-search" type="text" (keyup)="searchList($event)" matInput [(ngModel)]="searchTerm">
+<div class="container-fluid new-bps-layout">
+
+    <div class="row grid-header">
+    <div class="col-md-9 p-0">
+      <span class="module-sub-header-title">Approved List</span>
+    </div>
+    <div class="col-md-3 p-0 aprwkfl_search">
+        <!-- <label class="label-control">Search Workspace</label> -->
+        <div class="searchinputar">
+            <input class="form-control toolbar-search" type="text" placeholder="Search Workspace" [(ngModel)]="searchTerm">
             <mat-icon matSuffix style="font-size: 1.2em"><img src="../../../../assets/images/search.svg" alt=""></mat-icon>
-          </div>
         </div>
+    </div>
+    </div>
+    <div class="col-md-12 box-border myworkspace-style">
+  <div class="row col-md-12 text-bold aprwkfl_bpmn_list_header">
+    <div class="expan-icon"></div>
+    <div class="list_header" (click)="sort('processIntelligenceId',0)">Process ID<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></div>
+    <div class="list_header" (click)="sort('bpmnProcessName',1)">Process Name<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></div>
+    <div class="list_header" (click)="sort('createdTimestamp',2)">Modified Time<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></div>
+    <div class="list_header" (click)="sort('userName',3)">Resource<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></div>
+    <div class="list_header" (click)="sort('role',4)">Role<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></div>
+    <div class="list_header" (click)="sort('approvalStatus',5)">Actions<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></div>
   </div>
-</div>
-<div class="container-fluid bpmn_list text-bold">
-  <div class="row col-md-12 aprwkfl_bpmn_list_header">
-    <div class="list_header" (click)="sort('processIntelligenceId',0)"><b>Process ID<span class="asc" *ngIf="orderAsc && sortIndex==0">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==0">&#8593;</span></b></div>
-    <div class="list_header" (click)="sort('bpmnProcessName',1)"><b>Process Name<span class="asc" *ngIf="orderAsc && sortIndex==1">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==1">&#8593;</span></b></div>
-    <div class="list_header" (click)="sort('createdTimestamp',2)"><b>Modified Time<span class="asc" *ngIf="orderAsc && sortIndex==2">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==2">&#8593;</span></b></div>
-    <div class="list_header" (click)="sort('userName',3)"><b>Resource<span class="asc" *ngIf="orderAsc && sortIndex==3">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==3">&#8593;</span></b></div>
-    <div class="list_header" (click)="sort('role',4)"><b>Role<span class="asc" *ngIf="orderAsc && sortIndex==4">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==4">&#8593;</span></b></div>
-    <div class="list_header" (click)="sort('approvalStatus',5)"><b>Actions<span class="asc" *ngIf="orderAsc && sortIndex==5">&#8595;</span><span class="desc" *ngIf="!orderAsc && sortIndex==5">&#8593;</span></b></div>
-  </div><br/>
   <div class="row col-md-12 p-0 aprwkfl-grid-data"  id="bpmn_list">
-  <mat-accordion>
+    <mat-accordion>
     <mat-expansion-panel  #matExpansionPanel *ngFor="let each_diag of displayedRows$ | async | filter: searchTerm | paginate: { itemsPerPage: 14, currentPage: p };let i=index;trackBy:loopTrackBy" [id]="'bpmn_list_item'+i"
     [(expanded)]="each_diag.xpandStatus"
     (click)="clicked(i)"
     [class.activePanel]="i==selectedrow"
     (opened)="collapseExpansion()"
-    (afterExpand)="expandPanel(i, each_diag.bpmnProcessInfo[0])">
+    (afterExpand)="expandPanel(i, each_diag.bpmnProcessInfo[0])" hideToggle>
   <mat-expansion-panel-header>
         <mat-panel-title>
           <div class="row col-md-12" id="bpmn_list_row">
+            <div class="">
+              <i class="material-icons expand-open">chevron_right</i>
+              <i class="material-icons expand-close">expand_less</i>
+            </div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].processIntelligenceId ? each_diag.bpmnProcessInfo[0].processIntelligenceId : '-' }}</div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].bpmnProcessName ? each_diag.bpmnProcessInfo[0].bpmnProcessName : '-'}}</div>
             <div class="text-cell" *ngIf="each_diag.bpmnProcessInfo">{{each_diag.bpmnProcessInfo[0].convertedModifiedTime*1000 | date:'medium'}}</div>
@@ -89,24 +97,25 @@
         
       </div>
     </mat-expansion-panel>
-  </mat-accordion>
-  <div>
+    </mat-accordion>
+  </div>
+  <div class="bpspaginationdiv">
     <mat-paginator #paginator
-            [length]="totalRows$ | async"
-            [pageIndex]="0"
-            [pageSize]="10"
-            [showFirstLastButtons]="true"
-            [pageSizeOptions]="[5, 10, 25, 50]"
-          ></mat-paginator>
+          [length]="totalRows$ | async"
+          [pageIndex]="0"
+          [pageSize]="10"
+          [showFirstLastButtons]="true"
+          [pageSizeOptions]="[5, 10, 25, 50]"
+        ></mat-paginator>
   </div>
 </div>
-
   <div *ngIf="griddata.length>0">
     <!-- <pagination-controls (pageChange)="p = $event"></pagination-controls> -->
   </div>
 </div>
 <div class="spinoverlay" *ngIf="isLoading"><div class="spincenter">
-  <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner> 
+  <!-- <mat-progress-spinner diameter=50  mode="indeterminate"></mat-progress-spinner>  -->
+  <img  src='..\assets\images\EZFlow_Loader.gif' class="ezflow-loader"/>
   </div></div>
 
 

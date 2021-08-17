@@ -14,7 +14,7 @@
     </div>
     <div class="ml-auto module-heading-buttons">
       <span class="pull-right">
-        <span (click)="navigateToProjectRepo()">
+        <span (click)="navigateToProjectRepo()" class="prj-db-btn">
           <button class="btn btn-default">
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
@@ -38,12 +38,22 @@
 
         <span *ngIf="editdata==false">
           <button class="btn btn-primary" (click)="editdata=true">
-            <img class="testplus" src="../../../../assets/images/BPMS/Edit-white.svg"> Edit
+            <img class="testplus" src="../../../../assets/images/Projects/edit.svg"> Edit
           </button>
         </span>
 
-        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span>
-        <span class="projects-menu-item"><i class="ri-more-2-line"></i></span> -->
+        <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span> -->
+        <span>
+          <button  [matMenuTriggerFor]="menu">
+            <img class="more" src="../../../../assets/images/Projects/more.svg" matTooltip="More">
+          </button>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="downloadExcel()">Download as Excel</button>
+          </mat-menu>
+        
+        </span>
+          
+       
       </span>
     </div>
 
@@ -64,8 +74,9 @@
               </span>
               <!-- <span class="clickable text-success " *ngIf="editdata.projectName==true" (click)="editdata.projectName=false">&nbsp;<i class="fa fa-check"></i></span> -->
 
+              
               <span (change)="projectDetails.description=$event.target.value" [attr.contenteditable]="editdata"
-                [class]=" 'clickable '+(editdata.description==true?'focus-data':'')">
+                [class]=" 'projdesc clickable '+(editdata.description==true?'focus-data':'')">
                 {{projectDetails.description}}
               </span>
               <!-- <span class="clickable text-success " *ngIf="editdata.description==true" (click)="editdata.description=false">&nbsp;<i class="fa fa-check"></i></span> -->
@@ -236,7 +247,7 @@
     
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="text" (keypress)="projectDetails.effortsSpent=$event.target.value" class="small-input"
+                    <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" class="small-input"
                       placeholder="Efforts Spent"
                       [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
                   </div>
@@ -267,10 +278,15 @@
                   <span class="labeltit">Project Purpose</span>
 
                   <div *ngIf="editdata==false">
-                    <span class="tab-text labelcont">Improve ROI</span>
+                    
+                    <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
+                    <span
+                    *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
+                    class="tab-text labelcont">-</span>
+  
                   </div>
                   <div *ngIf="editdata==true">
-                    <input type="text"
+                    <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
                       [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
                       class="small-input" placeholder="Enter Project Purpose">
                   </div>
@@ -306,6 +322,7 @@
                       <option value="">Select Status</option>
                       <option value="New">New</option>
                       <option value="In Progress">In Progress</option>
+                      <option value="Pipeline">Pipeline</option>
                       <option value="On Hold">On Hold</option>
                       <option value="In Review">In Review</option>
                       <option value="Deployed">Deployed</option>
@@ -313,14 +330,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Burnt Rate</span>
-
-                  <span><input type="text" class="small-input" placeholder="Enter Burnt Rate Value" /></span>
-                </div>
-              </div>
-
+     
           </div>
         </div>
       </div>
@@ -749,24 +759,32 @@
         <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
           <div class="newinntalx">
             <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
-              <img src="../../../../assets/images/Projects/fileupload.svg">
-            </a>
+              <img src="../../../../assets/images/Projects/upload.svg" class="default-img">
+              <img src="../../../../assets/images/Projects/upload-blue.svg" class="hover-img">
+            </a> 
             
             <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
-              <img src="../../../../assets/images/Projects/edit.svg">
+              <!-- <img src="../../../../assets/images/Projects/edit-black.svg"> -->
+              <img src="../../../../../assets/images/Projects/edit-black.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
             </a> 
             
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
-              <img src="../../../../assets/images/Projects/delete-red.svg">
+              <!-- <img src="../../../../assets/images/Projects/delete-black.svg"> -->
+              <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
             </a> 
             <!-- <span class="actions-seperator">|</span> -->
             <a class="clickable text-dark"  *ngIf="element.taskCategory =='RPA Implementation'|| element.taskCategory =='BPMN Design'"
             (click)="navigateToWorkspace(element)" matTooltip="View Task">
-              <img src="../../../../../assets/images/Projects/eye-show.svg" />
+              <!-- <img src="../../../../../assets/images/Projects/eye-show.svg" /> -->
+              <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
             </a> 
 
-            <a class="disable-bg text-dark" *ngIf="element.taskCategory =='Analysis'|| element.taskCategory =='Task Mining'" >
-              <img src="../../../../../assets/images/Projects/eye-hide.svg" />
+            <a *ngIf="element.taskCategory =='Analysis'|| element.taskCategory =='Task Mining'" >
+              <img src="../../../../../assets/images/Projects/eye-hide.svg" class="icon-disabled" >
+              
             </a>
         </div>
         </td>
@@ -811,6 +829,14 @@
                 <button type="button" class="btn btn-primary" (click)="addresource(addresourcemodal)">
                   <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Add New
                 </button>
+                <span>
+                  <div *ngIf="Resourcedeleteflag==true" class="env-btn">
+                    <button title="Delete Resource" value="Delete" id="deletebtn" class="btn btn-primary" (click)="deleteresource()">Delete</button>
+                </div>       
+                <div *ngIf="Resourcedeleteflag==false" class="env-btn">
+                    <button data-toggle="tooltip" data-placement="top" id="deletebtn" class="btn btn-primary" title="Delete Resource" disabled>Delete</button>
+                </div>
+                </span>
               </span>
             </div>
           </div>
@@ -860,6 +886,15 @@
           <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls> -->
           <table mat-table #sort14="matSort" [dataSource]="dataSource6" matSort class="projecttable table" id="autotable">
             
+            <ng-container matColumnDef="check">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                  <input [disabled]="Resourcecheckeddisabled" type="checkbox" id="Credcheckall" [checked]="Resourcecheckflag" (change)="ResourcecheckAllCheckBox($event)">
+              </th>
+              <td mat-cell *matCellDef="let element; let i = index">
+                  <input type="checkbox" [checked]="element.checked" (change)="ResourcecheckEnableDisableBtn(element.id, $event)"> 
+              </td>
+          </ng-container>
+
             <ng-container matColumnDef="profilePic">
               <th mat-header-cell *matHeaderCellDef></th>
               <td mat-cell *matCellDef="let user" class="action-link tablacs"> 
@@ -904,7 +939,7 @@
                 </td>
             </ng-container>
       
-            <ng-container matColumnDef="action">
+            <!-- <ng-container matColumnDef="action">
               <th mat-header-cell *matHeaderCellDef>Actions</th>
               <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
                 <div class="newinntalx">
@@ -913,7 +948,7 @@
                   </a> 
               </div>
               </td>
-            </ng-container>
+            </ng-container> -->
       
               <ng-container matColumnDef="Loading">
                 <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
@@ -945,9 +980,9 @@
               </span>
             </div>
             <div class="col-md-6 pr-0">
-              <span class="pull-right">
-                <button type="button" class="btn btn-primary">
-                  <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload">Upload New</button>
+              <span class="pull-right" >
+                <button type="button"  (click)="uploadFile(uploadFilemodal)"  class="btn btn-primary">
+                  <img src="../../../../assets/images/BPMS/upload.svg"  class="testplusupload">Upload New</button>
               </span>
             </div>
           </div>
@@ -966,7 +1001,7 @@
         </div> -->
 
           <div class="projects-table-body">
-            <table class="table">
+            <!-- <table class="table">
               <thead>
                 <tr class="separated">
                   <th>Document Name</th>
@@ -995,7 +1030,62 @@
                   <td>10MB</td>
                 </tr>
               </tbody>
+            </table> -->
+
+
+            <table mat-table #sort16="matSort" [dataSource]="dataSource9" matSort class="projecttable table" id="autotable">
+          
+      
+                <ng-container matColumnDef="fileName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Document Name</th>
+                  <td mat-cell   *matCellDef="let element">
+                    <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
+                    <span *ngIf="element.fileName==null">---</span>
+                  </td>
+        
+              </ng-container>
+        
+              <ng-container matColumnDef="uploadedBy">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded By</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.uploadedBy!=null" [matTooltip]="element.uploadedBy">{{element.uploadedBy| userPipe : users_list}}</span>
+                    <span *ngIf="element.uploadedBy==null">---</span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="uploadedDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded Date</th>
+                <td mat-cell *matCellDef="let element">
+                  <span *ngIf="element.uploadedDate!=null" [matTooltip]="element.uploadedDate">{{element.uploadedDate| date:'MMM dd, y, HH:mm:ss'}}</span>
+                  <span *ngIf="element.uploadedDate==null">---</span>
+                </td>
+              </ng-container>
+          
+              <ng-container matColumnDef="fileSize">
+                  <th mat-header-cell *matHeaderCellDef>File Size</th>
+                  <td mat-cell *matCellDef="let element">
+                      <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}</span>
+                      <span *ngIf="element.fileSize==null">---</span>
+                     
+                  </td>
+              </ng-container>
+        
+                <ng-container matColumnDef="Loading">
+                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                      Loading
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="noData">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                        No Records Found
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns9; sticky: true"></tr>
+                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns9;"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource9!=null}"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource9!=null && dataSource9.data.length==0)}"></tr>
             </table>
+              <mat-paginator class="newpaginationdiv" #paginator109 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+              </mat-paginator>
           </div>
 
         </mat-card>
@@ -1026,7 +1116,7 @@
       <span class="pull-right lastedit-date">Last Updated Date : {{selectedtaskdata.lastModifiedTimestamp |
         date}}</span>
     </div>
-    <div class="modal-body modelprbody editmodelprbody" style="width:100%;overflow-x: auto;height:calc( 100vh - 260px)">
+    <div class="modal-body modelprbody editmodelprbody">
       <div class="container p-0" style="width:100%">
         <form [formGroup]="updatetaskForm" (ngSubmit)="updatetask()">
           <div class="row">
@@ -1142,7 +1232,7 @@
                           </div>
                           <div class="modal-footer modelprfooter">
                             <div class="pull-right">
-                              <button id="updatecancelcomment" type="button" class="btn btn-primary"
+                              <button id="updatecancelcomment" type="button" class="btn btn-default"
                                 (click)="posteditcancelcomment()">
                                 Cancel
                               </button>
@@ -1196,7 +1286,7 @@
                                         <div  *ngIf="result.length>3"><img class="res-circle " src="{{history.lastModifiedUserEmail|userImagePipe: users_list}}" ></div>
                                       </div>
                                     </div>
-                                  <br>
+                                  
                                   <div>
                                   {{history.message}}{{history.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
                                 </div> -->
@@ -1224,7 +1314,9 @@
                             <td>{{attachments.fileName}}</td>
                             <td class="text-left">{{attachments.fileSize | fileSizePipe}}</td>
                             <td class="text-left">
-                              <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                              <span class="clickable" (click)="downloadTaskAttachment(attachments)">
+                                <img src="../../../../assets/images/Projects/Download.svg" class="testplus" />
+                              </span>
                             </td>
                           </tr>
                         </tbody>
@@ -1242,8 +1334,8 @@
                         <tr>
                           <th></th>
                           <th class="text-left">Name</th>
-                          <th class="text-right">Role</th>
-                          <th class="text-right">Last Updated</th>
+                          <th class="text-left">Role</th>
+                          <th class="text-left">Last Updated</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -1260,8 +1352,8 @@
                           </td>
                           <td>{{selectedtaskdata.resources| userPipe : users_list}}</td>
                           <!-- <td style="text-align:center">{{roles?roles:'-'}}</td> -->
-                          <td class="text-right">{{roles?roles:'-'}}</td>
-                          <td class="text-right">{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
+                          <td class="text-left">{{roles?roles:'-'}}</td>
+                          <td class="text-left">{{selectedtaskdata.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</td>
                         </tr>
                       </tbody>
 
@@ -1276,7 +1368,7 @@
     </div>
     <div class="modal-footer modelprfooter">
       <div class="pull-right">
-        <button (click)="resetupdatetaskproject()" class="btn btn-primary">Reset</button>
+        <button (click)="resetupdatetaskproject()" class="btn btn-default">Reset</button>
         <button (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
         <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
           class="btn btn-primary btn-update">Update</button>
@@ -1292,7 +1384,7 @@
         <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
       </button>
     </div>
-    <div class="modal-body modelprbody">
+    <div class="modal-body modelprbody uploadfilebdiv">
       <div class="container p-0" style="width:100%">
         <form [formGroup]="uploadtaskFileForm" (ngSubmit)="submitUploadFileForm()">
           <div class="row">
@@ -1307,11 +1399,55 @@
               <span *ngIf="uploadtaskFileForm.get('category').invalid && uploadtaskFileForm.get('category').touched"
                 class="errspan required">File Category Required*</span>
             </div>
+            <div class="form-fields col-md-12">
+                
+              <label>Description<span class="star">*</span></label>
+              <textarea name= "desc" class="form-control" rows="2" formControlName="description" placeholder="Enter Description...">
 
+              </textarea>
+              <span *ngIf="uploadtaskFileForm.get('description').invalid && uploadtaskFileForm.get('description').touched"
+                   class="errspan required">Description Required*</span>
+
+            </div>
+         
             <div class="form-fields col-md-12">
               <label>Upload<span class="star">*</span></label>
-              <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File"
-                formControlName="filePath" placeholder="choose file">
+              <div class="box-fileupload">
+                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+                <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+                <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
+                
+                <span>Select File</span>
+              </label>
+              </div>
+          
+              <div class="upload-filesdiv">
+                <div class="row">
+                  <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
+                    <div class ="project-card">
+                        <span class="pull-right clickable" matTooltip="Remove"
+                        (click)="removeSelectedFile(index)">
+                            <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                            <!-- <i class="fa fa-trash"></i> -->
+                        </span>
+                     <span class="card-placeholder">
+                          File Name : {{selected.name}}     
+                    </span>
+                    
+                      <span class="file-size">
+                        Size : {{selected.size | fileSizePipe}}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <!-- {{selected}}
+                <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                  <span aria-hidden="true">&times;</span>
+              </button> -->
+                <!-- <button mat-icon-button (click)="removeSelectedFile(index)">delete</button> -->
+              </div>
+              <!-- <input type="file" class="form-control" (change)="onFileSelected($event)" name="Upload-File"
+                formControlName="filePath" placeholder="choose file"> -->
               <span *ngIf="uploadtaskFileForm.get('filePath').invalid && uploadtaskFileForm.get('filePath').touched"
                 class="errspan required"></span>
             </div>
@@ -1321,7 +1457,7 @@
     </div>
     <div class="modal-footer modelprfooter">
       <div class="pull-right">
-        <button (click)="uploadtaskFilemodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button (click)="uploadtaskFilemodalref.hide()" class="btn btn-default">Cancel</button>
         <button [disabled]="uploadtaskFileForm.invalid" (click)="submitUploadFileForm()"
           class="btn btn-primary btn-update">Submit</button>
       </div>
@@ -1329,3 +1465,90 @@
   </ng-template>
 
 </div>
+<ng-template class="modal-up" #uploadFilemodal>
+
+  <div class="modal-header modelprhead">
+    <h4 class="modal-title pull-left">Upload File</h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+    </button>
+  </div>
+  <div class="modal-body modelprbody uploadfilebdiv">
+  <div class="container p-0" style="width:100%">
+      <form [formGroup]="uploadFileFormDetails" (ngSubmit)="submitUploadFileFormattachment()">
+          <div class="row">
+              <div class="form-fields col-md-12">
+                  <label for="fileCategory">File Category<span class="star">*</span></label>
+                  <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory" required>
+                    <option  [value]="null" disabled hidden>Select Category</option>
+                    <option value="" [selected]="true">Select Category</option>
+                    <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                  </select>
+                  <span
+                      *ngIf="uploadFileFormDetails.get('fileCategory').invalid && uploadFileFormDetails.get('fileCategory').touched"
+                       class="errspan required">File Category Required*</span>
+              </div>
+              </div>
+              <div class="form-fields col-md-12">
+                  
+                  <label>Description<span class="star">*</span></label>
+                  <textarea name= "desc" class="form-control" rows="2" formControlName="description" placeholder="Enter Description...">
+  
+                  </textarea>
+                  <span *ngIf="uploadFileFormDetails.get('description').invalid && uploadFileFormDetails.get('description').touched"
+                       class="errspan required">Description Required*</span>
+  
+              </div>
+              <div class="form-fields col-md-12">
+                  
+                <label>Upload<span class="star">*</span></label>
+                <div class="box-fileupload">
+                  <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+                  <label for="file" matTooltip="Upload File" (change)="chnagefileUploadForm($event)">
+                  <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
+                  
+                  <span>Select File</span>
+                </label>
+                </div>
+               
+                <div class="upload-filesdiv">
+                  <div class="row">
+                    <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
+                      <div class ="project-card">
+                          <span class="pull-right clickable" matTooltip="Remove"
+                          (click)="removeSelectedFile(index)">
+                              <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                              <!-- <i class="fa fa-trash"></i> -->
+                          </span>
+                       <span class="card-placeholder">
+                            File Name : {{selected.name}}     
+                      </span>
+                      
+                        <span class="file-size">
+                          Size : {{selected.size | fileSizePipe}}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- {{selected}}
+                  <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                    <span aria-hidden="true">&times;</span>
+                </button> -->
+                  <!-- <button mat-icon-button (click)="removeSelectedFile(index)">delete</button> -->
+                </div>
+                
+                <span *ngIf="uploadFileFormDetails.get('uploadFile').invalid && uploadFileFormDetails.get('uploadFile').touched"
+                     class="errspan required">File Required*</span>
+  
+            </div>
+          
+      </form>
+  </div>
+  </div>
+  <div class="modal-footer modelprfooter">
+    <div class="pull-right">
+        <button (click)="uploadFilemodalref.hide()" class="btn btn-default">Cancel</button>
+        <button [disabled]="uploadFileFormDetails.invalid" (click)="submitUploadFileFormattachment()" class="btn btn-primary btn-update">Submit</button>
+        </div>
+  </div>
+  </ng-template>

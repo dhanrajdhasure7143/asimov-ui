@@ -43,7 +43,7 @@ import {MatSliderModule} from '@angular/material/slider';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { RequestFileComponent } from './request-file/request-file.component';
 import { FileSizePipe } from './pipes/file-size-pipe.pipe';
-
+import { MatMenuModule } from '@angular/material'; 
 import { UserDetialsPipe } from './pipes/user-detials.pipe';
 import { UserImagePipe } from './pipes/user-image-pipe';
 import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
@@ -74,7 +74,7 @@ const materialModules: any[] = [
     DataTablesModule,MatTableModule,ReactiveFormsModule,FormsModule, MatSortModule,MatSliderModule,
     MatPaginatorModule,
     MatFormFieldModule,
-    MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
+    MatMenuModule,MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
     ModalModule.forRoot(),
     MatProgressBarModule,NgSelectModule,Ng5SliderModule
     

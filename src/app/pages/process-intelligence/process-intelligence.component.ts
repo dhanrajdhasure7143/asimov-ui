@@ -1,26 +1,32 @@
 import { ActivatedRoute } from '@angular/router';
-import { Component, OnInit, DoCheck, OnChanges, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, DoCheck, OnChanges, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { Router } from '@angular/router';
+import { DataTransferService } from '../services/data-transfer.service';
 
 @Component({
-  selector: 'app-bussiness-process',
-  template: `<div class="main-content">
-              <div class="row content-area">
-                <div class="module-heading">
-                  <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>
-                  <span class="module-heading-title">Process Intelligence</span>
-                  <span class="insight-back-button" *ngIf="isShow"> <a href="javascript:void(0);" (click)="gotoProcessgraph()">Go Back</a> </span>
-                </div>
-                <router-outlet></router-outlet>
-              </div>
-            </div>`
+  selector: 'app-process-intelligence',
+  templateUrl: './process-intelligence.component.html',
+  styleUrls: ['./process-intelligence.component.css']
+
 })
 export class ProcessIntelligenceComponent implements OnInit {
  isShow:boolean  = false;
  wpiIdNumber:any;
+ isPIHeaderShow:any="true";
+ isplay:boolean;
+ isAddHrs:boolean=false;
+ workingHours:any = {
+  formDay:'Mon',
+  toDay: 'Sun',
+  shiftStartTime:"00:00",
+  shiftEndTime:"23:59"
+};
+isBackbutton:boolean=false;
+
   constructor(private changeDetectorRef:ChangeDetectorRef,
     private router:Router,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute,
+    private dt:DataTransferService) { 
    
   
   }
@@ -30,18 +36,36 @@ export class ProcessIntelligenceComponent implements OnInit {
    
  }
  ngAfterViewChecked(){
- 
+
     let windowUrl = window.location.href;
     if(windowUrl.indexOf('insights') == -1){
       this.isShow=false;
     } else{
       this.isShow=true;
   }
+  if(windowUrl.indexOf('flowChart') == -1){
+    this.isPIHeaderShow=false;
+  } else{
+    this.isPIHeaderShow=true;
+}
+if(windowUrl.indexOf('processIntelligence/insights') != -1||windowUrl.indexOf('business-insights') !=-1){
+  this.isBackbutton=true;
+} else{
+  this.isBackbutton=false;
+}
   this.route.queryParams.subscribe(params => {
     if(params['wpid']!=undefined){
         this.wpiIdNumber = parseInt(params['wpid']);
       }
+      if(params['wpiId']!=undefined){
+        this.wpiIdNumber = parseInt(params['wpiId']);
+      }
+      if(params['piId']!=undefined){
+        this.wpiIdNumber = parseInt(params['piId']);
+      }
+      // console.log( this.wpiIdNumber)
     });
+    
   this.changeDetectorRef.detectChanges();
 
  }
@@ -50,4 +74,47 @@ export class ProcessIntelligenceComponent implements OnInit {
   this.router.navigate(["/pages/processIntelligence/flowChart"],{queryParams:{wpiId:this.wpiIdNumber}})
 }
 
+downloadNotaton(e){
+  this.dt.piHeaderValues(e);
 }
+
+playAnimation(){
+  this.dt.piHeaderValues('play_graph');
+  this.isplay=!this.isplay;
+}
+
+viewInsights(){
+  this.router.navigate(["/pages/processIntelligence/insights"],{queryParams:{wpid:this.wpiIdNumber}});
+}
+
+viewbusinessinsights(){
+  this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.wpiIdNumber}})
+}
+generateBpmn(){
+  this.dt.piHeaderValues('bpmn');
+
+}
+openVariantListNav(){
+  this.dt.piHeaderValues('variant_list');
+}
+openHersOverLay(){
+  this.isAddHrs=!this.isAddHrs
+}
+
+canceladdHrs(){ //close timefeed popup 
+  this.isAddHrs=!this.isAddHrs;
+}
+addWorkingHours(){
+  this.dt.piHeaderValues(this.workingHours);
+}
+
+resetWorkingHours(){ //working hours reset in timffed   
+  this.workingHours.formDay = "Mon";
+  this.workingHours.toDay = "Sun";
+  this.workingHours.shiftStartTime="00:00";
+  this.workingHours.shiftEndTime="23:59"
+}
+
+}
+
+// <img class="module-heading-image" src='..\\assets\\busineeprocessstudionewicon.svg'>

@@ -9,6 +9,7 @@ import { DataselectionComponent } from './dataselection/dataselection.component'
 import { XesdocumentComponent } from './xesdocument/xesdocument.component';
 import { D3flowchartComponent } from './d3flowchart/d3flowchart.component';
 import { ProcessinsightsComponent } from './processinsights/processinsights.component';
+import { BusinessInsightsComponent } from './business-insights/business-insights.component';
 
 
 const routes: Routes = [
@@ -20,6 +21,7 @@ const routes: Routes = [
     {path:'xesdocument', component:XesdocumentComponent},
     {path:'flowchartd3', component:D3flowchartComponent},
     {path:'insights', component:ProcessinsightsComponent},
+    {path:'business-insights', component:BusinessInsightsComponent},
     {path:'**', redirectTo:'/upload', pathMatch: 'full'}
   ]}
 ];

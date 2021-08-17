@@ -3,7 +3,7 @@
       <div class=" row module-heading title">
           <div class="col-md-6 new-bps-header-title">
             <span class="bps-header-title">
-              <span class="module-heading-title">Business Process Studio 
+              <span class="module-header-title">Business Process Studio 
                 <span *ngIf="isHeaderShow == 'true'"> / {{currentNotation_name | titlecase}}</span>
               </span>
               <span class="" *ngIf="isHeaderShow == 'true'">
@@ -24,7 +24,7 @@
           <div class="col-md-6 new-bps-icons p-0" *ngIf="isHeaderShow == 'true'">
             <div class="row bps-float">
               <button *ngIf='!isfromApprover && !iscreate_notation' class="editprimary tsttooltipbtn" [disabled]="isEditMode || rejectedOrApproved=='PENDING'" (click)="editNotation()">
-                <img src="../../../assets/images/BPMS/Edit-white.svg">
+                <img class="defaul-img" src="../../../assets/images/BPMS/Edit-blue.svg">
                 <span class="testtooltip">Edit</span>
               </button>
               <button mat-button [matMenuTriggerFor]="download" class="tsttooltipbtn">
@@ -88,8 +88,7 @@
                 <button type="button" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"
         [popover]="popTemplate" placement="bottom">
         <img alt="" src="../../../assets/images/BPMS/submit-for-approval.svg">
-        <span class="testtooltip">Save & Submit for
-          approval</span>
+        <span class="testtooltip">Save & Submit for approval</span>
 </button>
             <!-- <mat-menu #menu="matMenu" class="custom-content">
               <div class="form-group">
@@ -125,10 +124,17 @@
               </ngx-dropzone>
             </div>  
           </div>
-          <div class="col-md-6 module-heading-buttons" *ngIf="isHeaderShow == 'false'">
+          <div class="col-md-6 module-heading-buttons bps-aprwkfl" *ngIf="isHeaderShow == 'false'">
             <span>
-              <a *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn btn-primary">Approval Workflow</a>
-              <a (click)="gotoBPMNPlatform()" class="btn btn-primary">View Cockpit</a>
+              <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn btn-default">
+                <img class="testplus default-img" src="../../../assets/images/BPMS/Workflow.svg">
+                <img class="testplus hover-img" src="../../../assets/images/BPMS/White-Workflow.svg">
+                Approval Workflow
+              </button>
+              <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
+                <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
+                View Cockpit
+              </button>
             </span>
           </div>
       </div>    
@@ -136,7 +142,7 @@
   </div>
 </div>
 <ng-template #popTemplate>
-  <div class="custom-content">
+  <div class="custom-content Apr-cnt">
     <div class="form-group">
       <label for="" class="label-control">Approval</label>
       <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
@@ -145,7 +151,10 @@
             {{each_approver.firstName+" "+each_approver.lastName}}</option>
     </select>
     </div>
-    <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
+    <div class="custom-footer-content">
+      <button class="btn btn-default">Cancel</button>
+      <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
+    </div>  
   </div>
 </ng-template>
 
@@ -157,6 +166,9 @@
         <option >Select</option>
     </select>
     </div>
-    <button class="btn btn-primary">Share</button>
+    <div class="custom-footer-content">
+      <button class="btn btn-default">Cancel</button>
+      <button class="btn btn-primary">Share</button>
+    </div>  
   </div>
 </ng-template>

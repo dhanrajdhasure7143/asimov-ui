@@ -41,7 +41,11 @@ export const environment = {
   //dbName: "asimov_aiotal",
 
 
+//camunda navigation 
+camunda_url : "http://10.11.0.127:8080",
+
   //  * QA ENV URl's
+<<<<<<< HEAD
   
      pi_url: 'http://piqa.epsoftinc.in',
      bps_url: 'http://bpsqa.epsoftinc.in',
@@ -75,6 +79,38 @@ export const environment = {
   //BPMN Platform URL
   bpmnplatformUrl : "http://10.11.0.128:8080"
 
+=======
+  //   pi_url: 'http://piqa.epsoftinc.in',
+  //   bps_url: 'http://bpsqa.epsoftinc.in',
+  //   rpa_url: 'http://rpaqa.epsoftinc.in',
+  //   loopback_url: 'http://10.11.0.107:3000',
+  //   idm_url:'http://10.11.0.108:8888',
+  //   pi_node_url: "http://10.11.0.108:3000",
+  //     pi_node_jobs: "http://10.11.0.108:5000",
+  //   auth_url: "http://authqa.epsoftinc.in",
+  //   platform_url:'http://apqa.epsoftinc.in',
+  //   schema_registry_url:"http://10.11.0.101:8081",
+  //   alerts_url:'http://alertsqa.epsoftinc.in',
+
+  // // Aiotal redirection urls
+  //  myaccount_url : "http://eiapcloudqa.epsoftinc.in/#/activation",
+  //  logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
+  // redirectout_url: 'http://eiapcloudqa.epsoftinc.in/#/signout',
+  // platform_home_url: 'http://eiapcloudqa.epsoftinc.in/#/',
+
+  // // PI Connectors
+  //  connector_topic: 'nodeq',
+
+  // //DB Connector
+  //  dbConnectorHost: "10.11.0.104",
+  //  dbName: 'eiap_qa',
+
+  // // BPMN Platform(camunda) URL
+  //   bpmnplatformUrl : "http://10.11.0.128:8080",
+
+  //camunda navigation 
+  // camunda_url : "http://10.11.0.128:8080",
+>>>>>>> 88e3803667ac586191cae2fe22ccd8275d8136c6
 };
 
 /*

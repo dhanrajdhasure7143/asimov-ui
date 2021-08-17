@@ -1,7 +1,8 @@
-import { Component, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterViewChecked, ChangeDetectorRef, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataTransferService } from '../services/data-transfer.service';
 import { RestApiService } from '../services/rest-api.service';
+import { APP_CONFIG } from 'src/app/app.config';
 @Component({
   selector: 'app-bussiness-process',
   templateUrl: './business-process.component.html' ,
@@ -27,7 +28,8 @@ export class BusinessProcessComponent implements AfterViewChecked {
   approver_list:any[] = [];
   selected_approver:any
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService ) { }
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
+              @Inject(APP_CONFIG) private config, ) { }
 
   ngOnInit(){
     localStorage.setItem("isheader","false");
@@ -60,6 +62,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
         this.iscreate_notation=notationValues_obj['isFromcreateScreen'];
         this.isStartProcessBtn=notationValues_obj['isStartProcessBtn'];
         this.currentNotation_name=notationValues_obj['process_name'];
+        // if(notationValues_obj['isEditbtn'])
+        this.isEditMode=notationValues_obj['isEditbtn'];
+        this.isSave_disabled=notationValues_obj['isSavebtn'];
       }
     });
   }
@@ -136,7 +141,12 @@ export class BusinessProcessComponent implements AfterViewChecked {
     if(selecetedTenant){
        splitTenant = selecetedTenant.split('-')[0];
     }
+<<<<<<< HEAD
     window.location.href = "http://10.11.0.128:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+=======
+    window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+    // window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
+>>>>>>> 88e3803667ac586191cae2fe22ccd8275d8136c6
   }
   onchange(){
     // console.log(e);

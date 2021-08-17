@@ -77,6 +77,7 @@ export class BpsHomeComponent implements OnInit {
     // document.getElementById("filters").style.display = "block";
     let obj={}
     this.dt.bpsNotationaScreenValues(obj);
+    this.dt.bpsHeaderValues('');
   }
 
   async getBPMNList(){
@@ -102,12 +103,18 @@ export class BpsHomeComponent implements OnInit {
   }
 
   openDiagram(bpmnDiagram){
+    console.log(bpmnDiagram)
     if(bpmnDiagram.bpmnProcessStatus && bpmnDiagram.bpmnProcessStatus =="PENDING" ) return;
     let binaryXMLContent = bpmnDiagram.bpmnXmlNotation; 
     let bpmnModelId = bpmnDiagram.bpmnModelId;
     let bpmnVersion = bpmnDiagram.version;
     let bpmnType = bpmnDiagram.ntype;
     this.bpmnservice.uploadBpmn(atob(binaryXMLContent));
+    let push_Obj={"rejectedOrApproved":bpmnDiagram.bpmnProcessStatus,"isfromApprover":true,
+    "isShowConformance":false,"isStartProcessBtn":false,"autosaveTime":bpmnDiagram.modifiedTimestamp,
+    "isFromcreateScreen":false,'process_name':bpmnDiagram.bpmnProcessName,'isEditbtn':false,'isSavebtn':true}
+this.dt.bpsNotationaScreenValues(push_Obj);
+this.dt.bpsHeaderValues('');
     this.router.navigate(['/pages/businessProcess/uploadProcessModel'], { queryParams: { bpsId: bpmnModelId , ver: bpmnVersion, ntype: bpmnType}});
   }
 
@@ -161,6 +168,8 @@ export class BpsHomeComponent implements OnInit {
    }
 
   getDiagram(eachBPMN,i){
+      var element = document.getElementById('_diagram'+i);
+    element.scrollIntoView({behavior: "auto",block: "center", inline: "nearest"});
     let byteBpmn = atob(eachBPMN.bpmnXmlNotation);
     this.index=i;
     if(document.getElementsByClassName('diagram_container'+i)[0].innerHTML.trim() != "") return;
@@ -233,10 +242,18 @@ export class BpsHomeComponent implements OnInit {
     let asc=this.orderAsc
     this.orderAsc=!this.orderAsc
     this.saved_diagrams= this.saved_diagrams.sort(function(a,b){
-      if (asc) 
-       return (a[colKey] > b[colKey]) ? 1 : -1;
-      else 
-       return (a[colKey] < b[colKey]) ? 1 : -1;
+      if(ind!=1){
+        if (asc) 
+        return (a[colKey].toLowerCase() > b[colKey].toLowerCase()) ? 1 : -1;
+       else 
+        return (a[colKey].toLowerCase() < b[colKey].toLowerCase()) ? 1 : -1;
+      }else{
+        if (asc) 
+        return (a[colKey] > b[colKey]) ? 1 : -1;
+       else 
+        return (a[colKey] < b[colKey]) ? 1 : -1;
+      }
+      
     });
     this.assignPagenation(this.saved_diagrams);
   }
@@ -317,7 +334,10 @@ export class BpsHomeComponent implements OnInit {
   searchList(event: Event) {       // search entered process ids from search input
     const filterValue = (event.target as HTMLInputElement).value;
     let test:any=[]
-    
+    if(!filterValue){
+      this.assignPagenation(this.saved_diagrams);
+      return;
+    }
     this.saved_diagrams.filter(item =>{
       Object.keys(item).some(k =>{ 
         if(item[k] != null &&item[k].toString().toLowerCase().includes(filterValue.toLowerCase())){

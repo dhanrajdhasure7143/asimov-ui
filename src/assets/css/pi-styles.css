@@ -24,9 +24,10 @@
 }
 
 #process_data .tableRow .tableCell.valid{
-  background-color:rgb(84, 168, 236) !important;
+  background-color: #00a0e3 !important;
   cursor: no-drop;
   pointer-events:none;
+  color: #fff;
 }
 #process_data .tableRow .tableCell.invalid{
   background-color:rgb(212, 105, 105) !important;
@@ -225,7 +226,7 @@ padding-left: 5px;
   /* font-size: 13px; */
   border:none !important;
   box-shadow: none !important;
-  border-radius: 0px !important;
+  border-radius: 4px !important;
   border-top: 0px;
   border-bottom: 1px solid lightgray !important;
   /* padding-left: 0px !important; */
@@ -849,7 +850,7 @@ label{
     border-right:dotted 10px #d02525;
   }
   #canvas, #canvas1, #canvas2{
-    height: calc(100% - 30px);
+    /* height: calc(100% - 30px); */
     /* width: 100%; */
 }
 .overlay{
@@ -874,18 +875,16 @@ label{
 /*pi bpmn component styles - Ends*/
 /*upload component styles - Starts*/
 .download_link{
-  top:104px;
   text-align: center;
-  color:#0061cf !important;
-  font-weight: 550;
   cursor: pointer;
+  margin-top: 30px;
 }
 
 .upload_zone{
-    border:1px solid rgb(212, 179, 179);
+    /* border:1px solid rgb(212, 179, 179);
     padding: 0;
     text-align: center;
-    margin: 2px 5px;
+    margin: 2px 5px; */
 }
 .upload_btn{
     margin-left:-10px;

@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RestApiService} from '../../services/rest-api.service'
 import { NgxSpinnerService} from 'ngx-spinner'
 import {  ActivatedRoute, Router } from '@angular/router';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Base64 } from 'js-base64';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
@@ -35,7 +38,11 @@ export class ProgramDetailsComponent implements OnInit {
     modalref:BsModalRef;
     mindate:any;
     selected_process_names:any=[];
-
+    editdata:Boolean=false;
+    displayedColumns8: string[] = ["initiatives","projectName","owner","new","projectPercentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
+    dataSource8:MatTableDataSource<any>;
+    @ViewChild("sort104",{static:false}) sort104: MatSort;
+    @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
   ngOnInit() {
     this.getprojects_and_programs();
     this.mindate= moment().format("YYYY-MM-DD");
@@ -92,7 +99,7 @@ export class ProgramDetailsComponent implements OnInit {
       let program_id=data.id;
       this.get_linked_projects(program_id);
       this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
-
+      this.editdata=false;
     });
   }
 
@@ -101,6 +108,10 @@ export class ProgramDetailsComponent implements OnInit {
   {
     this.rest.getProjectsByProgramId(id).subscribe(list=>{
       this.linked_projects=list;
+      console.log(this.linked_projects);
+      this.dataSource8= new MatTableDataSource(this.linked_projects);
+      this.dataSource8.sort=this.sort104;
+      this.dataSource8.paginator=this.paginator104;
     })
   }
 
@@ -240,22 +251,22 @@ export class ProgramDetailsComponent implements OnInit {
 
     // Add data
     chart.data = [{
-      "year": "Catrgory 1",
+      "year": "Category 1",
       "italy": 1,
       "germany": 5,
       "uk": 3
     }, {
-      "year": "categorty 2",
+      "year": "Categorty 2",
       "italy": 1,
       "germany": 2,
       "uk": 6
     }, {
-      "year": "category 3",
+      "year": "Category 3",
       "italy": 2,
       "germany": 3,
       "uk": 1
     }, {
-      "year": "category 4",
+      "year": "Category 4",
       "italy": 3,
       "germany": 4,
       "uk": 1
@@ -464,4 +475,27 @@ export class ProgramDetailsComponent implements OnInit {
         
   }
 
+  inputNumberOnly(event){
+    let numArray= ["0","1","2","3","4","5","6","7","8","9","Backspace","Tab"]
+    let temp =numArray.includes(event.key); //gives true or false
+   if(!temp){
+    event.preventDefault();
+   } 
+  }
+
+  updateprogramDetails()
+  {
+    this.spinner.show()
+    this.program_detials["type"]="Program";
+    this.rest.update_project(this.program_detials).subscribe(res=>{
+      this.spinner.hide()
+      let response:any=res;
+      if(response.errorMessage == undefined)
+        Swal.fire("Success",response.message,"success")
+      else
+        Swal.fire("Error",response.errorMessage,"error");
+      this.getprogramdetails();
+      this.editdata=false;
+    });
+  }
 }

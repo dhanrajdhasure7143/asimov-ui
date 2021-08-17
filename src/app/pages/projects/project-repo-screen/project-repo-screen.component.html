@@ -1,4 +1,4 @@
-<div style="width:100%;overflow-x: auto;height:calc( 100vh - 160px)">
+<div style="width:100%;overflow-x: auto;height:calc( 100vh - 80px)">
   <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
       <!-- <div class="projects-header maincreat">
         <span class="projects-back-button" routerLink="/pages/projects/projectdetails" [queryParams]="{id: projectid}">
@@ -37,16 +37,28 @@
         <div class="ml-auto module-heading-buttons">
           <span class="pull-right">
             <span>
-              <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
+              <button class="btn btn-primary" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
             </span>
             <span>
               &nbsp;
             </span>
             <span>
-              <button _ngcontent-svr-c17="" class="btn btn-primary" (click)="uploadFile(uploadFilemodal)" type="button"><img src="../../../../assets/images/BPMS/upload.svg" class="testplus2 default-img"> Upload File</button>
+              <button  class="btn btn-primary" (click)="uploadFile(uploadFilemodal)">
+                <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload"> Upload File
+              </button>
             </span>
-            <span class="projects-menu-item" type="button" (click)="onDeleteItem($event)"><i class="fa fa-trash"></i></span>
-            <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadItem($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span>
+            &nbsp;
+            <span class="gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
+              <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+            </span> 
+            &nbsp;
+            <span class="gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
+              <img src="../../../assets/images/BPMS/download.svg" class="default-img">
+              <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+            </span> 
+            <!-- <span class="projects-menu-item" type="button" (click)="onDeleteSelectedItems($event)"><i class="fa fa-trash"></i></span> -->
+            <!-- <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadSelectedItems($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span> -->
             <!-- <span class="projects-menu-item"><i class="fa fa-download"></i></span> -->
             <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
           </span>
@@ -97,6 +109,16 @@
               </div> -->
               <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
 
+                <ng-container matColumnDef="check">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      <input [disabled]="filecheckeddisabled" type="checkbox" id="Credcheckall" [checked]="filecheckflag" (change)="filecheckAll($event)">
+                  </th>
+                  <td mat-cell *matCellDef="let element; let i = index">
+                      <input type="checkbox" [checked]="element.checked" (change)="filechecktoggle(element.id, $event)"> 
+                  </td>
+              </ng-container>
+    
+                
                 <ng-container matColumnDef="category">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
                   <td mat-cell *matCellDef="let element">
@@ -157,8 +179,18 @@
               <ng-container matColumnDef="action">
                 <th mat-header-cell *matHeaderCellDef> Actions</th>
                 <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-                  <span class="projects-menu-item" (click)="onDeleteItem()"><i class="fa fa-trash"></i></span>
-                        <span class="projects-menu-item projects-menu-item1"><img src="../../../../assets/images/Projects/Download.svg" class="testplus1 default-img"></span>
+                  <span class="gridicon"  (click)="onDeleteItem(element.id,element.fileName)"   matTooltip="Delete" >
+                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                    <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                  </span> 
+                  &nbsp;
+                  <!-- <span class="projects-menu-item" (click)="onDeleteItem(element.id,element.fileName)"><i class="fa fa-trash"></i></span> -->
+
+                  <span class="gridicon"  (click)="onDownloadItem(element.fileName)"   matTooltip="Download" >
+                    <img src="../../../assets/images/BPMS/download.svg" class="default-img">
+                    <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+                  </span> 
+                  <!-- <span class="projects-menu-item projects-menu-item1" (click)="onDownloadItem(element.fileName)"> <img src="../../../assets/images/BPMS/download.svg" class="testplus1 default-img"></span> -->
                   <!-- <div class="newinntalx">
                     <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
                       <i class="fas fa-file-upload"></i>
@@ -196,7 +228,7 @@
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
               </table>
-              <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true">
+              <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
               </mat-paginator>
               <br>
               <div class="">
@@ -337,11 +369,17 @@
                   <th mat-header-cell *matHeaderCellDef> Actions</th>
                   <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
                     <span class="remove-action">
-                      <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" type="button"><i class="fas fa-times"></i></button>
+                      <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny File Request" type="button"><i class="fas fa-times"></i></button>
                     </span>
                     <span class="upload-action" *ngIf="loggedUser == element.requestTo">
                       <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
-                      <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
+                      <label for="file" (change)="uploadRequetedFile($event, element)">
+                        <span class="gridicon">
+                          <img src="../../../../assets/images/Projects/upload.svg" class="default-img" matTooltip="Upload">
+                          <img src="../../../../assets/images/Projects/upload-blue.svg" class="hover-img" matTooltip="Upload"> 
+                        </span>
+                        
+                      </label>
                   </span>
                   <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
                   
@@ -364,6 +402,8 @@
                   <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource4!=null && dataSource4.data.length==0)}"></tr>
                 </table>
                 </div>
+                <mat-paginator class="newpaginationdiv" #paginator102 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+                </mat-paginator>
          
         </mat-tab>
         <mat-tab label="My Requests">
@@ -414,11 +454,13 @@
               <th mat-header-cell *matHeaderCellDef> Actions</th>
               <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
                 <span class="remove-action">
-                  <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" type="button"><i class="fas fa-times"></i></button>
+                  <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny File Request"type="button"><i class="fas fa-times"></i></button>
                 </span>
                 <span class="upload-action" *ngIf="loggedUser == element.requestTo">
                   <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
-                  <label for="file" (change)="uploadRequetedFile($event, element)"><i class="fas fa-file-upload"></i></label>
+                  <label for="file" (change)="uploadRequetedFile($event, element)">
+                    <img src="../../../../assets/images/Projects/fileupload.svg"class="img-upload">
+                  </label>
               </span>
               <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
               
@@ -460,8 +502,9 @@
 <div class="modal-header">
   <h4 class="modal-title pull-left" *ngIf="isDeny">Reason to deny file request</h4>
   <h4 class="modal-title pull-left" *ngIf="!isDeny">Reason to revoke file request</h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
-      <span aria-hidden="true">&times;</span>
+  <button type="button" class="close pull-right deny-serve" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
+      <!-- <span aria-hidden="true">&times;</span> -->
+      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
   </button>
 </div>
 <div class="modal-body">
@@ -505,14 +548,18 @@
 <div class="modal-header modelprhead">
   <h4 class="modal-title pull-left">Upload File</h4>
   <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
-    <span aria-hidden="true">&times;</span>
+    <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
   </button>
+  <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button> -->
 </div>
+
 <div class="modal-body">
-<div class="container" style="width:100%">
+<div class="container p-0" style="width:100%">
     <form [formGroup]="uploadFileForm" (ngSubmit)="submitUploadFileForm()">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label for="fileCategory">File Category<span style="color:red">*</span></label>
                 <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory" required>
                   <option  [value]="null" disabled hidden>Select Category</option>
@@ -535,14 +582,56 @@
 
             </div>
             <div class="col-md-12">
-                
-              <label>Upload<span style="color:red">*</span></label>
-              <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required>
+              <label>Upload<span style="color:red">*</span></label><br>
+              <div class="box-fileupload">
+                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+              <label for="file" (change)="chnagefileUploadForm($event)">
+                <img src="../../../../assets/images/Projects/fileupload.svg" class="upload-img">
+                &nbsp;
+                <span>Select File</span>
+              </label>
+              </div>
+              &nbsp;
 
+              <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required multiple="true"> -->
+              <div >
+                <div class="row">
+                  <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
+                    <div class ="project-card">
+                      
+                        <span class="pull-right clickable" matTooltip="Remove"
+                        (click)="removeSelectedFile(index)">
+                            <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                            <!-- <i class="fa fa-trash"></i> -->
+                        </span>
+                     <span class="card-placeholder">
+                          File Name : {{selected.name}}
+                        
+                    </span>
+                    <br>
+
+                      <span class="file-size">
+                        Size : {{selected.size | fileSizePipe}}
+                      </span>
+                    
+    
+                    </div>
+
+                  </div>
+
+                </div>
+                
+
+                
+                <!-- {{selected}}
+                <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                  <span aria-hidden="true">&times;</span>
+              </button> -->
+                <!-- <button mat-icon-button (click)="removeSelectedFile(index)">delete</button> -->
+              </div>
               
               <span *ngIf="uploadFileForm.get('uploadFile').invalid && uploadFileForm.get('uploadFile').touched"
                   style="color:red" class="fa fa-info-circle errspan">File Required*</span>
-
           </div>
         
     </form>

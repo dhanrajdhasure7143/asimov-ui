@@ -1,4 +1,4 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
@@ -36,7 +36,7 @@ export class ProjectRepoScreenComponent implements OnInit {
   filecategories: any;
   filterdArray: any[];
   dataSource3:MatTableDataSource<any>;
-  displayedColumns3: string[] = ["category","fileName","uploadedDate","uploadedBy","fileSize","comments","action"];
+  displayedColumns3: string[] = ["check","category","fileName","uploadedDate","uploadedBy","fileSize","comments","action"];
   dataSource4:MatTableDataSource<any>;
   displayedColumns4: string[] = ["category","requestFrom","requestTo","comments","uploadedDate","action"];
   @ViewChild("sort12",{static:false}) sort12: MatSort;
@@ -45,8 +45,17 @@ export class ProjectRepoScreenComponent implements OnInit {
   @ViewChild("sort13",{static:false}) sort13: MatSort;
   @ViewChild("sort11",{static:false}) sort11: MatSort;
   @ViewChild("paginator101",{static:false}) paginator101: MatPaginator;
+  @ViewChild("paginator102",{static:false}) paginator102: MatPaginator;
   multiFilesArray: any[] = [];
   fileId: any;
+  filedeleteflag:Boolean;
+  filecheckeddisabled:boolean =false;
+  filecheckflag:boolean = false;
+  selectedFiles: any=[];
+  fileList: File[] = [];
+  listOfFiles: any[] = [];
+  // resources_list: any=[];
+
   constructor(private modalService: BsModalService, private formBuilder: FormBuilder, private api:RestApiService, private route: ActivatedRoute, private spinner:NgxSpinnerService) { 
     
 this.route.queryParams.subscribe(data=>{​​​​​​​​
@@ -111,8 +120,48 @@ this.getFileDetails();
     this.denyFileRequestmodalref = this.modalService.show(template,{class:"modal-lr"});
 
   }
-  onDeleteItem(event){
+  onDeleteItem(id,fileName){
     console.log("came to onDelete");
+    let input=[{
+      "id": id,
+      "fileName":fileName
+    }];
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.value) {
+        this.spinner.show();
+        this.api.deleteFiles(input).subscribe( res =>{ 
+          let status:any = res;
+          Swal.fire({
+            title: 'Success',
+            text: ""+status.message,
+            position: 'center',
+            icon: 'success',
+            showCancelButton: false,
+            confirmButtonColor: '#007bff',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ok'
+          }) 
+          this.getFileDetails();
+          this.spinner.hide();
+          },err => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+            })
+            this.spinner.hide();
+                         
+          })
+      }
+    });
     
     
   }
@@ -166,13 +215,16 @@ this.getFileDetails();
     this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
   }
   submitUploadFileForm(){
-
-    var fileData = new FormData();
-    
-    fileData.append("category", this.uploadFileForm.get("fileCategory").value)
+     var fileData = new FormData();
+     const files = this.fileList;
+  for(var i=0;i< files.length;i++){
+    fileData.append("filePath",files[i]);
+  }
+     fileData.append("category", this.uploadFileForm.get("fileCategory").value)
      fileData.append("comments", this.uploadFileForm.get("description").value)
-     fileData.append("filePath", this.fileUploadData)
+    //  fileData.append("filePath", this.fileList)
      fileData.append("projectId", this.projectid)
+     
    console.log("fileDattaa--- "+fileData);
 
     
@@ -188,7 +240,7 @@ this.getFileDetails();
     this.spinner.hide();
      Swal.fire({
        title: 'Success',
-       text: "File Uploaded Successfully",
+       text: "File/Files Uploaded Successfully",
        position: 'center',
        icon: 'success',
        showCancelButton: false,
@@ -210,17 +262,19 @@ this.getFileDetails();
 
   chnagefileUploadForm(e){
 
-    
-
-    console.log(<File> e.target.files);
-
-    
-    this.fileUploadData = <File> e.target.files[0]
-    console.log(this.fileUploadData);
-    this.multiFilesArray.push(
-      e.target.files[0]
-    )
-    console.log("array",this.multiFilesArray);
+    for (var i = 0; i <= e.target.files.length - 1; i++) {
+      var selectedFile = e.target.files[i];
+      this.fileList.push(selectedFile);
+      var value = {
+        // File Name 
+         name: selectedFile.name,
+         //File Size 
+         size: selectedFile.size,
+         
+     };
+      this.listOfFiles.push(value)
+    }
+    this.uploadFileForm.get("uploadFile").setValue(this.fileList);
     
     
   }
@@ -235,6 +289,7 @@ this.getFileDetails();
       console.log(this.requestedFiledata);
       this.dataSource4= new MatTableDataSource(this.requestedFiledata);
       this.dataSource4.sort=this.sort12;
+      this.dataSource4.paginator=this.paginator102;
       let loggedUser=localStorage.getItem("ProfileuserId")
       let responseArray=this.requestedFiledata
       this.filterdArray=[]
@@ -335,8 +390,16 @@ this.getFileDetails();
     else
     return value;
   }​​​​​​​​
-  onDownloadItem(element){
-
+  onDownloadItem(fileName){
+    let data=[fileName]
+    this.api.downloadTaskAttachment(data).subscribe(data=>{
+    let response:any=data
+    var link = document.createElement('a');
+    let extension=((((fileName.toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+    link.download = fileName;
+    link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[0]}`:`data:application/${extension};charset=utf-8,${response[0]}`) ;
+    link.click();
+    })
     // this.fileId = element.id;
     // this.api.downloadFiles(this.fileId).subscribe(res => {
     //   const urlCreator = window.URL;
@@ -364,4 +427,110 @@ this.getFileDetails();
     console.log("came to domwload file");
     
   }
+  onDownloadSelectedItems(){
+    let downloadSelectedfiles=[];
+    this.uploadedFiledata.filter(product => product.checked==true).map(p=>{
+     downloadSelectedfiles.push(p.fileName);
+    });
+    this.api.downloadTaskAttachment(downloadSelectedfiles).subscribe(data=>{
+      let response:any=data
+      // downloadSelectedfiles.forEach(fileName=>{
+      for(let i=0;i<response.length;i++){
+      var link = document.createElement('a');
+      let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
+      link.download = downloadSelectedfiles[i];
+      link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};charset=utf-8,${response[i]}`) ;
+      link.click();
+      }
+    })
+      // })
+  }
+
+  filecheckAll(ev) {
+    this.uploadedFiledata.forEach(x =>
+       x.checked = ev.target.checked);
+    this.checktodelete();
+  }
+
+  checktodelete()
+  {
+    const selectedresourcedata = this.uploadedFiledata.filter(product => product.checked).map(p => p.id);
+    if(selectedresourcedata.length>0)
+    {
+      this.filedeleteflag=true;
+    }else
+    {
+      this.filedeleteflag=false;
+    }
+  }
+
+  removeallchecks()
+  {
+    for(let i=0;i<this.uploadedFiledata.length;i++)
+    {
+      this.uploadedFiledata[i].checked= false;
+    }
+    this.filecheckflag=false;
+  }
+
+  filechecktoggle(id, event)
+  {
+    this.uploadedFiledata.find(data=>data.id==id).checked=event.target.checked;
+    this.checktodelete();
+  }
+  onDeleteSelectedItems(event){
+    const selectedFiles = [];
+    this.uploadedFiledata.filter(product => product.checked==true).map(p=>{
+      let obj={
+        "id": p.id,
+        "fileName": p.fileName
+      }
+      selectedFiles.push(obj);
+      });
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          this.spinner.show();
+          this.api.deleteFiles(selectedFiles).subscribe( res =>{ 
+            let status:any = res;
+            Swal.fire({
+              title: 'Success',
+              text: ""+status.message,
+              position: 'center',
+              icon: 'success',
+              showCancelButton: false,
+              confirmButtonColor: '#007bff',
+              cancelButtonColor: '#d33',
+              confirmButtonText: 'Ok'
+            }) 
+            this.getFileDetails();
+            this.spinner.hide();
+            },err => {
+              Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+              })
+              this.spinner.hide();
+                           
+            })
+        }
+      });
+      
+  }
+
+  removeSelectedFile(index) {
+    // Delete the item from fileNames list
+    this.listOfFiles.splice(index, 1);
+    // delete file from FileList
+    this.fileList.splice(index, 1);
+   }
+
 }

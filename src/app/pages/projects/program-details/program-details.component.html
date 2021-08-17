@@ -1,39 +1,532 @@
 <div class="program-details-main" *ngIf="program_detials!=undefined">
   <div class="module-heading title nrema">
-      <span class="module-back-button"  routerLink="/pages/projects/listOfProjects" ><i class="fas fa-arrow-left" aria-hidden="true"></i></span>
-      <span class="module-header-title">Programs</span>
+      <span class="module-back-button"  routerLink="/pages/projects/listOfProjects" >
+        <i class="fas fa-arrow-left" aria-hidden="true"></i>
+      </span>
+      <span class="module-header-title">Program  Details</span>
+
+      <div class="ml-auto module-heading-buttons">
+        <span class="pull-right">
+          <!-- <span>
+            Summary
+          </span>
+          <span>
+           <mat-slide-toggle></mat-slide-toggle>
+          </span>
+
+
+
+          <span class="item-data">
+             <i class="fa fa-file"></i>
+           </span>
+
+          <span class="item-data">
+           <i class="fa fa-history"></i>
+           </span>
+
+          <span class="item-data">
+           <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+           </span> -->
+
+           <span *ngIf="editdata==true" (click)="getprogramdetails()">
+             <button class="btn btn-default">
+               <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+               <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
+               Reset
+             </button>
+           </span>
+           <span *ngIf="editdata==true" (click)="updateprogramDetails()">
+             <button class="btn btn-primary">
+               <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
+               <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
+               Save
+             </button>
+           </span>
+
+           <span *ngIf="editdata==false">
+             <button class="btn btn-primary" (click)="editdata=true">
+               <img class="testplus" src="../../../../assets/images/Projects/edit.svg"> Edit
+             </button>
+           </span>
+
+         </span>
+    </div>
+  </div>
+  <div class="new-program-contents">
+    <div class="program-details-div">
+      <div class="row newprhcl">
+        <div class="col-md-12 p-0 program-info">
+          <div><img src="..\assets\images\Projects\project_icon.svg" alt="" ></div>
+          <div class="program-data">
+            <!-- <span class="h3">{{program_detials.programName |uppercase}}</span> -->
+            <div *ngIf="editdata==false">
+              <span class="tab-text"
+                *ngIf="program_detials.programName==null || program_detials.programName==undefined">-</span>
+              <span class="tab-text">{{program_detials.programName}}</span>
+            </div>
+            <div *ngIf="editdata==true">
+              <input type="text" (change)="program_detials.programName=$event.target.value"
+                [value]="(program_detials.programName==undefined||program_detials.programName==null)?'':program_detials.programName"
+                class="small-input" placeholder="Enter Program Name">
+            </div>
+
+            <div *ngIf="editdata==false">
+              <span class="programdesc"
+                *ngIf="program_detials.description==undefined || program_detials.description==null || program_detials.description=='' " class="h6">-</span>
+                <span class="programdesc">{{program_detials.description}}</span>
+            </div>
+
+            <div *ngIf="editdata==true">
+              <br>
+              <textarea (change)="program_detials.description=$event.target.value"
+              [value]="(program_detials.description==undefined||program_detials.description==null)?'':program_detials.description"
+              class="small-input" placeholder="Enter Program Description"></textarea>
+                  
+            </div>
+  
+            
+            <!-- <div *ngIf="program_detials.description==undefined || program_detials.description==null || program_detials.description=='' " class="h6">-</div> -->
+  
+          </div>
+        </div>
+
+        <!-- <div class="col-md-4 pr-0">
+          <div class="row newprjdates">
+            <div class="col-md-6 p-0">
+              <label class="labeltit">Start Date</label>
+              <p class="">{{program_detials.createdTimestamp| date}}</p>
+            </div>
+            <div class="col-md-6 p-0">
+              <label class="labeltit">Status</label>
+              <p class="">{{program_detials.status}}</p>
+            </div>
+          </div>
+        </div> -->
+      </div>
+      <div class="row">
+        <div class="col-sm-12 p-0 project-details-set" *ngIf="program_detials!= undefined">
+          <div class="row">
+  
+            <div class="col-sm-3 p-0">
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\document.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                  <span class="labeltit">Program ID</span>
+                    <span class="labelcont">{{program_detials.id}}</span>
+                    <div *ngIf="program_detials.id==undefined || program_detials.id==null || program_detials.id=='' " class="h6">-</div>
+                  
+                </div>
+              </div>
+            </div>
+            <div class="col-md-3 p-0">
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\document.svg" alt="" >
+                </div> -->
+                  <div class="mainset">
+                    <span class="labeltit">Program Sponsor</span>
+                    <span class="labelcont">{{program_detials.owner | userPipe : users_list}}</span>
+                    <div *ngIf="program_detials.owner==undefined || program_detials.owner==null || program_detials.owner=='' " class="h6">-</div>
+                  </div>
+              </div>
+            </div>
+            <div class="col-sm-3 p-0">
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                  <span class="labeltit">Projects</span>
+                  <span class="labelcont">{{linked_projects.length}}</span>
+                </div>
+              </div>
+            </div>
+  
+            <div class="col-sm-3 p-0">
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                  <span class="labeltit">Start Date</span>
+                  <span class="labelcont">{{program_detials.createdTimestamp| date}}</span>
+                </div>
+              </div>
+            </div>
     
-   <span style="float:right" class="pull-right menu-items">
-     <span>
-       Summary
-     </span>
-     <span>
-      <mat-slide-toggle></mat-slide-toggle>
-     </span>
-     
-     <span>
-       Detials
-     </span>
-
-
-     
-     <span class="item-data">
-        <i class="fa fa-file"></i>
-      </span>
-      
-     <span class="item-data">
-      <i class="fa fa-history"></i>
-      </span>
-      
-     <span class="item-data">
-      <i class="fa fa-ellipsis-v" aria-hidden="true"></i>
-      </span>
-    </span> 
+            <div class="col-sm-3 p-0">
+  
+              <div class="programdetmain">
+                <!-- <div class="process-img">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                  <span class="labeltit">Value Chain</span>
+                  <div >
+                    <span
+                      *ngIf="program_detials.programValueChain != null && program_detials.programValueChain != undefined && program_detials.programValueChain !='' "
+                      class="labelcont">{{program_detials.programValueChain }}</span>
+                    <span
+                      *ngIf="program_detials.programValueChain == null || program_detials.programValueChain == undefined || program_detials.programValueChain =='' "
+                      class="labelcont">-</span>
+                  </div>
     
-</div>
+                  <!-- <span *ngIf="editdata==true" class="tab-text labelcont">
+                    <select class="small-input" (change)="program_detials.programValueChain=$event.target.value"
+                      [value]="(program_detials.programValueChain==undefined||program_detials.programValueChain==null)?'':program_detials.programValueChain">
+                      
+                      <option value="Invoice Managment">Invoice Managment</option>
+                      <option value="Acme Managment">Acme Managment</option>
+                      <option value="E-Commerce">E-Commerce</option>
+                    </select>
+                  </span> -->
+                </div>
+              </div>
+  
+            </div>
+            <div class="col-sm-3 p-0">
+  
+              <div class="programdetmain">
+                <!-- <div class="process-img">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                  <span class="labeltit">Program Health</span>
+                  <!-- <div class="h6">{{program_detials.programHealth}}</div>
+                  <div *ngIf="program_detials.programHealth==undefined || program_detials.programHealth==null || program_detials.programHealth=='' " class="h6">-</div>
+                  -->
+    
+                  <div *ngIf="editdata==false">
+                    <span
+                      *ngIf="program_detials.programHealth != null && program_detials.programHealth != undefined && program_detials.programHealth !='' "
+                      class="labelcont">{{program_detials.programHealth }}</span>
+                    <span
+                      *ngIf="program_detials.programHealth == null || program_detials.programHealth == undefined || program_detials.programHealth =='' "
+                      class="labelcont">-</span>
+    
+                  </div>
+    
+                  <span *ngIf="editdata==true" class="tab-text labelcont">
+                    <select class="small-input" (change)="program_detials.programHealth=$event.target.value"
+                      [value]="(program_detials.programHealth==undefined||program_detials.programHealth==null)?'':program_detials.programHealth">
+                    <!-- <option value="">Select Program Health</option> -->
+                    <option value="Good">Good</option>
+                    <option value="Need Attention"><span class="status-ember"></span>Need Attention</option>
+                    <option value="Risk"> <span class="status-risk"></span>Risk</option>
+                    </select>
+                  </span>
+                </div>
+              </div>
+  
+            </div>
+  
+            <div class="col-sm-3 p-0">
+  
+              <div class="programdetmain">
+                              <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                  <span class="labeltit">Program Purpose</span>
+  
+                  <div *ngIf="editdata==false">
+                    <span class="labelcont">{{program_detials.purpose}}</span>
+                    <span
+                      *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
+                      class="labelcont">-</span>
+                  </div>
+                  <div *ngIf="editdata==true">
+                    <input type="text" (change)="program_detials.programPurpose=$event.target.value"
+                      [value]="(program_detials.programPurpose==undefined||program_detials.programPurpose==null)?'':program_detials.programPurpose"
+                      class="small-input" placeholder="Enter Program Purpose">
+                  </div>
+                  </div>
+              </div>
+  
+            </div>
+  
+            <div class="col-sm-3 p-0">
+  
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                    <span class="labeltit">Program Priority</span>
+      
+                    <div *ngIf="editdata==false">
+                      <span class="tab-text"
+                        *ngIf="program_detials.priority==null || program_detials.priority==undefined">-</span>
+                      <span class="labelcont">{{program_detials.priority}}</span>
+                    </div>
+                    <div *ngIf="editdata==true">
+                      <select class="small-input" (change)="program_detials.priority=$event.target.value"
+                        [value]="(program_detials.priority==undefined||program_detials.priority==null)?'':program_detials.priority">
+                        <!-- <option value="">Select Program Priority</option> -->
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                      </select>
+                    </div>
+                </div>
+              </div>  
+            </div>
+
+            <div class="col-sm-3 p-0">
+  
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                    <span class="labeltit">Effort Spent</span>
+                    <div *ngIf="editdata==false">
+                      <span class="tab-text"
+                        *ngIf="program_detials.effortsSpent==null || program_detials.effortsSpent==undefined">-</span>
+                      <span class="labelcont">{{program_detials.effortsSpent}}</span>
+    
+                      <!-- <input class="small-input" type="text"  [value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled> -->
+                    </div>
+                    <div *ngIf="editdata==true">
+                      <input type="text" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
+                        [value]="(program_detials.effortsSpent==undefined||program_detials.effortsSpent==null)?'':program_detials.effortsSpent"
+                        class="small-input" placeholder="Enter Efforts Spent">
+                    </div>
+                </div>
+              </div>
+  
+            </div>
+
+            <div class="col-sm-3 p-0">
+              <div class="programdetmain">
+                <!-- <div class="process-img ">
+                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                </div> -->
+                <div class="mainset">
+                  <span class="labeltit">Status</span>
+                  <div *ngIf="editdata==false" class="newstatus">{{program_detials.status}}</div>
+            
+                  <div *ngIf="editdata==true" class="">
+                    <select class="small-input" (change)="program_detials.status=$event.target.value"
+                    [value]="(program_detials.status==undefined||program_detials.status==null)?'':program_detials.status">
+                      <option value="">Select Status</option>
+                      <option value="New">New</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="On Hold">On Hold</option>
+                      <option value="In Review">In Review</option>
+                      <option value="Deployed">Deployed</option>
+                      <option value="Pipeline">Pipeline</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="prgmgrid" *ngIf="program_detials!=undefined">
+      <div class="row module-subheader-title">
+        <div class="col-md-4 p-0">
+          <span class="module-sub-header-title">
+            Projects
+          </span>
+        </div>
+        <div class="col-md-8 pr-0">
+          <span class="pull-right">
+            <span class="">
+              <button type="button" class="btn btn-primary" (click)="createproject(template)" >
+                <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Create Projects
+              </button>
+            </span>
+          </span>
+        </div>
+      </div>
+      <div class="prgmgrid-body">
+        <table mat-table #sort104="matSort" [dataSource]="dataSource8" matSort class="projecttable table" id="autotable">
+
+            <ng-container matColumnDef="initiatives">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Initiative</th>
+              <td mat-cell   *matCellDef="let project">
+                <span *ngIf="project.initiatives!=null" [matTooltip]="project.initiatives">{{project.initiatives}}</span>
+                <span *ngIf="project.initiatives==null">---</span>
+              </td>
+    
+          </ng-container>
+    
+          <ng-container matColumnDef="projectName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</th>
+            <td mat-cell   *matCellDef="let project">
+              <span *ngIf="project.projectName!=null" [matTooltip]="project.projectName">{{project.projectName}}</span>
+              <span *ngIf="project.projectName==null">---</span>
+            </td>
+  
+        </ng-container>
+        <ng-container matColumnDef="owner">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Project Owner</th>
+          <td mat-cell   *matCellDef="let project">
+            <span *ngIf="project.owner!=null" [matTooltip]="project.owner">{{project.owner  | userPipe : users_list}}</span>
+            <span *ngIf="project.owner==null">---</span>
+          </td>
+
+      </ng-container>
+      <ng-container matColumnDef="new">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+        <td mat-cell   *matCellDef="let project">
+         
+          <span *ngIf="project.status!=null" [matTooltip]="project.status">{{project.status}}</span>
+          <span *ngIf="project.status==null">---</span>
+        </td>
+
+    </ng-container>
+    <ng-container matColumnDef="projectPercentage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Percentage Complete</th>
+      <td mat-cell   *matCellDef="let project" class="d-flex">
+        <span *ngIf="project.projectPercentage!=null" [matTooltip]="project.projectPercentage">{{project.projectPercentage==undefined?0:project.projectPercentage}} %</span>
+        <span *ngIf="project.projectPercentage==null">---</span>
+        <div  class="py-5"><input type="range" min="0" class="slider" max="100" disabled [value]="project.projectPercentage==undefined?0:project.projectPercentage"></div>
+      </td>
+
+  </ng-container>
+      
+          <ng-container matColumnDef="lastModifiedTimestamp">
+              <th mat-header-cell *matHeaderCellDef>Last Updated</th>
+              <td mat-cell *matCellDef="let project">
+                  <span *ngIf="project.lastModifiedTimestamp!=null">{{project.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}</span>
+                  <span *ngIf="project.lastModifiedTimestamp==null || project.lastModifiedTimestamp==undefined || project.lastModifiedTimestamp=='' ">---</span>
+                 
+              </td>
+          </ng-container>
+          <ng-container matColumnDef="lastModifiedBy">
+            <th mat-header-cell *matHeaderCellDef>Last Updated by</th>
+            <td mat-cell *matCellDef="let project">
+                <span *ngIf="project.lastModifiedBy!=null">{{project.lastModifiedBy}}</span>
+                <span *ngIf="project.lastModifiedBy==null || project.lastModifiedBy==undefined || project.lastModifiedBy=='' ">---</span>
+               
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="createdBy">
+          <th mat-header-cell *matHeaderCellDef>Created By</th>
+          <td mat-cell *matCellDef="let project">
+              <span *ngIf="project.createdBy!=null">{{project.createdBy}}</span>
+              <span *ngIf="project.createdBy==null || project.createdBy==undefined || project.createdBy=='' ">---</span>
+             
+          </td>
+      </ng-container>
+    
+          <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let project" class="action-link tablacs"> 
+              <div class="newinntalx">
+                <a class="view"    (click)="projectDetailsbyId(project.id)" matTooltip="Go To Project Details">
+                  <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus default-img">
+                  <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="testplus hover-img">
+                </a>
+
+                <a class="delete" (click)="deleteproject(project)"   matTooltip="Delete Project" >
+                  <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus default-img">
+                  <img src="../../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img">
+                </a> 
+            </div>
+            </td>
+          </ng-container>
+    
+            <ng-container matColumnDef="Loading">
+              <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                  Loading
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="noData">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                    <!-- No Records Found -->
+                    <div *ngIf="linked_projects.length==0" class="text-center">
+                      <img  src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+                      <h3 class="text-center">No Items to display</h3>
+                  </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns8; sticky: true"></tr>
+            <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns8;"></tr>
+            <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource8!=null}"></tr>
+            <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource8!=null && dataSource8.data.length==0)}"></tr>
+        </table>
+        <mat-paginator class="newpaginationdiv" #paginator104 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+        </mat-paginator>
+        <!-- <table  class="table">
+          <thead >
+            <th class="py-10">Initiative</th>
+            <th class="py-10">Project Name</th>
+            <th class="py-10">Project Owner</th>
+            <th class="py-10">Status</th>
+            <th class="py-10">Percentage Complete</th>
+            <th class="py-10">Last Updated</th>
+            <th class="py-10">Last Updated by</th>
+            <th class="py-10">Created By</th>
+            <th class="py-10">Actions</th>
+          </thead>
+          <tbody>
+            <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 5, currentPage: p } ">
+              <td>{{project.initiatives}}</td>
+              <td>{{project.projectName}}</td>
+              <td>{{project.owner  | userPipe : users_list}}</td>
+              <td>New</td>
+
+              <td>
+                <div class="d-flex">
+                  <div>{{project.projectPercentage==undefined?0:project.projectPercentage}} %</div>
+                  <div  class="py-5"><input type="range" min="0" class="slider" max="100" disabled [value]="project.projectPercentage==undefined?0:project.projectPercentage"></div>
+
+                </div>
+                  
+                </td>
+              <td>
+                <div *ngIf="project.lastModifiedTimestamp==undefined || project.lastModifiedTimestamp==null || project.lastModifiedTimestamp=='' " class="h6">--</div>
+                <div>
+                  {{project.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
+                </div>
+              </td>
+
+              <td>
+                <div *ngIf="project.lastModifiedBy==undefined || project.lastModifiedBy==null || project.lastModifiedBy=='' " class="h6">--</div>
+                <div>{{project.lastModifiedBy}}</div>
+              </td>
+              <td>
+                <div *ngIf="project.createdBy==undefined || project.createdBy==null || project.createdBy=='' " class="h6">--</div>
+                <div>{{project.createdBy}}</div>
+              </td>
+              <td>
+                <div calss="newinntalx">
+                  <a class="view"    (click)="projectDetailsbyId(project.id)" matTooltip="Go To Project Details">
+                    <img src="../../../../../assets/images/Projects/eye-show.svg" class="testplus default-img">
+                    <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="testplus hover-img">
+                  </a>
+                
+                  
+                  <a class="delete" (click)="deleteproject(project)"   matTooltip="Delete Project" >
+                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="testplus default-img">
+                    <img src="../../../../../assets/images/Projects/delete-red.svg" class="testplus hover-img">
+                  </a>
+
+                </div>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="linked_projects.length==0" class="text-center">
+            <img  src="../../../../assets/images/RPA/No-Items.svg" class="no-item-img">
+            <h3 class="text-center">No Items to display</h3>
+        </div>
+        <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls> -->
+      </div>
+    </div>
+  </div>
 
 
-<div class="container-fluid card">
+  <div class="container-fluid card" style="display: none;">
     <div class="row  ">
         <div class="col-md-12 row border-bottom">
           <div class="col-md-10 d-flex ">
@@ -41,19 +534,43 @@
                 <img src="..\assets\images\Projects\project_icon.svg" alt="" >
             </div>
             <div class="program-data">
-              <span class="h3">{{program_detials.programName |uppercase}}</span><br>
+              <!-- <span class="h3">{{program_detials.programName |uppercase}}</span> -->
+              <div *ngIf="editdata==false">
+                <span class="tab-text"
+                  *ngIf="program_detials.programName==null || program_detials.programName==undefined">-</span>
+                <span class="tab-text labelcont">{{program_detials.programName}}</span>
+              </div>
+              <div *ngIf="editdata==true">
+                <input type="text" (change)="program_detials.programName=$event.target.value"
+                  [value]="(program_detials.programName==undefined||program_detials.programName==null)?'':program_detials.programName"
+                  class="small-input" placeholder="Enter Program Name">
+              </div>
+
               <span class="" style="font-size: 12px;" >{{program_detials.description}}</span>
               <div *ngIf="program_detials.description==undefined || program_detials.description==null || program_detials.description=='' " class="h6">-</div>
-         
+
             </div>
           </div>
           <div class="col-md-1 p-0">
             <label class="">Start Date</label>
             <p class="">{{program_detials.createdTimestamp| date}}</p>
           </div>
-          <div class="col-sm-1">
+          <div  class="col-sm-1">
             <label class="">Status</label>
-            <p class="">{{program_detials.status}}</p>
+            <div *ngIf="editdata==false" class="">{{program_detials.status}}</div>
+            
+            <div *ngIf="editdata==true" class="">
+              <select class="small-input" (change)="program_detials.status=$event.target.value"
+              [value]="(program_detials.status==undefined||program_detials.status==null)?'':program_detials.status">
+              <option value="">Select Status</option>
+              <option value="New">New</option>
+              <option value="In Progress">In Progress</option>
+              <option value="On Hold">On Hold</option>
+              <option value="In Review">In Review</option>
+              <option value="Deployed">Deployed</option>
+              <option value="Pipeline">Pipeline</option>
+            </select>
+            </div>
           </div>
         </div>
         <div class="col-md-12 py-10 " *ngIf="program_detials!= undefined">
@@ -62,21 +579,62 @@
               <div class="process-img py-5">
                 <img src="..\assets\images\Projects\process_icon.svg" alt="" >
               </div>
-              <div class="value py-5">
-                <p>Value Chain</p>
-                <div *ngIf="program_detials.programValueChain!=undefined" class="h6">{{program_detials.programValueChain}}</div>
-                <div *ngIf="program_detials.programValueChain==undefined || program_detials.programValueChain==null || program_detials.programValueChain=='' " class="h6">-</div>
+              <div class="mainset">
+                <span class="labeltit">Value Chain</span>
+                <div *ngIf="editdata==false">
+                  <span
+                    *ngIf="program_detials.programValueChain != null && program_detials.programValueChain != undefined && program_detials.programValueChain !='' "
+                    class="tab-text labelcont">{{program_detials.programValueChain }}</span>
+                  <span
+                    *ngIf="program_detials.programValueChain == null || program_detials.programValueChain == undefined || program_detials.programValueChain =='' "
+                    class="tab-text labelcont">-</span>
+
+                </div>
+
+                <span *ngIf="editdata==true" class="tab-text labelcont">
+                  <select class="small-input" (change)="program_detials.programValueChain=$event.target.value"
+                    [value]="(program_detials.programValueChain==undefined||program_detials.programValueChain==null)?'':program_detials.programValueChain">
+                    <!-- <option value="" >Select Map Value Chain</option> -->
+                    <option value="Invoice Managment">Invoice Managment</option>
+                    <option value="Acme Managment">Acme Managment</option>
+                    <option value="E-Commerce">E-Commerce</option>
+                  </select>
+                </span>
+
+
               </div>
             </div>
             <div class="item1 d-flex w-100 py-10">
               <div class="process-img py-5">
                 <img src="..\assets\images\Projects\process_icon.svg" alt="" >
               </div>
-              <div class="value py-5">
-                <p>Program Health</p>
-                <div class="h6">{{program_detials.programHealth}}</div>
+              <div class="mainset">
+                <span class="labeltit">Program Health</span>
+                <!-- <div class="h6">{{program_detials.programHealth}}</div>
                 <div *ngIf="program_detials.programHealth==undefined || program_detials.programHealth==null || program_detials.programHealth=='' " class="h6">-</div>
-            
+             -->
+
+                <div *ngIf="editdata==false">
+                  <span
+                    *ngIf="program_detials.programHealth != null && program_detials.programHealth != undefined && program_detials.programHealth !='' "
+                    class="tab-text labelcont">{{program_detials.programHealth }}</span>
+                  <span
+                    *ngIf="program_detials.programHealth == null || program_detials.programHealth == undefined || program_detials.programHealth =='' "
+                    class="tab-text labelcont">-</span>
+
+                </div>
+
+                <span *ngIf="editdata==true" class="tab-text labelcont">
+                  <select class="small-input" (change)="program_detials.programHealth=$event.target.value"
+                    [value]="(program_detials.programHealth==undefined||program_detials.programHealth==null)?'':program_detials.programHealth">
+                  <!-- <option value="">Select Program Health</option> -->
+                  <option value="Good">Good</option>
+                  <option value="Need Attention"><span class="status-ember"></span>Need Attention</option>
+                  <option value="Risk"> <span class="status-risk"></span>Risk</option>
+                  </select>
+                </span>
+
+
               </div>
             </div>
             <div class="item1 d-flex w-100  py-10">
@@ -85,9 +643,9 @@
               </div>
               <div class="value py-5">
                 <p>Program ID</p>
-                <div class="h6">{{program_detials.id}}</div>
+                <span class="tab-text labelcont">{{program_detials.id}}</span>
                 <div *ngIf="program_detials.id==undefined || program_detials.id==null || program_detials.id=='' " class="h6">-</div>
-            
+
               </div>
             </div>
             <div class="item1 d-flex  w-100 py-10">
@@ -96,9 +654,18 @@
               </div>
               <div class="value py-5">
                 <p>Program Purpose</p>
-                <div class="h6">{{program_detials.purpose}}</div>
-                <div *ngIf="program_detials.purpose==undefined || program_detials.purpose==null || program_detials.purpose=='' " class="h6">-</div>
-            
+
+                <div *ngIf="editdata==false">
+                  
+                  <span class="tab-text labelcont">{{program_detials.purpose}}</span>
+                  <div *ngIf="program_detials.purpose==undefined || program_detials.purpose==null || program_detials.purpose=='' " class="h6">-</div>
+                </div>
+                <div *ngIf="editdata==true">
+                  <input type="text" (change)="program_detials.purpose=$event.target.value"
+                    [value]="(program_detials.purpose==undefined||program_detials.purpose==null)?'':program_detials.purpose"
+                    class="small-input" placeholder="Enter Program Purpose">
+                </div>
+
               </div>
             </div>
             <div class="item1 d-flex w-100  py-10">
@@ -107,7 +674,7 @@
               </div>
               <div class="value py-5">
                 <p>Projects</p>
-                <div class="h6">{{linked_projects.length}}</div>
+                <span class="tab-text labelcont">{{linked_projects.length}}</span>
               </div>
             </div>
             <div class="item1 d-flex w-100  py-10">
@@ -116,9 +683,22 @@
               </div>
               <div class="value py-5">
                 <p>Program Priority</p>
-                <div class="h6">{{program_detials.priority}}</div>
-                <div *ngIf="program_detials.priority==undefined || program_detials.priority==null || program_detials.priority=='' " class="h6">-</div>
-            
+
+                <div *ngIf="editdata==false">
+                  <span class="tab-text"
+                    *ngIf="program_detials.priority==null || program_detials.priority==undefined">-</span>
+                  <span class="tab-text labelcont">{{program_detials.priority}}</span>
+                </div>
+                <div *ngIf="editdata==true">
+                  <select class="small-input" (change)="program_detials.priority=$event.target.value"
+                    [value]="(program_detials.priority==undefined||program_detials.priority==null)?'':program_detials.priority">
+                    <!-- <option value="">Select Program Priority</option> -->
+                    <option value="High">High</option>
+                    <option value="Medium">Medium</option>
+                    <option value="Low">Low</option>
+                  </select>
+                </div>
+
               </div>
             </div>
             <div class="item1 d-flex w-100  py-10">
@@ -127,7 +707,18 @@
               </div>
               <div class="value py-5">
                 <p>Effort Spent</p>
-                <input class="small-input" type="text"[value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled>
+                <div *ngIf="editdata==false">
+                  <span class="tab-text"
+                    *ngIf="program_detials.effortsSpent==null || program_detials.effortsSpent==undefined">-</span>
+                  <span class="tab-text labelcont">{{program_detials.effortsSpent}}</span>
+
+                  <!-- <input class="small-input" type="text"  [value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled> -->
+                </div>
+                <div *ngIf="editdata==true">
+                  <input type="text" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
+                    [value]="(program_detials.effortsSpent==undefined||program_detials.effortsSpent==null)?'':program_detials.effortsSpent"
+                    class="small-input" placeholder="Enter Efforts Spent">
+                </div>
 
               </div>
             </div>
@@ -137,26 +728,25 @@
               </div>
               <div class="value py-5">
                 <p>Program Sponser</p>
-                <div class="h6">{{program_detials.owner | userPipe : users_list}}</div>
+                <span class="tab-text labelcont">{{program_detials.owner | userPipe : users_list}}</span>
                 <div *ngIf="program_detials.owner==undefined || program_detials.owner==null || program_detials.owner=='' " class="h6">-</div>
-            
+
               </div>
             </div>
           </div>
         </div>
       </div>
-</div>
-<br>
-  <div class="container-fluid card  py-10" style="overflow:auto" *ngIf="program_detials!=undefined">
-        
-       
+  </div>
+  <div class="container-fluid card  py-10" style="display: none;overflow:auto" *ngIf="program_detials!=undefined">
+
+
         <div class="row ">
           <div class="col-md-12  py-10">
             <div class="d-flex  py-10">
               <div class="h4 w-100">Projects</div>
               <div class="w-100">
                 <span  class="pull-right">
-            
+
                 <span>
                   <button (click)="createproject(template)" class="btn btn-primary">
                     <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus"/>Create Projects</button>
@@ -176,7 +766,7 @@
                   <th class="py-10">Last Updated</th>
                   <th class="py-10">Last Updated by</th>
                   <th class="py-10">Created By</th>
-                  <th class="py-10">Action</th>
+                  <th class="py-10">Actions</th>
                 </thead>
                 <tbody>
                   <tr class="py-10" *ngFor="let project of linked_projects  | paginate: { itemsPerPage: 5, currentPage: p } ">
@@ -184,12 +774,12 @@
                     <td>{{project.projectName}}</td>
                     <td>{{project.owner  | userPipe : users_list}}</td>
                     <td>New</td>
-                    
+
                     <td>
                       <div class="d-flex">
                         <div>{{project.projectPercentage==undefined?0:project.projectPercentage}} %</div>
                         <div  class="py-5"><input type="range" min="0" class="slider" max="100" disabled [value]="project.projectPercentage==undefined?0:project.projectPercentage"></div>
-                        
+
                       </div>
                         <!-- <mat-progress-bar mode="determinate" value="15"></mat-progress-bar> -->
                       </td>
@@ -199,14 +789,28 @@
                         {{project.lastModifiedTimestamp | date:'MMM dd, y, HH:mm:ss'}}
                       </div>
                     </td>
-                    
+
                     <td>
                       <div *ngIf="project.lastModifiedBy==undefined || project.lastModifiedBy==null || project.lastModifiedBy=='' " class="h6">--</div>
                       <div>{{project.lastModifiedBy}}</div>
                     </td>
                     <td>{{project.createdBy}}</td>
                     <td>
-                      <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span>|<span class="clickable text-danger py-5 clickable" (click)="deleteproject(project)">Delete</span>
+                      <div calss="newinntalx">
+                        <a class="view"    (click)="projectDetailsbyId(project.id)" matTooltip="Go To Project Details">
+                          <img src="../../../../../assets/images/Projects/eye-show.svg" class="default-img">
+                          <img src="../../../../../assets/images/Projects/eye-show-blue.svg" class="hover-img">
+                        </a>
+                        
+                        <!-- <span class="clickable text-primary py-5 clickable" (click)="projectDetailsbyId(project.id)">View</span> -->
+                        <!-- <span class="clickable text-danger py-5 clickable" (click)="deleteproject(project)">Delete</span> -->
+                        <a class="delete" (click)="deleteproject(project)"   matTooltip="Delete Project" >
+                          <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                          <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                        </a>
+
+                      </div>
+
                     </td>
                   </tr>
                 </tbody>
@@ -216,26 +820,25 @@
                   <h3 class="text-center">No Items to display</h3>
               </div>
             </div>
-              
+
 
             <pagination-controls class="pull-right" (pageChange)="p = $event"></pagination-controls>
           </div>
         </div>
-       
-    </div>
-    <br>
 
-    <div class="container-fluid margin-none">
+  </div>
 
-        
+    <!-- <div class="container-fluid margin-none">
+
+
         <div class="row">
           <div class="col-md-4 card">
-          
+
               <div class=" program-graph py-10">
                 <div class="h4">Project Cost</div>
                 <div style="height:300px" id="project-cost"></div>
               </div>
-            
+
           </div>
 
 
@@ -255,8 +858,8 @@
           </div>
 
         </div>
-    </div>
- 
+    </div> -->
+
 
 
 
@@ -267,13 +870,13 @@
             <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
           </button>
         </div>
-        
+
         <div class="h-scroll">
-          <br>
+
           <app-create-project-form [users_list]="users_list" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
-         <br><br><br><br><br><br>
+
       </div>
-           
+
     </ng-template>
 
 </div>

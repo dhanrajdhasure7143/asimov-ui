@@ -401,7 +401,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.selected_approver = null;
       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
       setTimeout(() => {
         this.dt.bpsNotationaScreenValues(this.push_Obj);
       }, 4000);
@@ -522,7 +522,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     }
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
     setTimeout(() => {
       this.dt.bpsNotationaScreenValues(this.push_Obj);
     }, 3000);
@@ -583,7 +583,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
           this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
           "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-          "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
         }
         this.initModeler();
@@ -642,7 +642,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
         "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
       }
     this.initModeler();
@@ -751,7 +751,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.spinner.hide();
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
         "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
       },
       err => {
@@ -1038,7 +1038,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
             _self.rejectedOrApproved="PENDING";
             _self.push_Obj={"rejectedOrApproved":"PENDING","isfromApprover":_self.isfromApprover,
             "isShowConformance":_self.isShowConformance,"isStartProcessBtn":_self.isStartProcessBtn,"autosaveTime":_self.updated_date_time,
-            "isFromcreateScreen":false,'process_name':_self.currentNotation_name}
+            "isFromcreateScreen":false,'process_name':_self.currentNotation_name,'isSavebtn':true}
             _self.dt.bpsNotationaScreenValues(_self.push_Obj);
             Swal.fire(
               'Saved!',
@@ -1173,8 +1173,8 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     })
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
-      this.dt.bpsNotationaScreenValues(this.push_Obj)
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false}
+      this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
   uploadConfBpmn(confBpmnData){
@@ -1368,12 +1368,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       deployResponse=res
           this.definationId=deployResponse.definationId
           this.isStartProcessBtn=deployResponse.startprocess
+          this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+          "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
+            this.dt.bpsNotationaScreenValues(this.push_Obj);
       }
     })
-    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
-    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-    "isFromcreateScreen":false,'process_name':this.currentNotation_name}
-      this.dt.bpsNotationaScreenValues(this.push_Obj);
   }
 
   openVariableDialog(){
@@ -1424,7 +1424,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       this.isStartProcessBtn=false;
       this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
       "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-      "isFromcreateScreen":false,'process_name':this.currentNotation_name}
+      "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true}
         this.dt.bpsNotationaScreenValues(this.push_Obj);
     })    
   }

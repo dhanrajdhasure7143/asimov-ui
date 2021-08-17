@@ -1,11 +1,12 @@
 .module-heading.title {
-    padding: 12px 15px !important;
     margin-bottom: 0px;
 }
 .main-content1 .module-heading.title {
     background-color: #F3F3F3;
+    padding: 12px 15px 8px !important;
 }
-.main-content1 .module-heading-title {
+
+.main-content1 .module-header-title {
     font-weight: 600;
     font-size: 22px;
     color: #001c47;
@@ -24,7 +25,7 @@
     color: #001C47;
     font-weight: 400;
     font-size: 13px;
-    padding-top: 12px;
+    padding-top: 8px;
 }
 span.level3 {
     padding-right: 8px !important;
@@ -77,8 +78,8 @@ select.dowload-images option {
     color: #000;
 } */
 button.editprimary {
-    background-color: #00a1e3;
-    border-radius: 3px;
+    /* background-color: #00a1e3;
+    border-radius: 3px; */
 }
 .bpsbtnsep {
     color:#ddd;
@@ -106,18 +107,18 @@ span.label_icon.inpro-label {
 .upload_again_btn {
     background-color: #f3f3f3 !important;
 }
-.bps-float button:hover {
+.bps-float button:hover, button.editprimary:disabled {
     background-color: #00a0e3;
     border-radius: 3px;
 }
-.bps-float button:hover img {
-    filter: brightness(2.5);
+.bps-float button:hover img, button.editprimary:disabled img {
+    filter: brightness(2.5) !important;
 }
 .bps-float .clr-hvr:hover img {
     filter: brightness(10) !important;
 }
 button.upload-btn.bps-upload:hover img, button.editprimary:hover img {
-    filter: unset !important;
+    /* filter: unset !important; */
 }
 
 .bps-float span.label_icon {
@@ -191,4 +192,22 @@ span.module-back-button {
 
 .module-heading-buttons .btn {
     margin-left: 10px;
+}
+img.hover-img {
+    display: none;
+  }
+.bps-aprwkfl button:hover img.default-img {
+    display: none;
+}
+.bps-aprwkfl button:hover img.hover-img {
+    display: initial;
+}
+.bps-aprwkfl button {
+    margin: 0px !important;
+}
+.bps-aprwkfl button.btn.btn-primary {
+    margin-left: 10px !important;
+}
+.custom-footer-content {
+    float: right;
 }
