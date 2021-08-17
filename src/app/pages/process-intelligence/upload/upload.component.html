@@ -122,7 +122,7 @@
                                         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                                         <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="pList"></tr>
                         </table>
-                        <div class="bpspaginationdiv">
+                        <div class="">
                                 <mat-paginator class="newpaginationdiv" #paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true"></mat-paginator>
                         </div>        
                     </div>
