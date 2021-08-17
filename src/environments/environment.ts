@@ -10,39 +10,42 @@ export const environment = {
 
   //  * DEV ENV URl's
 
-  //pi_url: 'http://pidev.epsoftinc.in',
+//   pi_url: 'http://pidev.epsoftinc.in',
 
-  //bps_url: 'http://bpsdev.epsoftinc.in',
-  //rpa_url: 'http://rpadev.epsoftinc.in',
-  //loopback_url: 'http://10.11.0.107:3000',
-  //idm_url:'http://idmdev.epsoftinc.in',
-  //auth_url: "http://authdev.epsoftinc.in",
-  //for Auto build
-  //pi_node_url: "http://10.11.0.107:3000",
-  //for local environment
-  //pi_node_url: "http://10.11.0.112:3000",
-  
-  //platform_url:'http://apdev.epsoftinc.in',
-  //schema_registry_url:"http://10.11.0.101:8081",
-  //alerts_url:'http://alertsdev.epsoftinc.in',
+//   bps_url: 'http://bpsdev.epsoftinc.in',
+//   rpa_url: 'http://rpadev.epsoftinc.in',
+//   loopback_url: 'http://10.11.0.107:3000',
+//   idm_url:'http://idmdev.epsoftinc.in',
+//   auth_url: "http://authdev.epsoftinc.in",
+//   //for Auto build
+//   pi_node_url: "http://10.11.0.107:3000",
+//   pi_node_jobs: "http://10.11.0.107:5000",
+//   //for local environment
+//   //pi_node_url: "http://10.11.0.112:3000",
 
- // Aiotal redirection urls 
-  //myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
-  //logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation', 
+//   platform_url:'http://apdev.epsoftinc.in',
+//   schema_registry_url:"http://10.11.0.101:8081",
+//   alerts_url:'http://alertsdev.epsoftinc.in',
 
-// PI Connectors
-  //connector_topic: 'nodeDev',
+//  // Aiotal redirection urls
+//   myaccount_url : "http://eiapclouddev.epsoftinc.in/#/activation",
+//   logout_url: 'http://eiapclouddev.epsoftinc.in/#/activation',
+//   redirectout_url: 'http://eiapclouddev.epsoftinc.in/#/signout',
+//   platform_home_url: 'http://eiapclouddev.epsoftinc.in/#/',
+//   projectendpoint_url:'http://10.11.0.107:8282',
 
-//BPMN Platform URL
- // bpmnplatformUrl : "http://10.11.0.127:8080",
+// // PI Connectors
+//   connector_topic: 'nodeDev',
 
-//DB Connector
-  //dbConnectorHost: "10.11.0.113",
-  //dbName: "asimov_aiotal",
+// //BPMN Platform URL
+//   bpmnplatformUrl : "http://10.11.0.127:8080",
 
+// //DB Connector
+//   dbConnectorHost: "10.11.0.113",
+//   dbName: "asimov_aiotal",
 
-//camunda navigation 
-// camunda_url : "http://10.11.0.128:8080",
+// //camunda navigation 
+// camunda_url : "http://10.11.0.127:8080",
 
   //  * QA ENV URl's
     pi_url: 'http://piqa.epsoftinc.in',
@@ -62,6 +65,7 @@ export const environment = {
    logout_url: 'http://eiapcloudqa.epsoftinc.in/#/activation',
   redirectout_url: 'http://eiapcloudqa.epsoftinc.in/#/signout',
   platform_home_url: 'http://eiapcloudqa.epsoftinc.in/#/',
+   projectendpoint_url:'http://10.11.0.108:8282',
 
   // PI Connectors
    connector_topic: 'nodeq',
@@ -73,7 +77,7 @@ export const environment = {
   // BPMN Platform(camunda) URL
     bpmnplatformUrl : "http://10.11.0.128:8080",
 
-  //camunda navigation 
+  // camunda navigation 
   camunda_url : "http://10.11.0.128:8080",
 };
 
@@ -85,5 +89,3 @@ export const environment = {
  * on performance if an error is thrown.
  */
 // import 'zone.js/dist/zone-error';  // Included with Angular CLI.
-
-
