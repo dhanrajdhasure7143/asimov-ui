@@ -998,3 +998,13 @@ table.dataTable {
 .chart-legend .legend-label:hover{
   background-color: #0062cf !important;
 }
+.newpaginationdiv .mat-paginator-page-size {
+  left: 5px !important;
+}
+.timefeed-body .ngx-timepicker {
+  border: 1px solid #D1D1D1 !important;
+  border-radius: 4px;
+}
+.timefeed-body .ngx-timepicker-control {
+  width: 90px !important;
+}

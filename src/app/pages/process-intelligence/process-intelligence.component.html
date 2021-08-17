@@ -73,9 +73,10 @@
               </button>
                 <div *ngIf="isAddHrs" aria-labelledby="dropdownForm1" id="dropdownForm2">
                     <form class="row">
-                    <div class="form-group col-sm-6">
-                        <label for="exampleDropdownFormEmail1">Working From</label>
-                        <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours.formDay">
+                      <div class="timefeed-header">
+                        <div class="col-sm-6 pl-0">
+                          <label class="label-control" for="exampleDropdownFormEmail1">Working From</label>
+                          <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours.formDay">
                             <option value="" selected disabled>Select</option>
                             <option value="Sun">Sunday</option>
                             <option value="Mon">Monday</option>
@@ -84,11 +85,11 @@
                             <option value="Thu">Thursday</option>
                             <option value="Fri">Friday</option>
                             <option value="Sat">Saturday</option>
-                        </select>
+                          </select>
                         </div>
-                        <div class="form-group col-sm-6">
-                        <label for="">Working To</label>
-                        <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours.toDay">
+                        <div class="col-sm-6 pr-0">
+                          <label class="label-control" for="">Working To</label>
+                          <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours.toDay">
                             <option value="" selected disabled>Select</option>
                             <option value="Sun">Sunday</option>
                             <option value="Mon">Monday</option>
@@ -97,31 +98,27 @@
                             <option value="Thu">Thursday</option>
                             <option value="Fri">Friday</option>
                             <option value="Sat">Saturday</option>
-                        </select>
+                          </select>
                         </div>
-                        <hr>
-                        <p class="p_warning">*Please select business start time and end time</p>
-                    <div class="col-sm-6">
-                        <label for="">Shift Start Time</label>
-                        <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <label for="">Shift End Time</label>
-                        <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
-                    </div>
-                    <div class="col-sm-12 dropdown-divider"></div>
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-3">
-                        <button type="submit" class="btn btn-warning" (click)="resetWorkingHours()">Reset</button>
-                    </div>
-                <div class="col-sm-3">
-                    <button type="submit" class="btn btn-primary" (click)="addWorkingHours()">Apply</button>
-                </div>
-                <div class="col-sm-3">
-                    <button type="submit" class="btn btn-secondary" (click)="canceladdHrs()">Cancel</button>
-                </div>
-                </form>
+                        <span class="p_warning">*Please select business start time and end time</span>
+                      </div>
+                      <div class="timefeed-body">
+                        <div class="col-sm-6 pl-0">
+                          <label class="label-control" for="">Shift Start Time</label>
+                          <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
+                        </div>
+                        <div class="col-sm-6 pr-0">
+                          <label class="label-control" for="">Shift End Time</label>
+                          <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
+                        </div>
+                        <!-- <div class="col-sm-12 dropdown-divider"></div> -->
+                      </div>
+                      <div class="timefeed-footer">
+                          <button type="submit" class="btn btn-default" (click)="resetWorkingHours()">Reset</button>
+                          <button type="submit" class="btn btn-default" (click)="canceladdHrs()">Cancel</button>
+                          <button type="submit" class="btn btn-primary" (click)="addWorkingHours()">Apply</button>
+                      </div>  
+                    </form>
                 </div>
               <button class="tsttooltipbtn" id="generate_btn" (click)="generateBpmn()">
                 <img src="../../../assets/images/PI/bpmn.svg">

@@ -1100,14 +1100,17 @@ mat-panel-title.mat-expansion-panel-header-title {
 .chartinnsec g[aria-labelledby*="-title"] {
   display: none !important;
 }
-
+.canvas2propcontainer {
+  top: 56px;
+  height: calc(100vh - 150px);
+}
 .propertiesContainer.propertiesContainerClosed.canvas2propcontainer {
   top: 56px;
-    height: calc(100vh - 150px);
+  height: calc(100vh - 150px);
 }
 .canvas2 .bjs-powered-by {
-  bottom: 50px !important;
+  bottom: 25px !important;
 }
 .canvas2 .djs-minimap {
-  bottom: 50px;
+  bottom: 25px;
 }
