@@ -449,3 +449,6 @@
 .dropdown-divider{
   border: 1px solid #aaa;
 }
+.edgemetrics_spinner span{
+  font-size: 13px !important;
+}
