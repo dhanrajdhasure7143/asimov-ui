@@ -28,13 +28,13 @@
 }
 
 .mat-expansion-panel-header-title .bg_threebtn:hover {
-  padding: 8px;
+  /* padding: 8px;
   margin-left: -12px;
   background-color: white;
   border-radius: 15px;
   width: 32px;
   height: 30px;
-  box-shadow: -1px 0px 1px #888888;
+  box-shadow: -1px 0px 1px #888888; */
 }
 
 .resetbtn {
@@ -88,13 +88,13 @@ tr.mat-row {
 }
 
 .rpa-home-block>h6 {
-  color: #0062cf;
+  color: #00a1e3;
 }
 
 .rpa-home-reset-btn {
   margin-top: 26px;
   margin-left: 5px;
-  background-color: #0062cf;
+  background-color: #00a1e3;
   height: 23px;
   border-radius: 4px;
   color: white;
@@ -233,7 +233,7 @@ th {
 }
 
 .header {
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 .heading-workspace {
@@ -251,8 +251,8 @@ th {
 }
 
 .edit-bot-button {
-  margin-left: 70%;
-  margin-top: 5%;
+  /* margin-left: 70%;
+  margin-top: 5%; */
 }
 
 
@@ -262,20 +262,22 @@ th {
 
 .custom-file-input::before {
   text-align: center;
-  font-family: 'Font Awesome 5 Free';
+  /* font-family: 'Font Awesome 5 Free';
   content: "\f574    Select File";
-  font-weight: 900;
+  font-weight: 600; */
+  content: "Select File";
   display: inline-block;
-  background: #0062cf;
-  border-radius: 3px;
-  padding: 5px 8px;
+  background: #00a1e3;
+  border-radius: 2px;
+  padding: 6px 8px;
   outline: none;
   color: white;
   white-space: nowrap;
   -webkit-user-select: none;
   cursor: pointer;
-
-  font-size: 12pt;
+  position: absolute;
+  top:27px;
+  font-size: 15px;
 }
 
 .custom-file-input:hover::before {
@@ -283,33 +285,33 @@ th {
 }
 
 .header-btn1 {
-  top: 10px;
+  /* top: 10px; */
+  top: 21px;
+    right: 25px;
 }
 
 
 label.main-subtitle {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   display: inline-block;
-  /* display: block; */
-
   margin: 0px 10px 0px 0px;
 }
 
 label.subtitle-tag {
   font-weight: 400;
-  color: #0062cf;
+  color: #00a1e3;
   font-size: 14px;
   margin: 0px;
 }
 
 .main-subheader {
-  padding: 15px;
+  padding: 15px 6px;
   /* border-bottom: 2px solid #ddd; */
-  margin: 15px 0px;
-  box-shadow: 0px 1px 6px rgb(0 0 0 / 10%);
+  margin: 0px 0px 15px;
+  /* box-shadow: 0px 1px 6px rgb(0 0 0 / 10%); */
   border-radius: 4px;
-
+  border: 1px solid #e1e7ec;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -320,11 +322,13 @@ label.subtitle-tag {
 .main-subheaderBtns {
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
-span.gridHeader {
-  font-size: 18px;
-  font-weight: 600;
+h4.gridHeader {
+  color: #5b5b5b;
+  margin: 0px;
+  line-height: 2;
 }
 
 .mat-form-field-wrapper {
@@ -334,12 +338,11 @@ span.gridHeader {
 
 .gridheader-th {
   vertical-align: middle !important;
-  background-color: #e8f7fd !important;
   color: #00a0e3 !important;
   font-size: 14px !important;
   text-align: left !important;
   border-top: none !important;
-  font-weight: 600;
+  font-weight: 400;
   /* border-bottom: 1px solid #4a4a4a33 !important; */
   padding: 8px 10px;
   display: inline-block;
@@ -355,20 +358,10 @@ span.gridHeader {
   width: 100%;
   padding-right: 6px;
   background: #e8f7fd;
-  border-bottom: 1px solid #4a4a4a33 !important;
-}
-
-mat-expansion-panel-header {
-  height: auto !important;
 }
 
 mat-expansion-panel-header .flex-col {
-  padding: 7px 10px;
-}
-
-mat-expansion-panel.mat-expansion-panel {
-  border-top: medium none;
-  border-bottom: 1px solid #ddd;
+  padding: 8px 10px;
 }
 
 mat-panel-title.mat-expansion-panel-header-title {
@@ -385,4 +378,16 @@ mat-panel-title.mat-expansion-panel-header-title {
 .tableActionsIcons i {
   font-size: 18px;
   margin-right: 15px;
+}
+
+.rpa-searchip img {
+  position: absolute;
+  right: 9px;
+  top: 9px;
+}
+input.form-control.custom-file-input {
+  padding-left: 0px !important;
+}
+.mat-expansion-panel:hover {
+  background-color: #fdf6d4;
 }

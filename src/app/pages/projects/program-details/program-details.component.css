@@ -181,7 +181,7 @@ span.programdesc {
 .prgmgrid {
   background-color: #fff;
   padding: 10px;
-  min-height: 380px;
+  /* min-height: 380px; */
   position: relative;
 }
 .prgmgrid-body {
