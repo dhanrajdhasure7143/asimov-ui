@@ -2337,3 +2337,8 @@ th.mat-header-cell {
   padding: 10px;
 }
 /* RPA Module New Styles */
+
+#exportSVGtoPDF .edgeLabels g.label {
+  color: #000 !important;
+  font-size: 24px !important;
+}
