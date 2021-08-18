@@ -207,3 +207,6 @@ td a:hover img.testplus.hover-img {
     display: initial;
     cursor: pointer;
 }
+.link-button{
+  margin-left: 500px;
+}
