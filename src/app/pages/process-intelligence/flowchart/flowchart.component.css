@@ -115,7 +115,7 @@
   
   .tracking_detsils1{
     border-left:1px solid #e5e5e5;
-    border-radius: 4px;
+    border-radius: 0px;
     padding-right: 0px;
     background-color: #F3F3F3;
   }
@@ -172,12 +172,6 @@
     overflow: scroll; */
   }
 
-  .sidenav .closebtn {
-    font-size: 24px;
-    font-weight: 600;
-    margin-left: 30px;
-  }
-  
   #main {
     transition: margin-right .5s;
   }
@@ -447,7 +441,7 @@
   border: 1px solid #aaa;
 }
 .select_drpdwnone {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .select_drpdwnone, .variant2 {
   padding: 0px 10px !important;
@@ -476,4 +470,35 @@ button.closebtn:hover {
 
 .edgemetrics_spinner span{
   font-size: 13px !important;
+}
+.variants_slider h3 {
+  margin: 0px !important;
+  font-size: 18px !important;
+  font-weight: 600;
+  color: #001c47;
+  width: 80%;
+}
+.variants-header .closebtn {
+  width: 20%;
+  text-align: end;
+}
+.variants-header {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+img.hover-img {
+  display: none;
+}
+.variants-header button:hover img.default-img {
+  display: none;
+}
+.variants-header button:hover img.hover-img {
+  display: initial;
+}
+.PImodule-fileds {
+  margin-top: 20px !important;
+}
+.closebtn img {
+  vertical-align: top !important;
 }

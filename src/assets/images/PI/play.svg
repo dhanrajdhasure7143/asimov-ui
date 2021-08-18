@@ -5,8 +5,9 @@
     </clipPath>
   </defs>
   <g id="play" clip-path="url(#clip-play)">
-    <g id="noun_play_1939965" transform="translate(8.182 11.994)">
-      <path id="Path_924" data-name="Path 924" d="M30.557,12.9,15.435,2.833A1.957,1.957,0,0,0,12.4,4.451v20.1a1.95,1.95,0,0,0,3.035,1.618L30.557,16.109A1.937,1.937,0,0,0,30.557,12.9Z" transform="translate(-18.088 -14.499)" fill="#607088"/>
+    <g id="play-circle" transform="translate(-0.539 -0.539)">
+      <circle id="Ellipse_436" data-name="Ellipse 436" cx="11" cy="11" r="11" transform="translate(1.539 1.539)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <path id="Path_930" data-name="Path 930" d="M10,8l6.323,4.215L10,16.431Z" transform="translate(0.431 0.323)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
     </g>
   </g>
 </svg>

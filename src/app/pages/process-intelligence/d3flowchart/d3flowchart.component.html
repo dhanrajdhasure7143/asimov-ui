@@ -1,12 +1,12 @@
-<div class="search-node">
+<div class="col-md-2 search-node p-0">
   <span class="" *ngIf="searchNode" (click)="searchNode = null; onSearch();">&times;</span>
 <input class="search-input border_bottom form-control" name="search" placeholder="Search Node" #search="ngModel" [(ngModel)]="searchNode"  (keyup)="onSearch()"  (keyup)="onSearch()" (blur)="onSearch()" />
 <!-- <button class="btn btn-warning" (click)="searchNode = null; onSearch()" *ngIf="searchNode">Clear Search</button> -->
 </div>
 <div class="zoom_btns">
-<a class="btn btn1 zoom btn-primary" id="zoom_in"><i class="fas fa-search-plus"></i></a>
-<a class="btn btn1 zoom-out btn-primary" id="zoom_out"><i class="fas fa-search-minus"></i></a>
-<a class="btn btn1 zoom-init btn-primary" id="zoom_reset"><i class="fas fa-recycle"></i></a>
+  <a class="btn btn1 zoom btn-primary" id="zoom_in"><img src="../../../../assets/images/PI/zoom-in.svg" alt="" class="testplus1"></a>
+  <a class="btn btn1 zoom-out btn-primary" id="zoom_out"><img src="../../../../assets/images/PI/zoom-out.svg" alt="" class="testplus1"></a>
+  <a class="btn btn1 zoom-init btn-primary" id="zoom_reset"><img src="../../../../assets/images/PI/Fit to screen.svg" alt="" class="testplus1"></a>
 </div>
 
 <div *ngIf="isnoNode" class="nonode">No Nodes found</div>

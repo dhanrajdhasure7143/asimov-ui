@@ -5,18 +5,26 @@
 } */
  
 .zoom_btns{
-    position: absolute;
+    position: fixed;
+    bottom: 10px;
     z-index: 1;
-    margin-left: 80%;
+}
+.zoom_btns a {
+    display: table;
+    margin-top: 10px;
+    padding: 6px 8px;
+}
+.zoom_btns a:hover {
+    background-color: #001c47 !important;
+    border: 1px solid #001c47 !important;
 }
 .search-input{
     padding-right: 10px !important;
 }
 .search-node{
-    width: 16%;
-    margin-left: 18%;
-    margin-top: -48px;
     position: absolute;
+    top: -34px;
+    left: 19%;    
     z-index: 1;
 }
 .search-node span{
@@ -37,7 +45,3 @@
     margin-top: 200px;
     margin-left: 48%;
 }
-.zoom_btns a{
-    margin-right: 3px;
-}
-

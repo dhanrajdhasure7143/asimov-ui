@@ -5,8 +5,9 @@
     </clipPath>
   </defs>
   <g id="stop" clip-path="url(#clip-stop)">
-    <g id="noun_Stop_1939970" transform="translate(13.542 10.542)">
-      <path id="Path_925" data-name="Path 925" d="M24.555,2.5H4.445A1.963,1.963,0,0,0,2.5,4.445V24.555A1.946,1.946,0,0,0,4.445,26.5H24.555A1.946,1.946,0,0,0,26.5,24.555V4.445A1.963,1.963,0,0,0,24.555,2.5Z" transform="translate(-16.042 -13.042)" fill="#607088"/>
+    <g id="stop-circle" transform="translate(-0.538 -0.538)">
+      <circle id="Ellipse_437" data-name="Ellipse 437" cx="11" cy="11" r="11" transform="translate(1.538 1.538)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+      <rect id="Rectangle_2061" data-name="Rectangle 2061" width="6" height="6" transform="translate(9.538 9.538)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
     </g>
   </g>
 </svg>
