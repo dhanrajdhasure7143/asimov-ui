@@ -20,6 +20,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./program-details.component.css']
 })
 export class ProgramDetailsComponent implements OnInit {
+  unassigned_projects: any=[];
+  addprojectsForm:FormGroup;
 
   constructor(
     private rest:RestApiService,
@@ -48,6 +50,7 @@ export class ProgramDetailsComponent implements OnInit {
     this.mindate= moment().format("YYYY-MM-DD");
     this.getallusers();
     this.getprocessnames();
+    this.getunassignedprojectslist();
     setTimeout(()=>{
       this.getpiechart();
       this.get_project_duration_chart();
@@ -69,6 +72,11 @@ export class ProgramDetailsComponent implements OnInit {
      // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
   
   })
+  this.addprojectsForm=this.formBuilder.group({
+      
+    projects: [null, Validators.compose([Validators.required, Validators.maxLength(50)])],
+    
+    })
   }
 
   getprojects_and_programs()
@@ -497,5 +505,22 @@ export class ProgramDetailsComponent implements OnInit {
       this.getprogramdetails();
       this.editdata=false;
     });
+  }
+  linkproject(template){
+    this.modalref = this.modalservice.show(template);
+
+  }
+  getunassignedprojectslist()
+  {
+    this.rest.getunassignedprojects().subscribe(data=>{
+      this.unassigned_projects=data;
+    })
+  }
+  resetprojects(){
+    this.addprojectsForm.reset();
+    this.addprojectsForm.get("projects").setValue("");
+  }
+  save(){
+    
   }
 }
