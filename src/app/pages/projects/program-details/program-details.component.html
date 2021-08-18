@@ -336,6 +336,13 @@
           </span>
         </div>
         <div class="col-md-8 pr-0">
+          <span class="link-button">
+              <span class="">
+            <button type="button" class="btn btn-primary " (click)="linkproject(linkprojecttemplate)" >
+              <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus " />Link Projects
+            </button>
+          </span>
+        </span>
           <span class="pull-right">
             <span class="">
               <button type="button" class="btn btn-primary" (click)="createproject(template)" >
@@ -863,20 +870,54 @@
 
 
 
-    <ng-template class="modal-lg" #template>
-        <div class="modal-header modelprhead">
-          <h4 class="modal-title pull-left">Add New Project</h4>
+    <ng-template  #linkprojecttemplate>
+      <div class="modal-header modelprhead">
+        <h4 class="modal-title pull-left">Link Projects</h4>
           <button type="button" class="close pull-right" aria-label="Close" (click)="modalref.hide()">
             <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
           </button>
         </div>
 
-        <div class="h-scroll">
-
-          <app-create-project-form [users_list]="users_list" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
-
+        <div class="modal-body modelprbody resourcescreen">
+             <form [formGroup]="addprojectsForm">
+                  <div class="row">
+                      <div  class="form-fields col-md-12 addrespopup">
+                              <label for="projects"class="modal-label">Add Projects</label>
+         
+                               <ng-select  formControlName="projects" [multiple]="true"  placeholder="Select Projects"
+                                      required>
+                                      <ng-option  *ngFor="let prj of unassigned_projects" [value]="prj.id">{{prj.projectName}}</ng-option>
+                                  </ng-select> 
+          
+                              <span *ngIf="addprojectsForm.get('projects').invalid && addprojectsForm.get('projects').touched"
+                                  style="color:red" class="fa fa-info-circle errspan">Projects Required*</span>
+                      </div>
+                  </div>
+              </form>
+          <!-- </div> -->
+      </div>          
+      <div class="modal-footer modelprfooter">
+          <div class="pull-right">
+              <button (click)="resetprojects()" class="btn btn-default">Reset</button>
+              <button [disabled]="addprojectsForm.invalid" (click)="save()" class="btn btn-primary btn-update">Save</button>
+          </div>
       </div>
 
     </ng-template>
+    <ng-template class="modal-lg" #template>
+      <div class="modal-header modelprhead">
+        <h4 class="modal-title pull-left">Add New Project</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="modalref.hide()">
+          <span aria-hidden="true"><img src="../../../../assets/images/Projects/circle-close.svg" alt=""></span>
+        </button>
+      </div>
+
+      <div class="h-scroll">
+
+        <app-create-project-form [users_list]="users_list" (oncreate)="linkcreateproject($event)" [processes]="selected_process_names"></app-create-project-form>
+
+    </div>
+
+  </ng-template>
 
 </div>
