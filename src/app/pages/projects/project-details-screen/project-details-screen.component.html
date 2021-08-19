@@ -15,23 +15,23 @@
     <div class="ml-auto module-heading-buttons">
       <span class="pull-right">
         <span (click)="navigateToProjectRepo()" class="prj-db-btn">
-          <button class="btn btn-default">
+          <button class="tsttooltipbtn">
+            <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus" >
+            <span class="testtooltip">Project Repo</span>
+          </button>
+          <!-- <button class="btn btn-default">
             <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
             <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img">
             Project Repo
-          </button>
+          </button> -->
         </span>
-        <span *ngIf="editdata==true" (click)="projectdetails()">
-          <button class="btn btn-default">
-            <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
-            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
+        <!-- <span *ngIf="editdata==true" (click)="projectdetails()">
+          <button class="btn btn-default">           
             Reset
           </button>
         </span>
         <span *ngIf="editdata==true" (click)="updateprojectDetails()">
           <button class="btn btn-primary">
-            <!-- <img src="../../../../assets/images/Projects/Project-Repo.svg" class="testplus default-img">
-            <img src="../../../../assets/images/Projects/project-repo-white.svg" class="testplus hover-img"> -->
             Save
           </button>
         </span>
@@ -40,12 +40,13 @@
           <button class="btn btn-primary" (click)="editdata=true">
             <img class="testplus" src="../../../../assets/images/Projects/edit.svg"> Edit
           </button>
-        </span>
+        </span> -->
 
         <!-- <span class="projects-menu-item"><i class="ri-history-line"></i></span> -->
-        <span>
-          <button  [matMenuTriggerFor]="menu">
-            <img class="more" src="../../../../assets/images/Projects/more.svg" matTooltip="More">
+        <span class="prj-db-btn">
+          <button  [matMenuTriggerFor]="menu" class="tsttooltipbtn">
+            <img class="more testplus" src="../../../../assets/images/Projects/Download.svg">
+            <span class="testtooltip">Download</span>
           </button>
           <mat-menu #menu="matMenu">
             <button mat-menu-item (click)="downloadExcel()">Download as Excel</button>
@@ -111,229 +112,256 @@
 
           </div>
         </div>
-<div class="row">
-        <div class="col-sm-12 p-0 project-details-set">
-          <div class="row">
-            <div class="col-sm-3 p-0">
-              <div class="mainset">
-                <span class="labeltit">Initiative</span>
+        <div class="row">
 
-                <span class="tab-text"
-                  *ngIf="projectDetails.initiatives==undefined ||  projectDetails.initiatives==null">-</span>
-                <span class="tab-text labelcont"
-                  *ngIf="projectDetails.initiatives!=undefined &&  projectDetails.initiatives!=null">
-                  {{projectDetails.initiatives}}
-                </span>
+          <div class="col-sm-6 p-0 project-details-set projinfo">
+              <div class="det-innerheader">
+                <span class="module-sub-header-title">PROJECT INFO</span>
               </div>
-            </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Value Chain</span>
-
-                  <span class="tab-text"
-                    *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined">-</span>
-                  <span
-                    *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"
-                    class="tab-text labelcont clickable">{{projectDetails.mapValueChain}}</span>
-
-                </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Process</span>
-
-                  <span class="tab-text"
-                    *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
-                  <span
-                    *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
-                    class="tab-text clickable labelcont">{{projectDetails.process | processName : processes}}</span>
-                </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Process Id</span>
-
-                  <span class="tab-text labelcont">{{projectDetails.process }}</span>
-                </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Start Date</span>
-
-                  <div>
-                    <span
-                      *ngIf="projectDetails.startDate != null && projectDetails.startDate != undefined && projectDetails.startDate !='' "
-                      class="tab-text labelcont">{{projectDetails.startDate | date }}</span>
-                    <span
-                      *ngIf="projectDetails.startDate == null || projectDetails.startDate == undefined || projectDetails.startDate =='' "
-                      class="tab-text labelcont">-</span>
-                  </div>
-                </div>
-</div>
-                <div class="col-sm-3 p-0">
-                  <div class="mainset">
-                    <span class="labeltit">End Date</span>
-                    <div >
-                        <span  *ngIf="projectDetails.endDate != null && projectDetails.endDate != undefined && projectDetails.endDate !='' "  class="tab-text labelcont" >{{projectDetails.endDate | date }}</span>
-                      <span  *ngIf="projectDetails.endDate == null || projectDetails.endDate == undefined || projectDetails.endDate =='' "  class="tab-text labelcont" >-</span>
-                     
+              <div class="row">
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Initiative</span>
+      
+                      <span class="tab-text"
+                        *ngIf="projectDetails.initiatives==undefined ||  projectDetails.initiatives==null">-</span>
+                      <span class="tab-text labelcont"
+                        *ngIf="projectDetails.initiatives!=undefined &&  projectDetails.initiatives!=null">
+                        {{projectDetails.initiatives}}
+                      </span>
                     </div>
                   </div>
-                </div>
-
-                <div class="col-sm-3 p-0">
-                  <div class="mainset">
-                    <span class="labeltit" >Resources</span>
-                    <span class="tab-text labelcont" >{{resourceslength}}</span>
-                  </div>
-                </div>
-        </div>
-</div>
-        
-        <div class="col-sm-12 p-0 project-details-set">
-          <div class="row">
-            <div class="col-sm-3 p-0">
-              <div class="mainset">
-                <span class="labeltit">Project Health</span>
-
-                <div *ngIf="editdata==false">
-                  <span
-                    *ngIf="projectDetails.projectHealth != null && projectDetails.projectHealth != undefined && projectDetails.projectHealth !='' "
-                    class="tab-text labelcont">{{projectDetails.projectHealth }}</span>
-                  <span
-                    *ngIf="projectDetails.projectHealth == null || projectDetails.projectHealth == undefined || projectDetails.projectHealth =='' "
-                    class="tab-text labelcont">-</span>
-  
-                </div>
-  
-                <span *ngIf="editdata==true" class="tab-text labelcont">
-                  <select class="small-input" (change)="projectDetails.projectHealth=$event.target.value"
-                    [value]="(projectDetails.projectHealth==undefined||projectDetails.projectHealth==null)?'':projectDetails.projectHealth">
-                    <option value="">Select Project Health</option>
-                    <option value="Good">Good</option>
-                    <option value="Need Attention">Need Attention</option>
-                    <option value="Risk">Risk</option>
-                  </select>
-                </span>
-              </div>
-            </div>
-              <!-- <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Progress Percentage</span>
-
-                  <span *ngIf="editdata==false" class="tab-text labelcont">{{projectDetails.projectPercentage}}%
-                    <mat-progress-bar mode="determinate" value={{projectDetails.projectPercentage}}></mat-progress-bar>
-                  </span>
-                  <div *ngIf="editdata==true" class="d-flex">
-                    <input type="range" (change)="projectDetails.projectPercentage=$event.target.value" class="small-input"
-                      [value]="(projectDetails.projectPercentage==undefined||projectDetails.projectPercentage==null)?0:projectDetails.projectPercentage"
-                      step="1" min="0" max="100">
-                    <div class="py-5">
-                      {{projectDetails.projectPercentage}}%
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Value Chain</span>
+      
+                      <span class="tab-text"
+                        *ngIf="projectDetails.mapValueChain==null||projectDetails.mapValueChain==''|| projectDetails.mapValueChain==undefined">-</span>
+                      <span
+                        *ngIf="projectDetails.mapValueChain!=null && projectDetails.mapValueChain!=''&& projectDetails.mapValueChain!=undefined"
+                        class="tab-text labelcont clickable">{{projectDetails.mapValueChain}}</span>
+      
                     </div>
                   </div>
-                </div>
-              </div> -->
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Efforts Spent</span>
-                  <div *ngIf="editdata==false">
-                    <span
-                      *ngIf="projectDetails.effortsSpent != null && projectDetails.effortsSpent != undefined && projectDetails.effortsSpent !='' "
-                      class="tab-text labelcont">{{projectDetails.effortsSpent }}</span>
-                    <span
-                      *ngIf="projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='' "
-                      class="tab-text labelcont">-</span>
-    
-                  </div>
-                  <div *ngIf="editdata==true">
-                    <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" class="small-input"
-                      placeholder="Efforts Spent"
-                      [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Project Priority</span>
-
-                  <div *ngIf="editdata==false">
-                    <span class="tab-text"
-                      *ngIf="projectDetails.priority==null || projectDetails.priority==undefined">-</span>
-                    <span class="tab-text labelcont">{{projectDetails.priority}}</span>
-                  </div>
-                  <div *ngIf="editdata==true">
-                    <select class="small-input" (change)="projectDetails.priority=$event.target.value"
-                      [value]="(projectDetails.priority==undefined||projectDetails.priority==null)?'':projectDetails.priority">
-                      <option value="">Select Project Priority</option>
-                      <option value="High">High</option>
-                      <option value="Medium">Medium</option>
-                      <option value="Low">Low</option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Project Purpose</span>
-
-                  <div *ngIf="editdata==false">
-                    
-                    <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
-                    <span
-                    *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
-                    class="tab-text labelcont">-</span>
-  
-                  </div>
-                  <div *ngIf="editdata==true">
-                    <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
-                      [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
-                      class="small-input" placeholder="Enter Project Purpose">
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Progress Percentage</span>
-
-                  <span *ngIf="editdata==false" class="tab-text labelcont">{{projectDetails.projectPercentage}}%
-                    <mat-progress-bar mode="determinate" value={{projectDetails.projectPercentage}}></mat-progress-bar>
-                  </span>
-                  <div *ngIf="editdata==true" class="d-flex">
-                    <input type="range" (change)="projectDetails.projectPercentage=$event.target.value" class="small-input"
-                      [value]="(projectDetails.projectPercentage==undefined||projectDetails.projectPercentage==null)?0:projectDetails.projectPercentage"
-                      step="1" min="0" max="100">
-                    <div class="py-5">
-                      {{projectDetails.projectPercentage}}%
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Process</span>
+      
+                      <span class="tab-text"
+                        *ngIf="projectDetails.process==null || projectDetails.process==undefined || projectDetails.process==''">-</span>
+                      <span
+                        *ngIf="projectDetails.process!=null && projectDetails.process!=undefined && projectDetails.process!=''"
+                        class="tab-text clickable labelcont">{{projectDetails.process | processName : processes}}</span>
                     </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-sm-3 p-0">
-                <div class="mainset">
-                  <span class="labeltit">Status</span>
-
-                  <div *ngIf="editdata==false">
-                    <span class="tab-text labelcont">{{projectDetails.status}}</span>
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Process Id</span>
+      
+                      <span class="tab-text labelcont">{{projectDetails.process }}</span>
+                    </div>
                   </div>
-                  <div *ngIf="editdata==true">
-                    <select class="small-input" (change)="projectDetails.status=$event.target.value"
-                      [value]="(projectDetails.status==undefined||projectDetails.status==null)?'':projectDetails.status">
-                      <option value="">Select Status</option>
-                      <option value="New">New</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="Pipeline">Pipeline</option>
-                      <option value="On Hold">On Hold</option>
-                      <option value="In Review">In Review</option>
-                      <option value="Deployed">Deployed</option>
-                    </select>
+                  <div class="col-sm-4 p-0">
+                      <div class="mainset">
+                        <span class="labeltit">Start Date</span>
+      
+                        <div>
+                          <span
+                            *ngIf="projectDetails.startDate != null && projectDetails.startDate != undefined && projectDetails.startDate !='' "
+                            class="tab-text labelcont">{{projectDetails.startDate | date }}</span>
+                          <span
+                            *ngIf="projectDetails.startDate == null || projectDetails.startDate == undefined || projectDetails.startDate =='' "
+                            class="tab-text labelcont">-</span>
+                        </div>
+                      </div>
                   </div>
-                </div>
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">End Date</span>
+                      <div >
+                          <span  *ngIf="projectDetails.endDate != null && projectDetails.endDate != undefined && projectDetails.endDate !='' "  class="tab-text labelcont" >{{projectDetails.endDate | date }}</span>
+                        <span  *ngIf="projectDetails.endDate == null || projectDetails.endDate == undefined || projectDetails.endDate =='' "  class="tab-text labelcont" >-</span>
+                       
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit" >Resources</span>
+                      <span class="tab-text labelcont" >{{resourceslength}}</span>
+                    </div>
+                  </div>
               </div>
-     
           </div>
+          
+          <div class="col-sm-6 p-0 project-details-set progressdet">
+              <div class="det-innerheader">
+                  <span class="module-sub-header-title">PROGRESS DETAILS</span>
+                  <span style="margin-left: 10px">
+                      <span *ngIf="editdata==true" (click)="projectdetails()">
+                          <button class="btn btn-default">
+                            Cancel
+                          </button>
+                        </span>
+                        <span *ngIf="editdata==true" (click)="updateprojectDetails()">
+                          <button class="btn btn-primary">
+                            Save
+                          </button>
+                        </span>
+                
+                        <span *ngIf="editdata==false">
+                          <button class="btn btn-primary" (click)="editdata=true">
+                            Edit
+                            <!-- <img class="testplus" src="../../../../assets/images/Projects/edit.svg">  -->
+                          </button>
+                        </span>
+                  </span>
+              </div>
+              <div class="row">
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Project Health</span>
+      
+                      <div *ngIf="editdata==false">
+                        <span
+                          *ngIf="projectDetails.projectHealth != null && projectDetails.projectHealth != undefined && projectDetails.projectHealth !='' "
+                          class="tab-text labelcont">{{projectDetails.projectHealth }}</span>
+                        <span
+                          *ngIf="projectDetails.projectHealth == null || projectDetails.projectHealth == undefined || projectDetails.projectHealth =='' "
+                          class="tab-text labelcont">-</span>
+      
+                      </div>
+      
+                      <span *ngIf="editdata==true" class="tab-text labelcont">
+                        <select class="small-input" (change)="projectDetails.projectHealth=$event.target.value"
+                          [value]="(projectDetails.projectHealth==undefined||projectDetails.projectHealth==null)?'':projectDetails.projectHealth">
+                          <option value="">Select Project Health</option>
+                          <option value="Good">Good</option>
+                          <option value="Need Attention">Need Attention</option>
+                          <option value="Risk">Risk</option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+                    <!-- <div class="col-sm-4 p-0">
+                      <div class="mainset">
+                        <span class="labeltit">Progress Percentage</span>
+      
+                        <span *ngIf="editdata==false" class="tab-text labelcont">{{projectDetails.projectPercentage}}%
+                          <mat-progress-bar mode="determinate" value={{projectDetails.projectPercentage}}></mat-progress-bar>
+                        </span>
+                        <div *ngIf="editdata==true" class="d-flex">
+                          <input type="range" (change)="projectDetails.projectPercentage=$event.target.value" class="small-input"
+                            [value]="(projectDetails.projectPercentage==undefined||projectDetails.projectPercentage==null)?0:projectDetails.projectPercentage"
+                            step="1" min="0" max="100">
+                          <div class="py-5">
+                            {{projectDetails.projectPercentage}}%
+                          </div>
+                        </div>
+                      </div>
+                    </div> -->
+                  <div class="col-sm-4 p-0">
+                      <div class="mainset">
+                        <span class="labeltit">Efforts Spent</span>
+                        <div *ngIf="editdata==false">
+                          <span
+                            *ngIf="projectDetails.effortsSpent != null && projectDetails.effortsSpent != undefined && projectDetails.effortsSpent !='' "
+                            class="tab-text labelcont">{{projectDetails.effortsSpent }}</span>
+                          <span
+                            *ngIf="projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='' "
+                            class="tab-text labelcont">-</span>
+      
+                        </div>
+                        <div *ngIf="editdata==true">
+                          <input type="text" (change)="projectDetails.effortsSpent=$event.target.value" class="small-input"
+                            placeholder="Efforts Spent"
+                            [value]="(projectDetails.effortsSpent == null || projectDetails.effortsSpent == undefined || projectDetails.effortsSpent =='')?'':projectDetails.effortsSpent">
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-4 p-0">
+                      <div class="mainset">
+                        <span class="labeltit">Project Priority</span>
+      
+                        <div *ngIf="editdata==false">
+                          <span class="tab-text"
+                            *ngIf="projectDetails.priority==null || projectDetails.priority==undefined">-</span>
+                          <span class="tab-text labelcont">{{projectDetails.priority}}</span>
+                        </div>
+                        <div *ngIf="editdata==true">
+                          <select class="small-input" (change)="projectDetails.priority=$event.target.value"
+                            [value]="(projectDetails.priority==undefined||projectDetails.priority==null)?'':projectDetails.priority">
+                            <option value="">Select Project Priority</option>
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                          </select>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-4 p-0">
+                      <div class="mainset">
+                        <span class="labeltit">Project Purpose</span>
+      
+                        <div *ngIf="editdata==false">
+      
+                          <span class="tab-text labelcont">{{projectDetails.projectPurpose}}</span>
+                          <span
+                          *ngIf="projectDetails.projectPurpose == null || projectDetails.projectPurpose == undefined || projectDetails.projectPurpose =='' "
+                          class="tab-text labelcont">-</span>
+      
+                        </div>
+                        <div *ngIf="editdata==true">
+                          <input type="text" (change)="projectDetails.projectPurpose=$event.target.value"
+                            [value]="(projectDetails.projectPurpose==undefined||projectDetails.projectPurpose==null)?'':projectDetails.projectPurpose"
+                            class="small-input" placeholder="Enter Project Purpose">
+                        </div>
+                      </div>
+                  </div>
+                  
+                  <div class="col-sm-4 p-0">
+                      <div class="mainset">
+                        <span class="labeltit">Status</span>
+      
+                        <div *ngIf="editdata==false">
+                          <span class="tab-text labelcont">{{projectDetails.status}}</span>
+                        </div>
+                        <div *ngIf="editdata==true">
+                          <select class="small-input" (change)="projectDetails.status=$event.target.value"
+                            [value]="(projectDetails.status==undefined||projectDetails.status==null)?'':projectDetails.status">
+                            <option value="">Select Status</option>
+                            <option value="New">New</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Pipeline">Pipeline</option>
+                            <option value="On Hold">On Hold</option>
+                            <option value="In Review">In Review</option>
+                            <option value="Deployed">Deployed</option>
+                          </select>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-sm-4 p-0">
+                    <div class="mainset">
+                      <span class="labeltit">Progress Percentage</span>
+    
+                      <span *ngIf="editdata==false" class="tab-text labelcont">{{projectDetails.projectPercentage}}%
+                        <mat-progress-bar mode="determinate" value={{projectDetails.projectPercentage}}></mat-progress-bar>
+                      </span>
+                      <div *ngIf="editdata==true" class="d-flex">
+                        <input type="range" (change)="projectDetails.projectPercentage=$event.target.value" class="small-input"
+                          [value]="(projectDetails.projectPercentage==undefined||projectDetails.projectPercentage==null)?0:projectDetails.projectPercentage"
+                          step="1" min="0" max="100">
+                        <div class="py-5">
+                          {{projectDetails.projectPercentage}}%
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+      
         </div>
-      </div>
 
         <div class="d-flex w-100 project-details-setOne" style="display: none;">
           <div class="d-flex w-100 project-details-set">

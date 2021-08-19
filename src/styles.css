@@ -1745,7 +1745,7 @@ tr.mat-header-row {
   width: 100%;
   color: rgb(0 21 50 / 60%) !important;
   font-weight: 400 !important;
-  padding: 6px 10px !important;
+  padding: 4px 10px !important;
   border-radius: 4px;
 }
 
@@ -2111,6 +2111,7 @@ input.bps-home-fileds {
 
 .projecttable.table th button {
   font-size: 14px !important;
+  text-align: left;
   /* font-weight: 600; */
 }
 
@@ -2342,4 +2343,15 @@ th.mat-header-cell {
 #exportSVGtoPDF .edgeLabels g.label {
   color: #000 !important;
   font-size: 24px !important;
+}
+
+.mat-progress-bar {
+  height: 8px !important;
+  border-radius: 5px !important;
+}
+.mat-progress-bar .mat-progress-bar-buffer {
+  background: #e5e5e5;
+}
+.mat-progress-bar-fill::after {
+  background: linear-gradient(to right,red, orange, yellow, green);
 }
