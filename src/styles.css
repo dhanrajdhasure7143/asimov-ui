@@ -1386,6 +1386,7 @@ img.testplus1 {
   width: 16px;
   height: 16px;
   cursor: pointer;
+  margin:0px;
 }
 
 /* Modal popup New Styles */
@@ -1638,7 +1639,7 @@ select.form-control {
   font-size: 15px;
 } */
 .newinntalx a {
-  margin-right: 15px;
+  margin-right: 10px;
 }
 
 .editmodelprbody .ng5-slider .ng5-slider-pointer {
@@ -1705,7 +1706,7 @@ tr.mat-header-row {
 
 .module-back-button {
   border-right: 1px solid #dcdcdc;
-  margin-right: 8px;
+  margin-right: 6px;
 }
 
 .d-flex {
