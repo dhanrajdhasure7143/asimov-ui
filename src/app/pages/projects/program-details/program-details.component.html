@@ -55,7 +55,7 @@
   <div class="new-program-contents">
     <div class="program-details-div">
       <div class="row newprhcl">
-        <div class="col-md-12 p-0 program-info">
+        <div class="col-md-8 p-0 program-info">
           <div><img src="..\assets\images\Projects\project_icon.svg" alt="" ></div>
           <div class="program-data">
             <!-- <span class="h3">{{program_detials.programName |uppercase}}</span> -->
@@ -90,6 +90,20 @@
           </div>
         </div>
 
+        <div class="col-md-4 pr-0">
+          <div class="row newprjdates">
+            <div class="status-tabs">
+              <div class="">
+                <img src="../../../../assets/images/Projects/user3.svg" alt="">
+              </div>
+              <div class="status-data">
+                <span class="labeltit">Program Sponsor</span>
+                <span class="labelcont">{{program_detials.owner | userPipe : users_list}}</span>
+                <div *ngIf="program_detials.owner==undefined || program_detials.owner==null || program_detials.owner=='' " class="h6">-</div>
+              </div>
+            </div>
+          </div>
+        </div>
         <!-- <div class="col-md-4 pr-0">
           <div class="row newprjdates">
             <div class="col-md-6 p-0">
@@ -120,18 +134,15 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3 p-0">
+            <!-- <div class="col-md-3 p-0">
               <div class="programdetmain">
-                <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\document.svg" alt="" >
-                </div> -->
                   <div class="mainset">
                     <span class="labeltit">Program Sponsor</span>
                     <span class="labelcont">{{program_detials.owner | userPipe : users_list}}</span>
                     <div *ngIf="program_detials.owner==undefined || program_detials.owner==null || program_detials.owner=='' " class="h6">-</div>
                   </div>
               </div>
-            </div>
+            </div> -->
             <div class="col-sm-3 p-0">
               <div class="programdetmain">
                 <!-- <div class="process-img ">
@@ -336,14 +347,14 @@
           </span>
         </div>
         <div class="col-md-8 pr-0">
-          <span class="link-button">
-              <span class="">
-            <button type="button" class="btn btn-primary " (click)="linkproject(linkprojecttemplate)" >
-              <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus " />Link Projects
-            </button>
-          </span>
-        </span>
           <span class="pull-right">
+            <span class="link-button">
+              <span class="">
+                <button type="button" class="btn btn-primary" (click)="linkproject(linkprojecttemplate)" >
+                  <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Link Projects
+                </button>
+              </span>
+            </span>
             <span class="">
               <button type="button" class="btn btn-primary" (click)="createproject(template)" >
                 <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Create Projects
@@ -890,7 +901,7 @@
                                   </ng-select> 
           
                               <span *ngIf="addprojectsForm.get('projects').invalid && addprojectsForm.get('projects').touched"
-                                  style="color:red" class="fa fa-info-circle errspan">Projects Required*</span>
+                                  class="errspan required">Projects Required*</span>
                       </div>
                   </div>
               </form>
