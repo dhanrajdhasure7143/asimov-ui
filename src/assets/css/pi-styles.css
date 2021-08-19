@@ -309,13 +309,13 @@ height: 20px;
 }
 
 .slider_label{
-  margin-top: 25px;
+  margin-top: 5px;
   color: gray;
   font-weight: bold;
   font-size: 12px;
 }
 .Activities_slider{
-  margin-left:-8px;
+  /* margin-left:-8px; */
 }
 .vertical_slider{
   height: 110px !important;
@@ -340,14 +340,15 @@ border-radius: 10px;
 padding: 2px;
 }
 .tooltip_button{
-  position:absolute;
+  position: absolute;
+  top: 20px;
   display: inline-block;
   z-index: 1000;
-  margin-top: 20px;
+  /* margin-top: 20px; */
   /* background-color: none;
   color: blue;
   padding: 10px; */
-  height: 40px;
+  /* height: 40px; */
   cursor: pointer;
 }
 .lableHide{
@@ -369,9 +370,9 @@ width: 160px !important;
 padding: 0px 0px;
 position: absolute;
 z-index: 1;
-top: 150%;
-left:115%;
-margin-left: -60px;
+top: 43px;
+left: -2px;
+/* margin-left: -60px; */
 background-color: #fff;
 background-clip: padding-box;
 border: 1px solid #ccc;
@@ -381,20 +382,18 @@ box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
 .tooltiptext1 h5{
-color:black !important;
-text-align: center !important;
-font-weight: bold;
-padding: 10px 3px;;
-margin-top: 2px;
-margin-bottom: 2px;
+color: #000 !important;
+font-weight: 600;
+padding: 10px;;
+margin-top: 0px;
+margin-bottom: 0px;
 }
 
 .tooltip1 .tooltiptext1::after {
 content: "";
 position: absolute;
-bottom: 100%;
-left: 10%;
-margin-left: -5px;
+top: -10px;
+left: 0px;
 border-width: 5px;
 border-style: solid;
 border-color: transparent transparent gray transparent ;
@@ -533,7 +532,7 @@ transition: 0.5s;
 } */
 .tooltiptext1 hr{
   margin-top: 0px !important;
-  margin-bottom: 2px !important;
+  margin-bottom: 0px !important;
 }
 .tooltiptext1 p:hover{
 font-weight: bold;

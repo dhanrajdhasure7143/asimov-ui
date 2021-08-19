@@ -4,9 +4,18 @@
 <!-- <button class="btn btn-warning" (click)="searchNode = null; onSearch()" *ngIf="searchNode">Clear Search</button> -->
 </div>
 <div class="zoom_btns">
-  <a class="btn btn1 zoom btn-primary" id="zoom_in"><img src="../../../../assets/images/PI/zoom-in.svg" alt="" class="testplus1"></a>
-  <a class="btn btn1 zoom-out btn-primary" id="zoom_out"><img src="../../../../assets/images/PI/zoom-out.svg" alt="" class="testplus1"></a>
-  <a class="btn btn1 zoom-init btn-primary" id="zoom_reset"><img src="../../../../assets/images/PI/Fit to screen.svg" alt="" class="testplus1"></a>
+  <a class="btn btn1 zoom tsttooltipbtn " id="zoom_in">
+    <img src="../../../../assets/images/PI/zoom-in.svg" alt="">
+    <span class="testtooltip">Zoom in</span>
+  </a>
+  <a class="btn btn1 zoom-out tsttooltipbtn" id="zoom_out">
+    <img src="../../../../assets/images/PI/zoom-out.svg" alt="">
+    <span class="testtooltip">Zoom out</span>
+  </a>
+  <a class="btn btn1 zoom-init tsttooltipbtn" id="zoom_reset">
+    <img src="../../../../assets/images/PI/Fit to screen.svg" alt="">
+    <span class="testtooltip">Zoom Reset</span>
+  </a>
 </div>
 
 <div *ngIf="isnoNode" class="nonode">No Nodes found</div>

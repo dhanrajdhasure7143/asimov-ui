@@ -14,9 +14,16 @@
     margin-top: 10px;
     padding: 6px 8px;
 }
+.zoom_btns a:hover img {
+    filter: brightness(2.5);
+}
+.zoom_btns a img {
+    width: 18px;
+    height: 18px;
+}
 .zoom_btns a:hover {
-    background-color: #001c47 !important;
-    border: 1px solid #001c47 !important;
+    background-color: #00a0e3 !important;
+    border: 1px solid #00a0e3 !important;
 }
 .search-input{
     padding-right: 10px !important;
@@ -28,8 +35,9 @@
     z-index: 1;
 }
 .search-node span{
-    margin-left: 90%;
     position: absolute;
+    top: 4px;
+    right: 10px;
     z-index: 2;
     font-size: 20px;
     font-weight: bold;
@@ -44,4 +52,21 @@
     z-index: 100;
     margin-top: 200px;
     margin-left: 48%;
+}
+.tsttooltipbtn:hover span.testtooltip {
+    display: block;
+}
+span.testtooltip {
+    position: absolute;
+    top: 15px;
+    left: 40px;
+    background-color: #001c47;
+    color: #fff;
+    width: -webkit-max-content;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 3px 10px;
+    margin-top: -10px;
+    border-radius: 4px;
+    display: none;
 }

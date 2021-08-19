@@ -127,23 +127,19 @@
     background-color: #f4f4f4;
     color: black !important;
     font-weight: 600;
-    font-size: 12px;
-    padding: 5px 0px;
+    font-size: 13px;
+    padding: 5px 10px;
   }
   .form-check-input{
-    padding: 10px 10px;
+    margin-top: 3px;
+    margin-right: 4px;
   }
-  .edgemetrics_spinner span input{
-    margin-left: 8px;
-    margin-right: 7px;
-  }
+  
   .isactive{
     color: white !important;
     background-color: #0162cf
   }
-  .edgemetrics_spinner span{
-    padding: 10px 0px;
-  }
+  
   .activevaraint{
     color: #ffffff;
     background-color: #00a0e3;
@@ -176,12 +172,11 @@
     transition: margin-right .5s;
   }
   .reset_btn{
-    margin-left: 70%;
+    margin-left: 105px;
     border: none !important;
     background: none;
-    height: 20px;
     color: #0162cf;
-    padding: 0px;
+    padding-bottom: 5px;
   }
   #linkname{
     font-size: 14px;
@@ -470,6 +465,8 @@ button.closebtn:hover {
 
 .edgemetrics_spinner span{
   font-size: 13px !important;
+  margin-top: 6px !important;
+  display: flex;
 }
 .variants_slider h3 {
   margin: 0px !important;
@@ -501,4 +498,18 @@ img.hover-img {
 }
 .closebtn img {
   vertical-align: top !important;
+}
+.tooltip1 {
+  padding: 6px 8px;
+  background-color: #00a0e3;
+  border: 1px solid #00a0e3;
+  border-radius: 4px;
+}
+.tooltip1:hover {
+  background-color: #001c47 !important;
+  border: 1px solid #001c47 !important;
+}
+.caret {
+  margin-top: 6px;
+  float: right;
 }
