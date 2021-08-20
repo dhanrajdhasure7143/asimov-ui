@@ -314,8 +314,8 @@ height: 20px;
   font-weight: bold;
   font-size: 12px;
 }
-.Activities_slider{
-  /* margin-left:-8px; */
+.Activities_slider, .Paths_slider {
+  margin-left:-18px;
 }
 .vertical_slider{
   height: 110px !important;
@@ -377,13 +377,13 @@ background-color: #fff;
 background-clip: padding-box;
 border: 1px solid #ccc;
 border: 1px solid rgba(0,0,0,.15);
-border-radius: 4px;
+/* border-radius: 4px; */
 box-shadow: 0 6px 12px rgba(0,0,0,.175);
 }
 
 .tooltiptext1 h5{
 color: #000 !important;
-font-weight: 600;
+font-weight: normal;
 padding: 10px;;
 margin-top: 0px;
 margin-bottom: 0px;
@@ -392,11 +392,11 @@ margin-bottom: 0px;
 .tooltip1 .tooltiptext1::after {
 content: "";
 position: absolute;
-top: -10px;
-left: 0px;
-border-width: 5px;
+top: -13px;
+left: -1px;
+border-width: 6px;
 border-style: solid;
-border-color: transparent transparent gray transparent ;
+border-color: transparent transparent #ccc transparent ;
 }
 .play_label,.download_label{
   font-size: 11px;

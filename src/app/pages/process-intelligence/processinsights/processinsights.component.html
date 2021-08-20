@@ -1,27 +1,31 @@
 <div class=''>
-<div class="container">
+<div class="container-fluid new-PI-layout">
     <div class="">
     <div class="row">
-        <div class='col-md-12 boxes'>
+        <div class='col-md-12 boxes p-0'>
                 <div class="col-sm-3">
-                    <div class="col-sm-12 divbox divbox0">Total Time Spent
-                        <div>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}}</div>
+                    <div class="col-sm-12 divbox divbox0">
+                        <h4>Total Time Spent</h4>
+                        <label>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}}</label>
                     </div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="col-sm-12 divbox divbox1"> Potential Time Savings
-                            <div>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}}</div>
+                        <div class="col-sm-12 divbox divbox1">
+                            <h4>Potential Time Savings</h4>
+                            <label>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}}</label>
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="col-sm-12 divbox divbox2">Total Human Cost 
-                             <div>{{(totalMedianDuration && input1 && input2) ? (getHumanTotalCost(getHours(totalMedianDuration)*this.input1)| currency) : 0}}</div>
+                        <div class="col-sm-12 divbox divbox2">
+                            <h4>Total Human Cost</h4> 
+                             <label>{{(totalMedianDuration && input1 && input2) ? (getHumanTotalCost(getHours(totalMedianDuration)*this.input1)| currency) : 0}}</label>
                             <!-- <div>{{getHumanTotalCost(getHours(totalMedianDuration) * this.input1)}}</div> -->
                         </div>
                     </div>
                     <div class="col-sm-3">
-                        <div class="col-sm-12 divbox divbox3"> Potential Savings
-                            <div>{{calculateSavings(this.totalMedianDuration) | currency}}</div>
+                        <div class="col-sm-12 divbox divbox3">
+                            <h4>Potential Savings</h4>
+                            <label>{{calculateSavings(this.totalMedianDuration) | currency}}</label>
                         </div>
                     </div>
         </div>
@@ -49,57 +53,58 @@
                 
                       <div  class="d-inline-block">
                         <!--ngbDropdown ngbDropdownToggle -->
-                        <button class="btn btn-primary eiap-btn" id="dropdownForm1" (click)="openHersOverLay()">Time Feed</button>
-                        <div *ngIf="isAddHrs" aria-labelledby="dropdownForm1" id="dropdownForm2">
-                         
+                        <button class="tsttooltipbtn" id="dropdownForm1" (click)="openHersOverLay()">
+                            <img src="../../../assets/images/PI/timefeed.svg">
+                            <span class="testtooltip">Time Feed</span>
+                        </button>
+                        <div *ngIf="isAddHrs" aria-labelledby="dropdownForm1" id="dropdownForm2">                         
                           <form class="row">
-                            <div class="form-group col-sm-6">
-                                <label for="exampleDropdownFormEmail1">Working From</label>
-                                <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours.formDay">
-                                    <option value="" selected disabled>Select</option>
-                                    <option value="Sun">Sunday</option>
-                                    <option value="Mon">Monday</option>
-                                    <option value="Tue">Tuesday</option>
-                                    <option value="Wed">Wednesday</option>
-                                    <option value="Thu">Thursday</option>
-                                    <option value="Fri">Friday</option>
-                                    <option value="Sat">Saturday</option>
-                                </select>
-                              </div>
-                              <div class="form-group col-sm-6">
-                                <label for="">Working To</label>
-                                <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours.toDay">
-                                    <option value="" selected disabled>Select</option>
-                                    <option value="Sun">Sunday</option>
-                                    <option value="Mon">Monday</option>
-                                    <option value="Tue">Tuesday</option>
-                                    <option value="Wed">Wednesday</option>
-                                    <option value="Thu">Thursday</option>
-                                    <option value="Fri">Friday</option>
-                                    <option value="Sat">Saturday</option>
-                                </select>
-                              </div>
-                              <hr>
-                              <p class="p_warning">*Please select business start time and end time</p>
-                            <div class="col-sm-6">
-                                <label for="">Shift Start Time</label>
-                                <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
+                            <div class="timefeed-header">
+                                <span class="close">x</span>
+                                <h3>Time Feed</h3>
+                                <div class="col-sm-6 pl-0">
+                                    <label class="label-control" for="exampleDropdownFormEmail1">Working From</label>
+                                    <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours.formDay">
+                                        <option value="" selected disabled>Select</option>
+                                        <option value="Sun">Sunday</option>
+                                        <option value="Mon">Monday</option>
+                                        <option value="Tue">Tuesday</option>
+                                        <option value="Wed">Wednesday</option>
+                                        <option value="Thu">Thursday</option>
+                                        <option value="Fri">Friday</option>
+                                        <option value="Sat">Saturday</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-6 pr-0">
+                                    <label class="label-control" for="">Working To</label>
+                                    <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours.toDay">
+                                        <option value="" selected disabled>Select</option>
+                                        <option value="Sun">Sunday</option>
+                                        <option value="Mon">Monday</option>
+                                        <option value="Tue">Tuesday</option>
+                                        <option value="Wed">Wednesday</option>
+                                        <option value="Thu">Thursday</option>
+                                        <option value="Fri">Friday</option>
+                                        <option value="Sat">Saturday</option>
+                                    </select>
+                                </div>
+                                <span class="p_warning">*Please select business start time and end time</span>
                             </div>
-
-                            <div class="col-sm-6">
-                                <label for="">Shift End Time</label>
-                                <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
+                            <div class="timefeed-body">
+                                <div class="col-sm-6 pl-0">
+                                    <label class="label-control" for="">Shift Start Time</label>
+                                    <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
+                                </div>
+                                <div class="col-sm-6 pr-0">
+                                    <label class="label-control" for="">Shift End Time</label>
+                                    <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
+                                </div>
+                                <!-- <div class="col-sm-12 dropdown-divider"></div> -->
                             </div>
-                            <div class="col-sm-12 dropdown-divider"></div>
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-3">
-                                <button type="submit" class="btn btn-warning eiap-btn" (click)="resetWorkingHours()">Reset</button>
-                            </div>
-                        <div class="col-sm-3">
-                            <button type="submit" class="btn btn-primary eiap-btn" (click)="addWorkingHours()">Apply</button>
-                        </div>
-                        <div class="col-sm-3">
-                            <button type="submit" class="btn btn-secondary btn-cancel" (click)="canceladdHrs()">Cancel</button>
+                            <div class="timefeed-footer">
+                                <button type="submit" class="btn btn-default" (click)="resetWorkingHours()">Reset</button>
+                                <button type="submit" class="btn btn-default" (click)="canceladdHrs()">Cancel</button>
+                                <button type="submit" class="btn btn-primary" (click)="addWorkingHours()">Apply</button>
                         </div>
                       </form>
                           

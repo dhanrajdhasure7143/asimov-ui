@@ -57,7 +57,7 @@ span.testtooltip:before {
     margin-left: 4px;
     border-width: 8px;
     border-style: solid;
-    border-color: transparent transparent gray transparent;
+    border-color: transparent transparent #ccc transparent;
   }
   
   
