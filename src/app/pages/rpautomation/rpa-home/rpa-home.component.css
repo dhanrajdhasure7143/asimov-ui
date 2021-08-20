@@ -12,7 +12,7 @@
         height:25vh; */
   display: inline-block;
   margin: 0px;
-  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .rpa-home-block:hover {
@@ -146,6 +146,7 @@ tr.mat-row {
   font-size: 14px;
   color: white;
   margin: 0px !important;
+  padding: 6px 12px !important;
 }
 
 .title-font {
@@ -287,26 +288,25 @@ th {
 .header-btn1 {
   /* top: 10px; */
   top: 21px;
-    right: 25px;
+    right: 26px;
 }
 
 
 label.main-subtitle {
-  font-size: 18px;
-  font-weight: 400;
-  display: inline-block;
-  margin: 0px 10px 0px 0px;
+  font-size: 22px;
+  font-weight: 700;
+  color: #00a1e3;
+  display: block;
 }
 
 label.subtitle-tag {
   font-weight: 400;
-  color: #00a1e3;
   font-size: 14px;
-  margin: 0px;
+  margin-bottom: 10px;
 }
 
 .main-subheader {
-  padding: 15px 6px;
+  padding: 15px 6px 0px;
   /* border-bottom: 2px solid #ddd; */
   margin: 0px 0px 15px;
   /* box-shadow: 0px 1px 6px rgb(0 0 0 / 10%); */
@@ -314,14 +314,14 @@ label.subtitle-tag {
   border: 1px solid #e1e7ec;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
-
+  background-color: #edf9fb;
 }
 
 .main-subheaderBtns {
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   align-items: center;
 }
 
@@ -390,4 +390,18 @@ input.form-control.custom-file-input {
 }
 .mat-expansion-panel:hover {
   background-color: #fdf6d4;
+}
+
+.main-subheaderTitle {
+  margin-left: 15px;
+  margin-bottom: 18px;
+}
+button#create_Configuration {
+  background-color: #fff !important;
+  color: #00a1e3;
+  border: 1px solid #e5e5e5 !important;
+}
+button#create_Configuration:hover {
+  background: #001c47 !important;
+  color: #fff !important;
 }
