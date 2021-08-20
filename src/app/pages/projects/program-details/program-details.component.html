@@ -118,23 +118,26 @@
         </div> -->
       </div>
       <div class="row">
-        <div class="col-sm-12 p-0 project-details-set" *ngIf="program_detials!= undefined">
-          <div class="row">
-  
-            <div class="col-sm-3 p-0">
-              <div class="programdetmain">
-                <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\document.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                  <span class="labeltit">Program ID</span>
-                    <span class="labelcont">{{program_detials.id}}</span>
-                    <div *ngIf="program_detials.id==undefined || program_detials.id==null || program_detials.id=='' " class="h6">-</div>
-                  
-                </div>
-              </div>
+        <div class="col-sm-6 p-0 project-details-set programinfo" *ngIf="program_detials!= undefined">
+            <div class="det-innerheader">
+                <span class="module-sub-header-title">PROGRAM INFO</span>
             </div>
-            <!-- <div class="col-md-3 p-0">
+            <div class="row">
+    
+                <div class="col-sm-4 p-0">
+                    <div class="programdetmain">
+                      <!-- <div class="process-img ">
+                        <img src="..\assets\images\Projects\document.svg" alt="" >
+                      </div> -->
+                      <div class="mainset">
+                        <span class="labeltit">Program ID</span>
+                          <span class="labelcont">{{program_detials.id}}</span>
+                          <div *ngIf="program_detials.id==undefined || program_detials.id==null || program_detials.id=='' " class="h6">-</div>
+    
+                      </div>
+                    </div>
+                </div>
+                <!-- <div class="col-md-3 p-0">
               <div class="programdetmain">
                   <div class="mainset">
                     <span class="labeltit">Program Sponsor</span>
@@ -143,199 +146,206 @@
                   </div>
               </div>
             </div> -->
-            <div class="col-sm-3 p-0">
-              <div class="programdetmain">
-                <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                  <span class="labeltit">Projects</span>
-                  <span class="labelcont">{{linked_projects.length}}</span>
-                </div>
-              </div>
-            </div>
-  
-            <div class="col-sm-3 p-0">
-              <div class="programdetmain">
-                <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                  <span class="labeltit">Start Date</span>
-                  <span class="labelcont">{{program_detials.createdTimestamp| date}}</span>
-                </div>
-              </div>
-            </div>
-    
-            <div class="col-sm-3 p-0">
-  
-              <div class="programdetmain">
-                <!-- <div class="process-img">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                  <span class="labeltit">Value Chain</span>
-                  <div >
-                    <span
-                      *ngIf="program_detials.programValueChain != null && program_detials.programValueChain != undefined && program_detials.programValueChain !='' "
-                      class="labelcont">{{program_detials.programValueChain }}</span>
-                    <span
-                      *ngIf="program_detials.programValueChain == null || program_detials.programValueChain == undefined || program_detials.programValueChain =='' "
-                      class="labelcont">-</span>
-                  </div>
-    
-                  <!-- <span *ngIf="editdata==true" class="tab-text labelcont">
-                    <select class="small-input" (change)="program_detials.programValueChain=$event.target.value"
-                      [value]="(program_detials.programValueChain==undefined||program_detials.programValueChain==null)?'':program_detials.programValueChain">
-                      
-                      <option value="Invoice Managment">Invoice Managment</option>
-                      <option value="Acme Managment">Acme Managment</option>
-                      <option value="E-Commerce">E-Commerce</option>
-                    </select>
-                  </span> -->
-                </div>
-              </div>
-  
-            </div>
-            <div class="col-sm-3 p-0">
-  
-              <div class="programdetmain">
-                <!-- <div class="process-img">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                  <span class="labeltit">Program Health</span>
-                  <!-- <div class="h6">{{program_detials.programHealth}}</div>
-                  <div *ngIf="program_detials.programHealth==undefined || program_detials.programHealth==null || program_detials.programHealth=='' " class="h6">-</div>
-                  -->
-    
-                  <div *ngIf="editdata==false">
-                    <span
-                      *ngIf="program_detials.programHealth != null && program_detials.programHealth != undefined && program_detials.programHealth !='' "
-                      class="labelcont">{{program_detials.programHealth }}</span>
-                    <span
-                      *ngIf="program_detials.programHealth == null || program_detials.programHealth == undefined || program_detials.programHealth =='' "
-                      class="labelcont">-</span>
-    
-                  </div>
-    
-                  <span *ngIf="editdata==true" class="tab-text labelcont">
-                    <select class="small-input" (change)="program_detials.programHealth=$event.target.value"
-                      [value]="(program_detials.programHealth==undefined||program_detials.programHealth==null)?'':program_detials.programHealth">
-                    <!-- <option value="">Select Program Health</option> -->
-                    <option value="Good">Good</option>
-                    <option value="Need Attention"><span class="status-ember"></span>Need Attention</option>
-                    <option value="Risk"> <span class="status-risk"></span>Risk</option>
-                    </select>
-                  </span>
-                </div>
-              </div>
-  
-            </div>
-  
-            <div class="col-sm-3 p-0">
-  
-              <div class="programdetmain">
-                              <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                  <span class="labeltit">Program Purpose</span>
-  
-                  <div *ngIf="editdata==false">
-                    <span class="labelcont">{{program_detials.purpose}}</span>
-                    <span
-                      *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
-                      class="labelcont">-</span>
-                  </div>
-                  <div *ngIf="editdata==true">
-                    <input type="text" (change)="program_detials.programPurpose=$event.target.value"
-                      [value]="(program_detials.programPurpose==undefined||program_detials.programPurpose==null)?'':program_detials.programPurpose"
-                      class="small-input" placeholder="Enter Program Purpose">
-                  </div>
-                  </div>
-              </div>
-  
-            </div>
-  
-            <div class="col-sm-3 p-0">
-  
-              <div class="programdetmain">
-                <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                    <span class="labeltit">Program Priority</span>
-      
-                    <div *ngIf="editdata==false">
-                      <span class="tab-text"
-                        *ngIf="program_detials.priority==null || program_detials.priority==undefined">-</span>
-                      <span class="labelcont">{{program_detials.priority}}</span>
-                    </div>
-                    <div *ngIf="editdata==true">
-                      <select class="small-input" (change)="program_detials.priority=$event.target.value"
-                        [value]="(program_detials.priority==undefined||program_detials.priority==null)?'':program_detials.priority">
-                        <!-- <option value="">Select Program Priority</option> -->
-                        <option value="High">High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
-                      </select>
+                <div class="col-sm-4 p-0">
+                    <div class="programdetmain">
+                      <!-- <div class="process-img ">
+                        <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                      </div> -->
+                      <div class="mainset">
+                        <span class="labeltit">Projects</span>
+                        <span class="labelcont">{{linked_projects.length}}</span>
+                      </div>
                     </div>
                 </div>
-              </div>  
-            </div>
-
-            <div class="col-sm-3 p-0">
-  
-              <div class="programdetmain">
-                <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                    <span class="labeltit">Effort Spent</span>
-                    <div *ngIf="editdata==false">
-                      <span class="tab-text"
-                        *ngIf="program_detials.effortsSpent==null || program_detials.effortsSpent==undefined">-</span>
-                      <span class="labelcont">{{program_detials.effortsSpent}}</span>
     
-                      <!-- <input class="small-input" type="text"  [value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled> -->
-                    </div>
-                    <div *ngIf="editdata==true">
-                      <input type="text" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
-                        [value]="(program_detials.effortsSpent==undefined||program_detials.effortsSpent==null)?'':program_detials.effortsSpent"
-                        class="small-input" placeholder="Enter Efforts Spent">
+                <div class="col-sm-4 p-0">
+                    <div class="programdetmain">
+                      <!-- <div class="process-img ">
+                        <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                      </div> -->
+                      <div class="mainset">
+                        <span class="labeltit">Start Date</span>
+                        <span class="labelcont">{{program_detials.createdTimestamp| date}}</span>
+                      </div>
                     </div>
                 </div>
-              </div>
-  
+    
+                <div class="col-sm-4 p-0">
+    
+                    <div class="programdetmain">
+                      <!-- <div class="process-img">
+                        <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                      </div> -->
+                      <div class="mainset">
+                        <span class="labeltit">Value Chain</span>
+                        <div >
+                          <span
+                            *ngIf="program_detials.programValueChain != null && program_detials.programValueChain != undefined && program_detials.programValueChain !='' "
+                            class="labelcont">{{program_detials.programValueChain }}</span>
+                          <span
+                            *ngIf="program_detials.programValueChain == null || program_detials.programValueChain == undefined || program_detials.programValueChain =='' "
+                            class="labelcont">-</span>
+                        </div>
+                    
+                        <!-- <span *ngIf="editdata==true" class="tab-text labelcont">
+                          <select class="small-input" (change)="program_detials.programValueChain=$event.target.value"
+                            [value]="(program_detials.programValueChain==undefined||program_detials.programValueChain==null)?'':program_detials.programValueChain">
+    
+                            <option value="Invoice Managment">Invoice Managment</option>
+                            <option value="Acme Managment">Acme Managment</option>
+                            <option value="E-Commerce">E-Commerce</option>
+                          </select>
+                        </span> -->
+                      </div>
+                    </div>
+    
+                </div>
             </div>
-
-            <div class="col-sm-3 p-0">
-              <div class="programdetmain">
-                <!-- <div class="process-img ">
-                  <img src="..\assets\images\Projects\process_icon.svg" alt="" >
-                </div> -->
-                <div class="mainset">
-                  <span class="labeltit">Status</span>
-                  <div *ngIf="editdata==false" class="newstatus">{{program_detials.status}}</div>
-            
-                  <div *ngIf="editdata==true" class="">
-                    <select class="small-input" (change)="program_detials.status=$event.target.value"
-                    [value]="(program_detials.status==undefined||program_detials.status==null)?'':program_detials.status">
-                      <option value="">Select Status</option>
-                      <option value="New">New</option>
-                      <option value="In Progress">In Progress</option>
-                      <option value="On Hold">On Hold</option>
-                      <option value="In Review">In Review</option>
-                      <option value="Deployed">Deployed</option>
-                      <option value="Pipeline">Pipeline</option>
-                    </select>
+        </div>
+        <div class="col-sm-6 p-0 project-details-set progressdet" *ngIf="program_detials!= undefined">
+            <div class="det-innerheader">
+                <span class="module-sub-header-title">PROGRESS DETAILS</span>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 p-0">
+    
+                  <div class="programdetmain">
+                    <!-- <div class="process-img">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div> -->
+                    <div class="mainset">
+                      <span class="labeltit">Program Health</span>
+                      <!-- <div class="h6">{{program_detials.programHealth}}</div>
+                      <div *ngIf="program_detials.programHealth==undefined || program_detials.programHealth==null || program_detials.programHealth=='' " class="h6">-</div>
+                      -->
+    
+                      <div *ngIf="editdata==false">
+                        <span
+                          *ngIf="program_detials.programHealth != null && program_detials.programHealth != undefined && program_detials.programHealth !='' "
+                          class="labelcont">{{program_detials.programHealth }}</span>
+                        <span
+                          *ngIf="program_detials.programHealth == null || program_detials.programHealth == undefined || program_detials.programHealth =='' "
+                          class="labelcont">-</span>
+    
+                      </div>
+    
+                      <span *ngIf="editdata==true" class="tab-text labelcont">
+                        <select class="small-input" (change)="program_detials.programHealth=$event.target.value"
+                          [value]="(program_detials.programHealth==undefined||program_detials.programHealth==null)?'':program_detials.programHealth">
+                        <!-- <option value="">Select Program Health</option> -->
+                        <option value="Good">Good</option>
+                        <option value="Need Attention"><span class="status-ember"></span>Need Attention</option>
+                        <option value="Risk"> <span class="status-risk"></span>Risk</option>
+                        </select>
+                      </span>
+                    </div>
+                  </div>
+    
+                </div>
+    
+                <div class="col-sm-4 p-0">
+    
+                  <div class="programdetmain">
+                                  <!-- <div class="process-img ">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div> -->
+                    <div class="mainset">
+                      <span class="labeltit">Program Purpose</span>
+    
+                      <div *ngIf="editdata==false">
+                        <span class="labelcont">{{program_detials.purpose}}</span>
+                        <span
+                          *ngIf="program_detials.purpose == null || program_detials.purpose == undefined || program_detials.purpose =='' "
+                          class="labelcont">-</span>
+                      </div>
+                      <div *ngIf="editdata==true">
+                        <input type="text" (change)="program_detials.programPurpose=$event.target.value"
+                          [value]="(program_detials.programPurpose==undefined||program_detials.programPurpose==null)?'':program_detials.programPurpose"
+                          class="small-input" placeholder="Enter Program Purpose">
+                      </div>
+                      </div>
+                  </div>
+    
+                </div>
+    
+                <div class="col-sm-4 p-0">
+    
+                  <div class="programdetmain">
+                    <!-- <div class="process-img ">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div> -->
+                    <div class="mainset">
+                        <span class="labeltit">Program Priority</span>
+                    
+                        <div *ngIf="editdata==false">
+                          <span class="tab-text"
+                            *ngIf="program_detials.priority==null || program_detials.priority==undefined">-</span>
+                          <span class="labelcont">{{program_detials.priority}}</span>
+                        </div>
+                        <div *ngIf="editdata==true">
+                          <select class="small-input" (change)="program_detials.priority=$event.target.value"
+                            [value]="(program_detials.priority==undefined||program_detials.priority==null)?'':program_detials.priority">
+                            <!-- <option value="">Select Program Priority</option> -->
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                          </select>
+                        </div>
+                    </div>
+                  </div>  
+                </div>
+    
+                <div class="col-sm-4 p-0">
+                
+                  <div class="programdetmain">
+                    <!-- <div class="process-img ">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div> -->
+                    <div class="mainset">
+                        <span class="labeltit">Effort Spent</span>
+                        <div *ngIf="editdata==false">
+                          <span class="tab-text"
+                            *ngIf="program_detials.effortsSpent==null || program_detials.effortsSpent==undefined">-</span>
+                          <span class="labelcont">{{program_detials.effortsSpent}}</span>
+                        
+                          <!-- <input class="small-input" type="text"  [value]="program_detials.effortsSpent==undefined?'-':program_detials.effortsSpent" disabled> -->
+                        </div>
+                        <div *ngIf="editdata==true">
+                          <input type="text" (change)="program_detials.effortsSpent=$event.target.value" (keydown)="inputNumberOnly($event)" maxlength="6"
+                            [value]="(program_detials.effortsSpent==undefined||program_detials.effortsSpent==null)?'':program_detials.effortsSpent"
+                            class="small-input" placeholder="Enter Efforts Spent">
+                        </div>
+                    </div>
+                  </div>
+                
+                </div>
+    
+                <div class="col-sm-4 p-0">
+                  <div class="programdetmain">
+                    <!-- <div class="process-img ">
+                      <img src="..\assets\images\Projects\process_icon.svg" alt="" >
+                    </div> -->
+                    <div class="mainset">
+                      <span class="labeltit">Status</span>
+                      <div *ngIf="editdata==false" class="newstatus">{{program_detials.status}}</div>
+                    
+                      <div *ngIf="editdata==true" class="">
+                        <select class="small-input" (change)="program_detials.status=$event.target.value"
+                        [value]="(program_detials.status==undefined||program_detials.status==null)?'':program_detials.status">
+                          <option value="">Select Status</option>
+                          <option value="New">New</option>
+                          <option value="In Progress">In Progress</option>
+                          <option value="On Hold">On Hold</option>
+                          <option value="In Review">In Review</option>
+                          <option value="Deployed">Deployed</option>
+                          <option value="Pipeline">Pipeline</option>
+                        </select>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
            
-          </div>
+            </div>
         </div>
       </div>
     </div>

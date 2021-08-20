@@ -11,28 +11,30 @@ table {
 }
 
 .notification_alert_title {
-    color:black;
+    /* color:black;
     font-weight: bold;
     height: 11px;
     margin-left: 213px;
     line-height: 6px;
-    font-size: 22px;
+    font-size: 22px; */
 }
 .notification_cell {
-    width: 43%;
+    /* width: 43%;
    padding-left: 100px;
-   padding-bottom: 25px;
+   padding-bottom: 25px; */
   }
  .notificatnmsgs{
     margin-top: 5px;
  }
- .isRead
+ /* .isRead
  {
     color: grey;
-}
+} */
+
 .deletefrm{
-    margin-top: 5px;
+    /* margin-top: 5px; */
     color: white;
+    padding: 0px;
 }
 .deletconfm h5{
     font-size: 13px;
@@ -47,8 +49,10 @@ table {
       line-height: 20px;
           height: 20px;
           font-size: 10px;
-          margin-left: 25px;
-          border-radius: 10px;
+          /* margin-left: 25px;
+          border-radius: 10px; */
+          margin-right: 10px;
+    border-radius: 3px;
           color: black;
     }
     .cross_delet{
@@ -57,11 +61,17 @@ table {
         cursor: pointer;
     }
     #myid{
-        width:170px;
+        /* width:170px;
         height:120px;
         border:1px solid gray;
        display: none;
-       background-color: gray;
+       background-color: gray; */
+       width: 255px;
+    height: 120px;
+    display: none;
+    background-color: #bbb9b9;
+    margin-left: 10px;
+    padding: 10px;
         /* // cursor:none; */
     }
     .isdelet{
@@ -77,7 +87,10 @@ table {
      }
      .notificationpagination
      {
-         margin-left: 52%; 
+         /* margin-left: 52%;  */
+         position: fixed;
+         bottom: 0px;
+         right: 15px;
      }
      .notificatonmessage
      {
@@ -95,27 +108,27 @@ table {
          }
     .notificationmessage
     {
-        padding-top: 38px;
+        /* padding-top: 38px;
         font-weight: bold;
         font-size: 15px;
         color: black;
-        padding-left: 101px;
+        padding-left: 101px; */
     }
     .notificationdate
      {
-      padding-top: 38px;
+      /* padding-top: 38px;
        font-weight: bold;
       color: black;
       font-size: 15px;
-      padding-left: 141px;
+      padding-left: 141px; */
      }
     .notificationaction
     {
-        padding-top: 38px;
+        /* padding-top: 38px;
         font-weight: bold;
         color: black;
         font-size: 15px;
-        padding-right: 119px;
+        padding-right: 119px; */
 
     }
 .table_cell {
@@ -229,6 +242,7 @@ select:focus {
     font-size: 28px;
     font-weight: bold;
     margin-right: 10px;
+    margin-top: -30px;
 }
 
 .close_modal {
@@ -265,8 +279,8 @@ select:focus {
 
 .tab {
     overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
+    /* border: 1px solid #ccc;
+    background-color: #f1f1f1; */
 }
 
 
@@ -337,11 +351,12 @@ select:focus {
 }
 
 .notificatnmsgs {
-    margin-bottom: 82px !important;
     overflow: auto !important;
    height: 230px;
+   padding: 0px 15px;
+    /* margin-bottom: 82px !important;    
     display: block;
-  margin-left: 129px;
+  margin-left: 129px; */
 }
 
 button.tablinks.active {
@@ -391,8 +406,11 @@ button.tablinks.active {
 }
 
 .notification-alignments1{
-    padding: 10px 0px 0px 0px;
+    padding: 10px 15px;
 }
 .notification-alignments1 .close{
-    margin-top: -22px;
+    /* margin-top: -22px; */
+}
+td.notification_action_cell {
+    display: flex;
 }
