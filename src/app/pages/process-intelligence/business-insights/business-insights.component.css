@@ -153,3 +153,10 @@ span.smalfon {
 .chartinnsec g[aria-labelledby*="-title"] {
     display: none;
 }
+
+.new-PI-layout {
+    /* overflow: hidden auto;
+    height: calc(100% - 50px);
+    position: relative; */
+    padding: 15px 10px 10px;
+}
