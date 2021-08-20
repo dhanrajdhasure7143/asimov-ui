@@ -4,7 +4,10 @@
 <div class="header_addon header-btn1">
 
   
-  <button type="button" class="btn btn-primary btn-md"  style="float:right;" (click)="openModal(template)">Import</button>
+  <button type="button" class="btn btn-primary import-btn"  style="float:right;" (click)="openModal(template)">
+    <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" >
+    Import
+  </button>
 
   <ng-template #template>
     <div class="modal-header modelprhead">
@@ -59,20 +62,21 @@
 <div class="row">
 
   <div class="main-subheader">
-
+    <img src="../../../../assets/images/RPA/Automate-task.png" />
     <div class="main-subheaderTitle">
-      <label class="main-subtitle">Automate the Tasks</label>
-      <label class="subtitle-tag">(Select the options to Create or Configure the task)</label>
+      
+      <label class="main-subtitle">Let's Automate the Tasks</label>
+      <label class="subtitle-tag">Select the options to Create or Configure the task</label>
+    
+      <div class="main-subheaderBtns">
+          <div class="rpa-home-block" id="createbot-Home" *ngIf="this.isButtonVisible || enablecreatebot">
+              <button class="btn btn-primary rpa-home-btn-title" id="create_newbot"  (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+          </div>
+          <div class="rpa-home-block" id="Configuration_Home" *ngIf="this.isButtonVisible || enableConfiguration">
+              <button class="btn btn-primary rpa-home-btn-title" id="create_Configuration" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
+          </div>
+      </div>
     </div>
-    <div class="main-subheaderBtns">
-        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.isButtonVisible || enablecreatebot">
-            <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot"  (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
-        </div>
-        <div class="rpa-home-block" id="Configuration_Home" *ngIf="this.isButtonVisible || enableConfiguration">
-            <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
-        </div>
-    </div>
-
       <div class="rpa-home" style="display:none">
         <!--<div class="rpa-home-block" id="createbot-Home">
             <button type="button" (click)="createoverlay()" aria-hidden="true" placement="bottom">
