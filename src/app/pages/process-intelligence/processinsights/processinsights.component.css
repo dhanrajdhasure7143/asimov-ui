@@ -64,18 +64,17 @@ thead{
   }
 input:disabled{
     cursor: no-drop;
-    background-color: rgb(192, 181, 181) !important;
+    border: 1px solid #ccc;
+    padding: 3px 6px;
   }
 .amountinputs input{
     width: 80px !important;
     /* border: 1px solid #f8f8f8; */
-    border-radius: 5px;
+    border-radius: 2px;
     margin-bottom: 5px;
     /* text-align: center !important; */
     margin-left: 6px;
-    height: 20px !important;
     padding-right: 10px;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
 }
 .amountinputs i{
     cursor: pointer;
@@ -198,7 +197,7 @@ input:disabled{
   }
   .hedline1{
       background-color: #fff;
-      margin-top: 35px;
+      margin-top: 30px;
   }
   .hedline2{
     background-color: #fff;
@@ -267,16 +266,11 @@ background: rgb(241, 240, 240);
   margin-top: 10px;
 }
 .box_shadw{
-  border: 1px solid #f8f8f8;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  border: 1px solid #e5e5e5;
   background: #fff;
 }
 .box_shadw1{
-  border: 1px solid #f8f8f8;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  margin-bottom: 10px;
-  margin-top: 20px; 
+  margin-top: -20px; 
 }
 .box_shadw2{
   border: 1px solid #f8f8f8;
@@ -284,14 +278,7 @@ background: rgb(241, 240, 240);
   background: #fff;
 }
 .table-box{
-  padding: 10px;
-  overflow-y: auto;
-    height: 272px;
-}
-.table-box1{
-  padding: 10px;
-  overflow-y: auto;
-    height: 272px;
+  margin-top: 0px;
 }
 .pi-chart{
   margin-bottom: 10px;
@@ -354,14 +341,14 @@ padding: 10px;
   fill: #333333;
 }
 
-.l_title2 {
+/* .l_title2 {
   position: relative;
   top: 11px;
   left: 80px;
   color: #333333;
   font-size: 18px;
   fill: #333333;
-}
+} */
 
 
 .hrs-dropdwn .row {
@@ -401,9 +388,7 @@ padding: 10px;
 }
 
 .box_shadw34 {
-  border: 1px solid #f8f8f8;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  background: #fff;
+  border: 1px solid #e5e5e5;
   height: 264px;
 }
 
@@ -425,15 +410,9 @@ padding: 10px;
   padding: 5px 15px;
 }
 .box_shade{
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
-  background: #fff;
-  margin-top: 20px;
-  margin-left: 10px;
-  width: 51% !important;
-  padding: 0px !important;
+  margin-top: -20px;
 }
 .box_shadw-activity{
-  width: 48% !important;
   height: 444px ;
 }
 
@@ -496,4 +475,17 @@ span.testtooltip:before {
 }
 .timefeed-header span.close:hover {
   color: #00a0e3;
+}
+.insigntsoccur {
+  border: 1px solid #e5e5e5;
+  display: inline-block;
+  width: 100%;
+  height: 450px;
+}
+.resuractivity-select {
+  float: right;
+  padding: 0px;
+}
+.resuractivity {
+  clear: both;
 }

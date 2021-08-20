@@ -1,7 +1,7 @@
 <div class=''>
-<div class="container-fluid new-PI-layout">
+  <div class="container-fluid new-PI-layout">
     <div class="">
-    <div class="row">
+      <div class="row">
         <div class='col-md-12 boxes p-0'>
                 <div class="col-sm-3">
                     <div class="col-sm-12 divbox divbox0">
@@ -35,20 +35,15 @@
                     <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
                     <i (click)="editInput()"  class="fas fa-pen"></i>
                 </div>
-            <!-- </div>
-            <div class='col-sm-4'> -->
                 <div class="col-sm-4 amountinputs" id="BotCost">
                     <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
                     <i (click)="editInput1()"  class="fas fa-pen"></i>
                 </div>
-            <!-- </div>
-            <div class="col-sm-2"> -->
                 <div class="col-sm-4 amountinputs" id="totalcases">
                     <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
                 </div>    
             </div>
             <div class='col-sm-4'>
-
             <div class="col-sm-6 dropdown hrs-dropdwn">
                 
                       <div  class="d-inline-block">
@@ -120,12 +115,11 @@
       </div>
       </div>
       
-  </div>
-    <!-- </div> -->
-    <br>
-    <!-- <div class="row"> -->
-        <div class="col-md-12 py-4">
-            <div class="col-sm-8 ">
+        </div>
+        <!-- </div> -->
+        <!-- <div class="row"> -->
+        <div class="col-md-12 p-0">
+            <div class="col-sm-8 pl-0">
                 <!-- <div id="costprojection" class="lineChart box_shadw"></div> -->
                 <div class="l_title1"><p>Human Cost vs Bot Cost</p></div>
                 <div id="costprojection" class="lineChart box_shadw hvsbot">
@@ -150,7 +144,7 @@
                 </ngx-charts-line-chart>
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-4 pr-0">
                 <div class="col-sm-12 box-content hedline1 box_shadw">
                     <p class="business_heading"><strong>Business insights</strong> </p>
                     <ul class="business_content">
@@ -171,18 +165,16 @@
                     </ul>
                 </div>
             </div>
-        
-        <br>
-        <div class="col-md-12 btm-line"></div>
-        <br>
-        <div class="col-md-12">
-            <div class="col-sm-6 box_shadw1 box_shadw-activity">
-                <ul class="groupBtn">
+        </div>    
+        <div class="col-md-12 p-0">
+            <div class="col-sm-6 pl-0 box_shadw1 box_shadw-activity">
+                <div class="insigntsoccur">
+                  <ul class="groupBtn">
                     <li>
                         <button [class.active]="isEventGraph" (click)="getEventBubboleGraph('event')">Events</button>
                         <button [class.active]="!isEventGraph" (click)="getEventBubboleGraph('throughput')">Duration</button>
                     </li>
-                </ul>
+                  </ul>
                  <!-- <div id="scatter" class=""></div> <br/> -->
                  <div class="l_title"><p>Activity Vs Occurences</p></div>
                  <div id="scatter">
@@ -207,9 +199,11 @@
                     [rotateXAxisTicks]="rotateXAxisTicks"
                     [legendPosition]="top">
                 </ngx-charts-bubble-chart>
+                 </div>
+                </div>
             </div>
-            </div>
-            <div class="col-sm-6 box_shade">
+            <div class="col-sm-6 pr-0 box_shade">
+              <div class="insigntsoccur">
                 <div class="l_title "><p>Activity Based Human and Bot Cost</p></div>
                 <div id="scatter" >
 
@@ -239,12 +233,10 @@
                 </combo-chart-component>
                 </div>
             </div>
-        </div>
-        <br>
-        <div class="col-md-12 btm-line"></div>
-        <div class="col-md-12"  id="top10Activities">
-            <br>
-            <div class="col-sm-6 box_shadw1 table-box1">
+            </div>
+            </div>
+        <div class="col-md-12 p-0"  id="top10Activities">
+            <div class="col-sm-6 pl-0 box_shadw1 table-box">
                 <div class="text-center table1-heading">Top 10% Cases (in descending order of duration)</div>
                 <table class="table table-hover table-bordered text-center table-striped work_spacetable">
                     <thead class="text-center">
@@ -263,7 +255,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6 pr-0">
                 <div class="box_shadw1 table-box">
                 <div class="text-center table1-heading">Top Automation Opportunities</div>
                 <table class="table table-hover table-bordered text-center table-striped">
@@ -285,12 +277,10 @@
                 </div>
             </div>
         </div>
-    </div>
-    <br class="col-md-12 btm-line">
-    <div class="col-md-12">
-            <div class="col-sm-2">
-                    <div class="box_shadw1" id="resourcesselect">
-                        <ng-multiselect-dropdown
+        <div class="col-md-12 p-0">
+            <div class="col-sm-3 resuractivity-select">
+                <div class="box_shadw1" id="resourcesselect">
+                    <ng-multiselect-dropdown
                         [placeholder]="'All'"
                         [settings]="dropdownSettings"
                         [data]="resourcesList"
@@ -300,10 +290,11 @@
                         (onDeSelect)="onResourceSelect()"
                         (onDeSelectAll)="onResourceSelect(false)"
                         >
-                        </ng-multiselect-dropdown>
-                    </div>
+                    </ng-multiselect-dropdown>
                 </div>
-        <div class="col-md-5 py-4 pi-chart">
+            </div>
+            <div class="row resuractivity">
+                <div class="col-md-6 pl-0 pi-chart">
                 <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                         <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
@@ -312,7 +303,7 @@
                         </div>
                     </div> -->
                     <div class="l_title2"><p>Total Resource Duration By Activity</p></div>
-            <div id="piechart1" class="box_shadw34"> 
+                <div id="piechart1" class="box_shadw34"> 
                     <ngx-charts-pie-chart
                     [view]="[400, 300]"
                     [scheme]="{domain: ['#4AB0F5', '#4FA908', '
@@ -327,12 +318,11 @@
                     [legendTitle]="''"
                     [arcWidth]="0.50"
                     [labelFormatting]="pieChartLabel.bind(this, dChart1)"> 
-                  </ngx-charts-pie-chart>
-                
-             </div>
-        </div>
-        <div class="col-md-5 py-4 pi-chart">
-                <!-- <div class="dropdown pull-right">
+                  </ngx-charts-pie-chart>                
+                </div>
+                </div>        
+                <div class="col-md-6 pr-0 pi-chart">
+                    <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                         <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
                             <p *ngIf="!isstackedbarChart1" class="click" (click)="switchTostackedBar1('stackedbar')"><span>View In Bar chart</span></p>
@@ -340,28 +330,29 @@
                         </div>
                     </div> -->
                     <div class="l_title2"><p>Total Resource Cost By Activity</p></div>
-        <div id="piechart2" class="box_shadw34">
-                <ngx-charts-pie-chart
-                [view]="[400, 300]"
-                [scheme]="{domain: ['#4AB0F5', '#4FA908', '#FEAE3F', '#098DE6', '#EA3D3D', '#F2D12B', '#3EC1A4', '#f02e2e']}"
-                [results]="dChart2"
-                [legend]="true"
-                [labels]="true"
-                [animations]="false"
-                [doughnut]="true"
-                [arcWidth]="0.50"
-                [legendPosition] = "'right'"
-                [legendTitle]="''"
-                [labelFormatting]="pieChartLabel1.bind(this, dChart2)"> 
-              </ngx-charts-pie-chart>
-        </div>
-        </div>
+                    <div id="piechart2" class="box_shadw34">
+                    <ngx-charts-pie-chart
+                        [view]="[400, 300]"
+                        [scheme]="{domain: ['#4AB0F5', '#4FA908', '#FEAE3F', '#098DE6', '#EA3D3D', '#F2D12B', '#3EC1A4', '#f02e2e']}"
+                        [results]="dChart2"
+                        [legend]="true"
+                        [labels]="true"
+                        [animations]="false"
+                        [doughnut]="true"
+                        [arcWidth]="0.50"
+                        [legendPosition] = "'right'"
+                        [legendTitle]="''"
+                        [labelFormatting]="pieChartLabel1.bind(this, dChart2)"> 
+                    </ngx-charts-pie-chart>
+                    </div>
+                </div>
+            </div>    
        
 
+        </div>
+      </div>
     </div>
-</div>
-</div>
-</div>
+  </div>
 </div>
 
 

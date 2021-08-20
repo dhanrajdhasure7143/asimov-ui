@@ -55,8 +55,8 @@
                     </div>
                 </div>
             </div>
-            <div class="varienanal">
-                    <h1>Variant Analysis</h1>
+            <div class="varienanal chartinnsec">
+                    <label>Variant Analysis</label>
                     <!-- <div class="maintx d-flex">
                         <div class="leftyext">
                             <h4>Variant 1</h4>
@@ -75,11 +75,11 @@
                             <h5>{{convertedValue(element.percentage)}}% cases take {{getTimeConversion(element.medianDuration)}} on an average to complete the process</h5>
                             </div>
                         </div>
+                    </div>
+                    <div class="bpspaginationdiv">
+                        <mat-paginator class="newpaginationdiv mat-paginator" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="5" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]" ></mat-paginator>
                     </div>                
-            </div>
-            <div class="bpspaginationdiv">
-                <mat-paginator class="newpaginationdiv mat-paginator" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="5" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]" ></mat-paginator>
-            </div>
+            </div>            
         </div>
     </div>
     

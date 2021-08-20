@@ -47,7 +47,7 @@ span.smalfon {
     transform: translateY(-50%);
 }
 .leftinsec {
-    background-color: #098DE6;
+    background-color: #00a0e3;
     padding: 10px;
     width: 72px;
 }
@@ -55,7 +55,7 @@ span.smalfon {
     padding: 10px;
 }
 .innersecone {
-    border: 1px solid #098de6;
+    border: 1px solid #00a0e3;
     border-radius: 4px;
     background-color: #fff;
     min-height: 71px;
@@ -125,7 +125,7 @@ span.smalfon {
     height: 347px;
 }
 .chartssc, .varienanal {
-    margin-top: 20px;
+    margin-top: 30px;
 }
 .rightsecr {
     width: 80px;
@@ -161,4 +161,10 @@ span.smalfon {
 .bpspaginationdiv {
     position: relative;
     width: 100%;
-  }
+}
+.varienanal label {
+    color: #000000DE;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
