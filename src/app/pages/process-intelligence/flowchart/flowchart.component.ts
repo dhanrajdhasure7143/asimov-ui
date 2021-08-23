@@ -184,6 +184,7 @@ Pi_header_functions:Subscription;
   }
 
   ngAfterViewInit(){
+    this.isplay=false;
     let res_data
     this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
       console.log(res);
@@ -258,6 +259,9 @@ Pi_header_functions:Subscription;
   }
 
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
+    this.isplay=false;
+    this.dt.piHeaderValues(null);
+    this.dt.pi_buttonValues({"isPlaybtn":true,"isTimefeed_btn":true})
     this.isNodata=true;
     let self = this;
     this.route.queryParams.subscribe(params => {
@@ -763,6 +767,7 @@ Pi_header_functions:Subscription;
 
   playAnimation() {   // Process graph animation
     this.isplay = !this.isplay
+    console.log(this.isplay)
   }
 
   downloadSvg() { // Process graph download as SVG
@@ -1720,6 +1725,8 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       clearInterval(this.graphgenetaionInterval);
     }
     this.Pi_header_functions.unsubscribe();
+    this.isplay=false;
+    this.dt.piHeaderValues(null);
   }
 
   viewInsights(){
