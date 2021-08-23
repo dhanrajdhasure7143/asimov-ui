@@ -140,6 +140,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   businessKey:any;
   selected_bpmn_list:any  
   isEdit:boolean=false;
+  downloadFileformate:Subscription;
+  header_btn_functions:Subscription;
+  header_approvalBtn:Subscription;
   @ViewChild('variabletemplate',{ static: true }) variabletemplate: TemplateRef<any>;
   @ViewChild('keyboardShortcut',{ static: true }) keyboardShortcut: TemplateRef<any>;
   @ViewChild('dmnTabs',{ static: true }) dmnTabs: ElementRef<any>;
@@ -194,13 +197,13 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
        ngAfterViewInit(){
         if(this.isShowConformance)
           this.getAutoSavedDiagrams()
-        this.dt.download_notation.subscribe(res=>{
+        this.downloadFileformate=this.dt.download_notation.subscribe(res=>{
           this.fileType=res
           if(this.fileType != null){
             this.downloadBpmn();
           }
         })
-        this.dt.header_value.subscribe(res=>{
+        this.header_btn_functions=this.dt.header_value.subscribe(res=>{
           let headerValue=res
           console.log(res);
           let result = headerValue instanceof Object;
@@ -230,7 +233,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
           this.slideUp(headerValue)
         }
         })
-        this.dt.subMitApprovalValues.subscribe(res=>{
+        this.header_approvalBtn=this.dt.subMitApprovalValues.subscribe(res=>{
           console.log(res)
           if(res){
             this.submitDiagramForApproval(res.selectedApprovar);
@@ -239,6 +242,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       }
        ngOnDestroy() {
         // this.subscription.unsubscribe();
+        this.downloadFileformate.unsubscribe();
+        this.header_btn_functions.unsubscribe();
+        this.header_approvalBtn.unsubscribe();
       }
 
    setRPAData(){
@@ -300,6 +306,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   fetchBpmnNotationFromPI(){
     this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
        this.pivalues=res;
+       console.log("PI",res)
     })
    }
 
@@ -487,10 +494,16 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     if(this.isShowConformance && !this.reSize){
       this.rest.fetchBpmnNotationFromPI(this.pid).subscribe(res=>{
         this.pivalues=res;
+        console.log("pigraph",res)
         let selected_xml = this.pivalues['data'];
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];
+          // console.log(this.autosavedDiagramVersion)
+          this.push_Obj={"rejectedOrApproved":this.autosavedDiagramVersion[0]["bpmnModelTempStatus"],"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true}
+            this.dt.bpsNotationaScreenValues(this.push_Obj);
         }
         try{
           this[modeler_obj].importXML(atob(unescape(encodeURIComponent(selected_xml))))

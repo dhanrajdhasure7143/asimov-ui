@@ -38,18 +38,6 @@
                 </mat-menu>
               <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
 
-              <!-- <button class="tsttooltipbtn" (click)="zoom('zoomIn')" >
-                <img src="../../../assets/images/BPMS/zoom-in.svg">
-                <span class="testtooltip">Zoom in</span>
-              </button>
-              <button class="tsttooltipbtn" (click)="zoom('zoomOut')">
-                <img src="../../../assets/images/BPMS/zoom-out.svg">
-                <span class="testtooltip">Zoom out</span>
-              </button>
-              <button class="tsttooltipbtn" (click)="zoom('zoomReset')">
-                <i class="fas fa-recycle"></i>
-                <span class="testtooltip">Zoom out</span>
-              </button> -->
               <button (click)="playAnimation()" id="play_btn" class="tsttooltipbtn" *ngIf="!isplay" title="Play">
                 <img src="../../../assets/images/PI/play.svg">
                 <span class="testtooltip">Play</span>
@@ -74,7 +62,7 @@
                 <div *ngIf="isAddHrs" aria-labelledby="dropdownForm1" id="dropdownForm2">
                     <form class="row">
                       <div class="timefeed-header">
-                        <span class="close">x</span>
+                        <span class="close" (click)="canceladdHrs()">x</span>
                         <h3>Time Feed</h3>
                         <div class="col-sm-6 pl-0">
                           <label class="label-control" for="exampleDropdownFormEmail1">Working From</label>
@@ -127,6 +115,71 @@
                 <span class="testtooltip">Generate BPMN</span>
               </button>
               <button class="tsttooltipbtn" (click)="openVariantListNav()">
+                <img src="../../../assets/images/PI/varaintlist.svg">
+                <span class="testtooltip">Variant List</span>
+              </button>
+
+            </div>  
+          </div>
+          <div class="col-md-7 new-bps-icons p-0" *ngIf="insights_header">
+            <div class="row bps-float">             
+              <button class="tsttooltipbtn" (click)="openinsightsHrsOverLay()">
+                <img src="../../../assets/images/PI/timefeed.svg">
+                <span class="testtooltip">Time Feed</span>
+              </button>
+                <div *ngIf="isAddHrs1" aria-labelledby="dropdownForm1" id="dropdownForm2">
+                    <form class="row">
+                      <div class="timefeed-header">
+                        <span class="close" (click)="cancelinsightsaddHrs()">x</span>
+                        <h3>Time Feed</h3>
+                        <div class="col-sm-6 pl-0">
+                          <label class="label-control" for="exampleDropdownFormEmail1">Working From</label>
+                          <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours.formDay">
+                            <option value="" selected disabled>Select</option>
+                            <option value="Sun">Sunday</option>
+                            <option value="Mon">Monday</option>
+                            <option value="Tue">Tuesday</option>
+                            <option value="Wed">Wednesday</option>
+                            <option value="Thu">Thursday</option>
+                            <option value="Fri">Friday</option>
+                            <option value="Sat">Saturday</option>
+                          </select>
+                        </div>
+                        <div class="col-sm-6 pr-0">
+                          <label class="label-control" for="">Working To</label>
+                          <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours.toDay">
+                            <option value="" selected disabled>Select</option>
+                            <option value="Sun">Sunday</option>
+                            <option value="Mon">Monday</option>
+                            <option value="Tue">Tuesday</option>
+                            <option value="Wed">Wednesday</option>
+                            <option value="Thu">Thursday</option>
+                            <option value="Fri">Friday</option>
+                            <option value="Sat">Saturday</option>
+                          </select>
+                        </div>
+                        <span class="p_warning">*Please select business start time and end time</span>
+                      </div>
+                      <div class="timefeed-body">
+                        <div class="col-sm-6 pl-0">
+                          <label class="label-control" for="">Shift Start Time</label>
+                          <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
+                        </div>
+                        <div class="col-sm-6 pr-0">
+                          <label class="label-control" for="">Shift End Time</label>
+                          <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
+                        </div>
+                        <!-- <div class="col-sm-12 dropdown-divider"></div> -->
+                      </div>
+                      <div class="timefeed-footer">
+                          <button type="submit" class="btn btn-default" (click)="resetWorkingHours()">Reset</button>
+                          <button type="submit" class="btn btn-default" (click)="canceladdHrs()">Cancel</button>
+                          <button type="submit" class="btn btn-primary" (click)="addWorkingHrsInsights()">Apply</button>
+                      </div>  
+                    </form>
+                </div>
+
+              <button class="tsttooltipbtn" (click)="openInsightsVaraintOverLay()">
                 <img src="../../../assets/images/PI/varaintlist.svg">
                 <span class="testtooltip">Variant List</span>
               </button>

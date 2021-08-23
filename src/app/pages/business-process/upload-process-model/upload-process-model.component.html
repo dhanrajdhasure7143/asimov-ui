@@ -39,10 +39,10 @@
 <as-split class="ex-percent h-100" [class.no-split-pane]="!isShowConformance || (isShowConformance && !hasConformance && !reSize)" [ngClass]="reSize?'bpmn-split':''" unit="percent">
     <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:100):0">
         <span class="canvasOpt"><input type="radio" name="isBpmnModelerCanvas" [value]="true" [(ngModel)]="isConfBpmnModeler" selected #canvasopt/>&nbsp;As Is</span>
-        <div class="h-100 bps-c2-height" *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
+        <div class="h-100 bps-c2-height" *ngIf="isShowConformance" [class.bps_overlay]="reSize|| hasConformance || rejectedOrApproved=='PENDING' || !isEdit">
             <span class="info" *ngIf="rejectedOrApproved == 'PENDING' && !reSize">Business Process Notation has been submitted for approval. Cannot be edited till it is reviewed </span>
             <div class="row h-100">
-                <div class="canvas2 col-md-12 p-0 h-100" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'" id="canvas2"></div>
+                <div class="canvas2 col-md-12 p-0 h-100" [class.readOnly]="reSize|| hasConformance ||rejectedOrApproved=='PENDING' || !isEdit" id="canvas2"></div>
                 <!-- <div class="propertiesContainer" [class.hidden]="reSize|| hasConformance ||rejectedOrApproved=='PENDING'">
                     <div class="propertiesTitle" (click)="togglePosition()">
                         <div>Properties Panel</div>

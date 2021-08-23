@@ -188,6 +188,21 @@ robotValue:number;
        // Object.assign(this, { multi });
       // Object.assign(this.bubbleData,  this.bubbleData );
      }
+     ngAfterViewInit(){
+         let res_data
+         this.dt.processInsights_headerChanges.subscribe(res=>{
+             console.log(res)
+             res_data=res
+             if(res_data instanceof Object){
+                 this.workingHours=res_data
+                this.addWorkingHours();
+             }else if(res_data=="open_time"){
+                this.openHrsOverLay()
+             }else if(res_data=="open_Varaint"){
+                this.openVariantListNav();
+            }
+         })
+     }
 
     ngOnInit() {
         this.dt.changeParentModule({ "route": "/pages/processIntelligence/upload", "title": "Process Intelligence" });
@@ -1901,7 +1916,7 @@ svg
             .style("display", "none");
         });
     }
-    openHersOverLay(){
+    openHrsOverLay(){
         this.isAddHrs=!this.isAddHrs
     }
     canceladdHrs(){
