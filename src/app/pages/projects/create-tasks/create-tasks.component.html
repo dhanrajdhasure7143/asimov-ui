@@ -1,120 +1,137 @@
-<div class="modal-header modelprhead">
-    <h4 class="modal-title pull-left">Create Task</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="createtaskmodalref.hide()">
-      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
-    </button>
-</div>
-<div class="modal-body modelprbody">
-    <div class="container p-0" style="width:100%">
-        <form [formGroup]="createtaskForm" (ngSubmit)="savetasks()">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0">
-                        <label for="taskCategory">Task Category<span class="star">*</span></label>
-                        <select class="form-control"  formControlName="taskCategory">
-                            <option  [value]="null" disabled hidden>Select Task Category</option>
-                            <option value="" [selected]="true">Select Task Category</option>
-                            <option *ngFor="let categories of taskcategories" >{{categories.category}}</option>
-                            </select>
-                            <span *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
-                             class="errspan required">Task Category Required*</span>
-                    </div>  
-                    <div class="form-fields col-md-6 pr-0">
-                        <label for="taskName">Task Name<span class="star">*</span></label>
-                        <input type="text" formControlName="taskName" class="form-control data"
-                             placeholder="Enter Task Name">
-                        <span *ngIf="createtaskForm.get('taskName').invalid && createtaskForm.get('taskName').touched"
-                             class="errspan required">Task Name Required*</span>
-                        <span *ngIf="createtaskForm.controls['taskName'].hasError('maxlength')" class="errspan required">
-                            Maximum of 50 characters
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0">                         
-                        <label for="priority">Priority <span class="star">*</span></label>
-                        <select formControlName="priority" class="form-control data">
-                            <option value="">Select Priority</option>
-                            <option value="High">High</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Low">Low</option>
-                        </select>
-                        <span *ngIf="createtaskForm.get('priority').invalid && createtaskForm.get('priority').touched"
-                             class="errspan required">Priority Required*</span>
-                    </div>
-                    <div class="form-fields col-md-6 pr-0">
-                        <label for="timeEstimate">Time Estimate<span class="star">*</span></label>
-                        <input type="text" (keydown)="inputNumberOnly($event)" maxlength="6" formControlName="timeEstimate" class="form-control data"
-                             placeholder="Enter Time Estimate">
-                        <span
-                            *ngIf="createtaskForm.get('timeEstimate').invalid && createtaskForm.get('timeEstimate').touched"
-                             class="errspan required">Time Estimate Required*</span>
-                        <span *ngIf="createtaskForm.controls['timeEstimate'].hasError('maxlength')" 
-                            class="errspan required">
-                            Maximum of 50 characters
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0">
-                        <label class="label-control">Start Date <span class="star">*</span></label>
-                        <input class="form-control" type="date" name="daytime" [min]="mindate" formControlName="startDate">
-                        <span *ngIf="createtaskForm.get('startDate').invalid && createtaskForm.get('startDate').touched"
-                             class="errspan required">Start Date Required*</span>
-                    </div>
-                    <div class="form-fields col-md-6 pr-0">
-                        <label for="endDate">End Date<span class="star">*</span></label>
-                        <input class="form-control" type="date" name="daytime" [min]="mindate" formControlName="endDate">
-                        <span *ngIf="createtaskForm.get('endDate').invalid && createtaskForm.get('endDate').touched"
-                         class="errspan required">End Date Required*</span>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-fields col-md-6 pl-0">                         
-                        <label for="resources">Select Resources<span class="star">*</span></label>
-                        <select formControlName="resources" class="form-control data">
-                            <option value="">Select Resources</option>
-                            <option *ngFor="let user of userslist" [value]="user.userId.userId">
-                                {{user.userId.firstName}} {{user.userId.lastName}}</option>   
-                        </select>
 
-                        <!-- <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
-                             [(ngModel)]="selectedresources"  required>
-                            <ng-option *ngFor="let user of userslist" [value]="user.userId.id">
-                                {{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
-                        </ng-select>  -->
+        <div class="module-heading title ">
+            <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
+                <i class="fa fa-angle-left" aria-hidden="true"></i>
+            </span> -->
+            <span class="module-back-button" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}">
+                <i class="fas fa-arrow-left" aria-hidden="true"></i>
+            </span>
+            <span class="module-header-title">
+                <span class="module-parent-title">Tasks</span>
+                <span class="backslash">/</span>
+                <span class="module-parent-title">Create Task</span>
+            </span>
+            <!-- <span class="pull-right" style="font-size:20px;">
+              <span class="projects-menu-item" (click)="projects_toggle==false?projects_toggle=true:projects_toggle=false;" ><i class="ri-file-line"></i></span>
+              <span class="projects-menu-item"><i class="ri-filter-line"></i></span>
+              <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+            </span> -->
+        </div>
+        <div class="container-fluid h-scroll">
+            <div class="container maindivfoprm ">
+               
+                
+                <div class="create-heading">Create Task</div>
+                <form [formGroup]="createtaskForm" class=" prj-crt-form" (ngSubmit)="savetasks()">
+                    <div class="row">
+                        <div class="col-md-12">
 
-                        <span *ngIf="createtaskForm.get('resources').invalid && createtaskForm.get('resources').touched"
-                             class="errspan required">Resources Required*</span>
+                            <div class="form-fields col-md-6 pl-0">
+                                <label class="label-control" for="taskCategory">Task Category<span class="star">*</span></label>
+                                <select class="form-control enteredfield-color"  formControlName="taskCategory">
+                                    <option  [value]="null" disabled hidden>Select Task Category</option>
+                                    <option value="" [selected]="true">Select Task Category</option>
+                                    <option *ngFor="let categories of taskcategories" >{{categories.category}}</option>
+                                    </select>
+                                    <span *ngIf="createtaskForm.get('taskCategory').invalid && createtaskForm.get('taskCategory').touched"
+                                    class="errspan required">Task Category Required*</span>
+                            </div>  
+                            <div class="form-fields col-md-6 pr-0">
+                                <label class="label-control" for="taskName">Task Name<span class="star">*</span></label>
+                                <input type="text" formControlName="taskName" class="form-control data enteredfield-color"
+                                    placeholder="Enter Task Name">
+                                <span *ngIf="createtaskForm.get('taskName').invalid && createtaskForm.get('taskName').touched"
+                                    class="errspan required">Task Name Required*</span>
+                                <span *ngIf="createtaskForm.controls['taskName'].hasError('maxlength')" class="errspan required">
+                                    Maximum of 50 characters
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-fields col-md-6 pl-0">                         
+                                <label class="label-control" for="priority">Priority <span class="star">*</span></label>
+                                <select formControlName="priority" class="form-control data enteredfield-color">
+                                    <option value="">Select Priority</option>
+                                    <option value="High">High</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Low">Low</option>
+                                </select>
+                                <span *ngIf="createtaskForm.get('priority').invalid && createtaskForm.get('priority').touched"
+                                    class="errspan required">Priority Required*</span>
+                            </div>
+                            <div class="form-fields col-md-6 pr-0">
+                                <label class="label-control" for="timeEstimate">Time Estimate<span class="star">*</span></label>
+                                <input type="text" (keydown)="inputNumberOnly($event)" maxlength="6" formControlName="timeEstimate" class="form-control data enteredfield-color"
+                                    placeholder="Enter Time Estimate">
+                                <span
+                                    *ngIf="createtaskForm.get('timeEstimate').invalid && createtaskForm.get('timeEstimate').touched"
+                                    class="errspan required">Time Estimate Required*</span>
+                                <span *ngIf="createtaskForm.controls['timeEstimate'].hasError('maxlength')" 
+                                    class="errspan required">
+                                    Maximum of 50 characters
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-fields col-md-6 pl-0">
+                                <label class="label-control">Start Date <span class="star">*</span></label>
+                                <input class="form-control enteredfield-color" type="date" name="daytime" [min]="mindate" formControlName="startDate">
+                                <span *ngIf="createtaskForm.get('startDate').invalid && createtaskForm.get('startDate').touched"
+                                    class="errspan required">Start Date Required*</span>
+                            </div>
+                            <div class="form-fields col-md-6 pr-0">
+                                <label  class="label-control" for="endDate">End Date<span class="star">*</span></label>
+                                <input class="form-control enteredfield-color" type="date" name="daytime" [min]="mindate" formControlName="endDate">
+                                <span *ngIf="createtaskForm.get('endDate').invalid && createtaskForm.get('endDate').touched"
+                                class="errspan required">End Date Required*</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-fields col-md-6 pl-0">                         
+                                <label class="label-control" for="resources">Select Resources<span class="star">*</span></label>
+                                <select formControlName="resources" class="form-control data enteredfield-color">
+                                    <option value="">Select Resources</option>
+                                    <option *ngFor="let user of userslist" [value]="user.userId.userId">
+                                        {{user.userId.firstName}} {{user.userId.lastName}}</option>   
+                                </select>
+
+                                <!-- <ng-select  formControlName="resources" [multiple]="true"  placeholder="Select Resources"
+                                    [(ngModel)]="selectedresources"  required>
+                                    <ng-option *ngFor="let user of userslist" [value]="user.userId.id">
+                                        {{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
+                                </ng-select>  -->
+
+                                <span *ngIf="createtaskForm.get('resources').invalid && createtaskForm.get('resources').touched"
+                                    class="errspan required">Resources Required*</span>
+                            </div>
+                            <div class="form-fields col-md-6 pr-0">
+                                <label class="label-control" for="approvers">Select Approvers<span class="star">*</span></label>
+                                <select class="form-control enteredfield-color"  formControlName="approvers">
+                                    <option value="">Select Approvers</option>
+                                    <option *ngFor="let user of approverslist" [value]="user.userId.id">
+                                        {{user.userId.firstName}} {{user.userId.lastName}}</option>    
+                                </select>
+                                <!-- <ng-select  formControlName="approvers" [multiple]="true"  placeholder="Select Approvers"
+                                    [(ngModel)]="selectedapprovers"  required>
+                                    <ng-option *ngFor="let user of userslist" [value]="user.userId.id">
+                                        {{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
+                                </ng-select>  -->
+                                <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
+                                class="errspan required">Approvers Required*</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label class="label-control">Task Description</label>
+                            <textarea rows="4" class="form-control enteredfield-color" formControlName="description" placeholder="Enter Task Description...">
+                            </textarea>
+                        </div> 
                     </div>
-                    <div class="form-fields col-md-6 pr-0">
-                        <label for="approvers">Select Approvers<span class="star">*</span></label>
-                        <select class="form-control"  formControlName="approvers">
-                            <option value="">Select Approvers</option>
-                            <option *ngFor="let user of approverslist" [value]="user.userId.id">
-                                {{user.userId.firstName}} {{user.userId.lastName}}</option>    
-                        </select>
-                         <!-- <ng-select  formControlName="approvers" [multiple]="true"  placeholder="Select Approvers"
-                             [(ngModel)]="selectedapprovers"  required>
-                            <ng-option *ngFor="let user of userslist" [value]="user.userId.id">
-                                {{user.userId.firstName}} {{user.userId.lastName}}</ng-option>
-                        </ng-select>  -->
-                        <span *ngIf="createtaskForm.get('approvers').invalid && createtaskForm.get('approvers').touched"
-                         class="errspan required">Approvers Required*</span>
-                    </div>
+                </form>
+                <br>
+                <div class="pull-right">
+                    <button (click)="resettask()" class="btn btn-default">Reset</button>
+                    <button [disabled]="createtaskForm.invalid" (click)="savetasks()" class="btn btn-primary btn-update">Save</button>
                 </div>
-                <div class="col-md-12">
-                    <label>Task Description</label>
-                    <textarea rows="4" class="form-control" formControlName="description" placeholder="Enter Task Description...">
-                    </textarea>
-                </div> 
-            </div>
-        </form>
-    </div>
-</div>          
-<div class="modal-footer modelprfooter">
-    <div class="pull-right">
-        <button (click)="resettask()" class="btn btn-default">Reset</button>
-        <button [disabled]="createtaskForm.invalid" (click)="savetasks()" class="btn btn-primary btn-update">Save</button>
-    </div>
-</div>
+                </div>
+           
+        </div>

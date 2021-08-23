@@ -1,0 +1,241 @@
+.t-comments-box {
+    padding: 0px 10px;
+  }
+    
+    .add-comment {
+      display: flex;
+      margin: 15px 0px;
+    }
+      .comment-input {
+        position: relative;
+        width: 100%;
+      }
+
+    .comment-send {
+      color: #001c47;
+      position: absolute;
+      right: 12px;
+      top: 7px;
+    }
+    #sendcomment:hover {
+      color: #00a1e3;
+    }
+
+      .comment-label {
+        line-height: 1;
+      }
+     
+        .comment-time {
+          font-weight: 100;
+          color: #768791;
+        }
+      
+      .comment-action {
+        margin-right: 4px;
+        text-align:right;
+        color:#000;
+      }
+      .comment-action:hover {
+        color: #00a1e3;
+      }
+      .comment-level-1 {
+        /* margin-left: 50px; */
+        margin-top: 15px;
+      }
+      .comment-content {
+        width: 100%;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 15px;
+    }
+    .updatecomments .modal-footer.modelprfooter {
+      padding-bottom: 0px;
+    }
+    .comment-content-subdiv {
+      display: inline-flex;
+      width: 100%;
+    }
+
+
+    ::ng-deep .ng-select-container {
+      height: auto !important;
+      font-size: 1.0em!important;
+      font-family:sans-serif;
+    }
+  
+    .h-scroll {
+      height: calc(100% - 48px) !important;
+      overflow: auto !important;
+    }
+  
+    
+  label.label-control {
+    /* padding: 4px 0px; */
+    border: 1px solid transparent;
+    border-bottom: medium none;
+    margin: 0px !important;
+    border-radius: 2px;
+    color: black;
+    font-weight: 600;
+    font-size: 14px;
+    /* height: 30px; */
+    margin-bottom: 3px !important;
+    white-space: nowrap;
+    width: 100%;
+    text-overflow: ellipsis;
+  }
+  
+  .prj-crt-form {
+    margin-right: -15px !important;
+    margin-left: -15px !important;
+    padding-top: 15px !important;
+  }
+  
+  
+  .maindivfoprm {
+    width: 800px;
+    margin: 0px auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+
+  .padding-10{
+    padding:10px;
+  }
+
+  span.labelcont{
+    font-size: 14px !important;
+    color: #001c47 !important;
+    font-weight: 400;
+  }
+
+
+  img.testplus.hover-img ,
+button.btn.btn-primary.prj-lst-btn:hover img.testplus.default-img{
+    display: none;
+}
+button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
+    display: initial;
+}
+
+
+img.testplus.hover-img ,
+button.btn.btn-primary.prj-lst-btn:hover img.testplus.default-img{
+    display: none;
+}
+button.btn.btn-primary.prj-lst-btn:hover img.testplus.hover-img {
+    display: initial;
+}
+
+
+.res-circle {
+  width: 32px;
+  border-radius: 100%;
+  height: 32px;
+  color: #00a0e3;
+  background: #e6f2fd;
+  /* font-weight: 600; */
+  padding: 3px;
+  text-align: center;
+  line-height: 25px;
+  font-size: 15px;
+  /* letter-spacing: 1px; */
+}
+.res-circle-img {
+  border-radius: 100%;
+  width: 32px;
+  height: 32px;
+}
+.res-circle:after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+
+.histcontent {
+  line-height: 30px;
+}
+.attachment-name{
+  font-weight: bold;
+  font-size: 0.95rem;
+  color: #292929;
+}
+
+.attachmentdiv, ul.historydiv, .edit-resourcesdiv  {
+  padding: 15px 10px;
+}
+.attachmentdiv label.label-content {
+  margin-left: 10px;
+  font-weight: 500 !important;
+  color: #001c47 !important;
+}
+.row.attachment-content {
+  margin-bottom: 10px !important;
+}
+.attachmentdiv, ul.historydiv, .edit-resourcesdiv  {
+  padding: 15px 10px;
+}
+.attachmentdiv label.label-content {
+  margin-left: 10px;
+  font-weight: 500 !important;
+  color: #001c47 !important;
+}
+.row.attachment-content {
+  margin-bottom: 10px !important;
+}
+ul.historydiv li {
+  border-bottom: 1px solid #e5e5e5;
+  padding: 10px 0px;
+}
+ul.historydiv li:first-child {
+  padding-top: 0px;
+}
+ul.historydiv li:last-child {
+  border-bottom: none !important;
+}
+table tbody tr {
+  height: 40px;
+} 
+.d-flex{
+  display: flex;
+}
+
+
+.userimage{
+  padding:10px;
+  margin-right: 10px;
+}
+.commentsadded {
+  /* font-weight: 600; */
+  color: #001c47;
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 15px;
+  margin-left: 8px;
+}
+
+::ng-deep .edit-task-tabs .mat-tab-body-content{
+  height:170px !important;
+  overflow:auto !important;
+  border : 1px solid lightgray;
+}
+
+
+.bg-task{
+  background:rgb(241, 241, 241);
+}
+
+
+.h-scroll {
+  height: calc(100% - 48px) !important;
+  overflow: auto !important;
+}
+
+
+.edit-task-form .container-fluid{
+  padding-left:0px !important;
+  padding-right:0px !important;
+}
