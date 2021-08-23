@@ -18,14 +18,12 @@ export class CreateTasksComponent implements OnInit {
 
   createtaskForm:FormGroup;
   mindate: string;
-  @Input('createtaskmodalref') public createtaskmodalref: BsModalRef;
-  @Input('project_id') public project_id: BsModalRef;
   userslist: any;
   projectdetails: Object;
   taskcategories: Object;
   approverslist: any=[];
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
-    private router: Router,private projectdetailscreen:ProjectDetailsScreenComponent) { }
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -63,7 +61,7 @@ export class CreateTasksComponent implements OnInit {
     this.spinner.show();
     this.createtaskForm.value.status="New";
     this.createtaskForm.value.percentageComplete=0;
-    this.createtaskForm.value.projectId=this.project_id;
+    //this.createtaskForm.value.projectId=this.project_id;
     let data=this.createtaskForm.value;
     this.api.createTask(data).subscribe(data=>{
       let response:any=data;
@@ -71,7 +69,7 @@ export class CreateTasksComponent implements OnInit {
       if(response.message!=undefined)
       {
         let status: any= response;
-        this.createtaskmodalref.hide();
+        //this.createtaskmodalref.hide();
         Swal.fire({
           title: 'Success',
           text: ""+status.message,
@@ -83,7 +81,7 @@ export class CreateTasksComponent implements OnInit {
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resettask();
-        this.projectdetailscreen.getTaskandCommentsData();
+        //this.projectdetailscreen.getTaskandCommentsData();
       }) 
         
       }

@@ -163,7 +163,8 @@ button.btn.btn-primary.prj-btn-save {
 .maindivfoprm input,
 .maindivfoprm select,
 .maindivfoprm textarea {
-  /* background-color: #f6f6f6 !important; */
+
+  background-color: #f6f6f6 !important;
   border: 1px solid #D1D1D1;
   box-shadow: unset !important;
   color: #7B8694 !important;
