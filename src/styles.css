@@ -2357,3 +2357,6 @@ th.mat-header-cell {
 .mat-progress-bar-fill::after {
   background: linear-gradient(to right,red, orange, yellow, green);
 }
+.bpms-canvas-body .as-split-gutter.ng-star-inserted.testplus {
+  background-color: #f3f3f3 !important;
+}
