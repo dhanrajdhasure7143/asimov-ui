@@ -792,7 +792,8 @@
             </a> 
             
             <a routerLink="/pages/projects/edit-task" [queryParams]="{projectid:projectDetails.id,taskId:element.id}" matTooltip="Edit Task">
-              <img src="../../../../assets/images/Projects/edit-black.svg">
+              <img src="../../../../assets/images/Projects/edit-black.svg" class="default-img">
+              <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
             </a> 
             
             <a (click)="deletetask(element)" matTooltip="Delete Task" >

@@ -15,13 +15,20 @@ export class EditTaskComponent implements OnInit {
 
   selectedtask:any;
   taskcomments:any=[];
+  taskattacments: Object;
   taskhistory:any=[];
   rolelist:any=[];
+  userid: any;
+  public rolename: any;
+  roles: any;
+  userrole: any=[];
   updatetaskForm:FormGroup;
   taskcomments_list:any=[];
+  selectedtaskdata: any;
   projectsList:any=[];
   slider:any;
   currentDate:any;
+  taskresourceemail: any;
   showeditcomment:any;
   commentnumber:any;
   userdata:any;
@@ -97,10 +104,10 @@ export class EditTaskComponent implements OnInit {
       this.taskhistory=this.selectedtask.history
     console.log("taskhistory",this.taskhistory)
     console.log("taskcomment",this.taskcomments,this.taskcomments_list)
-    // this.getTaskAttachments();
-    // this.getUserRole();
-    // let user=this.users_list.find(item=>item.userId.userId==this.selectedtaskdata.resources);
-    // this.taskresourceemail=user.userId.userId
+    this.getTaskAttachments();
+    this.getUserRole();
+    let user=this.users_list.find(item=>item.userId.userId==this.selectedtaskdata.resources);
+    this.taskresourceemail=user.userId.userId
     // this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
   }
   updatetask(){
@@ -182,6 +189,29 @@ else
       
         this.users_list=response;
       });
+    }
+
+    getTaskAttachments(){
+      this.rest.getTaskAttachments(this.selectedtaskdata.projectId,this.selectedtaskdata.id).subscribe(data =>{
+        this.taskattacments=data
+      })
+    }
+
+    getUserRole(){
+      let user=this.users_list.find(item=>item.userId.userId==this.selectedtaskdata.resources);
+      this.userid=user.userId.userId
+      this.rest.getRole(this.userid).subscribe(data =>{
+        this.userrole=data
+        for (let index = 0; index <= this.userrole.message.length; index++) {
+          this.rolename =  this.userrole.message[index];
+  
+          this.rolelist.push(this.rolename.name)
+          this.roles=this.rolelist.join(',')
+          console.log("role", this.rolelist)
+        }
+        //this.rolename=this.userrole.message[0].name
+       
+      })
     }
 
 

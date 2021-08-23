@@ -225,9 +225,26 @@ table tbody tr {
 
 
 .bg-task{
-  background:rgb(241, 241, 241);
-}
+  background-color: #F3F3F3;
+  padding: 15px 15px !important;
 
+}
+.task-name{
+  font-weight: 600;
+  font-size: 22px;
+  color: #001c47;
+  line-height: 0px !important;
+}
+.level3{
+  color: #001c47;
+  font-size: 12px;
+}
+.value{
+  color: #001C47;
+  font-weight: 400;
+  font-size: 13px;
+  padding-top: 8px;
+}
 
 .h-scroll {
   height: calc(100% - 48px) !important;
@@ -238,4 +255,17 @@ table tbody tr {
 .edit-task-form .container-fluid{
   padding-left:0px !important;
   padding-right:0px !important;
+}
+
+img.hover-img {
+  display: none;
+}
+.newinntalx:hover img.default-img {
+  display: none;
+  cursor: pointer;
+}
+
+.newinntalx:hover img.hover-img {
+  display: initial;
+  cursor: pointer;
 }
