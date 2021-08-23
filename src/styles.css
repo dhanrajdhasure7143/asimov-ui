@@ -2163,7 +2163,8 @@ button.btn:hover {
 
 .newpaginationdiv mat-form-field {
   margin: 0px 0px 0px 5px;
-  width: 50px;
+  min-width: 50px;
+  /* width: 50px; */
 }
 
 .mat-paginator-page-size {
