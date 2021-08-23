@@ -21,14 +21,16 @@
     <div class=" h-scroll">  
     <div class="container-fluid" >
       
-        <div class="py-5 bg-task">
+        <div class="bg-task">
           <!-- {{selectedtask.id}} /
            -->
-          <h3>{{selectedtask.taskCategory}} / {{selectedtask.taskName}}</h3>
-          <div>
-            <span class="h5 label-control"><b>Last Modified by :</b></span>&nbsp;<span class="h5">{{selectedtask.lastModifiedBy}}</span>&nbsp;<span>|</span>&nbsp;<span>@&nbsp;{{selectedtask.lastModifiedTimestamp | date :"short"}}</span>
+          <span class="task-name">{{selectedtask.taskCategory}} / {{selectedtask.taskName}}</span>
+          <div class="value">
+            <span class="level3">Last Modified By : {{selectedtask.lastModifiedBy}}</span>&nbsp;
+            <span>|</span>&nbsp;
+            <span class="level3">{{selectedtask.lastModifiedTimestamp |  date:'MMM dd, y, HH:mm:ss'}}</span>
           </div>
-          <br>
+          
         </div>
         <br>
         <div class="container p-0" style="width:100%">
@@ -104,9 +106,12 @@
                       <div class="form-fields col-md-12 pr-0 comment-input">
                         <input class=" form-control" type="text" #commentInput id="addcomment"
                           placeholder="Add a comment.." />
-                        <div class="comment-send" id="sendcomment" (click)="postcomments(commentInput.value)">
-                         
-                          <img src="../../../../assets/images/Projects/send-blue.svg" class="hover-img" />
+                        <div class="comment-send" id="sendcomment"  matTooltip="Send"  (click)="postcomments(commentInput.value)">
+                          <a class="newinntalx">
+                            <img src="../../../../assets/images/Projects/send.svg" class="default-img" />
+                            <img src="../../../../assets/images/Projects/send-blue.svg" class="hover-img" />
+                          </a>
+                          
                           <!-- <i class="fab fa-telegram-plane" id="sendcomment" (click)="postcomments(commentInput.value)"></i> -->
                         </div>
                       </div>
