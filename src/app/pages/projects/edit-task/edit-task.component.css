@@ -227,3 +227,15 @@ table tbody tr {
 .bg-task{
   background:rgb(241, 241, 241);
 }
+
+
+.h-scroll {
+  height: calc(100% - 48px) !important;
+  overflow: auto !important;
+}
+
+
+.edit-task-form .container-fluid{
+  padding-left:0px !important;
+  padding-right:0px !important;
+}

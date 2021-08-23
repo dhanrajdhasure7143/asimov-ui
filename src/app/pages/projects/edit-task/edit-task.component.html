@@ -1,9 +1,9 @@
-    <div *ngIf="selectedtask!=undefined" class="">
+    <div *ngIf="selectedtask!=undefined" class="edit-task-form">
       <div class="module-heading title ">
         <!-- <span class="projects-back-button" routerLink="/pages/projects/listOfProjects" >
             <i class="fa fa-angle-left" aria-hidden="true"></i>
         </span> -->
-        <span class="module-back-button" routerLink="/pages/projects/listOfProjects">
+        <span class="module-back-button" routerLink="/pages/projects/projectdetails"  [queryParams]="{id:project_id}">
             <i class="fas fa-arrow-left" aria-hidden="true"></i>
         </span>
         <span class="module-header-title">
@@ -18,7 +18,9 @@
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span> -->
     </div>
-      <div class="h-sroll" >
+    <div class=" h-scroll">  
+    <div class="container-fluid" >
+      
         <div class="py-5 bg-task">
           <!-- {{selectedtask.id}} /
            -->
@@ -48,7 +50,7 @@
                 <div class="form-fields col-md-3 pr-0">
                   <label   class="h6 label-control" id="percentage" for="percentage">Percentage Completed</label>
                   <!-- <ng5-slider [(value)]="slider" formControlName="percentageComplete" [options]="options"></ng5-slider> -->
-                  <div>{{selectedtask.percentageComplete}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
+                  <div>{{slider}}%<input type="range" min=0 max=100 (change)="slider=$event.target.value" formControlName="percentageComplete" [value]="slider"></div>
                 </div>
               </div>
              
@@ -293,6 +295,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
    
   
