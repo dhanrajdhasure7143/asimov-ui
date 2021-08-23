@@ -160,24 +160,24 @@
                      <div class="PI-flow-freq">
                          <h5 class="btn-default dropdown-toggle" [ngClass]="isfrequencymetrics==true?'isactive':''" (click)='onfrequency()' type="button">Frequency<span class="caret"></span></h5>
                          <div *ngIf='isfrequencymetrics' class='edgemetrics_spinner'>
-                            <button class='reset_btn' type='button' (click)="resetspinnermetrics()">Reset</button>
-                            <hr>
                             <span><input type="radio"  class="form-check-input" name="check" value="absoluteFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Absolute Frequency</span>
                             <span><input type="radio"  class="form-check-input" name="check" value="caseFrequency" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Case Frequency</span>
                             <span><input type="radio"  class="form-check-input" name="check" value="maxRepititons" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Repetitions</span>
+                            <hr>
+                            <button class='reset_btn' type='button' (click)="resetspinnermetrics()">Reset</button>                            
                          </div>
                      </div>
                      <hr>
                      <div class="PI-flow-per">
                          <h5 class="btn-default dropdown-toggle" (click)='onPerformance()' [ngClass]="isperformancemetrics==true?'isactive':''" type="button">Performance        <span class="caret"></span></h5>
-                         <div *ngIf='isperformancemetrics' class='edgemetrics_spinner'>
-                            <button class='reset_btn' type='button' (click)="resetspinnermetrics()">Reset</button>
-                            <hr>                    
+                         <div *ngIf='isperformancemetrics' class='edgemetrics_spinner'>                                                
                             <span><input type="radio" class="form-check-input" name="check" value="totalDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Total Duration</span>
                             <span><input type="radio" class="form-check-input" name="check" value="medianDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Median Duration</span>
                             <span><input type="radio" class="form-check-input" name="check" value="meanDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Mean Duration</span>
                             <span><input type="radio" class="form-check-input" name="check" value="maxDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Max Duration</span>
                             <span><input type="radio" class="form-check-input" name="check" value="minDuration" (change)='selectedMetric($event.target.value)' [(ngModel)]='spinMetrics0'> Min Duration</span>
+                            <hr>
+                            <button class='reset_btn' type='button' (click)="resetspinnermetrics()">Reset</button>                            
                          </div>
                      </div>
                     </form>
@@ -189,13 +189,15 @@
 
      </div>
      <div class='col-md-1'>
-         <div class="path_slider1 pull-right">
+         <div class="path_slider1 text-center">
              <div>
-             <div class="vertical_slider custom-slider" id="act_slider"><ng5-slider (userChange)="onchangeActivity($event)" [disabled]="issliderDisabled" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
+             <div class="vertical_slider custom-slider" id="act_slider">
+                 <ng5-slider (userChange)="onchangeActivity($event)" [disabled]="issliderDisabled" [(ngModel)]="activityValue" [options]="options" ></ng5-slider></div>
              </div>
              <p class="slider_label Activities_slider">Activities</p>
              <div>
-             <div class="vertical_slider custom-slider" id="path_slider"><ng5-slider  [(ngModel)]="pathvalue" [disabled]="issliderDisabled" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
+             <div class="vertical_slider custom-slider" id="path_slider">
+                 <ng5-slider  [(ngModel)]="pathvalue" [disabled]="issliderDisabled" [options]="options" (userChange)="onChangePath($event)" ></ng5-slider></div>
              </div>
              <p class="slider_label Paths_slider">Paths</p>
          </div>
