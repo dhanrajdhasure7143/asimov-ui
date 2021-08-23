@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup,Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
+import { NgxSpinner } from 'ngx-spinner/lib/ngx-spinner.enum';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-edit-task',
@@ -24,10 +26,12 @@ export class EditTaskComponent implements OnInit {
   commentnumber:any;
   userdata:any;
   users_list:any=[];
-
+  project_id:number;
   constructor(private formBuilder:FormBuilder,
     private router:ActivatedRoute,
-    private rest:RestApiService
+    private route:Router,
+    private rest:RestApiService,
+    private spinner:NgxSpinnerService
     ) { }
 
   ngOnInit(): void {
@@ -58,12 +62,12 @@ export class EditTaskComponent implements OnInit {
   gettask()
   {
     this.router.queryParams.subscribe(data=>{
-      this.rest.gettaskandComments(data.projectid).subscribe(response=>{
+      let params:any=data
+      this.project_id=params.projectid
+      this.rest.gettaskandComments(params.projectid).subscribe(response=>{
         let taskList:any=response;
-        console.log("-----------------sample-------------",taskList.find(item=>item.id==data.taskId))
         let task:any=taskList.find(item=>item.id==data.taskId)
         this.updatetaskdata(task);
-        
       })
     })
   }
@@ -100,6 +104,7 @@ export class EditTaskComponent implements OnInit {
     // this.updatetaskmodalref=this.modalService.show(updatetaskmodal,{class:"modal-lg"})
   }
   updatetask(){
+    
     if(this.updatetaskForm.valid)
     {
       let taskupdatFormValue =  this.updatetaskForm.value;
@@ -107,13 +112,14 @@ export class EditTaskComponent implements OnInit {
       taskupdatFormValue["percentageComplete"]=this.slider
       taskupdatFormValue["comments"]=this.taskcomments
       taskupdatFormValue["history"]=this.taskhistory
+      this.spinner.show();
       this.rest.updateTask(taskupdatFormValue).subscribe( res =>{
+        this.spinner.hide();
         let status: any= res;
         if(status.errorMessage==undefined)
         {
           Swal.fire("Success",status.message,"success");
-          //this.getTaskandCommentsData();
-          //this.spinner.hide();
+          this.route.navigate(['/pages/projects/projectdetails'],{queryParams:{id:this.project_id}})
         }
         else
         {

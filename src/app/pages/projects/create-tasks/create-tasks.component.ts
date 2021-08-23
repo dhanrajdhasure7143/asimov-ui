@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Base64 } from 'js-base64';
 import moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -22,8 +22,9 @@ export class CreateTasksComponent implements OnInit {
   projectdetails: Object;
   taskcategories: Object;
   approverslist: any=[];
+  project_id:number;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
-    private router: Router) { }
+    private router: Router, private route:ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -43,9 +44,12 @@ export class CreateTasksComponent implements OnInit {
 
       this.mindate= moment().format("YYYY-MM-DD");
 
-
-      this.getallusers();
-      this.getTaskCategories();
+      this.route.queryParams.subscribe(data=>{
+        let response:any=data;
+        this.project_id=response.project_id
+        this.getallusers();
+        this.getTaskCategories();
+      })
   }
 
   inputNumberOnly(event){
@@ -61,7 +65,7 @@ export class CreateTasksComponent implements OnInit {
     this.spinner.show();
     this.createtaskForm.value.status="New";
     this.createtaskForm.value.percentageComplete=0;
-    //this.createtaskForm.value.projectId=this.project_id;
+    this.createtaskForm.value.projectId=this.project_id;
     let data=this.createtaskForm.value;
     this.api.createTask(data).subscribe(data=>{
       let response:any=data;
@@ -81,6 +85,8 @@ export class CreateTasksComponent implements OnInit {
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resettask();
+        
+        this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:this.project_id}})
         //this.projectdetailscreen.getTaskandCommentsData();
       }) 
         

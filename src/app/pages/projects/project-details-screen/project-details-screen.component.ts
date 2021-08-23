@@ -300,18 +300,20 @@ percentageComplete: number;
   }
 
   downloadExcel(){
-    this.spinner.show();
-    this.spinner.hide();
-    Swal.fire({
-      title: 'Oops...',
-      text: "Functionality is In Progress..!",
-      position: 'center',
-      icon: 'info',
-      showCancelButton: false,
-      confirmButtonColor: '#007bff',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'OK'
-  })
+    this.rpa.exportproject(this.project_id).subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage==undefined)
+      {
+           var link = document.createElement('a');
+           link.download = this.projectDetails.projectName;
+           link.href =(`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`) ;
+          link.click();
+      }
+      else
+      {
+        Swal.fire("Error", response.errorMessage,"error");
+      }
+    })
   }
   checktodelete()
   {
