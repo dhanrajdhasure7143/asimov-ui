@@ -976,4 +976,16 @@ save_blueprism_config(data)
     return this.http.post("/platform-service/document/deleteUploadedFile",input)
   }
 
+
+  getvaluechain()
+  {
+    return this.http.get("/vcmprocess/getVcmMasterContent")
+  }
+
+getvaluechainprocess(id)
+{
+  return this.http.get("/vcmprocess/getVcmProcessGroupInfoByMasterId/"+id);
+}
+
+
 }

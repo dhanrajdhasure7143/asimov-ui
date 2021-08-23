@@ -8,6 +8,8 @@ import { ProjectDetailsScreenComponent } from './project-details-screen/project-
 import { ProjectsDashboardComponent } from './projects-dashboard/projects-dashboard.component';
 import { ProjectRepoScreenComponent } from './project-repo-screen/project-repo-screen.component';
 import { ProgramDetailsComponent } from './program-details/program-details.component';
+import { CreateTasksComponent } from './create-tasks/create-tasks.component';
+import { EditTaskComponent } from './edit-task/edit-task.component';
 
 
 const routes: Routes = [
@@ -20,6 +22,8 @@ const routes: Routes = [
     {path:'projectdashboard', component:ProjectsDashboardComponent},
     {path:'programdetails', component:ProgramDetailsComponent},
     {path:'create-projects', component:CreateProjectsComponent},
+    {path:'create-task', component:CreateTasksComponent},
+    {path:'edit-task', component:EditTaskComponent},
     {path:"", component:ProjectsProgramsTableComponent},
     {path:'**', redirectTo:'/listOfProjects', pathMatch: 'full'}
     

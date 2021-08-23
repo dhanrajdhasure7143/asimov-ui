@@ -700,7 +700,7 @@
              <button type="button" class="btn btn-default new-attach-btn">Attachments</button> 
           </span>-->
             <span class="">
-              <button type="button" class="btn btn-primary" (click)="createtask(createtaskmodal)">
+              <button type="button" class="btn btn-primary"  routerLink="/pages/projects/create-task" [queryParams]="{id: projectid}" >
                 <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />Create New
               </button>
             </span>
@@ -791,10 +791,8 @@
               <img src="../../../../assets/images/Projects/upload-blue.svg" class="hover-img">
             </a> 
             
-            <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
-              <!-- <img src="../../../../assets/images/Projects/edit-black.svg"> -->
-              <img src="../../../../../assets/images/Projects/edit-black.svg" class="default-img">
-              <img src="../../../../../assets/images/Projects/Edit-blue.svg" class="hover-img">
+            <a routerLink="/pages/projects/edit-task" [queryParams]="{projectid:projectDetails.id,taskId:element.id}" matTooltip="Edit Task">
+              <img src="../../../../assets/images/Projects/edit-black.svg">
             </a> 
             
             <a (click)="deletetask(element)" matTooltip="Delete Task" >
@@ -1125,7 +1123,6 @@
 
 
   <ng-template class="modal-lg" #createtaskmodal>
-    <app-create-tasks [createtaskmodalref]="createtaskmodalref" [project_id]="project_id"></app-create-tasks>
   </ng-template>
 
 
