@@ -173,8 +173,9 @@ background-color: blue !important;
 
 .rpa-dropdown{
  /*top:-78px !important;*/
- min-width:53px !important;
-
+ /* min-width:53px !important; */
+ min-width:100px !important;
+ left: -38px;
 }
 
 
@@ -210,10 +211,10 @@ background-color: blue !important;
 }
 .action-item{
   width:auto;
-  font-size: 18px;
+  /* font-size: 18px; */
   padding:5px;
   cursor: pointer;
-  
+  position: relative;
 }
 
 
@@ -245,4 +246,10 @@ background-color: blue !important;
   border-right: 1px solid gray;
   padding-right:15px;
   padding-left:15px;
+}
+.rpa-custom-slider {
+  height: 200px;
+  position: absolute;
+  top: 25%;
+  right: 15px;
 }

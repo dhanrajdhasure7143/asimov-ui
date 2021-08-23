@@ -293,7 +293,7 @@ th {
 
 
 label.main-subtitle {
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 700;
   color: #00a1e3;
   display: block;
@@ -316,6 +316,7 @@ label.subtitle-tag {
   align-items: center;
   /* justify-content: space-between; */
   width: 100%;
+  height: 180px;
   background-color: #edf9fb;
 }
 
@@ -404,4 +405,9 @@ button#create_Configuration {
 button#create_Configuration:hover {
   background: #001c47 !important;
   color: #fff !important;
+}
+
+.main-subheader img {
+  position: relative;
+  bottom: -21px;
 }
