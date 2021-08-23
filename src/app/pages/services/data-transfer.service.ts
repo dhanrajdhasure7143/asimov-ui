@@ -81,4 +81,11 @@ export class DataTransferService {
     this.pi_headerValues.next(values);
   }
 
+  private process_insightsHeader:BehaviorSubject<any>=new BehaviorSubject<any>(null);
+  processInsights_headerChanges=this.process_insightsHeader.asObservable();
+ 
+  process_insightsHeaderValues(values:any){
+    this.process_insightsHeader.next(values);
+  }
+
 }

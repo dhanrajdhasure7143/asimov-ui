@@ -19,14 +19,14 @@ export class BusinessProcessComponent implements AfterViewChecked {
   isEditMode:boolean=false;
   updated_date_time:any;
   isSave_disabled:boolean=true;
-  iscreate_notation:boolean;
+  iscreate_notation:boolean=false;
   isStartProcessBtn:boolean=false;
   currentNotation_name:any;
   userRole;
   isApproverUser:boolean = false;
   logged_User:any;
   approver_list:any[] = [];
-  selected_approver:any
+  selected_approver:any;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
@@ -65,6 +65,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
         // if(notationValues_obj['isEditbtn'])
         this.isEditMode=notationValues_obj['isEditbtn'];
         this.isSave_disabled=notationValues_obj['isSavebtn'];
+        console.log(this.iscreate_notation)
       }
     });
   }

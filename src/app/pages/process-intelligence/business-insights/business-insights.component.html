@@ -1,35 +1,35 @@
     <div class="">
-        <div class="container-fluid">
+        <div class="container-fluid new-PI-layout">
             <div class="secone">
                 <h1>Business Metrics</h1>
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3 pl-0">
                         <div class="innersecone d-flex">
                             <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.slowestCase)}}</span></h2></div>
                            <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.fastestCase)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Fastest Case</p></div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 pl-0">
                         <div class="innersecone d-flex">
                             <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.fastestCase)}}</span></h2></div>
                             <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.slowestCase)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Slowest case</p></div>
                         </div>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-3 p-0">
                         <div class="innersecone d-flex">
                             <div class="leftinsec"><h2><span class="smalfon">{{getTimeConversion(this.b_metrics.avgTurnAround)}}</span></h2></div>
                             <!-- <div class="leftinsec"><h2>{{getTimeConversion(this.b_metrics.avgTurnAround)}}</h2></div> -->
                             <div class="rightinsec"><p class="heading">Average Turn Around Time</p></div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <!-- <div class="innersecone d-flex">
+                    <!-- <div class="col-md-3">
+                        <div class="innersecone d-flex">
                             <div class="leftinsec"><h2><span class="smalfon">59%</span></h2></div>
                             <div class="rightinsec"><p class="heading">Rework Rate</p></div>
-                        </div> -->
-                    </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
             <div class="chartssc">
@@ -37,35 +37,26 @@
                 
                 <h2 class="heading">Time Analysis</h2>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-6 pl-0">
                         <div class="chartinnsec">
-                            <div class="row pb-4">
-                                <div class="col-md-12">
-                                    <br>
-                                    <h3 class="heading">Activity Time</h3>
-                                </div>
-                                
+                            <div class="TA-Header">
+                                <label class="">Activity Time</label>                                
                             </div>
-                            <br>
                             <div id="chartdiv"></div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 pr-0">
                         <div class="chartinnsec">
-                            <div class="row pb-4">
-                                <div class="col-md-12">
-                                    <br>
-                                    <h3 class="heading">Throughput Time in Days</h3>
-                                </div>
+                            <div class="TA-Header">
+                                <label class="">Throughput Time in Days</label>
                             </div>
-                            <br>
                             <div id="chartdiv2"></div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="varienanal">
-                    <h1>Variant Analysis</h1>
+            <div class="varienanal chartinnsec">
+                    <label>Variant Analysis</label>
                     <!-- <div class="maintx d-flex">
                         <div class="leftyext">
                             <h4>Variant 1</h4>
@@ -85,18 +76,10 @@
                             </div>
                         </div>
                     </div>
-
-                    <div>
-                        <mat-paginator #paginator
-                        [length]="totalRows$ | async"
-                        [pageIndex]="0"
-                        [pageSize]="4"
-                        [showFirstLastButtons]="true"
-                        [pageSizeOptions]="[5, 10, 25, 50]"
-                      ></mat-paginator>
-                    </div>
-                
-            </div>
+                    <div class="bpspaginationdiv">
+                        <mat-paginator class="newpaginationdiv mat-paginator" #paginator [length]="totalRows$ | async" [pageIndex]="0" [pageSize]="5" [showFirstLastButtons]="true" [pageSizeOptions]="[5, 10, 25, 50]" ></mat-paginator>
+                    </div>                
+            </div>            
         </div>
     </div>
     

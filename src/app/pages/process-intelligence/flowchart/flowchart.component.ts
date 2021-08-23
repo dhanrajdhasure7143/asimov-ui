@@ -16,6 +16,7 @@ import { RestApiService } from '../../services/rest-api.service';
 import Swal from 'sweetalert2';
 import { Location} from '@angular/common'
 import { GlobalScript } from 'src/app/shared/global-script';
+import { Subscription } from 'rxjs';
 
 enum ProcessGraphList {
   'Accounts_payable_04-07-2020',
@@ -154,6 +155,8 @@ isWorkingHrsBtn:boolean=true;
 allVaraintsCases:any[]=[];
 isTimeChange:boolean=false;
 performanceFilterInput:any ={};
+isLoading:boolean=false;
+Pi_header_functions:Subscription;
 
   constructor(private dt: DataTransferService,
     private router: Router,
@@ -182,7 +185,7 @@ performanceFilterInput:any ={};
 
   ngAfterViewInit(){
     let res_data
-    this.dt.pi_headerChanges.subscribe(res=>{res_data=res
+    this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
       console.log(res);
       if(res_data=='svg'){
         this.downloadSvg();
@@ -222,8 +225,8 @@ performanceFilterInput:any ={};
           this.wpiIdNumber = parseInt(params['wpiId']);
           piId=this.wpiIdNumber;
           this.graphIds = piId;
-          this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-          this.spinner.show();
+          this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
+          this.isLoading=true;
           setTimeout(() => {
             this.onchangegraphId(piId);
             }, 500);
@@ -232,8 +235,8 @@ performanceFilterInput:any ={};
         this.piIdNumber = parseInt(params['piId']);
         piId=this.piIdNumber;
         this.graphIds = piId;        
-        this.loaderImgSrc = "/assets/images/PI/loader_vr_1.gif"; 
-        this.spinner.show();
+        this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
+        this.isLoading=true;
            this.graphgenetaionInterval = setInterval(() => {
              this.onchangegenerategraphId(piId);
            }, 10*1000);
@@ -326,7 +329,7 @@ performanceFilterInput:any ={};
             if(this.graphgenetaionInterval){
               clearInterval(this.graphgenetaionInterval);
             }
-            this.spinner.hide();
+            this.isLoading=false;
             return;
           } 
         }
@@ -354,7 +357,7 @@ performanceFilterInput:any ={};
             }
           })
 
-          this.spinner.hide();
+          this.isLoading=false;
          // this.redirectToWorkspace()
           this.model1=[];
           this.model2=[];
@@ -377,7 +380,7 @@ performanceFilterInput:any ={};
             this.endArray.push(element.from)
           }
         });
-        this.spinner.hide();
+        this.isLoading=false;
         this.linkmodel2 = this.model2;
         this.isFullGraphBPMN = true;
         this.isSingleTraceBPMN = false;
@@ -386,7 +389,7 @@ performanceFilterInput:any ={};
         this.filterOverlay()
     }
         },(err =>{
-          this.spinner.hide();
+          this.isLoading=false;
         }));
         const variantGraphbody= { 
           "data_type":"variant_graph", 
@@ -417,7 +420,7 @@ performanceFilterInput:any ={};
   }
 
   onchangegenerategraphId(selectedpiId){  // change process  graps in dropdown
-    //this.spinner.show();
+    //this.isLoading=true;
     this.isNodata=true;
     this.route.queryParams.subscribe(params => {
       let token = params['wpiId'];
@@ -491,12 +494,12 @@ performanceFilterInput:any ={};
             if(this.graphgenetaionInterval){
               clearInterval(this.graphgenetaionInterval);
             }
-            this.spinner.hide();
+            this.isLoading=false;
             return;
           } 
         }
         if(this.fullgraph.hasOwnProperty('display_msg')){
-          this.spinner.show();
+          this.isLoading=true;
           this.model1=[];
           this.model2=[];
         } else{
@@ -521,7 +524,7 @@ performanceFilterInput:any ={};
             this.endArray.push(element.from)
           }
         });
-        this.spinner.hide();
+        this.isLoading=false;
         this.linkmodel2 = this.model2;
         this.isFullGraphBPMN = true;
         this.isSingleTraceBPMN = false;
@@ -530,7 +533,7 @@ performanceFilterInput:any ={};
         this.filterOverlay()
     }
         },(err =>{
-          this.spinner.hide();
+          this.isLoading=false;
         }));
         const variantGraphbody= { 
           "data_type":"variant_graph", 
@@ -684,7 +687,7 @@ performanceFilterInput:any ={};
         endTime=this.workingHours.shiftEndTime
       }
       this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-      this.spinner.show();
+      this.isLoading=true;
       const variantComboBody={
         "data_type":"variant_combo",
         "pid":this.graphIds,
@@ -708,7 +711,7 @@ performanceFilterInput:any ={};
           }else{                
             this.model2 = this.flowchartData(this.model1);
           }
-          this.spinner.hide();
+          this.isLoading=false;
     })
          /**
        * BPMN Boolean Variables
@@ -1376,7 +1379,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   }
 
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
-    this.spinner.show();
+    this.isLoading=true;
     this.activity_value=SelectedActivities;
     this.model1=[]
     this.model2=[]
@@ -1406,9 +1409,9 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         let activityFilterGraph:any = data;
         this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
         this.model2 = this.flowchartData(this.model1);
-        this.spinner.hide();
+        this.isLoading=false;
       },(err =>{
-        this.spinner.hide();
+        this.isLoading=false;
       }));
   }
 
@@ -1573,7 +1576,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
           endTime=this.workingHours.shiftEndTime
         }
         this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-        this.spinner.show();
+        this.isLoading=true;
 
           var reqObj={
             "data_type":"endpoint_activity_filter",
@@ -1602,7 +1605,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
                 this.endArray.push(element.from)
               }
             });
-          this.spinner.hide();
+          this.isLoading=false;
       })
     }
   }
@@ -1716,6 +1719,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     if(this.graphgenetaionInterval){
       clearInterval(this.graphgenetaionInterval);
     }
+    this.Pi_header_functions.unsubscribe();
   }
 
   viewInsights(){
@@ -1753,7 +1757,7 @@ addWorkingHours(){
     endTime=this.workingHours.shiftEndTime
   }
   this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-  this.spinner.show();
+  this.isLoading=true;
   const fullGraphbody= { 
     "data_type":"full_graph", 
      "pid":this.graphIds,
@@ -1784,7 +1788,7 @@ addWorkingHours(){
             }, 1500);
           }
         })
-        this.spinner.hide();
+        this.isLoading=false;
         this.model1=[];
         this.model2=[];
     } else{
@@ -1806,7 +1810,7 @@ addWorkingHours(){
               this.endArray.push(element.from)
             }
           });
-          this.spinner.hide();
+          this.isLoading=false;
           this.linkmodel2 = this.model2;
           this.isFullGraphBPMN = true;
           this.isSingleTraceBPMN = false;
@@ -1815,7 +1819,7 @@ addWorkingHours(){
           this.filterOverlay();
       }
     },(err =>{
-      this.spinner.hide();
+      this.isLoading=false;
     }));
     const variantGraphbody= { 
       "data_type":"variant_graph", 
@@ -1972,7 +1976,7 @@ addWorkingHours(){
             }, 1500);
           }
         })
-        this.spinner.hide();
+        this.isLoading=false;
         this.model1=[];
         this.model2=[];
     } else{
@@ -1995,7 +1999,7 @@ addWorkingHours(){
               this.endArray.push(element.from)
             }
           });
-          this.spinner.hide();
+          this.isLoading=false;
           this.linkmodel2 = this.model2;
           this.isFullGraphBPMN = true;
           this.isSingleTraceBPMN = false;
@@ -2005,7 +2009,7 @@ addWorkingHours(){
       }
     }
      ,(err=>{
-      this.spinner.hide();
+      this.isLoading=false;
        console.log(err);
      }));
   }

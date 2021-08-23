@@ -26,18 +26,18 @@ span.testtooltip:before {
     display: block;
 }
 #dropdownForm2{
-    top: 2px; 
-    /* left: 30%;  */
+    top: 0px; 
+    left: 0px; 
     will-change: transform; 
     position: absolute; 
-    transform: translate(-340px, 39px);
+    transform: translate(253px, 42px);
     position: absolute;
     /* top: 100%; */
     /* left: 0; */
     width:500px ;
     z-index: 1000;
     float: left;
-    padding: 5px 0;
+    padding: 15px;
     /* margin: 2px 0 0; */
     font-size: 14px;
     text-align: left;
@@ -53,11 +53,11 @@ span.testtooltip:before {
     content: "";
     position: absolute;
     bottom: 100%;
-    left: 96%;
-    margin-left: -5px;
+    left: 80%;
+    margin-left: 4px;
     border-width: 8px;
     border-style: solid;
-    border-color: transparent transparent gray transparent;
+    border-color: transparent transparent #ccc transparent;
   }
   
   
@@ -86,7 +86,6 @@ span.testtooltip:before {
   }
   .p_warning {
     color: red;
-    padding: 0px 14px;
     font-size: 12px;
   }
   #dropdownForm2{
@@ -112,7 +111,7 @@ span.testtooltip:before {
   z-index: 999;
 }
 .bps-float button img {
-  height: 16px;
+  height: 17px;
   width: auto;
 }
 .bps-float button:hover {
@@ -122,4 +121,31 @@ span.testtooltip:before {
 .bps-float button:hover img {
   -webkit-filter: brightness(10) !important;
   filter: brightness(10) !important;
+}
+.timefeed-header {
+  margin-bottom: 15px;
+}
+.timefeed-footer {
+  float: right;
+  margin-top: 20px;
+}
+.timefeed-footer .btn-primary {
+  margin-right: 0px !important;
+}
+.timefeed-header h3 {
+  margin-top: 0px !important;
+  margin-bottom: 15px !important;
+  font-size: 18px !important;
+  font-weight: 600;
+  color: #001c47;
+}
+.timefeed-header span.close {
+  margin-top: -4px;
+  opacity: 1;
+  font-size: 20px;
+  font-weight: 600;
+  color: #001c47;
+}
+.timefeed-header span.close:hover {
+  color: #00a0e3;
 }

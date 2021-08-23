@@ -15,6 +15,7 @@ export class ProcessIntelligenceComponent implements OnInit {
  isPIHeaderShow:any="true";
  isplay:boolean;
  isAddHrs:boolean=false;
+ isAddHrs1:boolean=false;
  workingHours:any = {
   formDay:'Mon',
   toDay: 'Sun',
@@ -22,6 +23,7 @@ export class ProcessIntelligenceComponent implements OnInit {
   shiftEndTime:"23:59"
 };
 isBackbutton:boolean=false;
+insights_header:boolean=false;
 
   constructor(private changeDetectorRef:ChangeDetectorRef,
     private router:Router,
@@ -52,6 +54,11 @@ if(windowUrl.indexOf('processIntelligence/insights') != -1||windowUrl.indexOf('b
   this.isBackbutton=true;
 } else{
   this.isBackbutton=false;
+}
+if(windowUrl.indexOf('processIntelligence/insights') != -1){
+  this.insights_header=true;
+} else{
+  this.insights_header=false;
 }
   this.route.queryParams.subscribe(params => {
     if(params['wpid']!=undefined){
@@ -114,6 +121,19 @@ resetWorkingHours(){ //working hours reset in timffed
   this.workingHours.shiftStartTime="00:00";
   this.workingHours.shiftEndTime="23:59"
 }
+openinsightsHrsOverLay(){
+  this.isAddHrs1=!this.isAddHrs1
+}
+
+cancelinsightsaddHrs(){ //close timefeed popup 
+  this.isAddHrs1=!this.isAddHrs1;
+}
+openInsightsVaraintOverLay(){
+  this.dt.process_insightsHeaderValues("open_Varaint");
+  }
+  addWorkingHrsInsights(){
+    this.dt.process_insightsHeaderValues(this.workingHours);
+    }
 
 }
 
