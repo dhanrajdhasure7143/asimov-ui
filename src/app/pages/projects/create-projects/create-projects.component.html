@@ -120,8 +120,8 @@
                                                 [ngClass]="createprogram.get('process').valid?'enteredfield-color':'inputfield-color'">
                                                 <option [value]="null" disabled hidden>Select Process</option>
                                                 <option value="" [selected]="true">Select Process</option>
-                                                <option *ngFor="let process of selected_process_names"
-                                                    [value]="process.processName">{{process.processName}}</option>
+                                                <option *ngFor="let process of valuechainprocesses"
+                                                    [value]="process.processInfoName">{{process.processInfoName}}</option>
                                             </select>
                                             <span
                                                 *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
@@ -248,15 +248,12 @@
                                         <div class="form-fields">
                                             <label class="label-control" for="programValueChain">Map Value Chain<span
                                                     class="star">*</span></label>
-                                            <select formControlName="programValueChain" value=""
-                                                class="form-control data"
-                                                [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'">
-                                                <option [value]="null" disabled hidden>Select Map Value Chain</option>
-                                                <option value="" [selected]="true">Select Map Value Chain</option>
-                                                <option value="Invoice Managment">Invoice Managment</option>
-                                                <option value="Acme Managment">Acme Managment</option>
-                                                <option value="E-Commerce">E-Commerce</option>
-                                            </select>
+                                                    <select formControlName="programValueChain" (change)="getValueChainProcesses($event.target.value)" class="form-control data"
+                                                    [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'">
+                                                  
+                                                    <option value=""  >Select Map Value Chain</option>
+                                                    <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
+                                                </select>
                                             <span
                                                 *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
                                                 class=" errspan required">Map Value Chain Required*</span>

@@ -35,6 +35,8 @@ export class CreateProjectsComponent implements OnInit {
   username: string;
   mindate: any;
   unassigned_projects:any=[];
+  valuechain:any=[];
+  valuechainprocesses:any=[];
   constructor(
     private formBuilder: FormBuilder,
     private api:RestApiService, 
@@ -92,7 +94,7 @@ export class CreateProjectsComponent implements OnInit {
     this.getallProjects();
     this.getprocessnames();
     this.getunassignedprojectslist();
-
+    this.getvalchain();
     this.mindate= moment().format("YYYY-MM-DD");
   }
 
@@ -187,6 +189,7 @@ createproject(event)
     let userlastname=localStorage.getItem("lastName")
     this.username=userfirstname+" "+userlastname
     this.createprogram.value.createdBy=this.username;
+    this.createprogram.value.programValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.createprogram.value.programValueChain).processName;
     this.createprogram.value.status="New";
     this.createprogram.value.programHealth="Good";
     let data=this.createprogram.value;
@@ -294,6 +297,29 @@ createproject(event)
     }
   }
   
+  getValueChainProcesses(value)
+  {
+    // //this.valuechainprocesses=[];
+    // console.log(value);
+    // console.log(this.valuechain)
+  // let processmaster=this.valuechain.find(item=>item.processGrpMasterId==value)
+    //console.log("-processMaster-",value)
+    this.api.getvaluechainprocess(value).subscribe(data=>{
+      let response:any=data;
+      this.valuechainprocesses=response;
+    })
+  }
+
+
+  getvalchain()
+  {
+    this.valuechain=[];
+    this.api.getvaluechain().subscribe(res=>{
+      let response:any=res;
+      this.valuechain=response;
+    })
+  }
+
 
   
 }
