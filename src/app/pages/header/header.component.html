@@ -1,0 +1,65 @@
+<div class="s1">
+    <section class="header">
+        <div class="container-fluid">
+            <nav class="navbar navbar-fixed-top" id="nv1">
+                <div class=" c1">
+                    <div class="abrand">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="abrand_div" routerLink="/pages/home">
+                                    <img src="assets/images/EZFlow-New-Logo.png">
+                                </div>
+                            </div>
+                            <div class="col-md-10 header_nav">
+                                <ul class="nav navbar-nav  navbar-right ">
+                                    <li class="breadcrumb_li">
+                                        <div class="breadcrumb">
+                                            <span *ngIf="(parent_link && parent_link.length != 0)||(child_link && child_link.length != 0)" id="home" routerLink="/pages/home" (click)="selectedIndex=pages.length">Home</span>
+                                            <span *ngIf="parent_link && parent_link.length != 0" [routerLink]="parent_link.route" (click)="removenodes()" id="parent">&nbsp;|&nbsp;<u><b>{{parent_link.title}}</b></u></span>
+                                            <span *ngIf="child_link && child_link.length != 0" [routerLink]="child_link.route" id="child">&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;{{child_link.title}}</span>
+                                        </div>
+                                    </li>
+                                    <li class="icon_middle" [ngClass]="selectedIndex==i?'active': ''" (click)="selectedIndex=i" [id]="'nav-link-'+i" *ngFor="let each_page of pages;let i=index;trackBy:loopTrackBy" [routerLink]="each_page.link">
+                                        <a *ngIf="parent_link" [id]="'header'+i"> <img [src]="each_page.img">
+                                            <label>{{each_page.title}}</label> </a>
+                                    </li>
+                                    <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
+                                        <!-- <img src="assets/images/Group 192.svg"> </li> -->
+                                        <li class="notification-icon" style="padding-left:3px;" (click)='slideUp("notifications")'>
+                                           <img src="assets/images/Notification_Bell.svg">
+                                            <div *ngIf="this.notificationscount!=0" class="notification-count" style = "position:absolute; left:66px; top:2px;">
+                                            <span>{{notificationscount}}</span>
+                                         </div>
+                                       </li>
+                                    <li class="text-center">
+                                        <!-- <img src="assets/images/pro1.png"> -->
+                                        <div  class="res-circle " *ngIf="profilePicture==false">{{firstletter|uppercase}}</div>
+                                        <div   *ngIf="profilePicture==true"><img class="res-circle " [src]="retrievedImage" ></div>
+                                        <div class="dropdown">
+                                            <span class="dropdown-toggle" data-toggle="dropdown"><i class="fas fa-chevron-down"></i></span>
+                                            <div class="dropdown-menu drop_down" aria-labelledby="dropdownMenuButton">
+                                                <!-- <a (click)='slideUp("my_acc")'><i class="far fa-user hd_icon"></i> My Account</a>
+                          <a (click)='slideUp("user_manage")'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
+                          <a (click)='slideUp("config_alert")'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configure Alerts</a>
+                          <a (click)='slideUp("invite_user")'><img  class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
+                          <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a> -->
+                                                <a  (click)='myAccount()'><i class="far fa-user hd_icon"></i> My Account</a>
+                                                <a *ngIf="this.userRole.includes('Admin') || this.userRole.includes('SuperAdmin')" (click)='userManagement()'><img class="header_icon" src="..\assets\icons\user_management_icon.svg">User Management</a>
+                                                <a *ngIf="this.userRole.includes('Admin')" (click)='configAlerts()'><img class="header_icon" src="..\assets\icons\alert_icon.svg">Configuration</a>
+                                                <a *ngIf="this.userRole.includes('Admin')" (click)='inviteUser()'><img class="header_icon" src="..\assets\icons\invite_user_icon.svg">Invite User</a>
+                                                <a (click)='logout()'><i class="fas fa-sign-out-alt"></i>Signout</a>
+
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </section>
+</div>
+<app-header-dropdown-overlay [overlay_notifications_dt]="overlay_notifications_model" [overlay_acc_dt]="overlay_acc_model" [overlay_user_manage_dt]="overlay_user_manage_model" [overlay_config_alert_dt]="overlay_config_alert_model" [overlay_invite_user_dt]="overlay_invite_user_model"></app-header-dropdown-overlay>
+<!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#3385ff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color:white" ></p></ngx-spinner> -->

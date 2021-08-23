@@ -1,0 +1,727 @@
+<div class="bg-color">
+<br>
+<br>
+<div class="container-fluid">
+<div class="form-inline">
+
+  <div class="form-group">
+    <span style="padding:5px">
+      <mat-form-field id="autocategorysearch">
+        <mat-label>Select Process Group</mat-label>
+          <mat-select  [value]="selectedcategory" (selectionChange)="applyFilter1($event.value)">
+            <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
+            </mat-option>
+          </mat-select>
+      </mat-form-field>
+    </span>
+      <span style="padding:5px">
+        <mat-form-field *ngIf="process_names!=undefined" id="autoprocesssearch">
+            <mat-label>Select Process</mat-label>
+            <mat-select [(ngModel)]="selectedvalue" (selectionChange)="applyFilter($event.value)">
+                <mat-option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+      </span>
+
+      <span style="padding:5px">
+        <mat-form-field id="autoenvsearch">
+          <mat-label>Select Environment</mat-label>
+          <mat-select  [(ngModel)]="selectedEnvironment">
+              <mat-option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </span>
+      <span style="padding:5px" id="autoreset">
+      <button (click)="reset_all()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
+      </span>
+  </div>
+
+
+  <div class="form-group pull-right">
+      <!--<span style="padding:5px" id="autoStartProcess">
+        <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
+      </span>-->
+        <span style="padding:5px" id="autoStartProcess">
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-play" style="margin-right: -4px !important;"></i></button>
+        </span>
+       <!-- <span style="padding:5px">
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
+        </span>
+        -->
+        <span style="padding:5px" id="autoOpenScheduler">
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><i class="fa fa-calendar" style="margin-right: -1px !important;"></i></button>
+        </span>
+        <span style="padding:5px" id="autoViewLogs">
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs()"  ><i class="fa fa-file" style="margin-right: -1px !important;" aria-hidden="true"></i></button>
+        </span>
+  </div>
+
+</div>
+</div>
+
+
+<div class="container-fluid">
+<!-- <mat-card> -->
+  <div  *ngIf="responsedata!=undefined" style="width:100%;height:45vh;overflow: scroll;">
+
+    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table" id="autotable">
+
+        <ng-container matColumnDef="processName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
+            <td mat-cell [matTooltip]="element.processName"  *matCellDef="let element">{{(element.processName.length > 15) ? ((element.processName).slice(0, 15) + '...') : element.processName}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="taskName">
+          <th mat-header-cell *matHeaderCellDef>Task</th>
+          <td mat-cell *matCellDef="let element">
+            <span *ngIf="element.taskName!=null" [matTooltip]="element.taskName">{{(element.taskName.length > 15) ? ((element.taskName).slice(0, 15) + '...') : element.taskName}}</span>
+              <span *ngIf="element.taskName==null">---</span>
+          </td>
+      </ng-container>
+        <ng-container matColumnDef="taskType">
+            <th mat-header-cell *matHeaderCellDef>Task Type &nbsp;&nbsp;</th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.taskType!=null">{{element.taskType}}</span>
+                <span *ngIf="element.taskType==null">---</span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Category  &nbsp;&nbsp;</th>
+          <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.category!=null">{{element.category}}</span>
+              <span *ngIf="element.category==null">---</span>
+          </td>
+      </ng-container>
+        <ng-container matColumnDef="sourceType">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Source</th>
+          <td mat-cell *matCellDef="let element" class="text-center">
+            <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
+              <select class="form-control" style="width:140px;padding:0px" [value]="element.sourceType" (change)="changesource($event.target.value,element.taskId)">
+                  <option [value]="null" disabled hidden>Select Bot Source</option>
+                  <!-- <option value="">Select Bot Source</option> -->
+                  <option value="EPSoft">EPSoft</option>
+                  <option value="UiPath">UiPath</option>
+                  <option value="BluePrism">BluePrism</option>
+                  <!--<option value="Blue Prism">Blue Prism</option>
+                  <option value="Kofax">Kofax</option> -->
+              </select>
+            </span>
+            <span *ngIf="element.taskType=='Human'">
+              ---
+            </span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="processOwner">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Owner</th>
+          <td mat-cell *matCellDef="let element" >
+            {{element.createdBy}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="taskOwner">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Task Owner</th>
+          <td mat-cell *matCellDef="let element" >
+            {{element.taskOwner}}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Assign">
+            <th mat-header-cell *matHeaderCellDef>Assign Resource</th>
+            <td mat-cell *matCellDef="let element">
+
+            <span *ngIf="element.taskType=='Bot' || element.taskType=='Automated'">
+              <span *ngIf="element.sourceType=='EPSoft'">
+                <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
+                    <option value="0"  >Select Resource</option>
+                    <!-- <option *ngFor="let bot of (bot_list | botlistbycat : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option> -->
+                    <option *ngFor="let bot of (bot_list | BotlistbycatPipe : element.categoryId)" [value]="bot.botId"  [selected]="bot.botId == element.botId">{{bot.botName}}</option>
+                  </select>
+              </span>
+              <span *ngIf="element.sourceType=='UiPath'">
+                <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
+                    <option [selected]="'0'" value="'0'" disabled hidden>Select Resource</option>
+                    <option *ngFor="let bot of uipath_bots" [value]="bot.Key" [selected]="bot.Key==element.botId" >{{bot.ProcessKey}}</option>
+                </select>
+              </span>
+              <span *ngIf="element.sourceType=='BluePrism'">
+                <select class="form-control" style="width:200px;padding:0px"  [value]="element.botId" [id]="element.taskId+'__select'">
+                    <option [selected]="'0'" value="'0'" disabled hidden  >Select Resource</option>
+                    <option *ngFor="let bot of blueprismbots" [value]="bot.botName" [selected]="bot.botName==element.botId" >{{bot.botName}}</option>
+                </select>
+              </span>
+            </span>
+            <span *ngIf="element.taskType=='Human'">
+              <select class="form-control" style="width:200px;padding:0px;"  [value]="element.assignedUserId"  [id]="element.taskId+'__select'">
+                  <option value="0" >Select Resource</option>
+                  <option *ngFor="let human of (humans_list | HumanlistbycatPipe : element.category )" [value]="human.userId.id">{{human.userId.firstName}} {{human.userId.lastName}} </option>
+              </select>
+            </span>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element" align="center">
+              <span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
+                <span [matTooltip]="element.status" *ngIf="element.status=='Pending'" class="text-warning" ><span><i class="fa fa-clock" style="filter: none; font-size:19px;width: 19px;"></i></span></span>
+              <span [matTooltip]="element.status" *ngIf="element.status=='Running' || element.status=='InProgress'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp; Running</span>
+              <span [matTooltip]="element.status" *ngIf="(element.status=='Success' || element.status=='Executed') " class="text-success"><span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
+              <span [matTooltip]="element.status" *ngIf="element.status=='Rejected' " class="text-danger"><span><li class="fa fa-times-circle"style="font-size:19px"></span>&nbsp;<span> </span></span>
+              <span [matTooltip]="element.status"  *ngIf="element.status=='Approved' " class="text-success"><span><li class="fa fa-check-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
+              <span [matTooltip]="element.status" *ngIf="(element.status=='Failure' || element.status=='Failed')" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span> </span></span>
+              <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+              <span [matTooltip]="element.status" *ngIf="element.status=='New'" class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style='filter:none;height:20px' ></span>&nbsp;<span> </span></span>
+              <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span> </span></span>-->
+              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
+              <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
+              <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>--</span>
+              <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
+              <span *ngIf="element.status=='InProgress'" class="text-primary" ><span><img src='../../../../assets/images/RPA/processloading.svg' style='height:25px'></span>&nbsp;<span> </span></span>
+              <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span> </span></span>
+              <span *ngIf="element.status=='New'" class="text-primary"><span><img src="/assets/images/RPA/newicon.png" style="height:20px;"></span>&nbsp;<span> </span></span>
+              <span *ngIf="element.status=='Failed'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span> </span></span>
+              -->
+              </span>
+
+                <span *ngIf="element.status=='null'">---</span>
+            </td>
+        </ng-container>
+        <!--
+        <ng-container matColumnDef="successTask">
+          <th mat-header-cell *matHeaderCellDef>Success</th>
+          <td mat-cell *matCellDef="let element">
+              <span *ngIf="element.successTask!='null'" [id]="element.taskId+'__success'" [matTooltip]="element.successTask">{{(element.successTask.length > 20) ? ((element.successTask).slice(0, 20) + '...') : element.successTask}}</span>
+              <span *ngIf="element.successTask=='null'">---</span>
+          </td>
+      </ng-container>
+
+        <ng-container matColumnDef="failureTask">
+            <th mat-header-cell *matHeaderCellDef>Failure</th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.failureTask!='null'" [id]="element.taskId+'__failed'">{{element.failureTask}}</span>
+                <span *ngIf="element.failureTask=='null'">---</span>
+            </td>
+        </ng-container>-->
+
+        <ng-container matColumnDef="Operations">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+              <div *ngIf="element.taskType=='Automated'">
+                <span>
+                  <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
+                    <i  class="fas fa-plus text-primary"></i>
+                  </button>
+                </span>
+                &nbsp;
+                <span>
+                  <button  (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Automated'" matTooltip="Assign Bot"><i  class="fas fa-check text-success"></i></button>
+                  <button (click)="assignbot(element.taskId)" *ngIf="element.taskType == 'Human'" matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                </span>
+                &nbsp;
+                <span>
+                  <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
+                </span>
+                &nbsp;
+                 <span>
+                  <button [disabled]="element.botId==0" [class]="element.botId==0?'undobtn':''" (click)="loadbotdatadesign(element.botId)" [disabled]="element.sourceType!='EPSoft'" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
+                  <button  *ngIf="element.taskType !='Automated'" class="undobtn" ><i class="fa fa-eye-slash"></i></button>
+                </span>
+                &nbsp;
+                <span>
+                  <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
+                  <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                </span>
+              </div>
+              <div *ngIf="element.taskType=='Human'">
+                <span>
+                  <button [disabled]="element.taskType=='Human' || element.taskType==null" [class]="(element.taskType=='Human' || element.taskType==null)?'undobtn':''" (click)="createtaskbotoverlay(element.taskId)" matTooltip="Create and Assign Resource">
+                    <i  class="fas fa-plus text-primary"></i>
+                  </button>
+                </span>
+                &nbsp;
+                <span>
+                  <button (click)="assignhuman(element.taskId)"  matTooltip="Assign Resource"><i  class="fas fa-check text-success"></i></button>
+                </span>
+                &nbsp;
+                <span>
+                  <button (click)="resetbot(element.taskId)" matTooltip="Reset"><i  class="fas fa-sync-alt"></i></button>
+                </span>
+                &nbsp;
+                <span>
+                  <button (click)="loadbotdatadesign(element.botId)" *ngIf="element.taskType =='Automated'||element.taskType =='Bot'" matTooltip="View Bot"><i class="fa fa-eye"></i></button>
+                  <button  *ngIf="element.taskType !='Automated'" class="undobtn"><i class="fa fa-eye-slash"></i></button>
+                </span>
+                &nbsp;
+                <span>
+                  <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
+                  <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                </span>
+              </div>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="Smoke_Test">
+          <th mat-header-cell *matHeaderCellDef >Smoke Test</th>
+          <td mat-cell *matCellDef="let element" >
+            <button [disabled]="element.taskType!='Automated'" class='btn btn-xs btn-primary' (click)="runsmoketest(element.taskId)">Run Test</button>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Loading">
+          <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+              Loading
+          </td>
+      </ng-container>
+        <ng-container matColumnDef="noData">
+            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                No Records Found
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource2!=null}"></tr>
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource2!=null && dataSource2.data.length==0)}"></tr>
+    </table>
+  </div>
+
+  <!--</div>-->
+  <mat-paginator #paginator10 [pageSize]="10" [showFirstLastButtons]="true">
+  </mat-paginator>
+<!-- </mat-card> -->
+
+<br>
+<br>
+</div>
+</div>
+
+<div *ngIf="popup">
+  <div id='logsid' class="rpa-modal" style="display:block">
+      <div class="rpa-modal-content">
+          <div class="rpa-modal-header">
+              <span class="rpa-modal-close" (click)="closepop()">&times;</span>
+              <h4>Logs</h4>
+          </div>
+          <div class="rpa-modal-body">
+            <app-so-processlog [processId]="processId1"></app-so-processlog>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+
+<div *ngIf="schedulepopup">
+  <div id='sch' class="rpa-modal" style="display:block">
+      <div class="rpa-modal-content">
+          <div class="rpa-modal-header">
+              <span class="rpa-modal-close" (click)="closescheduler()">&times;</span>
+              <h4>Scheduler</h4>
+          </div>
+          <div class="rpa-modal-body">
+              <app-so-scheduler [data]="schdata" id="Scheduler"></app-so-scheduler>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div id='configuration' class="rpa-modal" >
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="closeconfig()">&times;</span>
+          <span *ngIf="(blueprismconfigoverlay != true) && (UiPathconfigoverlay != true)"><h4>Configuration</h4></span>
+          <span *ngIf="blueprismconfigoverlay == true"><h4>BluePrism Configuration</h4></span>
+          <span *ngIf="UiPathconfigoverlay == true"><h4>UiPath Configuration</h4></span>
+      </div>
+      <div class="rpa-modal-body" *ngIf="blueprismconfigoverlay != true && UiPathconfigoverlay != true">
+          <div class="container">
+            <br>
+            <div class="row">
+              <div class="col-md-2" style="margin-bottom:25px;">
+              </div>
+              <div class="col-md-4 img_box_shadow" style="padding:40px;margin-bottom:25px;">
+                <button (click)="getblueprismconfiguration()" class=""><img style="width:260px !important;height:60px !important;" src="/assets/images/blue-blue_prism_logo.png"></button>
+            </div>
+              <div class="col-md-4 img_box_shadow" style="padding:40px;margin-bottom:25px;">
+                <button (click)="getUIpathconfiguration()"><img style="width:180px !important;height:65px !important;" src="/assets/images/UIpath_logo.png"></button>
+              </div>
+
+            <div class="col-md-2"style="margin-bottom:25px;">
+            </div>
+            </div>
+          </div>
+      </div>
+      <div *ngIf="blueprismconfigoverlay == true">
+                <div class="rpa-modal-body">
+                      <div class="row">
+                          <div class="col-md-1" *ngIf="addBPconfigstatus == false"></div>
+                          <div class="col-md-10" style="margin-top:10px;" *ngIf="addBPconfigstatus == false && BluePrismFlag==false">
+                            <table class="configtable table" style="width:100% !important">
+                              <tr>
+                              <th>Connection Name</th>
+                              <th>Blue Prism UserName</th>
+                              <th>Blue Prism Password</th>
+                              <th>Hostname</th>
+                              <th>Username</th>
+                              <th>Password</th>
+                              <th>Port</th>
+                              <th>Status</th>
+                              <th style="width:100px"></th>
+                            </tr>
+                              <tr style="padding:5px;" *ngFor="let config of blueprism_configs">
+                                <td>{{config.configName}}</td>
+                                <td>{{config.bluePrismUsername}}</td>
+                                <td>{{config.bluPrismPassword | ipcustompipe}}</td>
+                                <td>{{config.hostAddress | ipcustompipe}}</td>
+                                <td>{{config.username}}</td>
+                                <td>{{config.password | ipcustompipe}}</td>
+                                <td>{{config.port}}</td>
+                                <td>
+                                  <span *ngIf="config.status==1">
+                                    <span ><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png" style="filter:none;"></span>
+                                    &nbsp;Active
+                                  </span>
+
+                                 <span *ngIf="config.status==0">
+                                   <span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png" style="filter:none;"></span>
+                                   &nbsp;Inactive
+                                </span>
+                                </td>
+                                <td style="width:100px">
+                                  <span class="display_hover" style="background-color: #f5f5f5;">
+                                    <button class="display_hover_edit" title="edit" (click)="edit_blue_prism_config(config.bluePrismId)" style="padding:2px;"><i class="fas fa-edit"></i></button> &nbsp;
+                                    <button class="display_hover_alt" (click)="delete_blueprism_config(config.bluePrismId)" title="delete" style="padding:2px;"><i class="fas fa-trash-alt"></i></button>
+                                  </span>
+                                </td>
+                              </tr>
+                            </table>
+                            <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                            <br>
+                            <br>
+                          </div>
+                          <div class="col-md-1" *ngIf="addBPconfigstatus == false && BluePrismFlag== false" style="margin-top:10px;">
+                            <span class="pull-right">
+                              <button matTooltip="Add" mat-mini-fab color="basic" [disabled]="checkedsource==''" (click)="addBPconfigstatus = true;BluePrismFlag=false">
+                                <i class="fa fa-plus"></i>
+                              </button> &nbsp;&nbsp;
+                              <button (click)="blueprismconfigoverlay = false;BluePrismFlag=false" matTooltip="Back" mat-mini-fab color="basic">
+                                <i class="fa fa-arrow-left"></i>
+                              </button>
+                            </span>
+                            <br>
+                            <br>
+                          </div>
+                        <div class="container">
+                          <div class="row">
+                        <div class="col-md-12 " [formGroup]="BluePrismConfigForm" *ngIf="addBPconfigstatus == true || BluePrismFlag==true">
+                          <div class="col-md-3">
+                              <label for="configName">Connection Name</label><br>
+                              <input type="text" id="configName" #configName formControlName="configName" autocomplete="off" placeholder="Enter Connection Name" required/>
+
+                          </div>
+                          <div class="col-md-3">
+                            <label for="bluePrismUsername">Blue Prism UserName</label><br>
+                            <input type="text" id="bluePrismUsername" autocomplete="off" #bluePrismUsername formControlName="bluePrismUsername" placeholder="Enter Blue Prism UserName" required/>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="bluPrismPassword">Blue Prism Password</label><br>
+                            <input type="password" id="bluPrismPassword" autocomplete="off" #bluPrismPassword formControlName="bluPrismPassword"placeholder="Enter Blue Prism Password" required/>
+                          </div>
+                          <div class="col-md-3">
+                            <label for="hostAddress">Hostname</label><br>
+                            <input type="text" id="hostAddress" autocomplete="off" #hostAddress formControlName="hostAddress" placeholder="Enter Hostname" required/>
+                          </div>
+                          <div class="col-md-3" style="padding-top:5px">
+                            <label for="username">Username</label><br>
+                            <input type="text" id="username" autocomplete="off" #username formControlName="username" placeholder="Enter Username" required/>
+                          </div>
+                          <div class="col-md-3" style="padding-top:5px">
+                            <label for="password">Password</label><br>
+                            <input type="password" id="password" autocomplete="off" #password formControlName="password" placeholder="Enter Password" required/>
+                          </div>
+                          <div class="col-md-3" style="padding-top:5px">
+                            <label for="port">Port</label><br>
+                            <input type="text" id="port" autocomplete="off" #port formControlName="port" placeholder="Enter Port Number" required/>
+                          </div>
+                          <div class="col-md-3" style="padding-top:5px">
+                            <br>
+                            <input type="checkbox" formControlName="status" >&nbsp; Active
+                           </div>
+                          <div class="col-md-12">
+                            <br>
+                            <button *ngIf="addBPconfigstatus == true" class='btn btn-primary' (click)="save_blue_prism_config()" tooltip="Save">Save</button>
+                            <button *ngIf="BluePrismFlag == true" class='btn btn-primary' (click)="save_blue_prism_config()" tooltip="Update">Update</button>
+
+                            <button class="btn btn-primary" (click)="testBluePrismconnection()" tooltip="Test Connection">Test Connection</button>
+                            <button class="btn btn-primary" tooltip="Cancel" (click)="addBPconfigstatus = false;BluePrismFlag=false">Cancel</button>
+                            <br><br>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="UiPathconfigoverlay == true">
+            <div class="rpa-modal-body">
+              <div class="container">
+                <br>
+                <div class="row">
+                    <div class="col-md-12" *ngIf="addconfigstatus==false">
+                      <span>
+                        <input type="checkbox" (click)="blueprism=false;kofax=false;checked('UiPath',uipath)" [(ngModel)]="uipath"> UiPath
+                      </span>
+                      <!-- &nbsp;&nbsp;
+                      <span>
+                        <input type="checkbox" (click)="kofax=false;uipath=false;checked('BluePrism',blueprism)" [(ngModel)]="blueprism"> Blue prism
+                      </span>
+                      &nbsp;&nbsp;
+                      <span>
+                        <input type="checkbox" (click)="uipath=false;blueprism=false;checked('Kofax',kofax)" [(ngModel)]="kofax"> Kofax
+                      </span>
+                      &nbsp;&nbsp; -->
+                      <span class="pull-right">
+                        <button [disabled]="checkedsource==''" matTooltip="Add" mat-mini-fab color="basic" (click)="addconfigstatus=true">
+                          <i class="fa fa-plus"></i>
+                        </button>&nbsp;&nbsp;
+                        <button (click)="UiPathconfigoverlay = false" matTooltip="Back" mat-mini-fab color="basic">
+                          <i class="fa fa-arrow-left"></i>
+                        </button>
+                      </span>
+                    </div>
+                      <div class="col-md-12" *ngIf="addconfigstatus==false">
+                        <br>
+                        <table class="configtable table">
+                          <th>Account Name</th>
+                          <th>Tenant Name</th>
+                          <th>Client ID</th>
+                          <th>User Key</th>
+                          <th>Status</th>
+                          <th style="width:100px;"></th>
+                          <tr style="padding:5px;" *ngFor=" let config of configurations  | paginate: { itemsPerPage: 5,currentPage: q }">
+                            <td>{{config.accountName}}</td>
+
+                            <td>{{config.tenantName}}</td>
+
+                            <td>{{config.clientId}}</td>
+
+                            <td>{{config.userKey}}</td>
+
+                            <td>
+                              <span *ngIf="config.active == true"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png" style="filter:none;"></span>&nbsp;Active</span>
+                              <span *ngIf="config.active == false"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png" style="filter:none;"></span>&nbsp;Inactive</span> &nbsp;
+                            </td>
+                            <td style="width:100px;">
+                              <span class="display_hover" style="background-color: #f5f5f5;">
+                                <button class="display_hover_edit" title="edit" style="padding:2px;"><i class="fas fa-edit"></i></button> &nbsp;
+                                <button class="display_hover_alt" title="delete" style="padding:2px;"><i class="fas fa-trash-alt"></i></button>
+                              </span>
+                            </td>
+
+                          </tr>
+                        </table>
+
+                        <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                        <br><br>
+                      </div>
+
+                    <div class="col-md-12 " *ngIf="addconfigstatus==true">
+                        <div class="col-md-3">
+                          <label for="account_name">Account Name</label><br>
+                          <input type="text" [(ngModel)]="accountName" id="account_name" autocomplete="off" placeholder="Enter Account Name" required/>
+                        </div>
+                        <div class="col-md-3">
+
+                          <label for="tenant">Tenant Name</label><br>
+                          <input type="text" [(ngModel)]="tenantId" id="tenant" autocomplete="off" placeholder="Enter Tenant Name" required/>
+                        </div>
+                        <div class="col-md-3">
+
+                          <label for="userkey">User Key</label><br>
+                          <input type="text" [(ngModel)]="userKey" id="userkey" autocomplete="off" placeholder="Enter User Key" required/>
+                        </div>
+                        <div class="col-md-3">
+
+                          <label for="clientId">Client Id</label><br>
+                          <input type="text" [(ngModel)]="clientId" id="clientId" autocomplete="off" placeholder="Enter Client Id" required/>
+
+                        </div>
+                         <div class="col-md-3">
+                           <br>
+                          <input type="checkbox" [(ngModel)]="activeStatus">&nbsp; Active
+
+                         </div>
+                      <div class="col-md-12">
+                      <br>
+                      <button class='btn btn-primary' (click)="saveconfiguration()">Save</button>
+                      <button class="btn btn-primary" tooltip="Test Connection">Test Connection</button>
+                      <button class="btn btn-primary" (click)="addconfigstatus=false">Cancel</button>
+                      <br><br>
+                    </div>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>
+
+  <div id='SLAConfig' class="rpa-modal" >
+    <div class="rpa-modal-content">
+        <div class="rpa-modal-header">
+            <span class="rpa-modal-close" (click)="SLAclose()">&times;</span>
+            <h4>SLA Configuration</h4>
+        </div>
+        <div class="container">
+                    <form [formGroup]="insertslaForm_so_bot" (ngSubmit)="savedata_SO_bot()">
+                      <div class="row">
+                        <div class="col-md-3 formelement">
+                          <label for="processName">Process Name<span style="color:red">*</span></label>
+                          <input type="text" class="form-control data" formControlName="processName" #processName value="" placeholder="Enter Process Name">
+                          <span *ngIf="(insertslaForm_so_bot.get('processName').invalid && insertslaForm_so_bot.get('processName').touched) && !insertslaForm_so_bot.controls['processName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Process Name*</span>
+                          <div *ngIf="insertslaForm_so_bot.controls['processName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                              Maximum of 50 characters
+                          </div>
+                        </div>
+                        <div class="col-md-3 formelement">
+                          <label for="processName">Process Owner<span style="color:red">*</span></label>
+                          <input type="text" class="form-control data" formControlName="processOwner" #processName value="" placeholder="Enter Process Owner">
+                          <span *ngIf="(insertslaForm_so_bot.get('processOwner').invalid && insertslaForm_so_bot.get('processOwner').touched) && !insertslaForm_so_bot.controls['processOwner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Process Owner*</span>
+                          <div *ngIf="insertslaForm_so_bot.controls['processOwner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                              Maximum of 50 characters
+                          </div>
+                        </div>
+                        <div class="col-md-3 formelement">
+                          <label for="taskName">Task Name<span style="color:red">*</span></label>
+                          <input type="text" class="form-control data" formControlName="taskName" #processName value="" placeholder="Enter Process Name">
+                          <span *ngIf="(insertslaForm_so_bot.get('taskName').invalid && insertslaForm_so_bot.get('taskName').touched) && !insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Process Name*</span>
+                          <div *ngIf="insertslaForm_so_bot.controls['taskName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                              Maximum of 50 characters
+                          </div>
+                        </div>
+                        <!-- <div class="col-md-3 formelement">
+                            <label for="botName">Bot Name<span style="color:red">*</span></label>
+                            <input type="text" class="form-control data" formControlName="botName" value="" placeholder="Enter Bot Name">
+                            <span *ngIf="(insertslaForm_so_bot.get('botName').invalid && insertslaForm_so_bot.get('botName').touched) && !insertslaForm_so_bot.controls['botName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Bot Name*</span>
+                            <div *ngIf="insertslaForm_so_bot.controls['botName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-md-3 formelement">
+                            <label for="botSource">Bot Source<span style="color:red">*</span></label>
+                            <input type="text" class="form-control data" formControlName="botSource"  value="" placeholder="Enter Bot Source">
+                            <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Bot Source*</span>
+                            <div *ngIf="insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
+                        </div> -->
+                        <!-- <div class="col-md-3 formelement">
+                            <label for="taskOwner">Task Owner<span style="color:red">*</span></label>
+                            <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name">
+                            <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Task Owner*</span>
+                            <div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 50 characters
+                            </div>
+                        </div> -->
+                        <div class="col-md-2 formelement">
+                            <label for="slaConfigId">SLA Breach Limit
+                              <!-- <span style="color:red">*</span> -->
+                            </label>
+                            <input type="number" style="width:100px" min=0 max=60 maxlength="2" formControlName="slaConfigId"  onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"   value="" placeholder="00">
+        
+                            <!-- <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"  #slaConfigId value="" placeholder="MM">
+                            <span *ngIf="(insertslaForm_so_bot.get('slaConfigId').invalid && insertslaForm_so_bot.get('slaConfigId').touched) && !insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required SLA Configuration*</span> -->
+                            <!--<div *ngIf="insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                Maximum of 2 characters
+                            </div>  -->
+                          </div>
+                    <div class="col-md-2 formelement">
+                      <label for="thresholdLimit">Threshold Limit 
+                        <!-- <span style="color:red">*</span> -->
+                      </label>
+                      <input type="number" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit"  value="" maxlength="2" placeholder="00">
+                      <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Threshold Limit*</span>
+                  </div>
+        
+                  <div class="col-md-2 formelement">
+                      <label for="totalRetries">Total Retries</label>
+                      <input type="number" style="width:100px" min=0 max=10 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="totalRetries"  value="" placeholder="0">
+                      <!--<span *ngIf="(insertslaForm_so_bot.get('totalRetries').invalid && insertslaForm_so_bot.get('totalRetries').touched) && !insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Breach Actual Alert*</span>
+                      <div *ngIf="insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                          Maximum of 50 characters
+                      </div>-->
+                  </div>
+                  <div class="col-md-2 formelement">
+                      <label for="retriesInterval">Retry Interval</label>
+                      <input type="number"  maxlength="2" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
+                      <!-- <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" style="color:red" class="fa fa-info-circle errspan">Required Retries Interval*</span> -->
+                  </div>
+        
+                  <div class="col-md-2 formelement">
+                    <label for="notificationType">Notificaion Type<span style="color:red">*</span></label><br>
+                    <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
+                     <label class="lbl_chk_cls"  for="emailcheck">E-mail</label> &nbsp;
+                    <input type="checkbox" class="smscheck" formControlName="sms"  id="smscheck">
+                     <label class="lbl_chk_cls" for="smscheck">SMS</label>
+                    </div>
+                  </div>
+                      <div class="row">
+          <!-- <div class="col-md-3 formelement">
+                <label for="breachAlerts">Breach Actual Alert<span style="color:red">*</span></label>
+                <select class="form-control"  value="" formControlName="breachAlerts">
+                    <option value="">-- Select Breach Actual Alerts --</option>
+                    <option value="Error">Error</option>
+                    <option value="Warning">Warning</option>
+                    <option value="All">All</option>
+                  </select>
+                <span *ngIf="(insertslaForm_so_bot.get('breachAlerts').invalid && insertslaForm_so_bot.get('breachAlerts').touched) && !insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Breach Actual Alert*</span> -->
+                <!--<div *ngIf="insertslaForm_so_bot.controls['breachAlerts'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                    Maximum of 50 characters
+                </div>-->
+            <!-- </div> -->
+           
+          </div>
+          <div class="row">
+
+            <!--<div class="col-md-3 formelement">
+              <label for="expectedEDate">Expected Execution Time in  Minutes</label>
+              <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="expectedEDate" #expectedEDate value="" placeholder="MM">-->
+              <!--<div class="row">
+                  <div class="col-md-6 formelement">
+                    <input type="date" [value]="expectedDate" [min]="expectedDate" formControlName="expectedDate">
+                  </div>
+                  <div class="col-md-6 formelement">
+                    <ngx-timepicker-field style="line-height: 0.928571;" [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" formControlName="expectedTime"></ngx-timepicker-field>
+                  </div>
+              </div> -->
+            <!--</div>-->
+          </div>
+
+                 <!--<div class="row">
+              <div class="col-md-3 formelement">
+                  <label for="cascadingImpact">Cascading Impact</label> &nbsp;&nbsp;&nbsp;
+                  <mat-slide-toggle style="height:20px;vertical-align: middle !important;" (change)="cascadingImp()" class="example-margin" color="primary"
+                  formControlName="cascadingImpact" tooltip="Cascading Impact" placement="bottom">
+                  </mat-slide-toggle>
+              </div>
+              <div class="col-md-3 formelement" *ngIf="cascadingImpactbtn == true">
+                <label for="systemImpacted">System Impacted</label>
+                <input type="text" maxlength="51" class="form-control data" formControlName="systemImpacted" #systemImpacted value="" placeholder="Enter system Impacted">
+                <span *ngIf="insertslaForm_so_bot.get('systemImpacted').invalid && insertslaForm_so_bot.get('systemImpacted').touched" style="color:red" class="fa fa-info-circle errspan">Required System Impacted*</span>
+            </div>
+
+            </div>-->
+            <!--<div class="row">
+
+            </div>-->
+
+                <div class="row" >
+                    <div class="col-md-12 formelement">
+                      <input type="button" class="btn btn-primary" value="Save" (click)="slaalerts()" >
+                      <input type="button" class="btn btn-primary" value="Reset" (click)="resetsla()">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

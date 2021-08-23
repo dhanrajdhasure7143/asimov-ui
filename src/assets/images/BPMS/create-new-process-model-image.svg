@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="63" viewBox="0 0 222.422 63">
+  <g id="Group_190" data-name="Group 190" transform="translate(-1177 -471)">
+    <g id="Rectangle_213" data-name="Rectangle 213" transform="translate(1177 479)" fill="none" stroke="#0062cf" stroke-width="2">
+      <rect width="81" height="55" rx="10" stroke="none"/>
+      <rect x="1" y="1" width="79" height="53" rx="9" fill="none"/>
+    </g>
+    <line id="Line_129" data-name="Line 129" x2="118" transform="translate(1257.5 506.5)" fill="none" stroke="#0062cf" stroke-width="2"/>
+    <g id="Polygon_1" data-name="Polygon 1" transform="translate(1274 471)" fill="#fff">
+      <path d="M 68.27330780029297 60 L 1.726688861846924 60 L 35 2.009371995925903 L 68.27330780029297 60 Z" stroke="none"/>
+      <path d="M 35 4.01873779296875 L 3.453376770019531 59 L 66.54662322998047 59 L 35 4.01873779296875 M 35 0 L 70 61 L 0 61 L 35 0 Z" stroke="none" fill="#0062cf"/>
+    </g>
+    <g id="iconfinder_ic_mode_edit_48px_352547" transform="translate(1361 488)">
+      <path id="Path_344" data-name="Path 344" d="M6,28.814v6h6L29.718,17.1l-6-6L6,28.814ZM34.344,12.477a1.6,1.6,0,0,0,0-2.265L30.606,6.473a1.6,1.6,0,0,0-2.265,0L25.411,9.4l6,6,2.93-2.93Z" transform="translate(-1.197 -1.198)" fill="#0062cf"/>
+      <path id="Path_345" data-name="Path 345" d="M0,0H38.422V38.422H0Z" fill="none"/>
+    </g>
+  </g>
+</svg>

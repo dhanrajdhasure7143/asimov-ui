@@ -1,0 +1,176 @@
+@import "//netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css";
+.section {
+  overflow-y: scroll;
+  min-height: 65px;
+  max-height: 57vh;
+  white-space: nowrap;
+}
+.nodes {
+  padding: 1px;
+}
+.con-img{
+  width:32px;
+  height:auto
+}
+
+.search-content{
+  padding:10px;
+  padding-right:35px;
+  padding-left:10px;
+}
+
+.toolset{
+   /* padding:10px;  */
+   width:300px !important;
+}
+
+.check{
+  overflow:visible !important;
+  position: relative  !important;
+}
+
+/* ::-webkit-scrollbar {
+  display: none;
+} */
+
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-bar {
+  color:white;
+  height: 130px;
+  background: white;
+  left: 5px !important;
+}
+
+
+.search{
+  border-radius: 0px !important;
+  /* border-top: none !important;
+  border-left: none !important;
+  border-right: none !important; */
+  width:100%;
+  box-shadow: none !important;
+  padding: 7px !important;
+
+  /* height:25px !important; */
+  /* border-bottom-color: lightgray !important; */
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer{
+  height:12px !important;
+  width: 12px;
+  border-radius: 50% !important;
+  background-color:white !important;
+  border: 1px solid gray;
+  margin-left: -1px;
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:after {
+  height: 0px !important;
+  width: 0px !important;
+  background:white;
+  border-radius: 50% !important;
+  border: 0px solid gray;
+
+}
+
+::ng-deep .custom-slider .ng5-slider .ng5-slider-pointer:hover:after {
+  background-color:white !important;
+  border-radius: 55% !important;
+
+}
+
+::ng-deep .custom-slider .ng5-slider-active:after {
+  height: 12px !important;
+  width: 12px !important;
+  background:white !important;
+}
+
+::ng-deep .custom-slider .ng5-slider :hover :after {
+  background:white !important;
+}
+::ng-deep  .custom-slider .ng5-slider-bubble {
+  color:gray !important;
+  font-size: 15px !important;
+  margin-bottom: 20px !important;
+}
+::ng-deep  .custom-slider .ng5-slider-floor {
+  color:gray!important;
+  font-size: 15px !important;
+  position: absolute !important;
+  z-index: 10 !important;
+}
+::ng-deep  .custom-slider .ng5-slider-ceil {
+  color:gray !important;
+  font-size: 15px !important;
+  position: absolute !important;
+  z-index: 10 !important;
+}
+
+.fontAwesome {
+  font-family: Helvetica, 'FontAwesome', sans-serif;
+}
+
+
+::ng-deep .rpa-dragicon + .tooltip>.tooltip-inner {
+
+  background-color:black;
+  margin-left:-20px !important;
+  color : white;
+  position:fixed !important;
+}
+.toolset-search-button{
+  text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 15px;
+    font-size: 18px;
+    padding-bottom: 15px;
+
+    border: 1px solid lightgrey;
+    font-weight: 300;
+}
+
+.toolset-search-close{
+  
+  float: right;
+  margin-top: -22px;
+  cursor: pointer;
+}
+
+::ng-deep .mat-drawer-container {
+background-color: white;
+}
+
+
+.nodename{
+  font-size: 18px;
+  color:#001c47;
+  font-weight: 400;
+}
+
+
+.mat-drawer-content {
+  position: relative;
+  z-index: 1;
+  display: block;
+  height: 100%;
+  overflow: hidden;
+}
+
+
+.taskname{
+  padding:10px;
+  font-size: 16px;
+  color:001c47;
+  font-weight: 400;
+}
+
+.toolset mat-expansion-panel {
+  border-bottom:none !important;
+}
+ 
+
+
+::ng-deeep .mat-drawer.mat-drawer-side {
+  z-index: 0 !important;
+}

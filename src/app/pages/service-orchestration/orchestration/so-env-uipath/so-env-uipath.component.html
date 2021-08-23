@@ -1,0 +1,190 @@
+<div class="container-fluid mx-3">
+    <div class="rpa-env-search">
+        <mat-form-field class="rpa-mat-form-field-search">
+            <mat-label>Search</mat-label>
+            <mat-icon matSuffix *ngIf="!isSearch" style="font-size: 1.2em">search</mat-icon>
+            <input class="toolbar-search" autocomplete="off" *ngIf="!isSearch" matInput (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>
+  
+    </div>
+    <div class="env-data-tool">
+        <span style="padding:5px">
+            <button matTooltip="Create" mat-mini-fab color="basic" (click)="createUiPath()"><i  class="fas fa-plus"></i></button>
+        </span>        
+        <span style="padding:5px">
+            <button [disabled]="updateflag == false" matTooltip="Modify" mat-mini-fab color="basic" (click)="updatedata()"><i style="margin-right: -4px !important;" class="fas fa-edit"></i></button>
+        </span>
+        <span style="padding:5px">
+            <button [disabled]="deleteflag == false" matTooltip="Delete" mat-mini-fab color="basic" (click)="deleteUiPath()"><i  class="fas fa-trash"></i></button>
+        </span>
+    </div>  
+  
+    <!--foms  -->
+    <div style="width:100%;height:45vh;overflow: scroll;">
+    <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="listofenv">
+  
+        <ng-container matColumnDef="check">
+            <th mat-header-cell id="matheader" *matHeaderCellDef mat-sort-header><input [disabled]="checkeddisabled" type="checkbox" id="checkall" [checked]="checkflag" (change)="checkAllCheckBox($event)"></th>
+            <td mat-cell *matCellDef="let element; let i = index"><input type="checkbox" [checked]="element.checked" (change)="checkEnableDisableBtn(element.userKey, $event)"> </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="accountName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Account</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.accountName!=null">{{element.accountName}}</span> <span *ngIf="element.accountName==''">-</span> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="tenantName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tenant</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.tenantName!=null">{{element.tenantName}}</span> <span *ngIf="element.tenantName==''">-</span> </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="clientId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Client Id</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.clientId!=null">{{(element.clientId.length > 15) ? ((element.clientId).slice(0, 15) + '...') : element.clientId}}</span> <span *ngIf="element.clientId==''">-</span> </td>
+        </ng-container>
+        <ng-container matColumnDef="userKey">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>UserKey</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.userKey!=null">{{(element.userKey.length > 15) ? ((element.userKey).slice(0, 15) + '...') : element.userKey}}</span> <span *ngIf="element.userKey==''">-</span> </td>
+        </ng-container>
+        <ng-container matColumnDef="active">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+            <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.active == true"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
+                <span *ngIf="element.active == false"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+           </td>
+        </ng-container>
+        <ng-container matColumnDef="createdTimeStamp">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
+        </ng-container>
+        <ng-container matColumnDef="createdBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+            <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdBy!=null" [matTooltip]="element.createdBy">{{element.createdBy}}</span> <span *ngIf="element.createdBy==''">-</span> <span *ngIf="element.createdBy==null">-</span></td>
+            <!--{{(element.createdBy.length > 10) ? ((element.createdBy).slice(0, 10) + '...') : element.createdBy}}-->
+        </ng-container>
+        <ng-container matColumnDef="noData">
+            <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="8">
+                No Records Found 
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        
+        <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': FilterHasnodata && !isTableHasData }"></tr>
+    </table>
+  
+  </div>
+    <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+  </div>
+  <div id="createUipath" class="rpa-modal">
+    <div class="rpa-modal-content">
+        <div class="rpa-modal-header">
+            <span class="rpa-modal-close" (click)="close()">&times;</span>
+            <h4>Create UiPath Configuration</h4>
+        </div>
+        <div class="rpa-modal-body">
+            <br>
+            <div class="container">
+                <form [formGroup]="UipathForm" (ngSubmit)="savedata()">
+                    <div class="row">
+                        <div class="col-md-3 formelement">
+                            <label for="accountName">Account Name<span style="color:red">*</span></label>
+                            <input type="text" maxlength="50" class="form-control data" formControlName="accountName" #accountName value="" placeholder="Enter Account Name">
+                            <span *ngIf="UipathForm.get('accountName').invalid && UipathForm.get('accountName').touched" style="color:red" class="fa fa-info-circle errspan">Account Name Required*</span>
+                        </div>
+                        
+                        <div class="col-md-3 formelement">
+                            <label for="tenantName">Tenant Name<span style="color:red">*</span></label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="tenantName" #tenantName value="" placeholder="Enter Tenant Name">
+                            <span *ngIf="UipathForm.get('tenantName').invalid && UipathForm.get('tenantName').touched" style="color:red" class="fa fa-info-circle errspan"> Tenant Name Required*</span>
+                        </div>
+
+                        <div class="col-md-3 formelement">
+                            <label for="userKey">User Key<span style="color:red">*</span></label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="userKey" #userKey value="" placeholder="Enter User Key">
+                            <span *ngIf="UipathForm.get('userKey').invalid && UipathForm.get('userKey').touched" style="color:red" class="fa fa-info-circle errspan"> User Key Required*</span>
+  
+                        </div>
+
+                        <div class="col-md-3 formelement">
+                            <label for="clientId">Client Id<span style="color:red">*</span></label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="clientId" #clientId value="" placeholder="Enter Client Id">
+                            <span *ngIf="UipathForm.get('clientId').invalid && UipathForm.get('clientId').touched" style="color:red" class="fa fa-info-circle errspan"> Client Id Required*</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 formelement">
+                            <input type="checkbox" checked formControlName="active"> Active
+                        </div>
+                    </div>
+                    <br>
+                </form>
+                <button class='btn btn-primary' (click)="saveUiPath()" tooltip="Save" [disabled]="UipathForm.invalid || submitted">Save</button>
+                <button class="btn btn-primary" (click)="testUiPath()" [disabled]="UipathForm.invalid" tooltip="Test Connection">Test Connection
+                </button>
+                <button class="btn btn-primary" (click)="reset_createUiPath()" tooltip="Reset">Reset
+                </button>
+            </div>
+        </div>
+        <br><br>
+    </div>
+  <br><br>
+  </div>
+  
+
+  <div id="updateUipath" class="rpa-modal">
+    <div class="rpa-modal-content">
+        <div class="rpa-modal-header">
+            <span class="rpa-modal-close" (click)="closeUBP()">&times;</span>
+            <h4>Update UiPath Configuration</h4>
+        </div>
+        <div class="rpa-modal-body">
+            <br>
+            <div class="container">
+                <form [formGroup]="UpdateUipathForm" (ngSubmit)="updateBlueprism()">
+                    <div class="row">
+                        <div class="col-md-3 formelement">
+                            <label for="accountName">Account Name<span style="color:red">*</span></label>
+                            <input type="text" maxlength="50" class="form-control data" formControlName="accountName" #accountName value="" placeholder="Enter Account Name">
+                            <span *ngIf="UpdateUipathForm.get('accountName').invalid && UpdateUipathForm.get('accountName').touched" style="color:red" class="fa fa-info-circle errspan">Account Name Required*</span>
+                        </div>
+                        
+                        <div class="col-md-3 formelement">
+                            <label for="tenantName">Tenant Name<span style="color:red">*</span></label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="tenantName" #tenantName value="" placeholder="Enter Tenant Name">
+                            <span *ngIf="UpdateUipathForm.get('tenantName').invalid && UpdateUipathForm.get('tenantName').touched" style="color:red" class="fa fa-info-circle errspan"> Tenant Name Required*</span>
+                        </div>
+
+                        <div class="col-md-3 formelement">
+                            <label for="userKey">User Key<span style="color:red">*</span></label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="userKey" #userKey value="" placeholder="Enter User Key">
+                            <span *ngIf="UpdateUipathForm.get('userKey').invalid && UpdateUipathForm.get('userKey').touched" style="color:red" class="fa fa-info-circle errspan"> User Key Required*</span>
+  
+                        </div>
+
+                        <div class="col-md-3 formelement">
+                            <label for="clientId">Client Id<span style="color:red">*</span></label>
+                            <input type="text" maxlength="50" class="form-control" formControlName="clientId" #clientId value="" placeholder="Enter Client Id">
+                            <span *ngIf="UpdateUipathForm.get('clientId').invalid && UpdateUipathForm.get('clientId').touched" style="color:red" class="fa fa-info-circle errspan"> Client Id Required*</span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3 formelement">
+                            <input type="checkbox" checked formControlName="active"> Active
+                        </div>
+                    </div>
+                    <br>
+                </form>
+                    <button class='btn btn-primary' (click)="Update_UiPath()" tooltip="Save" [disabled]="UipathForm.invalid ||updatesubmitted">Save</button>
+                    <button class="btn btn-primary" (click)="testUiPath()" [disabled]="UpdateUipathForm.invalid " tooltip="Test Connection">Test Connection
+                    </button>
+                    <button class="btn btn-primary" (click)="reset_UpdateUiPath()" tooltip="Reset">Reset
+                    </button>
+                </div>
+            </div>
+            <br><br>
+        </div>
+  <br><br>
+  </div>
+  
+  

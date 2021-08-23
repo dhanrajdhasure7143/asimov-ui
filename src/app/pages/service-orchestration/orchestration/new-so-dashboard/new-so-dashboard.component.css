@@ -1,0 +1,23 @@
+/* @import "../../../../../assets/css/new-so-styles.css"; */
+.dbichart-block label{
+    font-size: 15px;
+    font-weight: 500;
+}
+button{
+    border-radius: 0px !important;
+}
+th{
+    background-color:#ffffff  !important;
+    vertical-align: middle !important;
+    color:rgb(0, 0, 0) !important;
+    font-size: 16px !important;
+  }
+
+.backgr{
+    background:white;
+    border-radius: 3px;
+    height: 2000px;
+    }
+    .lob-sec{
+        display:block !important;
+    }

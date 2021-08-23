@@ -1,0 +1,237 @@
+        
+        <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <p class="filter_typesOne">Filter By</p>
+                        <div class="form-group">
+                            <select class="form-control filterSelection" name="filterBy" (change)="channgeFilter()" [(ngModel)]="filterby">
+                                <option [value]="chart_filter[each]" *ngFor="let each of chart_filter_options;let i=index;trackBy:loopTrackBy" selected="{{i==0}}">{{chart_filter[each]}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-8">
+                        <div *ngFor="let pill of appliedFilters" class="pill col-sm-2">{{pill}}
+                            <span (click)="removeTag(pill)">&times;</span>
+                          </div>
+                    </div>
+
+                    <div class="col-md-8" *ngIf="isActivity">
+                        <div class="col-sm-12">
+                        <p class="dataType_filter">Data Values :</p>
+                        </div>
+                        <div class="col-sm-5"></div>
+                        <div class="col-sm-7">
+                            <div class="col-sm-1"></div>
+                            <div class="col-sm-3">
+                                    <button class="btn" (click)="selectAllDataValue()">Select All</button>
+                                    
+                                    <!-- <button class="btn eiap-btn btn-primary" *ngIf="isSelect" (click)="deselectAllDataValue()">Deselect All</button>          -->
+                            </div>
+                            <div class="col-sm-4">
+                                    <!-- <button class="btn eiap-btn btn-primary" (click)="selectAllDataValue()" *ngIf="!isSelect">Select All</button> -->
+                                    <button class="btn" (click)="deselectAllDataValue()" [disabled]="isDeselectActivity">Deselect All</button>         
+                            </div>
+                            <div class="col-sm-4">
+                           <!-- <button *ngIf="!isSearch" class="btn" (click)="this.isSearch= !this.isSearch" >Search</button>  -->
+                            <div class='inner-addon right-addon' *ngIf="isSearch">
+                                    <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
+                                    <input class="form-control border_bottom" placeholder="Search" type="text" name="search" [(ngModel)]="search_activity">
+                                </div>
+                                <!-- <div class='search-Input inner-addon right-addon'>
+                                        <i class="fa fa-search " aria-hidden="true" style="color: gray"></i>
+                                        <input class="form-control border_bottom" placeholder="Search" type="text" name="search">
+                                    </div> -->
+                            </div>
+                        </div>
+                        <div class="col-sm-12 dataValues">
+                            <div *ngFor = "let data of dataValuesNames|filter:search_activity; let i = index;trackBy:loopTrackBy" >
+                                <div id="data" class="data_values activity_name" (click)="selectData(data, i)" [ngStyle]="{'background-color':data.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }" >{{data.name}}</div>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8" *ngIf="isEndpoint">
+                            <div class="col-sm-12">
+                            <p class="dataType_filter">End Points :</p>
+                            </div>
+                            <div class="col-sm-12 dataValues">
+                                <div class="data_values activity_name" (click)="onStartPoint()">Start</div>
+                                <div *ngFor="let each of startPointArray;let i=index" [hidden]="!isStartPoint">
+                                    <div id="data" class="data_values activity_name" (click)="selectedStartPoint(each,i)" [ngStyle]="{'background-color':each.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }">{{each.name}}</div>
+                                </div>
+                                <div class="data_values activity_name" (click)="onEndPoint()">End</div>
+                                <div *ngFor="let eachvalue of endPointArray;let i=index" [hidden]="!isEndPoint">
+                                    <div id="data" class="data_values activity_name" (click)="selectedEndPoint(eachvalue,i)" [ngStyle]="{'background-color':eachvalue.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }">{{eachvalue.name}}</div>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="col-md-8" *ngIf="isVariantFilter">
+                            <div class="col-sm-12 text-right">
+                                <div class="col-sm-12">
+                                    <p class="dataType_filter">Variants :</p>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                    <div class="col-sm-8">
+                                            <button class="btn" (click)="selectAllVariantList()">Select All</button>
+                                            
+                                            <!-- <button class="btn eiap-btn btn-primary" *ngIf="isSelect" (click)="deselectAllDataValue()">Deselect All</button>          -->
+                                    </div>
+                                    <div class="col-sm-2">
+                                            <!-- <button class="btn eiap-btn btn-primary" (click)="selectAllDataValue()" *ngIf="!isSelect">Select All</button> -->
+                                            <button class="btn" (click)="deselectAllVariantList()" [disabled]="isApplyFilter">Deselect All</button>         
+                                    </div>
+                                </div>
+                        
+
+                        <div class="col-sm-12 dataValues">
+                            <div *ngFor = "let data of variantListarray|filter:search_activity; let i = index;trackBy:loopTrackBy" >
+                                 <div id="data" class="data_values activity_name col-sm-12" (click)="selectedVariant(data, i)" [ngStyle]="{'background-color':data.selected === 'active' ? 'rgb(175, 168, 168)' : '#fff' }" >
+                                   
+                                        <div   class='col-sm-2 event3'>Variant <b>{{i+1}}</b></div>
+                                        <!-- <br/>{{caseParcent(data.casepercent)}}% of cases <br/> {{data.detail}} - {{timeConversion(data.days)}} -->
+                                    
+                                    <!-- <div class="data_values activity_name"(click)="caseIdSelect(data,i)" class='col-sm-12 events1'><p>{{data.detail}}</p></div> -->
+                                    <div class='col-sm-8 variant_parcent'>
+                                            <div  class='col-sm-12'>Cases Covered<br/> <b>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</b></div>
+                                            <!-- <div (click)="caseIdSelect(data,i)" class='col-sm-12 events1'><p>{{data.detail}}</p></div> -->
+                                        
+                                            <div  class='col-sm-3'></div>
+                                            <!-- <div class="col-sm-9" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
+                                                <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
+                                                <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
+                                            </div> -->
+                    
+                                        </div>
+                                        <div class='col-sm-2' >{{timeConversion(data.days)}}</div>  
+                                 </div>
+                                
+                               
+                            </div>
+                        </div>
+                </div>
+        
+                    <div class="col-md-2 apply-btn">
+                        <!-- <div class="reports">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>cases</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].cases}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Activities</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].activities}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Roles</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].roles}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Resources</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].resources}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Started</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].started}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Ended</td>
+                                    <td>:</td>
+                                    <td>{{reports[0].ended}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div> -->
+                    <button  class="btn btn-primary eiap-btn" (click)="comboFilter()">Apply Filter</button>
+                    <!-- <button *ngIf="isEndpoint" class="btn btn-primary eiap-btn" [disabled]='endptBt' (click)="applyEndpointFilter()">Apply Filter</button> -->
+                    <!-- <button *ngIf="isVariantFilter" class="btn btn-primary eiap-btn" (click)="applyVariantFilter()">Apply Filter</button> -->
+        
+                    </div>
+                </div>
+            </div>
+
+            <div id="myModal" class="modal">
+                <div class="modal-content" style="bottom: 190px !important; height: 520px;">
+                  <div class="modal-header">
+                    <span class="close" (click)="closePerformancePopup();">&times;</span>
+                    <h4>Time stamp</h4>
+                  </div>
+                <div class="modal-body">
+                   
+                      <div class="col-md-12">
+                        <label for="performance_metrics"><b>Filter Case By:</b></label>
+                          <select name="pFilterType" class="border_bottom" [(ngModel)]="pFilterType" (change)="this.setselectedFilter(pFilterType)" required>
+                               <option value="noofcases">No of Cases</option>
+                               <option value="caseutilization">Case Utilization</option>
+                               <option value="caseduration">Case Duration</option>
+                               <option value="meanactivetime">Mean active time</option>
+                               <option value="medianactivetime">Median active time</option>
+                               <option value="meanwaitingtime">Mean waiting time</option>
+                               <option value="medianwaitingtime">Median waiting time</option>
+                          </select>
+                          <div class="barchart_graph">
+                           <ngx-charts-bar-vertical
+                           [view]="view"
+                           [scheme]="colorScheme"
+                           [results]="single"
+                           [gradient]="gradient"
+                          
+                           [xAxis]="showXAxis"
+                           [yAxis]="showYAxis"
+                           [legend]="showLegend"
+                           [showXAxisLabel]="showXAxisLabel"
+                           [showYAxisLabel]="showYAxisLabel"
+                           [xAxisLabel]="xAxisLabel"
+                           [yAxisLabel]="yAxisLabel"
+                           (select)="onSelect($event)">
+                         </ngx-charts-bar-vertical>
+                          </div>
+
+                          <div>
+                           <ng5-slider [(value)]="vaue" [(highValue)]="highValue" (valueChange)="startValue($event)" [manualRefresh]="manualRefresh" (highValueChange)="endValue($event)"  [options]="options1"  ></ng5-slider>
+                          </div>
+                          <div class="row col-md-12 drp_btns">
+                          <div class="col-md-4 min_time_select" >
+                            <input type="text" class="arrows" [value]="convertMS(minPerfValue)">
+                            <label for="timeStamp" style="display: inherit;"><b>Minimum Duration</b></label>
+                          </div>
+                          <div class="col-md-4 pp_chart">
+                           <div class="piechart_graph">
+                           <ngx-charts-pie-chart
+                           [view]="pieview"
+                           [scheme]="piecolorScheme"
+                           [results]="piesingle"
+                           [gradient]="piegradient"
+                           [legend]="pieshowLegend"
+                           [legendPosition]="legendPosition"
+                           [labels]="showLabels"
+                           [doughnut]="isDoughnut"
+                           >
+                           </ngx-charts-pie-chart>
+                           <span class="pie_label">{{casePercentage}}%<br>of cases</span>
+                       </div>
+                         </div>
+                          <div class="col-md-4 max_time_select">
+                            <input type="text" class="arrows" [value]="convertMS(maxPerfValue)">
+                            <label for="timeRange" style="display: inherit;"><b>Maximum Duration</b></label>
+                          </div>
+                      </div>
+                      <div class="col-md-12">
+                       
+                          <button type="button" class="btn btn-primary eiap-btn pull-right" (click)="applyPerformanceFilter()">Apply Filter</button>
+                          <button type="button" class="btn btn-default btn-cancel eiap-btn pull-right" (click)="closePerformancePopup();">Cancel</button>
+                      </div>
+                         
+                      </div>
+                    
+                </div>
+              </div>
+            </div>
+
+

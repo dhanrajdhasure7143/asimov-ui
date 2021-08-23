@@ -1,0 +1,35 @@
+<mat-tab-group   (selectedTabChange)="onTabChanged($event)">
+  <mat-tab label="Statistics">
+
+   <ng-template mat-tab-label>
+     <!-- <mat-icon  class="text-primary">desktop_windows</mat-icon> -->
+       <!-- &nbsp;&nbsp; -->
+       Dashboard
+     </ng-template>
+   <div *ngIf="check_tab==0" >
+          <iframe [src]="urlSafe" scrolling='yes'   style="width:100%;height:71vh"  (load)="spinner.hide()" border='0' frameborder='0'></iframe>
+
+   </div>
+ </mat-tab>
+
+ <mat-tab label="Monitoring">
+
+   <ng-template mat-tab-label>
+     <!-- <i class="text-primary material-icons">inbox</i> -->
+       <!-- &nbsp;&nbsp; -->
+       Health Status
+   </ng-template>
+   <div *ngIf="check_tab==1" >
+      <app-so-health-status></app-so-health-status>
+   </div>
+ </mat-tab>
+ <mat-tab position=1 [disabled]="true" label="Monitoring">
+
+      <ng-template mat-tab-label>
+          <a href="https://www.site24x7.in/app/client#/home/monitors/9895000000009020/Device" target=blank class="btn btn-primary"> 
+              Metrics
+          </a>
+      </ng-template>
+      
+    </mat-tab>
+</mat-tab-group>

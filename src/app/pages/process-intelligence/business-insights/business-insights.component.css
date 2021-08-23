@@ -1,0 +1,151 @@
+body{
+    background-color: #F1F0F0;
+    font-family: 'Source Sans Pro', sans-serif !important;
+    margin: 0px;
+    padding: 0px;
+}
+h1,h2,h3,h4,h5,h6,a,ul,li,ol,p,span{
+    margin: 0px;
+    padding: 0px;
+    color: #081D2A;
+}
+[aria-labelledby*="-title"] {
+    display: none;
+}
+.main {
+    background-color: #F1F0F0;
+    /* margin: 40px 0px; */
+}
+.secone h1, .chartssc h2 {
+    font-size: 21px;
+    margin-bottom: 20px;
+}
+.varienanal h1 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+.innersecone h2 {
+    color: #fff;
+    font-weight: 600;
+    font-size: 34px;
+    line-height: 16px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+}
+span.smalfon {
+    color: #fff;
+    display: inline-block;
+    width: 100%;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 15px;
+}
+.innersecone p {
+    font-size: 16px;
+    line-height: 18px;
+    position: relative;
+    top: 49%;
+    transform: translateY(-50%);
+}
+.leftinsec {
+    background-color: #098DE6;
+    padding: 10px;
+}
+.rightinsec{
+    padding: 10px;
+}
+.innersecone {
+    border: 1px solid #098de6;
+    border-radius: 4px;
+    background-color: #fff;
+    min-height: 71px;
+}
+
+.varienanal {
+    background-color: #fff;
+    padding: 20px;
+    margin-top: 30px;
+}
+.maintx {
+    background-color: #F6F6F6;
+    margin-bottom: 15px;
+    width: 100%;
+}
+.maintx:last-child {
+    margin: unset;
+}
+.leftyext {
+    background-color: rgb(255 131 115 / 20%);
+    border-left: 2px solid #FF8373;
+    padding: 10px 15px;
+}
+.leftyext h4 {
+    font-size: 16px;
+    text-align: center;
+    color: #43425D;
+}
+.leftyight {
+    padding: 10px;
+    width: 100%;
+}
+.leftyight h5 {
+    color: #4D4F5C;
+    font-size: 18px;
+}
+.leftyight p {
+    color: #4D4F5C;
+    font-size: 14px;
+}
+.chartinnsec {
+    background-color: #fff;
+    padding: 10px;
+}
+.chartinnsec h3 {
+    color: #4D4F5C;
+    font-size: 18px;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.chartinnsec select {
+    border: 1px solid #D7DAE2;
+    color: #4D4F5C;
+    border-radius: 4px;
+    font-size: 14px;
+    padding: 3px 10px;
+    outline: unset;
+}
+#chartdiv{
+    width: 100%;
+    height: 340px;
+}
+#chartdiv2{
+    width: 100%;
+    height: 347px;
+}
+.chartssc {
+    margin-top: 40px;
+}
+.rightsecr {
+    width: 80px;
+    padding: 10px;
+    position: relative;
+}
+.rightsecr p {
+    font-size: 14px;
+    font-style: italic;
+    padding-top: 20px;
+}
+
+
+.d-flex
+{
+    display:flex !important;
+}
+
+
+.heading{
+    font-weight:600;
+}

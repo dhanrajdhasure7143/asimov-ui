@@ -1,0 +1,375 @@
+<ngx-spinner bdColor="rgba(255,255,255,0.7)"> <img style="height: 180px" src='\assets\images\RPA\rpa-loader.gif'/></ngx-spinner>
+
+<div class="header_addon">
+<!--
+  <mat-slide-toggle
+  style="float:right;height:20px;padding-right:30px"
+  class="example-margin"
+  color="primary"
+  *ngIf="tabsArray.length > 0"
+  [checked]="change_rpa_screen"
+  [(ngModel)]="changescreen_rpa_model"
+  (change)="checkchange()"
+  tooltip="change screen"
+  placement="bottom"
+  >
+</mat-slide-toggle> -->
+
+<div class="row">
+  <div class="col-md-6">
+    &nbsp;
+  </div>
+  <div class="col-md-6">
+  <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-primary" style="float:right" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
+    <i class="fa fa-list"></i>&nbsp;&nbsp;Load
+  </button>
+  
+  <button  type="button"  *ngIf="tabsArray.length > 0"  class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate(0)">
+    <i class="fa fa-plus"></i>&nbsp;&nbsp;Create
+  </button>
+</div>
+</div>
+</div>
+
+<!-- tabs -->
+<div class="container-fluid"  *ngIf="tabsArray.length < 1 && localstore">
+<app-rpa-home></app-rpa-home>
+</div>
+<div *ngIf="changescreen_rpa_model==true && tabsArray.length > 0" class="container-fluid">
+  <app-rpa-studio-designer [tabsArray]="tabsArray" ></app-rpa-studio-designer>
+</div>
+<div *ngIf="tabsArray.length > 0 && changescreen_rpa_model==false" class="container">
+<br><br><br>
+<div class="col-md-12 row">
+<div class="col-md-2 side-slide">
+  <div class="paddclass" id="search">
+    <input class="mainLoginInput" style="border: 1px solid gainsboro;" type="text" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" [(ngModel)]="userFilter.name" name="node" placeholder="Search"
+      class="form-control" autocomplete="off">
+  </div>
+
+
+  <div style="margin: 40px -2px 0px 0px;border: 1px solid lightgray;text-align:center;"id="dragicons">
+      <button type="button"class="scroll top">
+      <img (click)="scrolltop()"style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg"></button>
+          <div #section class="section">
+            <div class="nodes"*ngFor="let node of templateNodes | filterBy: userFilter">
+  <!-- | slice:0:show;  let i=index-->
+                <div class="" [tooltip]="node.name" placement="bottom" [dndDraggable]="node">
+                <span>
+                <img [src]="node.path"class="con-img">
+                </span>
+                </div>
+            </div>
+  <!--<div class="slice-icon" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
+                  </div>-->
+          </div>
+            <button (click)="scrollbottom()"type="button"class="scroll bottom">
+            <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\DownArrow.svg"></button>
+    </div>
+</div>
+<div class="col-md-10" id="draganddrop">
+<app-rpa-studio-tabs [tabsArray]= "tabsArray" (closeTabEvent)="closeBot($event)" [tabActiveId]="tabActiveId"></app-rpa-studio-tabs>
+<div class="rpa-nav">
+
+  <div class="rpa-nav-btn">
+  <!--  <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/environments']" >
+      <img src="..\\assets\\images\\RPA\\environments_icon.svg" class="rpa-nav-btn-img">
+        <br>
+      Environments
+    </button>
+</div>
+<div class="rpa-nav-btn">
+  <button  type="button" class="rpa-nav-btn" aria-hidden="true" placement="bottom" [routerLink]="[ '/pages/rpautomation/workspace']" >
+    <img src="..\\assets\\images\\RPA\\rpa-nav-workspace.svg" class="rpa-nav-btn-img">
+
+     <br>
+  Workspace
+  </button>-->
+  </div>
+
+</div>
+</div>
+</div>
+</div>
+<!-- <process-category-overlay headerTitle="Create Bot" (proceed)="onCreateSubmit($event)" isRpa="true" buttonName="Submit"></process-category-overlay> -->
+<div id="create-bot" class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="close()">&times;</span>
+          <h4>Create Bot</h4>
+      </div>
+      <div class="rpa-modal-body">
+
+  <div class="container">
+
+    <form [formGroup]="insertbot" (ngSubmit)="onCreateSubmit()" >
+
+      <div class="form-group">
+
+        <div class="row">
+
+          <div class="col-md-6">
+
+            <label for="botName">Bot Name<span style="color:red">*</span></label>
+            <input type="text" formControlName="botName" autocomplete="off" placeholder="Enter Bot Name" [(ngModel)]="botName" ngModel maxlength="31" (input)="validate(botName)" class="form-control" name="botName" (change)="checkBotnamevalidation()" required/>
+            <div *ngIf="(insertbot.get('botName').invalid && insertbot.get('botName').touched) && !insertbot.controls['botName'].hasError('maxlength')" style="color: red" class="fa fa-info-circle errspan">
+              Bot Name Required*
+              </div>
+              <div *ngIf="checkbotname && insertbot.get('botName').touched" style="color: red" class="fa fa-info-circle errspan">
+                Bot Name is already exists*
+              </div>
+              <div *ngIf="botNamespace" style="color:red;" class="fa fa-info-circle errspan">Spaces are not allowed</div>
+
+              <div *ngIf="insertbot.controls['botName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                Maximum of 30 characters
+            </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <label for="botType">Bot Type<span style="color:red">*</span></label>
+
+            <select  class="form-control" formControlName="botType" name="botType" >
+              <option value="" selected>--Select Bot Type--</option>
+              <option  value=0>Attended</option>
+              <option  value=1>Unattended</option>
+            </select>
+            <div *ngIf="insertbot.get('botType').invalid && insertbot.get('botType').touched" style="color: red" class="fa fa-info-circle errspan">
+              Bot Type Required*
+              </div>
+
+          </div>
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <label for="botDepartment">Category<span style="color:red">*</span></label>
+
+            <select  [(ngModel)]="rpaCategory" class="form-control" formControlName="botDepartment" name="botDepartment" >
+              <option  value="" selected>--Select Category--</option>
+              <option *ngFor ="let category of categaoryList" [value]="category.categoryId">{{category.categoryName}}</option>
+              <option  value='others'>Others</option>
+            </select>
+            <div *ngIf ="rpaCategory=='others'">
+              <input type="text" class="form-control" formControlName="newCategoryName" onkeypress="return (event.charCode !== 32)" placeholder="Enter Category Name" [(ngModel)] ="newRpaCategory">
+            </div>
+            <div *ngIf="insertbot.get('botDepartment').invalid && insertbot.get('botDepartment').touched" style="color: red" class="fa fa-info-circle errspan">
+              Category Required*
+            </div>
+
+
+          </div>
+          <div class="col-md-6">
+            <label for="botDescription">Bot Description</label>
+            <textarea type="text" autocomplete="off" formControlName="botDescription"  placeholder="Enter Bot Description" ngModel maxlength="501" style="height:70px" class="form-control" name="botDescription"  ></textarea>
+            <!--<div *ngIf="(insertbot.get('botDescription').invalid && insertbot.get('botDescription').touched) && !insertbot.controls['botDescription'].hasError('maxlength')" style="color: red" class="fa fa-info-circle errspan">
+              Bot Description Required*
+            </div>-->
+            <div *ngIf="insertbot.controls['botDescription'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+              Maximum of 500 characters
+          </div>
+          </div>
+        </div>
+        <div class="row">
+
+          <div class="col-md-6">
+            <input type="checkbox"  formControlName="predefinedBot" value="true" (click)="predefined($event)" name="predefinedBot">&nbsp; <span style="font-size:16px">Predefined Bot</span>
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" [disabled]="insertbot.invalid || botNamespace || checkbotname" >Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--load bot overlay-->
+<div id="load-bot" class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="close()">&times;</span>
+          <h4>Load Bot</h4>
+      </div>
+  <div class="rpa-modal-body">
+
+  <div class="container">
+
+    <form [formGroup]="loadbot" (ngSubmit)="getbotdata()" >
+
+      <div class="form-group">
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <label for="botDepartment" >Category*</label>
+            <select  class="form-control" (change)="loadbotdata()" formControlName="botDepartment" name="botDepartment" >
+              <option  value="" selected>--Select Category--</option>
+              <option *ngFor ="let category of categaoryList" [value]="category.categoryId">{{category.categoryName}}</option>
+            </select>
+            <div *ngIf="loadbot.get('botDepartment').invalid && loadbot.get('botDepartment').touched" style="color: red" >
+              Category Required*
+              </div>
+          </div>
+
+
+          <div class="col-md-6">
+            <label for="botType">Bot Type*</label>
+            <select  class="form-control" formControlName="botType" name="botType" (change)="loadbotdata()" >
+              <option value="" selected>--Select Bot Type--</option>
+              <option  value=0>Attended</option>
+              <option  value=1>Unattended</option>
+            </select>
+            <div *ngIf="loadbot.get('botType').invalid && loadbot.get('botType').touched" style="color: red" >
+              Bot Type Required*
+              </div>
+
+          </div>
+
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="botType">Bot*</label>
+
+            <select  class="form-control" formControlName="bot" name="bot" >
+              <option value="" selected>--Select Bot--</option>
+              <option *ngFor="let bot of botlist" [value]="bot.botId">{{bot.botName}}</option>
+            </select>
+            <div *ngIf="loadbot.get('bot').invalid && loadbot.get('bot').touched" style="color: red" >
+              Bot  Required*
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" [disabled]="loadbot.invalid" >Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--load bot overlay
+<div id="load-bot" class="rpa-modal">
+  <div class="rpa-modal-content">
+      <div class="rpa-modal-header">
+          <span class="rpa-modal-close" (click)="close()">&times;</span>
+          <h4>Load Bot</h4>
+      </div>
+  <div class="rpa-modal-body">
+
+  <div class="container">
+
+    <form [formGroup]="loadbot" (ngSubmit)="getbotdata()" >
+
+      <div class="form-group">
+
+        <div class="row">
+
+          <div class="col-md-6">
+            <label for="botDepartment" (change)="loadbotdata()">Category*</label>
+            <select  class="form-control" formControlName="botDepartment" name="botDepartment" >
+              <option  value="" selected>--Select Category--</option>
+              <option  value=1>Development</option>
+              <option  value=2>HR</option>
+              <option  value=3>QA</option>
+            </select>
+          </div>
+
+
+          <div class="col-md-6">
+            <label for="botType">Bot Type*</label>
+
+            <select  class="form-control" formControlName="botType" name="botType" (change)="loadbotdata()" >
+              <option value="" selected>--Select Bot Type--</option>
+              <option  value=1>Attended</option>
+              <option  value=0>Unattended</option>
+            </select>
+            <div *ngIf="loadbot.get('botType').invalid && loadbot.get('botType').touched" style="color: red" >
+              Bot Type Required*
+              </div>
+
+          </div>
+
+
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <label for="botType">Bot*</label>
+
+            <select  class="form-control" formControlName="bot" name="bot" >
+              <option value="" selected>--Select Bot--</option>
+              <option *ngFor="let bot of botlist" [value]="bot.botId">{{bot.botName}}</option>
+            </select>
+            <div *ngIf="loadbot.get('bot').invalid && loadbot.get('bot').touched" style="color: red" >
+              Bot  Required*
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="form-group">
+        <button class="btn btn-primary" [disabled]="loadbot.invalid" >Submit</button>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+</div>-->

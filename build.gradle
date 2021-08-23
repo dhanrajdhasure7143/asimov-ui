@@ -1,0 +1,51 @@
+plugins {
+  id "base"
+  id "java"
+  id "com.github.node-gradle.node" version "2.2.4"
+  id "com.bmuschko.docker-remote-api" version "6.6.1"
+}
+import org.apache.tools.ant.taskdefs.condition.Os      
+
+node {
+  version = "10.9.0"
+  npmVersion = "6.4.1"
+  download = true
+}
+
+npmInstall.outputs.upToDateWhen {
+  false
+}
+
+ext {
+  dockerImage = "${project.registryUrl}/${imageName}"
+  dockerTag   = "${project.semver}-${project.semverDevSuffix}"
+}
+
+task cleanAll (type:Delete) {
+  delete "${projectDir}/node_modules"
+  delete "dist"
+}
+
+task buildImage(type: Exec) {
+  commandLine "docker", "build", "--no-cache", "-t", "${project.dockerImage}:${project.dockerTag}", "." 
+}
+
+task pushImage(type: Exec, dependsOn: buildImage) {
+  commandLine "docker", "push", "${project.dockerImage}:${project.dockerTag}"
+}
+
+task dockerized {
+  dependsOn "pushImage"
+}
+
+task buildAll {
+  dependsOn "clean"
+  dependsOn "build"
+  dependsOn "dockerized"
+  tasks.findByName("build").mustRunAfter "clean"
+  tasks.findByName("dockerized").mustRunAfter "build"
+}
+
+jar.dependsOn "npm_run_build"
+clean.dependsOn "cleanAll"
+

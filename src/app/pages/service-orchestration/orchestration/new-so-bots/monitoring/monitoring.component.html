@@ -1,0 +1,132 @@
+<div class="container-fluid" *ngIf="bots_list.length!=0">
+        <br>
+        <div class="row">
+        <div class="col-md-4">
+                <div class="dbichart-block block chartinner">
+                    <div class="dbichart-head">
+                        <label>Status</label>
+                    </div><br>
+                    <div class="dbichart-body" >
+                        <table class="table failedbots" >
+                            <thead>
+                                <th><b>Failed Bots</b></th>
+                                <th><b>{{failedbots.length}} of  {{bots_list.length}}</b></th>
+                            </thead>
+                            <tr *ngFor="let bot of failedbots  | paginate: { itemsPerPage: 5,currentPage: q }"><td>{{bot.botName}}</td><td>{{bot.createdAt | date : "medium" }}</td></tr>
+                        </table>
+                            <div class="text-right">
+                                <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4">
+                <div class="dbichart-block block chartinner">
+                    <div class="dbichart-head">
+                        <label>Ongoing Bots</label>
+                    </div>
+                    <br>
+                    <div class="dbichart-body" style="padding:10px;height:300px">
+
+                        <div>
+                                Ready<br>
+                            <mat-progress-bar color="primary" mode="determinate" [value]="ongoingbots.ready"></mat-progress-bar><br>
+                        </div>
+                        <div>
+                                Running<br>
+                            <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="ongoingbots.running"></mat-progress-bar><br>
+        
+                        </div>
+                        
+                        <div>
+                                Pending<br>
+                            <mat-progress-bar  class="progress-bar-warn" mode="determinate" [value]="ongoingbots.pending"></mat-progress-bar><br>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="col-md-8">
+                <div class="dbichart-block block chartinner">
+                    <div class="dbichart-head">
+                        <label>Jobs History</label>
+                    </div>
+                    
+                    <div class="dbichart-body row">
+                        <div class="col-md-4">
+                        <div style="width:100%;height:270px" id="chartdiv3"></div>
+                        </div>
+                        <div class="col-md-4">
+                            
+                        <div style="width:100%;height:270px" id="chartdiv4"></div>
+                        </div>
+                        <div class="col-md-4">    
+                            <div style="width:100%;height:270px" id="chartdiv5"></div>
+                        </div>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="col-md-4">
+                <div class="dbichart-block block chartinner">
+                    <div class="dbichart-head">
+                        <label>Status</label>
+                    </div>
+                    <div class="dbichart-body" style="padding:10px;height:300px">
+                        <table class="table failedbots">
+                            <thead>
+                                <th>Alerts</th>
+                                <th>200</th>
+                            </thead>
+                            <tr><td> New </td><td>{{alerts.new}}</td></tr>
+                            <tr><td>Progess</td><td>{{alerts.inprogress}}</td></tr>
+                            <tr><td>Resolved</td><td>33</td></tr>
+                            <tr><td>Closed</td><td>44</td></tr>
+                        </table>
+                    </div>
+                </div>
+            </div> -->
+
+
+
+
+            <div class="col-md-4">
+                <div class="dbichart-block block chartinner" style="height: 380px">
+                    <div class="dbichart-head">
+                        <label>Executed Bots</label>
+                    </div>
+                    <br>
+                    <div class="dbichart-body" >
+
+                        <div>
+                                Successfull<br><br>
+                            <mat-progress-bar class="progress-bar-green" mode="determinate" [value]="executed.success"></mat-progress-bar><br>
+                        </div>
+                        <div>
+                              Stopped  <br><br>
+                            <mat-progress-bar class="progress-bar-warn" mode="determinate" [value]="executed.cancelled"></mat-progress-bar><br>
+        
+                        </div>
+                        
+                        <div>
+                                Failed<br><br>
+                            <mat-progress-bar class="progress-bar-red"  mode="determinate" [value]="executed.failure"></mat-progress-bar><br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-8">
+                <div class="dbichart-block block chartinner">
+                    <div class="dbichart-head">
+                        <label>Bot Transactions For Last 30 Days</label>
+                    </div>
+                    <div class="dbichart-body"  id="linechart_data">
+                        <canvas id='linechart' style='width:100% !important ;height:300px !important;'></canvas>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>

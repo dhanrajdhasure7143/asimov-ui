@@ -1,0 +1,89 @@
+.rpa-workspace-header 
+{
+    justify-content: space-between;
+    background-color: whitesmoke;
+    color: rgb(121, 116, 116);
+    font-size:14px;
+    font-weight: 600;
+    padding:10px;
+}
+
+.rpa-workspace-span img{
+    color:#0062cf;
+    padding-right: 3px;
+    float:right;
+    font-weight:100;
+}
+
+.rpa-workspace-manual-data svg{
+   width:100%;
+}
+
+.rpa-item {
+  padding:6px;
+  height:100px;
+  text-align: center;
+}
+
+.rpa-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.rpa-container>div {
+  flex: 0 50%;
+  /*demo*/
+  box-sizing:border-box
+}
+
+.rpa-workspace-title{
+  font-size:10px;
+}
+
+
+
+
+
+  .rpa-custom-scrollbar {
+    height: 350px;
+    overflow-y: scroll;
+   
+    
+  }
+  /* /* To style the document scrollbar, remove `.custom-scrollbar` */
+  .rpa-custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+  }
+  .rpa-custom-scrollbar::-webkit-scrollbar-track {
+    background :rgb(255, 255, 255);
+    border-radius: 10px;
+  }
+  .rpa-custom-scrollbar::-webkit-scrollbar-thumb {
+    background : rgb(209, 209, 209);
+    border-radius: 10px;
+  } 
+
+  .rpa-workspace-total{
+    float:right;
+    color: rgb(121, 116, 116);
+    font-size:10px;
+    font-style: italic;
+    padding-right: 10px;
+    padding-top: 10px;
+  }
+
+  .rpa-workspace-nav
+  {
+    padding-top:100px;
+    text-align: center;
+    padding-bottom: 70px;
+  }
+
+
+  #rpa-workspace-toolicon{
+    height:5px;
+    width:5px;
+   
+    fill:#0062cf;
+  }
+  

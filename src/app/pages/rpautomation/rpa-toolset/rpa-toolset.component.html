@@ -1,0 +1,82 @@
+
+  <mat-drawer-container class="example-container">
+    <mat-drawer #drawer [opened]="sidenavbutton" style="z-index:0" mode="side" >
+    
+  
+  
+    <div class="toolset" >
+      <div id="search">
+        <div  *ngIf="true" >
+          <h4>Actions</h4>
+          <div class="search-content">
+
+              <!-- onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" -->
+
+          <input type="text" *ngIf="true" style="border:1px solid gray" [(ngModel)]="userFilter.name" name="node" placeholder="&#61442; Search"
+          class="search fontAwesome" autocomplete="off">
+          </div> 
+          <!-- <span (click)="search=false" class="toolset-search-close"><i class="fa fa-times"></i></span> -->
+        </div>
+        <button  *ngIf="false" (click)="search=true" class="border toolset-search-button">
+          <span  class="text-primary">
+            <i class="fa fa-search"></i>
+          </span>
+        </button>
+      </div>
+        <div id="dragicons" class="dragicons">
+        <!-- <button type="button"class="scroll top">
+          <img (click)="scrolltop()"style="width:18px;text-align:center;"src="..\\assets\images\RPA\UpArrow.svg">
+        </button> -->
+
+       
+        <div #section class="section">
+            <mat-accordion  multi>
+          <div class="nodes rpa-dragicon" placement="bottom" *ngFor="let node of templateNodes | tasksearch:userFilter.name">
+    
+              <mat-expansion-panel  [expanded]="node.expanded" style="padding-right:15px;">
+                  <mat-expansion-panel-header [id]="node.name">
+                    <mat-panel-title>
+                        <span class="nodename pull-left">
+                            {{node.name}}
+                          </span>
+                         
+                    </mat-panel-title>
+                  
+                  </mat-expansion-panel-header>
+                  <div *ngFor="let taskdata  of (node | task) ">
+                    <div class="" [dndDraggable]="taskdata">
+                        <span class="taskname ">
+                          <img [src]="taskdata.path" class="con-img" /> 
+                        {{taskdata.selectedNodeTask}}
+                      </span>
+                        <br>
+                    </div>
+                  </div>
+                </mat-expansion-panel>
+              
+          </div>
+        </mat-accordion>
+    <!--<div class="slice-icon" *ngIf="show < templateNodes.length" (click)="increaseShow()"><i class="fa fa-ellipsis-v more-icon" aria-hidden="true"></i>
+                    </div>-->
+        </div>
+        <!-- <button (click)="scrollbottom()"type="button"class="scroll bottom">
+          <img style="width:18px;text-align:center;"src="..\\assets\images\RPA\DownArrow.svg">
+        </button> -->
+      </div>
+
+    </div>
+  
+
+</mat-drawer>
+  <mat-drawer-content>
+  <div class="row">
+  <div class="col-md-12 check" style="padding-right:0px;">
+    <div *ngIf="templateNodes.length!=0" class="check">
+     
+      <app-rpa-studio-actionsmenu [bot]="botState" [toolset]="templateNodes" ></app-rpa-studio-actionsmenu>
+    </div>
+  </div>
+
+</div>
+</mat-drawer-content>
+</mat-drawer-container>

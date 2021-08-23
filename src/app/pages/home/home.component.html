@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="row">
+        <span class="WTEPsoft">Welcome to EZFlow</span>&nbsp;<span class="WTEPsoft1">Intelligent Automation Platform</span>
+        <h3 id="sbtl">Select below service to launch</h3>
+        <form id="moduleSelectionForm" #moduleSelectionForm="ngForm" (ngSubmit)="navigateToModule()">
+            <div class="row">
+                <div class="col-sm-2 dataCardBox" *ngFor="let eachData of dataArr;let i=index;trackBy:loopTrackBy">
+                    <div [id]="eachData.id" class="dataCard" [ngClass]="selectedIndex == i?'active':''" (click)="selectedIndex = i"  (dblclick)="navigateToModule()">
+                        <img [src]="eachData.img"/>
+                        <h5 id="subheading">{{eachData.title}}</h5>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col-sm-8">
+                    <button type="submit" class="btn btn-primary eiap-btn right" id="launch_btn" style="margin-right:0px !important">
+                    Launch<span style="margin-left: 1em" ><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+                    </button>
+                 </div>
+            </div>
+        </form>
+    </div>
+</div>

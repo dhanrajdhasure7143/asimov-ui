@@ -1,0 +1,9 @@
+.bg-color {
+    background-color: rgb(241, 240, 240);
+}
+
+.undobtn {background-color:gainsboro; border-radius: 5px;}
+
+.verticalalignmiddle{
+    vertical-align: middle !important;
+}

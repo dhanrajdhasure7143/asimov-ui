@@ -1,0 +1,65 @@
+{
+  "$schema": "./node_modules/@angular/service-worker/config/schema.json",
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app-shell",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+          "files": [
+              "/index.html",
+              "/pwa-manifest.json",
+              "/assets/images/favicons/favicon.ico",
+              "/assets/js/*.js",
+              "/assests/**",
+              "/*.css",
+              "/*.js",
+              "!/*-es5*.js",
+              "/enjoyhint/**"
+          ],
+          "urls": [ ]
+      }
+  },
+  {
+      "name": "assets-eager",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "resources": {
+          "files": [
+              "/assets/images/**",
+              "/assets/images/BPMS/**",
+              "/assets/images/PI/**",
+              "/assets/images/icons/**",
+              "!/assets/images/favicons/**",
+              "!/**/_unused/**"
+          ]
+      }
+  },
+  {
+      "name": "assets-lazy",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "resources": {
+          "files": [
+              "/assets/images/favicons/**",
+              "/*-es5*.js",
+              "!/**/_unused/**"
+          ]
+      }
+  }],
+  "dataGroups": [
+    {
+      "name": "bpmn-approval",
+      "urls": [
+          "/bpsprocess/submit/bpms/notation/approve"
+      ],
+      "cacheConfig": {
+          "strategy": "freshness",
+          "maxSize": 100,
+          "maxAge": "3d",
+          "timeout": "10s"
+      }
+    }
+  ]
+}

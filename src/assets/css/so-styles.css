@@ -1,0 +1,45 @@
+/*bot management component styles - Starts*/
+/* .imageI{
+    width: 16px;;
+}
+.btn_style{
+    margin: 0px -6px 0px 10px;
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: 2px;
+}
+.collection_btn{
+    position: absolute;
+    left: 60%;
+    bottom: 15px;
+} */
+/*bot management component styles - Ends*/
+/*bot status component styles - Starts*/
+img.image{
+    position: absolute;
+    left: 26%;
+    width: 40px;
+    padding: 14px 0px 0px 0px;
+}
+.status{
+    color: #0062cf;
+}
+.bots_status:hover {
+    cursor: pointer;
+    background-color: #0062cf;
+}
+.bots_status:hover img{
+    filter: invert(1);
+}
+.bots_status:hover h3 {
+    color: white;
+}
+.bots_status:hover h6 {
+    color: white;
+}
+/*bot status component styles - Ends*/
+/*orchestration component styles - Starts*/
+.img123{
+    background-image: url("/assets/images/Group 211.svg");
+}
+/*orchestration component styles - Ends*/

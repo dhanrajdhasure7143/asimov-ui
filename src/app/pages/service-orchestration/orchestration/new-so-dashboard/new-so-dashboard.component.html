@@ -1,0 +1,182 @@
+<div class="my-new-div wrapper">
+    <!-- Tab panes -->
+    <br>
+    <div class="">
+      <div >
+            <div class="row">
+                <!-- <div class="col-sm-4">
+                    <div class="dbichart-block">
+                        <div class="dbichart-head">
+                            <label>LOB</label>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="lobchart"></div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="col-sm-4">
+                    <div class="dbichart-block"id="processgroup">
+                        <div class="dbichart-head">
+                            <label>Process Group</label>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="dashboardchart1"></div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-8  dashboardchart_show" *ngIf="chartflag==false">
+                    <div class="dbichart-block"id="botsbyprocesschart">
+                        <div class="dbichart-head">
+                            <label>Bots by Process</label>
+                            <div class="dbichart-dropdown">
+                                <span>Select by Process Group :</span>
+                                <select name="botOptions" >
+                                    <!-- <option value="" disabled hidden>Select</option> -->
+                                    <option value="all" selected>All</option>
+                                    <option value='Accounts Management'>Accounts Management</option>
+                                    <option value='Wealth Management'>Wealth Management</option>
+                                    <option value='Insurance'>Insurance</option>
+                                    <option value='Mergers & Acquisitions'>Mergers & Acquisitions</option>
+                                    <option value='Consumer banking'>Consumer banking</option>
+                                  </select>
+                            </div>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="dashboardchart2"></div>
+                        </div>
+                    </div>
+                  </div>
+                <div class="col-sm-4 " *ngIf="chartflag==true">
+                    <div class="dbichart-block">
+                        <div class="dbichart-head">
+                            <label>Tasks by Process</label>
+                            <div class="dbichart-dropdown">
+                                <span>Select by PG :</span>
+                                <select (change)='onchange($event.target.value)' name="botOptions" >
+                                    <option value="" disabled hidden>Select</option>
+                                    <option value='Accounts Management'>Accounts Management</option>
+                                    <option value='Wealth Management'>Wealth Management</option>
+                                    <option value='Insurance'>Insurance</option>
+                                    <option value='Mergers & Acquisitions'>Mergers & Acquisitions</option>
+                                    <option value='Consumer banking'>Consumer banking</option>
+                                  </select>
+                            </div>
+                        </div>
+                        <div class="dbichart-body"  *ngIf="chartflag==true">
+                            <div id="botsbyprocess"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4"  *ngIf="chartflag==true">
+                    <div class="dbichart-block">
+                        <div class="dbichart-head">
+                            <label>Bot vs Human Task</label>
+                            <div class="dbichart-dropdown">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="dbichart-body">
+                            <div id="bothumantask"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-sm-12"  *ngIf="chartflag==true">
+                    <div class="lob-sec accounts-management" *ngIf="processtableflag==true">
+                        <div class="bbp-title">Process Group :<span>{{selectedcat.categoryName}}</span></div>
+                        <div class="bbp-buttons">
+                            <button class="button color1"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Processes : <strong>{{count.processCount}}</strong></button>
+                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Processes_icon.svg"> Total Bots : <strong>{{count.bots}}</strong></button>
+                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>{{count.human}}</strong></button>
+                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>25</strong></button>
+                        </div>
+                        <table class="datatable table">
+                            <thead>
+                                <tr>
+                                    <th>S.No.</th>
+                                    <th>Process Name</th>
+                                    <th>No.of Bots</th>
+                                    <th>No.of Incidents</th>
+                                    <th>Process Owner</th>
+                                  
+                                    <th>Current Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  *ngFor="let process of processtable  | paginate: { itemsPerPage: 4,currentPage: r } ;let i=index">
+                                    <td>{{i+1}}</td>
+                                    <td>{{process.processName}}</td>
+                                    <td>{{process.bots}}</td>
+                                    <td>{{process.incidents}}</td>
+                                    <td>{{process.processOwner}}</td>
+                                   
+                                    <td><span class="dot1 Success"></span> Success</td>
+                                </tr>
+                               
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="r = $event"></pagination-controls>
+                    </div>
+                </div>
+
+
+                <div class="col-sm-12"  *ngIf="chartflag==true">
+                        <div class="lob-sec accounts-management" *ngIf="taskstableflag==true">
+                              
+                                        <div class="bbp-title">Process Group :<span>{{selectedcat.categoryName}}</span></div>
+                                        <div class="bbp-title">Process Name :<span>{{tasksTable[0].processName}}</span></div>
+                                        <div class="bbp-buttons">
+                                            <button class="button color2"><img src="assets/images/vartusaimages/Total_Bots_Icon.svg"> Total Bots : <strong>{{processCount.bots}}</strong></button>
+                                            <button class="button color3"><img src="assets/images/vartusaimages/Human_Tasks_icon.svg"> Human Tasks : <strong>{{processCount.human}}</strong></button>
+                                            <button class="button color4"><img src="assets/images/vartusaimages/Incidents_icon.svg"> Incidents : <strong>{{processCount.incident}}</strong></button>
+                                        </div>
+                                        <table class="datatable table">
+                                            <thead>
+                                                <tr>
+                                                    <th>S.No.</th>
+                                                    <th>Process Name</th>
+                                                    <th>Source Type</th>
+                                                    <th>Task Name</th>
+                                                    <th>Process Owner</th>
+                                                    <th>Task Owner</th>
+                                                   
+                                                    <th>Current Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let task of tasksTable | paginate: { itemsPerPage: 6,currentPage: q } ;let i = index ">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{task.processName}}</td>
+                                                    <td><select *ngIf="task.taskType=='Automated'" name="" [value]="task.sourceType" id="">
+                                                            <option value="UiPath">UiPath</option>
+                                                            <option value="BluePrism">Blueprism</option>
+                                                            <option value="EPSoft">Epsoft</option>
+                                                            </select>
+                                                            <div  *ngIf="task.taskType=='Human'" >---</div>
+                                                    </td>
+                                                    <td><a href="" data-toggle="modal" data-target="#myModal">{{task.taskName}}</a></td>
+                                                    <td>Karthik Peddinti</td>
+                                                    <td>{{task.createdBy}}</td>
+                                                    
+                                                    <td>
+                                                        <span *ngIf="task.status=='Success'" class="dot1 Success"></span> 
+                                                        
+                                                        <span *ngIf="task.status=='Approved'" class="dot1 Success"></span> 
+                                                        
+                                                        <span *ngIf="task.status=='Failure'" class="dot1 bg-danger"></span> 
+                                                        {{task.status}}</td>
+                                                </tr>
+                                    
+                                   
+                                </tbody>
+                            </table>
+                            <pagination-controls (pageChange)="q = $event"></pagination-controls>
+                        </div>
+                    
+                </div>
+      </div>
+
+   </div>
+</div>

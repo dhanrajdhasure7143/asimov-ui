@@ -1,0 +1,185 @@
+<div class="container">
+    <div class="row">
+      <div class="col-md-4 col-sm-4" id="title">
+          <!-- <button class="btn btn-warning eiap-btn" *ngIf="!headerName" (click)="resetColMap()">Reset Mapping</button> -->
+      </div>
+      <div class="col-md-6">
+        <div class='col-sm-8'></div>
+          <div class=" col-sm-4 inner-addon right-addon">
+            <i class="fa fa-search" aria-hidden="true" style="color: gray"></i>
+            <input type="text" placeholder="Search" aria-label="Search" id="search_process_data" [(ngModel)]="searchTerm">
+          </div>
+      </div>
+      <div class="col-md-2 col-sm-12">
+          <button class="btn btn-primary eiap-btn right" id="generateGraph" (click)="caseIdSelection()" [disabled]="!isValidPiData || (step_id != headerData.length)">
+              <img src="assets/images/Group 77.svg">&nbsp;&nbsp;&nbsp;Next</button>
+      </div>
+    </div>
+    <div class="row" *ngIf="headerName" class="columnSelection">
+      <div class="col-md-4"><b>Select Column - Step {{step_id}}/{{headerData.length}}:"{{headerName}}"</b></div>
+      <div class="col-md-4"><small>(Click on the {{headerName}} Value Column for Data Validation)</small></div>
+      <div class="col-md-2"> <svg width="12" height="12" class="svg">
+          <rect width="12" height="12" class ="svg_blue_rec" style="fill:rgb(84, 168, 236);stroke-width:3" />
+        </svg> Success Mapping
+      </div>
+      <div class="col-md-2">
+        <svg width="12" height="12" class="svg">
+          <rect width="12" height="12" class="svg_red_rec" style="fill:rgb(212, 105, 105);stroke-width:3" />
+        </svg> Error Mapping
+      </div>
+    </div>
+    <div class="">
+      <form id="DataDocTableForm">
+        <table class="table" id="process_data">
+            <thead #header >
+                <tr>
+                    <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader" (click)= "sort(headValue)">
+                    {{headValue}}
+                    </th>
+                </tr>
+                <tr >
+                  <th class="tableHeader" *ngIf="headerData[0]">
+                    <select name="cathead1" [disabled]='false' [(ngModel)]="cathead1"  class="form-control"  >
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                      </select>
+                  </th>
+                  <th class="tableHeader" *ngIf="headerData[1]">
+                    <select [disabled]='false' name="cathead2" [(ngModel)]="cathead2" class="form-control" (change)="getDataTypeChange(headerData[1], cathead2)">
+                  <option>String</option>
+                  <option>Integer</option>
+                  <option>Date/Time</option>
+                    </select>
+                  </th>
+                  <th class="tableHeader" *ngIf="headerData[2]">
+                  <select name="cathead3" [disabled]='false' [(ngModel)]="cathead3" class="form-control" (change)="getDataTypeChange(headerData[2], cathead3)">
+                  <option>String</option>
+                  <option>Integer</option>
+                  <option>Date/Time</option>
+                  </select>
+                </th>
+                <th class="tableHeader" *ngIf="headerData[3]">
+                  <select name="cathead4" [disabled]='false' [(ngModel)]="cathead4" class="form-control" (change)="getDataTypeChange(headerData[3], cathead4)">
+                  <option>String</option>
+                  <option>Integer</option>
+                  <option>Date/Time</option>
+                  </select>
+                </th>
+                <th class="tableHeader" *ngIf="headerData[4]">
+                  <select name="cathead5" [disabled]='false' [(ngModel)]="cathead5" class="form-control" (change)="getDataTypeChange(headerData[4], cathead5)">
+                  <option>String</option>
+                  <option>Integer</option>
+                  <option>Date/Time</option>
+                  </select>
+                </th>
+                <th class="tableHeader" *ngIf="headerData[5]">
+                  <select name="cathead6" [disabled]='false' [(ngModel)]="cathead6" class="form-control" (change)="getDataTypeChange(headerData[5], cathead6)">
+                  <option>String</option>
+                  <option>Integer</option>
+                  <option>Date/Time</option>
+                  </select>
+                </th>
+                 <th class="tableHeader" *ngIf="headerData[6]">
+                  <select name="cathead7" [disabled]='false' [(ngModel)]="cathead7" class="form-control" (change)="getDataTypeChange(headerData[6], cathead7)">
+                  <option>String</option>
+                  <option>Integer</option>
+                  <option>Date/Time</option>
+                  </select>
+                  </th>
+                  <th class="tableHeader" *ngIf="headerData[7]">
+                    <select name="cathead8" [disabled]='false' [(ngModel)]="cathead8" class="form-control" (change)="getDataTypeChange(headerData[7], cathead8)">
+                    <option>String</option>
+                    <option>Integer</option>
+                    <option>Date/Time</option>
+                    </select>
+                    </th>
+                    <th class="tableHeader" *ngIf="headerData[8]">
+                      <select name="cathead9" [disabled]='false' [(ngModel)]="cathead9" class="form-control" (change)="getDataTypeChange(headerData[8], cathead9)">
+                      <option>String</option>
+                      <option>Integer</option>
+                      <option>Date/Time</option>
+                      </select>
+                      </th>
+                      <th class="tableHeader" *ngIf="headerData[9]">
+                        <select name="cathead10" [disabled]='false' [(ngModel)]="cathead10" class="form-control" (change)="getDataTypeChange(headerData[9], cathead10)">
+                        <option>String</option>
+                        <option>Integer</option>
+                        <option>Date/Time</option>
+                        </select>
+                        </th>
+                        <th class="tableHeader" *ngIf="headerData[10]">
+                          <select name="cathead11" [disabled]='false' [(ngModel)]="cathead11" class="form-control" (change)="getDataTypeChange(headerData[10], cathead11)">
+                          <option>String</option>
+                          <option>Integer</option>
+                          <option>Date/Time</option>
+                          </select>
+                          </th>
+                          <th class="tableHeader" *ngIf="headerData[11]">
+                            <select name="cathead12" [disabled]='false' [(ngModel)]="cathead12" class="form-control" (change)="getDataTypeChange(headerData[11], cathead12)">
+                            <option>String</option>
+                            <option>Integer</option>
+                            <option>Date/Time</option>
+                            </select>
+                            </th>
+                            <th class="tableHeader" *ngIf="headerData[12]">
+                              <select name="cathead13" [disabled]='false' [(ngModel)]="cathead13" class="form-control" (change)="getDataTypeChange(headerData[12], cathead13)">
+                              <option>String</option>
+                              <option>Integer</option>
+                              <option>Date/Time</option>
+                              </select>
+                              </th>
+                  
+                  </tr>
+            </thead>
+            <tbody #container id="uploaded_data">
+                <tr *ngFor="let row of fileData|filter:searchTerm| paginate: { itemsPerPage: 100, currentPage: p };trackBy:loopTrackBy;let i=index;" class="tableRow">
+                  <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" (click)="selectedCell(i,j,$event, val)"
+                    [class.valid]="validCells['row'+i] && validCells['row'+i].indexOf('cell'+j)>-1" 
+                    [class.invalid]="invalidCells['row'+i] && invalidCells['row'+i].indexOf('cell'+j)>-1"> 
+                    {{row[j] || ' '}} 
+                  </td>
+                </tr>
+            </tbody>
+        </table>
+      </form>
+        <div class="col-sm-8"></div>
+      <div class="col-sm-4"><pagination-controls (pageChange)="p = $event"></pagination-controls></div>
+    </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-content preview-modal">
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Uploaded File Preview </h4>
+    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+ 
+  <div class="">
+    <form id="DataDocTableForm">
+      <table class="table" id="process_data">
+          <thead><!-- #header -->
+              <tr>
+                  <th *ngFor="let headValue of headerData;trackBy:loopTrackBy" class="tableHeader" >
+                  {{headValue}}
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              <tr *ngFor="let row of fileData;trackBy:loopTrackBy;let i=index;" class="tableRow">
+                <td *ngFor="let val of headerData; let j =index;trackBy:loopTrackBy" class="tableCell" 
+                  > 
+                  {{row[j] || ' '}} 
+                </td>
+              </tr>
+          </tbody>
+      </table>
+    </form>
+  </div>
+  </div>
+  </div>
+</ng-template>
+<app-pibpmnfilter></app-pibpmnfilter>

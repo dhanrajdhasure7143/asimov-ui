@@ -1,0 +1,394 @@
+/* RPA Studio styles - Starts */
+.collection_btn{
+    position: absolute;
+    bottom: 56px;
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    border: 1px solid rgb(219, 219, 219);
+    width: 87%;
+    left: 169px;
+       
+  }
+  .imageI{
+
+    width: 16px;
+    filter: brightness(0.1) !important;
+}
+
+.imageI1{
+  
+  height: 25px;
+  width:25px;
+  filter: brightness(0.1) !important;
+}
+.rpa-btn_style{
+  margin: 0px -6px 0px 10px;
+  background-color: white;
+  border-radius: 2px;
+  /*padding:15px;*/
+  padding-right:15px;
+  padding-left:15px;
+  
+  padding-top:5px;
+  
+  padding-bottom:5px;
+}
+.rpa-btn_style:disabled{
+  background-color:rgb(199, 199, 199);
+}
+.btn_title{
+font-size:10px;
+color:black;
+}
+.btn_style1{
+margin: 0px 5px 0px 3px;
+background-color: transparent;
+border-radius: 2px;
+padding: 0px 12px;
+}
+ /* :visited,.btn_style1 :focus,.btn_style1 :active{
+background-color: blue;
+color:#fff;
+} */
+
+.btn_style1 img:active, .btn_style1 img:hover {
+  background-color: blue;
+  color: white;
+}
+.drag-area1{
+  position: absolute;
+  border: 1px solid rgba(0,0,0,.15);
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  left: 19px;
+  top: 60px;
+  padding: 5px;
+  margin: 2px 0 0;
+  background-color: #fff;
+}
+.context-menu__item a{
+ background-color: #fff;
+ color: #000;
+ text-decoration: none;
+ font-size: 15px;
+}
+.environments label{
+font-size: 16px;
+}
+.download{
+  position: absolute;
+  top: 387px;
+  left:-69px;
+}
+
+.rpa-checkbox{
+  display: flex;
+  justify-content:center;
+}
+.rpa-table thead th {
+border-bottom-width: thin;
+border-bottom-color:#d9d9d9;
+}
+.rpa-table tfoot th{
+  border-top-color:#d9d9d9;
+  border-bottom-width: thin; 
+  font-weight: 200; 
+}
+.rpa-table tbody tr td{
+  border-top-color:#d9d9d9;
+  border-bottom-width: thin; 
+  font-weight: 200;
+  padding-top: 20px;
+  padding-bottom: 20px; 
+}
+
+.rpa-tablebox{
+padding-top:10px;
+padding-bottom:10px;
+/*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+border-radius: 10px;
+height: 500px;
+}
+.rpa-table.dataTable thead .rpa-checkbox-th{
+  background : none;
+}
+.env-btn button svg{
+fill:white;
+height: 20px;
+width:20px;
+stroke-width: 100;
+}
+.env-search{
+  display:inline-block;
+  float:right;
+  }
+.env-data-tool{
+padding:10px;
+float: right;
+}
+.rpa-env-search{
+  padding:10px;
+  float:left;
+}
+
+#listofenv_filter > label > input[type=search]
+{
+  float:left !important;
+}
+
+.rpa-env-nav
+{
+padding-top:60px;
+text-align: center;
+padding-bottom: 70px;
+}
+
+.rpa-env-btn-image{
+  fill:#ffffff;
+  height:17px;
+  width:14px;
+  stroke-width: 12px;
+}
+
+.rpa-nav-btn-img{
+  height:50px;
+  width:50px;
+}
+.robotic-run {
+    position: absolute;
+    top: 0px;
+    border: 1px solid lightgray;
+    height: 50px;
+    left: 40%;
+    bottom: 15px;
+    margin: 10px 10px 10px;
+    border-radius: 20px;
+    width: 25%;
+    z-index: 1000;
+  }
+  .rob-s{
+    padding: 0px 10px;
+  }
+  
+  .rob-s p{
+    font-size: 12px;
+    color: black;
+  }
+  .rob-s p:active{
+    font-size: 14px;
+    color:#fff;
+  }
+  .status{
+    position: absolute;
+    right:-172px;
+    top: 20px;
+  }
+  .rob-status{
+    border: 1px solid lightgray;
+    width: 50px;
+    text-align: center;
+  }
+  .rob-status p{
+    font-size: 9px;
+    color: black;
+    margin: 0;
+  }
+
+
+  .rpa-close{
+    float: none;
+    margin-left: 8px;
+    font-size: 16px;
+  }
+
+  .rpa-custom-scrollbar {
+    max-height: 350px;
+    overflow-y: scroll;
+   
+    
+  }
+  /* /* To style the document scrollbar, remove `.custom-scrollbar` */
+  .rpa-custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+  }
+  .rpa-custom-scrollbar::-webkit-scrollbar-track {
+    background :rgb(255, 255, 255);
+    border-radius: 10px;
+  }
+  .rpa-custom-scrollbar::-webkit-scrollbar-thumb {
+    background : rgb(209, 209, 209);
+    border-radius: 10px;
+  } 
+
+ 
+  /* The  rpa-modal (background) */
+.rpa-modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 10000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  -webkit-animation-name: fadeIn; /* Fade in the background */
+  -webkit-animation-duration: 0.4s;
+  animation-name: fadeIn;
+  animation-duration: 0.4s
+  }
+  
+  /*  rpa-modal Content */
+  .rpa-modal-content {
+  position: fixed;
+  bottom: 0;
+  background-color: #fefefe;
+  width: 100%;
+  -webkit-animation-name: slideIn;
+  -webkit-animation-duration: 0.4s;
+  animation-name: slideIn;
+  animation-duration: 0.4s
+  }
+  
+  /* The Close Button */
+  .rpa-modal-close {
+  color: #000;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  }
+  
+  .rpa-modal-close:hover,
+  .rpa-modal-close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+  }
+  
+  .rpa-modal-header {
+  padding: 2px 16px;
+  background-color: #e5e5e5;
+  color: #000;
+  }
+  .rpa-modal-header .close {
+  margin-top: 5px;
+ }
+  
+  .rpa-modal-body {padding: 2px 16px;}
+  
+  
+  /* Add Animation */
+  @-webkit-keyframes slideIn {
+  from {bottom: -300px; opacity: 0} 
+  to {bottom: 0; opacity: 1}
+  }
+  
+  @keyframes slideIn {
+  from {bottom: -300px; opacity: 0}
+  to {bottom: 0; opacity: 1}
+  }
+  
+  @-webkit-keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+  }
+  
+  @keyframes fadeIn {
+  from {opacity: 0} 
+  to {opacity: 1}
+  }
+
+
+
+
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul{
+    border-bottom: none;
+  }
+
+  
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul > li > a.nav-link.active{
+    border-right: 1px solid rgb(70, 70, 70) !important;
+    background-color:white !important; 
+    color:rgb(71, 71, 71) !important;
+    border-radius: 0 !important;
+    padding: 5px 12px !important;
+    
+  }
+
+
+    
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul > li > a.nav-link{
+    border-right: 1px solid lightgray !important;
+    background-color:white !important; 
+    border-radius: 0 !important;
+    padding: 5px 12px !important;
+  
+  }
+
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul > li > a.nav-link.active > span:nth-child(1)
+  {
+    font-size:14px;
+    color:black;
+  }
+  #draganddrop > app-rpa-studio-tabs > ngb-tabset > ul > li > a.nav-link > span:nth-child(1)
+  {
+    font-size:14px;
+    color:rgb(149, 149, 149);
+  }
+
+
+  cron-editor > div > div.card-header > ul > li > a.nav-link
+  {
+    padding: 6px 13px!important;
+    border-radius: 4px 4px 0 0 !important;
+    font-weight:normal;
+    font-size:14px;
+    
+  }
+
+  .mat-paginator > div > div > div.mat-paginator-range-actions > button:disabled{
+
+    background-color:none;    
+  }
+
+
+  .mat-tab-label-active{
+    background-color:white !important;
+  }
+
+  .mat-tab-group.mat-primary .mat-ink-bar, .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+    background-color: #0062cf !important;
+}
+
+.mat-tab-label-active, .mat-tab-label:active, .mat-tab-label:focus{
+  background-color: white !important;
+}
+
+mat-paginator button:disabled{
+  background-color:white !important;
+}
+
+/*RPA Environments header styles */
+.rpaenv_header_addon {
+  position: absolute !important;
+  top: 107px;
+  text-align: right;
+  width: 100%;
+}
+.rpaenv-nav-btn-img {
+  height: 36px;
+  width: 36px;
+  margin-right: 5px;
+}
+
+
+
+.rpa-home-table{
+  height:50vh;
+  overflow-y: scroll;
+}

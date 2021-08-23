@@ -1,0 +1,47 @@
+span li {
+    cursor: pointer;
+}
+
+li {
+    cursor: pointer;
+}
+
+select {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+}
+
+/*
+.bg-color {
+    background-color: rgb(241, 240, 240);
+}
+*/
+
+.rpa-modal-content{
+    padding-bottom: 25px !important;
+}
+
+.verticalalignmiddle{
+    vertical-align: middle !important;
+}
+
+.myInput{
+    padding:10px;
+    padding-bottom: 0px !important;
+    width: 90% !important;
+  }
+
+  .lbl_chk_cls{
+    font-size: 15px;
+    font-weight: lighter !important;
+    margin-left:3px
+  }
+
+  .swal-wide{
+    width:1000px !important;
+    height: 500px !important;
+  }
+.margin-25>span{
+  margin-left:14px!important;
+}

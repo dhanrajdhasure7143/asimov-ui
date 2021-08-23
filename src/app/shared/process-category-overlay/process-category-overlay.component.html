@@ -1,0 +1,87 @@
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close" (click)="slideDown(processCategoryForm);">&times;</span>
+            <h4>{{headerTitle}}</h4>
+        </div>
+        <div class="modal-body">
+            <form autocomplete="off" #processCategoryForm="ngForm">
+                <div class="container m-contanier">
+                    <mat-form-field class="row col-md-12">
+                        <mat-label>Select Category</mat-label>
+                        <mat-select  name="category" (selectionChange)="onchangeCategories(categoryName)" #category="ngModel" [(ngModel)]="categoryName" required panelClass="overlayMatSelect" [disabled]="data" >
+                            <mat-option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
+                                {{categories.categoryName}}</mat-option>
+                            <mat-option value="other">Other</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <span class="error_msg" [class.show]="category.dirty && category.invalid">Please select a category</span>
+                    <br/>
+                    <div *ngIf='isotherCategory'>
+                        <mat-form-field class="row col-md-12">
+                            <mat-label>Enter Category</mat-label>
+                            <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" #other_category="ngModel" pattern="[a-zA-Z0-9 _-]+" required>
+                        </mat-form-field>
+                        <span class="error_msg" [class.show]="other_category.dirty && other_category.invalid">Alphanumerics with _- are allowed</span>
+                    </div>
+                    <br/>
+                    <div *ngIf='isBpmnModule'>
+                        <mat-form-field class="row col-md-12">
+                            <mat-label>Select Notation Type</mat-label>
+                            <mat-select name="notation" #notation="ngModel" [(ngModel)]="notationType" required [disabled]="uploadedFileExtension">
+                                <mat-option value="bpmn">BPMN</mat-option>
+                                <mat-option value="cmmn">CMMN</mat-option>
+                                <mat-option value="dmn">DMN</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <mat-form-field class="row col-md-12">
+                        <mat-label>Enter Process Name</mat-label>
+                        <input type="text" matInput name="processName" [(ngModel)]="processName" #process_name="ngModel" pattern="^[a-zA-Z0-9 _-]{4,25}$" required  [disabled]="data">
+                    </mat-form-field>
+                    <span class="error_msg" [class.show]="process_name.dirty && process_name.invalid">Alphanumerics with _- are allowed having 4 - 25 characters</span>
+                    <br/>
+                    <div class="center">
+                        <button class="btn btn-primary eiap-btn" type="submit" (click)="proceedChanges(processCategoryForm);" [disabled]="!data && !processCategoryForm.valid">{{buttonName}}</button>
+                    </div>
+                </div>
+                <!-- <div class="container m-contanier" *ngIf="isRpa=='true'">
+                    <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Bot Name</mat-label>
+                            <input type="text" matInput name="botName" [(ngModel)]="botName" required>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Bot Type</mat-label>
+                            <mat-select  name="botType" [(ngModel)]="botType" required panelClass="overlayMatSelect">
+                                <mat-option value=1>Attended</mat-option>
+                                <mat-option value=0>Unattended</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                      </div>
+                      <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Select Category</mat-label>
+                            <mat-select  name="category" (selectionChange)="onchangeCategories(categoryName)" [(ngModel)]="categoryName" required panelClass="overlayMatSelect">
+                                <mat-option *ngFor="let categories of categoriesList.data;let i=index;trackBy:loopTrackBy" [value]="categories.categoryName">
+                                    {{categories.categoryName}}</mat-option>
+                                <mat-option value="other">Other</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="row col-md-12" *ngIf='isotherCategory'>
+                            <mat-label>Enter Category</mat-label>
+                            <input type="text" matInput name="otherCategory" [(ngModel)]="othercategory" required>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Bot Description</mat-label>
+                            <textarea matInput name="botDescription" [(ngModel)]="botDescription" placeholder="Enter Bot Description" maxlength="500"></textarea>
+                        </mat-form-field>
+                      </div>
+                      <div class="center">
+                        <button class="btn btn-primary eiap-btn" (click)="proceedChanges();processCategoryForm.reset()" [disabled]="processCategoryForm.invalid" >Submit</button>
+                      </div>
+                </div> -->
+            </form>
+        </div>
+    </div>
+</div>

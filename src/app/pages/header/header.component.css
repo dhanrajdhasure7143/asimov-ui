@@ -1,0 +1,73 @@
+.abrand_div img{
+    padding-top: 15px;
+    width:215px;
+}
+.abrand_div{
+    cursor: pointer;
+    outline: none !important;
+}
+.notification-icon{
+    margin-top: -24px !important;
+    margin-right: 20px;
+    cursor: pointer;
+}
+.icon_middle label{
+    margin-top: 5px;
+    line-height: 1.4 !important;
+}
+.drop_down a{
+    padding: 10px 4px !important;
+    color: #287ad6 !important;
+    font-size: 14px;
+    float: left;
+}
+.drop_down a:hover{
+    color: #287ad6 !important;
+    font-weight: bold !important;
+}
+.dropdown-menu{
+    padding:3px !important;
+    border: 1px solid #287ad6;
+}
+.header_icon{
+    padding-right: 7px !important;
+}
+.hd_icon{
+    padding-right: 5px;
+}
+
+
+.res-circle {
+    width: 60px;
+    border-radius: 100%;
+    text-align: center;
+    height: 60px;
+    margin-top: 5px;
+    color: black;
+    font-size: 25px;
+    background: #0091ea;
+    line-height: 59px;
+    margin-left: -5px;
+    font-weight: bold;
+    padding: 0px 0px;
+  }
+  .res-circle:after {
+    content: "";
+    display: block;
+    padding-bottom: 100%;
+  }
+
+  .notification-count
+  {
+      margin-left: -46px;
+      height: 19px;
+      width: 22px;
+      background: #ff6600;
+     color: white;
+     border: 2px solid #ff6600;
+     text-align: center;
+     border-radius: 57px;
+    font-weight: bold;
+    font-size: 11px;
+     line-height: 16px;
+  }
