@@ -371,29 +371,40 @@
 <!-- <ngx-spinner bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff" type = "ball-spin-clockwise-fade-rotating" [fullScreen] = "true"><p style="color: white" ></p></ngx-spinner> -->
 
 
-<div id="mySidenav" class="col-md-12 sidenav tracking_detsils1">
+<div id="mySidenav" class="col-md-12 p-0 sidenav tracking_detsils1">
     <div class='variants_slider'>
        <div class="col-sm-12 select_drpdwnone">
-            <div class="col-sm-12"><button class="closebtn" (click)="closeNav()">&times;</button></div>
-            <div class="col-sm-12 form-group">
+            <div class="variants-header">
+                <h3>Variants List</h3>
+                <button class="closebtn" (click)="closeNav()">
+                    <img src="../../../../assets/images/PI/close.svg" alt="" class="default-img">
+                    <img src="../../../../assets/images/PI/close-blue.svg" alt="" class="hover-img">
+                </button>
+            </div>
+            <div class="col-md-12 p-0">
                 <select class="form-control select_drpdwn" [(ngModel)]="select_varaint" (change)="onchangeVaraint(select_varaint)" name="status" id="variant_drpdwn">
-                <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
+                    <option [value]="each" *ngFor="let each of variant_list;let i=index;trackBy:loopTrackBy" [selected]="i==0">{{variant_list_options[each]}}</option>
                 </select>
             </div>
         </div>
-        <div class='col-sm-12 row variant2'>
-               <div class="col-sm-7 check_box">
-                   <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()"><span class="">Select all</span>
-               </div>
-               <div class='col-sm-5 event2'>Time Taken</div>
+        <div class='col-sm-12 variant2'>
+            <div class="check_box">
+                <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()">
+                <span class="">Select all</span>
+                <span class='event2'>Time Taken</span>
+            </div>   
         </div>
-        <div class='col-sm-12 row variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.varaint_data.data; let i=index">
-            <div (click)="caseIdSelect(data,i)"  class='col-sm-4 event3'>Variant <b>{{i+1}}</b></div>
-            <div class='col-sm-6 variant_parcent'>
-                <div (click)="caseIdSelect(data,i)" class='col-sm-12'>Cases Covered <b>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</b></div>
-                <div (click)="caseIdSelect(data,i)" class='col-sm-3'></div>
+        <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of this.varaint_data.data; let i=index">
+            <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
+                <span>{{i+1}}</span>
             </div>
-            <div class='col-sm-2' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
+            <div class='variant_parcent'>
+                <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
+                    <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
+                </div>
+                <div (click)="caseIdSelect(data,i)" class=''></div>
+            </div>
+            <div class='' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
         </div>
         </div>
         

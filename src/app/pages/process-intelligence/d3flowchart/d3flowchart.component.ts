@@ -575,7 +575,7 @@ var wrap = function(text, width) {
 
 // Simple function to style the tooltip for the given node.
 var styleTooltip = function(name, description) {
-  return "<p class='name node-name'>" + name + '</p><button id="filterBtn" class="fa fa-filter filter-icon"></button>' + description;
+  return "<div class='filter-overlayheader'><p class='name node-name'>" + name + '</p><button id="filterBtn" class="btn-filter"><img src="../../../../assets/images/PI/filter.svg" alt="" class="default-img"><img src="../../../../assets/images/PI/filter-blue.svg" alt="" class="hover-img"></button></div>' + description;
 };
 
 var tooltip = d3.select("body")

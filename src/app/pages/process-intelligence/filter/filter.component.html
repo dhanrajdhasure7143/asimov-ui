@@ -1,6 +1,6 @@
         
 <div class="container m-contanier form-body">
-    <div class="col-md-8 p-0 form-group PI-filterby">
+    <div class="col-md-12 p-0 form-group PI-filterby">
         <p class="filter_typesOne">Filter By</p>
                 <select class="form-control filterSelection" name="filterBy" (change)="channgeFilter()" [(ngModel)]="filterby">
                     <option [value]="chart_filter[each]" *ngFor="let each of chart_filter_options;let i=index;trackBy:loopTrackBy" selected="{{i==0}}">{{chart_filter[each]}}</option>
@@ -45,11 +45,11 @@
         <div class="col-sm-12 p-0 dataValues">
             <div class="data_values activity_name" (click)="onStartPoint()">Start</div>
             <div *ngFor="let each of startPointArray;let i=index" [hidden]="!isStartPoint">
-                <div id="data" class="data_values activity_name" (click)="selectedStartPoint(each,i)" [ngStyle]="{'background-color':each.selected === 'active' ? '#00a0e3' : '#fff','color':each.selected === 'active' ? '#fff' : '#000' }">{{each.name}}</div>
+                <div id="data" class="data_values activity_name" (click)="selectedStartPoint(each,i)" [ngStyle]="{'background-color':each.selected === 'active' ? '#00a0e3' : '#fff','color':each.selected === 'active' ? '#fff' : '#000','margin-right':'10px','margin-left':'10px' }">{{each.name}}</div>
             </div>
             <div class="data_values activity_name" (click)="onEndPoint()">End</div>
             <div *ngFor="let eachvalue of endPointArray;let i=index" [hidden]="!isEndPoint">
-                <div id="data" class="data_values activity_name" (click)="selectedEndPoint(eachvalue,i)" [ngStyle]="{'background-color':eachvalue.selected === 'active' ? '#00a0e3' : '#fff','color':eachvalue.selected === 'active' ? '#fff' : '#000' }">{{eachvalue.name}}</div>
+                <div id="data" class="data_values activity_name" (click)="selectedEndPoint(eachvalue,i)" [ngStyle]="{'background-color':eachvalue.selected === 'active' ? '#00a0e3' : '#fff','color':eachvalue.selected === 'active' ? '#fff' : '#000','margin-right':'10px','margin-left':'10px' }">{{eachvalue.name}}</div>
             </div>
         </div>
     </div>
@@ -130,81 +130,80 @@
 </div>
 
 <div id="myModal" class="modal">
-                <div class="modal-content" style="bottom: 190px !important; height: 520px;">
-                  <div class="modal-header">
-                    <span class="close" (click)="closePerformancePopup();">&times;</span>
-                    <h4>Time stamp</h4>
-                  </div>
-                <div class="modal-body">
-                   
-                      <div class="col-md-12">
-                        <label for="performance_metrics"><b>Filter Case By:</b></label>
-                          <select name="pFilterType" class="border_bottom" [(ngModel)]="pFilterType" (change)="this.setselectedFilter(pFilterType)" required>
-                               <option value="noofcases">No of Cases</option>
-                               <option value="caseutilization">Case Utilization</option>
-                               <option value="caseduration">Case Duration</option>
-                               <option value="meanactivetime">Mean active time</option>
-                               <option value="medianactivetime">Median active time</option>
-                               <option value="meanwaitingtime">Mean waiting time</option>
-                               <option value="medianwaitingtime">Median waiting time</option>
-                          </select>
-                          <div class="barchart_graph">
-                           <ngx-charts-bar-vertical
-                           [view]="view"
-                           [scheme]="colorScheme"
-                           [results]="single"
-                           [gradient]="gradient"
-                          
-                           [xAxis]="showXAxis"
-                           [yAxis]="showYAxis"
-                           [legend]="showLegend"
-                           [showXAxisLabel]="showXAxisLabel"
-                           [showYAxisLabel]="showYAxisLabel"
-                           [xAxisLabel]="xAxisLabel"
-                           [yAxisLabel]="yAxisLabel"
-                           (select)="onSelect($event)">
-                         </ngx-charts-bar-vertical>
-                          </div>
-
-                          <div>
-                           <ng5-slider [(value)]="vaue" [(highValue)]="highValue" (valueChange)="startValue($event)" [manualRefresh]="manualRefresh" (highValueChange)="endValue($event)"  [options]="options1"  ></ng5-slider>
-                          </div>
-                          <div class="row col-md-12 drp_btns">
-                          <div class="col-md-4 min_time_select" >
-                            <input type="text" class="arrows" [value]="convertMS(minPerfValue)">
-                            <label for="timeStamp" style="display: inherit;"><b>Minimum Duration</b></label>
-                          </div>
-                          <div class="col-md-4 pp_chart">
-                           <div class="piechart_graph">
-                           <ngx-charts-pie-chart
-                           [view]="pieview"
-                           [scheme]="piecolorScheme"
-                           [results]="piesingle"
-                           [gradient]="piegradient"
-                           [legend]="pieshowLegend"
-                           [legendPosition]="legendPosition"
-                           [labels]="showLabels"
-                           [doughnut]="isDoughnut"
-                           >
-                           </ngx-charts-pie-chart>
-                           <span class="pie_label">{{casePercentage}}%<br>of cases</span>
-                       </div>
-                         </div>
-                          <div class="col-md-4 max_time_select">
-                            <input type="text" class="arrows" [value]="convertMS(maxPerfValue)">
-                            <label for="timeRange" style="display: inherit;"><b>Maximum Duration</b></label>
-                          </div>
-                      </div>
-                      <div class="col-md-12">
-                       
-                          <button type="button" class="btn btn-primary eiap-btn pull-right" (click)="applyPerformanceFilter()">Apply Filter</button>
-                          <button type="button" class="btn btn-default btn-cancel eiap-btn pull-right" (click)="closePerformancePopup();">Cancel</button>
-                      </div>
-                         
-                      </div>
-                    
+    <div class="modal-content">
+        <div class="modal-header timestamp-header">
+            <span class="close" (click)="closePerformancePopup();">&times;</span>
+            <h4>Time stamp</h4>
+        </div>
+        <div class="modal-body timestamp-body">                   
+            <div class="row">
+                <div class="col-md-12 p-0 ts-header">
+                    <label class="label-control" for="performance_metrics">Filter Case By:</label>
+                    <select name="pFilterType" class="border_bottom form-control" [(ngModel)]="pFilterType" (change)="this.setselectedFilter(pFilterType)" required>
+                        <option value="noofcases">No of Cases</option>
+                        <option value="caseutilization">Case Utilization</option>
+                        <option value="caseduration">Case Duration</option>
+                        <option value="meanactivetime">Mean active time</option>
+                        <option value="medianactivetime">Median active time</option>
+                        <option value="meanwaitingtime">Mean waiting time</option>
+                        <option value="medianwaitingtime">Median waiting time</option>
+                    </select>
                 </div>
-              </div>
+                <div class="ts-body">
+                    <div class="col-md-12 p-0">
+                        <div class="barchart_graph">
+                            <ngx-charts-bar-vertical
+                                [view]="view"
+                                [scheme]="colorScheme"
+                                [results]="single"
+                                [gradient]="gradient"                          
+                                [xAxis]="showXAxis"
+                                [yAxis]="showYAxis"
+                                [legend]="showLegend"
+                                [showXAxisLabel]="showXAxisLabel"
+                                [showYAxisLabel]="showYAxisLabel"
+                                [xAxisLabel]="xAxisLabel"
+                                [yAxisLabel]="yAxisLabel"
+                                (select)="onSelect($event)">
+                            </ngx-charts-bar-vertical>
+                        </div>
+                        <div class="filter-slider">
+                            <ng5-slider [(value)]="vaue" [(highValue)]="highValue" (valueChange)="startValue($event)" [manualRefresh]="manualRefresh" (highValueChange)="endValue($event)"  [options]="options1"  ></ng5-slider>
+                        </div>
+                    </div>    
+                    <div class="col-md-12 p-0 drp_btns">
+                        <div class="col-md-4 p-0 min_time_select" >
+                            <label class="label-control" for="timeStamp" style="display: inherit;">Minimum Duration</label>
+                            <input type="text" class="arrows form-control" [value]="convertMS(minPerfValue)">
+                        </div>
+                        <div class="col-md-4 p-0 pp_chart">
+                            <div class="piechart_graph">
+                                <ngx-charts-pie-chart
+                                    [view]="pieview"
+                                    [scheme]="piecolorScheme"
+                                    [results]="piesingle"
+                                    [gradient]="piegradient"
+                                    [legend]="pieshowLegend"
+                                    [legendPosition]="legendPosition"
+                                    [labels]="showLabels"
+                                    [doughnut]="isDoughnut">
+                                </ngx-charts-pie-chart>
+                                <span class="pie_label">{{casePercentage}}% of cases</span>
+                            </div>
+                        </div>
+                        <div class="col-md-4 p-0 max_time_select">
+                            <label class="label-control" for="timeRange" style="display: inherit;">Maximum Duration</label>
+                            <input type="text" class="arrows form-control" [value]="convertMS(maxPerfValue)">                        
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+        <div class="timestamp-footer">
+            <button type="button" class="btn btn-default" (click)="closePerformancePopup();">Cancel</button>
+            <button type="button" class="btn btn-primary" (click)="applyPerformanceFilter()">Apply Filter</button>                                                            
+        </div>
+    </div>
 </div>
 
 
