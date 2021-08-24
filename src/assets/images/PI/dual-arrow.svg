@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-dual-arrow">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="dual-arrow" clip-path="url(#clip-dual-arrow)">
+    <path id="Path_26" data-name="Path 26" d="M8.1,11.6,2.6,6.041,4.026,4.6,8.1,8.718,12.174,4.6,13.6,6.041Z" transform="translate(3.9 12.4)" fill="#a0a0a0"/>
+    <path id="Path_26-2" data-name="Path 26" d="M8.1,11.6,2.6,6.041,4.026,4.6,8.1,8.718,12.174,4.6,13.6,6.041Z" transform="translate(20.1 11.6) rotate(180)" fill="#a0a0a0"/>
+  </g>
+</svg>

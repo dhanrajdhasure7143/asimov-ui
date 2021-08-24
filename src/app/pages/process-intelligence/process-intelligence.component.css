@@ -27,7 +27,7 @@ span.testtooltip:before {
 }
 #dropdownForm2{
     top: 0px; 
-    left: 0px; 
+    right: 244px; 
     will-change: transform; 
     position: absolute; 
     transform: translate(253px, 42px);
@@ -53,7 +53,7 @@ span.testtooltip:before {
     content: "";
     position: absolute;
     bottom: 100%;
-    left: 80%;
+    right: 16.7%;
     margin-left: 4px;
     border-width: 8px;
     border-style: solid;
@@ -149,3 +149,16 @@ span.testtooltip:before {
 .timefeed-header span.close:hover {
   color: #00a0e3;
 }
+.PI-insights-headericons button img {
+  width: 17px;
+  height: 17px;
+}
+.PI-insights-timefeed {
+  transform: translate(235px, 41px) !important;
+  right: 230px !important
+}
+.PI-insights-timefeed::after {
+  right: 9% !important;
+}
+
+

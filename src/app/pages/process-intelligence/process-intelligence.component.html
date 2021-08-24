@@ -122,12 +122,12 @@
             </div>  
           </div>
           <div class="col-md-7 new-bps-icons p-0" *ngIf="insights_header">
-            <div class="row bps-float">             
+            <div class="row PI-insights-headericons pull-right">             
               <button class="tsttooltipbtn" (click)="openinsightsHrsOverLay()">
                 <img src="../../../assets/images/PI/timefeed.svg">
                 <span class="testtooltip">Time Feed</span>
               </button>
-                <div *ngIf="isAddHrs1" aria-labelledby="dropdownForm1" id="dropdownForm2">
+                <div *ngIf="isAddHrs1" aria-labelledby="dropdownForm1" id="dropdownForm2" class="PI-insights-timefeed">
                     <form class="row">
                       <div class="timefeed-header">
                         <span class="close" (click)="cancelinsightsaddHrs()">x</span>
