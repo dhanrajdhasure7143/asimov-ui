@@ -97,7 +97,7 @@
                         <option [value]="null" disabled hidden>Select Process</option>
                         <option value="" [selected]="true">Select Process</option>
                         <option *ngFor="let process of valuechainprocesses"
-                            [value]="process.processId">{{process.processInfoName}}</option>
+                            [value]="process.processInfoName">{{process.processInfoName}}</option>
                     </select>
                     <span
                         *ngIf="insertForm2.get('process').invalid && insertForm2.get('process').touched"
