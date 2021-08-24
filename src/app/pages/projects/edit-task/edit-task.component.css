@@ -103,11 +103,13 @@
     padding:10px;
   }
 
-  span.labelcont{
-    font-size: 14px !important;
-    color: #001c47 !important;
-    font-weight: 400;
+  .labelcont{
+    color: #00a0e3 !important;
+    font-weight: 600;
+    
   }
+  
+  
 
 
   img.testplus.hover-img ,

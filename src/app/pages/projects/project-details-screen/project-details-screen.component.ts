@@ -192,7 +192,8 @@ percentageComplete: number;
   }
   
   submitUploadFileFormattachment(){
-
+    this.uploadFilemodalref.hide();
+    this.spinner.show();
     var fileData = new FormData();
     const files = this.fileList;
     for(var i=0;i< files.length;i++){
@@ -206,12 +207,12 @@ percentageComplete: number;
     
  this.rpa.uploadProjectFile(fileData).subscribe(res => {
    //message: "Resource Added Successfully
-   this.uploadFilemodalref.hide();
+   
    this.uploadFileFormDetails.get("fileCategory").setValue("");
    this.uploadFileFormDetails.get("description").setValue("");
    if(res.message!=undefined)
    {
-    this.spinner.show();
+    
     this.spinner.hide();
     this.getLatestFiveAttachments(this.project_id)
 
@@ -235,6 +236,7 @@ percentageComplete: number;
    Swal.fire("Error",res.message,"error");
    
  })
+ this.spinner.hide();
   }
   resetdocform() {
     
@@ -300,6 +302,7 @@ percentageComplete: number;
   }
 
   downloadExcel(){
+    this.spinner.show();
     this.rpa.exportproject(this.project_id).subscribe(data=>{
       let response:any=data;
       if(response.errorMessage==undefined)
@@ -308,12 +311,15 @@ percentageComplete: number;
            link.download = this.projectDetails.projectName;
            link.href =(`data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${response.encryptedString}`) ;
           link.click();
+          Swal.fire("Success", response.message,"success");
+          this.spinner.hide();
       }
       else
       {
         Swal.fire("Error", response.errorMessage,"error");
       }
     })
+    this.spinner.hide();
   }
   checktodelete()
   {
@@ -818,7 +824,8 @@ percentageComplete: number;
       }
 
       submitUploadFileForm(){
-       
+        this.uploadtaskFilemodalref.hide();
+        this.spinner.show();
         var fileData = new FormData();
         const files = this.fileList;
         for(var i=0;i< files.length;i++){
@@ -830,10 +837,10 @@ percentageComplete: number;
      fileData.append("taskId", this.selectedtaskfileupload.id)
 
      this.rpa.uploadProjectFile(fileData).subscribe(res => {
-      this.spinner.show();
+      
       this.spinner.hide();
       let message: any= res;
-       this.uploadtaskFilemodalref.hide();
+       
        //if(res.message!=undefined)
        //{
       
