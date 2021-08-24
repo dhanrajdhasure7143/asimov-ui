@@ -2163,7 +2163,8 @@ button.btn:hover {
 
 .newpaginationdiv mat-form-field {
   margin: 0px 0px 0px 5px;
-  width: 50px;
+  min-width: 50px;
+  /* width: 50px; */
 }
 
 .mat-paginator-page-size {
@@ -2364,4 +2365,7 @@ th.mat-header-cell {
 }
 .mat-progress-bar-fill::after {
   background: linear-gradient(to right,red, orange, yellow, green);
+}
+.bpms-canvas-body .as-split-gutter.ng-star-inserted.testplus {
+  background-color: #f3f3f3 !important;
 }
