@@ -215,6 +215,8 @@ this.getFileDetails();
     this.uploadFilemodalref = this.modalService.show(template,{class:"modal-lr"});
   }
   submitUploadFileForm(){
+    this.uploadFilemodalref.hide();
+    this.spinner.show();
      var fileData = new FormData();
      const files = this.fileList;
   for(var i=0;i< files.length;i++){
@@ -230,12 +232,12 @@ this.getFileDetails();
     
  this.api.uploadProjectFile(fileData).subscribe(res => {
    //message: "Resource Added Successfully
-   this.uploadFilemodalref.hide();
+   
    this.uploadFileForm.get("fileCategory").setValue("");
    this.uploadFileForm.get("description").setValue("");
    if(res.message!=undefined)
    {
-    this.spinner.show();
+
     this.getFileDetails();
     this.spinner.hide();
      Swal.fire({
@@ -258,6 +260,7 @@ this.getFileDetails();
    Swal.fire("Error",res.message,"error");
    
  })
+ this.spinner.hide();
   }
 
   chnagefileUploadForm(e){
@@ -391,6 +394,7 @@ this.getFileDetails();
     return value;
   }​​​​​​​​
   onDownloadItem(fileName){
+    this.spinner.show();
     let data=[fileName]
     this.api.downloadTaskAttachment(data).subscribe(data=>{
     let response:any=data
@@ -399,6 +403,7 @@ this.getFileDetails();
     link.download = fileName;
     link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[0]}`:`data:application/${extension};charset=utf-8,${response[0]}`) ;
     link.click();
+    this.spinner.hide();
     })
     // this.fileId = element.id;
     // this.api.downloadFiles(this.fileId).subscribe(res => {
