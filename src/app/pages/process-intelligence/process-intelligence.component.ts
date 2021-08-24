@@ -22,6 +22,12 @@ export class ProcessIntelligenceComponent implements OnInit {
   shiftStartTime:"00:00",
   shiftEndTime:"23:59"
 };
+workingHours1:any = {
+  formDay:'Mon',
+  toDay: 'Sun',
+  shiftStartTime:"00:00",
+  shiftEndTime:"23:59"
+};
 isBackbutton:boolean=false;
 insights_header:boolean=false;
 
@@ -47,9 +53,13 @@ insights_header:boolean=false;
   }
   if(windowUrl.indexOf('flowChart') == -1){
     this.isPIHeaderShow=false;
+    this.isplay=false;
+    this.isAddHrs=false;
+    // console.log('test')
+    this.workingHours = {formDay:'Mon',toDay: 'Sun',shiftStartTime:"00:00",shiftEndTime:"23:59"};
   } else{
     this.isPIHeaderShow=true;
-}
+  }
 if(windowUrl.indexOf('processIntelligence/insights') != -1||windowUrl.indexOf('business-insights') !=-1){
   this.isBackbutton=true;
 } else{
@@ -77,6 +87,12 @@ if(windowUrl.indexOf('processIntelligence/insights') != -1){
 
  }
 
+ ngAfterViewInit(){
+   this.dt.pi_btnChanges.subscribe(res=>{
+     console.log(res)
+  })
+ }
+
  gotoProcessgraph(){
   this.router.navigate(["/pages/processIntelligence/flowChart"],{queryParams:{wpiId:this.wpiIdNumber}})
 }
@@ -97,13 +113,15 @@ viewInsights(){
 viewbusinessinsights(){
   this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.wpiIdNumber}})
 }
+
 generateBpmn(){
   this.dt.piHeaderValues('bpmn');
-
 }
+
 openVariantListNav(){
   this.dt.piHeaderValues('variant_list');
 }
+
 openHersOverLay(){
   this.isAddHrs=!this.isAddHrs
 }
@@ -111,29 +129,40 @@ openHersOverLay(){
 canceladdHrs(){ //close timefeed popup 
   this.isAddHrs=!this.isAddHrs;
 }
+
 addWorkingHours(){
   this.dt.piHeaderValues(this.workingHours);
 }
 
-resetWorkingHours(){ //working hours reset in timffed   
+ resetWorkingHours(){ //working hours reset in timffed   
   this.workingHours.formDay = "Mon";
   this.workingHours.toDay = "Sun";
   this.workingHours.shiftStartTime="00:00";
   this.workingHours.shiftEndTime="23:59"
-}
-openinsightsHrsOverLay(){
-  this.isAddHrs1=!this.isAddHrs1
-}
+ }
 
-cancelinsightsaddHrs(){ //close timefeed popup 
+ openinsightsHrsOverLay(){
+  this.isAddHrs1=!this.isAddHrs1
+ }
+
+ cancelinsightsaddHrs(){ //close timefeed popup 
   this.isAddHrs1=!this.isAddHrs1;
-}
-openInsightsVaraintOverLay(){
-  this.dt.process_insightsHeaderValues("open_Varaint");
+ }
+
+  openInsightsVaraintOverLay(){
+    this.dt.process_insightsHeaderValues("open_Varaint");
   }
+
   addWorkingHrsInsights(){
-    this.dt.process_insightsHeaderValues(this.workingHours);
-    }
+    this.dt.process_insightsHeaderValues(this.workingHours1);
+  }
+
+  resetWorkingHours1(){ //working hours reset in timffed   
+    this.workingHours1.formDay = "Mon";
+    this.workingHours1.toDay = "Sun";
+    this.workingHours1.shiftStartTime="00:00";
+    this.workingHours1.shiftEndTime="23:59"
+   }
 
 }
 

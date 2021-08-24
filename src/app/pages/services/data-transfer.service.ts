@@ -88,4 +88,10 @@ export class DataTransferService {
     this.process_insightsHeader.next(values);
   }
 
+  private piButtons:BehaviorSubject<any>=new BehaviorSubject<any>(null)
+  pi_btnChanges=this.piButtons.asObservable();
+  pi_buttonValues(value:any){
+    this.piButtons.next(value)
+  }
+
 }

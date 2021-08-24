@@ -134,7 +134,7 @@
                         <h3>Time Feed</h3>
                         <div class="col-sm-6 pl-0">
                           <label class="label-control" for="exampleDropdownFormEmail1">Working From</label>
-                          <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours.formDay">
+                          <select name="weeks" class="form-control" id="from_id" name="formDay" [(ngModel)]="workingHours1.formDay">
                             <option value="" selected disabled>Select</option>
                             <option value="Sun">Sunday</option>
                             <option value="Mon">Monday</option>
@@ -147,7 +147,7 @@
                         </div>
                         <div class="col-sm-6 pr-0">
                           <label class="label-control" for="">Working To</label>
-                          <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours.toDay">
+                          <select name="weeks" id="to_id"  class="form-control" name="toDay" [(ngModel)]="workingHours1.toDay">
                             <option value="" selected disabled>Select</option>
                             <option value="Sun">Sunday</option>
                             <option value="Mon">Monday</option>
@@ -163,16 +163,16 @@
                       <div class="timefeed-body">
                         <div class="col-sm-6 pl-0">
                           <label class="label-control" for="">Shift Start Time</label>
-                          <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours.shiftStartTime"></ngx-timepicker-field>
+                          <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" name="shiftStartTime" [(ngModel)]="workingHours1.shiftStartTime"></ngx-timepicker-field>
                         </div>
                         <div class="col-sm-6 pr-0">
                           <label class="label-control" for="">Shift End Time</label>
-                          <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
+                          <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours1.shiftEndTime"  [format]="24"></ngx-timepicker-field>
                         </div>
                         <!-- <div class="col-sm-12 dropdown-divider"></div> -->
                       </div>
                       <div class="timefeed-footer">
-                          <button type="submit" class="btn btn-default" (click)="resetWorkingHours()">Reset</button>
+                          <button type="submit" class="btn btn-default" (click)="resetWorkingHours1()">Reset</button>
                           <button type="submit" class="btn btn-default" (click)="canceladdHrs()">Cancel</button>
                           <button type="submit" class="btn btn-primary" (click)="addWorkingHrsInsights()">Apply</button>
                       </div>  
