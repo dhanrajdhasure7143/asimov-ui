@@ -37,14 +37,20 @@
                   <button mat-menu-item (click)="downloadNotaton('jpg')">JPG</button>
                   <button mat-menu-item (click)="downloadNotaton(selectedNotationType)">{{selectedNotationType | uppercase}}</button>
                 </mat-menu>
-                <button type="button" class="clr-hvr tsttooltipbtn" [popover]="shareTemplate" placement="bottom">
+                <!-- <button type="button" class="clr-hvr tsttooltipbtn" [popover]="shareTemplate" placement="bottom">
                 <img src="../../../assets/images/BPMS/share.svg" >
                 <span class="testtooltip">Share</span>
+              </button> -->
+              <button type="button" class="icon-disabled" placement="bottom">
+                <img src="../../../assets/images/BPMS/share disable.svg" >
               </button>
               <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
-              <button class="tsttooltipbtn">
+              <!-- <button class="tsttooltipbtn">
                 <img src="../../../assets/images/BPMS/Favorite.svg" >
                 <span class="testtooltip">Favorite</span>
+              </button> -->
+              <button class="icon-disabled">
+                <img src="../../../assets/images/BPMS/Favorite disable.svg" >
               </button>
               <button class="tsttooltipbtn" (click)="zoomIn()" >
                 <img src="../../../assets/images/BPMS/zoom-in.svg">
@@ -112,6 +118,15 @@
                 <img src="../../../assets/images/BPMS/Play.svg">
                 <span class="testtooltip">Start Process</span>
               </button>
+              <button class="tsttooltipbtn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">
+                  <img src="../../../assets/images/BPMS/show conformance.svg">
+                  <span class="testtooltip">Show Conformance</span>
+                </button>
+                <button class="tsttooltipbtn" (click)="getBpmnDifferences()" *ngIf="isShowConformance && (hasConformance || reSize)">
+                    <img src="../../../assets/images/BPMS/show difference.svg">
+                    <span class="testtooltip">Show Differences</span>
+                  </button>
+              
               <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
               <button class="clr-hvr" matTooltip="Delete" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button> -->
               <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->

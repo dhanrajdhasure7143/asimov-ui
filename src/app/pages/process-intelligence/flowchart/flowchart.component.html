@@ -225,9 +225,9 @@
                      <p id="toolTipTextone"></p>
                  </div>
              </div>
-     </div>
+</div>
  
-     <div id="linkToolTipDIV" class="custom_tooltip">
+<div id="linkToolTipDIV" class="custom_tooltip">
          <div class="node_tooltip"></div>
          <div>
              <p id="receive"><span id="linkname"></span></p>
@@ -245,20 +245,21 @@
                      <p id="linktoolTipTextone"></p>
                  </div>
              </div>
-     </div>
+</div>
  
- 
- <div id="filterModal" class="modal">
+<div class="bpmnCreate">
+    <div id="filterModal" class="modal">
          <div class="modal-content">
            <div class="modal-header">
              <span class="close" (click)="closePopup();">&times;</span>
              <h4>Filter</h4>
            </div>
-         <div class="modal-body">
+           <div class="modal-body">
              <div *ngIf="isFilterComponent">
-             <app-filter *ngIf="isFilterComponent" [isClearFilter]='isClearFilter' [isFilterApplied]='isFilterApplied' [dataValues]='dataValues' [variantData]="varaint_data" [resetFilter]="resetFilter" [startArray]="startArray" [endArray]="endArray" [performanceFilterInput]="performanceFilterInput" (selectedNodes)="readselectedNodes1($event)" (selectedEndpoints)="readselectedEndpoint($event)" (selectedFilterValues)="readSelectedFilterValues($event)" (applyFilterValue)="readOverlayValue($event)" (selectedVariantOutput)="getselectedVariantList($event)" (appliedPerformanceFiterValues)="applyPerformanceFilterMethod($event)"></app-filter>
+                <app-filter *ngIf="isFilterComponent" [isClearFilter]='isClearFilter' [isFilterApplied]='isFilterApplied' [dataValues]='dataValues' [variantData]="varaint_data" [resetFilter]="resetFilter" [startArray]="startArray" [endArray]="endArray" [performanceFilterInput]="performanceFilterInput" (selectedNodes)="readselectedNodes1($event)" (selectedEndpoints)="readselectedEndpoint($event)" (selectedFilterValues)="readSelectedFilterValues($event)" (applyFilterValue)="readOverlayValue($event)" (selectedVariantOutput)="getselectedVariantList($event)" (appliedPerformanceFiterValues)="applyPerformanceFilterMethod($event)"></app-filter>
              </div>
-         </div>
-       </div>
-     </div>
+           </div>
+        </div>
+    </div>
+</div>
  

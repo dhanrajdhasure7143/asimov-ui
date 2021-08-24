@@ -94,16 +94,15 @@ float: left !important;
 }
 
 .filter_typesOne{
-    margin-top: 10px;
+    /* margin-top: 10px; */
     font-size: 13px;
     font-weight: bold;
 }
 
 .dataType_filter{
-    float:left;
-    font-size: 13px;
-    font-weight: bold;
-    margin-left: 10px;
+  font-size: 14px !important;
+  font-weight: 600;
+  margin-bottom: 0px !important;
 }
 
 .type_filter, .percent_filter{
@@ -119,7 +118,7 @@ float: left !important;
     font-size: 12px;
     padding-left: 0px !important;
     padding-bottom: 0px !important;
-    border-radius: 0px !important;
+    border-radius: 0px;
     width: 80%;
     font-weight: 600;
 }
