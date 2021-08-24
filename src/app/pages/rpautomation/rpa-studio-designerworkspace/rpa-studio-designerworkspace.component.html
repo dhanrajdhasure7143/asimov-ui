@@ -29,7 +29,10 @@
             </div>
         </div>
       </ng-container>
-      <div *ngIf="nodes.length==0" style="text-align: center;"><span style="position: absolute;left: 40%;top:50%;">Drag an action here...</span></div>
+      <div *ngIf="nodes.length==0" class="dragactionsdiv">        
+            <img src="../../../../assets/images/RPA/new_icons/dragdrop.svg" />
+            <span>Drag an action here...</span>
+    </div>
     </div>
   </div>
     <div *ngIf="hiddenPopUp" class="rpa-modal" style="display: block;">

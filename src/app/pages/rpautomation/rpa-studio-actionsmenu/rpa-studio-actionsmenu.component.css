@@ -253,3 +253,8 @@ background-color: blue !important;
   top: 25%;
   right: 15px;
 }
+
+.action-item img {
+  height: 18px;
+  width: auto;
+}

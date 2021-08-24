@@ -1,6 +1,6 @@
    .header_addon{
-      top: 100px !important;
-      padding-right:40px;
+      top: 21px !important;
+      padding-right: 16px;
       position: absolute !important;
       width:0% !important;
       right:100px;
@@ -338,4 +338,10 @@
   min-height: 65px;
   max-height: 443px;
   white-space: nowrap;
+}
+
+.rpa-actioncontent {
+  padding: 0px 10px;
+  height: calc(100% - 48px);
+  overflow: hidden auto;
 }
