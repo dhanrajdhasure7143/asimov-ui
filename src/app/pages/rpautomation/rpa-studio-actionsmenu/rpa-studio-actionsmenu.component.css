@@ -258,3 +258,21 @@ background-color: blue !important;
   height: 18px;
   width: auto;
 }
+
+.modal-body.createenv-mbody {
+  height: calc(100% - 135px);
+  overflow: hidden auto;
+}
+.createenv-mbody .form-footer {
+  right: 10px;
+}
+ul#environments {
+  width: 230px;
+  overflow: auto;
+  height: 325px;
+  font-size: 15px !important;
+}
+
+ul#environments li {
+  padding: 3px 5px;
+}
