@@ -260,8 +260,8 @@ Pi_header_functions:Subscription;
 
   onchangegraphId(selectedpiId){  // change process  graps in dropdown
     this.isplay=false;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":false});
     this.dt.piHeaderValues(null);
-    this.dt.pi_buttonValues({"isPlaybtn":true,"isTimefeed_btn":true})
     this.isNodata=true;
     let self = this;
     this.route.queryParams.subscribe(params => {
@@ -589,6 +589,8 @@ Pi_header_functions:Subscription;
 
   caseIdSelect(selectedData, index) { // Case selection on Variant list
     this.performanceValue=false
+    this.isplay=false;
+    // this.dt.piHeaderValues(null);
     this.activityValue=1;
     this.pathvalue=1;
     this.activity_value=[];
@@ -652,6 +654,7 @@ Pi_header_functions:Subscription;
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
       this.isWorkingHrsBtn=true;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }else if (this.selectedCaseArry.length == 1) {
       this.isvariantSelectedOne=true;
       this.issliderDisabled=true;
@@ -681,6 +684,7 @@ Pi_header_functions:Subscription;
       this.isMultiTraceBPMN = false;
       this.isSliderBPMN = false;
       this.isWorkingHrsBtn=false;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }else{
       this.issliderDisabled=true;
       this.isvariantSelectedOne=false;
@@ -725,6 +729,7 @@ Pi_header_functions:Subscription;
       this.isMultiTraceBPMN = true;
       this.isSliderBPMN = false;
       this.isWorkingHrsBtn=false;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }
     
     if(this.selectedCaseArry.length ==this.varaint_data.data.length||this.selectedCaseArry.length==0){
@@ -853,6 +858,7 @@ Pi_header_functions:Subscription;
       }
       this.isDefaultData = true;
       this.isWorkingHrsBtn=true;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     }
       this.performanceValue=false
   }
@@ -1249,6 +1255,7 @@ flowchartDataOne(dataArray,index) {   //Links generate from responce for perform
       this.performanceValue=false;
       this.options = Object.assign({}, this.options, {disabled: false});
       this.isWorkingHrsBtn=true;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
   }
 
   resetActivityFiltermetrics(){        //process graph reset in leftside  spinner metrics
@@ -1307,6 +1314,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   this.performanceValue=false;
   if(activity_slider==1&&path_slider==1){
     this.isWorkingHrsBtn=true;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
     this.isNodata=true;
     this.model1=this.fullgraph_model;
     this.filterPerformData = this.fullgraph_model;
@@ -1333,6 +1341,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
       this.isSliderBPMN = false;
   }else{
     this.isWorkingHrsBtn=false;
+    this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
   var sliderGraphArray = [];
     graphData.data.allSelectData.nodeDataArraycase.filter(function (item) {
       if (activity_slider == item.ActivitySlider && path_slider == item.PathSlider) {
@@ -1559,6 +1568,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
     this.isFilterApplied=true;
     if(object.startPoint==null && object.endPoint==null && object.activity==null && object.variants.length==this.varaint_data.data.length){
       this.isWorkingHrsBtn=true;
+      this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
       this.model1 = this.fullgraph_model;
       this.model2 = this.flowchartData(this.model1); 
             this.startArray=[];
@@ -1574,6 +1584,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
             });
     }else{
         this.isWorkingHrsBtn=false;
+        this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":this.isWorkingHrsBtn});
         let endTime:any
         if(this.workingHours.shiftEndTime=='23:59'){
           endTime="24:00"

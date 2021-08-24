@@ -13,7 +13,7 @@ export class ProcessIntelligenceComponent implements OnInit {
  isShow:boolean  = false;
  wpiIdNumber:any;
  isPIHeaderShow:any="true";
- isplay:boolean;
+ isplay:boolean=false;
  isAddHrs:boolean=false;
  isAddHrs1:boolean=false;
  workingHours:any = {
@@ -30,6 +30,8 @@ workingHours1:any = {
 };
 isBackbutton:boolean=false;
 insights_header:boolean=false;
+isTimefeed:boolean=true;
+btn_obj:any;
 
   constructor(private changeDetectorRef:ChangeDetectorRef,
     private router:Router,
@@ -48,6 +50,8 @@ insights_header:boolean=false;
     let windowUrl = window.location.href;
     if(windowUrl.indexOf('insights') == -1){
       this.isShow=false;
+    this.dt.pi_buttonValues(null);
+
     } else{
       this.isShow=true;
   }
@@ -88,9 +92,13 @@ if(windowUrl.indexOf('processIntelligence/insights') != -1){
  }
 
  ngAfterViewInit(){
-   this.dt.pi_btnChanges.subscribe(res=>{
-     console.log(res)
-  })
+   this.dt.pi_btnChanges.subscribe(res=>{this.btn_obj=res
+    //  console.log(res)
+     if(res){
+     this.isplay=this.btn_obj.isPlaybtn;
+    //  this.isTimefeed=this.btn_obj.isTimefeed_btn
+     }
+  });
  }
 
  gotoProcessgraph(){
