@@ -175,7 +175,8 @@ background-color: blue !important;
  /*top:-78px !important;*/
  /* min-width:53px !important; */
  min-width:100px !important;
- left: -38px;
+ padding: 0px !important;
+ /* left: -38px; */
 }
 
 
@@ -197,7 +198,8 @@ background-color: blue !important;
 
 
 .actionsmenu{
-  border-bottom: 1px solid lightgray;
+  /* border-bottom: 1px solid lightgray; */
+  margin-top: 5px !important;
 }
 
 
@@ -212,7 +214,7 @@ background-color: blue !important;
 .action-item{
   width:auto;
   /* font-size: 18px; */
-  padding:5px;
+  padding: 6px 8px;
   cursor: pointer;
   position: relative;
 }
@@ -238,14 +240,14 @@ background-color: blue !important;
 
 
 .action-item-data{
-  padding:10px;
+  padding: 8px 6px;
 }
 
 
 .dropdown-action-item{
-  border-right: 1px solid gray;
+  border-right: 1px solid #e0e0e0;
   padding-right:15px;
-  padding-left:15px;
+  /* padding-left:15px; */
 }
 .rpa-custom-slider {
   height: 200px;
@@ -274,5 +276,31 @@ ul#environments {
 }
 
 ul#environments li {
-  padding: 3px 5px;
+  padding: 3px 5px; 
+}
+
+.actionsmenu-right button, .actionsmenu-right span {
+  font-size: 14px;
+}
+ul#other_actions {
+  min-width: 120px !important;
+  max-height: 250px;
+  overflow: auto;
+  left: auto;
+  right: 0;
+}
+ul#other_actions {
+  padding: 0px !important;
+}
+li.action-item-data:hover {
+  background: rgba(0,0,0,.04);
+}
+.rpa-dropdown div {
+  padding: 8px 6px;
+}
+.rpa-dropdown div:hover {
+  background: rgba(0,0,0,.04);
+}
+a.dropdown-item {
+  color: #333;
 }

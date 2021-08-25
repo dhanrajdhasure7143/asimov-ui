@@ -5,7 +5,7 @@
         <button class="action-item" placement="bottom" tooltip="Toolset & Actions"  (click)="rpa_toolset.sidenavbutton==false?rpa_toolset.sidenavbutton=true:rpa_toolset.sidenavbutton=false;">
             <!-- <span><i class="ri-function-line"></i></span>&nbsp;Toolset -->
             <span class="pull-left">
-              <img src="../../../../assets/images/menu-line.svg" />
+              <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" />
             </span>
         </button>
       </div>
@@ -52,7 +52,7 @@
         </div>
        
         <div class="action-item" placement="bottom" tooltip="Save Bot" (click)="saveBotFunAct()">
-          <img src="../../../../assets/images/RPA/save.svg" />
+          <img src="../../../../assets/images/RPA/icon_latest/save.svg" />
           <!-- <i class="ri-save-line"></i> -->
         </div>
         <!-- <div class="action-item" >
@@ -85,9 +85,9 @@
             <img src="../../../../assets/images/RPA/icon_latest/download.svg"   />
           </button>
           <div class="rpa-dropdown dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadJpeg()"><i class="fas fa-file-image"> </i>&nbsp;<span>JPEG</span></a></div>
-            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()"><i class="fas fa-file-image"></i>&nbsp;<span>PNG</span></a></div>
-            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()"><i class="fas fa-file-pdf"></i>&nbsp;<span>PDF</span></a></div>
+            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadJpeg()">&nbsp;<span>JPEG</span></a></div>
+            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPng()">&nbsp;<span>PNG</span></a></div>
+            <div><a class="dropdown-item clickable" (click)="childBotWorkspace.downloadPdf()">&nbsp;<span>PDF</span></a></div>
           </div>
         </div>
         <div class="action-item" placement="bottom" tooltip="Reset">
@@ -103,21 +103,21 @@
             <img src="../../../../assets/images/RPA/icon_latest/more.svg" />
             <!-- <i class="ri-more-2-fill"></i> -->
             </button>
-            <ul id="other_actions" style="max-width:300px;max-height:250px;overflow:auto;left:auto;right:0;" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
+            <ul id="other_actions" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-basic">
               <li class="clickable" class="clickable action-item-data" >
                   <button  placement="bottom"  [disabled]="savebotrespose == undefined" tooltip="Delete Bot" (click)="delete()">
-                      <i class="menu-icon fas fa-trash"></i>&nbsp;&nbsp;Delete
-                    </button>
+                    <img src="../../../../assets/images/RPA/icon_latest/delete.svg" />&nbsp;&nbsp;Delete
+                  </button>
               </li>  
               <li  role="menuitem" class="clickable action-item-data"  style="white-space: nowrap;" >
                     <button  placement="top" tooltip="Reset Bot" (click)="reset()" >
-                        <i class="menu-icon fas fa-sync-alt "></i>&nbsp;&nbsp;Reset
-                      </button>
+                      <img src="../../../../assets/images/RPA/icon_latest/reset.svg" />&nbsp;&nbsp;Reset
+                    </button>
               </li>
               <li  role="menuitem" class="clickable action-item-data"   style="white-space: nowrap;" >
                   <button  placement="top" tooltip="Export Bot" (click)="exportbot(botState)" >
-                      <i class="menu-icon fas fa-file-export "></i>&nbsp;&nbsp;Export 
-                    </button>
+                    <img src="../../../../assets/images/RPA/icon_latest/export.svg" />&nbsp;&nbsp;Export 
+                  </button>
               </li>
            
             </ul>

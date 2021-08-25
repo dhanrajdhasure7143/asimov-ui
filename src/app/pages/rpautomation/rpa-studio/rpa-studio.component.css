@@ -345,3 +345,17 @@
   height: calc(100% - 48px);
   overflow: hidden auto;
 }
+
+.header_addon button img.default-img, .header_addon button img.hover-img {
+  width: 20px;
+  height: 20px;
+}
+img.hover-img {
+  display: none;
+}
+.header_addon button:hover img.default-img {
+  display: none;
+}
+.header_addon button:hover img.hover-img {
+  display: initial;
+}

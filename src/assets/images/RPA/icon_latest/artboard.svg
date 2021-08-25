@@ -1,1 +1,13 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:none;stroke:#607088;stroke-miterlimit:10;stroke-width:1.8px;}</style></defs><polygon class="cls-1" points="16.76 4.44 16.76 6.96 7.24 6.96 7.24 4.44 3.58 4.44 3.58 22 20.41 22 20.41 4.44 16.76 4.44"/><polyline class="cls-1" points="16.22 4.44 16.76 4.44 16.76 2 7.24 2 7.24 4.44 7.63 4.44"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-artboard">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="artboard" clip-path="url(#clip-artboard)">
+    <g id="artboard-2" data-name="artboard" transform="translate(-0.923 -1.103)">
+      <path id="Path_1057" data-name="Path 1057" d="M18.213,4.44v2.8H7.643V4.44H3.58v19.5H22.265V4.44Z" transform="translate(0 0.269)" fill="none" stroke="#607088" stroke-miterlimit="10" stroke-width="1.8"/>
+      <path id="Path_1058" data-name="Path 1058" d="M17.21,4.709h.6V2H7.24V4.709h.433" transform="translate(0.403)" fill="none" stroke="#607088" stroke-miterlimit="10" stroke-width="1.8"/>
+    </g>
+  </g>
+</svg>

@@ -229,12 +229,12 @@
                 <!-- &nbsp;{{bot.botStatus}} -->
               </span>
 
-              <span *ngIf="bot.botStatus=='Success'" class="tableActionsIcons"><span><i class="fa fa-check-circle" style="color:#4FA908"></i></span>
+              <span *ngIf="bot.botStatus=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>
                 <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
               </span>
 
               <span *ngIf="bot.botStatus=='Failure'">
-                <span class="tableActionsIcons"><i class="fa fa-times-circle"></i></span>
+                <span class="tableActionsIcons"><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                 </span>
               <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
@@ -261,11 +261,11 @@
 
               <span *ngIf="bot.botStatus==null">---</span>
               <span class="tableActionsIcons">
-                <button mat-button tooltip="More Actions" class="bg_threebtn"  placement="top" (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                <button mat-button tooltip="More Actions" class="bg_threebtn"  placement="top" (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu"><img src="../../../../assets/images/RPA/icon_latest/dots.svg" alt=""></button>
                 <mat-menu #menu="matMenu">
-                  <button  mat-menu-item (click)="editbotoverlay(bot)"><i class="fas fa-edit"></i> &nbsp;Edit </button>
-                  <button  mat-menu-item (click)="botdelete(bot.botId)"><i class="fas fa-trash"></i> &nbsp;Delete</button>
-                  <button (click)="exportbot(bot)" mat-menu-item><i class="fa  fa-file-export " aria-hidden="true"></i> &nbsp;Export</button>
+                  <button  mat-menu-item (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;Edit </button>
+                  <button  mat-menu-item (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;Delete</button>
+                  <button (click)="exportbot(bot)" mat-menu-item><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;Export</button>
                 </mat-menu>
               </span>
             </div>
