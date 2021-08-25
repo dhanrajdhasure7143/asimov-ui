@@ -35,13 +35,13 @@
     </div>
     </div>
   </div>
-    <div *ngIf="hiddenPopUp" class="rpa-modal" style="display: block;">
+    <div *ngIf="hiddenPopUp" class="rpa-modal dynamic-forms-modal" style="display: block;">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
             <span class="rpa-modal-close" (click)="closeFun()">&times;</span>
             <h4>{{formHeader}}</h4>
           </div>
-          <div class="modal-body actions-mbody">
+          <div class="modal-body actions-mbody"  *ngIf="form_change">
 
             <app-dynamic-forms [fields]="getFields()" (onSubmit)="onFormSubmit($event)"></app-dynamic-forms>
               
