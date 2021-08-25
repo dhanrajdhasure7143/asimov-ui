@@ -2,21 +2,22 @@
 .section {
   overflow-y: scroll;
   min-height: 65px;
-  max-height: 57vh;
+  /* max-height: 57vh; */
   white-space: nowrap;
 }
 .nodes {
   /* padding: 5px; */
 }
 .con-img{
-  width:32px;
+  width:30px;
   height:auto
 }
 
 .search-content{
-  padding:10px;
+  /* padding:10px; */
   /* padding-right:25px; */
   padding-left:0px;
+  padding-right: 10px;
 }
 
 .toolset{
@@ -144,7 +145,7 @@ background-color: white;
 
 .nodename{
   /* font-size: 16px; */
-  color:black;
+  color: #001c47;
   font-weight: 400;
 }
 
@@ -160,13 +161,14 @@ background-color: white;
 
 .taskname{
   /* padding:10px; */
-  font-size: 16px;
-  color:black;
+  font-size: 14px;
+  color: #001c47;
   font-weight: 400;
 }
 
 .toolset mat-expansion-panel {
   border-bottom:none !important;
+  padding-right: 8px !important;
 }
  
 
@@ -183,8 +185,8 @@ background-color: white;
 
 .search-content img.testplus1 {
   position: absolute;
-  left: 5px;
-  top: 45px;
+  left: 16px;
+  top: 50px;
 }
 
 .actionsheaderdiv {
@@ -197,4 +199,15 @@ background-color: white;
   color: #001c47;
   font-size: 25px;
   font-weight: 700;
+}
+.toolset-mainheader {
+  padding: 6px 0px 10px;
+}
+.actionsheaderdiv img.testplus1 {
+  width: 12px;
+  height: 12px;
+}
+.actionsheaderdiv img.testplus {
+  margin-right: 12px !important;
+  opacity: 0.5;
 }
