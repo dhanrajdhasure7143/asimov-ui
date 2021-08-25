@@ -1,9 +1,10 @@
    .header_addon{
-      top: 21px !important;
-      padding-right: 16px;
-      position: absolute !important;
-      width:0% !important;
-      right:100px;
+    top: 21px !important;
+    /* padding-right: 16px; */
+    position: absolute !important;
+    /* width: 0% !important; */
+    right: 15px;
+    text-align: right;
     }
 
   .dndDropzoneDisabled{
@@ -344,4 +345,18 @@
   padding: 0px 10px;
   height: calc(100% - 48px);
   overflow: hidden auto;
+}
+
+.header_addon button img.default-img, .header_addon button img.hover-img {
+  width: 20px;
+  height: 20px;
+}
+img.hover-img {
+  display: none;
+}
+.header_addon button:hover img.default-img {
+  display: none;
+}
+.header_addon button:hover img.hover-img {
+  display: initial;
 }

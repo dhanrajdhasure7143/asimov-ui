@@ -44,3 +44,13 @@
   color: black;
   opacity: 1;
 }
+
+span.tab-botname {
+  margin: 0px 6px;
+  color: #001c47;
+}
+
+.bot-close img {
+  width: 10px;
+  height: 10px;
+}
