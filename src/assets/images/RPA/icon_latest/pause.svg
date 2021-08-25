@@ -1,1 +1,12 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:none;stroke:#607088;stroke-miterlimit:10;stroke-width:1.8px;}.cls-2{fill:#607088;}</style></defs><circle class="cls-1" cx="12" cy="12" r="10.25"/><rect class="cls-2" x="9" y="9" width="6" height="6"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-pause">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="pause" clip-path="url(#clip-pause)">
+    <g id="stop-circle" transform="translate(-0.538 -0.538)">
+      <rect id="Rectangle_2061" data-name="Rectangle 2061" width="22" height="22" transform="translate(1.538 1.538)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+    </g>
+  </g>
+</svg>

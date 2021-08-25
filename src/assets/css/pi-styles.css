@@ -1027,8 +1027,9 @@ img.hover-img {
 .filter-overlayheader button:hover img.hover-img {
   display: initial;
 }
-.barchart_graph svg.ngx-charts {
-  width: 57% !important;
+.barchart_graph .ngx-charts-outer {
+  width: 100% !important;
+  overflow-x: scroll;
 }
 .filter-slider {
   margin-top: 15px;

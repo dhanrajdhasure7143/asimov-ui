@@ -29,25 +29,13 @@
                         </div>
                     </div>
         </div>
-        <div class="col-md-12 input-fields">
-            <div class="col-sm-8">
-                <div class="col-sm-4 amountinputs" id="humancost">
-                    <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
-                    <i (click)="editInput()"  class="fas fa-pen"></i>
-                </div>
-                <div class="col-sm-4 amountinputs" id="BotCost">
-                    <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
-                    <i (click)="editInput1()"  class="fas fa-pen"></i>
-                </div>
-                <div class="col-sm-4 amountinputs" id="totalcases">
-                    <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
-                </div>    
-            </div>
-            <div class='col-sm-4'>
-            <div class="col-sm-6 dropdown hrs-dropdwn">
+        <!-- <div class="col-md-12 input-fields"> -->
+            
+            <!-- <div class='col-sm-4'>
+                <div class="col-sm-6 dropdown hrs-dropdwn">
                 
                       <div  class="d-inline-block">
-                        <!--ngbDropdown ngbDropdownToggle -->
+                        ngbDropdown ngbDropdownToggle
                         <button class="tsttooltipbtn" id="dropdownForm1" (click)="openHersOverLay()">
                             <img src="../../../assets/images/PI/timefeed.svg">
                             <span class="testtooltip">Time Feed</span>
@@ -94,7 +82,7 @@
                                     <label class="label-control" for="">Shift End Time</label>
                                     <ngx-timepicker-field [controlOnly]="true" name="shiftEndTime" [(ngModel)]="workingHours.shiftEndTime"  [format]="24"></ngx-timepicker-field>
                                 </div>
-                                <!-- <div class="col-sm-12 dropdown-divider"></div> -->
+                                <div class="col-sm-12 dropdown-divider"></div>
                             </div>
                             <div class="timefeed-footer">
                                 <button type="submit" class="btn btn-default" (click)="resetWorkingHours()">Reset</button>
@@ -108,21 +96,32 @@
                     </div>
                 </div>
       
-      </div>
-      <div class='col-sm-6' id='variant-btn'>
-      <button class="btn btn-primary eiap-btn pull-right " (click)="openVariantListNav()">Variant List</button>
-
-      </div>
-      </div>
-      
-        </div>
+                </div>
+                <div class='col-sm-6' id='variant-btn'>
+                    <button class="btn btn-primary eiap-btn pull-right " (click)="openVariantListNav()">Variant List</button>
+                </div>
+            </div>       -->
+        <!-- </div> -->
         <!-- </div> -->
         <!-- <div class="row"> -->
-        <div class="col-md-12 p-0">
-            <div class="col-sm-8 pl-0">
+        <div class="col-md-12 p-0">            
+            <div class="col-sm-8 box_shadw PI-insigntscost pl-0">
                 <!-- <div id="costprojection" class="lineChart box_shadw"></div> -->
+                <div class="col-sm-12 p-0 input-fields">
+                    <div class="col-sm-4 amountinputs" id="humancost">
+                        <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
+                        <i (click)="editInput()"  class="fas fa-pen"></i>
+                    </div>
+                    <div class="col-sm-4 amountinputs" id="BotCost">
+                        <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
+                        <i (click)="editInput1()"  class="fas fa-pen"></i>
+                    </div>
+                    <div class="col-sm-4 amountinputs" id="totalcases">
+                        <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
+                    </div>    
+                </div>
                 <div class="l_title1"><p>Human Cost vs Bot Cost</p></div>
-                <div id="costprojection" class="lineChart box_shadw hvsbot">
+                <div id="costprojection" class="lineChart hvsbot">
                 <ngx-charts-line-chart
                         [view]="view"
                         [scheme]="colorScheme"
@@ -161,7 +160,7 @@
                         <!-- <li><b>{{top10_activityData[0]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[0]['Duration_range'])}}</b></li>
                         <li><b>{{top10_activityData[1]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[1]['Duration_range'])}}</b></li>
                         <li><b>{{top10_activityData[2]['Activity']}}</b> automation saves <b>{{calculateSavings(top10_activityData[2]['Duration_range'])}}</b></li> -->
-                        <div class="pull-right link" (click)="showTop10Rec()">Explore More&nbsp;<i class="fa fa-arrow-right"></i></div>
+                        <div class="link" (click)="showTop10Rec()">Explore More&nbsp;<i class="fa fa-arrow-right"></i></div>
                     </ul>
                 </div>
             </div>
@@ -404,7 +403,7 @@
                 </div>
                 <div (click)="caseIdSelect(data,i)" class=''></div>
             </div>
-            <div class='' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
+            <div class='varaint-days' (click)="caseIdSelect(data,i)">{{timeConversion(data.days)}}</div>
         </div>
         </div>
         

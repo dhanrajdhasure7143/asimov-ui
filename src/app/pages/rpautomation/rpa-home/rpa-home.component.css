@@ -247,7 +247,7 @@ th {
 }
 
 .mat-menu-item {
-  height: 30px !important;
+  height: 36px !important;
   line-height: 31px !important;
 }
 
@@ -373,12 +373,12 @@ mat-panel-title.mat-expansion-panel-header-title {
 .tableActionsIcons img {
   height: 18px;
   width: auto;
-  margin-right: 15px;
+  margin-right: 8px;
 }
 
 .tableActionsIcons i {
   font-size: 18px;
-  margin-right: 15px;
+  margin-right: 8px;
 }
 
 .rpa-searchip img {

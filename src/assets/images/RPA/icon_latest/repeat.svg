@@ -1,1 +1,13 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.cls-1{fill:#607088;stroke:#607088;stroke-miterlimit:10;stroke-width:0.2px;}</style></defs><path class="cls-1" d="M22.07,9l-4.47-.3c.56-.5,1-.92,1.45-1.28s.39-.51.08-.9a8.66,8.66,0,0,0-8.8-2.82,8.53,8.53,0,0,0-6.41,7.82c0,.1,0,.2-.06.36H2.39C2,8.49,4.63,4.51,8.42,2.7c4-1.92,8.4-.79,12.32,3.22l1.61-1.36Z"/><path class="cls-1" d="M4.28,18.12,2.65,19.5l.29-4.44,4.46.29L6.2,16.42c-.74.66-.74.67-.09,1.38a8.6,8.6,0,0,0,14.41-2.69,26.32,26.32,0,0,0,.73-2.94h1.34c.49,3.06-2.18,7.28-5.49,9A10.38,10.38,0,0,1,4.28,18.12Z"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-repeat">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="repeat" clip-path="url(#clip-repeat)">
+    <g id="repeat-2" data-name="repeat" transform="translate(-2.161 -1.678)">
+      <path id="Path_1062" data-name="Path 1062" d="M25.3,10.181l-5.2-.349c.652-.582,1.164-1.071,1.687-1.49s.454-.593.093-1.047A10.078,10.078,0,0,0,11.636,4.013a9.926,9.926,0,0,0-7.459,9.1,1.038,1.038,0,0,1-.07.419H2.4C1.942,9.587,5,4.956,9.413,2.849,14.068.615,19.188,1.93,23.75,6.6l1.874-1.583Z" transform="translate(0 0)" fill="#607088" stroke="#607088" stroke-miterlimit="10" stroke-width="0.2"/>
+      <path id="Path_1063" data-name="Path 1063" d="M4.547,19.094,2.65,20.7l.337-5.167,5.19.337-1.4,1.245c-.861.768-.861.78-.1,1.606a10.008,10.008,0,0,0,16.769-3.13,30.629,30.629,0,0,0,.849-3.421h1.559c.57,3.561-2.537,8.472-6.389,10.473A12.079,12.079,0,0,1,4.547,19.094Z" transform="translate(0.049 1.699)" fill="#607088" stroke="#607088" stroke-miterlimit="10" stroke-width="0.2"/>
+    </g>
+  </g>
+</svg>
