@@ -199,8 +199,6 @@ robotValue:number;
              if(res_data instanceof Object){
                  this.workingHours=res_data
                 this.addWorkingHours();
-             }else if(res_data=="open_time"){
-                this.openHrsOverLay()
              }else if(res_data=="open_Varaint"){
                 this.openVariantListNav();
             }
