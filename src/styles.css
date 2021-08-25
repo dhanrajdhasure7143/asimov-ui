@@ -2421,3 +2421,9 @@ th.mat-header-cell {
 .actions-mbody input.form-control.custom-file-input {
   padding-left: 0px !important;
 }
+.rpa-actioncontent .mat-drawer-inner-container {
+  padding: 0px 0px 10px 10px!important;
+}
+.section .mat-expansion-indicator::after {
+  opacity: 0.5 !important;
+}

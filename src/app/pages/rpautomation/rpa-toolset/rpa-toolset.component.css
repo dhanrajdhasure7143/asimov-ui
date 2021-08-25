@@ -14,9 +14,10 @@
 }
 
 .search-content{
-  padding:10px;
+  /* padding:10px; */
   /* padding-right:25px; */
   padding-left:0px;
+  padding-right: 10px;
 }
 
 .toolset{
@@ -183,8 +184,8 @@ background-color: white;
 
 .search-content img.testplus1 {
   position: absolute;
-  left: 5px;
-  top: 45px;
+  left: 15px;
+  top: 55px;
 }
 
 .actionsheaderdiv {
@@ -197,4 +198,7 @@ background-color: white;
   color: #001c47;
   font-size: 25px;
   font-weight: 700;
+}
+.toolset-mainheader {
+  padding: 10px 0px 15px;
 }

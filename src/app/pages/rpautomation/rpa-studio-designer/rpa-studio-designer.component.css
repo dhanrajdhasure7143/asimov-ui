@@ -46,11 +46,12 @@
 }
 
 span.tab-botname {
-  margin: 0px 6px;
+  margin: 0px 10px 0px 6px;
   color: #001c47;
 }
 
 .bot-close img {
   width: 10px;
   height: 10px;
+  opacity: 0.3;
 }
