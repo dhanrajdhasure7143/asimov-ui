@@ -10,7 +10,7 @@
     <div class="row">
          <div id="mySidenav" class="col-md-12 p-0 sidenav tracking_detsils1">
              <div class='variants_slider'>
-                <div class="col-md-12 p-0 select_drpdwnone">
+                <div class="col-md-12 select_drpdwnone">
                      <div class="variants-header">
                         <h3>Variants List</h3>  
                         <button class="closebtn" (click)="closeNav()">
@@ -24,24 +24,24 @@
                          </select>
                      </div>
                 </div>
-                <div class='col-sm-12 p-0 variant2'>
-                        <div class="check_box">
-                            <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()">
-                            <span class="">Select all</span>
-                            <span class='event2'>Time Taken</span>
-                        </div>                        
+                <div class='col-sm-12 variant2'>
+                    <div class="check_box">
+                        <input id="check_box"  type="checkbox" #check_box='ngModel' name="check_box"   [(ngModel)]="checkboxValue" (change)="selectAllVariants()">
+                        <span class="">Select all</span>
+                        <span class='event2'>Time Taken</span>
+                    </div>                        
                 </div>
-                <div class='col-sm-12 p-0 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
-                     <div (click)="caseIdSelect(data,i)"  class='event3'>Variant 
-                         <span>{{i+1}}</span>
+                <div class='col-sm-12 variant_border' [ngClass]="isselected ==i?'activevaraint':''||data.selected ==='active'?'activevaraint':''" *ngFor="let data of varaint_data.data; let i=index">
+                     <div (click)="caseIdSelect(data,i)"  class='event3'>Variant
+                        <span>{{i+1}}</span>
                     </div>
-                     <div class='variant_parcent'>
-                         <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
-                             <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
-                         </div> <!-- {{caseParcent(data.casepercent)}}% of cases-->
+                    <div class='variant_parcent'>
+                        <div (click)="caseIdSelect(data,i)" class=''>Cases Covered
+                            <span>{{data.case_value}} ({{caseParcent(data.casepercent)}}%)</span>
+                        </div> <!-- {{caseParcent(data.casepercent)}}% of cases-->
                          <!-- <div (click)="caseIdSelect(data,i)" class='col-sm-12 events1'><p>{{data.detail}}</p></div> -->
                         <div (click)="caseIdSelect(data,i)" class=''></div>
-                        <div class="" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
+                        <div class="text-center" *ngIf="data.selected === 'active'&&isvariantSelectedOne">
                              <button class="play_button" (click)="playAnimation()" *ngIf="!isplay"><i class="fa fa-play"></i><span class="">Play</span></button>
                              <button class="play_button" (click)="playAnimation()" *ngIf="isplay"><i class="fa fa-stop"></i><span class="">Stop</span></button>
                          </div> 
