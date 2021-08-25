@@ -293,7 +293,7 @@ th {
 
 
 label.main-subtitle {
-  font-size: 26px;
+  font-size: 32px;
   font-weight: 700;
   color: #00a1e3;
   display: block;
@@ -394,8 +394,9 @@ input.form-control.custom-file-input {
 }
 
 .main-subheaderTitle {
-  margin-left: 15%;
+  margin-left: 20px;
   margin-bottom: 18px;
+  margin-right: 25%;
 }
 button#create_Configuration {
   background-color: #fff !important;
