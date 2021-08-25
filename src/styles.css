@@ -2427,3 +2427,9 @@ th.mat-header-cell {
 .section .mat-expansion-indicator::after {
   opacity: 0.5 !important;
 }
+.section .mat-expansion-panel-body {
+  padding-bottom: 6px !important;
+}
+.section mat-expansion-panel {
+  border-top: 1px solid #cccccc70;
+}
