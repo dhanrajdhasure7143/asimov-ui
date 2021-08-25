@@ -2,10 +2,10 @@
   <div class="actionsmenu row">
     <div class="col-md-3 p-0">
       <div class="actionsmenu-left">
-        <button class="action-item" placement="bottom" tooltip="Toolset & Actions"  (click)="rpa_toolset.sidenavbutton==false?rpa_toolset.sidenavbutton=true:rpa_toolset.sidenavbutton=false;">
+        <button class="action-item" placement="bottom" tooltip="Toolset & Actions" *ngIf="rpa_toolset.sidenavbutton==false" (click)="rpa_toolset.sidenavbutton=true">
             <!-- <span><i class="ri-function-line"></i></span>&nbsp;Toolset -->
             <span class="pull-left">
-              <img src="../../../../assets/images/menu-line.svg" />
+              <img src="../../../../assets/images/menu-line.svg" /> &nbsp;    Toolset & Actions
             </span>
         </button>
       </div>
