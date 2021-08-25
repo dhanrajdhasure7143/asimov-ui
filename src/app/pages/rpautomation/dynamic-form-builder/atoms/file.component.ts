@@ -5,9 +5,9 @@ import { FormGroup } from'@angular/forms';
 @Component({
 selector:'file',
 template:`
-    <div [formGroup]="form" style = "margin-top: -12px; padding: 16px 0px 4px 0px;">
+    <div [formGroup]="form">
       <div  class="drop-container dropzone" dropZone (dropped)="field.onUpload($event,field)" >
-            <input style="border: 2px dashed lightgray;padding: 3px 0px;width:210px" type="file" multiple="" [formControlName]="field.name+'_'+field.id" (change)="field.onUpload($event,field)">
+        <input class="form-control custom-file-input" type="file" multiple="" [formControlName]="field.name+'_'+field.id" (change)="field.onUpload($event,field)">
       </div>
       <div *ngIf="field.value!=''">
       {{field.value}}

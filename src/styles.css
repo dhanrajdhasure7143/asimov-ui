@@ -2038,7 +2038,7 @@ span.star {
   border: 1px solid #D1D1D1 !important;
   box-shadow: unset !important;
   color: #7B8694 !important;
-  border-radius: 2px;
+  border-radius: 2px !important;
   padding: 6px 10px !important;
 }
 
@@ -2368,4 +2368,56 @@ th.mat-header-cell {
 }
 .bpms-canvas-body .as-split-gutter.ng-star-inserted.testplus {
   background-color: #f3f3f3 !important;
+}
+
+.rpa-custom-slider .ng5-slider.vertical .ng5-slider-pointer {
+  cursor: pointer;
+  width: 18px !important;
+  height: 18px !important;
+  left: -7px !important;
+  background-color: #00a0e3 !important;
+  z-index: 3;
+  border-radius: 16px;
+}
+.rpa-custom-slider .ng5-slider .ng5-slider-pointer:after {
+  content: '';
+  width: 6px !important;
+  height: 6px !important;
+  position: absolute;
+  top: 6px !important;
+  left: 6px !important;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.actions-mbody .form-group {
+  margin: 0px 0px 15px !important;
+}
+.actions-mbody .drop-container.dropzone {
+  margin-bottom: 5px !important;
+}
+.actions-mbody .custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.actions-mbody .custom-file-input::before {
+  text-align: center;
+  content: "Select File";
+  display: inline-block;
+  background: #00a1e3;
+  border-radius: 2px;
+  padding: 6px 8px;
+  outline: none;
+  color: white;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  position: absolute;
+  top:0px;
+  font-size: 15px;
+}
+.actions-mbody .custom-file-input:hover::before {
+  border-color: none;
+}
+.actions-mbody input.form-control.custom-file-input {
+  padding-left: 0px !important;
 }
