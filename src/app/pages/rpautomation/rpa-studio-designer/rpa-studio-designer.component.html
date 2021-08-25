@@ -2,9 +2,13 @@
       <mat-tab  *ngFor="let tab of tabsArray">
         <ng-template mat-tab-label>
             <mat-icon class="text-primary">android</mat-icon>
-              &nbsp;&nbsp;{{tab.botName}}
-              &emsp;&nbsp; &nbsp;&nbsp;
-            <div class="text-right"><button [id]="'close_bot_'+tab.botName"  class="bot-close" (click)="removetab(tab)"><i class="fa fa-times"  ></i></button></div>
+            <span class="tab-botname">{{tab.botName}}</span>
+            <div class="text-right">
+              <button [id]="'close_bot_'+tab.botName"  class="bot-close" (click)="removetab(tab)">
+                <img src="../../../../assets/images/RPA/icon_latest/close.svg" />
+                <!-- <i class="fa fa-times"  ></i> -->
+              </button>
+            </div>
         </ng-template>
         <app-rpa-toolset [bot]="tab" ></app-rpa-toolset>
       </mat-tab>

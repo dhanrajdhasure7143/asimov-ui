@@ -5,14 +5,12 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   selector: 'app-dynamic-forms',
   template:`
     <form (ngSubmit)="onSub()" [formGroup]="form" class="form-horizontal">
-      <div *ngFor="let field of fields; let i =index ">
-          <form-builder [field]="field" [form]="form"></form-builder>
-      </div>
-      <div class="form-row"></div>
-      <div class="form-group row">
-        <div class="col-md-3"></div>
-        <div class="">
-          <button type="submit"  [disabled]="!form.valid" class="btn btn-primary">Save</button>
+      <div class="container m-contanier form-body">
+        <div class="col-md-12 p-0 form-group" *ngFor="let field of fields; let i =index ">
+            <form-builder [field]="field" [form]="form"></form-builder>
+        </div>
+        <div class="form-footer">
+            <button type="submit"  [disabled]="!form.valid" class="btn btn-primary">Save</button>
         </div>
       </div>
     </form>
@@ -44,3 +42,5 @@ export class DynamicFormsComponent implements OnInit {
   }
 
 }
+ // <div class="form-row"></div>
+ // <div class="col-md-3"></div>

@@ -152,5 +152,10 @@
 }
 .dragactionsdiv span {
   display: block;
-  font-size:17px;
+  font-size: 15px;
+}
+
+.modal-body.actions-mbody {
+  height: calc(100% - 135px);
+  overflow: hidden auto;
 }
