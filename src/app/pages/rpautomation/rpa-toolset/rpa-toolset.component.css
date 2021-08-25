@@ -6,7 +6,7 @@
   white-space: nowrap;
 }
 .nodes {
-  padding: 5px;
+  /* padding: 5px; */
 }
 .con-img{
   width:32px;
@@ -15,7 +15,7 @@
 
 .search-content{
   padding:10px;
-  padding-right:35px;
+  /* padding-right:25px; */
   padding-left:0px;
 }
 
@@ -143,7 +143,7 @@ background-color: white;
 
 
 .nodename{
-  font-size: 16px;
+  /* font-size: 16px; */
   color:black;
   font-weight: 400;
 }
@@ -159,7 +159,7 @@ background-color: white;
 
 
 .taskname{
-  padding:10px;
+  /* padding:10px; */
   font-size: 16px;
   color:black;
   font-weight: 400;
@@ -173,4 +173,28 @@ background-color: white;
 
 ::ng-deeep .mat-drawer.mat-drawer-side {
   z-index: 0 !important;
+}
+
+.search-content input.search {
+  position: relative;
+  padding: 0px 25px 0px !important;
+  border-radius: 4px !important;
+}
+
+.search-content img.testplus1 {
+  position: absolute;
+  left: 5px;
+  top: 45px;
+}
+
+.actionsheaderdiv {
+  position: relative;
+}
+.actionsheaderdiv button span {
+  position: absolute;
+  right: 10px;
+  top: 3px;
+  color: #001c47;
+  font-size: 25px;
+  font-weight: 700;
 }
