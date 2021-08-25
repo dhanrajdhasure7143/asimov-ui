@@ -7,13 +7,22 @@
     <div class="toolset" >
       <div id="search">
         <div  *ngIf="true" >
-          <h4>Actions</h4>
+          <div class="actionsheaderdiv">
+            <span class="module-sub-header-title pull-left">
+              <img src="../../../../assets/images/menu-line.svg" class="testplus1" />
+              Toolset & Actions
+            </span>
+            <button type="button" class="close pull-right" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <div class="search-content">
 
               <!-- onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)" -->
 
-          <input type="text" *ngIf="true" style="border:1px solid gray" [(ngModel)]="userFilter.name" name="node" placeholder="&#61442; Search"
-          class="search fontAwesome" autocomplete="off">
+            <input type="text" *ngIf="true" [(ngModel)]="userFilter.name" name="node" placeholder="Search"
+                class="search form-control" autocomplete="off">
+            <img src="../../../../assets/images/search.svg" alt="" class="testplus1">
           </div> 
           <!-- <span (click)="search=false" class="toolset-search-close"><i class="fa fa-times"></i></span> -->
         </div>
@@ -69,8 +78,8 @@
 
 </mat-drawer>
   <mat-drawer-content>
-  <div class="row">
-  <div class="col-md-12 check" style="padding-right:0px;">
+  <div class="row h-100">
+  <div class="col-md-12 check p-0 h-100">
     <div *ngIf="templateNodes.length!=0" class="check">
      
       <app-rpa-studio-actionsmenu [bot]="botState" [toolset]="templateNodes" ></app-rpa-studio-actionsmenu>

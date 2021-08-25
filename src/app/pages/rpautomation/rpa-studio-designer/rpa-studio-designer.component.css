@@ -1,6 +1,7 @@
 .tabs{
   overflow:visible !important;
   position:  relative !important;
+  height: 100%;
 }
 .mat-tab-body-content{
   overflow: hidden !important;

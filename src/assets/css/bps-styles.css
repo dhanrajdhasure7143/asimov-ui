@@ -1114,3 +1114,6 @@ mat-panel-title.mat-expansion-panel-header-title {
 .canvas2 .djs-minimap {
   bottom: 25px;
 }
+.dragicons mat-panel-title.mat-expansion-panel-header-title {
+  padding: 5px 0px;
+}

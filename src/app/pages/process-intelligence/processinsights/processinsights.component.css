@@ -16,7 +16,7 @@
   margin-bottom: 0px;
 }
 .boxes{
-  /* margin-top: 10px; */
+  margin-bottom: 30px;
 }
 /* .divbox0{
   background:  white;
@@ -151,19 +151,16 @@ input:disabled{
     z-index: 10;
   }
   .box-content{
-    border: 1px solid rgb(32, 32, 32);
-    color: black;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    height: 175px;
+    color: #000;
+    border-radius: 4px;
+    margin-bottom: 25px;
   }
   .hedline1{
-      background-color: #fff;
-      margin-top: 30px;
+      /* background-color: #fff;
+      margin-top: 30px; */
   }
   .hedline2{
-    background-color: #fff;
-    margin-top: 5px;
+    margin: 0px;
 }
 
   .variants_slider{
@@ -213,8 +210,10 @@ input:disabled{
   padding: 0;
 }
 .link{
-  color: #0162cf;
+  color: #00a0e3;
   cursor: pointer;
+  margin-top: 10px;
+  font-size: 14px;
 }
 .backgr{
 background: rgb(241, 240, 240);
@@ -232,7 +231,7 @@ background: rgb(241, 240, 240);
   background: #fff;
 }
 .box_shadw1{
-  margin-top: -20px; 
+  margin-top: 30px; 
 }
 .box_shadw2{
   border: 1px solid #f8f8f8;
@@ -364,15 +363,26 @@ padding: 10px;
 }
 
 .business_heading{
-  text-align: center;
-  padding-top: 5px;
+  padding: 15px 0px;
   font-size: 17px;
+  margin: 0px;
+}
+.business_heading strong {
+  font-size: 15px;
+  font-weight: 600;
 }
 .business_content{
-  padding: 5px 15px;
+  padding: 0px;
+}
+.business_content li {
+  padding-bottom: 10px;
+  font-size: 14px;
+}
+.business_content li b {
+  font-weight: 600;
 }
 .box_shade{
-  margin-top: -20px;
+  margin-top: 30px;
 }
 .box_shadw-activity{
   height: 444px ;
@@ -469,4 +479,7 @@ img.hover-img {
 #chartdiv,#chartdiv1{
   width: 100%;
   height: 340px;
+}
+.PI-insigntscost {
+  height: 450px;
 }
