@@ -5,7 +5,7 @@
         <button class="action-item" placement="bottom" tooltip="Toolset & Actions" *ngIf="rpa_toolset.sidenavbutton==false" (click)="rpa_toolset.sidenavbutton=true">
             <!-- <span><i class="ri-function-line"></i></span>&nbsp;Toolset -->
             <span class="pull-left">
-              <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="testplus" />Toolset & Actions
+              <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="toolset-menuicon" />Toolset & Actions
             </span>
         </button>
       </div>
@@ -410,7 +410,7 @@
               <span class="rpa-modal-close" (click)="closesch()">&times;</span>
               <h4>Scheduler</h4>
           </div>
-          <div class="rpa-modal-body">
+          <div class="modal-body actions-mbody">
             <app-rpa-scheduler [data]="schedule"></app-rpa-scheduler>
           </div>
       </div>
