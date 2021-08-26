@@ -100,7 +100,7 @@ import { NgxSpinnerService } from "ngx-spinner";
     //this.updatepopup=document.getElementById('env_updatepopup');
     this.dt.changeHints(this.hints.rpaenvhints);
     this.getallData();
-    document.getElementById("filters").style.display='block';
+    //document.getElementById("filters").style.display='block';
     //document.getElementById("createenvironment").style.display='none';
     //document.getElementById("update-popup").style.display='none';
     
@@ -146,7 +146,7 @@ import { NgxSpinnerService } from "ngx-spinner";
         this.dataSource1.paginator=this.paginator1;
         this.spinner.hide();
       });
-      document.getElementById("filters").style.display = "block";
+     // document.getElementById("filters").style.display = "block";
   }
 
   EnvType1(){
@@ -188,7 +188,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   create()
   {
     
-    document.getElementById("filters").style.display='none';
+    //document.getElementById("filters").style.display='none';
     document.getElementById("createenvironment").style.display='block';
     document.getElementById("update-popup").style.display='none';
   
@@ -361,7 +361,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   updatedata()
   {
     document.getElementById("createenvironment").style.display='none';    
-    document.getElementById("filters").style.display='none';
+    //document.getElementById("filters").style.display='none';
     document.getElementById('update-popup').style.display='block';
     let data:environmentobservable;
     for(data of this.environments)
@@ -392,7 +392,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 
   close()
   { 
-    document.getElementById("filters").style.display='block';
+    //document.getElementById("filters").style.display='block';
     document.getElementById('createenvironment').style.display='none';
     document.getElementById('update-popup').style.display='none';
     this.resetEnvForm();
