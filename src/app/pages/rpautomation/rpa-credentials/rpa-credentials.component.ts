@@ -79,7 +79,7 @@ export class RpaCredentialsComponent implements OnInit {
 
   ngOnInit() {
     this.spinner.show();
-    document.getElementById("filters").style.display='block';
+   // document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     this.getallCredentials();
     this.passwordtype1=false;
@@ -130,7 +130,7 @@ inputNumberOnly(event){
         this.dataSource2= new MatTableDataSource(this.credentials);
         this.spinner.hide();
       });
-      document.getElementById("filters").style.display='block'; 
+     // document.getElementById("filters").style.display='block'; 
   }
 
   sortmethod(){
@@ -147,13 +147,13 @@ inputNumberOnly(event){
   
   createcredentials()
   {
-    document.getElementById("filters").style.display='none';
+   // document.getElementById("filters").style.display='none';
     document.getElementById("createcredentials").style.display='block';
     document.getElementById("Updatecredntials").style.display='none';
   }
 
   Updatecredntials(){
-    document.getElementById("filters").style.display='none';
+   // document.getElementById("filters").style.display='none';
     document.getElementById("createcredentials").style.display='none';
     document.getElementById("Updatecredntials").style.display='block';
   }
@@ -233,7 +233,7 @@ else
 
 updatecreddata()
   {    
-    document.getElementById("filters").style.display='none';
+   // document.getElementById("filters").style.display='none';
     document.getElementById('Updatecredntials').style.display='block';
     let data:any;
     for(data of this.credentials)
@@ -255,7 +255,7 @@ updatecreddata()
 
   closecredentials()
   {     
-    document.getElementById("filters").style.display='block';
+   // document.getElementById("filters").style.display='block';
     document.getElementById('createcredentials').style.display='none';
     document.getElementById('Updatecredntials').style.display='none';
     this.resetCredForm();
