@@ -59,6 +59,11 @@ btn_obj:any;
     this.isPIHeaderShow=false;
     this.isplay=false;
     this.isAddHrs=false;
+      let element=document.getElementById("tipsy_div");
+      if(element){
+        element.style.display = "none";
+        element.style.visibility = "hidden";
+      }
     // console.log('test')
     this.workingHours = {formDay:'Mon',toDay: 'Sun',shiftStartTime:"00:00",shiftEndTime:"23:59"};
   } else{
@@ -127,11 +132,21 @@ generateBpmn(){
 }
 
 openVariantListNav(){
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
   this.dt.piHeaderValues('variant_list');
 }
 
 openHersOverLay(){
-  this.isAddHrs=!this.isAddHrs
+  this.isAddHrs=!this.isAddHrs;
+  let element=document.getElementById("tipsy_div");
+  if(element){
+    element.style.display = "none";
+    element.style.visibility = "hidden";
+  }
 }
 
 canceladdHrs(){ //close timefeed popup 

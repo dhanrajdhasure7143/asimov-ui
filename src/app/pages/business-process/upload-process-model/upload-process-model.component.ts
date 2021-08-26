@@ -1509,4 +1509,10 @@ onExpansionClik(i){
     el.classList.add("slide-left");
   }
 }
+
+getBpmnById(){
+  this.rest.getBpmnNotationById(this.selected_modelId).subscribe(res=>{
+    console.log("get_bpmnById res",res)
+  })
+}
 }

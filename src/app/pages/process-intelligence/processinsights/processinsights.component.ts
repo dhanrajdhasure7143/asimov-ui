@@ -12,6 +12,9 @@ import { DataTransferService } from '../../services/data-transfer.service';
 import { PiHints } from '../model/process-intelligence-module-hints';
 import { GlobalScript } from 'src/app/shared/global-script';
 import { NgxSpinnerService } from "ngx-spinner";
+import * as am4core from '@amcharts/amcharts4/core';
+import * as am4charts from '@amcharts/amcharts4/charts';
+import am4themes_animated from '@amcharts/amcharts4/themes/animated';
 HC_more(Highcharts)
 enum VariantList {
     'Most Common',
@@ -94,7 +97,7 @@ export class ProcessinsightsComponent implements OnInit {
     multi: any = [];
 
     bubbleData:any =[];
-  view: any[] = [700, 420];
+  view: any[] = [800, 420];
   view1:any[] = [500, 340]
 
   // options
@@ -196,8 +199,6 @@ robotValue:number;
              if(res_data instanceof Object){
                  this.workingHours=res_data
                 this.addWorkingHours();
-             }else if(res_data=="open_time"){
-                this.openHrsOverLay()
              }else if(res_data=="open_Varaint"){
                 this.openVariantListNav();
             }
@@ -491,6 +492,9 @@ robotValue:number;
                         this.dChart1 = activityDuration;
                         this.dChart2 = activityCost;
                         //this.addchart2();
+                        console.log(this.dChart2)
+                        this.ActivityTimeChart();
+                        this.resourceCostByActivity();
                         this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                         this.getActivityTableData(this.activity_Metrics);
                     } else {
@@ -667,6 +671,9 @@ robotValue:number;
 
                 this.dChart1 = activityDuration;
                 this.dChart2 = activityCost;
+                console.log(this.dChart2)
+                this.ActivityTimeChart();
+                this.resourceCostByActivity();
                 //this.addchart2();
                 this.getActivityWiseHumanvsBotCost(this.activity_Metrics);
                 this.getActivityTableData(this.activity_Metrics);
@@ -1961,5 +1968,151 @@ svg
     // loopTrackBy(index, term){
     //     return index;
     //   }
+    ActivityTimeChart(){
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+        
+        var chart = am4core.create("pie_chart1", am4charts.PieChart);
+        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+        chart.legend = new am4charts.Legend();
+        chart.legend.useDefaultMarker = true;
+        var marker = chart.legend.markers.template.children.getIndex(0);
+        marker.strokeWidth = 2;
+        marker.strokeOpacity = 1;
+        marker.stroke = am4core.color("#ccc");
+        chart.legend.scrollable = true;
+        chart.legend.fontSize = 12;
+  
+        // chart.data=data;
+        chart.data=this.dChart1;
+  
+        chart.legend.position = "right";
+        chart.legend.valign = "middle";
+        chart.innerRadius = 70;
+        var label = chart.seriesContainer.createChild(am4core.Label);
+          // label.text = "230,900 Sales";
+        // label.horizontalCenter = "middle";
+        // label.verticalCenter = "middle";
+        label.fontSize = 18;
+        var series = chart.series.push(new am4charts.PieSeries());
+        series.dataFields.value = "value";
+        series.dataFields.category = "name";
+        series.labels.template.disabled = false;
+        // series.slices.template.cornerRadius = 0;
+        series.tooltip.horizontalCenter = "middle";
+        // series.tooltip.verticalCenter = "middle";
+        // series.tooltip.fontSize=18;
+        // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
+        // series.slices.template.tooltipText = "{parent.parent.name} {parent.name} > {name} ({value})";
+        // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
+        // series.tooltip.text = " caseId";
+        // series.adapter.add("tooltipText", function(text, target) {
+        //   console.log(text,target.dataItem)
+        //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
+        // });
+        var _self=this;
+        series.slices.template.adapter.add("tooltipText", function(text, target) {
+          // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
+          return "{_dataContext.name} \n {_dataContext.value}";
+        });
+        series.labels.template.text = "{_dataContext.label}";
+        series.colors.list = [
+            am4core.color("rgba(85, 216, 254, 0.9)"),
+            am4core.color("rgba(255, 131, 115, 0.9)"),
+            am4core.color("rgba(255, 218, 131, 0.9)"),
+            am4core.color("rgba(163, 160, 251, 0.9)"),
+            am4core.color("rgba(156, 39, 176, 0.9)"),
+            am4core.color("rgba(103, 58, 183, 0.9)"),
+            am4core.color("rgba(63, 81, 181, 0.9)"),
+            am4core.color("rgba(33, 150, 243, 0.9)"),
+            am4core.color("rgba(3, 169, 244, 0.9)"),
+            am4core.color("rgba(0, 188, 212, 0.9)"),
+            am4core.color("rgba(244, 67, 54, 0.9)"),
+            am4core.color("rgba(233, 33, 97, 0.9)"),
+            am4core.color("rgba(220, 103, 171, 0.9)"),
+            am4core.color("rgba(220, 103, 206, 0.9)"),
+            am4core.color("rgba(199, 103, 220, 0.9)"),
+            am4core.color("rgba(163, 103, 220, 0.9)"),
+            am4core.color("rgba(103, 113, 220, 0.9)"),
+            am4core.color("rgba(0, 136, 86, 0.9)"),
+            am4core.color("rgba(243, 195, 0, 0.9)"),
+            am4core.color("rgba(243, 132, 0, 0.9)"),
+            am4core.color("rgba(143, 13, 20, 0.9)"),
+        ];
+    }
+
+    resourceCostByActivity(){
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+        
+        var chart = am4core.create("pie_chart2", am4charts.PieChart);
+        chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+        chart.legend = new am4charts.Legend();
+        chart.legend.useDefaultMarker = true;
+        var marker = chart.legend.markers.template.children.getIndex(0);
+        marker.strokeWidth = 2;
+        marker.strokeOpacity = 1;
+        marker.stroke = am4core.color("#ccc");
+        chart.legend.scrollable = true;
+        chart.legend.fontSize = 12;
+  
+        // chart.data=data;
+        chart.data=this.dChart2;
+  
+        chart.legend.position = "right";
+        chart.legend.valign = "middle";
+        chart.innerRadius = 70;
+        var label = chart.seriesContainer.createChild(am4core.Label);
+          // label.text = "230,900 Sales";
+        // label.horizontalCenter = "middle";
+        // label.verticalCenter = "middle";
+        label.fontSize = 18;
+        var series = chart.series.push(new am4charts.PieSeries());
+        series.dataFields.value = "value";
+        series.dataFields.category = "name";
+        series.labels.template.disabled = false;
+        // series.slices.template.cornerRadius = 0;
+        series.tooltip.horizontalCenter = "middle";
+        // series.tooltip.verticalCenter = "middle";
+        // series.tooltip.fontSize=18;
+        // series.tooltipText = ' {name} ({_dataContext.totalDuration1})';
+        // series.slices.template.tooltipText = "{parent.parent.name} {parent.name} > {name} ({value})";
+        // series.columns.template.tooltipText = " caseId : {categoryX} \n  Duration : {valueY}[/] ";
+        // series.tooltip.text = " caseId";
+        // series.adapter.add("tooltipText", function(text, target) {
+        //   console.log(text,target.dataItem)
+        //   return "{_dataContext.activity} \n {_dataContext.totalDuration1}";
+        // });
+        var _self=this;
+        series.slices.template.adapter.add("tooltipText", function(text, target) {
+          // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
+          return "{_dataContext.name} \n {_dataContext.value}";
+        });
+        series.labels.template.text = "{_dataContext.label}";
+        series.colors.list = [
+            am4core.color("rgba(85, 216, 254, 0.9)"),
+            am4core.color("rgba(255, 131, 115, 0.9)"),
+            am4core.color("rgba(255, 218, 131, 0.9)"),
+            am4core.color("rgba(163, 160, 251, 0.9)"),
+            am4core.color("rgba(156, 39, 176, 0.9)"),
+            am4core.color("rgba(103, 58, 183, 0.9)"),
+            am4core.color("rgba(63, 81, 181, 0.9)"),
+            am4core.color("rgba(33, 150, 243, 0.9)"),
+            am4core.color("rgba(3, 169, 244, 0.9)"),
+            am4core.color("rgba(0, 188, 212, 0.9)"),
+            am4core.color("rgba(244, 67, 54, 0.9)"),
+            am4core.color("rgba(233, 33, 97, 0.9)"),
+            am4core.color("rgba(220, 103, 171, 0.9)"),
+            am4core.color("rgba(220, 103, 206, 0.9)"),
+            am4core.color("rgba(199, 103, 220, 0.9)"),
+            am4core.color("rgba(163, 103, 220, 0.9)"),
+            am4core.color("rgba(103, 113, 220, 0.9)"),
+            am4core.color("rgba(0, 136, 86, 0.9)"),
+            am4core.color("rgba(243, 195, 0, 0.9)"),
+            am4core.color("rgba(243, 132, 0, 0.9)"),
+            am4core.color("rgba(143, 13, 20, 0.9)"),
+        ];   
+    }
+  
 
 }

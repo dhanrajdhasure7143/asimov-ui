@@ -995,5 +995,9 @@ getvaluechainprocess(id)
   savedata(id,data){
     return this.http.post("/platform-service/project/addProjecttoexistingProgram/"+id,data)
   }
+  
+  getBpmnNotationById(bpmnId){
+    return this.http.get("/bpsprocess/get/"+bpmnId)
+  }
 
 }
