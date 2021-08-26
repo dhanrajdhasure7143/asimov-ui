@@ -418,3 +418,8 @@ mat-paginator button:disabled{
   background-color: #f99d1c;
   color: #fff !important;
 }
+.RPA-scheduletimer .ngx-timepicker{
+  border: 1px solid #D1D1D1 !important;
+  border-radius: 3px;
+  padding: 0px 10px;
+}

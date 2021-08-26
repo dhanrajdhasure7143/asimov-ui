@@ -229,6 +229,9 @@ background-color: white;
 }
 .dragicons {
   padding: 0px 10px;
+  overflow-y: scroll;
+  max-height: 61vh;
+  white-space: nowrap; 
 }
 span.con-text {
   font-size: 14px;

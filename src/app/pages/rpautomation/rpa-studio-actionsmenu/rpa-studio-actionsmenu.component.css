@@ -269,7 +269,7 @@ background-color: blue !important;
   right: 10px;
 }
 ul#environments {
-  width: 230px;
+  width: 200px;
   overflow: auto;
   height: 325px;
   font-size: 15px !important;
@@ -277,6 +277,9 @@ ul#environments {
 
 ul#environments li {
   padding: 3px 5px; 
+}
+ul#environments li img {
+  vertical-align: sub;
 }
 
 .actionsmenu-right button, .actionsmenu-right span {
@@ -309,4 +312,21 @@ img.toolset-menuicon {
   height: 16px !important;
   margin-right: 12px;
   opacity: 0.5;
+}
+.modal-body.actions-mbody {
+  height: calc(100% - 83px);
+  overflow: hidden auto;
+  font-size: 15px;
+}
+ul#versions {
+  padding: 0px !important;
+  min-width: 130px;
+}
+ul#versions li {
+  padding: 8px 10px;
+  font-size: 14px;
+  color: #001c47;
+}
+ul#versions li:hover {
+  background: rgba(0,0,0,.04);
 }

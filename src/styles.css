@@ -2434,3 +2434,8 @@ th.mat-header-cell {
 .section mat-expansion-panel {
   border-bottom: 1px solid #cccccc70;
 }
+.rpa-actioncontent .mat-tab-label .mat-ripple {
+  display: flex;
+  align-items: center;
+  background-color: #e3e9ef8c !important;
+}
