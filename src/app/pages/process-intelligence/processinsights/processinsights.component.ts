@@ -1972,7 +1972,7 @@ svg
         am4core.useTheme(am4themes_animated);
         // Themes end
         
-        var chart = am4core.create("chartdiv", am4charts.PieChart);
+        var chart = am4core.create("pie_chart1", am4charts.PieChart);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
         chart.legend = new am4charts.Legend();
         chart.legend.useDefaultMarker = true;
@@ -2045,7 +2045,7 @@ svg
         am4core.useTheme(am4themes_animated);
         // Themes end
         
-        var chart = am4core.create("chartdiv1", am4charts.PieChart);
+        var chart = am4core.create("pie_chart2", am4charts.PieChart);
         chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
         chart.legend = new am4charts.Legend();
         chart.legend.useDefaultMarker = true;
