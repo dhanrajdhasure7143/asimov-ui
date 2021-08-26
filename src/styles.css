@@ -2228,8 +2228,9 @@ span.projects-header-title {
 
 .module-sub-header-title {
   color: #001c47;
-  line-height: 35px;
-  margin: 0px;
+  /* line-height: 35px;
+  margin: 0px; */
+  width: 90%;
 }
 
 button.btn.btn-primary:first-child {
@@ -2422,14 +2423,14 @@ th.mat-header-cell {
   padding-left: 0px !important;
 }
 .rpa-actioncontent .mat-drawer-inner-container {
-  padding: 0px 0px 10px 10px!important;
+  /* padding: 0px 0px 10px 10px!important; */
 }
 .section .mat-expansion-indicator::after {
   opacity: 0.5 !important;
 }
 .section .mat-expansion-panel-body {
-  padding-bottom: 6px !important;
+  padding-bottom: 8px !important;
 }
 .section mat-expansion-panel {
-  border-top: 1px solid #cccccc70;
+  border-bottom: 1px solid #cccccc70;
 }

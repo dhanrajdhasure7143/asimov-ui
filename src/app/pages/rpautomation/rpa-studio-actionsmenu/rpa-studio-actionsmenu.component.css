@@ -257,8 +257,8 @@ background-color: blue !important;
 }
 
 .action-item img {
-  height: 18px;
-  width: auto;
+  height: 17px;
+  width: 17px;
 }
 
 .modal-body.createenv-mbody {
@@ -303,4 +303,10 @@ li.action-item-data:hover {
 }
 a.dropdown-item {
   color: #333;
+}
+img.toolset-menuicon {
+  width: 16px !important;
+  height: 16px !important;
+  margin-right: 12px;
+  opacity: 0.5;
 }
