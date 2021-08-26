@@ -97,7 +97,7 @@ export class ProcessinsightsComponent implements OnInit {
     multi: any = [];
 
     bubbleData:any =[];
-  view: any[] = [700, 420];
+  view: any[] = [800, 420];
   view1:any[] = [500, 340]
 
   // options
