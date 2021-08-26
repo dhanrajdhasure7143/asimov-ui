@@ -83,7 +83,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
     }
 
   ngOnInit() {
-    document.getElementById("filters").style.display='block';
+  //   //     document.getElementById("filters").style.display='block';
     this.dt.changeHints(this.hints.rpadbchints);
     this.getallDBConnection();
     this.passwordtype1=false;
@@ -123,7 +123,7 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
           this.sortmethod(); 
         }, 80);
       });
-      document.getElementById("filters").style.display='block'; 
+    //     document.getElementById("filters").style.display='block'; 
   }
 
   sortmethod(){
@@ -140,13 +140,13 @@ export class RpaDatabaseConnectionsComponent implements OnInit {
   
   createdbconnection()
   {
-    document.getElementById("filters").style.display='none';
+  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='block';
     document.getElementById("Updatedbconnection").style.display='none';
   }
 
   Updatedbconnection(){
-    document.getElementById("filters").style.display='none';
+  //     document.getElementById("filters").style.display='none;
     document.getElementById("createdbconnection").style.display='none';
     document.getElementById("Updatedbconnection").style.display='block';
   }
@@ -312,7 +312,7 @@ else
 
 updatedbdata()
   {    
-    document.getElementById("filters").style.display='none';
+  //     document.getElementById("filters").style.display='none;
     document.getElementById('Updatedbconnection').style.display='block';
     let data:any;
     for(data of this.dbconnections)
@@ -342,7 +342,7 @@ updatedbdata()
 
   closedbconnection()
   {     
-    document.getElementById("filters").style.display='block';
+  //     document.getElementById("filters").style.display='block';
     document.getElementById('createdbconnection').style.display='none';
     document.getElementById('Updatedbconnection').style.display='none';
     this.resetDBForm();

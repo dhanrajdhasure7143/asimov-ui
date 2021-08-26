@@ -66,21 +66,34 @@ background-color:#ccd9ff;
 }
 
 .rpa-control{
-  width:100% !important;
+  /* width:100% !important;
   border-top:none !important;
   border-right: none !important;
-  border-left: none !important;
-
+  border-left: none !important; */
 }
 
 .rpa-control:focus{
-
-  width:100% !important;
+  /* width:100% !important;
   border-top:none !important;
   border-right: none !important;
-  border-left: none !important;
+  border-left: none !important; */
 }
 button:disabled{
   background-color: white !important;
   color: lightgray !important;
 }
+.scheduletimer-loadicon span {
+  float: right;
+  margin-top: 6px;
+}
+.RPA-scheduletimer-footer {
+  margin-top: 15px;
+  float: right;
+}
+.RPA-scheduletimer input[type="date"] {
+  background-image: url('../../../../assets/images/RPA/icon_latest/calendar.svg');
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+

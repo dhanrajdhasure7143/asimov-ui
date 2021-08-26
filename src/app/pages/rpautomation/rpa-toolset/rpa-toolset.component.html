@@ -8,10 +8,10 @@
       <div id="search">
         <div class="toolset-mainheader" *ngIf="true" >
           <div class="actionsheaderdiv">
-            <span class="module-sub-header-title pull-left">
+            <span class="module-sub-header-title">
               <img src="../../../../assets/images/RPA/icon_latest/menu-line.svg" class="testplus" />Toolset & Actions
             </span>
-            <button type="button" class="close pull-right" (click)="sidenavbutton=false" aria-label="Close">
+            <button type="button" class="close toolset-close" (click)="sidenavbutton=false" aria-label="Close">
                 <span aria-hidden="true"><img src="../../../../assets/images/RPA/icon_latest/close.svg"></span>
             </button>
           </div>
@@ -52,10 +52,10 @@
                   
                   </mat-expansion-panel-header>
                   <div *ngFor="let taskdata  of (node | task) ">
-                    <div class="" [dndDraggable]="taskdata">
-                        <span class="taskname ">
+                    <div class="toolset-con" [dndDraggable]="taskdata">
+                        <span class="taskname">
                           <img [src]="taskdata.path" class="con-img" /> 
-                        {{taskdata.selectedNodeTask}}
+                        <span class="con-text">{{taskdata.selectedNodeTask}}</span>
                       </span>
                         <br>
                     </div>

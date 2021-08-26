@@ -28,9 +28,11 @@
 }*/
 
 ::ng-deep .tabs .mat-tab-label{
-  height :31px !important;
-  padding: 0 6px !important;
+  height :36px !important;
+  padding: 0 8px !important;
   min-width: 10px !important;
+  display: flex;
+  align-items: center;
 }
 
 ::ng-deep .tabs .mat-ink-bar{
