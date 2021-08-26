@@ -188,6 +188,13 @@ Pi_header_functions:Subscription;
     let res_data
     this.Pi_header_functions=this.dt.pi_headerChanges.subscribe(res=>{res_data=res
       console.log(res);
+      if(res){
+        let element=document.getElementById("tipsy_div");
+        if(element){
+          element.style.display = "none";
+          element.style.visibility = "hidden";
+        }
+      }
       if(res_data=='svg'){
         this.downloadSvg();
       }else if(res_data=='png'){
@@ -262,6 +269,11 @@ Pi_header_functions:Subscription;
     this.isplay=false;
     this.dt.pi_buttonValues({"isPlaybtn":false,"isTimefeed_btn":false});
     this.dt.piHeaderValues(null);
+      let element=document.getElementById("tipsy_div");
+      if(element){
+        element.style.display = "none";
+        element.style.visibility = "hidden";
+      }
     this.isNodata=true;
     let self = this;
     this.route.queryParams.subscribe(params => {
@@ -939,6 +951,11 @@ Pi_header_functions:Subscription;
 
   spinnermetrics(){
     this.isedgespinner= !this.isedgespinner;
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
   }
 
   generateBpmn() {      //generate bpmn from process graph
