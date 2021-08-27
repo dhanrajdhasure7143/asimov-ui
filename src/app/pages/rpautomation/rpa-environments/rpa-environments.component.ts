@@ -487,18 +487,19 @@ import { NgxSpinnerService } from "ngx-spinner";
   deploybotenvironment()
   {
     const selectedEnvironments = this.environments.filter(product => product.checked).map(p => p.environmentId);
-    this.spinner.show();
+    
     if(selectedEnvironments.length!=0)
     {
+      this.spinner.show();
       this.api.deployenvironment(selectedEnvironments).subscribe( res =>{ 
         let data:any=res
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
-          title: data[0].status,
-          showConfirmButton: false,
-          timer: 2000
-        })
+        console.log(data)
+        if(data[0].errorMessage==undefined){
+          Swal.fire("Success",data[0].status,"success")
+
+        }else{
+          Swal.fire("Error",data[0].errorMessage,"error")
+        }
         this.removeallchecks();
         this.getallData(); 
         this.checktoupdate();

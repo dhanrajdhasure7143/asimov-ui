@@ -148,14 +148,14 @@
                         <a class="text-primary text-center clickable" *ngIf="element.sourceType=='BluePrism'" matTooltip="View Logs" (click)="getBluePrismlogs(element.botName)">View</a>
                       </td>
                   </ng-container>
-                  <ng-container matColumnDef="Smoke_Test">
+                  <!-- <ng-container matColumnDef="Smoke_Test">
                     <th mat-header-cell *matHeaderCellDef >Smoke Test</th>
                     <td mat-cell *matCellDef="let element">
                       <button class="btn btn-xs btn-primary" (click)="runsmoketest(element.botId)">
                         Run Test
                       </button>
                     </td>
-                </ng-container>
+                </ng-container> -->
                   <ng-container matColumnDef="Loading">
                       <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
                           Loading
