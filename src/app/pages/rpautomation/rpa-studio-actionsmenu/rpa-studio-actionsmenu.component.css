@@ -330,3 +330,6 @@ ul#versions li {
 ul#versions li:hover {
   background: rgba(0,0,0,.04);
 }
+.caret {
+  color: #607088;
+}

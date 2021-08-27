@@ -1,13 +1,9 @@
 
-<div class="container-fluid mx-3" *ngIf="this.isButtonVisible || enableEnvironment">
+<div class="rpa-content-div mx-3" *ngIf="this.isButtonVisible || enableEnvironment">
 
-    <div class="rpa-env-search">
-        <mat-form-field class="rpa-mat-form-field-search">
-            <mat-label>Search</mat-label>
-            <mat-icon matSuffix *ngIf="!isSearch" style="font-size: 1.2em">search</mat-icon>
-            <input class="toolbar-search" *ngIf="!isSearch" matInput (keyup)="applyFilter($event.target.value)">
-        </mat-form-field>
-
+    <div class="rpa-env-search environment-search">            
+            <input class="form-control toolbar-search" placeholder="Search" *ngIf="!isSearch" (keyup)="applyFilter($event.target.value)">
+            <img src="../../../../assets/images/search.svg" matSuffix *ngIf="!isSearch" class="testplus1">
     </div>
     <div class="env-data-tool">
         <div class="env-btn">
@@ -248,7 +244,7 @@
 <div id="createenvironment" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="close()">&times;</span>
+            <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>Create Environment</h4>
         </div>
         <div class="rpa-modal-body">
@@ -375,7 +371,7 @@ placeholder="Enter Environment Type" >-->
 <div id="update-popup" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="close()">&times;</span>
+            <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>Modify Environment</h4>
         </div>
         <div class="rpa-modal-body" *ngIf="updateflag==true">
