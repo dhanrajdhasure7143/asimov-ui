@@ -8,43 +8,43 @@
         <div class="env-data-tool environment-tools">
             <div class="env-btn environment-btntool">
                 <button class="tsttooltipbtn" value="Create" title="Create Environment" id="addenvbtn" (click)="create()">
-                    <img src='../../../../assets/images/RPA/icon_latest/pluse-blue.svg'> 
+                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'> 
                     <span class="testtooltip">New</span>
                 </button>
             </div>
             <div *ngIf="deleteflag==true" class="env-btn environment-btntool">
                 <button class="tsttooltipbtn" title="Delete Environment tsttooltipbtn" value="Delete" id="deleteenvbtn" (click)="deleteEnvironments()">
-                    <img src='../../../../assets/images/RPA/icon_latest/delete.svg'> 
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'> 
                     <span class="testtooltip">Delete</span>      
                 </button>
             </div>
             <div *ngIf="deleteflag==false" class="env-btn environment-btntool">
                 <button class="tsttooltipbtn" data-toggle="tooltip" data-placement="top" id="deleteenvbtn" title="Delete Environment" disabled>
-                    <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg'> 
                     <span class="testtooltip">Delete</span>
                 </button>
             </div>
             <div *ngIf="updateflag==true" class="env-btn environment-btntool">
                 <button class="tsttooltipbtn" id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Environment" (click)="updatedata()">    
-                    <img src='../../../../assets/images/RPA/icon_latest/edit.svg'> 
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'> 
                     <span class="testtooltip">Modify</span>        
                 </button>
             </div>
             <div *ngIf="updateflag==false" class="env-btn environment-btntool">
                 <button class="tsttooltipbtn" data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Modify Environment" disabled>       
-                    <img src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'>        
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>        
                     <span class="testtooltip">Modify</span>      
                 </button>
             </div>
             <div *ngIf="deleteflag==true" class="env-btn environment-btntool">
                 <button class="tsttooltipbtn" data-toggle="tooltip" data-placement="top" id="deleteenvbtn" (click)="deploybotenvironment()" title="Deploy Bot Agent"> 
-                    <img src='../../../../assets/images/RPA/icon_latest/Deploy.svg'> 
+                    <img src='../../../../assets/images/RPA/icon_latest/deploy-blue.svg'> 
                     <span class="testtooltip">Deploy</span>
                 </button>
             </div>
             <div *ngIf="deleteflag==false" class="env-btn environment-btntool">
                 <button class="tsttooltipbtn" data-toggle="tooltip" id="deployenvbtn" data-placement="top" [disabled]="!(deleteflag==true)" title="Deploy Bot Agent" disabled> 
-                    <img src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
+                    <img src='../../../../assets/images/RPA/icon_latest/deploy-dis.svg'> 
                     <span class="testtooltip">Deploy</span>
                 </button>
             </div>
