@@ -425,3 +425,7 @@ mat-paginator button:disabled{
   border-radius: 3px;
   padding: 0px 10px;
 }
+
+.environment-tablegrid .mat-sort-header-button{
+  font-size: 14px !important;
+}

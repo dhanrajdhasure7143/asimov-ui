@@ -47,15 +47,16 @@
     background : none;
   }
 
-  .env-btn > button > img{
+  /* .env-btn > button > img{
     color:black !important;
     width:25px;
     background-color: white !important; 
-  }
+  } */
 
   .mat-paginator{
-    padding-right:25px !important;
+    /* padding-right:25px !important; */
   }
+  
 
   .rpa-modal-content{
     padding-bottom:25px !important;
@@ -136,4 +137,58 @@ input[type="text"]:not(.mat-input-element), input[type="password"] {
   position: absolute;
   top: 9px;
   right: 10px;
+}
+.environment-tools {
+  padding: 0px !important;
+  display: flex;
+}
+.environment-btntool {
+  position: relative;
+  padding: 3px 6px;
+  margin: 0px !important;
+}
+.environment-btntool img {
+  width: 16px;
+  height: 16px;
+}
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
+}
+span.testtooltip {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
+}
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top: -5px;
+  background: #001c47;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.environment-search-tools {
+  padding-top: 10px;
+}
+.environment-tablegrid {
+  width: 100%;
+  overflow-x: scroll;
+  padding-top: 20px;
+}
+
+.environment-tablegrid table td span{
+  font-size: 13px !important;
 }

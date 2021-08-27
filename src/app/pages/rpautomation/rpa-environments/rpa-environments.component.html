@@ -1,93 +1,59 @@
 
 <div class="rpa-content-div mx-3" *ngIf="this.isButtonVisible || enableEnvironment">
-
-    <div class="rpa-env-search environment-search">            
+    <div class="row environment-search-tools">
+        <div class="rpa-env-search environment-search">            
             <input class="form-control toolbar-search" placeholder="Search" *ngIf="!isSearch" (keyup)="applyFilter($event.target.value)">
             <img src="../../../../assets/images/search.svg" matSuffix *ngIf="!isSearch" class="testplus1">
-    </div>
-    <div class="env-data-tool">
-        <div class="env-btn">
-            <button value="Create" title="Create Environment" id="addenvbtn" (click)="create()">
-        <img  src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
-        <div>New</div>
-      </button>
         </div>
-
-        <div *ngIf="deleteflag==true" class="env-btn">
-
-            <button title="Delete Environment" value="Delete" id="deleteenvbtn" (click)="deleteEnvironments()">
-        <img   src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-        <div>Delete</div>
-      
-      </button>
-
-        </div>
-
-        <div *ngIf="deleteflag==false" class="env-btn">
-
-            <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn" title="Delete Environment" disabled>
-
-        <img   src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-        <div>Delete</div>
-      </button>
-
-        </div>
-
-        <div *ngIf="updateflag==true" class="env-btn">
-
-            <button id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Environment" (click)="updatedata()">
-    
-        <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
-        <div>Modify</div>
-        
-      </button>
-
-
-        </div>
-
-
-        <div *ngIf="updateflag==false" class="env-btn">
-
-
-            <button data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Modify Environment" disabled>
-        
-        
-        <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
-        
-        <div>Modify</div>
-      
-      </button>
-
-
-        </div>
-
-        <div *ngIf="deleteflag==true" class="env-btn">
-
-
-            <button data-toggle="tooltip" data-placement="top" id="deleteenvbtn" (click)="deploybotenvironment()" title="Deploy Bot Agent">
-  
-          <img   src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
-          <div>Deploy</div>
-        </button>
-
-        </div>
-
-        <div *ngIf="deleteflag==false" class="env-btn">
-
-
-
-            <button data-toggle="tooltip" id="deployenvbtn" data-placement="top" [disabled]="!(deleteflag==true)" title="Deploy Bot Agent" disabled> 
-          <img   src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
-          <div>Deploy</div>
-        </button>
-
-
-        </div>
+        <div class="env-data-tool environment-tools">
+            <div class="env-btn environment-btntool">
+                <button class="tsttooltipbtn" value="Create" title="Create Environment" id="addenvbtn" (click)="create()">
+                    <img src='../../../../assets/images/RPA/icon_latest/pluse-blue.svg'> 
+                    <span class="testtooltip">New</span>
+                </button>
+            </div>
+            <div *ngIf="deleteflag==true" class="env-btn environment-btntool">
+                <button class="tsttooltipbtn" title="Delete Environment tsttooltipbtn" value="Delete" id="deleteenvbtn" (click)="deleteEnvironments()">
+                    <img src='../../../../assets/images/RPA/icon_latest/delete.svg'> 
+                    <span class="testtooltip">Delete</span>      
+                </button>
+            </div>
+            <div *ngIf="deleteflag==false" class="env-btn environment-btntool">
+                <button class="tsttooltipbtn" data-toggle="tooltip" data-placement="top" id="deleteenvbtn" title="Delete Environment" disabled>
+                    <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
+                    <span class="testtooltip">Delete</span>
+                </button>
+            </div>
+            <div *ngIf="updateflag==true" class="env-btn environment-btntool">
+                <button class="tsttooltipbtn" id="updateenvbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Environment" (click)="updatedata()">    
+                    <img src='../../../../assets/images/RPA/icon_latest/edit.svg'> 
+                    <span class="testtooltip">Modify</span>        
+                </button>
+            </div>
+            <div *ngIf="updateflag==false" class="env-btn environment-btntool">
+                <button class="tsttooltipbtn" data-toggle="tooltip" id="updateenvbtn" data-placement="top" title="Modify Environment" disabled>       
+                    <img src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'>        
+                    <span class="testtooltip">Modify</span>      
+                </button>
+            </div>
+            <div *ngIf="deleteflag==true" class="env-btn environment-btntool">
+                <button class="tsttooltipbtn" data-toggle="tooltip" data-placement="top" id="deleteenvbtn" (click)="deploybotenvironment()" title="Deploy Bot Agent"> 
+                    <img src='../../../../assets/images/RPA/icon_latest/Deploy.svg'> 
+                    <span class="testtooltip">Deploy</span>
+                </button>
+            </div>
+            <div *ngIf="deleteflag==false" class="env-btn environment-btntool">
+                <button class="tsttooltipbtn" data-toggle="tooltip" id="deployenvbtn" data-placement="top" [disabled]="!(deleteflag==true)" title="Deploy Bot Agent" disabled> 
+                    <img src='..\\assets\\images\\RPA\\deploy_icon.svg'> 
+                    <span class="testtooltip">Deploy</span>
+                </button>
+            </div>
 
 
         <!-- <div class="env-search">
       <input type="text" class="form-control" placeholder="Search Here" [(ngModel)]="term">
     </div>-->
+    </div>
     </div>
     <!--
     <table datatable [dtTrigger]="dtTrigger" id="listofenv" [dtOptions]="dtOptions" class="table rpa-table table-striped  table-sm row-border hover env-table" >
@@ -151,8 +117,9 @@
 
 
     <!--foms  -->
-    <div style="width:100%;overflow-x: scroll;">
-    <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="listofenv">
+    <div class="col-md-12 p-0">
+        <div class="environment-tablegrid">
+            <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class="RPA table" id="listofenv">
 
         <ng-container matColumnDef="check">
             <th mat-header-cell *matHeaderCellDef mat-sort-header><input [disabled]="checkeddisabled" type="checkbox" id="checkall" [checked]="checkflag" (change)="checkAllCheckBox($event)"></th>
@@ -224,10 +191,10 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-
-</div>
-    <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+            </table>
+        </div>
+        <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> 
+    </div>    
 </div>
 
 <!-- <div class="container">
