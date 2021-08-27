@@ -2263,7 +2263,7 @@ button.btn.btn-primary:first-child {
   margin-right: 0px !important;
 }
 
-.projecttable.table th, .PI.table th {
+.projecttable.table th, .PI.table th, .RPA.table th {
   background-color: #e8f7fd !important;
   vertical-align: middle !important;
   font-size: 14px !important;
@@ -2273,7 +2273,7 @@ button.btn.btn-primary:first-child {
   color: #00a0e3 !important;
 }
 
-.projects-table-body td, .PI.table tbody td {
+.projects-table-body td, .PI.table tbody td, .RPA.table tbody td {
   padding: 5px 10px !important;
   vertical-align: middle !important;
   font-size: 13px !important;
