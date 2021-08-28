@@ -1,8 +1,9 @@
 <div class="module-body bpms-canvas-body">
 <div class="row header_addon bpm-notation-fields">
+        <!-- *ngIf="!isfromApprover" -->
     <div class="col-md-12 p-0" id="bpmnNotationList">
             <label class="label-control">Notations</label>
-            <select *ngIf="!isfromApprover" [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
+            <select [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
                 <option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
                     {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</option>
             </select>

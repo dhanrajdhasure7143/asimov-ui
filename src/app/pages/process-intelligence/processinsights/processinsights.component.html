@@ -104,25 +104,28 @@
         <!-- </div> -->
         <!-- </div> -->
         <!-- <div class="row"> -->
-        <div class="col-md-12 p-0">            
+        <div class="col-md-12 p-0">  
+                <div class="col-sm-12 p-0 input-fields">
+                        <div class="col-sm-4 amountinputs" id="humancost">
+                            <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
+                            <i (click)="editInput()"  class="fas fa-pen"></i>
+                        </div>
+                        <div class="col-sm-4 amountinputs" id="BotCost">
+                            <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
+                            <i (click)="editInput1()"  class="fas fa-pen"></i>
+                        </div>
+                        <div class="col-sm-4 amountinputs" id="totalcases">
+                            <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
+                        </div>
+                    </div>
             <div class="col-sm-8 box_shadw PI-insigntscost pl-0">
                 <!-- <div id="costprojection" class="lineChart box_shadw"></div> -->
-                <div class="col-sm-12 p-0 input-fields">
-                    <div class="col-sm-4 amountinputs" id="humancost">
-                        <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
-                        <i (click)="editInput()"  class="fas fa-pen"></i>
-                    </div>
-                    <div class="col-sm-4 amountinputs" id="BotCost">
-                        <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
-                        <i (click)="editInput1()"  class="fas fa-pen"></i>
-                    </div>
-                    <div class="col-sm-4 amountinputs" id="totalcases">
-                        <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
-                    </div>    
-                </div>
+                
                 <div class="l_title1"><p>Human Cost vs Bot Cost</p></div>
                 <div id="costprojection" class="lineChart hvsbot">
-                <ngx-charts-line-chart
+
+                        <div id="linechart1"></div>
+                    <!-- <ngx-charts-line-chart
                         [view]="view"
                         [scheme]="colorScheme"
                         [legend]="legend"
@@ -140,7 +143,7 @@
                         [maxXAxisTickLength]="10"
                         [showRefLabels]="false"
                         >
-                </ngx-charts-line-chart>
+                </ngx-charts-line-chart> -->
                 </div>
             </div>
             <div class="col-sm-4 pr-0">
