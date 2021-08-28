@@ -303,14 +303,18 @@ var count1
           var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
         if(this.model2[i].text.includes('Days')){
           let v1=this.model2[i].text.split(' ')[0];
-          let v2=Number(v1)/7;
           let v3
-          if(String(v2).indexOf('.') != -1){
-            let value=v2.toString().split('.')[0]+'.'+v2.toString().split('.')[1].slice(0,2)
-              v3=value+" Weeks"
-            }else{
-              v3=v2+" Weeks"
-            }
+          if(v1>=7){
+            let v2=Number(v1)/7;
+            if(String(v2).indexOf('.') != -1){
+              let value=v2.toString().split('.')[0]+'.'+v2.toString().split('.')[1].slice(0,2)
+                v3=value+" Weeks"
+              }else{
+                v3=v2+" Weeks"
+              }
+          }else{
+            v3=v1+" Days"
+          }
           this.model2[i].text=v3
         }
         
@@ -933,7 +937,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
         var itemName=item.toLowerCase();
         var _MATCHED_NODE_Array=[]
       
-      d3.selectAll(".node").style("opacity","0.1");
+      d3.selectAll(".node").style("opacity","0.6");
             d3.selectAll(".node").style("pointer-events","none");
             d3.selectAll(".node").selectAll("g text").style('font-size','14')
             

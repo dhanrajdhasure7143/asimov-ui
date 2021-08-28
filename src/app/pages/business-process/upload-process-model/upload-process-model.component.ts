@@ -503,6 +503,10 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.pivalues=res;
         console.log("pigraph",res)
         let selected_xml = this.pivalues['data'];
+        this.push_Obj={"rejectedOrApproved":'',"isfromApprover":this.isfromApprover,
+          "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.pivalues.updatedTime,
+          "isFromcreateScreen":false,'process_name':this.pivalues.piName,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+            this.dt.bpsNotationaScreenValues(this.push_Obj);
         if(this.autosavedDiagramVersion[0] && this.autosavedDiagramVersion[0]["bpmnProcessMeta"]){
           selected_xml = this.autosavedDiagramVersion[0]["bpmnProcessMeta"];
           this.updated_date_time = this.autosavedDiagramVersion[0]["modifiedTimestamp"];

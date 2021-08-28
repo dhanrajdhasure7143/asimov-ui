@@ -1124,3 +1124,9 @@ img.hover-img {
 .variant_parcent div  {
   font-size: 14px;
 }
+.piechart_graph svg{
+  margin-top: -9px;
+}
+#linechart1 tspan {
+  /* font-size: 12px !important; */
+}
