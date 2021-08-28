@@ -1,46 +1,137 @@
-<div class="container-fluid mx-3" *ngIf="this.isButtonVisible || enableDbconnection">
-    <div class="rpa-env-search">
-        <mat-form-field class="rpa-mat-form-field-search">
+<div class="rpa-content-div mx-3" *ngIf="this.isButtonVisible || enableDbconnection">
+    <div class="row credential-search-tools">
+        <div class="rpa-env-search credential-search">            
+            <input class="form-control toolbar-search" placeholder="Search" *ngIf="!isSearch" (keyup)="applyFilter1($event.target.value)">
+            <img src="../../../../assets/images/search.svg" matSuffix *ngIf="!isSearch" class="testplus1">
+        </div>
+        <!-- <mat-form-field class="rpa-mat-form-field-search">
             <mat-label>Search</mat-label>
             <mat-icon matSuffix *ngIf="!isSearch" style="font-size: 1.2em">search</mat-icon>
             <input class="toolbar-search" *ngIf="!isSearch" matInput (keyup)="applyFilter1($event.target.value)">
-        </mat-form-field>
+        </mat-form-field> -->
+        <div class="env-data-tool credential-tools">
+            <div class="env-btn credential-btntool">
+                <button value="Create" title="Create Database Connection" id="adddbbtn" (click)="createdbconnection()">
+                    <img src='../../../../assets/images/RPA/icon_latest/new-blue.svg'>
+                    <span class="testtooltip">New</span>
+                </button>
+            </div>
+            <div *ngIf="DBupdateflag == true" class="env-btn credential-btntool">
+                <button id="updatedbbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Database Connection" (click)="updatedbdata()">        
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-blue.svg'> 
+            <span class="testtooltip">Modify</span>           
+                </button>    
+            </div>   
+            <div *ngIf="DBupdateflag == false" class="env-btn credential-btntool">    
+                <button data-toggle="tooltip" id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>            
+                    <img src='../../../../assets/images/RPA/icon_latest/edit-dis.svg'>      
+                 <span class="testtooltip">Modify</span>        
+                 </button>   
+            </div>
+            <div *ngIf="DBdeleteflag==true" class="env-btn credential-btntool">
+                <button title="Delete Database Connection" value="Delete" id="deletedbbtn" (click)="deletedbconnection()">
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-blue.svg'> 
+                    <span class="testtooltip">Delete</span>
+                    </button>
+            </div>       
+            <div *ngIf="DBdeleteflag==false" class="env-btn credential-btntool">
+                <button data-toggle="tooltip" data-placement="top" id="deletedbbtn" title="Delete Database Connection" disabled>
+                    <img src='../../../../assets/images/RPA/icon_latest/delete-dis.svg'> 
+                <span class="testtooltip">Delete</span>
+                </button>
+            </div>
+        </div>
 
     </div>
-    <div class="env-data-tool">
-        <div class="env-btn">
-            <button value="Create" title="Create Database Connection" id="adddbbtn" (click)="createdbconnection()">
-        <img  src='..\\assets\\images\\RPA\\rpa-env-add-btn.svg'> 
-        <div>New</div>
-      </button>
+    <div class="col-md-12 p-0">
+        <div class="credential-tablegrid">
+            <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class="RPA table"  id="listofdb">
+                
+                <ng-container matColumnDef="check">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        <input [disabled]="DBcheckeddisabled" type="checkbox" id="DBcheckall" [checked]="DBcheckflag" (change)="DBcheckAllCheckBox($event)">
+                    </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        <input type="checkbox" [checked]="element.checked" (change)="DBcheckEnableDisableBtn(element.connectionId, $event)"> 
+                    </td>
+                </ng-container>
+
+                <ng-container matColumnDef="connectiontName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Connection Name</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <span *ngIf="element.connectiontName!=null">{{element.connectiontName}}</span> 
+                        <span *ngIf="element.connectiontName==''">-</span> 
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="password">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Password</th>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.password!=null">*******</span> <span *ngIf="element.password==''">-</span> </td>
+                </ng-container>
+                <ng-container matColumnDef="dataBaseType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Type</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <span *ngIf="element.dataBaseType!=null">{{element.dataBaseType}}</span> 
+                        <span *ngIf="element.dataBaseType==''">-</span> 
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="databasename">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Database Name</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <span *ngIf="element.databasename!=null">{{element.databasename}}</span> 
+                        <span *ngIf="element.databasename==''">-</span> 
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="hostAddress">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>IP Address/Host</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <span *ngIf="element.hostAddress!=null">{{element.hostAddress}}</span> 
+                        <span *ngIf="element.hostAddress==''">-</span> </td>
+                </ng-container>
+                <ng-container matColumnDef="portNumber">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Port</th>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.portNumber!=null">{{element.portNumber}}</span>
+                         <span *ngIf="element.portNumber==''">-</span> </td>
+                </ng-container>
+                <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>User Name</th>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.username!=null">{{element.username}}</span>
+                         <span *ngIf="element.username==''">-</span></td>
+                </ng-container>
+                <ng-container matColumnDef="schemaName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Schema</th>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.schemaName!=null">{{element.schemaName}}</span>
+                         <span *ngIf="element.schemaName==''">-</span></td>
+                </ng-container>
+                <ng-container matColumnDef="createdBy">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+                    <td mat-cell *matCellDef="let element"> 
+                        <span *ngIf="element.createdBy!=null">{{element.createdBy}}</span> 
+                        <span *ngIf="element.createdBy==''">-</span> 
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="activeStatus">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.activeStatus == 7"><span><img class="rpa-image1" src="/assets/images/RPA/GreenCricle.png"></span>&nbsp;Active</span>
+                        <span *ngIf="element.activeStatus == 8"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Inactive</span>
+                        <span *ngIf="element.activeStatus == 0"><span><img class="rpa-image1" src="/assets/images/RPA/red-circle.png"></span>&nbsp;Undefined</span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="createdTimeStamp">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</th>
+                    <td mat-cell *matCellDef="let element"> <span *ngIf="element.createdTimeStamp!=null">{{element.createdTimeStamp | date}} {{element.createdTimeStamp.split("T")[1].split(".")[0]}}</span> <span *ngIf="element.createdTimeStamp==''">-</span> </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+                <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            </table>
+        
+
         </div>
-        <div *ngIf="DBupdateflag == true" class="env-btn">
-            <button id="updatedbbtn" data-toggle="tooltip" data-placement="bottom" title="Modify Database Connection" (click)="updatedbdata()">        
-        <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'> 
-        <div>Modify</div>            
-            </button>    
-        </div>   
-        <div *ngIf="DBupdateflag == false" class="env-btn">    
-            <button data-toggle="tooltip" id="updatedbbtn" data-placement="top" title="Modify Database Connection" disabled>            
-             <img   src='..\\assets\\images\\RPA\\rpa-env-edit-btn.svg'>     
-             <div>Modify</div>          
-             </button>   
-        </div>
-        <div *ngIf="DBdeleteflag==true" class="env-btn">
-            <button title="Delete Database Connection" value="Delete" id="deletedbbtn" (click)="deletedbconnection()">
-                <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-                <div>Delete</div>
-                </button>
-        </div>       
-        <div *ngIf="DBdeleteflag==false" class="env-btn">
-            <button data-toggle="tooltip" data-placement="top" id="deletedbbtn" title="Delete Database Connection" disabled>
-            <img src='..\\assets\\images\\RPA\\rpa-env-delete-btn.svg'> 
-            <div>Delete</div>
-            </button>
-        </div>
+        <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> 
+
     </div>
     
-    <div style="width:100%;overflow-x: scroll;">
+    <!-- <div style="width:100%;overflow-x: scroll;">
     
             <table mat-table #sort2="matSort" [dataSource]="dataSource2" matSort class=" table"  id="listofdb">
                 
@@ -124,7 +215,7 @@
         
         </div>
             <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
-    </div>
+    </div> -->
 
 
     <div id="createdbconnection" class="rpa-modal">
@@ -133,102 +224,112 @@
                 <span class="rpa-modal-close" (click)="closedbconnection()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
                 <h4>Create Database Connection</h4>
             </div>
-            <div class="container">
-                <form [formGroup]="insertdbForm" (ngSubmit)="savedata()">
-                    <div class="row">
-                        <div class="col-md-3 formelement">
-                            <label for="connectiontName">Connection Name<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="connectiontName" #connectiontName value="" placeholder="Enter Connection Name">
-                            <span *ngIf="(insertdbForm.get('connectiontName').invalid && insertdbForm.get('connectiontName').touched) && !insertdbForm.controls['connectiontName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Connection Name Required*</span>
-                            <div *ngIf="insertdbForm.controls['connectiontName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>
-                        </div>
+            <div class="modal-body">
+                <div class="container m-contanier form-body">
+                    <form [formGroup]="insertdbForm" (ngSubmit)="savedata()">
                         
-                        <div class="col-md-3 formelement">
-                            <label for="dataBaseType">Database Type<span style="color:red">*</span></label>
-                            <select class="form-control" formControlName="dataBaseType">
-                                <option value="" [selected]="true">--Select Database Type--</option>
-                                <option value="PostgreSQL">PostgreSQL</option>                      
-                              </select>
-                            <span *ngIf="insertdbForm.get('dataBaseType').invalid && insertdbForm.get('dataBaseType').touched" style="color:red" class="fa fa-info-circle errspan"> Database Type Required*</span>
-                        </div>
-
-                        <div class="col-md-3 formelement">
-                            <label for="databasename">Database Name<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="databasename" #hostAddress value="" placeholder="Database Name">
-                            <span *ngIf="(insertdbForm.get('databasename').invalid && insertdbForm.get('databasename').touched) && !insertdbForm.controls['databasename'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Database Name Required*</span>
-                            <div *ngIf="insertdbForm.controls['databasename'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="connectiontName">Connection Name<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="connectiontName" #connectiontName value="" placeholder="Enter Connection Name">
+                                <span *ngIf="(insertdbForm.get('connectiontName').invalid && insertdbForm.get('connectiontName').touched) && !insertdbForm.controls['connectiontName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Connection Name Required*</span>
+                                <div *ngIf="insertdbForm.controls['connectiontName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 formelement">
-                            <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address/Host">
-                            <span *ngIf="(insertdbForm.get('hostAddress').invalid && insertdbForm.get('hostAddress').touched) && !insertdbForm.controls['hostAddress'].hasError('maxlength') && !insertdbForm.controls['hostAddress'].hasError('pattern')" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
-
-                            <!--<div *ngIf="insertdbForm.controls['hostAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>-->
-
-                            <div *ngIf="(insertdbForm.controls['hostAddress'].hasError('pattern') && !insertdbForm.controls['hostAddress'].hasError('maxlength')) && insertdbForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">
-                                Invalid IP Address format
+                            
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="dataBaseType">Database Type<span style="color:red">*</span></label>
+                                <select class="form-control" formControlName="dataBaseType">
+                                    <option value="" [selected]="true">--Select Database Type--</option>
+                                    <option value="PostgreSQL">PostgreSQL</option>                      
+                                  </select>
+                                <span *ngIf="insertdbForm.get('dataBaseType').invalid && insertdbForm.get('dataBaseType').touched" style="color:red" class="fa fa-info-circle errspan"> Database Type Required*</span>
                             </div>
-                            <div *ngIf="(insertdbForm.controls['hostAddress'].hasError('pattern') && insertdbForm.controls['hostAddress'].hasError('maxlength'))" style="color:red" class="fa fa-info-circle errspan">
-                                Invalid IP Address format
+    
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="databasename">Database Name<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="databasename" #hostAddress value="" placeholder="Database Name">
+                                <span *ngIf="(insertdbForm.get('databasename').invalid && insertdbForm.get('databasename').touched) && !insertdbForm.controls['databasename'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Database Name Required*</span>
+                                <div *ngIf="insertdbForm.controls['databasename'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>
                             </div>
-                        </div>                  
-                      
-                    </div>
-                    <div class="row">  
-                        <div class="col-md-3 formelement">
-                            <label for="portNumber">Port<span style="color:red">*</span></label>
-                            <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">    
-                            <span *ngIf="(insertdbForm.get('portNumber').invalid && insertdbForm.get('portNumber').touched) && !insertdbForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
-                            <div *ngIf="insertdbForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 6 characters
-                            </div>
-                        </div>  
-                        <div class="col-md-3 formelement">
-                            <label for="username">Username<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
-                            <span *ngIf="(insertdbForm.get('username').invalid && insertdbForm.get('username').touched) && !insertdbForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
-                            <div *ngIf="insertdbForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>     
-                        </div>                    
-                        <div class="col-md-3 formelement">
-                            <label for="password">Password<span style="color:red">*</span></label>
-                            <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
-                            <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                            <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-
-                            <span *ngIf="(insertdbForm.get('password').invalid && insertdbForm.get('password').touched) && !insertdbForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
-                            <div *ngIf="insertdbForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address/Host">
+                                <span *ngIf="(insertdbForm.get('hostAddress').invalid && insertdbForm.get('hostAddress').touched) && !insertdbForm.controls['hostAddress'].hasError('maxlength') && !insertdbForm.controls['hostAddress'].hasError('pattern')" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+    
+                                <!--<div *ngIf="insertdbForm.controls['hostAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>-->
+    
+                                <div *ngIf="(insertdbForm.controls['hostAddress'].hasError('pattern') && !insertdbForm.controls['hostAddress'].hasError('maxlength')) && insertdbForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">
+                                    Invalid IP Address format
+                                </div>
+                                <div *ngIf="(insertdbForm.controls['hostAddress'].hasError('pattern') && insertdbForm.controls['hostAddress'].hasError('maxlength'))" style="color:red" class="fa fa-info-circle errspan">
+                                    Invalid IP Address format
+                                </div>
+                            </div>                  
+                          
+                        
+                         
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="portNumber">Port<span style="color:red">*</span></label>
+                                <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">    
+                                <span *ngIf="(insertdbForm.get('portNumber').invalid && insertdbForm.get('portNumber').touched) && !insertdbForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+                                <div *ngIf="insertdbForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 6 characters
+                                </div>
                             </div>  
-                        </div>
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="username">Username<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
+                                <span *ngIf="(insertdbForm.get('username').invalid && insertdbForm.get('username').touched) && !insertdbForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+                                <div *ngIf="insertdbForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>     
+                            </div>                    
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="password">Password<span style="color:red">*</span></label>
+                                <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                                <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+                                <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+    
+                                <span *ngIf="(insertdbForm.get('password').invalid && insertdbForm.get('password').touched) && !insertdbForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+                                <div *ngIf="insertdbForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>  
+                            </div>
+                            
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="schemaName">Schema<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema">
+    
+                                <span *ngIf="(insertdbForm.get('schemaName').invalid && insertdbForm.get('schemaName').touched) && !insertdbForm.controls['schemaName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Schema Required*</span>
+                                <div *ngIf="insertdbForm.controls['schemaName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>  
+                            </div>
+                            
+                       
                         
-                        <div class="col-md-3 formelement">
-                            <label for="schemaName">Schema<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema">
+                            <div class="col-md-6 p-0 form-group">
+                                <input type="checkbox" formControlName="activeStatus"> Active
+                            </div>
+                            <div class="form-footer">
+                            
+                                <button class="btn btn-primary"[disabled]="insertdbForm.invalid || submitted" (click)="saveDBConnection()" >Save</button>
+                                <button class="btn btn-primary btn-test" [disabled]="insertdbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
+                                <button class="btn btn-default"[disabled]="insertdbForm.invalid || submitted" (click)="resetDBForm()" >Reset</button>
+                                
+                            </div>
+                   
+                        <!-- <input type="button" class="btn btn-primary" value="Save" (click)="saveDBConnection()" [disabled]="insertdbForm.invalid || submitted">
+                        <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertdbForm.invalid">
+                        <input type="button" class="btn btn-primary" value="Reset" (click)="resetDBForm()"> -->
+                    </form>
 
-                            <span *ngIf="(insertdbForm.get('schemaName').invalid && insertdbForm.get('schemaName').touched) && !insertdbForm.controls['schemaName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Schema Required*</span>
-                            <div *ngIf="insertdbForm.controls['schemaName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>  
-                        </div>
-                        
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 formelement">
-                            <input type="checkbox" formControlName="activeStatus"> Active
-                        </div>
-                    </div>
-                    <input type="button" class="btn btn-primary" value="Save" (click)="saveDBConnection()" [disabled]="insertdbForm.invalid || submitted">
-                    <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('insert')" [disabled]="insertdbForm.invalid">
-                    <input type="button" class="btn btn-primary" value="Reset" (click)="resetDBForm()">
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -239,102 +340,114 @@
                 <span class="rpa-modal-close" (click)="closedbconnection()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
                 <h4>Update Database Connection</h4>
             </div>
-            <div class="container">
-                <form [formGroup]="updatedbForm" (ngSubmit)="dbconnectionupdate()">
-                    <div class="row">
-                        <div class="col-md-3 formelement">
-                            <label for="connectiontName">Connection Name<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="connectiontName" #connectiontName value="" placeholder="Enter Connection Name">
-                            <span *ngIf="(updatedbForm.get('connectiontName').invalid && updatedbForm.get('connectiontName').touched) && !updatedbForm.controls['connectiontName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Connection Name Required*</span>
-                            <div *ngIf="updatedbForm.controls['connectiontName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
+            <div class="modal-body" *ngIf="DBupdateflag==true">
+                <div class="container m-contanier form-body">
+                    <form [formGroup]="updatedbForm" (ngSubmit)="dbconnectionupdate()">
+                        <div class="row">
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="connectiontName">Connection Name<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="connectiontName" #connectiontName value="" placeholder="Enter Connection Name">
+                                <span *ngIf="(updatedbForm.get('connectiontName').invalid && updatedbForm.get('connectiontName').touched) && !updatedbForm.controls['connectiontName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Connection Name Required*</span>
+                                <div *ngIf="updatedbForm.controls['connectiontName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="dataBaseType">Database Type<span style="color:red">*</span></label>
+                                <select class="form-control" formControlName="dataBaseType">
+                                    <option value="" [selected]="true">--Select Database Type--</option>
+                                    <option value="PostgreSQL">PostgreSQL</option>                      
+                                  </select>
+                                <span *ngIf="updatedbForm.get('dataBaseType').invalid && updatedbForm.get('dataBaseType').touched" style="color:red" class="fa fa-info-circle errspan"> Database Type Required*</span>
+                            </div>
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="databasename">Database Name<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="databasename" #hostAddress value="" placeholder="Database Name">
+                                <span *ngIf="(updatedbForm.get('databasename').invalid && updatedbForm.get('databasename').touched) && !updatedbForm.controls['databasename'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Database Name Required*</span>
+                                <div *ngIf="updatedbForm.controls['databasename'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>
+                            </div>
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address/Host">
+                                <span *ngIf="(updatedbForm.get('hostAddress').invalid && updatedbForm.get('hostAddress').touched) && !updatedbForm.controls['hostAddress'].hasError('maxlength') && !updatedbForm.controls['hostAddress'].hasError('pattern')" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+    
+                                <!--<div *ngIf="updatedbForm.controls['hostAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>-->
+    
+                                <div *ngIf="(updatedbForm.controls['hostAddress'].hasError('pattern') && !updatedbForm.controls['hostAddress'].hasError('maxlength')) && updatedbForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">
+                                    Invalid IP Address format
+                                </div>
+                                <div *ngIf="(updatedbForm.controls['hostAddress'].hasError('pattern') && updatedbForm.controls['hostAddress'].hasError('maxlength'))" style="color:red" class="fa fa-info-circle errspan">
+                                    Invalid IP Address format
+                                </div>
+                            </div>
+                                                 
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="portNumber">Port<span style="color:red">*</span></label>
+                                <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">       
+    
+                                <span *ngIf="(updatedbForm.get('portNumber').invalid && updatedbForm.get('portNumber').touched) && !updatedbForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
+                                <div *ngIf="updatedbForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 6 characters
+                                </div>
+                            </div> 
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="username">Username<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
+                                <span *ngIf="(updatedbForm.get('username').invalid && updatedbForm.get('username').touched) && !updatedbForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
+                                <div *ngIf="updatedbForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>       
+                            </div>
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="password">Password<span style="color:red">*</span></label>
+                                <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
+                                <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+                                <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
+                                <span *ngIf="(updatedbForm.get('password').invalid && updatedbForm.get('password').touched) && !updatedbForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
+                                <div *ngIf="updatedbForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>  
+                            </div>
+                            
+                            <div class="col-md-12 p-0 form-group">
+                                <label for="schemaName">Schema<span style="color:red">*</span></label>
+                                <input type="text" maxlength="51" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema">
+    
+                                <span *ngIf="(updatedbForm.get('schemaName').invalid && updatedbForm.get('schemaName').touched) && !updatedbForm.controls['schemaName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Schema Required*</span>
+                                <div *ngIf="updatedbForm.controls['schemaName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
+                                    Maximum of 50 characters
+                                </div>  
+                            </div>
+                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 p-0 form-group">
+                                <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
                             </div>
                         </div>
-                        
-                        <div class="col-md-3 formelement">
-                            <label for="dataBaseType">Database Type<span style="color:red">*</span></label>
-                            <select class="form-control" formControlName="dataBaseType">
-                                <option value="" [selected]="true">--Select Database Type--</option>
-                                <option value="PostgreSQL">PostgreSQL</option>                      
-                              </select>
-                            <span *ngIf="updatedbForm.get('dataBaseType').invalid && updatedbForm.get('dataBaseType').touched" style="color:red" class="fa fa-info-circle errspan"> Database Type Required*</span>
+                        <div class="form-footer">
+                            
+                            <button class="btn btn-primary"[disabled]="updatedbForm.invalid || submitted" (click)="dbconnectionupdate()" >Save</button>
+                            <button class="btn btn-primary btn-test" [disabled]="updatedbForm.invalid" (click)="testConnection('insert')" >Test Connection</button>
+                            <button class="btn btn-default"(click)="resetupdateDBForm()" >Reset</button>
+                            
                         </div>
-                        <div class="col-md-3 formelement">
-                            <label for="databasename">Database Name<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="databasename" #hostAddress value="" placeholder="Database Name">
-                            <span *ngIf="(updatedbForm.get('databasename').invalid && updatedbForm.get('databasename').touched) && !updatedbForm.controls['databasename'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Database Name Required*</span>
-                            <div *ngIf="updatedbForm.controls['databasename'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>
-                        </div>
-                        <div class="col-md-3 formelement">
-                            <label for="hostAddress">IP Address/Host<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="hostAddress" #hostAddress value="" placeholder="Enter IP Address/Host">
-                            <span *ngIf="(updatedbForm.get('hostAddress').invalid && updatedbForm.get('hostAddress').touched) && !updatedbForm.controls['hostAddress'].hasError('maxlength') && !updatedbForm.controls['hostAddress'].hasError('pattern')" style="color:red" class="fa fa-info-circle errspan"> IP Address/Host Required*</span>
+                        <!-- <input type="button" class="btn btn-primary" value="Save" (click)="dbconnectionupdate()" [disabled]="updatedbForm.invalid || submitted">
+                        <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')" [disabled]="updatedbForm.invalid">
+                         <input type="button" class="btn btn-primary" value="Reset" (click)="resetupdateDBForm()"> -->
+                    </form>
 
-                            <!--<div *ngIf="updatedbForm.controls['hostAddress'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>-->
+                </div>
 
-                            <div *ngIf="(updatedbForm.controls['hostAddress'].hasError('pattern') && !updatedbForm.controls['hostAddress'].hasError('maxlength')) && updatedbForm.get('hostAddress').touched" style="color:red" class="fa fa-info-circle errspan">
-                                Invalid IP Address format
-                            </div>
-                            <div *ngIf="(updatedbForm.controls['hostAddress'].hasError('pattern') && updatedbForm.controls['hostAddress'].hasError('maxlength'))" style="color:red" class="fa fa-info-circle errspan">
-                                Invalid IP Address format
-                            </div>
-                        </div>
-                                             
-                        
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 formelement">
-                            <label for="portNumber">Port<span style="color:red">*</span></label>
-                            <input type="text" maxlength="7" class="form-control" onkeypress="return (event.charCode > 47 && event.charCode < 58)" formControlName="portNumber" value="" placeholder="Enter Port">       
-
-                            <span *ngIf="(updatedbForm.get('portNumber').invalid && updatedbForm.get('portNumber').touched) && !updatedbForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Port Required*</span>
-                            <div *ngIf="updatedbForm.controls['portNumber'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 6 characters
-                            </div>
-                        </div> 
-                        <div class="col-md-3 formelement">
-                            <label for="username">Username<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control" formControlName="username" #username value="" placeholder="Enter Username">
-                            <span *ngIf="(updatedbForm.get('username').invalid && updatedbForm.get('username').touched) && !updatedbForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Username Required*</span>
-                            <div *ngIf="updatedbForm.controls['username'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>       
-                        </div>
-                        <div class="col-md-3 formelement">
-                            <label for="password">Password<span style="color:red">*</span></label>
-                            <input [type]="passwordtype1 ? 'text': 'password'" maxlength="51" class="form-control" formControlName="password" value="" placeholder="Enter Password" passwordToggle>
-                            <span *ngIf="passwordtype1==false" class="fa fa-fw fa-eye field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                            <span *ngIf="passwordtype1==true" class="fa fa-fw fa-eye-slash field-icon" (click)="passwordtype1 =!passwordtype1"></span>
-                            <span *ngIf="(updatedbForm.get('password').invalid && updatedbForm.get('password').touched) && !updatedbForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Password Required*</span>
-                            <div *ngIf="updatedbForm.controls['password'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>  
-                        </div>
-                        
-                        <div class="col-md-3 formelement">
-                            <label for="schemaName">Schema<span style="color:red">*</span></label>
-                            <input type="text" maxlength="51" class="form-control data" formControlName="schemaName" #schemaName value="" placeholder="Enter Schema">
-
-                            <span *ngIf="(updatedbForm.get('schemaName').invalid && updatedbForm.get('schemaName').touched) && !updatedbForm.controls['schemaName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan"> Schema Required*</span>
-                            <div *ngIf="updatedbForm.controls['schemaName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
-                                Maximum of 50 characters
-                            </div>  
-                        </div>
-                        
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3 formelement">
-                            <input type="checkbox" [checked]="toggle" formControlName="activeStatus"> Active
-                        </div>
-                    </div>
-                    <input type="button" class="btn btn-primary" value="Save" (click)="dbconnectionupdate()" [disabled]="updatedbForm.invalid || submitted">
-                    <input type="button" class="btn btn-primary" value="Test Connection" (click)="testConnection('update')" [disabled]="updatedbForm.invalid">
-                     <input type="button" class="btn btn-primary" value="Reset" (click)="resetupdateDBForm()">
-                </form>
             </div>
+            
         </div>
     </div>

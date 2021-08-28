@@ -12,7 +12,10 @@
     font-weight: 200; 
   }
 
-
+  .modal-body{
+    max-height: calc(100vh - 160px);
+    overflow-y: auto;
+}
   .rpa-table tbody tr td
   {
     border-top-color:#d9d9d9;
@@ -191,4 +194,7 @@ span.testtooltip:before {
 
 .environment-tablegrid table td span{
   font-size: 13px !important;
+}
+.btn-test{
+  margin-left: 10px !important;
 }
