@@ -1,5 +1,5 @@
 .divbox{
-    border: 1px solid #098de6;
+    border: 1px solid #E5E5E5;
     margin-left: -15px;
     padding: 10px 15px;
     border-radius: 4px;
@@ -7,7 +7,7 @@
     color: #081D2A;
 }
 .divbox h4 {
-  font-size: 16px;
+  font-size: 14px;
   margin-top: 0px;
   margin-bottom: 6px;
 }
@@ -19,26 +19,34 @@
 /* .boxes{
   margin-bottom: 30px;
 } */
-/* .divbox0{
-  background:  white;
-  border-radius: 10px;
-  padding: 5px 0px;
+.divbox0 label{
+color: #00A0E3
 }
-.divbox1{
-  background:  white;
-  border-radius: 10px;
-  padding: 5px 0px;
+.divbox1 label{
+  color: #27AD74;
 }
-.divbox2{
-  background:white;
-  border-radius: 10px;
-  padding: 5px 0px;
+.divbox0 span{
+color: #081D2A;
 }
-.divbox3{
-  background: white;
-  border-radius: 10px;
-  padding: 5px 0px;
-} */
+.divbox1 span{
+  color: #081D2A;
+}
+.divbox2 label{
+  color: #00A0E3;
+}
+.divbox3 label{
+  color: #B28A1A
+}
+.divbox0 img,.divbox1 img, .divbox2 img, .divbox3 img{
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  padding: 4px 0px;
+  text-align: center;
+  position: absolute;
+  right: 10px;
+  }
+
 .btm-line{
     border: 1px solid rgb(20, 20, 20);
 }
@@ -47,6 +55,7 @@
     margin-bottom: 10px;
     font-size: 18px;
     margin-top: 30px;
+    margin-left: 20px;
 }
 .table-striped>tbody>tr:nth-of-type(even){
     background-color: #ebf2d3 !important;
@@ -62,8 +71,9 @@ thead{
   font-weight: 500;
   }
   .table>tbody>tr>td{
-    font-size: 16px;
+    font-size: 14px;
     text-align: left;
+    color: #213b61;
   }
 input:disabled{
     cursor: no-drop;
@@ -103,7 +113,7 @@ input:disabled{
 .groupBtn{
   position: absolute;
   z-index: 1;
-  left: 0px;
+  right: 19px;
   list-style: none;
   padding: 0;
   font-size: 12px;
@@ -113,18 +123,31 @@ input:disabled{
   display: inline-flex;
 }
 .groupBtn button{
+  border: 1px solid #00A0E3;
   width: 80px;
   cursor: pointer;
   padding: 6px 4px;
-  background-color: #dadacf;
+  background-color: #fff;
+  font-size: 14px;
+  color: #213B61;
+}
+.event-btn{
+  
+  border-radius: 3px 0px 0px 3px;
+}
+.duration-btn{
+  border-radius: 0px 3px 3px 0px;
 }
 .groupBtn button:hover{
-  background-color: #dadacf;
+  background-color: #ECF5F9;
 }
 .groupBtn button.active{
-  background-color: #9ea29f;
-  font-weight: bold;
-  font-size: 14px;
+    background-color: #00A0E3;
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    border: 1px solid #00A0E3;
 }
 .sidenav {
     width: 0;
@@ -295,25 +318,20 @@ padding: 10px;
  /* position: relative; */
   /* top: 11px; */
   /* left: 190px; */
-  color: #333333;
+  color: #213b61;
   font-size: 18px;
-  fill: #333333;
-  text-align: center;
-  margin-top: 10px;
+  text-align: left;
+  margin-top: 15px;
+  margin-left: 20px;
+}
+.l_title p{
+  font-size: 18px !important;
 }
 .titleHB-cost{
   text-align: center;
   font-size: 18px;
   margin-top: 11px;
   color: #333333;
-}
-.l_title1{
-  position: relative;
-  top: 11px;
-  left: 280px;
-  color: #333333;
-  font-size: 18px;
-  fill: #333333;
 }
 
 /* .l_title2 {
@@ -378,8 +396,10 @@ padding: 10px;
 
 .business_heading{
   padding: 15px 0px;
-  font-size: 17px;
+  font-size: 16px;
   margin: 0px;
+  color: #213b61;
+  text-transform: capitalize;
 }
 .business_heading strong {
   font-size: 15px;
@@ -391,6 +411,7 @@ padding: 10px;
 .business_content li {
   padding-bottom: 10px;
   font-size: 14px;
+  color: #213b61;
 }
 .business_content li b {
   font-weight: 600;
@@ -466,7 +487,7 @@ span.testtooltip:before {
   border: 1px solid #e5e5e5;
   display: inline-block;
   width: 100%;
-  height: 450px;
+  height: 470px;
 }
 .resuractivity-select {
   float: right;
@@ -495,7 +516,7 @@ img.hover-img {
   height: 270px;
 }
 .PI-insigntscost {
-  height: 450px;
+  height: 470px;
 }
 #linechart1{
   height: 410px;

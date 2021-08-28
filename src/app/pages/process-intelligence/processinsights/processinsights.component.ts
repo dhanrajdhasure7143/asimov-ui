@@ -132,7 +132,7 @@ yAxisLabel1: string = 'Occurences';
     domain: ['#E44D25', '#5AA454', '#CFC0BB', '#7aa3e5', '#a8385d', '#aae3f5']
   };
   colorScheme1 = {
-    domain: ['#212F3C']
+    domain: ['#fc8d45']
   };
 
 
@@ -484,7 +484,7 @@ robotValue:number;
                         this.activityData = adata;
                         this.bubbleData = [{name:"", series: this.activityData}];
                         this.colorScheme1 = {
-                            domain: ['#212F3C']
+                            domain: ['#fc8d45']
                           };
                         this.yAxisLabel1="Occurences";
                         activityDuration = tmp;
@@ -569,7 +569,7 @@ chart.data = d3
 // Create axes
 let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
 // dateAxis.renderer.minGridDistance = 10;
-dateAxis.renderer.labels.template.rotation=270;
+// dateAxis.renderer.labels.template.rotation=270;
 dateAxis.title.text = "Duration";
 let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 valueAxis.title.text = "Price";
@@ -612,7 +612,7 @@ chart.cursor.xAxis = dateAxis;
     }
     getHours1(millisec) {
         var hours: any = Math.round(millisec / (1000 * 60 * 60));
-        return hours + ' hrs';
+        return hours;
     }
 
     removeDuplicate(dataArray) {
@@ -701,7 +701,7 @@ chart.cursor.xAxis = dateAxis;
                 });
                 this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
-                    domain: ['#232832']
+                    domain: ['#fc8d45']
                   };
 
                 this.dChart1 = activityDuration;
@@ -776,7 +776,7 @@ chart.cursor.xAxis = dateAxis;
                 this.isEventGraph = true;
                 this.bubbleData = [{name:"", series: this.activityData}];
                 this.colorScheme1 = {
-                    domain: ['#212F3C']
+                    domain: ['#fc8d45']
                   };
                   this.yAxisLabel1 = 'Occurences';
             } else {

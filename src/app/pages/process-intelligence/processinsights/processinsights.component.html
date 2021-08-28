@@ -5,18 +5,21 @@
         <div class='col-md-12 boxes p-0'>
                 <div class="col-sm-3">
                     <div class="col-sm-12 divbox divbox0">
+                        <img src="/assets/images/PI/total-timespent.png" alt="">
                         <h4>Total Time Spent</h4>
-                        <label>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}}</label>
+                        <label>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}} <span *ngIf="totalMedianDuration"> hrs</span></label>
                     </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="col-sm-12 divbox divbox1">
+                            <img src="/assets/images/PI/time-savings.png" alt="">
                             <h4>Potential Time Savings</h4>
-                            <label>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}}</label>
+                            <label>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}} <span *ngIf="totalMedianDuration"> hrs</span></label>
                         </div>
                     </div>
                     <div class="col-sm-3">
                         <div class="col-sm-12 divbox divbox2">
+                            <img src="/assets/images/PI/total-humancost.png" alt="">
                             <h4>Total Human Cost</h4> 
                              <label>{{(totalMedianDuration && input1 && input2) ? (getHumanTotalCost(getHours(totalMedianDuration)*this.input1)| currency) : 0}}</label>
                             <!-- <div>{{getHumanTotalCost(getHours(totalMedianDuration) * this.input1)}}</div> -->
@@ -24,6 +27,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="col-sm-12 divbox divbox3">
+                            <img src="/assets/images/PI/potational-savings.png" alt="">
                             <h4>Potential Savings</h4>
                             <label>{{calculateSavings(this.totalMedianDuration) | currency}}</label>
                         </div>
@@ -121,7 +125,7 @@
             <div class="col-sm-8 box_shadw PI-insigntscost pl-0">
                 <!-- <div id="costprojection" class="lineChart box_shadw"></div> -->
                 
-                <div class="l_title1"><p>Human Cost vs Bot Cost</p></div>
+                <div class="l_title"><p>Human Cost vs Bot Cost</p></div>
                 <div id="costprojection" class="lineChart hvsbot">
 
                         <div id="linechart1"></div>
@@ -173,8 +177,8 @@
                 <div class="insigntsoccur">
                   <ul class="groupBtn">
                     <li>
-                        <button [class.active]="isEventGraph" (click)="getEventBubboleGraph('event')">Events</button>
-                        <button [class.active]="!isEventGraph" (click)="getEventBubboleGraph('throughput')">Duration</button>
+                        <button [class.active]="isEventGraph" (click)="getEventBubboleGraph('event')" class="event-btn">Events</button>
+                        <button [class.active]="!isEventGraph" (click)="getEventBubboleGraph('throughput')"  class="duration-btn">Duration</button>
                     </li>
                   </ul>
                  <!-- <div id="scatter" class=""></div> <br/> -->
@@ -239,7 +243,7 @@
             </div>
         <div class="col-md-12 p-0"  id="top10Activities">
             <div class="col-sm-6 pl-0 box_shadw1 table-box">
-                <div class="text-center table1-heading">Top 10% Cases (in descending order of duration)</div>
+                <div class="table1-heading">Top 10% Cases (in descending order of duration)</div>
                 <table class="table table-hover table-bordered text-center table-striped work_spacetable">
                     <thead class="text-center">
                         <tr>
@@ -259,7 +263,7 @@
             </div>
             <div class="col-sm-6 pr-0">
                 <div class="box_shadw1 table-box">
-                <div class="text-center table1-heading">Top Automation Opportunities</div>
+                <div class="table1-heading">Top Automation Opportunities</div>
                 <table class="table table-hover table-bordered text-center table-striped">
                     <thead>
                         <tr>
@@ -304,7 +308,7 @@
                             <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
-                    <div class="l_title2"><p>Total Resource Duration By Activity</p></div>
+                    <div class="l_title"><p>Total Resource Duration By Activity</p></div>
                 <div id="" class="box_shadw34">
                         <div id="pie_chart1"></div> 
                     <!-- <ngx-charts-pie-chart
@@ -332,7 +336,7 @@
                             <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
-                    <div class="l_title2"><p>Total Resource Cost By Activity</p></div>
+                    <div class="l_title"><p>Total Resource Cost By Activity</p></div>
                     <div id="" class="box_shadw34">
                             <div id="pie_chart2"></div> 
                     <!-- <ngx-charts-pie-chart
