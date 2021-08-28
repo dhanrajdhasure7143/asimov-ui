@@ -198,3 +198,8 @@ span.testtooltip:before {
 .btn-test{
   margin-left: 10px !important;
 }
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
