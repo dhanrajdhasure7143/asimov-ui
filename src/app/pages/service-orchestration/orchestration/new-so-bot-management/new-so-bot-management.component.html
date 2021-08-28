@@ -148,14 +148,14 @@
                         <a class="text-primary text-center clickable" *ngIf="element.sourceType=='BluePrism'" matTooltip="View Logs" (click)="getBluePrismlogs(element.botName)">View</a>
                       </td>
                   </ng-container>
-                  <ng-container matColumnDef="Smoke_Test">
+                  <!-- <ng-container matColumnDef="Smoke_Test">
                     <th mat-header-cell *matHeaderCellDef >Smoke Test</th>
                     <td mat-cell *matCellDef="let element">
                       <button class="btn btn-xs btn-primary" (click)="runsmoketest(element.botId)">
                         Run Test
                       </button>
                     </td>
-                </ng-container>
+                </ng-container> -->
                   <ng-container matColumnDef="Loading">
                       <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="11">
                           Loading
@@ -186,7 +186,7 @@
   <div [id]="viewlogid" class="rpa-modal">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="viewlogclose()">&times;</span>
+              <span class="rpa-modal-close" (click)="viewlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Logs</h4>
           </div>
           <div class="container-fluid" style="background: white;" >
@@ -276,7 +276,7 @@
   <div [id]="viewlogid1" class="rpa-modal">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="viewlogclose1()">&times;</span>
+              <span class="rpa-modal-close" (click)="viewlogclose1()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Logs</h4>
           </div>
   
@@ -381,7 +381,7 @@
       <div id='sch' class="rpa-modal" style="display:block">
           <div class="rpa-modal-content">
               <div class="rpa-modal-header">
-                  <span class="rpa-modal-close" (click)="close()">&times;</span>
+                  <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
                   <h4>Scheduler</h4>
               </div>
               <div class="rpa-modal-body">
@@ -399,7 +399,7 @@
   <div id="uipathlogs" class="rpa-modal">
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="viewuipathlogclose()">&times;</span>
+            <span class="rpa-modal-close" (click)="viewuipathlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>Logs</h4>
         </div>
         <div class="container-fluid" style="background: white;" >
@@ -480,7 +480,7 @@
   <div id="divblueprismlogs" class="rpa-modal">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="viewblueprismlogclose()">&times;</span>
+              <span class="rpa-modal-close" (click)="viewblueprismlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>BluePrism Logs</h4>
           </div>
           <div class="container-fluid" style="background: white;" >
@@ -560,7 +560,7 @@
    <div id='SLAConfig_overlay' class="rpa-modal" >
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="SLAclose_SO_bot()">&times;</span>
+              <span class="rpa-modal-close" (click)="SLAclose_SO_bot()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>SLA Configuration</h4>
           </div>
           <div class="container">

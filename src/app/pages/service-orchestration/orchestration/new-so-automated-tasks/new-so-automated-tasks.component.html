@@ -261,12 +261,12 @@
               </div>
             </td>
         </ng-container>
-        <ng-container matColumnDef="Smoke_Test">
+        <!-- <ng-container matColumnDef="Smoke_Test">
           <th mat-header-cell *matHeaderCellDef >Smoke Test</th>
           <td mat-cell *matCellDef="let element" >
             <button [disabled]="element.taskType!='Automated'" class='btn btn-xs btn-primary' (click)="runsmoketest(element.taskId)">Run Test</button>
           </td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="Loading">
           <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
               Loading
@@ -298,7 +298,7 @@
   <div id='logsid' class="rpa-modal" style="display:block">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="closepop()">&times;</span>
+              <span class="rpa-modal-close" (click)="closepop()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Logs</h4>
           </div>
           <div class="rpa-modal-body">
@@ -314,7 +314,7 @@
   <div id='sch' class="rpa-modal" style="display:block">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="closescheduler()">&times;</span>
+              <span class="rpa-modal-close" (click)="closescheduler()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Scheduler</h4>
           </div>
           <div class="rpa-modal-body">
@@ -327,7 +327,7 @@
 <div id='configuration' class="rpa-modal" >
   <div class="rpa-modal-content">
       <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="closeconfig()">&times;</span>
+          <span class="rpa-modal-close" (click)="closeconfig()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
           <span *ngIf="(blueprismconfigoverlay != true) && (UiPathconfigoverlay != true)"><h4>Configuration</h4></span>
           <span *ngIf="blueprismconfigoverlay == true"><h4>BluePrism Configuration</h4></span>
           <span *ngIf="UiPathconfigoverlay == true"><h4>UiPath Configuration</h4></span>
@@ -569,7 +569,7 @@
   <div id='SLAConfig' class="rpa-modal" >
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="SLAclose()">&times;</span>
+            <span class="rpa-modal-close" (click)="SLAclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>SLA Configuration</h4>
         </div>
         <div class="container">

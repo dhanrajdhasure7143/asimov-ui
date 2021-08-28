@@ -28,7 +28,10 @@ export class MonitoringComponent implements OnInit {
   alerts:any;
   executed:any;
   failedbots:any=[];
+  chart5:any;
   bots_list:any=[];
+  Environments:any;
+  envcount:any;
   getallbots()
   {
     
@@ -55,7 +58,6 @@ export class MonitoringComponent implements OnInit {
       this.status2();
       this.status4()
       this.spinner.hide();
-      
       this.getbotscount();
     })
   }
@@ -180,6 +182,7 @@ export class MonitoringComponent implements OnInit {
   
   }
 
+ 
 
 
   status1()

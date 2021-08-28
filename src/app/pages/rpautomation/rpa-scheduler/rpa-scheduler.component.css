@@ -96,4 +96,7 @@ button:disabled{
   background-repeat: no-repeat;
   cursor: pointer;
 }
+input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
 

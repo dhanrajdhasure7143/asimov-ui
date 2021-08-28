@@ -28,7 +28,7 @@ public slaupdate : boolean = false;
     public respdata1=false;
     public blueprismbotname: any;
     schdata:any;
-    displayedColumns: string[] = ["botName","botType","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs","Smoke_Test"];
+    displayedColumns: string[] = ["botName","botType","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     displayedblueprismcolums: string[] = ['bluePrismBotSessionid','startTimeStamp','endTimeStamp','status','error'];
     botNameFilter = new FormControl('');
