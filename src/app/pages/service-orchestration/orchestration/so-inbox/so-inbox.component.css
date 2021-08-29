@@ -7,3 +7,18 @@
 .verticalalignmiddle{
     vertical-align: middle !important;
 }
+
+.inbox-tablegrid {
+    width: 100%;
+    overflow-x: scroll;
+    padding-top: 20px;
+  }
+  
+  .inbox-tablegrid table td span{
+    font-size: 13px !important;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }

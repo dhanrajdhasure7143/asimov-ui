@@ -1,4 +1,4 @@
-import {ViewChild,Input, Component, OnInit,Pipe, PipeTransform } from '@angular/core';
+import {ViewChild,Input, Component, OnInit,OnDestroy,Pipe, PipeTransform } from '@angular/core';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
@@ -18,7 +18,7 @@ import { NgxSpinnerService } from "ngx-spinner";
   templateUrl: './new-so-automated-tasks.component.html',
   styleUrls: ['./new-so-automated-tasks.component.css']
 })
-export class NewSoAutomatedTasksComponent implements OnInit {
+export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
  schdata:any;
   public UiPathconfigoverlay: boolean = false;
   public slabotId : any;
@@ -31,6 +31,7 @@ export class NewSoAutomatedTasksComponent implements OnInit {
   public schedulepopup:Boolean=false;
   public queryparam:any='';
   public isTableHasData = true;
+  public Active_bots_list:any=[];
   public respdata1=false;
   public expectedTime : any = 0;
   public expectedDate : any = 0;
@@ -136,7 +137,10 @@ export class NewSoAutomatedTasksComponent implements OnInit {
       this.isButtonVisible = false;
     }
     this.getenvironments();
-    this.getCategoryList(this.processId);
+    //this.getCategoryList(this.processId);
+    setTimeout(()=>{
+      this.getCategoryList(this.processId);
+    },400)
     this.getallbots();
     this.gethumanslist();
     this.getuipathbots();
@@ -488,22 +492,19 @@ resetsla(){
 
       if(response.automationTasks != undefined)
       {
-        this.responsedata=response.automationTasks.map(item=>{
-            if(item.sourceType=="UiPath")
-              item["taskOwner"]="Karthik Peddinti";
-            else if(item.sourceType=="EPSoft")
-            {
+        this.rest.getAllActiveBots().subscribe(bots=>{
+          this.Active_bots_list=bots;
+          this.responsedata=response.automationTasks.map(item=>{
+              if(item.sourceType=="UiPath")
+                item["taskOwner"]="Karthik Peddinti";
+              else if(item.sourceType=="EPSoft")
+                item["taskOwner"]=this.Active_bots_list.find(bot=>bot.botId==item.botId)==undefined?"---":this.Active_bots_list.find(bot=>bot.botId==item.botId).createdBy;
+              else{
+                item["taskOwner"]="---"
+              }
+              return item;
+          });
 
-              this.rest.getAllActiveBots().subscribe(botlist =>
-                {
-                  this.bot_list=botlist;
-                  item["taskOwner"]=this.bot_list.find(bot=>bot.botId==item.botId).createdBy;
-                });
-            }
-            else{
-              item["taskOwner"]="---"
-            }
-            return item;
         });
         this.automatedtask= response.automationTasks;
         this.dataSource2= new MatTableDataSource(response.automationTasks);
@@ -797,7 +798,7 @@ resetsla(){
   }
 
   getprocesslogs(){
-    document.getElementById("filters").style.display = "none";
+    //document.getElementById("filters").style.display = "none";
    
     this.processId1 = this.selectedvalue;
     this.popup=true;

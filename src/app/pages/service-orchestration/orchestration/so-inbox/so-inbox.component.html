@@ -9,17 +9,17 @@
                 <mat-icon matSuffix>search</mat-icon>
               </mat-form-field>
             </span>
-          <span (click)="reset()"  style="cursor:pointer" id="inboxreset" matTooltip="Reset" style="padding: 12px;">
+          <span (click)="reset()"  style="cursor:pointer;padding: 12px;" id="inboxreset" matTooltip="Reset">
             <i  class="fa fa-undo"></i>
           </span >
-          <span (click)="refresh()"  style="cursor:pointer" id="inboxrefresh" matTooltip="Refresh" style="padding: 2px;">
+          <span (click)="refresh()"  style="cursor:pointer;padding: 2px;" id="inboxrefresh" matTooltip="Refresh">
             <i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i>
           </span >
         </div>
-          <div class="row">
-            <div class="col-md-12">
-              <div  style="width:100%;height:45vh;overflow: scroll;">
-                <table mat-table  [dataSource]="dataSource1" #sort1="matSort" matSort class="table" id="inboxtable">
+      
+            <div class="col-md-12 p-0">
+              <div  class="inbox-tablegrid">
+                <table mat-table  [dataSource]="dataSource1" #sort1="matSort" matSort class="RPA table" id="inboxtable">
 
                     <ng-container matColumnDef="processName">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name </th>
@@ -116,7 +116,7 @@
 
               <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
             </div>
-        </div>
+        
       </div>
       <br><br>
 

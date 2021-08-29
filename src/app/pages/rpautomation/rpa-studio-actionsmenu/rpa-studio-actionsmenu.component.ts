@@ -467,7 +467,7 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
 
    viewlogdata(){
     this.childBotWorkspace.addsquences();
-    document.getElementById("filters").style.display = "none";
+    //document.getElementById("filters").style.display = "none";
    let response: any;
    let log:any=[];
    this.logresponse=[];
