@@ -498,7 +498,7 @@ public slaupdate : boolean = false;
         });
 
       //this.dataSource1.filterPredicate = this.customFilterPredicate();*/
-      this.update_bot_status();
+      //this.update_bot_status();
       this.spinner.hide();
     },(err)=>{
       this.spinner.hide();
@@ -506,33 +506,33 @@ public slaupdate : boolean = false;
   }
 
 
-  update_bot_status(){
-    this.timer = setInterval(() => {
-      this.rest.getallsobots().subscribe(botlist =>{
-        let responsedata:any=botlist
-        responsedata.forEach(statusdata => {
-          let data:any;
-          if(statusdata.status=="InProgress" || statusdata.status=="Running")
-                {
-                  data="<span matTooltip='"+statusdata.status+"' style='filter: none; width: 19px;' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
-                }
-                else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
-                {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"  style="filter: none; width: 19px;"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
-                }
+  // update_bot_status(){
+  //   this.timer = setInterval(() => {
+  //     this.rest.getallsobots().subscribe(botlist =>{
+  //       let responsedata:any=botlist
+  //       responsedata.forEach(statusdata => {
+  //         let data:any;
+  //         if(statusdata.status=="InProgress" || statusdata.status=="Running")
+  //               {
+  //                 data="<span matTooltip='"+statusdata.status+"' style='filter: none; width: 19px;' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
+  //               }
+  //               else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
+  //               {
+  //                 data='<span  matTooltip="'+statusdata.botStatus+'"  style="filter: none; width: 19px;"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
+  //               }
                
-                else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
-                {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"    style="filter: none; width: 19px;"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
-                }
+  //               else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
+  //               {
+  //                 data='<span  matTooltip="'+statusdata.botStatus+'"    style="filter: none; width: 19px;"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
+  //               }
                 
-          $("#"+statusdata.botId+"__status").html(data);
-        });
+  //         $("#"+statusdata.botId+"__status").html(data);
+  //       });
           
-        })
-    }, (5*60000));
+  //       })
+  //   }, (5*60000));
   
-  }
+  // }
 
 
   viewlogdata(botid ,version){

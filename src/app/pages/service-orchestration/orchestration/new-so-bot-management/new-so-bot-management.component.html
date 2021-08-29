@@ -33,10 +33,10 @@
         </span >  
       </div>
         <div class="row">
-          <div class="col-md-12" >
+          <div class="botmanagement-tablelist" >
             <!-- <mat-card> -->
-              <div  style="width:100%;height:45vh;overflow: scroll;">
-              <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
+              
+              <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="bmtable">
   
                   <ng-container matColumnDef="botName"id="bmbotname">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Names </th>
@@ -174,8 +174,8 @@
               <div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
                   No Record Found
               </div>
-            </div>
-          <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+            
+          <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"  [showFirstLastButtons]="true"></mat-paginator>
             <!-- </mat-card> -->
           </div>
       </div>
@@ -563,9 +563,10 @@
               <span class="rpa-modal-close" (click)="SLAclose_SO_bot()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>SLA Configuration</h4>
           </div>
-          <div class="container">
+          <div class="modal-body">
+            <div class="container m-contanier form-body">
               <form [formGroup]="insertslaForm_so_bot" (ngSubmit)="savedata_SO_bot()">
-                  <div class="row">
+                  
                       <!--<div class="col-md-3 formelement">
                         <label for="processName">Process Name<span style="color:red">*</span></label>
                         <input type="text" class="form-control data" formControlName="processName" #processName value="" placeholder="Enter Process Name">
@@ -574,35 +575,35 @@
                             Maximum of 50 characters
                         </div>
                       </div>-->
-                      <div class="col-md-3 formelement">
-                          <label for="botName">Bot Name<span style="color:red">*</span></label>
+                      <div class="col-md-12 p-0 form-group">
+                          <label class="label-control" for="botName">Bot Name<span style="color:red">*</span></label>
                           <input type="text" class="form-control data" formControlName="botName" value="" placeholder="Enter Bot Name">
                           <span *ngIf="(insertslaForm_so_bot.get('botName').invalid && insertslaForm_so_bot.get('botName').touched) && !insertslaForm_so_bot.controls['botName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Bot Name*</span>
                           <!--<div *ngIf="insertslaForm_so_bot.controls['botName'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                               Maximum of 50 characters
                           </div>-->
                       </div>
-                      <div class="col-md-3 formelement">
-                          <label for="botSource">Bot Source<span style="color:red">*</span></label>
+                      <div class="col-md-12 p-0 form-group">
+                          <label class="label-control"  for="botSource">Bot Source<span style="color:red">*</span></label>
                           <input type="text" class="form-control data" formControlName="botSource"  value="" placeholder="Enter Bot Source">
                           <span *ngIf="(insertslaForm_so_bot.get('botSource').invalid && insertslaForm_so_bot.get('botSource').touched) && !insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Bot Source*</span>
                           <!--<div *ngIf="insertslaForm_so_bot.controls['botSource'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                               Maximum of 50 characters
                           </div>-->
                       </div>
-                      <div class="col-md-3 formelement">
-                          <label for="taskOwner">Task Owner<span style="color:red">*</span></label>
+                      <div class="col-md-12 p-0 form-group">
+                          <label class="label-control" for="taskOwner">Task Owner<span style="color:red">*</span></label>
                           <input type="text" maxlength="51" class="form-control data" formControlName="taskOwner"  value="" placeholder="Enter Connection Name">
                           <span *ngIf="(insertslaForm_so_bot.get('taskOwner').invalid && insertslaForm_so_bot.get('taskOwner').touched) && !insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Task Owner*</span>
                           <!--<div *ngIf="insertslaForm_so_bot.controls['taskOwner'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                               Maximum of 50 characters
                           </div>-->
                       </div>
-                      <div class="col-md-3 formelement">
-                        <label for="slaConfigId">SLA Breach Limit
+                      <div class="col-md-6 p-0 form-group">
+                        <label class="label-control" for="slaConfigId">SLA Breach Limit
                            <!-- <span style="color:red">*</span> -->
                          </label>
-                          <input type="number" style="width:100px" min=0 max=60 maxlength="2" formControlName="slaConfigId"  onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"   value="" placeholder="00">
+                          <input type="number" style="width:150px" min=0 max=60 maxlength="2" formControlName="slaConfigId"  onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"   value="" placeholder="00">
   
                           <!-- <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data"  #slaConfigId value="" placeholder="MM">
                           <span *ngIf="(insertslaForm_so_bot.get('slaConfigId').invalid && insertslaForm_so_bot.get('slaConfigId').touched) && !insertslaForm_so_bot.controls['slaConfigId'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required SLA Configuration*</span> -->
@@ -610,8 +611,8 @@
                               Maximum of 2 characters
                           </div>  -->
                         </div>
-                  </div>
-                  <div class="row">
+                  
+                  
                   <!-- <div class="col-md-3 formelement">
                     <label for="breachAlerts">Breach Actual Alert<span style="color:red">*</span></label>
                     <select class="form-control"  value="" formControlName="breachAlerts">
@@ -625,76 +626,49 @@
                         Maximum of 50 characters
                     </div>-->
                 <!-- </div> -->
-                      <div class="col-md-2 formelement">
-                        <label for="thresholdLimit">Threshold Limit 
+                      <div class="col-md-6 p-0 form-group">
+                        <label class="label-control" for="thresholdLimit">Threshold Limit 
                            <!-- <span style="color:red">*</span> -->
                          </label>
-                          <input type="number" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit"  value="" maxlength="2" placeholder="00">
+                          <input type="number" style="width:150px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="thresholdLimit"  value="" maxlength="2" placeholder="00">
                           <span *ngIf="(insertslaForm_so_bot.get('thresholdLimit').invalid && insertslaForm_so_bot.get('thresholdLimit').touched) && !insertslaForm_so_bot.controls['thresholdLimit'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Threshold Limit*</span>
                       </div>
   
-                      <div class="col-md-2 formelement">
-                          <label for="totalRetries">Total Retries</label>
-                          <input type="number" style="width:100px" min=0 max=10 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="totalRetries"  value="" placeholder="0">
+                      <div class="col-md-6 p-0 form-group">
+                          <label class="label-control" for="totalRetries">Total Retries</label>
+                          <input type="number" style="width:150px" min=0 max=10 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="totalRetries"  value="" placeholder="0">
                           <!--<span *ngIf="(insertslaForm_so_bot.get('totalRetries').invalid && insertslaForm_so_bot.get('totalRetries').touched) && !insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">Required Breach Actual Alert*</span>
                           <div *ngIf="insertslaForm_so_bot.controls['totalRetries'].hasError('maxlength')" style="color:red" class="fa fa-info-circle errspan">
                               Maximum of 50 characters
                           </div>-->
                       </div>
-                      <div class="col-md-2 formelement">
-                          <label for="retriesInterval">Retry Interval</label>
-                          <input type="number"  maxlength="2" style="width:100px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
+                      <div class="col-md-6 p-0 form-group">
+                          <label class="label-control" for="retriesInterval">Retry Interval</label>
+                          <input type="number"  maxlength="2" style="width:150px" min=0 max=60 onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="retriesInterval"  value="" placeholder="00">
                           <!-- <span *ngIf="insertslaForm_so_bot.get('retriesInterval').invalid && insertslaForm_so_bot.get('retriesInterval').touched" style="color:red" class="fa fa-info-circle errspan">Required Retries Interval*</span> -->
                       </div>
   
-                      <div class="col-md-2 formelement">
-                        <label for="notificationType">Notificaion Type<span style="color:red">*</span></label><br>
+                      <div class="col-md-12 p-0 form-group">
+                        <label class="label-control" for="notificationType">Notificaion Type<span style="color:red">*</span></label><br>
                         <input type="checkbox" formControlName="email" class="emailcheck" id="emailcheck" >
                          <label class="lbl_chk_cls"  for="emailcheck">E-mail</label> &nbsp;
                         <input type="checkbox" class="smscheck" formControlName="sms"  id="smscheck">
                          <label class="lbl_chk_cls" for="smscheck">SMS</label>
                     </div>
-                  </div>
-                  <div class="row">
-  
-                    <!--<div class="col-md-3 formelement">
-                      <label for="expectedEDate">Expected Execution Time in  Minutes</label>
-                      <input type="text" maxlength="2" onkeypress="return (event.charCode > 47 && event.charCode < 58)" class="form-control data" formControlName="expectedEDate" #expectedEDate value="" placeholder="MM">-->
-                      <!--<div class="row">
-                          <div class="col-md-6 formelement">
-                            <input type="date" [value]="expectedDate" [min]="expectedDate" formControlName="expectedDate">
-                          </div>
-                          <div class="col-md-6 formelement">
-                            <ngx-timepicker-field style="line-height: 0.928571;" [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" formControlName="expectedTime"></ngx-timepicker-field>
-                          </div>
-                      </div> -->
-                    <!--</div>-->
-                  </div>
-                  <!--<div class="row">
-                    <div class="col-md-3 formelement">
-                        <label for="cascadingImpact">Cascading Impact</label> &nbsp;&nbsp;&nbsp;
-                        <mat-slide-toggle style="height:20px;vertical-align: middle !important;" (change)="cascadingImp()" class="example-margin" color="primary"
-                        formControlName="cascadingImpact" tooltip="Cascading Impact" placement="bottom">
-                        </mat-slide-toggle>
-                    </div>
-                    <div class="col-md-3 formelement" *ngIf="cascadingImpactbtn == true">
-                      <label for="systemImpacted">System Impacted</label>
-                      <input type="text" maxlength="51" class="form-control data" formControlName="systemImpacted" #systemImpacted value="" placeholder="Enter system Impacted">
-                      <span *ngIf="insertslaForm_so_bot.get('systemImpacted').invalid && insertslaForm_so_bot.get('systemImpacted').touched" style="color:red" class="fa fa-info-circle errspan">Required System Impacted*</span>
-                  </div>
-  
-                  </div>-->
-                  <!--<div class="row">
-  
-                  </div>-->
-                  <div class="row" >
-                      <div class="col-md-12 formelement">
-                          <input type="button" class="btn btn-primary" value="Save" (click)="slaalerts()" >
-                          <input type="button" class="btn btn-primary" value="Reset" (click)="resetsla()">
+                  
+                 
+                  
+                      <div class="form-footer">
+                        <button class="btn btn-default" (click)="resetsla()" >Reset</button>
+                        <button class="btn btn-primary btn-test" (click)="slaalerts()">Save</button>
+                         
                       </div>
-                  </div>
+                  
                   <br><br>
               </form>
           </div>
+
+          </div>
+          
       </div>
   </div>
