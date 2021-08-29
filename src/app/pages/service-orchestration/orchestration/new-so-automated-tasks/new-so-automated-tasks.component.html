@@ -66,7 +66,7 @@
 <!-- <mat-card> -->
   <div  *ngIf="responsedata!=undefined" style="width:100%;height:45vh;overflow: scroll;">
 
-    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table" id="autotable">
+    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class="RPA table" id="autotable">
 
         <ng-container matColumnDef="processName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
@@ -231,7 +231,7 @@
                 &nbsp;
                 <span>
                   <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-                  <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                  <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                 </span>
               </div>
               <div *ngIf="element.taskType=='Human'">
@@ -256,7 +256,7 @@
                 &nbsp;
                 <span>
                   <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-                  <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                  <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                 </span>
               </div>
             </td>

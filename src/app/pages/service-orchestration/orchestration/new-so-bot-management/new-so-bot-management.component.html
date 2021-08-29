@@ -33,10 +33,10 @@
         </span >  
       </div>
         <div class="row">
-          <div class="col-md-12" >
+          <div class="botmanagement-tablelist" >
             <!-- <mat-card> -->
-              <div  style="width:100%;height:45vh;overflow: scroll;">
-              <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="bmtable">
+              
+              <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="bmtable">
   
                   <ng-container matColumnDef="botName"id="bmbotname">
                       <th mat-header-cell *matHeaderCellDef mat-sort-header>Bot Names </th>
@@ -174,8 +174,8 @@
               <div [hidden]="isTableHasData" style="text-align:center;font-style:italic">
                   No Record Found
               </div>
-            </div>
-          <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+            
+          <mat-paginator #paginator1 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]"  [showFirstLastButtons]="true"></mat-paginator>
             <!-- </mat-card> -->
           </div>
       </div>

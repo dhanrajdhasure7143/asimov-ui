@@ -45,3 +45,14 @@ select {
 .margin-25>span{
   margin-left:14px!important;
 }
+.botmanagement-tablelist {
+  width:100%;
+  overflow-x: auto;
+  height: calc(100% - 40px);
+  /* margin-top: 5px; */
+}
+
+
+.botmanagement-tablelist table td span{
+  font-size: 13px !important;
+}

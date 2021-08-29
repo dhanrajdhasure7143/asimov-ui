@@ -21,7 +21,7 @@
   
     <!--foms  -->
     <div style="width:100%;height:45vh;overflow: scroll;">
-    <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" table" id="listofenv">
+    <table mat-table #sort1="matSort" [dataSource]="dataSource1" matSort class=" RPA table" id="listofenv">
   
         <ng-container matColumnDef="check">
             <th mat-header-cell *matHeaderCellDef mat-sort-header><input [disabled]="checkeddisabled" type="checkbox" id="checkall" [checked]="checkflag" (change)="checkAllCheckBox($event)"></th>
