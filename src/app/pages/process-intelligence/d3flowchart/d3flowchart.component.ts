@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input,EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input,EventEmitter, Output, HostListener } from '@angular/core';
 import * as dagreD3 from 'dagre-d3';
 import * as d3 from 'd3';
 declare var $: any;
@@ -48,6 +48,21 @@ export class D3flowchartComponent {
     @ViewChild('canvas',{static: false}) canvas: ElementRef;
     @ViewChild('downloadLink',{static: false}) downloadLink: ElementRef;
     @ViewChild('render',{static: false}) render: ElementRef;
+    // @ViewChild("exportSVGtoPDF",{static: false}) graph_canvas:ElementRef;
+    @HostListener('document:mouseover', ['$event.target'])
+    public onmouseover(targetElement) {
+        const hovered = this.exportSVGtoPDF.nativeElement.contains(targetElement);
+        if (!hovered) {
+           let element=document.getElementById("tipsy_div");
+            if(element){
+              element.style.display = "none";
+              element.style.visibility = "hidden";
+            }
+        }else{
+          console.log("test")
+        }
+    }
+
     ngOnInit(){
         this. processGraph();
     }
@@ -918,7 +933,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           return hours + " Hrs";
       } else {
         if(days1 >= 7){
-          return days + " Weeks"
+          return days + " Wks"
         }else{
           return days + " Days"
         }

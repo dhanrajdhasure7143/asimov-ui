@@ -191,7 +191,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     localStorage.clear();
     var input = btoa("Signout")
     //window.location.href=this.config.logoutRedirectionURL+'?input='+input;
-    window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    // window.location.href=this.config.logoutRedirectionURL+'?input='+input;
+    this.router.navigate(['/redirect']);
   }
 
   profileName(){

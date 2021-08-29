@@ -373,7 +373,7 @@ export class UploadComponent implements OnInit {
     this.isIncrement=false;
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
-    this.dbDetails={};
+    // this.dbDetails={};
     this.rest.fileName.next(null);
   }
 
