@@ -54,7 +54,7 @@
           <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><i class="fa fa-calendar" style="margin-right: -1px !important;"></i></button>
         </span>
         <span style="padding:5px" id="autoViewLogs">
-          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs()"  ><i class="fa fa-file" style="margin-right: -1px !important;" aria-hidden="true"></i></button>
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs(process_logs)"  ><i class="fa fa-file" style="margin-right: -1px !important;" aria-hidden="true"></i></button>
         </span>
   </div>
 
@@ -294,20 +294,20 @@
 </div>
 </div>
 
-<div *ngIf="popup">
-  <div id='logsid' class="rpa-modal" style="display:block">
-      <div class="rpa-modal-content">
-          <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="closepop()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-              <h4>Logs</h4>
-          </div>
-          <div class="rpa-modal-body">
-            <app-so-processlog [processId]="processId1"></app-so-processlog>
-          </div>
-      </div>
-  </div>
-</div>
 
+<ng-template #process_logs>
+  <div id='logsid' *ngIf="popup">
+    <div class="modal-header modelprhead">
+      Logs
+      <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+    </div> 
+    <div class="modal-body">
+      <app-so-processlog [processId]="processId1"></app-so-processlog>
+    </div>
+    
+  </div>
+
+</ng-template>
 
 
 <div *ngIf="schedulepopup">

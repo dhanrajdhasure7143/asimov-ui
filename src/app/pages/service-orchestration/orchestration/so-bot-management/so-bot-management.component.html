@@ -3,11 +3,10 @@
     <br>
     <div class="text-right">
         <span style="padding:10px">
-          <mat-form-field class="example-full-width" id="bmsearch">
-            <mat-label>Search</mat-label>
-            <input matInput placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
+          
+            <input class="form-control" placeholder="Search" [(ngModel)]="search" (keyup)="applyFilter2($event.target.value)">
+            
+         
         </span>
       <span style="padding:10px">
        <!--- <mat-form-field id="bmategorySearch">

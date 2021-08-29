@@ -2441,3 +2441,15 @@ th.mat-header-cell {
   align-items: center;
   background-color: #e3e9ef8c !important;
 }
+
+
+
+.logs-modal{
+  width:70% !important;
+}
+
+.logs-modal .logs-container
+{
+  height:400px  !important;
+  overflow:auto;
+}
