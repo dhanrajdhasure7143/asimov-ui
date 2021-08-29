@@ -14,6 +14,13 @@ import { RestApiService } from 'src/app/pages/services/rest-api.service';
 export class StatisticsComponent implements OnInit {
     isActiveBot:boolean=false;
     isActiveException:boolean=false;
+    environments:any=[];
+    runtimestats:any=[];
+    runtimestatschart:any;
+    runtimeflag:boolean;
+    bots:any;
+    processnames:any=[];
+    processstatistics:any;
   constructor(
     private spinner:NgxSpinnerService,
     private rest:RestApiService
@@ -24,12 +31,14 @@ export class StatisticsComponent implements OnInit {
     this.spinner.show();
     this.getallbots();
     this.getslametrics();
+    this.getprocesses();
     setTimeout(()=>{
 
 //this.chart1();
 this.slachart();
-this.chart5();
+//this.chart5();
 this.modelChart();
+this.getEnvironments();
     },500)
   }
 
@@ -49,7 +58,7 @@ this.modelChart();
     this.rest.getallsobots().subscribe(item=>{
        this.allbots=item;
        let data:any=[{
-        "Failure": "Failure",
+        "country": "Failure",
         "litres": this.allbots.filter(bot=>bot.botStatus=="Failure").length,
         "color": "#BC1D28"
       },{
@@ -64,7 +73,7 @@ this.modelChart();
 
       
       this.chart1(data)
-      this.chart2()
+      //this.chart2()
       let sourceType=[{
         "country": "UiPath",
         "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
@@ -79,9 +88,11 @@ this.modelChart();
         "color": "#fa4616"
       }];
       
-      this.chart3(sourceType);
-      this.chart4();
+      this.chart3(sourceType, this.allbots.length);
+      //this.chart4();
       
+      this.getprocesses();
+      this.botruntimestats();
       this.spinner.hide();
       
     })
@@ -150,9 +161,9 @@ this.modelChart();
           "value": "pointer"
         }
       ];
-      pieSeries.labels.template.maxWidth = 130;
-pieSeries.labels.template.wrap = true;
-pieSeries.labels.template.fontSize = 18;
+    pieSeries.labels.template.maxWidth = 130;
+    pieSeries.labels.template.wrap = true;
+    pieSeries.labels.template.fontSize = 18;
     pieSeries.labels.template.bent = false;
     pieSeries.labels.template.padding(0,0,0,0);
     pieSeries.ticks.template.disabled = true;
@@ -258,7 +269,7 @@ series3.show();
 chart.cursor = new am4charts.XYCursor();
 // chart.legend.fontSize = 11;
   }
-  chart3(data){
+  chart3(data, length){
 
     am4core.ready(function() {
         
@@ -293,16 +304,17 @@ chart.cursor = new am4charts.XYCursor();
           ];
         
         pieSeries.alignLabels = false;
-        pieSeries.labels.template.bent = true;
+        pieSeries.labels.template.bent = false;
         pieSeries.labels.template.radius = 3;
         pieSeries.labels.template.padding(0,0,0,0);
-        
+        pieSeries.labels.template.disabled=true;
         pieSeries.ticks.template.disabled = true;
         var label = pieSeries.createChild(am4core.Label);
-        //label.text = "122";
+
+        label.text = length;
         label.horizontalCenter = "middle";
         label.verticalCenter = "middle";
-        label.fontSize = 20;
+        label.fontSize = 50;
   
         // Create a base filter effect (as if it's not there) for the hover to return to
         var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
@@ -318,6 +330,12 @@ chart.cursor = new am4charts.XYCursor();
         
         // Add a legend
         
+        chart.legend = new am4charts.Legend();
+        chart.legend.fontSize = 13;
+        chart.legend.labels.template.text = "{category} - {value}";
+        // let markerTemplate = chart.legend.markers.template;
+        // markerTemplate.width = 10;
+        // markerTemplate.height = 10;
         
         chart.data = data
         });  
@@ -809,7 +827,314 @@ pieSeries.labels.template.fontSize = 18;
     (type == "1") ? currentdate.setDate(currentdate.getDate() + value) : currentdate.setDate(currentdate.getDate() - value);
     return moment(currentdate).format('DD/MM/YYYY');
   }
+
+
+  getEnvironments()
+  {
+    this.rest.listEnvironments().subscribe(data=>{
+      let response:any=data;
+      if(response.errorMessage == undefined)
+      {
+        this.environments=response;
+        let data=[{
+          "country": "Mac",
+          "litres": this.environments.filter(item=>item.environmentType=="Mac").length,
+          "color": "#ffda83"
+        },{
+          "country": "Windows",
+          "litres":  this.environments.filter(item=>item.environmentType=="Windows").length,
+          "color": "#55d8fe"
+        },{
+          "country": "Linux",
+          "litres":this.environments.filter(item=>item.environmentType=="Linux").length,
+          "color": "#fa4616"
+        }];
+
+        setTimeout(()=>{
+
+          this.getEnvironmentsChart(data, this.environments.length)
+        },500)
+      }
+    })
+  }
+
+
+  getEnvironmentsChart(data, length)
+  {
+    am4core.ready(function() {
+        
+      // Themes begin
+      am4core.useTheme(am4themes_animated);
+      // Themes end
+      
+      // Create chart instance
+      var chart = am4core.create("environments-chart", am4charts.PieChart);
+      
+      // Add and configure Series
+      var pieSeries = chart.series.push(new am4charts.PieSeries());
+      pieSeries.dataFields.value = "litres";
+      pieSeries.dataFields.category = "country";
+      pieSeries.slices.template.propertyFields.fill = "color";
+      // Let's cut a hole in our Pie chart the size of 30% the radius
+      chart.innerRadius = am4core.percent(40);
+      pieSeries.labels.template.maxWidth = 130;
+  pieSeries.labels.template.wrap = false;
+  pieSeries.labels.template.fontSize = 15;
+      // Put a thick white border around each Slice
+      pieSeries.slices.template.stroke = am4core.color("#fff");
+      pieSeries.slices.template.strokeWidth = 2;
+      pieSeries.slices.template.strokeOpacity = 1;
+      pieSeries.slices.template
+        // change the cursor on hover to make it apparent the object can be interacted with
+        .cursorOverStyle = [
+          {
+            "property": "cursor",
+            "value": "pointer"
+          }
+        ];
+      
+      pieSeries.alignLabels = false;
+      pieSeries.labels.template.bent = true;
+      pieSeries.labels.template.radius = 3;
+      
+      pieSeries.labels.template.text = "{category} - {value}";
+      pieSeries.labels.template.padding(0,0,0,0);
+      pieSeries.labels.template.disabled=true;
+      pieSeries.ticks.template.disabled = true;
+      var label = pieSeries.createChild(am4core.Label);
+      //label.text = "122";
+      label.text = length;
+      label.horizontalCenter = "middle";
+      label.verticalCenter = "middle";
+      label.fontSize = 50;
+      // Create a base filter effect (as if it's not there) for the hover to return to
+      var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
+      shadow.opacity = 0;
+      
+      // Create hover state
+      var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
+      
+      // Slightly shift the shadow and make it more prominent on hover
+      var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
+      hoverShadow.opacity = 0.7;
+      hoverShadow.blur = 5;
+      
+
+
+      chart.legend = new am4charts.Legend();
+      chart.legend.fontSize = 13;
+      chart.legend.labels.template.text = "{category}-{value}";
+      let markerTemplate = chart.legend.markers.template;
+      markerTemplate.width = 10;
+      markerTemplate.height = 10;
+
+      
+      chart.data = data
+      });  
+  }
+
+
+
+
+  botruntimestats()
+  {
+    this.rest.botPerformance().subscribe(data=>{
+      let botperformances:any=[]
+      botperformances=data;
+      this.bots=botperformances;
+      let today=new Date();
+      let yesterday=new Date();
+      let runtimestats:any=[]
+      yesterday.setDate(today.getDate()-1);
+      this.allbots.forEach(bot => {
+        let filteredbot:any;
+        filteredbot=botperformances.find(item=>item.botId==bot.botId);
+        if(filteredbot != undefined)
+        {
+          let filteredCoordinates:any=filteredbot.coordinates;
+          //.filter(item=>moment(item.startTime,"x").format("D-MM-YYYY")==moment(today).format("D-MM-YYYY")||moment(item.startTime,"x").format("D-MM-YYYY")==moment(yesterday).format("D-MM-YYYY"));
+          console.log("---------check--------",filteredCoordinates)
+          if(filteredCoordinates.length>0)
+          {
+              let timedur:any=0;
+              filteredCoordinates.forEach(timeseries=>{
+                timedur=timedur+timeseries.timeDuration;
+              })
+              let data:any={
+                "name":filteredbot.botName,
+                "value":timedur
+              }
+              runtimestats.push(data);
+
+          }
+        }
+      });
+      console.log(this.runtimestats)
+      this.runtimestats=runtimestats.sort(function(a, b){return b.value - a.value});
+      console.log(this.runtimestats)
+      if(runtimestats.length!=0)
+      {
+        this.statschart();
+      }
+      this.runtimeflag=true;
+    })
+  }
+
+
+
+  statschart()
+  {
+    am4core.useTheme(am4themes_animated);
+    setTimeout(()=>{
+      this.runtimestatschart = am4core.create("runtimestatistics-piechart", am4charts.XYChart);
+      this.runtimestatschart.hiddenState.properties.opacity = 0; // this creates initial fade-in
+      this.runtimestatschart.data=this.runtimestats;
+      this.runtimestatschart.zoomOutButton.disabled = true;
+
+      this.runtimestatschart.colors.list = [
+        am4core.color("#bf9d76"),
+        am4core.color("#e99450"),
+        am4core.color("#d89f59"),
+        am4core.color("#f2dfa7"),
+        am4core.color("#ff5b4f"),
+        am4core.color("#74c7b8")
+      ]
+      var categoryAxis = this.runtimestatschart.xAxes.push(new am4charts.CategoryAxis());
+
+      categoryAxis.dataFields.category = "name";
+      categoryAxis.title.text = "Bots";
+      let label1 = categoryAxis.renderer.labels.template;
+      label1.truncate = true;
+      label1.maxWidth = 90;
+      label1.disabled = false;
+      categoryAxis.renderer.minGridDistance = 40;
+      var valueAxis = this.runtimestatschart.yAxes.push(new am4charts.ValueAxis());
+      valueAxis.renderer.inside = true;
+      valueAxis.renderer.labels.template.fillOpacity = 1;
+      valueAxis.renderer.grid.template.strokeOpacity = 0;
+      valueAxis.min = 0;
+      valueAxis.cursorTooltipEnabled = false;
+      valueAxis.renderer.gridContainer.zIndex = 1;
+      valueAxis.title.text = "Total Execution Time (ms)";
+      var series = this.runtimestatschart.series.push(new am4charts.ColumnSeries);
+      series.dataFields.valueY = "value";
+      series.dataFields.categoryX = "name";
+      series.tooltipText = "{valueY.value}";
+
+      var columnTemplate = series.columns.template;
+      columnTemplate.width = 40;
+      columnTemplate.column.cornerRadiusTopLeft = 10;
+      columnTemplate.column.cornerRadiusTopRight = 10;
+      columnTemplate.strokeOpacity = 0;
+      let runtimeref=this.runtimestatschart;
+      columnTemplate.events.once("inited", function(event){
+        event.target.fill = runtimeref.colors.getIndex(event.target.dataItem.index);
+      });
+      var cursor = new am4charts.XYCursor();
+      cursor.behavior = "panX";
+      this.runtimestatschart.cursor = cursor;
+      this.runtimestatschart.events.on("datavalidated", function () {
+        if(this.runtimestats.length>5)
+          categoryAxis.zoomToIndexes(0,7,false,true);
+        else
+          categoryAxis.zoomToIndexes(0,this.runtimestats.length,false,true);
+      },this);
+      series.columns.template.events.on("hit", function(ev) {
+        let getdata:any=ev.target.dataItem.categories.categoryX
+        let data={name:getdata};
+        this.getruns(data);
+
+      },this);
+
+      
+
+      var label = this.runtimestatschart.plotContainer.createChild(am4core.Label);
+       label.x = 90;
+       label.y = 50;
+       $("#runtimestatistics-piechart > div > svg > g > g:nth-child(2) > g:nth-child(2)").hide();
+
+    },30)
+
+  }
   
+  getprocesses()
+  {
+    this.rest.getautomatedtasks(0).subscribe(data=>{
+      let resp:any=data;
+        this.rest.getprocessnames().subscribe(data=>{
+          this.processnames=data;
+          //this.getbotsvshumans()
+          this.getprocessstatistics();
+        })
+    })
+  }
   
+  getprocessstatistics(){
+    let data=[
+             {
+               "country":"Processes",
+               "litres":this.processnames.length
+             },
+             {
+               "country":"Bots",
+               "litres":this.allbots.length
+             }
+           ]
+   this.processstatistics=data;
+   setTimeout(() => {
+     var chart = am4core.create("processstatistics-piechart", am4charts.PieChart);
+     var pieSeries = chart.series.push(new am4charts.PieSeries());
+     pieSeries.dataFields.value = "litres";
+     pieSeries.dataFields.category = "country";
+     pieSeries.slices.template.propertyFields.fill = "color";
+     pieSeries.slices.template.stroke = am4core.color("#fff");
+     pieSeries.slices.template.strokeWidth = 2;
+     pieSeries.slices.template.strokeOpacity = 1;
+     pieSeries.slices.template
+       // change the cursor on hover to make it apparent the object can be interacted with
+       .cursorOverStyle = [
+         {
+           "property": "cursor",
+           "value": "pointer"
+         }
+       ];
+     pieSeries.labels.template.maxWidth = 130;
+     pieSeries.labels.template.wrap = true;
+     pieSeries.labels.template.fontSize = 18;
+     pieSeries.labels.template.bent = false;
+     pieSeries.labels.template.padding(0,0,0,0);
+     pieSeries.ticks.template.disabled = true;
+     pieSeries.alignLabels = false;
+     pieSeries.labels.template.text = "{value}";
+     pieSeries.labels.template.radius = am4core.percent(-40);
+     pieSeries.labels.template.fill = am4core.color("white");
+     // Create a base filter effect (as if it's not there) for the hover to return to
+     //var shadow = pieSeries.slices.template.filters.push(new am4core.DropShadowFilter);
+     //shadow.opacity = 0;
+     
+     // Create hover state
+     var hoverState = pieSeries.slices.template.states.getKey("hover"); // normally we have to create the hover state, in this case it already exists
+     
+     // Slightly shift the shadow and make it more prominent on hover
+     var hoverShadow = hoverState.filters.push(new am4core.DropShadowFilter);
+     hoverShadow.opacity = 0.7;
+     hoverShadow.blur = 5;
+     
+     // Add a legend
+ 
+     chart.legend = new am4charts.Legend();
+     chart.legend.fontSize = 13;
+     let markerTemplate = chart.legend.markers.template;
+     markerTemplate.width = 10;
+     markerTemplate.height = 10;
+     chart.innerRadius = am4core.percent(0);
+     chart.data = this.processstatistics;
+
+     chart.legend = new am4charts.Legend();
+     chart.legend.fontSize = 13;
+     chart.legend.labels.template.text = "{category} - {value}";
+   }, 50);
+}
+
 
 }
