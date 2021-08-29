@@ -496,7 +496,7 @@ export class MonitoringComponent implements OnInit {
       var categoryAxis = this.runschart.xAxes.push(new am4charts.CategoryAxis());
 
       categoryAxis.dataFields.category = "name";
-      categoryAxis.title.text = "Runs";
+      categoryAxis.title.text = "Jobs";
       let label1 = categoryAxis.renderer.labels.template;
       label1.truncate = true;
       label1.maxWidth = 90;

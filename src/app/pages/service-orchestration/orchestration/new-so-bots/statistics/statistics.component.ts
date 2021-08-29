@@ -30,7 +30,7 @@ export class StatisticsComponent implements OnInit {
   ngOnInit(){
     this.spinner.show();
     this.getallbots();
-    this.getslametrics();
+    //this.getslametrics();
     this.getprocesses();
     setTimeout(()=>{
 
@@ -77,15 +77,15 @@ this.getEnvironments();
       let sourceType=[{
         "country": "UiPath",
         "litres": this.allbots.filter(item=>item.sourceType=="UiPath").length,
-        "color": "#ffda83"
+        "color": "#fa4616"
       },{
         "country": "BluePrism",
         "litres":  this.allbots.filter(item=>item.sourceType=="BluePrism").length,
-        "color": "#55d8fe"
+        "color": "#001c47"
       },{
         "country": "EPSoft",
         "litres":this.allbots.filter(item=>item.sourceType=="EPSoft").length,
-        "color": "#fa4616"
+        "color": "#00a0e3"
       }];
       
       this.chart3(sourceType, this.allbots.length);
@@ -286,9 +286,9 @@ chart.cursor = new am4charts.XYCursor();
         pieSeries.dataFields.category = "country";
         pieSeries.slices.template.propertyFields.fill = "color";
         // Let's cut a hole in our Pie chart the size of 30% the radius
-        chart.innerRadius = am4core.percent(50);
+        chart.innerRadius = am4core.percent(40);
         pieSeries.labels.template.maxWidth = 130;
-    pieSeries.labels.template.wrap = true;
+    pieSeries.labels.template.wrap = false;
     pieSeries.labels.template.fontSize = 15;
         // Put a thick white border around each Slice
         pieSeries.slices.template.stroke = am4core.color("#fff");
@@ -333,9 +333,9 @@ chart.cursor = new am4charts.XYCursor();
         chart.legend = new am4charts.Legend();
         chart.legend.fontSize = 13;
         chart.legend.labels.template.text = "{category} - {value}";
-        // let markerTemplate = chart.legend.markers.template;
-        // markerTemplate.width = 10;
-        // markerTemplate.height = 10;
+        let markerTemplate = chart.legend.markers.template;
+        markerTemplate.width = 10;
+        markerTemplate.height = 10;
         
         chart.data = data
         });  
@@ -839,15 +839,15 @@ pieSeries.labels.template.fontSize = 18;
         let data=[{
           "country": "Mac",
           "litres": this.environments.filter(item=>item.environmentType=="Mac").length,
-          "color": "#ffda83"
+          "color": "#C2B280"
         },{
           "country": "Windows",
           "litres":  this.environments.filter(item=>item.environmentType=="Windows").length,
-          "color": "#55d8fe"
+          "color": "#848482"
         },{
           "country": "Linux",
           "litres":this.environments.filter(item=>item.environmentType=="Linux").length,
-          "color": "#fa4616"
+          "color": "#BE0032"
         }];
 
         setTimeout(()=>{
@@ -1073,16 +1073,21 @@ pieSeries.labels.template.fontSize = 18;
     let data=[
              {
                "country":"Processes",
-               "litres":this.processnames.length
+               "litres":this.processnames.length,
+               "color": "#ce3779"
+
              },
              {
                "country":"Bots",
-               "litres":this.allbots.length
+               "litres":this.allbots.length,
+               "color": "#575fcd"
+               
              }
            ]
    this.processstatistics=data;
    setTimeout(() => {
      var chart = am4core.create("processstatistics-piechart", am4charts.PieChart);
+     chart.innerRadius = am4core.percent(30);
      var pieSeries = chart.series.push(new am4charts.PieSeries());
      pieSeries.dataFields.value = "litres";
      pieSeries.dataFields.category = "country";
