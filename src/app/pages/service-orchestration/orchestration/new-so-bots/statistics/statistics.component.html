@@ -18,10 +18,10 @@
                       <div class="chartinner"id="botstatus">
                           <div class="dbichart-block">
                               <div class="dbichart-head">
-                                  <label>Current Queue Volumes</label>
+                                  <label>Environments</label>
                               </div>
                               <div class="dbichart-body">
-                                <div id="chartdiv2" class="amart"></div>
+                                <div id="environments-chart" class="amart"></div>
                               </div>
                           </div>
   
@@ -31,10 +31,11 @@
                     <div class="chartinner">
                         <div class="dbichart-block">
                             <div class="dbichart-head">
-                                <label>SLA Metrics</label>
+                                <label>Total Automations</label>
                             </div>
                             <div class="dbichart-body">
-                              <div id="slachartdiv" class="amart"></div>
+                              <!-- <div id="slachartdiv" class="amart"></div> -->
+                              <div id="processstatistics-piechart"  class="amart" ></div>
                             </div>
                         </div>
                    </div>
@@ -52,7 +53,7 @@
   
                       </div>
                   </div>
-                  <div class="col-md-4">
+                  <!-- <div class="col-md-4">
                       <div class="chartinner">
                           <div class="dbichart-block">
                               <div class="dbichart-head">
@@ -86,6 +87,19 @@
                           </div>
   
                       </div>
+                  </div> -->
+                  <div class="col-md-8">
+                    <div class="chartinner">
+                      <div class="dbichart-block">
+                          <div class="dbichart-head">
+                              <label>Long Running Bots</label>
+                          </div>
+                          <div class="dbichart-body">
+                            <div id="runtimestatistics-piechart" class="amart"></div>
+                          </div>
+                      </div>
+
+                  </div>
                   </div>
               </div>
               <div class="row">
