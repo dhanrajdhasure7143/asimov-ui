@@ -103,10 +103,10 @@
   border: 1px solid #d1d1d1;
   box-shadow: 0px 2px 5px rgb(0 0 0 / 15%);
   background: #ffff;
-  width: 200px;
+  width: 160px;
   height: 85px;
   border-radius: 4px;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   margin: 0px auto;
 }
@@ -123,6 +123,7 @@
   /* position: relative;
     top: 30px; */
     font-weight: 600;
+    margin-top: 20px;
 }
 .drp_btns {
   position: relative;

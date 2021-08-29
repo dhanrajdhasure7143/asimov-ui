@@ -570,6 +570,7 @@ body {
   transform: translate(5px, 0px);
   height: auto;
   width: auto;
+  /* fill: lightgray */
 }
 
 .node {
@@ -994,6 +995,7 @@ foreignObject {
 
 .pisvg {
   width: 100% !important;
+  height: 100%;
 }
 
 

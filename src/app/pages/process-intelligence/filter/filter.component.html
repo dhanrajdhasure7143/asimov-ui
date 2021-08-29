@@ -160,6 +160,7 @@
                                 [xAxis]="showXAxis"
                                 [yAxis]="showYAxis"
                                 [legend]="showLegend"
+                                [barPadding]="2"
                                 [showXAxisLabel]="showXAxisLabel"
                                 [showYAxisLabel]="showYAxisLabel"
                                 [xAxisLabel]="xAxisLabel"
@@ -188,7 +189,8 @@
                                     [labels]="showLabels"
                                     [doughnut]="isDoughnut">
                                 </ngx-charts-pie-chart>
-                                <span class="pie_label">{{casePercentage}}% of cases</span>
+                                <div class="pie_label">{{casePercentage}}% </div>
+                                <div> of cases</div>
                             </div>
                         </div>
                         <div class="col-md-4 p-0 max_time_select">

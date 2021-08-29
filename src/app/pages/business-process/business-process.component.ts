@@ -29,6 +29,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
   selected_approver:any;
   hasConformance:boolean = false;
   reSize:boolean=false;
+  process_id:any;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
@@ -46,6 +47,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.activatedRoute.queryParams.subscribe(params => {
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.selectedNotationType = params['ntype'];
+      this.process_id=params['pid'];
 
 
     });
@@ -134,8 +136,17 @@ export class BusinessProcessComponent implements AfterViewChecked {
   fitNotation(){
     this.dt.bpsHeaderValues("fitNotation");
   }
+  
   backtoNavigate(){
     this.router.navigate(['/pages/businessProcess/home'])
+  }
+
+  backtoApprovalWorkflow(){
+    this.router.navigate(['/pages/approvalWorkflow/home'])
+  }
+
+  backtoPI(){
+    this.router.navigate(["/pages/processIntelligence/flowChart"],{queryParams:{wpiId:this.process_id}})
   }
 
   gotoBPMNPlatform() {
