@@ -298,8 +298,13 @@
 <ng-template #process_logs>
   <div id='logsid' *ngIf="popup">
     <div class="modal-header modelprhead">
-      Logs
-      <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+     
+        <h4 class="modal-title pull-left">Logs</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide()">
+          <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+        </button>
+     
+      <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
     </div> 
     <div class="modal-body">
       <app-so-processlog [processId]="processId1"></app-so-processlog>

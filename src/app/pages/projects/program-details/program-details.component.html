@@ -259,8 +259,8 @@
                           class="labelcont">-</span>
                       </div>
                       <div *ngIf="editdata==true">
-                        <input type="text" (change)="program_detials.programPurpose=$event.target.value"
-                          [value]="(program_detials.programPurpose==undefined||program_detials.programPurpose==null)?'':program_detials.programPurpose"
+                        <input type="text" (change)="program_detials.purpose=$event.target.value"
+                          [value]="(program_detials.purpose==undefined||program_detials.purpose==null)?'':program_detials.purpose"
                           class="small-input" placeholder="Enter Program Purpose">
                       </div>
                       </div>

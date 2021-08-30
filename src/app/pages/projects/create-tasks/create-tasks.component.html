@@ -75,13 +75,13 @@
                         <div class="col-md-12">
                             <div class="form-fields col-md-6 pl-0">
                                 <label class="label-control">Start Date <span class="star">*</span></label>
-                                <input class="form-control enteredfield-color" type="date" name="daytime" [min]="mindate" formControlName="startDate">
+                                <input class="form-control enteredfield-color" type="date" name="daytime" [min]="mindate" max="9999-12-31" (change)="onchangeDate()" (keydown)="DateMethod()" formControlName="startDate">
                                 <span *ngIf="createtaskForm.get('startDate').invalid && createtaskForm.get('startDate').touched"
                                     class="errspan required">Start Date Required*</span>
                             </div>
                             <div class="form-fields col-md-6 pr-0">
                                 <label  class="label-control" for="endDate">End Date<span class="star">*</span></label>
-                                <input class="form-control enteredfield-color" type="date" name="daytime" [min]="mindate" formControlName="endDate">
+                                <input class="form-control enteredfield-color" type="date" name="daytime" max="9999-12-31" [min]="mindate" (keydown)="endDateMethod()"  formControlName="endDate">
                                 <span *ngIf="createtaskForm.get('endDate').invalid && createtaskForm.get('endDate').touched"
                                 class="errspan required">End Date Required*</span>
                             </div>

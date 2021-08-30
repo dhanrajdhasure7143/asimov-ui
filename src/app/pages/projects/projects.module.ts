@@ -50,6 +50,7 @@ import {CustomMatPaginatorIntl} from './../../shared/custom-mat-paginator-int';
 import {MatPaginatorIntl} from '@angular/material';
 import { CreateProjectFormComponent } from './forms/create-project-form/create-project-form.component';
 import { EditTaskComponent } from './edit-task/edit-task.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 const materialModules: any[] = [
     
@@ -78,7 +79,8 @@ const materialModules: any[] = [
     MatFormFieldModule,
     MatMenuModule,MatButtonModule,NgxSpinnerModule,NgxPaginationModule,
     ModalModule.forRoot(),
-    MatProgressBarModule,NgSelectModule,Ng5SliderModule
+    MatProgressBarModule,NgSelectModule,Ng5SliderModule,
+    NgbModule
     
   ],
   providers:[

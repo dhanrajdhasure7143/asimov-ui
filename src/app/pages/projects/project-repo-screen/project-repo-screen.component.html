@@ -347,7 +347,7 @@
                       <th mat-header-cell *matHeaderCellDef> Actions</th>
                       <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
                         <span class="remove-action">
-                          <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny File Request" type="button"><i class="fas fa-times"></i></button>
+                          <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny/Revoke File Request" type="button"><i class="fas fa-times"></i></button>
                         </span>
                         <span class="upload-action" *ngIf="loggedUser == element.requestTo">
                           <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
