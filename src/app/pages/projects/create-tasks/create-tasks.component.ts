@@ -17,7 +17,8 @@ import { ProjectDetailsScreenComponent } from '../project-details-screen/project
 export class CreateTasksComponent implements OnInit {
 
   createtaskForm:FormGroup;
-  mindate: string;
+  mindate= moment().format("YYYY-MM-DD");
+
   userslist: any;
   projectdetails: Object;
   taskcategories: Object;
@@ -42,7 +43,6 @@ export class CreateTasksComponent implements OnInit {
       })
 
 
-      this.mindate= moment().format("YYYY-MM-DD");
 
       this.route.queryParams.subscribe(data=>{
         let response:any=data;
@@ -128,6 +128,17 @@ export class CreateTasksComponent implements OnInit {
   this.createtaskForm.get("priority").setValue("");
   this.createtaskForm.get("resources").setValue("");
   this.createtaskForm.get("approvers").setValue("");
+  }
+  DateMethod(){
+    return false;
+  }
+  endDateMethod(){
+   return false;
+  }
+  onchangeDate(){
+    if(this.createtaskForm.get("endDate").value)
+    this.createtaskForm.get("endDate").setValue("0000-00-00");
+    this.mindate=this.createtaskForm.get("startDate").value;
   }
 
 }

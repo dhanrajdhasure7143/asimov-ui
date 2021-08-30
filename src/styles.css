@@ -2465,3 +2465,38 @@ th.mat-header-cell {
   border-left: 6px solid transparent !important;
   border-right: 6px solid transparent !important;
 } 
+
+
+.logs-modal{
+  width:70% !important;
+}
+
+.logs-modal .logs-container
+{
+  height:400px  !important;
+  overflow:auto;
+}
+.logs-table{
+  width:100% !important;
+}
+.logs-table th {
+  font-size: 16px !important;
+  text-align: left !important;
+  font-weight: 600 !important;
+  color:#00a0e3 !important;
+}
+.logs-table th button{
+  font-size: 16px !important;
+  text-align: left !important;
+  font-weight: 600 !important;
+  color:#00a0e3 !important;
+}
+.logs-table th{
+  background-color: white !important;
+  
+}
+
+.logs-table tr{
+  border-bottom:none !important;
+}
+

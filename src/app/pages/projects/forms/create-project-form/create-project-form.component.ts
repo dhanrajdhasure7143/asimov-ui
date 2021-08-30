@@ -3,6 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
 import moment from 'moment';
 import { RestApiService } from 'src/app/pages/services/rest-api.service';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-create-project-form',
   templateUrl: './create-project-form.component.html',
@@ -15,10 +16,11 @@ export class CreateProjectFormComponent implements OnInit {
   selectedresources:any=[];
   valuechain:any=[];
   valuechainprocesses:any=[];
-  mindate: any;
+  mindate= moment().format("YYYY-MM-DD");
   @Input('users_list') public users_list: any[];
   @Input('processes') public processes:any[];
   @Output() oncreate = new EventEmitter<String>();
+  date = new Date();
   ngOnInit(): void {
     
     this.insertForm2=this.formBuilder.group({
@@ -39,7 +41,6 @@ export class CreateProjectFormComponent implements OnInit {
       // status: ["", Validators.compose([Validators.required, Validators.maxLength(50)])],
 
     })
-    this.mindate= moment().format("YYYY-MM-DD");
     this.getvalchain();
   }
 
@@ -103,6 +104,17 @@ export class CreateProjectFormComponent implements OnInit {
       let response:any=res;
       this.valuechain=response;
     })
+  }
+  DateMethod(){
+    return false;
+  }
+  endDateMethod(){
+   return false;
+  }
+  onchangeDate(){
+    if(this.insertForm2.get("endDate").value)
+    this.insertForm2.get("endDate").setValue("0000-00-00");
+    this.mindate=this.insertForm2.get("startDate").value;
   }
 
 }
