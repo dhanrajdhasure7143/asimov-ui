@@ -214,7 +214,6 @@
     <div [id]="viewlogid" *ngIf="viewlogid1==undefined" class="modal-body" >
           
 
-      <br>
       <div class="logs-container" >
           <table mat-table [dataSource]="Viewloglist" #sort4="matSort" matSort class="logs-table">
 
@@ -300,7 +299,6 @@
     </div>
     <div [id]="viewlogid1"  *ngIf="viewlogid1!=undefined" class="modal-body">
    
-      <br>
       <div class="logs-container">
           <table mat-table  class="logs-table" [dataSource]="logbyrunid" #sort5="matSort" matSort >
 
