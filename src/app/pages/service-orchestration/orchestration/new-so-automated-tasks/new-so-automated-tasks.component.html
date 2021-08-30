@@ -5,7 +5,7 @@
 
   <div class="form-group leftfporm col-md-10 pl-0">
       <div id="autocategorysearch" class="comncl">
-          <select class="rpa-control form-control"  [value]="selectedcategory" (selectionChange)="applyFilter1($event.value)">
+          <select class="rpa-control form-control"  [value]="selectedcategory" (change)="applyFilter1($event.value)">
             <option value="" disabled>Select Process Group</option>
             <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
             </option>
@@ -13,7 +13,7 @@
         </div>
       
         <div *ngIf="process_names!=undefined" id="autoprocesssearch"  class="comncl">
-            <select class="rpa-control form-control" [(ngModel)]="selectedvalue" (selectionChange)="applyFilter($event.value)">
+            <select class="rpa-control form-control" [(ngModel)]="selectedvalue" (change)="applyFilter($event.value)">
               <option value="" disabled>Select Process</option>  
               <option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
                 </option>
