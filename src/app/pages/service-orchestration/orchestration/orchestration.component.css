@@ -185,3 +185,90 @@ td{
 .mat-form-field-wrapper {
   padding: 0px 0px 15px 0px !important;
 }
+.modal-body.actions-mbody {
+  height: calc(100% - 83px);
+  overflow: hidden auto;
+  font-size: 15px;
+}
+.mat-tab-header-pagination.mat-tab-header-pagination-after.mat-elevation-z4.mat-ripple {
+  z-index: 0;
+}
+.scheduletimer-loadicon span{
+  float: right;
+  margin-top: 6px;
+}
+.RPA-scheduletimer input[type="date"] {
+  background-image: url(../../../../assets/images/RPA/icon_latest/calendar.svg);
+  background-position: calc(100% - 10px) center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+.newshacl .RPA-scheduletimer-footer button.btn.btn-primary {
+  margin: 0px 0px 10px 0px !important;
+}
+.newshacl .RPA-scheduletimer-footer {
+  display: inline-block;
+  margin: 15px 0px 20px 0px;
+}
+input[type="date"]::-webkit-inner-spin-button, input[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.schedulemod .RPA-scheduletimer .col-md-6.pl-0 {
+  padding-right: 5px;
+}
+.schedulemod .RPA-scheduletimer .col-md-6.pr-0 {
+  padding-left: 5px;
+}
+.newshacl .scheduletimer-actionbtns button {
+  width: auto;
+  background: unset !important;
+  box-shadow: unset !important;
+  height: auto;
+  padding: 0px !important;
+  margin-left: 10px;
+}
+.schedulemod .RPA-scheduletimer-body input {
+  margin-bottom: 10px !important;
+  font-size: 14px !important;
+}
+.tablmacl .table th {
+  font-size: 14px;
+  font-weight: 500;
+}
+body .leftfporm select {
+  border: 1px solid #D1D1D1 !important;
+  border-radius: 2px !important;
+  width: 100% !important;
+}
+.leftfporm {
+  display: flex !important;
+  margin: 0px !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.comncl {
+  width: 100%;
+  margin-right: 10px;
+}
+.resecl button {
+  padding: 7px 0px;
+  margin-left: 5px;
+}
+.roghtform button {
+  background-color: unset !important;
+  width: auto;
+}
+.roghtform {
+  margin-bottom: 0px !important;
+  padding: 7px 0px;
+}
+.roghtform span {
+  padding: 0px !important;
+  margin-left: 6px !important;
+}
+.RPA.table select.form-control {
+  border: 1px solid #ddd !important;
+  width: 100%;
+  padding-right: 30px !important;
+  border-radius: 2px !important;
+}

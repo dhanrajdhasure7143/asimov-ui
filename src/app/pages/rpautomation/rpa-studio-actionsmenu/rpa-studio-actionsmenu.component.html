@@ -433,10 +433,10 @@
 
 
 <ng-template #logspopup>
-  <div class="modal-header modelprhead">
+  <div class="modal-header modelprhead newmodelcla">
     <span *ngIf="viewlogid1!=undefined">      
     
-      <button (click)="viewlogid1=undefined">
+      <button (click)="viewlogid1=undefined" class="backarrcl">
         <img src="../../../../assets/images/RPA/arrow.svg" style="height:17px">
       </button>&nbsp;&nbsp;
     </span> 
@@ -444,24 +444,24 @@
     Logs  
     
     <span *ngIf="viewlogid1!=undefined">
-      - RunId - {{viewlogid1}} 
+      - Run ID - {{viewlogid1}} 
     </span>
-    <span class="pull-right">
-    <span (click)="viewlogdata(logspopup,'update')" *ngIf="viewlogid1==undefined"  >
-      <img src="../../../../assets/images/RPA/icon_latest/repeat.svg" style="height:17px"  />&nbsp;&nbsp;Refresh
+    <span (click)="viewlogdata(logspopup,'update')" *ngIf="viewlogid1==undefined" class="clickable refecls"  >
+      Refresh
     </span>
 
-    <span (click)="ViewlogByrunid(viewlogid1)" *ngIf="viewlogid1!=undefined" >
-        <img src="../../../../assets/images/RPA/icon_latest/repeat.svg"  style="height:17px" />&nbsp;&nbsp;Refresh
+    <span (click)="ViewlogByrunid(viewlogid1)" *ngIf="viewlogid1!=undefined" class="clickable refecls">
+      Refresh
       </span>
-      &nbsp;&nbsp;
+    <span class="pull-right">
+   
     <span class=" clickable" (click)="logsmodalref.hide()">
       <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
     </span>
     
   </span>
   </div>
-  <div class="modal-body modelprbody" *ngIf="viewlogid1==undefined" [id]="viewlogid" >
+  <div class="modal-body newmodelbodycl" *ngIf="viewlogid1==undefined" [id]="viewlogid" >
       <!-- <div class="rpa-modal-header">
          <h4>Logs</h4>
       </div> -->

@@ -259,6 +259,7 @@ updatedata()
 }
 
 Update_UiPath(){
+  this.spinner.show();
   if(this.UpdateUipathForm.valid){
     this.updatesubmitted = true;
     setTimeout(()=>{
@@ -266,7 +267,7 @@ Update_UiPath(){
       Swal.fire({
         position: 'center',
         icon: 'success',
-        title: "Successfully Saved",
+        title: "Successfully Updated !!",
         showConfirmButton: false,
         timer: 2000
       });

@@ -1,60 +1,54 @@
 <div class="bg-color">
-<br>
-<br>
+
 <div class="container-fluid">
-<div class="form-inline">
+<div class="form-inline mainformco row">
 
-  <div class="form-group">
-    <span style="padding:5px">
-      <mat-form-field id="autocategorysearch">
-        <mat-label>Select Process Group</mat-label>
-          <mat-select  [value]="selectedcategory" (selectionChange)="applyFilter1($event.value)">
-            <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
-            </mat-option>
-          </mat-select>
-      </mat-form-field>
-    </span>
-      <span style="padding:5px">
-        <mat-form-field *ngIf="process_names!=undefined" id="autoprocesssearch">
-            <mat-label>Select Process</mat-label>
-            <mat-select [(ngModel)]="selectedvalue" (selectionChange)="applyFilter($event.value)">
-                <mat-option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-      </span>
-
-      <span style="padding:5px">
-        <mat-form-field id="autoenvsearch">
-          <mat-label>Select Environment</mat-label>
-          <mat-select  [(ngModel)]="selectedEnvironment">
-              <mat-option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </span>
-      <span style="padding:5px" id="autoreset">
-      <button (click)="reset_all()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
-      </span>
+  <div class="form-group leftfporm col-md-10 pl-0">
+      <div id="autocategorysearch" class="comncl">
+          <select class="rpa-control form-control"  [value]="selectedcategory" (change)="applyFilter1($event.target.value)">
+            <option value="" disabled>Select Process Group</option>
+            <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
+            </option>
+          </select>
+        </div>
+      
+        <div *ngIf="process_names!=undefined" id="autoprocesssearch"  class="comncl">
+            <select class="rpa-control form-control" [(ngModel)]="selectedvalue" (change)="applyFilter($event.target.value)">
+              <option value="" disabled>Select Process</option>  
+              <option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
+                </option>
+            </select>
+          </div>
+      
+        <div id="autoenvsearch"  class="comncl">
+          <select class="rpa-control form-control"  [(ngModel)]="selectedEnvironment">
+            <option value="" disabled>Select Environment</option>  
+              <option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}
+            </option>
+          </select>
+        </div>
+      <div id="autoreset" class="comncl resecl">
+      <button (click)="reset_all()" tooltip="Reset"><i class="fa fa-undo"></i></button>
+      </div>
   </div>
 
 
-  <div class="form-group pull-right">
+  <div class="text-right roghtform col-md-2 pr-0">
       <!--<span style="padding:5px" id="autoStartProcess">
         <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
       </span>-->
         <span style="padding:5px" id="autoStartProcess">
-          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-play" style="margin-right: -4px !important;"></i></button>
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" class="matbutton orchestration-action-btn" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"></button>
         </span>
        <!-- <span style="padding:5px">
           <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
         </span>
         -->
-        <span style="padding:5px" id="autoOpenScheduler">
-          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><i class="fa fa-calendar" style="margin-right: -1px !important;"></i></button>
-        </span>
+        <!-- <span style="padding:5px" id="autoOpenScheduler">
+          <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><img src="../../../../../assets/images/calicon.svg" alt="" class="testplus"></button>
+        </span> -->
         <span style="padding:5px" id="autoViewLogs">
-          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs(process_logs)"  ><i class="fa fa-file" style="margin-right: -1px !important;" aria-hidden="true"></i></button>
+          <button [disabled]="selectedvalue==''" class="orchestration-action-btn"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs(process_logs)"  ><img src="../../../../../assets/images/file.svg" alt="" class="testplus"></button>
         </span>
   </div>
 
@@ -64,7 +58,7 @@
 
 <div class="container-fluid">
 <!-- <mat-card> -->
-  <div  *ngIf="responsedata!=undefined" style="width:100%;height:45vh;overflow: scroll;">
+  <div  *ngIf="responsedata!=undefined" class="orchestration-table-container">
 
     <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class="RPA table" id="autotable">
 

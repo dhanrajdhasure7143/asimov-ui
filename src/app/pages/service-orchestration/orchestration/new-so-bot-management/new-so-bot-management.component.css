@@ -62,7 +62,7 @@ select {
   width:200px;
 }
 .tableActionsIcons img {
-  height: 20px;
+  height: 18px;
   width: auto;
   margin-right: 4px;
 }
@@ -71,4 +71,26 @@ select {
 .tableActionsIcons span {
   font-size: 16px;
   padding-top: 5px;
+}
+.newmodelcla {
+  padding: 15px !important;
+}
+.newmodelbodycl {
+  padding-top: 0px;
+}
+
+.newmodelcla .refecls {
+  cursor: pointer;
+  font-size: 10px;
+  background-color: #00a0e3 !important;
+  color: #fff;
+  padding: 2px 9px;
+  border-radius: 10px;
+  margin-left: 8px;
+}
+.newmodelcla .refecls:hover {
+  background-color: #001c47 !important;
+}
+.backarrcl img {
+  width: 12px;
 }
