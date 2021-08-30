@@ -995,7 +995,7 @@ label {
 }
 
 .as-split-area.show {
-  /* flex-basis: calc(100% - 0px) !important; */
+  flex-basis: calc(100% - 0px) !important;
 }
 
 .djs-palette {

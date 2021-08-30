@@ -1,8 +1,8 @@
 <div class="box_area container-fluid"><!-- [hidden]="bpmnupload" -->
 
     <!-- div for bpmn-worksapce -->
-    <div class="row">
-        <div class='col-md-6 drop_box' id="upload_bpmn" *ngIf="!isShowConformance">
+    <div class="row" *ngIf="!isShowConformance">
+        <div class='col-md-6 drop_box' id="upload_bpmn">
             <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
                 <div class="model-img">
                     <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'></ngx-dropzone-label>

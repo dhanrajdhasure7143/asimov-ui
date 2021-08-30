@@ -202,7 +202,7 @@
         </div>
         <div class="canvas2 col-md-12 h-100" *ngIf="!isShowConformance" id="canvas2"></div>
     </as-split-area>
-    <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" class="show">
+    <as-split-area [size]="isShowConformance?(reSize||hasConformance?50:0):100" [class.show]="!(isShowConformance && !isUploaded)">
         <span class="canvasOpt" *ngIf="isShowConformance && (hasConformance || isUploaded)"><input type="radio" [value]="false" name="isBpmnModelerCanvas" [(ngModel)]="isConfBpmnModeler"/>&nbsp;To Be</span>
         <app-upload-create-drop-bpmn *ngIf="isShowConformance && !hasConformance && !isUploaded" (update)="getUserBpmnList(true)" [data]="processName+'@'+category+'@'+randomNumber+'@'+pid"></app-upload-create-drop-bpmn>
         <div [class.bps_overlay]="isfromApprover || !isEdit || rejectedOrApproved=='PENDING'" class="h-100">

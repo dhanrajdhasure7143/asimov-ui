@@ -6,8 +6,8 @@
     </div>
 </div> -->
 
- <div class="container-fluid p-0">
-    <div class="row">
+ <div class="container-fluid p-0 h-100">
+    <div class="row h-100">
          <div id="mySidenav" class="col-md-12 p-0 sidenav tracking_detsils1">
              <div class='variants_slider'>
                 <div class="col-md-12 select_drpdwnone">
@@ -53,7 +53,7 @@
          </div>
  
  
- <div id="main">
+ <div id="main" class="newmaindiv">
      <div class='PImodule-fileds'>
         <div class='col-md-2'>
             <select class="form-control border_bottom" name="graphId" id="process_graph_list" #graphId="ngModel" [(ngModel)]="graphIds" (change)="onchangegraphId(graphIds)">
@@ -152,7 +152,7 @@
                  <button class="btn btn-primary btn-thin eiap-btn pull-right" id="variant_list" (click)="openVariantListNav()"> &#9776; Variant List</button>
          </div> -->
  </div>
-     <div class="col-md-12">
+     <div class="col-md-12 h-100">
              <!-- <div class="lableHide"></div> -->
              <div class="tooltip_button tooltip1" #toogleBtn><img (click)='spinnermetrics()' src="..\assets\images\PI\options_icon.svg" id="variants" class="testplus1">
                  <div *ngIf='isedgespinner' class="tooltiptext1">
