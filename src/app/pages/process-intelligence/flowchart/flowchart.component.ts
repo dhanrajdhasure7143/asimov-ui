@@ -234,7 +234,7 @@ Pi_header_functions:Subscription;
           piId=this.wpiIdNumber;
           this.graphIds = piId;
           this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
-          this.isLoading=true;
+          this.spinner.show();
           setTimeout(() => {
             this.onchangegraphId(piId);
             }, 500);
@@ -244,7 +244,7 @@ Pi_header_functions:Subscription;
         piId=this.piIdNumber;
         this.graphIds = piId;        
         this.loaderImgSrc = "/assets/images/PI/Loader_Generating-Graph.gif";
-        this.isLoading=true;
+        this.spinner.show();
            this.graphgenetaionInterval = setInterval(() => {
              this.onchangegenerategraphId(piId);
            }, 10*1000);
@@ -345,7 +345,7 @@ Pi_header_functions:Subscription;
             if(this.graphgenetaionInterval){
               clearInterval(this.graphgenetaionInterval);
             }
-            this.isLoading=false;
+            this.spinner.hide();
             return;
           } 
         }
@@ -373,7 +373,7 @@ Pi_header_functions:Subscription;
             }
           })
 
-          this.isLoading=false;
+          this.spinner.hide();
          // this.redirectToWorkspace()
           this.model1=[];
           this.model2=[];
@@ -396,7 +396,7 @@ Pi_header_functions:Subscription;
             this.endArray.push(element.from)
           }
         });
-        this.isLoading=false;
+        this.spinner.hide();
         this.linkmodel2 = this.model2;
         this.isFullGraphBPMN = true;
         this.isSingleTraceBPMN = false;
@@ -405,7 +405,7 @@ Pi_header_functions:Subscription;
         this.filterOverlay()
     }
         },(err =>{
-          this.isLoading=false;
+          this.spinner.hide();
         }));
         const variantGraphbody= { 
           "data_type":"variant_graph", 
@@ -510,12 +510,12 @@ Pi_header_functions:Subscription;
             if(this.graphgenetaionInterval){
               clearInterval(this.graphgenetaionInterval);
             }
-            this.isLoading=false;
+            this.spinner.hide();
             return;
           } 
         }
         if(this.fullgraph.hasOwnProperty('display_msg')){
-          this.isLoading=true;
+          this.spinner.show();
           this.model1=[];
           this.model2=[];
         } else{
@@ -540,7 +540,7 @@ Pi_header_functions:Subscription;
             this.endArray.push(element.from)
           }
         });
-        this.isLoading=false;
+        this.spinner.hide();
         this.linkmodel2 = this.model2;
         this.isFullGraphBPMN = true;
         this.isSingleTraceBPMN = false;
@@ -549,7 +549,7 @@ Pi_header_functions:Subscription;
         this.filterOverlay()
     }
         },(err =>{
-          this.isLoading=false;
+          this.spinner.hide();
         }));
         const variantGraphbody= { 
           "data_type":"variant_graph", 
@@ -707,7 +707,7 @@ Pi_header_functions:Subscription;
         endTime=this.workingHours.shiftEndTime
       }
       this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-      this.isLoading=true;
+      this.spinner.show();;
       const variantComboBody={
         "data_type":"variant_combo",
         "pid":this.graphIds,
@@ -731,7 +731,7 @@ Pi_header_functions:Subscription;
           }else{                
             this.model2 = this.flowchartData(this.model1);
           }
-          this.isLoading=false;
+          this.spinner.hide();
     })
          /**
        * BPMN Boolean Variables
@@ -1410,7 +1410,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
   }
 
   filterByActivity(SelectedActivities){   // filter process graph based on selected Activity (Node)
-    this.isLoading=true;
+    this.spinner.show();;
     this.activity_value=SelectedActivities;
     this.model1=[]
     this.model2=[]
@@ -1440,9 +1440,9 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         let activityFilterGraph:any = data;
         this.model1 = activityFilterGraph.data[0].nodeDataArraycase;
         this.model2 = this.flowchartData(this.model1);
-        this.isLoading=false;
+        this.spinner.hide();
       },(err =>{
-        this.isLoading=false;
+        this.spinner.hide();
       }));
   }
 
@@ -1609,7 +1609,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
           endTime=this.workingHours.shiftEndTime
         }
         this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-        this.isLoading=true;
+        this.spinner.show();;
 
           var reqObj={
             "data_type":"endpoint_activity_filter",
@@ -1638,7 +1638,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
                 this.endArray.push(element.from)
               }
             });
-          this.isLoading=false;
+          this.spinner.hide();
       })
     }
   }
@@ -1792,7 +1792,7 @@ addWorkingHours(){
     endTime=this.workingHours.shiftEndTime
   }
   this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
-  this.isLoading=true;
+  this.spinner.show();;
   const fullGraphbody= { 
     "data_type":"full_graph", 
      "pid":this.graphIds,
@@ -1823,7 +1823,7 @@ addWorkingHours(){
             }, 1500);
           }
         })
-        this.isLoading=false;
+        this.spinner.hide();
         this.model1=[];
         this.model2=[];
     } else{
@@ -1845,7 +1845,7 @@ addWorkingHours(){
               this.endArray.push(element.from)
             }
           });
-          this.isLoading=false;
+          this.spinner.hide();
           this.linkmodel2 = this.model2;
           this.isFullGraphBPMN = true;
           this.isSingleTraceBPMN = false;
@@ -1854,7 +1854,7 @@ addWorkingHours(){
           this.filterOverlay();
       }
     },(err =>{
-      this.isLoading=false;
+      this.spinner.hide();
     }));
     const variantGraphbody= { 
       "data_type":"variant_graph", 
@@ -2011,7 +2011,7 @@ addWorkingHours(){
             }, 1500);
           }
         })
-        this.isLoading=false;
+        this.spinner.hide();
         this.model1=[];
         this.model2=[];
     } else{
@@ -2034,7 +2034,7 @@ addWorkingHours(){
               this.endArray.push(element.from)
             }
           });
-          this.isLoading=false;
+          this.spinner.hide();
           this.linkmodel2 = this.model2;
           this.isFullGraphBPMN = true;
           this.isSingleTraceBPMN = false;
@@ -2044,7 +2044,7 @@ addWorkingHours(){
       }
     }
      ,(err=>{
-      this.isLoading=false;
+      this.spinner.hide();
        console.log(err);
      }));
   }

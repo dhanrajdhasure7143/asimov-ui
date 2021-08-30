@@ -334,7 +334,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(isFromConf) this.isUploaded = true;
       else this.getSelectedNotation();
       this.notationListOldValue = this.selected_notation;
-      this.isLoading = false;
+      // this.isLoading = false;
       setTimeout(() => {
       this.getSelectedApprover();
       this.getAutoSavedDiagrams();
@@ -375,6 +375,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   }
 
    getSelectedApprover(){
+     this.isLoading=true;
     let user_role=localStorage.getItem('userRole')
     let current_bpmn_info
     if(user_role=='Process Architect'){
@@ -418,8 +419,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
     "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
       setTimeout(() => {
+        this.isLoading=false;
         this.dt.bpsNotationaScreenValues(this.push_Obj);
-      }, 3000);
+      }, 2000);
    }
 
   getAutoSavedDiagrams(){
@@ -656,7 +658,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               console.error('could not import BPMN EZFlow notation', err);
             }
           }
-          _self.isLoading = false;
+          // _self.isLoading = false;
         }
       })
     }else{
@@ -722,7 +724,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           console.error('could not import BPMN EZFlow notation', err);
         }
       }
-      _self.isLoading = false;
+      // _self.isLoading = false;
     }
     this.getSelectedApprover();
   }
@@ -768,6 +770,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this.notationListOldValue = 0;
     this.isUploaded = this.saved_bpmn_list.length != 0;
     this.reSize=true;
+    this.isEdit=false;
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
     "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
@@ -1323,6 +1326,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   getBpmnDifferences(){
+    this.isEdit=false;
     let bpmnDiffs = diff( this.confBpmnModeler.getDefinitions(), this.bpmnModeler.getDefinitions());
     let revBpmnDiffs = diff( this.bpmnModeler.getDefinitions(), this.confBpmnModeler.getDefinitions());
     let rev_added = revBpmnDiffs._added;
@@ -1364,6 +1368,10 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this.getElementsToColor('confBpmnModeler', revBpmnDiffs._layoutChanged, 'layout');
 
     this.slideUpDifferences();
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize}
+this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   clearDifferences(){
