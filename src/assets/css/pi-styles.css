@@ -1130,3 +1130,6 @@ img.hover-img {
 #linechart1 tspan {
   /* font-size: 12px !important; */
 }
+.linechart1 g[aria-labelledby*="-title"] {
+  display: none;
+}

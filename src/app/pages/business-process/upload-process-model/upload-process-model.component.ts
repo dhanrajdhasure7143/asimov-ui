@@ -319,6 +319,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
 
   async getUserBpmnList(isFromConf){
     this.isLoading = true;
+    this.saved_bpmn_list=[];
     await this.rest.getUserBpmnsList().subscribe( (res:any[]) =>  {
       this.full_saved_bpmn_list = res;
       if(this.isShowConformance){
@@ -448,6 +449,12 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
 
   fitNotationView(){
     let modeler_obj = this.isConfBpmnModeler ? "confBpmnModeler":"bpmnModeler";
+    if(this.selectedNotationType=="dmn"){
+      this[modeler_obj].getActiveViewer()
+        .get('canvas').zoom('fit-viewport');
+        this.global.notify("Notation is fit to view port", "success")
+        return;
+    }
     this[modeler_obj].get('canvas').zoom('fit-viewport');
     let msg = "";
     if(this.isConfBpmnModeler){
@@ -1473,14 +1480,24 @@ zoomIn() {
 if(this.isShowConformance){
 this.confBpmnModeler.get('zoomScroll').stepZoom(0.1);
     }else{
-this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
+      if(this.selectedNotationType=="dmn"){
+        this.bpmnModeler.getActiveViewer()
+          .get('zoomScroll').stepZoom(0.1);
+          return;
+      }
+  this.bpmnModeler.get('zoomScroll').stepZoom(0.1);
     }
   }
 zoomOut() {
 if(this.isShowConformance){
 this.confBpmnModeler.get('zoomScroll').stepZoom(-0.1);
     }else{
-this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
+      if(this.selectedNotationType=="dmn"){
+        this.bpmnModeler.getActiveViewer()
+          .get('zoomScroll').stepZoom(-0.1);
+          return;
+      }
+  this.bpmnModeler.get('zoomScroll').stepZoom(-0.1);
     }
 }
 toggleOpen(){

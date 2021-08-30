@@ -15,6 +15,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import * as am4core from '@amcharts/amcharts4/core';
 import * as am4charts from '@amcharts/amcharts4/charts';
 import am4themes_animated from '@amcharts/amcharts4/themes/animated';
+import * as $ from 'jquery'
 HC_more(Highcharts)
 enum VariantList {
     'Most Common',
@@ -98,7 +99,7 @@ export class ProcessinsightsComponent implements OnInit {
 
     bubbleData:any =[];
   view: any[] = [800, 420];
-  view1:any[] = [500, 340]
+  view1:any[] = [600, 340]
 
   // options
   legend: boolean = false;
@@ -558,18 +559,19 @@ robotValue:number;
         this.robotCost = rCost;
 
         this.multi = [{name:"Human Cost", series: d1},{name:'Bot Cost', series:d2}];
-// console.log(d3)
 
     //    this.addcharts();
     let chart = am4core.create("linechart1", am4charts.XYChart);
 
 // Add data
 chart.data = d3
-
 // Create axes
 let dateAxis = chart.xAxes.push(new am4charts.DateAxis());
-// dateAxis.renderer.minGridDistance = 10;
-// dateAxis.renderer.labels.template.rotation=270;
+// Set date label formatting
+// dateAxis.dateFormats.setKey("day", "MMMM dt");
+// dateAxis.dateFormatter.dateFormat = "yyyy-MM-dd HH:mm";
+dateAxis.renderer.minGridDistance = 50;
+dateAxis.renderer.labels.template.text="date1"
 dateAxis.title.text = "Duration";
 let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
 valueAxis.title.text = "Price";
@@ -590,10 +592,38 @@ series2.strokeWidth = 2;
 series2.strokeDasharray = "3,4";
 // series2.tooltipText = "[bold]{date.formatDate()}:[/]\n{name1}: {value1}\n{name1}:{value2}";
 series2.stroke = series.stroke;
-
 // Add cursor
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.xAxis = dateAxis;
+
+// // add ranges
+// var minRange = dateAxis.axisRanges.create();
+// // this overrides minLabelPosition/maxLabelPosition so that the range labels would be visible
+// minRange.maxPosition = 1;
+// minRange.minPosition = 0;
+// minRange.label.horizontalCenter = "left"
+// minRange.label.paddingLeft = 0;
+
+
+// var maxRange = dateAxis.axisRanges.create();
+// // this overrides minLabelPosition/maxLabelPosition so that the range labels would be visible
+// maxRange.maxPosition = 1;
+// maxRange.minPosition = 0;
+// maxRange.label.horizontalCenter = "right"
+// maxRange.label.paddingRight = 0;
+
+// dateAxis.events.on("startendchanged", updateRangeLabels)
+// dateAxis.events.on("extremeschanged", updateRangeLabels)
+
+// function updateRangeLabels() {
+//   minRange.value = dateAxis.min + dateAxis.start * (dateAxis.max - dateAxis.min);
+//   minRange.label.text = dateAxis.dateFormatter.format(minRange.value, "yyyy-MM-dd");
+
+//   maxRange.value = dateAxis.min + dateAxis.end * (dateAxis.max - dateAxis.min);
+//   maxRange.label.text = dateAxis.dateFormatter.format(maxRange.value, "yyyy-MM-dd");
+// }
+
+    $('g:has(> g[stroke="#3cabff"])').hide();
     }
 
     getHours(millisec) {
@@ -2149,5 +2179,4 @@ svg
         ];   
     }
   
-
 }

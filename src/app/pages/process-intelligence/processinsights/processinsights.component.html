@@ -111,12 +111,14 @@
         <div class="col-md-12 p-0">  
                 <div class="col-sm-12 p-0 input-fields">
                         <div class="col-sm-4 amountinputs" id="humancost">
-                            <label for="">Human Cost/hr</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
-                            <i (click)="editInput()"  class="fas fa-pen"></i>
+                            <label for="">Human Cost/Hour</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
+                            <i *ngIf="!isEditable" (click)="editInput()"  class="fas fa-pen"></i>
+                            <i *ngIf="isEditable" (click)="editInput()" class="fas fa-check-circle"></i>
                         </div>
                         <div class="col-sm-4 amountinputs" id="BotCost">
-                            <label for="">Bot Cost/hr</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
-                            <i (click)="editInput1()"  class="fas fa-pen"></i>
+                            <label for="">Bot Cost/Hour</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
+                            <i *ngIf="!isEditable1" (click)="editInput1()"  class="fas fa-pen"></i>
+                            <i *ngIf="isEditable1" (click)="editInput1()" class="fas fa-check-circle"></i>
                         </div>
                         <div class="col-sm-4 amountinputs" id="totalcases">
                             <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
@@ -308,8 +310,9 @@
                             <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
+                    <div class="insigntsoccur1">
                     <div class="l_title"><p>Total Resource Duration By Activity</p></div>
-                <div id="" class="box_shadw34">
+                <div id="" class="">
                         <div id="pie_chart1"></div> 
                     <!-- <ngx-charts-pie-chart
                     [view]="[400, 300]"
@@ -327,6 +330,7 @@
                     [labelFormatting]="pieChartLabel.bind(this, dChart1)"> 
                   </ngx-charts-pie-chart>                 -->
                 </div>
+                    </div>
                 </div>        
                 <div class="col-md-6 pr-0 pi-chart">
                     <!-- <div class="dropdown pull-right">
@@ -336,8 +340,9 @@
                             <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
+                    <div class="insigntsoccur1">
                     <div class="l_title"><p>Total Resource Cost By Activity</p></div>
-                    <div id="" class="box_shadw34">
+                    <div id="" class="">
                             <div id="pie_chart2"></div> 
                     <!-- <ngx-charts-pie-chart
                         [view]="[400, 300]"
@@ -352,6 +357,7 @@
                         [legendTitle]="''"
                         [labelFormatting]="pieChartLabel1.bind(this, dChart2)"> 
                     </ngx-charts-pie-chart> -->
+                    </div>
                     </div>
                 </div>
             </div>    

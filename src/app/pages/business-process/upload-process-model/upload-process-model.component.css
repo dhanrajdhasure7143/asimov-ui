@@ -409,6 +409,14 @@ textarea.msgip {
 .bps-c2-height {
     height: 95% !important;
 }
-
+.menuicons-disable{
+    cursor: no-drop !important;
+}
+.menuicons-disable label{
+    cursor: no-drop !important;
+}
+.xml-input textarea{
+    width:100%
+}
 
 

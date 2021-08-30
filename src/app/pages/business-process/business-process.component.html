@@ -15,8 +15,8 @@
             </span>
               <div class="value" *ngIf="isHeaderShow == 'true'">
                 <span *ngIf="!isShowConformance">
-                  <span class="module-back-button" *ngIf="!isfromApprover" (click)='backtoApprovalWorkflow()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
-                  <span class="module-back-button" *ngIf="isfromApprover" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+                  <span class="module-back-button" *ngIf="isfromApprover" (click)='backtoApprovalWorkflow()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+                  <span class="module-back-button" *ngIf="!isfromApprover" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 </span>
                 <span class="module-back-button" *ngIf="isShowConformance" (click)='backtoPI()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->
@@ -148,7 +148,7 @@
               <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn btn-default">
                 <img class="testplus default-img" src="../../../assets/images/BPMS/Workflow.svg">
                 <img class="testplus hover-img" src="../../../assets/images/BPMS/White-Workflow.svg">
-                Approval Workflow
+                Approvals
               </button>
               <!-- <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
                 <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">

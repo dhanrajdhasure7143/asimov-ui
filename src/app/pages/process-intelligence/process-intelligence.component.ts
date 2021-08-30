@@ -186,6 +186,9 @@ addWorkingHours(){
     this.workingHours1.shiftStartTime="00:00";
     this.workingHours1.shiftEndTime="23:59"
    }
+   backtoWorkspace(){
+     this.router.navigate(['/pages/processIntelligence/upload'])
+   }
 
 }
 

@@ -5,7 +5,7 @@
             <label class="label-control">Notations</label>
             <select [(ngModel)]="selected_notation" (change)="displayBPMN()" disableOptionCentering class="form-control">
                 <option *ngFor="let each_bpmn of saved_bpmn_list;let bpmnIndex = index" [value]="bpmnIndex">
-                    {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"}}</option>
+                    {{(isShowConformance && each_bpmn.hasConformance?"AS IS vs ":"")+each_bpmn.bpmnProcessName+" ( V1."+each_bpmn.version+" )"|titlecase}}</option>
             </select>
     </div>
     <!-- <div class="col-md-2 pl-0" *ngIf="!isfromApprover" id="approversList">
@@ -79,16 +79,17 @@
                               <div id="properties" class=""></div>
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2">
+                            <mat-expansion-panel hideToggle>
+                            <!-- <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2"> -->
                               <mat-expansion-panel-header>
-                                <mat-panel-title>
+                                <mat-panel-title class="menuicons-disable" disabled="true">
                                     <div class="accordionHeaderToggle">
                                         <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                         <label for="" class="accordionHeader">Discussions</label>
                                     </div>                                                
                                 </mat-panel-title>                                            
                               </mat-expansion-panel-header>
-                              <mat-panel-description>
+                              <!-- <mat-panel-description>
                                 <div class="activecollaboration">
                                     <div class="row collab">
                                         <div class="row lftusermsg">
@@ -113,7 +114,7 @@
                                         <button class="btn"><img alt="" src="../../../../assets/images/BPMS/Send.svg"></button>
                                     </div>
                                 </div>
-                              </mat-panel-description>                                          
+                              </mat-panel-description>                                           -->
                             </mat-expansion-panel>
                             
                             <mat-expansion-panel (opened)="onExpansionClik('3')" hideToggle [expanded]="isOpenedState==3">
@@ -139,17 +140,18 @@
                                 </div>
                               </mat-panel-description>                                         
                             </mat-expansion-panel>
-
-                            <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4">
+                            
+                            <mat-expansion-panel hideToggle>
+                            <!-- <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4"> -->
                               <mat-expansion-panel-header>
-                                <mat-panel-title>
+                                <mat-panel-title class="menuicons-disable" disabled="true">
                                     <div class="accordionHeaderToggle">
                                         <img src="../../../../assets/images/BPMS/star.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                         <label for="" class="accordionHeader">Favourites</label>
                                     </div>
                                 </mat-panel-title>                                            
                               </mat-expansion-panel-header>
-                              <mat-panel-description>
+                              <!-- <mat-panel-description>
                                 <div class="favouriteslistdiv">
                                     <div class="row">
                                         <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
@@ -167,23 +169,24 @@
                                         <label class="favsh">(PI)</label>
                                     </div>
                                 </div>
-                              </mat-panel-description>
+                              </mat-panel-description> -->
                             </mat-expansion-panel>
 
-                            <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5">
+                            <mat-expansion-panel hideToggle>
+                            <!-- <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5"> -->
                               <mat-expansion-panel-header>
-                                <mat-panel-title>
+                                <mat-panel-title class="menuicons-disable" disabled="true">
                                     <div class="accordionHeaderToggle">
                                         <img src="../../../../assets/images/BPMS/Activities.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                         <label for="" class="accordionHeader">Activities</label>
                                     </div> 
                                 </mat-panel-title>                                            
                               </mat-expansion-panel-header>
-                              <mat-panel-description>
+                              <!-- <mat-panel-description>
                                 <div class="activitieslistdiv">
                                     <p>Activities list Here</p>
                                 </div>
-                              </mat-panel-description>
+                              </mat-panel-description> -->
                             </mat-expansion-panel>
 
                         </mat-accordion>
@@ -234,16 +237,17 @@
                                           <div id="properties" class=""></div>
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2">
+                                        <mat-expansion-panel hideToggle>
+                                                <!-- <mat-expansion-panel (opened)="onExpansionClik('2')" hideToggle [expanded]="isOpenedState==2"> -->
                                           <mat-expansion-panel-header>
-                                            <mat-panel-title>
+                                            <mat-panel-title class="menuicons-disable" disabled="true">
                                                 <div class="accordionHeaderToggle">
                                                     <img src="../../../../assets/images/BPMS/Discussions.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                                     <label for="" class="accordionHeader">Discussions</label>
                                                 </div>                                                
                                             </mat-panel-title>                                            
                                           </mat-expansion-panel-header>
-                                          <mat-panel-description>
+                                          <!-- <mat-panel-description>
                                             <div class="activecollaboration">
                                                 <div class="row collab">
                                                     <div class="row lftusermsg">
@@ -268,7 +272,7 @@
                                                     <button class="btn"><img alt="" src="../../../../assets/images/BPMS/Send.svg"></button>
                                                 </div>
                                             </div>
-                                          </mat-panel-description>                                          
+                                          </mat-panel-description>                                           -->
                                         </mat-expansion-panel>
                                         
                                         <mat-expansion-panel (opened)="onExpansionClik('3')" hideToggle [expanded]="isOpenedState==3">
@@ -295,16 +299,17 @@
                                           </mat-panel-description>                                         
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4">
+                                        <mat-expansion-panel hideToggle>
+                                        <!-- <mat-expansion-panel (opened)="onExpansionClik('4')" hideToggle [expanded]="isOpenedState==4"> -->
                                           <mat-expansion-panel-header>
-                                            <mat-panel-title>
+                                            <mat-panel-title class="menuicons-disable" disabled="true">
                                                 <div class="accordionHeaderToggle">
                                                     <img src="../../../../assets/images/BPMS/star.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                                     <label for="" class="accordionHeader">Favourites</label>
                                                 </div>
                                             </mat-panel-title>                                            
                                           </mat-expansion-panel-header>
-                                          <mat-panel-description>
+                                          <!-- <mat-panel-description>
                                             <div class="favouriteslistdiv">
                                                 <div class="row">
                                                     <img src="../../../../assets/images/BPMS/star-orange.svg" alt="menuToggleIcon" class="menuToggleIcon">
@@ -322,23 +327,24 @@
                                                     <label class="favsh">(PI)</label>
                                                 </div>
                                             </div>
-                                          </mat-panel-description>
+                                          </mat-panel-description> -->
                                         </mat-expansion-panel>
 
-                                        <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5">
+                                        <mat-expansion-panel hideToggle>
+                                                <!-- <mat-expansion-panel (opened)="onExpansionClik('5')" hideToggle [expanded]="isOpenedState==5"> -->
                                           <mat-expansion-panel-header>
-                                            <mat-panel-title>
+                                            <mat-panel-title class="menuicons-disable" disabled="true">
                                                 <div class="accordionHeaderToggle">
                                                     <img src="../../../../assets/images/BPMS/Activities.svg" alt="menuToggleIcon" class="menuToggleIcon">
                                                     <label for="" class="accordionHeader">Activities</label>
                                                 </div> 
                                             </mat-panel-title>                                            
                                           </mat-expansion-panel-header>
-                                          <mat-panel-description>
+                                          <!-- <mat-panel-description>
                                             <div class="activitieslistdiv">
                                                 <p>Activities list Here</p>
                                             </div>
-                                          </mat-panel-description>
+                                          </mat-panel-description> -->
                                         </mat-expansion-panel>
 
                                     </mat-accordion>
@@ -360,8 +366,8 @@
                         </ng-template>
                     </mat-tab>
                     <mat-tab label="XML">
-                        <div class="text-area">
-                            <textarea readonly [(ngModel)]="xmlTabContent" rows="22" cols="150">
+                        <div class="text-area xml-input">
+                            <textarea readonly [(ngModel)]="xmlTabContent" rows="22">
                                 {{xmlTabContent}}
                             </textarea>
                         </div>
