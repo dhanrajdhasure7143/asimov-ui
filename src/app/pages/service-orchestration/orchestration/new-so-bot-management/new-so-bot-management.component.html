@@ -94,9 +94,9 @@
                           <span *ngIf="element.botStatus=='New'"   [matTooltip]="element.botStatus"  class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style="filter: none; width: 19px;"></span></span>
   
                           <span *ngIf="element.botStatus=='Stop'" >
-                            <span class="bg-danger"  [matTooltip]="element.botStatus" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;">
-                              <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
-                              <i class="fas fa-stop"></i>
+                            <span class="bg-danger"  [matTooltip]="element.botStatus">
+                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                             
                             </span>
                             </span>
   
@@ -183,26 +183,39 @@
   
   
   <ng-template #epsoft_logs_modal_ref>
-    <div class="modal-header modelprhead">
-
-      <span *ngIf="viewlogid1!=undefined">
-        <button (click)="viewlogid1=undefined" matTooltip="Back">
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>&nbsp;
-        </button>
-      </span>
-      Logs
-      <span class="pull-right clickable" (click)="logs_modal.hide()">
-          <img src="../../../../../assets/images/Projects/circle-close.svg" alt="">
-      </span>
-    </div>
+      <div class="modal-header modelprhead">
+          <span *ngIf="viewlogid1!=undefined">      
+          
+            <button (click)="viewlogid1=undefined" >
+              <img src="../../../../assets/images/RPA/arrow.svg" style="height:17px">
+            </button>&nbsp;&nbsp;
+          </span> 
+          
+          Logs  
+          
+          <span *ngIf="viewlogid1!=undefined">
+            - RunId - {{viewlogid1}} 
+          </span>
+          <span class="pull-right">
+          <span (click)="getEpsoftLogs(log_botid,log_version,epsoft_logs_modal_ref,'update')" class="clickable" *ngIf="viewlogid1==undefined">
+            <img src="../../../../assets/images/RPA/icon_latest/repeat.svg" style="height:17px"  />&nbsp;&nbsp;Refresh
+          </span>
+      
+          <span (click)="ViewlogByrunid(viewlogid1)" *ngIf="viewlogid1!=undefined" class="clickable">
+              <img src="../../../../assets/images/RPA/icon_latest/repeat.svg"  style="height:17px" />&nbsp;&nbsp;Refresh
+            </span>
+            &nbsp;&nbsp;
+          <span class=" clickable" (click)="logs_modal.hide()">
+            <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+          </span>
+          
+        </span>
+        </div>
     <div [id]="viewlogid" *ngIf="viewlogid1==undefined" class="modal-body" >
           
-      <div class="text-right">    
-        <button (click)="getEpsoftLogs(log_botid,log_version,epsoft_logs_modal_ref,'update')" matTooltip="Refresh" ><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i>&nbsp; Refresh</button>  
-      </div>
-      <br>
+
       <div class="logs-container" >
-          <table mat-table [dataSource]="Viewloglist" #sort4="matSort" matSort class="table projecttable">
+          <table mat-table [dataSource]="Viewloglist" #sort4="matSort" matSort class="logs-table">
 
 
               <!-- Run Id Column -->
@@ -264,7 +277,10 @@
                     <img src="../../../../assets/images/RPA/userobot.png" style="filter: none; ">
                   </span>&nbsp;<span>{{element.bot_status}}</span></span>
 
-                  <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                  <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span>
+                    
+                      <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                    </span>&nbsp;<span>{{element.bot_status}}</span></span>
                       <span *ngIf="element.bot_status == undefined">-</span></td>
               </ng-container>
 
@@ -282,19 +298,9 @@
       <!-- <mat-paginator #paginator4 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
     </div>
     <div [id]="viewlogid1"  *ngIf="viewlogid1!=undefined" class="modal-body">
-      <div>
-        <span class="pull-left">
-          RunId - {{viewlogid1}}
-        </span>
-        <span class="pull-right">
-          <button (click)="ViewlogByrunid(botrunid)" matTooltip="Refresh" >
-            <i class="fas fa-sync-alt" aria-hidden="true"></i>&nbsp; Refresh
-          </button>
-        </span> 
-      </div> 
-      <br>
+   
       <div class="logs-container">
-          <table mat-table  class="table projecttable" [dataSource]="logbyrunid" #sort5="matSort" matSort >
+          <table mat-table  class="logs-table" [dataSource]="logbyrunid" #sort5="matSort" matSort >
 
               <!-- Task Name Column -->
               <ng-container matColumnDef="task_name">
@@ -405,17 +411,18 @@
     <div class="modal-header modelprhead">
           Logs
           <span class="pull-right" (click)="logs_modal.hide()">
+              <span (click)="getuipathlogs(uiPathLogsModal,uipathbotName)" ><img src="../../../../../assets/images/RPA/">&nbsp; Refresh</span>
+     
             <img src="../../../../../assets/images/Projects/circle-close.svg" alt="">
           </span>
           
     </div>
     <div class="modal-body">
       <div class="text-right">
-        <button (click)="getuipathlogs(uiPathLogsModal,uipathbotName)" matTooltip="Refresh"><i class="fas fa-sync-alt text-dark" aria-hidden="true"></i>&nbsp; Refresh</button>
-      </div>
+        </div>
   
       <div class="logs-container" >
-          <table mat-table [dataSource]="uipathlogs" #sort6="matSort" matSort class="table projecttable">
+          <table mat-table [dataSource]="uipathlogs" #sort6="matSort" matSort class="logs-table">
 
 
               <!-- Run Id Column -->
@@ -449,7 +456,8 @@
                           <i class="fa fa-check-circle"></i> &nbsp;{{element.State}}
                         </span>
                         <span class="text-danger" *ngIf="element.State=='Stopped'">
-                          <i class="fa fa-stop-circle"></i>&nbsp;{{element.State}}
+                          
+                            <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">&nbsp;{{element.State}}
                         </span>
                         <span class="text-warning" *ngIf="element.State=='Pending'">
                           <i class="fa fa-clock"></i>&nbsp;{{element.State}}

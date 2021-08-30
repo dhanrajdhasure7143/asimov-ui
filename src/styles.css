@@ -2490,14 +2490,16 @@ th.mat-header-cell {
 .logs-table th {
   font-size: 16px !important;
   text-align: left !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   color:#00a0e3 !important;
+  padding-left:0px !important;
 }
 .logs-table th button{
   font-size: 16px !important;
   text-align: left !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
   color:#00a0e3 !important;
+  padding-left:0px !important;
 }
 .logs-table th{
   background-color: white !important;
@@ -2507,7 +2509,16 @@ th.mat-header-cell {
 .as-horizontal > .as-split-gutter > .as-split-gutter-icon {
   background-color: #f3f3f3 !important;
 }
-.logs-table tr{
-  border-bottom:none !important;
+.logs-modal td{
+  
+  padding-left:0px !important;
 }
 
+.logs-table tr{
+  border-bottom:1px solid #e1e1e1 !important;
+}
+
+.logs-table .modal-header.modelprhead {
+  padding-left: 2px !important;
+  font-size: 20px !important;
+}
