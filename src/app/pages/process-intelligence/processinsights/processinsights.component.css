@@ -11,7 +11,7 @@
   margin-bottom: 6px;
 }
 .divbox label {
-  font-size: 18px;
+  font-size: 20px;
   margin-bottom: 0px;
   color: #00a0e3
 }
@@ -56,13 +56,19 @@ color: #081D2A;
     font-size: 18px;
     margin-top: 30px;
     margin-left: 20px; */
-    color: #000000DE;
+    color: #3B4B64;
     font-size: 16px !important;
     font-weight: 600;
     margin-bottom: 15px;
 }
 .table-striped>tbody>tr:nth-of-type(even){
-    background-color: #ebf2d3 !important;
+    background-color: #fff !important;
+}
+.table-striped>tbody>tr:nth-of-type(odd){
+  background-color: #fff !important;
+}
+.table-bordered {
+  border: none !important;
 }
 
 
@@ -88,6 +94,8 @@ input:disabled{
     margin-bottom: 20px;
     padding: 8px 8px 6px 8px !important;
     background-color: #f3f3f3;
+    margin-left: -15px;
+    margin-right: -15px;
 }
 .input-fields label{
     font-weight: 400 !important;
@@ -97,7 +105,7 @@ input:disabled{
   color: #5a6c87;
 }
 .input-fields input{
-  padding: 6px 8px;
+  padding: 3px 8px;
 }
 
 .groupBtn{
@@ -121,6 +129,7 @@ input:disabled{
   background-color: #fff;
   font-size: 14px;
   color: #213B61;
+  display: inline-block;
 }
 .event-btn{
   
@@ -139,6 +148,7 @@ input:disabled{
     color: #fff;
     text-align: center;
     border: 1px solid #00A0E3;
+    display: inline-block;
 }
 .sidenav {
     width: 0;
@@ -271,7 +281,7 @@ background: rgb(241, 240, 240);
   margin-top: 30px;
 }
 .pi-chart{
-  margin-top: 15px;  
+  margin-top: 10px;  
 }
 
 .hrsInput input{
@@ -314,7 +324,7 @@ padding: 10px;
   text-align: left;
   margin-top: 15px;
   margin-left: 20px; */
-  color: #000000DE;
+  color: #3B4B64;
   font-size: 16px !important;
   font-weight: 600;
 }
@@ -389,7 +399,7 @@ padding: 10px;
   padding: 15px 0px;
   font-size: 16px;
   margin: 0px;
-  color: #000000DE;
+  color: #3B4B64;
   text-transform: capitalize;
 }
 .business_heading strong {
@@ -416,7 +426,7 @@ padding: 10px;
   /* overflow: hidden auto;
   height: calc(100% - 50px);
   position: relative; */
-  padding: 15px 10px 10px;
+  padding: 0px 10px 10px;
 }
 span.testtooltip {
   position: absolute;
@@ -485,8 +495,9 @@ span.testtooltip:before {
   border-radius: 4px;
   display: inline-block;
   width: 100%;
-  height: 350px;
-  padding: 15px;
+  height: 320px;
+  padding: 15px 0px;
+  background-color: #fff;
 }
 .resuractivity-select {
   float: right;
@@ -535,7 +546,7 @@ img.hover-img {
   margin-bottom: 20px;
 }
 .amountinputs input[type="text"]:not(.mat-input-element), .amountinputs input[type="password"] {
-  border: 1px solid #00a0e3 !important;
+  border: 1px solid #ccc !important;
 }
 .box_shadw1 div#scatter {
   margin: 20px 0px 0px -10px;
@@ -546,13 +557,29 @@ img.hover-img {
   padding: 15px;
 }
 .resuractivity-title label {
-  color: #000000DE;
+  color: #3B4B64;
   font-size: 18px !important;
   font-weight: 600;
 }
 .resuractivity-header {
   display: flex;
   align-items: center;
+  margin-top: 12px;
+}
+.insigntsoccurtable table tr {
+  height: 40px;
+}
+.top10cases {
+  min-height: 309px !important;
+}
+.resuractivity-footer {
+  background-color: #f3f3f3;
   margin-top: 20px;
 }
-
+.resuractivitytitle {
+  padding-left: 15px;
+}
+.insigntsoccurtable table thead th, .insigntsoccurtable table tbody td {
+  border-left: medium none;
+  border-right: medium none;
+}

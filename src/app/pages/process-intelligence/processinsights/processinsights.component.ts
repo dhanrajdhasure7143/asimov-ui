@@ -2042,14 +2042,14 @@ svg
         chart.legend = new am4charts.Legend();
         chart.legend.useDefaultMarker = true;
         var marker = chart.legend.markers.template.children.getIndex(0);
-        marker.width = 16;
-        marker.height = 16;
-        marker.cornerRadius(12, 12, 12, 12);
+        marker.width = 18;
+        marker.height = 18;
+        marker.cornerRadius(0, 0, 0, 0);
         marker.strokeWidth = 2;
         marker.strokeOpacity = 1;        
         marker.stroke = am4core.color("#ccc");
         chart.legend.scrollable = true;
-        chart.legend.fontSize = 13;
+        chart.legend.fontSize = 12;
   
         // chart.data=data;
         chart.data=this.dChart1;
@@ -2065,7 +2065,7 @@ svg
         var series = chart.series.push(new am4charts.PieSeries());
         series.dataFields.value = "value";
         series.dataFields.category = "name";
-        series.labels.template.disabled = false;
+        series.labels.template.disabled = true;
         // series.slices.template.cornerRadius = 0;
         series.tooltip.horizontalCenter = "middle";
         // series.tooltip.verticalCenter = "middle";
@@ -2118,14 +2118,14 @@ svg
         chart.legend = new am4charts.Legend();
         chart.legend.useDefaultMarker = true;
         var marker = chart.legend.markers.template.children.getIndex(0);
-        marker.width = 16;
-        marker.height = 16;
-        marker.cornerRadius(12, 12, 12, 12);
+        marker.width = 18;
+        marker.height = 18;
+        marker.cornerRadius(0, 0, 0, 0);
         marker.strokeWidth = 2;        
         marker.strokeOpacity = 1;
-        marker.stroke = am4core.color("#ccc");
+        marker.stroke = am4core.color("#fff");
         chart.legend.scrollable = true;
-        chart.legend.fontSize = 13;
+        chart.legend.fontSize = 12;
   
         // chart.data=data;
         chart.data=this.dChart2;
@@ -2141,7 +2141,7 @@ svg
         var series = chart.series.push(new am4charts.PieSeries());
         series.dataFields.value = "value";
         series.dataFields.category = "name";
-        series.labels.template.disabled = false;
+        series.labels.template.disabled = true;
         // series.slices.template.cornerRadius = 0;
         series.tooltip.horizontalCenter = "middle";
         // series.tooltip.verticalCenter = "middle";

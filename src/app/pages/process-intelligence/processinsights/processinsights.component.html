@@ -2,7 +2,7 @@
   <div class="container-fluid new-PI-layout">
     <div class="">
       <div class="row">
-        <div class="col-sm-12 p-0 input-fields">
+        <div class="container-fluid p-0 input-fields">
             <div class="col-sm-4 amountinputs text-center" id="humancost">
                 <label for="">Human Cost/Hour</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
                 <i *ngIf="!isEditable" (click)="editInput()"  class="fas fa-pen"></i>
@@ -245,7 +245,7 @@
             </div>
         <div class="col-md-12 p-0"  id="top10Activities">
             <div class="col-sm-6 pl-0 table-box">
-                <div class="insigntsoccurtable">
+                <div class="insigntsoccurtable top10cases">
                     <div class="table1-heading">Top 10% Cases (in descending order of duration)</div>
                     <table class="RPA table table-hover table-bordered table-striped work_spacetable">
                     <thead class="">
@@ -287,8 +287,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 p-0">
-            <div class="col-md-12 p-0 resuractivity-header">
+        <div class="col-md-12 p-0 resuractivity-footer">
+            <div class="col-md-12 resuractivity-header">
                 <div class="col-md-10 p-0 resuractivity-title">
                     <label>Resources</label>
                 </div>
@@ -309,7 +309,7 @@
                 </div>
             </div>    
             <div class="row resuractivity">
-                <div class="col-md-6 pl-0 pi-chart">
+                <div class="col-md-6 pi-chart">
                 <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                         <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
@@ -318,7 +318,7 @@
                         </div>
                     </div> -->
                     <div class="insigntsresuractivity">
-                        <div class="l_title"><label>Total Resource Duration By Activity</label></div>
+                        <div class="l_title"><label class="resuractivitytitle">Total Resource Duration By Activity</label></div>
                         <div id="" class="">
                             <div id="pie_chart1"></div> 
                     <!-- <ngx-charts-pie-chart
@@ -339,7 +339,7 @@
                         </div>
                     </div>
                 </div>        
-                <div class="col-md-6 pr-0 pi-chart">
+                <div class="col-md-6 pi-chart">
                     <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                         <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
@@ -348,7 +348,7 @@
                         </div>
                     </div> -->
                     <div class="insigntsresuractivity">
-                        <div class="l_title"><label>Total Resource Cost By Activity</label></div>
+                        <div class="l_title"><label class="resuractivitytitle">Total Resource Cost By Activity</label></div>
                         <div id="" class="">
                             <div id="pie_chart2"></div> 
                     <!-- <ngx-charts-pie-chart
