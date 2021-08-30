@@ -2042,11 +2042,14 @@ svg
         chart.legend = new am4charts.Legend();
         chart.legend.useDefaultMarker = true;
         var marker = chart.legend.markers.template.children.getIndex(0);
+        marker.width = 16;
+        marker.height = 16;
+        marker.cornerRadius(12, 12, 12, 12);
         marker.strokeWidth = 2;
-        marker.strokeOpacity = 1;
+        marker.strokeOpacity = 1;        
         marker.stroke = am4core.color("#ccc");
         chart.legend.scrollable = true;
-        chart.legend.fontSize = 12;
+        chart.legend.fontSize = 13;
   
         // chart.data=data;
         chart.data=this.dChart1;
@@ -2115,11 +2118,14 @@ svg
         chart.legend = new am4charts.Legend();
         chart.legend.useDefaultMarker = true;
         var marker = chart.legend.markers.template.children.getIndex(0);
-        marker.strokeWidth = 2;
+        marker.width = 16;
+        marker.height = 16;
+        marker.cornerRadius(12, 12, 12, 12);
+        marker.strokeWidth = 2;        
         marker.strokeOpacity = 1;
         marker.stroke = am4core.color("#ccc");
         chart.legend.scrollable = true;
-        chart.legend.fontSize = 12;
+        chart.legend.fontSize = 13;
   
         // chart.data=data;
         chart.data=this.dChart2;
