@@ -1,6 +1,6 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-6 row">
+        <div class="col-md-12 row">
             <br>
             <div class="col-md-12">
               <span>
@@ -37,7 +37,7 @@
                 <br>
 
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <mat-form-field appearance="fill" style="width:100%">
                     <mat-label>Start date</mat-label>
                     <input matInput [(ngModel)]="startdate" [matDatepicker]="picker1" [min]="startdate" (dateChange)="enddate=startdate">
@@ -46,25 +46,25 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-md-3 text-center">
+            <div class="col-md-6 text-center">
                 <br>
                 <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="starttime"></ngx-timepicker-field>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-6">
                 <mat-form-field appearance="fill" style="width:100%">
-                    <mat-label>End date</mat-label>
-                    <input matInput [(ngModel)]="enddate" [min]="startdate" [matDatepicker]="picker2">
+                    <label>End date</label>
+                    <input type="date" [(ngModel)]="enddate" [min]="startdate" [matDatepicker]="picker2">
                     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
                     <mat-datepicker #picker2></mat-datepicker>
                 </mat-form-field>
             </div>
-            <div class="col-md-3 text-center">
+            <div class="col-md-6 text-center">
                 <br>
                 <ngx-timepicker-field [controlOnly]="true" [defaultTime]="'23:11'" [format]="24" [(ngModel)]="endtime"></ngx-timepicker-field>
             </div>
 
-            <div class="pull-right" style="padding:10px">
+            <div  style="padding:10px">
                 <br><br>
                 <button class="btn btn-primary eiap-btn" (click)="add_sch()">Add</button>
             </div>

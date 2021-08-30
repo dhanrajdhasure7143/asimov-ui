@@ -1,3 +1,8 @@
 .hide{
     display:none;
 }
+
+
+.schedule-table-container{
+    height: calc(100vh - 331px) !important;
+}
