@@ -5,4 +5,5 @@
 
 .schedule-table-container{
     height: calc(100vh - 331px) !important;
+    overflow:auto !important;
 }
