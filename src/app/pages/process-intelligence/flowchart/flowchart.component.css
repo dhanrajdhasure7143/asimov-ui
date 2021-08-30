@@ -451,5 +451,6 @@ img.hover-img {
   float: right;
 }
 .newmaindiv {
-  height: calc(100% - 65px);
+  /* height: calc(100% - 65px); */
+  height: 100%;
 }
