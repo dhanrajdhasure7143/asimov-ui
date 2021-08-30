@@ -53,12 +53,14 @@
               </span>-->
               <span *ngIf="element.runStatus=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.runStatus}}</span>
 
-            <span *ngIf="element.runStatus=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            <span *ngIf="element.runStatus=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.runStatus}}</span></span>
 
-            <span *ngIf="element.runStatus=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            <span *ngIf="element.runStatus=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.runStatus}}</span></span>
             <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
             <!--<span *ngIf="element.runStatus=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>-->
-            <span *ngIf="element.runStatus=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.runStatus}}</span></span>
+            <span *ngIf="element.runStatus=='New'" class="text-primary tableActionsIcons"><span>
+              <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
+            </span>&nbsp;<span>{{element.runStatus}}</span></span>
             <span *ngIf="element.runStatus=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
             <span *ngIf="element.runStatus=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.runStatus}}</span></span>
@@ -76,7 +78,7 @@
           </table>
         
       </div>
-      <mat-paginator #paginatorp1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>  
+      <!-- <mat-paginator #paginatorp1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>   -->
   </div>
 
 <div id="plogrunid">
@@ -149,12 +151,14 @@
                       </span>-->
                       <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
 
-                        <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
-                        <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        <span *ngIf="element.bot_status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                         <!--<span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>-->
-                        <span *ngIf="element.bot_status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                        <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons"><span>
+                          <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
+                        </span>&nbsp;<span>{{element.bot_status}}</span></span>
                         <span *ngIf="element.bot_status=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
                         <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
@@ -175,7 +179,7 @@
         </table>
       
   </div>
-  <mat-paginator #paginatorp2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+  <!-- <mat-paginator #paginatorp2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
 </div>
 <div id="pbotrunid">
   <div class="text-right">
@@ -219,8 +223,8 @@
              </ng-container>
 
             <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:10%">Status</th>
-                <td mat-cell *matCellDef="let element" style="width:10%"> <span *ngIf="element.status!=null">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="width:15%">Status</th>
+                <td mat-cell *matCellDef="let element" style="width:15%"> <span *ngIf="element.status!=null">
                     <!--<span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
 
                   <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check"></span>&nbsp;<span>{{element.status}}</span></span>
@@ -231,12 +235,13 @@
                   </span>-->
                   <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
 
-                        <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                        <span *ngIf="element.status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
 
-                        <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                        <span *ngIf="element.status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
                         <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                         <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
-                        <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
+                        <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons"><span>
+                          <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;"></span>&nbsp;<span>{{element.status}}</span></span>
                         <span *ngIf="element.status=='Pending'" class="text-warning"><i class="fa fa-clock" style="font-size:19px"></i>&nbsp;<span>{{element.runStatus}}</span></span>
 
                         <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span></span>
@@ -255,7 +260,7 @@
         </table>
     </div>
     
-    <mat-paginator #paginatorp3 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+    <!-- <mat-paginator #paginatorp3 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
 </div>
 
 

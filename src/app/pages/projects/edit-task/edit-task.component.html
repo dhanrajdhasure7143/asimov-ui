@@ -18,7 +18,8 @@
           <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
         </span> -->
     </div>
-    <div class=" h-scroll">  
+    </div>
+    <div class="h-scroll">  
     <div class="container-fluid" >
       
         <div class="bg-task">
@@ -293,8 +294,8 @@
           </form>
           <div class="modal-footer modelprfooter">
             <div class="pull-right">
-              <button (click)="resetupdatetaskproject()" class="btn btn-default">Reset</button>
-              <button (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
+              <button disabled (click)="resetupdatetaskproject()" class="btn btn-default">Reset</button>
+              <button disabled (click)="canceltaskform()" class="btn btn-primary">Cancel</button>
               <button [disabled]="updatetaskForm.invalid" (click)="updatetask()"
                 class="btn btn-primary btn-update">Update</button>
             </div>
