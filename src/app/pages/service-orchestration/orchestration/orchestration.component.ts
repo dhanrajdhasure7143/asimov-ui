@@ -39,10 +39,10 @@ export class OrchestrationComponent implements OnInit {
       else
       {
         this.selectedTab=1;
-        this.selectedTab=4;
+        this.selectedTab=3;
         this.param=processId.processid;
         this.check_tab=1;
-        this.check_tab=4;
+        this.check_tab=3;
         console.log(this.param)
       }
     });
