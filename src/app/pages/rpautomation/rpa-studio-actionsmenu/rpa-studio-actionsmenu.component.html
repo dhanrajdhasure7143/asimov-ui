@@ -435,27 +435,41 @@
 <ng-template #logspopup>
   <div class="modal-header modelprhead">
     <span *ngIf="viewlogid1!=undefined">      
+    
       <button (click)="viewlogid1=undefined"tooltip="Back" >
-        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        <img src="../../../../assets/images/RPA/arrow.svg" style="height:17px">
       </button>&nbsp;&nbsp;
-    </span> Logs  
-    <span class="pull-right clickable" (click)="logsmodalref.hide()">
+    </span> 
+    
+    Logs  
+    
+    <span *ngIf="viewlogid1!=undefined">
+      - RunId - {{viewlogid1}} 
+    </span>
+    <span class="pull-right">
+    <span (click)="viewlogdata(logspopup,'update')" *ngIf="viewlogid1==undefined" tooltip="Refresh" >
+      <img src="../../../../assets/images/RPA/icon_latest/repeat.svg" style="height:17px"  />&nbsp;&nbsp;Refresh
+    </span>
+
+    <span (click)="ViewlogByrunid(viewlogid1)" *ngIf="viewlogid1!=undefined" tooltip="Refresh" >
+        <img src="../../../../assets/images/RPA/icon_latest/repeat.svg"  style="height:17px" />&nbsp;&nbsp;Refresh
+      </span>
+      &nbsp;&nbsp;
+    <span class=" clickable" (click)="logsmodalref.hide()">
       <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
     </span>
-        
+    
+  </span>
   </div>
   <div class="modal-body modelprbody" *ngIf="viewlogid1==undefined" [id]="viewlogid" >
       <!-- <div class="rpa-modal-header">
          <h4>Logs</h4>
       </div> -->
-      <div class="pull-right">
-      <button (click)="viewlogdata(logspopup,'update')" tooltip="Refresh" ><i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i>&nbsp;&nbsp; Refresh</button>
-      
-    </div>
+    
       <br>
     <div class="logs-container" style="background: white;">
     
-            <table mat-table class="projecttable table" [dataSource]="Viewloglist" #sort1="matSort" matSort>
+            <table mat-table class="logs-table" [dataSource]="Viewloglist" #sort1="matSort" matSort>
 
 
                 <!-- Run Id Column -->
@@ -528,20 +542,10 @@
   </div>
 
   <div [id]="viewlogid1" *ngIf="viewlogid1!=undefined" class="modal-body modelprbody">
-    <div>
-      <span class="pull-left">
-        RunId - {{viewlogid1}}    
-      </span>
-      <span class="pull-right">
-        <button (click)="ViewlogByrunid(botrunid)" tooltip="Refresh" placement="bottom" >
-            <i class="fas fa-sync-alt" aria-hidden="true"></i>&nbsp; Refresh
-        </button>
-      </span>
-    </div>
-        <br>
+   
     <div class="logs-container">
    
-        <table mat-table class="projecttable table" [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
+        <table mat-table class="logs-table" [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
 
             <!-- Task Name Column -->
             <ng-container matColumnDef="task_name">
