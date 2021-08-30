@@ -2,7 +2,7 @@
     <div class="row content-area">
       <div class=" row module-heading title">
           <div class="col-md-6 new-bps-header-title">
-            <span class="bps-header-title">
+            <span class="bps-header-title" [class.gen-bpsheader]="!rejectedOrApproved">
               <span class="module-header-title">Business Process Studio 
                 <span *ngIf="isHeaderShow == 'true'"><span *ngIf="currentNotation_name">/ </span> {{currentNotation_name | titlecase}}</span>
               </span>
@@ -21,6 +21,7 @@
                 <span class="module-back-button" *ngIf="isShowConformance" (click)='backtoPI()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->
                 <span class="level3">Last Modified By: {{logged_User}}</span>
+                <span class="level3sep" *ngIf="updated_date_time">|</span>
                 <span *ngIf="updated_date_time">Autosaved @ {{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</span>
 
               </div> 
@@ -81,7 +82,7 @@
                 <img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg">
               </button>
               <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
-                <img src="../../../assets/images/BPMS/Orchestrate.svg">
+                <img src="../../../assets/images/BPMS/orchestration.svg">
                 <span class="testtooltip">Orchestration</span>
               </button>
               <!-- <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
@@ -123,11 +124,11 @@
                 <span class="testtooltip">Start Process</span>
               </button> -->
               <button class="tsttooltipbtn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">
-                  <img src="../../../assets/images/BPMS/show conformance.svg">
+                  <img src="../../../assets/images/BPMS/show-differences.svg">
                   <span class="testtooltip">Show Conformance</span>
                 </button>
                 <button class="tsttooltipbtn" (click)="getBpmnDifferences()" *ngIf="isShowConformance && (hasConformance || reSize)">
-                    <img src="../../../assets/images/BPMS/show difference.svg">
+                    <img src="../../../assets/images/BPMS/difference.svg">
                     <span class="testtooltip">Show Differences</span>
                   </button>
               

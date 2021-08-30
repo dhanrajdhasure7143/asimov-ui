@@ -706,7 +706,7 @@ Pi_header_functions:Subscription;
       }else{
         endTime=this.workingHours.shiftEndTime
       }
-      this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
+      this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
       this.spinner.show();;
       const variantComboBody={
         "data_type":"variant_combo",
@@ -1608,7 +1608,7 @@ sliderGraphResponse(graphData,activity_slider,path_slider) {      //based on act
         }else{
           endTime=this.workingHours.shiftEndTime
         }
-        this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
+        this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
         this.spinner.show();;
 
           var reqObj={
@@ -1791,7 +1791,7 @@ addWorkingHours(){
   }else{
     endTime=this.workingHours.shiftEndTime
   }
-  this.loaderImgSrc = "/assets/images/PI/loader_anim.gif";
+  this.loaderImgSrc = "/assets/images/PI/Loader_Retrieving-Generated-Graph.gif";
   this.spinner.show();;
   const fullGraphbody= { 
     "data_type":"full_graph", 
