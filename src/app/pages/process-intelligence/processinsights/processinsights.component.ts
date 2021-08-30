@@ -2044,7 +2044,7 @@ svg
         var marker = chart.legend.markers.template.children.getIndex(0);
         marker.width = 16;
         marker.height = 16;
-        marker.cornerRadius(12, 12, 12, 12);
+        // marker.cornerRadius(12, 12, 12, 12);
         marker.strokeWidth = 2;
         marker.strokeOpacity = 1;        
         marker.stroke = am4core.color("#ccc");
@@ -2120,7 +2120,7 @@ svg
         var marker = chart.legend.markers.template.children.getIndex(0);
         marker.width = 16;
         marker.height = 16;
-        marker.cornerRadius(12, 12, 12, 12);
+        // marker.cornerRadius(12, 12, 12, 12);
         marker.strokeWidth = 2;        
         marker.strokeOpacity = 1;
         marker.stroke = am4core.color("#ccc");

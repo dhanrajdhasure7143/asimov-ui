@@ -49,19 +49,19 @@ export class D3flowchartComponent {
     @ViewChild('downloadLink',{static: false}) downloadLink: ElementRef;
     @ViewChild('render',{static: false}) render: ElementRef;
     // @ViewChild("exportSVGtoPDF",{static: false}) graph_canvas:ElementRef;
-    @HostListener('document:mouseover', ['$event.target'])
-    public onmouseover(targetElement) {
-        const hovered = this.exportSVGtoPDF.nativeElement.contains(targetElement);
-        if (!hovered) {
-           let element=document.getElementById("tipsy_div");
-            if(element){
-              element.style.display = "none";
-              element.style.visibility = "hidden";
-            }
-        }else{
-          console.log("test")
-        }
-    }
+    // @HostListener('document:mouseover', ['$event.target'])
+    // public onmouseover(targetElement) {
+    //     const hovered = this.exportSVGtoPDF.nativeElement.contains(targetElement);
+    //     if (!hovered) {
+    //        let element=document.getElementById("tipsy_div");
+    //         if(element){
+    //           element.style.display = "none";
+    //           element.style.visibility = "hidden";
+    //         }
+    //     }else{
+    //       console.log("test")
+    //     }
+    // }
 
     ngOnInit(){
         this. processGraph();

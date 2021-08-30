@@ -1,8 +1,8 @@
 <div class="box_area container-fluid"><!-- [hidden]="bpmnupload" -->
 
     <!-- div for bpmn-worksapce -->
-    <!-- <div class="row">
-        <div class='col-md-6 drop_box' id="upload_bpmn">
+    <div class="row">
+        <div class='col-md-6 drop_box' id="upload_bpmn" *ngIf="!isShowConformance">
             <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
                 <div class="model-img">
                     <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'></ngx-dropzone-label>
@@ -28,10 +28,10 @@
                     <img src="../../../assets/images/Projects/White-plus.svg" alt="" class="testplus">Create New</button>
             </div>      
         </div>
-    </div> -->
+    </div>
 
     <!-- New Div for generate-bpmn -->
-    <div class="gen-newdiv">
+    <div class="gen-newdiv" *ngIf="isShowConformance">
         <div class="row">
             <div class='col-md-12 drop_box' id="upload_bpmn">
                 <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
