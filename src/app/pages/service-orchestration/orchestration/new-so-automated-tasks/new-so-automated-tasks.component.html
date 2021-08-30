@@ -174,7 +174,9 @@
               <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
               <span [matTooltip]="element.status" *ngIf="element.status=='New'" class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style='filter:none;height:20px' ></span>&nbsp;<span> </span></span>
               <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span> </span></span>-->
-              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
+              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span>
+                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                </span>&nbsp;<span> </span></span>
               <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
               <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>--</span>
               <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
@@ -296,10 +298,15 @@
 
 
 <ng-template #process_logs>
-  <div id='logsid' *ngIf="popup">
+  <div id='logsid'>
     <div class="modal-header modelprhead">
-     
-        <h4 class="modal-title pull-left">Logs</h4>
+
+       Logs
+       <span></span>
+       
+       <span></span>
+       
+       <span></span>
         <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide()">
           <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
         </button>

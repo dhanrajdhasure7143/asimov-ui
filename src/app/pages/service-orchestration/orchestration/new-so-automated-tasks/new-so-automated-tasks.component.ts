@@ -13,6 +13,7 @@ import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
 import { NgxSpinnerService } from "ngx-spinner";
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { SoProcesslogComponent } from '../so-processlog/so-processlog.component';
 
 @Component({
   selector: 'app-new-so-automated-tasks',
@@ -72,6 +73,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public blueprism_configs:any=[];
   public checkedsource:String="UiPath";
   @ViewChild("paginator10",{static:false}) paginator10: MatPaginator;
+ //@ViewChild(SoProcesslogComponent, { static: false }) processlogs_instance: SoProcesslogComponent;
   @ViewChild("sort10",{static:false}) sort10: MatSort;
   @Input('processid') public processId: any;
   public insertslaForm_so_bot:FormGroup;
