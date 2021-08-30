@@ -328,4 +328,7 @@ img.hover-img {
 .model-uploadhvr {
     display: none;
 }
+.bpmnCreate .modal-content{
+    padding: 0px 10px 0px 10px !important;
+}
 

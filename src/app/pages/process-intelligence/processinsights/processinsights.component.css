@@ -35,14 +35,14 @@ color: #081D2A;
   color: #00A0E3;
 }
 .divbox3 label{
-  color: #B28A1A
+  color: #27AD74
 }
 .divbox0 img,.divbox1 img, .divbox2 img, .divbox3 img{
   width: 35px;
-  height: 35px;
+  /* height: 35px;
   border-radius: 100%;
   padding: 4px 0px;
-  text-align: center;
+  text-align: center; */
   position: absolute;
   right: 10px;
   }
@@ -489,6 +489,12 @@ span.testtooltip:before {
   width: 100%;
   height: 470px;
 }
+.insigntsoccur1 {
+  border: 1px solid #e5e5e5;
+  display: inline-block;
+  width: 100%;
+  height: 350px;
+}
 .resuractivity-select {
   float: right;
   padding: 0px;
@@ -521,4 +527,12 @@ img.hover-img {
 #linechart1{
   height: 410px;
   width: 100%;
+}
+[aria-labelledby*="-title"] {
+  display: none !important;
+  visibility:"hidden";
+}
+.linechart1 g[aria-labelledby*="-title"] {
+  display: none !important;
+  visibility:"hidden";
 }

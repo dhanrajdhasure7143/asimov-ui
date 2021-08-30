@@ -152,7 +152,7 @@
                  <button class="btn btn-primary btn-thin eiap-btn pull-right" id="variant_list" (click)="openVariantListNav()"> &#9776; Variant List</button>
          </div> -->
  </div>
-     <div class="col-md-11">
+     <div class="col-md-12">
              <!-- <div class="lableHide"></div> -->
              <div class="tooltip_button tooltip1" #toogleBtn><img (click)='spinnermetrics()' src="..\assets\images\PI\options_icon.svg" id="variants" class="testplus1">
                  <div *ngIf='isedgespinner' class="tooltiptext1">
@@ -188,7 +188,7 @@
                 <app-d3flowchart [model1]="model1" [model2]="model2" [isdownloadsvg]="isdownloadsvg" [isdownloadpdf]="isdownloadpdf" [isdownloadPng]="isdownloadPng" [isdownloadJpeg]="isdownloadJpeg" [isplay]="isplay" (ispdf)="pdfValueEmitted($event)" (isjpeg)="jpegValueEmitted($event)" (issvg)="svgValueEmitted($event)" (ispng)="pngValueEmitted($event)" [performanceValue]="performanceValue" [processGraphName]='processGraphName' [isSlider]="isSliderBPMN"></app-d3flowchart>
 
      </div>
-     <div class='col-md-1'>
+     <!-- <div class='col-md-1'>
          <div class="path_slider1 text-center">
              <div>
              <div class="vertical_slider custom-slider" id="act_slider">
@@ -201,7 +201,7 @@
              </div>
              <p class="slider_label Paths_slider">Paths</p>
          </div>
-     </div>
+     </div> -->
      </div>  <!-- Id main -->
      </div>
  </div> 
