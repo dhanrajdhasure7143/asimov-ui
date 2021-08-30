@@ -208,6 +208,7 @@ this.getFileDetails();
   clearMsg(){
 
     this.denyFileRequestForm.get("description").setValue("");
+    this.denyFileRequestForm.reset();
   }
   uploadFile(template: TemplateRef<any>){
 
@@ -536,6 +537,12 @@ this.getFileDetails();
     this.listOfFiles.splice(index, 1);
     // delete file from FileList
     this.fileList.splice(index, 1);
+   }
+   uploadFilemodalCancel(){
+     this.uploadFileForm.reset();
+     this.listOfFiles=[];
+     this.uploadFilemodalref.hide();
+     
    }
 
 }
