@@ -89,14 +89,14 @@
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button> -->
-              <button class="clr-hvr tsttooltipbtn" *ngIf="iscreate_notation" (click)="saveandSubmitApprovalCreat()">
+              <button class="clr-hvr tsttooltipbtn" [outsideClick]="true" *ngIf="iscreate_notation" (click)="onsaveOverlayOpen()" [popover]="popTemplate" placement="bottom">
                 <img src="../../../assets/images/BPMS/submit-for-approval.svg">
                 <span class="testtooltip">Save & Submit for approval</span>
               </button>
               <!-- <button mat-button [matMenuTriggerFor]="menu" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"><img alt=""
                 src="../../../assets/images/BPMS/submit-for-approval.svg"><span class="testtooltip">Save & Submit for
                 approval</span></button> -->
-                <button type="button" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"
+                <button type="button" [outsideClick]="true" (click)="onsaveOverlayOpen()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation" class="clr-hvr tsttooltipbtn"
         [popover]="popTemplate" placement="bottom">
         <img alt="" src="../../../assets/images/BPMS/submit-for-approval.svg">
         <span class="testtooltip">Save & Submit for approval</span>
@@ -167,12 +167,13 @@
       <label for="" class="label-control">Approval</label>
       <select [(ngModel)]="selected_approver" [disabled]="rejectedOrApproved=='PENDING'" class="form-control">
         <option value="undefined" disabled hidden>Select Approver</option>
+        <option value="null" disabled hidden>Select Approver</option>
         <option *ngFor="let each_approver of approver_list;let i=index" [value]=i>
             {{each_approver.firstName+" "+each_approver.lastName}}</option>
     </select>
     </div>
     <div class="custom-footer-content">
-      <button class="btn btn-default">Cancel</button>
+      <!-- <button class="btn btn-default">Cancel</button> -->
       <button class="btn btn-primary" (click)="onchange()">Save & Submit for Approval</button>
     </div>  
   </div>

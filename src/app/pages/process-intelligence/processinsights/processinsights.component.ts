@@ -2034,6 +2034,7 @@ svg
     //     return index;
     //   }
     ActivityTimeChart(){
+        // console.log(this.dChart1)
         am4core.useTheme(am4themes_animated);
         // Themes end
         
@@ -2081,7 +2082,7 @@ svg
         var _self=this;
         series.slices.template.adapter.add("tooltipText", function(text, target) {
           // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-          return "{_dataContext.name} \n {_dataContext.value}";
+          return "{_dataContext.name} \n {_dataContext.label}";
         });
         $('g:has(> g[stroke="#3cabff"])').hide();
         series.labels.template.text = "{_dataContext.label}";
@@ -2158,7 +2159,7 @@ svg
         var _self=this;
         series.slices.template.adapter.add("tooltipText", function(text, target) {
           // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
-          return "{_dataContext.name} \n {_dataContext.value}";
+          return "{_dataContext.name} \n {_dataContext.label}";
         });
         series.labels.template.text = "{_dataContext.label}";
         $('g:has(> g[stroke="#3cabff"])').hide();

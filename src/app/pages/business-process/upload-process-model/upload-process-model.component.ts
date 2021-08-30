@@ -252,6 +252,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
         this.dt.bpsNotationaScreenValues(null);
         this.dt.downloadNotationValue(null);
         this.dt.bpsHeaderValues(null);
+        this.dt.submitForApproval(null)
       }
 
    setRPAData(){
@@ -789,6 +790,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj=data
+        this.isEdit=false;
         this.updated_date_time = new Date();
         this.spinner.hide();
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,

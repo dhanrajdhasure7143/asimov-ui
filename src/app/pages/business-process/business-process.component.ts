@@ -174,5 +174,11 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.dt.bpsHeaderValues("getBpmn_differences");
 
   }
+  onsaveOverlayOpen(){
+    if(this.selected_approver){
+      this.selected_approver=null;
+    }
+
+  }
 
 }
