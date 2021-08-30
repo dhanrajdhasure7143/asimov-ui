@@ -183,10 +183,10 @@
   
   
   <ng-template #epsoft_logs_modal_ref>
-      <div class="modal-header modelprhead">
+      <div class="modal-header modelprhead newmodelcla">
           <span *ngIf="viewlogid1!=undefined">      
           
-            <button (click)="viewlogid1=undefined" >
+            <button (click)="viewlogid1=undefined" class="backarrcl" >
               <img src="../../../../assets/images/RPA/arrow.svg" style="height:17px">
             </button>&nbsp;&nbsp;
           </span> 
@@ -194,16 +194,16 @@
           Logs  
           
           <span *ngIf="viewlogid1!=undefined">
-            - RunId - {{viewlogid1}} 
+            - Run ID - {{viewlogid1}} 
+          </span>
+          <span (click)="getEpsoftLogs(log_botid,log_version,epsoft_logs_modal_ref,'update')" class="clickable refecls" *ngIf="viewlogid1==undefined">
+            Refresh
+          </span>
+          <span (click)="ViewlogByrunid(viewlogid1)" *ngIf="viewlogid1!=undefined" class="clickable refecls">
+            Refresh
           </span>
           <span class="pull-right">
-          <span (click)="getEpsoftLogs(log_botid,log_version,epsoft_logs_modal_ref,'update')" class="clickable" *ngIf="viewlogid1==undefined">
-            <img src="../../../../assets/images/RPA/icon_latest/repeat.svg" style="height:17px"  />&nbsp;&nbsp;Refresh
-          </span>
-      
-          <span (click)="ViewlogByrunid(viewlogid1)" *ngIf="viewlogid1!=undefined" class="clickable">
-              <img src="../../../../assets/images/RPA/icon_latest/repeat.svg"  style="height:17px" />&nbsp;&nbsp;Refresh
-            </span>
+
             &nbsp;&nbsp;
           <span class=" clickable" (click)="logs_modal.hide()">
             <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
@@ -211,7 +211,7 @@
           
         </span>
         </div>
-    <div [id]="viewlogid" *ngIf="viewlogid1==undefined" class="modal-body" >
+    <div [id]="viewlogid" *ngIf="viewlogid1==undefined" class="modal-body newmodelbodycl" >
           
 
       <div class="logs-container" >
@@ -408,7 +408,7 @@
   
   
   <ng-template #uiPathLogsModal>
-    <div class="modal-header modelprhead">
+    <div class="modal-header modelprhead ">
           Logs
           <span class="pull-right" (click)="logs_modal.hide()">
               <span (click)="getuipathlogs(uiPathLogsModal,uipathbotName)" ><img src="../../../../../assets/images/RPA/">&nbsp; Refresh</span>
