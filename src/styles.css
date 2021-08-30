@@ -2327,7 +2327,7 @@ th.mat-header-cell {
 
 .ezflow-loader{
   height: 60px;
-  /* background: white; */
+  background: white !important;
   padding: 1px;
   border-radius: 50%;
   position : relative;
@@ -2459,12 +2459,20 @@ th.mat-header-cell {
   border-top: 6px solid #ccc !important;
   border-left: 6px solid transparent !important;
   border-right: 6px solid transparent !important;
+  padding-top: 2px;
 } 
 .resuractivity-header .multiselect-dropdown .dropdown-btn .dropdown-up {
   border-bottom: 6px solid #ccc !important;
   border-left: 6px solid transparent !important;
   border-right: 6px solid transparent !important;
+  padding-top: 2px;
 } 
+.resuractivity-header .multiselect-dropdown .dropdown-btn {
+  border-radius: 3px !important;
+  background-color: #fff !important;
+  opacity: unset !important;
+  line-height: 14px !important;
+}
 
 
 .logs-modal{
