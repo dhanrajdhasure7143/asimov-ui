@@ -184,10 +184,14 @@
   
   <ng-template #epsoft_logs_modal_ref>
     <div class="modal-header modelprhead">
-      Logs
-      <span class="pull-right clickable" (click)="logs_modal.hide()">
+      <h4 class="modal-title pull-left">Logs</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide()">
+        <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+      </button>
+     
+      <!-- <span class="pull-right clickable" (click)="logs_modal.hide()">
           <img src="../../../../assets/images/RPA/icon_latest/close.svg" alt="">
-      </span>
+      </span> -->
     </div>
     <div [id]="viewlogid" *ngIf="viewlogid1==undefined" class="modal-body" >
           
@@ -248,12 +252,14 @@
                       </span>-->
                       <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
 
-                  <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                  <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
-                  <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                  <span *ngIf="element.bot_status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
                   <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                   <!--<span *ngIf="element.bot_status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>-->
-                  <span *ngIf="element.bot_status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                  <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons"><span>
+                    <img src="../../../../assets/images/RPA/userobot.png" style="filter: none; ">
+                  </span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                   <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.bot_status}}</span></span>
                       <span *ngIf="element.bot_status == undefined">-</span></td>
@@ -270,7 +276,7 @@
               <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
           </table>
       </div>
-      <mat-paginator #paginator4 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+      <mat-paginator #paginator4 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
     </div>
     <div [id]="viewlogid1"  *ngIf="viewlogid1!=undefined" class="modal-body">
       <div class="text-right">
@@ -318,8 +324,8 @@
 
                               <!-- Status Column -->
               <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef style="width:10%">Status</th>
-                <td mat-cell *matCellDef="let element" style="width:10%">
+                <th mat-header-cell *matHeaderCellDef style="width:15%">Status</th>
+                <td mat-cell *matCellDef="let element" style="width:15%">
                   <!-- <span *ngIf="element.status!=null">
                       <span *ngIf="element.status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.status}}</span></span>
 
@@ -332,12 +338,14 @@
 
                     <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
 
-                      <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                      <span *ngIf="element.status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
 
-                      <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
+                      <span *ngIf="element.status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
                       <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                       <!--<span *ngIf="element.status=='New'" class="text-primary"><span><img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>-->
-                      <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
+                      <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons"><span>
+                        <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
+                      </span>&nbsp;<span>{{element.status}}</span></span>
 
                       <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
 
@@ -367,7 +375,7 @@
           </table>
       </div>
       
-      <mat-paginator #paginator5 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+      <mat-paginator #paginator5 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
     </div>
   </ng-template>
   
@@ -467,7 +475,7 @@
               <tr mat-row *matRowDef="let row; columns: displayedColumns6;"></tr>
           </table>
       </div>
-      <mat-paginator #paginator6 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+      <mat-paginator #paginator6 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
       </div>
        
 </ng-template>
@@ -545,7 +553,7 @@
                       <tr mat-row *matRowDef="let row; columns: displayedblueprismcolums;"></tr>
                       <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': blueplogsdata }"></tr>
                  </table>
-                  <mat-paginator #paginator7 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+                  <mat-paginator #paginator7 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
               </div>
             </div>
           </div>
