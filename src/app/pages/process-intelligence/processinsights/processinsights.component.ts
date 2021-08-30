@@ -590,11 +590,11 @@ series2.dataFields.valueY = "value2";
 series2.dataFields.dateX = "date";
 series2.strokeWidth = 2;
 series2.strokeDasharray = "3,4";
-// series2.tooltipText = "[bold]{date.formatDate()}:[/]\n{name1}: {value1}\n{name1}:{value2}";
 series2.stroke = series.stroke;
 // Add cursor
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.xAxis = dateAxis;
+series2.stroke = am4core.color("#fc8d45");
 
 // // add ranges
 // var minRange = dateAxis.axisRanges.create();
@@ -2083,6 +2083,7 @@ svg
           // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
           return "{_dataContext.name} \n {_dataContext.value}";
         });
+        $('g:has(> g[stroke="#3cabff"])').hide();
         series.labels.template.text = "{_dataContext.label}";
         series.colors.list = [
             am4core.color("rgba(85, 216, 254, 0.9)"),
@@ -2160,6 +2161,7 @@ svg
           return "{_dataContext.name} \n {_dataContext.value}";
         });
         series.labels.template.text = "{_dataContext.label}";
+        $('g:has(> g[stroke="#3cabff"])').hide();
         series.colors.list = [
             am4core.color("rgba(85, 216, 254, 0.9)"),
             am4core.color("rgba(255, 131, 115, 0.9)"),

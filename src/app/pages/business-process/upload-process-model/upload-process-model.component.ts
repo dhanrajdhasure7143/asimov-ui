@@ -334,7 +334,9 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(isFromConf) this.isUploaded = true;
       else this.getSelectedNotation();
       this.notationListOldValue = this.selected_notation;
-      this.isLoading = false;
+      setTimeout(() => {
+        this.isLoading = false;        
+      }, 2000);
       setTimeout(() => {
       this.getSelectedApprover();
       this.getAutoSavedDiagrams();

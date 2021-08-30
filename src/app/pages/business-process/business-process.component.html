@@ -21,7 +21,7 @@
                 <span class="module-back-button" *ngIf="isShowConformance" (click)='backtoPI()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->
                 <span class="level3">Last Modified By: {{logged_User}}</span>
-                <span class="level3sep" *ngIf="currentNotation_name">|</span>
+                <span class="level3sep" *ngIf="updated_date_time">|</span>
                 <span *ngIf="updated_date_time">Autosaved @ {{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</span>
 
               </div> 
