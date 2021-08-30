@@ -65,9 +65,7 @@
           <div class="maintabdiv">
               <!--For Bot Schedule-->
               <div  *ngIf="botid!='' && botid !=undefined">
-              <div class="tablmacl">
-              <div class="innertabld">
-              <table class="table">
+              <div class="tablmacl"><div class="innertabld"><table class="table">
                   <thead>
                       <th class="text-center"><input type="checkbox" (click)="check_all($event)"></th>
                       <th>Schedule Interval</th>
@@ -89,12 +87,8 @@
                           <td *ngIf="schedule.botActionStatus==undefined">{{schedule.save_status}}</td>
                       </tr>
                   </tbody>
-              </table>
-              </div>
-              </div>
-              <div class="pagicl float-right">
-                <pagination-controls (pageChange)="q = $event"></pagination-controls>
-              </div>
+              </table></div></div>
+              <div class="pagicl float-right"><pagination-controls (pageChange)="q = $event"></pagination-controls></div>
               </div>
               <div class="text-right">
                   <button class="btn btn-primary eiap-btn" (click)="saveschedule()">Save</button>
