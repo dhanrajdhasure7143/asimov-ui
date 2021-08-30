@@ -334,7 +334,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
       if(isFromConf) this.isUploaded = true;
       else this.getSelectedNotation();
       this.notationListOldValue = this.selected_notation;
-      // this.isLoading = false;
+      this.isLoading = false;
       setTimeout(() => {
       this.getSelectedApprover();
       this.getAutoSavedDiagrams();
@@ -375,7 +375,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
   }
 
    getSelectedApprover(){
-     this.isLoading=true;
     let user_role=localStorage.getItem('userRole')
     let current_bpmn_info
     if(user_role=='Process Architect'){
@@ -419,7 +418,6 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
     "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
       setTimeout(() => {
-        this.isLoading=false;
         this.dt.bpsNotationaScreenValues(this.push_Obj);
       }, 2000);
    }
@@ -658,7 +656,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
               console.error('could not import BPMN EZFlow notation', err);
             }
           }
-          // _self.isLoading = false;
+          _self.isLoading = false;
         }
       })
     }else{
@@ -724,7 +722,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
           console.error('could not import BPMN EZFlow notation', err);
         }
       }
-      // _self.isLoading = false;
+      _self.isLoading = false;
     }
     this.getSelectedApprover();
   }
