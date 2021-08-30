@@ -109,6 +109,7 @@ export class ProgramDetailsComponent implements OnInit {
       this.selectedProgram_id=program_id
       this.get_linked_projects(program_id);
       this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
+      console.log("pgrmdata: ", this.program_detials)
       this.editdata=false;
     });
   }

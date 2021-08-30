@@ -56,3 +56,19 @@ select {
 .botmanagement-tablelist table td span{
   font-size: 13px !important;
 }
+
+
+.search-fields-width{
+  width:200px;
+}
+.tableActionsIcons img {
+  height: 20px;
+  width: auto;
+  margin-right: 4px;
+}
+
+
+.tableActionsIcons span {
+  font-size: 16px;
+  padding-top: 5px;
+}

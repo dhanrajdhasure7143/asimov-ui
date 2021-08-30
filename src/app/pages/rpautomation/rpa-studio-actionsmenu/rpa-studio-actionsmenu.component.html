@@ -72,7 +72,7 @@
           <img src="../../../../assets/images/RPA/icon_latest/duplicate.svg" />
             <!-- <i class="ri-file-copy-line"></i> -->
         </div>
-        <div class="action-item" placement="bottom" tooltip="View Logs" (click)="viewlogdata()">
+        <div class="action-item" placement="bottom" tooltip="View Logs" (click)="viewlogdata(logspopup,'open')">
           <img src="../../../../assets/images/RPA/icon_latest/artboard.svg" />
             <!-- <i class="ri-clipboard-line"></i> -->
         </div>
@@ -432,181 +432,226 @@
 
 
 
-
-<div [id]="viewlogid" class="rpa-modal">
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="viewlogclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-          <h4>Logs</h4>
+<ng-template #logspopup>
+<<<<<<< Updated upstream
+    <div class="modal-header modelprhead">
+      <h4 class="modal-title pull-left">Logs</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="logsmodalref.hide()">
+        <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+      </button>
+       <!-- <span class="pull-right clickable" (click)="logsmodalref.hide()"><img src="../../../../../assets/images/Projects/circle-close.svg" alt=""></span> -->
+         
       </div>
 
-      <div class="container-fluid" style="background: white;">
-        <button (click)="viewlogdata()" style='float:right;margin-top:10px;' tooltip="Refresh" ><i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i></button>
-
-        <div class="container-fluid"  class="table w-100 w-100">
-
-              <table mat-table [dataSource]="Viewloglist" #sort1="matSort" matSort style="width:100%;max-height: 300px;overflow-x:scroll;">
-
-
-                  <!-- Run Id Column -->
-                  <ng-container matColumnDef="run_id">
-                      <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
-                      <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.run_id}}</button></td>
-                  </ng-container>
-
-                  <!-- Version Column -->
-                  <ng-container matColumnDef="version">
-                      <th mat-header-cell *matHeaderCellDef> Version </th>
-                      <td mat-cell *matCellDef="let element">
-                          <span *ngIf="element.version!=null">V{{element.version}}</span>
-                          <span *ngIf="element.version == undefined">-</span>
-                      </td>
-                  </ng-container>
-
-                  <!-- Start Date Column -->
-                  <ng-container matColumnDef="start_date">
-                      <th mat-header-cell *matHeaderCellDef style="width:25%;"> Start Date </th>
-                      <td mat-cell *matCellDef="let element" style="width:25%;">
-                          <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }}, {{element.start_time}}</span>
-                          <span *ngIf="element.start_date == undefined">-</span>
-                      </td>
-                  </ng-container>
-
-                  <!-- End Date Column -->
-
-                  <ng-container matColumnDef="end_date">
-                      <th mat-header-cell *matHeaderCellDef style="width:25%;"> End Date </th>
-                      <td mat-cell *matCellDef="let element" style="width:25%;">
-                          <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy' }}, {{element.end_time}}</span>
-                          <span *ngIf="element.end_date == undefined">-</span>
-                      </td>
-                  </ng-container>
-                  <ng-container matColumnDef="bot_status">
-                      <th mat-header-cell *matHeaderCellDef>Status</th>
-                      <td mat-cell *matCellDef="let element">
-                              <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
-
-                              <span *ngIf="element.bot_status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
-
-                              <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
-                              <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                              <span *ngIf="element.bot_status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
-
-                              <span *ngIf="element.bot_status=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
-
-                              <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
-
-                          <span *ngIf="element.bot_status == undefined || element.bot_status == null">-</span></td>
-                  </ng-container>
-
-                  <ng-container matColumnDef="noData">
-                      <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
-                          No Records Found
-                      </td>
-                  </ng-container>
-
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
-              </table>
-              <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
-          </div>
-      </div>
+=======
+  <div class="modal-header modelprhead">
+    <span *ngIf="viewlogid1!=undefined">      
+      <button (click)="viewlogid1=undefined"tooltip="Back" >
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </button>&nbsp;&nbsp;
+    </span> Logs  
+    <span class="pull-right clickable" (click)="logsmodalref.hide()">
+      <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+    </span>
+        
   </div>
-</div>
-<div [id]="viewlogid1" class="rpa-modal">
-  <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="viewlogclose1()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-          <h4>Logs</h4>
-      </div>
+>>>>>>> Stashed changes
+  <div class="modal-body modelprbody" *ngIf="viewlogid1==undefined" [id]="viewlogid" >
+      <!-- <div class="rpa-modal-header">
+         <h4>Logs</h4>
+      </div> -->
+<<<<<<< Updated upstream
+      <div class="text-right">
+      <button (click)="viewlogdata(logspopup,'update')" tooltip="Refresh"  placement="bottom" ><i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i>&nbsp;&nbsp; Refresh</button>
+=======
+      <div class="pull-right">
+      <button (click)="viewlogdata(logspopup,'update')" tooltip="Refresh" ><i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i>&nbsp;&nbsp; Refresh</button>
+>>>>>>> Stashed changes
+      
+    </div>
+      <br>
+    <div class="logs-container" style="background: white;">
+    
+            <table mat-table class="projecttable table" [dataSource]="Viewloglist" #sort1="matSort" matSort>
 
-      <div class="logs-container">
-          <button (click)="back()"tooltip="Back"  style='float:right;margin-top:10px;'>&nbsp;&nbsp;&nbsp;&nbsp;
-            <i class="fa fa-arrow-left" aria-hidden="true"></i>
-          </button>&nbsp;&nbsp;
-          <button (click)="ViewlogByrunid(botrunid)" tooltip="Refresh" placement="bottom" style='float:right;margin-top:10px;'>
-            <i class="fas fa-sync-alt" aria-hidden="true"></i>
+
+                <!-- Run Id Column -->
+                <ng-container matColumnDef="run_id">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:13%"> Run ID </th>
+                    <td mat-cell *matCellDef="let element" style="padding-left:55px;width:13%"><button style="color:blue; text-decoration: underline;" (click)="ViewlogByrunid(element.run_id)">{{element.run_id}}</button></td>
+                </ng-container>
+
+                <!-- Version Column -->
+                <ng-container matColumnDef="version">
+                    <th mat-header-cell *matHeaderCellDef> Version </th>
+                    <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.version!=null">V{{element.version}}</span>
+                        <span *ngIf="element.version == undefined">-</span>
+                    </td>
+                </ng-container>
+
+                <!-- Start Date Column -->
+                <ng-container matColumnDef="start_date">
+                    <th mat-header-cell *matHeaderCellDef style="width:25%;"> Start Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:25%;">
+                        <span *ngIf="element.start_date!=null">{{element.start_date  | date:'EEE MMM d, yyyy' }}, {{element.start_time}}</span>
+                        <span *ngIf="element.start_date == undefined">-</span>
+                    </td>
+                </ng-container>
+
+                <!-- End Date Column -->
+
+                <ng-container matColumnDef="end_date">
+                    <th mat-header-cell *matHeaderCellDef style="width:25%;"> End Date </th>
+                    <td mat-cell *matCellDef="let element" style="width:25%;">
+                        <span *ngIf="element.end_date!=null">{{element.end_date  | date:'EEE MMM d, yyyy' }}, {{element.end_time}}</span>
+                        <span *ngIf="element.end_date == undefined">-</span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="bot_status">
+                    <th mat-header-cell *matHeaderCellDef>Status</th>
+                    <td mat-cell *matCellDef="let element">
+                            <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
+
+                            <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                            <span *ngIf="element.bot_status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                            <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                            <span *ngIf="element.bot_status=='New'" class="text-primary tableActionsIcons"><span class="text-primary">
+                               <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
+                              </span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                            <span *ngIf="element.bot_status=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                            <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
+
+                        <span *ngIf="element.bot_status == undefined || element.bot_status == null">-</span></td>
+                </ng-container>
+
+                <ng-container matColumnDef="noData">
+                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                        No Records Found
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata1}"></tr>
+            </table>
+         
+       
+    </div>
+<<<<<<< Updated upstream
+    <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+=======
+    <!-- <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
+>>>>>>> Stashed changes
+  </div>
+
+  <div [id]="viewlogid1" *ngIf="viewlogid1!=undefined" class="modal-body modelprbody">
+    <div>
+      <span class="pull-left">
+        RunId - {{viewlogid1}}    
+      </span>
+      <span class="pull-right">
+        <button (click)="ViewlogByrunid(botrunid)" tooltip="Refresh" placement="bottom" >
+            <i class="fas fa-sync-alt" aria-hidden="true"></i>&nbsp; Refresh
+<<<<<<< Updated upstream
           </button>
-
-          <table mat-table [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
-
-              <!-- Task Name Column -->
-              <ng-container matColumnDef="task_name">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:18%"> Task Name </th>
-                  <td mat-cell *matCellDef="let element" style="padding-left:55px;width:18%">
-                      <span *ngIf="element.task_name != null" class="btntaskname">
-                          {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}</span>
-                         <span *ngIf="element.task_name == undefined">-</span>
-                  </td>
-              </ng-container>
-
-              <!-- Status Column -->
-              <ng-container matColumnDef="status">
-                  <th mat-header-cell *matHeaderCellDef style="width:13%">Status</th>
-                  <td mat-cell *matCellDef="let element" style="width:13%">
-                      <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
-
-                      <span *ngIf="element.status=='Success'" class="text-success"><span><li class="fa fa-check-circle"style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
-
-                      <span *ngIf="element.status=='Failure'" class="text-danger"><span><li class="fa fa-times-circle" style="font-size:19px"></span>&nbsp;<span>{{element.status}}</span></span>
-                      <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
-                      <span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-robot text-light"></i></span>&nbsp;<span>{{element.status}}</span></span>
-
-                      <span *ngIf="element.status=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>&nbsp;<span>{{element.status}}</span></span>
-
-                      <span *ngIf="element.status=='Pause'||element.status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.status}}</span></span>
-
-                      <span *ngIf="element.status == undefined || element.status == null">-</span></td>
-              </ng-container>
-
-              <!-- Start date Column -->
-              <ng-container matColumnDef="start_date">
-                  <th mat-header-cell *matHeaderCellDef style="width:18%"> Start Date </th>
-                  <td mat-cell *matCellDef="let element" style="width:18%">
-                      <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
-                      <span *ngIf="element.start_date == undefined">-</span>
-                  </td>
-              </ng-container>
-
-              <!-- End Time Column -->
-
-
-              <!-- End Date Column -->
-              <ng-container matColumnDef="end_date">
-                  <th mat-header-cell *matHeaderCellDef style="width:18%"> End Date </th>
-                  <td mat-cell *matCellDef="let element" style="width:18%">
-                      <span *ngIf="element.end_date != null">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
-                      <span *ngIf="element.end_date == undefined">-</span>
-                  </td>
-              </ng-container>
-
-              <!-- Error Info Column -->
-              <ng-container matColumnDef="error_info">
-                  <th mat-header-cell *matHeaderCellDef> Error Info </th>
-                  <td mat-cell *matCellDef="let element">
-                      <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [tooltip]="element.error_info" class="btnerrorinfo">
-                          {{(element.error_info.length > 50) ? ((element.error_info).slice(0, 50) + '...') : element.error_info}}</span>
-                      <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span>
-                      <!--<div class="errorinfoelement">{{element.error_info}}</div>-->
-                  </td>
-              </ng-container>
-
-              <ng-container matColumnDef="noData">
-                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
-                      No Records Found
-                  </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
-              <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
-          </table>
-          <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+      <button (click)="viewlogid1=undefined"tooltip="Back"  placement="bottom" >&nbsp;&nbsp;&nbsp;&nbsp;
+          <i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back
+        </button>&nbsp;&nbsp;
+      
       </div>
-  </div>
-</div>
+=======
+        </button>
+      </span>
+    </div>
+>>>>>>> Stashed changes
+        <br>
+    <div class="logs-container">
+   
+        <table mat-table class="projecttable table" [dataSource]="logbyrunid" #sort2="matSort" matSort style="width:100%;">
 
+            <!-- Task Name Column -->
+            <ng-container matColumnDef="task_name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left:55px;width:18%"> Task Name </th>
+                <td mat-cell *matCellDef="let element" style="padding-left:55px;width:18%">
+                    <span *ngIf="element.task_name != null" class="btntaskname">
+                        {{(element.task_name.length > 25) ? ((element.task_name).slice(0, 25) + '...') : element.task_name}}</span>
+                        <span *ngIf="element.task_name == undefined">-</span>
+                </td>
+            </ng-container>
+
+            <!-- Status Column -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef style="width:13%">Status</th>
+                <td mat-cell *matCellDef="let element" style="width:13%">
+                    <span *ngIf="element.status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.status}}</span>
+
+                    <span *ngIf="element.status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
+
+                    <span *ngIf="element.status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
+                    <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
+                    <span *ngIf="element.status=='New'" class="text-primary tableActionsIcons"><span >
+                      <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
+                    </span>&nbsp;<span>{{element.status}}</span></span>
+
+                    <span *ngIf="element.status=='Stop'" ><span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>&nbsp;<span>{{element.status}}</span></span>
+
+                    <span *ngIf="element.status=='Pause'||element.status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.status}}</span></span>
+
+                    <span *ngIf="element.status == undefined || element.status == null">-</span></td>
+            </ng-container>
+
+            <!-- Start date Column -->
+            <ng-container matColumnDef="start_date">
+                <th mat-header-cell *matHeaderCellDef style="width:18%"> Start Date </th>
+                <td mat-cell *matCellDef="let element" style="width:18%">
+                    <span *ngIf="element.start_date != null">{{element.start_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.start_time.slice(11,19)}}</span>
+                    <span *ngIf="element.start_date == undefined">-</span>
+                </td>
+            </ng-container>
+
+            <!-- End Time Column -->
+
+
+            <!-- End Date Column -->
+            <ng-container matColumnDef="end_date">
+                <th mat-header-cell *matHeaderCellDef style="width:18%"> End Date </th>
+                <td mat-cell *matCellDef="let element" style="width:18%">
+                    <span *ngIf="element.end_date != null||element.end_date != undefined">{{element.end_date.split('T')[0] | date:'EEE MMM d, yyyy' }},{{element.end_time.slice(11,19)}}</span>
+                    <span *ngIf="element.end_date == undefined">-</span>
+                </td>
+            </ng-container>
+
+            <!-- Error Info Column -->
+            <ng-container matColumnDef="error_info">
+                <th mat-header-cell *matHeaderCellDef> Error Info </th>
+                <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.error_info!=null && element.error_info != 'NA'" [tooltip]="element.error_info" class="btnerrorinfo">
+                        {{(element.error_info.length > 50) ? ((element.error_info).slice(0, 50) + '...') : element.error_info}}</span>
+                    <span *ngIf="element.error_info == undefined ||element.error_info == 'NA' ">-</span>
+                    <!--<div class="errorinfoelement">{{element.error_info}}</div>-->
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="noData">
+                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="7">
+                    No Records Found
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+            <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !respdata2}"></tr>
+        </table>
+       
+    </div>
+    <!-- <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
+  </div>
+
+</ng-template>
 
 <div [id]="'rpa_createenvironment'+'_'+botState.botName"  class="rpa-modal">
   <div class="rpa-modal-content">

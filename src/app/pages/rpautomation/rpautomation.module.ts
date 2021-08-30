@@ -18,7 +18,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RpaWorkspaceComponent } from './rpa-workspace/rpa-workspace.component';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { ModalModule, BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { CronEditorModule } from 'src/app/shared/cron-editor/cron-editor.module';
 import { FilterPipeModule } from 'ngx-filter-pipe';
 import { NgxPasswordToggleModule } from 'ngx-password-toggle';
@@ -119,6 +119,6 @@ import { TasksearchPipe } from './custom-pipes/tasksearch.pipe';
     MatSlideToggleModule,
     Ng5SliderModule,
   ],
-  providers: [MatDatepickerModule,Rpa_Hints]
+  providers: [MatDatepickerModule,Rpa_Hints, BsModalRef, BsModalService]
 })
 export class RpautomationModule { }

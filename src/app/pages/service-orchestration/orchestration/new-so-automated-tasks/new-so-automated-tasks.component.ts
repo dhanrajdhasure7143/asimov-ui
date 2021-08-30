@@ -12,6 +12,7 @@ import {sohints} from '../model/new-so-hints';
 import { DataTransferService } from '../../../services/data-transfer.service';
 declare var $:any;
 import { NgxSpinnerService } from "ngx-spinner";
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-new-so-automated-tasks',
@@ -77,7 +78,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
   public BluePrismConfigForm:FormGroup;
   public BluePrismFlag:Boolean=false;
   public timer:any;
-
+  public logs_modal:BsModalRef;
   constructor(
     private route: ActivatedRoute,
     private rest:RestApiService,
@@ -87,6 +88,7 @@ export class NewSoAutomatedTasksComponent implements OnInit,OnDestroy {
     private http:HttpClient,
     private hints: sohints,
     private dt : DataTransferService,
+    private modalService:BsModalService
    )
 
   {
@@ -797,9 +799,9 @@ resetsla(){
     })
   }
 
-  getprocesslogs(){
+  getprocesslogs(template){
     //document.getElementById("filters").style.display = "none";
-   
+    this.logs_modal=this.modalService.show(template,{class:"logs-modal"})
     this.processId1 = this.selectedvalue;
     this.popup=true;
    
