@@ -433,6 +433,7 @@
 
 
 <ng-template #logspopup>
+<<<<<<< Updated upstream
     <div class="modal-header modelprhead">
       <h4 class="modal-title pull-left">Logs</h4>
       <button type="button" class="close pull-right" aria-label="Close" (click)="logsmodalref.hide()">
@@ -442,12 +443,30 @@
          
       </div>
 
+=======
+  <div class="modal-header modelprhead">
+    <span *ngIf="viewlogid1!=undefined">      
+      <button (click)="viewlogid1=undefined"tooltip="Back" >
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+      </button>&nbsp;&nbsp;
+    </span> Logs  
+    <span class="pull-right clickable" (click)="logsmodalref.hide()">
+      <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+    </span>
+        
+  </div>
+>>>>>>> Stashed changes
   <div class="modal-body modelprbody" *ngIf="viewlogid1==undefined" [id]="viewlogid" >
       <!-- <div class="rpa-modal-header">
          <h4>Logs</h4>
       </div> -->
+<<<<<<< Updated upstream
       <div class="text-right">
       <button (click)="viewlogdata(logspopup,'update')" tooltip="Refresh"  placement="bottom" ><i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i>&nbsp;&nbsp; Refresh</button>
+=======
+      <div class="pull-right">
+      <button (click)="viewlogdata(logspopup,'update')" tooltip="Refresh" ><i class="fas fa-sync-alt text-dark"  aria-hidden="true"></i>&nbsp;&nbsp; Refresh</button>
+>>>>>>> Stashed changes
       
     </div>
       <br>
@@ -522,19 +541,33 @@
          
        
     </div>
+<<<<<<< Updated upstream
     <mat-paginator #paginator1 [pageSize]="10" [showFirstLastButtons]="true"></mat-paginator>
+=======
+    <!-- <mat-paginator #paginator1 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
+>>>>>>> Stashed changes
   </div>
 
   <div [id]="viewlogid1" *ngIf="viewlogid1!=undefined" class="modal-body modelprbody">
-    <div class="text-right">
+    <div>
+      <span class="pull-left">
+        RunId - {{viewlogid1}}    
+      </span>
+      <span class="pull-right">
         <button (click)="ViewlogByrunid(botrunid)" tooltip="Refresh" placement="bottom" >
             <i class="fas fa-sync-alt" aria-hidden="true"></i>&nbsp; Refresh
+<<<<<<< Updated upstream
           </button>
       <button (click)="viewlogid1=undefined"tooltip="Back"  placement="bottom" >&nbsp;&nbsp;&nbsp;&nbsp;
           <i class="fa fa-arrow-left" aria-hidden="true"></i> &nbsp; Back
         </button>&nbsp;&nbsp;
       
       </div>
+=======
+        </button>
+      </span>
+    </div>
+>>>>>>> Stashed changes
         <br>
     <div class="logs-container">
    
@@ -615,7 +648,7 @@
         </table>
        
     </div>
-    <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator>
+    <!-- <mat-paginator #paginator2 [pageSize]="5" [showFirstLastButtons]="true"></mat-paginator> -->
   </div>
 
 </ng-template>
