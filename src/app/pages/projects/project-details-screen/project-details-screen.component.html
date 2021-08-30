@@ -731,7 +731,7 @@
             </td>
           </ng-container>
           <ng-container matColumnDef="resources">
-            <th mat-header-cell *matHeaderCellDef>Resource </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Resource </th>
             <td mat-cell *matCellDef="let element">
               <span *ngIf="element.resources!=null">{{element.resources| userPipe : users_list}}</span>
               <span *ngIf="element.resources==null">---</span>
@@ -742,7 +742,7 @@
       </ng-container>
 
       <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status  </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Status  </th>
         <td mat-cell *matCellDef="let element">
           <span *ngIf="element.status!=null">{{element.status}}</span>
           <span *ngIf="element.status==null">---</span>
