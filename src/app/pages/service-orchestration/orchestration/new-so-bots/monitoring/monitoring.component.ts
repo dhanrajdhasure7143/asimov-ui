@@ -59,7 +59,16 @@ export class MonitoringComponent implements OnInit {
         cancelled:this.bots_list.filter(item=>item.botStatus=="cancelled").lenght,
       }
       this.failedbots=this.bots_list.filter(item=>item.botStatus=="Failed"||item.botStatus=="Failure");
-      
+      this.failedbots=this.failedbots.sort(function (var1, var2) { 
+        var a= new Date(var1.createdAt), b = new Date(var2.createdAt);
+         if (a > b)
+           return 1;
+         if (a < b)
+           return -1;
+        
+         return 0;
+     });
+     this.failedbots=this.failedbots.reverse();
       this.status1();
       this.status2();
       this.status4()
@@ -386,13 +395,23 @@ export class MonitoringComponent implements OnInit {
               })
               let data:any={
                 "name":filteredbot.botName,
-                "value":timedur
+                "value":timedur,
+                "createdAt":filteredbot.createdAt
               }
               runtimestats.push(data);
           }
         }
       });
-      this.runtimestats=runtimestats.sort(function(a, b){return b.value - a.value});;
+      this.runtimestats=runtimestats.sort(function (var1, var2) { 
+        var a= new Date(var1.createdAt), b = new Date(var2.createdAt);
+         if (a > b)
+           return 1;
+         if (a < b)
+           return -1;
+        
+         return 0;
+     });
+     this.runtimestats=this.runtimestats.reverse();
       if(runtimestats.length!=0)
       {
         this.statschart();

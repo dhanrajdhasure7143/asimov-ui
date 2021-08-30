@@ -130,3 +130,14 @@ table tr .display_hover:hover{
 }
 
 
+.orchestration-table-container{
+  width: 100%;
+  height: calc(100vh - 330px);
+  overflow: auto;
+}
+
+
+.orchestration-action-btn{
+  height: 38px !important;
+  width: 38px !important;
+}
