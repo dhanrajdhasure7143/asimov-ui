@@ -2442,6 +2442,29 @@ th.mat-header-cell {
   background-color: #e3e9ef8c !important;
 }
 
+.resuractivity-header ng-multiselect-dropdown .dropdown-list {
+  margin-top: 0px !important;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item1 li {
+  border-bottom: 1px solid #e5e5e5 !important;
+  padding: 6px 8px !important;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item2 {
+  max-height: 200px !important;
+}
+.resuractivity-header ng-multiselect-dropdown .dropdown-list ul.item2 li {
+  padding: 6px 8px !important;
+}
+.resuractivity-header .multiselect-dropdown .dropdown-btn .dropdown-down {
+  border-top: 6px solid #ccc !important;
+  border-left: 6px solid transparent !important;
+  border-right: 6px solid transparent !important;
+} 
+.resuractivity-header .multiselect-dropdown .dropdown-btn .dropdown-up {
+  border-bottom: 6px solid #ccc !important;
+  border-left: 6px solid transparent !important;
+  border-right: 6px solid transparent !important;
+} 
 
 
 .logs-modal{
@@ -2453,7 +2476,30 @@ th.mat-header-cell {
   height:400px  !important;
   overflow:auto;
 }
+.logs-table{
+  width:100% !important;
+}
+.logs-table th {
+  font-size: 16px !important;
+  text-align: left !important;
+  font-weight: 600 !important;
+  color:#00a0e3 !important;
+}
+.logs-table th button{
+  font-size: 16px !important;
+  text-align: left !important;
+  font-weight: 600 !important;
+  color:#00a0e3 !important;
+}
+.logs-table th{
+  background-color: white !important;
+  
+}
 
 .as-horizontal > .as-split-gutter > .as-split-gutter-icon {
   background-color: #f3f3f3 !important;
 }
+.logs-table tr{
+  border-bottom:none !important;
+}
+

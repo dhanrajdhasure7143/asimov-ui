@@ -1,6 +1,5 @@
 .divbox{
     border: 1px solid #E5E5E5;
-    margin-left: -15px;
     padding: 10px 15px;
     border-radius: 4px;
     /* box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2); */
@@ -45,6 +44,7 @@ color: #081D2A;
   text-align: center; */
   position: absolute;
   right: 10px;
+  top: 16px;
   }
 
 .btm-line{
@@ -52,29 +52,20 @@ color: #081D2A;
 }
 .table1-heading{
     /* font-weight: 800; */
-    margin-bottom: 10px;
+    /* margin-bottom: 10px;
     font-size: 18px;
     margin-top: 30px;
-    margin-left: 20px;
+    margin-left: 20px; */
+    color: #000000DE;
+    font-size: 16px !important;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 .table-striped>tbody>tr:nth-of-type(even){
     background-color: #ebf2d3 !important;
 }
-thead{
-    background-color: #4AB0F5 !important;
 
-}
-.table-bordered>thead>tr>th {
-  font-size: 16px !important;
-  color: #333;
-  text-align: left;
-  font-weight: 500;
-  }
-  .table>tbody>tr>td{
-    font-size: 14px;
-    text-align: left;
-    color: #213b61;
-  }
+
 input:disabled{
     cursor: no-drop;
     border: 1px solid #ccc;
@@ -94,8 +85,7 @@ input:disabled{
     margin-left: -20px;
   }
 .input-fields{
-    margin-top: 20px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     padding: 8px 8px 6px 8px !important;
     background-color: #f3f3f3;
 }
@@ -107,13 +97,14 @@ input:disabled{
   color: #5a6c87;
 }
 .input-fields input{
-  padding: 5px 8px;
+  padding: 6px 8px;
 }
 
 .groupBtn{
   position: absolute;
   z-index: 1;
-  right: 19px;
+  right: 30px;
+  top: 10px;
   list-style: none;
   padding: 0;
   font-size: 12px;
@@ -266,9 +257,10 @@ background: rgb(241, 240, 240);
 .box_shadw{
   border: 1px solid #e5e5e5;
   background: #fff;
+  border-radius: 4px;
 }
-.box_shadw1{
-  margin-top: 30px; 
+.box_shadw1, .box_shade {
+  margin-top: 20px; 
 }
 .box_shadw2{
   border: 1px solid #f8f8f8;
@@ -276,11 +268,10 @@ background: rgb(241, 240, 240);
   background: #fff;
 }
 .table-box{
-  margin-top: 0px;
+  margin-top: 30px;
 }
 .pi-chart{
-  margin-bottom: 10px;
-  margin-top: 10px;  
+  margin-top: 15px;  
 }
 
 .hrsInput input{
@@ -314,18 +305,18 @@ padding: 10px;
   border: 1px solid #aaa;
 }
 
-.l_title{
+.l_title label{
  /* position: relative; */
   /* top: 11px; */
   /* left: 190px; */
-  color: #213b61;
+  /* color: #213b61;
   font-size: 18px;
   text-align: left;
   margin-top: 15px;
-  margin-left: 20px;
-}
-.l_title p{
-  font-size: 18px !important;
+  margin-left: 20px; */
+  color: #000000DE;
+  font-size: 16px !important;
+  font-weight: 600;
 }
 .titleHB-cost{
   text-align: center;
@@ -398,11 +389,11 @@ padding: 10px;
   padding: 15px 0px;
   font-size: 16px;
   margin: 0px;
-  color: #213b61;
+  color: #000000DE;
   text-transform: capitalize;
 }
 .business_heading strong {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
 }
 .business_content{
@@ -416,11 +407,9 @@ padding: 10px;
 .business_content li b {
   font-weight: 600;
 }
-.box_shade{
-  margin-top: 30px;
-}
+
 .box_shadw-activity{
-  height: 444px ;
+  /* height: 444px ; */
 }
 
 .new-PI-layout {
@@ -485,22 +474,26 @@ span.testtooltip:before {
 }
 .insigntsoccur {
   border: 1px solid #e5e5e5;
+  border-radius: 4px;
   display: inline-block;
   width: 100%;
-  height: 470px;
+  height: 450px;
+  padding: 15px;
 }
-.insigntsoccur1 {
+.insigntsresuractivity {
   border: 1px solid #e5e5e5;
+  border-radius: 4px;
   display: inline-block;
   width: 100%;
   height: 350px;
+  padding: 15px;
 }
 .resuractivity-select {
   float: right;
   padding: 0px;
 }
 .resuractivity {
-  clear: both;
+  /* clear: both; */
 }
 .activevaraint {
   color: #ffffff;
@@ -522,7 +515,8 @@ img.hover-img {
   height: 270px;
 }
 .PI-insigntscost {
-  height: 470px;
+  height: 460px;
+  padding: 15px;
 }
 #linechart1{
   height: 410px;
@@ -536,3 +530,29 @@ img.hover-img {
   display: none !important;
   visibility:"hidden";
 }
+
+.boxes {
+  margin-bottom: 20px;
+}
+.amountinputs input[type="text"]:not(.mat-input-element), .amountinputs input[type="password"] {
+  border: 1px solid #00a0e3 !important;
+}
+.box_shadw1 div#scatter {
+  margin: 20px 0px 0px -10px;
+}
+.insigntsoccurtable {
+  border: 1px solid #e5e5e5;
+  border-radius: 4px;
+  padding: 15px;
+}
+.resuractivity-title label {
+  color: #000000DE;
+  font-size: 18px !important;
+  font-weight: 600;
+}
+.resuractivity-header {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+}
+
