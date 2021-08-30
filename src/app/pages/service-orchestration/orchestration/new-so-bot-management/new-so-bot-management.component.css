@@ -56,3 +56,8 @@ select {
 .botmanagement-tablelist table td span{
   font-size: 13px !important;
 }
+
+
+.search-fields-width{
+  width:200px;
+}
