@@ -1,5 +1,7 @@
 <div class="box_area container-fluid"><!-- [hidden]="bpmnupload" -->
-    <div class="row">
+
+    <!-- div for bpmn-worksapce -->
+    <!-- <div class="row">
         <div class='col-md-6 drop_box' id="upload_bpmn">
             <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
                 <div class="model-img">
@@ -26,6 +28,41 @@
                     <img src="../../../assets/images/Projects/White-plus.svg" alt="" class="testplus">Create New</button>
             </div>      
         </div>
+    </div> -->
+
+    <!-- New Div for generate-bpmn -->
+    <div class="gen-newdiv">
+        <div class="row">
+            <div class='col-md-12 drop_box' id="upload_bpmn">
+                <ngx-dropzone (change)="onSelect($event)" [multiple]=false [accept]="validNotationTypes" >
+                    <div class="model-img">
+                        <ngx-dropzone-label> <img src='..\assets\images\BPMS\upload-process-model-image.svg'></ngx-dropzone-label>
+                    </div>        
+                    <div class="model-text">
+                        <h3>Upload Process Model</h3>
+                        <h5>Drag and drop files here
+                            <span>{{'('+validNotationTypes+')'}}</span>
+                        </h5>
+                        <button class="btn btn-primary eiap-btn">
+                            <img src="../../../assets/images/BPMS/upload.svg" alt="" class="testplusupload"> Upload</button>
+                    </div>    
+                </ngx-dropzone>
+            </div> 
+        </div>
+        <div class="row">            
+            <div class='col-md-12 drop_box create_box' id="create_bpmn-box">
+                <div class="model-img">
+                    <img src='..\assets\images\BPMS\create-new-process-model-image.svg'>
+                </div>
+                <div class="model-text">
+                    <h3>Define Your Own Process</h3>
+                    <h5>Do process model from Scratch level</h5>
+                    <button class="btn btn-primary eiap-btn" id="create_bpmn" (click)="slideUp()">
+                        <img src="../../../assets/images/Projects/White-plus.svg" alt="" class="testplus">Create New</button>
+                </div>      
+            </div>
+        </div>
+
     </div>
 
 <process-category-overlay headerTitle="BPMN Details" (proceed)="uploadCreateBpmn($event)" [data]="data" [uploadedFileName]="uploadedFileName" class="bpmnCreate"></process-category-overlay>

@@ -2454,4 +2454,7 @@ th.mat-header-cell {
   overflow:auto;
 }
 
-
+.as-horizontal > .as-split-gutter > .as-split-gutter-icon {
+  background-image: none !important;
+  background-color: #eaeaeb !important;
+}

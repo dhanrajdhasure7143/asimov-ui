@@ -211,3 +211,7 @@ img.hover-img {
 .custom-footer-content {
     float: right;
 }
+
+span.bps-header-title.gen-bpsheader {
+    display: block;
+}

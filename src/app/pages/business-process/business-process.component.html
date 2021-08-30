@@ -2,7 +2,7 @@
     <div class="row content-area">
       <div class=" row module-heading title">
           <div class="col-md-6 new-bps-header-title">
-            <span class="bps-header-title">
+            <span class="bps-header-title gen-bpsheader">
               <span class="module-header-title">Business Process Studio 
                 <span *ngIf="isHeaderShow == 'true'"> / {{currentNotation_name | titlecase}}</span>
               </span>
@@ -123,11 +123,11 @@
                 <span class="testtooltip">Start Process</span>
               </button> -->
               <button class="tsttooltipbtn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">
-                  <img src="../../../assets/images/BPMS/show conformance.svg">
+                  <img src="../../../assets/images/BPMS/show-differences.svg">
                   <span class="testtooltip">Show Conformance</span>
                 </button>
                 <button class="tsttooltipbtn" (click)="getBpmnDifferences()" *ngIf="isShowConformance && (hasConformance || reSize)">
-                    <img src="../../../assets/images/BPMS/show difference.svg">
+                    <img src="../../../assets/images/BPMS/show-differences.svg">
                     <span class="testtooltip">Show Differences</span>
                   </button>
               
