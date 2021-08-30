@@ -419,7 +419,7 @@ export class UploadProcessModelComponent implements OnInit,OnDestroy {
     "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
       setTimeout(() => {
         this.dt.bpsNotationaScreenValues(this.push_Obj);
-      }, 3000);
+      }, 2000);
    }
 
   getAutoSavedDiagrams(){
@@ -768,6 +768,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this.notationListOldValue = 0;
     this.isUploaded = this.saved_bpmn_list.length != 0;
     this.reSize=true;
+    this.isEdit=false;
     this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
     "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
     "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
@@ -1323,6 +1324,7 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   getBpmnDifferences(){
+    this.isEdit=false;
     let bpmnDiffs = diff( this.confBpmnModeler.getDefinitions(), this.bpmnModeler.getDefinitions());
     let revBpmnDiffs = diff( this.bpmnModeler.getDefinitions(), this.confBpmnModeler.getDefinitions());
     let rev_added = revBpmnDiffs._added;
@@ -1364,6 +1366,10 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
     this.getElementsToColor('confBpmnModeler', revBpmnDiffs._layoutChanged, 'layout');
 
     this.slideUpDifferences();
+    this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
+    "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
+    "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize}
+this.dt.bpsNotationaScreenValues(this.push_Obj)
   }
 
   clearDifferences(){
