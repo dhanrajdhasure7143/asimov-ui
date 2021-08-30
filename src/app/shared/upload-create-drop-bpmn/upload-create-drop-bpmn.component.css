@@ -35,3 +35,17 @@
     /* box-shadow: 0px 1px 6px rgb(0 0 0 / 10%); */
     border-radius: 4px;
 }    
+
+.gen-newdiv .drop_box {
+    margin: 20px 0px;
+}
+.gen-newdiv .model-img {
+    margin-left: auto;
+}
+
+.gen-newdiv .model-text {
+    padding-left: 10px;
+}
+.gen-newdiv h3 {
+    margin-top: 0px;
+}

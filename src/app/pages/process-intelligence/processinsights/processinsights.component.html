@@ -2,22 +2,37 @@
   <div class="container-fluid new-PI-layout">
     <div class="">
       <div class="row">
+        <div class="container-fluid p-0 input-fields">
+            <div class="col-sm-4 amountinputs text-center" id="humancost">
+                <label for="">Human Cost/Hour</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
+                <i *ngIf="!isEditable" (click)="editInput()"  class="fas fa-pen"></i>
+                <i *ngIf="isEditable" (click)="editInput()" class="fas fa-check-circle"></i>
+            </div>
+            <div class="col-sm-4 amountinputs text-center" id="BotCost">
+                <label for="">Bot Cost/Hour</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
+                <i *ngIf="!isEditable1" (click)="editInput1()"  class="fas fa-pen"></i>
+                <i *ngIf="isEditable1" (click)="editInput1()" class="fas fa-check-circle"></i>
+            </div>
+            <div class="col-sm-4 amountinputs text-center" id="totalcases">
+                <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
+            </div>
+        </div>
         <div class='col-md-12 boxes p-0'>
-                <div class="col-sm-3">
+                <div class="col-sm-3 pl-0">
                     <div class="col-sm-12 divbox divbox0">
                         <img src="/assets/images/PI/total-timespent.png" alt="">
                         <h4>Total Time Spent</h4>
                         <label>{{totalMedianDuration ? getHours1(totalMedianDuration): '-'}} <span *ngIf="totalMedianDuration"> hrs</span></label>
                     </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 pl-0">
                         <div class="col-sm-12 divbox divbox1">
                             <img src="/assets/images/PI/time-savings.png" alt="">
                             <h4>Potential Time Savings</h4>
                             <label>{{totalMedianDuration ? getHours1(totalMedianDuration*40/100): '-'}} <span *ngIf="totalMedianDuration"> hrs</span></label>
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 p-0">
                         <div class="col-sm-12 divbox divbox2">
                             <img src="/assets/images/PI/total-humancost.png" alt="">
                             <h4>Total Human Cost</h4> 
@@ -25,7 +40,7 @@
                             <!-- <div>{{getHumanTotalCost(getHours(totalMedianDuration) * this.input1)}}</div> -->
                         </div>
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-3 pr-0">
                         <div class="col-sm-12 divbox divbox3">
                             <img src="/assets/images/PI/potational-savings.png" alt="">
                             <h4>Potential Savings</h4>
@@ -108,26 +123,11 @@
         <!-- </div> -->
         <!-- </div> -->
         <!-- <div class="row"> -->
-        <div class="col-md-12 p-0">  
-                <div class="col-sm-12 p-0 input-fields">
-                        <div class="col-sm-4 amountinputs" id="humancost">
-                            <label for="">Human Cost/Hour</label><input type="text" [disabled]="!isEditable" name="humanValue" [(ngModel)]="input1" (input)="getAllGraphsPriceCalculation(input1)">
-                            <i *ngIf="!isEditable" (click)="editInput()"  class="fas fa-pen"></i>
-                            <i *ngIf="isEditable" (click)="editInput()" class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="col-sm-4 amountinputs" id="BotCost">
-                            <label for="">Bot Cost/Hour</label><input type="text" [disabled]="!isEditable1" name="robotinput" [(ngModel)]="robotinput" (input)="getAllGraphsPriceCalculation(robotValue)">
-                            <i *ngIf="!isEditable1" (click)="editInput1()"  class="fas fa-pen"></i>
-                            <i *ngIf="isEditable1" (click)="editInput1()" class="fas fa-check-circle"></i>
-                        </div>
-                        <div class="col-sm-4 amountinputs" id="totalcases">
-                            <label for="">Total Cases</label><input type="text" name="frequency" disabled [(ngModel)]="totalCases">
-                        </div>
-                    </div>
-            <div class="col-sm-8 box_shadw PI-insigntscost pl-0">
+        <div class="col-md-12 p-0">                 
+            <div class="col-sm-8 box_shadw PI-insigntscost">
                 <!-- <div id="costprojection" class="lineChart box_shadw"></div> -->
                 
-                <div class="l_title"><p>Human Cost vs Bot Cost</p></div>
+                <div class="l_title"><label class="">Human Cost vs Bot Cost</label></div>
                 <div id="costprojection" class="lineChart hvsbot">
 
                         <div id="linechart1"></div>
@@ -184,7 +184,7 @@
                     </li>
                   </ul>
                  <!-- <div id="scatter" class=""></div> <br/> -->
-                 <div class="l_title"><p>Activity Vs Occurences</p></div>
+                 <div class="l_title"><label>Activity Vs Occurences</label></div>
                  <div id="scatter">
                     <ngx-charts-bubble-chart
                     [view]="view1"
@@ -212,7 +212,7 @@
             </div>
             <div class="col-sm-6 pr-0 box_shade">
               <div class="insigntsoccur">
-                <div class="l_title "><p>Activity Based Human and Bot Cost</p></div>
+                <div class="l_title "><label>Activity Based Human and Bot Cost</label></div>
                 <div id="scatter" >
 
                     <combo-chart-component
@@ -244,14 +244,15 @@
             </div>
             </div>
         <div class="col-md-12 p-0"  id="top10Activities">
-            <div class="col-sm-6 pl-0 box_shadw1 table-box">
-                <div class="table1-heading">Top 10% Cases (in descending order of duration)</div>
-                <table class="table table-hover table-bordered text-center table-striped work_spacetable">
-                    <thead class="text-center">
+            <div class="col-sm-6 pl-0 table-box">
+                <div class="insigntsoccurtable top10cases">
+                    <div class="table1-heading">Top 10% Cases (in descending order of duration)</div>
+                    <table class="RPA table table-hover table-bordered table-striped work_spacetable">
+                    <thead class="">
                         <tr>
-                            <th class="text-center">Variant</th>
-                            <th class="text-center">Time</th>
-                            <th class="text-center">%Cases</th>
+                            <th class="">Variant</th>
+                            <th class="">Time</th>
+                            <th class="">%Cases</th>
                         </tr>
                     </thead>
                     <tbody >
@@ -261,17 +262,18 @@
                         <td>{{caseParcent(each_variant.casepercent)}}%</td>
                     </tr>
                     </tbody>
-                </table>
+                    </table>
+                </div>
             </div>
-            <div class="col-sm-6 pr-0">
-                <div class="box_shadw1 table-box">
+            <div class="col-sm-6 pr-0 table-box">                
+                <div class="insigntsoccurtable">
                 <div class="table1-heading">Top Automation Opportunities</div>
-                <table class="table table-hover table-bordered text-center table-striped">
+                <table class="RPA table table-hover table-bordered table-striped">
                     <thead>
                         <tr>
-                            <th class="text-center">Step</th>
-                            <th class="text-center">Value</th>
-                            <th class="text-center">Savings</th>
+                            <th class="">Step</th>
+                            <th class="">Value</th>
+                            <th class="">Savings</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -285,10 +287,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-12 p-0">
-            <div class="col-sm-3 resuractivity-select">
-                <div class="box_shadw1" id="resourcesselect">
-                    <ng-multiselect-dropdown
+        <div class="col-md-12 p-0 resuractivity-footer">
+            <div class="col-md-12 resuractivity-header">
+                <div class="col-md-10 p-0 resuractivity-title">
+                    <label>Resources</label>
+                </div>
+                <div class="col-sm-2 resuractivity-select">
+                    <div class="" id="resourcesselect">
+                        <ng-multiselect-dropdown
                         [placeholder]="'All'"
                         [settings]="dropdownSettings"
                         [data]="resourcesList"
@@ -298,11 +304,12 @@
                         (onDeSelect)="onResourceSelect()"
                         (onDeSelectAll)="onResourceSelect(false)"
                         >
-                    </ng-multiselect-dropdown>
+                        </ng-multiselect-dropdown>
+                    </div>
                 </div>
-            </div>
+            </div>    
             <div class="row resuractivity">
-                <div class="col-md-6 pl-0 pi-chart">
+                <div class="col-md-6 pi-chart">
                 <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                         <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
@@ -310,10 +317,10 @@
                             <p *ngIf="isstackedbarChart" class="click" (click)="switchTostackedBar('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
-                    <div class="insigntsoccur1">
-                    <div class="l_title"><p>Total Resource Duration By Activity</p></div>
-                <div id="" class="">
-                        <div id="pie_chart1"></div> 
+                    <div class="insigntsresuractivity">
+                        <div class="l_title"><label class="resuractivitytitle">Total Resource Duration By Activity</label></div>
+                        <div id="" class="">
+                            <div id="pie_chart1"></div> 
                     <!-- <ngx-charts-pie-chart
                     [view]="[400, 300]"
                     [scheme]="{domain: ['#4AB0F5', '#4FA908', '
@@ -329,10 +336,10 @@
                     [arcWidth]="0.50"
                     [labelFormatting]="pieChartLabel.bind(this, dChart1)"> 
                   </ngx-charts-pie-chart>                 -->
-                </div>
+                        </div>
                     </div>
                 </div>        
-                <div class="col-md-6 pr-0 pi-chart">
+                <div class="col-md-6 pi-chart">
                     <!-- <div class="dropdown pull-right">
                         <button title="View" data-toggle="dropdown" class="fa fa-table down_btn dropdown-toggle"></button>
                         <div class="dropdown-menu drop_down download_selection text-center" aria-labelledby="dropdownMenuButton">
@@ -340,9 +347,9 @@
                             <p *ngIf="isstackedbarChart1" class="click" (click)="switchTostackedBar1('pei')" ><span>View In Pei chart</span></p>
                         </div>
                     </div> -->
-                    <div class="insigntsoccur1">
-                    <div class="l_title"><p>Total Resource Cost By Activity</p></div>
-                    <div id="" class="">
+                    <div class="insigntsresuractivity">
+                        <div class="l_title"><label class="resuractivitytitle">Total Resource Cost By Activity</label></div>
+                        <div id="" class="">
                             <div id="pie_chart2"></div> 
                     <!-- <ngx-charts-pie-chart
                         [view]="[400, 300]"
@@ -357,7 +364,7 @@
                         [legendTitle]="''"
                         [labelFormatting]="pieChartLabel1.bind(this, dChart2)"> 
                     </ngx-charts-pie-chart> -->
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>    

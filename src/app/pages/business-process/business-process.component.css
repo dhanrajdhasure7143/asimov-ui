@@ -28,11 +28,15 @@
     padding-top: 8px;
 }
 span.level3 {
-    padding-right: 8px !important;
+   /* padding-right: 8px !important;
     margin-right: 8px !important;
-    border-right: 1px solid #ccc;
+     border-right: 1px solid #ccc; */
 }
-
+.level3sep {
+    color:#ddd;
+    font-size: 20px;
+    margin: 5px;
+}
 .new-bps-icons button {
     padding: 6px;
     margin-right: 3px;
@@ -210,4 +214,8 @@ img.hover-img {
 }
 .custom-footer-content {
     float: right;
+}
+
+span.bps-header-title.gen-bpsheader {
+    display: block;
 }

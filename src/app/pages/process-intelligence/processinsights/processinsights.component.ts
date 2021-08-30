@@ -590,11 +590,11 @@ series2.dataFields.valueY = "value2";
 series2.dataFields.dateX = "date";
 series2.strokeWidth = 2;
 series2.strokeDasharray = "3,4";
-// series2.tooltipText = "[bold]{date.formatDate()}:[/]\n{name1}: {value1}\n{name1}:{value2}";
 series2.stroke = series.stroke;
 // Add cursor
 chart.cursor = new am4charts.XYCursor();
 chart.cursor.xAxis = dateAxis;
+series2.stroke = am4core.color("#fc8d45");
 
 // // add ranges
 // var minRange = dateAxis.axisRanges.create();
@@ -2042,8 +2042,11 @@ svg
         chart.legend = new am4charts.Legend();
         chart.legend.useDefaultMarker = true;
         var marker = chart.legend.markers.template.children.getIndex(0);
+        marker.width = 18;
+        marker.height = 18;
+        // marker.cornerRadius(0, 0, 0, 0);
         marker.strokeWidth = 2;
-        marker.strokeOpacity = 1;
+        marker.strokeOpacity = 1;        
         marker.stroke = am4core.color("#ccc");
         chart.legend.scrollable = true;
         chart.legend.fontSize = 12;
@@ -2062,7 +2065,7 @@ svg
         var series = chart.series.push(new am4charts.PieSeries());
         series.dataFields.value = "value";
         series.dataFields.category = "name";
-        series.labels.template.disabled = false;
+        series.labels.template.disabled = true;
         // series.slices.template.cornerRadius = 0;
         series.tooltip.horizontalCenter = "middle";
         // series.tooltip.verticalCenter = "middle";
@@ -2080,6 +2083,7 @@ svg
           // var text=_self.getTimeConversion('{_dataContext.totalDuration}');
           return "{_dataContext.name} \n {_dataContext.value}";
         });
+        $('g:has(> g[stroke="#3cabff"])').hide();
         series.labels.template.text = "{_dataContext.label}";
         series.colors.list = [
             am4core.color("rgba(85, 216, 254, 0.9)"),
@@ -2115,9 +2119,12 @@ svg
         chart.legend = new am4charts.Legend();
         chart.legend.useDefaultMarker = true;
         var marker = chart.legend.markers.template.children.getIndex(0);
-        marker.strokeWidth = 2;
+        marker.width = 18;
+        marker.height = 18;
+        // marker.cornerRadius(0, 0, 0, 0);
+        marker.strokeWidth = 2;        
         marker.strokeOpacity = 1;
-        marker.stroke = am4core.color("#ccc");
+        marker.stroke = am4core.color("#fff");
         chart.legend.scrollable = true;
         chart.legend.fontSize = 12;
   
@@ -2135,7 +2142,7 @@ svg
         var series = chart.series.push(new am4charts.PieSeries());
         series.dataFields.value = "value";
         series.dataFields.category = "name";
-        series.labels.template.disabled = false;
+        series.labels.template.disabled = true;
         // series.slices.template.cornerRadius = 0;
         series.tooltip.horizontalCenter = "middle";
         // series.tooltip.verticalCenter = "middle";
@@ -2154,6 +2161,7 @@ svg
           return "{_dataContext.name} \n {_dataContext.value}";
         });
         series.labels.template.text = "{_dataContext.label}";
+        $('g:has(> g[stroke="#3cabff"])').hide();
         series.colors.list = [
             am4core.color("rgba(85, 216, 254, 0.9)"),
             am4core.color("rgba(255, 131, 115, 0.9)"),
