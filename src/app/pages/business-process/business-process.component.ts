@@ -19,14 +19,17 @@ export class BusinessProcessComponent implements AfterViewChecked {
   isEditMode:boolean=false;
   updated_date_time:any;
   isSave_disabled:boolean=true;
-  iscreate_notation:boolean;
+  iscreate_notation:boolean=false;
   isStartProcessBtn:boolean=false;
   currentNotation_name:any;
   userRole;
   isApproverUser:boolean = false;
   logged_User:any;
   approver_list:any[] = [];
-  selected_approver:any
+  selected_approver:any;
+  hasConformance:boolean = false;
+  reSize:boolean=false;
+  process_id:any;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef, private dt: DataTransferService,private rest:RestApiService,
               @Inject(APP_CONFIG) private config, ) { }
@@ -44,6 +47,7 @@ export class BusinessProcessComponent implements AfterViewChecked {
     this.activatedRoute.queryParams.subscribe(params => {
       this.isShowConformance = params['isShowConformance'] == 'true';
       this.selectedNotationType = params['ntype'];
+      this.process_id=params['pid'];
 
 
     });
@@ -65,6 +69,9 @@ export class BusinessProcessComponent implements AfterViewChecked {
         // if(notationValues_obj['isEditbtn'])
         this.isEditMode=notationValues_obj['isEditbtn'];
         this.isSave_disabled=notationValues_obj['isSavebtn'];
+        this.hasConformance=notationValues_obj['hasConformance'];
+        this.reSize=notationValues_obj['resize'];
+        console.log(this.iscreate_notation)
       }
     });
   }
@@ -129,8 +136,17 @@ export class BusinessProcessComponent implements AfterViewChecked {
   fitNotation(){
     this.dt.bpsHeaderValues("fitNotation");
   }
+  
   backtoNavigate(){
     this.router.navigate(['/pages/businessProcess/home'])
+  }
+
+  backtoApprovalWorkflow(){
+    this.router.navigate(['/pages/approvalWorkflow/home'])
+  }
+
+  backtoPI(){
+    this.router.navigate(["/pages/processIntelligence/flowChart"],{queryParams:{wpiId:this.process_id}})
   }
 
   gotoBPMNPlatform() {
@@ -144,10 +160,19 @@ export class BusinessProcessComponent implements AfterViewChecked {
     window.location.href = this.config.camundaUrl+"/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
     // window.location.href = "http://10.11.0.127:8080/camunda/app/welcome/"+splitTenant+"/#!/login?accessToken=" + token + "&userID="+userId+"&tenentID="+selecetedTenant;
   }
+
   onchange(){
-    // console.log(e);
     let obj={id:"submit",selectedApprovar:this.selected_approver}
     this.dt.submitForApproval(obj)
+  }
+
+  showConformance(){
+    this.dt.bpsHeaderValues("show_conformance");
+  }
+
+  getBpmnDifferences(){
+    this.dt.bpsHeaderValues("getBpmn_differences");
+
   }
 
 }

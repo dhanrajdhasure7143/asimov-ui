@@ -2,9 +2,9 @@
     <div class="row content-area">
       <div class=" row module-heading title">
           <div class="col-md-6 new-bps-header-title">
-            <span class="bps-header-title">
+            <span class="bps-header-title" [class.gen-bpsheader]="!rejectedOrApproved">
               <span class="module-header-title">Business Process Studio 
-                <span *ngIf="isHeaderShow == 'true'"> / {{currentNotation_name | titlecase}}</span>
+                <span *ngIf="isHeaderShow == 'true'"><span *ngIf="currentNotation_name">/ </span> {{currentNotation_name | titlecase}}</span>
               </span>
               <span class="" *ngIf="isHeaderShow == 'true'">
                 <span *ngIf="rejectedOrApproved && !isfromApprover" class="label_icon inpro-label" [class.bg-red]="rejectedOrApproved=='REJECTED'" [class.bg-orange]="rejectedOrApproved=='INPROGRESS'" [class.bg-green]="rejectedOrApproved=='APPROVED'">
@@ -14,9 +14,14 @@
               </span>
             </span>
               <div class="value" *ngIf="isHeaderShow == 'true'">
-                <span class="module-back-button" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+                <span *ngIf="!isShowConformance">
+                  <span class="module-back-button" *ngIf="isfromApprover" (click)='backtoApprovalWorkflow()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+                  <span class="module-back-button" *ngIf="!isfromApprover" (click)='backtoNavigate()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
+                </span>
+                <span class="module-back-button" *ngIf="isShowConformance" (click)='backtoPI()'><i aria-hidden="true" class="fas fa-arrow-left"></i></span>
                 <!-- <span class="level3"><strong>Level 3</strong> - Value Chain Acneage</span> -->
                 <span class="level3">Last Modified By: {{logged_User}}</span>
+                <span class="level3sep" *ngIf="updated_date_time">|</span>
                 <span *ngIf="updated_date_time">Autosaved @ {{updated_date_time | date:"MM/dd/yyyy HH:mm:ss"}}</span>
 
               </div> 
@@ -37,14 +42,20 @@
                   <button mat-menu-item (click)="downloadNotaton('jpg')">JPG</button>
                   <button mat-menu-item (click)="downloadNotaton(selectedNotationType)">{{selectedNotationType | uppercase}}</button>
                 </mat-menu>
-                <button type="button" class="clr-hvr tsttooltipbtn" [popover]="shareTemplate" placement="bottom">
+                <!-- <button type="button" class="clr-hvr tsttooltipbtn" [popover]="shareTemplate" placement="bottom">
                 <img src="../../../assets/images/BPMS/share.svg" >
                 <span class="testtooltip">Share</span>
+              </button> -->
+              <button type="button" class="icon-disabled" placement="bottom">
+                <img src="../../../assets/images/BPMS/share disable.svg" >
               </button>
               <!-- <button><img src="../../../assets/images/BPMS/Forward.svg" matTooltip="Forward" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"></button> -->
-              <button class="tsttooltipbtn">
+              <!-- <button class="tsttooltipbtn">
                 <img src="../../../assets/images/BPMS/Favorite.svg" >
                 <span class="testtooltip">Favorite</span>
+              </button> -->
+              <button class="icon-disabled">
+                <img src="../../../assets/images/BPMS/Favorite disable.svg" >
               </button>
               <button class="tsttooltipbtn" (click)="zoomIn()" >
                 <img src="../../../assets/images/BPMS/zoom-in.svg">
@@ -71,7 +82,7 @@
                 <img src="../../../assets/images/BPMS/Savedisabled.svg" alt="" class="defaultimg">
               </button>
               <button class="clr-hvr tsttooltipbtn" (click)="orchestartion()" *ngIf="rejectedOrApproved=='APPROVED'">
-                <img src="../../../assets/images/BPMS/Orchestrate.svg">
+                <img src="../../../assets/images/BPMS/orchestration.svg">
                 <span class="testtooltip">Orchestration</span>
               </button>
               <!-- <button class="clr-hvr tsttooltipbtn" (click)="saveandSubmitApproval()" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && !isSave_disabled && !iscreate_notation">
@@ -104,14 +115,23 @@
               <button class="icon-disabled" *ngIf="rejectedOrApproved!='PENDING' && isfromApprover!=true && isSave_disabled && !iscreate_notation">
                 <img src="../../../assets/images/BPMS/submit-for-approvaldisabled.svg">
               </button>
-              <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
+              <!-- <button class="clr-hvr tsttooltipbtn" *ngIf="rejectedOrApproved == 'APPROVED'"  (click)="deployNotation()">
                 <img src="../../../assets/images/BPMS/Deploy.svg">
                 <span class="testtooltip">Deploy Notation</span>
               </button>
               <button class="clr-hvr tsttooltipbtn" *ngIf="isStartProcessBtn" (click)="startProcess()"  >
                 <img src="../../../assets/images/BPMS/Play.svg">
                 <span class="testtooltip">Start Process</span>
-              </button>
+              </button> -->
+              <button class="tsttooltipbtn" (click)="showConformance()" *ngIf="isShowConformance && !reSize && !hasConformance" [disabled]="disableShowConformance||rejectedOrApproved=='PENDING'">
+                  <img src="../../../assets/images/BPMS/show-differences.svg">
+                  <span class="testtooltip">Show Conformance</span>
+                </button>
+                <button class="tsttooltipbtn" (click)="getBpmnDifferences()" *ngIf="isShowConformance && (hasConformance || reSize)">
+                    <img src="../../../assets/images/BPMS/difference.svg">
+                    <span class="testtooltip">Show Differences</span>
+                  </button>
+              
               <!-- <button class="clr-hvr" matTooltip="Refresh" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/refresh.svg"></button>
               <button class="clr-hvr" matTooltip="Delete" matTooltipClass="bpsHeaderTooltip" matTooltipPosition="below"><img src="../../../assets/images/BPMS/Delete.svg"></button> -->
               <!-- <button class="upload-btn bps-upload"><img src="../../../assets/images/BPMS/upload.svg">Upload Again</button> -->
@@ -129,12 +149,12 @@
               <button *ngIf="isApproverUser" routerLink="/pages/approvalWorkflow/home" class="btn btn-default">
                 <img class="testplus default-img" src="../../../assets/images/BPMS/Workflow.svg">
                 <img class="testplus hover-img" src="../../../assets/images/BPMS/White-Workflow.svg">
-                Approval Workflow
+                Approvals
               </button>
-              <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
+              <!-- <button (click)="gotoBPMNPlatform()" class="btn btn-primary">
                 <img class="testplus" src="../../../assets/images/BPMS/White-eye.svg">
                 View Cockpit
-              </button>
+              </button> -->
             </span>
           </div>
       </div>    

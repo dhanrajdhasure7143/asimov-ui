@@ -12,7 +12,7 @@
         height:25vh; */
   display: inline-block;
   margin: 0px;
-  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .rpa-home-block:hover {
@@ -143,9 +143,10 @@ tr.mat-row {
 }
 
 .rpa-home-btn-title {
-  font-size: 14px;
+  /* font-size: 14px; */
   color: white;
   margin: 0px !important;
+  padding: 6px 12px !important;
 }
 
 .title-font {
@@ -246,7 +247,7 @@ th {
 }
 
 .mat-menu-item {
-  height: 30px !important;
+  height: 36px !important;
   line-height: 31px !important;
 }
 
@@ -287,26 +288,26 @@ th {
 .header-btn1 {
   /* top: 10px; */
   top: 21px;
-    right: 25px;
+    right: 26px;
 }
 
 
 label.main-subtitle {
-  font-size: 18px;
-  font-weight: 400;
-  display: inline-block;
-  margin: 0px 10px 0px 0px;
+  font-size: 32px;
+  font-weight: 700;
+  color: #00a1e3;
+  display: block;
 }
 
 label.subtitle-tag {
-  font-weight: 400;
-  color: #00a1e3;
-  font-size: 14px;
-  margin: 0px;
+  font-weight: lighter;
+    font-size: 14px;
+    margin-bottom: 15px;
+    color: #001c47;
 }
 
 .main-subheader {
-  padding: 15px 6px;
+  padding: 15px 6px 0px;
   /* border-bottom: 2px solid #ddd; */
   margin: 0px 0px 15px;
   /* box-shadow: 0px 1px 6px rgb(0 0 0 / 10%); */
@@ -314,14 +315,15 @@ label.subtitle-tag {
   border: 1px solid #e1e7ec;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   width: 100%;
-
+  height: 180px;
+  background-color: #edf9fb;
 }
 
 .main-subheaderBtns {
   display: flex;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
   align-items: center;
 }
 
@@ -372,12 +374,12 @@ mat-panel-title.mat-expansion-panel-header-title {
 .tableActionsIcons img {
   height: 18px;
   width: auto;
-  margin-right: 15px;
+  margin-right: 8px;
 }
 
 .tableActionsIcons i {
   font-size: 18px;
-  margin-right: 15px;
+  margin-right: 8px;
 }
 
 .rpa-searchip img {
@@ -390,4 +392,29 @@ input.form-control.custom-file-input {
 }
 .mat-expansion-panel:hover {
   background-color: #fdf6d4;
+}
+
+.main-subheaderTitle {
+  margin-left: 20px;
+  margin-bottom: 18px;
+  margin-right: 25%;
+}
+button#create_Configuration {
+  background-color: #fff !important;
+  color: #00a1e3;
+  border: 1px solid #e5e5e5 !important;
+}
+button#create_Configuration:hover {
+  background: #001c47 !important;
+  color: #fff !important;
+}
+
+.main-subheader img {
+  position: relative;
+  bottom: -9px;
+  width: 30%;
+  height: 145px;
+}
+.col-md-6.form-group.pr-0.rpa-searchip {
+  margin-bottom: 8px !important;
 }

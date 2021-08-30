@@ -113,7 +113,7 @@
                     {{monthDay}}
                   </option>
                 </select>
-              </label>&nbsp;
+              </label>
               <label>day(s) at
                 <cron-time-picker [disabled]="disabled || activeTab !== 'daily' || state.daily.subTab !== 'everyDays'" (onChange)="regenerateCron()"
                   [(model)]="state.daily.everyDays" [selectClass]="options.formSelectClass" [use24HourTime]="options.use24HourTime"
@@ -234,7 +234,7 @@
           </div>
 
           <!-- Yearly-->
-          <div class="tab-pane" *ngIf="!options.hideYearlyTab" [ngClass]="{'active': activeTab === 'yearly'}">
+          <div class="tab-pane yearclas" *ngIf="!options.hideYearlyTab" [ngClass]="{'active': activeTab === 'yearly'}">
             <div class="form-group">
               <input type="radio" name="yearly-radio" value="specificMonthDay" [disabled]="disabled" (change)="regenerateCron()" [(ngModel)]="state.yearly.subTab"
                 [ngClass]="state.formRadioClass"> Every

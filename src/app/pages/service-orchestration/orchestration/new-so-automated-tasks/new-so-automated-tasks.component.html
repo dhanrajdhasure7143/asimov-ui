@@ -1,60 +1,54 @@
 <div class="bg-color">
-<br>
-<br>
+
 <div class="container-fluid">
-<div class="form-inline">
+<div class="form-inline mainformco row">
 
-  <div class="form-group">
-    <span style="padding:5px">
-      <mat-form-field id="autocategorysearch">
-        <mat-label>Select Process Group</mat-label>
-          <mat-select  [value]="selectedcategory" (selectionChange)="applyFilter1($event.value)">
-            <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
-            </mat-option>
-          </mat-select>
-      </mat-form-field>
-    </span>
-      <span style="padding:5px">
-        <mat-form-field *ngIf="process_names!=undefined" id="autoprocesssearch">
-            <mat-label>Select Process</mat-label>
-            <mat-select [(ngModel)]="selectedvalue" (selectionChange)="applyFilter($event.value)">
-                <mat-option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-      </span>
-
-      <span style="padding:5px">
-        <mat-form-field id="autoenvsearch">
-          <mat-label>Select Environment</mat-label>
-          <mat-select  [(ngModel)]="selectedEnvironment">
-              <mat-option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </span>
-      <span style="padding:5px" id="autoreset">
-      <button (click)="reset_all()" matTooltip="Reset"><i class="fa fa-undo"></i></button>
-      </span>
+  <div class="form-group leftfporm col-md-10 pl-0">
+      <div id="autocategorysearch" class="comncl">
+          <select class="rpa-control form-control"  [value]="selectedcategory" (selectionChange)="applyFilter1($event.value)">
+            <option value="" disabled>Select Process Group</option>
+            <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
+            </option>
+          </select>
+        </div>
+      
+        <div *ngIf="process_names!=undefined" id="autoprocesssearch"  class="comncl">
+            <select class="rpa-control form-control" [(ngModel)]="selectedvalue" (selectionChange)="applyFilter($event.value)">
+              <option value="" disabled>Select Process</option>  
+              <option *ngFor="let process of selected_process_names" [value]="process.processId">{{process.processName}}
+                </option>
+            </select>
+          </div>
+      
+        <div id="autoenvsearch"  class="comncl">
+          <select class="rpa-control form-control"  [(ngModel)]="selectedEnvironment">
+            <option value="" disabled>Select Environment</option>  
+              <option *ngFor="let environment of environments" [value]="environment.environmentId" >{{environment.environmentName}}
+            </option>
+          </select>
+        </div>
+      <div id="autoreset" class="comncl resecl">
+      <button (click)="reset_all()" tooltip="Reset"><i class="fa fa-undo"></i></button>
+      </div>
   </div>
 
 
-  <div class="form-group pull-right">
+  <div class="form-group pull-right roghtform col-md-2 pr-0">
       <!--<span style="padding:5px" id="autoStartProcess">
         <button  matTooltip="View Configuration"   mat-mini-fab color="basic" (click)="configuration()"  ><i  class="fas fa-cog" style="margin-right: -5px !important;"></i></button>
       </span>-->
         <span style="padding:5px" id="autoStartProcess">
-          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-play" style="margin-right: -4px !important;"></i></button>
+          <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Start Process"   mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><img src="../../../../assets/images/RPA/icon_latest/play.svg" alt="" class="testplus"></button>
         </span>
        <!-- <span style="padding:5px">
           <button [disabled]="selectedvalue=='' || selectedEnvironment==''" matTooltip="Pause Process" mat-mini-fab color="basic" (click)="startprocess()"   title="Run Process"><i  class="fas fa-pause"></i></button>
         </span>
         -->
         <span style="padding:5px" id="autoOpenScheduler">
-          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><i class="fa fa-calendar" style="margin-right: -1px !important;"></i></button>
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"   matTooltip="Open Scheduler" (click)="startscheduler()" ><img src="../../../../../assets/images/calicon.svg" alt="" class="testplus"></button>
         </span>
         <span style="padding:5px" id="autoViewLogs">
-          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs()"  ><i class="fa fa-file" style="margin-right: -1px !important;" aria-hidden="true"></i></button>
+          <button [disabled]="selectedvalue==''"  mat-mini-fab color="basic"  matTooltip="View Logs"  (click)="getprocesslogs(process_logs)"  ><img src="../../../../../assets/images/file.svg" alt="" class="testplus"></button>
         </span>
   </div>
 
@@ -66,7 +60,7 @@
 <!-- <mat-card> -->
   <div  *ngIf="responsedata!=undefined" style="width:100%;height:45vh;overflow: scroll;">
 
-    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class=" table" id="autotable">
+    <table mat-table #sort10="matSort" [dataSource]="dataSource2" matSort class="RPA table" id="autotable">
 
         <ng-container matColumnDef="processName">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>Process Name</th>
@@ -174,7 +168,9 @@
               <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
               <span [matTooltip]="element.status" *ngIf="element.status=='New'" class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style='filter:none;height:20px' ></span>&nbsp;<span> </span></span>
               <!--<span *ngIf="element.status=='New'" class="text-primary"><span style="background-color:#0062cf;border-radius: 50%;color:white;padding-right:5px;padding-left:4px;padding-top:5px;padding-bottom:5px;font-size:10px;text-align: center;align-content: center;align-items: center;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><!--<i class="fas fa-robot text-light"></i></span>&nbsp;<span> </span></span>-->
-              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
+              <span [matTooltip]="element.status" *ngIf="element.status=='Stop'|| element.status=='Stopped'" class="text-danger"><span>
+                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                </span>&nbsp;<span> </span></span>
               <span [matTooltip]="element.status" *ngIf="element.status=='Paused'||element.status=='Pause'" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>&nbsp;<span> </span></span>
               <span [matTooltip]="element.status" *ngIf="element.status==null||element.status==''" class="text-primary"><span><li class="fas fa-pause-circle" style="font-size: 19px;"></span>--</span>
               <!--<span *ngIf="element.status!='null'" [id]="element.taskId+'__status'">
@@ -231,7 +227,7 @@
                 &nbsp;
                 <span>
                   <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-                  <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                  <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                 </span>
               </div>
               <div *ngIf="element.taskType=='Human'">
@@ -256,17 +252,17 @@
                 &nbsp;
                 <span>
                   <!-- <button (click)="SLACon(element.botId)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
-                  <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button>
+                  <!-- <button (click)="SLACon(element)" matTooltip="SLA Configuration"><i class="fa fa-cog" aria-hidden="true"></i></button> -->
                 </span>
               </div>
             </td>
         </ng-container>
-        <ng-container matColumnDef="Smoke_Test">
+        <!-- <ng-container matColumnDef="Smoke_Test">
           <th mat-header-cell *matHeaderCellDef >Smoke Test</th>
           <td mat-cell *matCellDef="let element" >
             <button [disabled]="element.taskType!='Automated'" class='btn btn-xs btn-primary' (click)="runsmoketest(element.taskId)">Run Test</button>
           </td>
-        </ng-container>
+        </ng-container> -->
         <ng-container matColumnDef="Loading">
           <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
               Loading
@@ -294,27 +290,37 @@
 </div>
 </div>
 
-<div *ngIf="popup">
-  <div id='logsid' class="rpa-modal" style="display:block">
-      <div class="rpa-modal-content">
-          <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="closepop()">&times;</span>
-              <h4>Logs</h4>
-          </div>
-          <div class="rpa-modal-body">
-            <app-so-processlog [processId]="processId1"></app-so-processlog>
-          </div>
-      </div>
-  </div>
-</div>
 
+<ng-template #process_logs>
+  <div id='logsid'>
+    <div class="modal-header modelprhead">
+
+       Logs
+       <span></span>
+       
+       <span></span>
+       
+       <span></span>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="logs_modal.hide()">
+          <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
+        </button>
+     
+      <!-- <span class="pull-right clickable" (click)="logs_modal.hide()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span> -->
+    </div> 
+    <div class="modal-body">
+      <app-so-processlog [processId]="processId1"></app-so-processlog>
+    </div>
+    
+  </div>
+
+</ng-template>
 
 
 <div *ngIf="schedulepopup">
   <div id='sch' class="rpa-modal" style="display:block">
       <div class="rpa-modal-content">
           <div class="rpa-modal-header">
-              <span class="rpa-modal-close" (click)="closescheduler()">&times;</span>
+              <span class="rpa-modal-close" (click)="closescheduler()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
               <h4>Scheduler</h4>
           </div>
           <div class="rpa-modal-body">
@@ -327,7 +333,7 @@
 <div id='configuration' class="rpa-modal" >
   <div class="rpa-modal-content">
       <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="closeconfig()">&times;</span>
+          <span class="rpa-modal-close" (click)="closeconfig()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
           <span *ngIf="(blueprismconfigoverlay != true) && (UiPathconfigoverlay != true)"><h4>Configuration</h4></span>
           <span *ngIf="blueprismconfigoverlay == true"><h4>BluePrism Configuration</h4></span>
           <span *ngIf="UiPathconfigoverlay == true"><h4>UiPath Configuration</h4></span>
@@ -569,7 +575,7 @@
   <div id='SLAConfig' class="rpa-modal" >
     <div class="rpa-modal-content">
         <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="SLAclose()">&times;</span>
+            <span class="rpa-modal-close" (click)="SLAclose()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
             <h4>SLA Configuration</h4>
         </div>
         <div class="container">

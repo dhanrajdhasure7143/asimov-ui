@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-Fit_to_screen">
+      <rect width="24" height="24"/>
+    </clipPath>
+  </defs>
+  <g id="Fit_to_screen" data-name="Fit to screen" clip-path="url(#clip-Fit_to_screen)">
+    <path id="Path_869" data-name="Path 869" d="M18.8,3H26v7.2H23.6V5.4H18.8ZM2,3H9.2V5.4H4.4v4.8H2ZM23.6,22.2V17.4H26v7.2H18.8V22.2Zm-19.2,0H9.2v2.4H2V17.4H4.4Z" transform="translate(-2 -1.8)" fill="#607088"/>
+  </g>
+</svg>

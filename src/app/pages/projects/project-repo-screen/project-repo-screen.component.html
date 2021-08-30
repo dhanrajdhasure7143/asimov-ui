@@ -1,5 +1,5 @@
-<div style="width:100%;overflow-x: auto;height:calc( 100vh - 80px)">
-  <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
+<div class="h-100">
+  <!-- <mat-card id="projects_details_screen" *ngIf="projects_toggle==false"> -->
       <!-- <div class="projects-header maincreat">
         <span class="projects-back-button" routerLink="/pages/projects/projectdetails" [queryParams]="{id: projectid}">
           <i class="fa fa-angle-left" aria-hidden="true"></i>
@@ -24,8 +24,7 @@
         </span>
       </div> -->
 
-
-      <div class="module-heading title">
+    <div class="module-heading title">
         <div>
           <span class="module-back-button" routerLink="/pages/projects/projectdetails" [queryParams]="{id: projectid}">
             <i aria-hidden="true" class="fas fa-arrow-left"></i>
@@ -37,47 +36,34 @@
         <div class="ml-auto module-heading-buttons">
           <span class="pull-right">
             <span>
-              <button class="btn btn-primary" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
-            </span>
-            <span>
-              &nbsp;
+              <button class="btn btn-default" (click)="createUploadRequest(createRequestmodal)" type="button">Request File</button>
             </span>
             <span>
               <button  class="btn btn-primary" (click)="uploadFile(uploadFilemodal)">
                 <img src="../../../../assets/images/BPMS/upload.svg" class="testplusupload"> Upload File
               </button>
             </span>
-            &nbsp;
-            <span class="gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
-              <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-              <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+            <span class="projects-menu-item gridicon"  (click)="onDeleteSelectedItems($event)"   matTooltip="Delete" >
+              <img src="../../../../assets/images/Projects/delete-black.svg" class="default-img">
+              <img src="../../../../assets/images/Projects/delete-red.svg" class="hover-img">
             </span> 
-            &nbsp;
-            <span class="gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
+            
+            <span class="projects-menu-item gridicon"  (click)="onDownloadSelectedItems($event)"   matTooltip="Download" >
               <img src="../../../assets/images/BPMS/download.svg" class="default-img">
               <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
             </span> 
             <!-- <span class="projects-menu-item" type="button" (click)="onDeleteSelectedItems($event)"><i class="fa fa-trash"></i></span> -->
             <!-- <span class="projects-menu-item projects-menu-item1" type="button" (click)="onDownloadSelectedItems($event)"><img src="../../../../assets/images/Projects/Download.svg" class="testplus default-img"></span> -->
             <!-- <span class="projects-menu-item"><i class="fa fa-download"></i></span> -->
-            <span class="projects-menu-item"><i class="ri-more-2-line"></i></span>
+            <span class="projects-menu-item" matTooltip="More">
+              <img src="../../../../assets/images/Projects/more.svg" class="testplus1">
+            </span>            
           </span>
         </div>
     
-      </div>
-
-
-
-
-
-
-
-
-
-
-
-      <br>
-      <div class="documents1">
+    </div>
+    <div class="projectrepo-body">
+      <div>
           <mat-card id="projects_details_screen" *ngIf="projects_toggle==false">
          
             <!-- <div class="projects-table-body">
@@ -107,6 +93,7 @@
                
               </table>
               </div> -->
+            <div class="projects-table-body">
               <table mat-table #sort11="matSort" [dataSource]="dataSource3" matSort class="projecttable table" id="autotable">
 
                 <ng-container matColumnDef="check">
@@ -116,28 +103,25 @@
                   <td mat-cell *matCellDef="let element; let i = index">
                       <input type="checkbox" [checked]="element.checked" (change)="filechecktoggle(element.id, $event)"> 
                   </td>
-              </ng-container>
-    
+                </ng-container>    
                 
                 <ng-container matColumnDef="category">
                   <th mat-header-cell *matHeaderCellDef mat-sort-header>Category</th>
                   <td mat-cell *matCellDef="let element">
                     <span *ngIf="element.category!=null" [matTooltip]="element.category">{{element.category}}</span>
-                    <span *ngIf="element.category==null">---</span>
-                  
+                    <span *ngIf="element.category==null">---</span>                  
+                  </td>   
+                </ng-container>
+        
+                <ng-container matColumnDef="fileName">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
+                  <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
+                      <span *ngIf="element.fileName==null">---</span>
                   </td>
-                  
-        
-              </ng-container>
-        
-              <ng-container matColumnDef="fileName">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>File Name</th>
-                <td mat-cell *matCellDef="let element">
-                  <span *ngIf="element.fileName!=null" [matTooltip]="element.fileName">{{element.fileName}}</span>
-                    <span *ngIf="element.fileName==null">---</span>
-                </td>
-            </ng-container>
-              <ng-container matColumnDef="uploadedDate">
+                </ng-container>
+
+                <ng-container matColumnDef="uploadedDate">
                   <th mat-header-cell *matHeaderCellDef>Uploaded Date </th>
                   <td mat-cell *matCellDef="let element">
                       <span *ngIf="element.uploadedDate!=null">{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</span>
@@ -146,78 +130,76 @@
                         <span mat-mini-fab color="primary" matTooltip="Add Resources" (click)="addresource(addresourcemodal)"><i class="fa fa-plus"></i></span>
                     </div> -->
                   </td>
-              </ng-container>
+                </ng-container>
         
-              <ng-container matColumnDef="uploadedBy">
-                <th mat-header-cell *matHeaderCellDef>Uploaded by  </th>
-                <td mat-cell *matCellDef="let element">
-                  <span *ngIf="element.uploadedBy!=null">{{getUserName(element.uploadedBy)}}</span>
-                  <span *ngIf="element.uploadedBy==null">---</span>
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="uploadedBy">
+                  <th mat-header-cell *matHeaderCellDef>Uploaded by  </th>
+                  <td mat-cell *matCellDef="let element">
+                    <span *ngIf="element.uploadedBy!=null">{{getUserName(element.uploadedBy)}}</span>
+                    <span *ngIf="element.uploadedBy==null">---</span>
+                  </td>
+                </ng-container>
              
-              <ng-container matColumnDef="fileSize">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size</th>
-                <td mat-cell *matCellDef="let element" >
-                  <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}
-                    <!-- <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar> -->
-                </span>
-                </td>
-              </ng-container>
+                <ng-container matColumnDef="fileSize">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>File Size</th>
+                  <td mat-cell *matCellDef="let element" >
+                    <span *ngIf="element.fileSize!=null">{{element.fileSize | fileSizePipe}}
+                      <!-- <mat-progress-bar mode="determinate" [(value)]="element.percentageComplete"></mat-progress-bar> -->
+                  </span>
+                  </td>
+                </ng-container>
+                
+                <ng-container matColumnDef="comments">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments</th>
+                  <td mat-cell *matCellDef="let element" >
+                    <span *ngIf="element.comments!=null">{{element.comments}}</span>
+                    <span *ngIf="element.comments==null">---</span>
+                  </td>
+                </ng-container>
         
-        
-              <ng-container matColumnDef="comments">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Comments</th>
-                <td mat-cell *matCellDef="let element" >
-                  <span *ngIf="element.comments!=null">{{element.comments}}</span>
-                  <span *ngIf="element.comments==null">---</span>
-                </td>
-              </ng-container>
-        
-            
-        
-              <ng-container matColumnDef="action">
-                <th mat-header-cell *matHeaderCellDef> Actions</th>
-                <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-                  <span class="gridicon"  (click)="onDeleteItem(element.id,element.fileName)"   matTooltip="Delete" >
-                    <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
-                    <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
-                  </span> 
-                  &nbsp;
-                  <!-- <span class="projects-menu-item" (click)="onDeleteItem(element.id,element.fileName)"><i class="fa fa-trash"></i></span> -->
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef> Actions</th>
+                  <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                    <span class="gridicon"  (click)="onDeleteItem(element.id,element.fileName)"   matTooltip="Delete" >
+                      <img src="../../../../../assets/images/Projects/delete-black.svg" class="default-img">
+                      <img src="../../../../../assets/images/Projects/delete-red.svg" class="hover-img">
+                    </span> 
 
-                  <span class="gridicon"  (click)="onDownloadItem(element.fileName)"   matTooltip="Download" >
-                    <img src="../../../assets/images/BPMS/download.svg" class="default-img">
-                    <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
-                  </span> 
-                  <!-- <span class="projects-menu-item projects-menu-item1" (click)="onDownloadItem(element.fileName)"> <img src="../../../assets/images/BPMS/download.svg" class="testplus1 default-img"></span> -->
-                  <!-- <div class="newinntalx">
-                    <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
-                      <i class="fas fa-file-upload"></i>
-                    </a>|
-                    <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
-                      <img src="../../../../assets/images/Projects/edit.svg">
-                    </a> |
-                    <a (click)="deletetask(element)" matTooltip="Delete Task" >
-                      <img src="../../../../assets/images/Projects/delete-red.svg">
-                    </a> |
-                    <a class="clickable text-dark"  *ngIf="element.category =='RPA Implementation'|| element.category =='BPMN Design'"
-                    (click)="navigateToWorkspace(element)" matTooltip="Model">
-                      <img src="../../../../../assets/images/Projects/eye-show.svg" />
-                    </a> 
-        
-                    <a class="disable-bg text-dark" *ngIf="element.category =='Analysis'|| element.category =='Task Mining'" >
-                      <img src="../../../../../assets/images/Projects/eye-hide.svg" />
-                    </a>
-                </div> -->
-                </td>
-              </ng-container>
+                    <!-- <span class="projects-menu-item" (click)="onDeleteItem(element.id,element.fileName)"><i class="fa fa-trash"></i></span> -->
+
+                    <span class="gridicon"  (click)="onDownloadItem(element.fileName)"   matTooltip="Download" >
+                      <img src="../../../assets/images/BPMS/download.svg" class="default-img">
+                      <img src="../../../../assets/images/Projects/Download.svg" class="hover-img">
+                    </span> 
+                    <!-- <span class="projects-menu-item projects-menu-item1" (click)="onDownloadItem(element.fileName)"> <img src="../../../assets/images/BPMS/download.svg" class="testplus1 default-img"></span> -->
+                    <!-- <div class="newinntalx">
+                      <a  (click)="uploadtaskfile(uploadtaskfilemodal,element)" matTooltip="Upload File">
+                        <i class="fas fa-file-upload"></i>
+                      </a>|
+                      <a  (click)="updatetaskdata(updatetaskmodal,element)" matTooltip="Edit Task">
+                        <img src="../../../../assets/images/Projects/edit.svg">
+                      </a> |
+                      <a (click)="deletetask(element)" matTooltip="Delete Task" >
+                        <img src="../../../../assets/images/Projects/delete-red.svg">
+                      </a> |
+                      <a class="clickable text-dark"  *ngIf="element.category =='RPA Implementation'|| element.category =='BPMN Design'"
+                      (click)="navigateToWorkspace(element)" matTooltip="Model">
+                        <img src="../../../../../assets/images/Projects/eye-show.svg" />
+                      </a> 
+                    
+                      <a class="disable-bg text-dark" *ngIf="element.category =='Analysis'|| element.category =='Task Mining'" >
+                        <img src="../../../../../assets/images/Projects/eye-hide.svg" />
+                      </a>
+                  </div> -->
+                  </td>
+                </ng-container>
         
                 <ng-container matColumnDef="Loading">
                   <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                       Loading
                   </td>
-              </ng-container>
+                </ng-container>
+
                 <ng-container matColumnDef="noData">
                     <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
                         No Records Found
@@ -228,18 +210,14 @@
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource3!=null}"></tr>
                 <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource3!=null && dataSource3.data.length==0)}"></tr>
               </table>
-              <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
-              </mat-paginator>
-              <br>
-              <div class="">
-              <span class="">
-               
-              </span>
-              <br>
-              <span class="projects-header-title">
+            </div>
+            <mat-paginator class="newpaginationdiv" #paginator101 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
+            </mat-paginator>
+              
+            <div class="">             
+              <span class="module-sub-header-title">
                <b>Pending Requests</b>
-              </span>
-            
+              </span>            
             </div>
             <!-- <mat-tab-group mat-align-tabs="Start">
               <mat-tab label="All">
@@ -278,7 +256,7 @@
                   
               </table>
               </div>
-            <br>
+            
        
       </mat-tab>
         <mat-tab label="My Requests">
@@ -319,332 +297,318 @@
               </div>
             </mat-tab>
           </mat-tab-group> -->
-          <mat-tab-group mat-align-tabs="Start">
-            <mat-tab label="All">
-              
-              <div class="projects-table-body">
-                <table mat-table #sort12="matSort" [dataSource]="dataSource4" matSort class="projecttable table" id="autotable">
-  
-                  <ng-container matColumnDef="category">
-                    <th mat-header-cell *matHeaderCellDef mat-sort-header>File Category</th>
-                    <td mat-cell   *matCellDef="let element">
-                      <span *ngIf="element.category!=null" [matTooltip]="element.category">{{element.category}}</span>
-                      <span *ngIf="element.category==null">---</span>
-                    </td>
-          
-                </ng-container>
-          
-                <ng-container matColumnDef="requestFrom">
-                  <th mat-header-cell *matHeaderCellDef mat-sort-header>Request From</th>
-                  <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.requestFrom!=null" [matTooltip]="element.requestFrom">{{getUserName(element.requestFrom)}}</span>
-                      <span *ngIf="element.requestFrom==null">---</span>
-                  </td>
-              </ng-container>
-              <ng-container matColumnDef="requestTo">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>Request To</th>
-                <td mat-cell *matCellDef="let element">
-                  <span *ngIf="element.requestTo!=null" [matTooltip]="element.requestTo">{{getUserName(element.requestTo)}}</span>
-                    <span *ngIf="element.requestTo==null">---</span>
-                </td>
-            </ng-container>
-            <ng-container matColumnDef="comments">
-              <th mat-header-cell *matHeaderCellDef>Description</th>
-              <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.comments!=null">{{element.comments}}</span>
-                <span *ngIf="element.comments==null">---</span>
-              </td>
-          </ng-container>
-                <ng-container matColumnDef="uploadedDate">
-                    <th mat-header-cell *matHeaderCellDef>Requested Date</th>
-                    <td mat-cell *matCellDef="let element">
-                        <span *ngIf="element.uploadedDate!=null">{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</span>
-                        <span *ngIf="element.uploadedDate==null">---</span>
-                       
-                    </td>
-                </ng-container>
-          
-              
-                <ng-container matColumnDef="action">
-                  <th mat-header-cell *matHeaderCellDef> Actions</th>
-                  <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-                    <span class="remove-action">
-                      <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny File Request" type="button"><i class="fas fa-times"></i></button>
-                    </span>
-                    <span class="upload-action" *ngIf="loggedUser == element.requestTo">
-                      <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
-                      <label for="file" (change)="uploadRequetedFile($event, element)">
-                        <span class="gridicon">
-                          <img src="../../../../assets/images/Projects/upload.svg" class="default-img" matTooltip="Upload">
-                          <img src="../../../../assets/images/Projects/upload-blue.svg" class="hover-img" matTooltip="Upload"> 
-                        </span>
-                        
-                      </label>
-                  </span>
-                  <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
+            <mat-tab-group mat-align-tabs="Start">
+              <mat-tab label="All">
+
+                <div class="projects-table-body">
+                  <table mat-table #sort12="matSort" [dataSource]="dataSource4" matSort class="projecttable table" id="autotable">
                   
-                  </td>
-                </ng-container>
-          
-                  <ng-container matColumnDef="Loading">
-                    <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                        Loading
-                    </td>
-                </ng-container>
-                  <ng-container matColumnDef="noData">
-                      <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                          No Records Found
+                    <ng-container matColumnDef="category">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>File Category</th>
+                      <td mat-cell   *matCellDef="let element">
+                        <span *ngIf="element.category!=null" [matTooltip]="element.category">{{element.category}}</span>
+                        <span *ngIf="element.category==null">---</span>
+                      </td>                    
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="requestFrom">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Request From</th>
+                      <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.requestFrom!=null" [matTooltip]="element.requestFrom">{{getUserName(element.requestFrom)}}</span>
+                          <span *ngIf="element.requestFrom==null">---</span>
                       </td>
-                  </ng-container>
-                  <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>
-                  <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
-                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource4!=null}"></tr>
-                  <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource4!=null && dataSource4.data.length==0)}"></tr>
-                </table>
+                    </ng-container>
+
+                    <ng-container matColumnDef="requestTo">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Request To</th>
+                      <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.requestTo!=null" [matTooltip]="element.requestTo">{{getUserName(element.requestTo)}}</span>
+                          <span *ngIf="element.requestTo==null">---</span>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="comments">
+                      <th mat-header-cell *matHeaderCellDef>Description</th>
+                      <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.comments!=null">{{element.comments}}</span>
+                        <span *ngIf="element.comments==null">---</span>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="uploadedDate">
+                      <th mat-header-cell *matHeaderCellDef>Requested Date</th>
+                      <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.uploadedDate!=null">{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</span>
+                          <span *ngIf="element.uploadedDate==null">---</span>
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef> Actions</th>
+                      <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                        <span class="remove-action">
+                          <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny/Revoke File Request" type="button"><i class="fas fa-times"></i></button>
+                        </span>
+                        <span class="upload-action" *ngIf="loggedUser == element.requestTo">
+                          <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
+                          <label for="file" (change)="uploadRequetedFile($event, element)">
+                            <span class="gridicon">
+                              <img src="../../../../assets/images/Projects/upload.svg" class="testplus default-img" matTooltip="Upload">
+                              <img src="../../../../assets/images/Projects/upload-blue.svg" class="testplus hover-img" matTooltip="Upload"> 
+                            </span>
+
+                          </label>
+                        </span>
+                        <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
+                      </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="Loading">
+                      <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                          Loading
+                      </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="noData">
+                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                            No Records Found
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns4; sticky: true"></tr>
+                    <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns4;"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource4!=null}"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource4!=null && dataSource4.data.length==0)}"></tr>
+                  </table>
                 </div>
                 <mat-paginator class="newpaginationdiv" #paginator102 [pageSize]="3" [pageSizeOptions]="[3, 5, 10, 25, 50]" [showFirstLastButtons]="true">
                 </mat-paginator>
-         
-        </mat-tab>
-        <mat-tab label="My Requests">
-          <div class="projects-table-body" style="padding:10px;">
-            <table mat-table #sort13="matSort" [dataSource]="dataSource5" matSort class="projecttable table" id="autotable">
-  
-              <ng-container matColumnDef="category">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header>File Category</th>
-                <td mat-cell   *matCellDef="let element">
-                  <span *ngIf="element.category!=null" [matTooltip]="element.category">{{element.category}}</span>
-                  <span *ngIf="element.category==null">---</span>
-                </td>
-      
-            </ng-container>
-      
-            <ng-container matColumnDef="requestFrom">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header>Request From</th>
-              <td mat-cell *matCellDef="let element">
-                <span *ngIf="element.requestFrom!=null" [matTooltip]="element.requestFrom">{{getUserName(element.requestFrom)}}</span>
-                  <span *ngIf="element.requestFrom==null">---</span>
-              </td>
-          </ng-container>
-          <ng-container matColumnDef="requestTo">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>Request To</th>
-            <td mat-cell *matCellDef="let element">
-              <span *ngIf="element.requestTo!=null" [matTooltip]="element.requestTo">{{getUserName(element.requestTo)}}</span>
-                <span *ngIf="element.requestTo==null">---</span>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="comments">
-          <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let element">
-            <span *ngIf="element.comments!=null">{{element.comments}}</span>
-            <span *ngIf="element.comments==null">---</span>
-          </td>
-      </ng-container>
-            <ng-container matColumnDef="uploadedDate">
-                <th mat-header-cell *matHeaderCellDef>Requested Date</th>
-                <td mat-cell *matCellDef="let element">
-                    <span *ngIf="element.uploadedDate!=null">{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</span>
-                    <span *ngIf="element.uploadedDate==null">---</span>
-                   
-                </td>
-            </ng-container>
-      
-          
-            <ng-container matColumnDef="action">
-              <th mat-header-cell *matHeaderCellDef> Actions</th>
-              <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
-                <span class="remove-action">
-                  <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny File Request"type="button"><i class="fas fa-times"></i></button>
-                </span>
-                <span class="upload-action" *ngIf="loggedUser == element.requestTo">
-                  <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
-                  <label for="file" (change)="uploadRequetedFile($event, element)">
-                    <img src="../../../../assets/images/Projects/fileupload.svg"class="img-upload">
-                  </label>
-              </span>
-              <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>
-              
-              </td>
-            </ng-container>
-      
-              <ng-container matColumnDef="Loading">
-                <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                    Loading
-                </td>
-            </ng-container>
-              <ng-container matColumnDef="noData">
-                  <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
-                      No Records Found
-                  </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedColumns5; sticky: true"></tr>
-              <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
-              <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource5!=null}"></tr>
-              <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource5!=null && dataSource5.data.length==0)}"></tr>
-            </table>
                 
-                  </div>
-                </mat-tab>
-        </mat-tab-group>
-            <br>
-          </mat-card>
+              </mat-tab>
+              <mat-tab label="My Requests">
+                <div class="projects-table-body">
+                  <table mat-table #sort13="matSort" [dataSource]="dataSource5" matSort class="projecttable table" id="autotable">
+                  
+                    <ng-container matColumnDef="category">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>File Category</th>
+                      <td mat-cell   *matCellDef="let element">
+                        <span *ngIf="element.category!=null" [matTooltip]="element.category">{{element.category}}</span>
+                        <span *ngIf="element.category==null">---</span>
+                      </td>                    
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="requestFrom">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Request From</th>
+                      <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.requestFrom!=null" [matTooltip]="element.requestFrom">{{getUserName(element.requestFrom)}}</span>
+                          <span *ngIf="element.requestFrom==null">---</span>
+                      </td>
+                    </ng-container>
 
-        </div>
-      
-      <br>
+                    <ng-container matColumnDef="requestTo">
+                      <th mat-header-cell *matHeaderCellDef mat-sort-header>Request To</th>
+                      <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.requestTo!=null" [matTooltip]="element.requestTo">{{getUserName(element.requestTo)}}</span>
+                          <span *ngIf="element.requestTo==null">---</span>
+                      </td>
+                    </ng-container>
 
-  
-<ng-template class="modal-lr" #createRequestmodal>
-<app-request-file [createRequestmodalref]="createRequestmodalref" [projectid]="projectid" (onrequest)="onrequestFileData($event)"></app-request-file>
-</ng-template>
+                    <ng-container matColumnDef="comments">
+                      <th mat-header-cell *matHeaderCellDef>Description</th>
+                      <td mat-cell *matCellDef="let element">
+                        <span *ngIf="element.comments!=null">{{element.comments}}</span>
+                        <span *ngIf="element.comments==null">---</span>
+                      </td>
+                    </ng-container>
 
-<ng-template #denyFileRequestmodal>
-<div class="modal-header">
-  <h4 class="modal-title pull-left" *ngIf="isDeny">Reason to deny file request</h4>
-  <h4 class="modal-title pull-left" *ngIf="!isDeny">Reason to revoke file request</h4>
-  <button type="button" class="close pull-right deny-serve" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
-      <!-- <span aria-hidden="true">&times;</span> -->
-      <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
-  </button>
-</div>
-<div class="modal-body">
-  <div class="container" style="width:100%">
+                    <ng-container matColumnDef="uploadedDate">
+                      <th mat-header-cell *matHeaderCellDef>Requested Date</th>
+                      <td mat-cell *matCellDef="let element">
+                          <span *ngIf="element.uploadedDate!=null">{{element.uploadedDate | date:'MMM dd, y, HH:mm:ss'}}</span>
+                          <span *ngIf="element.uploadedDate==null">---</span>
+                      </td>
+                    </ng-container>
 
-      <form [formGroup]="denyFileRequestForm" (ngSubmit)="sendDenyFileReq()">
-              <div class="col-md-12">
-                  <br>
-                  <label>Message<span style="color:red">*</span></label>
-                  <textarea class="form-control" formControlName="description" placeholder="Enter Message..." style="height:100px;">
-
-                  </textarea>
-                  <span *ngIf="denyFileRequestForm.get('description').invalid && denyFileRequestForm.get('description').touched"
-                      style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
-
-                      
-                      <h5>This message will be notified to {{getUserName(revokeorDenyValue)}}</h5>
-              </div>
-              
-          
-      </form>
-      <br>
-      <div class="pull-right">
-          <button (click)="clearMsg()" class="btn btn-primary">Clear</button>
-        
-              &nbsp;&nbsp;
-          <button [disabled]="denyFileRequestForm.invalid" (click)="sendDenyFileReq()" class="btn btn-primary">Send</button>
-      </div>
-  
-  </div>
-  </div>
-</ng-template>
-
-<ng-template class="modal-up" #uploadFilemodal>
-<!-- <div class="modal-header">
-<h4 class="modal-title pull-left">Upload File</h4>
-<button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
-    <span aria-hidden="true">&times;</span>
-</button>
-</div> -->
-<div class="modal-header modelprhead">
-  <h4 class="modal-title pull-left">Upload File</h4>
-  <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
-    <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
-  </button>
-  <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
-    <span aria-hidden="true">&times;</span>
-  </button> -->
-</div>
-
-<div class="modal-body">
-<div class="container p-0" style="width:100%">
-    <form [formGroup]="uploadFileForm" (ngSubmit)="submitUploadFileForm()">
-        <div class="row">
-            <div class="col-md-12">
-                <label for="fileCategory">File Category<span style="color:red">*</span></label>
-                <select class="form-control" style="border:1px solid lightgray" formControlName="fileCategory" required>
-                  <option  [value]="null" disabled hidden>Select Category</option>
-                  <option value="" [selected]="true">Select Category</option>
-                  <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
-                </select>
-                <span
-                    *ngIf="uploadFileForm.get('fileCategory').invalid && uploadFileForm.get('fileCategory').touched"
-                    style="color:red" class="fa fa-info-circle errspan">File Category Required*</span>
-            </div>
-            </div>
-            <div class="col-md-12">
-                
-                <label>Description<span style="color:red">*</span></label>
-                <textarea name= "desc" class="form-control" formControlName="description" placeholder="Enter Description..." style="height:100px;" required>
-
-                </textarea>
-                <span *ngIf="uploadFileForm.get('description').invalid && uploadFileForm.get('description').touched"
-                    style="color:red" class="fa fa-info-circle errspan">Description Required*</span>
-
-            </div>
-            <div class="col-md-12">
-              <label>Upload<span style="color:red">*</span></label><br>
-              <div class="box-fileupload">
-                <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
-              <label for="file" (change)="chnagefileUploadForm($event)">
-                <img src="../../../../assets/images/Projects/fileupload.svg" class="upload-img">
-                &nbsp;
-                <span>Select File</span>
-              </label>
-              </div>
-              &nbsp;
-
-              <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required multiple="true"> -->
-              <div >
-                <div class="row">
-                  <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
-                    <div class ="project-card">
-                      
-                        <span class="pull-right clickable" matTooltip="Remove"
-                        (click)="removeSelectedFile(index)">
-                            <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
-                            <!-- <i class="fa fa-trash"></i> -->
+                    <ng-container matColumnDef="action">
+                      <th mat-header-cell *matHeaderCellDef> Actions</th>
+                      <td mat-cell *matCellDef="let element" class="action-link tablacs"> 
+                        <span class="remove-action">
+                          <button *ngIf="!((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))" (click)="denyFileRequest(denyFileRequestmodal, element)" matTooltip="Deny File Request"type="button"><i class="fas fa-times"></i></button>
                         </span>
-                     <span class="card-placeholder">
-                          File Name : {{selected.name}}
-                        
-                    </span>
-                    <br>
+                        <span class="upload-action" *ngIf="loggedUser == element.requestTo">
+                          <input type="file" name="file" (change)="uploadRequetedFile($event, element)" id="file" class="inputfile" />
+                          <label for="file" (change)="uploadRequetedFile($event, element)">
+                            <span class="gridicon">
+                              <img src="../../../../assets/images/Projects/upload.svg" class="testplus default-img" matTooltip="Upload">
+                              <img src="../../../../assets/images/Projects/upload-blue.svg" class="testplus hover-img" matTooltip="Upload"> 
+                            </span>
+                          </label>
+                        </span>
+                        <span *ngIf="((loggedUser != element.requestFrom) && (loggedUser != element.requestTo))">-</span>                      
+                      </td>
+                    </ng-container>
+                  
+                    <ng-container matColumnDef="Loading">
+                      <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                          Loading
+                      </td>
+                    </ng-container>
 
-                      <span class="file-size">
-                        Size : {{selected.size | fileSizePipe}}
-                      </span>
-                    
-    
-                    </div>
+                    <ng-container matColumnDef="noData">
+                        <td mat-footer-cell class="mat-footer" style="text-align:center" *matFooterCellDef colspan="9">
+                            No Records Found
+                        </td>
+                    </ng-container>
 
-                  </div>
-
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns5; sticky: true"></tr>
+                    <tr class="row-highlight" mat-row *matRowDef="let row; columns: displayedColumns5;"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['Loading']" [ngClass]="{'hide':dataSource5!=null}"></tr>
+                    <tr class="row-highlight mat-footer" mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(dataSource5!=null && dataSource5.data.length==0)}"></tr>
+                  </table>
                 </div>
-                
-
-                
-                <!-- {{selected}}
-                <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
-                  <span aria-hidden="true">&times;</span>
-              </button> -->
-                <!-- <button mat-icon-button (click)="removeSelectedFile(index)">delete</button> -->
-              </div>
-              
-              <span *ngIf="uploadFileForm.get('uploadFile').invalid && uploadFileForm.get('uploadFile').touched"
-                  style="color:red" class="fa fa-info-circle errspan">File Required*</span>
-          </div>
-        
-    </form>
-</div>
-</div>
-<div class="modal-footer modelprfooter">
-  <div class="pull-right">
-      <button (click)="uploadFilemodalref.hide()" class="btn btn-primary">Cancel</button>
-      <button [disabled]="uploadFileForm.invalid" (click)="submitUploadFileForm()" class="btn btn-primary btn-update">Submit</button>
+              </mat-tab>
+            </mat-tab-group>
+            
+          </mat-card>
       </div>
+      <ng-template class="modal-lr" #createRequestmodal>
+        <app-request-file [createRequestmodalref]="createRequestmodalref" [projectid]="projectid" (onrequest)="onrequestFileData($event)"></app-request-file>
+      </ng-template>
+
+      <ng-template #denyFileRequestmodal>
+        <div class="modal-header modelprhead">
+          <h4 class="modal-title pull-left" *ngIf="isDeny">Reason to deny file request</h4>
+          <h4 class="modal-title pull-left" *ngIf="!isDeny">Reason to revoke file request</h4>
+          <button type="button" class="close pull-right deny-serve" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
+              <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
+          </button>
+        </div>
+        <div class="modal-body modelprbody">
+          <div class="container p-0" style="width:100%">          
+              <form [formGroup]="denyFileRequestForm" (ngSubmit)="sendDenyFileReq()">
+                      <div class="form-fields col-md-12">
+
+                          <label>Message<span class="star">*</span></label>
+                          <textarea class="form-control" formControlName="description" placeholder="Enter Message..." rows="3">
+                          
+                          </textarea>
+                          <span *ngIf="denyFileRequestForm.get('description').invalid && denyFileRequestForm.get('description').touched"
+                               class="errspan required">Message Required*</span>                        
+
+                              <h5>This message will be notified to {{getUserName(revokeorDenyValue)}}</h5>
+                      </div>                    
+              </form>
+          </div>
+        </div>
+        <div class="modal-footer modelprfooter">
+          <div class="pull-right">
+            <button (click)="clearMsg()" class="btn btn-default">Clear</button>
+            <button [disabled]="denyFileRequestForm.invalid" (click)="sendDenyFileReq()" class="btn btn-primary">Send</button>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-template class="modal-up" #uploadFilemodal>
+        <!-- <div class="modal-header">
+        <h4 class="modal-title pull-left">Upload File</h4>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div> -->
+        <div class="modal-header modelprhead">
+          <h4 class="modal-title pull-left">Upload File</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+            <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
+          </button>
+          <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button> -->
+        </div>
+
+        <div class="modal-body modelprbody">
+          <div class="container p-0" style="width:100%">
+            <form [formGroup]="uploadFileForm" (ngSubmit)="submitUploadFileForm()">
+                <div class="row">
+                    <div class="form-fields col-md-12">
+                        <label for="fileCategory">File Category<span class="star">*</span></label>
+                        <select class="form-control"  formControlName="fileCategory" required>
+                          <option  [value]="null" disabled hidden>Select Category</option>
+                          <option value="" [selected]="true">Select Category</option>
+                          <option *ngFor="let categories of filecategories" >{{categories.category}}</option>
+                        </select>
+                        <span
+                            *ngIf="uploadFileForm.get('fileCategory').invalid && uploadFileForm.get('fileCategory').touched"
+                             class="errspan required">File Category Required*</span>
+                    </div>
+                    </div>
+                    <div class="form-fields col-md-12">
+
+                        <label>Description<span class="star">*</span></label>
+                        <textarea name= "desc" class="form-control" formControlName="description" placeholder="Enter Description..." rows="3" required>
+                        
+                        </textarea>
+                        <span *ngIf="uploadFileForm.get('description').invalid && uploadFileForm.get('description').touched"
+                             class="errspan required">Description Required*</span>
+                      
+                    </div>
+                    <div class="form-fields col-md-12">
+                      <label>Upload<span class="star">*</span></label>
+                      <div class="box-fileupload">
+                        <input type="file" name="file" (change)="chnagefileUploadForm($event)" id="file" class="inputfile" multiple/>
+                        <label for="file" (change)="chnagefileUploadForm($event)">
+                          <img src="../../../../assets/images/Projects/fileupload.svg" class="testplusupload">
+                          <span>Select File</span>
+                        </label>
+                      </div>
+
+                    
+                      <!-- <input type="file" class="form-control" (change)="chnagefileUploadForm($event)" formControlName="uploadFile" name="Upload-File"  placeholder="choose file" required multiple="true"> -->
+                      <div >
+                        <div class="row">
+                          <div class="col-md-4 pl-0" *ngFor="let selected of listOfFiles"> 
+                            <div class ="project-card">
+
+                                <span class="pull-right clickable" matTooltip="Remove"
+                                (click)="removeSelectedFile(index)">
+                                    <img class="testplus1" src="../../../../assets/images/Projects/circle-close.svg" />
+                                    <!-- <i class="fa fa-trash"></i> -->
+                                </span>
+                             <span class="card-placeholder">
+                                  File Name : {{selected.name}}
+                              </span>                          
+                              <span class="file-size">
+                                Size : {{selected.size | fileSizePipe}}
+                              </span>                           
+                            
+                            </div>
+                          
+                          </div>
+                        
+                        </div>
+
+                      
+
+                        <!-- {{selected}}
+                        <button type="button" aria-label="Close" (click)="removeSelectedFile(index)">
+                          <span aria-hidden="true">&times;</span>
+                      </button> -->
+                        <!-- <button mat-icon-button (click)="removeSelectedFile(index)">delete</button> -->
+                      </div>
+
+                      <span *ngIf="uploadFileForm.get('uploadFile').invalid && uploadFileForm.get('uploadFile').touched"
+                           class="errspan required">File Required*</span>
+                  </div>
+                
+            </form>
+        </div>
+        </div>
+        <div class="modal-footer modelprfooter">
+          <div class="pull-right">
+              <button (click)="uploadFilemodalref.hide()" class="btn btn-default">Cancel</button>
+              <button [disabled]="uploadFileForm.invalid" (click)="submitUploadFileForm()" class="btn btn-primary btn-update">Submit</button>
+              </div>
+        </div>
+      </ng-template>
+
+    </div> 
 </div>
-</ng-template>
-
-
-
-

@@ -5,8 +5,8 @@
     </clipPath>
   </defs>
   <g id="play" clip-path="url(#clip-play)">
-    <g id="noun_play_1939965" transform="translate(8.182 11.994)">
-      <path id="Path_924" data-name="Path 924" d="M30.557,12.9,15.435,2.833A1.957,1.957,0,0,0,12.4,4.451v20.1a1.95,1.95,0,0,0,3.035,1.618L30.557,16.109A1.937,1.937,0,0,0,30.557,12.9Z" transform="translate(-18.088 -14.499)" fill="#607088"/>
+    <g id="play-circle" transform="translate(-0.539 -0.539)">
+      <path id="Path_930" data-name="Path 930" d="M10,8,26.514,19.009,10,30.018Z" transform="translate(-4.664 -6.471)" fill="none" stroke="#607088" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
     </g>
   </g>
 </svg>

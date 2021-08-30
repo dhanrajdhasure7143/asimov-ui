@@ -113,40 +113,36 @@
                                                           <span *ngIf="createprogram.get('status').invalid && createprogram.get('status').touched" style="color:red" class="fa fa-info-circle errspan">Status Required*</span>-->
                                     </div>
                                     <div class="col-md-12">
-                                        <div class="form-fields col-md-6 pl-0">
+                                        
+                                            <div class="form-fields col-md-6 pl-0">
+                                                <label class="label-control" for="programValueChain">Map Value Chain<span
+                                                        class="star">*</span></label>
+                                                        <select formControlName="programValueChain" (change)="getValueChainProcesses($event.target.value)" class="form-control data"
+                                                        [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'">
+                                                      
+                                                        <option value=""  >Select Map Value Chain</option>
+                                                        <option *ngFor="let value of valuechain" [value]="value.processGrpMasterId">{{value.processName}}</option>
+                                                    </select>
+                                                <span
+                                                    *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
+                                                    class=" errspan required">Map Value Chain Required*</span>
+                                            </div>
+                                        
+                                        <div class="form-fields col-md-6 pr-0">
                                             <label class="label-control" for="process">Process<span
                                                     class="star">*</span></label>
                                             <select class="form-control" formControlName="process"
                                                 [ngClass]="createprogram.get('process').valid?'enteredfield-color':'inputfield-color'">
                                                 <option [value]="null" disabled hidden>Select Process</option>
                                                 <option value="" [selected]="true">Select Process</option>
-                                                <option *ngFor="let process of selected_process_names"
-                                                    [value]="process.processName">{{process.processName}}</option>
+                                                <option *ngFor="let process of valuechainprocesses"
+                                                    [value]="process.processInfoName">{{process.processInfoName}}</option>
                                             </select>
                                             <span
                                                 *ngIf="createprogram.get('process').invalid && createprogram.get('process').touched"
                                                 class="errspan required">Process Required*</span>
                                         </div>
-                                        <div class="form-fields col-md-6 pr-0">
-                                            <label class="label-control" for="priority">Program Priority<span
-                                                    class="star">*</span></label>
-                                            <select class="form-control" formControlName="priority"
-                                                [ngClass]="createprogram.get('priority').valid?'enteredfield-color':'inputfield-color'">
-                                                <option [value]="null" disabled hidden>--Select Program Priority --
-                                                </option>
-                                                <option value="">Select Program Priority</option>
-                                                <option value="High">High</option>
-                                                <option value="Medium">Medium</option>
-                                                <option value="Low">Low</option>
-                                            </select>
-                                            <span
-                                                *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')"
-                                                class="errspan required">Program Priority Required*</span>
-                                            <span *ngIf="createprogram.controls['priority'].hasError('maxlength')"
-                                                class="errspan required">
-                                                Maximum of 50 characters
-                                            </span>
-                                        </div>
+                                        
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-fields col-md-6 pl-0">
@@ -244,22 +240,27 @@
                                                 class=" errspan required">Access Required*</span>
                                         </div>
                                     </div> -->
+                                   
                                     <div class="col-md-6">
                                         <div class="form-fields">
-                                            <label class="label-control" for="programValueChain">Map Value Chain<span
+                                            <label class="label-control" for="priority">Program Priority<span
                                                     class="star">*</span></label>
-                                            <select formControlName="programValueChain" value=""
-                                                class="form-control data"
-                                                [ngClass]="createprogram.get('programValueChain').valid?'enteredfield-color':'inputfield-color'">
-                                                <option [value]="null" disabled hidden>Select Map Value Chain</option>
-                                                <option value="" [selected]="true">Select Map Value Chain</option>
-                                                <option value="Invoice Managment">Invoice Managment</option>
-                                                <option value="Acme Managment">Acme Managment</option>
-                                                <option value="E-Commerce">E-Commerce</option>
+                                            <select class="form-control" formControlName="priority"
+                                                [ngClass]="createprogram.get('priority').valid?'enteredfield-color':'inputfield-color'">
+                                                <option [value]="null" disabled hidden>--Select Program Priority --
+                                                </option>
+                                                <option value="">Select Program Priority</option>
+                                                <option value="High">High</option>
+                                                <option value="Medium">Medium</option>
+                                                <option value="Low">Low</option>
                                             </select>
                                             <span
-                                                *ngIf="createprogram.get('programValueChain').invalid && createprogram.get('programValueChain').touched"
-                                                class=" errspan required">Map Value Chain Required*</span>
+                                                *ngIf="(createprogram.get('priority').invalid && createprogram.get('priority').touched) && !createprogram.controls['priority'].hasError('maxlength')"
+                                                class="errspan required">Program Priority Required*</span>
+                                            <span *ngIf="createprogram.controls['priority'].hasError('maxlength')"
+                                                class="errspan required">
+                                                Maximum of 50 characters
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="col-md-12 martsascl">

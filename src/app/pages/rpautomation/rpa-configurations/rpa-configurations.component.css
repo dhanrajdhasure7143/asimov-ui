@@ -115,9 +115,13 @@ min-width:10px !important;
 
 .rpaenv_header_addon {
   position: relative !important;
-  top: 10px !important;
+  top: 7px !important;
   /*text-align: right !important;*/
   width: 0% !important;
   float: right !important;
-
 }
+.rpaenv_header_addon button {
+  float: right !important;
+  margin-right: 10px !important;
+}
+

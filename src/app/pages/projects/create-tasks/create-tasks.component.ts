@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Base64 } from 'js-base64';
 import moment from 'moment';
 import { BsModalRef } from 'ngx-bootstrap/modal';
@@ -17,15 +17,15 @@ import { ProjectDetailsScreenComponent } from '../project-details-screen/project
 export class CreateTasksComponent implements OnInit {
 
   createtaskForm:FormGroup;
-  mindate: string;
-  @Input('createtaskmodalref') public createtaskmodalref: BsModalRef;
-  @Input('project_id') public project_id: BsModalRef;
+  mindate= moment().format("YYYY-MM-DD");
+
   userslist: any;
   projectdetails: Object;
   taskcategories: Object;
   approverslist: any=[];
+  project_id:number;
   constructor(private formBuilder: FormBuilder,private spinner:NgxSpinnerService,private api:RestApiService,
-    private router: Router,private projectdetailscreen:ProjectDetailsScreenComponent) { }
+    private router: Router, private route:ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -43,11 +43,13 @@ export class CreateTasksComponent implements OnInit {
       })
 
 
-      this.mindate= moment().format("YYYY-MM-DD");
 
-
-      this.getallusers();
-      this.getTaskCategories();
+      this.route.queryParams.subscribe(data=>{
+        let response:any=data;
+        this.project_id=response.project_id
+        this.getallusers();
+        this.getTaskCategories();
+      })
   }
 
   inputNumberOnly(event){
@@ -71,7 +73,7 @@ export class CreateTasksComponent implements OnInit {
       if(response.message!=undefined)
       {
         let status: any= response;
-        this.createtaskmodalref.hide();
+        //this.createtaskmodalref.hide();
         Swal.fire({
           title: 'Success',
           text: ""+status.message,
@@ -83,7 +85,9 @@ export class CreateTasksComponent implements OnInit {
           confirmButtonText: 'Ok'
       }).then((result) => {
         this.resettask();
-        this.projectdetailscreen.getTaskandCommentsData();
+        
+        this.router.navigate(['/pages/projects/projectdetails'],{queryParams:{id:this.project_id}})
+        //this.projectdetailscreen.getTaskandCommentsData();
       }) 
         
       }
@@ -124,6 +128,17 @@ export class CreateTasksComponent implements OnInit {
   this.createtaskForm.get("priority").setValue("");
   this.createtaskForm.get("resources").setValue("");
   this.createtaskForm.get("approvers").setValue("");
+  }
+  DateMethod(){
+    return false;
+  }
+  endDateMethod(){
+   return false;
+  }
+  onchangeDate(){
+    if(this.createtaskForm.get("endDate").value)
+    this.createtaskForm.get("endDate").setValue("0000-00-00");
+    this.mindate=this.createtaskForm.get("startDate").value;
   }
 
 }

@@ -132,3 +132,81 @@ input[type="text"]:not(.mat-input-element), input[type="password"] {
   margin-left: 5px !important;
   margin-right: 5px !important;
 } 
+
+.credential-tablegrid {
+  width: 100%;
+  overflow-x: scroll;
+  padding-top: 20px;
+}
+
+.credential-tablegrid table td span{
+  font-size: 13px !important;
+}
+
+.credential-search {
+  position: relative;
+  padding: 0px !important;
+}
+.credential-search  img {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+}
+.credential-tools {
+  padding: 0px !important;
+  display: flex;
+}
+.credential-btntool {
+  position: relative;
+  padding: 3px 3px;
+  margin: 0px !important;
+}
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+.credential-btntool img {
+  width: 16px;
+  height: 16px;
+}
+.tsttooltipbtn:hover span.testtooltip {
+  display: block;
+}
+span.testtooltip {
+  position: absolute;
+  top: 45px;
+  right: 0px;
+  background-color: #001c47;
+  color: #fff;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  padding: 3px 10px;
+  border-radius: 4px;
+  display: none;
+  z-index: 999;
+}
+span.testtooltip:before {
+  content: '';
+  border: 2px solid #001c47;
+  border-width: 0px 0px 2px 2px;
+  position: absolute;
+  padding: 4px;
+  right: 13px;
+  top: -5px;
+  background: #001c47;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.credential-search-tools {
+  padding-top: 10px;
+}
+
+.modal-body{
+  max-height: calc(100vh - 160px);
+  overflow-y: auto;
+}
+
+.btn-test{
+  margin-left: 10px !important;
+}

@@ -19,7 +19,7 @@
                             <span *ngIf="requestFileForm.get('fileCategory').invalid && requestFileForm.get('fileCategory').touched"
                              class="errspan required">File Category Required*</span>
                     </div>  
-                    <div class="form-fields col-md-6 pl-0">
+                    <div class="form-fields col-md-6 pr-0">
                         <label for="taskName">Request To<span class="star">*</span></label>
                         <select formControlName="resources" class="form-control data">
                             <option value="">Select Resources</option>
@@ -42,7 +42,7 @@
 </div>          
 <div class="modal-footer modelprfooter">
     <div class="pull-right">
-        <button (click)="createRequestmodalref.hide()" class="btn btn-primary">Cancel</button>
+        <button (click)="createRequestmodalref.hide()" class="btn btn-default">Cancel</button>
         <button [disabled]="requestFileForm.invalid" (click)="saveRequestedfile()" class="btn btn-primary btn-update">Submit</button>
     </div>
 </div>

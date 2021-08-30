@@ -43,6 +43,7 @@ export class ProgramDetailsComponent implements OnInit {
     editdata:Boolean=false;
     displayedColumns8: string[] = ["initiatives","projectName","owner","new","projectPercentage","lastModifiedTimestamp","lastModifiedBy", "createdBy","action"];
     dataSource8:MatTableDataSource<any>;
+    selectedProgram_id:any
     @ViewChild("sort104",{static:false}) sort104: MatSort;
     @ViewChild("paginator104",{static:false}) paginator104: MatPaginator;
   ngOnInit() {
@@ -105,8 +106,10 @@ export class ProgramDetailsComponent implements OnInit {
     
     this.route.queryParams.subscribe(data=>{
       let program_id=data.id;
+      this.selectedProgram_id=program_id
       this.get_linked_projects(program_id);
       this.program_detials=this.projects_and_programs_list[0].find(item=>item.id==program_id);
+      console.log("pgrmdata: ", this.program_detials)
       this.editdata=false;
     });
   }
@@ -521,6 +524,9 @@ export class ProgramDetailsComponent implements OnInit {
     this.addprojectsForm.get("projects").setValue("");
   }
   save(){
-    
+    let req_body:any=this.addprojectsForm.get("projects").value;
+    this.rest.savedata(this.selectedProgram_id,req_body).subscribe(res=>{
+      console.log(res)
+    })
   }
 }

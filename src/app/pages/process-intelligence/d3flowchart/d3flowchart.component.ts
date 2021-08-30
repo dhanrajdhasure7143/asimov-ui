@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input,EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input,EventEmitter, Output, HostListener } from '@angular/core';
 import * as dagreD3 from 'dagre-d3';
 import * as d3 from 'd3';
 declare var $: any;
@@ -48,6 +48,21 @@ export class D3flowchartComponent {
     @ViewChild('canvas',{static: false}) canvas: ElementRef;
     @ViewChild('downloadLink',{static: false}) downloadLink: ElementRef;
     @ViewChild('render',{static: false}) render: ElementRef;
+    // @ViewChild("exportSVGtoPDF",{static: false}) graph_canvas:ElementRef;
+    // @HostListener('document:mouseover', ['$event.target'])
+    // public onmouseover(targetElement) {
+    //     const hovered = this.exportSVGtoPDF.nativeElement.contains(targetElement);
+    //     if (!hovered) {
+    //        let element=document.getElementById("tipsy_div");
+    //         if(element){
+    //           element.style.display = "none";
+    //           element.style.visibility = "hidden";
+    //         }
+    //     }else{
+    //       console.log("test")
+    //     }
+    // }
+
     ngOnInit(){
         this. processGraph();
     }
@@ -303,14 +318,18 @@ var count1
           var linkTooltip = "<p>"+this.model2[i].from+"-"+this.model2[i].to+"</p><p>Frequency</p><ul><li><div>Absolute Frequency</div><div>"+this.model2[i].toolDataCount[0]+"</div></li><li><div>Case Frequency</div><div>"+this.model2[i].toolDataCount[1]+"</div></li><li><div>Max Repititions</div><div>"+this.model2[i].toolDataCount[2]+"</div></li><li><div>Start Frequency</div><div>"+this.model2[i].toolDataCount[3]+"</div></li><li><div>End Frequency</div><div>"+this.model2[i].toolDataCount[4]+"</div></li></ul><p>Performance </p><ul><li><div>Total Duration</div><div>"+performanceLinkCount1+"</div></li><li><div>Median Duration</div><div>"+performanceLinkCount2+"</div></li><li><div>Mean Duration </div><div>"+performanceLinkCount3+"</div></li><li><div>Max Duration </div><div>"+performanceLinkCount4+"</div></li><li><div>Min Duration </div><div>"+performanceLinkCount5+"</div></li></ul>";
         if(this.model2[i].text.includes('Days')){
           let v1=this.model2[i].text.split(' ')[0];
-          let v2=Number(v1)/7;
           let v3
-          if(String(v2).indexOf('.') != -1){
-            let value=v2.toString().split('.')[0]+'.'+v2.toString().split('.')[1].slice(0,2)
-              v3=value+" Weeks"
-            }else{
-              v3=v2+" Weeks"
-            }
+          if(v1>=7){
+            let v2=Number(v1)/7;
+            if(String(v2).indexOf('.') != -1){
+              let value=v2.toString().split('.')[0]+'.'+v2.toString().split('.')[1].slice(0,2)
+                v3=value+" Weeks"
+              }else{
+                v3=v2+" Weeks"
+              }
+          }else{
+            v3=v1+" Days"
+          }
           this.model2[i].text=v3
         }
         
@@ -575,7 +594,7 @@ var wrap = function(text, width) {
 
 // Simple function to style the tooltip for the given node.
 var styleTooltip = function(name, description) {
-  return "<p class='name node-name'>" + name + '</p><button id="filterBtn" class="fa fa-filter filter-icon"></button>' + description;
+  return "<div class='filter-overlayheader'><p class='name node-name'>" + name + '</p><button id="filterBtn" class="btn-filter"><img src="../../../../assets/images/PI/filter.svg" alt="" class="default-img"><img src="../../../../assets/images/PI/filter-blue.svg" alt="" class="hover-img"></button></div>' + description;
 };
 
 var tooltip = d3.select("body")
@@ -914,7 +933,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
           return hours + " Hrs";
       } else {
         if(days1 >= 7){
-          return days + " Weeks"
+          return days + " Wks"
         }else{
           return days + " Days"
         }
@@ -933,7 +952,7 @@ if(me.isdownloadJpeg==true||this.isdownloadPng==true||this.isdownloadpdf==true||
         var itemName=item.toLowerCase();
         var _MATCHED_NODE_Array=[]
       
-      d3.selectAll(".node").style("opacity","0.1");
+      d3.selectAll(".node").style("opacity","0.6");
             d3.selectAll(".node").style("pointer-events","none");
             d3.selectAll(".node").selectAll("g text").style('font-size','14')
             

@@ -976,4 +976,28 @@ save_blueprism_config(data)
     return this.http.post("/platform-service/document/deleteUploadedFile",input)
   }
 
+
+  getvaluechain()
+  {
+    return this.http.get("/vcmprocess/getVcmMasterContent")
+  }
+
+getvaluechainprocess(id)
+{
+  return this.http.get("/vcmprocess/getVcmProcessGroupInfoByMasterId/"+id);
+}
+
+
+  exportproject(projectid)
+  {
+    return this.http.get("/platform-service/program/exportProject?projectId="+projectid)
+  }
+  savedata(id,data){
+    return this.http.post("/platform-service/project/addProjecttoexistingProgram/"+id,data)
+  }
+  
+  getBpmnNotationById(bpmnId){
+    return this.http.get("/bpsprocess/get/"+bpmnId)
+  }
+
 }

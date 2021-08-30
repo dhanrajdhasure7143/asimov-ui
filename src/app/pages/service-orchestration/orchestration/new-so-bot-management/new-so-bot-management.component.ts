@@ -15,6 +15,7 @@ import { NgxSpinnerService } from "ngx-spinner";
 import { Pipe, PipeTransform } from '@angular/core';
 declare var $:any;
 import { NotifierService } from 'angular-notifier';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Component({
   selector: 'app-new-so-bot-management',
   templateUrl: './new-so-bot-management.component.html',
@@ -28,7 +29,7 @@ public slaupdate : boolean = false;
     public respdata1=false;
     public blueprismbotname: any;
     schdata:any;
-    displayedColumns: string[] = ["botName","botType","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs","Smoke_Test"];
+    displayedColumns: string[] = ["botName","botType","sourceType" ,"department","description","version","botStatus", "Action","Schedule","Logs"];
     departmentlist :string[] = ['Development','QA','HR'];
     displayedblueprismcolums: string[] = ['bluePrismBotSessionid','startTimeStamp','endTimeStamp','status','error'];
     botNameFilter = new FormControl('');
@@ -75,7 +76,8 @@ public slaupdate : boolean = false;
     public sla_list:any=[];
     public datasourcelist : any = [];
     public timer:any;
-
+    public logs_modal:BsModalRef;
+    public 
     @ViewChild("paginator1",{static:false}) paginator1: MatPaginator;
     @ViewChild("sort1",{static:false}) sort1: MatSort;
     @ViewChild("paginator4",{static:false}) paginator4: MatPaginator;
@@ -104,6 +106,7 @@ public slaupdate : boolean = false;
       private spinner:NgxSpinnerService,
       private formBuilder: FormBuilder,
       private notify:NotifierService,
+      private modalService:BsModalService
       )
     {
       this.insertslaForm_so_bot=this.formBuilder.group({
@@ -498,7 +501,7 @@ public slaupdate : boolean = false;
         });
 
       //this.dataSource1.filterPredicate = this.customFilterPredicate();*/
-      this.update_bot_status();
+      //this.update_bot_status();
       this.spinner.hide();
     },(err)=>{
       this.spinner.hide();
@@ -506,41 +509,42 @@ public slaupdate : boolean = false;
   }
 
 
-  update_bot_status(){
-    this.timer = setInterval(() => {
-      this.rest.getallsobots().subscribe(botlist =>{
-        let responsedata:any=botlist
-        responsedata.forEach(statusdata => {
-          let data:any;
-          if(statusdata.status=="InProgress" || statusdata.status=="Running")
-                {
-                  data="<span matTooltip='"+statusdata.status+"' style='filter: none; width: 19px;' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
-                }
-                else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
-                {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"  style="filter: none; width: 19px;"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
-                }
+  // update_bot_status(){
+  //   this.timer = setInterval(() => {
+  //     this.rest.getallsobots().subscribe(botlist =>{
+  //       let responsedata:any=botlist
+  //       responsedata.forEach(statusdata => {
+  //         let data:any;
+  //         if(statusdata.status=="InProgress" || statusdata.status=="Running")
+  //               {
+  //                 data="<span matTooltip='"+statusdata.status+"' style='filter: none; width: 19px;' class='text-primary'><img src='../../../../assets/images/RPA/DotSpin.gif' style='filter: none; width: 19px;'></span>";
+  //               }
+  //               else if(statusdata.botStatus=="Success" || statusdata.botStatus=="Completed")
+  //               {
+  //                 data='<span  matTooltip="'+statusdata.botStatus+'"  style="filter: none; width: 19px;"  class="text-success"><i class="fa fa-check-circle"  style="font-size:19px" aria-hidden="true"></i></span>';
+  //               }
                
-                else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
-                {
-                  data='<span  matTooltip="'+statusdata.botStatus+'"    style="filter: none; width: 19px;"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
-                }
+  //               else if(statusdata.botStatus=="Failure" || statusdata.botStatus=="Failed")
+  //               {
+  //                 data='<span  matTooltip="'+statusdata.botStatus+'"    style="filter: none; width: 19px;"  class="text-danger"><i class="fa fa-times-circle" aria-hidden="true"></i></span>&nbsp;<span class="text-danger"></span>';
+  //               }
                 
-          $("#"+statusdata.botId+"__status").html(data);
-        });
+  //         $("#"+statusdata.botId+"__status").html(data);
+  //       });
           
-        })
-    }, (5*60000));
+  //       })
+  //   }, (5*60000));
   
-  }
+  // }
 
 
-  viewlogdata(botid ,version){
+  getEpsoftLogs(botid ,version, template, action){
   let response: any;
    let log:any=[];
    this.logresponse=[];
    this.log_botid=botid;
    this.log_version=version
+   this.viewlogid1=undefined;
    this.rest.getviewlogdata(botid,version).subscribe(data =>{
        this.logresponse=data;
        if(this.logresponse.length >0)
@@ -590,8 +594,11 @@ public slaupdate : boolean = false;
      this.Viewloglist.paginator=this.paginator4;
      this.Viewloglist.sort=this.sort4;
 
-     document.getElementById(this.viewlogid).style.display="block";
-     $(".tour_guide").hide()
+    //  document.getElementById(this.viewlogid).style.display="block";
+    //  $(".tour_guide").hide()
+
+    if(action=="open")
+      this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
 
    });
  }
@@ -608,13 +615,10 @@ public slaupdate : boolean = false;
      if(responsedata.length >0)
      {
        this.respdata2 = false;
-       console.log(this.respdata2)
      }else
      {
        this.respdata2 = true;
-       console.log(this.respdata2);
      }
-     console.log(responsedata);
      responsedata.forEach(rlog=>{
        logbyrunidresp=rlog;
        logbyrunidresp["start_date"]=logbyrunidresp.start_time;
@@ -624,34 +628,15 @@ public slaupdate : boolean = false;
 
        resplogbyrun.push(logbyrunidresp)
      });
-     console.log(resplogbyrun);
      this.logflag=true;
      this.logbyrunid = new MatTableDataSource(resplogbyrun);
-     console.log(this.logbyrunid);
      this.logbyrunid.paginator=this.paginator5;
      this.logbyrunid.sort=this.sort5;
-     document.getElementById(this.viewlogid).style.display="none";
-     document.getElementById(this.viewlogid1).style.display="block";
-     $(".tour_guide").hide()
+     this.viewlogid1=runid;
        })
    }
 
-   back(){
-     //document.getElementById("ViewLog").style.display="none";
-     document.getElementById(this.viewlogid1).style.display="none";
-     document.getElementById(this.viewlogid).style.display="block";
-   }
-
-   viewlogclose(){
-    $(".tour_guide").show()
-     document.getElementById(this.viewlogid).style.display="none";
-   }
-
-   viewlogclose1(){
-    $(".tour_guide").show()
-     document.getElementById(this.viewlogid1).style.display="none";
-     document.getElementById(this.viewlogid).style.display="none";
-   }
+  
 
 
 
@@ -809,12 +794,10 @@ public slaupdate : boolean = false;
 
 
     public uipathbotName:any;
-    getuipathlogs(botname)
+    getuipathlogs(template,botname)
     {
       
       this.uipathbotName=botname;
-      document.getElementById("uipathlogs").style.display="block";
-      $(".tour_guide").hide()
       this.spinner.show();
       this.rest.getuipathlogs().subscribe(resp=>{
         let response:any=resp;
@@ -822,12 +805,13 @@ public slaupdate : boolean = false;
         let logsbytime:any=logs.sort((right,left)=>{
           return moment.utc(left.StartTime).diff(moment.utc(right.StartTime))
         });
-        console.log(logsbytime)
         this.uipathlogs=new MatTableDataSource(logsbytime);
         this.uipathlogs.sort=this.sort6;
         this.uipathlogs.paginator=this.paginator6;
         this.spinner.hide();
+        this.logs_modal=this.modalService.show(template,{class:"logs-modal"});
       });
+
 
     }
 

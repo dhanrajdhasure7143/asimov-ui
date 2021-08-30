@@ -373,7 +373,7 @@ export class UploadComponent implements OnInit {
     this.isIncrement=false;
     var modal = document.getElementById('myModal1');
     modal.style.display = "block";
-    this.dbDetails={};
+    // this.dbDetails={};
     this.rest.fileName.next(null);
   }
 
@@ -520,6 +520,7 @@ export class UploadComponent implements OnInit {
 
 testDbConnection(){     // check DB connection with port id and psw
   this.processId = Math.floor(100000 + Math.random() * 900000);
+  this.isLoading=true;
     let modekey
     let modekey1
     let connectorBody:any= {}
@@ -581,6 +582,7 @@ testDbConnection(){     // check DB connection with port id and psw
         connectorBody[modekey]=this.dbDetails.timestamp
       }
     this.rest.getJDBCConnectorConfig(connectorBody).subscribe(res => {this.connectionResp=res
+        this.isLoading=false;
         if(this.connectionResp.data.length==0){
           this.isDisabled = false;
             this.notifier.show({
@@ -588,6 +590,7 @@ testDbConnection(){     // check DB connection with port id and psw
               message: "Connected Successfully."
               });
           }else{
+            this.isLoading=false;
             this.notifier.show({
               type: 'error',
               message: "Error"+this.connectionResp.data[0].errors

@@ -4,7 +4,10 @@
 <div class="header_addon header-btn1">
 
   
-  <button type="button" class="btn btn-primary btn-md"  style="float:right;" (click)="openModal(template)">Import</button>
+  <button type="button" class="btn btn-primary import-btn"  style="float:right;" (click)="openModal(template)">
+    <img src="../../../../assets/images/RPA/import-white.svg" class="testplus" >
+    Import
+  </button>
 
   <ng-template #template>
     <div class="modal-header modelprhead">
@@ -59,20 +62,21 @@
 <div class="row">
 
   <div class="main-subheader">
-
     <div class="main-subheaderTitle">
-      <label class="main-subtitle">Automate the Tasks</label>
-      <label class="subtitle-tag">(Select the options to Create or Configure the task)</label>
+      
+      <label class="main-subtitle">Let's Automate the Tasks</label>
+      <label class="subtitle-tag">Select the options to Create or Configure the task</label>
+    
+      <div class="main-subheaderBtns">
+          <div class="rpa-home-block" id="createbot-Home" *ngIf="this.isButtonVisible || enablecreatebot">
+              <button class="btn btn-primary rpa-home-btn-title" id="create_newbot"  (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
+          </div>
+          <div class="rpa-home-block" id="Configuration_Home" *ngIf="this.isButtonVisible || enableConfiguration">
+              <button class="btn btn-primary rpa-home-btn-title" id="create_Configuration" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
+          </div>
+      </div>
     </div>
-    <div class="main-subheaderBtns">
-        <div class="rpa-home-block" id="createbot-Home" *ngIf="this.isButtonVisible || enablecreatebot">
-            <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_newbot"  (click)="createoverlay()" aria-hidden="true" placement="bottom">Create</button>
-        </div>
-        <div class="rpa-home-block" id="Configuration_Home" *ngIf="this.isButtonVisible || enableConfiguration">
-            <button class="btn btn-primary rpa-home-btn-title eiap-btn" id="create_Configuration" [routerLink]="[ '/pages/rpautomation/configurations']" placement="bottom">Configurations</button>
-        </div>
-    </div>
-
+    <img src="../../../../assets/images/RPA/icon_latest/bot_new.svg" />
       <div class="rpa-home" style="display:none">
         <!--<div class="rpa-home-block" id="createbot-Home">
             <button type="button" (click)="createoverlay()" aria-hidden="true" placement="bottom">
@@ -225,12 +229,12 @@
                 <!-- &nbsp;{{bot.botStatus}} -->
               </span>
 
-              <span *ngIf="bot.botStatus=='Success'" class="tableActionsIcons"><span><i class="fa fa-check-circle" style="color:#4FA908"></i></span>
+              <span *ngIf="bot.botStatus=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>
                 <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
               </span>
 
               <span *ngIf="bot.botStatus=='Failure'">
-                <span class="tableActionsIcons"><i class="fa fa-times-circle"></i></span>
+                <span class="tableActionsIcons"><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                 </span>
               <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
@@ -242,8 +246,10 @@
               </span>
 
               <span *ngIf="bot.botStatus=='Stop'" class="tableActionsIcons">
-                <span class="bg-danger" style="background-color:#a94442;border-radius: 50%;color:white;padding-right:6px;padding-left:5px;padding-top:5px;padding-bottom:4px;font-size:9px;text-align: center;align-content: center;align-items: center;">
-                  <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-stop"></i></span>
+                <span class="bg-danger" >
+                  <!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">-->
+                  <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                </span>
                   <!-- &nbsp;<span>{{bot.botStatus}}</span> -->
                 </span>
 
@@ -257,11 +263,11 @@
 
               <span *ngIf="bot.botStatus==null">---</span>
               <span class="tableActionsIcons">
-                <button mat-button tooltip="More Actions" class="bg_threebtn"  placement="top" (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></button>
+                <button mat-button tooltip="More Actions" class="bg_threebtn"  placement="top" (click)="$event.stopPropagation();" [matMenuTriggerFor]="menu"><img src="../../../../assets/images/RPA/icon_latest/dots.svg" alt=""></button>
                 <mat-menu #menu="matMenu">
-                  <button  mat-menu-item (click)="editbotoverlay(bot)"><i class="fas fa-edit"></i> &nbsp;Edit </button>
-                  <button  mat-menu-item (click)="botdelete(bot.botId)"><i class="fas fa-trash"></i> &nbsp;Delete</button>
-                  <button (click)="exportbot(bot)" mat-menu-item><i class="fa  fa-file-export " aria-hidden="true"></i> &nbsp;Export</button>
+                  <button  mat-menu-item (click)="editbotoverlay(bot)"><img src="../../../../assets/images/RPA/icon_latest/edit.svg" alt="" class="testplus">&nbsp;Edit </button>
+                  <button  mat-menu-item (click)="botdelete(bot.botId)"><img src="../../../../assets/images/RPA/icon_latest/delete.svg" alt="" class="testplus">&nbsp;Delete</button>
+                  <button (click)="exportbot(bot)" mat-menu-item><img src="../../../../assets/images/RPA/icon_latest/export.svg" alt="" class="testplus">&nbsp;Export</button>
                 </mat-menu>
               </span>
             </div>
@@ -286,7 +292,7 @@
     </mat-accordion>
 
   </div>
-
+  <!-- <mat-paginator #paginator2 [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 50]" [showFirstLastButtons]="true" class="newpaginationdiv"></mat-paginator> -->
   <div class="text-right">
 
     <pagination-controls class="pagination " (pageChange)="p = $event"></pagination-controls>
@@ -299,7 +305,7 @@
 <div id="edit-bot" class="modal rpa-modal">
   <div class="rpa-modal-content">
     <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="close()">&times;</span>
+          <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
           <h4>Edit Bot Details</h4>
     </div>
     <div class="modal-body">

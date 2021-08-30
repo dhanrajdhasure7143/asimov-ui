@@ -7,7 +7,7 @@ enum Filter {
   // 'Cases',
   'Variants',
   'End Points',
-  'Performance'
+  // 'Performance'
 }
 @Component({
   selector: 'app-filter',
@@ -166,6 +166,7 @@ export class FilterComponent implements OnInit {
         this.endPointArray.push(obj)
       }
       this.performanceLogic(this.performanceFilterInput, 'caseduration');
+      // console.log("performance",this.performanceFilterInput)
     }, 4000);
     this.chart_filter_options = Object.keys(Filter).filter(val => isNaN(Filter[val]));
 
@@ -619,7 +620,7 @@ export class FilterComponent implements OnInit {
       cc += Number(r.caseCount);
     })
     this.chagnedCases = cc;
-    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(2);
+    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
     this.casePercentage =Number(casePer);
     if(this.totalCases == this.chagnedCases){
       this.piesingle = [
@@ -644,7 +645,7 @@ export class FilterComponent implements OnInit {
       cc += Number(r.caseCount);
     })
     this.chagnedCases = cc;
-    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(2);
+    let casePer = ((Number(this.chagnedCases) / Number(this.totalCases)) * 100).toFixed(0);
     this.casePercentage =Number(casePer);
     if(this.totalCases == this.chagnedCases){
       this.piesingle = [
@@ -721,6 +722,7 @@ export class FilterComponent implements OnInit {
     this.minPerfValue = 0;
     this.maxPerfValue = 0;
     this.options1 = {};
+    // console.log("pData",pData)
     pData.data.filter(res => {
       this.totalCases += Number(res.case_value);
       this.performanceTotalDuration.push({ durationArray: res.filter_total_durations, caseValue: res.case_value });
@@ -740,6 +742,7 @@ export class FilterComponent implements OnInit {
       this.single.push({ name: res.duration, value: res.caseCount })
     });
 
+    // console.log(this.single)
     this.options1 = {
 
       floor: Number(this.perfrmanceFilterKeyValuepair[0].duration),
@@ -765,7 +768,7 @@ export class FilterComponent implements OnInit {
     }
     this.vaue = Number(this.perfrmanceFilterKeyValuepair[0].duration)
     this.highValue = Number(this.perfrmanceFilterKeyValuepair[this.perfrmanceFilterKeyValuepair.length - 1].duration)
-    console.log(this.casePercentage);
+    // console.log(this.casePercentage);
   }
   getMeanActiveTime(pData){
    
@@ -1056,6 +1059,7 @@ export class FilterComponent implements OnInit {
     this.perfrmanceFilterKeyValuepair.filter(res => {
       this.single.push({ name: res.duration, value: res.caseCount })
     });
+    // console.log(this.single)
 
     this.options1 = {
 

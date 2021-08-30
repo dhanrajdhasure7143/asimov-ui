@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, AfterViewChecked, ChangeDetectorRef, } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RestApiService } from '../../pages/services/rest-api.service';
 import { SharebpmndiagramService } from '../../pages/services/sharebpmndiagram.service';
@@ -28,12 +28,13 @@ export class UploadCreateDropBpmnComponent implements OnInit {
   category:string;
   validNotationTypes: string;
   uploadedFileName:string;
+  isShowConformance:boolean=false;
 
   @Output() update = new EventEmitter<any>();
   @Input() data;
 
   constructor(private router:Router,private bpmnservice:SharebpmndiagramService, private route:ActivatedRoute,
-    private global: GlobalScript, private rest:RestApiService) { }
+    private global: GlobalScript, private rest:RestApiService, private activatedRoute: ActivatedRoute, private cdRef: ChangeDetectorRef) { }
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
@@ -42,6 +43,12 @@ export class UploadCreateDropBpmnComponent implements OnInit {
         this.validNotationTypes += ', .cmmn, .dmn';
     });
     
+  }
+  ngAfterViewChecked() {
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.isShowConformance = params['isShowConformance'] == 'true';
+    });
+    this.cdRef.detectChanges();
   }
 
   onSelect(e){

@@ -13,15 +13,25 @@ export class ProcessIntelligenceComponent implements OnInit {
  isShow:boolean  = false;
  wpiIdNumber:any;
  isPIHeaderShow:any="true";
- isplay:boolean;
+ isplay:boolean=false;
  isAddHrs:boolean=false;
+ isAddHrs1:boolean=false;
  workingHours:any = {
   formDay:'Mon',
   toDay: 'Sun',
   shiftStartTime:"00:00",
   shiftEndTime:"23:59"
 };
+workingHours1:any = {
+  formDay:'Mon',
+  toDay: 'Sun',
+  shiftStartTime:"00:00",
+  shiftEndTime:"23:59"
+};
 isBackbutton:boolean=false;
+insights_header:boolean=false;
+isTimefeed:boolean=true;
+btn_obj:any;
 
   constructor(private changeDetectorRef:ChangeDetectorRef,
     private router:Router,
@@ -40,18 +50,34 @@ isBackbutton:boolean=false;
     let windowUrl = window.location.href;
     if(windowUrl.indexOf('insights') == -1){
       this.isShow=false;
+    this.dt.pi_buttonValues(null);
+
     } else{
       this.isShow=true;
   }
   if(windowUrl.indexOf('flowChart') == -1){
     this.isPIHeaderShow=false;
+    this.isplay=false;
+    this.isAddHrs=false;
+      let element=document.getElementById("tipsy_div");
+      if(element){
+        element.style.display = "none";
+        element.style.visibility = "hidden";
+      }
+    // console.log('test')
+    this.workingHours = {formDay:'Mon',toDay: 'Sun',shiftStartTime:"00:00",shiftEndTime:"23:59"};
   } else{
     this.isPIHeaderShow=true;
-}
+  }
 if(windowUrl.indexOf('processIntelligence/insights') != -1||windowUrl.indexOf('business-insights') !=-1){
   this.isBackbutton=true;
 } else{
   this.isBackbutton=false;
+}
+if(windowUrl.indexOf('processIntelligence/insights') != -1){
+  this.insights_header=true;
+} else{
+  this.insights_header=false;
 }
   this.route.queryParams.subscribe(params => {
     if(params['wpid']!=undefined){
@@ -68,6 +94,16 @@ if(windowUrl.indexOf('processIntelligence/insights') != -1||windowUrl.indexOf('b
     
   this.changeDetectorRef.detectChanges();
 
+ }
+
+ ngAfterViewInit(){
+   this.dt.pi_btnChanges.subscribe(res=>{this.btn_obj=res
+    //  console.log(res)
+     if(res){
+     this.isplay=this.btn_obj.isPlaybtn;
+    //  this.isTimefeed=this.btn_obj.isTimefeed_btn
+     }
+  });
  }
 
  gotoProcessgraph(){
@@ -90,30 +126,69 @@ viewInsights(){
 viewbusinessinsights(){
   this.router.navigate(["/pages/processIntelligence/business-insights"],{queryParams:{wpid:this.wpiIdNumber}})
 }
+
 generateBpmn(){
   this.dt.piHeaderValues('bpmn');
-
 }
+
 openVariantListNav(){
+    let element=document.getElementById("tipsy_div");
+    if(element){
+      element.style.display = "none";
+      element.style.visibility = "hidden";
+    }
   this.dt.piHeaderValues('variant_list');
 }
+
 openHersOverLay(){
-  this.isAddHrs=!this.isAddHrs
+  this.isAddHrs=!this.isAddHrs;
+  let element=document.getElementById("tipsy_div");
+  if(element){
+    element.style.display = "none";
+    element.style.visibility = "hidden";
+  }
 }
 
 canceladdHrs(){ //close timefeed popup 
   this.isAddHrs=!this.isAddHrs;
 }
+
 addWorkingHours(){
   this.dt.piHeaderValues(this.workingHours);
 }
 
-resetWorkingHours(){ //working hours reset in timffed   
+ resetWorkingHours(){ //working hours reset in timffed   
   this.workingHours.formDay = "Mon";
   this.workingHours.toDay = "Sun";
   this.workingHours.shiftStartTime="00:00";
   this.workingHours.shiftEndTime="23:59"
-}
+ }
+
+ openinsightsHrsOverLay(){
+  this.isAddHrs1=!this.isAddHrs1
+ }
+
+ cancelinsightsaddHrs(){ //close timefeed popup 
+  this.isAddHrs1=!this.isAddHrs1;
+ }
+
+  openInsightsVaraintOverLay(){
+    this.dt.process_insightsHeaderValues("open_Varaint");
+  }
+
+  addWorkingHrsInsights(){
+    this.dt.process_insightsHeaderValues(this.workingHours1);
+  }
+
+  resetWorkingHours1(){ //working hours reset in timffed   
+    this.workingHours1.formDay = "Mon";
+    this.workingHours1.toDay = "Sun";
+    this.workingHours1.shiftStartTime="00:00";
+    this.workingHours1.shiftEndTime="23:59"
+   }
+   backtoWorkspace(){
+     this.router.navigate(['/pages/processIntelligence/upload'])
+   }
 
 }
 

@@ -19,18 +19,20 @@
 </mat-slide-toggle> -->
 
 <div class="row">
-  <div class="col-md-6">
+  <!-- <div class="col-md-6">
     &nbsp;
-  </div>
-  <div class="col-md-6">
-  <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-primary" style="float:right" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
-    <i class="fa fa-list"></i>&nbsp;&nbsp;Load
+  </div> 
+  <div class="col-md-6">-->
+  <button  type="button" *ngIf="tabsArray.length > 0" class="btn btn-default" aria-hidden="true" placement="bottom" id="Load_Bot" (click)="onLoad()">
+    <img src="../../../../assets/images/RPA/icon_latest/load-blue.svg" class="default-img">
+    <img src="../../../../assets/images/RPA/icon_latest/load.svg" class="hover-img">&nbsp;&nbsp;Load
   </button>
   
   <button  type="button"  *ngIf="tabsArray.length > 0"  class="btn btn-primary"  aria-hidden="true" placement="bottom" id="Create_Bot" (click)="onCreate(0)">
-    <i class="fa fa-plus"></i>&nbsp;&nbsp;Create
+    <img src="../../../../assets/images/Projects/White-plus.svg" class="testplus" />
+    Create
   </button>
-</div>
+<!-- </div> -->
 </div>
 </div>
 
@@ -38,7 +40,7 @@
 <div class="rpa-content-div"  *ngIf="tabsArray.length < 1 && localstore">
 <app-rpa-home></app-rpa-home>
 </div>
-<div *ngIf="changescreen_rpa_model==true && tabsArray.length > 0" class="container-fluid">
+<div *ngIf="changescreen_rpa_model==true && tabsArray.length > 0" class="rpa-actioncontent">
   <app-rpa-studio-designer [tabsArray]="tabsArray" ></app-rpa-studio-designer>
 </div>
 <div *ngIf="tabsArray.length > 0 && changescreen_rpa_model==false" class="container">
@@ -98,7 +100,7 @@
 <div id="create-bot" class="rpa-modal">
   <div class="rpa-modal-content">
     <div class="rpa-modal-header">
-      <span class="rpa-modal-close" (click)="close()">&times;</span>
+      <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
       <h4>Create Bot</h4>
     </div>
     <div class="modal-body">
@@ -166,7 +168,7 @@
             </div>
           
             <div class="col-md-6 p-0 form-group">
-              <input type="checkbox"  formControlName="predefinedBot" value="true" (click)="predefined($event)" name="predefinedBot">&nbsp; <span style="font-size:16px">Predefined Bot</span>
+              <input type="checkbox"  formControlName="predefinedBot" value="true" (click)="predefined($event)" name="predefinedBot">&nbsp; <span>Predefined Bot</span>
             </div>
         </div>
         <div class="form-footer">
@@ -179,118 +181,65 @@
   </div>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <!--load bot overlay-->
 <div id="load-bot" class="rpa-modal">
   <div class="rpa-modal-content">
-      <div class="rpa-modal-header">
-          <span class="rpa-modal-close" (click)="close()">&times;</span>
-          <h4>Load Bot</h4>
-      </div>
-  <div class="modal-body">
+    <div class="rpa-modal-header">
+      <span class="rpa-modal-close" (click)="close()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
+      <h4>Load Bot</h4>
+    </div>
+    <div class="modal-body">
 
-  <div class="container">
+      <form [formGroup]="loadbot" (ngSubmit)="getbotdata()" >
 
-    <form [formGroup]="loadbot" (ngSubmit)="getbotdata()" >
+        <div class="container m-contanier form-body">
 
-      <div class="form-group">
-
-        <div class="row">
-
-          <div class="col-md-6 form-group">
-            <label class="form-control" for="botDepartment" >Category*</label>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="botDepartment" >Category<span class="star">*</span></label>
             <select  class="form-control" (change)="loadbotdata()" formControlName="botDepartment" name="botDepartment" >
               <option  value="" selected>--Select Category--</option>
               <option *ngFor ="let category of categaoryList" [value]="category.categoryId">{{category.categoryName}}</option>
             </select>
-            <div *ngIf="loadbot.get('botDepartment').invalid && loadbot.get('botDepartment').touched"  >
+            <div *ngIf="loadbot.get('botDepartment').invalid && loadbot.get('botDepartment').touched" class="errspan required" >
               Category Required*
               </div>
           </div>
 
-
-          <div class="col-md-6 form-group">
-            <label class="form-control" for="botType">Bot Type*</label>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="botType">Bot Type<span class="star">*</span></label>
             <select  class="form-control" formControlName="botType" name="botType" (change)="loadbotdata()" >
               <option value="" selected>--Select Bot Type--</option>
               <option  value=0>Attended</option>
               <option  value=1>Unattended</option>
             </select>
-            <div *ngIf="loadbot.get('botType').invalid && loadbot.get('botType').touched"  >
+            <div *ngIf="loadbot.get('botType').invalid && loadbot.get('botType').touched" class="errspan required" >
               Bot Type Required*
               </div>
-
           </div>
 
-
-        </div>
-
-        <div class="row">
-          <div class="col-md-12 form-group">
-            <label class="form-control" class="form-control" for="botType">Bot*</label>
+          <div class="col-md-12 p-0 form-group">
+            <label class="label-control" for="botType">Bot<span class="star">*</span></label>
 
             <select  class="form-control" formControlName="bot" name="bot" >
               <option value="" selected>--Select Bot--</option>
               <option *ngFor="let bot of botlist" [value]="bot.botId">{{bot.botName}}</option>
             </select>
-            <div *ngIf="loadbot.get('bot').invalid && loadbot.get('bot').touched"  >
-              Bot  Required*
+            <div *ngIf="loadbot.get('bot').invalid && loadbot.get('bot').touched" class="errspan required" >
+              Bot Required*
             </div>
-
           </div>
+
         </div>
 
-      </div>
+        <div class="form-footer">
+          <button class="btn btn-primary" [disabled]="loadbot.invalid" >Submit</button>
+        </div>
 
-      <div class="form-footer">
-        <button class="btn btn-primary" [disabled]="loadbot.invalid" >Submit</button>
-      </div>
-    </form>
+      </form>
+ 
+    </div>
   </div>
 </div>
-</div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!--load bot overlay
 <div id="load-bot" class="rpa-modal">
