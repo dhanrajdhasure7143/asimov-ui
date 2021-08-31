@@ -90,8 +90,8 @@
                           <!--<img src="../../../../assets/images/RPA/newicon.png" style="filter: none; width: 20px;">-->
                           <span *ngIf="element.botStatus=='New'"   [matTooltip]="element.botStatus"  class="text-primary"><span><img src='../../../../../assets/images/RPA/newicon.png' style="filter: none; width: 19px;"></span></span>
   
-                          <span *ngIf="element.botStatus=='Stop'" >
-                            <span class="bg-danger"  [matTooltip]="element.botStatus">
+                          <span *ngIf="element.botStatus=='Stop' || element.botStatus=='Stopped'" >
+                            <span class="tableActionsIcons"  [matTooltip]="element.botStatus">
                               <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;"> 
                             </span>
                             </span>
@@ -358,7 +358,7 @@
                         <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
                       </span>&nbsp;<span>{{element.status}}</span></span>
 
-                      <span *ngIf="element.status=='Stop'" class="text-danger"><span><li class="fas fa-stop-circle" style="font-size: 19px;"></span>&nbsp;<span>{{element.status}}</span></span>
+                      <span *ngIf="element.status=='Stop' || bot.botStatus=='Stopped'"  class="tableActionsIcons"><span><img src="../../../../../assets/images/RPA/stop_fail_icon.svg" alt=""></span>&nbsp;<span>{{element.status}}</span></span>
 
 
                     <span *ngIf="element.status == undefined">-</span></td>
