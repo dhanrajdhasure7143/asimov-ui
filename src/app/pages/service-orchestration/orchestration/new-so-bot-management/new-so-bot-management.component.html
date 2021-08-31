@@ -1,37 +1,34 @@
 <div class="bg-color">
   <div class="container-fluid">
       <br>
-      <div class="text-right">
-          <span style="padding:10px">
-            <mat-form-field class="example-full-width" id="bmsearch">
-              <mat-label>Search</mat-label>
-              <input matInput placeholder="Search" [(ngModel)]="search" (input)="method()"> <!--(keyup)="applyFilter2($event.target.value)">-->
-              <mat-icon matSuffix>search</mat-icon>
-            </mat-form-field>
-          </span>
-          <span style="padding:10px">
-            <mat-form-field id="bmcategorySearch">
-              <mat-label>Select By Source</mat-label>
-              <mat-select [(ngModel)]="selected_source" (selectionChange)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
-                  <mat-option value="EPSoft">EPSoft</mat-option>
-                  <mat-option value="BluePrism">BluePrism</mat-option>
-                  <mat-option value="UiPath">UiPath</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </span>
-        <span style="padding:10px">
-          <mat-form-field id="bmcategorySearch1">
-            <mat-label>Select Process Group</mat-label>
-            <mat-select [(ngModel)]="selectedcat" (selectionChange)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
-                <mat-option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </span>
-        <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
-          <i  class="fa fa-undo"></i>
-        </span >  
+      <div class="row">
+        <div class="col-md-5"></div>
+          <div class="col-md-2">
+            <input type="search" class="form-control rpa-control" placeholder="Search" [(ngModel)]="search" (input)="method()"> 
+          </div>
+          <div class="col-md-2">
+            <select [(ngModel)]="selected_source" value="" class="form-control rpa-control"  (change)="method()"> <!--(selectionChange)="applyFilter3($event.value)">-->
+              <option value="">Select Source</option>
+              <option value="EPSoft">EPSoft</option>
+              <option value="BluePrism">BluePrism</option>
+              <option value="UiPath">UiPath</option>
+            </select>
+          </div>
+        <div class="col-md-2">
+            <select [(ngModel)]="selectedcat" value="" class="form-control rpa-control"  (change)="method()"> <!--(selectionChange)="applyFilter($event.value)"-->
+              <option  value="">Select Category</option>
+                <option *ngFor="let category of categaoriesList" [value]="category.categoryId">{{category.categoryName}}
+              </option>
+            </select>
+           
+        </div>
+        <div class="col-md-1"> 
+          <span (click)="reset()" id="bmreset"  style="cursor:pointer" matTooltip="Reset">
+            <i  class="fa fa-undo"></i>
+          </span >
+        </div>
       </div>
+      <br>
         <div class="row">
           <div class="botmanagement-tablelist" >
             <!-- <mat-card> -->
@@ -95,8 +92,7 @@
   
                           <span *ngIf="element.botStatus=='Stop'" >
                             <span class="bg-danger"  [matTooltip]="element.botStatus">
-                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
-                             
+                              <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;"> 
                             </span>
                             </span>
   
@@ -256,7 +252,7 @@
 
               <ng-container matColumnDef="bot_status">
                   <th mat-header-cell *matHeaderCellDef>Status</th>
-                  <td mat-cell *matCellDef="let element">
+                  <td mat-cell class="font-weight-bold" *matCellDef="let element">
                       <!--<span *ngIf="element.bot_status!=null">
                         <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span class="fa fa-spinner fa-spin"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
@@ -266,7 +262,13 @@
 
                       <span *ngIf="element.bot_status=='Failure'" class="text-danger"><span><li class="fa fa-times"></span>&nbsp;<span>{{element.bot_status}}</span></span>
                       </span>-->
-                      <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
+                      <span *ngIf="element.bot_status=='Running'" class="text-primary" >
+                        <span>
+                          <img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;">
+                        </span>
+                        &nbsp;{{element.bot_status}}&nbsp;&nbsp;&nbsp;
+                        <span class="btn btn-xs btn-primary clickable" (click)="updateLog(element.run_id,epsoft_logs_modal_ref)" >Kill</span>
+                      </span>
 
                   <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
@@ -277,9 +279,9 @@
                     <img src="../../../../assets/images/RPA/userobot.png" style="filter: none; ">
                   </span>&nbsp;<span>{{element.bot_status}}</span></span>
 
-                  <span *ngIf="element.bot_status=='Stop'" class="text-danger"><span>
-                    
-                      <img src="../../../../../assets/images/RPA/stop_fail_icon.svg" style="filter: none; width: 19px;">
+                  <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  " class="tableActionsIcons">
+                    <span>
+                      <img src="../../../../../assets/images/RPA/stop_fail_icon.svg">
                     </span>&nbsp;<span>{{element.bot_status}}</span></span>
                       <span *ngIf="element.bot_status == undefined">-</span></td>
               </ng-container>
