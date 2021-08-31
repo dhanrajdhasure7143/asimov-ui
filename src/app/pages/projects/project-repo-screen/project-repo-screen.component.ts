@@ -402,7 +402,7 @@ this.getFileDetails();
     var link = document.createElement('a');
     let extension=((((fileName.toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
     link.download = fileName;
-    link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[0]}`:`data:application/${extension};charset=utf-8,${response[0]}`) ;
+    link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[0]}`:`data:application/${extension};base64,${response[0]}`) ;
     link.click();
     this.spinner.hide();
     })
@@ -445,7 +445,7 @@ this.getFileDetails();
       var link = document.createElement('a');
       let extension=((((downloadSelectedfiles[i].toString()).split("")).reverse()).join("")).split(".")[0].split("").reverse().join("")
       link.download = downloadSelectedfiles[i];
-      link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};charset=utf-8,${response[i]}`) ;
+      link.href =((extension=='png' ||extension=='jpg' ||extension=='svg' ||extension=='gif')?`data:image/${extension};base64,${response[i]}`:`data:application/${extension};base64,${response[i]}`) ;
       link.click();
       }
     })
