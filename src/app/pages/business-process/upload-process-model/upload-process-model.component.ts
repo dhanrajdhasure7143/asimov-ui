@@ -790,12 +790,12 @@ this.dt.bpsNotationaScreenValues(this.push_Obj)
       data=>{
         this.getAutoSavedDiagrams();
         this.autosaveObj=data
-        this.isEdit=false;
+        this.isEdit=true;
         this.updated_date_time = new Date();
         this.spinner.hide();
         this.push_Obj={"rejectedOrApproved":this.rejectedOrApproved,"isfromApprover":this.isfromApprover,
         "isShowConformance":this.isShowConformance,"isStartProcessBtn":this.isStartProcessBtn,"autosaveTime":this.updated_date_time,
-        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':true,"hasConformance":this.hasConformance,"resize":this.reSize}
+        "isFromcreateScreen":false,'process_name':this.currentNotation_name,'isSavebtn':false,"hasConformance":this.hasConformance,"resize":this.reSize,"isEditbtn":true}
       this.dt.bpsNotationaScreenValues(this.push_Obj)
       },
       err => {

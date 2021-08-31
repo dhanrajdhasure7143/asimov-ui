@@ -1406,7 +1406,7 @@
   <ng-template class="modal-up" #uploadtaskfilemodal>
     <div class="modal-header modelprhead">
       <h4 class="modal-title pull-left">Upload File</h4>
-      <button type="button" class="close pull-right" aria-label="Close" (click)="uploadtaskFilemodalref.hide()">
+      <button type="button" class="close pull-right" aria-label="Close" (click)="uploadtaskFilemodalCancel()">
         <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
       </button>
     </div>
@@ -1483,7 +1483,7 @@
     </div>
     <div class="modal-footer modelprfooter">
       <div class="pull-right">
-        <button (click)="uploadtaskFilemodalref.hide()" class="btn btn-default">Cancel</button>
+        <button (click)="uploadtaskFilemodalCancel()" class="btn btn-default">Cancel</button>
         <button [disabled]="uploadtaskFileForm.invalid" (click)="submitUploadFileForm()"
           class="btn btn-primary btn-update">Submit</button>
       </div>
@@ -1495,7 +1495,7 @@
 
   <div class="modal-header modelprhead">
     <h4 class="modal-title pull-left">Upload File</h4>
-    <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+    <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
       <span aria-hidden="true"><img alt="" src="../../../../../assets/images/Projects/circle-close.svg"></span>
     </button>
   </div>
@@ -1573,7 +1573,7 @@
   </div>
   <div class="modal-footer modelprfooter">
     <div class="pull-right">
-        <button (click)="uploadFilemodalref.hide()" class="btn btn-default">Cancel</button>
+        <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
         <button [disabled]="uploadFileFormDetails.invalid" (click)="submitUploadFileFormattachment()" class="btn btn-primary btn-update">Submit</button>
         </div>
   </div>
