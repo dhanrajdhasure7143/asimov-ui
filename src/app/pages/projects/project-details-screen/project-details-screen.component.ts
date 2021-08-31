@@ -897,6 +897,17 @@ percentageComplete: number;
           link.click();
         })
       }
+      uploadtaskFilemodalCancel(){
+        this.uploadtaskFileForm.reset();
+        this.listOfFiles = [];
+        this.uploadtaskFilemodalref.hide();
+      }
+      uploadFilemodalCancel(){
+        this.uploadFileFormDetails.reset();
+        this.listOfFiles = [];
+        this.uploadFilemodalref.hide();
+
+      }
 
       
 

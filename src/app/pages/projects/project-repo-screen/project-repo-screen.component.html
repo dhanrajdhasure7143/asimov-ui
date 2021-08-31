@@ -479,7 +479,7 @@
         <div class="modal-header modelprhead">
           <h4 class="modal-title pull-left" *ngIf="isDeny">Reason to deny file request</h4>
           <h4 class="modal-title pull-left" *ngIf="!isDeny">Reason to revoke file request</h4>
-          <button type="button" class="close pull-right deny-serve" aria-label="Close" (click)="denyFileRequestmodalref.hide()">
+          <button type="button" class="close pull-right deny-serve" aria-label="Close" (click)="denyFileRequestmodalref.hide();denyFileRequestForm.reset()">
               <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
           </button>
         </div>
@@ -517,7 +517,7 @@
         </div> -->
         <div class="modal-header modelprhead">
           <h4 class="modal-title pull-left">Upload File</h4>
-          <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
+          <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalCancel()">
             <img alt="" src="../../../../../assets/images/Projects/circle-close.svg">
           </button>
           <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="uploadFilemodalref.hide()">
@@ -604,7 +604,7 @@
         </div>
         <div class="modal-footer modelprfooter">
           <div class="pull-right">
-              <button (click)="uploadFilemodalref.hide()" class="btn btn-default">Cancel</button>
+              <button (click)="uploadFilemodalCancel()" class="btn btn-default">Cancel</button>
               <button [disabled]="uploadFileForm.invalid" (click)="submitUploadFileForm()" class="btn btn-primary btn-update">Submit</button>
               </div>
         </div>
