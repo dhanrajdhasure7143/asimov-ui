@@ -189,7 +189,7 @@ createproject(event)
     let userlastname=localStorage.getItem("lastName")
     this.username=userfirstname+" "+userlastname
     this.createprogram.value.createdBy=this.username;
-    this.createprogram.value.programValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.createprogram.value.programValueChain).processName;
+    //this.createprogram.value.programValueChain=this.valuechain.find(item=>item.processGrpMasterId==this.createprogram.value.programValueChain).processName;
     this.createprogram.value.status="New";
     this.createprogram.value.programHealth="Good";
     let data=this.createprogram.value;

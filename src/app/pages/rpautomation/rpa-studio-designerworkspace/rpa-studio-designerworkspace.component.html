@@ -21,7 +21,7 @@
                 <nav id="context-menu" class="context-menu contextmenu">
                     <div class="context-menu1">
                         <div class="context-menu__item">
-                            <a class="context-menu__link" (click)="outputbox(node)" data-action="View">Open Output Box
+                            <a class="context-menu__link" (click)="outputbox(node, outputboxModalRef)" data-action="View">Open Output Box
                             </a>
                         </div>
                     </div>
@@ -49,21 +49,22 @@
       </div>
   </div>
 
-
-  <div [id]="outputboxid" class="rpa-modal">
-    <div class="rpa-modal-content">
-        <div class="rpa-modal-header">
-            <span class="rpa-modal-close" (click)="closeoutputbox()"><img src="../../../../assets/images/RPA/icon_latest/close.svg" alt=""></span>
-            <h4>Output Box</h4>
+<ng-template #outputboxModalRef>
+  <div [id]="outputboxid">
+        <div  class="modal-header modelprhead newmodelcla">
+            Output Box
+            <span class="pull-right clickable" (click)="closeoutputbox();modalRef.hide()">
+                <img src="../../../../assets/images/Projects/circle-close.svg" alt="">
+            </span>
         </div>
-        <div class="rpa-modal-body">
+        <div class="modal-body">
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-4">
+            <div class="container-fluid ">
+                <div class="row logs-container">
+                    <div class="col-md-2">
                     </div>
 
-                    <div class="col-md-4" *ngIf="outputboxresult==undefined">
+                    <div class="col-md-8" *ngIf="outputboxresult==undefined">
                         <br><br>
                         <select class="form-control" [(ngModel)]="SelectedOutputType">
                   <option value="">--Select View Type--</option>
@@ -75,17 +76,21 @@
 
                         <br><br>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
 
                     </div>
 
                 </div>
 
                 <div class="row py-4" *ngIf="SelectedOutputType=='Table' && outputboxresult!=undefined">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6" style="height:300px; overflow-x:auto">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
+                        <br>
+                    </div>
 
-                        <table class="table">
+                    <div class="col-md-12  logs-container" style="height:300px; overflow-x:auto">
+                            <br>
+                        <table class="table logs-table">
                             <thead>
                                 <th>Key</th>
                                 <th>Value</th>
@@ -100,46 +105,39 @@
                                 </tr>
                             
                         </table>
-                        <br>
-                        <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
                     </div>
-                    <div class="col-md-3"></div>
+                   
                 </div>
                 <div class="row" *ngIf="SelectedOutputType=='Text' && outputboxresult!=undefined">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6">
-                    
-                        <br>
-                        <!-- <div [id]="'text_'+outputboxid" style="height:300px;width:100%; overflow-x:auto">
-
-                        </div> -->
-                            <textarea [id]="'text_'+outputboxid" disabled class="outputtextareastyle"></textarea>
-                        <br>
+                    <div class="col-md-12">
                         <button style="float: right" class="btn btn-primary eiap-btn" data-placement="bottom" tooltip="Back" (click)="outputlayoutback()"><i class="fa fa-arrow-left"></i>&nbsp;back</button>
-            
-                        <br>
                     </div>
-                    <div class="col-md-3"></div>
+                    <div class="col-md-12 logs-container">
+                            <br>
+                            <textarea [id]="'text_'+outputboxid" disabled class="outputtextareastyle"></textarea>
+                       
+                    </div>
                 </div>
                 <div class="row" *ngIf="SelectedOutputType=='Image' && outputboxresult!=undefined">
-                    <div class="col-md-3"></div>
-                    <div class="col-md-6 text-center">
-                      <br><br>
-                        <img [src]="Image" style="filter: none;height:400px;"><br><br>
+                   <div class="col-md-12">
                         <a [href]="Image" download><img src="../../../../assets/downloadimage.svg" style="filter: none; width: 40px;"></a>
                         <button class="btn btn-primary eiap-btn" style="float: right" (click)="outputlayoutback()"><i class="fa fa-arrow-left" aria-hidden="true"></i> back</button>
-
+                       
+                    </div>
+                  
+                    <div class="col-md-12 logs-container text-center">
+                            <br>
+                        <img [src]="Image" style="filter: none;height:400px;"><br><br>
+                      
                         <br>
                     </div>
-                    <div class="col-md-3"></div>
                 </div>
             </div>
 
         </div>
         <br><br>
     </div>
-</div>
-
+</ng-template>
 
   <div id="recordandplay" class="rpa-modal">
       <div class="rpa-modal-content">
