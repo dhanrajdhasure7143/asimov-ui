@@ -236,6 +236,8 @@ percentageComplete: number;
    Swal.fire("Error",res.message,"error");
    
  })
+ this.uploadFileFormDetails.reset();
+        this.listOfFiles = [];
  this.spinner.hide();
   }
   resetdocform() {
@@ -868,6 +870,8 @@ percentageComplete: number;
       //  Swal.fire("Error",res.message,"error");
        
      })
+     this.uploadtaskFileForm.reset();
+        this.listOfFiles = [];
       }
       updateprojectDetails()
       {
