@@ -13,6 +13,7 @@ import { NotifierService } from 'angular-notifier';
 import {NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { RpaToolsetComponent } from '../rpa-toolset/rpa-toolset.component';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-rpa-studio-actionsmenu',
@@ -103,7 +104,8 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
     private calender:NgbCalendar,
     private formBuilder: FormBuilder,
     private changeDetector:ChangeDetectorRef,
-    private modalService:BsModalService
+    private modalService:BsModalService,
+    private spinner:NgxSpinnerService
     ) {}
 
   ngOnInit() {
@@ -468,6 +470,19 @@ export class RpaStudioActionsmenuComponent implements OnInit , AfterContentCheck
    }
 
 
+   updateLog(logid,Logtemplate)
+   {
+    
+      this.spinner.show();
+     this.rest.updateBotLog(this.savebotrespose.botId,this.savebotrespose.version,logid).subscribe(data=>{
+        let response:any=data;  
+        this.spinner.hide();
+        if(response.errorMessage==undefined)
+          this.viewlogdata(Logtemplate,'update');
+        else
+          Swal.fire("Error",response.errorMessage,"error");
+     });
+   }
    viewlogdata(log_popup_template,action){
     this.childBotWorkspace.addsquences();
     this.viewlogid1=undefined;

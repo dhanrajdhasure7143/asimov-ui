@@ -44,8 +44,10 @@ public slaupdate : boolean = false;
     viewlogid1="check456";
     logflag:Boolean;
     respdata2:Boolean;
-    selectedcat:any;
-    search:any;
+    selectedcat:any="";
+    search:any="";    
+    public selected_source:any = "";
+    public sla_bot:any
     public isDataSource: boolean;
     public userRole:any = [];
     public isButtonVisible = false;
@@ -137,10 +139,10 @@ public slaupdate : boolean = false;
   method(){
     let result: any = [];
     this.dataSource1 = this.datasourcelist;
-    if(this.selectedcat == undefined){
+    if(this.selectedcat == undefined ){
       this.selectedcat = '';
     }
-    if(this.selected_source == undefined){
+    if(this.selected_source == undefined ){
       this.selected_source = '';
     }
     if(this.search == undefined){
@@ -148,7 +150,6 @@ public slaupdate : boolean = false;
     }
     if(this.search != '' && this.selected_source != '' && this.selectedcat != '')
     {
-      console.log(this.search, this.selectedcat, this.selected_source);
       let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
       for(let a of this.datasourcelist){
         if( category == a.department){
@@ -158,15 +159,12 @@ public slaupdate : boolean = false;
         }
       }
       this.dataSource1 = new MatTableDataSource(result);
-      console.log(this.dataSource1);
       let value1 = this.search.toLowerCase();
-       console.log(value1);
        this.dataSource1.filter = value1;
-       console.log(this.dataSource1.filteredData);
        this.dataSource1.sort=this.sort1;
        this.dataSource1.paginator=this.paginator1;
     }
-    else if(this.search != '' && this.selected_source)
+    else if(this.search != '' && this.selected_source !="")
     {
       for(let a of this.bot_list){
         console.log(a.sourceType);
@@ -219,7 +217,7 @@ public slaupdate : boolean = false;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
     }
-    else if(this.search)
+    else if(this.search !="")
     {
       this.dataSource1 = new MatTableDataSource(this.datasourcelist);
       let value1 = this.search.toLowerCase();
@@ -229,7 +227,7 @@ public slaupdate : boolean = false;
        this.dataSource1.sort=this.sort1;
        this.dataSource1.paginator=this.paginator1;
     }
-    else if(this.selected_source)
+    else if(this.selected_source!="")
     {
       for(let a of this.bot_list){
         console.log(a.sourceType);
@@ -241,7 +239,7 @@ public slaupdate : boolean = false;
       this.dataSource1.sort=this.sort1;
       this.dataSource1.paginator=this.paginator1;
     }
-    else if(this.selectedcat)
+    else if(this.selectedcat!="")
     {
       let category =this.categaoriesList.find(val=>this.selectedcat==val.categoryId).categoryName;
       for(let a of this.bot_list){
@@ -259,8 +257,6 @@ public slaupdate : boolean = false;
   getslaconfig(){
 
   }
-  public selected_source:any;
-  public sla_bot:any
   SelectSLACon(bot){
     this.sla_bot=bot;
     if(this.sla_bot.sourceType=="EPSoft")
@@ -537,7 +533,19 @@ public slaupdate : boolean = false;
   
   // }
 
-
+  updateLog(logid,Logtemplate)
+  {
+   
+     this.spinner.show();
+    this.rest.updateBotLog(this.log_botid,this.log_version,logid).subscribe(data=>{
+       let response:any=data;  
+       this.spinner.hide();
+       if(response.errorMessage==undefined)
+         this.getEpsoftLogs(this.log_botid,this.log_version,Logtemplate,'update');
+       else
+         Swal.fire("Error",response.errorMessage,"error");
+    });
+  }
   getEpsoftLogs(botid ,version, template, action){
   let response: any;
    let log:any=[];

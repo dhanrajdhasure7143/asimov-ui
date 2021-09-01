@@ -190,6 +190,7 @@ span.testtooltip:before {
   width: 100%;
   overflow-x: scroll;
   padding-top: 20px;
+  height: calc(100vh - 330px);
 }
 
 .environment-tablegrid table td span{

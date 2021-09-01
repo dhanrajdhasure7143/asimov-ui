@@ -507,9 +507,14 @@
                 </ng-container>
                 <ng-container matColumnDef="bot_status">
                     <th mat-header-cell *matHeaderCellDef>Status</th>
-                    <td mat-cell *matCellDef="let element">
-                            <span *ngIf="element.bot_status=='Running'" class="text-primary" ><span><img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;"></span>&nbsp;{{element.bot_status}}</span>
-
+                    <td class="font-weight-bold" mat-cell *matCellDef="let element">
+                            <span *ngIf="element.bot_status=='Running'" class="text-primary" >
+                              <span>
+                                <img src="../../../../assets/images/RPA/DotSpin.gif" style="filter: none; width: 19px;">
+                              </span>&nbsp;
+                              {{element.bot_status}}&nbsp;&nbsp;&nbsp;
+                              <span class="btn btn-xs btn-primary clickable" (click)="updateLog(element.run_id,logspopup)" >Kill</span> 
+                            </span>
                             <span *ngIf="element.bot_status=='Success'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/Success.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                             <span *ngIf="element.bot_status=='Failure'" class="tableActionsIcons"><span><img src="../../../../assets/images/RPA/icon_latest/close-red.svg" alt=""></span>&nbsp;<span>{{element.bot_status}}</span></span>
@@ -518,7 +523,7 @@
                                <img src="../../../../assets/images/RPA/userobot.png" style="filter: none;">
                               </span>&nbsp;<span>{{element.bot_status}}</span></span>
 
-                            <span *ngIf="element.bot_status=='Stop'" ><span class="bg-danger" ><img src="../../../../assets/images/RPA/stop_fail_icon.svg" style="height:10px"></span>&nbsp;<span>{{element.bot_status}}</span></span>
+                            <span *ngIf="element.bot_status=='Stop' ||element.bot_status=='Stopped'  " class="tableActionsIcons" ><span  ><img src="../../../../assets/images/RPA/stop_fail_icon.svg"></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
                             <span *ngIf="element.bot_status=='Pause'||element.bot_status=='Paused'" ><span class="text-primary" style="font-size:19px;"><!--<img src="../../../../assets/images/RPA/userobot.png" style="filter: none; width: 19px;">--><i class="fas fa-pause-circle text-primary"></i></span>&nbsp;<span>{{element.bot_status}}</span></span>
 
