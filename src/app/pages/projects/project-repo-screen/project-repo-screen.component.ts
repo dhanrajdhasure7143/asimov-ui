@@ -261,7 +261,9 @@ this.getFileDetails();
    Swal.fire("Error",res.message,"error");
    
  })
- this.spinner.hide();
+  this.uploadFileForm.reset();
+      this.listOfFiles=[];
+  this.spinner.hide();
   }
 
   chnagefileUploadForm(e){
